@@ -265,6 +265,23 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
     },
   });
 
+  // Realtime subscription for live task updates
+  useEffect(() => {
+    const channel = supabase
+      .channel(`workbook-tasks-${workbookId}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "workbook_tasks",
+        filter: `workbook_id=eq.${workbookId}`,
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ["workbook-tasks", workbookId] });
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [workbookId, queryClient]);
+
   const createTask = useMutation({
     mutationFn: async () => {
       const { error } = await supabase.from("workbook_tasks").insert({
