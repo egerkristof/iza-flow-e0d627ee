@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Eye, ArrowRight, AlertTriangle, CheckCircle, Clock, LayoutGrid, Columns,
-  ListTodo, TrendingUp, Target, Users, ChevronRight, ChevronDown,
+  ListTodo, TrendingUp, Target, Users, ChevronRight, ChevronDown, Archive,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -42,6 +42,7 @@ export default function OversightPage() {
   const { activeRole, user } = useAuth();
   const queryClient = useQueryClient();
   const [view, setView] = useState<"board" | "grid">("board");
+  const [showArchived, setShowArchived] = useState(false);
   const [peekWorkbook, setPeekWorkbook] = useState<OversightWorkbook | null>(null);
 
   // Realtime subscription for task + workbook updates
@@ -135,13 +136,22 @@ export default function OversightPage() {
           </div>
           <p className="mt-1 text-sm text-muted-foreground">{roleDescription}</p>
         </div>
-        <div className="flex gap-1 rounded-lg bg-secondary p-1">
-          <Button variant={view === "board" ? "default" : "ghost"} size="sm" className="text-xs" onClick={() => setView("board")}>
-            <Columns className="mr-1 h-3 w-3" /> Board
-          </Button>
-          <Button variant={view === "grid" ? "default" : "ghost"} size="sm" className="text-xs" onClick={() => setView("grid")}>
-            <LayoutGrid className="mr-1 h-3 w-3" /> Grid
-          </Button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setShowArchived(!showArchived)}
+            className={`flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors ${showArchived ? "border-primary/30 bg-primary/5 text-primary" : "border-border/50 text-muted-foreground hover:border-primary/20"}`}
+          >
+            <Archive className="h-3 w-3" />
+            {showArchived ? "Hide Archived" : "Show Archived"}
+          </button>
+          <div className="flex gap-1 rounded-lg bg-secondary p-1">
+            <Button variant={view === "board" ? "default" : "ghost"} size="sm" className="text-xs" onClick={() => setView("board")}>
+              <Columns className="mr-1 h-3 w-3" /> Board
+            </Button>
+            <Button variant={view === "grid" ? "default" : "ghost"} size="sm" className="text-xs" onClick={() => setView("grid")}>
+              <LayoutGrid className="mr-1 h-3 w-3" /> Grid
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -223,11 +233,29 @@ export default function OversightPage() {
                   </div>
                 );
               })}
+              {showArchived && (() => {
+                const archivedItems = workbooks.filter(w => w.status === "archived");
+                return (
+                  <div className="flex min-w-[300px] flex-col gap-3 opacity-50">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1"><Archive className="h-3.5 w-3.5" /> Archived</h3>
+                      <Badge variant="outline" className="text-[10px]">{archivedItems.length}</Badge>
+                    </div>
+                    {archivedItems.length === 0 ? (
+                      <p className="text-xs text-muted-foreground italic px-2">No archived workbooks</p>
+                    ) : archivedItems.map(wb => (
+                      <OversightCard key={wb.id} workbook={wb} getDriftColor={getDriftColor} onPeek={setPeekWorkbook} onOpen={() => navigate(`/workbooks/${wb.id}`)} taskStats={tasksByWorkbook[wb.id]} />
+                    ))}
+                  </div>
+                );
+              })()}
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {workbooks.map(wb => (
-                <OversightCard key={wb.id} workbook={wb} getDriftColor={getDriftColor} onPeek={setPeekWorkbook} onOpen={() => navigate(`/workbooks/${wb.id}`)} taskStats={tasksByWorkbook[wb.id]} />
+              {workbooks.filter(w => showArchived || w.status !== "archived").map(wb => (
+                <div key={wb.id} className={wb.status === "archived" ? "opacity-50" : ""}>
+                  <OversightCard workbook={wb} getDriftColor={getDriftColor} onPeek={setPeekWorkbook} onOpen={() => navigate(`/workbooks/${wb.id}`)} taskStats={tasksByWorkbook[wb.id]} />
+                </div>
               ))}
             </div>
           )}
