@@ -9,7 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, FileText, Trash2, Linkedin, Award, File, Loader2, BookUp, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PromoteToContextDialog } from "./PromoteToContextDialog";
-import { ExtractionReviewDialog, type ExtractionResult } from "./ExtractionReviewDialog";
+import { ImportCopilotDialog } from "./ImportCopilotDialog";
+import { type ExtractionResult } from "@/lib/knowledge-schema";
 
 const CATEGORIES = [
   { value: "cv", label: "CV / Resume", icon: FileText },
@@ -100,8 +101,8 @@ export function PersonalDocuments() {
   const handleExtract = async (docId: string, docName: string) => {
     setExtracting(docId);
     try {
-      const { data, error } = await supabase.functions.invoke("extract-profile", {
-        body: { documentId: docId },
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: { documentId: docId, source_type: "document" },
       });
       if (error) throw error;
       if (data.error) throw new Error(data.error);
@@ -235,11 +236,12 @@ export function PersonalDocuments() {
           sourceLabel="Document"
         />
 
-        <ExtractionReviewDialog
+        <ImportCopilotDialog
           open={reviewOpen}
           onOpenChange={setReviewOpen}
           data={extractionResult}
-          documentName={extractionDocName}
+          sourceName={extractionDocName}
+          sourceType="document"
         />
       </CardContent>
     </Card>

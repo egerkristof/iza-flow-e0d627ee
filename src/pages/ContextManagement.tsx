@@ -20,7 +20,8 @@ import { BundleCard } from "@/components/context/BundleCard";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
-import { ExtractionReviewDialog, type ExtractionResult } from "@/components/knowledge/ExtractionReviewDialog";
+import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import { type ExtractionResult } from "@/lib/knowledge-schema";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -230,9 +231,9 @@ export default function ContextManagementPage() {
         .single();
       if (insertErr || !docRow) throw insertErr ?? new Error("Insert failed");
 
-      // 3. Call extract-profile edge function
-      const { data, error } = await supabase.functions.invoke("extract-profile", {
-        body: { documentId: docRow.id },
+      // 3. Call extract-knowledge edge function
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: { documentId: docRow.id, source_type: "loom" },
       });
       if (error) throw error;
       if (data.error) throw new Error(data.error);
@@ -490,12 +491,13 @@ export default function ContextManagementPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Extraction Review Dialog (Knowledge Loom) */}
-      <ExtractionReviewDialog
+      {/* Import Copilot (Knowledge Loom) */}
+      <ImportCopilotDialog
         open={reviewOpen}
         onOpenChange={setReviewOpen}
         data={extractionResult}
-        documentName={extractionDocName}
+        sourceName={extractionDocName}
+        sourceType="loom"
       />
 
       {/* Governance Modals */}
