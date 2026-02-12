@@ -58,11 +58,18 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are an expert at analyzing professional profile documents. Extract structured information that can be used to personalize AI interactions. Return results via the extract_profile tool.`,
+            content: `You are an expert at analyzing professional profile documents. Extract structured information that can be used to personalize AI interactions. 
+
+You should extract:
+1. Working preferences (tone, style, expertise, etc.)
+2. Standalone context items (individual knowledge/research/directive items)
+3. Bundles — logical groupings of related context items that belong together as a curated set. For example, a CV might produce a "Technical Expertise" bundle with multiple knowledge items, or a "Leadership Principles" bundle with directive items.
+
+Return results via the extract_profile tool.`,
           },
           {
             role: "user",
-            content: `Analyze this profile document and extract relevant working preferences and context items.\n\nDocument (${doc.file_name}, category: ${doc.document_category}):\n\n${textContent.slice(0, 15000)}`,
+            content: `Analyze this profile document and extract relevant working preferences, standalone context items, and bundles of related context items.\n\nDocument (${doc.file_name}, category: ${doc.document_category}):\n\n${textContent.slice(0, 15000)}`,
           },
         ],
         tools: [
@@ -70,7 +77,7 @@ serve(async (req) => {
             type: "function",
             function: {
               name: "extract_profile",
-              description: "Extract working preferences and context items from a profile document",
+              description: "Extract working preferences, context items, and bundles from a profile document",
               parameters: {
                 type: "object",
                 properties: {
@@ -97,7 +104,7 @@ serve(async (req) => {
                   },
                   context_items: {
                     type: "array",
-                    description: "Knowledge or research context items worth capturing",
+                    description: "Standalone knowledge or research context items worth capturing individually (not part of a bundle)",
                     items: {
                       type: "object",
                       properties: {
@@ -105,15 +112,45 @@ serve(async (req) => {
                         content: { type: "string" },
                         category: {
                           type: "string",
-                          enum: ["KNOWLEDGE", "RESEARCH", "DIRECTIVE"],
+                          enum: ["KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE"],
                         },
                       },
                       required: ["title", "content", "category"],
                       additionalProperties: false,
                     },
                   },
+                  bundles: {
+                    type: "array",
+                    description: "Logical groupings of related context items that should be bundled together as a curated set",
+                    items: {
+                      type: "object",
+                      properties: {
+                        title: { type: "string", description: "Bundle name, e.g. 'Technical Expertise', 'Leadership Principles'" },
+                        description: { type: "string", description: "Brief description of what this bundle covers" },
+                        items: {
+                          type: "array",
+                          description: "Context items that belong in this bundle",
+                          items: {
+                            type: "object",
+                            properties: {
+                              title: { type: "string" },
+                              content: { type: "string" },
+                              category: {
+                                type: "string",
+                                enum: ["KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE"],
+                              },
+                            },
+                            required: ["title", "content", "category"],
+                            additionalProperties: false,
+                          },
+                        },
+                      },
+                      required: ["title", "description", "items"],
+                      additionalProperties: false,
+                    },
+                  },
                 },
-                required: ["preferences", "context_items"],
+                required: ["preferences", "context_items", "bundles"],
                 additionalProperties: false,
               },
             },
@@ -146,6 +183,9 @@ serve(async (req) => {
     if (!toolCall) throw new Error("No extraction result");
 
     const extracted = JSON.parse(toolCall.function.arguments);
+
+    // Ensure bundles array exists even if AI omits it
+    if (!extracted.bundles) extracted.bundles = [];
 
     // Update document parsed status
     await adminClient
