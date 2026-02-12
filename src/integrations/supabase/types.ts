@@ -650,6 +650,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_chat_participant: {
+        Args: { _chat_id: string; _user_id: string }
+        Returns: boolean
+      }
       is_workbook_member: {
         Args: { _user_id: string; _workbook_id: string }
         Returns: boolean
@@ -657,6 +661,10 @@ export type Database = {
       is_workbook_owner: {
         Args: { _user_id: string; _workbook_id: string }
         Returns: boolean
+      }
+      user_accessible_workbook_ids: {
+        Args: { _user_id: string }
+        Returns: string[]
       }
     }
     Enums: {
