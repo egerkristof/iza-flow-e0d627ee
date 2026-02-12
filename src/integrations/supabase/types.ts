@@ -701,6 +701,7 @@ export type Database = {
         | "PLAYBOOK"
         | "PREFERENCE"
         | "RESEARCH"
+        | "PRINCIPLE"
       priority_level: "STANDARD" | "CRITICAL"
       security_scope: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY"
       task_priority: "low" | "medium" | "high" | "critical"
@@ -842,6 +843,7 @@ export const Constants = {
         "PLAYBOOK",
         "PREFERENCE",
         "RESEARCH",
+        "PRINCIPLE",
       ],
       priority_level: ["STANDARD", "CRITICAL"],
       security_scope: ["INTERNAL", "CONFIDENTIAL", "ADMIN_ONLY"],
