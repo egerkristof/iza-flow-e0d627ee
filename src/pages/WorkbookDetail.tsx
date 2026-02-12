@@ -57,9 +57,26 @@ const MOCK_WORKBOOK_DATA: Record<string, { title: string; description: string; s
 export default function WorkbookDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { activeRole } = useAuth();
-  const wb = MOCK_WORKBOOK_DATA[id ?? ""] ?? { title: "Unknown Workbook", description: "", strategicOutcome: "", status: "draft" };
-  const { user } = useAuth();
+  const { activeRole, user } = useAuth();
+
+  // Fetch workbook from DB
+  const { data: dbWorkbook } = useQuery({
+    queryKey: ["workbook-detail", id],
+    enabled: !!id && !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workbooks")
+        .select("id, title, description, strategic_outcome, status")
+        .eq("id", id!)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const wb = dbWorkbook
+    ? { title: dbWorkbook.title, description: dbWorkbook.description ?? "", strategicOutcome: dbWorkbook.strategic_outcome ?? "", status: dbWorkbook.status }
+    : MOCK_WORKBOOK_DATA[id ?? ""] ?? { title: "Unknown Workbook", description: "", strategicOutcome: "", status: "draft" };
 
   const showAnalytics = activeRole === "manager" || activeRole === "architect";
   const showSettings = activeRole === "architect";
