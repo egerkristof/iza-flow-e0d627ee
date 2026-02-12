@@ -1,6 +1,6 @@
 import type { Database } from "@/integrations/supabase/types";
 
-type ContextCategory = Database["public"]["Enums"]["context_category"];
+export type ContextCategory = Database["public"]["Enums"]["context_category"] | "RESEARCH";
 type ActionLogic = Database["public"]["Enums"]["action_logic"];
 type PriorityLevel = Database["public"]["Enums"]["priority_level"];
 type SecurityScope = Database["public"]["Enums"]["security_scope"];
@@ -57,4 +57,4 @@ export const MOCK_CONTEXT_ITEMS: MockContextItem[] = [
 ];
 
 export const ALL_DOMAIN_TAGS = Array.from(new Set(MOCK_CONTEXT_ITEMS.flatMap(i => i.domain_tags))).sort();
-export const ALL_CATEGORIES: Database["public"]["Enums"]["context_category"][] = ["DIRECTIVE", "KNOWLEDGE", "PROCEDURE", "PLAYBOOK", "PREFERENCE"];
+export const ALL_CATEGORIES = ["DIRECTIVE", "KNOWLEDGE", "PROCEDURE", "PLAYBOOK", "PREFERENCE", "RESEARCH"] as string[];

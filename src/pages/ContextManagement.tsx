@@ -21,7 +21,7 @@ import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import {
   MOCK_CONTEXT_ITEMS, MOCK_BUNDLES, ALL_DOMAIN_TAGS, ALL_CATEGORIES,
-  type MockBundle, type MockContextItem,
+  type MockBundle, type MockContextItem, type ContextCategory,
 } from "@/data/mockContextItems";
 
 // ── Drift & Stale mock data (from Process Studio) ──
@@ -59,7 +59,7 @@ export default function ContextManagementPage() {
   // New item form state
   const emptyItem: {
     title: string; content_preview: string;
-    category: "DIRECTIVE" | "KNOWLEDGE" | "PROCEDURE" | "PLAYBOOK" | "PREFERENCE";
+    category: ContextCategory;
     priority: "STANDARD" | "CRITICAL";
     security_level: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY";
     action_type: "APPEND" | "OVERRIDE" | "BLOCK";

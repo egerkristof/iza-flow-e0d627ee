@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { MessageSquare, Plus, Users, User, Send, X, Hash } from "lucide-react";
+import { MessageSquare, Plus, Users, User, Send, X, Hash, ListTodo } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useToast } from "@/hooks/use-toast";
 
 interface ChatThread {
   id: string;
@@ -41,18 +45,61 @@ const MOCK_MESSAGES: ChatMessage[] = [
 ];
 
 export function WorkbookChats({ workbookId }: { workbookId: string }) {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [threads] = useState(MOCK_THREADS);
   const [activeThread, setActiveThread] = useState<string | null>(null);
   const [messageInput, setMessageInput] = useState("");
   const [messages, setMessages] = useState(MOCK_MESSAGES);
   const [typeFilter, setTypeFilter] = useState<"all" | "private" | "group">("all");
   const [newChatOpen, setNewChatOpen] = useState(false);
+  const [taskDialogOpen, setTaskDialogOpen] = useState(false);
+  const [taskTitle, setTaskTitle] = useState("");
 
   const filtered = threads.filter(t => typeFilter === "all" || t.type === typeFilter);
   const active = threads.find(t => t.id === activeThread);
 
+  const createTaskFromChat = useMutation({
+    mutationFn: async (title: string) => {
+      if (!user) throw new Error("Not authenticated");
+      const { error } = await supabase.from("workbook_tasks").insert({
+        workbook_id: workbookId,
+        title,
+        created_by: user.id,
+        assigned_to: user.id,
+      } as any);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workbook-tasks", workbookId] });
+      toast({ title: "Task created from chat" });
+      setTaskDialogOpen(false);
+      setTaskTitle("");
+    },
+    onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
+  });
+
   const handleSend = () => {
     if (!messageInput.trim()) return;
+
+    // Handle /task slash command
+    if (messageInput.trim().startsWith("/task ")) {
+      const title = messageInput.trim().slice(6).trim();
+      if (title) {
+        createTaskFromChat.mutate(title);
+        setMessages(prev => [...prev, {
+          id: `m${Date.now()}`,
+          sender: { name: "You", initials: "ME" },
+          content: `📋 Created task: "${title}"`,
+          time: "Just now",
+          isOwn: true,
+        }]);
+        setMessageInput("");
+        return;
+      }
+    }
+
     setMessages(prev => [...prev, { id: `m${Date.now()}`, sender: { name: "You", initials: "ME" }, content: messageInput, time: "Just now", isOwn: true }]);
     setMessageInput("");
   };
@@ -106,10 +153,31 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
         {/* Input */}
         <div className="border-t border-border/50 p-3">
           <div className="flex gap-2">
-            <Input value={messageInput} onChange={e => setMessageInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSend()} placeholder="Type a message…" className="flex-1 bg-secondary/50" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-10 w-10 shrink-0"
+              title="Create task"
+              onClick={() => setTaskDialogOpen(true)}
+            >
+              <ListTodo className="h-4 w-4" />
+            </Button>
+            <Input value={messageInput} onChange={e => setMessageInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSend()} placeholder="Type a message or /task <title>…" className="flex-1 bg-secondary/50" />
             <Button onClick={handleSend} size="icon" disabled={!messageInput.trim()}><Send className="h-4 w-4" /></Button>
           </div>
+          <p className="text-[10px] text-muted-foreground mt-1 ml-12">Tip: type <code className="bg-muted px-1 rounded">/task</code> followed by a title to create a task inline</p>
         </div>
+
+        {/* Task from chat dialog */}
+        <Dialog open={taskDialogOpen} onOpenChange={setTaskDialogOpen}>
+          <DialogContent className="max-w-sm">
+            <DialogHeader><DialogTitle className="text-base">Create Task from Chat</DialogTitle></DialogHeader>
+            <Input placeholder="Task title" value={taskTitle} onChange={e => setTaskTitle(e.target.value)} onKeyDown={e => e.key === "Enter" && taskTitle.trim() && createTaskFromChat.mutate(taskTitle)} />
+            <DialogFooter>
+              <Button onClick={() => createTaskFromChat.mutate(taskTitle)} disabled={!taskTitle.trim()}>Create Task</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
