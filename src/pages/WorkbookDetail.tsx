@@ -388,6 +388,9 @@ export default function WorkbookDetailPage() {
         {/* Protocol Banner */}
         <div className="flex items-center justify-between border-b border-primary/20 bg-primary/5 px-6 py-3">
           <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={handleUnlock} title="Back to workbook">
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
             <Lock className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-primary">Active Protocol: {lockedPlaybook.title}</span>
             <Badge variant="outline" className="border-primary/30 text-primary text-xs">Step {currentStepIndex + 1} of {lockedPlaybook.steps.length}</Badge>
