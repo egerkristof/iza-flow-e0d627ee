@@ -242,6 +242,70 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     setDragSource(null);
   }, [data, dragSource, bundleItemEdits, resolveItem]);
 
+  const handleDropCreateBundle = useCallback((e: DragEvent) => {
+    e.preventDefault();
+    setDropTarget(null);
+    if (!data || !dragSource) return;
+
+    const newData = { ...data, context_items: [...data.context_items], bundles: (data.bundles || []).map(b => ({ ...b, items: [...b.items] })) };
+
+    let movedItem: ExtractedContextItem | null = null;
+
+    if (dragSource.type === "standalone") {
+      const idx = dragSource.idx;
+      movedItem = resolveItem(data.context_items[idx], itemEdits[idx]);
+      newData.context_items.splice(idx, 1);
+      // Reindex standalone edits/selections
+      const newItemEdits: typeof itemEdits = {};
+      const newSelectedItems = new Set<number>();
+      const newAssignments: typeof itemBundleAssignment = {};
+      for (const [k, v] of Object.entries(itemEdits)) {
+        const ki = Number(k);
+        if (ki < idx) newItemEdits[ki] = v;
+        else if (ki > idx) newItemEdits[ki - 1] = v;
+      }
+      selectedItems.forEach(si => {
+        if (si < idx) newSelectedItems.add(si);
+        else if (si > idx) newSelectedItems.add(si - 1);
+      });
+      for (const [k, v] of Object.entries(itemBundleAssignment)) {
+        const ki = Number(k);
+        if (ki < idx) newAssignments[ki] = v;
+        else if (ki > idx) newAssignments[ki - 1] = v;
+      }
+      setItemEdits(newItemEdits);
+      setSelectedItems(newSelectedItems);
+      setItemBundleAssignment(newAssignments);
+    } else if (dragSource.type === "bundle") {
+      const { bundleIdx, itemIdx } = dragSource;
+      movedItem = resolveItem(data.bundles![bundleIdx].items[itemIdx], bundleItemEdits[`${bundleIdx}-${itemIdx}`]);
+      newData.bundles[bundleIdx].items.splice(itemIdx, 1);
+      const newBundleEdits: typeof bundleItemEdits = {};
+      for (const [k, v] of Object.entries(bundleItemEdits)) {
+        const [bi, ji] = k.split("-").map(Number);
+        if (bi === bundleIdx && ji > itemIdx) newBundleEdits[`${bi}-${ji - 1}`] = v;
+        else if (bi === bundleIdx && ji < itemIdx) newBundleEdits[k] = v;
+        else if (bi !== bundleIdx) newBundleEdits[k] = v;
+      }
+      setBundleItemEdits(newBundleEdits);
+    }
+
+    if (movedItem) {
+      const newBundle: ExtractedBundle = {
+        title: `New Bundle (${movedItem.title})`,
+        description: "Created from drag-and-drop",
+        items: [movedItem],
+      };
+      newData.bundles.push(newBundle);
+      const newBundleIdx = newData.bundles.length - 1;
+      setSelectedBundles(prev => new Set([...prev, newBundleIdx]));
+      setExpandedBundles(prev => new Set([...prev, newBundleIdx]));
+    }
+
+    setData(newData);
+    setDragSource(null);
+  }, [data, dragSource, itemEdits, bundleItemEdits, selectedItems, itemBundleAssignment, resolveItem]);
+
 
   const [refineOpen, setRefineOpen] = useState(false);
   const [refineInstruction, setRefineInstruction] = useState("");
@@ -846,7 +910,23 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
             </div>
           )}
 
-          {/* Standalone Context Items section */}
+          {/* Create New Bundle drop zone */}
+          {dragSource && (
+            <div
+              onDragOver={(e) => handleDragOver(e, "create-bundle")}
+              onDragLeave={(e) => handleDragLeave(e, "create-bundle")}
+              onDrop={handleDropCreateBundle}
+              className={`rounded-lg border-2 border-dashed p-4 flex items-center justify-center gap-2 transition-all ${
+                dropTarget === "create-bundle"
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border/50 text-muted-foreground"
+              }`}
+            >
+              <FolderPlus className={`h-4 w-4 ${dropTarget === "create-bundle" ? "text-primary" : ""}`} />
+              <span className="text-xs font-medium">Drop here to create a new bundle</span>
+            </div>
+          )}
+
           {(data.context_items.length > 0 || dragSource?.type === "bundle") && (
             <div
               className={`space-y-2 rounded-lg p-2 -m-2 transition-colors ${
