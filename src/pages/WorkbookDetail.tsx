@@ -18,7 +18,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
 import { WorkbookTasks, TaskInlineIndicator } from "@/components/workbooks/WorkbookTasks";
-import { ListTodo } from "lucide-react";
+import { WorkbookChats, ChatSidebarPanel } from "@/components/workbooks/WorkbookChats";
+import { WorkbookMembers, MembersSidebarPanel } from "@/components/workbooks/WorkbookMembers";
+import { WorkbookAgentConfig, AgentsSidebarPanel } from "@/components/workbooks/WorkbookAgentConfig";
+import { ListTodo, Bot } from "lucide-react";
 
 // ── MOCK PLAYBOOKS (from old Launchpad) ──
 interface Playbook {
@@ -295,6 +298,7 @@ export default function WorkbookDetailPage() {
               <div className="rounded-md bg-secondary/50 px-3 py-2 text-xs space-y-1">
                 <p className="font-medium">{wb.title}</p>
                 {wb.strategicOutcome && <p className="text-muted-foreground">🎯 {wb.strategicOutcome}</p>}
+                {wb.description && <p className="text-muted-foreground text-[10px]">{wb.description}</p>}
               </div>
             </div>
 
@@ -331,7 +335,7 @@ export default function WorkbookDetailPage() {
             )}
 
             {/* Knowledge sources */}
-            <div className="space-y-2">
+            <div className="space-y-2 mb-4">
               <p className="text-[11px] font-medium text-muted-foreground">Knowledge Sources</p>
               <div className="space-y-1">
                 {["Personal Profile (CV)", "Goals & KPIs", "Working Preferences", "Workbook Context"].map((src) => (
@@ -341,6 +345,19 @@ export default function WorkbookDetailPage() {
                 ))}
               </div>
             </div>
+
+            {/* Team members */}
+            <div className="mb-4">
+              <MembersSidebarPanel workbookId={id ?? "1"} />
+            </div>
+
+            {/* Chat threads */}
+            <div className="mb-4">
+              <ChatSidebarPanel workbookId={id ?? "1"} />
+            </div>
+
+            {/* Active agents */}
+            <AgentsSidebarPanel workbookId={id ?? "1"} />
           </div>
         </div>
       </div>
@@ -437,6 +454,13 @@ export default function WorkbookDetailPage() {
                 </div>
               </>
             )}
+
+            {/* Team & Chats & Agents */}
+            <div className="mt-5 space-y-4">
+              <MembersSidebarPanel workbookId={id ?? "1"} />
+              <ChatSidebarPanel workbookId={id ?? "1"} />
+              <AgentsSidebarPanel workbookId={id ?? "1"} />
+            </div>
           </div>
         </div>
       </div>
@@ -470,6 +494,8 @@ export default function WorkbookDetailPage() {
         <TabsList>
           <TabsTrigger value="protocols">Protocols</TabsTrigger>
           <TabsTrigger value="tasks"><ListTodo className="mr-1.5 h-3.5 w-3.5" />Tasks</TabsTrigger>
+          <TabsTrigger value="chats"><MessageSquare className="mr-1.5 h-3.5 w-3.5" />Chats</TabsTrigger>
+          <TabsTrigger value="members"><Users className="mr-1.5 h-3.5 w-3.5" />Members</TabsTrigger>
           {showAnalytics && <TabsTrigger value="analytics"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Analytics</TabsTrigger>}
           {showSettings && <TabsTrigger value="settings"><Settings className="mr-1.5 h-3.5 w-3.5" />Settings</TabsTrigger>}
         </TabsList>
@@ -514,6 +540,14 @@ export default function WorkbookDetailPage() {
           <WorkbookTasks workbookId={id ?? "1"} />
         </TabsContent>
 
+        <TabsContent value="chats" className="mt-4">
+          <WorkbookChats workbookId={id ?? "1"} />
+        </TabsContent>
+
+        <TabsContent value="members" className="mt-4">
+          <WorkbookMembers workbookId={id ?? "1"} />
+        </TabsContent>
+
         {showAnalytics && (
           <TabsContent value="analytics" className="mt-4 space-y-6">
             <WorkbookAnalytics workbookId={id ?? "1"} />
@@ -522,6 +556,7 @@ export default function WorkbookDetailPage() {
 
         {showSettings && (
           <TabsContent value="settings" className="mt-4 space-y-6">
+            <WorkbookAgentConfig workbookId={id ?? "1"} />
             <WorkbookSettings workbookId={id ?? "1"} />
           </TabsContent>
         )}
