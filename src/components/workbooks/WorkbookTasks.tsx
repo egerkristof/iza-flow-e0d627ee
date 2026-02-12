@@ -259,6 +259,7 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [expandedTasks, setExpandedTasks] = useState<Set<string>>(new Set());
+  const [highlightedTaskId, setHighlightedTaskId] = useState<string | null>(null);
   const [createDialog, setCreateDialog] = useState(false);
   const [parentForNew, setParentForNew] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState("");
@@ -277,14 +278,7 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
     });
   };
 
-  // Auto-focus a task when navigated from graph
-  useEffect(() => {
-    if (focusTaskId) {
-      setExpandedTasks(prev => new Set([...prev, focusTaskId]));
-      openSubchat(focusTaskId);
-      onFocusTaskHandled?.();
-    }
-  }, [focusTaskId]);
+  // (focus effect moved below useQuery)
 
   const closeSubchat = (taskId: string) => {
     setActiveSubchats(prev => {
@@ -316,6 +310,34 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
       return (data as unknown as WorkbookTask[]);
     },
   });
+
+  // Auto-focus a task when navigated from graph
+  useEffect(() => {
+    if (focusTaskId && tasks.length > 0) {
+      const parentChain: string[] = [];
+      const findParents = (id: string) => {
+        const t = tasks.find(tk => tk.id === id);
+        if (t?.parent_task_id) {
+          parentChain.push(t.parent_task_id);
+          findParents(t.parent_task_id);
+        }
+      };
+      findParents(focusTaskId);
+      
+      setExpandedTasks(prev => {
+        const next = new Set(prev);
+        parentChain.forEach(id => next.add(id));
+        next.add(focusTaskId);
+        return next;
+      });
+      openSubchat(focusTaskId);
+      setHighlightedTaskId(focusTaskId);
+      
+      const timer = setTimeout(() => setHighlightedTaskId(null), 2500);
+      onFocusTaskHandled?.();
+      return () => clearTimeout(timer);
+    }
+  }, [focusTaskId, tasks]);
 
   // Realtime subscription for live task updates
   useEffect(() => {
@@ -426,10 +448,23 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
     const subchatState = activeSubchats.get(task.id);
     const hasSubchat = !!subchatState;
 
+    const isHighlighted = highlightedTaskId === task.id;
+
     return (
       <div key={task.id}>
         <div
-          className={`group flex items-center gap-2 rounded-md px-3 py-2 hover:bg-secondary/30 transition-colors ${hasSubchat ? "bg-info/5" : ""}`}
+          ref={el => {
+            if (isHighlighted && el) {
+              setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
+            }
+          }}
+          className={`group flex items-center gap-2 rounded-md px-3 py-2 transition-all ${
+            isHighlighted
+              ? "bg-primary/15 ring-2 ring-primary/40 animate-pulse"
+              : hasSubchat
+                ? "bg-info/5 hover:bg-secondary/30"
+                : "hover:bg-secondary/30"
+          }`}
           style={{ paddingLeft: `${12 + depth * 24}px` }}
         >
           {hasChildren ? (
