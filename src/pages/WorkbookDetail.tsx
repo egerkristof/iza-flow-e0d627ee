@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   Lock, Unlock, Play, ChevronRight, ChevronLeft, FileText, Zap, Target,
   Search as SearchIcon, BarChart, Users, MessageSquare, Settings, TrendingUp,
+  GripVertical, ChevronUp, ChevronDown as ChevronDownIcon, Plus, X, Shield, AlertTriangle, Package,
 } from "lucide-react";
 import { AreaChart, Area, BarChart as ReBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -202,12 +205,8 @@ export default function WorkbookDetailPage() {
         )}
 
         {showSettings && (
-          <TabsContent value="settings" className="mt-4">
-            <div className="rounded-lg border border-border/50 bg-card p-8 text-center">
-              <Settings className="mx-auto h-8 w-8 text-muted-foreground/50 mb-3" />
-              <h3 className="font-medium mb-1">Workbook Configuration</h3>
-              <p className="text-sm text-muted-foreground">Bundle assignments, playbook ordering, and context overrides — visible to Process Owners only.</p>
-            </div>
+          <TabsContent value="settings" className="mt-4 space-y-6">
+            <WorkbookSettings workbookId={id ?? "1"} />
           </TabsContent>
         )}
       </Tabs>
@@ -330,6 +329,163 @@ function WorkbookAnalytics({ workbookId }: { workbookId: string }) {
             </PieChart>
           </ResponsiveContainer>
         </div>
+      </div>
+    </>
+  );
+}
+
+// ── SETTINGS COMPONENT (Process Owners only) ──
+
+const MOCK_BUNDLES = [
+  { id: "b1", title: "Presales Essentials", scope: "domain", health: 92, assigned: true },
+  { id: "b2", title: "Client Success Pack", scope: "org", health: 87, assigned: true },
+  { id: "b3", title: "Competitive Intel v2", scope: "domain", health: 76, assigned: false },
+  { id: "b4", title: "Deal Desk Toolkit", scope: "org", health: 95, assigned: false },
+  { id: "b5", title: "Legal & Compliance", scope: "org", health: 64, assigned: false },
+];
+
+const MOCK_OVERRIDES = [
+  { id: "o1", title: "Skip competitor mention in proposals", action: "BLOCK" as const, scope: "workbook", active: true },
+  { id: "o2", title: "Use metric format: EU (comma decimal)", action: "OVERRIDE" as const, scope: "workbook", active: true },
+  { id: "o3", title: "Include NDA clause in all outputs", action: "APPEND" as const, scope: "workbook", active: false },
+];
+
+function WorkbookSettings({ workbookId }: { workbookId: string }) {
+  const [playbooks, setPlaybooks] = useState(() =>
+    MOCK_PLAYBOOKS.map((pb, i) => ({ ...pb, order: i, enabled: i < 4 }))
+  );
+  const [bundles, setBundles] = useState(MOCK_BUNDLES);
+  const [overrides, setOverrides] = useState(MOCK_OVERRIDES);
+
+  const movePlaybook = (index: number, dir: -1 | 1) => {
+    const target = index + dir;
+    if (target < 0 || target >= playbooks.length) return;
+    const next = [...playbooks];
+    [next[index], next[target]] = [next[target], next[index]];
+    setPlaybooks(next.map((p, i) => ({ ...p, order: i })));
+  };
+
+  const toggleBundle = (id: string) => {
+    setBundles((prev) => prev.map((b) => b.id === id ? { ...b, assigned: !b.assigned } : b));
+  };
+
+  const toggleOverride = (id: string) => {
+    setOverrides((prev) => prev.map((o) => o.id === id ? { ...o, active: !o.active } : o));
+  };
+
+  const actionColor = (action: string) => {
+    switch (action) {
+      case "BLOCK": return "text-destructive border-destructive/30";
+      case "OVERRIDE": return "text-yellow-400 border-yellow-400/30";
+      case "APPEND": return "text-green-400 border-green-400/30";
+      default: return "";
+    }
+  };
+
+  return (
+    <>
+      {/* ── Bundle Assignments ── */}
+      <div className="rounded-lg border border-border/50 bg-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-sm font-semibold flex items-center gap-2">
+              <Package className="h-4 w-4 text-primary" /> Bundle Assignments
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5">Attach or detach capability bundles from this workbook.</p>
+          </div>
+          <Badge variant="outline" className="text-xs">{bundles.filter(b => b.assigned).length} active</Badge>
+        </div>
+        <div className="space-y-2">
+          {bundles.map((b) => (
+            <div key={b.id} className={`flex items-center justify-between rounded-md border px-4 py-3 transition-colors ${b.assigned ? "border-primary/20 bg-primary/5" : "border-border/50 bg-muted/20"}`}>
+              <div className="flex items-center gap-3 min-w-0">
+                <Package className={`h-4 w-4 shrink-0 ${b.assigned ? "text-primary" : "text-muted-foreground"}`} />
+                <div className="min-w-0">
+                  <p className="text-sm font-medium">{b.title}</p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <Badge variant="outline" className="text-[10px]">{b.scope}</Badge>
+                    <span className={`text-[10px] ${b.health >= 80 ? "text-green-400" : b.health >= 60 ? "text-yellow-400" : "text-destructive"}`}>
+                      Health: {b.health}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <Switch checked={b.assigned} onCheckedChange={() => toggleBundle(b.id)} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Playbook Ordering ── */}
+      <div className="rounded-lg border border-border/50 bg-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-sm font-semibold flex items-center gap-2">
+              <FileText className="h-4 w-4 text-primary" /> Playbook Ordering
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5">Reorder and enable/disable protocols shown to operators.</p>
+          </div>
+        </div>
+        <div className="space-y-1.5">
+          {playbooks.map((pb, i) => (
+            <div key={pb.id} className={`flex items-center gap-2 rounded-md border px-3 py-2.5 transition-colors ${pb.enabled ? "border-border/50 bg-muted/20" : "border-border/30 bg-muted/10 opacity-60"}`}>
+              <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+              <div className="flex items-center gap-1 shrink-0">
+                <button onClick={() => movePlaybook(i, -1)} disabled={i === 0} className="p-0.5 rounded hover:bg-accent disabled:opacity-30">
+                  <ChevronUp className="h-3 w-3" />
+                </button>
+                <button onClick={() => movePlaybook(i, 1)} disabled={i === playbooks.length - 1} className="p-0.5 rounded hover:bg-accent disabled:opacity-30">
+                  <ChevronDownIcon className="h-3 w-3" />
+                </button>
+              </div>
+              <span className="text-xs text-muted-foreground w-5 text-center">{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <span className="text-sm font-medium">{pb.title}</span>
+                <span className="text-xs text-muted-foreground ml-2">{pb.subtitle}</span>
+              </div>
+              <Badge variant="outline" className="text-[10px] shrink-0">{pb.steps.length} steps</Badge>
+              <Switch
+                checked={pb.enabled}
+                onCheckedChange={(checked) => setPlaybooks((prev) => prev.map((p) => p.id === pb.id ? { ...p, enabled: checked } : p))}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Context Overrides ── */}
+      <div className="rounded-lg border border-border/50 bg-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-sm font-semibold flex items-center gap-2">
+              <Shield className="h-4 w-4 text-primary" /> Context Overrides
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5">Workbook-level rules that override inherited context behavior.</p>
+          </div>
+          <Badge variant="outline" className="text-xs">{overrides.filter(o => o.active).length} active</Badge>
+        </div>
+        <div className="space-y-2">
+          {overrides.map((o) => (
+            <div key={o.id} className={`flex items-center justify-between rounded-md border px-4 py-3 ${o.active ? "border-border/50 bg-muted/20" : "border-border/30 bg-muted/10 opacity-60"}`}>
+              <div className="flex items-center gap-3 min-w-0">
+                {o.action === "BLOCK" ? <AlertTriangle className="h-4 w-4 text-destructive shrink-0" /> :
+                 o.action === "OVERRIDE" ? <Zap className="h-4 w-4 text-yellow-400 shrink-0" /> :
+                 <Plus className="h-4 w-4 text-green-400 shrink-0" />}
+                <div className="min-w-0">
+                  <p className="text-sm font-medium">{o.title}</p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <Badge variant="outline" className={`text-[10px] ${actionColor(o.action)}`}>{o.action}</Badge>
+                    <Badge variant="outline" className="text-[10px]">{o.scope}</Badge>
+                  </div>
+                </div>
+              </div>
+              <Switch checked={o.active} onCheckedChange={() => toggleOverride(o.id)} />
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
+          <AlertTriangle className="h-3 w-3" /> Overrides take precedence over inherited bundle and org-level context.
+        </p>
       </div>
     </>
   );
