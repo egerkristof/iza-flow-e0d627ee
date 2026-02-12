@@ -11,69 +11,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import {
+  type ExtractionResult,
+  type ExtractedPreference,
+  type ExtractedContextItem,
+  type ExtractedBundle,
+  type ImportCopilotProps,
+  type ContextCategory,
+  CONTEXT_CATEGORIES,
+  CATEGORY_COLORS,
+  PREFERENCE_KEY_LABELS,
+} from "@/lib/knowledge-schema";
 
-interface ExtractedPreference {
-  preference_key: string;
-  preference_value: string;
-  condition_label?: string;
-}
-
-interface ExtractedContextItem {
-  title: string;
-  content: string;
-  category: "KNOWLEDGE" | "RESEARCH" | "DIRECTIVE" | "PRINCIPLE" | "PROCEDURE" | "PLAYBOOK" | "PREFERENCE";
-}
-
-interface ExtractedBundle {
-  title: string;
-  description: string;
-  scope_suggestion?: "personal" | "team" | "organization";
-  items: ExtractedContextItem[];
-}
-
-interface ExtractionResult {
-  analysis_notes?: string;
-  preferences: ExtractedPreference[];
-  context_items: ExtractedContextItem[];
-  bundles?: ExtractedBundle[];
-}
-
-interface Props {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  data: ExtractionResult | null;
-  documentName: string;
-}
-
-const KEY_LABELS: Record<string, string> = {
-  tone: "Tone & Voice",
-  communication_style: "Communication Style",
-  response_depth: "Response Depth",
-  focus_areas: "Focus Areas",
-  excluded_topics: "Topics to Skip",
-  preferred_frameworks: "Preferred Frameworks",
-  output_format: "Output Format",
-  principles: "Principles",
-  prohibitions: "Prohibitions",
-  expertise: "Expertise",
-  past_experiences: "Past Experiences",
+const SOURCE_TYPE_LABELS: Record<string, string> = {
+  document: "Document",
+  chat: "Chat",
+  task: "Task",
+  research: "Research",
+  manual: "Manual",
+  loom: "Knowledge Loom",
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-  KNOWLEDGE: "bg-blue-500/10 text-blue-400 border-blue-500/30",
-  RESEARCH: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
-  DIRECTIVE: "bg-amber-500/10 text-amber-400 border-amber-500/30",
-  PRINCIPLE: "bg-purple-500/10 text-purple-400 border-purple-500/30",
-  PROCEDURE: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
-  PLAYBOOK: "bg-orange-500/10 text-orange-400 border-orange-500/30",
-  PREFERENCE: "bg-pink-500/10 text-pink-400 border-pink-500/30",
-};
-
-const ALL_CATEGORIES: ExtractedContextItem["category"][] = [
-  "KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE", "PLAYBOOK", "PREFERENCE",
-];
-
-export function ExtractionReviewDialog({ open, onOpenChange, data, documentName }: Props) {
+export function ImportCopilotDialog({ open, onOpenChange, data, sourceName, sourceType }: ImportCopilotProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const qc = useQueryClient();
@@ -83,11 +42,8 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
   const [expandedBundles, setExpandedBundles] = useState<Set<number>>(new Set());
   const [itemBundleAssignment, setItemBundleAssignment] = useState<Record<number, string>>({});
 
-  // Editable overrides for standalone items: index → partial overrides
   const [itemEdits, setItemEdits] = useState<Record<number, Partial<ExtractedContextItem>>>({});
-  // Editable overrides for bundle items: "bundleIdx-itemIdx" → partial overrides
   const [bundleItemEdits, setBundleItemEdits] = useState<Record<string, Partial<ExtractedContextItem>>>({});
-  // Which item is currently being edited: "standalone-{i}" or "bundle-{bi}-{ji}"
   const [editingKey, setEditingKey] = useState<string | null>(null);
 
   const { data: existingBundles = [] } = useQuery({
@@ -104,7 +60,6 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
     },
   });
 
-  // Resolve an item with edits applied
   const resolveItem = (original: ExtractedContextItem, edits?: Partial<ExtractedContextItem>): ExtractedContextItem => ({
     ...original,
     ...edits,
@@ -157,7 +112,6 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
     mutationFn: async () => {
       if (!user || !data) return;
 
-      // Save selected preferences
       const prefsToSave = data.preferences.filter((_, i) => selectedPrefs.has(i));
       if (prefsToSave.length > 0) {
         const { error } = await supabase.from("working_preferences").insert(
@@ -166,7 +120,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
             preference_key: p.preference_key,
             preference_value: p.preference_value,
             condition_label: p.condition_label || null,
-            description: `Extracted from ${documentName}`,
+            description: `Extracted from ${sourceType}: ${sourceName}`,
             scope_type: "global",
           }))
         );
@@ -184,7 +138,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
             owner_id: user.id,
             title: bundle.title,
             description: bundle.description,
-            scope_level: "draft",
+            scope_level: bundle.scope_suggestion || "draft",
           })
           .select("id")
           .single();
@@ -209,7 +163,6 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
         }
       }
 
-      // Save standalone items with edits applied
       const itemsToSave = data.context_items
         .map((ci, i) => ({ ci, i }))
         .filter(({ i }) => selectedItems.has(i));
@@ -248,7 +201,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
       if (selectedPrefs.size > 0) parts.push(`${selectedPrefs.size} preference${selectedPrefs.size !== 1 ? "s" : ""}`);
       if (selectedItems.size > 0) parts.push(`${selectedItems.size} context item${selectedItems.size !== 1 ? "s" : ""}`);
       if (selectedBundles.size > 0) parts.push(`${selectedBundles.size} bundle${selectedBundles.size !== 1 ? "s" : ""}`);
-      toast({ title: "Extraction saved", description: `${parts.join(", ")} created.` });
+      toast({ title: "Import complete", description: `${parts.join(", ")} added to your knowledge graph.` });
       onOpenChange(false);
     },
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
@@ -263,7 +216,6 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
     ([idx, val]) => selectedItems.has(Number(idx)) && val && val !== "none"
   ).length;
 
-  // Inline editable item renderer
   const renderEditableItem = (
     item: ExtractedContextItem,
     edits: Partial<ExtractedContextItem> | undefined,
@@ -294,7 +246,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {ALL_CATEGORIES.map(c => (
+                {CONTEXT_CATEGORIES.map(c => (
                   <SelectItem key={c} value={c} className="text-xs">{c}</SelectItem>
                 ))}
               </SelectContent>
@@ -344,15 +296,18 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
     );
   };
 
+  const sourceLabel = SOURCE_TYPE_LABELS[sourceType] || sourceType;
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-2xl max-h-[85vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="text-base flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
-            Review Extracted Items — {documentName}
+            Import Copilot — {sourceName}
           </DialogTitle>
           <p className="text-xs text-muted-foreground mt-1">
+            <Badge variant="secondary" className="text-[9px] mr-1.5">{sourceLabel}</Badge>
             AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles.
             Select what to keep — hover any item to edit.
           </p>
@@ -369,6 +324,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
               </div>
             </div>
           )}
+
           {/* Preferences section */}
           {data.preferences.length > 0 && (
             <div className="space-y-2">
@@ -386,7 +342,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <Badge variant="secondary" className="text-[10px]">
-                        {KEY_LABELS[p.preference_key] ?? p.preference_key}
+                        {PREFERENCE_KEY_LABELS[p.preference_key as keyof typeof PREFERENCE_KEY_LABELS] ?? p.preference_key}
                       </Badge>
                       {p.condition_label && (
                         <Badge variant="outline" className="text-[10px] border-primary/30 text-primary">
@@ -494,7 +450,6 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                     )}
                   </div>
 
-                  {/* Bundle assignment dropdown */}
                   {selectedItems.has(i) && (existingBundles.length > 0 || bundles.length > 0) && (
                     <div className="mt-2 ml-8 flex items-center gap-2">
                       <FolderPlus className="h-3 w-3 text-muted-foreground shrink-0" />
@@ -568,5 +523,3 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
     </Dialog>
   );
 }
-
-export type { ExtractionResult };
