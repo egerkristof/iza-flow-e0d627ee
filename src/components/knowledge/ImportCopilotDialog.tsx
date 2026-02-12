@@ -1,4 +1,4 @@
-import { useState, useCallback, type DragEvent } from "react";
+import { useState, useCallback, useEffect, type DragEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -40,7 +40,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
   // Mutable extraction data — updated when AI refines items
   const [data, setData] = useState<ExtractionResult | null>(initialData);
   // Sync when parent passes new data
-  useState(() => { setData(initialData); });
+  useEffect(() => { setData(initialData); }, [initialData]);
 
   const [selectedPrefs, setSelectedPrefs] = useState<Set<number>>(new Set());
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
