@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -32,10 +32,16 @@ const SOURCE_TYPE_LABELS: Record<string, string> = {
   loom: "Knowledge Loom",
 };
 
-export function ImportCopilotDialog({ open, onOpenChange, data, sourceName, sourceType }: ImportCopilotProps) {
+export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sourceName, sourceType }: ImportCopilotProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const qc = useQueryClient();
+
+  // Mutable extraction data — updated when AI refines items
+  const [data, setData] = useState<ExtractionResult | null>(initialData);
+  // Sync when parent passes new data
+  useState(() => { setData(initialData); });
+
   const [selectedPrefs, setSelectedPrefs] = useState<Set<number>>(new Set());
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const [selectedBundles, setSelectedBundles] = useState<Set<number>>(new Set());
@@ -45,6 +51,13 @@ export function ImportCopilotDialog({ open, onOpenChange, data, sourceName, sour
   const [itemEdits, setItemEdits] = useState<Record<number, Partial<ExtractedContextItem>>>({});
   const [bundleItemEdits, setBundleItemEdits] = useState<Record<string, Partial<ExtractedContextItem>>>({});
   const [editingKey, setEditingKey] = useState<string | null>(null);
+
+  // Refine copilot state
+  const [refineOpen, setRefineOpen] = useState(false);
+  const [refineInstruction, setRefineInstruction] = useState("");
+  const [refineScope, setRefineScope] = useState<"all" | "selected">("selected");
+  const [refining, setRefining] = useState(false);
+  const [refineNotes, setRefineNotes] = useState<string | null>(null);
 
   const { data: existingBundles = [] } = useQuery({
     queryKey: ["bundles", user?.id],
@@ -65,21 +78,27 @@ export function ImportCopilotDialog({ open, onOpenChange, data, sourceName, sour
     ...edits,
   });
 
-  const initSelections = () => {
-    if (data) {
-      setSelectedPrefs(new Set(data.preferences.map((_, i) => i)));
-      setSelectedItems(new Set(data.context_items.map((_, i) => i)));
-      setSelectedBundles(new Set((data.bundles || []).map((_, i) => i)));
+  const initSelections = (d: ExtractionResult | null = data) => {
+    if (d) {
+      setSelectedPrefs(new Set(d.preferences.map((_, i) => i)));
+      setSelectedItems(new Set(d.context_items.map((_, i) => i)));
+      setSelectedBundles(new Set((d.bundles || []).map((_, i) => i)));
       setExpandedBundles(new Set());
       setItemBundleAssignment({});
       setItemEdits({});
       setBundleItemEdits({});
       setEditingKey(null);
+      setRefineOpen(false);
+      setRefineInstruction("");
+      setRefineNotes(null);
     }
   };
 
   const handleOpenChange = (v: boolean) => {
-    if (v && data) initSelections();
+    if (v && initialData) {
+      setData(initialData);
+      initSelections(initialData);
+    }
     onOpenChange(v);
   };
 
@@ -106,6 +125,133 @@ export function ImportCopilotDialog({ open, onOpenChange, data, sourceName, sour
   const updateBundleItemEdit = (bundleIdx: number, itemIdx: number, field: keyof ExtractedContextItem, value: string) => {
     const key = `${bundleIdx}-${itemIdx}`;
     setBundleItemEdits(prev => ({ ...prev, [key]: { ...prev[key], [field]: value } }));
+  };
+
+  // ── Refine handler ──────────────────────────────────────────────────────
+  const handleRefine = async () => {
+    if (!data || !refineInstruction.trim()) return;
+    setRefining(true);
+    try {
+      const itemsToRefine: any[] = [];
+
+      if (refineScope === "all" || selectedPrefs.size > 0) {
+        const prefIndices = refineScope === "all"
+          ? data.preferences.map((_, i) => i)
+          : [...selectedPrefs];
+        for (const i of prefIndices) {
+          const p = data.preferences[i];
+          if (!p) continue;
+          itemsToRefine.push({
+            type: "preference", title: p.preference_key, content: p.preference_value,
+            category: "PREFERENCE", preference_key: p.preference_key,
+            condition_label: p.condition_label, original_index: i,
+          });
+        }
+      }
+
+      if (refineScope === "all" || selectedItems.size > 0) {
+        const itemIndices = refineScope === "all"
+          ? data.context_items.map((_, i) => i) : [...selectedItems];
+        for (const i of itemIndices) {
+          const ci = data.context_items[i];
+          if (!ci) continue;
+          const resolved = resolveItem(ci, itemEdits[i]);
+          itemsToRefine.push({
+            type: "context_item", title: resolved.title, content: resolved.content,
+            category: resolved.category, original_index: i,
+          });
+        }
+      }
+
+      const currentBundles = data.bundles || [];
+      if (refineScope === "all" || selectedBundles.size > 0) {
+        const bundleIndices = refineScope === "all"
+          ? currentBundles.map((_, i) => i) : [...selectedBundles];
+        for (const bi of bundleIndices) {
+          const bundle = currentBundles[bi];
+          if (!bundle) continue;
+          for (const [ji, item] of bundle.items.entries()) {
+            const resolved = resolveItem(item, bundleItemEdits[`${bi}-${ji}`]);
+            itemsToRefine.push({
+              type: "bundle_item", title: resolved.title, content: resolved.content,
+              category: resolved.category, original_index: ji,
+              bundle_index: bi, bundle_item_index: ji,
+            });
+          }
+        }
+      }
+
+      if (itemsToRefine.length === 0) {
+        toast({ title: "Nothing to refine", description: "Select items first.", variant: "destructive" });
+        setRefining(false);
+        return;
+      }
+
+      const { data: result, error } = await supabase.functions.invoke("refine-extraction", {
+        body: { items: itemsToRefine, instruction: refineInstruction },
+      });
+      if (error) throw error;
+      if (result.error) throw new Error(result.error);
+
+      const refined = result.items || [];
+      const newPrefs = [...data.preferences];
+      const newContextItems = [...data.context_items];
+      const newBundles = [...(data.bundles || [])].map(b => ({ ...b, items: [...b.items] }));
+      const newItemEdits = { ...itemEdits };
+      const newBundleItemEdits = { ...bundleItemEdits };
+
+      for (const r of refined) {
+        if (r.type === "preference") {
+          if (r.original_index >= 0 && r.original_index < newPrefs.length) {
+            newPrefs[r.original_index] = {
+              preference_key: r.preference_key || r.title,
+              preference_value: r.content,
+              condition_label: r.condition_label,
+            };
+          } else {
+            newPrefs.push({ preference_key: r.preference_key || r.title, preference_value: r.content, condition_label: r.condition_label });
+          }
+        } else if (r.type === "context_item") {
+          if (r.original_index >= 0 && r.original_index < newContextItems.length) {
+            newContextItems[r.original_index] = { title: r.title, content: r.content, category: r.category };
+            delete newItemEdits[r.original_index];
+          } else {
+            newContextItems.push({ title: r.title, content: r.content, category: r.category });
+          }
+        } else if (r.type === "bundle_item") {
+          const bi = r.bundle_index ?? 0;
+          const ji = r.bundle_item_index ?? r.original_index ?? 0;
+          if (bi < newBundles.length && ji >= 0 && ji < newBundles[bi].items.length) {
+            newBundles[bi].items[ji] = { title: r.title, content: r.content, category: r.category };
+            delete newBundleItemEdits[`${bi}-${ji}`];
+          } else if (bi < newBundles.length) {
+            newBundles[bi].items.push({ title: r.title, content: r.content, category: r.category });
+          }
+        }
+      }
+
+      const newData: ExtractionResult = {
+        ...data,
+        preferences: newPrefs,
+        context_items: newContextItems,
+        bundles: newBundles,
+        analysis_notes: result.analysis_notes || data.analysis_notes,
+      };
+
+      setData(newData);
+      setItemEdits(newItemEdits);
+      setBundleItemEdits(newBundleItemEdits);
+      setRefineNotes(result.analysis_notes || null);
+      setSelectedPrefs(new Set(newPrefs.map((_, i) => i)));
+      setSelectedItems(new Set(newContextItems.map((_, i) => i)));
+      setSelectedBundles(new Set(newBundles.map((_, i) => i)));
+      setRefineInstruction("");
+      toast({ title: "Items refined", description: `${refined.length} item${refined.length !== 1 ? "s" : ""} updated by the Knowledge Architect.` });
+    } catch (err: any) {
+      toast({ title: "Refinement failed", description: err.message, variant: "destructive" });
+    } finally {
+      setRefining(false);
+    }
   };
 
   const saveMutation = useMutation({
@@ -497,6 +643,70 @@ export function ImportCopilotDialog({ open, onOpenChange, data, sourceName, sour
           )}
         </div>
 
+        {/* Refine Copilot Panel */}
+        <div className="border-t border-border/30">
+          {!refineOpen ? (
+            <button
+              onClick={() => setRefineOpen(true)}
+              className="w-full flex items-center gap-2 px-4 py-2.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>Ask the Knowledge Architect to refine items…</span>
+            </button>
+          ) : (
+            <div className="p-3 space-y-2.5">
+              {refineNotes && (
+                <div className="rounded border border-primary/20 bg-primary/5 p-2 flex gap-2">
+                  <Brain className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">{refineNotes}</p>
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <Select value={refineScope} onValueChange={(v: "all" | "selected") => setRefineScope(v)}>
+                  <SelectTrigger className="h-7 text-[11px] w-28 shrink-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="selected" className="text-xs">Selected</SelectItem>
+                    <SelectItem value="all" className="text-xs">All items</SelectItem>
+                  </SelectContent>
+                </Select>
+                <div className="relative flex-1">
+                  <MessageSquare className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                  <Input
+                    value={refineInstruction}
+                    onChange={e => setRefineInstruction(e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey && !refining) { e.preventDefault(); handleRefine(); } }}
+                    placeholder="e.g. 'Split vague items into specific ones', 'Recategorize research items', 'Make content more detailed'…"
+                    className="h-7 text-xs pl-7 pr-8"
+                    disabled={refining}
+                  />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-0.5 top-1/2 -translate-y-1/2 h-6 w-6"
+                    onClick={handleRefine}
+                    disabled={refining || !refineInstruction.trim()}
+                  >
+                    {refining ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3 text-primary" />}
+                  </Button>
+                </div>
+              </div>
+              <div className="flex gap-1.5 flex-wrap">
+                {["Make items more specific and detailed", "Split broad items into atomic pieces", "Recategorize — fix wrong categories", "Merge similar items together"].map(q => (
+                  <button
+                    key={q}
+                    onClick={() => setRefineInstruction(q)}
+                    className="text-[10px] px-2 py-1 rounded-full border border-border/50 hover:border-primary/40 hover:bg-primary/5 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         <DialogFooter className="border-t border-border/50 pt-3">
           <div className="flex items-center gap-2 flex-1 text-[10px] text-muted-foreground">
             {totalBundleItems > 0 && (
@@ -509,7 +719,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data, sourceName, sour
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
           <Button
             onClick={() => saveMutation.mutate()}
-            disabled={totalSelected === 0 || saveMutation.isPending}
+            disabled={totalSelected === 0 || saveMutation.isPending || refining}
             className="gap-1.5"
           >
             {saveMutation.isPending ? (
