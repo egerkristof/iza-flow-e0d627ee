@@ -105,6 +105,19 @@ export default function WorkbookDetailPage() {
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
   const [detectedIntents, setDetectedIntents] = useState<string[]>([]);
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("protocols");
+  const [focusTaskId, setFocusTaskId] = useState<string | null>(null);
+  const [focusChatId, setFocusChatId] = useState<string | null>(null);
+
+  const handleGraphNodeNavigate = useCallback((nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat") => {
+    if (nodeType === "task" || nodeType === "subtask") {
+      setFocusTaskId(nodeId);
+      setActiveTab("tasks");
+    } else if (nodeType === "chat") {
+      setFocusChatId(nodeId);
+      setActiveTab("chats");
+    }
+  }, []);
 
   const handleLock = (playbook: Playbook) => {
     setLockedPlaybook(playbook);
@@ -549,7 +562,7 @@ export default function WorkbookDetailPage() {
       <ContextStackViewer open={stackViewerOpen} onOpenChange={setStackViewerOpen} scope="workbook" workbookTitle={wb.title} />
 
       {/* Tabbed sections — role-filtered */}
-      <Tabs defaultValue="protocols" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList>
           <TabsTrigger value="protocols">Protocols</TabsTrigger>
           <TabsTrigger value="tasks"><ListTodo className="mr-1.5 h-3.5 w-3.5" />Tasks</TabsTrigger>
@@ -598,11 +611,11 @@ export default function WorkbookDetailPage() {
         </TabsContent>
 
         <TabsContent value="tasks" className="mt-4">
-          <WorkbookTasks workbookId={id ?? "1"} workbookTitle={wb.title} />
+          <WorkbookTasks workbookId={id ?? "1"} workbookTitle={wb.title} focusTaskId={focusTaskId} onFocusTaskHandled={() => setFocusTaskId(null)} />
         </TabsContent>
 
         <TabsContent value="chats" className="mt-4">
-          <WorkbookChats workbookId={id ?? "1"} />
+          <WorkbookChats workbookId={id ?? "1"} focusChatId={focusChatId} onFocusChatHandled={() => setFocusChatId(null)} />
         </TabsContent>
 
         <TabsContent value="members" className="mt-4">
@@ -614,7 +627,7 @@ export default function WorkbookDetailPage() {
         </TabsContent>
 
         <TabsContent value="graph" className="mt-4">
-          <WorkbookGraph workbookId={id ?? "1"} workbookTitle={wb.title} />
+          <WorkbookGraph workbookId={id ?? "1"} workbookTitle={wb.title} onNodeNavigate={handleGraphNodeNavigate} />
         </TabsContent>
 
         {showAnalytics && (

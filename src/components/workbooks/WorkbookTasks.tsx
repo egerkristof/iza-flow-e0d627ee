@@ -254,7 +254,7 @@ function TaskSubchat({ task, workbookId, workbookTitle, allTasks, onClose, onMin
   );
 }
 
-export function WorkbookTasks({ workbookId, workbookTitle }: { workbookId: string; workbookTitle?: string }) {
+export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusTaskHandled }: { workbookId: string; workbookTitle?: string; focusTaskId?: string | null; onFocusTaskHandled?: () => void }) {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -276,6 +276,15 @@ export function WorkbookTasks({ workbookId, workbookTitle }: { workbookId: strin
       return next;
     });
   };
+
+  // Auto-focus a task when navigated from graph
+  useEffect(() => {
+    if (focusTaskId) {
+      setExpandedTasks(prev => new Set([...prev, focusTaskId]));
+      openSubchat(focusTaskId);
+      onFocusTaskHandled?.();
+    }
+  }, [focusTaskId]);
 
   const closeSubchat = (taskId: string) => {
     setActiveSubchats(prev => {

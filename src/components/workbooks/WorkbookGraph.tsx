@@ -307,7 +307,7 @@ function GraphNodeElement({
 }
 
 // ── Main Component ──
-export function WorkbookGraph({ workbookId, workbookTitle }: { workbookId: string; workbookTitle: string }) {
+export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { workbookId: string; workbookTitle: string; onNodeNavigate?: (nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat") => void }) {
   const { user } = useAuth();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -516,9 +516,21 @@ export function WorkbookGraph({ workbookId, workbookTitle }: { workbookId: strin
                   <Badge variant="secondary" className="text-[9px] capitalize">{selectedInfo.priority}</Badge>
                 )}
               </div>
-              <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => setSelectedNode(null)}>
-                <Info className="h-3 w-3" />
-              </Button>
+              <div className="flex items-center gap-1">
+                {selectedInfo.type !== "workbook" && onNodeNavigate && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-6 text-[10px] gap-1"
+                    onClick={() => onNodeNavigate(selectedInfo.id, selectedInfo.type)}
+                  >
+                    Open {selectedInfo.type === "chat" ? "Chat" : "Subchat"} →
+                  </Button>
+                )}
+                <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => setSelectedNode(null)}>
+                  <Info className="h-3 w-3" />
+                </Button>
+              </div>
             </div>
             <div className="mt-1.5 text-[10px] text-muted-foreground">
               {edges.filter(e => e.from === selectedInfo.id).length} children · {edges.filter(e => e.to === selectedInfo.id).length} parent connections

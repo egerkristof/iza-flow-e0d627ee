@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MessageSquare, Plus, Users, User, X, Hash } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
@@ -48,7 +48,7 @@ const MOCK_MESSAGES: ChatMessage[] = [
   { id: "m5", sender: { name: "Sarah Chen", initials: "SC" }, content: "Updated the pricing section, can you review?", time: "10:45 AM", isOwn: false },
 ];
 
-export function WorkbookChats({ workbookId }: { workbookId: string }) {
+export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: { workbookId: string; focusChatId?: string | null; onFocusChatHandled?: () => void }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -60,6 +60,14 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
   const [newChatOpen, setNewChatOpen] = useState(false);
 
   const filtered = threads.filter(t => typeFilter === "all" || t.type === typeFilter);
+
+  // Auto-focus a chat when navigated from graph
+  useEffect(() => {
+    if (focusChatId) {
+      setActiveThread(focusChatId);
+      onFocusChatHandled?.();
+    }
+  }, [focusChatId]);
   const active = threads.find(t => t.id === activeThread);
 
   const handleSend = (extra?: { attachment?: WorkbookResource }) => {
