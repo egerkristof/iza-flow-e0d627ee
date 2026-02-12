@@ -54,6 +54,7 @@ export type Database = {
         Row: {
           action_type: Database["public"]["Enums"]["action_logic"]
           bundle_id: string | null
+          capture_status: string
           category: Database["public"]["Enums"]["context_category"]
           content_full: string
           created_at: string
@@ -65,6 +66,8 @@ export type Database = {
           owner_id: string
           priority: Database["public"]["Enums"]["priority_level"]
           security_level: Database["public"]["Enums"]["security_scope"]
+          source_chat_id: string | null
+          source_workbook_id: string | null
           target_reference_id: string | null
           title: string
           trigger_intent: string | null
@@ -74,6 +77,7 @@ export type Database = {
         Insert: {
           action_type?: Database["public"]["Enums"]["action_logic"]
           bundle_id?: string | null
+          capture_status?: string
           category?: Database["public"]["Enums"]["context_category"]
           content_full: string
           created_at?: string
@@ -85,6 +89,8 @@ export type Database = {
           owner_id: string
           priority?: Database["public"]["Enums"]["priority_level"]
           security_level?: Database["public"]["Enums"]["security_scope"]
+          source_chat_id?: string | null
+          source_workbook_id?: string | null
           target_reference_id?: string | null
           title: string
           trigger_intent?: string | null
@@ -94,6 +100,7 @@ export type Database = {
         Update: {
           action_type?: Database["public"]["Enums"]["action_logic"]
           bundle_id?: string | null
+          capture_status?: string
           category?: Database["public"]["Enums"]["context_category"]
           content_full?: string
           created_at?: string
@@ -105,13 +112,30 @@ export type Database = {
           owner_id?: string
           priority?: Database["public"]["Enums"]["priority_level"]
           security_level?: Database["public"]["Enums"]["security_scope"]
+          source_chat_id?: string | null
+          source_workbook_id?: string | null
           target_reference_id?: string | null
           title?: string
           trigger_intent?: string | null
           updated_at?: string
           version?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "context_items_source_chat_id_fkey"
+            columns: ["source_chat_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_chats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "context_items_source_workbook_id_fkey"
+            columns: ["source_workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       personal_documents: {
         Row: {

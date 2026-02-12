@@ -2,3 +2,6 @@ project_id = "pvceypmzgmqufrtjwwbw"
 
 [functions.extract-profile]
 verify_jwt = false
+
+[functions.classify-finding]
+verify_jwt = false
