@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, type DragEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -53,7 +53,144 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
   const [prefEdits, setPrefEdits] = useState<Record<number, Partial<ExtractedPreference>>>({});
   const [editingKey, setEditingKey] = useState<string | null>(null);
 
-  // Refine copilot state
+  const resolveItem = (original: ExtractedContextItem, edits?: Partial<ExtractedContextItem>): ExtractedContextItem => ({
+    ...original,
+    ...edits,
+  });
+
+  // Drag-and-drop state
+  const [dragSource, setDragSource] = useState<{ type: "standalone"; idx: number } | { type: "bundle"; bundleIdx: number; itemIdx: number } | null>(null);
+  const [dropTarget, setDropTarget] = useState<string | null>(null);
+
+  const handleDragStart = useCallback((e: DragEvent, source: typeof dragSource) => {
+    setDragSource(source);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", JSON.stringify(source));
+    // Make the drag image slightly transparent
+    if (e.currentTarget instanceof HTMLElement) {
+      e.currentTarget.style.opacity = "0.5";
+    }
+  }, []);
+
+  const handleDragEnd = useCallback((e: DragEvent) => {
+    if (e.currentTarget instanceof HTMLElement) {
+      e.currentTarget.style.opacity = "1";
+    }
+    setDragSource(null);
+    setDropTarget(null);
+  }, []);
+
+  const handleDragOver = useCallback((e: DragEvent, targetId: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setDropTarget(targetId);
+  }, []);
+
+  const handleDragLeave = useCallback((e: DragEvent, targetId: string) => {
+    // Only clear if we're actually leaving (not entering a child)
+    const relatedTarget = e.relatedTarget as HTMLElement | null;
+    if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
+      setDropTarget(prev => prev === targetId ? null : prev);
+    }
+  }, []);
+
+  const handleDropOnBundle = useCallback((e: DragEvent, targetBundleIdx: number) => {
+    e.preventDefault();
+    setDropTarget(null);
+    if (!data || !dragSource) return;
+
+    const newData = { ...data, context_items: [...data.context_items], bundles: (data.bundles || []).map(b => ({ ...b, items: [...b.items] })) };
+
+    let movedItem: ExtractedContextItem | null = null;
+
+    if (dragSource.type === "standalone") {
+      const idx = dragSource.idx;
+      movedItem = resolveItem(data.context_items[idx], itemEdits[idx]);
+      // Remove from standalone
+      newData.context_items.splice(idx, 1);
+      // Clean up edits & selections for indices that shifted
+      const newItemEdits: typeof itemEdits = {};
+      const newSelectedItems = new Set<number>();
+      const newAssignments: typeof itemBundleAssignment = {};
+      for (const [k, v] of Object.entries(itemEdits)) {
+        const ki = Number(k);
+        if (ki < idx) { newItemEdits[ki] = v; }
+        else if (ki > idx) { newItemEdits[ki - 1] = v; }
+      }
+      selectedItems.forEach(si => {
+        if (si < idx) newSelectedItems.add(si);
+        else if (si > idx) newSelectedItems.add(si - 1);
+      });
+      for (const [k, v] of Object.entries(itemBundleAssignment)) {
+        const ki = Number(k);
+        if (ki < idx) newAssignments[ki] = v;
+        else if (ki > idx) newAssignments[ki - 1] = v;
+      }
+      setItemEdits(newItemEdits);
+      setSelectedItems(newSelectedItems);
+      setItemBundleAssignment(newAssignments);
+    } else if (dragSource.type === "bundle") {
+      const { bundleIdx, itemIdx } = dragSource;
+      if (bundleIdx === targetBundleIdx) return; // same bundle, nothing to do
+      movedItem = resolveItem(data.bundles![bundleIdx].items[itemIdx], bundleItemEdits[`${bundleIdx}-${itemIdx}`]);
+      newData.bundles[bundleIdx].items.splice(itemIdx, 1);
+      // Clean up bundle item edits for shifted indices
+      const newBundleEdits: typeof bundleItemEdits = {};
+      for (const [k, v] of Object.entries(bundleItemEdits)) {
+        const [bi, ji] = k.split("-").map(Number);
+        if (bi === bundleIdx && ji > itemIdx) {
+          newBundleEdits[`${bi}-${ji - 1}`] = v;
+        } else if (bi === bundleIdx && ji < itemIdx) {
+          newBundleEdits[k] = v;
+        } else if (bi !== bundleIdx) {
+          newBundleEdits[k] = v;
+        }
+      }
+      setBundleItemEdits(newBundleEdits);
+    }
+
+    if (movedItem) {
+      newData.bundles[targetBundleIdx].items.push(movedItem);
+      setExpandedBundles(prev => new Set([...prev, targetBundleIdx]));
+    }
+
+    setData(newData);
+    setDragSource(null);
+  }, [data, dragSource, itemEdits, bundleItemEdits, selectedItems, itemBundleAssignment, resolveItem]);
+
+  const handleDropOnStandalone = useCallback((e: DragEvent) => {
+    e.preventDefault();
+    setDropTarget(null);
+    if (!data || !dragSource || dragSource.type !== "bundle") return;
+
+    const { bundleIdx, itemIdx } = dragSource;
+    const movedItem = resolveItem(data.bundles![bundleIdx].items[itemIdx], bundleItemEdits[`${bundleIdx}-${itemIdx}`]);
+
+    const newData = { ...data, context_items: [...data.context_items], bundles: (data.bundles || []).map(b => ({ ...b, items: [...b.items] })) };
+    newData.bundles[bundleIdx].items.splice(itemIdx, 1);
+    newData.context_items.push(movedItem);
+
+    // Clean up bundle item edits
+    const newBundleEdits: typeof bundleItemEdits = {};
+    for (const [k, v] of Object.entries(bundleItemEdits)) {
+      const [bi, ji] = k.split("-").map(Number);
+      if (bi === bundleIdx && ji > itemIdx) {
+        newBundleEdits[`${bi}-${ji - 1}`] = v;
+      } else if (bi === bundleIdx && ji < itemIdx) {
+        newBundleEdits[k] = v;
+      } else if (bi !== bundleIdx) {
+        newBundleEdits[k] = v;
+      }
+    }
+    setBundleItemEdits(newBundleEdits);
+
+    // Select the newly added standalone item
+    setSelectedItems(prev => new Set([...prev, newData.context_items.length - 1]));
+    setData(newData);
+    setDragSource(null);
+  }, [data, dragSource, bundleItemEdits, resolveItem]);
+
+
   const [refineOpen, setRefineOpen] = useState(false);
   const [refineInstruction, setRefineInstruction] = useState("");
   const [refineScope, setRefineScope] = useState<"all" | "selected">("selected");
@@ -74,10 +211,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     },
   });
 
-  const resolveItem = (original: ExtractedContextItem, edits?: Partial<ExtractedContextItem>): ExtractedContextItem => ({
-    ...original,
-    ...edits,
-  });
+  // resolveItem is declared earlier, before DnD handlers
 
   const initSelections = (d: ExtractionResult | null = data) => {
     if (d) {
@@ -565,11 +699,18 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
             <div className="space-y-2">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                 <Package className="h-3 w-3" /> Bundles ({bundles.length})
+                {dragSource?.type === "standalone" && (
+                  <span className="text-[10px] text-primary font-normal ml-1">↓ Drop items onto a bundle</span>
+                )}
               </h3>
               {bundles.map((bundle, i) => (
                 <div
                   key={i}
+                  onDragOver={(e) => handleDragOver(e, `bundle-${i}`)}
+                  onDragLeave={(e) => handleDragLeave(e, `bundle-${i}`)}
+                  onDrop={(e) => handleDropOnBundle(e, i)}
                   className={`rounded-md border transition-colors ${
+                    dropTarget === `bundle-${i}` ? "border-primary bg-primary/10 ring-2 ring-primary/20" :
                     selectedBundles.has(i) ? "border-primary/30 bg-primary/5" : "border-border/50 bg-muted/10 opacity-60"
                   }`}
                 >
@@ -612,8 +753,12 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
                       {bundle.items.map((item, j) => (
                         <div
                           key={j}
-                          className="rounded border border-border/30 bg-background/50 p-2.5"
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
+                          onDragEnd={handleDragEnd}
+                          className="rounded border border-border/30 bg-background/50 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
                         >
+                          <GripVertical className="h-3 w-3 text-muted-foreground/50 shrink-0 mt-1" />
                           {renderEditableItem(
                             item,
                             bundleItemEdits[`${i}-${j}`],
@@ -631,19 +776,33 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
           )}
 
           {/* Standalone Context Items section */}
-          {data.context_items.length > 0 && (
-            <div className="space-y-2">
+          {(data.context_items.length > 0 || dragSource?.type === "bundle") && (
+            <div
+              className={`space-y-2 rounded-lg p-2 -m-2 transition-colors ${
+                dropTarget === "standalone" ? "bg-primary/10 ring-2 ring-primary/20 ring-inset" : ""
+              }`}
+              onDragOver={(e) => handleDragOver(e, "standalone")}
+              onDragLeave={(e) => handleDragLeave(e, "standalone")}
+              onDrop={handleDropOnStandalone}
+            >
               <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                 <BookUp className="h-3 w-3" /> Standalone Context Items ({data.context_items.length})
+                {dragSource?.type === "bundle" && (
+                  <span className="text-[10px] text-primary font-normal ml-1">↓ Drop here to make standalone</span>
+                )}
               </h3>
               {data.context_items.map((ci, i) => (
                 <div
                   key={i}
-                  className={`rounded-md border p-3 transition-colors ${
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, { type: "standalone", idx: i })}
+                  onDragEnd={handleDragEnd}
+                  className={`rounded-md border p-3 transition-colors cursor-grab active:cursor-grabbing ${
                     selectedItems.has(i) ? "border-primary/30 bg-primary/5" : "border-border/50 bg-muted/10 opacity-60"
                   }`}
                 >
                   <div className="flex items-start gap-3">
+                    <GripVertical className="h-4 w-4 text-muted-foreground/50 shrink-0 mt-0.5" />
                     <Checkbox checked={selectedItems.has(i)} onCheckedChange={() => toggleItem(i)} className="mt-0.5" />
                     {renderEditableItem(
                       ci,
