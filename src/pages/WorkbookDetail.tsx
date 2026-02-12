@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   Lock, Unlock, Play, ChevronRight, ChevronLeft, FileText, Zap, Target,
   Search as SearchIcon, BarChart, Users, MessageSquare, Settings, TrendingUp,
-  GripVertical, ChevronUp, ChevronDown as ChevronDownIcon, Plus, X, Shield, AlertTriangle, Package,
+  GripVertical, ChevronUp, ChevronDown as ChevronDownIcon, Plus, X, Shield, AlertTriangle, Package, Trash2,
 } from "lucide-react";
 import { AreaChart, Area, BarChart as ReBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -356,6 +358,8 @@ function WorkbookSettings({ workbookId }: { workbookId: string }) {
   );
   const [bundles, setBundles] = useState(MOCK_BUNDLES);
   const [overrides, setOverrides] = useState(MOCK_OVERRIDES);
+  const [overrideDialogOpen, setOverrideDialogOpen] = useState(false);
+  const [newOverride, setNewOverride] = useState({ title: "", action: "BLOCK" as "BLOCK" | "OVERRIDE" | "APPEND", scope: "workbook", description: "" });
 
   const movePlaybook = (index: number, dir: -1 | 1) => {
     const target = index + dir;
@@ -371,6 +375,18 @@ function WorkbookSettings({ workbookId }: { workbookId: string }) {
 
   const toggleOverride = (id: string) => {
     setOverrides((prev) => prev.map((o) => o.id === id ? { ...o, active: !o.active } : o));
+  };
+
+  const deleteOverride = (id: string) => {
+    setOverrides((prev) => prev.filter((o) => o.id !== id));
+  };
+
+  const handleCreateOverride = () => {
+    if (!newOverride.title.trim()) return;
+    const id = `o${Date.now()}`;
+    setOverrides((prev) => [...prev, { id, title: newOverride.title.trim(), action: newOverride.action, scope: newOverride.scope, active: true }]);
+    setNewOverride({ title: "", action: "BLOCK", scope: "workbook", description: "" });
+    setOverrideDialogOpen(false);
   };
 
   const actionColor = (action: string) => {
@@ -462,7 +478,63 @@ function WorkbookSettings({ workbookId }: { workbookId: string }) {
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5">Workbook-level rules that override inherited context behavior.</p>
           </div>
-          <Badge variant="outline" className="text-xs">{overrides.filter(o => o.active).length} active</Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs">{overrides.filter(o => o.active).length} active</Badge>
+            <Dialog open={overrideDialogOpen} onOpenChange={setOverrideDialogOpen}>
+              <DialogTrigger asChild>
+                <Button size="sm" variant="outline" className="gap-1.5 text-xs"><Plus className="h-3 w-3" /> Create Override</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>New Context Override</DialogTitle>
+                  <p className="text-xs text-muted-foreground mt-1">Define a rule that overrides inherited context for this workbook.</p>
+                </DialogHeader>
+                <div className="space-y-4 pt-2">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-muted-foreground">Rule Description</label>
+                    <Textarea
+                      placeholder='e.g. "Skip competitor mention in proposals" or "Always include pricing disclaimer"'
+                      rows={2}
+                      value={newOverride.title}
+                      onChange={(e) => setNewOverride({ ...newOverride, title: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-muted-foreground">Action Type</label>
+                    <Select value={newOverride.action} onValueChange={(v) => setNewOverride({ ...newOverride, action: v as "BLOCK" | "OVERRIDE" | "APPEND" })}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="BLOCK">
+                          <span className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-destructive" /> BLOCK — Suppress matching context</span>
+                        </SelectItem>
+                        <SelectItem value="OVERRIDE">
+                          <span className="flex items-center gap-2"><Zap className="h-3 w-3 text-yellow-400" /> OVERRIDE — Replace matching context</span>
+                        </SelectItem>
+                        <SelectItem value="APPEND">
+                          <span className="flex items-center gap-2"><Plus className="h-3 w-3 text-green-400" /> APPEND — Add alongside existing context</span>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-muted-foreground">Scope</label>
+                    <Select value={newOverride.scope} onValueChange={(v) => setNewOverride({ ...newOverride, scope: v })}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="workbook">📗 This Workbook only</SelectItem>
+                        <SelectItem value="domain">🏢 Entire Domain</SelectItem>
+                        <SelectItem value="global">🌍 Global (all workbooks)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex justify-end gap-2 pt-2 border-t border-border/50">
+                    <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                    <Button onClick={handleCreateOverride} disabled={!newOverride.title.trim()}>Create Override</Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
         <div className="space-y-2">
           {overrides.map((o) => (
@@ -479,7 +551,12 @@ function WorkbookSettings({ workbookId }: { workbookId: string }) {
                   </div>
                 </div>
               </div>
-              <Switch checked={o.active} onCheckedChange={() => toggleOverride(o.id)} />
+              <div className="flex items-center gap-2 shrink-0">
+                <Switch checked={o.active} onCheckedChange={() => toggleOverride(o.id)} />
+                <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={() => deleteOverride(o.id)}>
+                  <Trash2 className="h-3.5 w-3.5" />
+                </Button>
+              </div>
             </div>
           ))}
         </div>
