@@ -212,7 +212,7 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workbook-resources", workbookId] });
-      toast({ title: "Resource added" });
+      toast({ title: "Item added to repository" });
       resetForm();
     },
     onError: (e: any) => {
@@ -234,7 +234,7 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workbook-resources", workbookId] });
-      toast({ title: "Resource removed" });
+      toast({ title: "Item removed from repository" });
     },
   });
 
@@ -261,12 +261,12 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
 
   const canSubmit = newType === "file" ? !!selectedFile : !!newTitle.trim();
 
-  if (isLoading) return <div className="text-sm text-muted-foreground p-4">Loading resources…</div>;
+  if (isLoading) return <div className="text-sm text-muted-foreground p-4">Loading repository…</div>;
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">{resources.length} resource{resources.length !== 1 ? "s" : ""}</p>
+        <p className="text-xs text-muted-foreground">{resources.length} item{resources.length !== 1 ? "s" : ""}</p>
         <div className="flex items-center gap-2">
           <Button
             size="sm"
@@ -277,14 +277,14 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
             <Upload className="h-3 w-3" /> Upload File
           </Button>
           <Button size="sm" className="gap-1.5 text-xs" onClick={() => setCreateOpen(true)}>
-            <Plus className="h-3 w-3" /> Add Resource
+            <Plus className="h-3 w-3" /> Add Item
           </Button>
         </div>
       </div>
 
       {resources.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border/50 p-8 text-center text-sm text-muted-foreground">
-          No resources yet. Add text, links, or upload files to this workbook.
+          No items yet. Add text, links, or upload files to this workbook's repository.
         </div>
       ) : (
         <div className="space-y-2">
@@ -298,8 +298,8 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
       <Dialog open={createOpen} onOpenChange={(open) => { if (!open) resetForm(); else setCreateOpen(true); }}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-base">
-              {newType === "file" ? "Upload File" : "Add Resource"}
+          <DialogTitle className="text-base">
+              {newType === "file" ? "Upload File" : "Add Repository Item"}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
@@ -345,7 +345,7 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
                 </div>
                 <input ref={fileInputRef} type="file" className="hidden" onChange={handleFileSelect} />
                 <Input
-                  placeholder="Resource title (optional, defaults to filename)"
+                  placeholder="Title (optional, defaults to filename)"
                   value={newTitle}
                   onChange={e => setNewTitle(e.target.value)}
                 />
@@ -364,7 +364,7 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
               </>
             ) : (
               <>
-                <Input placeholder="Resource title" value={newTitle} onChange={e => setNewTitle(e.target.value)} />
+                <Input placeholder="Item title" value={newTitle} onChange={e => setNewTitle(e.target.value)} />
                 {newType === "link" ? (
                   <Input placeholder="https://..." value={newContent} onChange={e => setNewContent(e.target.value)} />
                 ) : (
