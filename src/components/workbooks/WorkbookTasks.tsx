@@ -1,10 +1,11 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Plus, ChevronRight, ChevronDown, Circle, CheckCircle2, Clock, AlertTriangle,
-  XCircle, Settings2, Trash2, GripVertical,
+  XCircle, Settings2, Trash2, Play, X, MessageSquare, Zap, FileText, Send,
+  Minimize2, Maximize2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,10 +14,18 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 
 type TaskStatus = "todo" | "in_progress" | "blocked" | "done" | "cancelled";
 type TaskPriority = "low" | "medium" | "high" | "critical";
+
+interface ContextConfig {
+  inherit_preferences: boolean;
+  inherit_intents: boolean;
+  inherit_history_summary: boolean;
+  depth_limit: number;
+}
 
 interface WorkbookTask {
   id: string;
@@ -30,17 +39,19 @@ interface WorkbookTask {
   created_by: string;
   source_protocol_id: string | null;
   sort_order: number;
-  context_config: {
-    inherit_preferences: boolean;
-    inherit_intents: boolean;
-    inherit_history_summary: boolean;
-    depth_limit: number;
-  };
+  context_config: ContextConfig;
   due_date: string | null;
   completed_at: string | null;
   created_at: string;
   updated_at: string;
   children?: WorkbookTask[];
+}
+
+interface SubchatMessage {
+  id: string;
+  role: "user" | "assistant" | "system";
+  text: string;
+  timestamp: string;
 }
 
 const STATUS_CONFIG: Record<TaskStatus, { icon: React.ReactNode; label: string; color: string }> = {
@@ -73,6 +84,133 @@ function buildTree(tasks: WorkbookTask[]): WorkbookTask[] {
   return roots;
 }
 
+/** Generate context injection summary based on task's context_config */
+function buildContextSummary(task: WorkbookTask): string[] {
+  const items: string[] = [];
+  const cfg = task.context_config;
+  if (cfg.inherit_preferences) items.push("Working preferences inherited");
+  if (cfg.inherit_intents) items.push("Parent intents forwarded");
+  if (cfg.inherit_history_summary) items.push("Conversation history summary included");
+  items.push(`Depth limit: ${cfg.depth_limit} level${cfg.depth_limit > 1 ? "s" : ""}`);
+  return items;
+}
+
+// ── SUBCHAT COMPONENT ──
+function TaskSubchat({ task, onClose, onMinimize, minimized }: {
+  task: WorkbookTask;
+  onClose: () => void;
+  onMinimize: () => void;
+  minimized: boolean;
+}) {
+  const [messages, setMessages] = useState<SubchatMessage[]>(() => {
+    const contextItems = buildContextSummary(task);
+    return [{
+      id: "sys-1",
+      role: "system" as const,
+      text: `🔗 Subchat spawned for task: **${task.title}**\n\nContext inherited:\n${contextItems.map(i => `• ${i}`).join("\n")}${task.description ? `\n\nTask description: ${task.description}` : ""}`,
+      timestamp: new Date().toISOString(),
+    }];
+  });
+  const [input, setInput] = useState("");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [messages]);
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    const userMsg: SubchatMessage = { id: `u${Date.now()}`, role: "user", text: input, timestamp: new Date().toISOString() };
+    const assistantMsg: SubchatMessage = {
+      id: `a${Date.now()}`,
+      role: "assistant",
+      text: `Working on "${input.slice(0, 50)}${input.length > 50 ? "…" : ""}" within task **${task.title}**.\n\n💡 Context config active: ${task.context_config.inherit_preferences ? "preferences ✓" : ""}${task.context_config.inherit_intents ? " · intents ✓" : ""}${task.context_config.inherit_history_summary ? " · history ✓" : ""}\n\nHow would you like to proceed?`,
+      timestamp: new Date().toISOString(),
+    };
+    setMessages(prev => [...prev, userMsg, assistantMsg]);
+    setInput("");
+  };
+
+  if (minimized) {
+    return (
+      <div className="flex items-center justify-between rounded-md border border-info/30 bg-info/5 px-3 py-2 ml-10">
+        <div className="flex items-center gap-2 text-xs">
+          <MessageSquare className="h-3 w-3 text-info" />
+          <span className="font-medium text-info">Subchat: {task.title}</span>
+          <Badge variant="outline" className="text-[9px]">{messages.filter(m => m.role !== "system").length} msgs</Badge>
+        </div>
+        <div className="flex items-center gap-1">
+          <Button variant="ghost" size="icon" className="h-5 w-5" onClick={onMinimize}><Maximize2 className="h-3 w-3" /></Button>
+          <Button variant="ghost" size="icon" className="h-5 w-5 text-destructive" onClick={onClose}><X className="h-3 w-3" /></Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-lg border border-info/30 bg-info/5 overflow-hidden ml-10 mb-2">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-info/20 px-3 py-2 bg-info/10">
+        <div className="flex items-center gap-2">
+          <MessageSquare className="h-3.5 w-3.5 text-info" />
+          <span className="text-xs font-medium text-info">Subchat — {task.title}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <Button variant="ghost" size="icon" className="h-5 w-5" onClick={onMinimize}><Minimize2 className="h-3 w-3" /></Button>
+          <Button variant="ghost" size="icon" className="h-5 w-5 text-destructive" onClick={onClose}><X className="h-3 w-3" /></Button>
+        </div>
+      </div>
+
+      {/* Context badges */}
+      <div className="flex items-center gap-1.5 px-3 py-2 border-b border-info/10 flex-wrap">
+        {task.context_config.inherit_preferences && (
+          <Badge variant="outline" className="text-[9px] border-info/30 text-info gap-0.5"><Settings2 className="h-2 w-2" /> Preferences</Badge>
+        )}
+        {task.context_config.inherit_intents && (
+          <Badge variant="outline" className="text-[9px] border-info/30 text-info gap-0.5"><Zap className="h-2 w-2" /> Intents</Badge>
+        )}
+        {task.context_config.inherit_history_summary && (
+          <Badge variant="outline" className="text-[9px] border-info/30 text-info gap-0.5"><FileText className="h-2 w-2" /> History</Badge>
+        )}
+        <Badge variant="outline" className="text-[9px] gap-0.5">Depth: {task.context_config.depth_limit}</Badge>
+      </div>
+
+      {/* Messages */}
+      <div ref={scrollRef} className="max-h-64 overflow-y-auto p-3 space-y-2">
+        {messages.map(msg => (
+          <div key={msg.id} className={`${msg.role === "user" ? "ml-auto max-w-[80%]" : msg.role === "system" ? "max-w-full" : "max-w-[80%]"}`}>
+            <div className={`rounded-lg px-3 py-2 text-xs whitespace-pre-line ${
+              msg.role === "user"
+                ? "bg-primary text-primary-foreground"
+                : msg.role === "system"
+                  ? "bg-info/10 text-info border border-info/20 text-[11px]"
+                  : "bg-secondary text-secondary-foreground"
+            }`}>
+              {msg.text}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Input */}
+      <div className="border-t border-info/20 p-2">
+        <div className="flex gap-2">
+          <Input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handleSend()}
+            placeholder={`Work on: ${task.title}…`}
+            className="flex-1 h-8 text-xs bg-background/80"
+          />
+          <Button onClick={handleSend} size="icon" className="h-8 w-8" disabled={!input.trim()}>
+            <Send className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function WorkbookTasks({ workbookId }: { workbookId: string }) {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -85,6 +223,34 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
   const [newPriority, setNewPriority] = useState<TaskPriority>("medium");
   const [contextDialog, setContextDialog] = useState<WorkbookTask | null>(null);
 
+  // Subchat state: map of task ID → { minimized }
+  const [activeSubchats, setActiveSubchats] = useState<Map<string, { minimized: boolean }>>(new Map());
+
+  const openSubchat = (taskId: string) => {
+    setActiveSubchats(prev => {
+      const next = new Map(prev);
+      next.set(taskId, { minimized: false });
+      return next;
+    });
+  };
+
+  const closeSubchat = (taskId: string) => {
+    setActiveSubchats(prev => {
+      const next = new Map(prev);
+      next.delete(taskId);
+      return next;
+    });
+  };
+
+  const toggleMinimize = (taskId: string) => {
+    setActiveSubchats(prev => {
+      const next = new Map(prev);
+      const current = next.get(taskId);
+      if (current) next.set(taskId, { minimized: !current.minimized });
+      return next;
+    });
+  };
+
   const { data: tasks = [], isLoading } = useQuery({
     queryKey: ["workbook-tasks", workbookId],
     enabled: !!user,
@@ -95,7 +261,7 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
         .eq("workbook_id", workbookId)
         .order("sort_order", { ascending: true });
       if (error) throw error;
-      return data as WorkbookTask[];
+      return (data as unknown as WorkbookTask[]);
     },
   });
 
@@ -130,17 +296,31 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
       if (status === "done") update.completed_at = new Date().toISOString();
       const { error } = await supabase.from("workbook_tasks").update(update).eq("id", id);
       if (error) throw error;
+      return { id, status };
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["workbook-tasks", workbookId] }),
+    onSuccess: (result) => {
+      queryClient.invalidateQueries({ queryKey: ["workbook-tasks", workbookId] });
+      // Auto-spawn subchat when task moves to in_progress
+      if (result.status === "in_progress") {
+        openSubchat(result.id);
+        toast({ title: "Task started", description: "Subchat spawned with inherited context" });
+      }
+      // Close subchat when task is done
+      if (result.status === "done") {
+        closeSubchat(result.id);
+      }
+    },
   });
 
   const deleteTask = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase.from("workbook_tasks").delete().eq("id", id);
       if (error) throw error;
+      return id;
     },
-    onSuccess: () => {
+    onSuccess: (id) => {
       queryClient.invalidateQueries({ queryKey: ["workbook-tasks", workbookId] });
+      closeSubchat(id);
       toast({ title: "Task deleted" });
     },
   });
@@ -174,11 +354,13 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
     const hasChildren = task.children && task.children.length > 0;
     const isExpanded = expandedTasks.has(task.id);
     const sc = STATUS_CONFIG[task.status];
+    const subchatState = activeSubchats.get(task.id);
+    const hasSubchat = !!subchatState;
 
     return (
       <div key={task.id}>
         <div
-          className="group flex items-center gap-2 rounded-md px-3 py-2 hover:bg-secondary/30 transition-colors"
+          className={`group flex items-center gap-2 rounded-md px-3 py-2 hover:bg-secondary/30 transition-colors ${hasSubchat ? "bg-info/5" : ""}`}
           style={{ paddingLeft: `${12 + depth * 24}px` }}
         >
           {hasChildren ? (
@@ -204,9 +386,20 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
             {task.title}
           </span>
 
+          {hasSubchat && (
+            <Badge variant="outline" className="text-[9px] border-info/30 text-info gap-0.5 animate-pulse">
+              <MessageSquare className="h-2 w-2" /> subchat
+            </Badge>
+          )}
+
           <Badge className={`text-[10px] ${PRIORITY_COLORS[task.priority]}`}>{task.priority}</Badge>
 
           <div className="hidden group-hover:flex items-center gap-0.5">
+            {task.status === "in_progress" && !hasSubchat && (
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-info" onClick={() => openSubchat(task.id)} title="Open subchat">
+                <MessageSquare className="h-3 w-3" />
+              </Button>
+            )}
             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => { setParentForNew(task.id); setCreateDialog(true); }} title="Add subtask">
               <Plus className="h-3 w-3" />
             </Button>
@@ -218,6 +411,16 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
             </Button>
           </div>
         </div>
+
+        {/* Subchat panel */}
+        {hasSubchat && (
+          <TaskSubchat
+            task={task}
+            onClose={() => closeSubchat(task.id)}
+            onMinimize={() => toggleMinimize(task.id)}
+            minimized={subchatState!.minimized}
+          />
+        )}
 
         {hasChildren && isExpanded && task.children!.map(child => renderTask(child, depth + 1))}
       </div>
@@ -234,6 +437,9 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
         <span className="text-success">✓ {done} done</span>
         <span className="text-info">⏳ {inProgress} active</span>
         {blocked > 0 && <span className="text-destructive">⚠ {blocked} blocked</span>}
+        {activeSubchats.size > 0 && (
+          <span className="text-info flex items-center gap-1"><MessageSquare className="h-3 w-3" /> {activeSubchats.size} subchat{activeSubchats.size > 1 ? "s" : ""}</span>
+        )}
         {total > 0 && (
           <div className="flex items-center gap-1.5 ml-auto">
             <div className="h-1.5 w-24 rounded-full bg-secondary overflow-hidden">
@@ -304,8 +510,8 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
 }
 
 function ContextConfigEditor({ config, onSave }: {
-  config: WorkbookTask["context_config"];
-  onSave: (c: WorkbookTask["context_config"]) => void;
+  config: ContextConfig;
+  onSave: (c: ContextConfig) => void;
 }) {
   const [local, setLocal] = useState({ ...config });
 
