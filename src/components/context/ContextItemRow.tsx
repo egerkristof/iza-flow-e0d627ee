@@ -1,6 +1,8 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { MockContextItem } from "@/data/mockContextItems";
-import { Shield, Zap, Clock } from "lucide-react";
+import { Shield, Zap, Clock, MoreVertical } from "lucide-react";
+import { DeleteDisambiguation } from "@/components/governance/DeleteDisambiguation";
 
 const categoryColors: Record<string, string> = {
   DIRECTIVE: "border-destructive/40 text-destructive",
@@ -24,9 +26,9 @@ interface ContextItemRowProps {
 
 export function ContextItemRow({ item, selected, onClick }: ContextItemRowProps) {
   return (
-    <button
+    <div
       onClick={onClick}
-      className={`w-full text-left rounded-lg border p-3 transition-all ${
+      className={`w-full text-left rounded-lg border p-3 transition-all cursor-pointer ${
         selected
           ? "border-primary/40 bg-primary/5 glow-sm"
           : "border-border/50 bg-card hover:border-primary/20"
@@ -44,9 +46,22 @@ export function ContextItemRow({ item, selected, onClick }: ContextItemRowProps)
             {item.content_preview}
           </p>
         </div>
-        <Badge variant="outline" className={`text-[10px] shrink-0 ${categoryColors[item.category] ?? ""}`}>
-          {item.category}
-        </Badge>
+        <div className="flex items-center gap-1 shrink-0">
+          <Badge variant="outline" className={`text-[10px] ${categoryColors[item.category] ?? ""}`}>
+            {item.category}
+          </Badge>
+          <DeleteDisambiguation itemTitle={item.title}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 opacity-0 group-hover:opacity-100 hover:opacity-100"
+              style={{ opacity: selected ? 1 : undefined }}
+              onClick={e => e.stopPropagation()}
+            >
+              <MoreVertical className="h-3.5 w-3.5" />
+            </Button>
+          </DeleteDisambiguation>
+        </div>
       </div>
 
       <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -67,6 +82,6 @@ export function ContextItemRow({ item, selected, onClick }: ContextItemRowProps)
           </Badge>
         ))}
       </div>
-    </button>
+    </div>
   );
 }
