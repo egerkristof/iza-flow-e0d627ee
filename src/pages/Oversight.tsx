@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -39,8 +39,25 @@ const statusColumns = [
 export default function OversightPage() {
   const navigate = useNavigate();
   const { activeRole, user } = useAuth();
+  const queryClient = useQueryClient();
   const [view, setView] = useState<"board" | "grid">("board");
   const [peekWorkbook, setPeekWorkbook] = useState<OversightWorkbook | null>(null);
+
+  // Realtime subscription for task updates
+  useEffect(() => {
+    const channel = supabase
+      .channel("oversight-tasks-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "workbook_tasks" },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["oversight-tasks"] });
+        }
+      )
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [queryClient]);
 
   // Fetch real tasks for stats
   const { data: allTasks = [] } = useQuery({
