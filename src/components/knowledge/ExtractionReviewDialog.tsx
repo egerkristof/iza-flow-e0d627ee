@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ExtractedPreference {
@@ -70,6 +71,23 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const [selectedBundles, setSelectedBundles] = useState<Set<number>>(new Set());
   const [expandedBundles, setExpandedBundles] = useState<Set<number>>(new Set());
+  // Map: standalone item index → existing bundle id (or "none" / "new-{extractedBundleIndex}")
+  const [itemBundleAssignment, setItemBundleAssignment] = useState<Record<number, string>>({});
+
+  // Fetch existing bundles for assignment dropdown
+  const { data: existingBundles = [] } = useQuery({
+    queryKey: ["bundles", user?.id],
+    enabled: !!user && open,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("bundles")
+        .select("id, title, scope_level")
+        .eq("owner_id", user!.id)
+        .order("title");
+      if (error) throw error;
+      return data;
+    },
+  });
 
   const initSelections = () => {
     if (data) {
@@ -77,6 +95,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
       setSelectedItems(new Set(data.context_items.map((_, i) => i)));
       setSelectedBundles(new Set((data.bundles || []).map((_, i) => i)));
       setExpandedBundles(new Set());
+      setItemBundleAssignment({});
     }
   };
 
@@ -96,6 +115,10 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
   };
   const toggleBundleExpand = (i: number) => {
     setExpandedBundles(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
+  };
+
+  const setItemAssignment = (itemIdx: number, value: string) => {
+    setItemBundleAssignment(prev => ({ ...prev, [itemIdx]: value }));
   };
 
   const saveMutation = useMutation({
@@ -118,27 +141,14 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
         if (error) throw error;
       }
 
-      // Save selected standalone context items
-      const itemsToSave = data.context_items.filter((_, i) => selectedItems.has(i));
-      if (itemsToSave.length > 0) {
-        const { error } = await supabase.from("context_items").insert(
-          itemsToSave.map(ci => ({
-            owner_id: user.id,
-            title: ci.title,
-            content_full: ci.content,
-            category: ci.category as any,
-            action_type: "APPEND" as any,
-          }))
-        );
-        if (error) throw error;
-      }
+      // Track created bundles from extracted bundles (index → id)
+      const createdBundleIds: Record<number, string> = {};
 
-      // Save selected bundles — create the bundle, then its items linked to it
-      const bundles = data.bundles || [];
-      for (const [i, bundle] of bundles.entries()) {
+      // Save selected extracted bundles — create the bundle, then its items
+      const extractedBundles = data.bundles || [];
+      for (const [i, bundle] of extractedBundles.entries()) {
         if (!selectedBundles.has(i)) continue;
 
-        // Create the bundle
         const { data: newBundle, error: bundleErr } = await supabase
           .from("bundles")
           .insert({
@@ -150,8 +160,8 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
           .select("id")
           .single();
         if (bundleErr) throw bundleErr;
+        createdBundleIds[i] = newBundle.id;
 
-        // Create all items linked to this bundle
         if (bundle.items.length > 0) {
           const { error: itemsErr } = await supabase.from("context_items").insert(
             bundle.items.map(ci => ({
@@ -165,6 +175,41 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
           );
           if (itemsErr) throw itemsErr;
         }
+      }
+
+      // Save selected standalone context items with optional bundle assignment
+      const itemsToSave = data.context_items
+        .map((ci, i) => ({ ci, i }))
+        .filter(({ i }) => selectedItems.has(i));
+
+      if (itemsToSave.length > 0) {
+        const rows = itemsToSave.map(({ ci, i }) => {
+          const assignment = itemBundleAssignment[i];
+          let bundleId: string | null = null;
+
+          if (assignment && assignment !== "none") {
+            if (assignment.startsWith("new-")) {
+              // Assigned to a newly created extracted bundle
+              const bundleIdx = parseInt(assignment.replace("new-", ""), 10);
+              bundleId = createdBundleIds[bundleIdx] || null;
+            } else {
+              // Assigned to an existing bundle
+              bundleId = assignment;
+            }
+          }
+
+          return {
+            owner_id: user.id,
+            title: ci.title,
+            content_full: ci.content,
+            category: ci.category as any,
+            action_type: "APPEND" as any,
+            bundle_id: bundleId,
+          };
+        });
+
+        const { error } = await supabase.from("context_items").insert(rows);
+        if (error) throw error;
       }
     },
     onSuccess: () => {
@@ -192,6 +237,9 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
   const bundles = data.bundles || [];
   const totalSelected = selectedPrefs.size + selectedItems.size + selectedBundles.size;
   const totalBundleItems = bundles.reduce((sum, b, i) => sum + (selectedBundles.has(i) ? b.items.length : 0), 0);
+  const assignedCount = Object.entries(itemBundleAssignment).filter(
+    ([idx, val]) => selectedItems.has(Number(idx)) && val && val !== "none"
+  ).length;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -252,7 +300,6 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                     selectedBundles.has(i) ? "border-primary/30 bg-primary/5" : "border-border/50 bg-muted/10 opacity-60"
                   }`}
                 >
-                  {/* Bundle header */}
                   <div className="flex items-start gap-3 p-3">
                     <Checkbox
                       checked={selectedBundles.has(i)}
@@ -281,7 +328,6 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                     </button>
                   </div>
 
-                  {/* Expanded bundle items */}
                   {expandedBundles.has(i) && (
                     <div className="border-t border-border/30 px-3 pb-3 pt-2 space-y-1.5 ml-8">
                       {bundle.items.map((item, j) => (
@@ -312,23 +358,68 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                 <BookUp className="h-3 w-3" /> Standalone Context Items ({data.context_items.length})
               </h3>
               {data.context_items.map((ci, i) => (
-                <label
+                <div
                   key={i}
-                  className={`flex items-start gap-3 rounded-md border p-3 cursor-pointer transition-colors ${
+                  className={`rounded-md border p-3 transition-colors ${
                     selectedItems.has(i) ? "border-primary/30 bg-primary/5" : "border-border/50 bg-muted/10 opacity-60"
                   }`}
                 >
-                  <Checkbox checked={selectedItems.has(i)} onCheckedChange={() => toggleItem(i)} className="mt-0.5" />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-medium">{ci.title}</span>
-                      <Badge variant="outline" className={`text-[10px] ${CATEGORY_COLORS[ci.category] || ""}`}>
-                        {ci.category}
-                      </Badge>
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <Checkbox checked={selectedItems.has(i)} onCheckedChange={() => toggleItem(i)} className="mt-0.5" />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-medium">{ci.title}</span>
+                        <Badge variant="outline" className={`text-[10px] ${CATEGORY_COLORS[ci.category] || ""}`}>
+                          {ci.category}
+                        </Badge>
+                      </div>
+                      <p className="text-xs mt-1 text-muted-foreground line-clamp-3">{ci.content}</p>
                     </div>
-                    <p className="text-xs mt-1 text-muted-foreground line-clamp-3">{ci.content}</p>
-                  </div>
-                </label>
+                  </label>
+
+                  {/* Bundle assignment dropdown */}
+                  {selectedItems.has(i) && (existingBundles.length > 0 || bundles.length > 0) && (
+                    <div className="mt-2 ml-8 flex items-center gap-2">
+                      <FolderPlus className="h-3 w-3 text-muted-foreground shrink-0" />
+                      <Select
+                        value={itemBundleAssignment[i] || "none"}
+                        onValueChange={(v) => setItemAssignment(i, v)}
+                      >
+                        <SelectTrigger className="h-7 text-[11px] w-56">
+                          <SelectValue placeholder="No bundle" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none" className="text-xs">No bundle (standalone)</SelectItem>
+                          {existingBundles.length > 0 && (
+                            <>
+                              <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                                Existing Bundles
+                              </div>
+                              {existingBundles.map(b => (
+                                <SelectItem key={b.id} value={b.id} className="text-xs">
+                                  {b.title}
+                                  <span className="text-muted-foreground ml-1">({b.scope_level})</span>
+                                </SelectItem>
+                              ))}
+                            </>
+                          )}
+                          {bundles.length > 0 && (
+                            <>
+                              <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                                New Bundles (from this extraction)
+                              </div>
+                              {bundles.map((b, bi) => (
+                                <SelectItem key={`new-${bi}`} value={`new-${bi}`} className="text-xs">
+                                  ✨ {b.title}
+                                </SelectItem>
+                              ))}
+                            </>
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           )}
@@ -338,6 +429,9 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
           <div className="flex items-center gap-2 flex-1 text-[10px] text-muted-foreground">
             {totalBundleItems > 0 && (
               <span>{selectedBundles.size} bundle{selectedBundles.size !== 1 ? "s" : ""} ({totalBundleItems} items)</span>
+            )}
+            {assignedCount > 0 && (
+              <span>· {assignedCount} item{assignedCount !== 1 ? "s" : ""} assigned to bundles</span>
             )}
           </div>
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
