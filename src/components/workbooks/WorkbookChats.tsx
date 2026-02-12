@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MessageSquare, Plus, Users, User, Send, X, Hash, ListTodo, Paperclip, FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -49,6 +50,7 @@ const MOCK_MESSAGES: ChatMessage[] = [
 
 export function WorkbookChats({ workbookId }: { workbookId: string }) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [threads] = useState(MOCK_THREADS);
@@ -151,7 +153,12 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
               </div>
             )}
           </div>
-          <Badge variant="outline" className="text-[10px]">{active.type}</Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-[10px]">{active.type}</Badge>
+            <Button variant="ghost" size="sm" className="text-[10px] text-muted-foreground gap-1 h-6 px-2" onClick={() => navigate("/workbooks")}>
+              ← Workbooks
+            </Button>
+          </div>
         </div>
 
         {/* Messages */}
