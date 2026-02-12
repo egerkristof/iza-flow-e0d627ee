@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
-  Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield,
+  Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield, Loader2,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,9 @@ import { BundleCard } from "@/components/context/BundleCard";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
+import { ExtractionReviewDialog, type ExtractionResult } from "@/components/knowledge/ExtractionReviewDialog";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   MOCK_CONTEXT_ITEMS, MOCK_BUNDLES, ALL_DOMAIN_TAGS, ALL_CATEGORIES,
   type MockBundle, type MockContextItem, type ContextCategory,
@@ -45,8 +48,8 @@ const MOCK_STALE: StaleItem[] = [
 ];
 
 export default function ContextManagementPage() {
+  const { user } = useAuth();
   const { toast } = useToast();
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Items state
   const [items, setItems] = useState(MOCK_CONTEXT_ITEMS);
@@ -80,10 +83,13 @@ export default function ContextManagementPage() {
   // Drift state
   const [expandedDrift, setExpandedDrift] = useState<string | null>(null);
 
-  // Ingestion state
+  // Ingestion / extraction state
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
-  const [ingestionModal, setIngestionModal] = useState(false);
-  const [candidates, setCandidates] = useState<{ title: string; type: string; approved: boolean }[]>([]);
+  const [loomExtracting, setLoomExtracting] = useState(false);
+  const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
+  const [extractionDocName, setExtractionDocName] = useState("");
+  const [reviewOpen, setReviewOpen] = useState(false);
 
   // Governance state
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
@@ -191,21 +197,68 @@ export default function ContextManagementPage() {
   const clearFilters = () => { setCategoryFilter(null); setDomainFilter(null); setSelectedBundleId(null); setItemSearch(""); };
   const hasFilters = categoryFilter || domainFilter || selectedBundleId || itemSearch;
 
-  const simulateIngestion = () => {
-    setCandidates([
-      { title: "Enterprise Pricing Protocol", type: "PLAYBOOK", approved: false },
-      { title: "Data Security Directive", type: "DIRECTIVE", approved: false },
-      { title: "Product Comparison Matrix", type: "KNOWLEDGE", approved: false },
-      { title: "Quarterly Review Procedure", type: "PROCEDURE", approved: false },
-    ]);
-    setIngestionModal(true);
+  const handleLoomFile = async (file: File) => {
+    if (!user) {
+      toast({ title: "Not authenticated", variant: "destructive" });
+      return;
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      toast({ title: "File too large", description: "Max 20MB", variant: "destructive" });
+      return;
+    }
+    setLoomExtracting(true);
+    try {
+      // 1. Upload to storage
+      const filePath = `${user.id}/${Date.now()}-${file.name}`;
+      const { error: uploadErr } = await supabase.storage
+        .from("personal-documents")
+        .upload(filePath, file);
+      if (uploadErr) throw uploadErr;
+
+      // 2. Create personal_documents record
+      const { data: docRow, error: insertErr } = await supabase
+        .from("personal_documents")
+        .insert({
+          user_id: user.id,
+          file_name: file.name,
+          file_path: filePath,
+          file_type: file.type || "application/octet-stream",
+          document_category: "other",
+          parsed_status: "pending",
+        })
+        .select("id")
+        .single();
+      if (insertErr || !docRow) throw insertErr ?? new Error("Insert failed");
+
+      // 3. Call extract-profile edge function
+      const { data, error } = await supabase.functions.invoke("extract-profile", {
+        body: { documentId: docRow.id },
+      });
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      // 4. Open ExtractionReviewDialog
+      setExtractionResult(data as ExtractionResult);
+      setExtractionDocName(file.name);
+      setReviewOpen(true);
+    } catch (err: any) {
+      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+    } finally {
+      setLoomExtracting(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
-  const handleDrop = (e: React.DragEvent) => { e.preventDefault(); setDragOver(false); simulateIngestion(); };
-  const toggleCandidate = (idx: number) => setCandidates(prev => prev.map((c, i) => (i === idx ? { ...c, approved: !c.approved } : c)));
-  const approveAll = () => {
-    toast({ title: "Ingestion Complete", description: `${candidates.filter(c => c.approved).length} items added.` });
-    setIngestionModal(false);
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) handleLoomFile(file);
+  };
+
+  const handleLoomFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) handleLoomFile(file);
   };
 
   // Health metrics
@@ -369,17 +422,27 @@ export default function ContextManagementPage() {
 
         {/* ── KNOWLEDGE LOOM TAB ── */}
         <TabsContent value="ingest" className="flex-1 overflow-auto mt-0 p-6">
-          <input ref={fileInputRef} type="file" multiple className="hidden" onChange={simulateIngestion} />
+          <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.csv,.json" onChange={handleLoomFileInput} />
           <div
-            className={`rounded-lg border-2 border-dashed p-12 text-center transition-all cursor-pointer ${dragOver ? "border-primary bg-primary/5" : "border-border/50 bg-card/50 hover:border-primary/30"}`}
+            className={`rounded-lg border-2 border-dashed p-12 text-center transition-all ${loomExtracting ? "border-primary/50 bg-primary/5" : dragOver ? "border-primary bg-primary/5" : "border-border/50 bg-card/50 hover:border-primary/30 cursor-pointer"}`}
             onDragOver={e => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
             onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => !loomExtracting && fileInputRef.current?.click()}
           >
-            <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-3" />
-            <p className="text-sm font-medium">Drop documents here or click to upload</p>
-            <p className="text-xs text-muted-foreground mt-1">Smart Ingestion will auto-extract Playbooks, Directives & Knowledge items</p>
+            {loomExtracting ? (
+              <>
+                <Loader2 className="mx-auto h-8 w-8 text-primary animate-spin mb-3" />
+                <p className="text-sm font-medium">Extracting items with AI…</p>
+                <p className="text-xs text-muted-foreground mt-1">This may take a moment depending on document size</p>
+              </>
+            ) : (
+              <>
+                <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-3" />
+                <p className="text-sm font-medium">Drop documents here or click to upload</p>
+                <p className="text-xs text-muted-foreground mt-1">AI will extract Preferences, Context Items & Bundles for your review</p>
+              </>
+            )}
           </div>
         </TabsContent>
 
@@ -427,37 +490,13 @@ export default function ContextManagementPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Ingestion Modal */}
-      <Dialog open={ingestionModal} onOpenChange={setIngestionModal}>
-        <DialogContent>
-          <DialogHeader><DialogTitle>Import Wizard — Candidate Items</DialogTitle></DialogHeader>
-          <div className="space-y-2">
-            {candidates.map((c, i) => (
-              <button key={i} className={`flex w-full items-center justify-between rounded-md px-3 py-2.5 text-sm transition-all ${c.approved ? "bg-primary/10 border border-primary/30" : "bg-secondary/50 border border-transparent"}`} onClick={() => toggleCandidate(i)}>
-                <div className="flex items-center gap-2">
-                  {c.approved ? <Check className="h-4 w-4 text-primary" /> : <div className="h-4 w-4 rounded border border-border" />}
-                  <span>{c.title}</span>
-                </div>
-                <Badge variant="outline" className="text-[10px]">{c.type}</Badge>
-              </button>
-            ))}
-          </div>
-          <p className="text-xs text-muted-foreground">Select items to bundle, or skip to import the document without bundling.</p>
-          <DialogFooter className="flex-col sm:flex-row gap-2">
-            <Button variant="outline" onClick={() => setIngestionModal(false)}>Cancel</Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                toast({ title: "Document Imported", description: "Document imported without bundling candidate items." });
-                setIngestionModal(false);
-              }}
-            >
-              Skip — Import as-is
-            </Button>
-            <Button onClick={approveAll} disabled={!candidates.some(c => c.approved)}>Approve & Bundle ({candidates.filter(c => c.approved).length})</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Extraction Review Dialog (Knowledge Loom) */}
+      <ExtractionReviewDialog
+        open={reviewOpen}
+        onOpenChange={setReviewOpen}
+        data={extractionResult}
+        documentName={extractionDocName}
+      />
 
       {/* Governance Modals */}
       <ContextStackViewer open={stackViewerOpen} onOpenChange={setStackViewerOpen} />
