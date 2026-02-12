@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   ListTodo, Paperclip, Plus, X, Send, FileText, Link2,
-  Type as TypeIcon, ExternalLink,
+  Type as TypeIcon, ExternalLink, Lightbulb, Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +28,19 @@ interface ChatToolbarProps {
   placeholder?: string;
   /** If provided, the /task slash command is parsed automatically */
   onTaskCreated?: () => void;
+  /** Chat ID for capture source tracking */
+  chatId?: string;
+}
+
+interface ClassificationResult {
+  category: string;
+  title: string;
+  content: string;
+  principles: string[];
+  related_item_ids: string[];
+  is_duplicate: boolean;
+  duplicate_of_id?: string;
+  confidence: number;
 }
 
 export function ChatToolbar({
@@ -36,8 +49,9 @@ export function ChatToolbar({
   setMessageInput,
   onSend,
   compact = false,
-  placeholder = "Type a message or /task <title>…",
+  placeholder = "Type a message, /task <title>, or /capture <text>…",
   onTaskCreated,
+  chatId,
 }: ChatToolbarProps) {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -56,6 +70,15 @@ export function ChatToolbar({
   // Resource attachment popover
   const [attachPopoverOpen, setAttachPopoverOpen] = useState(false);
   const [pendingAttachment, setPendingAttachment] = useState<WorkbookResource | null>(null);
+
+  // Capture dialog
+  const [captureDialogOpen, setCaptureDialogOpen] = useState(false);
+  const [captureText, setCaptureText] = useState("");
+  const [classifying, setClassifying] = useState(false);
+  const [classification, setClassification] = useState<ClassificationResult | null>(null);
+  const [captureTitle, setCaptureTitle] = useState("");
+  const [captureContent, setCaptureContent] = useState("");
+  const [captureCategory, setCaptureCategory] = useState("RESEARCH");
 
   const { data: resources = [] } = useWorkbookResources(workbookId);
 
@@ -105,15 +128,115 @@ export function ChatToolbar({
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
   });
 
-  // Handle send with /task parsing
+  // ── Classify Finding via AI ──
+  const classifyFinding = async (text: string) => {
+    setClassifying(true);
+    setClassification(null);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+      if (!token) throw new Error("Not authenticated");
+
+      const resp = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/classify-finding`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            message_text: text,
+            workbook_id: workbookId,
+            chat_id: chatId,
+          }),
+        }
+      );
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({ error: "Classification failed" }));
+        throw new Error(err.error || "Classification failed");
+      }
+
+      const { classification: result } = await resp.json();
+      setClassification(result);
+      setCaptureTitle(result.title);
+      setCaptureContent(result.content);
+      setCaptureCategory(result.category);
+    } catch (e: any) {
+      toast({ title: "Classification failed", description: e.message, variant: "destructive" });
+      // Fall back to manual entry
+      setCaptureTitle("");
+      setCaptureContent(text);
+      setCaptureCategory("RESEARCH");
+    } finally {
+      setClassifying(false);
+    }
+  };
+
+  // ── Save Capture ──
+  const saveCapture = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Not authenticated");
+      const { error } = await supabase.from("context_items").insert({
+        owner_id: user.id,
+        title: captureTitle,
+        content_full: captureContent,
+        category: captureCategory,
+        capture_status: "draft",
+        source_workbook_id: workbookId,
+        source_chat_id: chatId || null,
+      } as any);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["captures-inbox"] });
+      queryClient.invalidateQueries({ queryKey: ["captures-inbox-count"] });
+      toast({ title: "Finding captured!", description: "Review it in My Knowledge → Captures." });
+      resetCaptureDialog();
+    },
+    onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
+  });
+
+  const resetCaptureDialog = () => {
+    setCaptureDialogOpen(false);
+    setCaptureText("");
+    setClassification(null);
+    setCaptureTitle("");
+    setCaptureContent("");
+    setCaptureCategory("RESEARCH");
+  };
+
+  const openCaptureDialog = (text?: string) => {
+    const initialText = text || "";
+    setCaptureText(initialText);
+    setCaptureDialogOpen(true);
+    if (initialText.trim()) {
+      classifyFinding(initialText);
+    }
+  };
+
+  // Handle send with /task and /capture parsing
   const handleSend = () => {
     if (!messageInput.trim() && !pendingAttachment) return;
 
+    const trimmed = messageInput.trim();
+
     // /task slash command
-    if (messageInput.trim().startsWith("/task ")) {
-      const title = messageInput.trim().slice(6).trim();
+    if (trimmed.startsWith("/task ")) {
+      const title = trimmed.slice(6).trim();
       if (title) {
         createTask.mutate(title);
+        setMessageInput("");
+        return;
+      }
+    }
+
+    // /capture slash command
+    if (trimmed.startsWith("/capture ")) {
+      const text = trimmed.slice(9).trim();
+      if (text) {
+        openCaptureDialog(text);
         setMessageInput("");
         return;
       }
@@ -153,7 +276,18 @@ export function ChatToolbar({
           <ListTodo className={iconSize} />
         </Button>
 
-        {/* Create Resource button */}
+        {/* Capture Finding button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className={`${btnSize} shrink-0`}
+          title="Capture finding"
+          onClick={() => openCaptureDialog()}
+        >
+          <Lightbulb className={iconSize} />
+        </Button>
+
+        {/* Add to Repository button */}
         <Button
           variant="ghost"
           size="icon"
@@ -164,7 +298,7 @@ export function ChatToolbar({
           <Plus className={iconSize} />
         </Button>
 
-        {/* Attach existing resource */}
+        {/* Attach from repository */}
         <Popover open={attachPopoverOpen} onOpenChange={setAttachPopoverOpen}>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" className={`${btnSize} shrink-0`} title="Attach from repository">
@@ -209,8 +343,8 @@ export function ChatToolbar({
       </div>
 
       {!compact && (
-        <p className="text-[10px] text-muted-foreground mt-1 ml-[8.5rem]">
-          <ListTodo className="h-2.5 w-2.5 inline" /> tasks · <Plus className="h-2.5 w-2.5 inline" /> repository · <Paperclip className="h-2.5 w-2.5 inline" /> attach · <code className="bg-muted px-1 rounded">/task</code> slash command
+        <p className="text-[10px] text-muted-foreground mt-1 ml-[10.5rem]">
+          <ListTodo className="h-2.5 w-2.5 inline" /> tasks · <Lightbulb className="h-2.5 w-2.5 inline" /> capture · <Plus className="h-2.5 w-2.5 inline" /> repository · <Paperclip className="h-2.5 w-2.5 inline" /> attach · <code className="bg-muted px-1 rounded">/task</code> · <code className="bg-muted px-1 rounded">/capture</code>
         </p>
       )}
 
@@ -230,7 +364,7 @@ export function ChatToolbar({
         </DialogContent>
       </Dialog>
 
-      {/* Create Resource dialog */}
+      {/* Add to Repository dialog */}
       <Dialog open={resourceDialogOpen} onOpenChange={setResourceDialogOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader><DialogTitle className="text-base">Add to Repository</DialogTitle></DialogHeader>
@@ -252,6 +386,112 @@ export function ChatToolbar({
           <DialogFooter>
             <Button onClick={() => createResource.mutate()} disabled={!newResTitle.trim()}>Add Item</Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Capture Finding dialog */}
+      <Dialog open={captureDialogOpen} onOpenChange={(open) => { if (!open) resetCaptureDialog(); else setCaptureDialogOpen(true); }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-base flex items-center gap-2">
+              <Lightbulb className="h-4 w-4 text-primary" /> Capture Finding
+            </DialogTitle>
+          </DialogHeader>
+
+          {/* Step 1: Input text if not pre-filled */}
+          {!classification && !classifying && !captureTitle && (
+            <div className="space-y-3">
+              <Textarea
+                placeholder="Paste or type the insight, directive, or knowledge you want to capture…"
+                value={captureText}
+                onChange={e => setCaptureText(e.target.value)}
+                rows={4}
+              />
+              <Button
+                onClick={() => classifyFinding(captureText)}
+                disabled={!captureText.trim()}
+                className="gap-1.5 w-full"
+              >
+                <Lightbulb className="h-3.5 w-3.5" /> Classify with AI
+              </Button>
+            </div>
+          )}
+
+          {/* Loading state */}
+          {classifying && (
+            <div className="flex flex-col items-center py-8 gap-3">
+              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+              <p className="text-sm text-muted-foreground">Analyzing and classifying…</p>
+            </div>
+          )}
+
+          {/* Step 2: Review classification */}
+          {!classifying && (captureTitle || classification) && (
+            <div className="space-y-3">
+              {classification && (
+                <div className="rounded-md bg-muted/50 p-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-[10px]">
+                      AI Confidence: {Math.round((classification.confidence || 0) * 100)}%
+                    </Badge>
+                    {classification.is_duplicate && (
+                      <Badge variant="destructive" className="text-[10px]">Possible duplicate</Badge>
+                    )}
+                  </div>
+                  {classification.principles.length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-medium text-muted-foreground mb-1">Extracted principles:</p>
+                      <ul className="text-xs text-muted-foreground space-y-0.5">
+                        {classification.principles.map((p, i) => (
+                          <li key={i} className="flex items-start gap-1">
+                            <span className="text-primary mt-0.5">•</span> {p}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {classification.related_item_ids.length > 0 && (
+                    <p className="text-[10px] text-muted-foreground">
+                      {classification.related_item_ids.length} related item{classification.related_item_ids.length !== 1 ? "s" : ""} found in your knowledge
+                    </p>
+                  )}
+                </div>
+              )}
+
+              <Input
+                placeholder="Title"
+                value={captureTitle}
+                onChange={e => setCaptureTitle(e.target.value)}
+              />
+              <Select value={captureCategory} onValueChange={setCaptureCategory}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {["DIRECTIVE", "KNOWLEDGE", "PROCEDURE", "PLAYBOOK", "PREFERENCE", "RESEARCH"].map(c => (
+                    <SelectItem key={c} value={c}>{c}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Textarea
+                placeholder="Rewritten knowledge statement…"
+                value={captureContent}
+                onChange={e => setCaptureContent(e.target.value)}
+                rows={4}
+              />
+            </div>
+          )}
+
+          {!classifying && (captureTitle || classification) && (
+            <DialogFooter>
+              <Button variant="outline" onClick={resetCaptureDialog}>Cancel</Button>
+              <Button
+                onClick={() => saveCapture.mutate()}
+                disabled={!captureTitle.trim() || !captureContent.trim()}
+                className="gap-1.5"
+              >
+                <Lightbulb className="h-3.5 w-3.5" /> Capture as Draft
+              </Button>
+            </DialogFooter>
+          )}
         </DialogContent>
       </Dialog>
     </>
