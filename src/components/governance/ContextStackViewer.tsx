@@ -137,7 +137,7 @@ export function ContextStackViewer({ open, onOpenChange, scope = "global", workb
 
   return (
     <Dialog open={open} onOpenChange={(v) => { onOpenChange(v); if (!v) setInspectedItem(null); }}>
-      <DialogContent className="sm:max-w-lg max-h-[85vh] flex flex-col">
+      <DialogContent className="sm:max-w-lg max-h-[85vh] flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle className="text-base flex items-center gap-2">
             <Layers className="h-4 w-4 text-primary" />
@@ -204,7 +204,7 @@ export function ContextStackViewer({ open, onOpenChange, scope = "global", workb
           </div>
         )}
 
-        <ScrollArea className="flex-1 -mx-6 px-6">
+        <ScrollArea className="flex-1 -mx-6 px-6 overflow-hidden min-h-0">
           <div className="space-y-1 mt-2 pb-4">
             {stack.map((layer, idx) => (
               <div key={layer.level}>
