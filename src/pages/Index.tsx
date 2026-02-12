@@ -1,6 +1,11 @@
-import { BookOpen, Library, BarChart3 } from "lucide-react";
+import { BookOpen, Library, BarChart3, Shield } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 
 const Index = () => {
+  const { activeRole } = useAuth();
+  const isLeader = activeRole === "manager";
+
   return (
     <div className="flex flex-col gap-8 p-8">
       <div>
@@ -30,6 +35,13 @@ const Index = () => {
           href="/oversight"
         />
       </div>
+
+      {/* Leader-only: Mandates summary */}
+      {isLeader && (
+        <div className="rounded-lg border border-warning/20 bg-warning/5 p-5">
+          <MandatesDashboard compact />
+        </div>
+      )}
     </div>
   );
 };

@@ -59,15 +59,25 @@ export type Database = {
           content_full: string
           created_at: string
           domain_scope: Json | null
+          enforcement_level:
+            | Database["public"]["Enums"]["mandate_enforcement"]
+            | null
           expiry_date: string | null
           id: string
+          is_mandate: boolean
           last_used_at: string | null
+          mandate_description: string | null
+          mandate_scope: Json | null
+          mandate_status: Database["public"]["Enums"]["mandate_status"] | null
           operation_mode: Json | null
           owner_id: string
           priority: Database["public"]["Enums"]["priority_level"]
+          published_at: string | null
+          published_by: string | null
           security_level: Database["public"]["Enums"]["security_scope"]
           source_chat_id: string | null
           source_workbook_id: string | null
+          superseded_by: string | null
           target_reference_id: string | null
           title: string
           trigger_intent: string | null
@@ -82,15 +92,25 @@ export type Database = {
           content_full: string
           created_at?: string
           domain_scope?: Json | null
+          enforcement_level?:
+            | Database["public"]["Enums"]["mandate_enforcement"]
+            | null
           expiry_date?: string | null
           id?: string
+          is_mandate?: boolean
           last_used_at?: string | null
+          mandate_description?: string | null
+          mandate_scope?: Json | null
+          mandate_status?: Database["public"]["Enums"]["mandate_status"] | null
           operation_mode?: Json | null
           owner_id: string
           priority?: Database["public"]["Enums"]["priority_level"]
+          published_at?: string | null
+          published_by?: string | null
           security_level?: Database["public"]["Enums"]["security_scope"]
           source_chat_id?: string | null
           source_workbook_id?: string | null
+          superseded_by?: string | null
           target_reference_id?: string | null
           title: string
           trigger_intent?: string | null
@@ -105,15 +125,25 @@ export type Database = {
           content_full?: string
           created_at?: string
           domain_scope?: Json | null
+          enforcement_level?:
+            | Database["public"]["Enums"]["mandate_enforcement"]
+            | null
           expiry_date?: string | null
           id?: string
+          is_mandate?: boolean
           last_used_at?: string | null
+          mandate_description?: string | null
+          mandate_scope?: Json | null
+          mandate_status?: Database["public"]["Enums"]["mandate_status"] | null
           operation_mode?: Json | null
           owner_id?: string
           priority?: Database["public"]["Enums"]["priority_level"]
+          published_at?: string | null
+          published_by?: string | null
           security_level?: Database["public"]["Enums"]["security_scope"]
           source_chat_id?: string | null
           source_workbook_id?: string | null
+          superseded_by?: string | null
           target_reference_id?: string | null
           title?: string
           trigger_intent?: string | null
@@ -131,6 +161,51 @@ export type Database = {
           {
             foreignKeyName: "context_items_source_workbook_id_fkey"
             columns: ["source_workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mandate_acknowledgments: {
+        Row: {
+          acknowledged_at: string
+          acknowledged_by: string
+          id: string
+          mandate_id: string
+          notes: string | null
+          status: string
+          workbook_id: string
+        }
+        Insert: {
+          acknowledged_at?: string
+          acknowledged_by: string
+          id?: string
+          mandate_id: string
+          notes?: string | null
+          status?: string
+          workbook_id: string
+        }
+        Update: {
+          acknowledged_at?: string
+          acknowledged_by?: string
+          id?: string
+          mandate_id?: string
+          notes?: string | null
+          status?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mandate_acknowledgments_mandate_id_fkey"
+            columns: ["mandate_id"]
+            isOneToOne: false
+            referencedRelation: "context_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mandate_acknowledgments_workbook_id_fkey"
+            columns: ["workbook_id"]
             isOneToOne: false
             referencedRelation: "workbooks"
             referencedColumns: ["id"]
@@ -702,6 +777,13 @@ export type Database = {
         | "PREFERENCE"
         | "RESEARCH"
         | "PRINCIPLE"
+      mandate_enforcement: "advisory" | "required_ack" | "blocking"
+      mandate_status:
+        | "draft"
+        | "published"
+        | "active"
+        | "superseded"
+        | "revoked"
       priority_level: "STANDARD" | "CRITICAL"
       security_scope: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY"
       task_priority: "low" | "medium" | "high" | "critical"
@@ -845,6 +927,8 @@ export const Constants = {
         "RESEARCH",
         "PRINCIPLE",
       ],
+      mandate_enforcement: ["advisory", "required_ack", "blocking"],
+      mandate_status: ["draft", "published", "active", "superseded", "revoked"],
       priority_level: ["STANDARD", "CRITICAL"],
       security_scope: ["INTERNAL", "CONFIDENTIAL", "ADMIN_ONLY"],
       task_priority: ["low", "medium", "high", "critical"],

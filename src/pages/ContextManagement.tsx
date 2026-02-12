@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
-  Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil,
+  Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import { ContextItemRow } from "@/components/context/ContextItemRow";
 import { BundleCard } from "@/components/context/BundleCard";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
+import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import {
   MOCK_CONTEXT_ITEMS, MOCK_BUNDLES, ALL_DOMAIN_TAGS, ALL_CATEGORIES,
   type MockBundle, type MockContextItem, type ContextCategory,
@@ -244,11 +245,17 @@ export default function ContextManagementPage() {
         <div className="shrink-0 px-6 pt-3">
           <TabsList>
             <TabsTrigger value="items">Items & Bundles</TabsTrigger>
+            <TabsTrigger value="mandates" className="gap-1"><Shield className="h-3 w-3" />Mandates</TabsTrigger>
             <TabsTrigger value="drift">Drift Inbox</TabsTrigger>
             <TabsTrigger value="ingest">Knowledge Loom</TabsTrigger>
             <TabsTrigger value="stale">Garbage Collection</TabsTrigger>
           </TabsList>
         </div>
+
+        {/* ── MANDATES TAB ── */}
+        <TabsContent value="mandates" className="flex-1 overflow-auto mt-0 p-4">
+          <MandatesDashboard />
+        </TabsContent>
 
         {/* ── ITEMS & BUNDLES TAB (split panel) ── */}
         <TabsContent value="items" className="flex-1 overflow-hidden mt-0">
