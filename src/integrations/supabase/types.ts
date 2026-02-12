@@ -650,6 +650,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_workbook_member: {
+        Args: { _user_id: string; _workbook_id: string }
+        Returns: boolean
+      }
+      is_workbook_owner: {
+        Args: { _user_id: string; _workbook_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       action_logic: "APPEND" | "OVERRIDE" | "BLOCK"
