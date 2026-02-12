@@ -245,6 +245,181 @@ export type Database = {
         }
         Relationships: []
       }
+      workbook_agent_config: {
+        Row: {
+          created_at: string
+          id: string
+          is_enabled: boolean
+          max_tokens: number | null
+          model_id: string
+          notes: string | null
+          temperature: number | null
+          updated_at: string
+          workbook_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          max_tokens?: number | null
+          model_id: string
+          notes?: string | null
+          temperature?: number | null
+          updated_at?: string
+          workbook_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          max_tokens?: number | null
+          model_id?: string
+          notes?: string | null
+          temperature?: number | null
+          updated_at?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_agent_config_workbook_id_fkey"
+            columns: ["workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workbook_chat_messages: {
+        Row: {
+          chat_id: string
+          content: string
+          created_at: string
+          id: string
+          sender_id: string
+        }
+        Insert: {
+          chat_id: string
+          content: string
+          created_at?: string
+          id?: string
+          sender_id: string
+        }
+        Update: {
+          chat_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_chat_messages_chat_id_fkey"
+            columns: ["chat_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_chats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workbook_chat_participants: {
+        Row: {
+          chat_id: string
+          id: string
+          joined_at: string
+          user_id: string
+        }
+        Insert: {
+          chat_id: string
+          id?: string
+          joined_at?: string
+          user_id: string
+        }
+        Update: {
+          chat_id?: string
+          id?: string
+          joined_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_chat_participants_chat_id_fkey"
+            columns: ["chat_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_chats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workbook_chats: {
+        Row: {
+          chat_type: string
+          created_at: string
+          created_by: string
+          id: string
+          title: string | null
+          updated_at: string
+          workbook_id: string
+        }
+        Insert: {
+          chat_type?: string
+          created_at?: string
+          created_by: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          workbook_id: string
+        }
+        Update: {
+          chat_type?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_chats_workbook_id_fkey"
+            columns: ["workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workbook_members: {
+        Row: {
+          id: string
+          joined_at: string
+          role: string
+          user_id: string
+          workbook_id: string
+        }
+        Insert: {
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id: string
+          workbook_id: string
+        }
+        Update: {
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_members_workbook_id_fkey"
+            columns: ["workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workbook_tasks: {
         Row: {
           assigned_to: string | null
