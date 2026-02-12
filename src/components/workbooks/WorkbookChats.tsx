@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageSquare, Plus, Users, User, X, Hash, Search, Filter } from "lucide-react";
+import { MessageSquare, Plus, Users, User, X, Hash, Search, Filter, BookUp, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,8 @@ import { ChatToolbar } from "./ChatToolbar";
 import { type WorkbookResource } from "./WorkbookResources";
 import { MandateContextBanner } from "./MandateContextBanner";
 import { FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
+import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import type { ExtractionResult } from "@/lib/knowledge-schema";
 
 interface ChatThread {
   id: string;
@@ -62,6 +64,47 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
   const [highlightedChatId, setHighlightedChatId] = useState<string | null>(null);
   const [chatSearch, setChatSearch] = useState("");
 
+  // Knowledge extraction state
+  const [extracting, setExtracting] = useState(false);
+  const [extractionData, setExtractionData] = useState<ExtractionResult | null>(null);
+  const [extractionSourceName, setExtractionSourceName] = useState("");
+  const [showImportCopilot, setShowImportCopilot] = useState(false);
+
+  const handleExtractChat = async () => {
+    if (!active || messages.length === 0) return;
+    setExtracting(true);
+    try {
+      const content = messages
+        .filter(m => m.content)
+        .map(m => `[${m.sender.name} — ${m.time}]: ${m.content}${m.attachment ? ` [Attachment: ${m.attachment.title}]` : ""}`)
+        .join("\n");
+
+      const participants = active.participants.map(p => p.name).join(", ");
+
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: {
+          source_type: "chat",
+          content,
+          meta: {
+            title: active.title,
+            workbook: workbookId,
+            participants,
+          },
+        },
+      });
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setExtractionData(data as ExtractionResult);
+      setExtractionSourceName(`Chat: ${active.title}`);
+      setShowImportCopilot(true);
+    } catch (err: any) {
+      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+    } finally {
+      setExtracting(false);
+    }
+  };
+
   const filtered = threads.filter(t => {
     const matchesType = typeFilter === "all" || t.type === typeFilter;
     const matchesSearch = !chatSearch || t.title.toLowerCase().includes(chatSearch.toLowerCase()) || t.lastMessage.toLowerCase().includes(chatSearch.toLowerCase());
@@ -107,6 +150,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
 
   if (active) {
     return (
+      <>
       <div className="flex flex-col h-[500px] rounded-lg border border-border/50 bg-card overflow-hidden">
         {/* Chat header */}
         <div className="flex items-center justify-between border-b border-border/50 px-4 py-3">
@@ -128,7 +172,20 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
               </div>
             )}
           </div>
-          <Badge variant="outline" className="text-[10px]">{active.type}</Badge>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 text-xs gap-1.5 text-primary hover:text-primary"
+              onClick={handleExtractChat}
+              disabled={extracting || messages.length === 0}
+              title="Extract knowledge from this conversation"
+            >
+              {extracting ? <Loader2 className="h-3 w-3 animate-spin" /> : <BookUp className="h-3 w-3" />}
+              Capture
+            </Button>
+            <Badge variant="outline" className="text-[10px]">{active.type}</Badge>
+          </div>
         </div>
         {/* Mandate context */}
         <MandateContextBanner workbookId={workbookId} />
@@ -174,6 +231,15 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
           />
         </div>
       </div>
+
+      <ImportCopilotDialog
+        open={showImportCopilot}
+        onOpenChange={setShowImportCopilot}
+        data={extractionData}
+        sourceName={extractionSourceName}
+        sourceType="chat"
+      />
+    </>
     );
   }
 
