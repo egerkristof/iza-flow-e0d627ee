@@ -14,16 +14,217 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bundles: {
+        Row: {
+          created_at: string
+          description: string | null
+          health_score: number | null
+          id: string
+          owner_id: string
+          scope_level: string
+          title: string
+          updated_at: string
+          version: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          health_score?: number | null
+          id?: string
+          owner_id: string
+          scope_level?: string
+          title: string
+          updated_at?: string
+          version?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          health_score?: number | null
+          id?: string
+          owner_id?: string
+          scope_level?: string
+          title?: string
+          updated_at?: string
+          version?: string | null
+        }
+        Relationships: []
+      }
+      context_items: {
+        Row: {
+          action_type: Database["public"]["Enums"]["action_logic"]
+          bundle_id: string | null
+          category: Database["public"]["Enums"]["context_category"]
+          content_full: string
+          created_at: string
+          domain_scope: Json | null
+          expiry_date: string | null
+          id: string
+          last_used_at: string | null
+          operation_mode: Json | null
+          owner_id: string
+          priority: Database["public"]["Enums"]["priority_level"]
+          security_level: Database["public"]["Enums"]["security_scope"]
+          target_reference_id: string | null
+          title: string
+          trigger_intent: string | null
+          updated_at: string
+          version: string | null
+        }
+        Insert: {
+          action_type?: Database["public"]["Enums"]["action_logic"]
+          bundle_id?: string | null
+          category?: Database["public"]["Enums"]["context_category"]
+          content_full: string
+          created_at?: string
+          domain_scope?: Json | null
+          expiry_date?: string | null
+          id?: string
+          last_used_at?: string | null
+          operation_mode?: Json | null
+          owner_id: string
+          priority?: Database["public"]["Enums"]["priority_level"]
+          security_level?: Database["public"]["Enums"]["security_scope"]
+          target_reference_id?: string | null
+          title: string
+          trigger_intent?: string | null
+          updated_at?: string
+          version?: string | null
+        }
+        Update: {
+          action_type?: Database["public"]["Enums"]["action_logic"]
+          bundle_id?: string | null
+          category?: Database["public"]["Enums"]["context_category"]
+          content_full?: string
+          created_at?: string
+          domain_scope?: Json | null
+          expiry_date?: string | null
+          id?: string
+          last_used_at?: string | null
+          operation_mode?: Json | null
+          owner_id?: string
+          priority?: Database["public"]["Enums"]["priority_level"]
+          security_level?: Database["public"]["Enums"]["security_scope"]
+          target_reference_id?: string | null
+          title?: string
+          trigger_intent?: string | null
+          updated_at?: string
+          version?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      workbooks: {
+        Row: {
+          created_at: string
+          current_step: string | null
+          description: string | null
+          drift_score: number | null
+          id: string
+          locked_playbook_id: string | null
+          owner_id: string
+          status: Database["public"]["Enums"]["workbook_status"]
+          strategic_outcome: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          current_step?: string | null
+          description?: string | null
+          drift_score?: number | null
+          id?: string
+          locked_playbook_id?: string | null
+          owner_id: string
+          status?: Database["public"]["Enums"]["workbook_status"]
+          strategic_outcome?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          current_step?: string | null
+          description?: string | null
+          drift_score?: number | null
+          id?: string
+          locked_playbook_id?: string | null
+          owner_id?: string
+          status?: Database["public"]["Enums"]["workbook_status"]
+          strategic_outcome?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      action_logic: "APPEND" | "OVERRIDE" | "BLOCK"
+      app_role: "operator" | "architect" | "manager"
+      context_category:
+        | "DIRECTIVE"
+        | "KNOWLEDGE"
+        | "PROCEDURE"
+        | "PLAYBOOK"
+        | "PREFERENCE"
+      priority_level: "STANDARD" | "CRITICAL"
+      security_scope: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY"
+      workbook_status: "draft" | "active" | "review" | "completed" | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +351,19 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      action_logic: ["APPEND", "OVERRIDE", "BLOCK"],
+      app_role: ["operator", "architect", "manager"],
+      context_category: [
+        "DIRECTIVE",
+        "KNOWLEDGE",
+        "PROCEDURE",
+        "PLAYBOOK",
+        "PREFERENCE",
+      ],
+      priority_level: ["STANDARD", "CRITICAL"],
+      security_scope: ["INTERNAL", "CONFIDENTIAL", "ADMIN_ONLY"],
+      workbook_status: ["draft", "active", "review", "completed", "archived"],
+    },
   },
 } as const
