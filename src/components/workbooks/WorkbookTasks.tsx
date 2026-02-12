@@ -7,6 +7,7 @@ import {
   XCircle, Settings2, Trash2, Play, X, MessageSquare, Zap, FileText, Send,
   Minimize2, Maximize2,
 } from "lucide-react";
+import { ChatToolbar } from "./ChatToolbar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -96,8 +97,9 @@ function buildContextSummary(task: WorkbookTask): string[] {
 }
 
 // ── SUBCHAT COMPONENT ──
-function TaskSubchat({ task, onClose, onMinimize, minimized }: {
+function TaskSubchat({ task, workbookId, onClose, onMinimize, minimized }: {
   task: WorkbookTask;
+  workbookId: string;
   onClose: () => void;
   onMinimize: () => void;
   minimized: boolean;
@@ -192,20 +194,16 @@ function TaskSubchat({ task, onClose, onMinimize, minimized }: {
         ))}
       </div>
 
-      {/* Input */}
+      {/* Input — reuses ChatToolbar for task/resource creation */}
       <div className="border-t border-info/20 p-2">
-        <div className="flex gap-2">
-          <Input
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && handleSend()}
-            placeholder={`Work on: ${task.title}…`}
-            className="flex-1 h-8 text-xs bg-background/80"
-          />
-          <Button onClick={handleSend} size="icon" className="h-8 w-8" disabled={!input.trim()}>
-            <Send className="h-3.5 w-3.5" />
-          </Button>
-        </div>
+        <ChatToolbar
+          workbookId={workbookId}
+          messageInput={input}
+          setMessageInput={setInput}
+          onSend={handleSend}
+          compact
+          placeholder={`Work on: ${task.title}…`}
+        />
       </div>
     </div>
   );
@@ -433,6 +431,7 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
         {hasSubchat && (
           <TaskSubchat
             task={task}
+            workbookId={workbookId}
             onClose={() => closeSubchat(task.id)}
             onMinimize={() => toggleMinimize(task.id)}
             minimized={subchatState!.minimized}
