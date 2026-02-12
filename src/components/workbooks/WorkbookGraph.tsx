@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ZoomIn, ZoomOut, Maximize2, Info } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Info, Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 // ── Types ──
 interface GraphNode {
@@ -322,6 +323,7 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [graphSearch, setGraphSearch] = useState("");
 
   // Fetch tasks
   const { data: tasks = [] } = useQuery({
@@ -360,6 +362,12 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
     [workbookId, workbookTitle, tasks, chats]
   );
 
+  const matchingNodeIds = useMemo(() => {
+    if (!graphSearch) return null;
+    const q = graphSearch.toLowerCase();
+    return new Set(nodes.filter(n => n.label.toLowerCase().includes(q)).map(n => n.id));
+  }, [nodes, graphSearch]);
+
   const selectedInfo = nodes.find(n => n.id === selectedNode);
 
   // Pan handlers
@@ -391,7 +399,7 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
   return (
     <div className="space-y-3">
       {/* Controls */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
           <h3 className="text-sm font-semibold text-foreground">Nervous System View</h3>
           <Badge variant="outline" className="text-[9px] gap-1">
@@ -399,6 +407,20 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
           </Badge>
         </div>
         <div className="flex items-center gap-1">
+          <div className="relative">
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+            <Input
+              placeholder="Search nodes…"
+              value={graphSearch}
+              onChange={e => setGraphSearch(e.target.value)}
+              className="pl-7 h-7 w-36 text-xs"
+            />
+            {graphSearch && (
+              <button onClick={() => setGraphSearch("")} className="absolute right-1.5 top-1/2 -translate-y-1/2">
+                <X className="h-3 w-3 text-muted-foreground" />
+              </button>
+            )}
+          </div>
           <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setZoom(z => Math.min(3, z + 0.2))}>
             <ZoomIn className="h-3.5 w-3.5" />
           </Button>
@@ -476,14 +498,15 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
 
             {/* Nodes */}
             {nodes.map(node => (
-              <GraphNodeElement
-                key={node.id}
-                node={node}
-                isSelected={selectedNode === node.id}
-                onSelect={setSelectedNode}
-                onHover={setHoveredNode}
-                onNavigate={onNodeNavigate}
-              />
+              <g key={node.id} opacity={matchingNodeIds && !matchingNodeIds.has(node.id) ? 0.15 : 1}>
+                <GraphNodeElement
+                  node={node}
+                  isSelected={selectedNode === node.id}
+                  onSelect={setSelectedNode}
+                  onHover={setHoveredNode}
+                  onNavigate={onNodeNavigate}
+                />
+              </g>
             ))}
           </g>
         </svg>
