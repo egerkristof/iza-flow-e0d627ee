@@ -10,6 +10,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { ContextItemRow } from "@/components/context/ContextItemRow";
 import { BundleCard } from "@/components/context/BundleCard";
@@ -17,7 +21,7 @@ import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import {
   MOCK_CONTEXT_ITEMS, MOCK_BUNDLES, ALL_DOMAIN_TAGS, ALL_CATEGORIES,
-  type MockBundle,
+  type MockBundle, type MockContextItem,
 } from "@/data/mockContextItems";
 
 // ── Drift & Stale mock data (from Process Studio) ──
@@ -44,12 +48,20 @@ export default function ContextManagementPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Items state
+  const [items, setItems] = useState(MOCK_CONTEXT_ITEMS);
   const [itemSearch, setItemSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [domainFilter, setDomainFilter] = useState<string | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [itemDialog, setItemDialog] = useState(false);
 
-  // Bundles state
+  // New item form state
+  const emptyItem = {
+    title: "", content_preview: "", category: "KNOWLEDGE" as const, priority: "STANDARD" as const,
+    security_level: "INTERNAL" as const, action_type: "APPEND" as const,
+    trigger_intent: "", domain_tags_input: "", bundle_ids: [] as string[],
+  };
+  const [newItem, setNewItem] = useState(emptyItem);
   const [bundleSearch, setBundleSearch] = useState("");
   const [selectedBundleId, setSelectedBundleId] = useState<string | null>(null);
   const [bundleDialog, setBundleDialog] = useState(false);
@@ -71,20 +83,45 @@ export default function ContextManagementPage() {
 
   // Filter items
   const filteredItems = useMemo(() => {
-    return MOCK_CONTEXT_ITEMS.filter(item => {
+    return items.filter(item => {
       if (itemSearch && !item.title.toLowerCase().includes(itemSearch.toLowerCase()) && !item.content_preview.toLowerCase().includes(itemSearch.toLowerCase())) return false;
       if (categoryFilter && item.category !== categoryFilter) return false;
       if (domainFilter && !item.domain_tags.includes(domainFilter)) return false;
-      if (selectedBundleId && item.bundle_id !== selectedBundleId) return false;
+      if (selectedBundleId && !item.bundle_ids.includes(selectedBundleId)) return false;
       return true;
     });
-  }, [itemSearch, categoryFilter, domainFilter, selectedBundleId]);
+  }, [items, itemSearch, categoryFilter, domainFilter, selectedBundleId]);
 
   const filteredBundles = useMemo(() => {
     return bundles.filter(b => !bundleSearch || b.title.toLowerCase().includes(bundleSearch.toLowerCase()));
   }, [bundles, bundleSearch]);
 
-  const selectedItem = MOCK_CONTEXT_ITEMS.find(i => i.id === selectedItemId);
+  const selectedItem = items.find(i => i.id === selectedItemId);
+
+  // Handle create item
+  const handleCreateItem = () => {
+    const domainTags = newItem.domain_tags_input.split(",").map(t => t.trim()).filter(Boolean);
+    const item: MockContextItem = {
+      id: `ci${Date.now()}`,
+      title: newItem.title,
+      content_preview: newItem.content_preview,
+      category: newItem.category,
+      priority: newItem.priority,
+      security_level: newItem.security_level,
+      action_type: newItem.action_type,
+      bundle_id: newItem.bundle_ids[0] ?? null,
+      bundle_ids: newItem.bundle_ids,
+      domain_tags: domainTags.length > 0 ? domainTags : ["general"],
+      trigger_intent: newItem.trigger_intent || null,
+      last_used_at: null,
+      version: "v1.0",
+      created_at: new Date().toISOString(),
+    };
+    setItems(prev => [item, ...prev]);
+    setItemDialog(false);
+    setNewItem(emptyItem);
+    toast({ title: "Context item created", description: `"${item.title}" added${item.bundle_ids.length > 0 ? ` to ${item.bundle_ids.length} bundle(s)` : ""}` });
+  };
 
   const handleDeleteBundle = (id: string) => {
     setBundles(prev => prev.filter(b => b.id !== id));
@@ -125,7 +162,7 @@ export default function ContextManagementPage() {
   };
 
   // Health metrics
-  const totalItems = MOCK_CONTEXT_ITEMS.length;
+  const totalItems = items.length;
   const avgHealth = bundles.reduce((acc, m) => acc + m.health_score, 0) / (bundles.length || 1);
 
   return (
@@ -146,8 +183,11 @@ export default function ContextManagementPage() {
             <Button variant="outline" size="sm" className="text-xs gap-1.5" onClick={() => { setImpactTarget("Selected Item"); setImpactSimOpen(true); }}>
               <Zap className="h-3.5 w-3.5" /> Impact Sim
             </Button>
-            <Button onClick={() => { setEditingBundle(null); setBundleDialog(true); }} className="gap-1.5">
+            <Button onClick={() => { setEditingBundle(null); setBundleDialog(true); }} variant="outline" className="gap-1.5">
               <Plus className="h-4 w-4" /> New Bundle
+            </Button>
+            <Button onClick={() => { setNewItem(emptyItem); setItemDialog(true); }} className="gap-1.5">
+              <Plus className="h-4 w-4" /> New Item
             </Button>
           </div>
         </div>
@@ -354,6 +394,99 @@ export default function ContextManagementPage() {
       {/* Governance Modals */}
       <ContextStackViewer open={stackViewerOpen} onOpenChange={setStackViewerOpen} />
       <ImpactSimulator open={impactSimOpen} onOpenChange={setImpactSimOpen} itemTitle={impactTarget} changeType="update" />
+
+      {/* New Item Dialog */}
+      <Dialog open={itemDialog} onOpenChange={setItemDialog}>
+        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>Create Context Item</DialogTitle></DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <Label className="text-xs">Title</Label>
+              <Input placeholder="e.g. Enterprise Pricing Protocol" value={newItem.title} onChange={e => setNewItem(p => ({ ...p, title: e.target.value }))} />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Content</Label>
+              <Textarea placeholder="Full content or preview…" rows={3} value={newItem.content_preview} onChange={e => setNewItem(p => ({ ...p, content_preview: e.target.value }))} />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-xs">Category</Label>
+                <Select value={newItem.category} onValueChange={v => setNewItem(p => ({ ...p, category: v as any }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {ALL_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Priority</Label>
+                <Select value={newItem.priority} onValueChange={v => setNewItem(p => ({ ...p, priority: v as any }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="STANDARD">STANDARD</SelectItem>
+                    <SelectItem value="CRITICAL">CRITICAL</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Security Level</Label>
+                <Select value={newItem.security_level} onValueChange={v => setNewItem(p => ({ ...p, security_level: v as any }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="INTERNAL">INTERNAL</SelectItem>
+                    <SelectItem value="CONFIDENTIAL">CONFIDENTIAL</SelectItem>
+                    <SelectItem value="ADMIN_ONLY">ADMIN_ONLY</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs">Action Type</Label>
+                <Select value={newItem.action_type} onValueChange={v => setNewItem(p => ({ ...p, action_type: v as any }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="APPEND">APPEND</SelectItem>
+                    <SelectItem value="OVERRIDE">OVERRIDE</SelectItem>
+                    <SelectItem value="BLOCK">BLOCK</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Trigger Intent</Label>
+              <Input placeholder="e.g. pricing negotiation (optional)" value={newItem.trigger_intent} onChange={e => setNewItem(p => ({ ...p, trigger_intent: e.target.value }))} />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Domain Tags</Label>
+              <Input placeholder="Comma-separated: sales, pricing" value={newItem.domain_tags_input} onChange={e => setNewItem(p => ({ ...p, domain_tags_input: e.target.value }))} />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs">Assign to Bundles</Label>
+              <div className="rounded-md border border-border/50 p-3 space-y-2 max-h-36 overflow-y-auto">
+                {bundles.length === 0 && <p className="text-xs text-muted-foreground">No bundles available</p>}
+                {bundles.map(b => (
+                  <label key={b.id} className="flex items-center gap-2 cursor-pointer">
+                    <Checkbox
+                      checked={newItem.bundle_ids.includes(b.id)}
+                      onCheckedChange={(checked) => {
+                        setNewItem(p => ({
+                          ...p,
+                          bundle_ids: checked ? [...p.bundle_ids, b.id] : p.bundle_ids.filter(id => id !== b.id),
+                        }));
+                      }}
+                    />
+                    <span className="text-sm">{b.title}</span>
+                    <Badge variant="outline" className="text-[9px] ml-auto">{b.scope_level}</Badge>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setItemDialog(false)}>Cancel</Button>
+            <Button onClick={handleCreateItem} disabled={!newItem.title.trim() || !newItem.content_preview.trim()}>Create Item</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
