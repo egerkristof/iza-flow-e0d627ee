@@ -16,10 +16,11 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+function ProtectedRoute({ children, blockedRoles }: { children: React.ReactNode; blockedRoles?: string[] }) {
+  const { user, loading, activeRole } = useAuth();
   if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
   if (!user) return <Navigate to="/auth" replace />;
+  if (blockedRoles?.includes(activeRole)) return <Navigate to="/" replace />;
   return <AppLayout>{children}</AppLayout>;
 }
 
@@ -42,7 +43,7 @@ const App = () => (
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />
-            <Route path="/context" element={<ProtectedRoute><ContextManagementPage /></ProtectedRoute>} />
+            <Route path="/context" element={<ProtectedRoute blockedRoles={["operator"]}><ContextManagementPage /></ProtectedRoute>} />
             <Route path="/oversight" element={<ProtectedRoute><OversightPage /></ProtectedRoute>} />
             <Route path="/my-knowledge" element={<ProtectedRoute><MyKnowledgePage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
