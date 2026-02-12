@@ -50,6 +50,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
 
   const [itemEdits, setItemEdits] = useState<Record<number, Partial<ExtractedContextItem>>>({});
   const [bundleItemEdits, setBundleItemEdits] = useState<Record<string, Partial<ExtractedContextItem>>>({});
+  const [prefEdits, setPrefEdits] = useState<Record<number, Partial<ExtractedPreference>>>({});
   const [editingKey, setEditingKey] = useState<string | null>(null);
 
   // Refine copilot state
@@ -87,6 +88,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
       setItemBundleAssignment({});
       setItemEdits({});
       setBundleItemEdits({});
+      setPrefEdits({});
       setEditingKey(null);
       setRefineOpen(false);
       setRefineInstruction("");
@@ -258,17 +260,20 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     mutationFn: async () => {
       if (!user || !data) return;
 
-      const prefsToSave = data.preferences.filter((_, i) => selectedPrefs.has(i));
-      if (prefsToSave.length > 0) {
+      const prefEntries = data.preferences.map((p, i) => ({ p, i })).filter(({ i }) => selectedPrefs.has(i));
+      if (prefEntries.length > 0) {
         const { error } = await supabase.from("working_preferences").insert(
-          prefsToSave.map(p => ({
-            user_id: user.id,
-            preference_key: p.preference_key,
-            preference_value: p.preference_value,
-            condition_label: p.condition_label || null,
-            description: `Extracted from ${sourceType}: ${sourceName}`,
-            scope_type: "global",
-          }))
+          prefEntries.map(({ p, i }) => {
+            const edits = prefEdits[i];
+            return {
+              user_id: user.id,
+              preference_key: p.preference_key,
+              preference_value: edits?.preference_value ?? p.preference_value,
+              condition_label: (edits?.condition_label ?? p.condition_label) || null,
+              description: `Extracted from ${sourceType}: ${sourceName}`,
+              scope_type: "global",
+            };
+          })
         );
         if (error) throw error;
       }
@@ -477,7 +482,13 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
               <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                 <Settings2 className="h-3 w-3" /> Working Preferences ({data.preferences.length})
               </h3>
-              {data.preferences.map((p, i) => (
+              {data.preferences.map((p, i) => {
+                const editedValue = prefEdits[i]?.preference_value ?? p.preference_value;
+                const editedCondition = prefEdits[i]?.condition_label ?? p.condition_label;
+                const isPrefEditing = editingKey === `pref-${i}`;
+                const hasEdits = prefEdits[i] && Object.keys(prefEdits[i]).length > 0;
+
+                return (
                 <label
                   key={i}
                   className={`flex items-start gap-3 rounded-md border p-3 cursor-pointer transition-colors ${
@@ -485,21 +496,67 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
                   }`}
                 >
                   <Checkbox checked={selectedPrefs.has(i)} onCheckedChange={() => togglePref(i)} className="mt-0.5" />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge variant="secondary" className="text-[10px]">
-                        {PREFERENCE_KEY_LABELS[p.preference_key as keyof typeof PREFERENCE_KEY_LABELS] ?? p.preference_key}
-                      </Badge>
-                      {p.condition_label && (
-                        <Badge variant="outline" className="text-[10px] border-primary/30 text-primary">
-                          {p.condition_label}
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-xs mt-1 text-foreground">{p.preference_value}</p>
+                  <div className="min-w-0 flex-1 group/prefedit">
+                    {isPrefEditing ? (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="secondary" className="text-[10px] shrink-0">
+                            {PREFERENCE_KEY_LABELS[p.preference_key as keyof typeof PREFERENCE_KEY_LABELS] ?? p.preference_key}
+                          </Badge>
+                          <Input
+                            value={editedCondition || ""}
+                            onChange={e => setPrefEdits(prev => ({ ...prev, [i]: { ...prev[i], condition_label: e.target.value || undefined } }))}
+                            className="h-7 text-xs flex-1"
+                            placeholder="Condition label (optional)"
+                            onClick={e => e.stopPropagation()}
+                          />
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 shrink-0"
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setEditingKey(null); }}
+                          >
+                            <Check className="h-3 w-3 text-primary" />
+                          </Button>
+                        </div>
+                        <Textarea
+                          value={editedValue}
+                          onChange={e => setPrefEdits(prev => ({ ...prev, [i]: { ...prev[i], preference_value: e.target.value } }))}
+                          rows={2}
+                          className="text-xs resize-none"
+                          placeholder="Preference value"
+                          onClick={e => e.stopPropagation()}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <Badge variant="secondary" className="text-[10px]">
+                            {PREFERENCE_KEY_LABELS[p.preference_key as keyof typeof PREFERENCE_KEY_LABELS] ?? p.preference_key}
+                          </Badge>
+                          {editedCondition && (
+                            <Badge variant="outline" className="text-[10px] border-primary/30 text-primary">
+                              {editedCondition}
+                            </Badge>
+                          )}
+                          {hasEdits && (
+                            <Badge variant="secondary" className="text-[9px]">edited</Badge>
+                          )}
+                          <button
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setEditingKey(`pref-${i}`); }}
+                            className="opacity-0 group-hover/prefedit:opacity-100 transition-opacity p-0.5 rounded hover:bg-secondary/50"
+                            title="Edit"
+                          >
+                            <Pencil className="h-3 w-3 text-muted-foreground" />
+                          </button>
+                        </div>
+                        <p className="text-xs mt-1 text-foreground">{editedValue}</p>
+                      </>
+                    )}
                   </div>
                 </label>
-              ))}
+                );
+              })}
             </div>
           )}
 
