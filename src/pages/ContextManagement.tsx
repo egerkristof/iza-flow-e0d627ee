@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
-  Archive, FileText, Check, Gauge, GitBranch, Zap,
+  Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -54,12 +54,20 @@ export default function ContextManagementPage() {
   const [domainFilter, setDomainFilter] = useState<string | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [itemDialog, setItemDialog] = useState(false);
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
 
   // New item form state
-  const emptyItem = {
-    title: "", content_preview: "", category: "KNOWLEDGE" as const, priority: "STANDARD" as const,
-    security_level: "INTERNAL" as const, action_type: "APPEND" as const,
-    trigger_intent: "", domain_tags_input: "", bundle_ids: [] as string[],
+  const emptyItem: {
+    title: string; content_preview: string;
+    category: "DIRECTIVE" | "KNOWLEDGE" | "PROCEDURE" | "PLAYBOOK" | "PREFERENCE";
+    priority: "STANDARD" | "CRITICAL";
+    security_level: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY";
+    action_type: "APPEND" | "OVERRIDE" | "BLOCK";
+    trigger_intent: string; domain_tags_input: string; bundle_ids: string[];
+  } = {
+    title: "", content_preview: "", category: "KNOWLEDGE", priority: "STANDARD",
+    security_level: "INTERNAL", action_type: "APPEND",
+    trigger_intent: "", domain_tags_input: "", bundle_ids: [],
   };
   const [newItem, setNewItem] = useState(emptyItem);
   const [bundleSearch, setBundleSearch] = useState("");
@@ -98,29 +106,67 @@ export default function ContextManagementPage() {
 
   const selectedItem = items.find(i => i.id === selectedItemId);
 
-  // Handle create item
-  const handleCreateItem = () => {
+  // Handle create/update item
+  const handleSaveItem = () => {
     const domainTags = newItem.domain_tags_input.split(",").map(t => t.trim()).filter(Boolean);
-    const item: MockContextItem = {
-      id: `ci${Date.now()}`,
-      title: newItem.title,
-      content_preview: newItem.content_preview,
-      category: newItem.category,
-      priority: newItem.priority,
-      security_level: newItem.security_level,
-      action_type: newItem.action_type,
-      bundle_id: newItem.bundle_ids[0] ?? null,
-      bundle_ids: newItem.bundle_ids,
-      domain_tags: domainTags.length > 0 ? domainTags : ["general"],
-      trigger_intent: newItem.trigger_intent || null,
-      last_used_at: null,
-      version: "v1.0",
-      created_at: new Date().toISOString(),
-    };
-    setItems(prev => [item, ...prev]);
-    setItemDialog(false);
-    setNewItem(emptyItem);
-    toast({ title: "Context item created", description: `"${item.title}" added${item.bundle_ids.length > 0 ? ` to ${item.bundle_ids.length} bundle(s)` : ""}` });
+    if (editingItemId) {
+      // Update existing
+      setItems(prev => prev.map(i => i.id === editingItemId ? {
+        ...i,
+        title: newItem.title,
+        content_preview: newItem.content_preview,
+        category: newItem.category,
+        priority: newItem.priority,
+        security_level: newItem.security_level,
+        action_type: newItem.action_type,
+        trigger_intent: newItem.trigger_intent || null,
+        domain_tags: domainTags.length > 0 ? domainTags : ["general"],
+        bundle_id: newItem.bundle_ids[0] ?? null,
+        bundle_ids: newItem.bundle_ids,
+      } : i));
+      setItemDialog(false);
+      setEditingItemId(null);
+      setNewItem(emptyItem);
+      toast({ title: "Context item updated", description: `"${newItem.title}" saved.` });
+    } else {
+      const item: MockContextItem = {
+        id: `ci${Date.now()}`,
+        title: newItem.title,
+        content_preview: newItem.content_preview,
+        category: newItem.category,
+        priority: newItem.priority,
+        security_level: newItem.security_level,
+        action_type: newItem.action_type,
+        bundle_id: newItem.bundle_ids[0] ?? null,
+        bundle_ids: newItem.bundle_ids,
+        domain_tags: domainTags.length > 0 ? domainTags : ["general"],
+        trigger_intent: newItem.trigger_intent || null,
+        last_used_at: null,
+        version: "v1.0",
+        created_at: new Date().toISOString(),
+      };
+      setItems(prev => [item, ...prev]);
+      setItemDialog(false);
+      setNewItem(emptyItem);
+      toast({ title: "Context item created", description: `"${item.title}" added${item.bundle_ids.length > 0 ? ` to ${item.bundle_ids.length} bundle(s)` : ""}` });
+    }
+  };
+
+  // Open edit dialog pre-populated
+  const openEditDialog = (item: MockContextItem) => {
+    setEditingItemId(item.id);
+    setNewItem({
+      title: item.title,
+      content_preview: item.content_preview,
+      category: item.category,
+      priority: item.priority,
+      security_level: item.security_level,
+      action_type: item.action_type,
+      trigger_intent: item.trigger_intent ?? "",
+      domain_tags_input: item.domain_tags.join(", "),
+      bundle_ids: [...item.bundle_ids],
+    });
+    setItemDialog(true);
   };
 
   const handleDeleteBundle = (id: string) => {
@@ -186,7 +232,7 @@ export default function ContextManagementPage() {
             <Button onClick={() => { setEditingBundle(null); setBundleDialog(true); }} variant="outline" className="gap-1.5">
               <Plus className="h-4 w-4" /> New Bundle
             </Button>
-            <Button onClick={() => { setNewItem(emptyItem); setItemDialog(true); }} className="gap-1.5">
+            <Button onClick={() => { setEditingItemId(null); setNewItem(emptyItem); setItemDialog(true); }} className="gap-1.5">
               <Plus className="h-4 w-4" /> New Item
             </Button>
           </div>
@@ -237,7 +283,7 @@ export default function ContextManagementPage() {
                     {filteredItems.length === 0 ? (
                       <div className="text-center py-12 text-muted-foreground text-sm">No items match your filters</div>
                     ) : filteredItems.map(item => (
-                      <ContextItemRow key={item.id} item={item} selected={selectedItemId === item.id} onClick={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)} />
+                      <ContextItemRow key={item.id} item={item} selected={selectedItemId === item.id} onClick={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)} onEdit={openEditDialog} />
                     ))}
                   </div>
                 </ScrollArea>
@@ -245,11 +291,16 @@ export default function ContextManagementPage() {
                   <div className="shrink-0 border-t border-border/50 p-4 bg-card/50 max-h-48 overflow-auto">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-sm font-semibold">{selectedItem.title}</h3>
-                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setSelectedItemId(null)}><X className="h-3 w-3" /></Button>
+                      <div className="flex items-center gap-1">
+                        <Button variant="ghost" size="sm" className="h-6 text-xs gap-1" onClick={() => openEditDialog(selectedItem)}>
+                          <Pencil className="h-3 w-3" /> Edit
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setSelectedItemId(null)}><X className="h-3 w-3" /></Button>
+                      </div>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">{selectedItem.content_preview}</p>
                     <div className="flex gap-2 mt-2 text-[10px] text-muted-foreground">
-                      <span>Version: {selectedItem.version}</span><span>·</span><span>Trigger: {selectedItem.trigger_intent ?? "None"}</span>
+                      <span>Version: {selectedItem.version}</span><span>·</span><span>Trigger: {selectedItem.trigger_intent ?? "None"}</span><span>·</span><span>Bundles: {selectedItem.bundle_ids.length > 0 ? selectedItem.bundle_ids.map(bid => bundles.find(b => b.id === bid)?.title ?? bid).join(", ") : "None"}</span>
                     </div>
                   </div>
                 )}
@@ -396,9 +447,9 @@ export default function ContextManagementPage() {
       <ImpactSimulator open={impactSimOpen} onOpenChange={setImpactSimOpen} itemTitle={impactTarget} changeType="update" />
 
       {/* New Item Dialog */}
-      <Dialog open={itemDialog} onOpenChange={setItemDialog}>
+      <Dialog open={itemDialog} onOpenChange={v => { setItemDialog(v); if (!v) setEditingItemId(null); }}>
         <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
-          <DialogHeader><DialogTitle>Create Context Item</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{editingItemId ? "Edit Context Item" : "Create Context Item"}</DialogTitle></DialogHeader>
           <div className="space-y-4">
             <div className="space-y-1.5">
               <Label className="text-xs">Title</Label>
@@ -483,7 +534,7 @@ export default function ContextManagementPage() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setItemDialog(false)}>Cancel</Button>
-            <Button onClick={handleCreateItem} disabled={!newItem.title.trim() || !newItem.content_preview.trim()}>Create Item</Button>
+            <Button onClick={handleSaveItem} disabled={!newItem.title.trim() || !newItem.content_preview.trim()}>{editingItemId ? "Save Changes" : "Create Item"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

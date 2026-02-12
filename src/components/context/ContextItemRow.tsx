@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MockContextItem } from "@/data/mockContextItems";
-import { Shield, Zap, Clock, MoreVertical } from "lucide-react";
+import { Shield, Zap, Clock, MoreVertical, Pencil } from "lucide-react";
 import { DeleteDisambiguation } from "@/components/governance/DeleteDisambiguation";
 
 const categoryColors: Record<string, string> = {
@@ -22,9 +22,10 @@ interface ContextItemRowProps {
   item: MockContextItem;
   selected: boolean;
   onClick: () => void;
+  onEdit?: (item: MockContextItem) => void;
 }
 
-export function ContextItemRow({ item, selected, onClick }: ContextItemRowProps) {
+export function ContextItemRow({ item, selected, onClick, onEdit }: ContextItemRowProps) {
   return (
     <div
       onClick={onClick}
@@ -50,6 +51,17 @@ export function ContextItemRow({ item, selected, onClick }: ContextItemRowProps)
           <Badge variant="outline" className={`text-[10px] ${categoryColors[item.category] ?? ""}`}>
             {item.category}
           </Badge>
+          {onEdit && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6"
+              style={{ opacity: selected ? 1 : 0 }}
+              onClick={e => { e.stopPropagation(); onEdit(item); }}
+            >
+              <Pencil className="h-3 w-3" />
+            </Button>
+          )}
           <DeleteDisambiguation itemTitle={item.title}>
             <Button
               variant="ghost"
