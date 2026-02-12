@@ -289,6 +289,8 @@ export type Database = {
       }
       working_preferences: {
         Row: {
+          bound_playbook_ids: string[] | null
+          condition_label: string | null
           created_at: string
           description: string | null
           id: string
@@ -297,10 +299,14 @@ export type Database = {
           preference_value: string
           scope_id: string | null
           scope_type: string
+          trigger_intents: string[] | null
+          trigger_keywords: string[] | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          bound_playbook_ids?: string[] | null
+          condition_label?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -309,10 +315,14 @@ export type Database = {
           preference_value: string
           scope_id?: string | null
           scope_type?: string
+          trigger_intents?: string[] | null
+          trigger_keywords?: string[] | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          bound_playbook_ids?: string[] | null
+          condition_label?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -321,6 +331,8 @@ export type Database = {
           preference_value?: string
           scope_id?: string | null
           scope_type?: string
+          trigger_intents?: string[] | null
+          trigger_keywords?: string[] | null
           updated_at?: string
           user_id?: string
         }
