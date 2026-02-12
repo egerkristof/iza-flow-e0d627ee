@@ -18,12 +18,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
-                size="icon"
-                className="h-8 w-8 relative"
-                title="Research Lens"
+                size="sm"
+                className="h-8 gap-2 text-xs text-muted-foreground hover:text-foreground"
+                title="Research Lens (⌘K)"
                 onClick={() => setLensOpen(true)}
               >
                 <Search className="h-4 w-4" />
+                <span className="hidden sm:inline">Research</span>
+                <kbd className="hidden sm:inline-flex h-5 items-center rounded border border-border bg-secondary px-1.5 text-[10px] font-mono text-muted-foreground">⌘K</kbd>
               </Button>
             </div>
           </header>
