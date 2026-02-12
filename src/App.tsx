@@ -10,6 +10,7 @@ import AuthPage from "./pages/Auth";
 import LaunchpadPage from "./pages/Launchpad";
 import CommandCenterPage from "./pages/CommandCenter";
 import ProcessStudioPage from "./pages/ProcessStudio";
+import WorkbooksPage from "./pages/Workbooks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/launchpad" element={<ProtectedRoute><LaunchpadPage /></ProtectedRoute>} />
+            <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/command-center" element={<ProtectedRoute><CommandCenterPage /></ProtectedRoute>} />
             <Route path="/process-studio" element={<ProtectedRoute><ProcessStudioPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
