@@ -1,5 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Plus,
   Search,
@@ -23,106 +26,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { WorkbookCard, type WorkbookCardData } from "@/components/workbooks/WorkbookCard";
 
-// ── MOCK DATA ──
-const MOCK_WORKBOOKS: WorkbookCardData[] = [
-  {
-    id: "1",
-    title: "Q1 OKR Planning",
-    description: "Define success metrics and align team objectives for Q1 growth targets.",
-    status: "active",
-    driftScore: 0.12,
-    memberAvatars: ["IB", "KT", "AL"],
-    commentCount: 8,
-    updatedAt: "2h ago",
-    strategicOutcome: "Growth 30% YoY",
-    lockedPlaybook: "Strategic Planning",
-  },
-  {
-    id: "2",
-    title: "Market Expansion APAC",
-    description: "Feasibility study and go-to-market strategy for Southeast Asia entry.",
-    status: "active",
-    driftScore: 0.45,
-    memberAvatars: ["IB", "MR", "JP", "SL"],
-    commentCount: 14,
-    updatedAt: "5h ago",
-    strategicOutcome: "Enter 3 new markets",
-    lockedPlaybook: "Market Analysis",
-  },
-  {
-    id: "3",
-    title: "Client Onboarding — Acme Corp",
-    description: "90-day activation plan including system setup, training, and SLA alignment.",
-    status: "active",
-    driftScore: 0.08,
-    memberAvatars: ["KT", "AL"],
-    commentCount: 5,
-    updatedAt: "30m ago",
-    strategicOutcome: "90-day activation",
-    lockedPlaybook: "Onboarding Setup",
-  },
-  {
-    id: "4",
-    title: "Proposal Pipeline — Enterprise",
-    description: "Enterprise deal pipeline with pricing, technical scope, and executive summary.",
-    status: "review",
-    driftScore: 0.62,
-    memberAvatars: ["IB", "MR"],
-    commentCount: 22,
-    updatedAt: "1h ago",
-    strategicOutcome: "Close by Q1",
-    lockedPlaybook: "Draft Proposal",
-  },
-  {
-    id: "5",
-    title: "Deal Retrospective — Beta Inc",
-    description: "Win/loss analysis and process improvement documentation.",
-    status: "completed",
-    driftScore: 0.03,
-    memberAvatars: ["JP"],
-    commentCount: 3,
-    updatedAt: "1d ago",
-    strategicOutcome: "Process Improvement",
-    lockedPlaybook: null,
-  },
-  {
-    id: "6",
-    title: "Annual Contract Renewal",
-    description: "Contract renewal processing for key accounts, terms negotiation.",
-    status: "completed",
-    driftScore: 0.0,
-    memberAvatars: ["AL", "SL"],
-    commentCount: 1,
-    updatedAt: "3d ago",
-    strategicOutcome: "100% renewal rate",
-    lockedPlaybook: null,
-  },
-  {
-    id: "7",
-    title: "Competitive Intel — Q1",
-    description: "Battlecard updates and competitive positioning refresh across all verticals.",
-    status: "draft",
-    driftScore: 0,
-    memberAvatars: ["MR"],
-    commentCount: 0,
-    updatedAt: "5d ago",
-    strategicOutcome: null,
-    lockedPlaybook: null,
-  },
-  {
-    id: "8",
-    title: "Product Launch — v3.0",
-    description: "Cross-functional launch plan including messaging, enablement, and rollout.",
-    status: "draft",
-    driftScore: 0,
-    memberAvatars: ["IB", "KT", "JP", "AL", "MR"],
-    commentCount: 2,
-    updatedAt: "1w ago",
-    strategicOutcome: "Launch by March",
-    lockedPlaybook: null,
-  },
-];
-
 const STATUS_FILTERS = [
   { value: "all", label: "All" },
   { value: "active", label: "Active" },
@@ -135,6 +38,8 @@ const STATUS_FILTERS = [
 const WorkbooksPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -143,8 +48,88 @@ const WorkbooksPage = () => {
   const [newDescription, setNewDescription] = useState("");
   const [newOutcome, setNewOutcome] = useState("");
 
+  // Fetch workbooks from DB
+  const { data: dbWorkbooks = [], isLoading } = useQuery({
+    queryKey: ["workbooks"],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workbooks")
+        .select("id, title, description, status, drift_score, strategic_outcome, updated_at, created_at")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Realtime subscription
+  useEffect(() => {
+    const channel = supabase
+      .channel("workbooks-list")
+      .on("postgres_changes", { event: "*", schema: "public", table: "workbooks" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["workbooks"] });
+      })
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [queryClient]);
+
+  // Map DB rows to WorkbookCardData
+  const workbooks: WorkbookCardData[] = useMemo(() => {
+    return dbWorkbooks.map((wb) => {
+      const now = new Date();
+      const updated = new Date(wb.updated_at);
+      const diffMs = now.getTime() - updated.getTime();
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+      const updatedAt =
+        diffMins < 1 ? "just now" :
+        diffMins < 60 ? `${diffMins}m ago` :
+        diffHours < 24 ? `${diffHours}h ago` :
+        diffDays < 7 ? `${diffDays}d ago` : `${Math.floor(diffDays / 7)}w ago`;
+
+      return {
+        id: wb.id,
+        title: wb.title,
+        description: wb.description ?? "",
+        status: wb.status,
+        driftScore: Number(wb.drift_score) || 0,
+        memberAvatars: [],
+        commentCount: 0,
+        updatedAt,
+        strategicOutcome: wb.strategic_outcome,
+        lockedPlaybook: null,
+      };
+    });
+  }, [dbWorkbooks]);
+
+  // Create workbook mutation
+  const createWorkbook = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Not authenticated");
+      const { data, error } = await supabase.from("workbooks").insert({
+        title: newTitle,
+        description: newDescription || null,
+        strategic_outcome: newOutcome || null,
+        owner_id: user.id,
+      }).select("id").single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["workbooks"] });
+      toast({ title: "Workbook created", description: `"${newTitle}" has been created.` });
+      setCreateOpen(false);
+      setNewTitle("");
+      setNewDescription("");
+      setNewOutcome("");
+      navigate(`/workbooks/${data.id}`);
+    },
+    onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
+  });
+
   const filtered = useMemo(() => {
-    return MOCK_WORKBOOKS.filter((wb) => {
+    return workbooks.filter((wb) => {
       const matchesSearch =
         !search ||
         wb.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -152,7 +137,7 @@ const WorkbooksPage = () => {
       const matchesStatus = statusFilter === "all" || wb.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [search, statusFilter]);
+  }, [search, statusFilter, workbooks]);
 
   const handleOpen = (id: string) => {
     navigate(`/workbooks/${id}`);
@@ -160,11 +145,7 @@ const WorkbooksPage = () => {
 
   const handleCreate = () => {
     if (!newTitle.trim()) return;
-    toast({ title: "Workbook created", description: `"${newTitle}" has been created.` });
-    setCreateOpen(false);
-    setNewTitle("");
-    setNewDescription("");
-    setNewOutcome("");
+    createWorkbook.mutate();
   };
 
   const openCreateDialog = () => {
@@ -181,8 +162,7 @@ const WorkbooksPage = () => {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Workbooks</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            {filtered.length} workbook{filtered.length !== 1 ? "s" : ""} ·{" "}
-            {MOCK_WORKBOOKS.filter((w) => w.status === "active").length} active
+            {isLoading ? "Loading…" : `${filtered.length} workbook${filtered.length !== 1 ? "s" : ""} · ${workbooks.filter((w) => w.status === "active").length} active`}
           </p>
         </div>
         <Button className="gap-2 self-start" onClick={openCreateDialog}>
@@ -264,7 +244,7 @@ const WorkbooksPage = () => {
       )}
 
       {/* Empty state */}
-      {filtered.length === 0 && (
+      {filtered.length === 0 && !isLoading && (
         <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
           <p className="text-sm">No workbooks match your filters.</p>
           <Button
@@ -321,7 +301,9 @@ const WorkbooksPage = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setCreateOpen(false)}>Cancel</Button>
-            <Button onClick={handleCreate} disabled={!newTitle.trim()}>Create</Button>
+            <Button onClick={handleCreate} disabled={!newTitle.trim() || createWorkbook.isPending}>
+              {createWorkbook.isPending ? "Creating…" : "Create"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
