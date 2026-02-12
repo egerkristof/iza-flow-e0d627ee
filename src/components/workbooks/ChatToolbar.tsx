@@ -30,6 +30,8 @@ interface ChatToolbarProps {
   onTaskCreated?: () => void;
   /** Chat ID for capture source tracking */
   chatId?: string;
+  /** Parent task ID — subtasks created here will be nested under this task */
+  parentTaskId?: string;
 }
 
 interface ClassificationResult {
@@ -52,6 +54,7 @@ export function ChatToolbar({
   placeholder = "Type a message, /task <title>, or /capture <text>…",
   onTaskCreated,
   chatId,
+  parentTaskId,
 }: ChatToolbarProps) {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -91,6 +94,7 @@ export function ChatToolbar({
         title,
         created_by: user.id,
         assigned_to: user.id,
+        ...(parentTaskId ? { parent_task_id: parentTaskId } : {}),
       } as any);
       if (error) throw error;
     },
