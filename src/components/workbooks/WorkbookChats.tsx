@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageSquare, Plus, Users, User, X, Hash } from "lucide-react";
+import { MessageSquare, Plus, Users, User, X, Hash, Search, Filter } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -59,8 +59,13 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
   const [typeFilter, setTypeFilter] = useState<"all" | "private" | "group">("all");
   const [newChatOpen, setNewChatOpen] = useState(false);
   const [highlightedChatId, setHighlightedChatId] = useState<string | null>(null);
+  const [chatSearch, setChatSearch] = useState("");
 
-  const filtered = threads.filter(t => typeFilter === "all" || t.type === typeFilter);
+  const filtered = threads.filter(t => {
+    const matchesType = typeFilter === "all" || t.type === typeFilter;
+    const matchesSearch = !chatSearch || t.title.toLowerCase().includes(chatSearch.toLowerCase()) || t.lastMessage.toLowerCase().includes(chatSearch.toLowerCase());
+    return matchesType && matchesSearch;
+  });
 
   // Auto-focus a chat when navigated from graph
   useEffect(() => {
@@ -171,6 +176,22 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <div className="relative flex-1">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+          <Input
+            placeholder="Search chats…"
+            value={chatSearch}
+            onChange={e => setChatSearch(e.target.value)}
+            className="pl-8 h-8 text-xs"
+          />
+          {chatSearch && (
+            <button onClick={() => setChatSearch("")} className="absolute right-2 top-1/2 -translate-y-1/2">
+              <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+            </button>
+          )}
+        </div>
+      </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           {(["all", "private", "group"] as const).map(type => (
