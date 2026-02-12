@@ -8,6 +8,7 @@ import {
   Minimize2, Maximize2, Search, Filter, Pencil,
 } from "lucide-react";
 import { ChatToolbar } from "./ChatToolbar";
+import { MandateContextBanner } from "./MandateContextBanner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -247,6 +248,11 @@ function TaskSubchat({ task, workbookId, workbookTitle, allTasks, onClose, onMin
           <Badge variant="outline" className="text-[9px] border-info/30 text-info gap-0.5"><FileText className="h-2 w-2" /> History</Badge>
         )}
         <Badge variant="outline" className="text-[9px] gap-0.5">Depth: {task.context_config.depth_limit}</Badge>
+      </div>
+
+      {/* Active mandates in context */}
+      <div className="px-2 py-1.5 border-b border-info/10">
+        <MandateContextBanner workbookId={workbookId} compact />
       </div>
 
       {/* Messages */}
@@ -802,6 +808,9 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
           </div>
         )}
       </div>
+
+      {/* Active Mandates */}
+      <MandateContextBanner workbookId={workbookId} />
 
       {/* Task list */}
       <ScrollArea className="max-h-[600px]">
