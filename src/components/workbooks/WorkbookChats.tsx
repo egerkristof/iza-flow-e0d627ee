@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { ChatToolbar } from "./ChatToolbar";
 import { type WorkbookResource } from "./WorkbookResources";
+import { MandateContextBanner } from "./MandateContextBanner";
 import { FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
 
 interface ChatThread {
@@ -129,6 +130,8 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
           </div>
           <Badge variant="outline" className="text-[10px]">{active.type}</Badge>
         </div>
+        {/* Mandate context */}
+        <MandateContextBanner workbookId={workbookId} />
 
         {/* Messages */}
         <ScrollArea className="flex-1 p-4">
