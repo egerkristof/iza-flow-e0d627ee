@@ -331,8 +331,17 @@ export function WorkingPreferences() {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        {/* Template Gallery */}
-        <PreferenceTemplateGallery />
+        {/* Template Gallery — collapsible, closed by default */}
+        <Collapsible>
+          <CollapsibleTrigger className="flex items-center gap-2 w-full text-left group">
+            <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-90" />
+            <span className="text-sm font-semibold">Role Templates</span>
+            <span className="text-xs text-muted-foreground">— one-click import curated preference sets</span>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="pt-3">
+            <PreferenceTemplateGallery />
+          </CollapsibleContent>
+        </Collapsible>
 
         {/* Divider */}
         <div className="border-t border-border/50" />
