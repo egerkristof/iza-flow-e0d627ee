@@ -37,28 +37,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    // 1. Set up the listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-
-      if (currentUser) {
-        await loadUserData(currentUser);
-      } else {
-        setRoles(["operator"]);
-        setActiveRole("operator");
-        setProfile(null);
-      }
-      setLoading(false);
-    });
-
-    // 2. THEN check for existing session
+    // 1. Check existing session first
     supabase.auth.getSession().then(({ data: { session } }) => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
         loadUserData(currentUser).finally(() => setLoading(false));
       } else {
+        setLoading(false);
+      }
+    });
+
+    // 2. Listen for future changes (NOT initial)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      // Skip INITIAL_SESSION — already handled above
+      if (event === "INITIAL_SESSION") return;
+
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+
+      if (currentUser) {
+        // Use setTimeout to avoid Supabase deadlock inside callback
+        setTimeout(() => {
+          loadUserData(currentUser).finally(() => setLoading(false));
+        }, 0);
+      } else {
+        setRoles(["operator"]);
+        setActiveRole("operator");
+        setProfile(null);
         setLoading(false);
       }
     });
