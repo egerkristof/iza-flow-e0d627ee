@@ -215,16 +215,21 @@ function GraphNodeElement({
   isSelected,
   onSelect,
   onHover,
+  onNavigate,
 }: {
   node: GraphNode;
   isSelected: boolean;
   onSelect: (id: string | null) => void;
   onHover: (id: string | null) => void;
+  onNavigate?: (id: string, type: "task" | "subtask" | "chat") => void;
 }) {
   return (
     <g
       className="cursor-pointer transition-transform"
       onClick={() => onSelect(isSelected ? null : node.id)}
+      onDoubleClick={() => {
+        if (node.type !== "workbook") onNavigate?.(node.id, node.type);
+      }}
       onMouseEnter={() => onHover(node.id)}
       onMouseLeave={() => onHover(null)}
     >
@@ -477,6 +482,7 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
                 isSelected={selectedNode === node.id}
                 onSelect={setSelectedNode}
                 onHover={setHoveredNode}
+                onNavigate={onNodeNavigate}
               />
             ))}
           </g>
