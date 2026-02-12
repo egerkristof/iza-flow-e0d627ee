@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, FileText, Trash2, Linkedin, Award, File, Loader2, BookUp } from "lucide-react";
+import { Upload, FileText, Trash2, Linkedin, Award, File, Loader2, BookUp, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PromoteToContextDialog } from "./PromoteToContextDialog";
+import { ExtractionReviewDialog, type ExtractionResult } from "./ExtractionReviewDialog";
 
 const CATEGORIES = [
   { value: "cv", label: "CV / Resume", icon: FileText },
@@ -28,6 +29,10 @@ export function PersonalDocuments() {
   const [uploading, setUploading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("cv");
   const [promoteDoc, setPromoteDoc] = useState<{ title: string; content: string } | null>(null);
+  const [extracting, setExtracting] = useState<string | null>(null);
+  const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
+  const [extractionDocName, setExtractionDocName] = useState("");
+  const [reviewOpen, setReviewOpen] = useState(false);
 
   const { data: docs = [], isLoading } = useQuery({
     queryKey: ["personal-documents", user?.id],
@@ -59,7 +64,6 @@ export function PersonalDocuments() {
     const file = e.target.files?.[0];
     if (!file || !user) return;
 
-    // 20MB limit
     if (file.size > 20 * 1024 * 1024) {
       toast({ title: "File too large", description: "Max 20MB", variant: "destructive" });
       return;
@@ -90,6 +94,26 @@ export function PersonalDocuments() {
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
+    }
+  };
+
+  const handleExtract = async (docId: string, docName: string) => {
+    setExtracting(docId);
+    try {
+      const { data, error } = await supabase.functions.invoke("extract-profile", {
+        body: { documentId: docId },
+      });
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setExtractionResult(data as ExtractionResult);
+      setExtractionDocName(docName);
+      setReviewOpen(true);
+      qc.invalidateQueries({ queryKey: ["personal-documents"] });
+    } catch (err: any) {
+      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+    } finally {
+      setExtracting(null);
     }
   };
 
@@ -166,6 +190,20 @@ export function PersonalDocuments() {
                   <Button
                     variant="ghost"
                     size="icon"
+                    className="h-7 w-7 text-amber-400 hover:text-amber-300"
+                    title="Extract preferences & context with AI"
+                    disabled={extracting === doc.id}
+                    onClick={() => handleExtract(doc.id, doc.file_name)}
+                  >
+                    {extracting === doc.id ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-3.5 w-3.5" />
+                    )}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     className="h-7 w-7 text-primary hover:text-primary"
                     title="Promote to Context Item"
                     onClick={() => setPromoteDoc({
@@ -195,6 +233,13 @@ export function PersonalDocuments() {
           defaultTitle={promoteDoc?.title ?? ""}
           defaultContent={promoteDoc?.content ?? ""}
           sourceLabel="Document"
+        />
+
+        <ExtractionReviewDialog
+          open={reviewOpen}
+          onOpenChange={setReviewOpen}
+          data={extractionResult}
+          documentName={extractionDocName}
         />
       </CardContent>
     </Card>

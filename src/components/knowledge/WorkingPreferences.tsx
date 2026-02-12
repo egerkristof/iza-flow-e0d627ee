@@ -11,9 +11,10 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Plus, Settings2, Trash2, Zap, Hash, BookOpen, ChevronDown, ChevronRight, Filter, Tag } from "lucide-react";
+import { Plus, Settings2, Trash2, Zap, Hash, BookOpen, ChevronDown, ChevronRight, Filter, Tag, BookUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PreferenceTemplateGallery } from "./PreferenceTemplateGallery";
+import { PromoteToContextDialog } from "./PromoteToContextDialog";
 
 // ── Preference types ──
 const PRESET_KEYS = [
@@ -24,6 +25,10 @@ const PRESET_KEYS = [
   { key: "excluded_topics", label: "Topics to Skip", hint: "e.g. competitor mentions, historical context" },
   { key: "preferred_frameworks", label: "Preferred Frameworks", hint: "e.g. MECE, Jobs-to-be-Done, OKR" },
   { key: "output_format", label: "Output Format", hint: "e.g. Markdown table, numbered list, narrative paragraph" },
+  { key: "principles", label: "Principles", hint: "e.g. always lead with data, transparency first, user-centric" },
+  { key: "prohibitions", label: "Prohibitions", hint: "e.g. never guarantee outcomes, avoid jargon, no speculation" },
+  { key: "expertise", label: "Expertise", hint: "e.g. enterprise SaaS, regulatory compliance, M&A advisory" },
+  { key: "past_experiences", label: "Past Experiences", hint: "e.g. led APAC expansion at Acme, managed $50M portfolio" },
   { key: "custom", label: "Custom Preference", hint: "Define your own" },
 ];
 
@@ -64,6 +69,7 @@ export function WorkingPreferences() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ ...EMPTY_FORM });
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [promotePref, setPromotePref] = useState<{ title: string; content: string } | null>(null);
 
   const { data: prefs = [], isLoading } = useQuery({
     queryKey: ["working-preferences", user?.id],
@@ -369,6 +375,18 @@ export function WorkingPreferences() {
                       </div>
                     </button>
                     <div className="flex items-center gap-2 shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-primary hover:text-primary"
+                        title="Promote to Context Item"
+                        onClick={() => setPromotePref({
+                          title: `${keyLabel(p.preference_key)}${p.condition_label ? ` — ${p.condition_label}` : ""}`,
+                          content: p.preference_value,
+                        })}
+                      >
+                        <BookUp className="h-3.5 w-3.5" />
+                      </Button>
                       <Switch
                         checked={p.is_active}
                         onCheckedChange={(checked) => toggleMutation.mutate({ id: p.id, is_active: checked })}
@@ -418,6 +436,14 @@ export function WorkingPreferences() {
             })}
           </div>
         )}
+
+        <PromoteToContextDialog
+          open={!!promotePref}
+          onOpenChange={(v) => { if (!v) setPromotePref(null); }}
+          defaultTitle={promotePref?.title ?? ""}
+          defaultContent={promotePref?.content ?? ""}
+          sourceLabel="Preference"
+        />
       </CardContent>
     </Card>
   );
