@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Lock, Unlock, Play, ChevronRight, ChevronLeft, FileText, Zap, Target,
-  Search as SearchIcon, BarChart, Users, MessageSquare,
+  Search as SearchIcon, BarChart, Users, MessageSquare, Settings, TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/contexts/AuthContext";
 
 // ── MOCK PLAYBOOKS (from old Launchpad) ──
 interface Playbook {
@@ -39,7 +41,11 @@ const MOCK_WORKBOOK_DATA: Record<string, { title: string; description: string; s
 export default function WorkbookDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { activeRole } = useAuth();
   const wb = MOCK_WORKBOOK_DATA[id ?? ""] ?? { title: "Unknown Workbook", description: "", strategicOutcome: "", status: "draft" };
+
+  const showAnalytics = activeRole === "manager" || activeRole === "architect";
+  const showSettings = activeRole === "architect";
 
   const [lockedPlaybook, setLockedPlaybook] = useState<Playbook | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -160,26 +166,54 @@ export default function WorkbookDetailPage() {
         </div>
       </div>
 
-      {/* Action Grid */}
-      <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Select a Protocol</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {MOCK_PLAYBOOKS.map(pb => (
-            <button key={pb.id} onClick={() => handleLock(pb)} className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 text-left transition-all hover:border-primary/30 hover:glow-sm">
-              <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">{pb.icon}</div>
-                <div>
-                  <h3 className="font-medium">{pb.title}</h3>
-                  <p className="text-xs text-muted-foreground">{pb.subtitle}</p>
+      {/* Tabbed sections — role-filtered */}
+      <Tabs defaultValue="protocols" className="w-full">
+        <TabsList>
+          <TabsTrigger value="protocols">Protocols</TabsTrigger>
+          {showAnalytics && <TabsTrigger value="analytics"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Analytics</TabsTrigger>}
+          {showSettings && <TabsTrigger value="settings"><Settings className="mr-1.5 h-3.5 w-3.5" />Settings</TabsTrigger>}
+        </TabsList>
+
+        <TabsContent value="protocols" className="mt-4">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Select a Protocol</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {MOCK_PLAYBOOKS.map(pb => (
+              <button key={pb.id} onClick={() => handleLock(pb)} className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 text-left transition-all hover:border-primary/30 hover:glow-sm">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">{pb.icon}</div>
+                  <div>
+                    <h3 className="font-medium">{pb.title}</h3>
+                    <p className="text-xs text-muted-foreground">{pb.subtitle}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span>{pb.steps.length} steps</span><span>·</span><span>{pb.assets.length} assets</span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{pb.steps.length} steps</span><span>·</span><span>{pb.assets.length} assets</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </TabsContent>
+
+        {showAnalytics && (
+          <TabsContent value="analytics" className="mt-4">
+            <div className="rounded-lg border border-border/50 bg-card p-8 text-center">
+              <TrendingUp className="mx-auto h-8 w-8 text-muted-foreground/50 mb-3" />
+              <h3 className="font-medium mb-1">Workbook Analytics</h3>
+              <p className="text-sm text-muted-foreground">Drift score trends, protocol usage stats, and completion rates will appear here.</p>
+            </div>
+          </TabsContent>
+        )}
+
+        {showSettings && (
+          <TabsContent value="settings" className="mt-4">
+            <div className="rounded-lg border border-border/50 bg-card p-8 text-center">
+              <Settings className="mx-auto h-8 w-8 text-muted-foreground/50 mb-3" />
+              <h3 className="font-medium mb-1">Workbook Configuration</h3>
+              <p className="text-sm text-muted-foreground">Bundle assignments, playbook ordering, and context overrides — visible to Process Owners only.</p>
+            </div>
+          </TabsContent>
+        )}
+      </Tabs>
     </div>
   );
 }
