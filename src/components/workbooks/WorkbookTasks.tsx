@@ -5,9 +5,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   Plus, ChevronRight, ChevronDown, Circle, CheckCircle2, Clock, AlertTriangle,
   XCircle, Settings2, Trash2, Play, X, MessageSquare, Zap, FileText, Send,
-  Minimize2, Maximize2, Search, Filter, Pencil, GripVertical,
+  Minimize2, Maximize2, Search, Filter, Pencil, GripVertical, BookUp, Loader2,
 } from "lucide-react";
 import { ChatToolbar } from "./ChatToolbar";
+import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import type { ExtractionResult } from "@/lib/knowledge-schema";
 import { MandateContextBanner } from "./MandateContextBanner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -395,6 +397,47 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
   const [contextDialog, setContextDialog] = useState<WorkbookTask | null>(null);
   const [editTask, setEditTask] = useState<WorkbookTask | null>(null);
 
+  // Knowledge extraction state
+  const [extractingTaskId, setExtractingTaskId] = useState<string | null>(null);
+  const [extractionData, setExtractionData] = useState<ExtractionResult | null>(null);
+  const [extractionSourceName, setExtractionSourceName] = useState("");
+  const [showImportCopilot, setShowImportCopilot] = useState(false);
+
+  const handleExtractKnowledge = async (task: WorkbookTask) => {
+    if (!task.description && !task.title) return;
+    setExtractingTaskId(task.id);
+    try {
+      const content = [
+        `Task: ${task.title}`,
+        task.description ? `Description/Notes:\n${task.description}` : "",
+        `Status: ${task.status}`,
+        task.completed_at ? `Completed: ${new Date(task.completed_at).toLocaleDateString()}` : "",
+      ].filter(Boolean).join("\n\n");
+
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: {
+          source_type: "task",
+          content,
+          meta: {
+            title: task.title,
+            workbook: workbookTitle || workbookId,
+            status: task.status,
+          },
+        },
+      });
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setExtractionData(data as ExtractionResult);
+      setExtractionSourceName(task.title);
+      setShowImportCopilot(true);
+    } catch (err: any) {
+      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+    } finally {
+      setExtractingTaskId(null);
+    }
+  };
+
   // Search & filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
@@ -781,6 +824,18 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
                 <MessageSquare className="h-3 w-3" />
               </Button>
             )}
+            {task.status === "done" && task.description && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-primary"
+                onClick={(e) => { e.stopPropagation(); handleExtractKnowledge(task); }}
+                title="Extract knowledge"
+                disabled={extractingTaskId === task.id}
+              >
+                {extractingTaskId === task.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <BookUp className="h-3 w-3" />}
+              </Button>
+            )}
             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={(e) => { e.stopPropagation(); setParentForNew(task.id); setCreateDialog(true); }} title="Add subtask">
               <Plus className="h-3 w-3" />
             </Button>
@@ -1021,6 +1076,15 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Import Copilot Dialog for task knowledge extraction */}
+      <ImportCopilotDialog
+        open={showImportCopilot}
+        onOpenChange={setShowImportCopilot}
+        data={extractionData}
+        sourceName={extractionSourceName}
+        sourceType="task"
+      />
     </div>
   );
 }
