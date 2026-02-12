@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -401,6 +401,10 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
   const [priorityFilter, setPriorityFilter] = useState<TaskPriority | "all">("all");
   const [showFilters, setShowFilters] = useState(false);
 
+  // Pagination state
+  const PAGE_SIZE = 25;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
   // Subchat state
   const [activeSubchats, setActiveSubchats] = useState<Map<string, { minimized: boolean }>>(new Map());
 
@@ -583,6 +587,14 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
     () => filterTree(tree, searchQuery, statusFilter, priorityFilter),
     [tree, searchQuery, statusFilter, priorityFilter]
   );
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [searchQuery, statusFilter, priorityFilter]);
+
+  const paginatedTree = useMemo(() => filteredTree.slice(0, visibleCount), [filteredTree, visibleCount]);
+  const hasMore = filteredTree.length > visibleCount;
 
   const toggleExpand = (id: string) => setExpandedTasks(prev => {
     const next = new Set(prev);
@@ -799,6 +811,7 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
           <span className="text-info flex items-center gap-1"><MessageSquare className="h-3 w-3" /> {activeSubchats.size} subchat{activeSubchats.size > 1 ? "s" : ""}</span>
         )}
         {searchQuery && <span className="text-primary">Showing {filteredTree.length} matches</span>}
+        {hasMore && <span className="text-muted-foreground/60">Showing {visibleCount} of {filteredTree.length}</span>}
         {total > 0 && (
           <div className="flex items-center gap-1.5 ml-auto">
             <div className="h-1.5 w-24 rounded-full bg-secondary overflow-hidden">
@@ -822,9 +835,43 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
                 : "No tasks yet. Create one to start tracking work in this workbook."}
             </div>
           ) : (
-            filteredTree.map(task => renderTask(task))
+            paginatedTree.map(task => renderTask(task))
           )}
         </div>
+
+        {/* Show more / pagination */}
+        {hasMore && (
+          <div className="flex items-center justify-center py-3 gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-xs gap-1.5"
+              onClick={() => setVisibleCount(prev => prev + PAGE_SIZE)}
+            >
+              Show more ({filteredTree.length - visibleCount} remaining)
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs"
+              onClick={() => setVisibleCount(filteredTree.length)}
+            >
+              Show all
+            </Button>
+          </div>
+        )}
+        {!hasMore && filteredTree.length > PAGE_SIZE && (
+          <div className="text-center py-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-[10px] text-muted-foreground"
+              onClick={() => setVisibleCount(PAGE_SIZE)}
+            >
+              Collapse to first {PAGE_SIZE}
+            </Button>
+          </div>
+        )}
       </ScrollArea>
 
       {/* Add task button */}
