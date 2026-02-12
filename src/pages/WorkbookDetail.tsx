@@ -554,7 +554,7 @@ export default function WorkbookDetailPage() {
           <TabsTrigger value="tasks"><ListTodo className="mr-1.5 h-3.5 w-3.5" />Tasks</TabsTrigger>
           <TabsTrigger value="chats"><MessageSquare className="mr-1.5 h-3.5 w-3.5" />Chats</TabsTrigger>
           <TabsTrigger value="members"><Users className="mr-1.5 h-3.5 w-3.5" />Members</TabsTrigger>
-          <TabsTrigger value="resources"><Package className="mr-1.5 h-3.5 w-3.5" />Resources</TabsTrigger>
+          <TabsTrigger value="resources"><Package className="mr-1.5 h-3.5 w-3.5" />Repository</TabsTrigger>
           {showAnalytics && <TabsTrigger value="analytics"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Analytics</TabsTrigger>}
           {showSettings && <TabsTrigger value="settings"><Settings className="mr-1.5 h-3.5 w-3.5" />Settings</TabsTrigger>}
         </TabsList>

@@ -96,7 +96,7 @@ export function ChatToolbar({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workbook-resources", workbookId] });
-      toast({ title: "Resource created" });
+      toast({ title: "Added to repository" });
       setResourceDialogOpen(false);
       setNewResTitle("");
       setNewResContent("");
@@ -158,7 +158,7 @@ export function ChatToolbar({
           variant="ghost"
           size="icon"
           className={`${btnSize} shrink-0`}
-          title="Create resource"
+          title="Add to repository"
           onClick={() => setResourceDialogOpen(true)}
         >
           <Plus className={iconSize} />
@@ -167,14 +167,14 @@ export function ChatToolbar({
         {/* Attach existing resource */}
         <Popover open={attachPopoverOpen} onOpenChange={setAttachPopoverOpen}>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon" className={`${btnSize} shrink-0`} title="Attach resource">
+            <Button variant="ghost" size="icon" className={`${btnSize} shrink-0`} title="Attach from repository">
               <Paperclip className={iconSize} />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-72 p-2" align="start">
-            <p className="text-xs font-medium text-muted-foreground px-2 py-1">Attach a resource</p>
+            <p className="text-xs font-medium text-muted-foreground px-2 py-1">Attach from repository</p>
             {resources.length === 0 ? (
-              <p className="text-xs text-muted-foreground px-2 py-3 text-center">No resources yet.</p>
+              <p className="text-xs text-muted-foreground px-2 py-3 text-center">Repository is empty.</p>
             ) : (
               <ScrollArea className="max-h-48">
                 <div className="space-y-0.5">
@@ -210,7 +210,7 @@ export function ChatToolbar({
 
       {!compact && (
         <p className="text-[10px] text-muted-foreground mt-1 ml-[8.5rem]">
-          <ListTodo className="h-2.5 w-2.5 inline" /> tasks · <Plus className="h-2.5 w-2.5 inline" /> resources · <Paperclip className="h-2.5 w-2.5 inline" /> attach · <code className="bg-muted px-1 rounded">/task</code> slash command
+          <ListTodo className="h-2.5 w-2.5 inline" /> tasks · <Plus className="h-2.5 w-2.5 inline" /> repository · <Paperclip className="h-2.5 w-2.5 inline" /> attach · <code className="bg-muted px-1 rounded">/task</code> slash command
         </p>
       )}
 
@@ -233,7 +233,7 @@ export function ChatToolbar({
       {/* Create Resource dialog */}
       <Dialog open={resourceDialogOpen} onOpenChange={setResourceDialogOpen}>
         <DialogContent className="max-w-md">
-          <DialogHeader><DialogTitle className="text-base">Create Resource</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle className="text-base">Add to Repository</DialogTitle></DialogHeader>
           <div className="space-y-3">
             <Select value={newResType} onValueChange={(v) => setNewResType(v as "text" | "link")}>
               <SelectTrigger><SelectValue /></SelectTrigger>
@@ -242,7 +242,7 @@ export function ChatToolbar({
                 <SelectItem value="link">Link / URL</SelectItem>
               </SelectContent>
             </Select>
-            <Input placeholder="Resource title" value={newResTitle} onChange={e => setNewResTitle(e.target.value)} />
+            <Input placeholder="Item title" value={newResTitle} onChange={e => setNewResTitle(e.target.value)} />
             {newResType === "link" ? (
               <Input placeholder="https://..." value={newResContent} onChange={e => setNewResContent(e.target.value)} />
             ) : (
@@ -250,7 +250,7 @@ export function ChatToolbar({
             )}
           </div>
           <DialogFooter>
-            <Button onClick={() => createResource.mutate()} disabled={!newResTitle.trim()}>Create Resource</Button>
+            <Button onClick={() => createResource.mutate()} disabled={!newResTitle.trim()}>Add Item</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
