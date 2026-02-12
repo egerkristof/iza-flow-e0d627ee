@@ -27,8 +27,8 @@ import {
 
 const roleLabels: Record<AppRole, string> = {
   operator: "🚀 Operator",
-  architect: "🏗️ Architect",
-  manager: "📊 Manager",
+  architect: "🏗️ Process Owner",
+  manager: "📊 Leader",
 };
 
 const navItems = [
