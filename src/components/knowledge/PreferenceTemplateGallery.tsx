@@ -134,12 +134,6 @@ export function PreferenceTemplateGallery() {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 mb-1">
-        <Sparkles className="h-4 w-4 text-primary" />
-        <h3 className="text-sm font-semibold">Role Templates</h3>
-        <span className="text-xs text-muted-foreground">— one-click import curated preference sets</span>
-      </div>
-
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {TEMPLATES.map((t) => {
           const isImported = importedIds.has(t.id);
