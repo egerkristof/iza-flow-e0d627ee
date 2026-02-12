@@ -204,7 +204,7 @@ export function ContextStackViewer({ open, onOpenChange, scope = "global", workb
           </div>
         )}
 
-        <ScrollArea className="flex-1 -mx-6 px-6 overflow-hidden min-h-0">
+        <ScrollArea className="-mx-6 px-6" style={{ maxHeight: 'calc(85vh - 200px)' }}>
           <div className="space-y-1 mt-2 pb-4">
             {stack.map((layer, idx) => (
               <div key={layer.level}>
