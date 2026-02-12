@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageSquare, Plus, Users, User, Send, X, Hash, ListTodo } from "lucide-react";
+import { MessageSquare, Plus, Users, User, Send, X, Hash, ListTodo, Paperclip, FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,7 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
+import { useWorkbookResources, type WorkbookResource } from "./WorkbookResources";
 
 interface ChatThread {
   id: string;
@@ -27,6 +29,7 @@ interface ChatMessage {
   content: string;
   time: string;
   isOwn: boolean;
+  attachment?: { id: string; title: string; type: string; url?: string; content?: string };
 }
 
 const MOCK_THREADS: ChatThread[] = [
@@ -56,6 +59,9 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
   const [newChatOpen, setNewChatOpen] = useState(false);
   const [taskDialogOpen, setTaskDialogOpen] = useState(false);
   const [taskTitle, setTaskTitle] = useState("");
+  const [attachPopoverOpen, setAttachPopoverOpen] = useState(false);
+  const [pendingAttachment, setPendingAttachment] = useState<WorkbookResource | null>(null);
+  const { data: resources = [] } = useWorkbookResources(workbookId);
 
   const filtered = threads.filter(t => typeFilter === "all" || t.type === typeFilter);
   const active = threads.find(t => t.id === activeThread);
@@ -100,8 +106,26 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
       }
     }
 
-    setMessages(prev => [...prev, { id: `m${Date.now()}`, sender: { name: "You", initials: "ME" }, content: messageInput, time: "Just now", isOwn: true }]);
+    const attachment = pendingAttachment ? {
+      id: pendingAttachment.id,
+      title: pendingAttachment.title,
+      type: pendingAttachment.resource_type,
+      url: pendingAttachment.file_path
+        ? supabase.storage.from("workbook-resources").getPublicUrl(pendingAttachment.file_path).data.publicUrl
+        : undefined,
+      content: pendingAttachment.content ?? undefined,
+    } : undefined;
+
+    setMessages(prev => [...prev, {
+      id: `m${Date.now()}`,
+      sender: { name: "You", initials: "ME" },
+      content: messageInput || (attachment ? `📎 Shared: ${attachment.title}` : ""),
+      time: "Just now",
+      isOwn: true,
+      attachment,
+    }]);
     setMessageInput("");
+    setPendingAttachment(null);
   };
 
   if (active) {
@@ -142,7 +166,19 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
                 )}
                 <div className={`max-w-[75%] rounded-lg px-3 py-2 text-sm ${msg.isOwn ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
                   {!msg.isOwn && <p className="text-[10px] font-medium mb-0.5 opacity-70">{msg.sender.name}</p>}
-                  <p>{msg.content}</p>
+                  {msg.attachment && (
+                    <div className={`flex items-center gap-2 rounded-md px-2 py-1.5 mb-1.5 text-xs ${msg.isOwn ? "bg-primary-foreground/10" : "bg-muted/50"}`}>
+                      {msg.attachment.type === "link" ? <Link2 className="h-3 w-3 shrink-0" /> : msg.attachment.type === "file" ? <FileText className="h-3 w-3 shrink-0" /> : <TypeIcon className="h-3 w-3 shrink-0" />}
+                      <span className="font-medium truncate">{msg.attachment.title}</span>
+                      {msg.attachment.url && (
+                        <a href={msg.attachment.url} target="_blank" rel="noopener noreferrer" className="shrink-0"><ExternalLink className="h-3 w-3" /></a>
+                      )}
+                      {msg.attachment.type === "link" && msg.attachment.content && (
+                        <a href={msg.attachment.content} target="_blank" rel="noopener noreferrer" className="shrink-0"><ExternalLink className="h-3 w-3" /></a>
+                      )}
+                    </div>
+                  )}
+                  {msg.content && <p>{msg.content}</p>}
                   <p className={`text-[10px] mt-1 ${msg.isOwn ? "text-primary-foreground/60" : "text-muted-foreground"}`}>{msg.time}</p>
                 </div>
               </div>
@@ -150,8 +186,15 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
           </div>
         </ScrollArea>
 
-        {/* Input */}
         <div className="border-t border-border/50 p-3">
+          {pendingAttachment && (
+            <div className="flex items-center gap-2 mb-2 ml-12 rounded-md bg-secondary/50 px-3 py-1.5 text-xs">
+              <Paperclip className="h-3 w-3 text-primary shrink-0" />
+              <span className="font-medium truncate">{pendingAttachment.title}</span>
+              <Badge variant="outline" className="text-[9px] shrink-0">{pendingAttachment.resource_type}</Badge>
+              <button onClick={() => setPendingAttachment(null)} className="ml-auto shrink-0"><X className="h-3 w-3 text-muted-foreground hover:text-destructive" /></button>
+            </div>
+          )}
           <div className="flex gap-2">
             <Button
               variant="ghost"
@@ -162,10 +205,39 @@ export function WorkbookChats({ workbookId }: { workbookId: string }) {
             >
               <ListTodo className="h-4 w-4" />
             </Button>
+            <Popover open={attachPopoverOpen} onOpenChange={setAttachPopoverOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-10 w-10 shrink-0" title="Attach resource">
+                  <Paperclip className="h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 p-2" align="start">
+                <p className="text-xs font-medium text-muted-foreground px-2 py-1">Attach a resource</p>
+                {resources.length === 0 ? (
+                  <p className="text-xs text-muted-foreground px-2 py-3 text-center">No resources yet. Add some in the Resources tab.</p>
+                ) : (
+                  <ScrollArea className="max-h-48">
+                    <div className="space-y-0.5">
+                      {resources.map(r => (
+                        <button
+                          key={r.id}
+                          className="flex items-center gap-2 w-full rounded-md px-2 py-1.5 text-xs text-left hover:bg-primary/5 transition-colors"
+                          onClick={() => { setPendingAttachment(r); setAttachPopoverOpen(false); }}
+                        >
+                          {r.resource_type === "link" ? <Link2 className="h-3 w-3 text-blue-400 shrink-0" /> : r.resource_type === "file" ? <FileText className="h-3 w-3 text-amber-400 shrink-0" /> : <TypeIcon className="h-3 w-3 text-primary shrink-0" />}
+                          <span className="truncate">{r.title}</span>
+                          <Badge variant="outline" className="text-[9px] ml-auto shrink-0">{r.resource_type}</Badge>
+                        </button>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                )}
+              </PopoverContent>
+            </Popover>
             <Input value={messageInput} onChange={e => setMessageInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSend()} placeholder="Type a message or /task <title>…" className="flex-1 bg-secondary/50" />
-            <Button onClick={handleSend} size="icon" disabled={!messageInput.trim()}><Send className="h-4 w-4" /></Button>
+            <Button onClick={handleSend} size="icon" disabled={!messageInput.trim() && !pendingAttachment}><Send className="h-4 w-4" /></Button>
           </div>
-          <p className="text-[10px] text-muted-foreground mt-1 ml-12">Tip: type <code className="bg-muted px-1 rounded">/task</code> followed by a title to create a task inline</p>
+          <p className="text-[10px] text-muted-foreground mt-1 ml-24">Tip: use <Paperclip className="h-2.5 w-2.5 inline" /> to attach resources or <code className="bg-muted px-1 rounded">/task</code> to create tasks</p>
         </div>
 
         {/* Task from chat dialog */}
