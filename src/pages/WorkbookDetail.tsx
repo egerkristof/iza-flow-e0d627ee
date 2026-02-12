@@ -22,6 +22,7 @@ import { WorkbookChats, ChatSidebarPanel } from "@/components/workbooks/Workbook
 import { WorkbookMembers, MembersSidebarPanel } from "@/components/workbooks/WorkbookMembers";
 import { WorkbookAgentConfig, AgentsSidebarPanel } from "@/components/workbooks/WorkbookAgentConfig";
 import { WorkbookResources } from "@/components/workbooks/WorkbookResources";
+import { ChatToolbar } from "@/components/workbooks/ChatToolbar";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { WorkbookStatusTransition } from "@/components/workbooks/WorkbookStatusTransition";
 import { ListTodo, Bot, GitBranch } from "lucide-react";
@@ -296,16 +297,13 @@ export default function WorkbookDetailPage() {
 
             {/* Input */}
             <div className="border-t border-border/50 p-4">
-              <div className="flex gap-2">
-                <Input
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  placeholder="Describe what you'd like to work on…"
-                  className="flex-1 bg-secondary/50"
-                />
-                <Button onClick={handleSend} size="icon"><Play className="h-4 w-4" /></Button>
-              </div>
+              <ChatToolbar
+                workbookId={id ?? ""}
+                messageInput={chatInput}
+                setMessageInput={setChatInput}
+                onSend={() => handleSend()}
+                placeholder="Describe what you'd like to work on…"
+              />
             </div>
           </div>
 
@@ -448,10 +446,13 @@ export default function WorkbookDetailPage() {
 
             {/* Input */}
             <div className="border-t border-border/50 p-4">
-              <div className="flex gap-2">
-                <Input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSend()} placeholder={step.instruction} className="flex-1 bg-secondary/50" />
-                <Button onClick={handleSend} size="icon"><Play className="h-4 w-4" /></Button>
-              </div>
+              <ChatToolbar
+                workbookId={id ?? ""}
+                messageInput={chatInput}
+                setMessageInput={setChatInput}
+                onSend={() => handleSend()}
+                placeholder={step.instruction}
+              />
             </div>
           </div>
 
