@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Lock, Unlock, Play, ChevronRight, ChevronLeft, FileText, Zap, Target,
   Search as SearchIcon, BarChart, Users, MessageSquare, Settings, TrendingUp,
 } from "lucide-react";
+import { AreaChart, Area, BarChart as ReBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -195,12 +196,8 @@ export default function WorkbookDetailPage() {
         </TabsContent>
 
         {showAnalytics && (
-          <TabsContent value="analytics" className="mt-4">
-            <div className="rounded-lg border border-border/50 bg-card p-8 text-center">
-              <TrendingUp className="mx-auto h-8 w-8 text-muted-foreground/50 mb-3" />
-              <h3 className="font-medium mb-1">Workbook Analytics</h3>
-              <p className="text-sm text-muted-foreground">Drift score trends, protocol usage stats, and completion rates will appear here.</p>
-            </div>
+          <TabsContent value="analytics" className="mt-4 space-y-6">
+            <WorkbookAnalytics workbookId={id ?? "1"} />
           </TabsContent>
         )}
 
@@ -215,5 +212,125 @@ export default function WorkbookDetailPage() {
         )}
       </Tabs>
     </div>
+  );
+}
+
+// ── ANALYTICS COMPONENT ──
+const CHART_COLORS = ["hsl(205, 85%, 55%)", "hsl(142, 60%, 45%)", "hsl(38, 92%, 50%)", "hsl(0, 72%, 51%)", "hsl(265, 60%, 55%)", "hsl(180, 60%, 45%)"];
+
+function generateDriftData(workbookId: string) {
+  const seed = workbookId.charCodeAt(0) || 49;
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon+1", "Tue+1", "Wed+1", "Thu+1", "Fri+1", "Sat+1", "Sun+1"];
+  let score = 15 + (seed % 20);
+  return days.map((day) => {
+    score = Math.max(0, Math.min(100, score + (Math.sin(seed + day.length) * 8 + (Math.random() - 0.5) * 12)));
+    return { day, drift: Math.round(score), threshold: 40 };
+  });
+}
+
+function generateProtocolUsage() {
+  return [
+    { name: "Draft Proposal", runs: 34, completions: 28, avgTime: 12 },
+    { name: "Client Research", runs: 27, completions: 25, avgTime: 8 },
+    { name: "Deal Review", runs: 19, completions: 15, avgTime: 18 },
+    { name: "Pricing Analysis", runs: 14, completions: 12, avgTime: 10 },
+    { name: "Competitive Intel", runs: 11, completions: 9, avgTime: 6 },
+    { name: "Onboarding Setup", runs: 8, completions: 7, avgTime: 15 },
+  ];
+}
+
+function generateCompletionPie() {
+  return [
+    { name: "Completed", value: 68 },
+    { name: "In Progress", value: 18 },
+    { name: "Abandoned", value: 14 },
+  ];
+}
+
+function WorkbookAnalytics({ workbookId }: { workbookId: string }) {
+  const driftData = useMemo(() => generateDriftData(workbookId), [workbookId]);
+  const protocolUsage = useMemo(() => generateProtocolUsage(), []);
+  const completionData = useMemo(() => generateCompletionPie(), []);
+
+  const currentDrift = driftData[driftData.length - 1]?.drift ?? 0;
+  const prevDrift = driftData[driftData.length - 3]?.drift ?? currentDrift;
+  const driftDelta = currentDrift - prevDrift;
+  const totalRuns = protocolUsage.reduce((s, p) => s + p.runs, 0);
+  const totalCompletions = protocolUsage.reduce((s, p) => s + p.completions, 0);
+  const completionRate = totalRuns > 0 ? Math.round((totalCompletions / totalRuns) * 100) : 0;
+  const avgTime = Math.round(protocolUsage.reduce((s, p) => s + p.avgTime, 0) / protocolUsage.length);
+
+  return (
+    <>
+      {/* KPI strip */}
+      <div className="grid gap-4 sm:grid-cols-4">
+        {[
+          { label: "Current Drift", value: `${currentDrift}%`, sub: `${driftDelta >= 0 ? "+" : ""}${driftDelta.toFixed(0)}% vs 3d ago`, color: currentDrift > 40 ? "text-destructive" : "text-green-400" },
+          { label: "Total Protocol Runs", value: totalRuns.toString(), sub: "last 14 days" },
+          { label: "Completion Rate", value: `${completionRate}%`, sub: `${totalCompletions}/${totalRuns} finished` },
+          { label: "Avg Session Time", value: `${avgTime} min`, sub: "across all protocols" },
+        ].map((kpi) => (
+          <div key={kpi.label} className="rounded-lg border border-border/50 bg-card p-4">
+            <p className="text-xs text-muted-foreground">{kpi.label}</p>
+            <p className={`text-2xl font-semibold mt-1 ${kpi.color ?? ""}`}>{kpi.value}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{kpi.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Drift Score Over Time */}
+      <div className="rounded-lg border border-border/50 bg-card p-5">
+        <h3 className="text-sm font-semibold mb-4">Drift Score — 14 Day Trend</h3>
+        <ResponsiveContainer width="100%" height={260}>
+          <AreaChart data={driftData} margin={{ top: 5, right: 20, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="driftGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(205, 85%, 55%)" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="hsl(205, 85%, 55%)" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(225, 15%, 15%)" />
+            <XAxis dataKey="day" tick={{ fontSize: 11, fill: "hsl(215, 12%, 52%)" }} axisLine={false} tickLine={false} />
+            <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: "hsl(215, 12%, 52%)" }} axisLine={false} tickLine={false} />
+            <Tooltip contentStyle={{ background: "hsl(225, 22%, 9%)", border: "1px solid hsl(225, 15%, 15%)", borderRadius: 8, fontSize: 12 }} />
+            <Area type="monotone" dataKey="threshold" stroke="hsl(0, 72%, 51%)" strokeDasharray="5 3" strokeWidth={1.5} fill="none" name="Danger Threshold" />
+            <Area type="monotone" dataKey="drift" stroke="hsl(205, 85%, 55%)" fill="url(#driftGrad)" strokeWidth={2} name="Drift Score" />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Protocol Usage Bar Chart */}
+        <div className="rounded-lg border border-border/50 bg-card p-5">
+          <h3 className="text-sm font-semibold mb-4">Protocol Usage</h3>
+          <ResponsiveContainer width="100%" height={260}>
+            <ReBarChart data={protocolUsage} layout="vertical" margin={{ top: 0, right: 20, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(225, 15%, 15%)" horizontal={false} />
+              <XAxis type="number" tick={{ fontSize: 11, fill: "hsl(215, 12%, 52%)" }} axisLine={false} tickLine={false} />
+              <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: "hsl(215, 12%, 52%)" }} width={110} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ background: "hsl(225, 22%, 9%)", border: "1px solid hsl(225, 15%, 15%)", borderRadius: 8, fontSize: 12 }} />
+              <Bar dataKey="runs" fill="hsl(205, 85%, 55%)" radius={[0, 4, 4, 0]} name="Runs" barSize={14} />
+              <Bar dataKey="completions" fill="hsl(142, 60%, 45%)" radius={[0, 4, 4, 0]} name="Completions" barSize={14} />
+            </ReBarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Completion Pie */}
+        <div className="rounded-lg border border-border/50 bg-card p-5">
+          <h3 className="text-sm font-semibold mb-4">Session Outcomes</h3>
+          <ResponsiveContainer width="100%" height={260}>
+            <PieChart>
+              <Pie data={completionData} cx="50%" cy="50%" innerRadius={60} outerRadius={90} paddingAngle={3} dataKey="value" nameKey="name" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
+                {completionData.map((_, i) => (
+                  <Cell key={i} fill={CHART_COLORS[i]} />
+                ))}
+              </Pie>
+              <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+              <Tooltip contentStyle={{ background: "hsl(225, 22%, 9%)", border: "1px solid hsl(225, 15%, 15%)", borderRadius: 8, fontSize: 12 }} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </>
   );
 }
