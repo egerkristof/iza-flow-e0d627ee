@@ -54,24 +54,96 @@ export default function WorkbookDetailPage() {
   const showSettings = activeRole === "architect";
 
   const [lockedPlaybook, setLockedPlaybook] = useState<Playbook | null>(null);
+  const [freeSession, setFreeSession] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
+  const [detectedIntents, setDetectedIntents] = useState<string[]>([]);
 
   const handleLock = (playbook: Playbook) => {
     setLockedPlaybook(playbook);
+    setFreeSession(false);
     setCurrentStepIndex(0);
     setChatMessages([]);
+    setDetectedIntents([]);
+  };
+
+  const handleStartFreeSession = () => {
+    setFreeSession(true);
+    setLockedPlaybook(null);
+    setChatMessages([]);
+    setDetectedIntents([]);
+    setChatInput("");
   };
 
   const handleUnlock = () => {
     setLockedPlaybook(null);
+    setFreeSession(false);
     setCurrentStepIndex(0);
     setChatMessages([]);
+    setDetectedIntents([]);
+  };
+
+  // Mock intent detection from message content
+  const detectIntents = (text: string): string[] => {
+    const intentMap: Record<string, string[]> = {
+      "create social media post": ["social", "post", "facebook", "linkedin", "instagram", "tweet"],
+      "write proposal": ["proposal", "rfp", "pitch", "bid"],
+      "draft email": ["email", "outreach", "follow-up", "follow up"],
+      "analyze pricing": ["pricing", "cost", "rate", "margin", "discount"],
+      "prepare report": ["report", "summary", "analysis", "review"],
+      "create listing": ["listing", "property", "estate", "real estate"],
+      "build presentation": ["presentation", "deck", "slides", "pptx"],
+    };
+    const lower = text.toLowerCase();
+    return Object.entries(intentMap)
+      .filter(([, keywords]) => keywords.some((k) => lower.includes(k)))
+      .map(([intent]) => intent);
+  };
+
+  // Mock matching preferences based on detected intents
+  const getMatchedPreferences = (intents: string[]): { key: string; value: string; condition: string }[] => {
+    if (intents.length === 0) return [];
+    const mockMatches: { key: string; value: string; condition: string }[] = [];
+    if (intents.some((i) => i.includes("social") || i.includes("listing"))) {
+      mockMatches.push(
+        { key: "Tone", value: "Aspirational and premium for luxury; friendly and approachable for starter homes", condition: "luxury vs standard" },
+      );
+    }
+    if (intents.some((i) => i.includes("proposal") || i.includes("email"))) {
+      mockMatches.push(
+        { key: "Communication Style", value: "Concise, data-backed, executive-friendly", condition: "business writing" },
+      );
+    }
+    if (intents.some((i) => i.includes("pricing") || i.includes("report"))) {
+      mockMatches.push(
+        { key: "Output Format", value: "Structured tables with comparison columns", condition: "analytical work" },
+      );
+    }
+    mockMatches.push({ key: "Focus Areas", value: "ROI, client value, market positioning", condition: "always active" });
+    return mockMatches;
   };
 
   const handleSend = () => {
-    if (!chatInput.trim() || !lockedPlaybook) return;
+    if (!chatInput.trim()) return;
+
+    if (freeSession) {
+      const newIntents = detectIntents(chatInput);
+      const uniqueIntents = [...new Set([...detectedIntents, ...newIntents])];
+      setDetectedIntents(uniqueIntents);
+      const contextNote = newIntents.length > 0
+        ? `\n\n💡 _Detected intent: ${newIntents.join(", ")}. Applying your matched preferences and workbook context._`
+        : "";
+      setChatMessages((prev) => [
+        ...prev,
+        { role: "user", text: chatInput },
+        { role: "assistant", text: `Working on "${chatInput.slice(0, 60)}${chatInput.length > 60 ? "…" : ""}" within **${wb.title}**.${contextNote}\n\nI have your workbook context, personal knowledge, and matching preferences loaded. How would you like to proceed?` },
+      ]);
+      setChatInput("");
+      return;
+    }
+
+    if (!lockedPlaybook) return;
     const step = lockedPlaybook.steps[currentStepIndex];
     setChatMessages(prev => [
       ...prev,
@@ -81,6 +153,141 @@ export default function WorkbookDetailPage() {
     setChatInput("");
     if (currentStepIndex < lockedPlaybook.steps.length - 1) setCurrentStepIndex(i => i + 1);
   };
+
+  // ── FREE SESSION STATE ──
+  if (freeSession) {
+    const matchedPrefs = getMatchedPreferences(detectedIntents);
+    return (
+      <div className="flex h-[calc(100vh-3.5rem)] flex-col" style={{ background: "hsl(142 60% 45% / 0.03)" }}>
+        {/* Free Session Banner */}
+        <div className="flex items-center justify-between border-b border-green-500/20 bg-green-500/5 px-6 py-3">
+          <div className="flex items-center gap-3">
+            <MessageSquare className="h-4 w-4 text-green-400" />
+            <span className="text-sm font-medium text-green-400">Free Session — {wb.title}</span>
+            {detectedIntents.length > 0 && (
+              <div className="flex items-center gap-1">
+                {detectedIntents.map((intent) => (
+                  <Badge key={intent} variant="outline" className="border-green-500/30 text-green-400 text-[10px]">
+                    <Zap className="h-2 w-2 mr-0.5" />{intent}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
+          <Button variant="ghost" size="sm" onClick={handleUnlock} className="text-xs text-muted-foreground hover:text-destructive">
+            <Unlock className="mr-1 h-3 w-3" /> End Session
+          </Button>
+        </div>
+
+        <div className="flex flex-1 overflow-hidden">
+          <div className="flex flex-1 flex-col">
+            {/* Messages */}
+            <div className="flex-1 overflow-auto p-6 space-y-3">
+              {chatMessages.length === 0 && (
+                <div className="space-y-4">
+                  <div className="text-sm text-muted-foreground">
+                    <p className="font-medium text-foreground mb-1">No protocol needed — just start working.</p>
+                    <p>Your personal knowledge, workbook context, and intent-based preferences are active. Simply describe what you'd like to do.</p>
+                  </div>
+                  <div className="rounded-lg border border-border/50 bg-muted/20 p-4 space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Try something like:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {["Create a Facebook post for this listing", "Draft an email to the buyer", "Summarize our pricing strategy", "Prepare a market comparison"].map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => { setChatInput(s); }}
+                          className="rounded-full border border-border/50 bg-card px-3 py-1.5 text-xs text-muted-foreground hover:border-primary/30 hover:text-primary transition-colors"
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {chatMessages.map((msg, i) => (
+                <div key={i} className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm whitespace-pre-line ${msg.role === "user" ? "ml-auto bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
+                  {msg.text}
+                </div>
+              ))}
+            </div>
+
+            {/* Input */}
+            <div className="border-t border-border/50 p-4">
+              <div className="flex gap-2">
+                <Input
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                  placeholder="Describe what you'd like to work on…"
+                  className="flex-1 bg-secondary/50"
+                />
+                <Button onClick={handleSend} size="icon"><Play className="h-4 w-4" /></Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Context sidebar */}
+          <div className="w-72 border-l border-border/50 bg-card/50 p-4 overflow-auto">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Active Context</h3>
+
+            {/* Workbook context */}
+            <div className="space-y-2 mb-4">
+              <p className="text-[11px] font-medium text-muted-foreground">Workbook</p>
+              <div className="rounded-md bg-secondary/50 px-3 py-2 text-xs space-y-1">
+                <p className="font-medium">{wb.title}</p>
+                {wb.strategicOutcome && <p className="text-muted-foreground">🎯 {wb.strategicOutcome}</p>}
+              </div>
+            </div>
+
+            {/* Detected intents */}
+            {detectedIntents.length > 0 && (
+              <div className="space-y-2 mb-4">
+                <p className="text-[11px] font-medium text-muted-foreground">Detected Intents</p>
+                <div className="space-y-1">
+                  {detectedIntents.map((intent) => (
+                    <div key={intent} className="flex items-center gap-2 rounded-md bg-green-500/10 px-3 py-1.5 text-xs text-green-400">
+                      <Zap className="h-3 w-3" />{intent}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Matched preferences */}
+            {matchedPrefs.length > 0 && (
+              <div className="space-y-2 mb-4">
+                <p className="text-[11px] font-medium text-muted-foreground">Matched Preferences</p>
+                <div className="space-y-1.5">
+                  {matchedPrefs.map((pref, i) => (
+                    <div key={i} className="rounded-md border border-border/50 bg-muted/20 px-3 py-2 text-xs space-y-0.5">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{pref.key}</span>
+                        <Badge variant="outline" className="text-[9px]">{pref.condition}</Badge>
+                      </div>
+                      <p className="text-muted-foreground">{pref.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Knowledge sources */}
+            <div className="space-y-2">
+              <p className="text-[11px] font-medium text-muted-foreground">Knowledge Sources</p>
+              <div className="space-y-1">
+                {["Personal Profile (CV)", "Goals & KPIs", "Working Preferences", "Workbook Context"].map((src) => (
+                  <div key={src} className="flex items-center gap-2 rounded-md bg-secondary/50 px-3 py-1.5 text-xs">
+                    <FileText className="h-3 w-3 text-primary" />{src}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // ── LOCKED STATE ──
   if (lockedPlaybook) {
@@ -183,6 +390,22 @@ export default function WorkbookDetailPage() {
         <TabsContent value="protocols" className="mt-4">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Select a Protocol</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Free Session card — always first */}
+            <button onClick={handleStartFreeSession} className="group flex flex-col gap-3 rounded-lg border border-dashed border-green-500/30 bg-green-500/5 p-5 text-left transition-all hover:border-green-500/50 hover:bg-green-500/10">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-green-500/10 text-green-400 group-hover:bg-green-500/20 transition-colors">
+                  <MessageSquare className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-medium">Free Session</h3>
+                  <p className="text-xs text-muted-foreground">No protocol — just start working</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span>Your context & preferences auto-applied</span>
+              </div>
+            </button>
+
             {MOCK_PLAYBOOKS.map(pb => (
               <button key={pb.id} onClick={() => handleLock(pb)} className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 text-left transition-all hover:border-primary/30 hover:glow-sm">
                 <div className="flex items-center gap-3">
