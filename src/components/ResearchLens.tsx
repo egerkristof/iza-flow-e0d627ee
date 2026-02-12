@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Search, Globe, Database, Pin, ChevronDown, Sparkles, Clock, BookOpen, Layers } from "lucide-react";
+import { Search, Globe, Database, Pin, ChevronDown, Sparkles, Clock, BookOpen, Layers, Lightbulb } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,9 +7,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface SearchResult {
   id: string;
@@ -31,14 +33,29 @@ const MOCK_RESULTS: SearchResult[] = [
   { id: "6", title: "Data Privacy Regulations — APAC Update", snippet: "New data localization requirements in Singapore and Indonesia effective Q2 2026. Impact assessment required for all client data stored outside local jurisdiction.", source: "Reuters Legal", relevance: 0.72, type: "external", category: "REGULATION", lastUpdated: "1d ago" },
 ];
 
+// Map external result categories to context_item categories
+function mapToContextCategory(cat?: string): string {
+  if (!cat) return "RESEARCH";
+  const map: Record<string, string> = {
+    KNOWLEDGE: "KNOWLEDGE",
+    PROCEDURE: "PROCEDURE",
+    PLAYBOOK: "PLAYBOOK",
+    NEWS: "RESEARCH",
+    REPORT: "RESEARCH",
+    REGULATION: "DIRECTIVE",
+  };
+  return map[cat] || "RESEARCH";
+}
+
 interface ResearchLensProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
-  const { activeRole } = useAuth();
+  const { user, activeRole } = useAuth();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [scope, setScope] = useState<"all" | "internal" | "external">("all");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -66,78 +83,104 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
         (scope === "all" || r.type === scope) &&
         (r.title.toLowerCase().includes(q) || r.snippet.toLowerCase().includes(q) || r.source.toLowerCase().includes(q))
       );
-      // If no match, show all for scope as fallback
       setResults(filtered.length > 0 ? filtered : MOCK_RESULTS.filter(r => scope === "all" || r.type === scope));
       setSearching(false);
     }, 500);
   }, [query, scope]);
 
-  const handlePinOperator = (result: SearchResult) => {
+  // ── Save to My Knowledge (all roles) ──
+  const handleSaveToKnowledge = async (result: SearchResult) => {
+    if (!user) return;
+    const category = mapToContextCategory(result.category);
+    const { error } = await supabase.from("context_items").insert({
+      owner_id: user.id,
+      title: result.title,
+      content_full: result.snippet,
+      category,
+      capture_status: "draft",
+    } as any);
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+      return;
+    }
+    queryClient.invalidateQueries({ queryKey: ["captures-inbox"] });
+    queryClient.invalidateQueries({ queryKey: ["captures-inbox-count"] });
+    toast({
+      title: "Saved to My Knowledge",
+      description: `"${result.title}" added as a draft capture. Review it in My Knowledge → Captures.`,
+    });
+  };
+
+  // ── Pin to Workbook Context (operators) ──
+  const handlePinToWorkbook = (result: SearchResult) => {
     toast({ title: "Pinned to Workbook Context", description: `"${result.title}" saved to your current workbook's local memory.` });
   };
 
-  const handlePinManager = (result: SearchResult) => {
-    toast({ title: "Pinned to Task Brief", description: `"${result.title}" attached to the active delegation brief.` });
-  };
-
-  const handlePinExpertBundle = (result: SearchResult) => {
+  // ── Add to Global Bundle (architects) ──
+  const handleAddToBundle = (result: SearchResult) => {
     toast({ title: "Added to Global Bundle", description: `"${result.title}" promoted to the organizational knowledge graph.` });
   };
 
-  const handlePinExpertPlaybook = (result: SearchResult) => {
-    toast({ title: "Added to Active Playbook", description: `"${result.title}" linked to the current playbook as a knowledge asset.` });
+  // ── Pin to Task Brief (managers) ──
+  const handlePinToBrief = (result: SearchResult) => {
+    toast({ title: "Pinned to Task Brief", description: `"${result.title}" attached to the active delegation brief.` });
   };
 
   const renderPinButton = (result: SearchResult) => {
-    if (activeRole === "operator") {
-      return (
-        <Button variant="ghost" size="sm" className="h-7 text-xs gap-1 hover:text-primary" onClick={() => handlePinOperator(result)}>
-          <Pin className="h-3 w-3" />
-          <BookOpen className="h-3 w-3" />
-          Pin to Workbook
-        </Button>
-      );
-    }
-
-    if (activeRole === "manager") {
-      return (
-        <Button variant="ghost" size="sm" className="h-7 text-xs gap-1 hover:text-primary" onClick={() => handlePinManager(result)}>
-          <Pin className="h-3 w-3" />
-          Pin to Brief
-        </Button>
-      );
-    }
-
-    // Architect / Process Owner — dropdown with two options (REQ-U-03)
+    // All roles get a dropdown with "Save to My Knowledge" as the primary action
+    // plus role-specific options
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm" className="h-7 text-xs gap-1 hover:text-primary">
             <Pin className="h-3 w-3" />
-            <Layers className="h-3 w-3" />
-            Pin
+            Save
             <ChevronDown className="h-2.5 w-2.5" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => handlePinExpertBundle(result)}>
-            <Layers className="h-3.5 w-3.5 mr-2" />
-            Add to Global Bundle
+          {/* Primary action — available to all roles */}
+          <DropdownMenuItem onClick={() => handleSaveToKnowledge(result)}>
+            <Lightbulb className="h-3.5 w-3.5 mr-2" />
+            Save to My Knowledge
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handlePinExpertPlaybook(result)}>
-            <BookOpen className="h-3.5 w-3.5 mr-2" />
-            Add to Active Playbook
-          </DropdownMenuItem>
+
+          {/* Role-specific actions */}
+          {activeRole === "operator" && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handlePinToWorkbook(result)}>
+                <BookOpen className="h-3.5 w-3.5 mr-2" />
+                Pin to Workbook
+              </DropdownMenuItem>
+            </>
+          )}
+
+          {activeRole === "manager" && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handlePinToBrief(result)}>
+                <Pin className="h-3.5 w-3.5 mr-2" />
+                Pin to Task Brief
+              </DropdownMenuItem>
+            </>
+          )}
+
+          {activeRole === "architect" && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleAddToBundle(result)}>
+                <Layers className="h-3.5 w-3.5 mr-2" />
+                Add to Global Bundle
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     );
   };
 
-  const roleHint = activeRole === "operator"
-    ? "Results will pin to your current Workbook"
-    : activeRole === "manager"
-    ? "Results will pin to your Task Brief"
-    : "Results can be promoted to Bundles or Playbooks";
+  const roleHint = "Save results to your knowledge or pin to workbooks & bundles";
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
