@@ -17,6 +17,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
+import { WorkbookTasks, TaskInlineIndicator } from "@/components/workbooks/WorkbookTasks";
+import { ListTodo } from "lucide-react";
 
 // ── MOCK PLAYBOOKS (from old Launchpad) ──
 interface Playbook {
@@ -467,6 +469,7 @@ export default function WorkbookDetailPage() {
       <Tabs defaultValue="protocols" className="w-full">
         <TabsList>
           <TabsTrigger value="protocols">Protocols</TabsTrigger>
+          <TabsTrigger value="tasks"><ListTodo className="mr-1.5 h-3.5 w-3.5" />Tasks</TabsTrigger>
           {showAnalytics && <TabsTrigger value="analytics"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Analytics</TabsTrigger>}
           {showSettings && <TabsTrigger value="settings"><Settings className="mr-1.5 h-3.5 w-3.5" />Settings</TabsTrigger>}
         </TabsList>
@@ -505,6 +508,10 @@ export default function WorkbookDetailPage() {
               </button>
             ))}
           </div>
+        </TabsContent>
+
+        <TabsContent value="tasks" className="mt-4">
+          <WorkbookTasks workbookId={id ?? "1"} />
         </TabsContent>
 
         {showAnalytics && (

@@ -245,6 +245,78 @@ export type Database = {
         }
         Relationships: []
       }
+      workbook_tasks: {
+        Row: {
+          assigned_to: string | null
+          completed_at: string | null
+          context_config: Json
+          created_at: string
+          created_by: string
+          description: string | null
+          due_date: string | null
+          id: string
+          parent_task_id: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          sort_order: number
+          source_protocol_id: string | null
+          status: Database["public"]["Enums"]["task_status"]
+          title: string
+          updated_at: string
+          workbook_id: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          context_config?: Json
+          created_at?: string
+          created_by: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          parent_task_id?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          sort_order?: number
+          source_protocol_id?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          title: string
+          updated_at?: string
+          workbook_id: string
+        }
+        Update: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          context_config?: Json
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          parent_task_id?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          sort_order?: number
+          source_protocol_id?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          title?: string
+          updated_at?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_tasks_parent_task_id_fkey"
+            columns: ["parent_task_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workbook_tasks_workbook_id_fkey"
+            columns: ["workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workbooks: {
         Row: {
           created_at: string
@@ -362,6 +434,8 @@ export type Database = {
         | "PREFERENCE"
       priority_level: "STANDARD" | "CRITICAL"
       security_scope: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY"
+      task_priority: "low" | "medium" | "high" | "critical"
+      task_status: "todo" | "in_progress" | "blocked" | "done" | "cancelled"
       workbook_status: "draft" | "active" | "review" | "completed" | "archived"
     }
     CompositeTypes: {
@@ -501,6 +575,8 @@ export const Constants = {
       ],
       priority_level: ["STANDARD", "CRITICAL"],
       security_scope: ["INTERNAL", "CONFIDENTIAL", "ADMIN_ONLY"],
+      task_priority: ["low", "medium", "high", "critical"],
+      task_status: ["todo", "in_progress", "blocked", "done", "cancelled"],
       workbook_status: ["draft", "active", "review", "completed", "archived"],
     },
   },
