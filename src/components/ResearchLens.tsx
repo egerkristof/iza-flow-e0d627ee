@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Search, Globe, Database, Pin, ChevronDown, Sparkles, Clock, BookOpen, Layers, Lightbulb } from "lucide-react";
+import { Search, Globe, Database, Pin, ChevronDown, Sparkles, Clock, BookOpen, Layers, Lightbulb, BookUp, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +12,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
+import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import type { ExtractionResult } from "@/lib/knowledge-schema";
 
 interface SearchResult {
   id: string;
@@ -61,6 +63,12 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [searching, setSearching] = useState(false);
   const [recentQueries] = useState(["pricing strategy", "competitor analysis", "onboarding metrics"]);
+
+  // Extraction state
+  const [extracting, setExtracting] = useState<string | null>(null); // result id or "bulk"
+  const [extractionData, setExtractionData] = useState<ExtractionResult | null>(null);
+  const [extractionSourceName, setExtractionSourceName] = useState("");
+  const [showImportCopilot, setShowImportCopilot] = useState(false);
 
   // Global keyboard shortcut: Cmd/Ctrl + K
   useEffect(() => {
@@ -126,6 +134,35 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
     toast({ title: "Pinned to Task Brief", description: `"${result.title}" attached to the active delegation brief.` });
   };
 
+  // ── Deep Extract via Import Copilot ──
+  const handleDeepExtract = async (items: SearchResult[], label: string) => {
+    const extractId = items.length === 1 ? items[0].id : "bulk";
+    setExtracting(extractId);
+    try {
+      const content = items.map(r =>
+        `## ${r.title}\nSource: ${r.source} | Type: ${r.type} | Category: ${r.category || "N/A"}\n\n${r.snippet}`
+      ).join("\n\n---\n\n");
+
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: {
+          source_type: "research",
+          content,
+          meta: { title: label, source: items.map(r => r.source).join(", ") },
+        },
+      });
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setExtractionData(data as ExtractionResult);
+      setExtractionSourceName(label);
+      setShowImportCopilot(true);
+    } catch (err: any) {
+      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+    } finally {
+      setExtracting(null);
+    }
+  };
+
   const renderPinButton = (result: SearchResult) => {
     // All roles get a dropdown with "Save to My Knowledge" as the primary action
     // plus role-specific options
@@ -145,7 +182,15 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
             Save to My Knowledge
           </DropdownMenuItem>
 
-          {/* Role-specific actions */}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => handleDeepExtract([result], result.title)}
+            disabled={extracting === result.id}
+          >
+            {extracting === result.id ? <Loader2 className="h-3.5 w-3.5 mr-2 animate-spin" /> : <BookUp className="h-3.5 w-3.5 mr-2" />}
+            Deep Extract via Copilot
+          </DropdownMenuItem>
+
           {activeRole === "operator" && (
             <>
               <DropdownMenuSeparator />
@@ -183,6 +228,7 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
   const roleHint = "Save results to your knowledge or pin to workbooks & bundles";
 
   return (
+    <>
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-[440px] sm:w-[500px] flex flex-col gap-0 p-0">
         <SheetHeader className="border-b border-border p-4">
@@ -270,6 +316,21 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
               <div className="text-sm text-muted-foreground py-12 text-center">No results found. Try different keywords.</div>
             )}
 
+            {!searching && results.length > 1 && (
+              <div className="flex justify-end pb-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-xs gap-1.5"
+                  onClick={() => handleDeepExtract(results, `Research: "${query}"`)}
+                  disabled={extracting === "bulk"}
+                >
+                  {extracting === "bulk" ? <Loader2 className="h-3 w-3 animate-spin" /> : <BookUp className="h-3 w-3" />}
+                  Extract All {results.length} Results via Copilot
+                </Button>
+              </div>
+            )}
+
             {!searching && results.map(result => (
               <div key={result.id} className="rounded-lg border border-border/50 bg-card p-4 space-y-2.5 transition-all hover:border-primary/20">
                 <div className="flex items-start justify-between gap-2">
@@ -313,5 +374,14 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
         </ScrollArea>
       </SheetContent>
     </Sheet>
+
+    <ImportCopilotDialog
+      open={showImportCopilot}
+      onOpenChange={setShowImportCopilot}
+      data={extractionData}
+      sourceName={extractionSourceName}
+      sourceType="research"
+    />
+    </>
   );
 }
