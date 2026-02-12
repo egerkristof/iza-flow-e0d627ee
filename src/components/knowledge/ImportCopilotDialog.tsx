@@ -726,6 +726,19 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
             </div>
           )}
 
+          {/* Empty state when nothing was extracted */}
+          {data.preferences.length === 0 && data.context_items.length === 0 && bundles.length === 0 && (
+            <div className="text-center py-8 space-y-3">
+              <Package className="h-10 w-10 mx-auto text-muted-foreground/40" />
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">No items extracted</p>
+                <p className="text-xs text-muted-foreground/70 mt-1 max-w-sm mx-auto">
+                  The AI couldn't extract structured knowledge from this content. Try using the Refine panel below to provide specific instructions, or check that the source file contains readable text.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Preferences section */}
           {data.preferences.length > 0 && (
             <div className="space-y-2">

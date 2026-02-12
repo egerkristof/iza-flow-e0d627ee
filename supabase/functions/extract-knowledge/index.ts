@@ -315,12 +315,33 @@ serve(async (req) => {
         .download(doc.file_path);
       if (dlError || !fileData) throw new Error("Failed to download file");
 
-      textContent = await fileData.text();
-      meta = {
-        file_name: doc.file_name,
-        category: doc.document_category,
-        file_type: doc.file_type,
-      };
+      const isPdf = doc.file_type === "application/pdf" || doc.file_name.toLowerCase().endsWith(".pdf");
+      
+      if (isPdf) {
+        // For PDFs, convert to base64 and use Gemini multimodal
+        const arrayBuffer = await fileData.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        let binary = "";
+        for (let i = 0; i < bytes.length; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        const base64Content = btoa(binary);
+        
+        meta = {
+          file_name: doc.file_name,
+          category: doc.document_category,
+          file_type: doc.file_type,
+          _pdf_base64: base64Content, // special key for multimodal
+        };
+        textContent = "[PDF document — content provided as inline image/pdf for multimodal analysis]";
+      } else {
+        textContent = await fileData.text();
+        meta = {
+          file_name: doc.file_name,
+          category: doc.document_category,
+          file_type: doc.file_type,
+        };
+      }
 
       // Update parsed status
       await adminClient
@@ -353,10 +374,26 @@ serve(async (req) => {
           model: "google/gemini-2.5-flash",
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
-            {
-              role: "user",
-              content: buildUserPrompt(sourceType, textContent, meta),
-            },
+            meta._pdf_base64
+              ? {
+                  role: "user",
+                  content: [
+                    {
+                      type: "text",
+                      text: buildUserPrompt(sourceType, textContent, meta),
+                    },
+                    {
+                      type: "image_url",
+                      image_url: {
+                        url: `data:application/pdf;base64,${meta._pdf_base64}`,
+                      },
+                    },
+                  ],
+                }
+              : {
+                  role: "user",
+                  content: buildUserPrompt(sourceType, textContent, meta),
+                },
           ],
           tools: [TOOL_DEFINITION],
           tool_choice: {
