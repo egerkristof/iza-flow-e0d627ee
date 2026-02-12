@@ -23,6 +23,7 @@ import { WorkbookMembers, MembersSidebarPanel } from "@/components/workbooks/Wor
 import { WorkbookAgentConfig, AgentsSidebarPanel } from "@/components/workbooks/WorkbookAgentConfig";
 import { WorkbookResources } from "@/components/workbooks/WorkbookResources";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
+import { WorkbookStatusTransition } from "@/components/workbooks/WorkbookStatusTransition";
 import { ListTodo, Bot, GitBranch } from "lucide-react";
 
 // ── MOCK PLAYBOOKS (from old Launchpad) ──
@@ -497,12 +498,24 @@ export default function WorkbookDetailPage() {
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">{wb.title}</h1>
             <p className="mt-1 text-sm text-muted-foreground">{wb.description}</p>
-            {wb.strategicOutcome && (
+             {wb.strategicOutcome && (
               <div className="flex items-center gap-2 mt-2">
                 <Badge variant="outline" className="text-[10px] border-primary/30 text-primary">🎯 {wb.strategicOutcome}</Badge>
-                <Badge variant="outline" className="text-[10px]">{wb.status}</Badge>
               </div>
             )}
+            <div className="mt-2">
+              <WorkbookStatusTransition
+                workbookId={id ?? ""}
+                currentStatus={wb.status as "draft" | "active" | "review" | "completed" | "archived"}
+                isOwner={true}
+                onStatusChanged={(newStatus) => {
+                  // Update local mock data for immediate UI feedback
+                  if (MOCK_WORKBOOK_DATA[id ?? ""]) {
+                    MOCK_WORKBOOK_DATA[id ?? ""].status = newStatus;
+                  }
+                }}
+              />
+            </div>
           </div>
           <Button variant="outline" size="sm" className="text-xs gap-1.5 shrink-0" onClick={() => setStackViewerOpen(true)}>
             <GitBranch className="h-3.5 w-3.5" /> Context Stack
