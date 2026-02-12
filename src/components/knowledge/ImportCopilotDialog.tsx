@@ -84,6 +84,12 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
     setDropTarget(targetId);
+    // Auto-expand bundles when hovering over them during drag
+    const bundleMatch = targetId.match(/^bundle-(\d+)$/);
+    if (bundleMatch) {
+      const bi = Number(bundleMatch[1]);
+      setExpandedBundles(prev => prev.has(bi) ? prev : new Set([...prev, bi]));
+    }
   }, []);
 
   const handleDragLeave = useCallback((e: DragEvent, targetId: string) => {
@@ -94,21 +100,21 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     }
   }, []);
 
-  const handleDropOnBundle = useCallback((e: DragEvent, targetBundleIdx: number) => {
+  const handleDropOnBundle = useCallback((e: DragEvent, targetBundleIdx: number, targetItemIdx?: number) => {
     e.preventDefault();
+    e.stopPropagation();
     setDropTarget(null);
     if (!data || !dragSource) return;
 
     const newData = { ...data, context_items: [...data.context_items], bundles: (data.bundles || []).map(b => ({ ...b, items: [...b.items] })) };
 
     let movedItem: ExtractedContextItem | null = null;
+    let insertAt = targetItemIdx ?? newData.bundles[targetBundleIdx].items.length;
 
     if (dragSource.type === "standalone") {
       const idx = dragSource.idx;
       movedItem = resolveItem(data.context_items[idx], itemEdits[idx]);
-      // Remove from standalone
       newData.context_items.splice(idx, 1);
-      // Clean up edits & selections for indices that shifted
       const newItemEdits: typeof itemEdits = {};
       const newSelectedItems = new Set<number>();
       const newAssignments: typeof itemBundleAssignment = {};
@@ -131,10 +137,56 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
       setItemBundleAssignment(newAssignments);
     } else if (dragSource.type === "bundle") {
       const { bundleIdx, itemIdx } = dragSource;
-      if (bundleIdx === targetBundleIdx) return; // same bundle, nothing to do
+
+      if (bundleIdx === targetBundleIdx) {
+        // Same-bundle reorder
+        if (targetItemIdx === undefined || targetItemIdx === itemIdx || targetItemIdx === itemIdx + 1) return;
+        const items = newData.bundles[bundleIdx].items;
+        const [removed] = items.splice(itemIdx, 1);
+        const adjustedIdx = targetItemIdx > itemIdx ? targetItemIdx - 1 : targetItemIdx;
+        items.splice(adjustedIdx, 0, removed);
+
+        // Remap bundle item edits for this bundle
+        const oldEdits = { ...bundleItemEdits };
+        const newBundleEdits: typeof bundleItemEdits = {};
+        // Copy non-affected bundle edits
+        for (const [k, v] of Object.entries(oldEdits)) {
+          const [bi] = k.split("-").map(Number);
+          if (bi !== bundleIdx) newBundleEdits[k] = v;
+        }
+        // Remap indices for this bundle
+        const reorderMap = new Map<number, number>();
+        for (let idx = 0; idx < items.length; idx++) {
+          // The item at idx was originally at some position — we track via the edit
+          // Simpler: just clear edits for the reordered bundle since item objects moved
+        }
+        // Since we moved actual item objects (not just indices), edits keyed by old indices are stale.
+        // Rebuild: the removed item's edit goes to adjustedIdx, others shift.
+        for (const [k, v] of Object.entries(oldEdits)) {
+          const [bi, ji] = k.split("-").map(Number);
+          if (bi !== bundleIdx) continue;
+          let newJi: number;
+          if (ji === itemIdx) {
+            newJi = adjustedIdx;
+          } else if (itemIdx < targetItemIdx!) {
+            // moved forward: items between (itemIdx, adjustedIdx] shift back by 1
+            if (ji > itemIdx && ji <= adjustedIdx) newJi = ji - 1;
+            else newJi = ji;
+          } else {
+            // moved backward: items between [adjustedIdx, itemIdx) shift forward by 1
+            if (ji >= adjustedIdx && ji < itemIdx) newJi = ji + 1;
+            else newJi = ji;
+          }
+          newBundleEdits[`${bi}-${newJi}`] = v;
+        }
+        setBundleItemEdits(newBundleEdits);
+        setData(newData);
+        setDragSource(null);
+        return;
+      }
+
       movedItem = resolveItem(data.bundles![bundleIdx].items[itemIdx], bundleItemEdits[`${bundleIdx}-${itemIdx}`]);
       newData.bundles[bundleIdx].items.splice(itemIdx, 1);
-      // Clean up bundle item edits for shifted indices
       const newBundleEdits: typeof bundleItemEdits = {};
       for (const [k, v] of Object.entries(bundleItemEdits)) {
         const [bi, ji] = k.split("-").map(Number);
@@ -150,7 +202,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     }
 
     if (movedItem) {
-      newData.bundles[targetBundleIdx].items.push(movedItem);
+      newData.bundles[targetBundleIdx].items.splice(insertAt, 0, movedItem);
       setExpandedBundles(prev => new Set([...prev, targetBundleIdx]));
     }
 
@@ -749,25 +801,44 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
                   </div>
 
                   {expandedBundles.has(i) && (
-                    <div className="border-t border-border/30 px-3 pb-3 pt-2 space-y-1.5 ml-8">
+                    <div className="border-t border-border/30 px-3 pb-3 pt-2 space-y-0 ml-8">
                       {bundle.items.map((item, j) => (
-                        <div
-                          key={j}
-                          draggable
-                          onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
-                          onDragEnd={handleDragEnd}
-                          className="rounded border border-border/30 bg-background/50 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
-                        >
-                          <GripVertical className="h-3 w-3 text-muted-foreground/50 shrink-0 mt-1" />
-                          {renderEditableItem(
-                            item,
-                            bundleItemEdits[`${i}-${j}`],
-                            `bundle-${i}-${j}`,
-                            (field, value) => updateBundleItemEdit(i, j, field, value),
-                            true,
-                          )}
+                        <div key={j}>
+                          {/* Drop zone before this item */}
+                          <div
+                            onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-before-${j}`); }}
+                            onDragLeave={(e) => handleDragLeave(e, `bundle-${i}-before-${j}`)}
+                            onDrop={(e) => { e.stopPropagation(); handleDropOnBundle(e, i, j); }}
+                            className={`h-1 -mx-1 rounded transition-all ${
+                              dropTarget === `bundle-${i}-before-${j}` ? "h-2 bg-primary/30 my-1" : "my-0.5"
+                            }`}
+                          />
+                          <div
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
+                            onDragEnd={handleDragEnd}
+                            className="rounded border border-border/30 bg-background/50 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
+                          >
+                            <GripVertical className="h-3 w-3 text-muted-foreground/50 shrink-0 mt-1" />
+                            {renderEditableItem(
+                              item,
+                              bundleItemEdits[`${i}-${j}`],
+                              `bundle-${i}-${j}`,
+                              (field, value) => updateBundleItemEdit(i, j, field, value),
+                              true,
+                            )}
+                          </div>
                         </div>
                       ))}
+                      {/* Drop zone after last item */}
+                      <div
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-after-last`); }}
+                        onDragLeave={(e) => handleDragLeave(e, `bundle-${i}-after-last`)}
+                        onDrop={(e) => { e.stopPropagation(); handleDropOnBundle(e, i, bundle.items.length); }}
+                        className={`h-1 -mx-1 rounded transition-all ${
+                          dropTarget === `bundle-${i}-after-last` ? "h-2 bg-primary/30 my-1" : "my-0.5"
+                        }`}
+                      />
                     </div>
                   )}
                 </div>
