@@ -247,6 +247,7 @@ function TaskSubchat({ task, workbookId, workbookTitle, allTasks, onClose, onMin
           onSend={handleSend}
           compact
           placeholder={`Work on: ${task.title}…`}
+          parentTaskId={task.id}
         />
       </div>
     </div>
