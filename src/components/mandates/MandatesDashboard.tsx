@@ -287,9 +287,9 @@ function MandateCard({
         isSelected ? "border-primary bg-primary/5" : "border-border/50 bg-card"
       }`}
     >
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 mb-1">
+      <div className="flex items-start justify-between gap-2 min-w-0">
+        <div className="min-w-0 flex-1 overflow-hidden">
+          <div className="flex items-center gap-2 mb-1 min-w-0">
             <Shield className={`h-3.5 w-3.5 shrink-0 ${enforceCfg.color}`} />
             <h4 className="text-sm font-medium truncate">{mandate.title}</h4>
           </div>
@@ -297,7 +297,7 @@ function MandateCard({
             <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{mandate.mandate_description}</p>
           )}
         </div>
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
           <Badge variant="outline" className={`text-[9px] gap-0.5 ${statusCfg.color}`}>
             {statusCfg.icon} {statusCfg.label}
           </Badge>
@@ -318,7 +318,7 @@ function MandateCard({
         </div>
       )}
 
-      <div className="flex items-center gap-2 mt-2.5">
+      <div className="flex items-center gap-2 mt-2.5 flex-wrap">
         <Badge variant="secondary" className={`text-[9px] gap-0.5 ${enforceCfg.color}`}>
           {enforceCfg.label}
         </Badge>
@@ -329,7 +329,7 @@ function MandateCard({
             <><Target className="h-2 w-2" /> {mandate.mandate_scope?.workbook_ids?.length ?? 0} workbooks</>
           )}
         </Badge>
-        <span className="text-[10px] text-muted-foreground ml-auto">
+        <span className="text-[10px] text-muted-foreground ml-auto whitespace-nowrap">
           {new Date(mandate.created_at).toLocaleDateString()}
         </span>
       </div>
@@ -454,7 +454,7 @@ export function MandatesDashboard({ compact = false }: { compact?: boolean }) {
   if (isLoading) return <div className="text-sm text-muted-foreground p-4">Loading mandates…</div>;
 
   return (
-    <div className={compact ? "space-y-3" : "space-y-4"}>
+    <div className={`${compact ? "space-y-3" : "space-y-4"} min-w-0 overflow-hidden`}>
       {/* Header */}
       {!compact && (
         <div className="flex items-center justify-between">
@@ -500,7 +500,7 @@ export function MandatesDashboard({ compact = false }: { compact?: boolean }) {
       </div>
 
       {/* Filter tabs */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 flex-wrap">
         {["all", "draft", "active", "superseded", "revoked"].map(s => (
           <Button
             key={s}
