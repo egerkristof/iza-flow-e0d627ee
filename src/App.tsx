@@ -7,11 +7,10 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { AppLayout } from "@/components/AppLayout";
 import Index from "./pages/Index";
 import AuthPage from "./pages/Auth";
-import LaunchpadPage from "./pages/Launchpad";
-import CommandCenterPage from "./pages/CommandCenter";
-import ProcessStudioPage from "./pages/ProcessStudio";
 import WorkbooksPage from "./pages/Workbooks";
+import WorkbookDetailPage from "./pages/WorkbookDetail";
 import ContextManagementPage from "./pages/ContextManagement";
+import OversightPage from "./pages/Oversight";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,11 +39,10 @@ const App = () => (
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-            <Route path="/launchpad" element={<ProtectedRoute><LaunchpadPage /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
+            <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />
             <Route path="/context" element={<ProtectedRoute><ContextManagementPage /></ProtectedRoute>} />
-            <Route path="/command-center" element={<ProtectedRoute><CommandCenterPage /></ProtectedRoute>} />
-            <Route path="/process-studio" element={<ProtectedRoute><ProcessStudioPage /></ProtectedRoute>} />
+            <Route path="/oversight" element={<ProtectedRoute><OversightPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

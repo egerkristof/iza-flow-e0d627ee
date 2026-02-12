@@ -1,9 +1,8 @@
-import { Rocket, BarChart3, Settings2, Search, Brain } from "lucide-react";
+import { BookOpen, Library, BarChart3 } from "lucide-react";
 
 const Index = () => {
   return (
     <div className="flex flex-col gap-8 p-8">
-      {/* Hero */}
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Welcome to LizaOS</h1>
         <p className="mt-2 text-muted-foreground">
@@ -11,25 +10,24 @@ const Index = () => {
         </p>
       </div>
 
-      {/* Quick cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <QuickCard
-          icon={<Rocket className="h-5 w-5 text-primary" />}
-          title="The Launchpad"
-          description="Open a Workbook to see your Action Grid and start executing locked playbooks."
-          href="/launchpad"
+          icon={<BookOpen className="h-5 w-5 text-primary" />}
+          title="Workbooks"
+          description="Open a Workbook to execute playbook-guided protocols and manage strategic outcomes."
+          href="/workbooks"
+        />
+        <QuickCard
+          icon={<Library className="h-5 w-5 text-success" />}
+          title="Context"
+          description="Curate items & bundles, review drift, ingest knowledge, and manage the graph."
+          href="/context"
         />
         <QuickCard
           icon={<BarChart3 className="h-5 w-5 text-warning" />}
-          title="Command Center"
-          description="Kanban overview of workbooks, drift indicators, and task lineage."
-          href="/command-center"
-        />
-        <QuickCard
-          icon={<Settings2 className="h-5 w-5 text-success" />}
-          title="Process Studio"
-          description="Knowledge Loom, Drift Inbox, Capability Modules, and Health Dashboard."
-          href="/process-studio"
+          title="Oversight"
+          description="Kanban view of workbooks, drift indicators, and task lineage for leaders."
+          href="/oversight"
         />
       </div>
     </div>
