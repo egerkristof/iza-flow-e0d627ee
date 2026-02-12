@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageSquare, Plus, Users, User, X, Hash, Search, Filter, BookUp, Loader2 } from "lucide-react";
+import { MessageSquare, Plus, Users, User, X, Hash, Search, Filter, BookUp, Loader2, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import { MandateContextBanner } from "./MandateContextBanner";
 import { FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import type { ExtractionResult } from "@/lib/knowledge-schema";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ChatThread {
   id: string;
@@ -66,6 +67,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
 
   // Knowledge extraction state
   const [extracting, setExtracting] = useState(false);
+  const [extractingMsgId, setExtractingMsgId] = useState<string | null>(null);
   const [extractionData, setExtractionData] = useState<ExtractionResult | null>(null);
   const [extractionSourceName, setExtractionSourceName] = useState("");
   const [showImportCopilot, setShowImportCopilot] = useState(false);
@@ -102,6 +104,36 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
       toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
     } finally {
       setExtracting(false);
+    }
+  };
+
+  const handleExtractMessage = async (msg: ChatMessage) => {
+    if (!active) return;
+    setExtractingMsgId(msg.id);
+    try {
+      const content = `[${msg.sender.name} — ${msg.time}]: ${msg.content}${msg.attachment ? `\n[Attachment: ${msg.attachment.title}${msg.attachment.content ? " — " + msg.attachment.content : ""}]` : ""}`;
+
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: {
+          source_type: "chat",
+          content,
+          meta: {
+            title: `${active.title} — message by ${msg.sender.name}`,
+            workbook: workbookId,
+            participants: msg.sender.name,
+          },
+        },
+      });
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setExtractionData(data as ExtractionResult);
+      setExtractionSourceName(`Message by ${msg.sender.name} (${msg.time})`);
+      setShowImportCopilot(true);
+    } catch (err: any) {
+      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+    } finally {
+      setExtractingMsgId(null);
     }
   };
 
@@ -194,7 +226,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-3">
             {messages.map(msg => (
-              <div key={msg.id} className={`flex gap-2 ${msg.isOwn ? "justify-end" : ""}`}>
+              <div key={msg.id} className={`group/msg relative flex gap-2 ${msg.isOwn ? "justify-end" : ""}`}>
                 {!msg.isOwn && (
                   <Avatar className="h-6 w-6 shrink-0 mt-0.5">
                     <AvatarFallback className="text-[9px] bg-secondary">{msg.sender.initials}</AvatarFallback>
@@ -217,6 +249,25 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
                   {msg.content && <p>{msg.content}</p>}
                   <p className={`text-[10px] mt-1 ${msg.isOwn ? "text-primary-foreground/60" : "text-muted-foreground"}`}>{msg.time}</p>
                 </div>
+                {/* Per-message extract button — appears on hover */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleExtractMessage(msg)}
+                      disabled={extractingMsgId === msg.id}
+                      className={`absolute ${msg.isOwn ? "left-0 -translate-x-full" : "right-0 translate-x-full"} top-1/2 -translate-y-1/2 mx-1 opacity-0 group-hover/msg:opacity-100 transition-opacity p-1.5 rounded-md hover:bg-primary/10 disabled:opacity-50`}
+                    >
+                      {extractingMsgId === msg.id ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
+                      ) : (
+                        <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                      )}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side={msg.isOwn ? "left" : "right"} className="text-xs">
+                    Extract knowledge from this message
+                  </TooltipContent>
+                </Tooltip>
               </div>
             ))}
           </div>
