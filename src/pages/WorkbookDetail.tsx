@@ -25,7 +25,8 @@ import { WorkbookResources } from "@/components/workbooks/WorkbookResources";
 import { ChatToolbar } from "@/components/workbooks/ChatToolbar";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { WorkbookStatusTransition } from "@/components/workbooks/WorkbookStatusTransition";
-import { ListTodo, Bot, GitBranch } from "lucide-react";
+import { ListTodo, Bot, GitBranch, Network } from "lucide-react";
+import { WorkbookGraph } from "@/components/workbooks/WorkbookGraph";
 
 // ── MOCK PLAYBOOKS (from old Launchpad) ──
 interface Playbook {
@@ -555,6 +556,7 @@ export default function WorkbookDetailPage() {
           <TabsTrigger value="chats"><MessageSquare className="mr-1.5 h-3.5 w-3.5" />Chats</TabsTrigger>
           <TabsTrigger value="members"><Users className="mr-1.5 h-3.5 w-3.5" />Members</TabsTrigger>
           <TabsTrigger value="resources"><Package className="mr-1.5 h-3.5 w-3.5" />Repository</TabsTrigger>
+          <TabsTrigger value="graph"><Network className="mr-1.5 h-3.5 w-3.5" />Graph</TabsTrigger>
           {showAnalytics && <TabsTrigger value="analytics"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Analytics</TabsTrigger>}
           {showSettings && <TabsTrigger value="settings"><Settings className="mr-1.5 h-3.5 w-3.5" />Settings</TabsTrigger>}
         </TabsList>
@@ -609,6 +611,10 @@ export default function WorkbookDetailPage() {
 
         <TabsContent value="resources" className="mt-4">
           <WorkbookResources workbookId={id ?? "1"} />
+        </TabsContent>
+
+        <TabsContent value="graph" className="mt-4">
+          <WorkbookGraph workbookId={id ?? "1"} workbookTitle={wb.title} />
         </TabsContent>
 
         {showAnalytics && (

@@ -83,4 +83,15 @@
   .surface-elevated {
     background: hsl(var(--surface-elevated));
   }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@keyframes neural-pulse {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -28; }
+}
+
+.animate-neural-pulse {
+  animation: neural-pulse 1.5s linear infinite;
 }
