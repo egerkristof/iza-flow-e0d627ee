@@ -10,8 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Target, TrendingUp, Trash2, Pencil } from "lucide-react";
+import { Plus, Target, TrendingUp, Trash2, Pencil, BookUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { PromoteToContextDialog } from "./PromoteToContextDialog";
 
 export function PersonalGoals() {
   const { user } = useAuth();
@@ -19,6 +20,7 @@ export function PersonalGoals() {
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ title: "", description: "", goal_type: "goal", target_value: "", current_value: "", unit: "" });
+  const [promoteGoal, setPromoteGoal] = useState<{ title: string; content: string } | null>(null);
 
   const { data: goals = [], isLoading } = useQuery({
     queryKey: ["personal-goals", user?.id],
@@ -136,9 +138,23 @@ export function PersonalGoals() {
                       </div>
                       {g.description && <p className="text-xs text-muted-foreground mt-1">{g.description}</p>}
                     </div>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => deleteMutation.mutate(g.id)}>
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </Button>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-primary hover:text-primary"
+                        title="Promote to Context Item"
+                        onClick={() => setPromoteGoal({
+                          title: g.title,
+                          content: `[${g.goal_type.toUpperCase()}] ${g.title}${g.description ? `\n${g.description}` : ""}${g.target_value ? `\nTarget: ${g.target_value}${g.unit ? ` ${g.unit}` : ""}` : ""}${g.current_value ? ` | Current: ${g.current_value}${g.unit ? ` ${g.unit}` : ""}` : ""}\nStatus: ${g.status}`,
+                        })}
+                      >
+                        <BookUp className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => deleteMutation.mutate(g.id)}>
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
                   </div>
                   {p !== null && (
                     <div className="space-y-1">
@@ -154,6 +170,14 @@ export function PersonalGoals() {
             })}
           </div>
         )}
+
+        <PromoteToContextDialog
+          open={!!promoteGoal}
+          onOpenChange={(v) => { if (!v) setPromoteGoal(null); }}
+          defaultTitle={promoteGoal?.title ?? ""}
+          defaultContent={promoteGoal?.content ?? ""}
+          sourceLabel="Goal"
+        />
       </CardContent>
     </Card>
   );

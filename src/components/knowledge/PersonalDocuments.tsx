@@ -6,8 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, FileText, Trash2, Linkedin, Award, File, Loader2 } from "lucide-react";
+import { Upload, FileText, Trash2, Linkedin, Award, File, Loader2, BookUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { PromoteToContextDialog } from "./PromoteToContextDialog";
 
 const CATEGORIES = [
   { value: "cv", label: "CV / Resume", icon: FileText },
@@ -26,6 +27,7 @@ export function PersonalDocuments() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("cv");
+  const [promoteDoc, setPromoteDoc] = useState<{ title: string; content: string } | null>(null);
 
   const { data: docs = [], isLoading } = useQuery({
     queryKey: ["personal-documents", user?.id],
@@ -164,6 +166,18 @@ export function PersonalDocuments() {
                   <Button
                     variant="ghost"
                     size="icon"
+                    className="h-7 w-7 text-primary hover:text-primary"
+                    title="Promote to Context Item"
+                    onClick={() => setPromoteDoc({
+                      title: doc.file_name,
+                      content: `[${categoryLabel(doc.document_category)}] ${doc.description || doc.file_name}\n\nSource: Personal document uploaded ${new Date(doc.created_at).toLocaleDateString()}`,
+                    })}
+                  >
+                    <BookUp className="h-3.5 w-3.5" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     className="h-7 w-7 text-destructive hover:text-destructive"
                     onClick={() => deleteMutation.mutate({ id: doc.id, file_path: doc.file_path })}
                   >
@@ -174,6 +188,14 @@ export function PersonalDocuments() {
             ))}
           </div>
         )}
+
+        <PromoteToContextDialog
+          open={!!promoteDoc}
+          onOpenChange={(v) => { if (!v) setPromoteDoc(null); }}
+          defaultTitle={promoteDoc?.title ?? ""}
+          defaultContent={promoteDoc?.content ?? ""}
+          sourceLabel="Document"
+        />
       </CardContent>
     </Card>
   );
