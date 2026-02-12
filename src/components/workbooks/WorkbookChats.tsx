@@ -58,6 +58,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
   const [messages, setMessages] = useState(MOCK_MESSAGES);
   const [typeFilter, setTypeFilter] = useState<"all" | "private" | "group">("all");
   const [newChatOpen, setNewChatOpen] = useState(false);
+  const [highlightedChatId, setHighlightedChatId] = useState<string | null>(null);
 
   const filtered = threads.filter(t => typeFilter === "all" || t.type === typeFilter);
 
@@ -65,7 +66,10 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
   useEffect(() => {
     if (focusChatId) {
       setActiveThread(focusChatId);
+      setHighlightedChatId(focusChatId);
+      const timer = setTimeout(() => setHighlightedChatId(null), 2500);
       onFocusChatHandled?.();
+      return () => clearTimeout(timer);
     }
   }, [focusChatId]);
   const active = threads.find(t => t.id === activeThread);
@@ -182,7 +186,20 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
 
       <div className="space-y-2">
         {filtered.map(thread => (
-          <button key={thread.id} onClick={() => setActiveThread(thread.id)} className="flex w-full items-center gap-3 rounded-lg border border-border/50 bg-card p-4 text-left transition-all hover:border-primary/30 hover:bg-primary/5">
+          <button
+            key={thread.id}
+            onClick={() => setActiveThread(thread.id)}
+            ref={el => {
+              if (highlightedChatId === thread.id && el) {
+                setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
+              }
+            }}
+            className={`flex w-full items-center gap-3 rounded-lg border p-4 text-left transition-all ${
+              highlightedChatId === thread.id
+                ? "border-primary bg-primary/15 ring-2 ring-primary/40 animate-pulse"
+                : "border-border/50 bg-card hover:border-primary/30 hover:bg-primary/5"
+            }`}
+          >
             <div className={`flex h-9 w-9 items-center justify-center rounded-md shrink-0 ${thread.type === "group" ? "bg-primary/10 text-primary" : "bg-secondary"}`}>
               {thread.type === "group" ? <Hash className="h-4 w-4" /> : <User className="h-4 w-4 text-muted-foreground" />}
             </div>
