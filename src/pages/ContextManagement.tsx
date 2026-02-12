@@ -442,8 +442,18 @@ export default function ContextManagementPage() {
               </button>
             ))}
           </div>
-          <DialogFooter>
+          <p className="text-xs text-muted-foreground">Select items to bundle, or skip to import the document without bundling.</p>
+          <DialogFooter className="flex-col sm:flex-row gap-2">
             <Button variant="outline" onClick={() => setIngestionModal(false)}>Cancel</Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                toast({ title: "Document Imported", description: "Document imported without bundling candidate items." });
+                setIngestionModal(false);
+              }}
+            >
+              Skip — Import as-is
+            </Button>
             <Button onClick={approveAll} disabled={!candidates.some(c => c.approved)}>Approve & Bundle ({candidates.filter(c => c.approved).length})</Button>
           </DialogFooter>
         </DialogContent>
