@@ -113,6 +113,93 @@ export type Database = {
         }
         Relationships: []
       }
+      personal_documents: {
+        Row: {
+          created_at: string
+          description: string | null
+          document_category: string
+          file_name: string
+          file_path: string
+          file_type: string
+          id: string
+          parsed_status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          document_category?: string
+          file_name: string
+          file_path: string
+          file_type: string
+          id?: string
+          parsed_status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          document_category?: string
+          file_name?: string
+          file_path?: string
+          file_type?: string
+          id?: string
+          parsed_status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      personal_goals: {
+        Row: {
+          created_at: string
+          current_value: string | null
+          description: string | null
+          due_date: string | null
+          goal_type: string
+          id: string
+          status: string
+          target_value: string | null
+          title: string
+          unit: string | null
+          updated_at: string
+          user_id: string
+          workbook_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          current_value?: string | null
+          description?: string | null
+          due_date?: string | null
+          goal_type?: string
+          id?: string
+          status?: string
+          target_value?: string | null
+          title: string
+          unit?: string | null
+          updated_at?: string
+          user_id: string
+          workbook_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          current_value?: string | null
+          description?: string | null
+          due_date?: string | null
+          goal_type?: string
+          id?: string
+          status?: string
+          target_value?: string | null
+          title?: string
+          unit?: string | null
+          updated_at?: string
+          user_id?: string
+          workbook_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -197,6 +284,45 @@ export type Database = {
           strategic_outcome?: string | null
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      working_preferences: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          preference_key: string
+          preference_value: string
+          scope_id: string | null
+          scope_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          preference_key: string
+          preference_value: string
+          scope_id?: string | null
+          scope_type?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          preference_key?: string
+          preference_value?: string
+          scope_id?: string | null
+          scope_type?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
