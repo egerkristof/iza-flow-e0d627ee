@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   Plus, ChevronRight, ChevronDown, Circle, CheckCircle2, Clock, AlertTriangle,
   XCircle, Settings2, Trash2, Play, X, MessageSquare, Zap, FileText, Send,
-  Minimize2, Maximize2, Search, Filter, Pencil,
+  Minimize2, Maximize2, Search, Filter, Pencil, GripVertical,
 } from "lucide-react";
 import { ChatToolbar } from "./ChatToolbar";
 import { MandateContextBanner } from "./MandateContextBanner";
@@ -408,6 +408,11 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
   // Subchat state
   const [activeSubchats, setActiveSubchats] = useState<Map<string, { minimized: boolean }>>(new Map());
 
+  // Drag-and-drop state
+  const [dragTaskId, setDragTaskId] = useState<string | null>(null);
+  const [dragOverTaskId, setDragOverTaskId] = useState<string | null>(null);
+  const [dragOverPosition, setDragOverPosition] = useState<"above" | "below" | null>(null);
+
   const openSubchat = (taskId: string) => {
     setActiveSubchats(prev => {
       const next = new Map(prev);
@@ -582,6 +587,36 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
     },
   });
 
+  // Drag-and-drop reorder handler
+  const handleDrop = useCallback(async (draggedId: string, targetId: string, position: "above" | "below") => {
+    const dragged = tasks.find(t => t.id === draggedId);
+    const target = tasks.find(t => t.id === targetId);
+    if (!dragged || !target) return;
+    // Only allow reorder within same nesting level
+    if (dragged.parent_task_id !== target.parent_task_id) return;
+
+    // Get siblings at this level, sorted by sort_order
+    const siblings = tasks
+      .filter(t => t.parent_task_id === dragged.parent_task_id)
+      .sort((a, b) => a.sort_order - b.sort_order);
+
+    // Remove dragged from list
+    const without = siblings.filter(s => s.id !== draggedId);
+    // Find target index in the filtered list
+    const targetIdx = without.findIndex(s => s.id === targetId);
+    const insertIdx = position === "above" ? targetIdx : targetIdx + 1;
+
+    // Rebuild order
+    const reordered = [...without.slice(0, insertIdx), dragged, ...without.slice(insertIdx)];
+
+    // Batch update sort_orders
+    const updates = reordered.map((t, i) => ({ id: t.id, sort_order: i }));
+    for (const u of updates) {
+      await supabase.from("workbook_tasks").update({ sort_order: u.sort_order }).eq("id", u.id);
+    }
+    queryClient.invalidateQueries({ queryKey: ["workbook-tasks", workbookId] });
+  }, [tasks, workbookId, queryClient]);
+
   const tree = useMemo(() => buildTree(tasks), [tasks]);
   const filteredTree = useMemo(
     () => filterTree(tree, searchQuery, statusFilter, priorityFilter),
@@ -625,6 +660,9 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
     const hasSubchat = !!subchatState;
     const isHighlighted = highlightedTaskId === task.id;
 
+    const isDragging = dragTaskId === task.id;
+    const isDropTarget = dragOverTaskId === task.id && dragTaskId !== task.id;
+
     return (
       <div key={task.id}>
         <div
@@ -633,7 +671,54 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
               setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
             }
           }}
+          draggable
+          onDragStart={(e) => {
+            setDragTaskId(task.id);
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/plain", task.id);
+          }}
+          onDragEnd={() => {
+            setDragTaskId(null);
+            setDragOverTaskId(null);
+            setDragOverPosition(null);
+          }}
+          onDragOver={(e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "move";
+            if (dragTaskId === task.id) return;
+            // Only allow drop on same nesting level
+            const dragged = tasks.find(t => t.id === dragTaskId);
+            if (dragged && dragged.parent_task_id !== task.parent_task_id) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const midY = rect.top + rect.height / 2;
+            const pos = e.clientY < midY ? "above" : "below";
+            setDragOverTaskId(task.id);
+            setDragOverPosition(pos);
+          }}
+          onDragLeave={() => {
+            if (dragOverTaskId === task.id) {
+              setDragOverTaskId(null);
+              setDragOverPosition(null);
+            }
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            if (dragTaskId && dragOverTaskId && dragOverPosition && dragTaskId !== dragOverTaskId) {
+              handleDrop(dragTaskId, dragOverTaskId, dragOverPosition);
+            }
+            setDragTaskId(null);
+            setDragOverTaskId(null);
+            setDragOverPosition(null);
+          }}
           className={`group flex items-center gap-2 rounded-md px-3 py-2 transition-all cursor-pointer ${
+            isDragging
+              ? "opacity-40"
+              : isDropTarget && dragOverPosition === "above"
+                ? "border-t-2 border-t-primary"
+                : isDropTarget && dragOverPosition === "below"
+                  ? "border-b-2 border-b-primary"
+                  : ""
+          } ${
             isHighlighted
               ? "bg-primary/15 ring-2 ring-primary/40 animate-pulse"
               : hasSubchat
@@ -646,6 +731,11 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
             setEditTask(task);
           }}
         >
+          {/* Drag handle */}
+          <span className="shrink-0 cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-50 hover:!opacity-100 transition-opacity">
+            <GripVertical className="h-3.5 w-3.5 text-muted-foreground" />
+          </span>
+
           {hasChildren ? (
             <button onClick={(e) => { e.stopPropagation(); toggleExpand(task.id); }} className="shrink-0">
               {isExpanded ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
