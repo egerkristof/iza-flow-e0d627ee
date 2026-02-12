@@ -128,6 +128,7 @@ Classify this finding using the classify_finding tool.`;
                         "PLAYBOOK",
                         "PREFERENCE",
                         "RESEARCH",
+                        "PRINCIPLE",
                       ],
                       description: "Best-fit category for this finding",
                     },

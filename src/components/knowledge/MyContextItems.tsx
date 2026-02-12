@@ -85,7 +85,7 @@ export function MyContextItems() {
     return matchSearch && matchCategory;
   });
 
-  const categories = ["all", "DIRECTIVE", "KNOWLEDGE", "PROCEDURE", "PLAYBOOK", "PREFERENCE", "RESEARCH"];
+  const categories = ["all", "DIRECTIVE", "KNOWLEDGE", "PROCEDURE", "PLAYBOOK", "PREFERENCE", "RESEARCH", "PRINCIPLE"];
 
   if (isLoading) return <div className="text-sm text-muted-foreground p-4">Loading…</div>;
 

@@ -57,4 +57,4 @@ export const MOCK_CONTEXT_ITEMS: MockContextItem[] = [
 ];
 
 export const ALL_DOMAIN_TAGS = Array.from(new Set(MOCK_CONTEXT_ITEMS.flatMap(i => i.domain_tags))).sort();
-export const ALL_CATEGORIES = ["DIRECTIVE", "KNOWLEDGE", "PROCEDURE", "PLAYBOOK", "PREFERENCE", "RESEARCH"] as string[];
+export const ALL_CATEGORIES = ["DIRECTIVE", "KNOWLEDGE", "PROCEDURE", "PLAYBOOK", "PREFERENCE", "RESEARCH", "PRINCIPLE"] as string[];
