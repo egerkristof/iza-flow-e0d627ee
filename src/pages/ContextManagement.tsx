@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
-  Archive, FileText, Check, Gauge,
+  Archive, FileText, Check, Gauge, GitBranch, Zap,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { ContextItemRow } from "@/components/context/ContextItemRow";
 import { BundleCard } from "@/components/context/BundleCard";
+import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
+import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import {
   MOCK_CONTEXT_ITEMS, MOCK_BUNDLES, ALL_DOMAIN_TAGS, ALL_CATEGORIES,
   type MockBundle,
@@ -61,6 +63,11 @@ export default function ContextManagementPage() {
   const [dragOver, setDragOver] = useState(false);
   const [ingestionModal, setIngestionModal] = useState(false);
   const [candidates, setCandidates] = useState<{ title: string; type: string; approved: boolean }[]>([]);
+
+  // Governance state
+  const [stackViewerOpen, setStackViewerOpen] = useState(false);
+  const [impactSimOpen, setImpactSimOpen] = useState(false);
+  const [impactTarget, setImpactTarget] = useState("");
 
   // Filter items
   const filteredItems = useMemo(() => {
@@ -132,9 +139,17 @@ export default function ContextManagementPage() {
               Curate, organize, and manage the knowledge graph — {totalItems} items · {bundles.length} bundles · {Math.round(avgHealth * 100)}% health
             </p>
           </div>
-          <Button onClick={() => { setEditingBundle(null); setBundleDialog(true); }} className="gap-1.5">
-            <Plus className="h-4 w-4" /> New Bundle
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="text-xs gap-1.5" onClick={() => setStackViewerOpen(true)}>
+              <GitBranch className="h-3.5 w-3.5" /> Context Stack
+            </Button>
+            <Button variant="outline" size="sm" className="text-xs gap-1.5" onClick={() => { setImpactTarget("Selected Item"); setImpactSimOpen(true); }}>
+              <Zap className="h-3.5 w-3.5" /> Impact Sim
+            </Button>
+            <Button onClick={() => { setEditingBundle(null); setBundleDialog(true); }} className="gap-1.5">
+              <Plus className="h-4 w-4" /> New Bundle
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -335,6 +350,10 @@ export default function ContextManagementPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Governance Modals */}
+      <ContextStackViewer open={stackViewerOpen} onOpenChange={setStackViewerOpen} />
+      <ImpactSimulator open={impactSimOpen} onOpenChange={setImpactSimOpen} itemTitle={impactTarget} changeType="update" />
     </div>
   );
 }
