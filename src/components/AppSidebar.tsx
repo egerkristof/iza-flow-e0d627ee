@@ -19,11 +19,11 @@ const roleLabels: Record<AppRole, string> = {
 };
 
 const navItems = [
-  { title: "Dashboard", url: "/", icon: Brain },
-  { title: "Workbooks", url: "/workbooks", icon: BookOpen },
-  { title: "Context", url: "/context", icon: Library },
-  { title: "Oversight", url: "/oversight", icon: BarChart3 },
-  { title: "My Knowledge", url: "/my-knowledge", icon: User },
+  { title: "Dashboard", url: "/", icon: Brain, hideForRoles: [] as string[] },
+  { title: "Workbooks", url: "/workbooks", icon: BookOpen, hideForRoles: [] as string[] },
+  { title: "Context", url: "/context", icon: Library, hideForRoles: ["operator"] },
+  { title: "Oversight", url: "/oversight", icon: BarChart3, hideForRoles: [] as string[] },
+  { title: "My Knowledge", url: "/my-knowledge", icon: User, hideForRoles: [] as string[] },
 ];
 
 export function AppSidebar() {
@@ -60,7 +60,7 @@ export function AppSidebar() {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map((item) => (
+              {navItems.filter(item => !item.hideForRoles.includes(activeRole)).map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} end={item.url === "/"} className="hover:bg-sidebar-accent" activeClassName="bg-sidebar-accent text-primary font-medium">

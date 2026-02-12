@@ -21,7 +21,8 @@ import { WorkbookTasks, TaskInlineIndicator } from "@/components/workbooks/Workb
 import { WorkbookChats, ChatSidebarPanel } from "@/components/workbooks/WorkbookChats";
 import { WorkbookMembers, MembersSidebarPanel } from "@/components/workbooks/WorkbookMembers";
 import { WorkbookAgentConfig, AgentsSidebarPanel } from "@/components/workbooks/WorkbookAgentConfig";
-import { ListTodo, Bot } from "lucide-react";
+import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
+import { ListTodo, Bot, GitBranch } from "lucide-react";
 
 // ── MOCK PLAYBOOKS (from old Launchpad) ──
 interface Playbook {
@@ -82,6 +83,7 @@ export default function WorkbookDetailPage() {
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
   const [detectedIntents, setDetectedIntents] = useState<string[]>([]);
+  const [stackViewerOpen, setStackViewerOpen] = useState(false);
 
   const handleLock = (playbook: Playbook) => {
     setLockedPlaybook(playbook);
@@ -290,7 +292,12 @@ export default function WorkbookDetailPage() {
 
           {/* Context sidebar */}
           <div className="w-72 border-l border-border/50 bg-card/50 p-4 overflow-auto">
-            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Active Context</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Active Context</h3>
+              <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 text-primary" onClick={() => setStackViewerOpen(true)}>
+                <GitBranch className="h-3 w-3" /> Stack
+              </Button>
+            </div>
 
             {/* Workbook context */}
             <div className="space-y-2 mb-4">
@@ -360,6 +367,9 @@ export default function WorkbookDetailPage() {
             <AgentsSidebarPanel workbookId={id ?? "1"} />
           </div>
         </div>
+
+        {/* Context Stack Modal — chat-level for free session */}
+        <ContextStackViewer open={stackViewerOpen} onOpenChange={setStackViewerOpen} scope="chat" workbookTitle={wb.title} chatTitle="Free Session" />
       </div>
     );
   }
@@ -425,7 +435,12 @@ export default function WorkbookDetailPage() {
 
           {/* Context sidebar — Assets + Injected Preferences */}
           <div className="w-72 border-l border-border/50 bg-card/50 p-4 overflow-auto">
-            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Mission Assets</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Mission Assets</h3>
+              <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 text-primary" onClick={() => setStackViewerOpen(true)}>
+                <GitBranch className="h-3 w-3" /> Stack
+              </Button>
+            </div>
             <div className="space-y-2 mb-5">
               {lockedPlaybook.assets.map(asset => (
                 <div key={asset} className="flex items-center gap-2 rounded-md bg-secondary/50 px-3 py-2 text-xs">
@@ -463,6 +478,8 @@ export default function WorkbookDetailPage() {
             </div>
           </div>
         </div>
+        {/* Context Stack Modal — chat-level for protocol */}
+        <ContextStackViewer open={stackViewerOpen} onOpenChange={setStackViewerOpen} scope="chat" workbookTitle={wb.title} chatTitle={lockedPlaybook.title} />
       </div>
     );
   }
@@ -486,8 +503,14 @@ export default function WorkbookDetailPage() {
               </div>
             )}
           </div>
+          <Button variant="outline" size="sm" className="text-xs gap-1.5 shrink-0" onClick={() => setStackViewerOpen(true)}>
+            <GitBranch className="h-3.5 w-3.5" /> Context Stack
+          </Button>
         </div>
       </div>
+
+      {/* Context Stack Modal — workbook-level for idle state */}
+      <ContextStackViewer open={stackViewerOpen} onOpenChange={setStackViewerOpen} scope="workbook" workbookTitle={wb.title} />
 
       {/* Tabbed sections — role-filtered */}
       <Tabs defaultValue="protocols" className="w-full">
