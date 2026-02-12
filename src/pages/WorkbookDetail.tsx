@@ -21,6 +21,7 @@ import { WorkbookTasks, TaskInlineIndicator } from "@/components/workbooks/Workb
 import { WorkbookChats, ChatSidebarPanel } from "@/components/workbooks/WorkbookChats";
 import { WorkbookMembers, MembersSidebarPanel } from "@/components/workbooks/WorkbookMembers";
 import { WorkbookAgentConfig, AgentsSidebarPanel } from "@/components/workbooks/WorkbookAgentConfig";
+import { WorkbookResources } from "@/components/workbooks/WorkbookResources";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ListTodo, Bot, GitBranch } from "lucide-react";
 
@@ -519,6 +520,7 @@ export default function WorkbookDetailPage() {
           <TabsTrigger value="tasks"><ListTodo className="mr-1.5 h-3.5 w-3.5" />Tasks</TabsTrigger>
           <TabsTrigger value="chats"><MessageSquare className="mr-1.5 h-3.5 w-3.5" />Chats</TabsTrigger>
           <TabsTrigger value="members"><Users className="mr-1.5 h-3.5 w-3.5" />Members</TabsTrigger>
+          <TabsTrigger value="resources"><Package className="mr-1.5 h-3.5 w-3.5" />Resources</TabsTrigger>
           {showAnalytics && <TabsTrigger value="analytics"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Analytics</TabsTrigger>}
           {showSettings && <TabsTrigger value="settings"><Settings className="mr-1.5 h-3.5 w-3.5" />Settings</TabsTrigger>}
         </TabsList>
@@ -569,6 +571,10 @@ export default function WorkbookDetailPage() {
 
         <TabsContent value="members" className="mt-4">
           <WorkbookMembers workbookId={id ?? "1"} />
+        </TabsContent>
+
+        <TabsContent value="resources" className="mt-4">
+          <WorkbookResources workbookId={id ?? "1"} />
         </TabsContent>
 
         {showAnalytics && (

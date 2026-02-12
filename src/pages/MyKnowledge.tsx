@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, Target, Settings2, Upload } from "lucide-react";
+import { FileText, Target, Settings2, BookOpen } from "lucide-react";
 import { PersonalDocuments } from "@/components/knowledge/PersonalDocuments";
 import { PersonalGoals } from "@/components/knowledge/PersonalGoals";
 import { WorkingPreferences } from "@/components/knowledge/WorkingPreferences";
+import { MyContextItems } from "@/components/knowledge/MyContextItems";
 
 export default function MyKnowledgePage() {
   return (
@@ -26,6 +27,9 @@ export default function MyKnowledgePage() {
           <TabsTrigger value="preferences" className="gap-1.5">
             <Settings2 className="h-3.5 w-3.5" /> Working Style
           </TabsTrigger>
+          <TabsTrigger value="context-items" className="gap-1.5">
+            <BookOpen className="h-3.5 w-3.5" /> My Context Items
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="documents">
@@ -36,6 +40,9 @@ export default function MyKnowledgePage() {
         </TabsContent>
         <TabsContent value="preferences">
           <WorkingPreferences />
+        </TabsContent>
+        <TabsContent value="context-items">
+          <MyContextItems />
         </TabsContent>
       </Tabs>
     </div>

@@ -420,6 +420,59 @@ export type Database = {
           },
         ]
       }
+      workbook_resources: {
+        Row: {
+          content: string | null
+          created_at: string
+          created_by: string
+          file_name: string | null
+          file_path: string | null
+          file_type: string | null
+          id: string
+          metadata: Json | null
+          resource_type: string
+          title: string
+          updated_at: string
+          workbook_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          created_by: string
+          file_name?: string | null
+          file_path?: string | null
+          file_type?: string | null
+          id?: string
+          metadata?: Json | null
+          resource_type?: string
+          title: string
+          updated_at?: string
+          workbook_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          created_by?: string
+          file_name?: string | null
+          file_path?: string | null
+          file_type?: string | null
+          id?: string
+          metadata?: Json | null
+          resource_type?: string
+          title?: string
+          updated_at?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_resources_workbook_id_fkey"
+            columns: ["workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workbook_tasks: {
         Row: {
           assigned_to: string | null
@@ -607,6 +660,7 @@ export type Database = {
         | "PROCEDURE"
         | "PLAYBOOK"
         | "PREFERENCE"
+        | "RESEARCH"
       priority_level: "STANDARD" | "CRITICAL"
       security_scope: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY"
       task_priority: "low" | "medium" | "high" | "critical"
@@ -747,6 +801,7 @@ export const Constants = {
         "PROCEDURE",
         "PLAYBOOK",
         "PREFERENCE",
+        "RESEARCH",
       ],
       priority_level: ["STANDARD", "CRITICAL"],
       security_scope: ["INTERNAL", "CONFIDENTIAL", "ADMIN_ONLY"],
