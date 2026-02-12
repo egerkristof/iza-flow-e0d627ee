@@ -7,6 +7,40 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const SYSTEM_PROMPT = `You are a **Senior Knowledge Architect** — an expert at analyzing documents and transforming them into structured, high-fidelity knowledge graph elements. You work within a Context Management System (AACE) that organises knowledge into the following taxonomy:
+
+## CONTEXT ITEM CATEGORIES (use exactly these)
+- **DIRECTIVE** — Explicit instructions, rules, mandates, or constraints that MUST be followed. E.g. "Always use metric units", "Never disclose pricing before NDA".
+- **KNOWLEDGE** — Factual information, domain expertise, reference data, definitions, or institutional memory. E.g. "Our SLA guarantees 99.9% uptime", "Target market is mid-enterprise 200-2000 employees".
+- **PROCEDURE** — Step-by-step processes, workflows, checklists, or operational sequences. E.g. "Onboarding checklist: 1. Send welcome email, 2. Schedule kick-off…"
+- **PLAYBOOK** — Strategic approaches, methodologies, or multi-step strategies for achieving outcomes. A playbook bundles related procedures, directives, and knowledge into a coherent action plan. E.g. "Enterprise Sales Playbook", "Incident Response Playbook".
+- **PREFERENCE** — Working style preferences, communication tone, formatting choices, or personal operational defaults. E.g. "Prefers bullet points over prose", "Communicates in formal English".
+- **RESEARCH** — Findings, analyses, competitive intelligence, market data, or investigative insights. E.g. "Competitor X launched feature Y in Q3", "Market analysis shows 15% YoY growth".
+- **PRINCIPLE** — Core beliefs, values, philosophical stances, or guiding tenets that shape decision-making. E.g. "Customer trust over short-term revenue", "Transparency by default".
+
+## BUNDLES
+Bundles are **curated collections** of related context items that belong together as a coherent knowledge unit. When you detect a document that represents a cohesive topic (e.g. a playbook, a domain expertise area, a project brief), create a bundle and assign its items into it.
+
+**Bundle types to consider:**
+- A Playbook document → Create a PLAYBOOK-type bundle with PROCEDURE, DIRECTIVE, and KNOWLEDGE items inside
+- A domain expertise document → Create a KNOWLEDGE bundle grouping related facts
+- A policy/governance document → Create a bundle of DIRECTIVE and PRINCIPLE items
+- A research report → Create a RESEARCH bundle with findings as items
+
+## EXTRACTION PRINCIPLES
+1. **Deep extraction**: Don't be superficial. Extract EVERY meaningful, actionable, or referenceable piece of knowledge. A 5-page document should yield 10-30+ items, not 3-5 vague summaries.
+2. **Atomic items**: Each context item should be self-contained and independently useful. Don't create items that are too broad ("Communication skills") — instead create specific ones ("Prefers async Slack communication over meetings for status updates").
+3. **Rich content**: The \`content\` field should contain the full, detailed information — not a one-line summary. Include specifics, numbers, names, conditions, and context.
+4. **Correct categorization**: Be precise about which category each item belongs to. A rule is a DIRECTIVE, not KNOWLEDGE. A process is a PROCEDURE, not a DIRECTIVE.
+5. **Intent-aware bundling**: If the document IS a playbook, create it as a single bundle with all its components. If the document covers multiple topics, create multiple bundles. Standalone items that don't fit a bundle should remain standalone.
+6. **Preserve hierarchy**: If the document has sections/chapters, use them to inform bundle structure.
+7. **Working preferences**: Extract ONLY genuine style/working preferences (tone, format, tools, communication style). Don't force general knowledge into preferences.
+
+## ANALYSIS NOTES
+Provide a brief \`analysis_notes\` string explaining what you found in the document, what structure you chose, and any recommendations for the user about how to organize the extracted items in their knowledge graph.
+
+Return results via the extract_document tool.`;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
@@ -19,7 +53,6 @@ serve(async (req) => {
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!lovableApiKey) throw new Error("LOVABLE_API_KEY not configured");
 
-    // Verify user
     const anonClient = createClient(supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY")!);
     const { data: { user }, error: authError } = await anonClient.auth.getUser(authHeader.replace("Bearer ", ""));
     if (authError || !user) throw new Error("Unauthorized");
@@ -27,7 +60,6 @@ serve(async (req) => {
     const { documentId } = await req.json();
     if (!documentId) throw new Error("documentId required");
 
-    // Fetch document metadata
     const adminClient = createClient(supabaseUrl, supabaseKey);
     const { data: doc, error: docError } = await adminClient
       .from("personal_documents")
@@ -37,16 +69,14 @@ serve(async (req) => {
       .single();
     if (docError || !doc) throw new Error("Document not found");
 
-    // Download file content
     const { data: fileData, error: dlError } = await adminClient.storage
       .from("personal-documents")
       .download(doc.file_path);
     if (dlError || !fileData) throw new Error("Failed to download file");
 
-    // Extract text from the file
     const textContent = await fileData.text();
 
-    // Call Lovable AI to extract structured data
+    // Use a stronger model for deep extraction
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -54,36 +84,45 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.5-flash",
         messages: [
-          {
-            role: "system",
-            content: `You are an expert at analyzing professional profile documents. Extract structured information that can be used to personalize AI interactions. 
-
-You should extract:
-1. Working preferences (tone, style, expertise, etc.)
-2. Standalone context items (individual knowledge/research/directive items)
-3. Bundles — logical groupings of related context items that belong together as a curated set. For example, a CV might produce a "Technical Expertise" bundle with multiple knowledge items, or a "Leadership Principles" bundle with directive items.
-
-Return results via the extract_profile tool.`,
-          },
+          { role: "system", content: SYSTEM_PROMPT },
           {
             role: "user",
-            content: `Analyze this profile document and extract relevant working preferences, standalone context items, and bundles of related context items.\n\nDocument (${doc.file_name}, category: ${doc.document_category}):\n\n${textContent.slice(0, 15000)}`,
+            content: `Analyze the following document thoroughly and extract ALL knowledge elements. Be exhaustive — every actionable fact, rule, process, insight, or preference should become a context item.
+
+**Document metadata:**
+- File name: ${doc.file_name}
+- Category: ${doc.document_category}
+- Type: ${doc.file_type}
+
+**Document content:**
+${textContent.slice(0, 30000)}${textContent.length > 30000 ? "\n\n[... document truncated at 30,000 characters ...]" : ""}
+
+Now extract every meaningful element. Remember:
+- Create bundles when items naturally group together (especially for playbooks, topic areas, or document sections)
+- Each item must be specific and self-contained with rich content
+- Use the correct category for each item
+- Extract working preferences ONLY when they genuinely describe working style
+- Provide analysis_notes with your reasoning and recommendations`,
           },
         ],
         tools: [
           {
             type: "function",
             function: {
-              name: "extract_profile",
-              description: "Extract working preferences, context items, and bundles from a profile document",
+              name: "extract_document",
+              description: "Extract structured knowledge elements from a document into the AACE context management system",
               parameters: {
                 type: "object",
                 properties: {
+                  analysis_notes: {
+                    type: "string",
+                    description: "Brief analysis of what was found, the structure chosen, and recommendations for organizing in the knowledge graph. 2-4 sentences.",
+                  },
                   preferences: {
                     type: "array",
-                    description: "Working style preferences extracted from the document",
+                    description: "Working style preferences ONLY — tone, communication style, formatting, tool preferences. NOT general knowledge.",
                     items: {
                       type: "object",
                       properties: {
@@ -93,10 +132,11 @@ Return results via the extract_profile tool.`,
                             "tone", "communication_style", "response_depth", "focus_areas",
                             "excluded_topics", "preferred_frameworks", "output_format",
                             "principles", "prohibitions", "expertise", "past_experiences",
+                            "tools_and_platforms", "collaboration_style", "decision_style",
                           ],
                         },
-                        preference_value: { type: "string", description: "The extracted preference value" },
-                        condition_label: { type: "string", description: "Optional context label" },
+                        preference_value: { type: "string", description: "Specific, detailed preference value" },
+                        condition_label: { type: "string", description: "Optional: when this preference applies (e.g. 'client meetings', 'technical writing')" },
                       },
                       required: ["preference_key", "preference_value"],
                       additionalProperties: false,
@@ -104,15 +144,15 @@ Return results via the extract_profile tool.`,
                   },
                   context_items: {
                     type: "array",
-                    description: "Standalone knowledge or research context items worth capturing individually (not part of a bundle)",
+                    description: "Standalone items that don't belong to any bundle. Each must be specific and self-contained.",
                     items: {
                       type: "object",
                       properties: {
-                        title: { type: "string" },
-                        content: { type: "string" },
+                        title: { type: "string", description: "Clear, specific title (not vague). E.g. 'SLA Response Time Tiers' not 'Performance'" },
+                        content: { type: "string", description: "Full, detailed content with specifics, numbers, conditions. Multiple sentences minimum." },
                         category: {
                           type: "string",
-                          enum: ["KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE"],
+                          enum: ["KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE", "PLAYBOOK", "PREFERENCE"],
                         },
                       },
                       required: ["title", "content", "category"],
@@ -121,15 +161,20 @@ Return results via the extract_profile tool.`,
                   },
                   bundles: {
                     type: "array",
-                    description: "Logical groupings of related context items that should be bundled together as a curated set",
+                    description: "Logical groupings of related items. Create a bundle when 3+ items naturally belong together.",
                     items: {
                       type: "object",
                       properties: {
-                        title: { type: "string", description: "Bundle name, e.g. 'Technical Expertise', 'Leadership Principles'" },
-                        description: { type: "string", description: "Brief description of what this bundle covers" },
+                        title: { type: "string", description: "Descriptive bundle name, e.g. 'Enterprise Onboarding Playbook' or 'Product Architecture Knowledge Base'" },
+                        description: { type: "string", description: "What this bundle covers and when it should be activated in the context graph" },
+                        scope_suggestion: {
+                          type: "string",
+                          enum: ["personal", "team", "organization"],
+                          description: "Suggested scope level for this bundle",
+                        },
                         items: {
                           type: "array",
-                          description: "Context items that belong in this bundle",
+                          description: "Context items belonging to this bundle",
                           items: {
                             type: "object",
                             properties: {
@@ -137,7 +182,7 @@ Return results via the extract_profile tool.`,
                               content: { type: "string" },
                               category: {
                                 type: "string",
-                                enum: ["KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE"],
+                                enum: ["KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE", "PLAYBOOK", "PREFERENCE"],
                               },
                             },
                             required: ["title", "content", "category"],
@@ -145,18 +190,18 @@ Return results via the extract_profile tool.`,
                           },
                         },
                       },
-                      required: ["title", "description", "items"],
+                      required: ["title", "description", "scope_suggestion", "items"],
                       additionalProperties: false,
                     },
                   },
                 },
-                required: ["preferences", "context_items", "bundles"],
+                required: ["analysis_notes", "preferences", "context_items", "bundles"],
                 additionalProperties: false,
               },
             },
           },
         ],
-        tool_choice: { type: "function", function: { name: "extract_profile" } },
+        tool_choice: { type: "function", function: { name: "extract_document" } },
       }),
     });
 
@@ -165,14 +210,12 @@ Return results via the extract_profile tool.`,
       console.error("AI error:", aiResponse.status, errText);
       if (aiResponse.status === 429) {
         return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (aiResponse.status === 402) {
         return new Response(JSON.stringify({ error: "AI credits exhausted. Please add credits." }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       throw new Error("AI extraction failed");
@@ -183,11 +226,9 @@ Return results via the extract_profile tool.`,
     if (!toolCall) throw new Error("No extraction result");
 
     const extracted = JSON.parse(toolCall.function.arguments);
-
-    // Ensure bundles array exists even if AI omits it
     if (!extracted.bundles) extracted.bundles = [];
+    if (!extracted.analysis_notes) extracted.analysis_notes = "";
 
-    // Update document parsed status
     await adminClient
       .from("personal_documents")
       .update({ parsed_status: "parsed" })

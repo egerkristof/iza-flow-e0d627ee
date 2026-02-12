@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ExtractedPreference {
@@ -21,16 +21,18 @@ interface ExtractedPreference {
 interface ExtractedContextItem {
   title: string;
   content: string;
-  category: "KNOWLEDGE" | "RESEARCH" | "DIRECTIVE" | "PRINCIPLE" | "PROCEDURE";
+  category: "KNOWLEDGE" | "RESEARCH" | "DIRECTIVE" | "PRINCIPLE" | "PROCEDURE" | "PLAYBOOK" | "PREFERENCE";
 }
 
 interface ExtractedBundle {
   title: string;
   description: string;
+  scope_suggestion?: "personal" | "team" | "organization";
   items: ExtractedContextItem[];
 }
 
 interface ExtractionResult {
+  analysis_notes?: string;
   preferences: ExtractedPreference[];
   context_items: ExtractedContextItem[];
   bundles?: ExtractedBundle[];
@@ -63,10 +65,12 @@ const CATEGORY_COLORS: Record<string, string> = {
   DIRECTIVE: "bg-amber-500/10 text-amber-400 border-amber-500/30",
   PRINCIPLE: "bg-purple-500/10 text-purple-400 border-purple-500/30",
   PROCEDURE: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
+  PLAYBOOK: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+  PREFERENCE: "bg-pink-500/10 text-pink-400 border-pink-500/30",
 };
 
 const ALL_CATEGORIES: ExtractedContextItem["category"][] = [
-  "KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE",
+  "KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE", "PLAYBOOK", "PREFERENCE",
 ];
 
 export function ExtractionReviewDialog({ open, onOpenChange, data, documentName }: Props) {
@@ -355,6 +359,16 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto space-y-4 -mx-6 px-6" style={{ maxHeight: "calc(85vh - 200px)" }}>
+          {/* AI Analysis Notes */}
+          {data.analysis_notes && (
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 flex gap-2.5">
+              <Brain className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-xs font-semibold text-primary mb-1">Knowledge Architect Analysis</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{data.analysis_notes}</p>
+              </div>
+            </div>
+          )}
           {/* Preferences section */}
           {data.preferences.length > 0 && (
             <div className="space-y-2">
@@ -413,6 +427,12 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                         <Badge variant="outline" className="text-[10px]">
                           {bundle.items.length} item{bundle.items.length !== 1 ? "s" : ""}
                         </Badge>
+                        {bundle.scope_suggestion && (
+                          <Badge variant="secondary" className="text-[9px] gap-0.5">
+                            {bundle.scope_suggestion === "organization" ? <Globe className="h-2.5 w-2.5" /> : bundle.scope_suggestion === "team" ? <Users className="h-2.5 w-2.5" /> : <User className="h-2.5 w-2.5" />}
+                            {bundle.scope_suggestion}
+                          </Badge>
+                        )}
                       </div>
                       <p className="text-xs mt-1 text-muted-foreground">{bundle.description}</p>
                     </div>
