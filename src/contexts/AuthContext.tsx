@@ -22,25 +22,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<{ display_name: string | null; avatar_url: string | null } | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const loadUserData = async (currentUser: User) => {
+    try {
+      const [fetchedRoles, fetchedProfile] = await Promise.all([
+        getUserRoles(currentUser.id),
+        getUserProfile(currentUser.id),
+      ]);
+      setRoles(fetchedRoles);
+      setActiveRole(fetchedRoles[0] ?? "operator");
+      setProfile(fetchedProfile);
+    } catch (err) {
+      console.error("Error loading user data:", err);
+    }
+  };
+
   useEffect(() => {
+    // 1. Set up the listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
 
       if (currentUser) {
-        const [fetchedRoles, fetchedProfile] = await Promise.all([
-          getUserRoles(currentUser.id),
-          getUserProfile(currentUser.id),
-        ]);
-        setRoles(fetchedRoles);
-        setActiveRole(fetchedRoles[0] ?? "operator");
-        setProfile(fetchedProfile);
+        await loadUserData(currentUser);
       } else {
         setRoles(["operator"]);
         setActiveRole("operator");
         setProfile(null);
       }
       setLoading(false);
+    });
+
+    // 2. THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        loadUserData(currentUser).finally(() => setLoading(false));
+      } else {
+        setLoading(false);
+      }
     });
 
     return () => subscription.unsubscribe();
