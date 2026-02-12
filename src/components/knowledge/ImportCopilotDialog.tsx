@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, type DragEvent } from "react";
+import { useState, useCallback, useEffect, useMemo, type DragEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -22,6 +22,111 @@ import {
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
 } from "@/lib/knowledge-schema";
+
+// ─── Smart Suggestion Engine ─────────────────────────────────────────────────
+interface SmartSuggestion {
+  label: string;
+  instruction: string;
+  /** Which scope to use for the refine call */
+  scope: "all" | "selected";
+}
+
+function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestion[] {
+  if (!data) return [];
+  const suggestions: SmartSuggestion[] = [];
+  const allItems = [
+    ...data.context_items,
+    ...(data.bundles || []).flatMap(b => b.items),
+  ];
+
+  // 1. PLAYBOOKs that look like they should be split into steps
+  const playbooks = allItems.filter(i => i.category === "PLAYBOOK");
+  if (playbooks.length > 0) {
+    const names = playbooks.slice(0, 2).map(p => `"${p.title}"`).join(", ");
+    suggestions.push({
+      label: `Split ${playbooks.length} PLAYBOOK${playbooks.length > 1 ? "s" : ""} into step-by-step PROCEDUREs`,
+      instruction: `The following items are labelled PLAYBOOK but may actually describe step-by-step processes: ${names}. For each, break them into individual PROCEDURE items (one per step) and keep the PLAYBOOK as a bundle wrapper only, not as an item. If a playbook truly is a strategic approach (not steps), leave it.`,
+      scope: "all",
+    });
+  }
+
+  // 2. Items with very short content (< 60 chars) — likely need more detail
+  const thinItems = allItems.filter(i => i.content.length < 60);
+  if (thinItems.length >= 2) {
+    suggestions.push({
+      label: `Expand ${thinItems.length} thin items with more detail`,
+      instruction: `${thinItems.length} items have very brief content (under 60 characters). Expand each with specific details, numbers, conditions, and context to make them self-contained and actionable. Don't pad with filler — add real substance from the source.`,
+      scope: "all",
+    });
+  }
+
+  // 3. Potential category mismatches — KNOWLEDGE items that sound like DIRECTIVEs
+  const possibleDirectives = allItems.filter(
+    i => i.category === "KNOWLEDGE" && /\b(must|never|always|shall|required|prohibited|mandatory)\b/i.test(i.content)
+  );
+  if (possibleDirectives.length > 0) {
+    suggestions.push({
+      label: `Review ${possibleDirectives.length} KNOWLEDGE item${possibleDirectives.length > 1 ? "s" : ""} that may be DIRECTIVEs`,
+      instruction: `These KNOWLEDGE items contain directive language (must, never, always, required): ${possibleDirectives.slice(0, 3).map(i => `"${i.title}"`).join(", ")}. Re-examine each: if it's an explicit rule or constraint, recategorize to DIRECTIVE. If it's truly factual info that happens to use strong language, keep as KNOWLEDGE.`,
+      scope: "all",
+    });
+  }
+
+  // 4. Standalone items that could form a bundle (3+ items share words in title)
+  if (data.context_items.length >= 3 && (data.bundles || []).length === 0) {
+    suggestions.push({
+      label: "Group related standalone items into bundles",
+      instruction: `There are ${data.context_items.length} standalone items but no bundles. Analyze them for thematic clusters — items about the same topic, domain, or workflow should be grouped into bundles. Create bundles for any group of 3+ related items.`,
+      scope: "all",
+    });
+  }
+
+  // 5. Duplicate-looking titles
+  const titles = allItems.map(i => i.title.toLowerCase().replace(/[^a-z0-9]/g, " ").trim());
+  const seen = new Map<string, number>();
+  for (const t of titles) {
+    const key = t.split(" ").slice(0, 3).join(" ");
+    seen.set(key, (seen.get(key) || 0) + 1);
+  }
+  const dupeCount = [...seen.values()].filter(c => c > 1).reduce((a, b) => a + b, 0);
+  if (dupeCount >= 2) {
+    suggestions.push({
+      label: `Merge ~${dupeCount} similar/duplicate items`,
+      instruction: "Several items have very similar titles and likely overlap. Merge duplicates into single, comprehensive items. Keep the richest content and discard redundancy.",
+      scope: "all",
+    });
+  }
+
+  // 6. PROCEDURE items without numbered steps
+  const procsWithoutSteps = allItems.filter(
+    i => i.category === "PROCEDURE" && !/\d[.)]\s/.test(i.content) && !/step\s*\d/i.test(i.content)
+  );
+  if (procsWithoutSteps.length > 0) {
+    suggestions.push({
+      label: `Add numbered steps to ${procsWithoutSteps.length} PROCEDURE${procsWithoutSteps.length > 1 ? "s" : ""}`,
+      instruction: `${procsWithoutSteps.length} PROCEDURE items describe processes but lack numbered steps. Restructure their content into clear numbered step-by-step format (1. Do X, 2. Do Y, ...).`,
+      scope: "all",
+    });
+  }
+
+  // Always keep 1-2 generic fallbacks at the end
+  if (suggestions.length < 4) {
+    suggestions.push({
+      label: "Make items more specific and detailed",
+      instruction: "Make items more specific and detailed",
+      scope: "all",
+    });
+  }
+  if (suggestions.length < 5) {
+    suggestions.push({
+      label: "Recategorize — fix wrong categories",
+      instruction: "Recategorize — fix wrong categories",
+      scope: "all",
+    });
+  }
+
+  return suggestions.slice(0, 5);
+}
 
 const SOURCE_TYPE_LABELS: Record<string, string> = {
   document: "Document",
@@ -305,6 +410,25 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     setData(newData);
     setDragSource(null);
   }, [data, dragSource, itemEdits, bundleItemEdits, selectedItems, itemBundleAssignment, resolveItem]);
+
+function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSelect: (instruction: string, scope: "all" | "selected") => void }) {
+  const suggestions = useMemo(() => generateSmartSuggestions(data), [data]);
+
+  return (
+    <div className="flex gap-1.5 flex-wrap">
+      {suggestions.map((s, i) => (
+        <button
+          key={i}
+          onClick={() => onSelect(s.instruction, s.scope)}
+          className="text-[10px] px-2 py-1 rounded-full border border-border/50 hover:border-primary/40 hover:bg-primary/5 text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+        >
+          {i === 0 && <Lightbulb className="h-2.5 w-2.5 text-amber-400" />}
+          {s.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 
   const [refineOpen, setRefineOpen] = useState(false);
@@ -1072,17 +1196,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
                   </Button>
                 </div>
               </div>
-              <div className="flex gap-1.5 flex-wrap">
-                {["Make items more specific and detailed", "Split broad items into atomic pieces", "Recategorize — fix wrong categories", "Merge similar items together"].map(q => (
-                  <button
-                    key={q}
-                    onClick={() => setRefineInstruction(q)}
-                    className="text-[10px] px-2 py-1 rounded-full border border-border/50 hover:border-primary/40 hover:bg-primary/5 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
+              <SmartSuggestionChips data={data} onSelect={(instruction, scope) => { setRefineInstruction(instruction); setRefineScope(scope); }} />
             </div>
           )}
         </div>
