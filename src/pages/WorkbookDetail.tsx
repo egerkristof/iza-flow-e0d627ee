@@ -1,5 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Lock, Unlock, Play, ChevronRight, ChevronLeft, FileText, Zap, Target,
   Search as SearchIcon, BarChart, Users, MessageSquare, Settings, TrendingUp,
@@ -49,9 +51,25 @@ export default function WorkbookDetailPage() {
   const navigate = useNavigate();
   const { activeRole } = useAuth();
   const wb = MOCK_WORKBOOK_DATA[id ?? ""] ?? { title: "Unknown Workbook", description: "", strategicOutcome: "", status: "draft" };
+  const { user } = useAuth();
 
   const showAnalytics = activeRole === "manager" || activeRole === "architect";
   const showSettings = activeRole === "architect";
+
+  // ── Fetch real working preferences from DB ──
+  const { data: allPreferences = [] } = useQuery({
+    queryKey: ["working-preferences-for-execution", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("working_preferences")
+        .select("*")
+        .eq("user_id", user!.id)
+        .eq("is_active", true);
+      if (error) throw error;
+      return data;
+    },
+  });
 
   const [lockedPlaybook, setLockedPlaybook] = useState<Playbook | null>(null);
   const [freeSession, setFreeSession] = useState(false);
@@ -101,27 +119,54 @@ export default function WorkbookDetailPage() {
       .map(([intent]) => intent);
   };
 
-  // Mock matching preferences based on detected intents
-  const getMatchedPreferences = (intents: string[]): { key: string; value: string; condition: string }[] => {
-    if (intents.length === 0) return [];
-    const mockMatches: { key: string; value: string; condition: string }[] = [];
-    if (intents.some((i) => i.includes("social") || i.includes("listing"))) {
-      mockMatches.push(
-        { key: "Tone", value: "Aspirational and premium for luxury; friendly and approachable for starter homes", condition: "luxury vs standard" },
-      );
-    }
-    if (intents.some((i) => i.includes("proposal") || i.includes("email"))) {
-      mockMatches.push(
-        { key: "Communication Style", value: "Concise, data-backed, executive-friendly", condition: "business writing" },
-      );
-    }
-    if (intents.some((i) => i.includes("pricing") || i.includes("report"))) {
-      mockMatches.push(
-        { key: "Output Format", value: "Structured tables with comparison columns", condition: "analytical work" },
-      );
-    }
-    mockMatches.push({ key: "Focus Areas", value: "ROI, client value, market positioning", condition: "always active" });
-    return mockMatches;
+  // ── Real preference matching engine ──
+  const PRESET_KEY_LABELS: Record<string, string> = {
+    tone: "Tone & Voice", communication_style: "Communication Style", response_depth: "Response Depth",
+    focus_areas: "Focus Areas", excluded_topics: "Topics to Skip", preferred_frameworks: "Preferred Frameworks",
+    output_format: "Output Format",
+  };
+
+  const matchPreferences = useCallback((intents: string[], keywords: string[], playbookId?: string) => {
+    return allPreferences.filter((pref) => {
+      const hasIntentTriggers = pref.trigger_intents && pref.trigger_intents.length > 0;
+      const hasKeywordTriggers = pref.trigger_keywords && pref.trigger_keywords.length > 0;
+      const hasPlaybookBinding = pref.bound_playbook_ids && pref.bound_playbook_ids.length > 0;
+      const isGlobal = !hasIntentTriggers && !hasKeywordTriggers && !hasPlaybookBinding;
+
+      // Global preferences always match
+      if (isGlobal) return true;
+
+      // Check playbook binding
+      if (hasPlaybookBinding && playbookId) {
+        if (pref.bound_playbook_ids!.includes(playbookId)) return true;
+      }
+
+      // Check intent match
+      if (hasIntentTriggers) {
+        const prefIntents = pref.trigger_intents!.map((i) => i.toLowerCase());
+        if (intents.some((userIntent) => prefIntents.some((pi) => userIntent.includes(pi) || pi.includes(userIntent)))) return true;
+      }
+
+      // Check keyword match
+      if (hasKeywordTriggers) {
+        const prefKeywords = pref.trigger_keywords!.map((k) => k.toLowerCase());
+        if (keywords.some((kw) => prefKeywords.some((pk) => kw.includes(pk) || pk.includes(kw)))) return true;
+      }
+
+      return false;
+    }).map((pref) => ({
+      key: PRESET_KEY_LABELS[pref.preference_key] ?? pref.preference_key,
+      value: pref.preference_value,
+      condition: pref.condition_label ?? pref.scope_type,
+      triggerIntents: pref.trigger_intents ?? [],
+      triggerKeywords: pref.trigger_keywords ?? [],
+      boundPlaybooks: pref.bound_playbook_ids ?? [],
+    }));
+  }, [allPreferences]);
+
+  // Extract keywords from text for matching
+  const extractKeywords = (text: string): string[] => {
+    return text.toLowerCase().split(/\s+/).filter((w) => w.length > 3);
   };
 
   const handleSend = () => {
@@ -131,9 +176,13 @@ export default function WorkbookDetailPage() {
       const newIntents = detectIntents(chatInput);
       const uniqueIntents = [...new Set([...detectedIntents, ...newIntents])];
       setDetectedIntents(uniqueIntents);
-      const contextNote = newIntents.length > 0
-        ? `\n\n💡 _Detected intent: ${newIntents.join(", ")}. Applying your matched preferences and workbook context._`
-        : "";
+      const keywords = extractKeywords(chatInput);
+      const matched = matchPreferences(uniqueIntents, keywords);
+      const contextNote = matched.length > 0
+        ? `\n\n💡 _${matched.length} preference rule${matched.length > 1 ? "s" : ""} activated: ${matched.map((m) => m.key).join(", ")}. Context injected._`
+        : newIntents.length > 0
+          ? `\n\n💡 _Detected intent: ${newIntents.join(", ")}. No conditional preferences matched — using global defaults._`
+          : "";
       setChatMessages((prev) => [
         ...prev,
         { role: "user", text: chatInput },
@@ -145,10 +194,16 @@ export default function WorkbookDetailPage() {
 
     if (!lockedPlaybook) return;
     const step = lockedPlaybook.steps[currentStepIndex];
+    const stepIntents = detectIntents(chatInput);
+    const stepKeywords = extractKeywords(chatInput);
+    const stepMatched = matchPreferences(stepIntents, stepKeywords, lockedPlaybook.id);
+    const prefNote = stepMatched.length > 0
+      ? `\n\n🎯 _Preferences injected: ${stepMatched.map((m) => m.key).join(", ")}_`
+      : "";
     setChatMessages(prev => [
       ...prev,
       { role: "user", text: chatInput },
-      { role: "assistant", text: `[Step ${currentStepIndex + 1}: ${step.label}] Processing your input for "${lockedPlaybook.title}"…` },
+      { role: "assistant", text: `[Step ${currentStepIndex + 1}: ${step.label}] Processing your input for "${lockedPlaybook.title}"…${prefNote}` },
     ]);
     setChatInput("");
     if (currentStepIndex < lockedPlaybook.steps.length - 1) setCurrentStepIndex(i => i + 1);
@@ -156,7 +211,8 @@ export default function WorkbookDetailPage() {
 
   // ── FREE SESSION STATE ──
   if (freeSession) {
-    const matchedPrefs = getMatchedPreferences(detectedIntents);
+    const freeKeywords = chatMessages.filter((m) => m.role === "user").flatMap((m) => extractKeywords(m.text));
+    const matchedPrefs = matchPreferences(detectedIntents, freeKeywords);
     return (
       <div className="flex h-[calc(100vh-3.5rem)] flex-col" style={{ background: "hsl(142 60% 45% / 0.03)" }}>
         {/* Free Session Banner */}
@@ -292,6 +348,10 @@ export default function WorkbookDetailPage() {
   // ── LOCKED STATE ──
   if (lockedPlaybook) {
     const step = lockedPlaybook.steps[currentStepIndex];
+    const lockedKeywords = chatMessages.filter((m) => m.role === "user").flatMap((m) => extractKeywords(m.text));
+    const lockedIntents = chatMessages.filter((m) => m.role === "user").flatMap((m) => detectIntents(m.text));
+    const playbookPrefs = matchPreferences(lockedIntents, lockedKeywords, lockedPlaybook.id);
+
     return (
       <div className="flex h-[calc(100vh-3.5rem)] flex-col" style={{ background: "hsl(205 85% 55% / 0.03)" }}>
         {/* Protocol Banner */}
@@ -300,6 +360,9 @@ export default function WorkbookDetailPage() {
             <Lock className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-primary">Active Protocol: {lockedPlaybook.title}</span>
             <Badge variant="outline" className="border-primary/30 text-primary text-xs">Step {currentStepIndex + 1} of {lockedPlaybook.steps.length}</Badge>
+            {playbookPrefs.length > 0 && (
+              <Badge variant="secondary" className="text-[10px] gap-0.5"><Settings className="h-2 w-2" />{playbookPrefs.length} pref{playbookPrefs.length > 1 ? "s" : ""} active</Badge>
+            )}
           </div>
           <Button variant="ghost" size="sm" onClick={handleUnlock} className="text-xs text-muted-foreground hover:text-destructive">
             <Unlock className="mr-1 h-3 w-3" /> Release Lock
@@ -341,16 +404,37 @@ export default function WorkbookDetailPage() {
             </div>
           </div>
 
-          {/* Mission Assets sidebar */}
-          <div className="w-64 border-l border-border/50 bg-card/50 p-4">
+          {/* Context sidebar — Assets + Injected Preferences */}
+          <div className="w-72 border-l border-border/50 bg-card/50 p-4 overflow-auto">
             <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Mission Assets</h3>
-            <div className="space-y-2">
+            <div className="space-y-2 mb-5">
               {lockedPlaybook.assets.map(asset => (
                 <div key={asset} className="flex items-center gap-2 rounded-md bg-secondary/50 px-3 py-2 text-xs">
                   <FileText className="h-3 w-3 text-primary" /><span>{asset}</span>
                 </div>
               ))}
             </div>
+
+            {/* Injected preferences */}
+            {playbookPrefs.length > 0 && (
+              <>
+                <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Injected Preferences</h3>
+                <div className="space-y-1.5">
+                  {playbookPrefs.map((pref, i) => (
+                    <div key={i} className="rounded-md border border-border/50 bg-muted/20 px-3 py-2 text-xs space-y-0.5">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{pref.key}</span>
+                        <Badge variant="outline" className="text-[9px]">{pref.condition}</Badge>
+                      </div>
+                      <p className="text-muted-foreground">{pref.value}</p>
+                      {pref.boundPlaybooks.length > 0 && (
+                        <p className="text-[10px] text-primary/70">📗 Bound to this playbook</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
