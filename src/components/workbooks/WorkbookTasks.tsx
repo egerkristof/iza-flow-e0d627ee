@@ -96,13 +96,27 @@ function buildContextSummary(task: WorkbookTask): string[] {
   return items;
 }
 
+// ── Build ancestor breadcrumb trail ──
+function getAncestorTrail(taskId: string, allTasks: WorkbookTask[]): WorkbookTask[] {
+  const map = new Map(allTasks.map(t => [t.id, t]));
+  const trail: WorkbookTask[] = [];
+  let current = map.get(taskId);
+  while (current) {
+    trail.unshift(current);
+    current = current.parent_task_id ? map.get(current.parent_task_id) : undefined;
+  }
+  return trail;
+}
+
 // ── SUBCHAT COMPONENT ──
-function TaskSubchat({ task, workbookId, onClose, onMinimize, minimized }: {
+function TaskSubchat({ task, workbookId, allTasks, onClose, onMinimize, minimized, onNavigateToTask }: {
   task: WorkbookTask;
   workbookId: string;
+  allTasks: WorkbookTask[];
   onClose: () => void;
   onMinimize: () => void;
   minimized: boolean;
+  onNavigateToTask: (taskId: string) => void;
 }) {
   const [messages, setMessages] = useState<SubchatMessage[]>(() => {
     const contextItems = buildContextSummary(task);
@@ -133,6 +147,8 @@ function TaskSubchat({ task, workbookId, onClose, onMinimize, minimized }: {
     setInput("");
   };
 
+  const breadcrumbs = getAncestorTrail(task.id, allTasks);
+
   if (minimized) {
     return (
       <div className="flex items-center justify-between rounded-md border border-info/30 bg-info/5 px-3 py-2 ml-10">
@@ -151,13 +167,33 @@ function TaskSubchat({ task, workbookId, onClose, onMinimize, minimized }: {
 
   return (
     <div className="rounded-lg border border-info/30 bg-info/5 overflow-hidden ml-10 mb-2">
-      {/* Header */}
+      {/* Breadcrumb header */}
       <div className="flex items-center justify-between border-b border-info/20 px-3 py-2 bg-info/10">
-        <div className="flex items-center gap-2">
-          <MessageSquare className="h-3.5 w-3.5 text-info" />
-          <span className="text-xs font-medium text-info">Subchat — {task.title}</span>
+        <div className="flex items-center gap-1 min-w-0 overflow-hidden">
+          <MessageSquare className="h-3.5 w-3.5 text-info shrink-0" />
+          <nav className="flex items-center gap-0.5 text-xs overflow-x-auto no-scrollbar">
+            {breadcrumbs.map((ancestor, idx) => {
+              const isLast = idx === breadcrumbs.length - 1;
+              return (
+                <span key={ancestor.id} className="flex items-center gap-0.5 shrink-0">
+                  {idx > 0 && <ChevronRight className="h-2.5 w-2.5 text-muted-foreground shrink-0" />}
+                  {isLast ? (
+                    <span className="font-medium text-info truncate max-w-[160px]">{ancestor.title}</span>
+                  ) : (
+                    <button
+                      onClick={() => onNavigateToTask(ancestor.id)}
+                      className="text-muted-foreground hover:text-info hover:underline truncate max-w-[120px] transition-colors"
+                      title={`Go to: ${ancestor.title}`}
+                    >
+                      {ancestor.title}
+                    </button>
+                  )}
+                </span>
+              );
+            })}
+          </nav>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 shrink-0">
           <Button variant="ghost" size="icon" className="h-5 w-5" onClick={onMinimize}><Minimize2 className="h-3 w-3" /></Button>
           <Button variant="ghost" size="icon" className="h-5 w-5 text-destructive" onClick={onClose}><X className="h-3 w-3" /></Button>
         </div>
@@ -432,9 +468,24 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
           <TaskSubchat
             task={task}
             workbookId={workbookId}
+            allTasks={tasks}
             onClose={() => closeSubchat(task.id)}
             onMinimize={() => toggleMinimize(task.id)}
             minimized={subchatState!.minimized}
+            onNavigateToTask={(targetId) => {
+              // Expand ancestors and scroll to the target task
+              setExpandedTasks(prev => {
+                const next = new Set(prev);
+                const trail = getAncestorTrail(targetId, tasks);
+                trail.forEach(t => next.add(t.id));
+                return next;
+              });
+              // Open subchat on the target if it's in_progress
+              const target = tasks.find(t => t.id === targetId);
+              if (target?.status === "in_progress") {
+                openSubchat(targetId);
+              }
+            }}
           />
         )}
 
