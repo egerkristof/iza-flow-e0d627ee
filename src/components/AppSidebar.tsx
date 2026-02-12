@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
-  Rocket, BarChart3, Settings2, Search, Brain, LogOut, ChevronDown, BookOpen,
+  Rocket, BarChart3, Settings2, Search, Brain, LogOut, ChevronDown, BookOpen, Library,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -34,6 +34,7 @@ const roleLabels: Record<AppRole, string> = {
 const navItems = [
   { title: "Dashboard", url: "/", icon: Brain },
   { title: "Workbooks", url: "/workbooks", icon: BookOpen },
+  { title: "Context", url: "/context", icon: Library },
   { title: "Launchpad", url: "/launchpad", icon: Rocket, roles: ["operator"] as AppRole[] },
   { title: "Command Center", url: "/command-center", icon: BarChart3, roles: ["manager"] as AppRole[] },
   { title: "Process Studio", url: "/process-studio", icon: Settings2, roles: ["architect"] as AppRole[] },

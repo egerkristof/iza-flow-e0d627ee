@@ -11,6 +11,7 @@ import LaunchpadPage from "./pages/Launchpad";
 import CommandCenterPage from "./pages/CommandCenter";
 import ProcessStudioPage from "./pages/ProcessStudio";
 import WorkbooksPage from "./pages/Workbooks";
+import ContextManagementPage from "./pages/ContextManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/launchpad" element={<ProtectedRoute><LaunchpadPage /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
+            <Route path="/context" element={<ProtectedRoute><ContextManagementPage /></ProtectedRoute>} />
             <Route path="/command-center" element={<ProtectedRoute><CommandCenterPage /></ProtectedRoute>} />
             <Route path="/process-studio" element={<ProtectedRoute><ProcessStudioPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
