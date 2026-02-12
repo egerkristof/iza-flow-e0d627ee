@@ -6,8 +6,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ExtractedPreference {
@@ -63,6 +65,10 @@ const CATEGORY_COLORS: Record<string, string> = {
   PROCEDURE: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
 };
 
+const ALL_CATEGORIES: ExtractedContextItem["category"][] = [
+  "KNOWLEDGE", "RESEARCH", "DIRECTIVE", "PRINCIPLE", "PROCEDURE",
+];
+
 export function ExtractionReviewDialog({ open, onOpenChange, data, documentName }: Props) {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -71,10 +77,15 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const [selectedBundles, setSelectedBundles] = useState<Set<number>>(new Set());
   const [expandedBundles, setExpandedBundles] = useState<Set<number>>(new Set());
-  // Map: standalone item index → existing bundle id (or "none" / "new-{extractedBundleIndex}")
   const [itemBundleAssignment, setItemBundleAssignment] = useState<Record<number, string>>({});
 
-  // Fetch existing bundles for assignment dropdown
+  // Editable overrides for standalone items: index → partial overrides
+  const [itemEdits, setItemEdits] = useState<Record<number, Partial<ExtractedContextItem>>>({});
+  // Editable overrides for bundle items: "bundleIdx-itemIdx" → partial overrides
+  const [bundleItemEdits, setBundleItemEdits] = useState<Record<string, Partial<ExtractedContextItem>>>({});
+  // Which item is currently being edited: "standalone-{i}" or "bundle-{bi}-{ji}"
+  const [editingKey, setEditingKey] = useState<string | null>(null);
+
   const { data: existingBundles = [] } = useQuery({
     queryKey: ["bundles", user?.id],
     enabled: !!user && open,
@@ -89,6 +100,12 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
     },
   });
 
+  // Resolve an item with edits applied
+  const resolveItem = (original: ExtractedContextItem, edits?: Partial<ExtractedContextItem>): ExtractedContextItem => ({
+    ...original,
+    ...edits,
+  });
+
   const initSelections = () => {
     if (data) {
       setSelectedPrefs(new Set(data.preferences.map((_, i) => i)));
@@ -96,6 +113,9 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
       setSelectedBundles(new Set((data.bundles || []).map((_, i) => i)));
       setExpandedBundles(new Set());
       setItemBundleAssignment({});
+      setItemEdits({});
+      setBundleItemEdits({});
+      setEditingKey(null);
     }
   };
 
@@ -116,9 +136,17 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
   const toggleBundleExpand = (i: number) => {
     setExpandedBundles(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
   };
-
   const setItemAssignment = (itemIdx: number, value: string) => {
     setItemBundleAssignment(prev => ({ ...prev, [itemIdx]: value }));
+  };
+
+  const updateItemEdit = (idx: number, field: keyof ExtractedContextItem, value: string) => {
+    setItemEdits(prev => ({ ...prev, [idx]: { ...prev[idx], [field]: value } }));
+  };
+
+  const updateBundleItemEdit = (bundleIdx: number, itemIdx: number, field: keyof ExtractedContextItem, value: string) => {
+    const key = `${bundleIdx}-${itemIdx}`;
+    setBundleItemEdits(prev => ({ ...prev, [key]: { ...prev[key], [field]: value } }));
   };
 
   const saveMutation = useMutation({
@@ -141,10 +169,7 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
         if (error) throw error;
       }
 
-      // Track created bundles from extracted bundles (index → id)
       const createdBundleIds: Record<number, string> = {};
-
-      // Save selected extracted bundles — create the bundle, then its items
       const extractedBundles = data.bundles || [];
       for (const [i, bundle] of extractedBundles.entries()) {
         if (!selectedBundles.has(i)) continue;
@@ -164,50 +189,49 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
 
         if (bundle.items.length > 0) {
           const { error: itemsErr } = await supabase.from("context_items").insert(
-            bundle.items.map(ci => ({
-              owner_id: user.id,
-              title: ci.title,
-              content_full: ci.content,
-              category: ci.category as any,
-              action_type: "APPEND" as any,
-              bundle_id: newBundle.id,
-            }))
+            bundle.items.map((ci, j) => {
+              const resolved = resolveItem(ci, bundleItemEdits[`${i}-${j}`]);
+              return {
+                owner_id: user.id,
+                title: resolved.title,
+                content_full: resolved.content,
+                category: resolved.category as any,
+                action_type: "APPEND" as any,
+                bundle_id: newBundle.id,
+              };
+            })
           );
           if (itemsErr) throw itemsErr;
         }
       }
 
-      // Save selected standalone context items with optional bundle assignment
+      // Save standalone items with edits applied
       const itemsToSave = data.context_items
         .map((ci, i) => ({ ci, i }))
         .filter(({ i }) => selectedItems.has(i));
 
       if (itemsToSave.length > 0) {
         const rows = itemsToSave.map(({ ci, i }) => {
+          const resolved = resolveItem(ci, itemEdits[i]);
           const assignment = itemBundleAssignment[i];
           let bundleId: string | null = null;
-
           if (assignment && assignment !== "none") {
             if (assignment.startsWith("new-")) {
-              // Assigned to a newly created extracted bundle
               const bundleIdx = parseInt(assignment.replace("new-", ""), 10);
               bundleId = createdBundleIds[bundleIdx] || null;
             } else {
-              // Assigned to an existing bundle
               bundleId = assignment;
             }
           }
-
           return {
             owner_id: user.id,
-            title: ci.title,
-            content_full: ci.content,
-            category: ci.category as any,
+            title: resolved.title,
+            content_full: resolved.content,
+            category: resolved.category as any,
             action_type: "APPEND" as any,
             bundle_id: bundleId,
           };
         });
-
         const { error } = await supabase.from("context_items").insert(rows);
         if (error) throw error;
       }
@@ -216,17 +240,11 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
       qc.invalidateQueries({ queryKey: ["working-preferences"] });
       qc.invalidateQueries({ queryKey: ["context-items"] });
       qc.invalidateQueries({ queryKey: ["bundles"] });
-      const prefCount = selectedPrefs.size;
-      const itemCount = selectedItems.size;
-      const bundleCount = selectedBundles.size;
       const parts: string[] = [];
-      if (prefCount > 0) parts.push(`${prefCount} preference${prefCount !== 1 ? "s" : ""}`);
-      if (itemCount > 0) parts.push(`${itemCount} context item${itemCount !== 1 ? "s" : ""}`);
-      if (bundleCount > 0) parts.push(`${bundleCount} bundle${bundleCount !== 1 ? "s" : ""}`);
-      toast({
-        title: "Extraction saved",
-        description: `${parts.join(", ")} created.`,
-      });
+      if (selectedPrefs.size > 0) parts.push(`${selectedPrefs.size} preference${selectedPrefs.size !== 1 ? "s" : ""}`);
+      if (selectedItems.size > 0) parts.push(`${selectedItems.size} context item${selectedItems.size !== 1 ? "s" : ""}`);
+      if (selectedBundles.size > 0) parts.push(`${selectedBundles.size} bundle${selectedBundles.size !== 1 ? "s" : ""}`);
+      toast({ title: "Extraction saved", description: `${parts.join(", ")} created.` });
       onOpenChange(false);
     },
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
@@ -241,6 +259,87 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
     ([idx, val]) => selectedItems.has(Number(idx)) && val && val !== "none"
   ).length;
 
+  // Inline editable item renderer
+  const renderEditableItem = (
+    item: ExtractedContextItem,
+    edits: Partial<ExtractedContextItem> | undefined,
+    editKey: string,
+    onUpdate: (field: keyof ExtractedContextItem, value: string) => void,
+    compact?: boolean,
+  ) => {
+    const resolved = resolveItem(item, edits);
+    const isEditing = editingKey === editKey;
+    const textSize = compact ? "text-xs" : "text-sm";
+    const contentSize = compact ? "text-[11px]" : "text-xs";
+
+    if (isEditing) {
+      return (
+        <div className="space-y-2 flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <Input
+              value={resolved.title}
+              onChange={e => onUpdate("title", e.target.value)}
+              className="h-7 text-xs"
+              placeholder="Title"
+            />
+            <Select
+              value={resolved.category}
+              onValueChange={v => onUpdate("category", v)}
+            >
+              <SelectTrigger className="h-7 text-[11px] w-36 shrink-0">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {ALL_CATEGORIES.map(c => (
+                  <SelectItem key={c} value={c} className="text-xs">{c}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 shrink-0"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setEditingKey(null); }}
+            >
+              <Check className="h-3 w-3 text-primary" />
+            </Button>
+          </div>
+          <Textarea
+            value={resolved.content}
+            onChange={e => onUpdate("content", e.target.value)}
+            rows={2}
+            className="text-xs resize-none"
+            placeholder="Content"
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-w-0 flex-1 group/edit">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className={`${textSize} font-medium`}>{resolved.title}</span>
+          <Badge variant="outline" className={`text-[${compact ? "9" : "10"}px] ${CATEGORY_COLORS[resolved.category] || ""}`}>
+            {resolved.category}
+          </Badge>
+          {edits && Object.keys(edits).length > 0 && (
+            <Badge variant="secondary" className="text-[9px]">edited</Badge>
+          )}
+          <button
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setEditingKey(editKey); }}
+            className="opacity-0 group-hover/edit:opacity-100 transition-opacity p-0.5 rounded hover:bg-secondary/50"
+            title="Edit"
+          >
+            <Pencil className="h-3 w-3 text-muted-foreground" />
+          </button>
+        </div>
+        <p className={`${contentSize} mt-1 text-muted-foreground ${compact ? "line-clamp-2" : "line-clamp-3"}`}>
+          {resolved.content}
+        </p>
+      </div>
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-2xl max-h-[85vh] flex flex-col">
@@ -250,7 +349,8 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
             Review Extracted Items — {documentName}
           </DialogTitle>
           <p className="text-xs text-muted-foreground mt-1">
-            AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles. Select what to keep.
+            AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles.
+            Select what to keep — hover any item to edit.
           </p>
         </DialogHeader>
 
@@ -335,13 +435,13 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                           key={j}
                           className="rounded border border-border/30 bg-background/50 p-2.5"
                         >
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-xs font-medium">{item.title}</span>
-                            <Badge variant="outline" className={`text-[9px] ${CATEGORY_COLORS[item.category] || ""}`}>
-                              {item.category}
-                            </Badge>
-                          </div>
-                          <p className="text-[11px] mt-1 text-muted-foreground line-clamp-2">{item.content}</p>
+                          {renderEditableItem(
+                            item,
+                            bundleItemEdits[`${i}-${j}`],
+                            `bundle-${i}-${j}`,
+                            (field, value) => updateBundleItemEdit(i, j, field, value),
+                            true,
+                          )}
                         </div>
                       ))}
                     </div>
@@ -364,18 +464,15 @@ export function ExtractionReviewDialog({ open, onOpenChange, data, documentName 
                     selectedItems.has(i) ? "border-primary/30 bg-primary/5" : "border-border/50 bg-muted/10 opacity-60"
                   }`}
                 >
-                  <label className="flex items-start gap-3 cursor-pointer">
+                  <div className="flex items-start gap-3">
                     <Checkbox checked={selectedItems.has(i)} onCheckedChange={() => toggleItem(i)} className="mt-0.5" />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-medium">{ci.title}</span>
-                        <Badge variant="outline" className={`text-[10px] ${CATEGORY_COLORS[ci.category] || ""}`}>
-                          {ci.category}
-                        </Badge>
-                      </div>
-                      <p className="text-xs mt-1 text-muted-foreground line-clamp-3">{ci.content}</p>
-                    </div>
-                  </label>
+                    {renderEditableItem(
+                      ci,
+                      itemEdits[i],
+                      `standalone-${i}`,
+                      (field, value) => updateItemEdit(i, field, value),
+                    )}
+                  </div>
 
                   {/* Bundle assignment dropdown */}
                   {selectedItems.has(i) && (existingBundles.length > 0 || bundles.length > 0) && (
