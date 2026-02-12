@@ -109,9 +109,10 @@ function getAncestorTrail(taskId: string, allTasks: WorkbookTask[]): WorkbookTas
 }
 
 // ── SUBCHAT COMPONENT ──
-function TaskSubchat({ task, workbookId, allTasks, onClose, onMinimize, minimized, onNavigateToTask }: {
+function TaskSubchat({ task, workbookId, workbookTitle, allTasks, onClose, onMinimize, minimized, onNavigateToTask }: {
   task: WorkbookTask;
   workbookId: string;
+  workbookTitle?: string;
   allTasks: WorkbookTask[];
   onClose: () => void;
   onMinimize: () => void;
@@ -172,6 +173,13 @@ function TaskSubchat({ task, workbookId, allTasks, onClose, onMinimize, minimize
         <div className="flex items-center gap-1 min-w-0 overflow-hidden">
           <MessageSquare className="h-3.5 w-3.5 text-info shrink-0" />
           <nav className="flex items-center gap-0.5 text-xs overflow-x-auto no-scrollbar">
+            {/* Workbook root */}
+            {workbookTitle && (
+              <span className="flex items-center gap-0.5 shrink-0">
+                <span className="text-muted-foreground truncate max-w-[120px]">{workbookTitle}</span>
+                <ChevronRight className="h-2.5 w-2.5 text-muted-foreground shrink-0" />
+              </span>
+            )}
             {breadcrumbs.map((ancestor, idx) => {
               const isLast = idx === breadcrumbs.length - 1;
               return (
@@ -245,7 +253,7 @@ function TaskSubchat({ task, workbookId, allTasks, onClose, onMinimize, minimize
   );
 }
 
-export function WorkbookTasks({ workbookId }: { workbookId: string }) {
+export function WorkbookTasks({ workbookId, workbookTitle }: { workbookId: string; workbookTitle?: string }) {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -468,6 +476,7 @@ export function WorkbookTasks({ workbookId }: { workbookId: string }) {
           <TaskSubchat
             task={task}
             workbookId={workbookId}
+            workbookTitle={workbookTitle}
             allTasks={tasks}
             onClose={() => closeSubchat(task.id)}
             onMinimize={() => toggleMinimize(task.id)}

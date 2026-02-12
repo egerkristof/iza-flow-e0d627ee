@@ -596,7 +596,7 @@ export default function WorkbookDetailPage() {
         </TabsContent>
 
         <TabsContent value="tasks" className="mt-4">
-          <WorkbookTasks workbookId={id ?? "1"} />
+          <WorkbookTasks workbookId={id ?? "1"} workbookTitle={wb.title} />
         </TabsContent>
 
         <TabsContent value="chats" className="mt-4">
