@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Plus, Settings2, Trash2, Zap, Hash, BookOpen, ChevronDown, ChevronRight, Filter, Tag } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { PreferenceTemplateGallery } from "./PreferenceTemplateGallery";
 
 // ── Preference types ──
 const PRESET_KEYS = [
@@ -323,7 +324,13 @@ export function WorkingPreferences() {
         </Dialog>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="space-y-6">
+        {/* Template Gallery */}
+        <PreferenceTemplateGallery />
+
+        {/* Divider */}
+        <div className="border-t border-border/50" />
+
         {isLoading ? (
           <p className="text-sm text-muted-foreground text-center py-6">Loading…</p>
         ) : prefs.length === 0 ? (
