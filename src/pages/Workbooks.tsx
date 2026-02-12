@@ -10,6 +10,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -17,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import { WorkbookCard, type WorkbookCardData } from "@/components/workbooks/WorkbookCard";
 
 // ── MOCK DATA ──
@@ -130,9 +134,14 @@ const STATUS_FILTERS = [
 
 const WorkbooksPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [view, setView] = useState<"grid" | "list">("grid");
+  const [createOpen, setCreateOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newOutcome, setNewOutcome] = useState("");
 
   const filtered = useMemo(() => {
     return MOCK_WORKBOOKS.filter((wb) => {
@@ -146,8 +155,23 @@ const WorkbooksPage = () => {
   }, [search, statusFilter]);
 
   const handleOpen = (id: string) => {
-    // Will navigate to workbook detail later
     navigate(`/workbooks/${id}`);
+  };
+
+  const handleCreate = () => {
+    if (!newTitle.trim()) return;
+    toast({ title: "Workbook created", description: `"${newTitle}" has been created.` });
+    setCreateOpen(false);
+    setNewTitle("");
+    setNewDescription("");
+    setNewOutcome("");
+  };
+
+  const openCreateDialog = () => {
+    setNewTitle("");
+    setNewDescription("");
+    setNewOutcome("");
+    setCreateOpen(true);
   };
 
   return (
@@ -161,7 +185,7 @@ const WorkbooksPage = () => {
             {MOCK_WORKBOOKS.filter((w) => w.status === "active").length} active
           </p>
         </div>
-        <Button className="gap-2 self-start" onClick={() => {}}>
+        <Button className="gap-2 self-start" onClick={openCreateDialog}>
           <Plus className="h-4 w-4" />
           New Workbook
         </Button>
@@ -220,7 +244,7 @@ const WorkbooksPage = () => {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {/* Create card */}
           <button
-            onClick={() => {}}
+            onClick={openCreateDialog}
             className="flex min-h-[180px] flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-border/50 bg-card/30 text-muted-foreground transition-all hover:border-primary/30 hover:text-primary"
           >
             <Plus className="h-8 w-8" />
@@ -255,6 +279,52 @@ const WorkbooksPage = () => {
           </Button>
         </div>
       )}
+      {/* Create Workbook Dialog */}
+      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Create Workbook</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="wb-title">Title</Label>
+              <Input
+                id="wb-title"
+                placeholder="e.g. Q2 Pipeline Review"
+                value={newTitle}
+                onChange={e => setNewTitle(e.target.value)}
+                maxLength={100}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="wb-desc">Description</Label>
+              <Textarea
+                id="wb-desc"
+                placeholder="What is this workbook about?"
+                value={newDescription}
+                onChange={e => setNewDescription(e.target.value)}
+                maxLength={500}
+                rows={3}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="wb-outcome">Strategic Outcome</Label>
+              <Input
+                id="wb-outcome"
+                placeholder="e.g. Close 5 enterprise deals by Q2"
+                value={newOutcome}
+                onChange={e => setNewOutcome(e.target.value)}
+                maxLength={200}
+              />
+              <p className="text-[11px] text-muted-foreground">The measurable goal this workbook drives toward.</p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCreateOpen(false)}>Cancel</Button>
+            <Button onClick={handleCreate} disabled={!newTitle.trim()}>Create</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
