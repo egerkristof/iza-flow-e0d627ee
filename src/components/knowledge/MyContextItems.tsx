@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   BookOpen, Trash2, Plus, Search, Microscope, Sparkles,
-  Tag, FileText, Shield, Loader2, MoreHorizontal, RefreshCw, CheckSquare, X, GitMerge,
+  Tag, FileText, Shield, Loader2, MoreHorizontal, RefreshCw, CheckSquare, X, GitMerge, PackagePlus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -58,6 +58,7 @@ export function MyContextItems() {
   const [reanalysisResult, setReanalysisResult] = useState<ExtractionResult | null>(null);
   const [reanalysisOpen, setReanalysisOpen] = useState(false);
   const [mergeOpen, setMergeOpen] = useState(false);
+  const [autoBundling, setAutoBundling] = useState(false);
 
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["my-context-items", user?.id],
@@ -96,6 +97,42 @@ export function MyContextItems() {
     list.push({ id: row.bundle_id, title });
     bundlesByItem.set(row.context_item_id, list);
   }
+
+  // Compute unbundled items (no junction table entries AND no legacy bundle_id)
+  const bundledItemIds = new Set(bundleMemberships.map(r => r.context_item_id));
+  const unbundledItems = items.filter(i => !bundledItemIds.has(i.id) && !i.bundle_id);
+
+
+  const handleAutoBundle = async () => {
+    if (unbundledItems.length < 3) return;
+    setAutoBundling(true);
+    try {
+      const composedContent = unbundledItems.map(item =>
+        `## ${item.title}\n**Category:** ${item.category} | **Priority:** ${item.priority}\n\n${item.content_full}`
+      ).join("\n\n---\n\n");
+
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: {
+          source_type: "manual",
+          content: composedContent,
+          meta: {
+            title: `Auto-Bundle analysis of ${unbundledItems.length} unbundled items`,
+            source: "auto-bundle",
+          },
+        },
+      });
+
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setReanalysisResult(data as ExtractionResult);
+      setReanalysisOpen(true);
+    } catch (e: any) {
+      toast({ title: "Auto-Bundle failed", description: e.message, variant: "destructive" });
+    } finally {
+      setAutoBundling(false);
+    }
+  };
 
   // ── Bulk re-analyze ──
   const handleBulkReanalyze = async () => {
@@ -418,9 +455,23 @@ export function MyContextItems() {
         </div>
       )}
 
-      <p className="text-xs text-muted-foreground">
-        {filtered.length} item{filtered.length !== 1 ? "s" : ""} · Promote personal knowledge into context items to share with workbooks and bundles.
-      </p>
+      <div className="flex items-center justify-between">
+        <p className="text-xs text-muted-foreground">
+          {filtered.length} item{filtered.length !== 1 ? "s" : ""} · Promote personal knowledge into context items to share with workbooks and bundles.
+        </p>
+        {unbundledItems.length >= 3 && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 text-xs"
+            onClick={handleAutoBundle}
+            disabled={autoBundling}
+          >
+            {autoBundling ? <Loader2 className="h-3 w-3 animate-spin" /> : <PackagePlus className="h-3 w-3" />}
+            Auto-Bundle ({unbundledItems.length} unbundled)
+          </Button>
+        )}
+      </div>
 
       {/* Copilot Panel */}
       {copilotOpen && (
