@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -30,6 +30,8 @@ interface SmartSuggestion {
   instruction: string;
   /** Which scope to use for the refine call */
   scope: "all" | "selected";
+  /** If set, this is a local action (no AI call needed) */
+  localAction?: "promote-to-mandate";
 }
 
 function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestion[] {
@@ -110,7 +112,17 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
     });
   }
 
-  // Always keep 1-2 generic fallbacks at the end
+  // 7. DIRECTIVE items that could be promoted to mandates
+  const directives = allItems.filter(i => i.category === "DIRECTIVE");
+  if (directives.length > 0) {
+    suggestions.push({
+      label: `Promote ${directives.length} DIRECTIVE${directives.length > 1 ? "s" : ""} to Mandate${directives.length > 1 ? "s" : ""}`,
+      instruction: "",
+      scope: "all",
+      localAction: "promote-to-mandate",
+    });
+  }
+
   if (suggestions.length < 4) {
     suggestions.push({
       label: "Make items more specific and detailed",
@@ -158,6 +170,9 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
   const [bundleItemEdits, setBundleItemEdits] = useState<Record<string, Partial<ExtractedContextItem>>>({});
   const [prefEdits, setPrefEdits] = useState<Record<number, Partial<ExtractedPreference>>>({});
   const [editingKey, setEditingKey] = useState<string | null>(null);
+
+  // Mandate promotion tracking — keys are "standalone-{idx}" or "bundle-{bi}-{ji}"
+  const [mandateFlags, setMandateFlags] = useState<Record<string, { is_mandate: boolean; enforcement_level: "advisory" | "required_ack" | "blocking" }>>({});
 
   const resolveItem = (original: ExtractedContextItem, edits?: Partial<ExtractedContextItem>): ExtractedContextItem => ({
     ...original,
@@ -412,7 +427,11 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
     setDragSource(null);
   }, [data, dragSource, itemEdits, bundleItemEdits, selectedItems, itemBundleAssignment, resolveItem]);
 
-function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSelect: (instruction: string, scope: "all" | "selected") => void }) {
+function SmartSuggestionChips({ data, onSelect, onLocalAction }: { 
+  data: ExtractionResult; 
+  onSelect: (instruction: string, scope: "all" | "selected") => void;
+  onLocalAction?: (action: string) => void;
+}) {
   const suggestions = useMemo(() => generateSmartSuggestions(data), [data]);
 
   return (
@@ -420,10 +439,17 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
       {suggestions.map((s, i) => (
         <button
           key={i}
-          onClick={() => onSelect(s.instruction, s.scope)}
+          onClick={() => {
+            if (s.localAction && onLocalAction) {
+              onLocalAction(s.localAction);
+            } else {
+              onSelect(s.instruction, s.scope);
+            }
+          }}
           className="text-[10px] px-2 py-1 rounded-full border border-border/50 hover:border-primary/40 hover:bg-primary/5 text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
         >
-          {i === 0 && <Lightbulb className="h-2.5 w-2.5 text-amber-400" />}
+          {s.localAction === "promote-to-mandate" && <Shield className="h-2.5 w-2.5 text-amber-400" />}
+          {!s.localAction && i === 0 && <Lightbulb className="h-2.5 w-2.5 text-amber-400" />}
           {s.label}
         </button>
       ))}
@@ -478,6 +504,29 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
     }
     onOpenChange(v);
   };
+
+  const handlePromoteToMandate = useCallback(() => {
+    if (!data) return;
+    const newFlags = { ...mandateFlags };
+    // Promote all DIRECTIVE standalone items
+    data.context_items.forEach((ci, i) => {
+      const resolved = resolveItem(ci, itemEdits[i]);
+      if (resolved.category === "DIRECTIVE") {
+        newFlags[`standalone-${i}`] = { is_mandate: true, enforcement_level: "required_ack" };
+      }
+    });
+    // Promote all DIRECTIVE bundle items
+    (data.bundles || []).forEach((b, bi) => {
+      b.items.forEach((ci, ji) => {
+        const resolved = resolveItem(ci, bundleItemEdits[`${bi}-${ji}`]);
+        if (resolved.category === "DIRECTIVE") {
+          newFlags[`bundle-${bi}-${ji}`] = { is_mandate: true, enforcement_level: "required_ack" };
+        }
+      });
+    });
+    setMandateFlags(newFlags);
+    toast({ title: "Directives promoted", description: "All DIRECTIVE items marked as Mandates with 'Required Acknowledgment'. You can adjust enforcement per-item." });
+  }, [data, mandateFlags, itemEdits, bundleItemEdits, resolveItem, toast]);
 
   const togglePref = (i: number) => {
     setSelectedPrefs(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
@@ -675,6 +724,7 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
           const { error: itemsErr } = await supabase.from("context_items").insert(
             bundle.items.map((ci, j) => {
               const resolved = resolveItem(ci, bundleItemEdits[`${i}-${j}`]);
+              const mandate = mandateFlags[`bundle-${i}-${j}`];
               return {
                 owner_id: user.id,
                 title: resolved.title,
@@ -682,6 +732,12 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
                 category: resolved.category as any,
                 action_type: "APPEND" as any,
                 bundle_id: newBundle.id,
+                ...(mandate?.is_mandate ? {
+                  is_mandate: true,
+                  enforcement_level: mandate.enforcement_level as any,
+                  mandate_status: "draft" as any,
+                  priority: "CRITICAL" as any,
+                } : {}),
               };
             })
           );
@@ -706,6 +762,7 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
               bundleId = assignment;
             }
           }
+          const mandate = mandateFlags[`standalone-${i}`];
           return {
             owner_id: user.id,
             title: resolved.title,
@@ -713,6 +770,12 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
             category: resolved.category as any,
             action_type: "APPEND" as any,
             bundle_id: bundleId,
+            ...(mandate?.is_mandate ? {
+              is_mandate: true,
+              enforcement_level: mandate.enforcement_level as any,
+              mandate_status: "draft" as any,
+              priority: "CRITICAL" as any,
+            } : {}),
           };
         });
         const { error } = await supabase.from("context_items").insert(rows);
@@ -723,6 +786,7 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
       qc.invalidateQueries({ queryKey: ["working-preferences"] });
       qc.invalidateQueries({ queryKey: ["context-items"] });
       qc.invalidateQueries({ queryKey: ["bundles"] });
+      qc.invalidateQueries({ queryKey: ["mandates"] });
       const parts: string[] = [];
       if (selectedPrefs.size > 0) parts.push(`${selectedPrefs.size} preference${selectedPrefs.size !== 1 ? "s" : ""}`);
       if (selectedItems.size > 0) parts.push(`${selectedItems.size} context item${selectedItems.size !== 1 ? "s" : ""}`);
@@ -804,6 +868,12 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
           <CategoryBadge category={resolved.category} compact={compact} className={compact ? "text-[9px]" : ""} />
           {edits && Object.keys(edits).length > 0 && (
             <Badge variant="secondary" className="text-[9px]">edited</Badge>
+          )}
+          {mandateFlags[editKey]?.is_mandate && (
+            <Badge variant="outline" className="text-[9px] border-amber-500/30 bg-amber-500/10 text-amber-400 gap-0.5">
+              <Shield className="h-2 w-2" />
+              Mandate · {mandateFlags[editKey].enforcement_level}
+            </Badge>
           )}
           <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); setEditingKey(editKey); }}
@@ -1195,7 +1265,13 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
                   </Button>
                 </div>
               </div>
-              <SmartSuggestionChips data={data} onSelect={(instruction, scope) => { setRefineInstruction(instruction); setRefineScope(scope); }} />
+              <SmartSuggestionChips 
+                data={data} 
+                onSelect={(instruction, scope) => { setRefineInstruction(instruction); setRefineScope(scope); }}
+                onLocalAction={(action) => {
+                  if (action === "promote-to-mandate") handlePromoteToMandate();
+                }}
+              />
             </div>
           )}
         </div>
