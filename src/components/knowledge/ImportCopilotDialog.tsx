@@ -19,10 +19,13 @@ import {
   type ImportCopilotProps,
   type ContextCategory,
   type AdvisorPersona,
+  type BundleReadiness,
   CONTEXT_CATEGORIES,
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
   EXTRACTION_DEPTH_META,
+  BUNDLE_READINESS_META,
+  computeBundleReadiness,
 } from "@/lib/knowledge-schema";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 
@@ -910,7 +913,34 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
       <div className="min-w-0 flex-1 group/edit">
         <div className="flex items-center gap-2 flex-wrap">
           <span className={`${textSize} font-medium`}>{resolved.title}</span>
-          <CategoryBadge category={resolved.category} compact={compact} className={compact ? "text-[9px]" : ""} />
+          {/* Inline category switcher */}
+          <Select
+            value={resolved.category}
+            onValueChange={v => onUpdate("category", v)}
+          >
+            <SelectTrigger className={`h-auto border-0 p-0 shadow-none focus:ring-0 w-auto ${compact ? "text-[9px]" : "text-[10px]"}`}>
+              <CategoryBadge category={resolved.category} compact={compact} className={`${compact ? "text-[9px]" : ""} cursor-pointer hover:opacity-80`} />
+            </SelectTrigger>
+            <SelectContent>
+              {CONTEXT_CATEGORIES.map(c => {
+                const role = PROTOCOL_ROLE_META[c];
+                return (
+                  <SelectItem key={c} value={c} className="text-xs">
+                    <span className="flex items-center gap-1.5">
+                      <span>{role?.icon || "📄"}</span>
+                      <span>{c}</span>
+                      <span className="text-muted-foreground text-[10px]">— {role?.label || "Item"}</span>
+                    </span>
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+          {resolved.step_order_hint && resolved.category === "PROCEDURE" && (
+            <Badge variant="outline" className="text-[9px] py-0 px-1.5 border-cyan-500/30 text-cyan-400">
+              Step {resolved.step_order_hint}
+            </Badge>
+          )}
           {edits && Object.keys(edits).length > 0 && (
             <Badge variant="secondary" className="text-[9px]">edited</Badge>
           )}
@@ -959,19 +989,25 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
           </DialogTitle>
           <p className="text-xs text-muted-foreground mt-1">
             <Badge variant="secondary" className="text-[9px] mr-1.5">{sourceLabel}</Badge>
-            AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles
+            AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles.
+            {" "}
             {(() => {
-              const full = bundles.filter(b => b.content_completeness === "full").length;
-              const partial = bundles.filter(b => b.content_completeness === "partial").length;
-              const skeleton = bundles.filter(b => b.content_completeness === "skeleton").length;
-              if (full + partial + skeleton === 0) return ".";
+              const readinessCounts = bundles.reduce((acc, b, i) => {
+                const r = computeBundleReadiness(
+                  b.items.map((it, j) => resolveItem(it, bundleItemEdits[`${i}-${j}`])),
+                  b.content_completeness,
+                );
+                acc[r] = (acc[r] || 0) + 1;
+                return acc;
+              }, {} as Record<BundleReadiness, number>);
               const parts: string[] = [];
-              if (full > 0) parts.push(`${full} complete`);
-              if (partial > 0) parts.push(`${partial} partial`);
-              if (skeleton > 0) parts.push(`${skeleton} skeleton`);
-              return ` (${parts.join(", ")}).`;
+              if (readinessCounts["protocol-ready"]) parts.push(`🟢 ${readinessCounts["protocol-ready"]} protocol-ready`);
+              if (readinessCounts["needs-steps"]) parts.push(`🟡 ${readinessCounts["needs-steps"]} need steps`);
+              if (readinessCounts["context-only"]) parts.push(`🔵 ${readinessCounts["context-only"]} context-only`);
+              if (readinessCounts["skeleton"]) parts.push(`⚪ ${readinessCounts["skeleton"]} skeleton`);
+              return parts.length > 0 ? parts.join(" · ") + "." : "";
             })()}
-            {" "}Select what to keep — hover any item to edit.
+            {" "}Click any category badge to re-categorize. Drag to reorder steps.
           </p>
         </DialogHeader>
 
@@ -1171,27 +1207,24 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                         <Badge variant="outline" className="text-[10px]">
                           {bundle.items.length} item{bundle.items.length !== 1 ? "s" : ""}
                         </Badge>
-                        {bundle.content_completeness && (
-                          <Badge
-                            variant="outline"
-                            className={`text-[9px] gap-0.5 ${
-                              bundle.content_completeness === "full"
-                                ? "border-emerald-500/30 text-emerald-400 bg-emerald-500/10"
-                                : bundle.content_completeness === "partial"
-                                ? "border-amber-500/30 text-amber-400 bg-amber-500/10"
-                                : "border-muted-foreground/30 text-muted-foreground bg-muted/30"
-                            }`}
-                          >
-                            {bundle.content_completeness === "full" ? (
-                              <CheckCircle2 className="h-2.5 w-2.5" />
-                            ) : bundle.content_completeness === "partial" ? (
-                              <AlertTriangle className="h-2.5 w-2.5" />
-                            ) : (
-                              <CircleDashed className="h-2.5 w-2.5" />
-                            )}
-                            {bundle.content_completeness}
-                          </Badge>
-                        )}
+                        {/* Bundle Readiness Badge */}
+                        {(() => {
+                          const readiness = computeBundleReadiness(
+                            bundle.items.map((it, j) => resolveItem(it, bundleItemEdits[`${i}-${j}`])),
+                            bundle.content_completeness,
+                          );
+                          const meta = BUNDLE_READINESS_META[readiness];
+                          return (
+                            <Badge
+                              variant="outline"
+                              className={`text-[9px] gap-0.5 ${meta.color}`}
+                              title={meta.description}
+                            >
+                              <span className="text-[8px]">{meta.icon}</span>
+                              {meta.label}
+                            </Badge>
+                          );
+                        })()}
                         {bundle.scope_suggestion && (
                           <Badge variant="secondary" className="text-[9px] gap-0.5">
                             {bundle.scope_suggestion === "organization" ? <Globe className="h-2.5 w-2.5" /> : bundle.scope_suggestion === "team" ? <Users className="h-2.5 w-2.5" /> : <User className="h-2.5 w-2.5" />}

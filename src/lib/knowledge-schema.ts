@@ -124,6 +124,28 @@ export interface ExtractedContextItem {
   title: string;
   content: string;
   category: ContextCategory;
+  /** Suggested execution order within a bundle (1-based). Only meaningful for PROCEDURE items. */
+  step_order_hint?: number;
+}
+
+// ─── Bundle Readiness ────────────────────────────────────────────────────────
+export type BundleReadiness = "protocol-ready" | "needs-steps" | "context-only" | "skeleton";
+
+export const BUNDLE_READINESS_META: Record<BundleReadiness, { label: string; icon: string; color: string; description: string }> = {
+  "protocol-ready": { label: "Protocol-Ready", icon: "🟢", color: "border-emerald-500/30 text-emerald-400 bg-emerald-500/10", description: "Has a driver + execution steps — ready to deploy" },
+  "needs-steps":    { label: "Needs Steps",    icon: "🟡", color: "border-amber-500/30 text-amber-400 bg-amber-500/10",     description: "Has a driver but no execution steps" },
+  "context-only":   { label: "Context Only",   icon: "🔵", color: "border-blue-500/30 text-blue-400 bg-blue-500/10",        description: "No protocol driver — passive context only" },
+  "skeleton":       { label: "Skeleton",       icon: "⚪", color: "border-muted-foreground/30 text-muted-foreground bg-muted/30", description: "Structure detected, content pending" },
+};
+
+/** Compute readiness from a bundle's items */
+export function computeBundleReadiness(items: ExtractedContextItem[], completeness?: string): BundleReadiness {
+  if (completeness === "skeleton") return "skeleton";
+  const hasPlaybook = items.some(i => i.category === "PLAYBOOK");
+  const hasProcedure = items.some(i => i.category === "PROCEDURE");
+  if (hasPlaybook && hasProcedure) return "protocol-ready";
+  if (hasPlaybook) return "needs-steps";
+  return "context-only";
 }
 
 export interface ExtractedBundle {
