@@ -27,6 +27,7 @@ import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { WorkbookStatusTransition } from "@/components/workbooks/WorkbookStatusTransition";
 import { ListTodo, Bot, GitBranch, Network } from "lucide-react";
 import { WorkbookGraph } from "@/components/workbooks/WorkbookGraph";
+import { useWorkbookProtocols, ProtocolCard, ProtocolExecutionView } from "@/components/workbooks/ProtocolExecution";
 
 // ── MOCK PLAYBOOKS (from old Launchpad) ──
 interface Playbook {
@@ -100,6 +101,10 @@ export default function WorkbookDetailPage() {
 
   const [lockedPlaybook, setLockedPlaybook] = useState<Playbook | null>(null);
   const [freeSession, setFreeSession] = useState(false);
+  const [activeProtocol, setActiveProtocol] = useState<any>(null);
+
+  // Fetch real protocols from deployed bundles
+  const { data: realProtocols = [] } = useWorkbookProtocols(id ?? "");
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
@@ -249,6 +254,18 @@ export default function WorkbookDetailPage() {
     setChatInput("");
     if (currentStepIndex < lockedPlaybook.steps.length - 1) setCurrentStepIndex(i => i + 1);
   };
+
+  // ── REAL PROTOCOL EXECUTION ──
+  if (activeProtocol) {
+    return (
+      <ProtocolExecutionView
+        protocol={activeProtocol}
+        workbookId={id ?? ""}
+        workbookTitle={wb.title}
+        onExit={() => setActiveProtocol(null)}
+      />
+    );
+  }
 
   // ── FREE SESSION STATE ──
   if (freeSession) {
@@ -578,9 +595,9 @@ export default function WorkbookDetailPage() {
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Select a Protocol</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* Free Session card — always first */}
-            <button onClick={handleStartFreeSession} className="group flex flex-col gap-3 rounded-lg border border-dashed border-green-500/30 bg-green-500/5 p-5 text-left transition-all hover:border-green-500/50 hover:bg-green-500/10">
+            <button onClick={handleStartFreeSession} className="group flex flex-col gap-3 rounded-lg border border-dashed border-emerald-500/30 bg-emerald-500/5 p-5 text-left transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-green-500/10 text-green-400 group-hover:bg-green-500/20 transition-colors">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500/20 transition-colors">
                   <MessageSquare className="h-5 w-5" />
                 </div>
                 <div>
@@ -593,8 +610,18 @@ export default function WorkbookDetailPage() {
               </div>
             </button>
 
-            {MOCK_PLAYBOOKS.map(pb => (
-              <button key={pb.id} onClick={() => handleLock(pb)} className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 text-left transition-all hover:border-primary/30 hover:glow-sm">
+            {/* Real protocols from deployed bundles */}
+            {realProtocols.map(proto => (
+              <ProtocolCard
+                key={proto.id}
+                protocol={proto}
+                onStart={(p) => setActiveProtocol(p)}
+              />
+            ))}
+
+            {/* Legacy mock playbooks (fallback) */}
+            {realProtocols.length === 0 && MOCK_PLAYBOOKS.map(pb => (
+              <button key={pb.id} onClick={() => handleLock(pb)} className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 text-left transition-all hover:border-primary/30 hover:shadow-md">
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">{pb.icon}</div>
                   <div>
@@ -607,6 +634,12 @@ export default function WorkbookDetailPage() {
                 </div>
               </button>
             ))}
+
+            {realProtocols.length === 0 && (
+              <div className="col-span-full text-center py-4 text-xs text-muted-foreground">
+                Deploy bundles with playbooks to generate real protocols. Showing sample protocols above.
+              </div>
+            )}
           </div>
         </TabsContent>
 
