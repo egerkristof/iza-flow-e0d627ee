@@ -246,15 +246,115 @@ The backend session object must track `session.locked_playbook_id`.
 
 # **7. Knowledge Extraction & Bundle Architecture**
 
-This section defines how source documents are transformed into deployable knowledge bundles.
+This section defines the complete extraction pipeline: how source documents, chats, tasks, and research findings are transformed into structured, deployable knowledge bundles within the AACE context graph.
 
-### **7.1 Bundle Granularity Principle**
+## **7.1 Extraction Pipeline Overview**
+
+The extraction engine follows a multi-stage pipeline:
+
+```
+Source Document/Chat/Task/Research
+        │
+        ▼
+┌──────────────────────┐
+│  1. Source Routing    │  Determine source type, load content
+│     & Content Load   │  (document, chat, task, research, manual)
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│  2. Advisor          │  [Guided/Deep only] Generate domain-specific
+│     Generation       │  expert advisor persona for category precision
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│  3. AI Extraction    │  Structural analysis → bundle creation →
+│     (Knowledge       │  item extraction → category assignment →
+│      Architect)      │  completeness scoring → gap analysis
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│  4. Import Copilot   │  Human review: select/deselect, merge,
+│     (Human Review)   │  split, re-categorize, adjust step order
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│  5. Persistence      │  Save to context_items, bundles,
+│     & Deduplication   │  context_item_bundles, working_preferences
+└──────────────────────┘
+```
+
+## **7.2 Extraction Depths**
+
+Users select one of three extraction depths that control the pipeline:
+
+| Depth | Label | Pipeline | Model | Use Case |
+|---|---|---|---|---|
+| `quick` | Quick Scan | Direct extraction, no advisor | `gemini-2.5-flash` | Fast triage, simple documents |
+| `guided` | Guided Extract | Advisor → extraction with advisor context | `gemini-2.5-flash` | **Default.** Best balance of speed & precision |
+| `deep` | Deep Analysis | Advisor → extraction with advisor + thoroughness | `gemini-2.5-pro` | Complex methodology docs, high-stakes imports |
+
+**Key difference:** Deep mode extracts **more items per bundle** (deeper within each phase), NOT more bundles. Bundle consolidation rules apply at all depths.
+
+## **7.3 Domain Advisor Architecture**
+
+For `guided` and `deep` extractions, the engine first generates a **Domain-Specific Expert Advisor** to improve categorization:
+
+### Advisor Generation Input
+- Content preview (first portion of the document)
+- Document metadata (filename, category, type)
+
+### Advisor Output (`AdvisorPersona`)
+```typescript
+interface AdvisorPersona {
+  persona_title: string;       // e.g., "Senior Sales Strategist"
+  domain: string;              // e.g., "Enterprise B2B Sales"
+  expertise_areas: string[];   // e.g., ["Sales methodology", "Deal governance"]
+  extraction_guidance: string; // Domain-specific extraction advice
+  category_hints: {
+    likely_playbooks: string;  // What PLAYBOOKs look like in this domain
+    likely_procedures: string; // What PROCEDUREs look like in this domain
+    likely_directives: string; // What DIRECTIVEs look like in this domain
+    likely_knowledge: string;  // What KNOWLEDGE looks like in this domain
+  };
+  icon_suggestion: string;     // Emoji for UI display
+}
+```
+
+The advisor's identity and guidance are:
+1. Injected into the extraction system prompt to enhance category precision
+2. Surfaced in the Import Copilot UI so users know which expert perspective shaped the extraction
+
+## **7.4 Category Decision Rules**
+
+The extraction AI follows this **ordered checklist** to assign categories. The first matching rule wins:
+
+| Priority | Question | Category | Signals | Protocol Role |
+|---|---|---|---|---|
+| 1 | Is it a RULE, CONSTRAINT, or MANDATE? | **DIRECTIVE** | must, never, always, shall, required, prohibited, mandatory | Compliance gate |
+| 2 | Is it a STEP, CHECKLIST, or ACTION? | **PROCEDURE** | send, schedule, prepare, verify, complete, assess, review, create | Executable step (ordered via `step_order_hint`) |
+| 3 | Is it a STRATEGY, METHODOLOGY, or FRAMEWORK? | **PLAYBOOK** | overall approach, phases, goals, strategic intent | Protocol driver |
+| 4 | Is it a CORE BELIEF or VALUE? | **PRINCIPLE** | philosophical stance, guides thinking, not enforceable | Decision guidance |
+| 5 | Is it RESEARCH or INTELLIGENCE? | **RESEARCH** | findings, data points, competitive intel, time-sensitive | Reference context |
+| 6 | Is it a WORKING STYLE or PREFERENCE? | **PREFERENCE** | tone, formatting, tool choices, communication style | AI personalization |
+| 7 | Everything else | **KNOWLEDGE** | facts, definitions, reference data, domain expertise | Context injection |
+
+### Critical Category Rules
+- A **PLAYBOOK** should describe the WHAT and WHY (strategic intent), never step-by-step HOW
+- If a PLAYBOOK contains actionable steps, those steps MUST be extracted as separate **PROCEDURE** items
+- Each PROCEDURE is a **single, atomic action** that can be checked off as "done"
+- Multiple steps in a numbered list → each step = separate PROCEDURE with `step_order_hint`
+
+## **7.5 Bundle Granularity Principle**
 
 > **A bundle is a self-contained, deployable unit of execution — not a structural mirror of the source document.**
 
 Bundles must be designed for **operator consumption**, not document fidelity. Each bundle should be independently deployable to a workbook and generate a meaningful, executable protocol.
 
-### **7.2 Bundle Consolidation Rules**
+## **7.6 Bundle Consolidation Rules**
 
 When extracting from structured documents (methodology decks, process guides, playbooks), the extraction engine MUST consolidate sub-sections into their parent phase:
 
@@ -268,7 +368,7 @@ When extracting from structured documents (methodology decks, process guides, pl
 
 5. **Sub-Step Nesting**: Steps within a phase (e.g., "Step B1.0", "Step B1.1", "Step B1.2") should be PROCEDURE items within the parent phase bundle, NOT separate bundles. Use `step_order_hint` to preserve sequence.
 
-### **7.3 Target Bundle Counts by Document Type**
+## **7.7 Target Bundle Counts by Document Type**
 
 | Document Type | Pages | Target Bundles |
 |---|---|---|
@@ -278,7 +378,7 @@ When extracting from structured documents (methodology decks, process guides, pl
 | Research Report | 5-20 pages | 3-8 bundles |
 | Single Process / SOP | 2-10 pages | 1-3 bundles |
 
-### **7.4 Protocol-Ready Bundle Composition**
+## **7.8 Protocol-Ready Bundle Composition**
 
 Every bundle intended for execution SHOULD contain:
 
@@ -291,7 +391,100 @@ Every bundle intended for execution SHOULD contain:
 | RESEARCH | Context Injection — findings, intelligence | As needed |
 | PRINCIPLE | Decision Guidance — values, beliefs | As needed |
 
-### **7.5 Example: Sales Methodology Extraction**
+## **7.9 Structural Analysis Requirements**
+
+Before extracting individual items, the engine MUST:
+
+### Step 1: Detect Document Architecture
+- **Process lifecycles** — multi-stage processes or workflows
+- **Section hierarchy** — sections, chapters, modules
+- **Parallel tracks** — multiple concurrent process tracks
+- **Phase markers** — named phases, stages, milestones
+- **Diagram/visual structure** — process diagrams, flowcharts, tables
+
+### Step 2: Map to Phase-Level Bundles
+Apply consolidation rules (§7.6) to determine the bundle structure. Each top-level phase = one bundle.
+
+### Step 3: Content Completeness Scoring
+For every bundle, assess documentation quality:
+- **`full`** — Rich: detailed steps, checklists, examples (3+ substantive items)
+- **`partial`** — Some content but incomplete (1-2 items with moderate detail)
+- **`skeleton`** — Top-level phase detected but NO elaborating content. Create a PLAYBOOK placeholder describing what this section SHOULD contain.
+
+### Step 4: Coverage Gap Analysis
+In `analysis_notes` AND each bundle's `coverage_gaps` array, flag:
+- Top-level phases in diagrams/headers with no elaborating content
+- Lifecycle stages referenced but not documented
+- Asymmetries (e.g., "Phase A has 15 items, Phase B has 0")
+
+## **7.10 Bundle Readiness Model**
+
+Bundles progress through readiness states based on their content composition:
+
+| State | Badge | Criteria | Meaning |
+|---|---|---|---|
+| `protocol-ready` | 🟢 Protocol-Ready | Has PLAYBOOK + PROCEDURE items | Fully deployable — generates executable protocol |
+| `needs-steps` | 🟡 Needs Steps | Has PLAYBOOK but no PROCEDURE | Strategy defined, needs execution steps added |
+| `context-only` | 🔵 Context Only | No PLAYBOOK driver | Passive reference — won't generate a protocol |
+| `skeleton` | ⚪ Skeleton | `content_completeness = "skeleton"` | Structure detected, content pending |
+
+## **7.11 Extraction Source Types**
+
+The engine supports multiple source types, each with tailored prompting:
+
+| Source Type | Origin | Prompt Focus |
+|---|---|---|
+| `document` | Personal document upload (PDF, text) | Full structural analysis, phase-level bundling |
+| `chat` | Workbook chat conversation | Decisions, action items, implicit preferences |
+| `task` | Workbook task output/notes | Procedures followed, lessons learned, reusable patterns |
+| `research` | Research Lens findings | Data points, competitive intelligence, structured RESEARCH items |
+| `manual` | User-initiated capture | Flexible — user provides content directly |
+| `loom` | Knowledge Loom bulk import | Same as document — full structural analysis |
+
+### PDF Multimodal Processing
+For PDF documents, the engine uses **multimodal AI processing**: the PDF is converted to base64 and sent as an inline image alongside text instructions. This preserves visual elements (diagrams, flowcharts, tables) that text-only extraction would miss.
+
+## **7.12 Import Copilot (Human Review Layer)**
+
+All extractions route through the Import Copilot before persistence. The Copilot provides:
+
+### Review Features
+- **Advisor Identity Display** — Shows which domain expert shaped the extraction
+- **Select All Toggles** — For bundles, standalone items, and working preferences
+- **Readiness Badges** — Visual indicator of bundle protocol-readiness (§7.10)
+- **Step Order Labels** — Shows execution sequence for PROCEDURE items
+
+### Curation Actions
+- **Merge** — Combine two items using delete-and-replace strategy (originals soft-deleted, new item inherits union of bundle assignments)
+- **Split** — Break a PLAYBOOK into separate PROCEDUREs
+- **Re-categorize** — Inline category switcher to change item type (e.g., KNOWLEDGE → PROCEDURE)
+- **Enrich** — AI-assisted content expansion
+
+## **7.13 Deduplication & Content Hashing**
+
+The system prevents duplicate knowledge at multiple layers:
+
+1. **Database Level** — `content_hash` column computed via `generate_content_hash(title, content_full)` using SHA-256
+2. **Semantic Level** — Jaccard similarity detection for near-duplicates
+3. **Merge Resolution** — When duplicates are found, the merge action creates a consolidated item and soft-deletes the originals
+
+## **7.14 Persistence Model**
+
+Extracted knowledge is stored across these tables:
+
+| Data | Table | Relationship |
+|---|---|---|
+| Context items | `context_items` | `bundle_id` (legacy) + `context_item_bundles` (junction, many-to-many) |
+| Bundles | `bundles` | `owner_id` → user, `scope_level` for access |
+| Bundle ↔ Item links | `context_item_bundles` | Many-to-many junction |
+| Working preferences | `working_preferences` | `user_id` → user, scoped by type |
+
+### Bundle Lifecycle States
+- **Draft** — `scope_level = 'draft'` — Being curated, not deployable
+- **Ready** — Promoted scope (team/organization) but not yet deployed to a workbook
+- **Deployed** — Attached to one or more workbooks via `workbook_resources` (resource_type: 'bundle')
+
+## **7.15 Example: Sales Methodology Extraction**
 
 Given a 50-slide "Way of Selling" deck with phases A→F:
 
@@ -330,3 +523,50 @@ Pre-Sales Process Reference                    [team]
 ```
 
 Each bundle contains the full depth of its phase: the PLAYBOOK driver, all PROCEDUREs as ordered steps, DIRECTIVEs as gates, and KNOWLEDGE/RESEARCH as context — making every bundle independently protocol-ready.
+
+---
+
+# **8. Protocol Execution Layer**
+
+This section defines how deployed bundles are transformed into executable protocols within workbooks.
+
+## **8.1 Protocol Generation (Bundle → Protocol Mapping)**
+
+When a bundle is deployed to a workbook, the `generate-protocols` function transforms its items into an executable protocol:
+
+| Bundle Item Category | Protocol Element | Behavior |
+|---|---|---|
+| PLAYBOOK | `workbook_protocols` row | Becomes the **protocol driver** — defines title, description, strategic intent |
+| PROCEDURE | `protocol_steps` (type: `action`) | Becomes an **executable step** — ordered by `step_order`, contains `agent_prompt` for AI |
+| DIRECTIVE | `protocol_steps` (type: `gate`) | Becomes a **compliance gate** — requires operator acknowledgment, has `gate_enforcement` level |
+| KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE | `protocol_context_items` | Injected into AI context window during execution (scope: `always` or step-specific) |
+
+### Mapping Logic
+1. Each PLAYBOOK item in the bundle generates a separate protocol
+2. If no PLAYBOOK exists, the bundle itself acts as the protocol driver
+3. All PROCEDURE items become ordered action steps (`step_order` from `step_order_hint`)
+4. All DIRECTIVE items become gate steps appended after action steps
+5. All other items are linked as context injections
+
+## **8.2 Protocol Execution Schema**
+
+```
+workbook_protocols          ← Protocol definition (from PLAYBOOK)
+  ├── protocol_steps        ← Executable steps (from PROCEDURE + DIRECTIVE)
+  ├── protocol_context_items ← Context injections (from KNOWLEDGE, RESEARCH, etc.)
+  └── protocol_executions   ← Runtime instances
+       ├── step_executions  ← Per-step status tracking
+       └── execution_captures ← Learnings, drift, best practices
+```
+
+## **8.3 Execution Feedback Loop**
+
+The protocol execution layer implements a continuous improvement cycle:
+
+1. **Operators execute** protocol steps in workbooks
+2. **Captures are recorded** — friction points, drifts, best practices, learnings, enhancements, exceptions
+3. **Process owners review** captures via the Oversight dashboard
+4. **Knowledge graph is updated** — captures are promoted to new context items or used to refine existing bundles
+5. **Protocols regenerate** from updated bundles, incorporating operational reality
+
+This ensures the knowledge DNA grows based on operational experience, not just initial documentation.
