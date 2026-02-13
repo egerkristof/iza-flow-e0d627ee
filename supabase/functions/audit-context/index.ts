@@ -32,6 +32,19 @@ Pay special attention to **semantic duplicates**: items that say the same thing 
 
 Be specific and actionable. Only suggest changes that would genuinely improve the knowledge graph. Don't suggest changes for items that are already well-structured.`;
 
+const CHAT_SYSTEM_PROMPT = `You are a **Knowledge Graph Copilot** for the AACE context management system. You help users understand, audit, and improve their knowledge graph.
+
+You can discuss:
+- How to organize and categorize context items
+- When to split, merge, or archive items
+- Best practices for knowledge graph health
+- How to interpret audit results and suggestions
+- Strategies for re-auditing after changes
+- When to promote directives to mandates
+- How to improve content quality and reduce duplication
+
+Be concise, practical, and specific. Reference the user's actual items when relevant. Format responses with markdown.`;
+
 const TOOL_DEFINITION = {
   type: "function",
   function: {
@@ -110,8 +123,52 @@ serve(async (req) => {
     const body = await req.json();
     const { action, items, item_id } = body;
 
-    // action: "audit" (bulk) | "suggest_single" (per-item)
-    if (action === "audit" || !action) {
+    if (action === "chat") {
+      // Conversational chat about the knowledge graph
+      const { messages, graph_context } = body;
+      if (!messages || !Array.isArray(messages)) throw new Error("messages array required for chat");
+
+      const contextBlock = graph_context
+        ? `\n\nCurrent knowledge graph snapshot (${graph_context.length} items):\n${graph_context.map((i: any) => `- [${i.category}] "${i.title}"`).join("\n")}`
+        : "";
+
+      const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${lovableApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-3-flash-preview",
+          messages: [
+            { role: "system", content: CHAT_SYSTEM_PROMPT + contextBlock },
+            ...messages,
+          ],
+          stream: true,
+        }),
+      });
+
+      if (!aiResponse.ok) {
+        const errText = await aiResponse.text();
+        console.error("AI chat error:", aiResponse.status, errText);
+        if (aiResponse.status === 429) {
+          return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again." }), {
+            status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        if (aiResponse.status === 402) {
+          return new Response(JSON.stringify({ error: "Credits exhausted. Please add funds." }), {
+            status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        throw new Error("AI request failed");
+      }
+
+      return new Response(aiResponse.body, {
+        headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+      });
+
+    } else if (action === "audit" || !action) {
       // Bulk audit: analyze all provided items
       if (!items || !Array.isArray(items) || items.length === 0) {
         throw new Error("items array required for audit");
@@ -173,7 +230,6 @@ Only suggest genuinely valuable improvements — don't force suggestions.`;
       });
 
     } else if (action === "apply_enrich") {
-      // Apply an enrichment suggestion to an item
       const { enriched_content } = body;
       if (!item_id || !enriched_content) throw new Error("item_id and enriched_content required");
 
