@@ -11,7 +11,8 @@ import { useToast } from "@/hooks/use-toast";
 import { PromoteToContextDialog } from "./PromoteToContextDialog";
 import { ImportCopilotDialog } from "./ImportCopilotDialog";
 import { CompareExtractionsDialog } from "./CompareExtractionsDialog";
-import { type ExtractionResult, type ExtractionDepth, EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
+import { ExtractionDepthSelector } from "./ExtractionDepthSelector";
+import { type ExtractionResult, type ExtractionDepth, type AdvisorPersona, EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
 
 const CATEGORIES = [
   { value: "cv", label: "CV / Resume", icon: FileText },
@@ -36,6 +37,7 @@ export function PersonalDocuments() {
   const [extractionDocName, setExtractionDocName] = useState("");
   const [reviewOpen, setReviewOpen] = useState(false);
   const [compareDoc, setCompareDoc] = useState<{ id: string; name: string } | null>(null);
+  const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
 
   const { data: docs = [], isLoading } = useQuery({
     queryKey: ["personal-documents", user?.id],
@@ -103,8 +105,24 @@ export function PersonalDocuments() {
   const handleExtract = async (docId: string, docName: string) => {
     setExtracting(docId);
     try {
+      // Generate advisor for guided/deep modes
+      let advisorPersona: AdvisorPersona | null = null;
+      if (extractionDepth !== "quick") {
+        try {
+          const { data: advData } = await supabase.functions.invoke("generate-advisor", {
+            body: { content: docName, meta: { title: docName } },
+          });
+          if (advData && !advData.error) advisorPersona = advData as AdvisorPersona;
+        } catch {}
+      }
+
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
-        body: { documentId: docId, source_type: "document" },
+        body: {
+          documentId: docId,
+          source_type: "document",
+          extraction_depth: extractionDepth,
+          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+        },
       });
       if (error) throw error;
       if (data.error) throw new Error(data.error);
@@ -158,6 +176,7 @@ export function PersonalDocuments() {
             {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
             {uploading ? "Uploading…" : "Choose File"}
           </Button>
+          <ExtractionDepthSelector value={extractionDepth} onChange={setExtractionDepth} compact />
           <span className="text-xs text-muted-foreground">PDF, DOC, TXT, CSV — max 20MB</span>
         </div>
 
