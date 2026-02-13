@@ -285,6 +285,63 @@ Only suggest genuinely valuable improvements — don't force suggestions.`;
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
 
+    } else if (action === "apply_merge") {
+      const { merge_with_id } = body;
+      if (!item_id || !merge_with_id) throw new Error("item_id and merge_with_id required");
+
+      const adminClient = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+
+      // Fetch both items
+      const { data: sourceItem } = await adminClient.from("context_items").select("*").eq("id", item_id).eq("owner_id", user.id).single();
+      const { data: targetItem } = await adminClient.from("context_items").select("*").eq("id", merge_with_id).eq("owner_id", user.id).single();
+      if (!sourceItem || !targetItem) throw new Error("Could not find both items to merge");
+
+      // Merge content into target, soft-delete source
+      const mergedContent = targetItem.content_full + "\n\n---\n\n" + sourceItem.content_full;
+      const { error: updateErr } = await adminClient.from("context_items")
+        .update({ content_full: mergedContent })
+        .eq("id", merge_with_id)
+        .eq("owner_id", user.id);
+      if (updateErr) throw updateErr;
+
+      const { error: deleteErr } = await adminClient.from("context_items")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", item_id)
+        .eq("owner_id", user.id);
+      if (deleteErr) throw deleteErr;
+
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+
+    } else if (action === "apply_split") {
+      const { suggested_content } = body;
+      if (!item_id) throw new Error("item_id required");
+
+      const adminClient = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+
+      // Fetch the original item
+      const { data: original } = await adminClient.from("context_items").select("*").eq("id", item_id).eq("owner_id", user.id).single();
+      if (!original) throw new Error("Item not found");
+
+      // Create a second item as a split-off with the suggested content
+      const { error: insertErr } = await adminClient.from("context_items").insert({
+        owner_id: user.id,
+        title: original.title + " (Split)",
+        content_full: suggested_content || "Split from: " + original.title,
+        category: original.category,
+        priority: original.priority,
+        security_level: original.security_level,
+        action_type: original.action_type,
+        bundle_id: original.bundle_id,
+        domain_scope: original.domain_scope,
+      });
+      if (insertErr) throw insertErr;
+
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+
     } else {
       throw new Error("Unknown action: " + action);
     }
