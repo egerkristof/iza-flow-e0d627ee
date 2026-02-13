@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -115,6 +115,16 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
     suggestions.push({
       label: `Add protocol drivers to ${bundlesWithoutPlaybook.length} bundle${bundlesWithoutPlaybook.length > 1 ? "s" : ""}`,
       instruction: `These bundles lack a PLAYBOOK item to drive protocol execution: ${bundlesWithoutPlaybook.slice(0, 2).map(b => `"${b.title}"`).join(", ")}. Create a PLAYBOOK item for each that describes the strategic intent, goals, and approach. This becomes the protocol template when the bundle is deployed to a workbook.`,
+      scope: "all",
+    });
+  }
+
+  // 5b. Skeleton bundles that need content
+  const skeletonBundles = (data.bundles || []).filter(b => b.content_completeness === "skeleton");
+  if (skeletonBundles.length > 0) {
+    suggestions.push({
+      label: `Expand ${skeletonBundles.length} skeleton bundle${skeletonBundles.length > 1 ? "s" : ""} with inferred content`,
+      instruction: `These bundles were detected from the document structure but lack content: ${skeletonBundles.slice(0, 3).map(b => `"${b.title}"`).join(", ")}. Based on the context of surrounding well-documented bundles and the domain, infer and generate likely PROCEDUREs, DIRECTIVEs, and KNOWLEDGE items for each. Mark inferred items clearly in their content.`,
       scope: "all",
     });
   }
@@ -947,8 +957,19 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
           </DialogTitle>
           <p className="text-xs text-muted-foreground mt-1">
             <Badge variant="secondary" className="text-[9px] mr-1.5">{sourceLabel}</Badge>
-            AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles.
-            Select what to keep — hover any item to edit.
+            AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles
+            {(() => {
+              const full = bundles.filter(b => b.content_completeness === "full").length;
+              const partial = bundles.filter(b => b.content_completeness === "partial").length;
+              const skeleton = bundles.filter(b => b.content_completeness === "skeleton").length;
+              if (full + partial + skeleton === 0) return ".";
+              const parts: string[] = [];
+              if (full > 0) parts.push(`${full} complete`);
+              if (partial > 0) parts.push(`${partial} partial`);
+              if (skeleton > 0) parts.push(`${skeleton} skeleton`);
+              return ` (${parts.join(", ")}).`;
+            })()}
+            {" "}Select what to keep — hover any item to edit.
           </p>
         </DialogHeader>
 
@@ -1148,6 +1169,27 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                         <Badge variant="outline" className="text-[10px]">
                           {bundle.items.length} item{bundle.items.length !== 1 ? "s" : ""}
                         </Badge>
+                        {bundle.content_completeness && (
+                          <Badge
+                            variant="outline"
+                            className={`text-[9px] gap-0.5 ${
+                              bundle.content_completeness === "full"
+                                ? "border-emerald-500/30 text-emerald-400 bg-emerald-500/10"
+                                : bundle.content_completeness === "partial"
+                                ? "border-amber-500/30 text-amber-400 bg-amber-500/10"
+                                : "border-muted-foreground/30 text-muted-foreground bg-muted/30"
+                            }`}
+                          >
+                            {bundle.content_completeness === "full" ? (
+                              <CheckCircle2 className="h-2.5 w-2.5" />
+                            ) : bundle.content_completeness === "partial" ? (
+                              <AlertTriangle className="h-2.5 w-2.5" />
+                            ) : (
+                              <CircleDashed className="h-2.5 w-2.5" />
+                            )}
+                            {bundle.content_completeness}
+                          </Badge>
+                        )}
                         {bundle.scope_suggestion && (
                           <Badge variant="secondary" className="text-[9px] gap-0.5">
                             {bundle.scope_suggestion === "organization" ? <Globe className="h-2.5 w-2.5" /> : bundle.scope_suggestion === "team" ? <Users className="h-2.5 w-2.5" /> : <User className="h-2.5 w-2.5" />}
@@ -1156,6 +1198,18 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                         )}
                       </div>
                       <p className="text-xs mt-1 text-muted-foreground">{bundle.description}</p>
+                      {bundle.coverage_gaps && bundle.coverage_gaps.length > 0 && (
+                        <div className="mt-1.5 flex items-start gap-1.5">
+                          <AlertTriangle className="h-3 w-3 text-amber-400 shrink-0 mt-0.5" />
+                          <div className="flex flex-wrap gap-1">
+                            {bundle.coverage_gaps.map((gap, gi) => (
+                              <Badge key={gi} variant="outline" className="text-[9px] border-amber-500/20 text-amber-400/80 bg-amber-500/5">
+                                {gap}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                     <button
                       onClick={(e) => { e.preventDefault(); toggleBundleExpand(i); }}

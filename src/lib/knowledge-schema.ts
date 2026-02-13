@@ -130,6 +130,8 @@ export interface ExtractedBundle {
   title: string;
   description: string;
   scope_suggestion?: ScopeLevel;
+  content_completeness?: "full" | "partial" | "skeleton";
+  coverage_gaps?: string[];
   items: ExtractedContextItem[];
 }
 

@@ -52,18 +52,55 @@ Bundles are **curated collections** of related context items that form a deploya
 - A research report → Create a RESEARCH bundle with findings as items
 - A conversation extract → Create a bundle if 3+ items from the same discussion topic
 
+## STRUCTURAL ANALYSIS — THE MOST CRITICAL CAPABILITY
+
+You MUST perform **structural analysis** before extracting content. This means:
+
+### 1. Detect the Document Architecture
+Before extracting individual items, identify the **full structural blueprint** of the document:
+- **Process lifecycles** — Does the document describe a multi-stage process or workflow? (e.g., sales pipeline stages, hiring funnel, incident response phases, onboarding steps)
+- **Section hierarchy** — Are there sections, chapters, or modules that form a logical structure?
+- **Parallel tracks** — Are there multiple parallel process tracks? (e.g., a "Hunting" sales cycle AND a "Farming" account management cycle; or an "Engineering" track AND a "Design" track)
+- **Phase markers** — Are there named phases, stages, or milestones? (e.g., "Phase A", "Day 0-30", "Sprint 1", "Stage: Discovery")
+- **Diagram/visual structure** — Do process diagrams, flowcharts, or tables reveal structure that the text body doesn't fully elaborate?
+
+### 2. Create Bundles for EVERY Structural Node
+For EACH stage/phase/section in the detected architecture, create a bundle — even if the document provides minimal or NO content for that section. This is critical because:
+- **Structure IS knowledge.** Knowing that a process has 7 stages (even unnamed ones) is valuable.
+- **Users will fill in gaps.** Skeleton bundles serve as placeholders that users complete over time.
+- **Completeness visibility.** The user must see which parts are well-documented vs. which need work.
+
+### 3. Content Completeness Scoring
+For EVERY bundle, assess how well the document actually documents that section:
+- **"full"** — Rich content: detailed steps, checklists, examples, explanations (3+ substantive items)
+- **"partial"** — Some content exists but is incomplete: a few bullet points, brief descriptions, or only high-level overviews (1-2 items with moderate detail)
+- **"skeleton"** — Structure detected (from headings, diagrams, labels, or process maps) but NO or minimal elaborating content. Create the bundle with a PLAYBOOK placeholder describing what this section SHOULD contain, based on its label/context.
+
+### 4. Coverage Gap Analysis
+In your analysis_notes AND in each bundle's coverage_gaps array, explicitly flag:
+- Sections that appear in diagrams/headers but have no elaborating content
+- Stages of a lifecycle that are referenced but not documented
+- Asymmetries (e.g., "Stage A has 15 items, Stage B has 0 — likely a documentation gap")
+- Cross-references to content that doesn't exist in the document yet
+
 ## EXTRACTION PRINCIPLES
-1. **Deep extraction**: Don't be superficial. Extract EVERY meaningful, actionable, or referenceable piece of knowledge. A 5-page document should yield 10-30+ items, not 3-5 vague summaries.
-2. **Atomic items**: Each context item should be self-contained and independently useful. Don't create items that are too broad ("Communication skills") — instead create specific ones ("Prefers async Slack communication over meetings for status updates").
-3. **Rich content**: The \`content\` field should contain the full, detailed information — not a one-line summary. Include specifics, numbers, names, conditions, and context.
-4. **Correct categorization**: Be precise. A rule is a DIRECTIVE, not KNOWLEDGE. A process step is a PROCEDURE, not a PLAYBOOK. A strategic approach is a PLAYBOOK, not a PROCEDURE.
-5. **Protocol-aware bundling**: Structure bundles for execution. PLAYBOOK drives, PROCEDUREs are ordered steps, DIRECTIVEs are gates. Don't mix up the hierarchy.
-6. **Granular PROCEDUREs**: Split multi-step processes into individual PROCEDURE items. Each step should be one clear action, not a paragraph of multiple actions.
-7. **Preserve hierarchy**: If the content has sections/chapters/threads, use them to inform bundle structure.
-8. **Working preferences**: Extract ONLY genuine style/working preferences (tone, format, tools, communication style). Don't force general knowledge into preferences.
+1. **Structural fidelity first**: The bundle structure must mirror the document's architecture. Don't collapse 7 stages into 3 bundles just because 4 stages lack content.
+2. **Deep extraction**: Don't be superficial. Extract EVERY meaningful, actionable, or referenceable piece of knowledge. A 5-page document should yield 10-30+ items, not 3-5 vague summaries.
+3. **Atomic items**: Each context item should be self-contained and independently useful. Don't create items that are too broad ("Communication skills") — instead create specific ones ("Prefers async Slack communication over meetings for status updates").
+4. **Rich content**: The \`content\` field should contain the full, detailed information — not a one-line summary. Include specifics, numbers, names, conditions, and context.
+5. **Correct categorization**: Be precise. A rule is a DIRECTIVE, not KNOWLEDGE. A process step is a PROCEDURE, not a PLAYBOOK. A strategic approach is a PLAYBOOK, not a PROCEDURE.
+6. **Protocol-aware bundling**: Structure bundles for execution. PLAYBOOK drives, PROCEDUREs are ordered steps, DIRECTIVEs are gates. Don't mix up the hierarchy.
+7. **Granular PROCEDUREs**: Split multi-step processes into individual PROCEDURE items. Each step should be one clear action, not a paragraph of multiple actions.
+8. **Preserve hierarchy**: If the content has sections/chapters/threads, use them to inform bundle structure.
+9. **Working preferences**: Extract ONLY genuine style/working preferences (tone, format, tools, communication style). Don't force general knowledge into preferences.
+10. **Skeleton bundles for gaps**: When structure exists without content, create a skeleton bundle with content_completeness="skeleton" and a PLAYBOOK item describing what SHOULD be documented there. The PLAYBOOK content should say something like: "This section covers [X] but has not been documented yet. Key areas to document include: [inferred from context]."
 
 ## ANALYSIS NOTES
-Provide a brief \`analysis_notes\` string explaining what you found, what structure you chose, and how the items map to the protocol execution model (which items are protocol drivers, steps, gates, and context).
+Provide comprehensive \`analysis_notes\` explaining:
+1. The document's structural architecture you detected
+2. How many bundles have full vs. partial vs. skeleton content
+3. Key coverage gaps and recommendations for what to document next
+4. How items map to the protocol execution model (drivers, steps, gates, context)
 
 Return results via the extract_knowledge tool.`;
 
@@ -122,7 +159,7 @@ Focus on creating well-structured RESEARCH items with specific data points and f
     case "document":
     case "loom":
     default:
-      return `Analyze the following document thoroughly and extract ALL knowledge elements. Be exhaustive — every actionable fact, rule, process, insight, or preference should become a context item.
+      return `Analyze the following document thoroughly. First, identify the COMPLETE structural architecture (all sections, phases, stages, parallel tracks), then extract ALL knowledge elements exhaustively.
 
 **Document metadata:**
 - File name: ${meta.file_name || "Unknown"}
@@ -132,12 +169,15 @@ Focus on creating well-structured RESEARCH items with specific data points and f
 **Document content:**
 ${truncated}${overflow}
 
-Now extract every meaningful element. Remember:
-- Create bundles when items naturally group together (especially for playbooks, topic areas, or document sections)
-- Each item must be specific and self-contained with rich content
-- Use the correct category for each item
-- Extract working preferences ONLY when they genuinely describe working style
-- Provide analysis_notes with your reasoning and recommendations`;
+**CRITICAL INSTRUCTIONS:**
+1. FIRST: Map the document's full structure — identify every section, stage, phase, or track, including those visible only in diagrams/headers/tables
+2. Create a bundle for EVERY structural node — even sections with no elaborating content (mark those as skeleton)
+3. For well-documented sections: extract items exhaustively (every step, rule, fact, template, checklist)
+4. For undocumented sections: create a skeleton bundle with a PLAYBOOK placeholder describing what should be there
+5. Set content_completeness on every bundle: "full", "partial", or "skeleton"
+6. List coverage_gaps for each bundle that isn't fully documented
+7. In analysis_notes: describe the full architecture, highlight gaps, and recommend what to document next
+8. Extract working preferences ONLY when they genuinely describe working style`;
   }
 }
 
@@ -153,7 +193,7 @@ const TOOL_DEFINITION = {
         analysis_notes: {
           type: "string",
           description:
-            "Brief analysis of what was found, the structure chosen, and recommendations for organizing in the knowledge graph. 2-4 sentences.",
+            "Comprehensive analysis: document architecture detected, bundle completeness breakdown (X full, Y partial, Z skeleton), key coverage gaps, recommendations for what to document next. 4-8 sentences.",
         },
         preferences: {
           type: "array",
@@ -232,7 +272,7 @@ const TOOL_DEFINITION = {
         bundles: {
           type: "array",
           description:
-            "Logical groupings of related items. Create a bundle when 3+ items naturally belong together.",
+            "Logical groupings of related items. Create a bundle for EVERY structural section/phase/stage — including skeleton bundles for undocumented sections.",
           items: {
             type: "object",
             properties: {
@@ -251,9 +291,19 @@ const TOOL_DEFINITION = {
                 enum: ["personal", "team", "organization"],
                 description: "Suggested scope level for this bundle",
               },
+              content_completeness: {
+                type: "string",
+                enum: ["full", "partial", "skeleton"],
+                description: "How well-documented is this bundle's content? 'full' = rich, detailed items (3+). 'partial' = some content but incomplete. 'skeleton' = structure detected but no/minimal elaborating content.",
+              },
+              coverage_gaps: {
+                type: "array",
+                items: { type: "string" },
+                description: "What's missing or undocumented in this bundle. E.g. 'No step-by-step procedures defined', 'Referenced in process diagram but not elaborated', 'Missing checklists and templates'. Empty array if fully documented.",
+              },
               items: {
                 type: "array",
-                description: "Context items belonging to this bundle",
+                description: "Context items belonging to this bundle. For skeleton bundles, include at minimum a PLAYBOOK placeholder describing what SHOULD be documented.",
                 items: {
                   type: "object",
                   properties: {
@@ -277,7 +327,7 @@ const TOOL_DEFINITION = {
                 },
               },
             },
-            required: ["title", "description", "scope_suggestion", "items"],
+            required: ["title", "description", "scope_suggestion", "content_completeness", "coverage_gaps", "items"],
             additionalProperties: false,
           },
         },
@@ -410,7 +460,9 @@ You are in **deep analysis mode**. This means:
 - Split complex items into their most atomic components
 - Surface implicit knowledge that isn't explicitly stated but can be inferred
 - Pay extra attention to relationships between items
-- Generate comprehensive analysis_notes with recommendations`;
+- Generate comprehensive analysis_notes with recommendations
+- For skeleton bundles: infer as much as possible about what SHOULD be documented based on the structural context, related sections, and domain knowledge
+- Create detailed PLAYBOOK placeholders for skeleton bundles that describe not just the topic but specific aspects that should be covered`;
     }
 
     const aiResponse = await fetch(
