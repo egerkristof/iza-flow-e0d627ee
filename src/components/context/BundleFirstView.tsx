@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import {
   Package, ChevronDown, ChevronRight, Search, Filter, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
-  Layers, Tag, Loader2,
+  Layers, Tag, Loader2, Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +12,7 @@ import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { type MockBundle, type MockContextItem, ALL_CATEGORIES } from "@/data/mockContextItems";
+import { DeployToWorkbookDialog } from "@/components/context/DeployToWorkbookDialog";
 
 interface BundleFirstViewProps {
   items: MockContextItem[];
@@ -51,6 +52,7 @@ function BundleExpandable({
   onEditBundle: (bundle: MockBundle) => void;
   onDeleteBundle: (id: string) => void;
 }) {
+  const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
   return (
@@ -84,6 +86,9 @@ function BundleExpandable({
                 </div>
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button variant="ghost" size="icon" className="h-7 w-7 text-primary" title="Deploy to Workbook" onClick={(e) => { e.stopPropagation(); setDeployOpen(true); }}>
+                  <Rocket className="h-3 w-3" />
+                </Button>
                 <Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onEditBundle(bundle); }}>
                   <Pencil className="h-3 w-3" />
                 </Button>
@@ -128,6 +133,12 @@ function BundleExpandable({
           </div>
         </CollapsibleContent>
       </div>
+      <DeployToWorkbookDialog
+        open={deployOpen}
+        onOpenChange={setDeployOpen}
+        bundleId={bundle.id}
+        bundleTitle={bundle.title}
+      />
     </Collapsible>
   );
 }
