@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageSquare, Plus, Users, User, X, Hash, Search, Filter, BookUp, Loader2, Sparkles } from "lucide-react";
+import { MessageSquare, Plus, Users, User, X, Hash, Search, Filter, BookUp, Loader2, Sparkles, GitCompareArrows } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,9 @@ import { MandateContextBanner } from "./MandateContextBanner";
 import { FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
+import { CompareExtractionsDialog } from "@/components/knowledge/CompareExtractionsDialog";
 import type { ExtractionResult, ExtractionDepth, AdvisorPersona } from "@/lib/knowledge-schema";
+import { EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ChatThread {
@@ -73,6 +75,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
   const [extractionSourceName, setExtractionSourceName] = useState("");
   const [showImportCopilot, setShowImportCopilot] = useState(false);
   const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
+  const [compareOpen, setCompareOpen] = useState(false);
 
   const generateAdvisor = async (content: string, title: string): Promise<AdvisorPersona | null> => {
     if (extractionDepth === "quick") return null;
@@ -236,6 +239,16 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
               {extracting ? <Loader2 className="h-3 w-3 animate-spin" /> : <BookUp className="h-3 w-3" />}
               Capture
             </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              title="Compare all extraction depths"
+              onClick={() => setCompareOpen(true)}
+              disabled={extracting || messages.length === 0}
+            >
+              <GitCompareArrows className="h-3.5 w-3.5" />
+            </Button>
             <Badge variant="outline" className="text-[10px]">{active.type}</Badge>
           </div>
         </div>
@@ -309,6 +322,30 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
         data={extractionData}
         sourceName={extractionSourceName}
         sourceType="chat"
+      />
+
+      <CompareExtractionsDialog
+        open={compareOpen}
+        onOpenChange={setCompareOpen}
+        sourceName={active ? `Chat: ${active.title}` : ""}
+        buildBody={() => {
+          const content = messages
+            .filter(m => m.content)
+            .map(m => `[${m.sender.name} — ${m.time}]: ${m.content}${m.attachment ? ` [Attachment: ${m.attachment.title}]` : ""}`)
+            .join("\n");
+          const participants = active ? active.participants.map(p => p.name).join(", ") : "";
+          return {
+            source_type: "chat",
+            content,
+            meta: { title: active?.title ?? "", workbook: workbookId, participants },
+          };
+        }}
+        onSelectResult={(data, depth) => {
+          setExtractionData(data);
+          setExtractionSourceName(`Chat: ${active?.title ?? ""} (${EXTRACTION_DEPTH_META[depth].label})`);
+          setCompareOpen(false);
+          setShowImportCopilot(true);
+        }}
       />
     </>
     );

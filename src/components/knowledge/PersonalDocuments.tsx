@@ -277,8 +277,8 @@ export function PersonalDocuments() {
         <CompareExtractionsDialog
           open={!!compareDoc}
           onOpenChange={(v) => { if (!v) setCompareDoc(null); }}
-          documentId={compareDoc?.id ?? ""}
-          documentName={compareDoc?.name ?? ""}
+          sourceName={compareDoc?.name ?? ""}
+          buildBody={() => ({ documentId: compareDoc?.id ?? "", source_type: "document" })}
           onSelectResult={(data, depth) => {
             setExtractionResult(data);
             setExtractionDocName(`${compareDoc?.name ?? ""} (${EXTRACTION_DEPTH_META[depth].label})`);

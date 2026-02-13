@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Search, Globe, Database, Pin, ChevronDown, Sparkles, Clock, BookOpen, Layers, Lightbulb, BookUp, Loader2 } from "lucide-react";
+import { Search, Globe, Database, Pin, ChevronDown, Sparkles, Clock, BookOpen, Layers, Lightbulb, BookUp, Loader2, GitCompareArrows } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,8 +14,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
+import { CompareExtractionsDialog } from "@/components/knowledge/CompareExtractionsDialog";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 import type { ExtractionResult, ExtractionDepth, AdvisorPersona } from "@/lib/knowledge-schema";
+import { EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
 
 interface SearchResult {
   id: string;
@@ -72,6 +74,7 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
   const [extractionSourceName, setExtractionSourceName] = useState("");
   const [showImportCopilot, setShowImportCopilot] = useState(false);
   const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
+  const [compareOpen, setCompareOpen] = useState(false);
 
   // Global keyboard shortcut: Cmd/Ctrl + K
   useEffect(() => {
@@ -343,7 +346,17 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
                   disabled={extracting === "bulk"}
                 >
                   {extracting === "bulk" ? <Loader2 className="h-3 w-3 animate-spin" /> : <BookUp className="h-3 w-3" />}
-                  Extract All {results.length} Results via Copilot
+                  Extract All via Copilot
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-xs gap-1.5"
+                  onClick={() => setCompareOpen(true)}
+                  disabled={!!extracting}
+                >
+                  <GitCompareArrows className="h-3 w-3" />
+                  Compare
                 </Button>
               </div>
             )}
@@ -398,6 +411,28 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
       data={extractionData}
       sourceName={extractionSourceName}
       sourceType="research"
+    />
+
+    <CompareExtractionsDialog
+      open={compareOpen}
+      onOpenChange={setCompareOpen}
+      sourceName={`Research: "${query}"`}
+      buildBody={() => {
+        const content = results.map(r =>
+          `## ${r.title}\nSource: ${r.source} | Type: ${r.type} | Category: ${r.category || "N/A"}\n\n${r.snippet}`
+        ).join("\n\n---\n\n");
+        return {
+          source_type: "research",
+          content,
+          meta: { title: `Research: "${query}"`, source: results.map(r => r.source).join(", ") },
+        };
+      }}
+      onSelectResult={(data, depth) => {
+        setExtractionData(data);
+        setExtractionSourceName(`Research: "${query}" (${EXTRACTION_DEPTH_META[depth].label})`);
+        setCompareOpen(false);
+        setShowImportCopilot(true);
+      }}
     />
     </>
   );
