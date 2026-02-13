@@ -393,15 +393,40 @@ export default function ContextManagementPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-3.5rem)]">
+      {/* Hidden file input for Knowledge Loom (shared by both views) */}
+      <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.csv,.json" onChange={handleLoomFileInput} />
       {/* Header */}
       <div className="shrink-0 p-6 pb-4 border-b border-border/50">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          📚 Context
-          <span className="text-sm font-normal text-muted-foreground ml-3">
-            Curate, organize, and manage the knowledge graph — {totalItems} items · {bundles.length} bundles · <span className={Math.round(avgHealth * 100) > 80 ? "text-emerald-400" : Math.round(avgHealth * 100) >= 50 ? "text-yellow-400" : "text-red-400"}>{Math.round(avgHealth * 100)}% health</span>
-          </span>
-        </h1>
-        <div className="flex items-center gap-2 flex-wrap mt-3">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            📚 Context
+            <span className="text-sm font-normal text-muted-foreground ml-3">
+              {totalItems} items · {bundles.length} bundles · <span className={Math.round(avgHealth * 100) > 80 ? "text-emerald-400" : Math.round(avgHealth * 100) >= 50 ? "text-yellow-400" : "text-red-400"}>{Math.round(avgHealth * 100)}% health</span>
+            </span>
+          </h1>
+          {/* View toggle in header */}
+          <div className="flex items-center gap-1 rounded-lg border border-border/50 p-0.5 bg-secondary/30">
+            <Button
+              variant={viewMode === "simplified" ? "default" : "ghost"}
+              size="sm"
+              className="h-7 text-xs gap-1.5 px-3"
+              onClick={() => setViewMode("simplified")}
+            >
+              <LayoutGrid className="h-3 w-3" /> Bundles
+            </Button>
+            <Button
+              variant={viewMode === "classic" ? "default" : "ghost"}
+              size="sm"
+              className="h-7 text-xs gap-1.5 px-3"
+              onClick={() => setViewMode("classic")}
+            >
+              <List className="h-3 w-3" /> Classic
+            </Button>
+          </div>
+        </div>
+
+        {viewMode === "classic" ? (
+          <div className="flex items-center gap-2 flex-wrap mt-3">
             <Button variant="outline" size="sm" className="text-xs gap-1.5" onClick={() => setCopilotOpen(!copilotOpen)}>
               <Sparkles className="h-3.5 w-3.5" /> {copilotOpen ? "Hide Copilot" : "AI Copilot"}
             </Button>
@@ -417,66 +442,60 @@ export default function ContextManagementPage() {
             <Button onClick={() => { setEditingItemId(null); setNewItem(emptyItem); setItemDialog(true); }} className="gap-1.5">
               <Plus className="h-4 w-4" /> New Item
             </Button>
-        </div>
+          </div>
+        ) : (
+          <p className="text-xs text-muted-foreground mt-2">
+            Organize and deploy your knowledge bundles. Expand a bundle to see its items.
+          </p>
+        )}
       </div>
 
-      {/* Tabs for merged views */}
-      <Tabs defaultValue="items" className="flex-1 flex flex-col overflow-hidden">
-        <div className="shrink-0 px-6 pt-3">
-          <TabsList>
-            <TabsTrigger value="items">Items & Bundles</TabsTrigger>
-            <TabsTrigger value="mandates" className="gap-1"><Shield className="h-3 w-3" />Mandates</TabsTrigger>
-            <TabsTrigger value="drift">Drift Inbox</TabsTrigger>
-            <TabsTrigger value="ingest">Knowledge Loom</TabsTrigger>
-            <TabsTrigger value="stale">Garbage Collection</TabsTrigger>
-          </TabsList>
-        </div>
-
-        {/* ── MANDATES TAB ── */}
-        <TabsContent value="mandates" className="flex-1 overflow-auto mt-0 p-4">
-          <MandatesDashboard />
-        </TabsContent>
-
-        {/* ── ITEMS & BUNDLES TAB (split panel) ── */}
-        <TabsContent value="items" className="flex-1 overflow-auto mt-0">
+      {/* ─── SIMPLIFIED (BUNDLES) MODE ─── */}
+      {viewMode === "simplified" ? (
+        <div className="flex-1 flex flex-col overflow-hidden">
           {copilotOpen && (
-            <div className="px-4 pt-3">
+            <div className="px-4 pt-3 shrink-0">
               <ContextCopilotPanel items={dbItems} onClose={() => setCopilotOpen(false)} />
             </div>
           )}
-
-          {/* View mode toggle */}
-          <div className="flex items-center gap-1 px-4 pt-3">
-            <Button
-              variant={viewMode === "simplified" ? "default" : "ghost"}
-              size="sm"
-              className="h-7 text-xs gap-1.5"
-              onClick={() => setViewMode("simplified")}
-            >
-              <LayoutGrid className="h-3 w-3" /> Bundles
-            </Button>
-            <Button
-              variant={viewMode === "classic" ? "default" : "ghost"}
-              size="sm"
-              className="h-7 text-xs gap-1.5"
-              onClick={() => setViewMode("classic")}
-            >
-              <List className="h-3 w-3" /> Classic
-            </Button>
+          <BundleFirstView
+            items={items}
+            bundles={bundles}
+            allDomainTags={allDomainTags}
+            onEditItem={openEditDialog}
+            onDestroyItem={handleDestroyItem}
+            onEditBundle={(bundle) => { setEditingBundle(bundle); setBundleDialog(true); }}
+            onDeleteBundle={handleDeleteBundle}
+            onCreateItem={() => { setEditingItemId(null); setNewItem(emptyItem); setItemDialog(true); }}
+            onCreateBundle={() => { setEditingBundle(null); setBundleDialog(true); }}
+            onOpenCopilot={() => setCopilotOpen(!copilotOpen)}
+            copilotOpen={copilotOpen}
+            onOpenLoom={() => fileInputRef.current?.click()}
+          />
+        </div>
+      ) : (
+        /* ─── CLASSIC MODE ─── */
+        <Tabs defaultValue="items" className="flex-1 flex flex-col overflow-hidden">
+          <div className="shrink-0 px-6 pt-3">
+            <TabsList>
+              <TabsTrigger value="items">Items & Bundles</TabsTrigger>
+              <TabsTrigger value="mandates" className="gap-1"><Shield className="h-3 w-3" />Mandates</TabsTrigger>
+              <TabsTrigger value="drift">Drift Inbox</TabsTrigger>
+              <TabsTrigger value="ingest">Knowledge Loom</TabsTrigger>
+              <TabsTrigger value="stale">Garbage Collection</TabsTrigger>
+            </TabsList>
           </div>
 
-          {viewMode === "simplified" ? (
-            <BundleFirstView
-              items={items}
-              bundles={bundles}
-              onEditItem={openEditDialog}
-              onDestroyItem={handleDestroyItem}
-              onEditBundle={(bundle) => { setEditingBundle(bundle); setBundleDialog(true); }}
-              onDeleteBundle={handleDeleteBundle}
-              onCreateItem={() => { setEditingItemId(null); setNewItem(emptyItem); setItemDialog(true); }}
-              onCreateBundle={() => { setEditingBundle(null); setBundleDialog(true); }}
-            />
-          ) : (
+          <TabsContent value="mandates" className="flex-1 overflow-auto mt-0 p-4">
+            <MandatesDashboard />
+          </TabsContent>
+
+          <TabsContent value="items" className="flex-1 overflow-auto mt-0">
+            {copilotOpen && (
+              <div className="px-4 pt-3">
+                <ContextCopilotPanel items={dbItems} onClose={() => setCopilotOpen(false)} />
+              </div>
+            )}
             <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
               <ResizablePanel defaultSize={55} minSize={35}>
                 <div className="flex flex-col h-full">
@@ -550,8 +569,7 @@ export default function ContextManagementPage() {
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>
-          )}
-        </TabsContent>
+          </TabsContent>
 
         {/* ── DRIFT INBOX TAB ── */}
         <TabsContent value="drift" className="flex-1 overflow-auto mt-0 p-6">
@@ -588,8 +606,8 @@ export default function ContextManagementPage() {
 
         {/* ── KNOWLEDGE LOOM TAB ── */}
         <TabsContent value="ingest" className="flex-1 overflow-auto mt-0 p-6">
-          <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.csv,.json" onChange={handleLoomFileInput} />
           <div
+
             className={`rounded-lg border-2 border-dashed p-12 text-center transition-all ${loomExtracting ? "border-primary/50 bg-primary/5" : dragOver ? "border-primary bg-primary/5" : "border-border/50 bg-card/50 hover:border-primary/30 cursor-pointer"}`}
             onDragOver={e => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
@@ -639,7 +657,8 @@ export default function ContextManagementPage() {
             ))}
           </div>
         </TabsContent>
-      </Tabs>
+        </Tabs>
+      )}
 
       {/* Bundle CRUD Dialog */}
       <Dialog open={bundleDialog} onOpenChange={setBundleDialog}>

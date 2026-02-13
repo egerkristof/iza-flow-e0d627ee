@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import {
   Package, ChevronDown, ChevronRight, Search, Filter, Plus,
-  FileText, Pencil, Trash2, Sparkles, Inbox, ArrowRight,
+  FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
+  Layers, Tag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,12 +16,16 @@ import { type MockBundle, type MockContextItem, ALL_CATEGORIES } from "@/data/mo
 interface BundleFirstViewProps {
   items: MockContextItem[];
   bundles: MockBundle[];
+  allDomainTags: string[];
   onEditItem: (item: MockContextItem) => void;
   onDestroyItem: (item: MockContextItem) => void;
   onEditBundle: (bundle: MockBundle) => void;
   onDeleteBundle: (id: string) => void;
   onCreateItem: () => void;
   onCreateBundle: () => void;
+  onOpenCopilot: () => void;
+  copilotOpen: boolean;
+  onOpenLoom: () => void;
 }
 
 const scopeColors: Record<string, string> = {
@@ -129,15 +134,23 @@ function BundleExpandable({
 export function BundleFirstView({
   items,
   bundles,
+  allDomainTags,
   onEditItem,
   onDestroyItem,
   onEditBundle,
   onDeleteBundle,
   onCreateItem,
   onCreateBundle,
+  onOpenCopilot,
+  copilotOpen,
+  onOpenLoom,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [domainFilter, setDomainFilter] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+
+  const activeFilterCount = (domainFilter ? 1 : 0) + (categoryFilter ? 1 : 0);
 
   // Items grouped by bundle
   const bundledItemsMap = useMemo(() => {
@@ -156,43 +169,47 @@ export function BundleFirstView({
     items.filter(i => !i.bundle_id),
   [items]);
 
-  // Apply search & category filter
+  // Apply search & filters
   const matchesFilter = (item: MockContextItem) => {
     if (search && !item.title.toLowerCase().includes(search.toLowerCase()) && !item.content_preview.toLowerCase().includes(search.toLowerCase())) return false;
     if (categoryFilter && item.category !== categoryFilter) return false;
+    if (domainFilter && !item.domain_tags.includes(domainFilter)) return false;
     return true;
   };
 
   const filteredBundles = useMemo(() => {
-    if (!search && !categoryFilter) return bundles;
+    if (!search && !categoryFilter && !domainFilter) return bundles;
     return bundles.filter(b => {
+      const bItems = bundledItemsMap.get(b.id) || [];
       if (search && !b.title.toLowerCase().includes(search.toLowerCase()) && !b.description.toLowerCase().includes(search.toLowerCase())) {
-        // Check if any items inside match
-        const bItems = bundledItemsMap.get(b.id) || [];
         return bItems.some(matchesFilter);
       }
-      if (categoryFilter) {
-        const bItems = bundledItemsMap.get(b.id) || [];
-        return bItems.some(i => i.category === categoryFilter);
+      if (categoryFilter || domainFilter) {
+        return bItems.some(matchesFilter);
       }
       return true;
     });
-  }, [bundles, search, categoryFilter, bundledItemsMap]);
+  }, [bundles, search, categoryFilter, domainFilter, bundledItemsMap]);
 
   const filteredLooseItems = useMemo(() =>
     looseItems.filter(matchesFilter),
-  [looseItems, search, categoryFilter]);
+  [looseItems, search, categoryFilter, domainFilter]);
 
   const filteredBundleItems = (bundleId: string) => {
     const bItems = bundledItemsMap.get(bundleId) || [];
-    if (!search && !categoryFilter) return bItems;
+    if (!search && !categoryFilter && !domainFilter) return bItems;
     return bItems.filter(matchesFilter);
   };
 
+  const clearFilters = () => {
+    setDomainFilter(null);
+    setCategoryFilter(null);
+  };
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col flex-1 min-h-0">
       {/* Toolbar */}
-      <div className="shrink-0 p-4 space-y-3 border-b border-border/30">
+      <div className="shrink-0 px-4 pt-3 pb-2 space-y-2">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -203,41 +220,109 @@ export function BundleFirstView({
               className="pl-9 h-9"
             />
           </div>
-          <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={onCreateBundle}>
-            <Package className="h-3.5 w-3.5" /> New Bundle
+
+          {/* Collapsible filter toggle */}
+          <Button
+            variant={filtersOpen || activeFilterCount > 0 ? "secondary" : "ghost"}
+            size="sm"
+            className="h-9 gap-1.5 text-xs relative"
+            onClick={() => setFiltersOpen(!filtersOpen)}
+          >
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+            Filters
+            {activeFilterCount > 0 && (
+              <Badge variant="default" className="h-4 w-4 p-0 flex items-center justify-center text-[9px] ml-0.5">
+                {activeFilterCount}
+              </Badge>
+            )}
           </Button>
-          <Button size="sm" className="gap-1.5 text-xs" onClick={onCreateItem}>
-            <Plus className="h-3.5 w-3.5" /> New Item
+
+          <div className="h-5 w-px bg-border/50" />
+
+          <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs" onClick={onOpenCopilot}>
+            <Sparkles className="h-3.5 w-3.5" /> {copilotOpen ? "Hide AI" : "AI Copilot"}
+          </Button>
+          <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs" onClick={onOpenLoom}>
+            <Upload className="h-3.5 w-3.5" /> Import
+          </Button>
+
+          <div className="h-5 w-px bg-border/50" />
+
+          <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs" onClick={onCreateBundle}>
+            <Package className="h-3.5 w-3.5" /> Bundle
+          </Button>
+          <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={onCreateItem}>
+            <Plus className="h-3.5 w-3.5" /> Item
           </Button>
         </div>
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <Filter className="h-3 w-3 text-muted-foreground" />
-          {ALL_CATEGORIES.map(cat => (
-            <Badge
-              key={cat}
-              variant={categoryFilter === cat ? "default" : "outline"}
-              className="text-[10px] cursor-pointer hover:bg-primary/10"
-              onClick={() => setCategoryFilter(categoryFilter === cat ? null : cat)}
-            >
-              {cat}
-            </Badge>
-          ))}
-          {categoryFilter && (
-            <button
-              className="text-[10px] text-muted-foreground hover:text-foreground ml-1"
-              onClick={() => setCategoryFilter(null)}
-            >
-              Clear
-            </button>
-          )}
-        </div>
+
+        {/* Collapsible two-level filter panel */}
+        <Collapsible open={filtersOpen} onOpenChange={setFiltersOpen}>
+          <CollapsibleContent>
+            <div className="rounded-lg border border-border/40 bg-card/50 p-3 space-y-3">
+              {/* Level 1: Domain tags (more important) */}
+              {allDomainTags.length > 0 && (
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                    <Layers className="h-3 w-3" /> Domains
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {allDomainTags.map(tag => (
+                      <Badge
+                        key={tag}
+                        variant={domainFilter === tag ? "default" : "secondary"}
+                        className="text-[10px] cursor-pointer hover:bg-primary/10"
+                        onClick={() => setDomainFilter(domainFilter === tag ? null : tag)}
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Level 2: Categories (less important) */}
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                  <Tag className="h-3 w-3" /> Categories
+                </div>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {ALL_CATEGORIES.map(cat => (
+                    <Badge
+                      key={cat}
+                      variant={categoryFilter === cat ? "default" : "outline"}
+                      className="text-[10px] cursor-pointer hover:bg-primary/10"
+                      onClick={() => setCategoryFilter(categoryFilter === cat ? null : cat)}
+                    >
+                      {cat}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {activeFilterCount > 0 && (
+                <button
+                  className="text-[10px] text-muted-foreground hover:text-foreground underline"
+                  onClick={clearFilters}
+                >
+                  Clear all filters
+                </button>
+              )}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto p-4 space-y-3">
+      <div className="flex-1 overflow-auto px-4 pb-4 space-y-3">
         {/* Summary */}
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span>{bundles.length} bundles · {looseItems.length} unbundled items</span>
+          {activeFilterCount > 0 && (
+            <span className="text-primary">
+              Filtered: {filteredBundles.length} bundles · {filteredLooseItems.length} loose items
+            </span>
+          )}
         </div>
 
         {/* Bundles */}
@@ -253,22 +338,27 @@ export function BundleFirstView({
           />
         ))}
 
-        {filteredBundles.length === 0 && !search && !categoryFilter && (
+        {filteredBundles.length === 0 && !search && !categoryFilter && !domainFilter && (
           <div className="rounded-lg border border-dashed border-border/50 p-8 text-center">
             <Package className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
             <p className="text-sm font-medium">No bundles yet</p>
             <p className="text-xs text-muted-foreground mt-1">
-              Create a bundle to group related knowledge items, or upload a document to auto-generate them.
+              Create a bundle to group related knowledge items, or import a document to auto-generate them.
             </p>
-            <Button size="sm" className="mt-3 gap-1.5" onClick={onCreateBundle}>
-              <Plus className="h-3 w-3" /> Create First Bundle
-            </Button>
+            <div className="flex items-center justify-center gap-2 mt-3">
+              <Button size="sm" className="gap-1.5" onClick={onCreateBundle}>
+                <Plus className="h-3 w-3" /> Create Bundle
+              </Button>
+              <Button size="sm" variant="outline" className="gap-1.5" onClick={onOpenLoom}>
+                <Upload className="h-3 w-3" /> Import Document
+              </Button>
+            </div>
           </div>
         )}
 
         {/* Loose Items */}
         {filteredLooseItems.length > 0 && (
-          <div className="mt-6">
+          <div className="mt-4">
             <div className="flex items-center gap-2 mb-3">
               <Inbox className="h-4 w-4 text-muted-foreground" />
               <h3 className="text-sm font-semibold text-muted-foreground">Unbundled Items</h3>
