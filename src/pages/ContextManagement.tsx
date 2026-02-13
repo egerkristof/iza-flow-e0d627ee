@@ -26,11 +26,31 @@ import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel"
 import { type ExtractionResult } from "@/lib/knowledge-schema";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  MOCK_CONTEXT_ITEMS, MOCK_BUNDLES, ALL_DOMAIN_TAGS, ALL_CATEGORIES,
+  ALL_CATEGORIES,
   type MockBundle, type MockContextItem, type ContextCategory,
 } from "@/data/mockContextItems";
+import type { Json } from "@/integrations/supabase/types";
+
+// Helper: parse domain_scope jsonb to string[]
+function parseDomainTags(domainScope: Json | null): string[] {
+  if (Array.isArray(domainScope)) return domainScope.filter((t): t is string => typeof t === "string");
+  return ["general"];
+}
+
+// Helper: format relative time
+function formatRelativeTime(dateStr: string | null): string | null {
+  if (!dateStr) return null;
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+  return `${Math.floor(days / 7)}w ago`;
+}
 
 // ── Drift & Stale mock data (from Process Studio) ──
 interface DriftCluster {
@@ -54,9 +74,10 @@ const MOCK_STALE: StaleItem[] = [
 export default function ContextManagementPage() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [copilotOpen, setCopilotOpen] = useState(false);
 
-  // Fetch real DB items for Copilot auditing
+  // Fetch real DB items
   const { data: dbItems = [] } = useQuery({
     queryKey: ["context-items-all", user?.id],
     enabled: !!user,
@@ -70,8 +91,61 @@ export default function ContextManagementPage() {
     },
   });
 
+  // Fetch real DB bundles
+  const { data: dbBundles = [] } = useQuery({
+    queryKey: ["bundles-all", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("bundles")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Map DB rows → MockContextItem shape for component compatibility
+  const items: MockContextItem[] = useMemo(() =>
+    dbItems.map(row => ({
+      id: row.id,
+      title: row.title,
+      category: row.category as ContextCategory,
+      priority: row.priority,
+      security_level: row.security_level,
+      action_type: row.action_type,
+      bundle_id: row.bundle_id,
+      bundle_ids: row.bundle_id ? [row.bundle_id] : [],
+      domain_tags: parseDomainTags(row.domain_scope),
+      trigger_intent: row.trigger_intent,
+      content_preview: row.content_full,
+      last_used_at: formatRelativeTime(row.last_used_at),
+      version: row.version ?? "v1.0",
+      created_at: row.created_at,
+    })),
+  [dbItems]);
+
+  // Map DB rows → MockBundle shape
+  const bundles: MockBundle[] = useMemo(() =>
+    dbBundles.map(row => ({
+      id: row.id,
+      title: row.title,
+      description: row.description ?? "",
+      scope_level: row.scope_level,
+      version: row.version ?? "v1.0",
+      health_score: Number(row.health_score ?? 1),
+      item_count: dbItems.filter(i => i.bundle_id === row.id).length,
+      domain_tags: Array.from(new Set(dbItems.filter(i => i.bundle_id === row.id).flatMap(i => parseDomainTags(i.domain_scope)))),
+      created_at: row.created_at,
+    })),
+  [dbBundles, dbItems]);
+
+  // Derived domain tags from real data
+  const allDomainTags = useMemo(() =>
+    Array.from(new Set(items.flatMap(i => i.domain_tags))).sort(),
+  [items]);
+
   // Items state
-  const [items, setItems] = useState(MOCK_CONTEXT_ITEMS);
   const [itemSearch, setItemSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [domainFilter, setDomainFilter] = useState<string | null>(null);
@@ -97,7 +171,6 @@ export default function ContextManagementPage() {
   const [selectedBundleId, setSelectedBundleId] = useState<string | null>(null);
   const [bundleDialog, setBundleDialog] = useState(false);
   const [editingBundle, setEditingBundle] = useState<MockBundle | null>(null);
-  const [bundles, setBundles] = useState(MOCK_BUNDLES);
 
   // Drift state
   const [expandedDrift, setExpandedDrift] = useState<string | null>(null);
@@ -132,49 +205,48 @@ export default function ContextManagementPage() {
 
   const selectedItem = items.find(i => i.id === selectedItemId);
 
-  // Handle create/update item
-  const handleSaveItem = () => {
+  // Handle create/update item — writes to DB
+  const handleSaveItem = async () => {
+    if (!user) return;
     const domainTags = newItem.domain_tags_input.split(",").map(t => t.trim()).filter(Boolean);
+    const domainScope = domainTags.length > 0 ? domainTags : ["general"];
+
     if (editingItemId) {
-      // Update existing
-      setItems(prev => prev.map(i => i.id === editingItemId ? {
-        ...i,
+      const { error } = await supabase.from("context_items").update({
         title: newItem.title,
-        content_preview: newItem.content_preview,
+        content_full: newItem.content_preview,
         category: newItem.category,
         priority: newItem.priority,
         security_level: newItem.security_level,
         action_type: newItem.action_type,
         trigger_intent: newItem.trigger_intent || null,
-        domain_tags: domainTags.length > 0 ? domainTags : ["general"],
+        domain_scope: domainScope,
         bundle_id: newItem.bundle_ids[0] ?? null,
-        bundle_ids: newItem.bundle_ids,
-      } : i));
+      }).eq("id", editingItemId);
+      if (error) { toast({ title: "Update failed", description: error.message, variant: "destructive" }); return; }
       setItemDialog(false);
       setEditingItemId(null);
       setNewItem(emptyItem);
+      queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
       toast({ title: "Context item updated", description: `"${newItem.title}" saved.` });
     } else {
-      const item: MockContextItem = {
-        id: `ci${Date.now()}`,
+      const { error } = await supabase.from("context_items").insert({
+        owner_id: user.id,
         title: newItem.title,
-        content_preview: newItem.content_preview,
+        content_full: newItem.content_preview,
         category: newItem.category,
         priority: newItem.priority,
         security_level: newItem.security_level,
         action_type: newItem.action_type,
-        bundle_id: newItem.bundle_ids[0] ?? null,
-        bundle_ids: newItem.bundle_ids,
-        domain_tags: domainTags.length > 0 ? domainTags : ["general"],
         trigger_intent: newItem.trigger_intent || null,
-        last_used_at: null,
-        version: "v1.0",
-        created_at: new Date().toISOString(),
-      };
-      setItems(prev => [item, ...prev]);
+        domain_scope: domainScope,
+        bundle_id: newItem.bundle_ids[0] ?? null,
+      });
+      if (error) { toast({ title: "Create failed", description: error.message, variant: "destructive" }); return; }
       setItemDialog(false);
       setNewItem(emptyItem);
-      toast({ title: "Context item created", description: `"${item.title}" added${item.bundle_ids.length > 0 ? ` to ${item.bundle_ids.length} bundle(s)` : ""}` });
+      queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+      toast({ title: "Context item created", description: `"${newItem.title}" added.` });
     }
   };
 
@@ -195,22 +267,36 @@ export default function ContextManagementPage() {
     setItemDialog(true);
   };
 
-  const handleDeleteBundle = (id: string) => {
-    setBundles(prev => prev.filter(b => b.id !== id));
+  const handleDeleteBundle = async (id: string) => {
+    const { error } = await supabase.from("bundles").delete().eq("id", id);
+    if (error) { toast({ title: "Delete failed", description: error.message, variant: "destructive" }); return; }
     if (selectedBundleId === id) setSelectedBundleId(null);
+    queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
     toast({ title: "Bundle deleted" });
   };
 
-  const handleSaveBundle = () => {
+  const handleSaveBundle = async () => {
+    if (!user) return;
     if (editingBundle?.id) {
-      setBundles(prev => prev.map(b => b.id === editingBundle.id ? editingBundle : b));
+      const { error } = await supabase.from("bundles").update({
+        title: editingBundle.title,
+        description: editingBundle.description,
+      }).eq("id", editingBundle.id);
+      if (error) { toast({ title: "Update failed", description: error.message, variant: "destructive" }); return; }
       toast({ title: "Bundle updated" });
     } else {
-      setBundles(prev => [...prev, { id: `b${Date.now()}`, title: "New Bundle", description: "Description", scope_level: "draft", version: "v0.1", health_score: 1, item_count: 0, domain_tags: [], created_at: new Date().toISOString() }]);
+      const { error } = await supabase.from("bundles").insert({
+        owner_id: user.id,
+        title: editingBundle?.title || "New Bundle",
+        description: editingBundle?.description || "Description",
+        scope_level: "draft",
+      });
+      if (error) { toast({ title: "Create failed", description: error.message, variant: "destructive" }); return; }
       toast({ title: "Bundle created" });
     }
     setBundleDialog(false);
     setEditingBundle(null);
+    queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
   };
 
   const clearFilters = () => { setCategoryFilter(null); setDomainFilter(null); setSelectedBundleId(null); setItemSearch(""); };
@@ -227,14 +313,12 @@ export default function ContextManagementPage() {
     }
     setLoomExtracting(true);
     try {
-      // 1. Upload to storage
       const filePath = `${user.id}/${Date.now()}-${file.name}`;
       const { error: uploadErr } = await supabase.storage
         .from("personal-documents")
         .upload(filePath, file);
       if (uploadErr) throw uploadErr;
 
-      // 2. Create personal_documents record
       const { data: docRow, error: insertErr } = await supabase
         .from("personal_documents")
         .insert({
@@ -249,14 +333,12 @@ export default function ContextManagementPage() {
         .single();
       if (insertErr || !docRow) throw insertErr ?? new Error("Insert failed");
 
-      // 3. Call extract-knowledge edge function
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
         body: { documentId: docRow.id, source_type: "loom" },
       });
       if (error) throw error;
       if (data.error) throw new Error(data.error);
 
-      // 4. Open ExtractionReviewDialog
       setExtractionResult(data as ExtractionResult);
       setExtractionDocName(file.name);
       setReviewOpen(true);
@@ -358,7 +440,7 @@ export default function ContextManagementPage() {
                   </div>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <Layers className="h-3 w-3 text-muted-foreground" />
-                    {ALL_DOMAIN_TAGS.map(tag => (
+                    {allDomainTags.map(tag => (
                       <Badge key={tag} variant={domainFilter === tag ? "default" : "secondary"} className="text-[9px] cursor-pointer hover:bg-primary/10" onClick={() => setDomainFilter(domainFilter === tag ? null : tag)}>{tag}</Badge>
                     ))}
                   </div>
