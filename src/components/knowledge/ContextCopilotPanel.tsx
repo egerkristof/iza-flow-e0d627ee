@@ -216,6 +216,18 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
           }
         }
       }
+
+      // Check for re-audit trigger in the final assistant message
+      if (assistantSoFar.includes("[TRIGGER_REAUDIT]")) {
+        // Clean the marker from the displayed message
+        const cleaned = assistantSoFar.replace(/\s*\[TRIGGER_REAUDIT\]\s*/g, "").trim();
+        setChatMessages(prev =>
+          prev.map((m, i) => (i === prev.length - 1 && m.role === "assistant" ? { ...m, content: cleaned } : m))
+        );
+        // Auto-switch to suggestions tab and trigger audit
+        setActiveTab("suggestions");
+        setTimeout(() => auditMutation.mutate(), 300);
+      }
     } catch (e: any) {
       console.error("Chat error:", e);
       toast({ title: "Chat error", description: e.message, variant: "destructive" });

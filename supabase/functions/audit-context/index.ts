@@ -43,6 +43,9 @@ You can discuss:
 - When to promote directives to mandates
 - How to improve content quality and reduce duplication
 
+## IMPORTANT: RE-AUDIT TRIGGER
+When the user asks you to re-audit, run an audit, re-analyze, rescan, or otherwise requests a fresh audit of their knowledge graph, you MUST include the exact token **[TRIGGER_REAUDIT]** at the very end of your response. This token will be detected by the system to automatically trigger a re-audit. Provide a brief confirmation message before the token, e.g. "Sure, I'll kick off a fresh audit now. [TRIGGER_REAUDIT]"
+
 Be concise, practical, and specific. Reference the user's actual items when relevant. Format responses with markdown.`;
 
 const TOOL_DEFINITION = {
