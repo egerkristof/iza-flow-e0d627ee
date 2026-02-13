@@ -14,6 +14,8 @@ export interface ResolutionResult {
   action: ResolutionAction;
   targetId?: string; // existing item to merge into / replace
   mergedContent?: string;
+  /** Union of bundle_ids from both source items (for merge) */
+  bundleIds?: string[];
 }
 
 interface DuplicateResolutionDialogProps {
@@ -40,7 +42,9 @@ export function DuplicateResolutionDialog({
   const handleMerge = () => {
     if (!selected) return;
     const merged = mergeContent(selected.content_full, newItem.content);
-    onResolve({ action: "merge", targetId: selected.id, mergedContent: merged });
+    // Collect unique bundle_ids from the existing match
+    const bundleIds = selected.bundle_id ? [selected.bundle_id] : [];
+    onResolve({ action: "merge", targetId: selected.id, mergedContent: merged, bundleIds });
   };
 
   const handleReplace = () => {

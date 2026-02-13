@@ -178,13 +178,31 @@ export function MyContextItems() {
           category: newCategory,
         } as any).eq("id", result.targetId);
       } else if (result.action === "merge" && result.targetId && result.mergedContent) {
-        await supabase.from("context_items").update({
+        // Delete the original item
+        await supabase.from("context_items").delete().eq("id", result.targetId);
+
+        // Create the new merged item
+        const { data: newItem, error: insertErr } = await supabase.from("context_items").insert({
+          owner_id: user!.id,
+          title: newTitle,
           content_full: result.mergedContent,
-        } as any).eq("id", result.targetId);
+          category: newCategory,
+          bundle_id: result.bundleIds?.[0] ?? null,
+        } as any).select("id").single();
+        if (insertErr) throw insertErr;
+
+        // Assign to all source bundles via junction table
+        if (newItem && result.bundleIds && result.bundleIds.length > 0) {
+          const rows = result.bundleIds.map(bid => ({
+            context_item_id: newItem.id,
+            bundle_id: bid,
+          }));
+          await supabase.from("context_item_bundles").insert(rows as any);
+        }
       }
       queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
       queryClient.invalidateQueries({ queryKey: ["context-items"] });
-      toast({ title: result.action === "keep_both" ? "Item created" : `Item ${result.action}d` });
+      toast({ title: result.action === "keep_both" ? "Item created" : result.action === "merge" ? "Items merged" : `Item ${result.action}d` });
       setCreateOpen(false);
       setNewTitle("");
       setNewContent("");
