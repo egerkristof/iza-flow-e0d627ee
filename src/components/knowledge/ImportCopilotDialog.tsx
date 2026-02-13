@@ -22,6 +22,7 @@ import {
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
 } from "@/lib/knowledge-schema";
+import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 
 // ─── Smart Suggestion Engine ─────────────────────────────────────────────────
 interface SmartSuggestion {
@@ -800,9 +801,7 @@ function SmartSuggestionChips({ data, onSelect }: { data: ExtractionResult; onSe
       <div className="min-w-0 flex-1 group/edit">
         <div className="flex items-center gap-2 flex-wrap">
           <span className={`${textSize} font-medium`}>{resolved.title}</span>
-          <Badge variant="outline" className={`text-[${compact ? "9" : "10"}px] ${CATEGORY_COLORS[resolved.category] || ""}`}>
-            {resolved.category}
-          </Badge>
+          <CategoryBadge category={resolved.category} compact={compact} className={compact ? "text-[9px]" : ""} />
           {edits && Object.keys(edits).length > 0 && (
             <Badge variant="secondary" className="text-[9px]">edited</Badge>
           )}
