@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   BookOpen, Trash2, Plus, Search, Microscope, Sparkles,
-  Tag, FileText, Shield, Loader2, MoreHorizontal, RefreshCw, CheckSquare, X,
+  Tag, FileText, Shield, Loader2, MoreHorizontal, RefreshCw, CheckSquare, X, GitMerge,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +23,7 @@ import { DuplicateResolutionDialog, type ResolutionResult } from "@/components/k
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import { findDuplicates, type DuplicateMatch } from "@/lib/dedup";
 import { type ExtractionResult } from "@/lib/knowledge-schema";
+import { MergeItemsDialog } from "@/components/knowledge/MergeItemsDialog";
 
 const CATEGORY_COLORS: Record<string, string> = {
   DIRECTIVE: "bg-destructive/10 text-destructive",
@@ -56,6 +57,7 @@ export function MyContextItems() {
   // Import Copilot state for re-analysis results
   const [reanalysisResult, setReanalysisResult] = useState<ExtractionResult | null>(null);
   const [reanalysisOpen, setReanalysisOpen] = useState(false);
+  const [mergeOpen, setMergeOpen] = useState(false);
 
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["my-context-items", user?.id],
@@ -364,20 +366,31 @@ export function MyContextItems() {
               {selectedIds.size} of {filtered.length} selected
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              className="gap-1.5 text-xs"
-              onClick={handleBulkReanalyze}
-              disabled={selectedIds.size === 0 || reanalyzing}
-            >
-              {reanalyzing ? <Loader2 className="h-3 w-3 animate-spin" /> : <RefreshCw className="h-3 w-3" />}
-              Re-analyze ({selectedIds.size})
-            </Button>
-            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={exitSelectMode}>
-              <X className="h-3 w-3" />
-            </Button>
-          </div>
+           <div className="flex items-center gap-2">
+              {selectedIds.size === 2 && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5 text-xs"
+                  onClick={() => setMergeOpen(true)}
+                >
+                  <GitMerge className="h-3 w-3" />
+                  Merge 2 Items
+                </Button>
+              )}
+              <Button
+                size="sm"
+                className="gap-1.5 text-xs"
+                onClick={handleBulkReanalyze}
+                disabled={selectedIds.size === 0 || reanalyzing}
+              >
+                {reanalyzing ? <Loader2 className="h-3 w-3 animate-spin" /> : <RefreshCw className="h-3 w-3" />}
+                Re-analyze ({selectedIds.size})
+              </Button>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={exitSelectMode}>
+                <X className="h-3 w-3" />
+              </Button>
+            </div>
         </div>
       )}
 
@@ -522,6 +535,26 @@ export function MyContextItems() {
         sourceName={`Re-analysis of ${selectedIds.size || "selected"} items`}
         sourceType="manual"
       />
+
+      {/* Merge Items Dialog */}
+      {selectedIds.size === 2 && (() => {
+        const ids = Array.from(selectedIds);
+        const a = items.find(i => i.id === ids[0]);
+        const b = items.find(i => i.id === ids[1]);
+        if (!a || !b) return null;
+        return (
+          <MergeItemsDialog
+            open={mergeOpen}
+            onOpenChange={setMergeOpen}
+            itemA={a as any}
+            itemB={b as any}
+            onComplete={() => {
+              setSelectedIds(new Set());
+              setSelectMode(false);
+            }}
+          />
+        );
+      })()}
     </div>
   );
 }
