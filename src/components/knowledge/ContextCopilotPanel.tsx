@@ -249,7 +249,7 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
   const activeSuggestions = suggestions.filter(s => !dismissed.has(s.item_id + s.type));
 
   return (
-    <div className="border border-primary/20 rounded-lg bg-card/80 backdrop-blur-sm flex flex-col">
+    <div className="border border-primary/20 rounded-lg bg-card/80 backdrop-blur-sm flex flex-col max-h-[70vh]">
       {/* Header */}
       <div className="flex items-center justify-between p-3 border-b border-border/50">
         <div className="flex items-center gap-2">
@@ -287,7 +287,7 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
         </TabsList>
 
         {/* Suggestions Tab */}
-        <TabsContent value="suggestions" className="flex-1 overflow-hidden m-0 p-3 pt-2">
+        <TabsContent value="suggestions" className="flex-1 overflow-hidden m-0 p-3 pt-2 flex flex-col min-h-0">
           {auditMutation.isPending ? (
             <div className="flex items-center gap-2 text-sm text-muted-foreground py-6 justify-center">
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -300,11 +300,11 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
               <p className="text-[10px] mt-1">The AI will scan {items.length} items and suggest improvements.</p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="flex flex-col flex-1 min-h-0 space-y-2">
               {summary && (
                 <p className="text-xs text-muted-foreground bg-muted/30 rounded-md p-2 mb-3">{summary}</p>
               )}
-              <ScrollArea className="max-h-[400px]">
+              <ScrollArea className="flex-1">
                 <div className="space-y-2 pr-2">
                   {activeSuggestions.map((s, idx) => {
                     const meta = TYPE_META[s.type];
