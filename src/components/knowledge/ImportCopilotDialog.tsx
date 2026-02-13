@@ -870,10 +870,22 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             <Badge variant="secondary" className="text-[9px]">edited</Badge>
           )}
           {mandateFlags[editKey]?.is_mandate && (
-            <Badge variant="outline" className="text-[9px] border-amber-500/30 bg-amber-500/10 text-amber-400 gap-0.5">
-              <Shield className="h-2 w-2" />
-              Mandate · {mandateFlags[editKey].enforcement_level}
-            </Badge>
+            <Select
+              value={mandateFlags[editKey].enforcement_level}
+              onValueChange={(v: "advisory" | "required_ack" | "blocking") => {
+                setMandateFlags(prev => ({ ...prev, [editKey]: { ...prev[editKey], enforcement_level: v } }));
+              }}
+            >
+              <SelectTrigger className="h-5 w-auto text-[9px] border-amber-500/30 bg-amber-500/10 text-amber-400 gap-1 px-1.5 py-0 rounded-full">
+                <Shield className="h-2 w-2 shrink-0" />
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="advisory" className="text-xs">Advisory</SelectItem>
+                <SelectItem value="required_ack" className="text-xs">Required Ack</SelectItem>
+                <SelectItem value="blocking" className="text-xs">Blocking</SelectItem>
+              </SelectContent>
+            </Select>
           )}
           <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); setEditingKey(editKey); }}
