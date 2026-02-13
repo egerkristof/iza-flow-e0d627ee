@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -451,7 +453,28 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
                       <p className="whitespace-pre-wrap">{m.content}</p>
                     ) : (
                       <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px] [&_code]:bg-muted [&_code]:px-1 [&_code]:rounded">
-                        <ReactMarkdown>{m.content}</ReactMarkdown>
+                        <ReactMarkdown
+                          components={{
+                            code({ className, children, ...props }) {
+                              const match = /language-(\w+)/.exec(className || "");
+                              const code = String(children).replace(/\n$/, "");
+                              return match ? (
+                                <SyntaxHighlighter
+                                  style={oneDark}
+                                  language={match[1]}
+                                  PreTag="div"
+                                  customStyle={{ fontSize: "10px", borderRadius: "6px", margin: "4px 0", padding: "8px" }}
+                                >
+                                  {code}
+                                </SyntaxHighlighter>
+                              ) : (
+                                <code className={className} {...props}>{children}</code>
+                              );
+                            },
+                          }}
+                        >
+                          {m.content}
+                        </ReactMarkdown>
                       </div>
                     )}
                   </div>
