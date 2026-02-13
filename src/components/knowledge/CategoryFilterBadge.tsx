@@ -1,5 +1,5 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { CATEGORY_COLORS, CATEGORY_DESCRIPTIONS, CATEGORY_LABELS, type ContextCategory } from "@/lib/knowledge-schema";
+import { CATEGORY_COLORS, CATEGORY_DESCRIPTIONS, CATEGORY_LABELS, CATEGORY_RELATIONSHIPS, type ContextCategory } from "@/lib/knowledge-schema";
 import { cn } from "@/lib/utils";
 import {
   HelpCircle, Gavel, BookOpen, ListChecks, Map, SlidersHorizontal,
@@ -38,6 +38,7 @@ export function CategoryFilterBadge({ category, isActive, onClick }: CategoryFil
   const description = CATEGORY_DESCRIPTIONS[category as ContextCategory];
   const color = CATEGORY_COLORS[category as ContextCategory] || "";
   const example = CATEGORY_EXAMPLES[category] ?? "";
+  const relationship = CATEGORY_RELATIONSHIPS[category as ContextCategory] ?? "";
 
   const badge = (
     <button
@@ -67,6 +68,9 @@ export function CategoryFilterBadge({ category, isActive, onClick }: CategoryFil
             <span className="font-semibold">{label}</span>
           </div>
           <p className="text-muted-foreground leading-relaxed">{description}</p>
+          {relationship && (
+            <p className="text-[10px] text-muted-foreground/80 leading-relaxed">🔗 {relationship}</p>
+          )}
           {example && (
             <p className="text-[10px] text-muted-foreground/70 italic">{example}</p>
           )}
