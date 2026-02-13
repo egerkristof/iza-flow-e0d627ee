@@ -4,6 +4,7 @@ import {
   Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
   Layers, Tag, Loader2, Rocket, BookOpen, Circle, CheckCircle2, ArrowUpCircle,
+  Eraser,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,6 +22,11 @@ import {
 } from "@/components/ui/tooltip";
 import { type MockBundle, type MockContextItem, ALL_CATEGORIES } from "@/data/mockContextItems";
 import { DeployToWorkbookDialog } from "@/components/context/DeployToWorkbookDialog";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface BundleFirstViewProps {
   items: MockContextItem[];
@@ -38,6 +44,8 @@ interface BundleFirstViewProps {
   loomExtracting: boolean;
   extractionDepth: ExtractionDepth;
   onExtractionDepthChange: (depth: ExtractionDepth) => void;
+  onClearAll?: () => void;
+  clearingAll?: boolean;
 }
 
 const scopeColors: Record<string, string> = {
@@ -277,6 +285,8 @@ export function BundleFirstView({
   loomExtracting,
   extractionDepth,
   onExtractionDepthChange,
+  onClearAll,
+  clearingAll,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -397,6 +407,34 @@ export function BundleFirstView({
           <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={onCreateItem}>
             <Plus className="h-3.5 w-3.5" /> Item
           </Button>
+
+          {onClearAll && (
+            <>
+              <div className="h-5 w-px bg-border/50" />
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs text-destructive hover:text-destructive" disabled={clearingAll}>
+                    {clearingAll ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Eraser className="h-3.5 w-3.5" />}
+                    Clear All
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Clear all knowledge?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will permanently delete all context items and bundles. This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={onClearAll} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                      Delete Everything
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </>
+          )}
         </div>
 
         {/* Collapsible two-level filter panel */}

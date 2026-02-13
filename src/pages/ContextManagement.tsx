@@ -84,6 +84,7 @@ export default function ContextManagementPage() {
   const queryClient = useQueryClient();
   const [copilotOpen, setCopilotOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"simplified" | "classic">("simplified");
+  const [clearingAll, setClearingAll] = useState(false);
 
   // Fetch real DB items
   const { data: dbItems = [] } = useQuery({
@@ -540,6 +541,25 @@ export default function ContextManagementPage() {
             loomExtracting={loomExtracting}
             extractionDepth={extractionDepth}
             onExtractionDepthChange={setExtractionDepth}
+            clearingAll={clearingAll}
+            onClearAll={async () => {
+              if (!user) return;
+              setClearingAll(true);
+              try {
+                // Delete items first (cascade-safe), then bundles
+                const { error: itemsErr } = await supabase.from("context_items").delete().eq("owner_id", user.id);
+                const { error: bundlesErr } = await supabase.from("bundles").delete().eq("owner_id", user.id);
+                if (itemsErr) throw itemsErr;
+                if (bundlesErr) throw bundlesErr;
+                queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+                queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
+                toast({ title: "All cleared", description: "All context items and bundles have been deleted." });
+              } catch (e: any) {
+                toast({ title: "Error", description: e.message, variant: "destructive" });
+              } finally {
+                setClearingAll(false);
+              }
+            }}
           />
         </div>
       ) : (
