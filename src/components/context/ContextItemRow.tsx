@@ -24,9 +24,10 @@ interface ContextItemRowProps {
   selected: boolean;
   onClick: () => void;
   onEdit?: (item: MockContextItem) => void;
+  onDestroy?: (item: MockContextItem) => void;
 }
 
-export function ContextItemRow({ item, selected, onClick, onEdit }: ContextItemRowProps) {
+export function ContextItemRow({ item, selected, onClick, onEdit, onDestroy }: ContextItemRowProps) {
   return (
     <div
       onClick={onClick}
@@ -61,7 +62,7 @@ export function ContextItemRow({ item, selected, onClick, onEdit }: ContextItemR
               <Pencil className="h-3 w-3" />
             </Button>
           )}
-          <DeleteDisambiguation itemTitle={item.title}>
+          <DeleteDisambiguation itemTitle={item.title} onDestroy={() => onDestroy?.(item)}>
             <Button
               variant="ghost"
               size="icon"

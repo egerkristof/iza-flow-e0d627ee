@@ -299,6 +299,14 @@ export default function ContextManagementPage() {
     queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
   };
 
+  const handleDestroyItem = async (item: MockContextItem) => {
+    const { error } = await supabase.from("context_items").delete().eq("id", item.id);
+    if (error) { toast({ title: "Delete failed", description: error.message, variant: "destructive" }); return; }
+    if (selectedItemId === item.id) setSelectedItemId(null);
+    queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+    toast({ title: "Item destroyed", description: `"${item.title}" permanently deleted.`, variant: "destructive" });
+  };
+
   const clearFilters = () => { setCategoryFilter(null); setDomainFilter(null); setSelectedBundleId(null); setItemSearch(""); };
   const hasFilters = categoryFilter || domainFilter || selectedBundleId || itemSearch;
 
@@ -450,7 +458,7 @@ export default function ContextManagementPage() {
                     {filteredItems.length === 0 ? (
                       <div className="text-center py-12 text-muted-foreground text-sm">No items match your filters</div>
                     ) : filteredItems.map(item => (
-                      <ContextItemRow key={item.id} item={item} selected={selectedItemId === item.id} onClick={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)} onEdit={openEditDialog} />
+                      <ContextItemRow key={item.id} item={item} selected={selectedItemId === item.id} onClick={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)} onEdit={openEditDialog} onDestroy={handleDestroyItem} />
                     ))}
                   </div>
                 </ScrollArea>
