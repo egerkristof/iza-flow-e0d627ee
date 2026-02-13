@@ -13,8 +13,9 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
-import type { ExtractionResult } from "@/lib/knowledge-schema";
+import type { ExtractionResult, ExtractionDepth, AdvisorPersona } from "@/lib/knowledge-schema";
 
 interface SearchResult {
   id: string;
@@ -66,10 +67,11 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
   const [recentQueries] = useState(["pricing strategy", "competitor analysis", "onboarding metrics"]);
 
   // Extraction state
-  const [extracting, setExtracting] = useState<string | null>(null); // result id or "bulk"
+  const [extracting, setExtracting] = useState<string | null>(null);
   const [extractionData, setExtractionData] = useState<ExtractionResult | null>(null);
   const [extractionSourceName, setExtractionSourceName] = useState("");
   const [showImportCopilot, setShowImportCopilot] = useState(false);
+  const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
 
   // Global keyboard shortcut: Cmd/Ctrl + K
   useEffect(() => {
@@ -144,10 +146,23 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
         `## ${r.title}\nSource: ${r.source} | Type: ${r.type} | Category: ${r.category || "N/A"}\n\n${r.snippet}`
       ).join("\n\n---\n\n");
 
+      // Generate advisor for guided/deep modes
+      let advisorPersona: AdvisorPersona | null = null;
+      if (extractionDepth !== "quick") {
+        try {
+          const { data: advData } = await supabase.functions.invoke("generate-advisor", {
+            body: { content: content.slice(0, 2000), meta: { title: label } },
+          });
+          if (advData && !advData.error) advisorPersona = advData as AdvisorPersona;
+        } catch {}
+      }
+
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
         body: {
           source_type: "research",
           content,
+          extraction_depth: extractionDepth,
+          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
           meta: { title: label, source: items.map(r => r.source).join(", ") },
         },
       });
@@ -318,7 +333,8 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
             )}
 
             {!searching && results.length > 1 && (
-              <div className="flex justify-end pb-1">
+              <div className="flex items-center justify-end gap-2 pb-1">
+                <ExtractionDepthSelector value={extractionDepth} onChange={setExtractionDepth} compact disabled={extracting === "bulk"} />
                 <Button
                   variant="outline"
                   size="sm"

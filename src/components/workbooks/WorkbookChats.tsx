@@ -15,7 +15,8 @@ import { type WorkbookResource } from "./WorkbookResources";
 import { MandateContextBanner } from "./MandateContextBanner";
 import { FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
-import type { ExtractionResult } from "@/lib/knowledge-schema";
+import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
+import type { ExtractionResult, ExtractionDepth, AdvisorPersona } from "@/lib/knowledge-schema";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ChatThread {
@@ -71,6 +72,18 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
   const [extractionData, setExtractionData] = useState<ExtractionResult | null>(null);
   const [extractionSourceName, setExtractionSourceName] = useState("");
   const [showImportCopilot, setShowImportCopilot] = useState(false);
+  const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
+
+  const generateAdvisor = async (content: string, title: string): Promise<AdvisorPersona | null> => {
+    if (extractionDepth === "quick") return null;
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-advisor", {
+        body: { content, meta: { title } },
+      });
+      if (!error && data && !data.error) return data as AdvisorPersona;
+    } catch {}
+    return null;
+  };
 
   const handleExtractChat = async () => {
     if (!active || messages.length === 0) return;
@@ -82,11 +95,14 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
         .join("\n");
 
       const participants = active.participants.map(p => p.name).join(", ");
+      const advisorPersona = await generateAdvisor(content.slice(0, 2000), active.title);
 
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
         body: {
           source_type: "chat",
           content,
+          extraction_depth: extractionDepth,
+          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
           meta: {
             title: active.title,
             workbook: workbookId,
@@ -112,11 +128,14 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
     setExtractingMsgId(msg.id);
     try {
       const content = `[${msg.sender.name} — ${msg.time}]: ${msg.content}${msg.attachment ? `\n[Attachment: ${msg.attachment.title}${msg.attachment.content ? " — " + msg.attachment.content : ""}]` : ""}`;
+      const advisorPersona = await generateAdvisor(content, `${active.title} — message by ${msg.sender.name}`);
 
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
         body: {
           source_type: "chat",
           content,
+          extraction_depth: extractionDepth,
+          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
           meta: {
             title: `${active.title} — message by ${msg.sender.name}`,
             workbook: workbookId,
@@ -205,6 +224,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
             )}
           </div>
           <div className="flex items-center gap-2">
+            <ExtractionDepthSelector value={extractionDepth} onChange={setExtractionDepth} compact disabled={extracting} />
             <Button
               variant="ghost"
               size="sm"
