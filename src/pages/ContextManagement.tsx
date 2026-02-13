@@ -436,13 +436,13 @@ export default function ContextManagementPage() {
         </TabsContent>
 
         {/* ── ITEMS & BUNDLES TAB (split panel) ── */}
-        <TabsContent value="items" className="flex-1 overflow-hidden mt-0">
+        <TabsContent value="items" className="flex-1 overflow-auto mt-0">
           {copilotOpen && (
             <div className="px-4 pt-3">
               <ContextCopilotPanel items={dbItems} onClose={() => setCopilotOpen(false)} />
             </div>
           )}
-          <ResizablePanelGroup direction="horizontal" className="h-full">
+          <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
             <ResizablePanel defaultSize={55} minSize={35}>
               <div className="flex flex-col h-full">
                 <div className="shrink-0 p-4 space-y-3 border-b border-border/30">
