@@ -471,6 +471,7 @@ export default function ContextManagementPage() {
             onOpenCopilot={() => setCopilotOpen(!copilotOpen)}
             copilotOpen={copilotOpen}
             onOpenLoom={() => fileInputRef.current?.click()}
+            loomExtracting={loomExtracting}
           />
         </div>
       ) : (
