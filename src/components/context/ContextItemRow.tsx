@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { MockContextItem } from "@/data/mockContextItems";
 import { Shield, Zap, Clock, MoreVertical, Pencil } from "lucide-react";
 import { DeleteDisambiguation } from "@/components/governance/DeleteDisambiguation";
+import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 
 const categoryColors: Record<string, string> = {
   DIRECTIVE: "border-destructive/40 text-destructive",
@@ -48,9 +49,7 @@ export function ContextItemRow({ item, selected, onClick, onEdit }: ContextItemR
           </p>
         </div>
         <div className="flex items-center gap-1 shrink-0">
-          <Badge variant="outline" className={`text-[10px] ${categoryColors[item.category] ?? ""}`}>
-            {item.category}
-          </Badge>
+          <CategoryBadge category={item.category} />
           {onEdit && (
             <Button
               variant="ghost"

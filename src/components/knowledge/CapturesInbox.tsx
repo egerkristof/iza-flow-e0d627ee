@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -153,7 +154,7 @@ export function CapturesInbox() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">{item.title}</span>
-                  <Badge variant="outline" className="text-[10px]">{item.category}</Badge>
+                  <CategoryBadge category={item.category} />
                   <Badge variant="outline" className="text-[10px] bg-primary/10 text-primary border-primary/20">draft</Badge>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{item.content_full}</p>
