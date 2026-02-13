@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 import type { ExtractionResult } from "@/lib/knowledge-schema";
 
 interface SearchResult {
@@ -338,7 +339,7 @@ export function ResearchLens({ open, onOpenChange }: ResearchLensProps) {
                     <div className="flex items-center gap-2">
                       <h4 className="text-sm font-medium truncate">{result.title}</h4>
                       {result.category && (
-                        <Badge variant="outline" className="text-[9px] shrink-0">{result.category}</Badge>
+                        <CategoryBadge category={mapToContextCategory(result.category)} compact />
                       )}
                     </div>
                     <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{result.snippet}</p>
