@@ -129,6 +129,12 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
       } else if (effective.type === "promote_mandate") {
         action = "apply_promote_mandate";
         body.enforcement_level = effective.enforcement_level || "required_ack";
+      } else if (effective.type === "merge") {
+        action = "apply_merge";
+        body.merge_with_id = effective.merge_with_id;
+      } else if (effective.type === "split") {
+        action = "apply_split";
+        body.suggested_content = effective.suggested_content;
       } else {
         throw new Error(`Apply not yet supported for ${effective.type} — use as guidance`);
       }
@@ -308,7 +314,7 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
                     const isExpanded = expandedIdx === idx;
                     const isEditing = editingIdx === idx;
                     const effective = getEffective(idx, s);
-                    const canApply = ["recategorize", "enrich", "promote_mandate"].includes(s.type);
+                    const canApply = ["recategorize", "enrich", "promote_mandate", "merge", "split"].includes(s.type);
 
                     return (
                       <div key={key} className={cn("rounded-md border p-2.5 transition-colors", isApplied ? "opacity-50" : "")}>
