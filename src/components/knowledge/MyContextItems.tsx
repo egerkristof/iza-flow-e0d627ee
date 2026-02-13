@@ -4,10 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   BookOpen, Trash2, Plus, Search, Microscope, Sparkles,
-  Tag, FileText, Shield, Loader2, MoreHorizontal,
+  Tag, FileText, Shield, Loader2, MoreHorizontal, RefreshCw, CheckSquare, X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,7 +20,9 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
 import { DuplicateResolutionDialog, type ResolutionResult } from "@/components/knowledge/DuplicateResolutionDialog";
+import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import { findDuplicates, type DuplicateMatch } from "@/lib/dedup";
+import { type ExtractionResult } from "@/lib/knowledge-schema";
 
 const CATEGORY_COLORS: Record<string, string> = {
   DIRECTIVE: "bg-destructive/10 text-destructive",
@@ -45,6 +48,15 @@ export function MyContextItems() {
   const [dupMatches, setDupMatches] = useState<DuplicateMatch[]>([]);
   const [dupDialogOpen, setDupDialogOpen] = useState(false);
 
+  // Bulk selection state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [selectMode, setSelectMode] = useState(false);
+  const [reanalyzing, setReanalyzing] = useState(false);
+
+  // Import Copilot state for re-analysis results
+  const [reanalysisResult, setReanalysisResult] = useState<ExtractionResult | null>(null);
+  const [reanalysisOpen, setReanalysisOpen] = useState(false);
+
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["my-context-items", user?.id],
     enabled: !!user,
@@ -59,6 +71,67 @@ export function MyContextItems() {
     },
   });
 
+  // ── Bulk re-analyze ──
+  const handleBulkReanalyze = async () => {
+    const selected = items.filter(i => selectedIds.has(i.id));
+    if (selected.length === 0) return;
+
+    setReanalyzing(true);
+    try {
+      // Compose content from selected items for the extract-knowledge engine
+      const composedContent = selected.map(item =>
+        `## ${item.title}\n**Category:** ${item.category} | **Priority:** ${item.priority}\n\n${item.content_full}`
+      ).join("\n\n---\n\n");
+
+      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
+        body: {
+          source_type: "manual",
+          content: composedContent,
+          meta: {
+            title: `Re-analysis of ${selected.length} items`,
+            source: "bulk-reanalyze",
+          },
+        },
+      });
+
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setReanalysisResult(data as ExtractionResult);
+      setReanalysisOpen(true);
+      // Clear selection after successful re-analysis
+      setSelectedIds(new Set());
+      setSelectMode(false);
+    } catch (e: any) {
+      toast({ title: "Re-analysis failed", description: e.message, variant: "destructive" });
+    } finally {
+      setReanalyzing(false);
+    }
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === filtered.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filtered.map(i => i.id)));
+    }
+  };
+
+  const exitSelectMode = () => {
+    setSelectMode(false);
+    setSelectedIds(new Set());
+  };
+
+  // ── Create / dedup logic ──
   const doInsert = async () => {
     const { error } = await supabase.from("context_items").insert({
       owner_id: user!.id,
@@ -71,17 +144,16 @@ export function MyContextItems() {
 
   const createItem = useMutation({
     mutationFn: async () => {
-      // Check for duplicates first
       const matches = await findDuplicates(user!.id, newTitle, newContent);
       if (matches.length > 0) {
         setDupMatches(matches);
         setDupDialogOpen(true);
-        return; // Don't insert yet — wait for resolution
+        return;
       }
       await doInsert();
     },
     onSuccess: () => {
-      if (dupDialogOpen) return; // Resolution pending
+      if (dupDialogOpen) return;
       queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
       toast({ title: "Context item created" });
       setCreateOpen(false);
@@ -147,7 +219,6 @@ export function MyContextItems() {
         queryClient.invalidateQueries({ queryKey: ["mandates"] });
         toast({ title: "Promoted to Mandate", description: "Item is now a draft mandate with Required Ack enforcement." });
       } else if (action === "enrich") {
-        // Run audit on single item to get enrichment suggestion
         const item = items.find(i => i.id === itemId);
         if (!item) return;
         const { data, error } = await supabase.functions.invoke("audit-context", {
@@ -240,6 +311,18 @@ export function MyContextItems() {
             variant="outline"
             size="sm"
             className="gap-1.5 text-xs"
+            onClick={() => {
+              if (selectMode) exitSelectMode();
+              else setSelectMode(true);
+            }}
+          >
+            <CheckSquare className="h-3 w-3" />
+            {selectMode ? "Cancel Select" : "Select"}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 text-xs"
             onClick={() => setCopilotOpen(!copilotOpen)}
           >
             <Sparkles className="h-3 w-3" />
@@ -250,6 +333,35 @@ export function MyContextItems() {
           </Button>
         </div>
       </div>
+
+      {/* Bulk action bar */}
+      {selectMode && (
+        <div className="flex items-center justify-between rounded-lg border border-primary/20 bg-primary/5 px-4 py-2">
+          <div className="flex items-center gap-3">
+            <Checkbox
+              checked={selectedIds.size === filtered.length && filtered.length > 0}
+              onCheckedChange={toggleSelectAll}
+            />
+            <span className="text-xs text-muted-foreground">
+              {selectedIds.size} of {filtered.length} selected
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              className="gap-1.5 text-xs"
+              onClick={handleBulkReanalyze}
+              disabled={selectedIds.size === 0 || reanalyzing}
+            >
+              {reanalyzing ? <Loader2 className="h-3 w-3 animate-spin" /> : <RefreshCw className="h-3 w-3" />}
+              Re-analyze ({selectedIds.size})
+            </Button>
+            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={exitSelectMode}>
+              <X className="h-3 w-3" />
+            </Button>
+          </div>
+        </div>
+      )}
 
       <p className="text-xs text-muted-foreground">
         {filtered.length} item{filtered.length !== 1 ? "s" : ""} · Promote personal knowledge into context items to share with workbooks and bundles.
@@ -269,7 +381,23 @@ export function MyContextItems() {
       ) : (
         <div className="space-y-2">
           {filtered.map(item => (
-            <div key={item.id} className="group flex items-start gap-3 rounded-lg border border-border/50 bg-card p-4 hover:border-primary/20 transition-colors">
+            <div
+              key={item.id}
+              className={`group flex items-start gap-3 rounded-lg border p-4 transition-colors ${
+                selectedIds.has(item.id)
+                  ? "border-primary/40 bg-primary/5"
+                  : "border-border/50 bg-card hover:border-primary/20"
+              }`}
+              onClick={selectMode ? () => toggleSelect(item.id) : undefined}
+            >
+              {selectMode && (
+                <Checkbox
+                  checked={selectedIds.has(item.id)}
+                  onCheckedChange={() => toggleSelect(item.id)}
+                  className="mt-1 shrink-0"
+                  onClick={e => e.stopPropagation()}
+                />
+              )}
               <div className={`flex h-8 w-8 items-center justify-center rounded-md shrink-0 ${CATEGORY_COLORS[item.category] || "bg-secondary"}`}>
                 {item.category === "RESEARCH" ? <Microscope className="h-3.5 w-3.5" /> : <BookOpen className="h-3.5 w-3.5" />}
               </div>
@@ -291,43 +419,45 @@ export function MyContextItems() {
                   {item.bundle_id && <span className="text-primary">📦 In bundle</span>}
                 </div>
               </div>
-              <div className="flex items-center gap-1 shrink-0">
-                {inlineLoading === item.id ? (
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
-                ) : (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100">
-                        <Sparkles className="h-3.5 w-3.5 text-primary" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
-                      <DropdownMenuItem onClick={() => handleInlineAction(item.id, "suggest_category")} className="text-xs gap-2">
-                        <Tag className="h-3 w-3" /> Suggest Category
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleInlineAction(item.id, "enrich")} className="text-xs gap-2">
-                        <FileText className="h-3 w-3" /> Enrich Content
-                      </DropdownMenuItem>
-                      {item.category === "DIRECTIVE" && !item.is_mandate && (
-                        <>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => handleInlineAction(item.id, "promote_mandate")} className="text-xs gap-2 text-amber-400">
-                            <Shield className="h-3 w-3" /> Promote to Mandate
-                          </DropdownMenuItem>
-                        </>
-                      )}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7 opacity-0 group-hover:opacity-100 text-destructive"
-                  onClick={() => deleteItem.mutate(item.id)}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
-              </div>
+              {!selectMode && (
+                <div className="flex items-center gap-1 shrink-0">
+                  {inlineLoading === item.id ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
+                  ) : (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100">
+                          <Sparkles className="h-3.5 w-3.5 text-primary" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem onClick={() => handleInlineAction(item.id, "suggest_category")} className="text-xs gap-2">
+                          <Tag className="h-3 w-3" /> Suggest Category
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleInlineAction(item.id, "enrich")} className="text-xs gap-2">
+                          <FileText className="h-3 w-3" /> Enrich Content
+                        </DropdownMenuItem>
+                        {item.category === "DIRECTIVE" && !item.is_mandate && (
+                          <>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => handleInlineAction(item.id, "promote_mandate")} className="text-xs gap-2 text-amber-400">
+                              <Shield className="h-3 w-3" /> Promote to Mandate
+                            </DropdownMenuItem>
+                          </>
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 opacity-0 group-hover:opacity-100 text-destructive"
+                    onClick={() => deleteItem.mutate(item.id)}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -364,6 +494,15 @@ export function MyContextItems() {
         newItem={{ title: newTitle, content: newContent, category: newCategory }}
         matches={dupMatches}
         onResolve={handleDupResolution}
+      />
+
+      {/* Import Copilot for Re-analysis Results */}
+      <ImportCopilotDialog
+        open={reanalysisOpen}
+        onOpenChange={setReanalysisOpen}
+        data={reanalysisResult}
+        sourceName={`Re-analysis of ${selectedIds.size || "selected"} items`}
+        sourceType="manual"
       />
     </div>
   );
