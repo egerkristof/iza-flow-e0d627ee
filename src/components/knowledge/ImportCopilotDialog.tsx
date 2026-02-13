@@ -828,7 +828,9 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["working-preferences"] });
       qc.invalidateQueries({ queryKey: ["context-items"] });
+      qc.invalidateQueries({ queryKey: ["context-items-all"] });
       qc.invalidateQueries({ queryKey: ["bundles"] });
+      qc.invalidateQueries({ queryKey: ["bundles-all"] });
       qc.invalidateQueries({ queryKey: ["mandates"] });
       const parts: string[] = [];
       if (selectedPrefs.size > 0) parts.push(`${selectedPrefs.size} preference${selectedPrefs.size !== 1 ? "s" : ""}`);
