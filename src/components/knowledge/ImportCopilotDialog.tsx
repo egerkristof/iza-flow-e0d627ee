@@ -34,6 +34,17 @@ interface SmartSuggestion {
   localAction?: "promote-to-mandate";
 }
 
+/** Protocol role icons for bundle items */
+const PROTOCOL_ROLE_META: Record<string, { label: string; color: string; icon: string }> = {
+  PLAYBOOK: { label: "Protocol Driver", color: "text-orange-400 bg-orange-500/10 border-orange-500/30", icon: "🎯" },
+  PROCEDURE: { label: "Execution Step", color: "text-cyan-400 bg-cyan-500/10 border-cyan-500/30", icon: "▶" },
+  DIRECTIVE: { label: "Compliance Gate", color: "text-amber-400 bg-amber-500/10 border-amber-500/30", icon: "⚡" },
+  KNOWLEDGE: { label: "Context", color: "text-blue-400 bg-blue-500/10 border-blue-500/30", icon: "📘" },
+  RESEARCH: { label: "Context", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30", icon: "🔬" },
+  PRINCIPLE: { label: "Context", color: "text-purple-400 bg-purple-500/10 border-purple-500/30", icon: "🧭" },
+  PREFERENCE: { label: "Personalization", color: "text-pink-400 bg-pink-500/10 border-pink-500/30", icon: "🎨" },
+};
+
 function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestion[] {
   if (!data) return [];
   const suggestions: SmartSuggestion[] = [];
@@ -42,18 +53,39 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
     ...(data.bundles || []).flatMap(b => b.items),
   ];
 
-  // 1. PLAYBOOKs that look like they should be split into steps
+  // 1. PLAYBOOKs that contain step-by-step content → split into PLAYBOOK (strategy) + PROCEDUREs (steps)
   const playbooks = allItems.filter(i => i.category === "PLAYBOOK");
-  if (playbooks.length > 0) {
-    const names = playbooks.slice(0, 2).map(p => `"${p.title}"`).join(", ");
+  const stepPatterns = playbooks.filter(p => /\d[.)]\s|step\s*\d|first.*then|phase\s*\d/i.test(p.content));
+  if (stepPatterns.length > 0) {
     suggestions.push({
-      label: `Split ${playbooks.length} PLAYBOOK${playbooks.length > 1 ? "s" : ""} into step-by-step PROCEDUREs`,
-      instruction: `The following items are labelled PLAYBOOK but may actually describe step-by-step processes: ${names}. For each, break them into individual PROCEDURE items (one per step) and keep the PLAYBOOK as a bundle wrapper only, not as an item. If a playbook truly is a strategic approach (not steps), leave it.`,
+      label: `Decompose ${stepPatterns.length} PLAYBOOK${stepPatterns.length > 1 ? "s" : ""} into protocol steps`,
+      instruction: `These PLAYBOOKs contain step-by-step instructions and should be decomposed for protocol execution: ${stepPatterns.slice(0, 2).map(p => `"${p.title}"`).join(", ")}. For each: keep the PLAYBOOK as a strategic overview (the WHAT and WHY), then extract each discrete step as a separate PROCEDURE item (the HOW). Each PROCEDURE should be one atomic action. Also extract any rules/constraints as DIRECTIVE items (compliance gates).`,
+      scope: "all",
+    });
+  } else if (playbooks.length > 0) {
+    suggestions.push({
+      label: `Add execution steps for ${playbooks.length} PLAYBOOK${playbooks.length > 1 ? "s" : ""}`,
+      instruction: `The following PLAYBOOKs are protocol drivers but lack explicit PROCEDURE steps: ${playbooks.slice(0, 2).map(p => `"${p.title}"`).join(", ")}. Analyze each playbook's content and extract specific, ordered execution steps as individual PROCEDURE items. Each PROCEDURE should be one clear, atomic action. Also identify any rules/constraints and extract them as DIRECTIVE items (compliance gates).`,
       scope: "all",
     });
   }
 
-  // 2. Items with very short content (< 60 chars) — likely need more detail
+  // 2. PROCEDUREs with multiple actions → should be atomic steps
+  const multiActionProcs = allItems.filter(
+    i => i.category === "PROCEDURE" && (
+      (i.content.match(/\d[.)]\s/g) || []).length >= 3 ||
+      i.content.length > 500
+    )
+  );
+  if (multiActionProcs.length > 0) {
+    suggestions.push({
+      label: `Split ${multiActionProcs.length} multi-step PROCEDURE${multiActionProcs.length > 1 ? "s" : ""} into atomic steps`,
+      instruction: `These PROCEDUREs contain multiple actions and should be split into individual atomic steps for protocol execution: ${multiActionProcs.slice(0, 2).map(p => `"${p.title}"`).join(", ")}. Each resulting PROCEDURE should be ONE clear action that an operator can complete and check off.`,
+      scope: "all",
+    });
+  }
+
+  // 3. Items with very short content (< 60 chars) — likely need more detail
   const thinItems = allItems.filter(i => i.content.length < 60);
   if (thinItems.length >= 2) {
     suggestions.push({
@@ -63,28 +95,49 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
     });
   }
 
-  // 3. Potential category mismatches — KNOWLEDGE items that sound like DIRECTIVEs
+  // 4. Potential category mismatches — KNOWLEDGE items that sound like DIRECTIVEs
   const possibleDirectives = allItems.filter(
     i => i.category === "KNOWLEDGE" && /\b(must|never|always|shall|required|prohibited|mandatory)\b/i.test(i.content)
   );
   if (possibleDirectives.length > 0) {
     suggestions.push({
-      label: `Review ${possibleDirectives.length} KNOWLEDGE item${possibleDirectives.length > 1 ? "s" : ""} that may be DIRECTIVEs`,
-      instruction: `These KNOWLEDGE items contain directive language (must, never, always, required): ${possibleDirectives.slice(0, 3).map(i => `"${i.title}"`).join(", ")}. Re-examine each: if it's an explicit rule or constraint, recategorize to DIRECTIVE. If it's truly factual info that happens to use strong language, keep as KNOWLEDGE.`,
+      label: `Review ${possibleDirectives.length} KNOWLEDGE item${possibleDirectives.length > 1 ? "s" : ""} that may be compliance gates`,
+      instruction: `These KNOWLEDGE items contain directive language (must, never, always, required): ${possibleDirectives.slice(0, 3).map(i => `"${i.title}"`).join(", ")}. Re-examine each: if it's a rule or constraint that must be enforced, recategorize to DIRECTIVE (it will become a compliance gate in protocol execution). If it's truly factual info, keep as KNOWLEDGE.`,
       scope: "all",
     });
   }
 
-  // 4. Standalone items that could form a bundle (3+ items share words in title)
+  // 5. Bundles without a PLAYBOOK driver
+  const bundlesWithoutPlaybook = (data.bundles || []).filter(b => !b.items.some(i => i.category === "PLAYBOOK"));
+  if (bundlesWithoutPlaybook.length > 0) {
+    suggestions.push({
+      label: `Add protocol drivers to ${bundlesWithoutPlaybook.length} bundle${bundlesWithoutPlaybook.length > 1 ? "s" : ""}`,
+      instruction: `These bundles lack a PLAYBOOK item to drive protocol execution: ${bundlesWithoutPlaybook.slice(0, 2).map(b => `"${b.title}"`).join(", ")}. Create a PLAYBOOK item for each that describes the strategic intent, goals, and approach. This becomes the protocol template when the bundle is deployed to a workbook.`,
+      scope: "all",
+    });
+  }
+
+  // 6. Standalone items that could form a bundle (3+ items share words in title)
   if (data.context_items.length >= 3 && (data.bundles || []).length === 0) {
     suggestions.push({
-      label: "Group related standalone items into bundles",
-      instruction: `There are ${data.context_items.length} standalone items but no bundles. Analyze them for thematic clusters — items about the same topic, domain, or workflow should be grouped into bundles. Create bundles for any group of 3+ related items.`,
+      label: "Group related items into executable bundles",
+      instruction: `There are ${data.context_items.length} standalone items but no bundles. Analyze them for thematic clusters. Create bundles with proper protocol structure: a PLAYBOOK as the strategic driver, PROCEDUREs as ordered execution steps, DIRECTIVEs as compliance gates, and other items as context.`,
       scope: "all",
     });
   }
 
-  // 5. Duplicate-looking titles
+  // 7. DIRECTIVE items that could be promoted to mandates
+  const directives = allItems.filter(i => i.category === "DIRECTIVE");
+  if (directives.length > 0) {
+    suggestions.push({
+      label: `Promote ${directives.length} DIRECTIVE${directives.length > 1 ? "s" : ""} to compliance gate${directives.length > 1 ? "s" : ""}`,
+      instruction: "",
+      scope: "all",
+      localAction: "promote-to-mandate",
+    });
+  }
+
+  // 8. Duplicate-looking titles
   const titles = allItems.map(i => i.title.toLowerCase().replace(/[^a-z0-9]/g, " ").trim());
   const seen = new Map<string, number>();
   for (const t of titles) {
@@ -100,40 +153,18 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
     });
   }
 
-  // 6. PROCEDURE items without numbered steps
-  const procsWithoutSteps = allItems.filter(
-    i => i.category === "PROCEDURE" && !/\d[.)]\s/.test(i.content) && !/step\s*\d/i.test(i.content)
-  );
-  if (procsWithoutSteps.length > 0) {
-    suggestions.push({
-      label: `Add numbered steps to ${procsWithoutSteps.length} PROCEDURE${procsWithoutSteps.length > 1 ? "s" : ""}`,
-      instruction: `${procsWithoutSteps.length} PROCEDURE items describe processes but lack numbered steps. Restructure their content into clear numbered step-by-step format (1. Do X, 2. Do Y, ...).`,
-      scope: "all",
-    });
-  }
-
-  // 7. DIRECTIVE items that could be promoted to mandates
-  const directives = allItems.filter(i => i.category === "DIRECTIVE");
-  if (directives.length > 0) {
-    suggestions.push({
-      label: `Promote ${directives.length} DIRECTIVE${directives.length > 1 ? "s" : ""} to Mandate${directives.length > 1 ? "s" : ""}`,
-      instruction: "",
-      scope: "all",
-      localAction: "promote-to-mandate",
-    });
-  }
-
+  // Fill up to minimum suggestions
   if (suggestions.length < 4) {
     suggestions.push({
-      label: "Make items more specific and detailed",
-      instruction: "Make items more specific and detailed",
+      label: "Restructure for protocol execution",
+      instruction: "Review all items and ensure they follow the protocol execution model: PLAYBOOKs define strategy (protocol drivers), PROCEDUREs are atomic execution steps, DIRECTIVEs are compliance gates, and other categories provide context. Restructure any items that don't fit this model.",
       scope: "all",
     });
   }
   if (suggestions.length < 5) {
     suggestions.push({
       label: "Recategorize — fix wrong categories",
-      instruction: "Recategorize — fix wrong categories",
+      instruction: "Fix any miscategorized items according to the protocol model: strategic overviews should be PLAYBOOK, step-by-step actions should be PROCEDURE, rules/constraints should be DIRECTIVE, facts should be KNOWLEDGE.",
       scope: "all",
     });
   }
@@ -1114,7 +1145,27 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
 
                   {expandedBundles.has(i) && (
                     <div className="border-t border-border/30 px-3 pb-3 pt-2 space-y-0 ml-8">
-                      {bundle.items.map((item, j) => (
+                      {/* Protocol structure hint */}
+                      {(() => {
+                        const playbooks = bundle.items.filter(it => (bundleItemEdits[`${i}-${bundle.items.indexOf(it)}`]?.category || it.category) === "PLAYBOOK");
+                        const procedures = bundle.items.filter(it => (bundleItemEdits[`${i}-${bundle.items.indexOf(it)}`]?.category || it.category) === "PROCEDURE");
+                        const directives = bundle.items.filter(it => (bundleItemEdits[`${i}-${bundle.items.indexOf(it)}`]?.category || it.category) === "DIRECTIVE");
+                        const contextCount = bundle.items.length - playbooks.length - procedures.length - directives.length;
+                        return (
+                          <div className="flex items-center gap-2 text-[10px] text-muted-foreground mb-2 flex-wrap">
+                            <span className="font-medium">Protocol structure:</span>
+                            {playbooks.length > 0 && <Badge variant="outline" className="text-[9px] border-orange-500/30 text-orange-400 py-0">🎯 {playbooks.length} driver{playbooks.length !== 1 ? "s" : ""}</Badge>}
+                            {procedures.length > 0 && <Badge variant="outline" className="text-[9px] border-cyan-500/30 text-cyan-400 py-0">▶ {procedures.length} step{procedures.length !== 1 ? "s" : ""}</Badge>}
+                            {directives.length > 0 && <Badge variant="outline" className="text-[9px] border-amber-500/30 text-amber-400 py-0">⚡ {directives.length} gate{directives.length !== 1 ? "s" : ""}</Badge>}
+                            {contextCount > 0 && <Badge variant="outline" className="text-[9px] py-0">📘 {contextCount} context</Badge>}
+                            {playbooks.length === 0 && <span className="text-destructive/70 italic">⚠ No protocol driver</span>}
+                          </div>
+                        );
+                      })()}
+                      {bundle.items.map((item, j) => {
+                        const resolvedCat = bundleItemEdits[`${i}-${j}`]?.category || item.category;
+                        const roleMeta = PROTOCOL_ROLE_META[resolvedCat] || PROTOCOL_ROLE_META.KNOWLEDGE;
+                        return (
                         <div key={j}>
                           {/* Drop zone before this item */}
                           <div
@@ -1131,7 +1182,10 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                             onDragEnd={handleDragEnd}
                             className="rounded border border-border/30 bg-background/50 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
                           >
-                            <GripVertical className="h-3 w-3 text-muted-foreground/50 shrink-0 mt-1" />
+                            <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
+                              <GripVertical className="h-3 w-3 text-muted-foreground/50" />
+                              <span className="text-[9px] leading-none" title={roleMeta.label}>{roleMeta.icon}</span>
+                            </div>
                             {renderEditableItem(
                               item,
                               bundleItemEdits[`${i}-${j}`],
@@ -1141,7 +1195,8 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                             )}
                           </div>
                         </div>
-                      ))}
+                        );
+                      })}
                       {/* Drop zone after last item */}
                       <div
                         onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-after-last`); }}
