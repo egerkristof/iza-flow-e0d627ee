@@ -59,6 +59,7 @@ export type Database = {
           content_full: string
           content_hash: string | null
           created_at: string
+          deleted_at: string | null
           domain_scope: Json | null
           enforcement_level:
             | Database["public"]["Enums"]["mandate_enforcement"]
@@ -93,6 +94,7 @@ export type Database = {
           content_full: string
           content_hash?: string | null
           created_at?: string
+          deleted_at?: string | null
           domain_scope?: Json | null
           enforcement_level?:
             | Database["public"]["Enums"]["mandate_enforcement"]
@@ -127,6 +129,7 @@ export type Database = {
           content_full?: string
           content_hash?: string | null
           created_at?: string
+          deleted_at?: string | null
           domain_scope?: Json | null
           enforcement_level?:
             | Database["public"]["Enums"]["mandate_enforcement"]

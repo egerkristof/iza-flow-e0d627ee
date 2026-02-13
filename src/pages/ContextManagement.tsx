@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { ContextItemRow } from "@/components/context/ContextItemRow";
 import { BundleCard } from "@/components/context/BundleCard";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
@@ -85,6 +86,7 @@ export default function ContextManagementPage() {
       const { data, error } = await supabase
         .from("context_items")
         .select("*")
+        .is("deleted_at", null)
         .order("updated_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -300,11 +302,24 @@ export default function ContextManagementPage() {
   };
 
   const handleDestroyItem = async (item: MockContextItem) => {
-    const { error } = await supabase.from("context_items").delete().eq("id", item.id);
+    // Soft-delete: set deleted_at timestamp
+    const { error } = await supabase.from("context_items").update({ deleted_at: new Date().toISOString() } as any).eq("id", item.id);
     if (error) { toast({ title: "Delete failed", description: error.message, variant: "destructive" }); return; }
     if (selectedItemId === item.id) setSelectedItemId(null);
     queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
-    toast({ title: "Item destroyed", description: `"${item.title}" permanently deleted.`, variant: "destructive" });
+    toast({
+      title: "Item destroyed",
+      description: `"${item.title}" removed.`,
+      action: (
+        <ToastAction altText="Undo delete" onClick={async () => {
+          await supabase.from("context_items").update({ deleted_at: null } as any).eq("id", item.id);
+          queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+          toast({ title: "Restored", description: `"${item.title}" has been restored.` });
+        }}>
+          Undo
+        </ToastAction>
+      ),
+    });
   };
 
   const clearFilters = () => { setCategoryFilter(null); setDomainFilter(null); setSelectedBundleId(null); setItemSearch(""); };
