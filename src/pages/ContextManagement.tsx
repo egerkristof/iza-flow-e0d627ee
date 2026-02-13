@@ -288,14 +288,13 @@ export default function ContextManagementPage() {
     <div className="flex flex-col h-[calc(100vh-3.5rem)]">
       {/* Header */}
       <div className="shrink-0 p-6 pb-4 border-b border-border/50">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight">📚 Context</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Curate, organize, and manage the knowledge graph — {totalItems} items · {bundles.length} bundles · {Math.round(avgHealth * 100)}% health
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          📚 Context
+          <span className="text-sm font-normal text-muted-foreground ml-3">
+            Curate, organize, and manage the knowledge graph — {totalItems} items · {bundles.length} bundles · {Math.round(avgHealth * 100)}% health
+          </span>
+        </h1>
+        <div className="flex items-center gap-2 flex-wrap mt-3">
             <Button variant="outline" size="sm" className="text-xs gap-1.5" onClick={() => setCopilotOpen(!copilotOpen)}>
               <Sparkles className="h-3.5 w-3.5" /> {copilotOpen ? "Hide Copilot" : "AI Copilot"}
             </Button>
@@ -311,7 +310,6 @@ export default function ContextManagementPage() {
             <Button onClick={() => { setEditingItemId(null); setNewItem(emptyItem); setItemDialog(true); }} className="gap-1.5">
               <Plus className="h-4 w-4" /> New Item
             </Button>
-          </div>
         </div>
       </div>
 
