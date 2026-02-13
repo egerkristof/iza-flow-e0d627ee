@@ -57,6 +57,7 @@ export type Database = {
           capture_status: string
           category: Database["public"]["Enums"]["context_category"]
           content_full: string
+          content_hash: string | null
           created_at: string
           domain_scope: Json | null
           enforcement_level:
@@ -90,6 +91,7 @@ export type Database = {
           capture_status?: string
           category?: Database["public"]["Enums"]["context_category"]
           content_full: string
+          content_hash?: string | null
           created_at?: string
           domain_scope?: Json | null
           enforcement_level?:
@@ -123,6 +125,7 @@ export type Database = {
           capture_status?: string
           category?: Database["public"]["Enums"]["context_category"]
           content_full?: string
+          content_hash?: string | null
           created_at?: string
           domain_scope?: Json | null
           enforcement_level?:
@@ -742,6 +745,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_content_hash: {
+        Args: { p_content: string; p_title: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
