@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { ContextItemRow } from "@/components/context/ContextItemRow";
+import { CategoryFilterBadge } from "@/components/knowledge/CategoryFilterBadge";
 import { BundleCard } from "@/components/context/BundleCard";
 import { BundleFirstView } from "@/components/context/BundleFirstView";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
@@ -550,7 +551,7 @@ export default function ContextManagementPage() {
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <Filter className="h-3 w-3 text-muted-foreground" />
                       {ALL_CATEGORIES.map(cat => (
-                        <Badge key={cat} variant={categoryFilter === cat ? "default" : "outline"} className="text-[10px] cursor-pointer hover:bg-primary/10" onClick={() => setCategoryFilter(categoryFilter === cat ? null : cat)}>{cat}</Badge>
+                        <CategoryFilterBadge key={cat} category={cat} isActive={categoryFilter === cat} onClick={() => setCategoryFilter(categoryFilter === cat ? null : cat)} />
                       ))}
                     </div>
                     <div className="flex items-center gap-1.5 flex-wrap">
