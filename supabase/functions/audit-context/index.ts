@@ -23,9 +23,12 @@ Analyze the provided context items and return suggestions for improvements. Each
 - **recategorize** — The item's category is wrong. Suggest the correct one with reasoning.
 - **enrich** — The item's content is thin or vague. Provide enriched content.
 - **split** — The item covers multiple concerns. Suggest how to split it.
-- **merge** — Two or more items are redundant. Suggest merging them.
+- **merge** — Two or more items are semantically similar or redundant. Suggest merging them. ALWAYS provide the merge_with_id field pointing to the other item.
 - **promote_mandate** — A DIRECTIVE item should be elevated to a formal mandate.
 - **archive** — The item appears stale, redundant, or superseded.
+
+## DEDUPLICATION FOCUS
+Pay special attention to **semantic duplicates**: items that say the same thing in different words, cover the same topic with overlapping content, or have near-identical titles. When you find such pairs, emit a "merge" suggestion for one of them with merge_with_id pointing to the other.
 
 Be specific and actionable. Only suggest changes that would genuinely improve the knowledge graph. Don't suggest changes for items that are already well-structured.`;
 
@@ -123,10 +126,10 @@ serve(async (req) => {
 ${itemsSummary}
 
 Return actionable suggestions. Focus on:
-1. Items with wrong categories (e.g. rules categorized as KNOWLEDGE instead of DIRECTIVE)
-2. Items with thin/vague content that need enrichment
-3. Items that should be split into multiple focused items
-4. Redundant items that could be merged
+1. **Semantic duplicates** — Items that cover the same topic, say the same thing in different words, or have very similar titles. Emit "merge" suggestions with merge_with_id.
+2. Items with wrong categories (e.g. rules categorized as KNOWLEDGE instead of DIRECTIVE)
+3. Items with thin/vague content that need enrichment
+4. Items that should be split into multiple focused items
 5. DIRECTIVE items that should be promoted to formal mandates
 6. Stale or superseded items that could be archived
 

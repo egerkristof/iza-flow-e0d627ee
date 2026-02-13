@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
+import { DuplicateResolutionDialog, type ResolutionResult } from "@/components/knowledge/DuplicateResolutionDialog";
+import { findDuplicates, type DuplicateMatch } from "@/lib/dedup";
 
 const CATEGORY_COLORS: Record<string, string> = {
   DIRECTIVE: "bg-destructive/10 text-destructive",
@@ -40,6 +42,8 @@ export function MyContextItems() {
   const [newCategory, setNewCategory] = useState("RESEARCH");
   const [copilotOpen, setCopilotOpen] = useState(false);
   const [inlineLoading, setInlineLoading] = useState<string | null>(null);
+  const [dupMatches, setDupMatches] = useState<DuplicateMatch[]>([]);
+  const [dupDialogOpen, setDupDialogOpen] = useState(false);
 
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["my-context-items", user?.id],
@@ -55,17 +59,29 @@ export function MyContextItems() {
     },
   });
 
+  const doInsert = async () => {
+    const { error } = await supabase.from("context_items").insert({
+      owner_id: user!.id,
+      title: newTitle,
+      content_full: newContent,
+      category: newCategory,
+    } as any);
+    if (error) throw error;
+  };
+
   const createItem = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("context_items").insert({
-        owner_id: user!.id,
-        title: newTitle,
-        content_full: newContent,
-        category: newCategory,
-      } as any);
-      if (error) throw error;
+      // Check for duplicates first
+      const matches = await findDuplicates(user!.id, newTitle, newContent);
+      if (matches.length > 0) {
+        setDupMatches(matches);
+        setDupDialogOpen(true);
+        return; // Don't insert yet — wait for resolution
+      }
+      await doInsert();
     },
     onSuccess: () => {
+      if (dupDialogOpen) return; // Resolution pending
       queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
       toast({ title: "Context item created" });
       setCreateOpen(false);
@@ -75,6 +91,36 @@ export function MyContextItems() {
     },
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
   });
+
+  const handleDupResolution = async (result: ResolutionResult) => {
+    setDupDialogOpen(false);
+    setDupMatches([]);
+    try {
+      if (result.action === "cancel") return;
+      if (result.action === "keep_both") {
+        await doInsert();
+      } else if (result.action === "replace" && result.targetId) {
+        await supabase.from("context_items").update({
+          title: newTitle,
+          content_full: newContent,
+          category: newCategory,
+        } as any).eq("id", result.targetId);
+      } else if (result.action === "merge" && result.targetId && result.mergedContent) {
+        await supabase.from("context_items").update({
+          content_full: result.mergedContent,
+        } as any).eq("id", result.targetId);
+      }
+      queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
+      queryClient.invalidateQueries({ queryKey: ["context-items"] });
+      toast({ title: result.action === "keep_both" ? "Item created" : `Item ${result.action}d` });
+      setCreateOpen(false);
+      setNewTitle("");
+      setNewContent("");
+      setNewCategory("RESEARCH");
+    } catch (e: any) {
+      toast({ title: "Error", description: e.message, variant: "destructive" });
+    }
+  };
 
   const deleteItem = useMutation({
     mutationFn: async (id: string) => {
@@ -310,6 +356,15 @@ export function MyContextItems() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Duplicate Resolution Dialog */}
+      <DuplicateResolutionDialog
+        open={dupDialogOpen}
+        onOpenChange={setDupDialogOpen}
+        newItem={{ title: newTitle, content: newContent, category: newCategory }}
+        matches={dupMatches}
+        onResolve={handleDupResolution}
+      />
     </div>
   );
 }
