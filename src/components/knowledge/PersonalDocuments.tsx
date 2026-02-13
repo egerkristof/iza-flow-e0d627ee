@@ -6,11 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, FileText, Trash2, Linkedin, Award, File, Loader2, BookUp, Sparkles } from "lucide-react";
+import { Upload, FileText, Trash2, Linkedin, Award, File, Loader2, BookUp, Sparkles, GitCompareArrows } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PromoteToContextDialog } from "./PromoteToContextDialog";
 import { ImportCopilotDialog } from "./ImportCopilotDialog";
-import { type ExtractionResult } from "@/lib/knowledge-schema";
+import { CompareExtractionsDialog } from "./CompareExtractionsDialog";
+import { type ExtractionResult, type ExtractionDepth, EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
 
 const CATEGORIES = [
   { value: "cv", label: "CV / Resume", icon: FileText },
@@ -34,6 +35,7 @@ export function PersonalDocuments() {
   const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
   const [extractionDocName, setExtractionDocName] = useState("");
   const [reviewOpen, setReviewOpen] = useState(false);
+  const [compareDoc, setCompareDoc] = useState<{ id: string; name: string } | null>(null);
 
   const { data: docs = [], isLoading } = useQuery({
     queryKey: ["personal-documents", user?.id],
@@ -205,6 +207,15 @@ export function PersonalDocuments() {
                   <Button
                     variant="ghost"
                     size="icon"
+                    className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                    title="Compare all extraction depths"
+                    onClick={() => setCompareDoc({ id: doc.id, name: doc.file_name })}
+                  >
+                    <GitCompareArrows className="h-3.5 w-3.5" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     className="h-7 w-7 text-primary hover:text-primary"
                     title="Promote to Context Item"
                     onClick={() => setPromoteDoc({
@@ -242,6 +253,19 @@ export function PersonalDocuments() {
           data={extractionResult}
           sourceName={extractionDocName}
           sourceType="document"
+        />
+
+        <CompareExtractionsDialog
+          open={!!compareDoc}
+          onOpenChange={(v) => { if (!v) setCompareDoc(null); }}
+          documentId={compareDoc?.id ?? ""}
+          documentName={compareDoc?.name ?? ""}
+          onSelectResult={(data, depth) => {
+            setExtractionResult(data);
+            setExtractionDocName(`${compareDoc?.name ?? ""} (${EXTRACTION_DEPTH_META[depth].label})`);
+            setCompareDoc(null);
+            setReviewOpen(true);
+          }}
         />
       </CardContent>
     </Card>
