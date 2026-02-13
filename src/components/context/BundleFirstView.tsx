@@ -1,9 +1,11 @@
 import { useState, useMemo } from "react";
 import {
-  Package, ChevronDown, ChevronRight, Search, Filter, Plus,
+  Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
-  Layers, Tag, Loader2, Rocket,
+  Layers, Tag, Loader2, Rocket, BookOpen,
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -11,6 +13,9 @@ import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { type MockBundle, type MockContextItem, ALL_CATEGORIES } from "@/data/mockContextItems";
 import { DeployToWorkbookDialog } from "@/components/context/DeployToWorkbookDialog";
 
@@ -36,6 +41,60 @@ const scopeColors: Record<string, string> = {
   team: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
   draft: "border-muted-foreground/30 bg-muted/50 text-muted-foreground",
 };
+
+const MAX_VISIBLE_WORKBOOKS = 3;
+
+function DeploymentBadges({ bundleId }: { bundleId: string }) {
+  const { data: deployments = [] } = useQuery({
+    queryKey: ["bundle-deployments", bundleId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workbook_resources")
+        .select("workbook_id, workbooks!workbook_resources_workbook_id_fkey(title)")
+        .eq("resource_type", "bundle")
+        .contains("metadata", { bundle_id: bundleId } as any);
+      if (error) throw error;
+      return (data || []).map((r: any) => ({
+        workbook_id: r.workbook_id,
+        title: r.workbooks?.title ?? "Untitled",
+      }));
+    },
+  });
+
+  if (deployments.length === 0) return null;
+
+  const visible = deployments.slice(0, MAX_VISIBLE_WORKBOOKS);
+  const overflow = deployments.length - MAX_VISIBLE_WORKBOOKS;
+
+  return (
+    <div className="flex items-center gap-1 flex-wrap">
+      <BookOpen className="h-3 w-3 text-muted-foreground shrink-0" />
+      {visible.map((d) => (
+        <Badge key={d.workbook_id} variant="secondary" className="text-[9px] px-1.5 py-0 h-4 gap-1">
+          {d.title}
+        </Badge>
+      ))}
+      {overflow > 0 && (
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4 cursor-default">
+                +{overflow} more
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="max-w-xs">
+              <div className="space-y-0.5">
+                {deployments.slice(MAX_VISIBLE_WORKBOOKS).map((d) => (
+                  <div key={d.workbook_id} className="text-xs">{d.title}</div>
+                ))}
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+    </div>
+  );
+}
 
 function BundleExpandable({
   bundle,
@@ -63,17 +122,18 @@ function BundleExpandable({
             <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 shrink-0">
               <Package className="h-4 w-4 text-primary" />
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 space-y-1">
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-semibold truncate">{bundle.title}</h3>
                 <Badge variant="outline" className={`text-[10px] ${scopeColors[bundle.scope_level] ?? ""}`}>
                   {bundle.scope_level}
                 </Badge>
               </div>
-              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{bundle.description}</p>
+              <p className="text-xs text-muted-foreground line-clamp-1">{bundle.description}</p>
+              <DeploymentBadges bundleId={bundle.id} />
             </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="text-right">
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="text-right mr-1">
                 <span className="text-xs font-medium">{bundleItems.length} items</span>
                 <div className="flex items-center gap-1 mt-0.5">
                   <div className="h-1.5 w-16 rounded-full bg-secondary overflow-hidden">
@@ -85,10 +145,17 @@ function BundleExpandable({
                   <span className="text-[10px] text-muted-foreground">{Math.round(bundle.health_score * 100)}%</span>
                 </div>
               </div>
-              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button variant="ghost" size="icon" className="h-7 w-7 text-primary" title="Deploy to Workbook" onClick={(e) => { e.stopPropagation(); setDeployOpen(true); }}>
-                  <Rocket className="h-3 w-3" />
-                </Button>
+              {/* Always-visible Deploy button */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-7 gap-1 text-[11px] border-primary/30 text-primary hover:bg-primary/10 hover:text-primary"
+                onClick={(e) => { e.stopPropagation(); setDeployOpen(true); }}
+              >
+                <Rocket className="h-3 w-3" />
+                Deploy
+              </Button>
+              <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onEditBundle(bundle); }}>
                   <Pencil className="h-3 w-3" />
                 </Button>
