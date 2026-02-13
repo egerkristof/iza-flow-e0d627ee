@@ -2,7 +2,7 @@ import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
   Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield, Loader2,
-  Sparkles, LayoutGrid, List,
+  Sparkles, LayoutGrid, List, Network,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,7 @@ import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog"
 import { ExtractionProgressDialog, type ExtractionPhase } from "@/components/knowledge/ExtractionProgressDialog";
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
 import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
+import { TaxonomyDiagramDialog } from "@/components/knowledge/TaxonomyDiagramDialog";
 import { type ExtractionResult, type ExtractionDepth, type AdvisorPersona } from "@/lib/knowledge-schema";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -196,6 +197,7 @@ export default function ContextManagementPage() {
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
   const [impactSimOpen, setImpactSimOpen] = useState(false);
   const [impactTarget, setImpactTarget] = useState("");
+  const [taxonomyOpen, setTaxonomyOpen] = useState(false);
 
   // Filter items
   const filteredItems = useMemo(() => {
@@ -459,6 +461,9 @@ export default function ContextManagementPage() {
             <span className="text-sm font-normal text-muted-foreground ml-3">
               {totalItems} items · {bundles.length} bundles · <span className={Math.round(avgHealth * 100) > 80 ? "text-emerald-400" : Math.round(avgHealth * 100) >= 50 ? "text-yellow-400" : "text-red-400"}>{Math.round(avgHealth * 100)}% health</span>
             </span>
+            <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground ml-1" onClick={() => setTaxonomyOpen(true)}>
+              <Network className="h-3 w-3" /> Taxonomy
+            </Button>
           </h1>
           {/* View toggle in header */}
           <div className="flex items-center gap-1 rounded-lg border border-border/50 p-0.5 bg-secondary/30">
@@ -847,6 +852,7 @@ export default function ContextManagementPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <TaxonomyDiagramDialog open={taxonomyOpen} onOpenChange={setTaxonomyOpen} />
     </div>
   );
 }
