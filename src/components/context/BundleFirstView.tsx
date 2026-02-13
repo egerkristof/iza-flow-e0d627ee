@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
+import { CategoryFilterBadge } from "@/components/knowledge/CategoryFilterBadge";
 import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
@@ -414,15 +415,13 @@ export function BundleFirstView({
                   <Tag className="h-3 w-3" /> Categories
                 </div>
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  {ALL_CATEGORIES.map(cat => (
-                    <Badge
+                {ALL_CATEGORIES.map(cat => (
+                    <CategoryFilterBadge
                       key={cat}
-                      variant={categoryFilter === cat ? "default" : "outline"}
-                      className="text-[10px] cursor-pointer hover:bg-primary/10"
+                      category={cat}
+                      isActive={categoryFilter === cat}
                       onClick={() => setCategoryFilter(categoryFilter === cat ? null : cat)}
-                    >
-                      {cat}
-                    </Badge>
+                    />
                   ))}
                 </div>
               </div>
