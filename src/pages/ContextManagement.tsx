@@ -24,6 +24,7 @@ import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import { ExtractionProgressDialog, type ExtractionPhase } from "@/components/knowledge/ExtractionProgressDialog";
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
 import { type ExtractionResult } from "@/lib/knowledge-schema";
 import { supabase } from "@/integrations/supabase/client";
@@ -186,7 +187,7 @@ export default function ContextManagementPage() {
   const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
   const [extractionDocName, setExtractionDocName] = useState("");
   const [reviewOpen, setReviewOpen] = useState(false);
-
+  const [extractionPhase, setExtractionPhase] = useState<ExtractionPhase>("uploading");
   // Governance state
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
   const [impactSimOpen, setImpactSimOpen] = useState(false);
@@ -336,6 +337,8 @@ export default function ContextManagementPage() {
       toast({ title: "File too large", description: "Max 20MB", variant: "destructive" });
       return;
     }
+    setExtractionPhase("uploading");
+    setExtractionDocName(file.name);
     setLoomExtracting(true);
     try {
       const filePath = `${user.id}/${Date.now()}-${file.name}`;
@@ -343,6 +346,8 @@ export default function ContextManagementPage() {
         .from("personal-documents")
         .upload(filePath, file);
       if (uploadErr) throw uploadErr;
+
+      setExtractionPhase("analyzing");
 
       const { data: docRow, error: insertErr } = await supabase
         .from("personal_documents")
@@ -358,14 +363,19 @@ export default function ContextManagementPage() {
         .single();
       if (insertErr || !docRow) throw insertErr ?? new Error("Insert failed");
 
+      setExtractionPhase("extracting");
+
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
         body: { documentId: docRow.id, source_type: "loom" },
       });
       if (error) throw error;
       if (data.error) throw new Error(data.error);
 
+      setExtractionPhase("done");
+      // Brief pause to show completion state
+      await new Promise(r => setTimeout(r, 800));
+
       setExtractionResult(data as ExtractionResult);
-      setExtractionDocName(file.name);
       setReviewOpen(true);
     } catch (err: any) {
       toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
@@ -676,6 +686,13 @@ export default function ContextManagementPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Extraction Progress Dialog */}
+      <ExtractionProgressDialog
+        open={loomExtracting}
+        fileName={extractionDocName}
+        phase={extractionPhase}
+      />
 
       {/* Import Copilot (Knowledge Loom) */}
       <ImportCopilotDialog
