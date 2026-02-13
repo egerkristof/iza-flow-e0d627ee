@@ -767,27 +767,41 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
         createdBundleIds[i] = newBundle.id;
 
         if (bundle.items.length > 0) {
-          const { error: itemsErr } = await supabase.from("context_items").insert(
-            bundle.items.map((ci, j) => {
-              const resolved = resolveItem(ci, bundleItemEdits[`${i}-${j}`]);
-              const mandate = mandateFlags[`bundle-${i}-${j}`];
-              return {
-                owner_id: user.id,
-                title: resolved.title,
-                content_full: resolved.content,
-                category: resolved.category as any,
-                action_type: "APPEND" as any,
-                bundle_id: newBundle.id,
-                ...(mandate?.is_mandate ? {
-                  is_mandate: true,
-                  enforcement_level: mandate.enforcement_level as any,
-                  mandate_status: "draft" as any,
-                  priority: "CRITICAL" as any,
-                } : {}),
-              };
-            })
-          );
+          const itemRows = bundle.items.map((ci, j) => {
+            const resolved = resolveItem(ci, bundleItemEdits[`${i}-${j}`]);
+            const mandate = mandateFlags[`bundle-${i}-${j}`];
+            return {
+              owner_id: user.id,
+              title: resolved.title,
+              content_full: resolved.content,
+              category: resolved.category as any,
+              action_type: "APPEND" as any,
+              bundle_id: newBundle.id,
+              ...(mandate?.is_mandate ? {
+                is_mandate: true,
+                enforcement_level: mandate.enforcement_level as any,
+                mandate_status: "draft" as any,
+                priority: "CRITICAL" as any,
+              } : {}),
+            };
+          });
+          const { data: createdItems, error: itemsErr } = await supabase
+            .from("context_items")
+            .insert(itemRows)
+            .select("id");
           if (itemsErr) throw itemsErr;
+
+          // Persist many-to-many junction links
+          if (createdItems && createdItems.length > 0) {
+            const junctionRows = createdItems.map(ci => ({
+              context_item_id: ci.id,
+              bundle_id: newBundle.id,
+            }));
+            const { error: junctionErr } = await supabase
+              .from("context_item_bundles")
+              .insert(junctionRows);
+            if (junctionErr) throw junctionErr;
+          }
         }
       }
 
@@ -824,8 +838,38 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             } : {}),
           };
         });
-        const { error } = await supabase.from("context_items").insert(rows);
+        const { data: createdStandalone, error } = await supabase
+          .from("context_items")
+          .insert(rows)
+          .select("id");
         if (error) throw error;
+
+        // Persist junction links for standalone items assigned to bundles
+        if (createdStandalone) {
+          const junctionRows: { context_item_id: string; bundle_id: string }[] = [];
+          createdStandalone.forEach((ci, idx) => {
+            const originalIdx = itemsToSave[idx].i;
+            const assignment = itemBundleAssignment[originalIdx];
+            let bundleId: string | null = null;
+            if (assignment && assignment !== "none") {
+              if (assignment.startsWith("new-")) {
+                const bundleIdx = parseInt(assignment.replace("new-", ""), 10);
+                bundleId = createdBundleIds[bundleIdx] || null;
+              } else {
+                bundleId = assignment;
+              }
+            }
+            if (bundleId) {
+              junctionRows.push({ context_item_id: ci.id, bundle_id: bundleId });
+            }
+          });
+          if (junctionRows.length > 0) {
+            const { error: jErr } = await supabase
+              .from("context_item_bundles")
+              .insert(junctionRows);
+            if (jErr) throw jErr;
+          }
+        }
       }
     },
     onSuccess: () => {
