@@ -2,6 +2,7 @@ import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
   Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield, Loader2,
+  Sparkles,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,9 +22,11 @@ import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
+import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
 import { type ExtractionResult } from "@/lib/knowledge-schema";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 import {
   MOCK_CONTEXT_ITEMS, MOCK_BUNDLES, ALL_DOMAIN_TAGS, ALL_CATEGORIES,
   type MockBundle, type MockContextItem, type ContextCategory,
@@ -51,6 +54,21 @@ const MOCK_STALE: StaleItem[] = [
 export default function ContextManagementPage() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const [copilotOpen, setCopilotOpen] = useState(false);
+
+  // Fetch real DB items for Copilot auditing
+  const { data: dbItems = [] } = useQuery({
+    queryKey: ["context-items-all", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("context_items")
+        .select("*")
+        .order("updated_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
 
   // Items state
   const [items, setItems] = useState(MOCK_CONTEXT_ITEMS);
@@ -278,6 +296,9 @@ export default function ContextManagementPage() {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="text-xs gap-1.5" onClick={() => setCopilotOpen(!copilotOpen)}>
+              <Sparkles className="h-3.5 w-3.5" /> {copilotOpen ? "Hide Copilot" : "AI Copilot"}
+            </Button>
             <Button variant="outline" size="sm" className="text-xs gap-1.5" onClick={() => setStackViewerOpen(true)}>
               <GitBranch className="h-3.5 w-3.5" /> Context Stack
             </Button>
@@ -313,6 +334,11 @@ export default function ContextManagementPage() {
 
         {/* ── ITEMS & BUNDLES TAB (split panel) ── */}
         <TabsContent value="items" className="flex-1 overflow-hidden mt-0">
+          {copilotOpen && (
+            <div className="px-4 pt-3">
+              <ContextCopilotPanel items={dbItems} onClose={() => setCopilotOpen(false)} />
+            </div>
+          )}
           <ResizablePanelGroup direction="horizontal" className="h-full">
             <ResizablePanel defaultSize={55} minSize={35}>
               <div className="flex flex-col h-full">
