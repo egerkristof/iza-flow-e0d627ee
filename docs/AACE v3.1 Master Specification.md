@@ -241,3 +241,92 @@ The backend session object must track `session.locked_playbook_id`.
 
 - **If SET:** The Classifier step is skipped or downgraded to simple "Exit Detection" (e.g. looking for "Stop"). The System Prompt is compiled with the Locked Playbook as the primary directive.
 - **If NULL:** The Classifier scans for Triggers to potentially Enter a Locked state.
+
+---
+
+# **7. Knowledge Extraction & Bundle Architecture**
+
+This section defines how source documents are transformed into deployable knowledge bundles.
+
+### **7.1 Bundle Granularity Principle**
+
+> **A bundle is a self-contained, deployable unit of execution — not a structural mirror of the source document.**
+
+Bundles must be designed for **operator consumption**, not document fidelity. Each bundle should be independently deployable to a workbook and generate a meaningful, executable protocol.
+
+### **7.2 Bundle Consolidation Rules**
+
+When extracting from structured documents (methodology decks, process guides, playbooks), the extraction engine MUST consolidate sub-sections into their parent phase:
+
+1. **Phase-Level Bundling**: Group by the document's primary organizational phases (e.g., "Phase A", "Phase B"), NOT by individual slides, sub-headings, or table rows within those phases.
+
+2. **The Deployability Test**: Before creating a bundle, ask: _"Could a process owner deploy this standalone to a workbook and an operator execute it?"_ If the answer is no — the content only makes sense alongside sibling content — it belongs in a parent bundle.
+
+3. **Governance & Framework Consolidation**: Related governance elements (categories, approvers, review formats, sync protocols) that form a single decision framework MUST be consolidated into ONE bundle, not split by aspect.
+
+4. **Skeleton Bundles**: Only create skeleton bundles for **top-level phases** that are referenced but undocumented. Do NOT create skeletons for every sub-heading.
+
+5. **Sub-Step Nesting**: Steps within a phase (e.g., "Step B1.0", "Step B1.1", "Step B1.2") should be PROCEDURE items within the parent phase bundle, NOT separate bundles. Use `step_order_hint` to preserve sequence.
+
+### **7.3 Target Bundle Counts by Document Type**
+
+| Document Type | Pages | Target Bundles |
+|---|---|---|
+| Sales Methodology / Process Deck | 30-60 slides | 10-18 bundles |
+| Policy / Governance Document | 10-30 pages | 5-12 bundles |
+| Training Manual | 20-50 pages | 8-15 bundles |
+| Research Report | 5-20 pages | 3-8 bundles |
+| Single Process / SOP | 2-10 pages | 1-3 bundles |
+
+### **7.4 Protocol-Ready Bundle Composition**
+
+Every bundle intended for execution SHOULD contain:
+
+| Category | Role in Protocol | Count |
+|---|---|---|
+| PLAYBOOK | Protocol Driver — strategic intent, WHAT and WHY | Exactly 1 |
+| PROCEDURE | Executable Steps — ordered actions with `step_order_hint` | 3-15 per bundle |
+| DIRECTIVE | Compliance Gates — mandatory checkpoints | 0-5 per bundle |
+| KNOWLEDGE | Context Injection — facts, references, definitions | As needed |
+| RESEARCH | Context Injection — findings, intelligence | As needed |
+| PRINCIPLE | Decision Guidance — values, beliefs | As needed |
+
+### **7.5 Example: Sales Methodology Extraction**
+
+Given a 50-slide "Way of Selling" deck with phases A→F:
+
+**❌ Wrong (45 bundles — per-slide fragmentation):**
+```
+B. Deal Categories & Governance: Deal Categories
+B. Deal Categories & Governance: Approvers  
+B. Deal Categories & Governance: Internal Syncs
+B. Deal Categories & Governance: Review Process
+STEP B1 0. Actions Before First Meeting
+STEP B1 0. Introduction Call
+STEP B1 1. BANT Methodology
+STEP B1 1. Buying Center Analysis
+STEP B1 1. Buying Center Analysis (DISK)
+STEP B1 1. Pain & Gain
+STEP B1 1. Cloud Adoption Framework
+STEP B1 2. Opportunity Assessment
+STEP B1 2. Opportunity Assessment Example: Vodafone
+```
+
+**✅ Correct (13 bundles — phase-level consolidation):**
+```
+A. Lead & Demand Generation                    [team]
+B. Deal Categories & Governance                [organization]  
+B. Customer Need Discovery & Qualification     [team]
+C. Pre-Proposal Strategy & Planning            [team]
+C. Proposal & Contracting                      [team]
+D. Negotiation                                 [team]
+E. Won / Implementation                        [team]
+F. Account Management (Farming)                [team]
+Sales Cycle Overview                           [organization]
+Funnel Management                              [team]
+Solutioning Deliverables by Stage              [organization]
+Google-Aliz Relationship Model                 [organization]
+Pre-Sales Process Reference                    [team]
+```
+
+Each bundle contains the full depth of its phase: the PLAYBOOK driver, all PROCEDUREs as ordered steps, DIRECTIVEs as gates, and KNOWLEDGE/RESEARCH as context — making every bundle independently protocol-ready.
