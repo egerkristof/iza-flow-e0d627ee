@@ -50,6 +50,42 @@ export type Database = {
         }
         Relationships: []
       }
+      context_item_bundles: {
+        Row: {
+          bundle_id: string
+          context_item_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          bundle_id: string
+          context_item_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          bundle_id?: string
+          context_item_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "context_item_bundles_bundle_id_fkey"
+            columns: ["bundle_id"]
+            isOneToOne: false
+            referencedRelation: "bundles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "context_item_bundles_context_item_id_fkey"
+            columns: ["context_item_id"]
+            isOneToOne: false
+            referencedRelation: "context_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       context_items: {
         Row: {
           action_type: Database["public"]["Enums"]["action_logic"]

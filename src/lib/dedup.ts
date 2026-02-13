@@ -5,6 +5,7 @@ export interface DuplicateMatch {
   title: string;
   content_full: string;
   category: string;
+  bundle_id: string | null;
   similarity: "exact" | "near";
 }
 
@@ -38,7 +39,7 @@ export async function findDuplicates(
 ): Promise<DuplicateMatch[]> {
   const { data: existing, error } = await supabase
     .from("context_items")
-    .select("id, title, content_full, category")
+    .select("id, title, content_full, category, bundle_id")
     .eq("owner_id", ownerId);
 
   if (error || !existing) return [];
