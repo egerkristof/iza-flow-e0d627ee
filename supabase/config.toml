@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.classify-finding]
 verify_jwt = false
+
+[functions.audit-context]
+verify_jwt = false
