@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import {
   Package, ChevronDown, ChevronRight, Search, Filter, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
-  Layers, Tag,
+  Layers, Tag, Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +26,7 @@ interface BundleFirstViewProps {
   onOpenCopilot: () => void;
   copilotOpen: boolean;
   onOpenLoom: () => void;
+  loomExtracting: boolean;
 }
 
 const scopeColors: Record<string, string> = {
@@ -144,6 +145,7 @@ export function BundleFirstView({
   onOpenCopilot,
   copilotOpen,
   onOpenLoom,
+  loomExtracting,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -242,8 +244,9 @@ export function BundleFirstView({
           <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs" onClick={onOpenCopilot}>
             <Sparkles className="h-3.5 w-3.5" /> {copilotOpen ? "Hide AI" : "AI Copilot"}
           </Button>
-          <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs" onClick={onOpenLoom}>
-            <Upload className="h-3.5 w-3.5" /> Import
+          <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs" onClick={onOpenLoom} disabled={loomExtracting}>
+            {loomExtracting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+            {loomExtracting ? "Extracting…" : "Import"}
           </Button>
 
           <div className="h-5 w-px bg-border/50" />
