@@ -947,9 +947,24 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
           {/* Preferences section */}
           {data.preferences.length > 0 && (
             <div className="space-y-2">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-                <Settings2 className="h-3 w-3" /> Working Preferences ({data.preferences.length})
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                  <Settings2 className="h-3 w-3" /> Working Preferences ({data.preferences.length})
+                </h3>
+                <label className="flex items-center gap-1.5 cursor-pointer">
+                  <Checkbox
+                    checked={data.preferences.length > 0 && selectedPrefs.size === data.preferences.length}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedPrefs(new Set(data.preferences.map((_, i) => i)));
+                      } else {
+                        setSelectedPrefs(new Set());
+                      }
+                    }}
+                  />
+                  <span className="text-[10px] text-muted-foreground">Select all</span>
+                </label>
+              </div>
               {data.preferences.map((p, i) => {
                 const editedValue = prefEdits[i]?.preference_value ?? p.preference_value;
                 const editedCondition = prefEdits[i]?.condition_label ?? p.condition_label;
