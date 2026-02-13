@@ -483,13 +483,24 @@ export function BundleFirstView({
             <p className="text-xs text-muted-foreground mt-1">
               Create a bundle to group related knowledge items, or import a document to auto-generate them.
             </p>
-            <div className="flex items-center justify-center gap-2 mt-3">
-              <Button size="sm" className="gap-1.5" onClick={onCreateBundle}>
-                <Plus className="h-3 w-3" /> Create Bundle
-              </Button>
-              <Button size="sm" variant="outline" className="gap-1.5" onClick={onOpenLoom}>
-                <Upload className="h-3 w-3" /> Import Document
-              </Button>
+            <div className="flex flex-col items-center gap-3 mt-3">
+              <div className="flex items-center gap-2">
+                <Button size="sm" className="gap-1.5" onClick={onCreateBundle}>
+                  <Plus className="h-3 w-3" /> Create Bundle
+                </Button>
+                <Button size="sm" variant="outline" className="gap-1.5" onClick={onOpenLoom}>
+                  <Upload className="h-3 w-3" /> Import Document
+                </Button>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-muted-foreground">Extraction depth:</span>
+                <ExtractionDepthSelector
+                  value={extractionDepth}
+                  onChange={onExtractionDepthChange}
+                  disabled={loomExtracting}
+                  compact
+                />
+              </div>
             </div>
           </div>
         )}
