@@ -103,35 +103,57 @@ Before extracting individual items, identify the **full structural blueprint**:
 - **Phase markers** — named phases, stages, milestones
 - **Diagram/visual structure** — process diagrams, flowcharts, tables revealing unlabeled structure
 
-### 2. Create Bundles for EVERY Structural Node
-For EACH stage/phase/section, create a bundle — even if the document provides minimal or NO content:
-- **Structure IS knowledge.** Knowing a process has 7 stages is valuable.
-- **Users will fill in gaps.** Skeleton bundles serve as placeholders.
-- **Completeness visibility.** Users must see which parts are documented vs. which need work.
+### 2. Bundle at the PHASE Level — NOT the Slide/Heading Level
+**A bundle is a self-contained, deployable unit of execution — not a structural mirror of the source document.**
+
+**CRITICAL CONSOLIDATION RULES:**
+- **Phase-level bundling**: Group by the document's PRIMARY organizational phases (e.g., "Phase A", "Phase B"), NOT by individual slides, sub-headings, tables, or diagrams within those phases.
+- **The Deployability Test**: Before creating a bundle, ask: _"Could a process owner deploy this standalone to a workbook and an operator execute it?"_ If the answer is no — the content only makes sense alongside sibling content — it belongs in a parent bundle.
+- **Governance consolidation**: Related governance elements (categories, approvers, review formats, sync protocols) that form a single decision framework MUST be ONE bundle.
+- **Sub-step nesting**: Steps within a phase (e.g., "Step B1.0", "Step B1.1") should be PROCEDURE items WITHIN the parent phase bundle with step_order_hint, NOT separate bundles.
+- **Skeleton bundles**: Only for TOP-LEVEL phases that are referenced but undocumented. Do NOT create skeletons for every sub-heading.
+
+**TARGET BUNDLE COUNTS:**
+- 30-60 slide methodology deck → 10-18 bundles
+- 10-30 page policy document → 5-12 bundles
+- 5-20 page research report → 3-8 bundles
+- Single SOP/process → 1-3 bundles
+
+**WRONG (over-fragmented):**
+  B. Deal Governance: Categories    — split by aspect
+  B. Deal Governance: Approvers     — should be one bundle
+  B. Deal Governance: Syncs
+  STEP B1.0: Actions Before Meeting — sub-steps as bundles
+  STEP B1.1: BANT Methodology       — should be PROCEDUREs
+  STEP B1.1: Buying Center Analysis  — within parent phase
+
+**CORRECT (phase-level):**
+  B. Deal Categories & Governance [1 bundle with all governance items]
+  B. Customer Need Discovery & Qualification [1 bundle with all B1 steps as PROCEDUREs]
 
 ### 3. Content Completeness Scoring
 For EVERY bundle, assess documentation quality:
 - **"full"** — Rich: detailed steps, checklists, examples (3+ substantive items)
 - **"partial"** — Some content but incomplete (1-2 items with moderate detail)
-- **"skeleton"** — Structure detected but NO elaborating content. Create a PLAYBOOK placeholder describing what this section SHOULD contain.
+- **"skeleton"** — Top-level phase detected but NO elaborating content. Create a PLAYBOOK placeholder describing what this section SHOULD contain.
 
 ### 4. Coverage Gap Analysis
 In analysis_notes AND each bundle's coverage_gaps array, flag:
-- Sections in diagrams/headers with no elaborating content
+- Top-level phases in diagrams/headers with no elaborating content
 - Lifecycle stages referenced but not documented
-- Asymmetries (e.g., "Stage A has 15 items, Stage B has 0")
+- Asymmetries (e.g., "Phase A has 15 items, Phase B has 0")
 
 ## EXTRACTION PRINCIPLES
-1. **Structural fidelity first**: Bundle structure must mirror document architecture. Don't collapse stages.
+1. **Phase-level consolidation first**: Bundle at the phase/chapter level. Sub-sections become items WITHIN the bundle, NOT separate bundles.
 2. **Deep extraction**: Extract EVERY meaningful piece. A 5-page document should yield 10-30+ items.
 3. **Atomic items**: Each item self-contained. Not "Communication skills" → "Prefers async Slack for status updates".
 4. **Rich content**: Full detail with specifics, numbers, conditions.
 5. **Correct categorization**: Follow the CATEGORY DECISION RULES checklist above, in order.
 6. **Protocol-aware bundling**: PLAYBOOK drives, PROCEDUREs are ordered steps with step_order_hint, DIRECTIVEs are gates.
 7. **Granular PROCEDUREs**: Split multi-step processes. Each step = one action with step_order_hint.
-8. **Preserve hierarchy**: Use sections/chapters to inform bundle structure.
+8. **Consolidate related content**: Sub-headings, tables, and diagrams within a phase become items in the parent bundle.
 9. **Working preferences**: Extract ONLY genuine style preferences. Don't force general knowledge.
-10. **Skeleton bundles for gaps**: Create with content_completeness="skeleton" and a PLAYBOOK placeholder.
+10. **Skeleton bundles for top-level gaps only**: Create with content_completeness="skeleton" for undocumented PHASES, not sub-sections.
 
 ## ANALYSIS NOTES
 Provide comprehensive analysis_notes explaining:
@@ -502,13 +524,14 @@ Use the advisor's guidance to improve categorization precision and extraction de
       systemPrompt += `\n\n## DEEP ANALYSIS MODE
 You are in **deep analysis mode**. This means:
 - Extract EVERY possible piece of knowledge, no matter how granular
-- Create more bundles with finer-grained structure
+- Create MORE ITEMS per bundle (deeper extraction within each phase-level bundle)
 - Split complex items into their most atomic components
 - Surface implicit knowledge that isn't explicitly stated but can be inferred
 - Pay extra attention to relationships between items
 - Generate comprehensive analysis_notes with recommendations
 - For skeleton bundles: infer as much as possible about what SHOULD be documented based on the structural context, related sections, and domain knowledge
-- Create detailed PLAYBOOK placeholders for skeleton bundles that describe not just the topic but specific aspects that should be covered`;
+- Create detailed PLAYBOOK placeholders for skeleton bundles that describe not just the topic but specific aspects that should be covered
+- IMPORTANT: Deep mode means MORE ITEMS PER BUNDLE, not MORE BUNDLES. Maintain phase-level consolidation.`;
     }
 
     const aiResponse = await fetch(
