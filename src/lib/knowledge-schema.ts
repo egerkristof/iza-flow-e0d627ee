@@ -38,6 +38,18 @@ export const CATEGORY_DESCRIPTIONS: Record<ContextCategory, string> = {
   PRINCIPLE: "Core beliefs, values, or guiding tenets for decision-making",
 };
 
+/** Describes how each category relates to others in the taxonomy. */
+export const CATEGORY_RELATIONSHIPS: Record<ContextCategory, string> = {
+  DIRECTIVE: "Enforced within Playbooks & Procedures; derived from Principles",
+  KNOWLEDGE: "Referenced by Playbooks, Procedures & Directives",
+  PROCEDURE: "Part of a Playbook; may enforce Directives; uses Knowledge",
+  PLAYBOOK: "Bundles Procedures, Directives & Knowledge into a strategy",
+  PREFERENCE: "Shapes how Procedures & Playbooks are executed",
+  RESEARCH: "Feeds into Knowledge; informs Directives & Playbooks",
+  PRINCIPLE: "Guides Directives & Playbooks; shapes Preferences",
+};
+
+
 export const CATEGORY_COLORS: Record<ContextCategory, string> = {
   KNOWLEDGE: "bg-blue-500/10 text-blue-400 border-blue-500/30",
   RESEARCH: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
