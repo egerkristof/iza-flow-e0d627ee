@@ -29,6 +29,7 @@ import { ExtractionProgressDialog, type ExtractionPhase } from "@/components/kno
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
 import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
 import { TaxonomyDiagramDialog } from "@/components/knowledge/TaxonomyDiagramDialog";
+import { TaxonomyOnboarding, TaxonomyHelpButton } from "@/components/knowledge/TaxonomyOnboarding";
 import { type ExtractionResult, type ExtractionDepth, type AdvisorPersona } from "@/lib/knowledge-schema";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -454,7 +455,8 @@ export default function ContextManagementPage() {
       {/* Hidden file input for Knowledge Loom (shared by both views) */}
       <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.csv,.json" onChange={handleLoomFileInput} />
       {/* Header */}
-      <div className="shrink-0 p-6 pb-4 border-b border-border/50">
+      <div className="shrink-0 p-6 pb-4 border-b border-border/50 space-y-3">
+        <TaxonomyOnboarding />
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold tracking-tight">
             📚 Context
@@ -464,6 +466,9 @@ export default function ContextManagementPage() {
             <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground ml-1" onClick={() => setTaxonomyOpen(true)}>
               <Network className="h-3 w-3" /> Taxonomy
             </Button>
+            <div className="relative inline-block">
+              <TaxonomyHelpButton onOpenDiagram={() => setTaxonomyOpen(true)} />
+            </div>
           </h1>
           {/* View toggle in header */}
           <div className="flex items-center gap-1 rounded-lg border border-border/50 p-0.5 bg-secondary/30">
