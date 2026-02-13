@@ -384,6 +384,7 @@ export default function ContextManagementPage() {
 
   const handleLoomFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    console.log("[Knowledge Loom] File selected:", file?.name, file?.size);
     if (file) handleLoomFile(file);
   };
 
