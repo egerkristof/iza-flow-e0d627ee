@@ -76,14 +76,27 @@ function getReadiness(scopeLevel: string, deploymentCount: number): ReadinessSta
   return "ready";
 }
 
-function ReadinessBadge({ state }: { state: ReadinessState }) {
+function ReadinessBadge({ state, onClick }: { state: ReadinessState; onClick?: () => void }) {
   const config = readinessConfig[state];
   const Icon = config.icon;
+  const isClickable = !!onClick && state !== "deployed";
+  const hint = state === "draft" ? "Promote scope" : state === "ready" ? "Deploy to workbook" : "Deployed";
   return (
-    <Badge variant="outline" className={`text-[9px] px-1.5 py-0 h-4 gap-0.5 ${config.className}`}>
-      <Icon className="h-2.5 w-2.5" />
-      {config.label}
-    </Badge>
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Badge
+            variant="outline"
+            className={`text-[9px] px-1.5 py-0 h-4 gap-0.5 ${config.className} ${isClickable ? "cursor-pointer hover:ring-1 hover:ring-primary/30 transition-shadow" : ""}`}
+            onClick={isClickable ? (e) => { e.stopPropagation(); onClick(); } : undefined}
+          >
+            <Icon className="h-2.5 w-2.5" />
+            {config.label}
+          </Badge>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="text-xs">{hint}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -157,7 +170,10 @@ function BundleExpandable({
                 <Badge variant="outline" className={`text-[10px] ${scopeColors[bundle.scope_level] ?? ""}`}>
                   {bundle.scope_level}
                 </Badge>
-                <ReadinessBadge state={readiness} />
+                <ReadinessBadge
+                  state={readiness}
+                  onClick={readiness === "draft" ? () => onEditBundle(bundle) : readiness === "ready" ? () => setDeployOpen(true) : undefined}
+                />
               </div>
               <p className="text-xs text-muted-foreground line-clamp-1">{bundle.description}</p>
               <DeploymentBadges deployments={deployments} />
