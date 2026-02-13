@@ -37,7 +37,7 @@ export function PromoteToContextDialog({
   const [content, setContent] = useState(defaultContent);
   const [priority, setPriority] = useState<"STANDARD" | "CRITICAL">("STANDARD");
   const [security, setSecurity] = useState<"INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY">("INTERNAL");
-  const [selectedBundleId, setSelectedBundleId] = useState<string>("");
+  const [selectedBundleId, setSelectedBundleId] = useState<string>("__none__");
 
   // Reset form when dialog opens
   const handleOpenChange = (v: boolean) => {
@@ -46,7 +46,7 @@ export function PromoteToContextDialog({
       setContent(defaultContent);
       setPriority("STANDARD");
       setSecurity("INTERNAL");
-      setSelectedBundleId("");
+      setSelectedBundleId("__none__");
     }
     onOpenChange(v);
   };
@@ -76,7 +76,7 @@ export function PromoteToContextDialog({
         category: "RESEARCH" as any,
         priority,
         security_level: security,
-        bundle_id: selectedBundleId || null,
+        bundle_id: selectedBundleId === "__none__" ? null : selectedBundleId,
         action_type: "APPEND" as any,
       });
       if (error) throw error;
@@ -144,7 +144,7 @@ export function PromoteToContextDialog({
             <Select value={selectedBundleId} onValueChange={setSelectedBundleId}>
               <SelectTrigger><SelectValue placeholder="No bundle — standalone item" /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="">No bundle</SelectItem>
+                <SelectItem value="__none__">No bundle</SelectItem>
                 {bundles.map((b) => (
                   <SelectItem key={b.id} value={b.id}>
                     <span className="flex items-center gap-2">
