@@ -97,13 +97,21 @@ You MUST perform **structural analysis** before extracting content:
 
 ### 1. Detect the Document Architecture
 Before extracting individual items, identify the **full structural blueprint**:
-- **Process lifecycles** — multi-stage processes or workflows
+- **Process lifecycles** — multi-stage processes or workflows (map ALL stages, even if some lack content)
 - **Section hierarchy** — sections, chapters, modules
 - **Parallel tracks** — multiple concurrent process tracks
-- **Phase markers** — named phases, stages, milestones
+- **Phase markers** — named phases, stages, milestones (look for A, B, C, D, E, F or 1, 2, 3 patterns)
 - **Diagram/visual structure** — process diagrams, flowcharts, tables revealing unlabeled structure
 
-### 2. Bundle at the PHASE Level — NOT the Slide/Heading Level
+### 2. Phase Sequence Integrity
+**CRITICAL: When a document uses sequential labels (A, B, C, D, E, F or Phase 1, 2, 3, etc.), you MUST:**
+- Map the COMPLETE sequence from start to finish before creating bundles
+- Preserve the EXACT labels from the document — do NOT reassign letters/numbers
+- If Phase E is "Contracting", the bundle MUST be titled "E. Contracting", NOT "C. Contracting"
+- If any phase in the sequence is missing content, create a SKELETON bundle for it
+- Flag missing phases in analysis_notes (e.g., "Phase F referenced in overview diagram but has no dedicated section")
+
+### 3. Bundle at the PHASE Level — NOT the Slide/Heading Level
 **A bundle is a self-contained, deployable unit of execution — not a structural mirror of the source document.**
 
 **CRITICAL CONSOLIDATION RULES:**
@@ -119,6 +127,12 @@ Before extracting individual items, identify the **full structural blueprint**:
 - 5-20 page research report → 3-8 bundles
 - Single SOP/process → 1-3 bundles
 
+**SUB-PHASE SPLITTING RULE:**
+- If a single phase contains MORE THAN 15 items after extraction, it MAY be split into 2-3 sub-phase bundles
+- Sub-phases must EACH pass the Deployability Test independently
+- Sub-phase naming: use the original phase letter + descriptive suffix (e.g., "B1. Customer Discovery & First Meeting", "B2. Qualification & Opportunity Assessment")
+- Each sub-phase bundle MUST have its own PLAYBOOK driver
+
 **WRONG (over-fragmented):**
   B. Deal Governance: Categories    — split by aspect
   B. Deal Governance: Approvers     — should be one bundle
@@ -131,29 +145,50 @@ Before extracting individual items, identify the **full structural blueprint**:
   B. Deal Categories & Governance [1 bundle with all governance items]
   B. Customer Need Discovery & Qualification [1 bundle with all B1 steps as PROCEDUREs]
 
-### 3. Content Completeness Scoring
+### 4. PLAYBOOK Classification — Strict Rules
+**A PLAYBOOK is a STRATEGIC DRIVER that becomes the protocol's intent anchor. NOT every framework, model, or methodology reference.**
+
+**IS a PLAYBOOK (protocol driver):**
+- The strategic overview of a major phase (e.g., "Enterprise Sales Cycle Overview")
+- A methodology's EXECUTION approach (e.g., "Customer Onboarding Strategy")
+- An operational playbook with clear phases/stages
+
+**Is NOT a PLAYBOOK — use correct category instead:**
+- An analytical FRAMEWORK or MODEL (e.g., BANT, DISK, Buying Center) → **KNOWLEDGE** (reference material)
+- A CHECKLIST of actions before a meeting → **PROCEDURE** (actionable steps)
+- A step within a larger process (e.g., "Consolidate Your Value Proposition") → **PROCEDURE** (execution step)
+- A description of WHAT something is (e.g., "Pre-Sales Process Flow") → **KNOWLEDGE** (unless it drives execution)
+- Competitive strategy REFERENCE material → **KNOWLEDGE** (informational)
+
+**The PLAYBOOK Test:** Ask: _"Does this item define the STRATEGIC INTENT of an entire bundle and drive protocol creation?"_ If NO → it's probably KNOWLEDGE or PROCEDURE.
+
+**TARGET: Each bundle should have exactly 1 PLAYBOOK item (max 2-3 in rare cases). If you're assigning 5+ PLAYBOOKs to a single bundle, most are miscategorized.**
+
+### 5. Content Completeness Scoring
 For EVERY bundle, assess documentation quality:
 - **"full"** — Rich: detailed steps, checklists, examples (3+ substantive items)
 - **"partial"** — Some content but incomplete (1-2 items with moderate detail)
 - **"skeleton"** — Top-level phase detected but NO elaborating content. Create a PLAYBOOK placeholder describing what this section SHOULD contain.
 
-### 4. Coverage Gap Analysis
+### 6. Coverage Gap Analysis
 In analysis_notes AND each bundle's coverage_gaps array, flag:
 - Top-level phases in diagrams/headers with no elaborating content
 - Lifecycle stages referenced but not documented
 - Asymmetries (e.g., "Phase A has 15 items, Phase B has 0")
+- Missing phases in sequential processes (e.g., "Phases A-D documented but E-F missing")
 
 ## EXTRACTION PRINCIPLES
 1. **Phase-level consolidation first**: Bundle at the phase/chapter level. Sub-sections become items WITHIN the bundle, NOT separate bundles.
 2. **Deep extraction**: Extract EVERY meaningful piece. A 5-page document should yield 10-30+ items.
 3. **Atomic items**: Each item self-contained. Not "Communication skills" → "Prefers async Slack for status updates".
 4. **Rich content**: Full detail with specifics, numbers, conditions.
-5. **Correct categorization**: Follow the CATEGORY DECISION RULES checklist above, in order.
-6. **Protocol-aware bundling**: PLAYBOOK drives, PROCEDUREs are ordered steps with step_order_hint, DIRECTIVEs are gates.
+5. **Correct categorization**: Follow the CATEGORY DECISION RULES checklist above, in order. Apply the PLAYBOOK Test strictly.
+6. **Protocol-aware bundling**: 1 PLAYBOOK drives, PROCEDUREs are ordered steps with step_order_hint, DIRECTIVEs are gates.
 7. **Granular PROCEDUREs**: Split multi-step processes. Each step = one action with step_order_hint.
 8. **Consolidate related content**: Sub-headings, tables, and diagrams within a phase become items in the parent bundle.
 9. **Working preferences**: Extract ONLY genuine style preferences. Don't force general knowledge.
 10. **Skeleton bundles for top-level gaps only**: Create with content_completeness="skeleton" for undocumented PHASES, not sub-sections.
+11. **Phase sequence integrity**: Preserve document's sequential labels exactly. Create skeletons for any gaps in the sequence.
 
 ## ANALYSIS NOTES
 Provide comprehensive analysis_notes explaining:
