@@ -313,7 +313,8 @@ serve(async (req) => {
 
     const body = await req.json();
     const sourceType: string = body.source_type || "document";
-
+    const advisorPersona: any = body.advisor_persona || null;
+    const extractionDepth: string = body.extraction_depth || "quick";
     let textContent = "";
     let meta: Record<string, string> = {};
 
@@ -383,6 +384,35 @@ serve(async (req) => {
     }
 
     // ── Call AI ──────────────────────────────────────────────────────────
+    // Build system prompt — optionally enhanced with advisor persona
+    let systemPrompt = SYSTEM_PROMPT;
+    if (advisorPersona) {
+      systemPrompt += `\n\n## DOMAIN ADVISOR CONSULTATION
+You are being advised by a **${advisorPersona.persona_title}** (${advisorPersona.icon_suggestion || "🎯"}) with expertise in: ${(advisorPersona.expertise_areas || []).join(", ")}.
+
+**Advisor guidance:** ${advisorPersona.extraction_guidance || ""}
+
+**Domain-specific category hints from the advisor:**
+- PLAYBOOKs in this domain: ${advisorPersona.category_hints?.likely_playbooks || "N/A"}
+- PROCEDUREs in this domain: ${advisorPersona.category_hints?.likely_procedures || "N/A"}
+- DIRECTIVEs in this domain: ${advisorPersona.category_hints?.likely_directives || "N/A"}
+- KNOWLEDGE in this domain: ${advisorPersona.category_hints?.likely_knowledge || "N/A"}
+
+Use the advisor's guidance to improve categorization precision and extraction depth. The advisor's domain expertise should inform your decisions about what to extract and how to structure it.`;
+    }
+
+    // For "deep" extraction, add extra instructions for thoroughness
+    if (extractionDepth === "deep") {
+      systemPrompt += `\n\n## DEEP ANALYSIS MODE
+You are in **deep analysis mode**. This means:
+- Extract EVERY possible piece of knowledge, no matter how granular
+- Create more bundles with finer-grained structure
+- Split complex items into their most atomic components
+- Surface implicit knowledge that isn't explicitly stated but can be inferred
+- Pay extra attention to relationships between items
+- Generate comprehensive analysis_notes with recommendations`;
+    }
+
     const aiResponse = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
       {
@@ -392,9 +422,9 @@ serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-2.5-flash",
+          model: extractionDepth === "deep" ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash",
           messages: [
-            { role: "system", content: SYSTEM_PROMPT },
+            { role: "system", content: systemPrompt },
             meta._pdf_base64
               ? {
                   role: "user",
@@ -460,6 +490,11 @@ serve(async (req) => {
     const extracted = JSON.parse(toolCall.function.arguments);
     if (!extracted.bundles) extracted.bundles = [];
     if (!extracted.analysis_notes) extracted.analysis_notes = "";
+    // Attach advisor info if used
+    if (advisorPersona) {
+      extracted.advisor = advisorPersona;
+    }
+    extracted.extraction_depth = extractionDepth;
 
     return new Response(JSON.stringify(extracted), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

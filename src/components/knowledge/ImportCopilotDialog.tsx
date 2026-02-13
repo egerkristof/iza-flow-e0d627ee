@@ -18,9 +18,11 @@ import {
   type ExtractedBundle,
   type ImportCopilotProps,
   type ContextCategory,
+  type AdvisorPersona,
   CONTEXT_CATEGORIES,
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
+  EXTRACTION_DEPTH_META,
 } from "@/lib/knowledge-schema";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 
@@ -951,6 +953,30 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto space-y-4 -mx-6 px-6" style={{ maxHeight: "calc(85vh - 200px)" }}>
+          {/* Advisor Persona Banner */}
+          {data.advisor && (
+            <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 flex gap-2.5">
+              <span className="text-lg shrink-0">{data.advisor.icon_suggestion || "🎯"}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h4 className="text-xs font-semibold text-amber-400">Domain Advisor</h4>
+                  <Badge variant="outline" className="text-[9px] border-amber-500/30 text-amber-400">{data.advisor.persona_title}</Badge>
+                  {data.extraction_depth && (
+                    <Badge variant="secondary" className="text-[9px]">
+                      {EXTRACTION_DEPTH_META[data.extraction_depth]?.icon} {EXTRACTION_DEPTH_META[data.extraction_depth]?.label}
+                    </Badge>
+                  )}
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">{data.advisor.extraction_guidance}</p>
+                <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                  {data.advisor.expertise_areas?.map((area, i) => (
+                    <Badge key={i} variant="secondary" className="text-[9px]">{area}</Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* AI Analysis Notes */}
           {data.analysis_notes && (
             <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 flex gap-2.5">
