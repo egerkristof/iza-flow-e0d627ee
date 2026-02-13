@@ -121,11 +121,35 @@ export interface ExtractedBundle {
   items: ExtractedContextItem[];
 }
 
+export interface AdvisorPersona {
+  persona_title: string;
+  domain: string;
+  expertise_areas: string[];
+  extraction_guidance: string;
+  category_hints: {
+    likely_playbooks: string;
+    likely_procedures: string;
+    likely_directives: string;
+    likely_knowledge: string;
+  };
+  icon_suggestion: string;
+}
+
+export type ExtractionDepth = "quick" | "guided" | "deep";
+
+export const EXTRACTION_DEPTH_META: Record<ExtractionDepth, { label: string; description: string; icon: string }> = {
+  quick: { label: "Quick Scan", description: "Fast extraction, no domain advisor", icon: "⚡" },
+  guided: { label: "Guided Extract", description: "Domain advisor enhances categorization", icon: "🎯" },
+  deep: { label: "Deep Analysis", description: "Thorough extraction + advisor + refinement", icon: "🔬" },
+};
+
 export interface ExtractionResult {
   analysis_notes?: string;
   preferences: ExtractedPreference[];
   context_items: ExtractedContextItem[];
   bundles?: ExtractedBundle[];
+  advisor?: AdvisorPersona;
+  extraction_depth?: ExtractionDepth;
 }
 
 // ─── Import Copilot Props ────────────────────────────────────────────────────

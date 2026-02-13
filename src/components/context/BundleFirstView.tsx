@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import type { ExtractionDepth } from "@/lib/knowledge-schema";
 import {
   Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
@@ -11,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 import { CategoryFilterBadge } from "@/components/knowledge/CategoryFilterBadge";
+import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
 import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
@@ -34,6 +36,8 @@ interface BundleFirstViewProps {
   copilotOpen: boolean;
   onOpenLoom: () => void;
   loomExtracting: boolean;
+  extractionDepth: ExtractionDepth;
+  onExtractionDepthChange: (depth: ExtractionDepth) => void;
 }
 
 const scopeColors: Record<string, string> = {
@@ -271,6 +275,8 @@ export function BundleFirstView({
   copilotOpen,
   onOpenLoom,
   loomExtracting,
+  extractionDepth,
+  onExtractionDepthChange,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -373,6 +379,12 @@ export function BundleFirstView({
             {loomExtracting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
             {loomExtracting ? "Extracting…" : "Import"}
           </Button>
+          <ExtractionDepthSelector
+            value={extractionDepth}
+            onChange={onExtractionDepthChange}
+            disabled={loomExtracting}
+            compact
+          />
 
           <div className="h-5 w-px bg-border/50" />
 

@@ -27,7 +27,8 @@ import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import { ExtractionProgressDialog, type ExtractionPhase } from "@/components/knowledge/ExtractionProgressDialog";
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
-import { type ExtractionResult } from "@/lib/knowledge-schema";
+import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
+import { type ExtractionResult, type ExtractionDepth, type AdvisorPersona } from "@/lib/knowledge-schema";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -190,6 +191,7 @@ export default function ContextManagementPage() {
   const [reviewOpen, setReviewOpen] = useState(false);
   const [extractionPhase, setExtractionPhase] = useState<ExtractionPhase>("uploading");
   const extractionAbortRef = useRef<AbortController | null>(null);
+  const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
   // Governance state
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
   const [impactSimOpen, setImpactSimOpen] = useState(false);
@@ -374,8 +376,24 @@ export default function ContextManagementPage() {
 
       setExtractionPhase("extracting");
 
+      // Generate advisor for guided/deep modes
+      let advisorPersona: AdvisorPersona | null = null;
+      if (extractionDepth !== "quick") {
+        try {
+          const { data: advData } = await supabase.functions.invoke("generate-advisor", {
+            body: { content: file.name, meta: { title: file.name, file_type: file.type } },
+          });
+          if (advData && !advData.error) advisorPersona = advData as AdvisorPersona;
+        } catch {} // best-effort
+      }
+
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
-        body: { documentId: docRow.id, source_type: "loom" },
+        body: {
+          documentId: docRow.id,
+          source_type: "loom",
+          extraction_depth: extractionDepth,
+          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+        },
       });
       if (abortController.signal.aborted) throw new Error("Cancelled");
       if (error) throw error;
@@ -510,6 +528,8 @@ export default function ContextManagementPage() {
             copilotOpen={copilotOpen}
             onOpenLoom={() => fileInputRef.current?.click()}
             loomExtracting={loomExtracting}
+            extractionDepth={extractionDepth}
+            onExtractionDepthChange={setExtractionDepth}
           />
         </div>
       ) : (
