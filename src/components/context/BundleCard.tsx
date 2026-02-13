@@ -52,7 +52,7 @@ export function BundleCard({ bundle, selected, onClick, onEdit, onDelete }: Bund
         </Badge>
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <span>{bundle.item_count} items</span>
-          <span className={bundle.health_score > 0.8 ? "text-success" : "text-warning"}>
+          <span className={bundle.health_score > 0.8 ? "text-emerald-400" : bundle.health_score >= 0.5 ? "text-yellow-400" : "text-red-400"}>
             {Math.round(bundle.health_score * 100)}%
           </span>
         </div>
