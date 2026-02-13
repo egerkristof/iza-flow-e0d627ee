@@ -283,7 +283,7 @@ function MandateCard({
   return (
     <button
       onClick={onSelect}
-      className={`w-full text-left rounded-lg border p-4 transition-all hover:border-primary/30 ${
+      className={`w-full text-left rounded-lg border p-4 transition-all hover:border-primary/30 min-w-0 overflow-hidden ${
         isSelected ? "border-primary bg-primary/5" : "border-border/50 bg-card"
       }`}
     >
@@ -515,9 +515,9 @@ export function MandatesDashboard({ compact = false }: { compact?: boolean }) {
       </div>
 
       {/* Mandate list + detail split */}
-      <div className={`grid gap-4 ${compact ? "" : "grid-cols-[1fr_1fr]"}`}>
+      <div className={`grid gap-4 min-w-0 ${compact ? "" : "grid-cols-[1fr_1fr]"}`}>
         {/* List */}
-        <ScrollArea className={compact ? "max-h-[400px]" : "max-h-[500px]"}>
+        <ScrollArea className={`min-w-0 ${compact ? "max-h-[400px]" : "max-h-[500px]"}`}>
           <div className="space-y-2 pr-2">
             {filtered.length === 0 && (
               <div className="text-center py-8 text-sm text-muted-foreground">
