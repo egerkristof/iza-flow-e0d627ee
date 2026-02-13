@@ -536,7 +536,7 @@ export default function ContextManagementPage() {
             onCreateBundle={() => { setEditingBundle(null); setBundleDialog(true); }}
             onOpenCopilot={() => setCopilotOpen(!copilotOpen)}
             copilotOpen={copilotOpen}
-            onOpenLoom={() => fileInputRef.current?.click()}
+            onOpenLoom={() => { if (fileInputRef.current) { fileInputRef.current.value = ""; fileInputRef.current.click(); } }}
             loomExtracting={loomExtracting}
             extractionDepth={extractionDepth}
             onExtractionDepthChange={setExtractionDepth}
