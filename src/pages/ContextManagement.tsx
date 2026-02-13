@@ -669,9 +669,19 @@ export default function ContextManagementPage() {
         </TabsContent>
 
         {/* ── KNOWLEDGE LOOM TAB ── */}
-        <TabsContent value="ingest" className="flex-1 overflow-auto mt-0 p-6">
+        <TabsContent value="ingest" className="flex-1 overflow-auto mt-0 p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium">Extraction Depth</p>
+              <p className="text-xs text-muted-foreground">Choose analysis depth before importing</p>
+            </div>
+            <ExtractionDepthSelector
+              value={extractionDepth}
+              onChange={setExtractionDepth}
+              disabled={loomExtracting}
+            />
+          </div>
           <div
-
             className={`rounded-lg border-2 border-dashed p-12 text-center transition-all ${loomExtracting ? "border-primary/50 bg-primary/5" : dragOver ? "border-primary bg-primary/5" : "border-border/50 bg-card/50 hover:border-primary/30 cursor-pointer"}`}
             onDragOver={e => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
