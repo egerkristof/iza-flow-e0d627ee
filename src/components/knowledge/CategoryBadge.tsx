@@ -42,11 +42,13 @@ export function CategoryBadge({ category, className, compact }: CategoryBadgePro
   const label = CATEGORY_LABELS[category as ContextCategory] ?? category;
 
   const badge = (
-    <Badge variant="outline" className={cn("text-[10px] gap-1 cursor-default", color, className)}>
-      <Icon className="h-2.5 w-2.5 shrink-0" />
-      {label}
-      {!compact && description && <HelpCircle className="h-2 w-2 opacity-40" />}
-    </Badge>
+    <span tabIndex={0} className="inline-flex cursor-default">
+      <Badge variant="outline" className={cn("text-[10px] gap-1 cursor-default pointer-events-none", color, className)}>
+        <Icon className="h-2.5 w-2.5 shrink-0" />
+        {label}
+        {!compact && description && <HelpCircle className="h-2 w-2 opacity-40" />}
+      </Badge>
+    </span>
   );
 
   if (!description) return badge;
@@ -57,7 +59,7 @@ export function CategoryBadge({ category, className, compact }: CategoryBadgePro
     <TooltipProvider delayDuration={150}>
       <Tooltip>
         <TooltipTrigger asChild>{badge}</TooltipTrigger>
-        <TooltipContent side="top" className="max-w-[260px] text-xs p-3 space-y-1.5">
+        <TooltipContent side="top" className="max-w-[260px] text-xs p-3 space-y-1.5 z-[100]">
           <div className="flex items-center gap-1.5">
             <Icon className={cn("h-3.5 w-3.5 shrink-0", color.split(" ").find(c => c.startsWith("text-")))} />
             <span className="font-semibold">{label}</span>

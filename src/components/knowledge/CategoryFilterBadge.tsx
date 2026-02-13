@@ -1,5 +1,4 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
 import { CATEGORY_COLORS, CATEGORY_DESCRIPTIONS, CATEGORY_LABELS, type ContextCategory } from "@/lib/knowledge-schema";
 import { cn } from "@/lib/utils";
 import {
@@ -41,14 +40,19 @@ export function CategoryFilterBadge({ category, isActive, onClick }: CategoryFil
   const example = CATEGORY_EXAMPLES[category] ?? "";
 
   const badge = (
-    <Badge
-      variant={isActive ? "default" : "outline"}
-      className={cn("text-[10px] cursor-pointer hover:bg-primary/10 gap-1", !isActive && color)}
+    <button
+      type="button"
       onClick={onClick}
+      className={cn(
+        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-semibold transition-colors cursor-pointer gap-1 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+        isActive
+          ? "border-transparent bg-primary text-primary-foreground hover:bg-primary/80"
+          : cn("text-foreground hover:bg-primary/10", color),
+      )}
     >
       <Icon className="h-2.5 w-2.5 shrink-0" />
       {label}
-    </Badge>
+    </button>
   );
 
   if (!description) return badge;
@@ -57,7 +61,7 @@ export function CategoryFilterBadge({ category, isActive, onClick }: CategoryFil
     <TooltipProvider delayDuration={150}>
       <Tooltip>
         <TooltipTrigger asChild>{badge}</TooltipTrigger>
-        <TooltipContent side="bottom" className="max-w-[260px] text-xs p-3 space-y-1.5">
+        <TooltipContent side="bottom" className="max-w-[260px] text-xs p-3 space-y-1.5 z-[100]">
           <div className="flex items-center gap-1.5">
             <Icon className={cn("h-3.5 w-3.5 shrink-0", color.split(" ").find(c => c.startsWith("text-")))} />
             <span className="font-semibold">{label}</span>
