@@ -486,13 +486,18 @@ export function MyContextItems() {
         </div>
       ) : (
         <div className="space-y-2">
-          {filtered.map(item => (
+          {filtered.map(item => {
+            const itemBundles = bundlesByItem.get(item.id) ?? [];
+            const isBundled = itemBundles.length > 0 || !!item.bundle_id;
+            return (
             <div
               key={item.id}
               className={`group flex items-start gap-3 rounded-lg border p-4 transition-colors ${
                 selectedIds.has(item.id)
                   ? "border-primary/40 bg-primary/5"
-                  : "border-border/50 bg-card hover:border-primary/20"
+                  : isBundled
+                    ? "border-border/50 bg-card hover:border-primary/20"
+                    : "border-dashed border-muted-foreground/30 bg-muted/5 hover:border-muted-foreground/50"
               }`}
               onClick={selectMode ? () => toggleSelect(item.id) : undefined}
             >
@@ -522,12 +527,17 @@ export function MyContextItems() {
                 <div className="flex items-center gap-2 mt-1.5 flex-wrap text-[10px] text-muted-foreground">
                   <span>{item.security_level}</span>
                   <span>v{item.version}</span>
-                  {(bundlesByItem.get(item.id) ?? []).map(b => (
+                  {itemBundles.map(b => (
                     <Badge key={b.id} variant="secondary" className="text-[9px] px-1.5 py-0 h-4 gap-0.5">
                       📦 {b.title}
                     </Badge>
                   ))}
-                  {(bundlesByItem.get(item.id) ?? []).length === 0 && item.bundle_id && (
+                  {!isBundled && (
+                    <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4 border-dashed border-muted-foreground/40 text-muted-foreground">
+                      Unbundled
+                    </Badge>
+                  )}
+                  {itemBundles.length === 0 && item.bundle_id && (
                     <span className="text-primary">📦 In bundle</span>
                   )}
                 </div>
@@ -572,7 +582,8 @@ export function MyContextItems() {
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
