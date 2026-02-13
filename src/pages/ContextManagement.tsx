@@ -291,7 +291,7 @@ export default function ContextManagementPage() {
         <h1 className="text-2xl font-semibold tracking-tight">
           📚 Context
           <span className="text-sm font-normal text-muted-foreground ml-3">
-            Curate, organize, and manage the knowledge graph — {totalItems} items · {bundles.length} bundles · {Math.round(avgHealth * 100)}% health
+            Curate, organize, and manage the knowledge graph — {totalItems} items · {bundles.length} bundles · <span className={Math.round(avgHealth * 100) > 80 ? "text-emerald-400" : Math.round(avgHealth * 100) >= 50 ? "text-yellow-400" : "text-red-400"}>{Math.round(avgHealth * 100)}% health</span>
           </span>
         </h1>
         <div className="flex items-center gap-2 flex-wrap mt-3">
