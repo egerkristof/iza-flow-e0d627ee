@@ -1169,12 +1169,27 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
               onDragLeave={(e) => handleDragLeave(e, "standalone")}
               onDrop={handleDropOnStandalone}
             >
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-                <BookUp className="h-3 w-3" /> Standalone Context Items ({data.context_items.length})
-                {dragSource?.type === "bundle" && (
-                  <span className="text-[10px] text-primary font-normal ml-1">↓ Drop here to make standalone</span>
-                )}
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                  <BookUp className="h-3 w-3" /> Standalone Context Items ({data.context_items.length})
+                  {dragSource?.type === "bundle" && (
+                    <span className="text-[10px] text-primary font-normal ml-1">↓ Drop here to make standalone</span>
+                  )}
+                </h3>
+                <label className="flex items-center gap-1.5 cursor-pointer">
+                  <Checkbox
+                    checked={data.context_items.length > 0 && selectedItems.size === data.context_items.length}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedItems(new Set(data.context_items.map((_, i) => i)));
+                      } else {
+                        setSelectedItems(new Set());
+                      }
+                    }}
+                  />
+                  <span className="text-[10px] text-muted-foreground">Select all</span>
+                </label>
+              </div>
               {data.context_items.map((ci, i) => (
                 <div
                   key={i}
