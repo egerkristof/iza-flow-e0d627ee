@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import {
   Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
-  Layers, Tag, Loader2, Rocket, BookOpen,
+  Layers, Tag, Loader2, Rocket, BookOpen, Circle, CheckCircle2, ArrowUpCircle,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,8 +44,16 @@ const scopeColors: Record<string, string> = {
 
 const MAX_VISIBLE_WORKBOOKS = 3;
 
-function DeploymentBadges({ bundleId }: { bundleId: string }) {
-  const { data: deployments = [] } = useQuery({
+type ReadinessState = "draft" | "ready" | "deployed";
+
+const readinessConfig: Record<ReadinessState, { label: string; icon: typeof Circle; className: string }> = {
+  draft: { label: "Draft", icon: Circle, className: "border-muted-foreground/30 text-muted-foreground bg-muted/30" },
+  ready: { label: "Ready", icon: ArrowUpCircle, className: "border-primary/30 text-primary bg-primary/10" },
+  deployed: { label: "Deployed", icon: CheckCircle2, className: "border-emerald-500/30 text-emerald-500 bg-emerald-500/10" },
+};
+
+function useDeployments(bundleId: string) {
+  return useQuery({
     queryKey: ["bundle-deployments", bundleId],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -60,7 +68,26 @@ function DeploymentBadges({ bundleId }: { bundleId: string }) {
       }));
     },
   });
+}
 
+function getReadiness(scopeLevel: string, deploymentCount: number): ReadinessState {
+  if (deploymentCount > 0) return "deployed";
+  if (scopeLevel === "draft") return "draft";
+  return "ready";
+}
+
+function ReadinessBadge({ state }: { state: ReadinessState }) {
+  const config = readinessConfig[state];
+  const Icon = config.icon;
+  return (
+    <Badge variant="outline" className={`text-[9px] px-1.5 py-0 h-4 gap-0.5 ${config.className}`}>
+      <Icon className="h-2.5 w-2.5" />
+      {config.label}
+    </Badge>
+  );
+}
+
+function DeploymentBadges({ deployments }: { deployments: { workbook_id: string; title: string }[] }) {
   if (deployments.length === 0) return null;
 
   const visible = deployments.slice(0, MAX_VISIBLE_WORKBOOKS);
@@ -113,6 +140,8 @@ function BundleExpandable({
 }) {
   const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const { data: deployments = [] } = useDeployments(bundle.id);
+  const readiness = getReadiness(bundle.scope_level, deployments.length);
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
@@ -128,9 +157,10 @@ function BundleExpandable({
                 <Badge variant="outline" className={`text-[10px] ${scopeColors[bundle.scope_level] ?? ""}`}>
                   {bundle.scope_level}
                 </Badge>
+                <ReadinessBadge state={readiness} />
               </div>
               <p className="text-xs text-muted-foreground line-clamp-1">{bundle.description}</p>
-              <DeploymentBadges bundleId={bundle.id} />
+              <DeploymentBadges deployments={deployments} />
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <div className="text-right mr-1">
