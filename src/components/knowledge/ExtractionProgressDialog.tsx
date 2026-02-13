@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { FileText, Brain, Sparkles, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { FileText, Brain, Sparkles, CheckCircle2, X } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 export type ExtractionPhase = "uploading" | "analyzing" | "extracting" | "done";
@@ -9,6 +10,7 @@ interface ExtractionProgressDialogProps {
   open: boolean;
   fileName: string;
   phase: ExtractionPhase;
+  onCancel?: () => void;
 }
 
 const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; icon: typeof FileText; progress: number }> = {
@@ -38,7 +40,7 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
   },
 };
 
-export function ExtractionProgressDialog({ open, fileName, phase }: ExtractionProgressDialogProps) {
+export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: ExtractionProgressDialogProps) {
   const config = PHASE_CONFIG[phase];
   const Icon = config.icon;
 
@@ -51,7 +53,6 @@ export function ExtractionProgressDialog({ open, fileName, phase }: ExtractionPr
     const timer = setInterval(() => {
       setDisplayProgress(prev => {
         if (prev >= target) return target;
-        // Ease toward target, slower as we approach
         const step = Math.max(0.3, (target - prev) * 0.08);
         return Math.min(prev + step, target);
       });
@@ -132,6 +133,18 @@ export function ExtractionProgressDialog({ open, fileName, phase }: ExtractionPr
               );
             })}
           </div>
+
+          {/* Cancel button */}
+          {phase !== "done" && onCancel && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 text-xs text-muted-foreground hover:text-destructive"
+              onClick={onCancel}
+            >
+              <X className="h-3 w-3" /> Cancel extraction
+            </Button>
+          )}
         </div>
       </DialogContent>
     </Dialog>

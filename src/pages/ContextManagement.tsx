@@ -188,6 +188,7 @@ export default function ContextManagementPage() {
   const [extractionDocName, setExtractionDocName] = useState("");
   const [reviewOpen, setReviewOpen] = useState(false);
   const [extractionPhase, setExtractionPhase] = useState<ExtractionPhase>("uploading");
+  const extractionAbortRef = useRef<AbortController | null>(null);
   // Governance state
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
   const [impactSimOpen, setImpactSimOpen] = useState(false);
@@ -337,15 +338,20 @@ export default function ContextManagementPage() {
       toast({ title: "File too large", description: "Max 20MB", variant: "destructive" });
       return;
     }
+    const abortController = new AbortController();
+    extractionAbortRef.current = abortController;
     setExtractionPhase("uploading");
     setExtractionDocName(file.name);
     setLoomExtracting(true);
+    let filePath: string | null = null;
+    let docId: string | null = null;
     try {
-      const filePath = `${user.id}/${Date.now()}-${file.name}`;
+      filePath = `${user.id}/${Date.now()}-${file.name}`;
       const { error: uploadErr } = await supabase.storage
         .from("personal-documents")
         .upload(filePath, file);
       if (uploadErr) throw uploadErr;
+      if (abortController.signal.aborted) throw new Error("Cancelled");
 
       setExtractionPhase("analyzing");
 
@@ -362,27 +368,47 @@ export default function ContextManagementPage() {
         .select("id")
         .single();
       if (insertErr || !docRow) throw insertErr ?? new Error("Insert failed");
+      docId = docRow.id;
+      if (abortController.signal.aborted) throw new Error("Cancelled");
 
       setExtractionPhase("extracting");
 
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
         body: { documentId: docRow.id, source_type: "loom" },
       });
+      if (abortController.signal.aborted) throw new Error("Cancelled");
       if (error) throw error;
       if (data.error) throw new Error(data.error);
 
       setExtractionPhase("done");
-      // Brief pause to show completion state
       await new Promise(r => setTimeout(r, 800));
 
       setExtractionResult(data as ExtractionResult);
       setReviewOpen(true);
     } catch (err: any) {
-      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+      if (err.message === "Cancelled") {
+        // Cleanup uploaded file & document row
+        if (filePath) {
+          await supabase.storage.from("personal-documents").remove([filePath]).catch(() => {});
+        }
+        if (docId) {
+          try { await supabase.from("personal_documents").delete().eq("id", docId); } catch {}
+        }
+        toast({ title: "Extraction cancelled" });
+      } else {
+        toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+      }
     } finally {
+      extractionAbortRef.current = null;
       setLoomExtracting(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
+  };
+
+  const handleCancelExtraction = () => {
+    extractionAbortRef.current?.abort();
+    extractionAbortRef.current = null;
+    setLoomExtracting(false);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -692,6 +718,7 @@ export default function ContextManagementPage() {
         open={loomExtracting}
         fileName={extractionDocName}
         phase={extractionPhase}
+        onCancel={handleCancelExtraction}
       />
 
       {/* Import Copilot (Knowledge Loom) */}
