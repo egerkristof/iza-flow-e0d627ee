@@ -9,16 +9,20 @@ import { CategoryBadge } from "./CategoryBadge";
 import {
   type ExtractionResult,
   type ExtractionDepth,
-  type ImportCopilotProps,
   EXTRACTION_DEPTH_META,
 } from "@/lib/knowledge-schema";
 
 interface CompareExtractionsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  /** The document ID to extract from */
-  documentId: string;
-  documentName: string;
+  /** Display label for the source being compared */
+  sourceName: string;
+  /**
+   * Builds the extraction request body for a given depth.
+   * The dialog will call this for each depth to get the base payload,
+   * then layer on extraction_depth and advisor_persona automatically.
+   */
+  buildBody: () => Record<string, any>;
   /** Called when user picks a result to import */
   onSelectResult: (data: ExtractionResult, depth: ExtractionDepth) => void;
 }
@@ -37,8 +41,8 @@ const DEPTHS: ExtractionDepth[] = ["quick", "guided", "deep"];
 export function CompareExtractionsDialog({
   open,
   onOpenChange,
-  documentId,
-  documentName,
+  sourceName,
+  buildBody,
   onSelectResult,
 }: CompareExtractionsDialogProps) {
   const [runs, setRuns] = useState<Record<ExtractionDepth, DepthRun>>({
@@ -56,15 +60,18 @@ export function CompareExtractionsDialog({
       deep: { state: "running", result: null, error: null, durationMs: null },
     });
 
+    const baseBody = buildBody();
+
     const runOne = async (depth: ExtractionDepth) => {
       const t0 = performance.now();
       try {
         // For guided/deep: generate advisor first
         let advisorPersona = null;
         if (depth !== "quick") {
+          const advisorContent = baseBody.content || baseBody.documentId || sourceName;
           const { data: advisorData, error: advisorError } = await supabase.functions.invoke(
             "generate-advisor",
-            { body: { content: documentName, meta: { title: documentName } } }
+            { body: { content: typeof advisorContent === "string" ? advisorContent.slice(0, 2000) : sourceName, meta: { title: sourceName } } }
           );
           if (!advisorError && advisorData && !advisorData.error) {
             advisorPersona = advisorData;
@@ -73,8 +80,7 @@ export function CompareExtractionsDialog({
 
         const { data, error } = await supabase.functions.invoke("extract-knowledge", {
           body: {
-            documentId,
-            source_type: "document",
+            ...baseBody,
             extraction_depth: depth,
             ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
           },
@@ -98,9 +104,7 @@ export function CompareExtractionsDialog({
 
     // Run all three in parallel
     await Promise.allSettled(DEPTHS.map((d) => runOne(d)));
-  }, [documentId, documentName]);
-
-  const allDone = DEPTHS.every((d) => runs[d].state === "done" || runs[d].state === "error");
+  }, [buildBody, sourceName]);
 
   const countItems = (r: ExtractionResult | null) => {
     if (!r) return { prefs: 0, items: 0, bundles: 0, bundleItems: 0, total: 0 };
@@ -117,14 +121,14 @@ export function CompareExtractionsDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
             Compare Extraction Depths
-            <Badge variant="outline" className="text-xs font-normal">{documentName}</Badge>
+            <Badge variant="outline" className="text-xs font-normal">{sourceName}</Badge>
           </DialogTitle>
         </DialogHeader>
 
         {!started ? (
           <div className="flex flex-col items-center gap-4 py-10">
             <p className="text-sm text-muted-foreground text-center max-w-md">
-              Run all three extraction depths on this document simultaneously and compare the results side-by-side.
+              Run all three extraction depths simultaneously and compare the results side-by-side.
             </p>
             <div className="flex gap-3">
               {DEPTHS.map((d) => {
@@ -139,7 +143,6 @@ export function CompareExtractionsDialog({
               })}
             </div>
             <Button onClick={runAll} className="mt-2 gap-2">
-              <Loader2 className="h-4 w-4 hidden" />
               Run All Three
             </Button>
           </div>
