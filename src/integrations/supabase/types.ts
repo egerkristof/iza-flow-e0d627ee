@@ -209,6 +209,76 @@ export type Database = {
           },
         ]
       }
+      execution_captures: {
+        Row: {
+          capture_type: Database["public"]["Enums"]["capture_type"]
+          captured_by: string
+          content: string
+          created_at: string
+          execution_id: string
+          id: string
+          metadata: Json | null
+          promoted_to_item_id: string | null
+          resolution_status: string | null
+          severity: string | null
+          step_id: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          capture_type?: Database["public"]["Enums"]["capture_type"]
+          captured_by: string
+          content: string
+          created_at?: string
+          execution_id: string
+          id?: string
+          metadata?: Json | null
+          promoted_to_item_id?: string | null
+          resolution_status?: string | null
+          severity?: string | null
+          step_id?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          capture_type?: Database["public"]["Enums"]["capture_type"]
+          captured_by?: string
+          content?: string
+          created_at?: string
+          execution_id?: string
+          id?: string
+          metadata?: Json | null
+          promoted_to_item_id?: string | null
+          resolution_status?: string | null
+          severity?: string | null
+          step_id?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "execution_captures_execution_id_fkey"
+            columns: ["execution_id"]
+            isOneToOne: false
+            referencedRelation: "protocol_executions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "execution_captures_promoted_to_item_id_fkey"
+            columns: ["promoted_to_item_id"]
+            isOneToOne: false
+            referencedRelation: "context_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "execution_captures_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "protocol_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mandate_acknowledgments: {
         Row: {
           acknowledged_at: string
@@ -367,6 +437,267 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      protocol_context_items: {
+        Row: {
+          context_item_id: string
+          created_at: string
+          id: string
+          injection_scope: string
+          protocol_id: string
+          step_id: string | null
+        }
+        Insert: {
+          context_item_id: string
+          created_at?: string
+          id?: string
+          injection_scope?: string
+          protocol_id: string
+          step_id?: string | null
+        }
+        Update: {
+          context_item_id?: string
+          created_at?: string
+          id?: string
+          injection_scope?: string
+          protocol_id?: string
+          step_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "protocol_context_items_context_item_id_fkey"
+            columns: ["context_item_id"]
+            isOneToOne: false
+            referencedRelation: "context_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "protocol_context_items_protocol_id_fkey"
+            columns: ["protocol_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_protocols"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "protocol_context_items_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "protocol_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      protocol_executions: {
+        Row: {
+          completed_at: string | null
+          compliance_score: number | null
+          created_at: string
+          current_step_id: string | null
+          drift_score: number | null
+          executed_by: string
+          id: string
+          metadata: Json | null
+          notes: string | null
+          protocol_id: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["protocol_execution_status"]
+          updated_at: string
+          workbook_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          compliance_score?: number | null
+          created_at?: string
+          current_step_id?: string | null
+          drift_score?: number | null
+          executed_by: string
+          id?: string
+          metadata?: Json | null
+          notes?: string | null
+          protocol_id: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["protocol_execution_status"]
+          updated_at?: string
+          workbook_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          compliance_score?: number | null
+          created_at?: string
+          current_step_id?: string | null
+          drift_score?: number | null
+          executed_by?: string
+          id?: string
+          metadata?: Json | null
+          notes?: string | null
+          protocol_id?: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["protocol_execution_status"]
+          updated_at?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "protocol_executions_current_step_id_fkey"
+            columns: ["current_step_id"]
+            isOneToOne: false
+            referencedRelation: "protocol_steps"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "protocol_executions_protocol_id_fkey"
+            columns: ["protocol_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_protocols"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "protocol_executions_workbook_id_fkey"
+            columns: ["workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      protocol_steps: {
+        Row: {
+          agent_prompt: string | null
+          created_at: string
+          description: string | null
+          estimated_minutes: number | null
+          gate_enforcement: string | null
+          id: string
+          is_required: boolean
+          protocol_id: string
+          source_item_id: string | null
+          step_order: number
+          step_type: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          agent_prompt?: string | null
+          created_at?: string
+          description?: string | null
+          estimated_minutes?: number | null
+          gate_enforcement?: string | null
+          id?: string
+          is_required?: boolean
+          protocol_id: string
+          source_item_id?: string | null
+          step_order?: number
+          step_type?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          agent_prompt?: string | null
+          created_at?: string
+          description?: string | null
+          estimated_minutes?: number | null
+          gate_enforcement?: string | null
+          id?: string
+          is_required?: boolean
+          protocol_id?: string
+          source_item_id?: string | null
+          step_order?: number
+          step_type?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "protocol_steps_protocol_id_fkey"
+            columns: ["protocol_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_protocols"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "protocol_steps_source_item_id_fkey"
+            columns: ["source_item_id"]
+            isOneToOne: false
+            referencedRelation: "context_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      step_executions: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          execution_id: string
+          gate_acknowledged: boolean | null
+          gate_acknowledged_at: string | null
+          gate_acknowledged_by: string | null
+          id: string
+          metadata: Json | null
+          output_chat_id: string | null
+          output_notes: string | null
+          output_task_ids: string[] | null
+          started_at: string | null
+          status: Database["public"]["Enums"]["step_execution_status"]
+          step_id: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          execution_id: string
+          gate_acknowledged?: boolean | null
+          gate_acknowledged_at?: string | null
+          gate_acknowledged_by?: string | null
+          id?: string
+          metadata?: Json | null
+          output_chat_id?: string | null
+          output_notes?: string | null
+          output_task_ids?: string[] | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["step_execution_status"]
+          step_id: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          execution_id?: string
+          gate_acknowledged?: boolean | null
+          gate_acknowledged_at?: string | null
+          gate_acknowledged_by?: string | null
+          id?: string
+          metadata?: Json | null
+          output_chat_id?: string | null
+          output_notes?: string | null
+          output_task_ids?: string[] | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["step_execution_status"]
+          step_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "step_executions_execution_id_fkey"
+            columns: ["execution_id"]
+            isOneToOne: false
+            referencedRelation: "protocol_executions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "step_executions_output_chat_id_fkey"
+            columns: ["output_chat_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_chats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "step_executions_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "protocol_steps"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -554,6 +885,67 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "workbook_members_workbook_id_fkey"
+            columns: ["workbook_id"]
+            isOneToOne: false
+            referencedRelation: "workbooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workbook_protocols: {
+        Row: {
+          bundle_id: string
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          sort_order: number
+          source_playbook_id: string
+          title: string
+          updated_at: string
+          workbook_id: string
+        }
+        Insert: {
+          bundle_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          source_playbook_id: string
+          title: string
+          updated_at?: string
+          workbook_id: string
+        }
+        Update: {
+          bundle_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          source_playbook_id?: string
+          title?: string
+          updated_at?: string
+          workbook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_protocols_bundle_id_fkey"
+            columns: ["bundle_id"]
+            isOneToOne: false
+            referencedRelation: "bundles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workbook_protocols_source_playbook_id_fkey"
+            columns: ["source_playbook_id"]
+            isOneToOne: false
+            referencedRelation: "context_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workbook_protocols_workbook_id_fkey"
             columns: ["workbook_id"]
             isOneToOne: false
             referencedRelation: "workbooks"
@@ -815,6 +1207,13 @@ export type Database = {
     Enums: {
       action_logic: "APPEND" | "OVERRIDE" | "BLOCK"
       app_role: "operator" | "architect" | "manager"
+      capture_type:
+        | "friction"
+        | "drift"
+        | "best_practice"
+        | "learning"
+        | "enhancement"
+        | "exception"
       context_category:
         | "DIRECTIVE"
         | "KNOWLEDGE"
@@ -831,7 +1230,19 @@ export type Database = {
         | "superseded"
         | "revoked"
       priority_level: "STANDARD" | "CRITICAL"
+      protocol_execution_status:
+        | "not_started"
+        | "in_progress"
+        | "paused"
+        | "completed"
+        | "abandoned"
       security_scope: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY"
+      step_execution_status:
+        | "pending"
+        | "in_progress"
+        | "completed"
+        | "skipped"
+        | "blocked"
       task_priority: "low" | "medium" | "high" | "critical"
       task_status: "todo" | "in_progress" | "blocked" | "done" | "cancelled"
       workbook_status: "draft" | "active" | "review" | "completed" | "archived"
@@ -964,6 +1375,14 @@ export const Constants = {
     Enums: {
       action_logic: ["APPEND", "OVERRIDE", "BLOCK"],
       app_role: ["operator", "architect", "manager"],
+      capture_type: [
+        "friction",
+        "drift",
+        "best_practice",
+        "learning",
+        "enhancement",
+        "exception",
+      ],
       context_category: [
         "DIRECTIVE",
         "KNOWLEDGE",
@@ -976,7 +1395,21 @@ export const Constants = {
       mandate_enforcement: ["advisory", "required_ack", "blocking"],
       mandate_status: ["draft", "published", "active", "superseded", "revoked"],
       priority_level: ["STANDARD", "CRITICAL"],
+      protocol_execution_status: [
+        "not_started",
+        "in_progress",
+        "paused",
+        "completed",
+        "abandoned",
+      ],
       security_scope: ["INTERNAL", "CONFIDENTIAL", "ADMIN_ONLY"],
+      step_execution_status: [
+        "pending",
+        "in_progress",
+        "completed",
+        "skipped",
+        "blocked",
+      ],
       task_priority: ["low", "medium", "high", "critical"],
       task_status: ["todo", "in_progress", "blocked", "done", "cancelled"],
       workbook_status: ["draft", "active", "review", "completed", "archived"],

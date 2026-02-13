@@ -71,12 +71,22 @@ export function DeployToWorkbookDialog({
       });
       if (error) throw error;
 
+      // Auto-generate protocols from the bundle
+      try {
+        await supabase.functions.invoke("generate-protocols", {
+          body: { workbook_id: workbookId, bundle_id: bundleId },
+        });
+      } catch (protoErr) {
+        console.warn("Protocol generation failed (non-blocking):", protoErr);
+      }
+
       const wb = workbooks.find((w) => w.id === workbookId);
       toast({
         title: "Bundle deployed",
-        description: `"${bundleTitle}" attached to "${wb?.title ?? "workbook"}".`,
+        description: `"${bundleTitle}" attached to "${wb?.title ?? "workbook"}". Protocols generated.`,
       });
       qc.invalidateQueries({ queryKey: ["workbook-resources"] });
+      qc.invalidateQueries({ queryKey: ["workbook-protocols"] });
       onOpenChange(false);
     } catch (err: any) {
       toast({ title: "Deploy failed", description: err.message, variant: "destructive" });
