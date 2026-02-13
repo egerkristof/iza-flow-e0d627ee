@@ -375,16 +375,19 @@ export function BundleFirstView({
           <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs" onClick={onOpenCopilot}>
             <Sparkles className="h-3.5 w-3.5" /> {copilotOpen ? "Hide AI" : "AI Copilot"}
           </Button>
-          <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-xs" onClick={onOpenLoom} disabled={loomExtracting}>
-            {loomExtracting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
-            {loomExtracting ? "Extracting…" : "Import"}
-          </Button>
-          <ExtractionDepthSelector
-            value={extractionDepth}
-            onChange={onExtractionDepthChange}
-            disabled={loomExtracting}
-            compact
-          />
+          <div className="flex items-center gap-1 rounded-md border border-border/50 bg-secondary/20 px-1.5 py-0.5">
+            <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs px-2" onClick={onOpenLoom} disabled={loomExtracting}>
+              {loomExtracting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+              {loomExtracting ? "Extracting…" : "Import"}
+            </Button>
+            <div className="h-4 w-px bg-border/50" />
+            <ExtractionDepthSelector
+              value={extractionDepth}
+              onChange={onExtractionDepthChange}
+              disabled={loomExtracting}
+              compact
+            />
+          </div>
 
           <div className="h-5 w-px bg-border/50" />
 
