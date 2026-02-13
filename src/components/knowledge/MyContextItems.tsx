@@ -73,6 +73,30 @@ export function MyContextItems() {
     },
   });
 
+  // Fetch all bundle memberships for the user's items via junction table
+  const { data: bundleMemberships = [] } = useQuery({
+    queryKey: ["item-bundle-memberships", user?.id],
+    enabled: !!user && items.length > 0,
+    queryFn: async () => {
+      const itemIds = items.map(i => i.id);
+      const { data, error } = await supabase
+        .from("context_item_bundles")
+        .select("context_item_id, bundle_id, bundles(title)")
+        .in("context_item_id", itemIds);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  // Build a lookup: itemId -> bundle names
+  const bundlesByItem = new Map<string, { id: string; title: string }[]>();
+  for (const row of bundleMemberships) {
+    const list = bundlesByItem.get(row.context_item_id) ?? [];
+    const title = (row as any).bundles?.title ?? "Untitled";
+    list.push({ id: row.bundle_id, title });
+    bundlesByItem.set(row.context_item_id, list);
+  }
+
   // ── Bulk re-analyze ──
   const handleBulkReanalyze = async () => {
     const selected = items.filter(i => selectedIds.has(i.id));
@@ -444,10 +468,17 @@ export function MyContextItems() {
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{item.content_full}</p>
-                <div className="flex items-center gap-3 mt-1.5 text-[10px] text-muted-foreground">
+                <div className="flex items-center gap-2 mt-1.5 flex-wrap text-[10px] text-muted-foreground">
                   <span>{item.security_level}</span>
                   <span>v{item.version}</span>
-                  {item.bundle_id && <span className="text-primary">📦 In bundle</span>}
+                  {(bundlesByItem.get(item.id) ?? []).map(b => (
+                    <Badge key={b.id} variant="secondary" className="text-[9px] px-1.5 py-0 h-4 gap-0.5">
+                      📦 {b.title}
+                    </Badge>
+                  ))}
+                  {(bundlesByItem.get(item.id) ?? []).length === 0 && item.bundle_id && (
+                    <span className="text-primary">📦 In bundle</span>
+                  )}
                 </div>
               </div>
               {!selectMode && (
