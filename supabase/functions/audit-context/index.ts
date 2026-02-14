@@ -17,41 +17,67 @@ When bundles are deployed to workbooks, they generate executable protocols:
 - **DIRECTIVE** = Compliance Gates (rules requiring acknowledgment before proceeding)
 - **KNOWLEDGE/RESEARCH/PRINCIPLE/PREFERENCE** = Context Injections (fed to AI during execution)
 
-## CONTEXT ITEM CATEGORIES
-- DIRECTIVE — Explicit rules/mandates → become compliance gates in execution
-- KNOWLEDGE — Factual information, domain expertise → context injection
-- PROCEDURE — Step-by-step actions → become executable protocol steps (should be atomic: ONE step per item)
-- PLAYBOOK — Strategic approaches → become protocol templates that DRIVE execution
-- PREFERENCE — Working style, communication tone → personalization context
-- RESEARCH — Findings, analyses, competitive intelligence → reference context
-- PRINCIPLE — Core beliefs, values, guiding tenets → decision-making context
+## CONTEXT ITEM CATEGORIES — DECISION RULES (follow IN ORDER)
+1. **Is it a RULE, CONSTRAINT, or MANDATE?** → **DIRECTIVE** — becomes a compliance gate in execution
+2. **Is it a STEP, CHECKLIST, or ACTIONABLE SEQUENCE?** → **PROCEDURE** — becomes an executable step (should be atomic: ONE step per item, with step_order_hint for sequence)
+3. **Is it a STRATEGY, METHODOLOGY, or MULTI-PHASE APPROACH?** → **PLAYBOOK** — becomes the protocol driver (ONE per bundle)
+4. **Is it a CORE BELIEF, VALUE, or GUIDING TENET?** → **PRINCIPLE** — shapes decision-making context
+5. **Is it RESEARCH, ANALYSIS, or INTELLIGENCE?** → **RESEARCH** — reference context
+6. **Is it a WORKING STYLE or PERSONAL PREFERENCE?** → **PREFERENCE** — personalizes AI behavior
+7. **Everything else** → **KNOWLEDGE** — factual information, domain expertise
 
 ## YOUR TASK
 Analyze the provided context items and return suggestions for improvements. Each suggestion should be one of:
-- **recategorize** — The item's category is wrong per the protocol model. E.g. a step-by-step process labeled PLAYBOOK should be PROCEDURE; a strategic overview labeled PROCEDURE should be PLAYBOOK.
+- **recategorize** — The item's category is wrong per the protocol model.
 - **enrich** — The item's content is thin or vague. Provide enriched content.
-- **split** — The item covers multiple concerns or multiple steps. Especially flag PLAYBOOKs that contain step-by-step instructions (should be split into individual PROCEDUREs). Flag PROCEDUREs that contain multiple actions (should be split into atomic steps).
+- **split** — The item covers multiple concerns or multiple steps. Especially flag PLAYBOOKs that contain step-by-step instructions.
 - **merge** — Two or more items are semantically similar or redundant. ALWAYS provide the merge_with_id field.
 - **promote_mandate** — A DIRECTIVE item should be elevated to a formal mandate (compliance gate).
 - **archive** — The item appears stale, redundant, or superseded.
 
 ## KEY AUDIT PATTERNS
-1. **PLAYBOOKs with step-by-step content** → Should be split: keep the PLAYBOOK as strategic overview, extract each step as a separate PROCEDURE
-2. **PROCEDUREs with multiple actions** → Should be split into atomic, single-step PROCEDUREs
-3. **KNOWLEDGE items with imperative language** → May actually be DIRECTIVEs (compliance gates)
+1. **PLAYBOOKs with step-by-step content** → Split: keep PLAYBOOK as strategic overview, extract each step as PROCEDURE with step_order_hint
+2. **PROCEDUREs with multiple actions** → Split into atomic, single-step PROCEDUREs
+3. **KNOWLEDGE items with imperative language** ("must", "never", "always") → May actually be DIRECTIVEs
 4. **Orphan PROCEDUREs without a PLAYBOOK** → Flag for bundling with a strategic driver
-5. **Semantic duplicates** — Items that cover the same topic in different words
+5. **Semantic duplicates** — Items covering the same topic in different words → merge suggestion
+6. **Frameworks/models classified as PLAYBOOK** (BANT, DISK, Porter's) → Should be KNOWLEDGE
+7. **Missing PRINCIPLE items** — Values and beliefs buried in KNOWLEDGE items that should be elevated
+8. **PROCEDUREs without step_order_hint** → Flag for sequence assignment
+
+## PLAYBOOK TEST (apply to every PLAYBOOK)
+Ask: (1) Does it define the STRATEGIC INTENT of a phase? (2) Would an operator use it as a MISSION STATEMENT? (3) Does it describe WHAT & WHY, leaving HOW to PROCEDUREs?
+If any answer is NO → it's probably PROCEDURE or KNOWLEDGE, not PLAYBOOK.
 
 Be specific and actionable. Only suggest genuinely valuable improvements.`;
 
-const CHAT_SYSTEM_PROMPT = `You are a **Knowledge Graph Copilot** for the AACE context management system. You help users understand, audit, and improve their knowledge graph.
+const CHAT_SYSTEM_PROMPT = `You are a **Knowledge Graph Copilot** for the AACE context management system. You help users understand, audit, and improve their knowledge graph through conversation.
 
 ## PROTOCOL EXECUTION MODEL
 When bundles are deployed to workbooks, they generate executable protocols:
-- **PLAYBOOK** = Protocol Template (strategic driver — defines WHAT and WHY)  
-- **PROCEDURE** = Executable Steps (ordered actions operators follow — one step per item)
-- **DIRECTIVE** = Compliance Gates (rules requiring acknowledgment)
+- **PLAYBOOK** = Protocol Template (strategic driver — defines WHAT and WHY)
+- **PROCEDURE** = Executable Steps (ordered actions operators follow — one step per item, with step_order_hint for sequence)
+- **DIRECTIVE** = Compliance Gates (rules requiring acknowledgment before proceeding)
 - **KNOWLEDGE/RESEARCH/PRINCIPLE/PREFERENCE** = Context Injections (fed to AI during execution)
+
+## CONTEXT ITEM CATEGORIES — DECISION RULES (follow IN ORDER)
+1. **RULE/CONSTRAINT/MANDATE** → **DIRECTIVE** — compliance gate
+2. **STEP/CHECKLIST/ACTION** → **PROCEDURE** — executable step (atomic, with step_order_hint)
+3. **STRATEGY/METHODOLOGY** → **PLAYBOOK** — protocol driver (ONE per bundle)
+4. **CORE BELIEF/VALUE** → **PRINCIPLE** — decision-making context
+5. **RESEARCH/ANALYSIS/DATA** → **RESEARCH** — reference context
+6. **WORKING STYLE/PREFERENCE** → **PREFERENCE** — AI personalization
+7. **Everything else** → **KNOWLEDGE** — factual information
+
+## COMMON MISCLASSIFICATION PATTERNS
+- Frameworks (BANT, DISK, Porter's) classified as PLAYBOOK → should be KNOWLEDGE
+- Step-by-step sequences classified as PLAYBOOK → should be PROCEDURE
+- Imperative rules ("must", "never") classified as KNOWLEDGE → should be DIRECTIVE
+- Values and beliefs classified as KNOWLEDGE → should be PRINCIPLE
+
+## PLAYBOOK TEST
+Ask: (1) Strategic intent of a phase? (2) Mission statement for an operator? (3) WHAT & WHY only, not HOW?
+All YES → PLAYBOOK. Any NO → likely PROCEDURE or KNOWLEDGE.
 
 You can discuss:
 - How to structure bundles for optimal protocol execution (PLAYBOOK drives, PROCEDUREs are steps, DIRECTIVEs are gates)
@@ -64,6 +90,7 @@ You can discuss:
 - When to promote directives to mandates (compliance gates)
 - How to improve content quality and reduce duplication
 - How bundles map to protocol execution in workbooks
+- How step_order_hint affects PROCEDURE execution sequence
 
 ## IMPORTANT: RE-AUDIT TRIGGER
 When the user asks you to re-audit, run an audit, re-analyze, rescan, or otherwise requests a fresh audit of their knowledge graph, you MUST include the exact token **[TRIGGER_REAUDIT]** at the very end of your response. This token will be detected by the system to automatically trigger a re-audit. Provide a brief confirmation message before the token, e.g. "Sure, I'll kick off a fresh audit now. [TRIGGER_REAUDIT]"
@@ -150,12 +177,13 @@ serve(async (req) => {
 
     if (action === "chat") {
       // Conversational chat about the knowledge graph
-      const { messages, graph_context } = body;
+      const { messages, graph_context, system_override } = body;
       if (!messages || !Array.isArray(messages)) throw new Error("messages array required for chat");
 
-      const activeChatPrompt = await loadPrompt("audit-context-chat", CHAT_SYSTEM_PROMPT);
+      // Use system_override if provided (e.g. from Admin Copilot), otherwise load from DB
+      const activeChatPrompt = system_override || await loadPrompt("audit-context-chat", CHAT_SYSTEM_PROMPT);
 
-      const contextBlock = graph_context
+      const contextBlock = graph_context && graph_context.length > 0
         ? `\n\nCurrent knowledge graph snapshot (${graph_context.length} items):\n${graph_context.map((i: any) => `- [${i.category}] "${i.title}"`).join("\n")}`
         : "";
 

@@ -31,7 +31,14 @@ When bundles are deployed to workbooks, they generate executable protocols:
 - **DIRECTIVE** = Compliance Gates (rules that require acknowledgment before proceeding)
 - **KNOWLEDGE/RESEARCH/PRINCIPLE/PREFERENCE** = Context Injections (fed to AI during execution)
 
-## Categories: DIRECTIVE, KNOWLEDGE, PROCEDURE, PLAYBOOK, PREFERENCE, RESEARCH, PRINCIPLE
+## CATEGORY DECISION RULES — follow this checklist IN ORDER:
+1. Is it a RULE, CONSTRAINT, or MANDATE? → DIRECTIVE
+2. Is it a STEP, CHECKLIST, or ACTIONABLE SEQUENCE? → PROCEDURE (set step_order_hint for execution order)
+3. Is it a STRATEGY, METHODOLOGY, or MULTI-PHASE APPROACH? → PLAYBOOK
+4. Is it a CORE BELIEF, VALUE, or GUIDING TENET? → PRINCIPLE
+5. Is it RESEARCH, ANALYSIS, or INTELLIGENCE? → RESEARCH
+6. Is it a WORKING STYLE or PERSONAL PREFERENCE? → PREFERENCE
+7. Everything else → KNOWLEDGE
 
 ## Rules
 - Preserve all meaningful information — don't lose content during refinement
@@ -39,9 +46,10 @@ When bundles are deployed to workbooks, they generate executable protocols:
 - If the user asks to merge items, combine them intelligently  
 - If the user asks to recategorize, change the category following the protocol model
 - When splitting a PLAYBOOK into steps, create individual PROCEDURE items for each step and keep the PLAYBOOK as the strategic overview only
-- PROCEDUREs should be atomic, ordered actions — one step per item
+- PROCEDUREs should be atomic, ordered actions — one step per item. Always set step_order_hint (1, 2, 3...) to preserve execution sequence.
 - DIRECTIVEs should be clear rules/constraints that become compliance gates
 - Always return items with title, content, category, and type fields
+- When items have step_order_hint values, preserve or reassign them logically when splitting/merging
 - Return a brief analysis_notes explaining what you changed and why, referencing the protocol model`;
 
     const activePrompt = await loadPrompt("refine-extraction-system", FALLBACK_PROMPT);

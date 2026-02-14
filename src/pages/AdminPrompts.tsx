@@ -224,11 +224,9 @@ export default function AdminPromptsPage() {
       const { data, error } = await supabase.functions.invoke("audit-context", {
         body: {
           action: "chat",
-          messages: [
-            { role: "system", content: ADMIN_COPILOT_CONTEXT + `\n\n## CURRENT PROMPTS IN THE SYSTEM:\n\n${promptContext}` },
-            ...newMessages.map(m => ({ role: m.role, content: m.content })),
-          ],
+          messages: newMessages.map(m => ({ role: m.role, content: m.content })),
           graph_context: [],
+          system_override: ADMIN_COPILOT_CONTEXT + `\n\n## CURRENT PROMPTS IN THE SYSTEM:\n\n${promptContext}`,
         },
       });
 
