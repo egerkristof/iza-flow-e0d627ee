@@ -18,7 +18,7 @@ serve(async (req) => {
     if (!instruction) throw new Error("instruction required");
 
     const itemsSummary = items.map((it: any, i: number) =>
-      `[${i + 1}] (${it.type}) Title: "${it.title}" | Category: ${it.category || "N/A"} | Content: "${(it.content || it.preference_value || "").slice(0, 300)}"`
+      `[${i + 1}] (${it.type}) Title: "${it.title}" | Category: ${it.category || "N/A"}${it.is_suggestion ? " | ⚠️ AI-Suggested" : ""} | Content: "${(it.content || it.preference_value || "").slice(0, 300)}"`
     ).join("\n");
 
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -89,6 +89,7 @@ When bundles are deployed to workbooks, they generate executable protocols:
                         original_index: { type: "number", description: "Original item index (0-based) this came from, or -1 if new" },
                         bundle_index: { type: "number", description: "For bundle items: which bundle this belongs to" },
                         bundle_item_index: { type: "number", description: "For bundle items: original position within the bundle" },
+                        is_suggestion: { type: "boolean", description: "True if this content was AI-generated to fill a gap, not from the source document. Preserve from original items when present." },
                       },
                       required: ["type", "title", "content", "category", "original_index"],
                       additionalProperties: false,
