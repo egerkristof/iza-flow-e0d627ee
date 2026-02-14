@@ -255,6 +255,13 @@ function BundleExpandable({
                     {/* Playbook trees with owned children */}
                     {playbooks.map(playbook => {
                       const children = ownedByPlaybook.get(playbook.id) || [];
+                      // Sort: PROCEDUREs first (they are the playbook's steps), then DIRECTIVEs, then others
+                      const sortedChildren = [...children].sort((a, b) => {
+                        const order = (cat: string) => cat === "PROCEDURE" ? 0 : cat === "DIRECTIVE" ? 1 : 2;
+                        return order(a.category) - order(b.category);
+                      });
+                      const procedures = sortedChildren.filter(i => i.category === "PROCEDURE");
+                      const others = sortedChildren.filter(i => i.category !== "PROCEDURE");
                       return (
                         <div key={playbook.id}>
                           {/* Playbook header */}
@@ -268,7 +275,9 @@ function BundleExpandable({
                                   Protocol Driver
                                 </Badge>
                                 {children.length > 0 && (
-                                  <span className="text-[9px] text-muted-foreground">→ {children.length} owned</span>
+                                  <span className="text-[9px] text-muted-foreground">
+                                    → {procedures.length} step{procedures.length !== 1 ? "s" : ""}{others.length > 0 ? `, ${others.length} gate${others.length !== 1 ? "s" : ""}` : ""}
+                                  </span>
                                 )}
                               </div>
                               <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{playbook.content_preview}</p>
@@ -282,29 +291,64 @@ function BundleExpandable({
                               </Button>
                             </div>
                           </div>
-                          {/* Owned children nested under playbook */}
-                          {children.map(item => (
-                            <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-2 group/item hover:bg-secondary/20 transition-colors border-l-2 border-orange-500/10 ml-4">
-                              <div className="h-3.5 w-px bg-orange-500/20 shrink-0 -ml-2 mr-1" />
-                              <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-xs font-medium truncate">{item.title}</span>
-                                  <CategoryBadge category={item.category} />
-                                  <span className="text-[9px] text-muted-foreground/60">(owned)</span>
+                          {/* Procedures (steps) grouped together */}
+                          {procedures.length > 0 && (
+                            <div className="ml-4 border-l-2 border-orange-500/10">
+                              <div className="px-4 pt-1.5 pb-0.5 pl-10">
+                                <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Steps</span>
+                              </div>
+                              {procedures.map((item, idx) => (
+                                <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-1.5 group/item hover:bg-secondary/20 transition-colors">
+                                  <span className="text-[9px] font-mono text-muted-foreground/50 w-4 text-right shrink-0">{idx + 1}.</span>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xs font-medium truncate">{item.title}</span>
+                                      <CategoryBadge category={item.category} />
+                                    </div>
+                                    <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                                  </div>
+                                  <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                                      <Pencil className="h-3 w-3" />
+                                    </Button>
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                                      <Trash2 className="h-3 w-3" />
+                                    </Button>
+                                  </div>
                                 </div>
-                                <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
-                              </div>
-                              <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
-                                  <Pencil className="h-3 w-3" />
-                                </Button>
-                                <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
-                                  <Trash2 className="h-3 w-3" />
-                                </Button>
-                              </div>
+                              ))}
                             </div>
-                          ))}
+                          )}
+                          {/* Other owned items (DIRECTIVEs, etc.) */}
+                          {others.length > 0 && (
+                            <div className="ml-4 border-l-2 border-orange-500/10">
+                              {procedures.length > 0 && (
+                                <div className="px-4 pt-1.5 pb-0.5 pl-10">
+                                  <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Gates & Context</span>
+                                </div>
+                              )}
+                              {others.map(item => (
+                                <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-1.5 group/item hover:bg-secondary/20 transition-colors">
+                                  <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xs font-medium truncate">{item.title}</span>
+                                      <CategoryBadge category={item.category} />
+                                    </div>
+                                    <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                                  </div>
+                                  <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                                      <Pencil className="h-3 w-3" />
+                                    </Button>
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                                      <Trash2 className="h-3 w-3" />
+                                    </Button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       );
                     })}
