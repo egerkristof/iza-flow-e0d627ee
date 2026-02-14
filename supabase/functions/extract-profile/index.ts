@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
+import { loadPrompt } from "../_shared/load-prompt.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -76,6 +77,9 @@ serve(async (req) => {
 
     const textContent = await fileData.text();
 
+    // Load prompt from DB with fallback
+    const activePrompt = await loadPrompt("extract-profile-system", SYSTEM_PROMPT);
+
     // Use a stronger model for deep extraction
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -86,7 +90,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: activePrompt },
           {
             role: "user",
             content: `Analyze the following document thoroughly and extract ALL knowledge elements. Be exhaustive — every actionable fact, rule, process, insight, or preference should become a context item.
