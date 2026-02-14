@@ -50,7 +50,7 @@ Ask THREE questions:
 5. Suggest related existing items from the user's knowledge (by ID) that overlap or conflict
 6. Flag if this is likely a duplicate of an existing item
 
-Be precise and actionable. The captured finding should be useful out of context.`;`
+Be precise and actionable. The captured finding should be useful out of context.`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
