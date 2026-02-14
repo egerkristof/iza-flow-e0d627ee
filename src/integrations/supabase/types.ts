@@ -14,6 +14,92 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_prompt_versions: {
+        Row: {
+          change_note: string | null
+          changed_by: string | null
+          content: string
+          created_at: string
+          id: string
+          prompt_id: string
+          version: number
+        }
+        Insert: {
+          change_note?: string | null
+          changed_by?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          prompt_id: string
+          version: number
+        }
+        Update: {
+          change_note?: string | null
+          changed_by?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          prompt_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_prompt_versions_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "ai_prompts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_prompts: {
+        Row: {
+          content: string
+          created_at: string
+          description: string | null
+          function_name: string
+          id: string
+          is_active: boolean
+          label: string
+          model: string | null
+          prompt_type: string
+          slug: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          description?: string | null
+          function_name: string
+          id?: string
+          is_active?: boolean
+          label: string
+          model?: string | null
+          prompt_type?: string
+          slug: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          description?: string | null
+          function_name?: string
+          id?: string
+          is_active?: boolean
+          label?: string
+          model?: string | null
+          prompt_type?: string
+          slug?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: []
+      }
       bundles: {
         Row: {
           created_at: string
