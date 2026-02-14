@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Brain, BookOpen, Library, BarChart3, User, LogOut, ChevronDown } from "lucide-react";
+import { Brain, BookOpen, Library, BarChart3, User, LogOut, ChevronDown, FileCode2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/lib/auth";
@@ -24,6 +24,7 @@ const navItems = [
   { title: "Context", url: "/context", icon: Library, hideForRoles: ["operator"] },
   { title: "Oversight", url: "/oversight", icon: BarChart3, hideForRoles: [] as string[] },
   { title: "My Knowledge", url: "/my-knowledge", icon: User, hideForRoles: [] as string[] },
+  { title: "AI Prompts", url: "/admin/prompts", icon: FileCode2, hideForRoles: ["operator", "manager"] },
 ];
 
 export function AppSidebar() {
