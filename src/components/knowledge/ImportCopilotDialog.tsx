@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -28,6 +28,7 @@ import {
   computeBundleReadiness,
 } from "@/lib/knowledge-schema";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
+import { cn } from "@/lib/utils";
 
 // ─── Smart Suggestion Engine ─────────────────────────────────────────────────
 interface SmartSuggestion {
@@ -219,6 +220,7 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
 
   // Mandate promotion tracking — keys are "standalone-{idx}" or "bundle-{bi}-{ji}"
   const [mandateFlags, setMandateFlags] = useState<Record<string, { is_mandate: boolean; enforcement_level: "advisory" | "required_ack" | "blocking" }>>({});
+  const [hideSuggestions, setHideSuggestions] = useState(false);
 
   const resolveItem = (original: ExtractedContextItem, edits?: Partial<ExtractedContextItem>): ExtractedContextItem => ({
     ...original,
@@ -889,9 +891,38 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
   });
 
+  // Count AI suggestions across all items
+  const suggestionCount = useMemo(() => {
+    if (!data) return 0;
+    let count = 0;
+    const bs = data.bundles || [];
+    data.context_items.forEach(ci => { if (ci.is_suggestion) count++; });
+    bs.forEach(b => b.items.forEach(it => { if (it.is_suggestion) count++; }));
+    return count;
+  }, [data]);
+
+  // Filtered items based on hideSuggestions toggle
+  const visibleStandaloneItems = useMemo(() => {
+    if (!data) return [];
+    if (!hideSuggestions) return data.context_items.map((ci, i) => ({ ci, i }));
+    return data.context_items.map((ci, i) => ({ ci, i })).filter(({ ci, i }) => {
+      const resolved = resolveItem(ci, itemEdits[i]);
+      return !resolved.is_suggestion;
+    });
+  }, [data, hideSuggestions, itemEdits, resolveItem]);
+
+  const getVisibleBundleItems = useCallback((bundle: ExtractedBundle, bundleIdx: number) => {
+    if (!hideSuggestions) return bundle.items.map((item, j) => ({ item, j }));
+    return bundle.items.map((item, j) => ({ item, j })).filter(({ item, j }) => {
+      const resolved = resolveItem(item, bundleItemEdits[`${bundleIdx}-${j}`]);
+      return !resolved.is_suggestion;
+    });
+  }, [hideSuggestions, bundleItemEdits, resolveItem]);
+
   if (!data) return null;
 
   const bundles = data.bundles || [];
+
   const totalSelected = selectedPrefs.size + selectedItems.size + selectedBundles.size;
   const totalBundleItems = bundles.reduce((sum, b, i) => sum + (selectedBundles.has(i) ? b.items.length : 0), 0);
   const assignedCount = Object.entries(itemBundleAssignment).filter(
@@ -1059,6 +1090,24 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             })()}
             {" "}Click any category badge to re-categorize. Drag to reorder steps.
           </p>
+          {/* AI Suggestion filter toggle */}
+          {suggestionCount > 0 && (
+            <div className="flex items-center gap-2 mt-1.5">
+              <button
+                onClick={() => setHideSuggestions(!hideSuggestions)}
+                className={cn(
+                  "flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full border transition-colors",
+                  hideSuggestions
+                    ? "border-yellow-500/40 bg-yellow-500/10 text-yellow-400"
+                    : "border-border/50 text-muted-foreground hover:border-yellow-500/30 hover:text-yellow-400"
+                )}
+              >
+                {hideSuggestions ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                <Lightbulb className="h-2.5 w-2.5" />
+                {hideSuggestions ? `${suggestionCount} AI suggestions hidden` : `${suggestionCount} AI suggestion${suggestionCount !== 1 ? "s" : ""}`}
+              </button>
+            </div>
+          )}
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto space-y-4 -mx-6 px-6" style={{ maxHeight: "calc(85vh - 200px)" }}>
@@ -1327,41 +1376,55 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                           </div>
                         );
                       })()}
-                      {bundle.items.map((item, j) => {
-                        const resolvedCat = bundleItemEdits[`${i}-${j}`]?.category || item.category;
-                        const roleMeta = PROTOCOL_ROLE_META[resolvedCat] || PROTOCOL_ROLE_META.KNOWLEDGE;
+                      {(() => {
+                        const visibleItems = getVisibleBundleItems(bundle, i);
+                        const hiddenCount = bundle.items.length - visibleItems.length;
                         return (
-                        <div key={j}>
-                          {/* Drop zone before this item */}
-                          <div
-                            onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-before-${j}`); }}
-                            onDragLeave={(e) => handleDragLeave(e, `bundle-${i}-before-${j}`)}
-                            onDrop={(e) => { e.stopPropagation(); handleDropOnBundle(e, i, j); }}
-                            className={`h-1 -mx-1 rounded transition-all ${
-                              dropTarget === `bundle-${i}-before-${j}` ? "h-2 bg-primary/30 my-1" : "my-0.5"
-                            }`}
-                          />
-                          <div
-                            draggable
-                            onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
-                            onDragEnd={handleDragEnd}
-                            className="rounded border border-border/30 bg-background/50 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
-                          >
-                            <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
-                              <GripVertical className="h-3 w-3 text-muted-foreground/50" />
-                              <span className="text-[9px] leading-none" title={roleMeta.label}>{roleMeta.icon}</span>
-                            </div>
-                            {renderEditableItem(
-                              item,
-                              bundleItemEdits[`${i}-${j}`],
-                              `bundle-${i}-${j}`,
-                              (field, value) => updateBundleItemEdit(i, j, field, value),
-                              true,
+                          <>
+                            {visibleItems.map(({ item, j }) => {
+                              const resolvedCat = bundleItemEdits[`${i}-${j}`]?.category || item.category;
+                              const roleMeta = PROTOCOL_ROLE_META[resolvedCat] || PROTOCOL_ROLE_META.KNOWLEDGE;
+                              return (
+                              <div key={j}>
+                                {/* Drop zone before this item */}
+                                <div
+                                  onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-before-${j}`); }}
+                                  onDragLeave={(e) => handleDragLeave(e, `bundle-${i}-before-${j}`)}
+                                  onDrop={(e) => { e.stopPropagation(); handleDropOnBundle(e, i, j); }}
+                                  className={`h-1 -mx-1 rounded transition-all ${
+                                    dropTarget === `bundle-${i}-before-${j}` ? "h-2 bg-primary/30 my-1" : "my-0.5"
+                                  }`}
+                                />
+                                <div
+                                  draggable
+                                  onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
+                                  onDragEnd={handleDragEnd}
+                                  className="rounded border border-border/30 bg-background/50 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
+                                >
+                                  <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
+                                    <GripVertical className="h-3 w-3 text-muted-foreground/50" />
+                                    <span className="text-[9px] leading-none" title={roleMeta.label}>{roleMeta.icon}</span>
+                                  </div>
+                                  {renderEditableItem(
+                                    item,
+                                    bundleItemEdits[`${i}-${j}`],
+                                    `bundle-${i}-${j}`,
+                                    (field, value) => updateBundleItemEdit(i, j, field, value),
+                                    true,
+                                  )}
+                                </div>
+                              </div>
+                              );
+                            })}
+                            {hiddenCount > 0 && (
+                              <div className="text-[10px] text-yellow-400/70 flex items-center gap-1 py-1 px-2">
+                                <Lightbulb className="h-2.5 w-2.5" />
+                                {hiddenCount} AI suggestion{hiddenCount !== 1 ? "s" : ""} hidden
+                              </div>
                             )}
-                          </div>
-                        </div>
+                          </>
                         );
-                      })}
+                      })()}
                       {/* Drop zone after last item */}
                       <div
                         onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-after-last`); }}
@@ -1406,7 +1469,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-                  <BookUp className="h-3 w-3" /> Standalone Context Items ({data.context_items.length})
+                  <BookUp className="h-3 w-3" /> Standalone Context Items ({visibleStandaloneItems.length}{hideSuggestions && visibleStandaloneItems.length !== data.context_items.length ? `/${data.context_items.length}` : ""})
                   {dragSource?.type === "bundle" && (
                     <span className="text-[10px] text-primary font-normal ml-1">↓ Drop here to make standalone</span>
                   )}
@@ -1425,7 +1488,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                   <span className="text-[10px] text-muted-foreground">Select all</span>
                 </label>
               </div>
-              {data.context_items.map((ci, i) => (
+              {visibleStandaloneItems.map(({ ci, i }) => (
                 <div
                   key={i}
                   draggable
