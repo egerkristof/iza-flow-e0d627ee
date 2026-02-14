@@ -80,14 +80,21 @@ This means within a bundle:
 Bundles are **curated collections** of related context items that form a deployable execution unit.
 
 **CRITICAL: Bundle Structure Rules**
-- Every bundle SHOULD have exactly 1 PLAYBOOK item (the strategic driver)
+- A bundle CAN have MULTIPLE PLAYBOOK items — each represents a distinct activatable action/workflow
+- When a bundle is deployed to a workbook, EACH PLAYBOOK generates a SEPARATE protocol that operators can activate based on intent or explicitly
 - PROCEDURE items within a bundle MUST have step_order_hint set (1, 2, 3...) to define execution order
 - DIRECTIVE items act as gates — place them where compliance checks naturally occur
 - KNOWLEDGE, RESEARCH, PRINCIPLE items provide context — they inform but don't drive execution
 - If content describes a process with steps, extract EACH STEP as a separate PROCEDURE item with step_order_hint
 
+**PLAYBOOK multiplicity guidance:**
+- A phase bundle describing a sales stage might have: "Run Discovery Call" (playbook 1), "Build Proposal" (playbook 2), "Handle Objection" (playbook 3) — each becomes a separate executable protocol
+- Each PLAYBOOK defines the WHAT and WHY for ONE specific action an operator can take
+- PROCEDUREs, DIRECTIVEs, KNOWLEDGE etc. are SHARED across all protocols generated from the bundle — they form the common execution context
+- Think of PLAYBOOKs as "menu items" an operator can choose when working within this domain
+
 **Bundle types to consider:**
-- A Playbook document → 1 PLAYBOOK (strategy) + multiple PROCEDUREs (ordered steps) + DIRECTIVEs (gates) + KNOWLEDGE (context)
+- A methodology document → Multiple PLAYBOOKs (activatable strategies) + PROCEDUREs (shared steps) + DIRECTIVEs (gates) + KNOWLEDGE (context)
 - A domain expertise document → KNOWLEDGE bundle
 - A policy/governance document → DIRECTIVE and PRINCIPLE items
 - A research report → RESEARCH bundle
@@ -139,9 +146,9 @@ Before extracting individual items, identify the **full structural blueprint**:
 - If a single phase contains MORE THAN 15 items after extraction, it MUST be split into 2-3 sub-phase bundles
 - Sub-phases MUST EACH pass the Deployability Test independently
 - Sub-phase naming: use the original phase letter + numeric suffix + descriptive label (e.g., "B1. Customer Discovery & First Meeting", "B2. Qualification & Opportunity Assessment")
-- Each sub-phase bundle MUST have exactly 1 PLAYBOOK driver (the strategic intent of that sub-phase)
+- Each sub-phase bundle MUST have at least 1 PLAYBOOK driver (the strategic intent of that sub-phase)
 - When splitting, group items by natural workflow stages, NOT arbitrarily by count
-- After splitting, verify each sub-phase has: 1 PLAYBOOK, 2+ PROCEDUREs, and relevant KNOWLEDGE/DIRECTIVE items
+- After splitting, verify each sub-phase has: 1+ PLAYBOOKs, 2+ PROCEDUREs, and relevant KNOWLEDGE/DIRECTIVE items
 
 **WRONG (over-fragmented):**
   B. Deal Governance: Categories    — split by aspect
@@ -155,19 +162,19 @@ Before extracting individual items, identify the **full structural blueprint**:
   B. Deal Categories & Governance [1 bundle with all governance items]
   B. Customer Need Discovery & Qualification [1 bundle with all B1 steps as PROCEDUREs]
 
-### 4. PLAYBOOK Classification — STRICT Rules (Most Common Misclassification)
-**A PLAYBOOK is the SINGLE strategic driver of a bundle — the protocol's intent anchor.**
+### 4. PLAYBOOK Classification — Intent-Based Protocol Drivers
+**Each PLAYBOOK becomes a SEPARATE executable protocol when the bundle is deployed to a workbook.**
 
 **The PLAYBOOK Test (apply to EVERY candidate):**
 Ask THREE questions:
-1. _"Does this item define the STRATEGIC INTENT of an entire phase/bundle?"_ — If NO → not a PLAYBOOK
-2. _"Would an operator use this as the MISSION STATEMENT when starting work?"_ — If NO → not a PLAYBOOK  
+1. _"Does this item define the STRATEGIC INTENT of a specific action an operator can take?"_ — If NO → not a PLAYBOOK
+2. _"Would an operator select this from a menu of available actions when working in this domain?"_ — If NO → not a PLAYBOOK
 3. _"Does it describe the WHAT & WHY at a high level, leaving HOW to PROCEDUREs?"_ — If NO → not a PLAYBOOK
 
-**IS a PLAYBOOK (protocol driver) — ONLY these patterns:**
-- The strategic overview of an entire phase (one per phase bundle)
-- A methodology's high-level EXECUTION philosophy
-- A multi-phase operational strategy defining goals and stages
+**IS a PLAYBOOK (protocol driver) — these patterns:**
+- A distinct activatable strategy or workflow within a phase (e.g., "Run Discovery Call", "Build Proposal", "Handle Objection")
+- The strategic overview of an entire phase (the "master" playbook)
+- An intent-triggered action plan (activates when a specific situation arises)
 
 **Is NOT a PLAYBOOK — COMMON MISTAKES to avoid:**
 - ❌ An analytical FRAMEWORK or MODEL (BANT, DISK, Porter's 5 Forces, Buying Center) → **KNOWLEDGE**
@@ -175,13 +182,13 @@ Ask THREE questions:
 - ❌ A step-by-step SEQUENCE (e.g., "Introduction Call Sequence") → **PROCEDURE** (with step_order_hint)
 - ❌ A decision PROCESS (e.g., "Selecting a Strategy Framework") → **PROCEDURE** (decision workflow)
 - ❌ A process DESCRIPTION or FLOW diagram → **KNOWLEDGE** (reference, not driver)
-- ❌ A sub-process within a larger phase → **PROCEDURE** (execution step, not strategic driver)
-- ❌ A pre-qualification or assessment PROCESS → **PROCEDURE** (actionable, not strategic)
 - ❌ Competitive strategy REFERENCE material → **KNOWLEDGE** (informational context)
 
-**HARD LIMIT: Each bundle MUST have exactly 1 PLAYBOOK item. Never 0, never 2+.**
-- If you find yourself assigning 2+ PLAYBOOKs to one bundle, keep ONLY the most strategic one and reclassify the rest
-- If a bundle genuinely needs multiple strategic perspectives, it should be SPLIT into sub-phase bundles
+**MULTIPLE PLAYBOOKs PER BUNDLE: ALLOWED & ENCOURAGED when appropriate.**
+- Each PLAYBOOK = one executable protocol operators can activate
+- Bundle's PROCEDUREs, DIRECTIVEs, KNOWLEDGE are shared across all its protocols
+- A bundle with 0 PLAYBOOKs is valid (context-only bundle — provides supporting knowledge)
+- Ask: _"Are there multiple distinct ACTIONS an operator might take in this domain?"_ → Each action = 1 PLAYBOOK
 
 ### 5. Content Completeness Scoring
 For EVERY bundle, assess documentation quality:
@@ -215,11 +222,11 @@ In analysis_notes AND each bundle's coverage_gaps array, flag:
 After extraction, validate ALL of the following:
 1. **Phase label uniqueness**: No two bundles share the same phase prefix letter/number
 2. **Phase sequence completeness**: No gaps in sequential labels (A, B, C... must be contiguous; missing = skeleton)
-3. **PLAYBOOK count per bundle**: Every bundle has EXACTLY 1 PLAYBOOK item
+3. **PLAYBOOK quality**: Every PLAYBOOK passes the PLAYBOOK Test (defines strategic intent of an activatable action)
 4. **Bundle size limit**: No bundle exceeds 15 items (split into sub-phases if so)
 5. **PROCEDURE step_order_hint**: Every PROCEDURE item has step_order_hint set
 6. **No framework-as-PLAYBOOK**: Analytical frameworks, checklists, sequences, and decision processes are NOT PLAYBOOKs
-7. **TOTAL PLAYBOOK COUNT**: The total number of PLAYBOOK items across ALL bundles + standalone should roughly equal the number of bundles. If you have 15 bundles but 40 PLAYBOOKs, something is very wrong — most of those PLAYBOOKs should be PROCEDURE or KNOWLEDGE.
+7. **PLAYBOOK sanity check**: Each PLAYBOOK should represent a distinct operator-activatable action. If two PLAYBOOKs in the same bundle describe the same action, merge them. If a PLAYBOOK is really a sub-step of another, reclassify it as PROCEDURE.
 8. **Suggestion marking**: ALL items in skeleton bundles must have is_suggestion=true. ALL items whose content was generated by the AI (not from the document) must have is_suggestion=true.
 9. **Reclassification sweep**: Before returning, scan ALL PLAYBOOK items and apply the PLAYBOOK Test to each one. Reclassify any that fail:
    - If it describes a step-by-step process → PROCEDURE
@@ -234,7 +241,7 @@ If any check fails, fix it before returning.
 3. **Atomic items**: Each item self-contained. Not "Communication skills" → "Prefers async Slack for status updates".
 4. **Rich content**: Full detail with specifics, numbers, conditions.
 5. **Correct categorization**: Follow the CATEGORY DECISION RULES checklist above, in order. Apply the PLAYBOOK Test strictly.
-6. **Protocol-aware bundling**: 1 PLAYBOOK drives, PROCEDUREs are ordered steps with step_order_hint, DIRECTIVEs are gates.
+6. **Protocol-aware bundling**: PLAYBOOKs are activatable protocols, PROCEDUREs are ordered steps with step_order_hint, DIRECTIVEs are gates. Multiple PLAYBOOKs per bundle = multiple protocols generated on deployment.
 7. **Granular PROCEDUREs**: Split multi-step processes. Each step = one action with step_order_hint.
 8. **Consolidate related content**: Sub-headings, tables, and diagrams within a phase become items in the parent bundle.
 9. **Working preferences**: Extract ONLY genuine style preferences. Don't force general knowledge.
@@ -326,7 +333,7 @@ ${truncated}${overflow}
 7. In analysis_notes: describe the full architecture, highlight gaps, and recommend what to document next
 8. Extract working preferences ONLY when they genuinely describe working style
 9. **ANTI-CONFABULATION**: Only items whose content can be traced to the source document should have is_suggestion=false (or omitted). Any content you GENERATE to fill gaps MUST have is_suggestion=true. Never fabricate document content.
-10. **PLAYBOOK DISCIPLINE**: Before returning, COUNT your total PLAYBOOKs. If total PLAYBOOKs > total bundles, you have over-classified. Reclassify frameworks, checklists, templates, and processes as KNOWLEDGE or PROCEDURE.`;
+10. **PLAYBOOK DISCIPLINE**: Each PLAYBOOK must represent a distinct activatable action an operator can take. Frameworks, checklists, templates, and sub-processes are NOT PLAYBOOKs — reclassify as KNOWLEDGE or PROCEDURE. Multiple PLAYBOOKs per bundle are fine when they represent genuinely different actions.`;
   }
 }
 
@@ -629,7 +636,7 @@ You are in **deep analysis mode**. This means:
 - For skeleton bundles: infer as much as possible about what SHOULD be documented based on the structural context, related sections, and domain knowledge — mark ALL such inferred content with is_suggestion=true
 - Create detailed PLAYBOOK placeholders for skeleton bundles that describe not just the topic but specific aspects that should be covered — ALWAYS with is_suggestion=true
 - IMPORTANT: Deep mode means MORE ITEMS PER BUNDLE, not MORE BUNDLES. Maintain phase-level consolidation.
-- IMPORTANT: Even in deep mode, the PLAYBOOK Test still applies strictly. More extraction depth does NOT mean more PLAYBOOKs — it means more PROCEDUREs, KNOWLEDGE, and DIRECTIVEs within existing bundles.`;
+- IMPORTANT: Deep mode may surface additional PLAYBOOKs (activatable actions) within bundles — this is expected. But each PLAYBOOK must still pass the PLAYBOOK Test and represent a distinct operator action.`;
     }
 
     const aiResponse = await fetch(
