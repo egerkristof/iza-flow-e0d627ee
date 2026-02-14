@@ -115,6 +115,32 @@ export default function ContextManagementPage() {
     },
   });
 
+  // Fetch junction table for parent_playbook_id ownership
+  const { data: junctionRows = [] } = useQuery({
+    queryKey: ["context-item-bundles-all", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("context_item_bundles")
+        .select("context_item_id, bundle_id, parent_playbook_id");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Build a lookup: item_id → parent_playbook_id (per bundle)
+  const parentPlaybookMap = useMemo(() => {
+    const map = new Map<string, string | null>();
+    for (const jr of junctionRows) {
+      if (jr.parent_playbook_id) {
+        map.set(`${jr.context_item_id}:${jr.bundle_id}`, jr.parent_playbook_id);
+        // Also set a global fallback (most items belong to one bundle)
+        map.set(jr.context_item_id, jr.parent_playbook_id);
+      }
+    }
+    return map;
+  }, [junctionRows]);
+
   // Map DB rows → MockContextItem shape for component compatibility
   const items: MockContextItem[] = useMemo(() =>
     dbItems.map(row => ({
@@ -132,8 +158,11 @@ export default function ContextManagementPage() {
       last_used_at: formatRelativeTime(row.last_used_at),
       version: row.version ?? "v1.0",
       created_at: row.created_at,
+      parent_playbook_id: row.bundle_id
+        ? (parentPlaybookMap.get(`${row.id}:${row.bundle_id}`) ?? parentPlaybookMap.get(row.id) ?? null)
+        : null,
     })),
-  [dbItems]);
+  [dbItems, parentPlaybookMap]);
 
   // Map DB rows → MockBundle shape
   const bundles: MockBundle[] = useMemo(() =>

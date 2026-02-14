@@ -20,6 +20,7 @@ export interface MockContextItem {
   last_used_at: string | null;
   version: string;
   created_at: string;
+  parent_playbook_id?: string | null;
 }
 
 export interface MockBundle {
