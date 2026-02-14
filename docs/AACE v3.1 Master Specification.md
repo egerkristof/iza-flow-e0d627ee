@@ -334,19 +334,25 @@ The extraction AI follows this **ordered checklist** to assign categories. The f
 
 | Priority | Question | Category | Signals | Protocol Role |
 |---|---|---|---|---|
-| 1 | Is it a RULE, CONSTRAINT, or MANDATE? | **DIRECTIVE** | must, never, always, shall, required, prohibited, mandatory | Compliance gate |
-| 2 | Is it a STEP, CHECKLIST, or ACTION? | **PROCEDURE** | send, schedule, prepare, verify, complete, assess, review, create | Executable step (ordered via `step_order_hint`) |
-| 3 | Is it a STRATEGY, METHODOLOGY, or FRAMEWORK? | **PLAYBOOK** | overall approach, phases, goals, strategic intent | Protocol driver |
-| 4 | Is it a CORE BELIEF or VALUE? | **PRINCIPLE** | philosophical stance, guides thinking, not enforceable | Decision guidance |
-| 5 | Is it RESEARCH or INTELLIGENCE? | **RESEARCH** | findings, data points, competitive intel, time-sensitive | Reference context |
-| 6 | Is it a WORKING STYLE or PREFERENCE? | **PREFERENCE** | tone, formatting, tool choices, communication style | AI personalization |
-| 7 | Everything else | **KNOWLEDGE** | facts, definitions, reference data, domain expertise | Context injection |
+| 1 | Is it a RULE, CONSTRAINT, or MANDATE? | **DIRECTIVE** | must, never, always, shall, required, prohibited, mandatory | Compliance gate (owned by a PLAYBOOK) |
+| 2 | Is it a STEP, CHECKLIST, or ACTION? | **PROCEDURE** | send, schedule, prepare, verify, complete, assess, review, create | Executable step (owned by a PLAYBOOK, ordered via `step_order_hint`) |
+| 3 | Is it a STRATEGY, METHODOLOGY, or ACTIVATABLE ACTION? | **PLAYBOOK** | overall approach, phases, goals, strategic intent | Protocol driver (multiple per bundle allowed) |
+| 4 | Is it a CORE BELIEF or VALUE? | **PRINCIPLE** | philosophical stance, guides thinking, not enforceable | Shared context (injected into ALL protocols) |
+| 5 | Is it RESEARCH or INTELLIGENCE? | **RESEARCH** | findings, data points, competitive intel, time-sensitive | Shared context (injected into ALL protocols) |
+| 6 | Is it a WORKING STYLE or PREFERENCE? | **PREFERENCE** | tone, formatting, tool choices, communication style | Shared context (AI personalization) |
+| 7 | Everything else | **KNOWLEDGE** | facts, definitions, reference data, domain expertise | Shared context (injected into ALL protocols) |
 
 ### Critical Category Rules
 - A **PLAYBOOK** should describe the WHAT and WHY (strategic intent), never step-by-step HOW
 - If a PLAYBOOK contains actionable steps, those steps MUST be extracted as separate **PROCEDURE** items
 - Each PROCEDURE is a **single, atomic action** that can be checked off as "done"
 - Multiple steps in a numbered list → each step = separate PROCEDURE with `step_order_hint`
+
+### Item Ownership Model
+- **PROCEDUREs and DIRECTIVEs** belong to a specific PLAYBOOK within the bundle (their parent). They carry a `parent_playbook_title` field that maps to the owning PLAYBOOK's title.
+- **KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE** are shared across ALL playbooks in the bundle — they have no `parent_playbook_title`.
+- A **PLAYBOOK** itself does NOT have a `parent_playbook_title`.
+- When persisted, the `parent_playbook_title` is resolved to a `parent_playbook_id` in the `context_item_bundles` junction table.
 
 ## **7.5 Bundle Granularity Principle**
 
@@ -380,16 +386,31 @@ When extracting from structured documents (methodology decks, process guides, pl
 
 ## **7.8 Protocol-Ready Bundle Composition**
 
-Every bundle intended for execution SHOULD contain:
+A bundle can contain **one or more PLAYBOOKs**. Each PLAYBOOK generates a separate executable protocol when deployed. PROCEDUREs and DIRECTIVEs are **owned** by a specific PLAYBOOK, while other item types are **shared** across all protocols.
 
-| Category | Role in Protocol | Count |
-|---|---|---|
-| PLAYBOOK | Protocol Driver — strategic intent, WHAT and WHY | Exactly 1 |
-| PROCEDURE | Executable Steps — ordered actions with `step_order_hint` | 3-15 per bundle |
-| DIRECTIVE | Compliance Gates — mandatory checkpoints | 0-5 per bundle |
-| KNOWLEDGE | Context Injection — facts, references, definitions | As needed |
-| RESEARCH | Context Injection — findings, intelligence | As needed |
-| PRINCIPLE | Decision Guidance — values, beliefs | As needed |
+| Category | Role in Protocol | Ownership | Count |
+|---|---|---|---|
+| PLAYBOOK | Protocol Driver — strategic intent, WHAT and WHY | N/A (is the owner) | 1+ per bundle |
+| PROCEDURE | Executable Steps — ordered actions with `step_order_hint` | Owned by a specific PLAYBOOK | 3-15 per playbook |
+| DIRECTIVE | Compliance Gates — mandatory checkpoints | Owned by a specific PLAYBOOK | 0-5 per playbook |
+| KNOWLEDGE | Context Injection — facts, references, definitions | Shared (all protocols) | As needed |
+| RESEARCH | Context Injection — findings, intelligence | Shared (all protocols) | As needed |
+| PRINCIPLE | Decision Guidance — values, beliefs | Shared (all protocols) | As needed |
+| PREFERENCE | AI Personalization — tone, style, format | Shared (all protocols) | As needed |
+
+### Multi-Playbook Bundle Example
+```
+Bundle: "B. Customer Need Discovery"
+├── PLAYBOOK: "Run Discovery Call"          → Protocol 1
+│   ├── PROCEDURE: "Confirm attendees"        (owned, step 1)
+│   ├── PROCEDURE: "Run BANT assessment"      (owned, step 2)
+│   └── DIRECTIVE: "Never skip qualification" (owned)
+├── PLAYBOOK: "Handle Objection"            → Protocol 2
+│   ├── PROCEDURE: "Identify objection type"  (owned, step 1)
+│   └── PROCEDURE: "Apply reframe technique"  (owned, step 2)
+├── KNOWLEDGE: "Competitor weaknesses"        (shared → injected into BOTH protocols)
+└── PRINCIPLE: "Lead with value"              (shared → injected into BOTH protocols)
+```
 
 ## **7.9 Structural Analysis Requirements**
 
@@ -476,7 +497,7 @@ Extracted knowledge is stored across these tables:
 |---|---|---|
 | Context items | `context_items` | `bundle_id` (legacy) + `context_item_bundles` (junction, many-to-many) |
 | Bundles | `bundles` | `owner_id` → user, `scope_level` for access |
-| Bundle ↔ Item links | `context_item_bundles` | Many-to-many junction |
+| Bundle ↔ Item links | `context_item_bundles` | Many-to-many junction with `parent_playbook_id` for ownership |
 | Working preferences | `working_preferences` | `user_id` → user, scoped by type |
 
 ### Bundle Lifecycle States
@@ -522,7 +543,7 @@ Google-Aliz Relationship Model                 [organization]
 Pre-Sales Process Reference                    [team]
 ```
 
-Each bundle contains the full depth of its phase: the PLAYBOOK driver, all PROCEDUREs as ordered steps, DIRECTIVEs as gates, and KNOWLEDGE/RESEARCH as context — making every bundle independently protocol-ready.
+Each bundle contains the full depth of its phase: one or more PLAYBOOK drivers, PROCEDUREs as ordered steps owned by their parent PLAYBOOK, DIRECTIVEs as gates owned by their parent PLAYBOOK, and shared KNOWLEDGE/RESEARCH/PRINCIPLE context injected into all protocols — making every bundle independently protocol-ready.
 
 ---
 
@@ -532,21 +553,27 @@ This section defines how deployed bundles are transformed into executable protoc
 
 ## **8.1 Protocol Generation (Bundle → Protocol Mapping)**
 
-When a bundle is deployed to a workbook, the `generate-protocols` function transforms its items into an executable protocol:
+When a bundle is deployed to a workbook, the `generate-protocols` function transforms its items into executable protocols. **Each PLAYBOOK generates a separate protocol**, with only its owned items as steps/gates, plus all shared context.
 
-| Bundle Item Category | Protocol Element | Behavior |
-|---|---|---|
-| PLAYBOOK | `workbook_protocols` row | Becomes the **protocol driver** — defines title, description, strategic intent |
-| PROCEDURE | `protocol_steps` (type: `action`) | Becomes an **executable step** — ordered by `step_order`, contains `agent_prompt` for AI |
-| DIRECTIVE | `protocol_steps` (type: `gate`) | Becomes a **compliance gate** — requires operator acknowledgment, has `gate_enforcement` level |
-| KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE | `protocol_context_items` | Injected into AI context window during execution (scope: `always` or step-specific) |
+| Bundle Item Category | Protocol Element | Ownership | Behavior |
+|---|---|---|---|
+| PLAYBOOK | `workbook_protocols` row | N/A | Becomes the **protocol driver** — defines title, description, strategic intent |
+| PROCEDURE | `protocol_steps` (type: `action`) | Owned by parent PLAYBOOK | Becomes an **executable step** — only included in the owning PLAYBOOK's protocol |
+| DIRECTIVE | `protocol_steps` (type: `gate`) | Owned by parent PLAYBOOK | Becomes a **compliance gate** — only included in the owning PLAYBOOK's protocol |
+| KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE | `protocol_context_items` | Shared | Injected into **ALL** protocols in the bundle |
 
 ### Mapping Logic
-1. Each PLAYBOOK item in the bundle generates a separate protocol
-2. If no PLAYBOOK exists, the bundle itself acts as the protocol driver
-3. All PROCEDURE items become ordered action steps (`step_order` from `step_order_hint`)
-4. All DIRECTIVE items become gate steps appended after action steps
-5. All other items are linked as context injections
+1. Each PLAYBOOK item in the bundle generates a **separate protocol** (`workbook_protocols` row)
+2. If no PLAYBOOK exists, the bundle itself acts as a single protocol driver
+3. PROCEDURE items become action steps **only in the protocol of their parent PLAYBOOK** (determined by `parent_playbook_id` in `context_item_bundles`)
+4. DIRECTIVE items become gate steps **only in the protocol of their parent PLAYBOOK**
+5. Orphan PROCEDUREs/DIRECTIVEs (no `parent_playbook_id`) are included in **all** protocols as fallback
+6. KNOWLEDGE, RESEARCH, PRINCIPLE, and PREFERENCE items are linked as context injections to **every** protocol in the bundle
+
+### Ownership Resolution
+The `context_item_bundles` junction table stores the ownership relationship:
+- `parent_playbook_id` → points to the PLAYBOOK context_item that owns this PROCEDURE/DIRECTIVE
+- `NULL parent_playbook_id` → shared context item, injected into all protocols
 
 ## **8.2 Protocol Execution Schema**
 
