@@ -91,6 +91,7 @@ When bundles are deployed to workbooks, they generate executable protocols:
                         },
                         preference_key: { type: "string", description: "Only for preference type items" },
                         condition_label: { type: "string", description: "Only for preference type items" },
+                        step_order_hint: { type: "integer", description: "Execution order (1-based). REQUIRED for PROCEDURE items to preserve sequence." },
                         original_index: { type: "number", description: "Original item index (0-based) this came from, or -1 if new" },
                         bundle_index: { type: "number", description: "For bundle items: which bundle this belongs to" },
                         bundle_item_index: { type: "number", description: "For bundle items: original position within the bundle" },

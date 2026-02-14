@@ -19,6 +19,7 @@ Your job: Given a chat message (or user-highlighted text), classify it as a reus
 - PLAYBOOK — Strategic templates, repeatable strategies (e.g. "Land-and-expand approach for SMBs")
 - PREFERENCE — Personal or team working style preferences (e.g. "I prefer async over meetings")
 - RESEARCH — Data points, benchmarks, references (e.g. "Market avg churn is 5.2% for SaaS")
+- PRINCIPLE — Core beliefs, values, guiding tenets that shape decisions (e.g. "Customer trust over short-term revenue")
 
 ## Your Task
 1. Classify the finding into the best category
