@@ -243,17 +243,31 @@ If any check fails, fix it before returning.
 
 ## EXTRACTION PRINCIPLES
 1. **Phase-level consolidation first**: Bundle at the phase/chapter level. Sub-sections become items WITHIN the bundle, NOT separate bundles.
-2. **Deep extraction**: Extract EVERY meaningful piece. A 5-page document should yield 10-30+ items.
+2. **EXHAUSTIVE extraction — this is the MOST IMPORTANT rule**: Extract EVERY meaningful piece of content from the document. Do NOT summarize or skip content. Every fact, step, rule, template, checklist, example, and data point MUST be captured as a separate item. A 5-page document should yield 30-50+ items. A 30-60 slide deck should yield 80-200+ items. If a slide/page has 5 distinct points, that's 5 items. If a table has 8 rows of data, each row is likely a separate item.
 3. **Atomic items**: Each item self-contained. Not "Communication skills" → "Prefers async Slack for status updates".
-4. **Rich content**: Full detail with specifics, numbers, conditions.
+4. **Rich content**: Full detail with specifics, numbers, conditions. Include ALL details from the source — percentages, thresholds, examples, templates, frameworks. Never write "etc." or "and more" — enumerate everything.
 5. **Correct categorization**: Follow the CATEGORY DECISION RULES checklist above, in order. Apply the PLAYBOOK Test strictly.
 6. **Protocol-aware bundling**: PLAYBOOKs are activatable protocols, PROCEDUREs are ordered steps with step_order_hint, DIRECTIVEs are gates. Multiple PLAYBOOKs per bundle = multiple protocols generated on deployment.
-7. **Granular PROCEDUREs**: Split multi-step processes. Each step = one action with step_order_hint.
+7. **Granular PROCEDUREs — CRITICAL**: Any content describing actions, steps, tasks, or things to do MUST be PROCEDURE items with step_order_hint. Look for: numbered lists, bullet points with action verbs, process descriptions, workflow steps, checklists, "how to" content, sequenced activities. A methodology document should have MORE PROCEDUREs than any other category. Each individual action = 1 PROCEDURE.
 8. **Consolidate related content**: Sub-headings, tables, and diagrams within a phase become items in the parent bundle.
 9. **Working preferences**: Extract ONLY genuine style preferences. Don't force general knowledge.
 10. **Skeleton bundles for top-level gaps only**: Create with content_completeness="skeleton" for undocumented PHASES, not sub-sections.
 11. **MINIMIZE standalone context_items**: Nearly ALL items should be placed INSIDE bundles. The standalone context_items array should contain ONLY items that truly don't belong to any phase/bundle (e.g., cross-cutting meta-information about the document itself). If an item relates to a phase, it goes IN that phase's bundle. Target: <5% of total items as standalone.
 12. **Phase sequence integrity**: Preserve document's sequential labels exactly. Create skeletons for any gaps in the sequence.
+
+## ITEM DENSITY TARGETS PER BUNDLE
+A "full" bundle should have 8-15 items on average. Specifically:
+- 1-3 PLAYBOOKs (activatable strategic actions)
+- 3-8 PROCEDUREs (ordered executable steps — look for ANY actionable content)
+- 1-3 DIRECTIVEs (rules, constraints, must/never statements)
+- 2-5 KNOWLEDGE items (facts, definitions, reference data, frameworks, models)
+- 0-2 RESEARCH/PRINCIPLE items as applicable
+
+If a bundle has only 1-3 items, you've UNDER-EXTRACTED. Go back and look for:
+- Steps hidden in paragraph text (convert to PROCEDUREs)
+- Rules hidden in descriptions (convert to DIRECTIVEs)  
+- Data points, thresholds, examples (convert to KNOWLEDGE)
+- Tables, diagrams, charts (each row/element = potential item)
 
 ## ANALYSIS NOTES
 Provide comprehensive analysis_notes explaining:
@@ -261,6 +275,7 @@ Provide comprehensive analysis_notes explaining:
 2. Bundle completeness breakdown (X full, Y partial, Z skeleton)
 3. Key coverage gaps and recommendations
 4. Protocol readiness: how many bundles are protocol-ready (have PLAYBOOK + PROCEDUREs)
+5. Total item count and category distribution
 
 Return results via the extract_knowledge tool.`;
 
@@ -319,7 +334,7 @@ Focus on creating well-structured RESEARCH items with specific data points and f
     case "document":
     case "loom":
     default:
-      return `Analyze the following document thoroughly. First, identify the COMPLETE structural architecture (all sections, phases, stages, parallel tracks), then extract ALL knowledge elements exhaustively.
+      return `Analyze the following document thoroughly. First, identify the COMPLETE structural architecture (all sections, phases, stages, parallel tracks), then extract ALL knowledge elements EXHAUSTIVELY — leave NOTHING on the table.
 
 **Document metadata:**
 - File name: ${meta.file_name || "Unknown"}
@@ -332,14 +347,17 @@ ${truncated}${overflow}
 **CRITICAL INSTRUCTIONS:**
 1. FIRST: Map the document's full structure — identify every section, stage, phase, or track, including those visible only in diagrams/headers/tables
 2. Create a bundle for EVERY structural node — even sections with no elaborating content (mark those as skeleton)
-3. For well-documented sections: extract items exhaustively (every step, rule, fact, template, checklist)
-4. For undocumented sections: create a skeleton bundle with a PLAYBOOK placeholder describing what should be there. **Mark ALL such AI-generated placeholders with is_suggestion=true.**
-5. Set content_completeness on every bundle: "full", "partial", or "skeleton"
-6. List coverage_gaps for each bundle that isn't fully documented
-7. In analysis_notes: describe the full architecture, highlight gaps, and recommend what to document next
-8. Extract working preferences ONLY when they genuinely describe working style
-9. **ANTI-CONFABULATION**: Only items whose content can be traced to the source document should have is_suggestion=false (or omitted). Any content you GENERATE to fill gaps MUST have is_suggestion=true. Never fabricate document content.
-10. **PLAYBOOK DISCIPLINE**: Each PLAYBOOK must represent a distinct activatable action an operator can take. Frameworks, checklists, templates, and sub-processes are NOT PLAYBOOKs — reclassify as KNOWLEDGE or PROCEDURE. Multiple PLAYBOOKs per bundle are fine when they represent genuinely different actions.`;
+3. For well-documented sections: extract items EXHAUSTIVELY. Every single slide, paragraph, bullet point, table row, diagram label, and checklist item should become a context item. Do NOT summarize multiple points into one item.
+4. **PROCEDURE EXTRACTION IS CRITICAL**: Any content that describes an ACTION, STEP, TASK, or thing someone should DO must be a PROCEDURE with step_order_hint. Methodology documents are full of procedures — numbered lists, bullet-point actions, process flows, "do X then Y" sequences. A sales methodology document should have DOZENS of procedures. If you're extracting <30 procedures from a 40+ slide deck, you're missing content.
+5. For undocumented sections: create a skeleton bundle with a PLAYBOOK placeholder describing what should be there. **Mark ALL such AI-generated placeholders with is_suggestion=true.**
+6. Set content_completeness on every bundle: "full", "partial", or "skeleton"
+7. List coverage_gaps for each bundle that isn't fully documented
+8. In analysis_notes: describe the full architecture, highlight gaps, total item count and category distribution, and recommend what to document next
+9. Extract working preferences ONLY when they genuinely describe working style
+10. **ANTI-CONFABULATION**: Only items whose content can be traced to the source document should have is_suggestion=false (or omitted). Any content you GENERATE to fill gaps MUST have is_suggestion=true. Never fabricate document content.
+11. **PLAYBOOK DISCIPLINE**: Each PLAYBOOK must represent a distinct activatable action an operator can take. Frameworks, checklists, templates, and sub-processes are NOT PLAYBOOKs — reclassify as KNOWLEDGE or PROCEDURE. Multiple PLAYBOOKs per bundle are fine when they represent genuinely different actions.
+12. **TABLES & DIAGRAMS**: Each row of a table, each box in a diagram, each element in a flowchart is potentially a separate item. Do NOT collapse tables into a single KNOWLEDGE item. Break them apart.
+13. **TARGET**: For a 40-60 slide methodology deck, aim for 120-200+ total items across 10-18 bundles. If you're producing significantly fewer, you're under-extracting.`;
   }
 }
 
@@ -658,7 +676,7 @@ You are in **deep analysis mode**. This means:
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: extractionDepth === "deep" ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash",
+          model: extractionDepth === "quick" ? "google/gemini-2.5-flash" : "google/gemini-2.5-pro",
           messages: [
             { role: "system", content: systemPrompt },
             meta._pdf_base64
