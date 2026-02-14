@@ -14,38 +14,43 @@ Your job: Given a chat message (or user-highlighted text), classify it as a reus
 
 ## PROTOCOL EXECUTION MODEL
 When bundles are deployed to workbooks, they generate executable protocols:
-- **PLAYBOOK** = Protocol Template (strategic driver — defines WHAT and WHY)
+- **PLAYBOOK** = Protocol Template (strategic driver — defines WHAT and WHY). Each PLAYBOOK generates a SEPARATE protocol.
 - **PROCEDURE** = Executable Steps (ordered actions — each is a discrete step operators follow)
 - **DIRECTIVE** = Compliance Gates (rules requiring acknowledgment before proceeding)
 - **KNOWLEDGE/RESEARCH/PRINCIPLE/PREFERENCE** = Context Injections (fed to AI during execution)
 
-## Categories
-- DIRECTIVE — Rules, constraints, policies (e.g. "Never discount more than 15%")
-- KNOWLEDGE — Facts, insights, domain expertise (e.g. "Enterprise clients need SOC2")
-- PROCEDURE — Step-by-step processes, workflows (e.g. "Always run legal review before signing")
-- PLAYBOOK — Strategic templates, repeatable strategies (e.g. "Land-and-expand approach for SMBs")
-- PREFERENCE — Personal or team working style preferences (e.g. "I prefer async over meetings")
-- RESEARCH — Data points, benchmarks, references (e.g. "Market avg churn is 5.2% for SaaS")
-- PRINCIPLE — Core beliefs, values, guiding tenets that shape decisions (e.g. "Customer trust over short-term revenue")
-
 ## CATEGORY DECISION RULES (follow IN ORDER)
 1. Is it a RULE/CONSTRAINT/MANDATE? → DIRECTIVE
 2. Is it a STEP/CHECKLIST/ACTION? → PROCEDURE
-3. Is it a STRATEGY/METHODOLOGY? → PLAYBOOK
+3. Is it a STRATEGY/METHODOLOGY? → PLAYBOOK (apply PLAYBOOK Test below)
 4. Is it a CORE BELIEF/VALUE? → PRINCIPLE
 5. Is it RESEARCH/ANALYSIS/DATA? → RESEARCH
 6. Is it a WORKING STYLE/PREFERENCE? → PREFERENCE
 7. Everything else → KNOWLEDGE
 
+## THE PLAYBOOK TEST (apply to EVERY PLAYBOOK candidate)
+Ask THREE questions:
+1. _"Does this define the STRATEGIC INTENT of a specific action an operator can take?"_ — If NO → not a PLAYBOOK
+2. _"Would an operator select this from a menu of available actions?"_ — If NO → not a PLAYBOOK
+3. _"Does it describe the WHAT & WHY at a high level, leaving HOW to PROCEDUREs?"_ — If NO → not a PLAYBOOK
+
+**Is NOT a PLAYBOOK — COMMON MISTAKES:**
+- ❌ An analytical FRAMEWORK or MODEL (BANT, DISK, Porter's 5 Forces) → **KNOWLEDGE**
+- ❌ A CHECKLIST of actions → **PROCEDURE** (ordered steps)
+- ❌ A step-by-step SEQUENCE → **PROCEDURE** (with step_order_hint)
+- ❌ A decision PROCESS → **PROCEDURE**
+- ❌ A process DESCRIPTION or FLOW diagram → **KNOWLEDGE**
+- ❌ Competitive strategy REFERENCE material → **KNOWLEDGE**
+
 ## Your Task
-1. Classify the finding into the best category using the rules above
+1. Classify the finding into the best category using the CATEGORY DECISION RULES above
 2. Extract a clear, concise title (max 10 words)
 3. Rewrite the content as a clean, reusable knowledge statement
 4. Extract any principles or best practices embedded in the text
 5. Suggest related existing items from the user's knowledge (by ID) that overlap or conflict
 6. Flag if this is likely a duplicate of an existing item
 
-Be precise and actionable. The captured finding should be useful out of context.`;
+Be precise and actionable. The captured finding should be useful out of context.`;`
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
