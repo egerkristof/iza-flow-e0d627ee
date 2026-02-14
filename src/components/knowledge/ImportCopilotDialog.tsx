@@ -222,6 +222,8 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
   // Mandate promotion tracking — keys are "standalone-{idx}" or "bundle-{bi}-{ji}"
   const [mandateFlags, setMandateFlags] = useState<Record<string, { is_mandate: boolean; enforcement_level: "advisory" | "required_ack" | "blocking" }>>({});
   const [hideSuggestions, setHideSuggestions] = useState(false);
+  // Manual override: bundle index → existing bundle ID (or "new" to create fresh)
+  const [bundleMergeOverrides, setBundleMergeOverrides] = useState<Record<number, string>>({});
 
   const resolveItem = (original: ExtractedContextItem, edits?: Partial<ExtractedContextItem>): ExtractedContextItem => ({
     ...original,
@@ -758,16 +760,21 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
       for (const [i, bundle] of extractedBundles.entries()) {
         if (!selectedBundles.has(i)) continue;
 
-        // Check if this bundle should merge into an existing one
+        // Check manual override first, then AI match
+        const manualOverride = bundleMergeOverrides[i];
         const match = bundleMatches.find(m => m.extracted_index === i);
-        const mergeIntoExisting = match && 
+        const autoMerge = match && 
           (match.match_type === "exact" || match.match_type === "absorb") && 
           match.confidence >= 0.9 && 
           match.target_bundle_id;
 
-        if (mergeIntoExisting && match.target_bundle_id) {
+        const mergeTargetId = (manualOverride && manualOverride !== "new")
+          ? manualOverride
+          : (autoMerge ? match.target_bundle_id : null);
+
+        if (mergeTargetId) {
           // Use existing bundle ID — items will be added to it
-          createdBundleIds[i] = match.target_bundle_id;
+          createdBundleIds[i] = mergeTargetId;
         } else {
           const { data: newBundle, error: bundleErr } = await supabase
             .from("bundles")
@@ -1443,6 +1450,32 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                               </Badge>
                             ))}
                           </div>
+                        </div>
+                      )}
+                      {/* Manual merge-into-existing dropdown */}
+                      {existingBundles.length > 0 && (
+                        <div className="mt-2 flex items-center gap-2">
+                          <GitMerge className="h-3 w-3 text-muted-foreground shrink-0" />
+                          <Select
+                            value={bundleMergeOverrides[i] || "new"}
+                            onValueChange={(v) => setBundleMergeOverrides(prev => ({ ...prev, [i]: v }))}
+                          >
+                            <SelectTrigger className="h-7 text-[11px] w-56">
+                              <SelectValue placeholder="Create new bundle" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="new" className="text-xs">✨ Create new bundle</SelectItem>
+                              <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                                Merge into existing
+                              </div>
+                              {existingBundles.map(eb => (
+                                <SelectItem key={eb.id} value={eb.id} className="text-xs">
+                                  {eb.title}
+                                  <span className="text-muted-foreground ml-1">({eb.scope_level})</span>
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </div>
                       )}
                     </div>
