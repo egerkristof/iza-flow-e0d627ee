@@ -133,7 +133,7 @@ export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: Ex
                     ) : (
                       <div className={`h-2 w-2 rounded-full ${isActive ? "bg-primary animate-pulse" : "bg-muted-foreground/30"}`} />
                     )}
-                    <span className="capitalize">{p === "uploading" ? "Upload" : p === "analyzing" ? "Analyze" : "Extract"}</span>
+                    <span className="capitalize">{p === "uploading" ? "Upload" : p === "analyzing" ? "Analyze" : p === "matching" ? "Consolidate" : "Extract"}</span>
                   </div>
                 </div>
               );
