@@ -3,8 +3,8 @@ project_id = "pvceypmzgmqufrtjwwbw"
 [functions.extract-knowledge]
 verify_jwt = false
 
-[functions.extract-profile]
-verify_jwt = false
+
+
 
 [functions.refine-extraction]
 verify_jwt = false

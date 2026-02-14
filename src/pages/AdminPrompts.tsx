@@ -58,7 +58,7 @@ You help Process Owners (Architects) understand, debug, and improve the AI promp
 - **classify-finding**: Real-time classification of chat messages as knowledge captures with dedup detection.
 - **audit-context**: Bulk auditing + conversational copilot for knowledge graph health analysis.
 - **generate-protocols**: Deterministic (no AI) — transforms bundles into executable workbook protocols.
-- **extract-profile**: Legacy extraction function, superseded by extract-knowledge.
+- **extract-profile**: ~~Retired~~ — legacy function, fully superseded by extract-knowledge.
 
 ### Key Learnings from Testing
 1. **PLAYBOOK Over-classification**: The most common extraction error. Frameworks (BANT, DISK), checklists, and step-by-step sequences are NOT PLAYBOOKs. Each bundle should have exactly 1 PLAYBOOK.
@@ -283,7 +283,7 @@ export default function AdminPromptsPage() {
     "generate-advisor": { icon: "🎯", color: "text-emerald-400" },
     "classify-finding": { icon: "🏷️", color: "text-cyan-400" },
     "audit-context": { icon: "🔍", color: "text-purple-400" },
-    "extract-profile": { icon: "📄", color: "text-muted-foreground" },
+    "extract-profile": { icon: "📄", color: "text-muted-foreground line-through" },
     "generate-protocols": { icon: "⚙️", color: "text-orange-400" },
   };
 
