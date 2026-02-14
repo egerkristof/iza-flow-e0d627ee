@@ -942,6 +942,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
       qc.invalidateQueries({ queryKey: ["context-items-all"] });
       qc.invalidateQueries({ queryKey: ["bundles"] });
       qc.invalidateQueries({ queryKey: ["bundles-all"] });
+      qc.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
       qc.invalidateQueries({ queryKey: ["mandates"] });
       const parts: string[] = [];
       if (selectedPrefs.size > 0) parts.push(`${selectedPrefs.size} preference${selectedPrefs.size !== 1 ? "s" : ""}`);
