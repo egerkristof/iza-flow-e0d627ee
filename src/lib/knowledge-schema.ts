@@ -143,10 +143,10 @@ export const BUNDLE_READINESS_META: Record<BundleReadiness, { label: string; ico
 /** Compute readiness from a bundle's items */
 export function computeBundleReadiness(items: ExtractedContextItem[], completeness?: string): BundleReadiness {
   if (completeness === "skeleton") return "skeleton";
-  const hasPlaybook = items.some(i => i.category === "PLAYBOOK");
+  const playbookCount = items.filter(i => i.category === "PLAYBOOK").length;
   const hasProcedure = items.some(i => i.category === "PROCEDURE");
-  if (hasPlaybook && hasProcedure) return "protocol-ready";
-  if (hasPlaybook) return "needs-steps";
+  if (playbookCount > 0 && hasProcedure) return "protocol-ready";
+  if (playbookCount > 0) return "needs-steps";
   return "context-only";
 }
 
