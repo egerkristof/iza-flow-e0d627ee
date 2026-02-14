@@ -432,10 +432,31 @@ export default function ContextManagementPage() {
       if (error) throw error;
       if (data.error) throw new Error(data.error);
 
+      const extracted = data as ExtractionResult;
+
+      // ── Bundle Matching Pass ──────────────────────────────────────────
+      if (extracted.bundles && extracted.bundles.length > 0) {
+        setExtractionPhase("matching");
+        try {
+          const { data: matchResult } = await supabase.functions.invoke("match-bundles", {
+            body: {
+              extracted_bundles: extracted.bundles.map(b => ({
+                title: b.title,
+                description: b.description,
+                items: b.items.map(it => ({ title: it.title, category: it.category })),
+              })),
+            },
+          });
+          if (matchResult?.matches) {
+            extracted.bundle_matches = matchResult.matches;
+          }
+        } catch {} // best-effort
+      }
+
       setExtractionPhase("done");
       await new Promise(r => setTimeout(r, 800));
 
-      setExtractionResult(data as ExtractionResult);
+      setExtractionResult(extracted);
       setReviewOpen(true);
     } catch (err: any) {
       if (err.message === "Cancelled") {

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FileText, Brain, Sparkles, CheckCircle2, X } from "lucide-react";
+import { FileText, Brain, Sparkles, CheckCircle2, X, GitMerge } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
-export type ExtractionPhase = "uploading" | "analyzing" | "extracting" | "done";
+export type ExtractionPhase = "uploading" | "analyzing" | "extracting" | "matching" | "done";
 
 interface ExtractionProgressDialogProps {
   open: boolean;
@@ -24,13 +24,19 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
     label: "Analyzing content",
     subtitle: "Reading and understanding your document…",
     icon: Brain,
-    progress: 45,
+    progress: 40,
   },
   extracting: {
     label: "Extracting knowledge",
     subtitle: "Identifying items, bundles & preferences…",
     icon: Sparkles,
-    progress: 80,
+    progress: 70,
+  },
+  matching: {
+    label: "Matching bundles",
+    subtitle: "Finding existing bundles to merge with…",
+    icon: GitMerge,
+    progress: 90,
   },
   done: {
     label: "Extraction complete",
@@ -113,7 +119,7 @@ export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: Ex
 
           {/* Phase steps */}
           <div className="flex items-center gap-3 text-[11px]">
-            {(["uploading", "analyzing", "extracting"] as ExtractionPhase[]).map((p, i) => {
+            {(["uploading", "analyzing", "extracting", "matching"] as ExtractionPhase[]).map((p, i) => {
               const isActive = p === phase;
               const isDone = config.progress > PHASE_CONFIG[p].progress || phase === "done";
               return (

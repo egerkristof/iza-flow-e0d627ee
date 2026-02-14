@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff, GitMerge, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -20,6 +20,7 @@ import {
   type ContextCategory,
   type AdvisorPersona,
   type BundleReadiness,
+  type BundleMatch,
   CONTEXT_CATEGORIES,
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
@@ -752,21 +753,35 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
 
       const createdBundleIds: Record<number, string> = {};
       const extractedBundles = data.bundles || [];
+      const bundleMatches = data.bundle_matches || [];
+
       for (const [i, bundle] of extractedBundles.entries()) {
         if (!selectedBundles.has(i)) continue;
 
-        const { data: newBundle, error: bundleErr } = await supabase
-          .from("bundles")
-          .insert({
-            owner_id: user.id,
-            title: bundle.title,
-            description: bundle.description,
-            scope_level: bundle.scope_suggestion || "draft",
-          })
-          .select("id")
-          .single();
-        if (bundleErr) throw bundleErr;
-        createdBundleIds[i] = newBundle.id;
+        // Check if this bundle should merge into an existing one
+        const match = bundleMatches.find(m => m.extracted_index === i);
+        const mergeIntoExisting = match && 
+          (match.match_type === "exact" || match.match_type === "absorb") && 
+          match.confidence >= 0.9 && 
+          match.target_bundle_id;
+
+        if (mergeIntoExisting && match.target_bundle_id) {
+          // Use existing bundle ID — items will be added to it
+          createdBundleIds[i] = match.target_bundle_id;
+        } else {
+          const { data: newBundle, error: bundleErr } = await supabase
+            .from("bundles")
+            .insert({
+              owner_id: user.id,
+              title: bundle.title,
+              description: bundle.description,
+              scope_level: bundle.scope_suggestion || "draft",
+            })
+            .select("id")
+            .single();
+          if (bundleErr) throw bundleErr;
+          createdBundleIds[i] = newBundle.id;
+        }
 
         if (bundle.items.length > 0) {
           // Insert items one-by-one to handle duplicate hash conflicts gracefully
@@ -781,7 +796,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
               content_full: resolved.content,
               category: resolved.category as any,
               action_type: "APPEND" as any,
-              bundle_id: newBundle.id,
+              bundle_id: createdBundleIds[i],
               ...(mandate?.is_mandate ? {
                 is_mandate: true,
                 enforcement_level: mandate.enforcement_level as any,
@@ -825,7 +840,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                 : null;
               return {
                 context_item_id: id,
-                bundle_id: newBundle.id,
+                bundle_id: createdBundleIds[i],
                 ...(parentPlaybookId ? { parent_playbook_id: parentPlaybookId } : {}),
               };
             });
@@ -1372,6 +1387,52 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                         )}
                       </div>
                       <p className="text-xs mt-1 text-muted-foreground">{bundle.description}</p>
+                      {/* Bundle Match Suggestion */}
+                      {(() => {
+                        const match = (data.bundle_matches || []).find(m => m.extracted_index === i);
+                        if (!match || match.match_type === "new") return null;
+
+                        const confidenceColor = match.confidence >= 0.9
+                          ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
+                          : match.confidence >= 0.7
+                          ? "border-amber-500/30 bg-amber-500/10 text-amber-400"
+                          : "border-blue-500/30 bg-blue-500/10 text-blue-400";
+
+                        return (
+                          <div className={`mt-2 rounded-md border p-2 flex items-center gap-2 ${confidenceColor}`}>
+                            <GitMerge className="h-3.5 w-3.5 shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                {match.match_type === "exact" || match.match_type === "absorb" ? (
+                                  <>
+                                    <span className="text-[10px] font-medium">
+                                      {match.confidence >= 0.9 ? "Will merge into" : "Suggested merge with"}
+                                    </span>
+                                    <Badge variant="outline" className="text-[9px] border-current/30">
+                                      {match.target_bundle_title || "existing bundle"}
+                                    </Badge>
+                                  </>
+                                ) : match.match_type === "consolidate" ? (
+                                  <>
+                                    <span className="text-[10px] font-medium">
+                                      {match.confidence >= 0.9 ? "Auto-consolidated" : "Consider merging"} with
+                                    </span>
+                                    {(match.consolidate_with || []).map(ci => (
+                                      <Badge key={ci} variant="outline" className="text-[9px] border-current/30">
+                                        {bundles[ci]?.title || `Bundle ${ci}`}
+                                      </Badge>
+                                    ))}
+                                  </>
+                                ) : null}
+                                <Badge variant="secondary" className="text-[8px] ml-auto">
+                                  {Math.round(match.confidence * 100)}% match
+                                </Badge>
+                              </div>
+                              <p className="text-[10px] opacity-80 mt-0.5">{match.reason}</p>
+                            </div>
+                          </div>
+                        );
+                      })()}
                       {bundle.coverage_gaps && bundle.coverage_gaps.length > 0 && (
                         <div className="mt-1.5 flex items-start gap-1.5">
                           <AlertTriangle className="h-3 w-3 text-amber-400 shrink-0 mt-0.5" />
