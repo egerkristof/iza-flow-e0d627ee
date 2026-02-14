@@ -184,6 +184,20 @@ export const EXTRACTION_DEPTH_META: Record<ExtractionDepth, { label: string; des
   deep: { label: "Deep Analysis", description: "Thorough extraction + advisor + refinement", icon: "🔬" },
 };
 
+// ─── Bundle Match Types ──────────────────────────────────────────────────────
+export type BundleMatchType = "exact" | "consolidate" | "new" | "absorb";
+
+export interface BundleMatch {
+  extracted_index: number;
+  match_type: BundleMatchType;
+  target_bundle_id?: string;
+  target_bundle_title?: string;
+  consolidate_with?: number[];
+  confidence: number;
+  reason: string;
+  suggested_merged_title?: string;
+}
+
 export interface ExtractionResult {
   analysis_notes?: string;
   preferences: ExtractedPreference[];
@@ -191,6 +205,8 @@ export interface ExtractionResult {
   bundles?: ExtractedBundle[];
   advisor?: AdvisorPersona;
   extraction_depth?: ExtractionDepth;
+  /** Bundle match suggestions from the matching engine */
+  bundle_matches?: BundleMatch[];
 }
 
 // ─── Import Copilot Props ────────────────────────────────────────────────────
