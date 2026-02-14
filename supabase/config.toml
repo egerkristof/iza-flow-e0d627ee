@@ -3,9 +3,6 @@ project_id = "pvceypmzgmqufrtjwwbw"
 [functions.extract-knowledge]
 verify_jwt = false
 
-
-
-
 [functions.refine-extraction]
 verify_jwt = false
 
@@ -13,4 +10,10 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.audit-context]
+verify_jwt = false
+
+[functions.generate-advisor]
+verify_jwt = false
+
+[functions.generate-protocols]
 verify_jwt = false
