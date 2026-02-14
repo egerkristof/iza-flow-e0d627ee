@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
+import { loadPrompt } from "../_shared/load-prompt.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -152,6 +153,8 @@ serve(async (req) => {
       const { messages, graph_context } = body;
       if (!messages || !Array.isArray(messages)) throw new Error("messages array required for chat");
 
+      const activeChatPrompt = await loadPrompt("audit-context-chat", CHAT_SYSTEM_PROMPT);
+
       const contextBlock = graph_context
         ? `\n\nCurrent knowledge graph snapshot (${graph_context.length} items):\n${graph_context.map((i: any) => `- [${i.category}] "${i.title}"`).join("\n")}`
         : "";
@@ -165,7 +168,7 @@ serve(async (req) => {
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
           messages: [
-            { role: "system", content: CHAT_SYSTEM_PROMPT + contextBlock },
+            { role: "system", content: activeChatPrompt + contextBlock },
             ...messages,
           ],
           stream: true,
@@ -216,6 +219,8 @@ Return actionable suggestions. Focus on:
 
 Only suggest genuinely valuable improvements — don't force suggestions.`;
 
+      const activeAuditPrompt = await loadPrompt("audit-context-system", SYSTEM_PROMPT);
+
       const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -225,7 +230,7 @@ Only suggest genuinely valuable improvements — don't force suggestions.`;
         body: JSON.stringify({
           model: "google/gemini-2.5-flash",
           messages: [
-            { role: "system", content: SYSTEM_PROMPT },
+            { role: "system", content: activeAuditPrompt },
             { role: "user", content: userPrompt },
           ],
           tools: [TOOL_DEFINITION],

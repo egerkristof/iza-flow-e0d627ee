@@ -1,10 +1,21 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { loadPrompt } from "../_shared/load-prompt.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
+
+const SYSTEM_PROMPT_FALLBACK = `You are a content domain classifier. Analyze the provided content and determine what type of professional domain expertise it falls under, then generate a specific expert advisor persona who would be best positioned to guide knowledge extraction from this content.
+
+The advisor will consult with a Knowledge Architect to improve extraction quality — advising on:
+- Whether items are categorized correctly for the domain
+- What granularity is appropriate (e.g., a sales expert knows deal stages need atomic steps)
+- What implicit knowledge might be missing that someone in this domain would know to extract
+- Domain-specific terminology and priority signals
+
+Return the advisor persona via the generate_advisor tool.`;
 
 /**
  * Generate a domain-specific expert advisor persona based on content analysis.
@@ -20,6 +31,8 @@ serve(async (req) => {
     const { content, meta } = await req.json();
     if (!content) throw new Error("content required");
 
+    const activePrompt = await loadPrompt("generate-advisor-system", SYSTEM_PROMPT_FALLBACK);
+
     // Use a fast model for classification
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -32,15 +45,7 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are a content domain classifier. Analyze the provided content and determine what type of professional domain expertise it falls under, then generate a specific expert advisor persona who would be best positioned to guide knowledge extraction from this content.
-
-The advisor will consult with a Knowledge Architect to improve extraction quality — advising on:
-- Whether items are categorized correctly for the domain
-- What granularity is appropriate (e.g., a sales expert knows deal stages need atomic steps)
-- What implicit knowledge might be missing that someone in this domain would know to extract
-- Domain-specific terminology and priority signals
-
-Return the advisor persona via the generate_advisor tool.`,
+            content: activePrompt,
           },
           {
             role: "user",

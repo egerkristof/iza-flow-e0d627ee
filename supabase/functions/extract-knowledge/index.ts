@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
+import { loadPrompt } from "../_shared/load-prompt.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -598,8 +599,8 @@ serve(async (req) => {
     }
 
     // ── Call AI ──────────────────────────────────────────────────────────
-    // Build system prompt — optionally enhanced with advisor persona
-    let systemPrompt = SYSTEM_PROMPT;
+    // Load system prompt from DB (admin-editable), fallback to hardcoded
+    let systemPrompt = await loadPrompt("extract-knowledge-system", SYSTEM_PROMPT);
     if (advisorPersona) {
       systemPrompt += `\n\n## DOMAIN ADVISOR CONSULTATION
 You are being advised by a **${advisorPersona.persona_title}** (${advisorPersona.icon_suggestion || "🎯"}) with expertise in: ${(advisorPersona.expertise_areas || []).join(", ")}.

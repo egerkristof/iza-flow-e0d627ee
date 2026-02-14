@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { loadPrompt } from "../_shared/load-prompt.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -21,18 +22,7 @@ serve(async (req) => {
       `[${i + 1}] (${it.type}) Title: "${it.title}" | Category: ${it.category || "N/A"}${it.is_suggestion ? " | ⚠️ AI-Suggested" : ""} | Content: "${(it.content || it.preference_value || "").slice(0, 300)}"`
     ).join("\n");
 
-    const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          {
-            role: "system",
-            content: `You are a Senior Knowledge Architect helping a user refine extracted knowledge items within the AACE protocol execution system.
+    const FALLBACK_PROMPT = `You are a Senior Knowledge Architect helping a user refine extracted knowledge items within the AACE protocol execution system.
 
 ## PROTOCOL EXECUTION MODEL
 When bundles are deployed to workbooks, they generate executable protocols:
@@ -52,7 +42,22 @@ When bundles are deployed to workbooks, they generate executable protocols:
 - PROCEDUREs should be atomic, ordered actions — one step per item
 - DIRECTIVEs should be clear rules/constraints that become compliance gates
 - Always return items with title, content, category, and type fields
-- Return a brief analysis_notes explaining what you changed and why, referencing the protocol model`,
+- Return a brief analysis_notes explaining what you changed and why, referencing the protocol model`;
+
+    const activePrompt = await loadPrompt("refine-extraction-system", FALLBACK_PROMPT);
+
+    const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${lovableApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages: [
+          {
+            role: "system",
+            content: activePrompt,
           },
           {
             role: "user",
