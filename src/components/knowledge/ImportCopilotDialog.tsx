@@ -985,6 +985,12 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
               Step {resolved.step_order_hint}
             </Badge>
           )}
+          {resolved.is_suggestion && (
+            <Badge variant="outline" className="text-[9px] py-0 px-1.5 border-yellow-500/30 text-yellow-400 bg-yellow-500/5">
+              <Lightbulb className="h-2 w-2 mr-0.5" />
+              AI suggestion
+            </Badge>
+          )}
           {edits && Object.keys(edits).length > 0 && (
             <Badge variant="secondary" className="text-[9px]">edited</Badge>
           )}

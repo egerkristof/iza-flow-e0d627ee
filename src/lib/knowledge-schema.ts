@@ -126,6 +126,8 @@ export interface ExtractedContextItem {
   category: ContextCategory;
   /** Suggested execution order within a bundle (1-based). Only meaningful for PROCEDURE items. */
   step_order_hint?: number;
+  /** true if this content was AI-generated to fill a gap, not from the source document */
+  is_suggestion?: boolean;
 }
 
 // ─── Bundle Readiness ────────────────────────────────────────────────────────
