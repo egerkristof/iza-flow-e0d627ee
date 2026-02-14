@@ -546,13 +546,26 @@ export default function ContextManagementPage() {
               if (!user) return;
               setClearingAll(true);
               try {
-                // Delete items first (cascade-safe), then bundles
+                // 1. Delete junction table entries first (references both items and bundles)
+                const { data: userItems } = await supabase.from("context_items").select("id").eq("owner_id", user.id);
+                if (userItems && userItems.length > 0) {
+                  const itemIds = userItems.map(i => i.id);
+                  // Delete in batches to avoid query size limits
+                  for (let i = 0; i < itemIds.length; i += 100) {
+                    const batch = itemIds.slice(i, i + 100);
+                    await supabase.from("context_item_bundles").delete().in("context_item_id", batch);
+                  }
+                }
+                // 2. Delete context items
                 const { error: itemsErr } = await supabase.from("context_items").delete().eq("owner_id", user.id);
-                const { error: bundlesErr } = await supabase.from("bundles").delete().eq("owner_id", user.id);
                 if (itemsErr) throw itemsErr;
+                // 3. Delete bundles
+                const { error: bundlesErr } = await supabase.from("bundles").delete().eq("owner_id", user.id);
                 if (bundlesErr) throw bundlesErr;
+                // 4. Invalidate all related caches
                 queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
                 queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
+                queryClient.invalidateQueries({ queryKey: ["context-item-bundles"] });
                 toast({ title: "All cleared", description: "All context items and bundles have been deleted." });
               } catch (e: any) {
                 toast({ title: "Error", description: e.message, variant: "destructive" });
