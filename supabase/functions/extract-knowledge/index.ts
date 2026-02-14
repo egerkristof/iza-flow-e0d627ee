@@ -103,13 +103,19 @@ Before extracting individual items, identify the **full structural blueprint**:
 - **Phase markers** — named phases, stages, milestones (look for A, B, C, D, E, F or 1, 2, 3 patterns)
 - **Diagram/visual structure** — process diagrams, flowcharts, tables revealing unlabeled structure
 
-### 2. Phase Sequence Integrity
+### 2. Phase Sequence Integrity & Label Uniqueness
 **CRITICAL: When a document uses sequential labels (A, B, C, D, E, F or Phase 1, 2, 3, etc.), you MUST:**
-- Map the COMPLETE sequence from start to finish before creating bundles
+- Map the COMPLETE sequence from start to finish BEFORE creating any bundles — build the full phase map first
 - Preserve the EXACT labels from the document — do NOT reassign letters/numbers
 - If Phase E is "Contracting", the bundle MUST be titled "E. Contracting", NOT "C. Contracting"
 - If any phase in the sequence is missing content, create a SKELETON bundle for it
 - Flag missing phases in analysis_notes (e.g., "Phase F referenced in overview diagram but has no dedicated section")
+
+**LABEL UNIQUENESS RULE (prevents collisions):**
+- Each top-level phase letter/number can appear ONLY ONCE as a bundle prefix
+- If a document has multiple sub-sections under the same phase (e.g., Phase C has "Proposal", "Competitive Strategy", "Contracting"), those are SUB-TOPICS within that phase — NOT separate top-level phases
+- Handle this by EITHER: (a) consolidating into one "C. [Phase Name]" bundle, or (b) splitting as "C1. Proposal", "C2. Competitive Strategy", "C3. Contracting"
+- NEVER create multiple bundles all starting with the same letter (e.g., three "C." bundles)
 
 ### 3. Bundle at the PHASE Level — NOT the Slide/Heading Level
 **A bundle is a self-contained, deployable unit of execution — not a structural mirror of the source document.**
@@ -119,7 +125,8 @@ Before extracting individual items, identify the **full structural blueprint**:
 - **The Deployability Test**: Before creating a bundle, ask: _"Could a process owner deploy this standalone to a workbook and an operator execute it?"_ If the answer is no — the content only makes sense alongside sibling content — it belongs in a parent bundle.
 - **Governance consolidation**: Related governance elements (categories, approvers, review formats, sync protocols) that form a single decision framework MUST be ONE bundle.
 - **Sub-step nesting**: Steps within a phase (e.g., "Step B1.0", "Step B1.1") should be PROCEDURE items WITHIN the parent phase bundle with step_order_hint, NOT separate bundles.
-- **Skeleton bundles**: Only for TOP-LEVEL phases that are referenced but undocumented. Do NOT create skeletons for every sub-heading.
+- **Skeleton bundles**: For TOP-LEVEL phases that are referenced but undocumented. Do NOT create skeletons for every sub-heading.
+- **Gap detection**: After mapping all phases, check for GAPS in the sequence (e.g., A, B, C, E → where is D?). Check overview sections, diagrams, table of contents, and process flow charts for phase references that lack dedicated content sections. Create SKELETON bundles for ALL detected gaps.
 
 **TARGET BUNDLE COUNTS:**
 - 30-60 slide methodology deck → 10-18 bundles
@@ -127,11 +134,13 @@ Before extracting individual items, identify the **full structural blueprint**:
 - 5-20 page research report → 3-8 bundles
 - Single SOP/process → 1-3 bundles
 
-**SUB-PHASE SPLITTING RULE:**
-- If a single phase contains MORE THAN 15 items after extraction, it MAY be split into 2-3 sub-phase bundles
-- Sub-phases must EACH pass the Deployability Test independently
-- Sub-phase naming: use the original phase letter + descriptive suffix (e.g., "B1. Customer Discovery & First Meeting", "B2. Qualification & Opportunity Assessment")
-- Each sub-phase bundle MUST have its own PLAYBOOK driver
+**SUB-PHASE SPLITTING RULE (MANDATORY):**
+- If a single phase contains MORE THAN 15 items after extraction, it MUST be split into 2-3 sub-phase bundles
+- Sub-phases MUST EACH pass the Deployability Test independently
+- Sub-phase naming: use the original phase letter + numeric suffix + descriptive label (e.g., "B1. Customer Discovery & First Meeting", "B2. Qualification & Opportunity Assessment")
+- Each sub-phase bundle MUST have exactly 1 PLAYBOOK driver (the strategic intent of that sub-phase)
+- When splitting, group items by natural workflow stages, NOT arbitrarily by count
+- After splitting, verify each sub-phase has: 1 PLAYBOOK, 2+ PROCEDUREs, and relevant KNOWLEDGE/DIRECTIVE items
 
 **WRONG (over-fragmented):**
   B. Deal Governance: Categories    — split by aspect
@@ -145,24 +154,33 @@ Before extracting individual items, identify the **full structural blueprint**:
   B. Deal Categories & Governance [1 bundle with all governance items]
   B. Customer Need Discovery & Qualification [1 bundle with all B1 steps as PROCEDUREs]
 
-### 4. PLAYBOOK Classification — Strict Rules
-**A PLAYBOOK is a STRATEGIC DRIVER that becomes the protocol's intent anchor. NOT every framework, model, or methodology reference.**
+### 4. PLAYBOOK Classification — STRICT Rules (Most Common Misclassification)
+**A PLAYBOOK is the SINGLE strategic driver of a bundle — the protocol's intent anchor.**
 
-**IS a PLAYBOOK (protocol driver):**
-- The strategic overview of a major phase (e.g., "Enterprise Sales Cycle Overview")
-- A methodology's EXECUTION approach (e.g., "Customer Onboarding Strategy")
-- An operational playbook with clear phases/stages
+**The PLAYBOOK Test (apply to EVERY candidate):**
+Ask THREE questions:
+1. _"Does this item define the STRATEGIC INTENT of an entire phase/bundle?"_ — If NO → not a PLAYBOOK
+2. _"Would an operator use this as the MISSION STATEMENT when starting work?"_ — If NO → not a PLAYBOOK  
+3. _"Does it describe the WHAT & WHY at a high level, leaving HOW to PROCEDUREs?"_ — If NO → not a PLAYBOOK
 
-**Is NOT a PLAYBOOK — use correct category instead:**
-- An analytical FRAMEWORK or MODEL (e.g., BANT, DISK, Buying Center) → **KNOWLEDGE** (reference material)
-- A CHECKLIST of actions before a meeting → **PROCEDURE** (actionable steps)
-- A step within a larger process (e.g., "Consolidate Your Value Proposition") → **PROCEDURE** (execution step)
-- A description of WHAT something is (e.g., "Pre-Sales Process Flow") → **KNOWLEDGE** (unless it drives execution)
-- Competitive strategy REFERENCE material → **KNOWLEDGE** (informational)
+**IS a PLAYBOOK (protocol driver) — ONLY these patterns:**
+- The strategic overview of an entire phase (one per phase bundle)
+- A methodology's high-level EXECUTION philosophy
+- A multi-phase operational strategy defining goals and stages
 
-**The PLAYBOOK Test:** Ask: _"Does this item define the STRATEGIC INTENT of an entire bundle and drive protocol creation?"_ If NO → it's probably KNOWLEDGE or PROCEDURE.
+**Is NOT a PLAYBOOK — COMMON MISTAKES to avoid:**
+- ❌ An analytical FRAMEWORK or MODEL (BANT, DISK, Porter's 5 Forces, Buying Center) → **KNOWLEDGE**
+- ❌ A CHECKLIST of actions (e.g., "Actions Before First Meeting") → **PROCEDURE** (ordered steps)
+- ❌ A step-by-step SEQUENCE (e.g., "Introduction Call Sequence") → **PROCEDURE** (with step_order_hint)
+- ❌ A decision PROCESS (e.g., "Selecting a Strategy Framework") → **PROCEDURE** (decision workflow)
+- ❌ A process DESCRIPTION or FLOW diagram → **KNOWLEDGE** (reference, not driver)
+- ❌ A sub-process within a larger phase → **PROCEDURE** (execution step, not strategic driver)
+- ❌ A pre-qualification or assessment PROCESS → **PROCEDURE** (actionable, not strategic)
+- ❌ Competitive strategy REFERENCE material → **KNOWLEDGE** (informational context)
 
-**TARGET: Each bundle should have exactly 1 PLAYBOOK item (max 2-3 in rare cases). If you're assigning 5+ PLAYBOOKs to a single bundle, most are miscategorized.**
+**HARD LIMIT: Each bundle MUST have exactly 1 PLAYBOOK item. Never 0, never 2+.**
+- If you find yourself assigning 2+ PLAYBOOKs to one bundle, keep ONLY the most strategic one and reclassify the rest
+- If a bundle genuinely needs multiple strategic perspectives, it should be SPLIT into sub-phase bundles
 
 ### 5. Content Completeness Scoring
 For EVERY bundle, assess documentation quality:
@@ -177,6 +195,16 @@ In analysis_notes AND each bundle's coverage_gaps array, flag:
 - Asymmetries (e.g., "Phase A has 15 items, Phase B has 0")
 - Missing phases in sequential processes (e.g., "Phases A-D documented but E-F missing")
 
+### 7. Final Validation Checklist (run BEFORE returning results)
+After extraction, validate ALL of the following:
+1. **Phase label uniqueness**: No two bundles share the same phase prefix letter/number
+2. **Phase sequence completeness**: No gaps in sequential labels (A, B, C... must be contiguous; missing = skeleton)
+3. **PLAYBOOK count per bundle**: Every bundle has EXACTLY 1 PLAYBOOK item
+4. **Bundle size limit**: No bundle exceeds 15 items (split into sub-phases if so)
+5. **PROCEDURE step_order_hint**: Every PROCEDURE item has step_order_hint set
+6. **No framework-as-PLAYBOOK**: Analytical frameworks, checklists, sequences, and decision processes are NOT PLAYBOOKs
+If any check fails, fix it before returning.
+
 ## EXTRACTION PRINCIPLES
 1. **Phase-level consolidation first**: Bundle at the phase/chapter level. Sub-sections become items WITHIN the bundle, NOT separate bundles.
 2. **Deep extraction**: Extract EVERY meaningful piece. A 5-page document should yield 10-30+ items.
@@ -188,7 +216,8 @@ In analysis_notes AND each bundle's coverage_gaps array, flag:
 8. **Consolidate related content**: Sub-headings, tables, and diagrams within a phase become items in the parent bundle.
 9. **Working preferences**: Extract ONLY genuine style preferences. Don't force general knowledge.
 10. **Skeleton bundles for top-level gaps only**: Create with content_completeness="skeleton" for undocumented PHASES, not sub-sections.
-11. **Phase sequence integrity**: Preserve document's sequential labels exactly. Create skeletons for any gaps in the sequence.
+11. **MINIMIZE standalone context_items**: Nearly ALL items should be placed INSIDE bundles. The standalone context_items array should contain ONLY items that truly don't belong to any phase/bundle (e.g., cross-cutting meta-information about the document itself). If an item relates to a phase, it goes IN that phase's bundle. Target: <5% of total items as standalone.
+12. **Phase sequence integrity**: Preserve document's sequential labels exactly. Create skeletons for any gaps in the sequence.
 
 ## ANALYSIS NOTES
 Provide comprehensive analysis_notes explaining:
