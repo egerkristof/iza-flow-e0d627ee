@@ -793,12 +793,30 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             .select("id");
           if (itemsErr) throw itemsErr;
 
-          // Persist many-to-many junction links
+          // Build a map of playbook title -> created ID for parent_playbook_id resolution
+          const playbookTitleToId: Record<string, string> = {};
+          if (createdItems) {
+            bundle.items.forEach((ci, j) => {
+              const resolved = resolveItem(ci, bundleItemEdits[`${i}-${j}`]);
+              if (resolved.category === "PLAYBOOK" && createdItems[j]) {
+                playbookTitleToId[resolved.title] = createdItems[j].id;
+              }
+            });
+          }
+
+          // Persist many-to-many junction links with parent_playbook_id
           if (createdItems && createdItems.length > 0) {
-            const junctionRows = createdItems.map(ci => ({
-              context_item_id: ci.id,
-              bundle_id: newBundle.id,
-            }));
+            const junctionRows = createdItems.map((ci, j) => {
+              const resolved = resolveItem(bundle.items[j], bundleItemEdits[`${i}-${j}`]);
+              const parentPlaybookId = resolved.parent_playbook_title
+                ? playbookTitleToId[resolved.parent_playbook_title] || null
+                : null;
+              return {
+                context_item_id: ci.id,
+                bundle_id: newBundle.id,
+                ...(parentPlaybookId ? { parent_playbook_id: parentPlaybookId } : {}),
+              };
+            });
             const { error: junctionErr } = await supabase
               .from("context_item_bundles")
               .insert(junctionRows);
@@ -1361,61 +1379,170 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                     <div className="border-t border-border/30 px-3 pb-3 pt-2 space-y-0 ml-8">
                       {/* Protocol structure hint */}
                       {(() => {
-                        const playbooks = bundle.items.filter(it => (bundleItemEdits[`${i}-${bundle.items.indexOf(it)}`]?.category || it.category) === "PLAYBOOK");
-                        const procedures = bundle.items.filter(it => (bundleItemEdits[`${i}-${bundle.items.indexOf(it)}`]?.category || it.category) === "PROCEDURE");
-                        const directives = bundle.items.filter(it => (bundleItemEdits[`${i}-${bundle.items.indexOf(it)}`]?.category || it.category) === "DIRECTIVE");
-                        const contextCount = bundle.items.length - playbooks.length - procedures.length - directives.length;
-                        return (
-                          <div className="flex items-center gap-2 text-[10px] text-muted-foreground mb-2 flex-wrap">
-                            <span className="font-medium">Protocol structure:</span>
-                            {playbooks.length > 0 && <Badge variant="outline" className="text-[9px] border-orange-500/30 text-orange-400 py-0">🎯 {playbooks.length} driver{playbooks.length !== 1 ? "s" : ""}</Badge>}
-                            {procedures.length > 0 && <Badge variant="outline" className="text-[9px] border-cyan-500/30 text-cyan-400 py-0">▶ {procedures.length} step{procedures.length !== 1 ? "s" : ""}</Badge>}
-                            {directives.length > 0 && <Badge variant="outline" className="text-[9px] border-amber-500/30 text-amber-400 py-0">⚡ {directives.length} gate{directives.length !== 1 ? "s" : ""}</Badge>}
-                            {contextCount > 0 && <Badge variant="outline" className="text-[9px] py-0">📘 {contextCount} context</Badge>}
-                            {playbooks.length === 0 && <span className="text-destructive/70 italic">⚠ No protocol driver</span>}
-                          </div>
-                        );
-                      })()}
-                      {(() => {
-                        const visibleItems = getVisibleBundleItems(bundle, i);
-                        const hiddenCount = bundle.items.length - visibleItems.length;
+                        const resolvedItems = bundle.items.map((it, j) => resolveItem(it, bundleItemEdits[`${i}-${j}`]));
+                        const playbooks = resolvedItems.filter(it => it.category === "PLAYBOOK");
+                        const procedures = resolvedItems.filter(it => it.category === "PROCEDURE");
+                        const directives = resolvedItems.filter(it => it.category === "DIRECTIVE");
+                        const contextCount = resolvedItems.length - playbooks.length - procedures.length - directives.length;
+                        
+                        // Group items: playbooks as headers, their owned items nested, shared items at bottom
+                        const playbookIndices = bundle.items.map((it, j) => ({ it: resolvedItems[j], j })).filter(({ it }) => it.category === "PLAYBOOK");
+                        const getVisItems = getVisibleBundleItems(bundle, i);
+                        const hiddenCount = bundle.items.length - getVisItems.length;
+
+                        // Build ownership map from parent_playbook_title
+                        const ownedByPlaybook = new Map<string, { item: ExtractedContextItem; j: number }[]>();
+                        const sharedItems: { item: ExtractedContextItem; j: number }[] = [];
+                        
+                        for (const { item, j } of getVisItems) {
+                          const resolved = resolveItem(item, bundleItemEdits[`${i}-${j}`]);
+                          if (resolved.category === "PLAYBOOK") continue; // playbooks rendered as headers
+                          if (resolved.parent_playbook_title) {
+                            const existing = ownedByPlaybook.get(resolved.parent_playbook_title) || [];
+                            existing.push({ item, j });
+                            ownedByPlaybook.set(resolved.parent_playbook_title, existing);
+                          } else {
+                            sharedItems.push({ item, j });
+                          }
+                        }
+
                         return (
                           <>
-                            {visibleItems.map(({ item, j }) => {
-                              const resolvedCat = bundleItemEdits[`${i}-${j}`]?.category || item.category;
-                              const roleMeta = PROTOCOL_ROLE_META[resolvedCat] || PROTOCOL_ROLE_META.KNOWLEDGE;
+                            <div className="flex items-center gap-2 text-[10px] text-muted-foreground mb-2 flex-wrap">
+                              <span className="font-medium">Protocol structure:</span>
+                              <span className="text-orange-400">🎯 {playbooks.length} protocol{playbooks.length !== 1 ? "s" : ""}</span>
+                              <span className="text-cyan-400">▶ {procedures.length} step{procedures.length !== 1 ? "s" : ""}</span>
+                              {directives.length > 0 && <span className="text-amber-400">⚡ {directives.length} gate{directives.length !== 1 ? "s" : ""}</span>}
+                              {contextCount > 0 && <span className="text-blue-400">📘 {contextCount} shared context</span>}
+                            </div>
+
+                            {/* Render playbooks as collapsible groups */}
+                            {playbookIndices.map(({ it: pbItem, j: pbJ }) => {
+                              const resolved = resolveItem(bundle.items[pbJ], bundleItemEdits[`${i}-${pbJ}`]);
+                              const roleMeta = PROTOCOL_ROLE_META[resolved.category] || PROTOCOL_ROLE_META.KNOWLEDGE;
+                              const owned = ownedByPlaybook.get(resolved.title) || [];
+
                               return (
-                              <div key={j}>
-                                {/* Drop zone before this item */}
-                                <div
-                                  onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-before-${j}`); }}
-                                  onDragLeave={(e) => handleDragLeave(e, `bundle-${i}-before-${j}`)}
-                                  onDrop={(e) => { e.stopPropagation(); handleDropOnBundle(e, i, j); }}
-                                  className={`h-1 -mx-1 rounded transition-all ${
-                                    dropTarget === `bundle-${i}-before-${j}` ? "h-2 bg-primary/30 my-1" : "my-0.5"
-                                  }`}
-                                />
-                                <div
-                                  draggable
-                                  onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
-                                  onDragEnd={handleDragEnd}
-                                  className="rounded border border-border/30 bg-background/50 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
-                                >
-                                  <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
-                                    <GripVertical className="h-3 w-3 text-muted-foreground/50" />
-                                    <span className="text-[9px] leading-none" title={roleMeta.label}>{roleMeta.icon}</span>
+                                <div key={`pb-${pbJ}`} className="mb-2">
+                                  {/* Playbook header */}
+                                  <div
+                                    draggable
+                                    onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: pbJ })}
+                                    onDragEnd={handleDragEnd}
+                                    className="rounded border border-orange-500/20 bg-orange-500/5 p-2.5 cursor-grab active:cursor-grabbing flex items-start gap-2"
+                                  >
+                                    <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
+                                      <GripVertical className="h-3 w-3 text-muted-foreground/50" />
+                                      <span className="text-[9px] leading-none" title={roleMeta.label}>{roleMeta.icon}</span>
+                                    </div>
+                                    {renderEditableItem(
+                                      bundle.items[pbJ],
+                                      bundleItemEdits[`${i}-${pbJ}`],
+                                      `bundle-${i}-${pbJ}`,
+                                      (field, value) => updateBundleItemEdit(i, pbJ, field, value),
+                                      true,
+                                    )}
                                   </div>
-                                  {renderEditableItem(
-                                    item,
-                                    bundleItemEdits[`${i}-${j}`],
-                                    `bundle-${i}-${j}`,
-                                    (field, value) => updateBundleItemEdit(i, j, field, value),
-                                    true,
+                                  {/* Owned items nested under playbook */}
+                                  {owned.length > 0 && (
+                                    <div className="ml-4 border-l-2 border-orange-500/15 pl-2 mt-1 space-y-1">
+                                      {owned.map(({ item, j }) => {
+                                        const itemResolved = resolveItem(item, bundleItemEdits[`${i}-${j}`]);
+                                        const itemRoleMeta = PROTOCOL_ROLE_META[itemResolved.category] || PROTOCOL_ROLE_META.KNOWLEDGE;
+                                        return (
+                                          <div key={`owned-${j}`}>
+                                            <div
+                                              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-item-${j}`); }}
+                                              onDragLeave={(e) => handleDragLeave(e, `bundle-${i}-item-${j}`)}
+                                              onDrop={(e) => { e.stopPropagation(); handleDropOnBundle(e, i, j); }}
+                                              className={`h-0.5 -mx-1 rounded transition-all ${
+                                                dropTarget === `bundle-${i}-item-${j}` ? "h-1.5 bg-primary/30 my-0.5" : ""
+                                              }`}
+                                            />
+                                            <div
+                                              draggable
+                                              onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
+                                              onDragEnd={handleDragEnd}
+                                              className="rounded border border-border/30 bg-background/50 p-2 cursor-grab active:cursor-grabbing flex items-start gap-2"
+                                            >
+                                              <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
+                                                <GripVertical className="h-3 w-3 text-muted-foreground/50" />
+                                                <span className="text-[9px] leading-none" title={itemRoleMeta.label}>{itemRoleMeta.icon}</span>
+                                              </div>
+                                              {renderEditableItem(
+                                                item,
+                                                bundleItemEdits[`${i}-${j}`],
+                                                `bundle-${i}-${j}`,
+                                                (field, value) => updateBundleItemEdit(i, j, field, value),
+                                                true,
+                                              )}
+                                            </div>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                  {owned.length === 0 && (
+                                    <div className="ml-4 border-l-2 border-orange-500/15 pl-2 mt-1">
+                                      <p className="text-[10px] text-muted-foreground/50 italic py-1">No steps assigned to this protocol yet</p>
+                                    </div>
                                   )}
                                 </div>
-                              </div>
                               );
                             })}
+
+                            {/* Shared context items (no parent playbook) */}
+                            {sharedItems.length > 0 && (
+                              <div className="mt-2">
+                                {playbookIndices.length > 0 && (
+                                  <div className="text-[10px] text-blue-400/70 font-medium mb-1 flex items-center gap-1">
+                                    📘 Shared context (injected into all protocols)
+                                  </div>
+                                )}
+                                <div className="space-y-1">
+                                  {sharedItems.map(({ item, j }) => {
+                                    const resolved = resolveItem(item, bundleItemEdits[`${i}-${j}`]);
+                                    const roleMeta = PROTOCOL_ROLE_META[resolved.category] || PROTOCOL_ROLE_META.KNOWLEDGE;
+                                    return (
+                                      <div key={`shared-${j}`}>
+                                        <div
+                                          onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); handleDragOver(e, `bundle-${i}-item-${j}`); }}
+                                          onDragLeave={(e) => handleDragLeave(e, `bundle-${i}-item-${j}`)}
+                                          onDrop={(e) => { e.stopPropagation(); handleDropOnBundle(e, i, j); }}
+                                          className={`h-0.5 -mx-1 rounded transition-all ${
+                                            dropTarget === `bundle-${i}-item-${j}` ? "h-1.5 bg-primary/30 my-0.5" : ""
+                                          }`}
+                                        />
+                                        <div
+                                          draggable
+                                          onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
+                                          onDragEnd={handleDragEnd}
+                                          className="rounded border border-border/30 bg-background/50 p-2 cursor-grab active:cursor-grabbing flex items-start gap-2"
+                                        >
+                                          <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
+                                            <GripVertical className="h-3 w-3 text-muted-foreground/50" />
+                                            <span className="text-[9px] leading-none" title={roleMeta.label}>{roleMeta.icon}</span>
+                                          </div>
+                                          {renderEditableItem(
+                                            item,
+                                            bundleItemEdits[`${i}-${j}`],
+                                            `bundle-${i}-${j}`,
+                                            (field, value) => updateBundleItemEdit(i, j, field, value),
+                                            true,
+                                          )}
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* No items at all (no playbooks either) */}
+                            {playbookIndices.length === 0 && sharedItems.length === 0 && getVisItems.length === 0 && (
+                              <p className="text-[10px] text-muted-foreground/50 italic py-1">No items in this bundle</p>
+                            )}
+
                             {hiddenCount > 0 && (
                               <div className="text-[10px] text-yellow-400/70 flex items-center gap-1 py-1 px-2">
                                 <Lightbulb className="h-2.5 w-2.5" />
