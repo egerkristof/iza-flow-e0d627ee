@@ -142,18 +142,21 @@ export type Database = {
           context_item_id: string
           created_at: string
           id: string
+          parent_playbook_id: string | null
         }
         Insert: {
           bundle_id: string
           context_item_id: string
           created_at?: string
           id?: string
+          parent_playbook_id?: string | null
         }
         Update: {
           bundle_id?: string
           context_item_id?: string
           created_at?: string
           id?: string
+          parent_playbook_id?: string | null
         }
         Relationships: [
           {
@@ -166,6 +169,13 @@ export type Database = {
           {
             foreignKeyName: "context_item_bundles_context_item_id_fkey"
             columns: ["context_item_id"]
+            isOneToOne: false
+            referencedRelation: "context_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "context_item_bundles_parent_playbook_id_fkey"
+            columns: ["parent_playbook_id"]
             isOneToOne: false
             referencedRelation: "context_items"
             referencedColumns: ["id"]

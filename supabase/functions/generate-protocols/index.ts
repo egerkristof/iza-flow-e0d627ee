@@ -47,10 +47,10 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Get all context items in this bundle via the junction table
+    // Get all context items in this bundle via the junction table (with parent_playbook_id)
     const { data: bundleLinks, error: linkError } = await supabase
       .from("context_item_bundles")
-      .select("context_item_id")
+      .select("context_item_id, parent_playbook_id")
       .eq("bundle_id", bundle_id);
 
     // Also get items with legacy bundle_id
@@ -63,11 +63,19 @@ Deno.serve(async (req) => {
       throw new Error("Failed to fetch bundle items");
     }
 
-    // Merge IDs
-    const junctionIds = (bundleLinks || []).map((l: any) => l.context_item_id);
-    const legacyIds = (legacyItems || []).map((i: any) => i.id);
-    const allIds = [...new Set([...junctionIds, ...legacyIds])];
+    // Build a map of item_id -> parent_playbook_id from junction table
+    const parentMap: Record<string, string | null> = {};
+    for (const link of (bundleLinks || [])) {
+      parentMap[link.context_item_id] = link.parent_playbook_id || null;
+    }
+    // Legacy items have no parent info
+    for (const item of (legacyItems || [])) {
+      if (!(item.id in parentMap)) {
+        parentMap[item.id] = null;
+      }
+    }
 
+    const allIds = Object.keys(parentMap);
     if (allIds.length === 0) {
       return new Response(JSON.stringify({ protocols_created: 0, message: "No items in bundle" }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -84,10 +92,11 @@ Deno.serve(async (req) => {
 
     // Categorize items
     const playbooks = items.filter((i: any) => i.category === "PLAYBOOK");
-    const procedures = items.filter((i: any) => i.category === "PROCEDURE");
-    const directives = items.filter((i: any) => i.category === "DIRECTIVE");
-    const contextItems = items.filter((i: any) =>
-      ["KNOWLEDGE", "RESEARCH", "PRINCIPLE", "PREFERENCE"].includes(i.category)
+    const allProcedures = items.filter((i: any) => i.category === "PROCEDURE");
+    const allDirectives = items.filter((i: any) => i.category === "DIRECTIVE");
+    const sharedContextItems = items.filter((i: any) =>
+      ["KNOWLEDGE", "RESEARCH", "PRINCIPLE", "PREFERENCE"].includes(i.category) &&
+      !parentMap[i.id] // only truly shared items (no parent playbook)
     );
 
     // If no playbooks, create a single protocol from the bundle itself
@@ -105,6 +114,16 @@ Deno.serve(async (req) => {
 
     for (let pi = 0; pi < protocolSources.length; pi++) {
       const pb = protocolSources[pi];
+
+      // Get items OWNED by this playbook + items with no parent (shared procedures/directives for legacy data)
+      const ownedProcedures = allProcedures.filter((proc: any) => {
+        const parent = parentMap[proc.id];
+        return parent === pb.id || parent === null; // owned by this playbook OR shared (legacy)
+      });
+      const ownedDirectives = allDirectives.filter((dir: any) => {
+        const parent = parentMap[dir.id];
+        return parent === pb.id || parent === null;
+      });
 
       // Upsert protocol
       const { data: protocol, error: protoError } = await supabase
@@ -134,11 +153,11 @@ Deno.serve(async (req) => {
         .delete()
         .eq("protocol_id", protocol.id);
 
-      // Create steps from procedures
+      // Create steps from owned procedures
       let stepOrder = 0;
       const stepInserts = [];
 
-      for (const proc of procedures) {
+      for (const proc of ownedProcedures) {
         stepInserts.push({
           protocol_id: protocol.id,
           source_item_id: proc.id,
@@ -151,8 +170,8 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Insert directive gates at appropriate positions
-      for (const dir of directives) {
+      // Insert owned directive gates
+      for (const dir of ownedDirectives) {
         stepInserts.push({
           protocol_id: protocol.id,
           source_item_id: dir.id,
@@ -184,17 +203,17 @@ Deno.serve(async (req) => {
         await supabase.from("protocol_steps").insert(stepInserts);
       }
 
-      // Link context items (KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE)
+      // Link SHARED context items (KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE) to every protocol
       await supabase
         .from("protocol_context_items")
         .delete()
         .eq("protocol_id", protocol.id);
 
-      if (contextItems.length > 0) {
-        const contextInserts = contextItems.map((ci: any) => ({
+      if (sharedContextItems.length > 0) {
+        const contextInserts = sharedContextItems.map((ci: any) => ({
           protocol_id: protocol.id,
           context_item_id: ci.id,
-          injection_scope: ci.category === "PREFERENCE" ? "always" : "always",
+          injection_scope: "always",
         }));
         await supabase.from("protocol_context_items").insert(contextInserts);
       }
@@ -205,9 +224,9 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         protocols_created: protocolsCreated,
-        steps_from_procedures: procedures.length,
-        gates_from_directives: directives.length,
-        context_items_linked: contextItems.length,
+        total_procedures: allProcedures.length,
+        total_directives: allDirectives.length,
+        shared_context_items: sharedContextItems.length,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

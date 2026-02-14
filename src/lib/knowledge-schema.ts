@@ -124,10 +124,13 @@ export interface ExtractedContextItem {
   title: string;
   content: string;
   category: ContextCategory;
-  /** Suggested execution order within a bundle (1-based). Only meaningful for PROCEDURE items. */
+  /** Suggested execution order within a playbook's protocol (1-based). Only meaningful for PROCEDURE items. */
   step_order_hint?: number;
   /** true if this content was AI-generated to fill a gap, not from the source document */
   is_suggestion?: boolean;
+  /** EXACT title of the parent PLAYBOOK this item belongs to within the same bundle.
+   *  REQUIRED for PROCEDURE and DIRECTIVE items. Unset for PLAYBOOKs themselves and shared context items. */
+  parent_playbook_title?: string;
 }
 
 // ─── Bundle Readiness ────────────────────────────────────────────────────────

@@ -65,16 +65,22 @@ const SYSTEM_PROMPT = `You are a **Senior Knowledge Architect** — an expert at
 
 ## PROTOCOL EXECUTION MODEL
 When bundles are deployed to workbooks, they generate executable protocols:
-- **PLAYBOOK** items → **Protocol Driver** (the strategic template)
+- **PLAYBOOK** items → **Protocol Drivers** — each PLAYBOOK generates a SEPARATE protocol
 - **PROCEDURE** items → **Steps** (executable actions, ordered by step_order_hint)
 - **DIRECTIVE** items → **Compliance Gates** (acknowledgment checkpoints)
 - **KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE** → **Context Injections** (fed to AI)
 
-This means within a bundle:
-- A PLAYBOOK should describe the WHAT and WHY — the strategic approach
-- PROCEDUREs should describe the HOW — each one is a specific step an operator follows, with step_order_hint indicating sequence
-- DIRECTIVEs should describe the MUST — rules that cannot be violated during execution
-- Other categories provide supporting context that shapes AI behavior
+### ITEM OWNERSHIP WITHIN A BUNDLE (CRITICAL)
+Items inside a bundle are either **owned by a specific PLAYBOOK** or **shared across all playbooks**:
+
+- **Owned items** (PROCEDUREs, DIRECTIVEs): These are steps/gates that belong to ONE specific playbook's protocol. Set \`parent_playbook_title\` to the EXACT title of the owning PLAYBOOK.
+- **Shared items** (KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE): These provide context to ALL protocols generated from the bundle. Leave \`parent_playbook_title\` unset (null).
+
+**Rules:**
+- Every PROCEDURE and DIRECTIVE MUST have \`parent_playbook_title\` set — they always belong to a specific playbook's execution flow
+- KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE should generally be SHARED (no parent_playbook_title) unless they are truly specific to one playbook's context
+- A PLAYBOOK item itself should NOT have parent_playbook_title set — it IS the parent
+- The value of parent_playbook_title must EXACTLY match the title of a PLAYBOOK item in the same bundle
 
 ## BUNDLES
 Bundles are **curated collections** of related context items that form a deployable execution unit.
@@ -487,11 +493,15 @@ const TOOL_DEFINITION = {
                     },
                     step_order_hint: {
                       type: "integer",
-                      description: "Execution order within the bundle (1-based). REQUIRED for PROCEDURE items. Indicates the sequence in which this step should be executed.",
+                      description: "Execution order within the parent playbook's protocol (1-based). REQUIRED for PROCEDURE items.",
                     },
                     is_suggestion: {
                       type: "boolean",
                       description: "true if this content was AI-generated (not from source document). MUST be true for skeleton placeholders and inferred content.",
+                    },
+                    parent_playbook_title: {
+                      type: "string",
+                      description: "EXACT title of the PLAYBOOK item this belongs to. REQUIRED for PROCEDURE and DIRECTIVE items. Must match a PLAYBOOK title in the same bundle. Leave unset for PLAYBOOK items themselves and for shared context items (KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE).",
                     },
                   },
                   required: ["title", "content", "category"],
