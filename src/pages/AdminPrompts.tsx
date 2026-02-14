@@ -221,46 +221,57 @@ export default function AdminPromptsPage() {
         `### ${p.label} (${p.slug})\nFunction: ${p.function_name} | Type: ${p.prompt_type} | Model: ${p.model || "N/A"} | v${p.version}\n\n${p.content.slice(0, 2000)}${p.content.length > 2000 ? "\n[...truncated]" : ""}`
       ).join("\n\n---\n\n");
 
-      const { data, error } = await supabase.functions.invoke("audit-context", {
-        body: {
+      // Use raw fetch for SSE streaming (supabase.functions.invoke doesn't support streams)
+      const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/audit-context`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        },
+        body: JSON.stringify({
           action: "chat",
           messages: newMessages.map(m => ({ role: m.role, content: m.content })),
           graph_context: [],
           system_override: ADMIN_COPILOT_CONTEXT + `\n\n## CURRENT PROMPTS IN THE SYSTEM:\n\n${promptContext}`,
-        },
+        }),
       });
 
-      if (error) throw error;
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      if (!resp.body) throw new Error("No response body");
 
-      // Handle streaming response
-      if (data instanceof ReadableStream) {
-        const reader = data.getReader();
-        const decoder = new TextDecoder();
-        let assistantContent = "";
-        setChatMessages(prev => [...prev, { role: "assistant", content: "" }]);
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let assistantContent = "";
+      let textBuffer = "";
+      setChatMessages(prev => [...prev, { role: "assistant", content: "" }]);
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          const lines = chunk.split("\n").filter(l => l.startsWith("data: "));
-          for (const line of lines) {
-            const json = line.slice(6);
-            if (json === "[DONE]") continue;
-            try {
-              const parsed = JSON.parse(json);
-              const delta = parsed.choices?.[0]?.delta?.content || "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (!line.startsWith("data: ")) continue;
+          const json = line.slice(6).trim();
+          if (json === "[DONE]") continue;
+          try {
+            const parsed = JSON.parse(json);
+            const delta = parsed.choices?.[0]?.delta?.content;
+            if (delta) {
               assistantContent += delta;
               setChatMessages(prev => {
                 const msgs = [...prev];
                 msgs[msgs.length - 1] = { role: "assistant", content: assistantContent };
                 return msgs;
               });
-            } catch { /* skip parse errors */ }
-          }
+            }
+          } catch { /* partial JSON, skip */ }
         }
-      } else if (typeof data === "string") {
-        setChatMessages(prev => [...prev, { role: "assistant", content: data }]);
       }
     } catch (e: any) {
       setChatMessages(prev => [...prev, { role: "assistant", content: `Error: ${e.message}` }]);
