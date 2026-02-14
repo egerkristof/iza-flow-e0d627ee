@@ -769,10 +769,13 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
         createdBundleIds[i] = newBundle.id;
 
         if (bundle.items.length > 0) {
-          const itemRows = bundle.items.map((ci, j) => {
-            const resolved = resolveItem(ci, bundleItemEdits[`${i}-${j}`]);
+          // Insert items one-by-one to handle duplicate hash conflicts gracefully
+          const createdItems: { id: string; idx: number }[] = [];
+          let skippedDupes = 0;
+          for (let j = 0; j < bundle.items.length; j++) {
+            const resolved = resolveItem(bundle.items[j], bundleItemEdits[`${i}-${j}`]);
             const mandate = mandateFlags[`bundle-${i}-${j}`];
-            return {
+            const row = {
               owner_id: user.id,
               title: resolved.title,
               content_full: resolved.content,
@@ -786,33 +789,42 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                 priority: "CRITICAL" as any,
               } : {}),
             };
-          });
-          const { data: createdItems, error: itemsErr } = await supabase
-            .from("context_items")
-            .insert(itemRows)
-            .select("id");
-          if (itemsErr) throw itemsErr;
+            const { data: created, error: itemErr } = await supabase
+              .from("context_items")
+              .insert(row)
+              .select("id")
+              .maybeSingle();
+            if (itemErr) {
+              if (itemErr.message?.includes("idx_context_items_owner_hash")) {
+                skippedDupes++;
+                continue;
+              }
+              throw itemErr;
+            }
+            if (created) createdItems.push({ id: created.id, idx: j });
+          }
+          if (skippedDupes > 0) {
+            console.log(`Skipped ${skippedDupes} duplicate items in bundle "${bundle.title}"`);
+          }
 
           // Build a map of playbook title -> created ID for parent_playbook_id resolution
           const playbookTitleToId: Record<string, string> = {};
-          if (createdItems) {
-            bundle.items.forEach((ci, j) => {
-              const resolved = resolveItem(ci, bundleItemEdits[`${i}-${j}`]);
-              if (resolved.category === "PLAYBOOK" && createdItems[j]) {
-                playbookTitleToId[resolved.title] = createdItems[j].id;
-              }
-            });
+          for (const { id, idx } of createdItems) {
+            const resolved = resolveItem(bundle.items[idx], bundleItemEdits[`${i}-${idx}`]);
+            if (resolved.category === "PLAYBOOK") {
+              playbookTitleToId[resolved.title] = id;
+            }
           }
 
           // Persist many-to-many junction links with parent_playbook_id
-          if (createdItems && createdItems.length > 0) {
-            const junctionRows = createdItems.map((ci, j) => {
-              const resolved = resolveItem(bundle.items[j], bundleItemEdits[`${i}-${j}`]);
+          if (createdItems.length > 0) {
+            const junctionRows = createdItems.map(({ id, idx }) => {
+              const resolved = resolveItem(bundle.items[idx], bundleItemEdits[`${i}-${idx}`]);
               const parentPlaybookId = resolved.parent_playbook_title
                 ? playbookTitleToId[resolved.parent_playbook_title] || null
                 : null;
               return {
-                context_item_id: ci.id,
+                context_item_id: id,
                 bundle_id: newBundle.id,
                 ...(parentPlaybookId ? { parent_playbook_id: parentPlaybookId } : {}),
               };
@@ -830,9 +842,11 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
         .filter(({ i }) => selectedItems.has(i));
 
       if (itemsToSave.length > 0) {
-        const rows = itemsToSave.map(({ ci, i }) => {
-          const resolved = resolveItem(ci, itemEdits[i]);
-          const assignment = itemBundleAssignment[i];
+        const createdStandalone: { id: string; originalIdx: number }[] = [];
+        let skippedStandalone = 0;
+        for (const { ci, i: originalIdx } of itemsToSave) {
+          const resolved = resolveItem(ci, itemEdits[originalIdx]);
+          const assignment = itemBundleAssignment[originalIdx];
           let bundleId: string | null = null;
           if (assignment && assignment !== "none") {
             if (assignment.startsWith("new-")) {
@@ -842,8 +856,8 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
               bundleId = assignment;
             }
           }
-          const mandate = mandateFlags[`standalone-${i}`];
-          return {
+          const mandate = mandateFlags[`standalone-${originalIdx}`];
+          const row = {
             owner_id: user.id,
             title: resolved.title,
             content_full: resolved.content,
@@ -857,38 +871,46 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
               priority: "CRITICAL" as any,
             } : {}),
           };
-        });
-        const { data: createdStandalone, error } = await supabase
-          .from("context_items")
-          .insert(rows)
-          .select("id");
-        if (error) throw error;
+          const { data: created, error } = await supabase
+            .from("context_items")
+            .insert(row)
+            .select("id")
+            .maybeSingle();
+          if (error) {
+            if (error.message?.includes("idx_context_items_owner_hash")) {
+              skippedStandalone++;
+              continue;
+            }
+            throw error;
+          }
+          if (created) createdStandalone.push({ id: created.id, originalIdx });
+        }
+        if (skippedStandalone > 0) {
+          console.log(`Skipped ${skippedStandalone} duplicate standalone items`);
+        }
 
         // Persist junction links for standalone items assigned to bundles
-        if (createdStandalone) {
-          const junctionRows: { context_item_id: string; bundle_id: string }[] = [];
-          createdStandalone.forEach((ci, idx) => {
-            const originalIdx = itemsToSave[idx].i;
-            const assignment = itemBundleAssignment[originalIdx];
-            let bundleId: string | null = null;
-            if (assignment && assignment !== "none") {
-              if (assignment.startsWith("new-")) {
-                const bundleIdx = parseInt(assignment.replace("new-", ""), 10);
-                bundleId = createdBundleIds[bundleIdx] || null;
-              } else {
-                bundleId = assignment;
-              }
+        const junctionRows: { context_item_id: string; bundle_id: string }[] = [];
+        for (const { id, originalIdx } of createdStandalone) {
+          const assignment = itemBundleAssignment[originalIdx];
+          let bundleId: string | null = null;
+          if (assignment && assignment !== "none") {
+            if (assignment.startsWith("new-")) {
+              const bundleIdx = parseInt(assignment.replace("new-", ""), 10);
+              bundleId = createdBundleIds[bundleIdx] || null;
+            } else {
+              bundleId = assignment;
             }
-            if (bundleId) {
-              junctionRows.push({ context_item_id: ci.id, bundle_id: bundleId });
-            }
-          });
-          if (junctionRows.length > 0) {
-            const { error: jErr } = await supabase
-              .from("context_item_bundles")
-              .insert(junctionRows);
-            if (jErr) throw jErr;
           }
+          if (bundleId) {
+            junctionRows.push({ context_item_id: id, bundle_id: bundleId });
+          }
+        }
+        if (junctionRows.length > 0) {
+          const { error: jErr } = await supabase
+            .from("context_item_bundles")
+            .insert(junctionRows);
+          if (jErr) throw jErr;
         }
       }
     },
