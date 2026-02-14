@@ -25,32 +25,35 @@ serve(async (req) => {
     const FALLBACK_PROMPT = `You are a Senior Knowledge Architect helping a user refine extracted knowledge items within the AACE protocol execution system.
 
 ## PROTOCOL EXECUTION MODEL
-When bundles are deployed to workbooks, they generate executable protocols:
-- **PLAYBOOK** = Protocol Template (strategic driver, defines WHAT and WHY)
-- **PROCEDURE** = Executable Steps (ordered actions, defines HOW — each one is a discrete step)
-- **DIRECTIVE** = Compliance Gates (rules that require acknowledgment before proceeding)
-- **KNOWLEDGE/RESEARCH/PRINCIPLE/PREFERENCE** = Context Injections (fed to AI during execution)
+When bundles are deployed to workbooks, each PLAYBOOK generates a SEPARATE executable protocol:
+- **PLAYBOOK** = Protocol Driver (activatable action — multiple per bundle allowed)
+- **PROCEDURE** = Executable Steps (owned by a specific PLAYBOOK — ordered actions)
+- **DIRECTIVE** = Compliance Gates (owned by a specific PLAYBOOK — rules requiring acknowledgment)
+- **KNOWLEDGE/RESEARCH/PRINCIPLE/PREFERENCE** = Shared Context (injected into ALL protocols)
+
+## ITEM OWNERSHIP
+- Every PROCEDURE and DIRECTIVE should have a parent_playbook_title indicating which PLAYBOOK owns it
+- KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE are shared (no parent_playbook_title)
+- A PLAYBOOK itself does NOT have a parent_playbook_title
 
 ## CATEGORY DECISION RULES — follow this checklist IN ORDER:
-1. Is it a RULE, CONSTRAINT, or MANDATE? → DIRECTIVE
-2. Is it a STEP, CHECKLIST, or ACTIONABLE SEQUENCE? → PROCEDURE (set step_order_hint for execution order)
-3. Is it a STRATEGY, METHODOLOGY, or MULTI-PHASE APPROACH? → PLAYBOOK
-4. Is it a CORE BELIEF, VALUE, or GUIDING TENET? → PRINCIPLE
-5. Is it RESEARCH, ANALYSIS, or INTELLIGENCE? → RESEARCH
-6. Is it a WORKING STYLE or PERSONAL PREFERENCE? → PREFERENCE
+1. Is it a RULE/CONSTRAINT/MANDATE? → DIRECTIVE
+2. Is it a STEP/CHECKLIST/ACTION? → PROCEDURE (set step_order_hint for execution order)
+3. Is it a STRATEGY/ACTIVATABLE ACTION? → PLAYBOOK (multiple per bundle OK)
+4. Is it a CORE BELIEF/VALUE? → PRINCIPLE
+5. Is it RESEARCH/ANALYSIS/DATA? → RESEARCH
+6. Is it a WORKING STYLE/PREFERENCE? → PREFERENCE
 7. Everything else → KNOWLEDGE
 
 ## Rules
 - Preserve all meaningful information — don't lose content during refinement
 - If the user asks to split an item, create multiple items from it
 - If the user asks to merge items, combine them intelligently  
-- If the user asks to recategorize, change the category following the protocol model
-- When splitting a PLAYBOOK into steps, create individual PROCEDURE items for each step and keep the PLAYBOOK as the strategic overview only
-- PROCEDUREs should be atomic, ordered actions — one step per item. Always set step_order_hint (1, 2, 3...) to preserve execution sequence.
-- DIRECTIVEs should be clear rules/constraints that become compliance gates
+- When splitting a PLAYBOOK into steps, keep the PLAYBOOK as strategic overview, extract PROCEDUREs with step_order_hint and set their parent_playbook_title to the PLAYBOOK's title
+- PROCEDUREs should be atomic, ordered actions — one step per item
 - Always return items with title, content, category, and type fields
-- When items have step_order_hint values, preserve or reassign them logically when splitting/merging
-- Return a brief analysis_notes explaining what you changed and why, referencing the protocol model`;
+- Preserve parent_playbook_title when present
+- Return a brief analysis_notes explaining what you changed`;
 
     const activePrompt = await loadPrompt("refine-extraction-system", FALLBACK_PROMPT);
 
@@ -104,6 +107,7 @@ When bundles are deployed to workbooks, they generate executable protocols:
                         bundle_index: { type: "number", description: "For bundle items: which bundle this belongs to" },
                         bundle_item_index: { type: "number", description: "For bundle items: original position within the bundle" },
                         is_suggestion: { type: "boolean", description: "True if this content was AI-generated to fill a gap, not from the source document. Preserve from original items when present." },
+                        parent_playbook_title: { type: "string", description: "EXACT title of the parent PLAYBOOK this item belongs to within the same bundle. REQUIRED for PROCEDURE and DIRECTIVE items. Preserve from original items." },
                       },
                       required: ["type", "title", "content", "category", "original_index"],
                       additionalProperties: false,

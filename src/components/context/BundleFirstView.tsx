@@ -233,28 +233,64 @@ function BundleExpandable({
                 No items in this bundle yet.
               </div>
             ) : (
-              <div className="divide-y divide-border/20">
-                {bundleItems.map(item => (
-                  <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-secondary/20 transition-colors">
-                    <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium truncate">{item.title}</span>
-                        <CategoryBadge category={item.category} />
+              (() => {
+                const playbooks = bundleItems.filter(i => i.category === "PLAYBOOK");
+                const sharedItems = bundleItems.filter(i => i.category !== "PLAYBOOK" && !i.category); // fallback: show flat if no grouping data
+                // For now, show all non-playbook items as flat (parent_playbook_id grouping will come from DB queries)
+                const nonPlaybooks = bundleItems.filter(i => i.category !== "PLAYBOOK");
+
+                return (
+                  <div className="divide-y divide-border/20">
+                    {/* Playbook protocol drivers */}
+                    {playbooks.map(item => (
+                      <div key={item.id}>
+                        <div className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-orange-500/5 transition-colors border-l-2 border-orange-500/30">
+                          <span className="text-[9px] shrink-0">🎯</span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-semibold truncate">{item.title}</span>
+                              <CategoryBadge category={item.category} />
+                              <Badge variant="outline" className="text-[9px] border-orange-500/30 text-orange-400 bg-orange-500/5">
+                                Protocol Driver
+                              </Badge>
+                            </div>
+                            <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                          </div>
+                          <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                              <Pencil className="h-3 w-3" />
+                            </Button>
+                            <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
-                    </div>
-                    <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
-                        <Pencil className="h-3 w-3" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    </div>
+                    ))}
+                    {/* Non-playbook items (shared context / steps) */}
+                    {nonPlaybooks.map(item => (
+                      <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-secondary/20 transition-colors">
+                        <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium truncate">{item.title}</span>
+                            <CategoryBadge category={item.category} />
+                          </div>
+                          <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                        </div>
+                        <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                            <Pencil className="h-3 w-3" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                );
+              })()
             )}
           </div>
         </CollapsibleContent>
