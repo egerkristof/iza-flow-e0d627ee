@@ -18,6 +18,7 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
 import { DuplicateResolutionDialog, type ResolutionResult } from "@/components/knowledge/DuplicateResolutionDialog";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
@@ -277,12 +278,27 @@ export function MyContextItems() {
 
   const deleteItem = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("context_items").delete().eq("id", id);
+      // Soft-delete: set deleted_at timestamp
+      const { error } = await supabase.from("context_items").update({ deleted_at: new Date().toISOString() } as any).eq("id", id);
       if (error) throw error;
+      return id;
     },
-    onSuccess: () => {
+    onSuccess: (deletedId) => {
+      const deletedItem = items.find(i => i.id === deletedId);
       queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
-      toast({ title: "Context item removed" });
+      queryClient.invalidateQueries({ queryKey: ["context-items"] });
+      toast({
+        title: "Context item removed",
+        description: deletedItem ? `"${deletedItem.title}" deleted.` : undefined,
+        action: (
+          <ToastAction altText="Undo delete" onClick={async () => {
+            await supabase.from("context_items").update({ deleted_at: null } as any).eq("id", deletedId);
+            queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
+            queryClient.invalidateQueries({ queryKey: ["context-items"] });
+            toast({ title: "Restored", description: deletedItem ? `"${deletedItem.title}" has been restored.` : "Item restored." });
+          }}>Undo</ToastAction>
+        ),
+      });
     },
   });
 
