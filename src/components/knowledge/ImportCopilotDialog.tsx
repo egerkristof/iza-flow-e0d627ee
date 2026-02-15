@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff, GitMerge, ArrowRight } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff, GitMerge, ArrowRight, ScanSearch } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -21,6 +21,7 @@ import {
   type AdvisorPersona,
   type BundleReadiness,
   type BundleMatch,
+  type DocumentStructureSkeleton,
   CONTEXT_CATEGORIES,
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
@@ -1177,6 +1178,29 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto space-y-4 -mx-6 px-6" style={{ maxHeight: "calc(85vh - 200px)" }}>
+          {/* Document Structure Detection Banner */}
+          {data.document_structure && (
+            <div className="rounded-lg border border-cyan-500/20 bg-cyan-500/5 px-3 py-2 flex items-center gap-2.5">
+              <ScanSearch className="h-4 w-4 text-cyan-400 shrink-0" />
+              <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
+                <span className="text-[11px] font-medium text-cyan-400">Structure Detected</span>
+                <Badge variant="outline" className="text-[9px] border-cyan-500/30 text-cyan-400 capitalize">
+                  {data.document_structure.structure_type === "toc" ? "Table of Contents" : data.document_structure.structure_type}
+                </Badge>
+                <Badge variant="outline" className={cn("text-[9px]", 
+                  data.document_structure.confidence === "high" 
+                    ? "border-emerald-500/30 text-emerald-400" 
+                    : "border-amber-500/30 text-amber-400"
+                )}>
+                  {data.document_structure.confidence === "high" ? "✓ Mandatory blueprint" : "~ Suggested guide"}
+                </Badge>
+                <span className="text-[10px] text-muted-foreground">
+                  {data.document_structure.total_sections_detected} sections mapped
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* Advisor Persona Banner */}
           {data.advisor && (
             <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 flex gap-2.5">

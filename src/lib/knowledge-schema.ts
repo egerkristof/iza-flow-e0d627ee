@@ -198,6 +198,13 @@ export interface BundleMatch {
   suggested_merged_title?: string;
 }
 
+export interface DocumentStructureSkeleton {
+  structure_type: "toc" | "presentation" | "hierarchical" | "phased" | "tabular" | "flat";
+  confidence: "high" | "medium" | "low";
+  total_sections_detected: number;
+  notes?: string;
+}
+
 export interface ExtractionResult {
   analysis_notes?: string;
   preferences: ExtractedPreference[];
@@ -207,6 +214,8 @@ export interface ExtractionResult {
   extraction_depth?: ExtractionDepth;
   /** Bundle match suggestions from the matching engine */
   bundle_matches?: BundleMatch[];
+  /** Document structure detected in pre-pass */
+  document_structure?: DocumentStructureSkeleton;
 }
 
 // ─── Import Copilot Props ────────────────────────────────────────────────────

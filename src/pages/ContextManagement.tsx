@@ -457,6 +457,10 @@ export default function ContextManagementPage() {
       if (data.error) throw new Error(data.error);
 
       const extracted = data as ExtractionResult;
+      // Attach detected structure metadata for Import Copilot display
+      if (documentStructure) {
+        extracted.document_structure = documentStructure;
+      }
 
       // ── Bundle Matching Pass ──────────────────────────────────────────
       if (extracted.bundles && extracted.bundles.length > 0) {

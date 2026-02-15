@@ -86,6 +86,10 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
       if (data?.error) throw new Error(data.error);
 
       const extracted = data as ExtractionResult;
+      // Attach detected structure metadata for Import Copilot display
+      if (documentStructure) {
+        extracted.document_structure = documentStructure;
+      }
 
       // ── Bundle Matching Pass ──────────────────────────────────────────
       // Run the matcher if we have extracted bundles
