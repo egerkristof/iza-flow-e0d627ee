@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.optimize-structure]
 verify_jwt = false
+
+[functions.enhance-context]
+verify_jwt = false

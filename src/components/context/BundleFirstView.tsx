@@ -1,11 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import type { ExtractionDepth } from "@/lib/knowledge-schema";
 import {
   Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
   Layers, Tag, Loader2, Rocket, BookOpen, Circle, CheckCircle2, ArrowUpCircle,
-  Eraser, GripVertical,
+  Eraser, GripVertical, Wand2,
 } from "lucide-react";
+import { InlineContextCopilot, type CopilotScope, type CopilotHierarchy } from "@/components/context/InlineContextCopilot";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -165,6 +166,8 @@ function DraggableItemList({
   onReorderItems,
   renderPrefix,
   className = "",
+  onToggleCopilot,
+  activeCopilot,
 }: {
   items: MockContextItem[];
   bundleId: string;
@@ -173,6 +176,8 @@ function DraggableItemList({
   onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
   renderPrefix?: (item: MockContextItem, index: number) => React.ReactNode;
   className?: string;
+  onToggleCopilot?: (scope: CopilotScope, id: string, title: string) => void;
+  activeCopilot?: { scope: CopilotScope; id: string; title: string } | null;
 }) {
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
@@ -243,6 +248,15 @@ function DraggableItemList({
             <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
           </div>
           <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+            {onToggleCopilot && item.category === "PROCEDURE" && (
+              <Button
+                variant={activeCopilot?.scope === "step" && activeCopilot.id === item.id ? "secondary" : "ghost"}
+                size="icon" className="h-6 w-6"
+                onClick={() => onToggleCopilot("step", item.id, item.title)}
+              >
+                <Wand2 className="h-3 w-3 text-primary" />
+              </Button>
+            )}
             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
               <Pencil className="h-3 w-3" />
             </Button>
@@ -265,6 +279,10 @@ function DraggablePlaybookList({
   onDestroyItem,
   onCreateItem,
   onReorderItems,
+  activeCopilot,
+  onToggleCopilot,
+  buildHierarchy,
+  allMentionableItems,
 }: {
   playbooks: MockContextItem[];
   ownedByPlaybook: Map<string, MockContextItem[]>;
@@ -273,6 +291,10 @@ function DraggablePlaybookList({
   onDestroyItem: (item: MockContextItem) => void;
   onCreateItem: (ctx?: CreateItemContext) => void;
   onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
+  activeCopilot?: { scope: CopilotScope; id: string; title: string } | null;
+  onToggleCopilot?: (scope: CopilotScope, id: string, title: string) => void;
+  buildHierarchy?: (focusItem?: MockContextItem) => CopilotHierarchy;
+  allMentionableItems?: { id: string; title: string; category: string; level: "bundle" | "playbook" | "step" | "shared" }[];
 }) {
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
@@ -354,6 +376,15 @@ function DraggablePlaybookList({
                 <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{playbook.content_preview}</p>
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                {onToggleCopilot && (
+                  <Button
+                    variant={activeCopilot?.scope === "playbook" && activeCopilot.id === playbook.id ? "secondary" : "ghost"}
+                    size="icon" className="h-6 w-6"
+                    onClick={() => onToggleCopilot("playbook", playbook.id, playbook.title)}
+                  >
+                    <Wand2 className="h-3 w-3 text-primary" />
+                  </Button>
+                )}
                 <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(playbook)}>
                   <Pencil className="h-3 w-3" />
                 </Button>
@@ -362,6 +393,21 @@ function DraggablePlaybookList({
                 </Button>
               </div>
             </div>
+
+            {/* Playbook-level copilot */}
+            {activeCopilot?.scope === "playbook" && activeCopilot.id === playbook.id && buildHierarchy && allMentionableItems && (
+              <div className="ml-4 border-l-2 border-orange-500/10 px-4 py-2">
+                <InlineContextCopilot
+                  scope="playbook"
+                  scopeId={playbook.id}
+                  scopeTitle={playbook.title}
+                  hierarchy={buildHierarchy(playbook)}
+                  allItems={allMentionableItems}
+                  onClose={() => onToggleCopilot?.("playbook", playbook.id, playbook.title)}
+                />
+              </div>
+            )}
+
             {/* Procedures (steps) - draggable */}
             {procedures.length > 0 && (
               <div className="ml-4 border-l-2 border-orange-500/10">
@@ -378,7 +424,22 @@ function DraggablePlaybookList({
                     <span className="text-[9px] font-mono text-muted-foreground/50 w-4 text-right shrink-0">{idx + 1}.</span>
                   )}
                   className="pl-10 pr-4"
+                  onToggleCopilot={onToggleCopilot}
+                  activeCopilot={activeCopilot}
                 />
+                {/* Step-level copilot */}
+                {activeCopilot?.scope === "step" && procedures.some(p => p.id === activeCopilot.id) && buildHierarchy && allMentionableItems && (
+                  <div className="pl-10 pr-4 py-2">
+                    <InlineContextCopilot
+                      scope="step"
+                      scopeId={activeCopilot.id}
+                      scopeTitle={activeCopilot.title}
+                      hierarchy={buildHierarchy(procedures.find(p => p.id === activeCopilot.id))}
+                      allItems={allMentionableItems}
+                      onClose={() => onToggleCopilot?.("step", activeCopilot.id, activeCopilot.title)}
+                    />
+                  </div>
+                )}
                 <div className="pl-10 pr-4 py-1">
                   <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
                     onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}>
@@ -465,6 +526,56 @@ function BundleExpandable({
   const { data: deployments = [] } = useDeployments(bundle.id);
   const readiness = getReadiness(bundle.scope_level, deployments.length);
 
+  // Copilot state: which level is active, and which ID
+  const [activeCopilot, setActiveCopilot] = useState<{ scope: CopilotScope; id: string; title: string } | null>(null);
+
+  // Build hierarchy for copilot
+  const buildHierarchy = useCallback((focusItem?: MockContextItem): CopilotHierarchy => {
+    const sortedItems = [...bundleItems].sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999));
+    const playbooks = sortedItems.filter(i => i.category === "PLAYBOOK");
+    const sharedItems: { id: string; title: string; content?: string; category: string }[] = [];
+    const playbookEntries: CopilotHierarchy["playbooks"] = [];
+
+    for (const pb of playbooks) {
+      const children = sortedItems
+        .filter(i => i.category !== "PLAYBOOK" && i.parent_playbook_id === pb.id)
+        .map(i => ({ id: i.id, title: i.title, content: i.content_preview, category: i.category }));
+      playbookEntries.push({ id: pb.id, title: pb.title, content: pb.content_preview, children });
+    }
+
+    for (const item of sortedItems) {
+      if (item.category === "PLAYBOOK") continue;
+      if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) continue;
+      sharedItems.push({ id: item.id, title: item.title, content: item.content_preview, category: item.category });
+    }
+
+    return {
+      bundle: { id: bundle.id, title: bundle.title, description: bundle.description },
+      playbooks: playbookEntries,
+      sharedItems,
+      currentItem: focusItem ? { id: focusItem.id, title: focusItem.title, content: focusItem.content_preview, category: focusItem.category } : undefined,
+    };
+  }, [bundleItems, bundle]);
+
+  // All mentionable items for @ references
+  const allMentionableItems = useMemo(() => {
+    return bundleItems.map(i => ({
+      id: i.id,
+      title: i.title,
+      category: i.category,
+      level: i.category === "PLAYBOOK" ? "playbook" as const :
+        i.parent_playbook_id ? "step" as const : "shared" as const,
+    }));
+  }, [bundleItems]);
+
+  const toggleCopilot = (scope: CopilotScope, id: string, title: string) => {
+    if (activeCopilot?.scope === scope && activeCopilot?.id === id) {
+      setActiveCopilot(null);
+    } else {
+      setActiveCopilot({ scope, id, title });
+    }
+  };
+
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <div className="rounded-lg border border-border/50 bg-card overflow-hidden transition-all hover:border-primary/20">
@@ -510,6 +621,15 @@ function BundleExpandable({
                 <Rocket className="h-3 w-3" />
                 Deploy
               </Button>
+              {/* Copilot button for bundle level */}
+              <Button
+                variant={activeCopilot?.scope === "bundle" ? "secondary" : "ghost"}
+                size="icon"
+                className="h-7 w-7"
+                onClick={(e) => { e.stopPropagation(); toggleCopilot("bundle", bundle.id, bundle.title); }}
+              >
+                <Wand2 className="h-3 w-3 text-primary" />
+              </Button>
               <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onEditBundle(bundle); }}>
                   <Pencil className="h-3 w-3" />
@@ -524,6 +644,20 @@ function BundleExpandable({
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div className="border-t border-border/30 bg-secondary/5">
+            {/* Bundle-level copilot */}
+            {activeCopilot?.scope === "bundle" && activeCopilot.id === bundle.id && (
+              <div className="px-4 py-3">
+                <InlineContextCopilot
+                  scope="bundle"
+                  scopeId={bundle.id}
+                  scopeTitle={bundle.title}
+                  hierarchy={buildHierarchy()}
+                  allItems={allMentionableItems}
+                  onClose={() => setActiveCopilot(null)}
+                />
+              </div>
+            )}
+
             {bundleItems.length === 0 ? (
               <div className="p-4 text-center text-xs text-muted-foreground">
                 No items in this bundle yet.
@@ -565,8 +699,11 @@ function BundleExpandable({
                       onDestroyItem={onDestroyItem}
                       onCreateItem={onCreateItem}
                       onReorderItems={onReorderItems}
+                      activeCopilot={activeCopilot}
+                      onToggleCopilot={toggleCopilot}
+                      buildHierarchy={buildHierarchy}
+                      allMentionableItems={allMentionableItems}
                     />
-
 
                     {/* Shared context items */}
                     {sharedItems.length > 0 && playbooks.length > 0 && (
