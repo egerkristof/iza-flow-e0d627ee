@@ -204,7 +204,7 @@ export function StructureEditorDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col border-border/50 bg-card">
+      <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col border-border/50 bg-card overflow-hidden">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
             <Layers className="h-4 w-4 text-primary" />
@@ -260,7 +260,7 @@ export function StructureEditorDialog({
         )}
 
         {/* Blueprint tree */}
-        <ScrollArea className="flex-1 min-h-0 -mx-6 px-6">
+        <ScrollArea className="flex-1 min-h-0 -mx-6 px-6" style={{ overflow: 'auto' }}>
           <div className="space-y-2 pb-4">
             {blueprint.map((bundle, bi) => (
               <div key={bi} className="rounded-lg border border-border/50 bg-muted/10">
