@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff, GitMerge, ArrowRight, ScanSearch } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff, GitMerge, ArrowRight, ScanSearch, Scissors, Undo2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -23,6 +23,7 @@ import {
   type BundleMatch,
   type DocumentStructureSkeleton,
   type SkeletonSection,
+  type ConsolidationDecision,
   CONTEXT_CATEGORIES,
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
@@ -1266,6 +1267,217 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                         {ds.notes}
                       </p>
                     )}
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
+          {/* Optimization Decisions Panel */}
+          {data.document_structure?.consolidation_decisions && data.document_structure.consolidation_decisions.length > 0 && (() => {
+            const decisions = data.document_structure!.consolidation_decisions!;
+            const mergeDecisions = decisions.filter(d => d.action === "merge" || d.original_labels.length > 1);
+            const reclassDecisions = decisions.filter(d => d.action !== "merge" && d.action !== "keep_as_is" && d.original_labels.length <= 1);
+            const optExpanded = expandedBundles.has(-998);
+            const setOptExpanded = (v: boolean) => setExpandedBundles(prev => {
+              const next = new Set(prev);
+              v ? next.add(-998) : next.delete(-998);
+              return next;
+            });
+
+            const handleUndoMerge = (decision: typeof decisions[0]) => {
+              if (!data) return;
+              const bundleIdx = (data.bundles || []).findIndex(b =>
+                b.title.toLowerCase().includes(decision.result_label.toLowerCase()) ||
+                decision.result_label.toLowerCase().includes(b.title.toLowerCase())
+              );
+              if (bundleIdx === -1) {
+                toast({ title: "Cannot split", description: "Could not find the merged bundle.", variant: "destructive" });
+                return;
+              }
+              const bundle = data.bundles![bundleIdx];
+              const playbooks = bundle.items
+                .map((it, j) => ({ it: resolveItem(it, bundleItemEdits[`${bundleIdx}-${j}`]), j }))
+                .filter(({ it }) => it.category === "PLAYBOOK");
+
+              const newBundles = [...(data.bundles || [])].map(b => ({ ...b, items: [...b.items] }));
+
+              if (playbooks.length <= 1) {
+                const midpoint = Math.ceil(bundle.items.length / 2);
+                const keepItems = bundle.items.slice(0, midpoint);
+                const splitItems = bundle.items.slice(midpoint);
+                if (splitItems.length === 0) {
+                  toast({ title: "Cannot split", description: "Not enough items to split.", variant: "destructive" });
+                  return;
+                }
+                newBundles[bundleIdx] = { ...bundle, items: keepItems };
+                const splitTitle = decision.original_labels.length > 1
+                  ? decision.original_labels[decision.original_labels.length - 1]
+                  : `${decision.result_label} (Split)`;
+                newBundles.push({
+                  title: splitTitle,
+                  description: `Split from "${bundle.title}" — originally: ${decision.original_labels.join(" + ")}`,
+                  items: splitItems,
+                });
+              } else {
+                const lastPb = playbooks[playbooks.length - 1];
+                const ownedIndices = bundle.items
+                  .map((it, j) => ({ it: resolveItem(it, bundleItemEdits[`${bundleIdx}-${j}`]), j }))
+                  .filter(({ it }) => it.parent_playbook_title === lastPb.it.title)
+                  .map(({ j }) => j);
+                const indicesToMove = new Set([lastPb.j, ...ownedIndices]);
+                newBundles[bundleIdx] = { ...bundle, items: bundle.items.filter((_, j) => !indicesToMove.has(j)) };
+                newBundles.push({
+                  title: lastPb.it.title,
+                  description: `Split from "${bundle.title}"`,
+                  items: bundle.items.filter((_, j) => indicesToMove.has(j)),
+                });
+              }
+
+              const newStructure = { ...data.document_structure };
+              newStructure.consolidation_decisions = decisions.filter(d => d !== decision);
+              const newData = { ...data, bundles: newBundles, document_structure: newStructure };
+              setData(newData);
+              const newIdx = newBundles.length - 1;
+              setSelectedBundles(prev => new Set([...prev, newIdx]));
+              setExpandedBundles(prev => new Set([...prev, newIdx]));
+              toast({ title: "Split applied", description: `"${decision.result_label}" split back into separate items.` });
+            };
+
+            const handleUndoReclassify = (decision: typeof decisions[0]) => {
+              if (!data) return;
+              let found = false;
+              for (let bi = 0; bi < (data.bundles || []).length; bi++) {
+                for (let ji = 0; ji < data.bundles![bi].items.length; ji++) {
+                  const resolved = resolveItem(data.bundles![bi].items[ji], bundleItemEdits[`${bi}-${ji}`]);
+                  if (decision.original_labels.some(l =>
+                    resolved.title.toLowerCase().includes(l.toLowerCase()) ||
+                    l.toLowerCase().includes(resolved.title.toLowerCase())
+                  )) {
+                    const revertCategory = decision.action === "reclassify_as_procedure" ? "PLAYBOOK" : resolved.category;
+                    updateBundleItemEdit(bi, ji, "category", revertCategory);
+                    found = true;
+                  }
+                }
+              }
+              if (!found) {
+                toast({ title: "Item not found", description: "Could not locate the reclassified item.", variant: "destructive" });
+                return;
+              }
+              const newStructure = { ...data.document_structure };
+              newStructure.consolidation_decisions = decisions.filter(d => d !== decision);
+              setData(prev => prev ? { ...prev, document_structure: newStructure } : prev);
+              toast({ title: "Reclassification reverted" });
+            };
+
+            const actionIcons: Record<string, string> = {
+              merge: "🔗", demote_to_playbook: "⬇", promote_to_bundle: "⬆",
+              reclassify_as_procedure: "↩", keep_as_is: "✓",
+            };
+            const actionLabels: Record<string, string> = {
+              merge: "Merged", demote_to_playbook: "Demoted → Playbook",
+              promote_to_bundle: "Promoted → Bundle", reclassify_as_procedure: "Reclassified → Procedure",
+              keep_as_is: "Kept as-is",
+            };
+
+            return (
+              <div className="rounded-lg border border-violet-500/20 bg-violet-500/5">
+                <button
+                  type="button"
+                  className="w-full px-3 py-2 flex items-center gap-2.5 text-left"
+                  onClick={() => setOptExpanded(!optExpanded)}
+                >
+                  <GitMerge className="h-4 w-4 text-violet-400 shrink-0" />
+                  <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
+                    <span className="text-[11px] font-medium text-violet-400">Structure Optimized</span>
+                    {mergeDecisions.length > 0 && (
+                      <Badge variant="outline" className="text-[9px] border-violet-500/30 text-violet-400">
+                        {mergeDecisions.length} merge{mergeDecisions.length !== 1 ? "s" : ""}
+                      </Badge>
+                    )}
+                    {reclassDecisions.length > 0 && (
+                      <Badge variant="outline" className="text-[9px] border-violet-500/30 text-violet-400">
+                        {reclassDecisions.length} reclassif.
+                      </Badge>
+                    )}
+                    {data.document_structure?.optimization_stats && (
+                      <span className="text-[10px] text-muted-foreground">
+                        {data.document_structure.optimization_stats.final_bundles} bundles · {data.document_structure.optimization_stats.final_playbooks} playbooks
+                      </span>
+                    )}
+                  </div>
+                  {optExpanded
+                    ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                    : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                  }
+                </button>
+
+                {optExpanded && (
+                  <div className="px-3 pb-3 pt-0 space-y-1.5">
+                    {data.document_structure?.optimization_summary && (
+                      <p className="text-[10px] text-muted-foreground italic border-t border-violet-500/10 pt-2">
+                        {data.document_structure.optimization_summary}
+                      </p>
+                    )}
+                    <div className="space-y-1.5 max-h-64 overflow-y-auto overscroll-contain">
+                      {decisions.filter(d => d.action !== "keep_as_is").map((decision, di) => (
+                        <div
+                          key={di}
+                          className="flex items-start gap-2 rounded border border-border/30 bg-background/50 p-2 text-[10px] group/decision"
+                        >
+                          <span className="shrink-0 mt-0.5" title={actionLabels[decision.action] || decision.action}>
+                            {actionIcons[decision.action] || "•"}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <Badge variant="outline" className="text-[8px] border-violet-500/20 text-violet-400 py-0 h-3.5">
+                                {actionLabels[decision.action] || decision.action}
+                              </Badge>
+                              <span className="font-medium text-foreground">{decision.result_label}</span>
+                              <Badge variant="secondary" className="text-[8px] py-0 h-3.5">
+                                {decision.result_role}
+                              </Badge>
+                              <span className={cn("text-[8px] ml-auto shrink-0",
+                                decision.semantic_confidence >= 0.8 ? "text-emerald-400" :
+                                decision.semantic_confidence >= 0.6 ? "text-amber-400" : "text-red-400"
+                              )}>
+                                {Math.round(decision.semantic_confidence * 100)}%
+                              </span>
+                            </div>
+                            {decision.original_labels.length > 1 && (
+                              <div className="flex items-center gap-1 mt-1 flex-wrap">
+                                <span className="text-muted-foreground">From:</span>
+                                {decision.original_labels.map((label, li) => (
+                                  <span key={li} className="text-foreground/70">
+                                    {li > 0 && <span className="text-muted-foreground mx-0.5">+</span>}
+                                    "{label}"
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                            <p className="text-muted-foreground mt-0.5">{decision.rationale}</p>
+                          </div>
+                          {decision.action === "merge" && decision.original_labels.length > 1 && (
+                            <button
+                              onClick={() => handleUndoMerge(decision)}
+                              className="opacity-0 group-hover/decision:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10 shrink-0"
+                              title="Undo merge — split back into separate items"
+                            >
+                              <Scissors className="h-3 w-3 text-destructive" />
+                            </button>
+                          )}
+                          {(decision.action === "demote_to_playbook" || decision.action === "promote_to_bundle" || decision.action === "reclassify_as_procedure") && (
+                            <button
+                              onClick={() => handleUndoReclassify(decision)}
+                              className="opacity-0 group-hover/decision:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10 shrink-0"
+                              title="Undo reclassification"
+                            >
+                              <Undo2 className="h-3 w-3 text-destructive" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
