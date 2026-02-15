@@ -7,7 +7,7 @@ import {
   Play, ChevronRight, ChevronLeft, Lock, Unlock, Check, Shield,
   AlertTriangle, Ban, Info, Loader2, Package, FileText, MessageSquare,
   Zap, GitBranch, Clock, CheckCircle2, Circle, PauseCircle, XCircle,
-  Sparkles, Flag, BookOpen,
+  Sparkles, Flag, BookOpen, Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -46,6 +46,7 @@ interface ProtocolStep {
   gate_enforcement: string | null;
   agent_prompt: string | null;
   estimated_minutes: number | null;
+  research_template_id: string | null;
 }
 
 interface ProtocolContextItem {
@@ -203,6 +204,7 @@ const stepTypeConfig: Record<string, { icon: typeof FileText; color: string; lab
   gate: { icon: Shield, color: "text-destructive", label: "Compliance Gate" },
   checkpoint: { icon: Flag, color: "text-warning", label: "Checkpoint" },
   review: { icon: BookOpen, color: "text-info", label: "Review" },
+  research: { icon: Search, color: "text-violet-500", label: "Research" },
 };
 
 const stepExecStatusConfig: Record<string, { icon: typeof Circle; color: string; label: string }> = {
@@ -227,6 +229,7 @@ export function ProtocolCard({
 
   const gates = steps.filter(s => s.step_type === "gate");
   const actions = steps.filter(s => s.step_type !== "gate");
+  const researchSteps = steps.filter(s => s.step_type === "research");
 
   return (
     <button
@@ -251,6 +254,14 @@ export function ProtocolCard({
             <span>·</span>
             <span className="flex items-center gap-0.5 text-amber-400">
               <Shield className="h-3 w-3" /> {gates.length} gate{gates.length !== 1 ? "s" : ""}
+            </span>
+          </>
+        )}
+        {researchSteps.length > 0 && (
+          <>
+            <span>·</span>
+            <span className="flex items-center gap-0.5 text-violet-400">
+              <Search className="h-3 w-3" /> {researchSteps.length} research
             </span>
           </>
         )}
@@ -615,6 +626,7 @@ export function ProtocolExecutionView({
                     "bg-secondary text-muted-foreground"
                   }`}>
                     {isGate && <Shield className="h-2.5 w-2.5" />}
+                    {s.step_type === "research" && <Search className="h-2.5 w-2.5" />}
                     {isCompleted && <Check className="h-2.5 w-2.5" />}
                     <span className="truncate max-w-[120px]">{s.title}</span>
                   </div>
@@ -655,6 +667,30 @@ export function ProtocolExecutionView({
                   <Flag className="h-3 w-3" /> Flag Issue
                 </Button>
               </div>
+            </div>
+          )}
+
+          {/* Research step handling */}
+          {currentStep && currentStep.step_type === "research" && (
+            <div className="mx-6 mt-4 rounded-lg border border-violet-500/30 bg-violet-500/5 p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Search className="h-5 w-5 text-violet-500" />
+                <h3 className="text-sm font-semibold text-violet-400">Research Step</h3>
+                <Badge variant="outline" className="text-[9px] border-violet-500/30 text-violet-400">
+                  Dynamic Info Gathering
+                </Badge>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {currentStep.description ?? "This step triggers dynamic research and information gathering. Provide your research query below."}
+              </p>
+              {currentStep.research_template_id && (
+                <Badge variant="outline" className="text-[9px] border-primary/30 text-primary">
+                  🔬 Research template attached
+                </Badge>
+              )}
+              <p className="text-[11px] text-muted-foreground">
+                Enter your research question or topic in the chat below. The AI agent will gather and synthesize relevant information.
+              </p>
             </div>
           )}
 
@@ -782,6 +818,7 @@ export function ProtocolExecutionView({
                   <StepIcon className={`h-3 w-3 shrink-0 ${cfg.color} ${se?.status === "in_progress" ? "animate-spin" : ""}`} />
                   <span className="truncate flex-1">{s.title}</span>
                   {s.step_type === "gate" && <Shield className="h-2.5 w-2.5 text-destructive shrink-0" />}
+                  {s.step_type === "research" && <Search className="h-2.5 w-2.5 text-violet-500 shrink-0" />}
                 </div>
               );
             })}

@@ -95,10 +95,13 @@ Deno.serve(async (req) => {
     const playbooks = items.filter((i: any) => i.category === "PLAYBOOK");
     const allProcedures = items.filter((i: any) => i.category === "PROCEDURE");
     const allDirectives = items.filter((i: any) => i.category === "DIRECTIVE");
+    const allResearch = items.filter((i: any) => i.category === "RESEARCH");
     const sharedContextItems = items.filter((i: any) =>
-      ["KNOWLEDGE", "RESEARCH", "PRINCIPLE", "PREFERENCE"].includes(i.category) &&
+      ["KNOWLEDGE", "PRINCIPLE", "PREFERENCE"].includes(i.category) &&
       !parentMap[i.id] // only truly shared items (no parent playbook)
     );
+    // RESEARCH items without a parent playbook are also shared context
+    const sharedResearch = allResearch.filter((i: any) => !parentMap[i.id]);
 
     // If no playbooks, create a single protocol from the bundle itself
     const { data: bundle } = await supabase
@@ -124,6 +127,10 @@ Deno.serve(async (req) => {
       const ownedDirectives = allDirectives.filter((dir: any) => {
         const parent = parentMap[dir.id];
         return parent === pb.id || parent === null;
+      });
+      const ownedResearch = allResearch.filter((r: any) => {
+        const parent = parentMap[r.id];
+        return parent === pb.id; // only explicitly owned research becomes a step
       });
 
       // Upsert protocol
@@ -186,7 +193,21 @@ Deno.serve(async (req) => {
         });
       }
 
-      // If no procedures/directives, create a single default step from the playbook
+      // Insert owned research steps
+      for (const res of ownedResearch) {
+        stepInserts.push({
+          protocol_id: protocol.id,
+          source_item_id: res.id,
+          title: `🔬 ${res.title}`,
+          description: res.content_full?.substring(0, 1000) ?? null,
+          step_type: "research",
+          step_order: stepOrder++,
+          is_required: true,
+          agent_prompt: `RESEARCH: ${res.content_full}`,
+        });
+      }
+
+      // If no procedures/directives/research, create a single default step from the playbook
       if (stepInserts.length === 0) {
         stepInserts.push({
           protocol_id: protocol.id,
@@ -204,14 +225,15 @@ Deno.serve(async (req) => {
         await supabase.from("protocol_steps").insert(stepInserts);
       }
 
-      // Link SHARED context items (KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE) to every protocol
+      // Link SHARED context items (KNOWLEDGE, PRINCIPLE, PREFERENCE) + unowned RESEARCH to every protocol
+      const allShared = [...sharedContextItems, ...sharedResearch];
       await supabase
         .from("protocol_context_items")
         .delete()
         .eq("protocol_id", protocol.id);
 
-      if (sharedContextItems.length > 0) {
-        const contextInserts = sharedContextItems.map((ci: any) => ({
+      if (allShared.length > 0) {
+        const contextInserts = allShared.map((ci: any) => ({
           protocol_id: protocol.id,
           context_item_id: ci.id,
           injection_scope: "always",
@@ -227,7 +249,8 @@ Deno.serve(async (req) => {
         protocols_created: protocolsCreated,
         total_procedures: allProcedures.length,
         total_directives: allDirectives.length,
-        shared_context_items: sharedContextItems.length,
+        total_research_steps: allResearch.filter((r: any) => !!parentMap[r.id]).length,
+        shared_context_items: sharedContextItems.length + sharedResearch.length,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
