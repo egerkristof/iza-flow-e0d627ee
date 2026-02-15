@@ -1,6 +1,9 @@
-import { MessageSquare, Users, Clock, MoreHorizontal } from "lucide-react";
+import { MessageSquare, Users, Clock, MoreHorizontal, Trash2, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export interface WorkbookCardData {
   id: string;
@@ -26,9 +29,11 @@ const statusConfig: Record<string, { label: string; className: string }> = {
 export function WorkbookCard({
   workbook,
   onClick,
+  onDelete,
 }: {
   workbook: WorkbookCardData;
   onClick: (id: string) => void;
+  onDelete?: (id: string) => void;
 }) {
   const st = statusConfig[workbook.status] ?? statusConfig.draft;
   const driftColor =
@@ -47,16 +52,31 @@ export function WorkbookCard({
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-medium leading-tight line-clamp-2">{workbook.title}</h3>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+              <DropdownMenuItem onClick={() => onClick(workbook.id)}>
+                <ExternalLink className="h-3.5 w-3.5 mr-2" /> Open
+              </DropdownMenuItem>
+              {onDelete && (
+                <DropdownMenuItem
+                  className="text-destructive focus:text-destructive"
+                  onClick={() => onDelete(workbook.id)}
+                >
+                  <Trash2 className="h-3.5 w-3.5 mr-2" /> Delete
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {workbook.description && (
