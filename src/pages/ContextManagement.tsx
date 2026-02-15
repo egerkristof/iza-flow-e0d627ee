@@ -115,30 +115,35 @@ export default function ContextManagementPage() {
     },
   });
 
-  // Fetch junction table for parent_playbook_id ownership
+  // Fetch junction table for parent_playbook_id ownership and sort_order
   const { data: junctionRows = [] } = useQuery({
     queryKey: ["context-item-bundles-all", user?.id],
     enabled: !!user,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("context_item_bundles")
-        .select("context_item_id, bundle_id, parent_playbook_id");
+        .select("context_item_id, bundle_id, parent_playbook_id, sort_order");
       if (error) throw error;
       return data;
     },
   });
 
-  // Build a lookup: item_id → parent_playbook_id (per bundle)
-  const parentPlaybookMap = useMemo(() => {
-    const map = new Map<string, string | null>();
+  // Build lookups: item_id → parent_playbook_id and sort_order (per bundle)
+  const { parentPlaybookMap, sortOrderMap } = useMemo(() => {
+    const ppMap = new Map<string, string | null>();
+    const soMap = new Map<string, number>();
     for (const jr of junctionRows) {
       if (jr.parent_playbook_id) {
-        map.set(`${jr.context_item_id}:${jr.bundle_id}`, jr.parent_playbook_id);
-        // Also set a global fallback (most items belong to one bundle)
-        map.set(jr.context_item_id, jr.parent_playbook_id);
+        ppMap.set(`${jr.context_item_id}:${jr.bundle_id}`, jr.parent_playbook_id);
+        ppMap.set(jr.context_item_id, jr.parent_playbook_id);
+      }
+      const sortVal = (jr as any).sort_order;
+      if (typeof sortVal === "number") {
+        soMap.set(`${jr.context_item_id}:${jr.bundle_id}`, sortVal);
+        soMap.set(jr.context_item_id, sortVal);
       }
     }
-    return map;
+    return { parentPlaybookMap: ppMap, sortOrderMap: soMap };
   }, [junctionRows]);
 
   // Map DB rows → MockContextItem shape for component compatibility
@@ -161,8 +166,11 @@ export default function ContextManagementPage() {
       parent_playbook_id: row.bundle_id
         ? (parentPlaybookMap.get(`${row.id}:${row.bundle_id}`) ?? parentPlaybookMap.get(row.id) ?? null)
         : null,
+      sort_order: row.bundle_id
+        ? (sortOrderMap.get(`${row.id}:${row.bundle_id}`) ?? sortOrderMap.get(row.id) ?? 999)
+        : 999,
     })),
-  [dbItems, parentPlaybookMap]);
+  [dbItems, parentPlaybookMap, sortOrderMap]);
 
   // Map DB rows → MockBundle shape
   const bundles: MockBundle[] = useMemo(() =>

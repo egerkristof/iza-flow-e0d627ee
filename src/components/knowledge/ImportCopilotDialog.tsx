@@ -838,7 +838,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             }
           }
 
-          // Persist many-to-many junction links with parent_playbook_id
+          // Persist many-to-many junction links with parent_playbook_id and sort_order
           if (createdItems.length > 0) {
             const junctionRows = createdItems.map(({ id, idx }) => {
               const resolved = resolveItem(bundle.items[idx], bundleItemEdits[`${i}-${idx}`]);
@@ -848,12 +848,13 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
               return {
                 context_item_id: id,
                 bundle_id: createdBundleIds[i],
+                sort_order: idx,
                 ...(parentPlaybookId ? { parent_playbook_id: parentPlaybookId } : {}),
               };
             });
             const { error: junctionErr } = await supabase
               .from("context_item_bundles")
-              .insert(junctionRows);
+              .insert(junctionRows as any);
             if (junctionErr) throw junctionErr;
           }
         }

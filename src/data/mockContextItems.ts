@@ -21,6 +21,7 @@ export interface MockContextItem {
   version: string;
   created_at: string;
   parent_playbook_id?: string | null;
+  sort_order?: number;
 }
 
 export interface MockBundle {
