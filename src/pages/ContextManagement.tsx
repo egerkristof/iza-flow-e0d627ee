@@ -476,23 +476,35 @@ export default function ContextManagementPage() {
       const contentType = extractRes.headers.get("content-type") || "";
 
       if (contentType.includes("text/event-stream")) {
-        const text = await extractRes.text();
-        const events = text.split("\n\n").filter(e => e.startsWith("data: "));
+        // Use ReadableStream reader for real-time chunk progress updates
+        const reader = extractRes.body!.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
         let result: ExtractionResult | null = null;
 
-        for (const event of events) {
-          const jsonStr = event.replace("data: ", "");
-          try {
-            const parsed = JSON.parse(jsonStr);
-            if (parsed.type === "chunk_progress") {
-              setChunkProgress({ current: parsed.current, total: parsed.total });
-            } else if (parsed.type === "result") {
-              result = parsed.data as ExtractionResult;
-            } else if (parsed.type === "error") {
-              throw new Error(parsed.error);
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          const parts = buffer.split("\n\n");
+          buffer = parts.pop() || "";
+
+          for (const part of parts) {
+            if (!part.startsWith("data: ")) continue;
+            const jsonStr = part.slice(6);
+            try {
+              const parsed = JSON.parse(jsonStr);
+              if (parsed.type === "chunk_progress") {
+                setChunkProgress({ current: parsed.current, total: parsed.total });
+              } else if (parsed.type === "result") {
+                result = parsed.data as ExtractionResult;
+              } else if (parsed.type === "error") {
+                throw new Error(parsed.error);
+              }
+            } catch (parseErr) {
+              if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
             }
-          } catch (parseErr) {
-            if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
           }
         }
 
