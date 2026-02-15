@@ -1,5 +1,6 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -405,6 +406,8 @@ export function ProtocolExecutionView({
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
   const [captureOpen, setCaptureOpen] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   const currentStepIndex = useMemo(() => {
     if (!activeExecution?.current_step_id || steps.length === 0) return 0;
@@ -522,18 +525,137 @@ export function ProtocolExecutionView({
     },
   });
 
-  const handleSend = () => {
-    if (!chatInput.trim()) return;
-    setChatMessages(prev => [
-      ...prev,
-      { role: "user", text: chatInput },
-      {
-        role: "assistant",
-        text: `[Step ${currentStepIndex + 1}: ${currentStep?.title}] Processing your input for "${protocol.title}"…\n\nContext loaded: ${contextItems.length} knowledge items active. ${captures.length} capture${captures.length !== 1 ? "s" : ""} recorded.`,
-      },
-    ]);
+  const handleSend = useCallback(async () => {
+    const text = chatInput.trim();
+    if (!text || isStreaming) return;
     setChatInput("");
-  };
+
+    const userMsg = { role: "user", text };
+    setChatMessages(prev => [...prev, userMsg]);
+
+    // If current step is a research step, invoke the AI research agent
+    const isResearch = currentStep?.step_type === "research";
+    if (isResearch) {
+      setIsStreaming(true);
+      let assistantSoFar = "";
+      const upsert = (chunk: string) => {
+        assistantSoFar += chunk;
+        setChatMessages(prev => {
+          const last = prev[prev.length - 1];
+          if (last?.role === "assistant") {
+            return prev.map((m, i) => i === prev.length - 1 ? { ...m, text: assistantSoFar } : m);
+          }
+          return [...prev, { role: "assistant", text: assistantSoFar }];
+        });
+      };
+
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) {
+          toast({ title: "Not authenticated", variant: "destructive" });
+          setIsStreaming(false);
+          return;
+        }
+
+        // Build protocol context from injected context items
+        const protocolCtx = contextItems
+          .filter(ci => ci.context_items)
+          .map(ci => ({
+            title: ci.context_items!.title,
+            category: ci.context_items!.category,
+            content: ci.context_items!.content_full,
+          }));
+
+        const resp = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/run-research`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session.access_token}`,
+              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+            body: JSON.stringify({
+              research_template_id: currentStep.research_template_id,
+              query: text,
+              step_context: {
+                title: currentStep.title,
+                description: currentStep.description,
+                agent_prompt: currentStep.agent_prompt,
+              },
+              protocol_context: protocolCtx,
+            }),
+          }
+        );
+
+        if (!resp.ok || !resp.body) {
+          if (resp.status === 429) { toast({ title: "Rate limited", description: "Please try again shortly.", variant: "destructive" }); }
+          else if (resp.status === 402) { toast({ title: "Credits exhausted", description: "Please add funds.", variant: "destructive" }); }
+          else { const errData = await resp.json().catch(() => ({})); toast({ title: "Research failed", description: (errData as any).error || `Error ${resp.status}`, variant: "destructive" }); }
+          setIsStreaming(false);
+          return;
+        }
+
+        const reader = resp.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          let newlineIdx: number;
+          while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+            let line = buffer.slice(0, newlineIdx);
+            buffer = buffer.slice(newlineIdx + 1);
+            if (line.endsWith("\r")) line = line.slice(0, -1);
+            if (line.startsWith(":") || line.trim() === "") continue;
+            if (!line.startsWith("data: ")) continue;
+            const jsonStr = line.slice(6).trim();
+            if (jsonStr === "[DONE]") break;
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+              if (content) upsert(content);
+            } catch {
+              buffer = line + "\n" + buffer;
+              break;
+            }
+          }
+        }
+
+        // Flush remaining
+        if (buffer.trim()) {
+          for (let raw of buffer.split("\n")) {
+            if (!raw || raw.startsWith(":") || raw.trim() === "" || !raw.startsWith("data: ")) continue;
+            if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+            const jsonStr = raw.slice(6).trim();
+            if (jsonStr === "[DONE]") continue;
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+              if (content) upsert(content);
+            } catch { /* ignore */ }
+          }
+        }
+      } catch (e: any) {
+        console.error("Research stream error:", e);
+        toast({ title: "Research error", description: e.message, variant: "destructive" });
+      } finally {
+        setIsStreaming(false);
+      }
+    } else {
+      // Non-research steps: existing mock behavior
+      setChatMessages(prev => [
+        ...prev,
+        {
+          role: "assistant",
+          text: `[Step ${currentStepIndex + 1}: ${currentStep?.title}] Processing your input for "${protocol.title}"…\n\nContext loaded: ${contextItems.length} knowledge items active. ${captures.length} capture${captures.length !== 1 ? "s" : ""} recorded.`,
+        },
+      ]);
+    }
+  }, [chatInput, isStreaming, currentStep, contextItems, captures, currentStepIndex, protocol.title, toast]);
 
   // Auto-start execution
   if (!activeExecution && steps.length > 0) {
@@ -674,23 +796,24 @@ export function ProtocolExecutionView({
           {currentStep && currentStep.step_type === "research" && (
             <div className="mx-6 mt-4 rounded-lg border border-violet-500/30 bg-violet-500/5 p-4 space-y-3">
               <div className="flex items-center gap-2">
-                <Search className="h-5 w-5 text-violet-500" />
+                {isStreaming ? (
+                  <Loader2 className="h-5 w-5 text-violet-500 animate-spin" />
+                ) : (
+                  <Search className="h-5 w-5 text-violet-500" />
+                )}
                 <h3 className="text-sm font-semibold text-violet-400">Research Step</h3>
                 <Badge variant="outline" className="text-[9px] border-violet-500/30 text-violet-400">
-                  Dynamic Info Gathering
+                  {isStreaming ? "Researching…" : "AI-Powered"}
                 </Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                {currentStep.description ?? "This step triggers dynamic research and information gathering. Provide your research query below."}
+                {currentStep.description ?? "Enter your research question below. The AI agent will gather and synthesize information."}
               </p>
               {currentStep.research_template_id && (
                 <Badge variant="outline" className="text-[9px] border-primary/30 text-primary">
                   🔬 Research template attached
                 </Badge>
               )}
-              <p className="text-[11px] text-muted-foreground">
-                Enter your research question or topic in the chat below. The AI agent will gather and synthesize relevant information.
-              </p>
             </div>
           )}
 
@@ -705,14 +828,26 @@ export function ProtocolExecutionView({
               </div>
             )}
             {chatMessages.map((msg, i) => (
-              <div key={i} className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm whitespace-pre-line ${
+              <div key={i} className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm ${
                 msg.role === "user"
-                  ? "ml-auto bg-primary text-primary-foreground"
+                  ? "ml-auto bg-primary text-primary-foreground whitespace-pre-line"
                   : "bg-secondary text-secondary-foreground"
               }`}>
-                {msg.text}
+                {msg.role === "assistant" ? (
+                  <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px] [&_code]:bg-muted [&_code]:px-1 [&_code]:rounded">
+                    <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  </div>
+                ) : (
+                  msg.text
+                )}
               </div>
             ))}
+            {isStreaming && chatMessages[chatMessages.length - 1]?.role !== "assistant" && (
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <Loader2 className="h-3 w-3 animate-spin" /> Researching…
+              </div>
+            )}
+            <div ref={chatEndRef} />
           </div>
 
           {/* Input + step completion */}
@@ -722,7 +857,11 @@ export function ProtocolExecutionView({
               messageInput={chatInput}
               setMessageInput={setChatInput}
               onSend={handleSend}
-              placeholder={currentStep?.agent_prompt?.substring(0, 100) ?? "Enter your input…"}
+              placeholder={
+                isStreaming ? "Researching…" :
+                currentStep?.step_type === "research" ? "Ask your research question…" :
+                currentStep?.agent_prompt?.substring(0, 100) ?? "Enter your input…"
+              }
             />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
