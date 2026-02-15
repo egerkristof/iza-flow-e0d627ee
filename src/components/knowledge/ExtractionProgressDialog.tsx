@@ -35,7 +35,7 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
   },
   extracting: {
     label: "Extracting knowledge",
-    subtitle: "Identifying items, bundles & preferences…",
+    subtitle: "Identifying items, bundles & preferences (this may take a minute for large documents)…",
     icon: Sparkles,
     progress: 70,
   },
