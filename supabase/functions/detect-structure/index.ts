@@ -214,16 +214,74 @@ serve(async (req) => {
       throw new Error("documentId or content required");
     }
 
-    // ── For structure detection, we only need a PREVIEW of the content ──
-    // Use first ~30K chars (enough to capture ToC, headers, section structure)
-    // For PDFs, send the full document as multimodal
+    // ── Extract structural markers from the FULL document ──────────────
+    // Scan entire text for headings, numbered sections, phase labels so
+    // sections beyond the 30K preview are still visible to the AI.
+    const extractStructuralMarkers = (fullText: string): string[] => {
+      const markers: string[] = [];
+      const lines = fullText.split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+
+        // Markdown headings
+        if (/^#{1,4}\s+\S/.test(line)) { markers.push(line); continue; }
+
+        // Numbered sections: "1.", "1.1", "A."
+        if (/^(?:\d+\.[\d.]*|[A-Z]\.)\s+\S/.test(line) && line.length < 200) { markers.push(line); continue; }
+
+        // Phase/Stage/Part/Chapter/Section labels
+        if (/^(?:Phase|Stage|Part|Chapter|Section|Module|Unit|Appendix|Step)\s+[\dIVXA-Z]/i.test(line) && line.length < 200) { markers.push(line); continue; }
+
+        // ALL-CAPS headings (≥5 chars, no lowercase)
+        if (/^[A-Z][A-Z\s\d&:,\-–—/()]{4,119}$/.test(line) && /[A-Z]{2}/.test(line) && !/[a-z]/.test(line)) { markers.push(line); continue; }
+
+        // Title-case lines that look like headings (short, no trailing punctuation)
+        if (line.length < 120 && line.length > 3 && /^[A-Z][a-zA-Z\s\d&:,\-–—/()]+$/.test(line) && !/[.!?;]$/.test(line)) {
+          const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : "";
+          if (!nextLine || /^[-─═#*]/.test(nextLine)) { markers.push(line); continue; }
+        }
+
+        // Underline-style headings (=== or ---)
+        if (/^[=\-─]{3,}$/.test(line) && i > 0) {
+          const prevLine = lines[i - 1].trim();
+          if (prevLine && prevLine.length < 200 && !markers.includes(prevLine)) { markers.push(prevLine); }
+        }
+      }
+      // Deduplicate preserving order
+      const seen = new Set<string>();
+      return markers.filter(m => { if (seen.has(m)) return false; seen.add(m); return true; });
+    };
+
+    // ── Build content for the AI ────────────────────────────────────────
     const contentPreview = textContent.length > 30000
       ? textContent.slice(0, 30000) + "\n\n[... document continues for " + (textContent.length - 30000) + " more characters ...]"
       : textContent;
 
+    // Extract markers from the FULL document
+    const allMarkers = textContent ? extractStructuralMarkers(textContent) : [];
+    const markersFromBeyondPreview = textContent.length > 30000
+      ? extractStructuralMarkers(textContent.slice(30000))
+      : [];
+
+    let structuralIndexNote = "";
+    if (markersFromBeyondPreview.length > 0) {
+      const markerList = markersFromBeyondPreview.map((m, i) => `${i + 1}. ${m}`).join("\n");
+      structuralIndexNote = "\n\n---\n**IMPORTANT — STRUCTURAL MARKERS FROM BEYOND THE PREVIEW:**\n" +
+        `The content preview was truncated. These ${markersFromBeyondPreview.length} headings/sections appear in the REMAINDER of the document. You MUST include them in your skeleton:\n\n` +
+        markerList + "\n";
+    }
+
+    let fullIndexNote = "";
+    if (allMarkers.length > 0 && textContent.length > 30000) {
+      const fullList = allMarkers.map((m, i) => `${i + 1}. ${m}`).join("\n");
+      fullIndexNote = `\n\n---\n**COMPLETE STRUCTURAL INDEX (${allMarkers.length} markers across full document):**\n` + fullList + "\n";
+    }
+
+    const mainContent = pdfBase64 ? "[PDF document provided as inline image for analysis]" : contentPreview;
     const userPrompt = `Analyze the structure of this document and return its organizational skeleton.
 
-${pdfBase64 ? "[PDF document provided as inline image for analysis]" : contentPreview}
+${mainContent}${structuralIndexNote}${fullIndexNote}
 
 **FOCUS ON:**
 - Table of contents, agenda slides, overview sections
@@ -231,6 +289,7 @@ ${pdfBase64 ? "[PDF document provided as inline image for analysis]" : contentPr
 - Phase/stage labels and sequences
 - Section dividers or transition markers
 - How content is organized (by topic, by phase, by role, etc.)
+- ALL sections listed in the structural index above — even those beyond the content preview
 
 Return the structural skeleton. Do NOT extract content — only map architecture.`;
 
