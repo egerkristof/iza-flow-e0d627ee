@@ -12,7 +12,9 @@ import { PromoteToContextDialog } from "./PromoteToContextDialog";
 import { ImportCopilotDialog } from "./ImportCopilotDialog";
 import { CompareExtractionsDialog } from "./CompareExtractionsDialog";
 import { ExtractionDepthSelector } from "./ExtractionDepthSelector";
-import { type ExtractionResult, type ExtractionDepth, type AdvisorPersona, EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
+import { StructureEditorDialog } from "./StructureEditorDialog";
+import { useExtraction } from "@/hooks/use-extraction";
+import { type ExtractionResult, type ExtractionDepth, EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
 
 const CATEGORIES = [
   { value: "cv", label: "CV / Resume", icon: FileText },
@@ -32,12 +34,34 @@ export function PersonalDocuments() {
   const [uploading, setUploading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("cv");
   const [promoteDoc, setPromoteDoc] = useState<{ title: string; content: string } | null>(null);
-  const [extracting, setExtracting] = useState<string | null>(null);
+  const [extractingDocId, setExtractingDocId] = useState<string | null>(null);
   const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
   const [extractionDocName, setExtractionDocName] = useState("");
   const [reviewOpen, setReviewOpen] = useState(false);
   const [compareDoc, setCompareDoc] = useState<{ id: string; name: string } | null>(null);
-  const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
+
+  const {
+    extract,
+    extracting,
+    depth: extractionDepth,
+    setDepth: setExtractionDepth,
+    advisorPhase,
+    chunkProgress,
+    structureEditorOpen,
+    setStructureEditorOpen,
+    pendingStructure,
+    pendingFileName,
+    handleStructureConfirm,
+    handleStructureSkip,
+  } = useExtraction({
+    onResult: (data, sourceName) => {
+      setExtractionResult(data);
+      setExtractionDocName(sourceName);
+      setReviewOpen(true);
+      setExtractingDocId(null);
+      qc.invalidateQueries({ queryKey: ["personal-documents"] });
+    },
+  });
 
   const { data: docs = [], isLoading } = useQuery({
     queryKey: ["personal-documents", user?.id],
@@ -103,40 +127,11 @@ export function PersonalDocuments() {
   };
 
   const handleExtract = async (docId: string, docName: string) => {
-    setExtracting(docId);
-    try {
-      // Generate advisor for guided/deep modes
-      let advisorPersona: AdvisorPersona | null = null;
-      if (extractionDepth !== "quick") {
-        try {
-          const { data: advData } = await supabase.functions.invoke("generate-advisor", {
-            body: { content: docName, meta: { title: docName } },
-          });
-          if (advData && !advData.error) advisorPersona = advData as AdvisorPersona;
-        } catch {}
-      }
-
-      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
-        body: {
-          documentId: docId,
-          source_type: "document",
-          extraction_depth: extractionDepth,
-          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
-        },
-      });
-      if (error) throw error;
-      if (data.error) throw new Error(data.error);
-
-      setExtractionResult(data as ExtractionResult);
-      setExtractionDocName(docName);
-      setReviewOpen(true);
-      qc.invalidateQueries({ queryKey: ["personal-documents"] });
-    } catch (err: any) {
-      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
-    } finally {
-      setExtracting(null);
-    }
+    setExtractingDocId(docId);
+    extract({ documentId: docId, source_type: "document" }, docName);
   };
+
+  const isDocExtracting = (docId: string) => extractingDocId === docId && extracting;
 
   return (
     <Card className="border-border bg-card">
@@ -201,6 +196,19 @@ export function PersonalDocuments() {
                     <p className="text-sm font-medium truncate">{doc.file_name}</p>
                     <p className="text-xs text-muted-foreground">
                       {new Date(doc.created_at).toLocaleDateString()}
+                      {isDocExtracting(doc.id) && advisorPhase !== "idle" && (
+                        <span className="ml-2 text-primary">
+                          {advisorPhase === "detecting-structure" && "Detecting structure…"}
+                          {advisorPhase === "optimizing-structure" && "Optimizing structure…"}
+                          {advisorPhase === "generating-advisor" && "Generating advisor…"}
+                          {advisorPhase === "extracting" && (
+                            chunkProgress
+                              ? `Extracting chunk ${chunkProgress.current}/${chunkProgress.total}…`
+                              : "Extracting…"
+                          )}
+                          {advisorPhase === "matching" && "Matching bundles…"}
+                        </span>
+                      )}
                     </p>
                   </div>
                 </div>
@@ -214,10 +222,10 @@ export function PersonalDocuments() {
                     size="icon"
                     className="h-7 w-7 text-amber-400 hover:text-amber-300"
                     title="Extract preferences & context with AI"
-                    disabled={extracting === doc.id}
+                    disabled={isDocExtracting(doc.id)}
                     onClick={() => handleExtract(doc.id, doc.file_name)}
                   >
-                    {extracting === doc.id ? (
+                    {isDocExtracting(doc.id) ? (
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />
                     ) : (
                       <Sparkles className="h-3.5 w-3.5" />
@@ -264,6 +272,15 @@ export function PersonalDocuments() {
           defaultTitle={promoteDoc?.title ?? ""}
           defaultContent={promoteDoc?.content ?? ""}
           sourceLabel="Document"
+        />
+
+        <StructureEditorDialog
+          open={structureEditorOpen}
+          onOpenChange={setStructureEditorOpen}
+          data={pendingStructure}
+          fileName={pendingFileName}
+          onConfirm={handleStructureConfirm}
+          onSkip={handleStructureSkip}
         />
 
         <ImportCopilotDialog
