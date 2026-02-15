@@ -86,18 +86,22 @@ Items inside a bundle are either **owned by a specific PLAYBOOK** or **shared ac
 Bundles are **curated collections** of related context items that form a deployable execution unit.
 
 **CRITICAL: Bundle Structure Rules**
-- A bundle CAN have MULTIPLE PLAYBOOK items — each represents a distinct activatable action/workflow
+- A bundle MUST have MULTIPLE PLAYBOOK items when it contains more than 5 PROCEDUREs — each PLAYBOOK represents a distinct activatable action/workflow
 - When a bundle is deployed to a workbook, EACH PLAYBOOK generates a SEPARATE protocol that operators can activate based on intent or explicitly
 - PROCEDURE items within a bundle MUST have step_order_hint set (1, 2, 3...) to define execution order
 - DIRECTIVE items act as gates — place them where compliance checks naturally occur
 - KNOWLEDGE, RESEARCH, PRINCIPLE items provide context — they inform but don't drive execution
 - If content describes a process with steps, extract EACH STEP as a separate PROCEDURE item with step_order_hint
 
-**PLAYBOOK multiplicity guidance:**
-- A phase bundle describing a sales stage might have: "Run Discovery Call" (playbook 1), "Build Proposal" (playbook 2), "Handle Objection" (playbook 3) — each becomes a separate executable protocol
+**PLAYBOOK multiplicity — MANDATORY (not optional):**
+- A phase bundle MUST have MULTIPLE PLAYBOOKs when the content describes multiple distinct activities within that phase
+- Example: Phase B (Discovery & Qualification): "Run Introduction Call" (PLAYBOOK 1), "Perform Opportunity Assessment" (PLAYBOOK 2), "Execute Qualification Process" (PLAYBOOK 3)
 - Each PLAYBOOK defines the WHAT and WHY for ONE specific action an operator can take
-- PROCEDUREs, DIRECTIVEs, KNOWLEDGE etc. are SHARED across all protocols generated from the bundle — they form the common execution context
+- PROCEDUREs and DIRECTIVEs are OWNED by their parent PLAYBOOK via parent_playbook_title
+- KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE are SHARED across all protocols (no parent_playbook_title)
 - Think of PLAYBOOKs as "menu items" an operator can choose when working within this domain
+- **TARGET: 1 PLAYBOOK per 4-8 PROCEDUREs.** If a bundle has 20 PROCEDUREs under 1 PLAYBOOK, you have FAILED — segment into 3-5 PLAYBOOKs based on workflow stages
+- **VALIDATION: If any bundle has >10 PROCEDUREs all under ONE PLAYBOOK, go back and create additional PLAYBOOKs**
 
 **Bundle types to consider:**
 - A methodology document → Multiple PLAYBOOKs (activatable strategies) + PROCEDUREs (shared steps) + DIRECTIVEs (gates) + KNOWLEDGE (context)
@@ -239,6 +243,7 @@ After extraction, validate ALL of the following:
    - If it describes a framework, model, or analytical tool → KNOWLEDGE
    - If it describes a template or checklist → KNOWLEDGE
    - If it describes a sub-process within a larger phase → PROCEDURE
+10. **MULTI-PLAYBOOK CHECK (CRITICAL)**: For EVERY bundle, count the PROCEDUREs. If a bundle has >5 PROCEDUREs under a SINGLE PLAYBOOK, you MUST create additional PLAYBOOKs by segmenting the PROCEDUREs into distinct workflow stages. Target: 1 PLAYBOOK per 4-8 PROCEDUREs. Reassign parent_playbook_title for each PROCEDURE to its correct PLAYBOOK.
 If any check fails, fix it before returning.
 
 ## EXTRACTION PRINCIPLES
