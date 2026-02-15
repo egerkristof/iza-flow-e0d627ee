@@ -15,7 +15,7 @@ import {
 import {
   ChevronRight, ChevronDown, Layers, BookOpen, ListCheck,
   Merge, Trash2, Edit2, Check, X, ArrowRight, Sparkles,
-  Info, AlertTriangle, MoveRight,
+  Info, AlertTriangle, MoveRight, GripVertical,
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -86,6 +86,8 @@ export function StructureEditorDialog({
   const [expandedBundles, setExpandedBundles] = useState<Set<number>>(new Set());
   const [editingTitle, setEditingTitle] = useState<{ type: "bundle" | "playbook"; bundleIdx: number; playbookIdx?: number } | null>(null);
   const [editValue, setEditValue] = useState("");
+  const [dragState, setDragState] = useState<{ bundleIdx: number; playbookIdx: number } | null>(null);
+  const [dropTarget, setDropTarget] = useState<{ bundleIdx: number; playbookIdx: number } | null>(null);
 
   useEffect(() => {
     if (data?.optimized_blueprint) {
@@ -188,6 +190,60 @@ export function StructureEditorDialog({
       };
       return next;
     });
+  };
+
+  // ── Reorder playbooks within a bundle via drag-and-drop ────────────────
+  const reorderPlaybook = (bundleIdx: number, fromIdx: number, toIdx: number) => {
+    if (fromIdx === toIdx) return;
+    setBlueprint(prev => {
+      const next = [...prev];
+      const playbooks = [...next[bundleIdx].playbooks];
+      const [moved] = playbooks.splice(fromIdx, 1);
+      playbooks.splice(toIdx, 0, moved);
+      next[bundleIdx] = { ...next[bundleIdx], playbooks };
+      return next;
+    });
+  };
+
+  const handleDragStart = (e: React.DragEvent, bundleIdx: number, playbookIdx: number) => {
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", `${bundleIdx}:${playbookIdx}`);
+    setDragState({ bundleIdx, playbookIdx });
+  };
+
+  const handleDragOver = (e: React.DragEvent, bundleIdx: number, playbookIdx: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setDropTarget({ bundleIdx, playbookIdx });
+  };
+
+  const handleDrop = (e: React.DragEvent, bundleIdx: number, playbookIdx: number) => {
+    e.preventDefault();
+    if (!dragState) return;
+    if (dragState.bundleIdx === bundleIdx) {
+      reorderPlaybook(bundleIdx, dragState.playbookIdx, playbookIdx);
+    } else {
+      // Cross-bundle: move playbook then reinsert at drop position
+      setBlueprint(prev => {
+        const next = [...prev];
+        const pb = next[dragState.bundleIdx].playbooks[dragState.playbookIdx];
+        next[dragState.bundleIdx] = {
+          ...next[dragState.bundleIdx],
+          playbooks: next[dragState.bundleIdx].playbooks.filter((_, i) => i !== dragState.playbookIdx),
+        };
+        const targetPlaybooks = [...next[bundleIdx].playbooks];
+        targetPlaybooks.splice(playbookIdx, 0, pb);
+        next[bundleIdx] = { ...next[bundleIdx], playbooks: targetPlaybooks };
+        return next;
+      });
+    }
+    setDragState(null);
+    setDropTarget(null);
+  };
+
+  const handleDragEnd = () => {
+    setDragState(null);
+    setDropTarget(null);
   };
 
   const handleConfirm = () => {
@@ -343,7 +399,24 @@ export function StructureEditorDialog({
                       <p className="text-[10px] text-muted-foreground mb-2">{bundle.bundle_description}</p>
                       <div className="space-y-1.5">
                         {bundle.playbooks.map((pb, pi) => (
-                          <div key={pi} className="flex items-center gap-2 rounded-md bg-muted/30 px-2.5 py-1.5 group">
+                          <div
+                            key={pi}
+                            draggable
+                            onDragStart={e => handleDragStart(e, bi, pi)}
+                            onDragOver={e => handleDragOver(e, bi, pi)}
+                            onDrop={e => handleDrop(e, bi, pi)}
+                            onDragEnd={handleDragEnd}
+                            className={`flex items-center gap-2 rounded-md bg-muted/30 px-2.5 py-1.5 group cursor-grab active:cursor-grabbing transition-all ${
+                              dropTarget?.bundleIdx === bi && dropTarget?.playbookIdx === pi
+                                ? "ring-1 ring-primary/50 bg-primary/5"
+                                : ""
+                            } ${
+                              dragState?.bundleIdx === bi && dragState?.playbookIdx === pi
+                                ? "opacity-40"
+                                : ""
+                            }`}
+                          >
+                            <GripVertical className="h-3 w-3 text-muted-foreground/50 shrink-0" />
                             <BookOpen className="h-3 w-3 text-orange-400 shrink-0" />
 
                             {editingTitle?.type === "playbook" && editingTitle.bundleIdx === bi && editingTitle.playbookIdx === pi ? (
