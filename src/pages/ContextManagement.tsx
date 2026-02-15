@@ -424,8 +424,29 @@ export default function ContextManagementPage() {
           body: { documentId: docRow.id },
         });
         if (!structError && structData && !structData.error && structData.confidence !== "low") {
-          documentStructure = structData;
           console.log(`Structure detected: type=${structData.structure_type}, confidence=${structData.confidence}, sections=${structData.total_sections_detected}`);
+
+          // ── Pass 1.5: Semantic Structure Optimization ────────────────
+          setExtractionPhase("optimizing-structure");
+          try {
+            const { data: optData, error: optError } = await supabase.functions.invoke("optimize-structure", {
+              body: { skeleton: structData },
+            });
+            if (!optError && optData && !optData.error && !optData.fallback) {
+              documentStructure = {
+                ...structData,
+                optimized_blueprint: optData.optimized_blueprint,
+                consolidation_decisions: optData.consolidation_decisions,
+                optimization_summary: optData.optimization_summary,
+                optimization_stats: optData.stats,
+              };
+              console.log(`Structure optimized: bundles=${optData.stats?.final_bundles}, playbooks=${optData.stats?.final_playbooks}, merges=${optData.stats?.merges_performed}`);
+            } else {
+              documentStructure = structData;
+            }
+          } catch {
+            documentStructure = structData;
+          }
         }
       } catch {} // best-effort
       if (abortController.signal.aborted) throw new Error("Cancelled");

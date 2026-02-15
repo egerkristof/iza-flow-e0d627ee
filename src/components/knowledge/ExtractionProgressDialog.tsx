@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FileText, Brain, Sparkles, CheckCircle2, X, GitMerge, ScanSearch, Timer } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
-export type ExtractionPhase = "uploading" | "detecting-structure" | "analyzing" | "extracting" | "matching" | "done";
+export type ExtractionPhase = "uploading" | "detecting-structure" | "optimizing-structure" | "analyzing" | "extracting" | "matching" | "done";
 
 interface ExtractionProgressDialogProps {
   open: boolean;
@@ -25,7 +25,13 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
     label: "Detecting structure",
     subtitle: "Mapping document architecture (ToC, sections, phases)…",
     icon: ScanSearch,
-    progress: 25,
+    progress: 20,
+  },
+  "optimizing-structure": {
+    label: "Optimizing structure",
+    subtitle: "Semantic analysis — merging related sections, defining hierarchy…",
+    icon: ScanSearch,
+    progress: 35,
   },
   analyzing: {
     label: "Generating advisor",
@@ -193,10 +199,10 @@ export function ExtractionProgressDialog({ open, fileName, phase, chunkProgress,
 
           {/* Phase steps */}
           <div className="flex items-center gap-3 text-[11px]">
-            {(["uploading", "detecting-structure", "analyzing", "extracting", "matching"] as ExtractionPhase[]).map((p, i) => {
+            {(["uploading", "detecting-structure", "optimizing-structure", "analyzing", "extracting", "matching"] as ExtractionPhase[]).map((p, i) => {
               const isActive = p === phase;
               const isDone = config.progress > PHASE_CONFIG[p].progress || phase === "done";
-              const shortLabel = p === "uploading" ? "Upload" : p === "detecting-structure" ? "Structure" : p === "analyzing" ? "Advisor" : p === "matching" ? "Match" : "Extract";
+              const shortLabel = p === "uploading" ? "Upload" : p === "detecting-structure" ? "Structure" : p === "optimizing-structure" ? "Optimize" : p === "analyzing" ? "Advisor" : p === "matching" ? "Match" : "Extract";
               return (
                 <div key={p} className="flex items-center gap-1.5">
                   {i > 0 && <div className={`w-4 h-px ${isDone ? "bg-emerald-500/50" : "bg-border"}`} />}

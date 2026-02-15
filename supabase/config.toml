@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.detect-structure]
 verify_jwt = false
+
+[functions.optimize-structure]
+verify_jwt = false
