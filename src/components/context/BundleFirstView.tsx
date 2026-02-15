@@ -36,7 +36,7 @@ interface BundleFirstViewProps {
   onDestroyItem: (item: MockContextItem) => void;
   onEditBundle: (bundle: MockBundle) => void;
   onDeleteBundle: (id: string) => void;
-  onCreateItem: () => void;
+  onCreateItem: (bundleId?: string) => void;
   onCreateBundle: () => void;
   onOpenCopilot: () => void;
   copilotOpen: boolean;
@@ -156,6 +156,7 @@ function BundleExpandable({
   onDestroyItem,
   onEditBundle,
   onDeleteBundle,
+  onCreateItem,
 }: {
   bundle: MockBundle;
   bundleItems: MockContextItem[];
@@ -163,6 +164,7 @@ function BundleExpandable({
   onDestroyItem: (item: MockContextItem) => void;
   onEditBundle: (bundle: MockBundle) => void;
   onDeleteBundle: (id: string) => void;
+  onCreateItem: (bundleId?: string) => void;
 }) {
   const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -385,6 +387,17 @@ function BundleExpandable({
                 );
               })()
             )}
+            {/* Add item to this bundle */}
+            <div className="px-4 py-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 w-full text-xs gap-1.5 border border-dashed border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/40"
+                onClick={() => onCreateItem(bundle.id)}
+              >
+                <Plus className="h-3 w-3" /> Add item to bundle
+              </Button>
+            </div>
           </div>
         </CollapsibleContent>
       </div>
@@ -533,7 +546,7 @@ export function BundleFirstView({
           <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs" onClick={onCreateBundle}>
             <Package className="h-3.5 w-3.5" /> Bundle
           </Button>
-          <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={onCreateItem}>
+          <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => onCreateItem()}>
             <Plus className="h-3.5 w-3.5" /> Item
           </Button>
 
@@ -643,6 +656,7 @@ export function BundleFirstView({
             onDestroyItem={onDestroyItem}
             onEditBundle={onEditBundle}
             onDeleteBundle={onDeleteBundle}
+            onCreateItem={onCreateItem}
           />
         ))}
 

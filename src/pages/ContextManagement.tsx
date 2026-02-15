@@ -854,7 +854,7 @@ export default function ContextManagementPage() {
             onDestroyItem={handleDestroyItem}
             onEditBundle={(bundle) => { setEditingBundle(bundle); setBundleDialog(true); }}
             onDeleteBundle={handleDeleteBundle}
-            onCreateItem={() => { setEditingItemId(null); setNewItem(emptyItem); setItemDialog(true); }}
+            onCreateItem={(bundleId?: string) => { setEditingItemId(null); setNewItem({ ...emptyItem, bundle_ids: bundleId ? [bundleId] : [] }); setItemDialog(true); }}
             onCreateBundle={() => { setEditingBundle(null); setBundleDialog(true); }}
             onOpenCopilot={() => setCopilotOpen(!copilotOpen)}
             copilotOpen={copilotOpen}
@@ -950,7 +950,10 @@ export default function ContextManagementPage() {
                       {filteredItems.length === 0 ? (
                         <div className="text-center py-12 text-muted-foreground text-sm">No items match your filters</div>
                       ) : filteredItems.map(item => (
-                        <ContextItemRow key={item.id} item={item} selected={selectedItemId === item.id} onClick={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)} onEdit={openEditDialog} onDestroy={handleDestroyItem} />
+                        <ContextItemRow key={item.id} item={item} selected={selectedItemId === item.id} onClick={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)} onEdit={openEditDialog} onDestroy={handleDestroyItem}
+                          onAddAbove={(ref) => { setEditingItemId(null); setNewItem({ ...emptyItem, bundle_ids: ref.bundle_ids }); setItemDialog(true); }}
+                          onAddBelow={(ref) => { setEditingItemId(null); setNewItem({ ...emptyItem, bundle_ids: ref.bundle_ids }); setItemDialog(true); }}
+                        />
                       ))}
                     </div>
                   </ScrollArea>
