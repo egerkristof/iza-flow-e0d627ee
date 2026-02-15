@@ -415,9 +415,22 @@ export default function ContextManagementPage() {
       docId = docRow.id;
       if (abortController.signal.aborted) throw new Error("Cancelled");
 
-      setExtractionPhase("extracting");
+      // ── Pass 1: Structure Detection ──────────────────────────────────
+      setExtractionPhase("detecting-structure");
+      let documentStructure: any = null;
+      try {
+        const { data: structData, error: structError } = await supabase.functions.invoke("detect-structure", {
+          body: { documentId: docRow.id },
+        });
+        if (!structError && structData && !structData.error && structData.confidence !== "low") {
+          documentStructure = structData;
+          console.log(`Structure detected: type=${structData.structure_type}, confidence=${structData.confidence}, sections=${structData.total_sections_detected}`);
+        }
+      } catch {} // best-effort
+      if (abortController.signal.aborted) throw new Error("Cancelled");
 
-      // Generate advisor for guided/deep modes
+      // ── Generate advisor for guided/deep modes ──────────────────────
+      setExtractionPhase("analyzing");
       let advisorPersona: AdvisorPersona | null = null;
       if (extractionDepth !== "quick") {
         try {
@@ -427,13 +440,16 @@ export default function ContextManagementPage() {
           if (advData && !advData.error) advisorPersona = advData as AdvisorPersona;
         } catch {} // best-effort
       }
+      if (abortController.signal.aborted) throw new Error("Cancelled");
 
+      setExtractionPhase("extracting");
       const { data, error } = await supabase.functions.invoke("extract-knowledge", {
         body: {
           documentId: docRow.id,
           source_type: "loom",
           extraction_depth: extractionDepth,
           ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+          ...(documentStructure ? { document_structure: documentStructure } : {}),
         },
       });
       if (abortController.signal.aborted) throw new Error("Cancelled");
