@@ -109,7 +109,7 @@ export default function ContextManagementPage() {
       const { data, error } = await supabase
         .from("bundles")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: true });
       if (error) throw error;
       return data;
     },
