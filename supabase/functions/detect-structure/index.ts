@@ -254,14 +254,14 @@ serve(async (req) => {
     };
 
     // ── Build content for the AI ────────────────────────────────────────
-    const contentPreview = textContent.length > 30000
-      ? textContent.slice(0, 30000) + "\n\n[... document continues for " + (textContent.length - 30000) + " more characters ...]"
+    const contentPreview = textContent.length > 60000
+      ? textContent.slice(0, 60000) + "\n\n[... document continues for " + (textContent.length - 60000) + " more characters ...]"
       : textContent;
 
     // Extract markers from the FULL document
     const allMarkers = textContent ? extractStructuralMarkers(textContent) : [];
-    const markersFromBeyondPreview = textContent.length > 30000
-      ? extractStructuralMarkers(textContent.slice(30000))
+    const markersFromBeyondPreview = textContent.length > 60000
+      ? extractStructuralMarkers(textContent.slice(60000))
       : [];
 
     let structuralIndexNote = "";

@@ -276,7 +276,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
               const optimizeBody: Record<string, any> = { skeleton: structData };
               if (body.content) {
                 optimizeBody.content_preview = typeof body.content === "string"
-                  ? body.content.slice(0, 30000)
+                  ? body.content.slice(0, 60000)
                   : "";
               }
 
