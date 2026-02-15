@@ -86,7 +86,8 @@ Deno.serve(async (req) => {
     const { data: items, error: itemError } = await supabase
       .from("context_items")
       .select("*")
-      .in("id", allIds);
+      .in("id", allIds)
+      .is("deleted_at", null);
 
     if (itemError) throw itemError;
 
