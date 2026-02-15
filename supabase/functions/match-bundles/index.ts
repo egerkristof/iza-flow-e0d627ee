@@ -207,6 +207,22 @@ For each extracted bundle (by index), determine the best match action. Return re
     }
 
     const result = JSON.parse(toolCall.function.arguments);
+
+    // Strip non-UUID target_bundle_ids (AI sometimes hallucinates placeholder strings)
+    const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (result.matches && Array.isArray(result.matches)) {
+      for (const m of result.matches) {
+        if (m.target_bundle_id && !uuidRe.test(m.target_bundle_id)) {
+          console.warn(`Stripping invalid target_bundle_id: ${m.target_bundle_id}`);
+          delete m.target_bundle_id;
+          delete m.target_bundle_title;
+          if (m.match_type === "exact" || m.match_type === "absorb") {
+            m.match_type = "new";
+          }
+        }
+      }
+    }
+
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
