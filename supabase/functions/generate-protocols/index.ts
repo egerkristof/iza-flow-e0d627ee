@@ -171,10 +171,11 @@ Deno.serve(async (req) => {
           source_item_id: proc.id,
           title: proc.title,
           description: proc.content_full?.substring(0, 1000) ?? null,
-          step_type: "action",
+          step_type: proc.target_reference_id ? "research" : "action",
           step_order: stepOrder++,
           is_required: true,
           agent_prompt: proc.content_full ?? null,
+          research_template_id: proc.target_reference_id ?? null,
         });
       }
 
@@ -204,6 +205,7 @@ Deno.serve(async (req) => {
           step_order: stepOrder++,
           is_required: true,
           agent_prompt: `RESEARCH: ${res.content_full}`,
+          research_template_id: res.target_reference_id ?? null,
         });
       }
 
