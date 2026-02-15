@@ -26,3 +26,9 @@ verify_jwt = false
 
 [functions.enhance-context]
 verify_jwt = false
+
+[functions.run-research]
+verify_jwt = false
+
+[functions.match-bundles]
+verify_jwt = false
