@@ -9,7 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff, GitMerge, ArrowRight, ScanSearch, Scissors, Undo2 } from "lucide-react";
+import { Settings2, BookUp, Loader2, Sparkles, Package, ChevronDown, ChevronRight, FolderPlus, Pencil, Check, Brain, Globe, Users, User, RefreshCw, MessageSquare, Send, GripVertical, Lightbulb, Shield, AlertTriangle, CheckCircle2, CircleDashed, Eye, EyeOff, GitMerge, ArrowRight, ScanSearch, Scissors, Undo2, ArrowRightLeft } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import {
   type ExtractionResult,
@@ -1890,18 +1891,62 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                                               draggable
                                               onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
                                               onDragEnd={handleDragEnd}
-                                              className="rounded border border-border/30 bg-background/50 p-2 cursor-grab active:cursor-grabbing flex items-start gap-2"
+                                              className="rounded border border-border/30 bg-background/50 p-2 cursor-grab active:cursor-grabbing flex items-start gap-2 group/owneditem"
                                             >
                                               <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
                                                 <GripVertical className="h-3 w-3 text-muted-foreground/50" />
                                                 <span className="text-[9px] leading-none" title={itemRoleMeta.label}>{itemRoleMeta.icon}</span>
                                               </div>
-                                              {renderEditableItem(
-                                                item,
-                                                bundleItemEdits[`${i}-${j}`],
-                                                `bundle-${i}-${j}`,
-                                                (field, value) => updateBundleItemEdit(i, j, field, value),
-                                                true,
+                                              <div className="flex-1 min-w-0">
+                                                {renderEditableItem(
+                                                  item,
+                                                  bundleItemEdits[`${i}-${j}`],
+                                                  `bundle-${i}-${j}`,
+                                                  (field, value) => updateBundleItemEdit(i, j, field, value),
+                                                  true,
+                                                )}
+                                              </div>
+                                              {/* Move to playbook action */}
+                                              {playbookIndices.length > 0 && (
+                                                <DropdownMenu>
+                                                  <DropdownMenuTrigger asChild>
+                                                    <button
+                                                      className="opacity-0 group-hover/owneditem:opacity-100 transition-opacity p-1 rounded hover:bg-secondary/50 shrink-0"
+                                                      title="Move to another playbook"
+                                                      onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                      <ArrowRightLeft className="h-3 w-3 text-muted-foreground" />
+                                                    </button>
+                                                  </DropdownMenuTrigger>
+                                                  <DropdownMenuContent align="end" className="min-w-[180px]">
+                                                    <DropdownMenuLabel className="text-[10px] text-muted-foreground">Move to playbook</DropdownMenuLabel>
+                                                    <DropdownMenuSeparator />
+                                                    {playbookIndices.map(({ it: pb, j: pbIdx }) => {
+                                                      const pbResolved = resolveItem(bundle.items[pbIdx], bundleItemEdits[`${i}-${pbIdx}`]);
+                                                      const isCurrent = itemResolved.parent_playbook_title === pbResolved.title;
+                                                      return (
+                                                        <DropdownMenuItem
+                                                          key={pbIdx}
+                                                          disabled={isCurrent}
+                                                          className={cn("text-xs gap-2", isCurrent && "opacity-50")}
+                                                          onClick={() => updateBundleItemEdit(i, j, "parent_playbook_title", pbResolved.title)}
+                                                        >
+                                                          <span className="text-orange-400">🎯</span>
+                                                          {pbResolved.title}
+                                                          {isCurrent && <span className="text-[9px] text-muted-foreground ml-auto">current</span>}
+                                                        </DropdownMenuItem>
+                                                      );
+                                                    })}
+                                                    <DropdownMenuSeparator />
+                                                    <DropdownMenuItem
+                                                      className="text-xs gap-2"
+                                                      onClick={() => updateBundleItemEdit(i, j, "parent_playbook_title", undefined)}
+                                                    >
+                                                      <span className="text-blue-400">📘</span>
+                                                      Shared context (no playbook)
+                                                    </DropdownMenuItem>
+                                                  </DropdownMenuContent>
+                                                </DropdownMenu>
                                               )}
                                             </div>
                                           </div>
@@ -1944,18 +1989,51 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                                           draggable
                                           onDragStart={(e) => handleDragStart(e, { type: "bundle", bundleIdx: i, itemIdx: j })}
                                           onDragEnd={handleDragEnd}
-                                          className="rounded border border-border/30 bg-background/50 p-2 cursor-grab active:cursor-grabbing flex items-start gap-2"
+                                          className="rounded border border-border/30 bg-background/50 p-2 cursor-grab active:cursor-grabbing flex items-start gap-2 group/shareditem"
                                         >
                                           <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
                                             <GripVertical className="h-3 w-3 text-muted-foreground/50" />
                                             <span className="text-[9px] leading-none" title={roleMeta.label}>{roleMeta.icon}</span>
                                           </div>
-                                          {renderEditableItem(
-                                            item,
-                                            bundleItemEdits[`${i}-${j}`],
-                                            `bundle-${i}-${j}`,
-                                            (field, value) => updateBundleItemEdit(i, j, field, value),
-                                            true,
+                                          <div className="flex-1 min-w-0">
+                                            {renderEditableItem(
+                                              item,
+                                              bundleItemEdits[`${i}-${j}`],
+                                              `bundle-${i}-${j}`,
+                                              (field, value) => updateBundleItemEdit(i, j, field, value),
+                                              true,
+                                            )}
+                                          </div>
+                                          {/* Move to playbook action */}
+                                          {playbookIndices.length > 0 && (
+                                            <DropdownMenu>
+                                              <DropdownMenuTrigger asChild>
+                                                <button
+                                                  className="opacity-0 group-hover/shareditem:opacity-100 transition-opacity p-1 rounded hover:bg-secondary/50 shrink-0"
+                                                  title="Assign to a playbook"
+                                                  onClick={(e) => e.stopPropagation()}
+                                                >
+                                                  <ArrowRightLeft className="h-3 w-3 text-muted-foreground" />
+                                                </button>
+                                              </DropdownMenuTrigger>
+                                              <DropdownMenuContent align="end" className="min-w-[180px]">
+                                                <DropdownMenuLabel className="text-[10px] text-muted-foreground">Assign to playbook</DropdownMenuLabel>
+                                                <DropdownMenuSeparator />
+                                                {playbookIndices.map(({ it: pb, j: pbIdx }) => {
+                                                  const pbResolved = resolveItem(bundle.items[pbIdx], bundleItemEdits[`${i}-${pbIdx}`]);
+                                                  return (
+                                                    <DropdownMenuItem
+                                                      key={pbIdx}
+                                                      className="text-xs gap-2"
+                                                      onClick={() => updateBundleItemEdit(i, j, "parent_playbook_title", pbResolved.title)}
+                                                    >
+                                                      <span className="text-orange-400">🎯</span>
+                                                      {pbResolved.title}
+                                                    </DropdownMenuItem>
+                                                  );
+                                                })}
+                                              </DropdownMenuContent>
+                                            </DropdownMenu>
                                           )}
                                         </div>
                                       </div>
