@@ -52,7 +52,16 @@ Analyze the document and identify its structural blueprint:
      * Content density estimate: "rich" (lots of detail), "moderate", "sparse" (just a heading), "empty" (referenced but no content)
      * Child count (how many direct sub-entries it has)
 
-3. **Assess confidence** — how reliable is this structure?
+3. **Classify layout type** for each entry — HOW was this section detected?
+   - "heading" — Text-based header (H1, H2, #, bold heading)
+   - "numbered" — Numbered section (1.1, A.2, Phase 1)
+   - "visual_group" — Spatial/visual grouping (items arranged in a circle, quadrant, radial layout, grouped in a box)
+   - "table" — Table or matrix structure
+   - "diagram" — Flow diagram, process chart, decision tree
+   - "slide_divider" — Presentation section divider slide
+   - "implicit" — Inferred from content semantics, no explicit visual or textual marker
+
+4. **Assess confidence** — how reliable is this structure?
    - "high" — Clear, explicit structure (ToC, numbered phases, slide sections). Use as MANDATORY blueprint.
    - "medium" — Implicit structure detectable (consistent headers, logical sections). Use as SUGGESTED blueprint.
    - "low" — Minimal structure. Fall back to heuristic extraction.
@@ -105,6 +114,11 @@ const TOOL_DEFINITION = {
                 type: "integer",
                 description: "Hierarchy level: 1 = top-level section (bundle candidate), 2 = sub-section (playbook candidate), 3+ = sub-sub-section (item-level)",
               },
+              layout_type: {
+                type: "string",
+                enum: ["heading", "numbered", "visual_group", "table", "diagram", "slide_divider", "implicit"],
+                description: "How this section was detected: 'heading' = text header (H1/H2/#), 'numbered' = numbered section (1.1, A.2), 'visual_group' = spatial/visual grouping (circle, quadrant, radial layout), 'table' = table or matrix structure, 'diagram' = flow diagram or process chart, 'slide_divider' = presentation section divider slide, 'implicit' = inferred from content semantics rather than explicit formatting",
+              },
               is_bundle_candidate: {
                 type: "boolean",
                 description: "Should this section become its own bundle? true for level-1 sections and significant level-2 sections that pass the deployability test.",
@@ -141,7 +155,7 @@ const TOOL_DEFINITION = {
                 description: "Approximate page/slide range (e.g., 'slides 12-18', 'pages 15-22'). Optional.",
               },
             },
-            required: ["label", "level", "is_bundle_candidate", "playbook_candidates", "content_density", "child_count"],
+            required: ["label", "level", "layout_type", "is_bundle_candidate", "playbook_candidates", "content_density", "child_count"],
           },
         },
         notes: {
