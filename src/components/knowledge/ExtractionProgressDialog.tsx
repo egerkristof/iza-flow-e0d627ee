@@ -10,6 +10,7 @@ interface ExtractionProgressDialogProps {
   open: boolean;
   fileName: string;
   phase: ExtractionPhase;
+  chunkProgress?: { current: number; total: number } | null;
   onCancel?: () => void;
 }
 
@@ -52,9 +53,11 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
   },
 };
 
-export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: ExtractionProgressDialogProps) {
+export function ExtractionProgressDialog({ open, fileName, phase, chunkProgress, onCancel }: ExtractionProgressDialogProps) {
   const config = PHASE_CONFIG[phase];
   const Icon = config.icon;
+
+  const showChunks = phase === "extracting" && chunkProgress && chunkProgress.total > 1;
 
   // Smooth progress animation — slowly fills within each phase
   const [displayProgress, setDisplayProgress] = useState(0);
@@ -110,7 +113,9 @@ export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: Ex
               {config.label}{dots}
             </h3>
             <p className="text-sm text-muted-foreground">
-              {config.subtitle}
+              {showChunks
+                ? `Processing chunk ${chunkProgress!.current} of ${chunkProgress!.total}…`
+                : config.subtitle}
             </p>
           </div>
 
@@ -121,6 +126,13 @@ export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: Ex
               <span className="truncate max-w-[180px]">{fileName}</span>
               <span>{Math.round(displayProgress)}%</span>
             </div>
+            {showChunks && (
+              <div className="flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">
+                <span className="font-medium text-primary">{chunkProgress!.current}</span>
+                <span>/</span>
+                <span>{chunkProgress!.total} chunks</span>
+              </div>
+            )}
           </div>
 
           {/* Phase steps */}

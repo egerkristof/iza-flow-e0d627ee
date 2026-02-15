@@ -989,6 +989,73 @@ You are in **deep analysis mode**. This means:
     const chunks = splitIntoChunks(textContent);
     console.log(`Document length: ${textContent.length} chars → ${chunks.length} chunk(s)`);
 
+    // If multiple chunks, use SSE streaming to report progress
+    if (chunks.length > 1) {
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            const chunkResults: ExtractionResult[] = [];
+            const existingBundleTitles: string[] = [];
+
+            // Send initial chunk info
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: 0, total: chunks.length })}\n\n`));
+
+            for (let i = 0; i < chunks.length; i++) {
+              const chunkInfo = { chunkIndex: i, totalChunks: chunks.length, existingBundleTitles: [...existingBundleTitles] };
+              const userPrompt = buildUserPrompt(sourceType, chunks[i], meta, chunkInfo);
+              console.log(`Extracting chunk ${i + 1}/${chunks.length} (${chunks[i].length} chars)...`);
+
+              // Send progress event
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: i + 1, total: chunks.length })}\n\n`));
+
+              const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey);
+              if (!result) {
+                console.error(`Chunk ${i + 1} failed — skipping`);
+                continue;
+              }
+
+              chunkResults.push(result);
+              for (const b of (result.bundles || [])) {
+                if (!existingBundleTitles.includes(b.title)) {
+                  existingBundleTitles.push(b.title);
+                }
+              }
+            }
+
+            if (chunkResults.length === 0) {
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "error", error: "Extraction failed — no chunks produced results" })}\n\n`));
+              controller.close();
+              return;
+            }
+
+            const merged = mergeExtractionResults(chunkResults);
+            if (advisorPersona) merged.advisor = advisorPersona;
+            merged.extraction_depth = extractionDepth;
+            merged.analysis_notes = `[Chunked extraction: ${chunks.length} chunks processed, ${textContent.length} total chars]\n\n${merged.analysis_notes}`;
+            merged.chunk_info = { total: chunks.length, processed: chunkResults.length };
+
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "result", data: merged })}\n\n`));
+            controller.close();
+          } catch (err) {
+            console.error("Streaming extraction error:", err);
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "error", error: err instanceof Error ? err.message : "Unknown error" })}\n\n`));
+            controller.close();
+          }
+        },
+      });
+
+      return new Response(stream, {
+        headers: {
+          ...corsHeaders,
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          "Connection": "keep-alive",
+        },
+      });
+    }
+
+    // Single chunk — no streaming needed
     const chunkResults: ExtractionResult[] = [];
     const existingBundleTitles: string[] = [];
 
@@ -1007,8 +1074,6 @@ You are in **deep analysis mode**. This means:
       }
 
       chunkResults.push(result);
-
-      // Collect bundle titles for subsequent chunks
       for (const b of (result.bundles || [])) {
         if (!existingBundleTitles.includes(b.title)) {
           existingBundleTitles.push(b.title);
@@ -1023,10 +1088,6 @@ You are in **deep analysis mode**. This means:
     const merged = mergeExtractionResults(chunkResults);
     if (advisorPersona) merged.advisor = advisorPersona;
     merged.extraction_depth = extractionDepth;
-
-    if (chunks.length > 1) {
-      merged.analysis_notes = `[Chunked extraction: ${chunks.length} chunks processed, ${textContent.length} total chars]\n\n${merged.analysis_notes}`;
-    }
 
     return new Response(JSON.stringify(merged), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

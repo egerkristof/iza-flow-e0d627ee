@@ -227,6 +227,8 @@ export interface ExtractionResult {
   bundle_matches?: BundleMatch[];
   /** Document structure detected in pre-pass */
   document_structure?: DocumentStructureSkeleton;
+  /** Chunk processing info (for multi-chunk extractions) */
+  chunk_info?: { total: number; processed: number };
 }
 
 // ─── Import Copilot Props ────────────────────────────────────────────────────
