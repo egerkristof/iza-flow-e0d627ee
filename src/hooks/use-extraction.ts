@@ -20,7 +20,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
   const { toast } = useToast();
   const [extracting, setExtracting] = useState(false);
   const [depth, setDepth] = useState<ExtractionDepth>("guided");
-  const [advisorPhase, setAdvisorPhase] = useState<"idle" | "detecting-structure" | "generating-advisor" | "extracting" | "matching">("idle");
+  const [advisorPhase, setAdvisorPhase] = useState<"idle" | "detecting-structure" | "optimizing-structure" | "generating-advisor" | "extracting" | "matching">("idle");
   const [chunkProgress, setChunkProgress] = useState<{ current: number; total: number } | null>(null);
 
   const extract = useCallback(async (
@@ -49,8 +49,41 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
             body: structureBody,
           });
           if (!structError && structData && !structData.error && structData.confidence !== "low") {
-            documentStructure = structData;
             console.log(`Structure detected: type=${structData.structure_type}, confidence=${structData.confidence}, sections=${structData.total_sections_detected}`);
+
+            // ── Pass 1.5: Semantic Structure Optimization ──────────────────
+            setAdvisorPhase("optimizing-structure");
+            try {
+              const optimizeBody: Record<string, any> = { skeleton: structData };
+              // Send content preview for semantic analysis
+              if (body.content) {
+                optimizeBody.content_preview = typeof body.content === "string"
+                  ? body.content.slice(0, 30000)
+                  : "";
+              }
+
+              const { data: optData, error: optError } = await supabase.functions.invoke("optimize-structure", {
+                body: optimizeBody,
+              });
+
+              if (!optError && optData && !optData.error && !optData.fallback) {
+                // Attach both raw skeleton and optimized blueprint
+                documentStructure = {
+                  ...structData,
+                  optimized_blueprint: optData.optimized_blueprint,
+                  consolidation_decisions: optData.consolidation_decisions,
+                  optimization_summary: optData.optimization_summary,
+                  optimization_stats: optData.stats,
+                };
+                console.log(`Structure optimized: bundles=${optData.stats?.final_bundles}, playbooks=${optData.stats?.final_playbooks}, merges=${optData.stats?.merges_performed}`);
+              } else {
+                documentStructure = structData;
+                console.log("Structure optimization returned fallback — using raw skeleton");
+              }
+            } catch (optErr) {
+              documentStructure = structData;
+              console.warn("Structure optimization failed (non-fatal):", optErr);
+            }
           } else {
             console.log("Structure detection returned low confidence or failed — using heuristic extraction");
           }
