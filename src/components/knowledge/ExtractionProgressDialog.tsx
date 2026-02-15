@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FileText, Brain, Sparkles, CheckCircle2, X, GitMerge, ScanSearch } from "lucide-react";
+import { FileText, Brain, Sparkles, CheckCircle2, X, GitMerge, ScanSearch, Timer } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 export type ExtractionPhase = "uploading" | "detecting-structure" | "analyzing" | "extracting" | "matching" | "done";
@@ -35,7 +35,7 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
   },
   extracting: {
     label: "Extracting knowledge",
-    subtitle: "Identifying items, bundles & preferences (this may take a minute for large documents)…",
+    subtitle: "Identifying items, bundles & preferences…",
     icon: Sparkles,
     progress: 70,
   },
@@ -53,11 +53,31 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
   },
 };
 
+function formatElapsed(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return m > 0 ? `${m}m ${s}s` : `${s}s`;
+}
+
 export function ExtractionProgressDialog({ open, fileName, phase, chunkProgress, onCancel }: ExtractionProgressDialogProps) {
   const config = PHASE_CONFIG[phase];
   const Icon = config.icon;
 
   const showChunks = phase === "extracting" && chunkProgress && chunkProgress.total > 1;
+
+  // Elapsed timer — starts when dialog opens, resets on close
+  const [elapsed, setElapsed] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (open && phase !== "done") {
+      setElapsed(0);
+      timerRef.current = setInterval(() => setElapsed(prev => prev + 1), 1000);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [open, phase === "done"]);
 
   // Smooth progress animation — slowly fills within each phase
   const [displayProgress, setDisplayProgress] = useState(0);
@@ -82,6 +102,9 @@ export function ExtractionProgressDialog({ open, fileName, phase, chunkProgress,
     const timer = setInterval(() => setDots(d => d.length >= 3 ? "" : d + "."), 500);
     return () => clearInterval(timer);
   }, [phase]);
+
+  // Indeterminate shimmer for long-running phases without chunk progress
+  const showIndeterminate = phase === "extracting" && !showChunks;
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
@@ -121,10 +144,35 @@ export function ExtractionProgressDialog({ open, fileName, phase, chunkProgress,
 
           {/* Progress bar */}
           <div className="w-full max-w-xs space-y-2">
-            <Progress value={displayProgress} className="h-2" />
+            {showIndeterminate ? (
+              <div className="relative h-2 w-full overflow-hidden rounded-full bg-primary/10">
+                <div
+                  className="absolute inset-y-0 w-1/3 rounded-full bg-primary/60"
+                  style={{
+                    animation: "shimmer-slide 1.8s ease-in-out infinite",
+                  }}
+                />
+                <style>{`
+                  @keyframes shimmer-slide {
+                    0% { left: -33%; }
+                    50% { left: 100%; }
+                    100% { left: -33%; }
+                  }
+                `}</style>
+              </div>
+            ) : (
+              <Progress value={displayProgress} className="h-2" />
+            )}
             <div className="flex justify-between text-[10px] text-muted-foreground">
               <span className="truncate max-w-[180px]">{fileName}</span>
-              <span>{Math.round(displayProgress)}%</span>
+              {showIndeterminate ? (
+                <span className="flex items-center gap-1">
+                  <Timer className="h-3 w-3" />
+                  {formatElapsed(elapsed)}
+                </span>
+              ) : (
+                <span>{Math.round(displayProgress)}%</span>
+              )}
             </div>
             {showChunks && (
               <div className="flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">
@@ -134,6 +182,14 @@ export function ExtractionProgressDialog({ open, fileName, phase, chunkProgress,
               </div>
             )}
           </div>
+
+          {/* Elapsed time badge for non-extracting phases */}
+          {phase !== "done" && !showIndeterminate && elapsed >= 5 && (
+            <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground animate-fade-in">
+              <Timer className="h-3 w-3" />
+              <span>Elapsed: {formatElapsed(elapsed)}</span>
+            </div>
+          )}
 
           {/* Phase steps */}
           <div className="flex items-center gap-3 text-[11px]">
