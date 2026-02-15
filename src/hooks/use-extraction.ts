@@ -1,7 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import type { ExtractionResult, ExtractionDepth, AdvisorPersona, BundleMatch } from "@/lib/knowledge-schema";
+import type { StructureEditorData } from "@/components/knowledge/StructureEditorDialog";
 
 interface UseExtractionOptions {
   onResult: (data: ExtractionResult, sourceName: string) => void;
@@ -13,6 +14,9 @@ interface UseExtractionOptions {
  * - Guided Extract: generate advisor → extract with advisor context
  * - Deep Analysis: generate advisor → extract with advisor + deep mode
  * 
+ * After structure optimization, pauses to let the user review/edit
+ * the blueprint via the StructureEditorDialog before proceeding.
+ *
  * After extraction, runs the bundle matcher to find existing bundle overlaps.
  * High-confidence matches (≥0.9) auto-tag bundles; lower ones show as suggestions.
  */
@@ -22,6 +26,222 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
   const [depth, setDepth] = useState<ExtractionDepth>("guided");
   const [advisorPhase, setAdvisorPhase] = useState<"idle" | "detecting-structure" | "optimizing-structure" | "generating-advisor" | "extracting" | "matching">("idle");
   const [chunkProgress, setChunkProgress] = useState<{ current: number; total: number } | null>(null);
+
+  // Structure editor pause state
+  const [pendingStructure, setPendingStructure] = useState<StructureEditorData | null>(null);
+  const [pendingFileName, setPendingFileName] = useState("");
+  const [structureEditorOpen, setStructureEditorOpen] = useState(false);
+
+  // Stash extraction context so we can resume after editor confirmation
+  const pendingExtraction = useRef<{
+    body: Record<string, any>;
+    sourceName: string;
+    advisorPersona: AdvisorPersona | null;
+    rawStructure: any;
+  } | null>(null);
+
+  // ── Resume extraction after structure editor confirm/skip ────────────
+  const resumeExtraction = useCallback(async (
+    editedStructure: StructureEditorData | null,
+  ) => {
+    setStructureEditorOpen(false);
+    setPendingStructure(null);
+
+    const pending = pendingExtraction.current;
+    if (!pending) return;
+    pendingExtraction.current = null;
+
+    const { body, sourceName, advisorPersona, rawStructure } = pending;
+
+    // Build final documentStructure from edited or raw
+    const documentStructure = editedStructure
+      ? {
+          ...rawStructure,
+          optimized_blueprint: editedStructure.optimized_blueprint,
+          consolidation_decisions: editedStructure.consolidation_decisions,
+          optimization_summary: editedStructure.optimization_summary,
+          optimization_stats: editedStructure.optimization_stats,
+        }
+      : rawStructure;
+
+    try {
+      await runExtraction(body, sourceName, advisorPersona, documentStructure);
+    } catch (err: any) {
+      toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+    } finally {
+      setExtracting(false);
+      setAdvisorPhase("idle");
+      setChunkProgress(null);
+    }
+  }, [toast]);
+
+  const handleStructureConfirm = useCallback((edited: StructureEditorData) => {
+    resumeExtraction(edited);
+  }, [resumeExtraction]);
+
+  const handleStructureSkip = useCallback(() => {
+    resumeExtraction(null);
+  }, [resumeExtraction]);
+
+  // ── Core extraction (advisor → extract → match) ─────────────────────
+  const runExtraction = async (
+    body: Record<string, any>,
+    sourceName: string,
+    advisorPersona: AdvisorPersona | null,
+    documentStructure: any,
+  ) => {
+    // For guided/deep: generate advisor if not already done
+    if (depth !== "quick" && !advisorPersona) {
+      setAdvisorPhase("generating-advisor");
+      const contentPreview = body.content || body.documentId || "";
+      const { data: advisorData, error: advisorError } = await supabase.functions.invoke("generate-advisor", {
+        body: {
+          content: typeof contentPreview === "string" ? contentPreview : sourceName,
+          meta: body.meta || { title: sourceName },
+        },
+      });
+      if (!advisorError && advisorData && !advisorData.error) {
+        advisorPersona = advisorData as AdvisorPersona;
+      }
+    }
+
+    setAdvisorPhase("extracting");
+    setChunkProgress(null);
+
+    const session = (await supabase.auth.getSession()).data.session;
+    const extractBody = {
+      ...body,
+      extraction_depth: depth,
+      ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+      ...(documentStructure ? { document_structure: documentStructure } : {}),
+    };
+
+    const extractRes = await fetch(
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token}`,
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        },
+        body: JSON.stringify(extractBody),
+      },
+    );
+
+    if (!extractRes.ok) {
+      const errText = await extractRes.text();
+      throw new Error(errText || `Extraction failed (${extractRes.status})`);
+    }
+
+    let extracted: ExtractionResult;
+    const contentType = extractRes.headers.get("content-type") || "";
+
+    if (contentType.includes("text/event-stream")) {
+      const reader = extractRes.body!.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let result: ExtractionResult | null = null;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const parts = buffer.split("\n\n");
+        buffer = parts.pop() || "";
+
+        for (const part of parts) {
+          if (!part.startsWith("data: ")) continue;
+          const jsonStr = part.slice(6);
+          try {
+            const parsed = JSON.parse(jsonStr);
+            if (parsed.type === "chunk_progress") {
+              setChunkProgress({ current: parsed.current, total: parsed.total });
+            } else if (parsed.type === "result") {
+              result = parsed.data as ExtractionResult;
+            } else if (parsed.type === "error") {
+              throw new Error(parsed.error);
+            }
+          } catch (parseErr) {
+            if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
+            console.warn("Failed to parse SSE event:", jsonStr);
+          }
+        }
+      }
+
+      if (!result) throw new Error("No extraction result received");
+      extracted = result;
+    } else {
+      const data = await extractRes.json();
+      if (data?.error) throw new Error(data.error);
+      extracted = data as ExtractionResult;
+    }
+
+    if (documentStructure) {
+      extracted.document_structure = documentStructure;
+    }
+
+    // ── Bundle Matching Pass ──────────────────────────────────────────
+    if (extracted.bundles && extracted.bundles.length > 0) {
+      setAdvisorPhase("matching");
+      try {
+        const { data: matchResult, error: matchErr } = await supabase.functions.invoke("match-bundles", {
+          body: {
+            extracted_bundles: extracted.bundles.map(b => ({
+              title: b.title,
+              description: b.description,
+              items: b.items.map(it => ({ title: it.title, category: it.category })),
+            })),
+          },
+        });
+
+        if (!matchErr && matchResult && !matchResult.error && matchResult.matches) {
+          extracted.bundle_matches = matchResult.matches as BundleMatch[];
+
+          const consolidations = (matchResult.matches as BundleMatch[])
+            .filter(m => m.match_type === "consolidate" && m.confidence >= 0.9 && m.consolidate_with?.length);
+
+          if (consolidations.length > 0) {
+            const merged = new Set<number>();
+            const newBundles = [...extracted.bundles];
+            
+            for (const c of consolidations) {
+              if (merged.has(c.extracted_index)) continue;
+              const targets = (c.consolidate_with || []).filter(i => !merged.has(i));
+              if (targets.length === 0) continue;
+
+              for (const t of targets) {
+                if (t < newBundles.length) {
+                  newBundles[c.extracted_index] = {
+                    ...newBundles[c.extracted_index],
+                    title: c.suggested_merged_title || newBundles[c.extracted_index].title,
+                    items: [...newBundles[c.extracted_index].items, ...newBundles[t].items],
+                  };
+                  merged.add(t);
+                }
+              }
+            }
+
+            const mergedIndices = [...merged].sort((a, b) => b - a);
+            for (const idx of mergedIndices) {
+              newBundles.splice(idx, 1);
+            }
+
+            if (merged.size > 0) {
+              extracted.bundles = newBundles;
+              extracted.bundle_matches = (matchResult.matches as BundleMatch[])
+                .filter(m => !merged.has(m.extracted_index));
+            }
+          }
+        }
+      } catch (matchError) {
+        console.warn("Bundle matching failed (non-fatal):", matchError);
+      }
+    }
+
+    onResult(extracted, sourceName);
+  };
 
   const extract = useCallback(async (
     body: Record<string, any>,
@@ -36,7 +256,6 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
       let documentStructure: any = null;
 
       // ── Pass 1: Structure Detection ──────────────────────────────────
-      // Detect document structure before extraction (for document/loom sources)
       const isDocumentSource = !body.source_type || body.source_type === "document" || body.source_type === "loom";
       if (isDocumentSource) {
         setAdvisorPhase("detecting-structure");
@@ -55,7 +274,6 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
             setAdvisorPhase("optimizing-structure");
             try {
               const optimizeBody: Record<string, any> = { skeleton: structData };
-              // Send content preview for semantic analysis
               if (body.content) {
                 optimizeBody.content_preview = typeof body.content === "string"
                   ? body.content.slice(0, 30000)
@@ -67,7 +285,6 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
               });
 
               if (!optError && optData && !optData.error && !optData.fallback) {
-                // Attach both raw skeleton and optimized blueprint
                 documentStructure = {
                   ...structData,
                   optimized_blueprint: optData.optimized_blueprint,
@@ -76,6 +293,48 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
                   optimization_stats: optData.stats,
                 };
                 console.log(`Structure optimized: bundles=${optData.stats?.final_bundles}, playbooks=${optData.stats?.final_playbooks}, merges=${optData.stats?.merges_performed}`);
+
+                // ── Pause for Structure Editor ──────────────────────────────
+                // Generate advisor in parallel while user reviews structure
+                if (depth !== "quick") {
+                  setAdvisorPhase("generating-advisor");
+                  const contentPreview = body.content || body.documentId || "";
+                  const { data: advisorData, error: advisorError } = await supabase.functions.invoke("generate-advisor", {
+                    body: {
+                      content: typeof contentPreview === "string" ? contentPreview : sourceName,
+                      meta: body.meta || { title: sourceName },
+                    },
+                  });
+                  if (!advisorError && advisorData && !advisorData.error) {
+                    advisorPersona = advisorData as AdvisorPersona;
+                  }
+                }
+
+                // Stash context and show editor
+                pendingExtraction.current = {
+                  body,
+                  sourceName,
+                  advisorPersona,
+                  rawStructure: structData,
+                };
+
+                const editorData: StructureEditorData = {
+                  optimized_blueprint: optData.optimized_blueprint,
+                  consolidation_decisions: optData.consolidation_decisions,
+                  optimization_summary: optData.optimization_summary,
+                  optimization_stats: optData.stats,
+                  structure_type: structData.structure_type,
+                  confidence: structData.confidence,
+                  total_sections_detected: structData.total_sections_detected,
+                  notes: structData.notes,
+                };
+
+                setPendingStructure(editorData);
+                setPendingFileName(sourceName);
+                setStructureEditorOpen(true);
+                // Don't setExtracting(false) — keep spinner state; 
+                // resumeExtraction will handle cleanup
+                return;
               } else {
                 documentStructure = structData;
                 console.log("Structure optimization returned fallback — using raw skeleton");
@@ -92,175 +351,17 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
         }
       }
 
-      // For guided/deep: generate advisor
-      if (depth !== "quick") {
-        setAdvisorPhase("generating-advisor");
-        const contentPreview = body.content || body.documentId || "";
-        const { data: advisorData, error: advisorError } = await supabase.functions.invoke("generate-advisor", {
-          body: {
-            content: typeof contentPreview === "string" ? contentPreview : sourceName,
-            meta: body.meta || { title: sourceName },
-          },
-        });
-        if (!advisorError && advisorData && !advisorData.error) {
-          advisorPersona = advisorData as AdvisorPersona;
-        }
-      }
-
-      setAdvisorPhase("extracting");
-      setChunkProgress(null);
-
-      // Use raw fetch for extraction to support SSE streaming (chunk progress)
-      const session = (await supabase.auth.getSession()).data.session;
-      const extractBody = {
-        ...body,
-        extraction_depth: depth,
-        ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
-        ...(documentStructure ? { document_structure: documentStructure } : {}),
-      };
-
-      const extractRes = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.access_token}`,
-            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          },
-          body: JSON.stringify(extractBody),
-        },
-      );
-
-      if (!extractRes.ok) {
-        const errText = await extractRes.text();
-        throw new Error(errText || `Extraction failed (${extractRes.status})`);
-      }
-
-      let extracted: ExtractionResult;
-      const contentType = extractRes.headers.get("content-type") || "";
-
-      if (contentType.includes("text/event-stream")) {
-        // SSE streaming — use ReadableStream reader for real-time chunk progress
-        const reader = extractRes.body!.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
-        let result: ExtractionResult | null = null;
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-
-          // Process complete SSE events (delimited by double newlines)
-          const parts = buffer.split("\n\n");
-          buffer = parts.pop() || ""; // keep incomplete part in buffer
-
-          for (const part of parts) {
-            if (!part.startsWith("data: ")) continue;
-            const jsonStr = part.slice(6); // remove "data: " prefix
-            try {
-              const parsed = JSON.parse(jsonStr);
-              if (parsed.type === "chunk_progress") {
-                setChunkProgress({ current: parsed.current, total: parsed.total });
-              } else if (parsed.type === "result") {
-                result = parsed.data as ExtractionResult;
-              } else if (parsed.type === "error") {
-                throw new Error(parsed.error);
-              }
-            } catch (parseErr) {
-              if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
-              console.warn("Failed to parse SSE event:", jsonStr);
-            }
-          }
-        }
-
-        if (!result) throw new Error("No extraction result received");
-        extracted = result;
-      } else {
-        // Standard JSON response (single chunk / PDF)
-        const data = await extractRes.json();
-        if (data?.error) throw new Error(data.error);
-        extracted = data as ExtractionResult;
-      }
-      // Attach detected structure metadata for Import Copilot display
-      if (documentStructure) {
-        extracted.document_structure = documentStructure;
-      }
-
-      // ── Bundle Matching Pass ──────────────────────────────────────────
-      // Run the matcher if we have extracted bundles
-      if (extracted.bundles && extracted.bundles.length > 0) {
-        setAdvisorPhase("matching");
-        try {
-          const { data: matchResult, error: matchErr } = await supabase.functions.invoke("match-bundles", {
-            body: {
-              extracted_bundles: extracted.bundles.map(b => ({
-                title: b.title,
-                description: b.description,
-                items: b.items.map(it => ({ title: it.title, category: it.category })),
-              })),
-            },
-          });
-
-          if (!matchErr && matchResult && !matchResult.error && matchResult.matches) {
-            extracted.bundle_matches = matchResult.matches as BundleMatch[];
-
-            // Auto-apply high-confidence matches: merge extracted bundles that 
-            // the AI says should be consolidated (confidence ≥ 0.9)
-            const consolidations = (matchResult.matches as BundleMatch[])
-              .filter(m => m.match_type === "consolidate" && m.confidence >= 0.9 && m.consolidate_with?.length);
-
-            if (consolidations.length > 0) {
-              // Build merge groups
-              const merged = new Set<number>();
-              const newBundles = [...extracted.bundles];
-              
-              for (const c of consolidations) {
-                if (merged.has(c.extracted_index)) continue;
-                const targets = (c.consolidate_with || []).filter(i => !merged.has(i));
-                if (targets.length === 0) continue;
-
-                // Merge items from target bundles into the primary
-                for (const t of targets) {
-                  if (t < newBundles.length) {
-                    newBundles[c.extracted_index] = {
-                      ...newBundles[c.extracted_index],
-                      title: c.suggested_merged_title || newBundles[c.extracted_index].title,
-                      items: [...newBundles[c.extracted_index].items, ...newBundles[t].items],
-                    };
-                    merged.add(t);
-                  }
-                }
-              }
-
-              // Remove merged bundles (iterate in reverse to preserve indices)
-              const mergedIndices = [...merged].sort((a, b) => b - a);
-              for (const idx of mergedIndices) {
-                newBundles.splice(idx, 1);
-              }
-
-              if (merged.size > 0) {
-                extracted.bundles = newBundles;
-                // Reindex matches after consolidation
-                extracted.bundle_matches = (matchResult.matches as BundleMatch[])
-                  .filter(m => !merged.has(m.extracted_index));
-              }
-            }
-          }
-        } catch (matchError) {
-          // Bundle matching is best-effort — don't fail the extraction
-          console.warn("Bundle matching failed (non-fatal):", matchError);
-        }
-      }
-
-      onResult(extracted, sourceName);
+      // No structure editor pause — proceed directly
+      await runExtraction(body, sourceName, advisorPersona, documentStructure);
     } catch (err: any) {
       toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
     } finally {
-      setExtracting(false);
-      setAdvisorPhase("idle");
-      setChunkProgress(null);
+      // Only clean up if we're not waiting for structure editor
+      if (!pendingExtraction.current) {
+        setExtracting(false);
+        setAdvisorPhase("idle");
+        setChunkProgress(null);
+      }
     }
   }, [depth, onResult, toast]);
 
@@ -271,5 +372,12 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     setDepth,
     advisorPhase,
     chunkProgress,
+    // Structure editor state
+    structureEditorOpen,
+    setStructureEditorOpen,
+    pendingStructure,
+    pendingFileName,
+    handleStructureConfirm,
+    handleStructureSkip,
   };
 }
