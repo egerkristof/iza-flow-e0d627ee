@@ -1226,7 +1226,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
                 </button>
 
                 {structureExpanded && hasSkeleton && (
-                  <div className="px-3 pb-2.5 pt-0 space-y-0.5">
+                  <div className="px-3 pb-2.5 pt-0 space-y-0.5 max-h-48 overflow-y-auto">
                     <div className="border-t border-cyan-500/10 pt-2 space-y-0.5">
                       {ds.skeleton!.map((section, si) => (
                         <div
