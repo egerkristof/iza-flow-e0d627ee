@@ -287,9 +287,9 @@ function buildUserPrompt(
   content: string,
   meta: Record<string, string>,
 ): string {
-  const truncated = content.slice(0, 30000);
-  const overflow = content.length > 30000
-    ? "\n\n[... content truncated at 30,000 characters ...]"
+  const truncated = content.slice(0, 60000);
+  const overflow = content.length > 60000
+    ? `\n\n[... content truncated at 60,000 characters. Original length: ${content.length} characters. IMPORTANT: Extract from ALL content above — do not skip sections just because the document is long.]`
     : "";
 
   switch (sourceType) {
