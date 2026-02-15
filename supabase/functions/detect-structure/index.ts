@@ -38,12 +38,19 @@ Analyze the document and identify its structural blueprint:
    - "tabular" — Primarily organized through tables/matrices
    - "flat" — No clear hierarchical structure (prose, single-topic, conversational)
 
-2. **Map the skeleton** — for each major section/phase/topic:
-   - Title (exact label from the document)
-   - Hierarchy level (1 = top-level, 2 = sub-section, etc.)
-   - Suggested bundle? (should this be its own bundle or part of a parent?)
-   - Playbook candidates (sub-sections that describe distinct activatable actions)
-   - Content density estimate: "rich" (lots of detail), "moderate", "sparse" (just a heading), "empty" (referenced but no content)
+2. **Map the FULL skeleton** — return ALL levels of hierarchy as flat entries in the skeleton array:
+   - Level 1 = top-level sections (bundle candidates)
+   - Level 2 = sub-sections within a level-1 section (playbook/procedure candidates)
+   - Level 3+ = sub-sub-sections, steps, detailed breakdowns
+   - IMPORTANT: Do NOT stop at level 1. Include ALL sub-sections, steps, and sub-topics you can detect.
+   - Each entry should have its exact label from the document and its hierarchy level.
+   - Order entries in the same sequence as they appear in the document.
+   - For each entry include:
+     * Title (exact label from the document)
+     * Hierarchy level (1, 2, 3, etc.)
+     * Whether it's a bundle candidate (typically level 1 sections only)
+     * Content density estimate: "rich" (lots of detail), "moderate", "sparse" (just a heading), "empty" (referenced but no content)
+     * Child count (how many direct sub-entries it has)
 
 3. **Assess confidence** — how reliable is this structure?
    - "high" — Clear, explicit structure (ToC, numbered phases, slide sections). Use as MANDATORY blueprint.
@@ -53,11 +60,12 @@ Analyze the document and identify its structural blueprint:
 ## RULES
 - Do NOT extract content. Only identify STRUCTURE.
 - Preserve EXACT labels/titles from the document.
+- Include ALL hierarchy levels in the skeleton array — not just top-level sections.
 - For presentations: agenda/overview slides define the skeleton. Section divider slides mark bundle boundaries.
-- For ToC documents: ToC entries ARE the skeleton.
-- For hierarchical: H1/Part = bundle, H2/Chapter = potential playbook, H3+ = items within.
+- For ToC documents: ToC entries ARE the skeleton — include ALL levels from the ToC.
+- For hierarchical: H1/Part = bundle (level 1), H2/Chapter = level 2, H3 = level 3, etc.
 - If structure is ambiguous or flat, return confidence="low" with minimal skeleton.
-- Be FAST — this is a lightweight pre-pass, not deep analysis.
+- Be thorough but FAST — this is a pre-pass, not deep analysis.
 
 Return results via the detect_structure tool.`;
 
