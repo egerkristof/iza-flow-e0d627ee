@@ -256,6 +256,191 @@ function DraggableItemList({
   );
 }
 
+// ── Draggable Playbook List for reordering playbooks within a bundle ──
+function DraggablePlaybookList({
+  playbooks,
+  ownedByPlaybook,
+  bundle,
+  onEditItem,
+  onDestroyItem,
+  onCreateItem,
+  onReorderItems,
+}: {
+  playbooks: MockContextItem[];
+  ownedByPlaybook: Map<string, MockContextItem[]>;
+  bundle: MockBundle;
+  onEditItem: (item: MockContextItem) => void;
+  onDestroyItem: (item: MockContextItem) => void;
+  onCreateItem: (ctx?: CreateItemContext) => void;
+  onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
+}) {
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [localPlaybooks, setLocalPlaybooks] = useState(playbooks);
+
+  if (playbooks !== localPlaybooks && !draggedId) {
+    setLocalPlaybooks(playbooks);
+  }
+
+  const handleDragStart = (e: React.DragEvent, id: string) => {
+    setDraggedId(id);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", id);
+  };
+
+  const handleDragOver = (e: React.DragEvent, id: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (id !== draggedId) setDragOverId(id);
+  };
+
+  const handleDrop = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    if (!draggedId || draggedId === targetId) {
+      setDraggedId(null);
+      setDragOverId(null);
+      return;
+    }
+    const fromIdx = localPlaybooks.findIndex(i => i.id === draggedId);
+    const toIdx = localPlaybooks.findIndex(i => i.id === targetId);
+    if (fromIdx === -1 || toIdx === -1) return;
+    const reordered = [...localPlaybooks];
+    const [moved] = reordered.splice(fromIdx, 1);
+    reordered.splice(toIdx, 0, moved);
+    setLocalPlaybooks(reordered);
+    setDraggedId(null);
+    setDragOverId(null);
+    onReorderItems?.(bundle.id, reordered.map(i => i.id));
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+    setDragOverId(null);
+  };
+
+  return (
+    <>
+      {localPlaybooks.map(playbook => {
+        const children = ownedByPlaybook.get(playbook.id) || [];
+        const procedures = children.filter(i => i.category === "PROCEDURE");
+        const others = children.filter(i => i.category !== "PROCEDURE");
+        return (
+          <div
+            key={playbook.id}
+            draggable
+            onDragStart={e => handleDragStart(e, playbook.id)}
+            onDragOver={e => handleDragOver(e, playbook.id)}
+            onDrop={e => handleDrop(e, playbook.id)}
+            onDragEnd={handleDragEnd}
+            className={`${draggedId === playbook.id ? "opacity-40" : ""} ${dragOverId === playbook.id ? "border-t-2 border-primary/50" : ""}`}
+          >
+            {/* Playbook header */}
+            <div className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-orange-500/5 transition-colors border-l-2 border-orange-500/30">
+              <GripVertical className="h-3 w-3 text-muted-foreground/30 cursor-grab active:cursor-grabbing shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+              <span className="text-[9px] shrink-0">🎯</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold truncate">{playbook.title}</span>
+                  <CategoryBadge category={playbook.category} />
+                  <Badge variant="outline" className="text-[9px] border-orange-500/30 text-orange-400 bg-orange-500/5">
+                    Protocol Driver
+                  </Badge>
+                  {children.length > 0 && (
+                    <span className="text-[9px] text-muted-foreground">
+                      → {procedures.length} step{procedures.length !== 1 ? "s" : ""}{others.length > 0 ? `, ${others.length} gate${others.length !== 1 ? "s" : ""}` : ""}
+                    </span>
+                  )}
+                </div>
+                <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{playbook.content_preview}</p>
+              </div>
+              <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(playbook)}>
+                  <Pencil className="h-3 w-3" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(playbook)}>
+                  <Trash2 className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+            {/* Procedures (steps) - draggable */}
+            {procedures.length > 0 && (
+              <div className="ml-4 border-l-2 border-orange-500/10">
+                <div className="px-4 pt-1.5 pb-0.5 pl-10">
+                  <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Steps</span>
+                </div>
+                <DraggableItemList
+                  items={procedures}
+                  bundleId={bundle.id}
+                  onEditItem={onEditItem}
+                  onDestroyItem={onDestroyItem}
+                  onReorderItems={onReorderItems}
+                  renderPrefix={(_, idx) => (
+                    <span className="text-[9px] font-mono text-muted-foreground/50 w-4 text-right shrink-0">{idx + 1}.</span>
+                  )}
+                  className="pl-10 pr-4"
+                />
+                <div className="pl-10 pr-4 py-1">
+                  <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                    onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}>
+                    <Plus className="h-2.5 w-2.5" /> Add step
+                  </Button>
+                </div>
+              </div>
+            )}
+            {/* Other owned items (DIRECTIVEs, etc.) */}
+            {others.length > 0 && (
+              <div className="ml-4 border-l-2 border-orange-500/10">
+                {procedures.length > 0 && (
+                  <div className="px-4 pt-1.5 pb-0.5 pl-10">
+                    <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Gates & Context</span>
+                  </div>
+                )}
+                {others.map(item => (
+                  <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-1.5 group/item hover:bg-secondary/20 transition-colors">
+                    <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium truncate">{item.title}</span>
+                        <CategoryBadge category={item.category} />
+                      </div>
+                      <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                    </div>
+                    <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                        <Pencil className="h-3 w-3" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* Add buttons */}
+            {procedures.length === 0 && others.length === 0 && (
+              <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
+                <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                  onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}>
+                  <Plus className="h-2.5 w-2.5" /> Add step
+                </Button>
+              </div>
+            )}
+            {(others.length > 0 || procedures.length > 0) && (
+              <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
+                <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                  onClick={() => onCreateItem({ bundleId: bundle.id, category: "DIRECTIVE", parentPlaybookId: playbook.id })}>
+                  <Plus className="h-2.5 w-2.5" /> Add gate / directive
+                </Button>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
 function BundleExpandable({
   bundle,
   bundleItems,
@@ -371,128 +556,18 @@ function BundleExpandable({
 
                 return (
                   <div className="divide-y divide-border/20">
-                    {/* Playbook trees with owned children */}
-                    {playbooks.map(playbook => {
-                      const children = ownedByPlaybook.get(playbook.id) || [];
-                      const procedures = children.filter(i => i.category === "PROCEDURE");
-                      const others = children.filter(i => i.category !== "PROCEDURE");
-                      return (
-                        <div key={playbook.id}>
-                          {/* Playbook header */}
-                          <div className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-orange-500/5 transition-colors border-l-2 border-orange-500/30">
-                            <span className="text-[9px] shrink-0">🎯</span>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs font-semibold truncate">{playbook.title}</span>
-                                <CategoryBadge category={playbook.category} />
-                                <Badge variant="outline" className="text-[9px] border-orange-500/30 text-orange-400 bg-orange-500/5">
-                                  Protocol Driver
-                                </Badge>
-                                {children.length > 0 && (
-                                  <span className="text-[9px] text-muted-foreground">
-                                    → {procedures.length} step{procedures.length !== 1 ? "s" : ""}{others.length > 0 ? `, ${others.length} gate${others.length !== 1 ? "s" : ""}` : ""}
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{playbook.content_preview}</p>
-                            </div>
-                            <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(playbook)}>
-                                <Pencil className="h-3 w-3" />
-                              </Button>
-                              <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(playbook)}>
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          </div>
-                          {/* Procedures (steps) - draggable */}
-                          {procedures.length > 0 && (
-                            <div className="ml-4 border-l-2 border-orange-500/10">
-                              <div className="px-4 pt-1.5 pb-0.5 pl-10">
-                                <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Steps</span>
-                              </div>
-                              <DraggableItemList
-                                items={procedures}
-                                bundleId={bundle.id}
-                                onEditItem={onEditItem}
-                                onDestroyItem={onDestroyItem}
-                                onReorderItems={onReorderItems}
-                                renderPrefix={(_, idx) => (
-                                  <span className="text-[9px] font-mono text-muted-foreground/50 w-4 text-right shrink-0">{idx + 1}.</span>
-                                )}
-                                className="pl-10 pr-4"
-                              />
-                              {/* Add step button */}
-                              <div className="pl-10 pr-4 py-1">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
-                                  onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}
-                                >
-                                  <Plus className="h-2.5 w-2.5" /> Add step
-                                </Button>
-                              </div>
-                            </div>
-                          )}
-                          {/* Other owned items (DIRECTIVEs, etc.) */}
-                          {others.length > 0 && (
-                            <div className="ml-4 border-l-2 border-orange-500/10">
-                              {procedures.length > 0 && (
-                                <div className="px-4 pt-1.5 pb-0.5 pl-10">
-                                  <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Gates & Context</span>
-                                </div>
-                              )}
-                              {others.map(item => (
-                                <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-1.5 group/item hover:bg-secondary/20 transition-colors">
-                                  <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2">
-                                      <span className="text-xs font-medium truncate">{item.title}</span>
-                                      <CategoryBadge category={item.category} />
-                                    </div>
-                                    <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
-                                  </div>
-                                  <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
-                                      <Pencil className="h-3 w-3" />
-                                    </Button>
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
-                                      <Trash2 className="h-3 w-3" />
-                                    </Button>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                          {/* Add gate/directive to playbook */}
-                          {procedures.length === 0 && others.length === 0 && (
-                            <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
-                                onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}
-                              >
-                                <Plus className="h-2.5 w-2.5" /> Add step
-                              </Button>
-                            </div>
-                          )}
-                          {others.length > 0 || procedures.length > 0 ? (
-                            <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
-                                onClick={() => onCreateItem({ bundleId: bundle.id, category: "DIRECTIVE", parentPlaybookId: playbook.id })}
-                              >
-                                <Plus className="h-2.5 w-2.5" /> Add gate / directive
-                              </Button>
-                            </div>
-                          ) : null}
-                        </div>
-                      );
-                    })}
+                    {/* Playbook trees with owned children — draggable */}
+                    <DraggablePlaybookList
+                      playbooks={playbooks}
+                      ownedByPlaybook={ownedByPlaybook}
+                      bundle={bundle}
+                      onEditItem={onEditItem}
+                      onDestroyItem={onDestroyItem}
+                      onCreateItem={onCreateItem}
+                      onReorderItems={onReorderItems}
+                    />
+
+
                     {/* Shared context items */}
                     {sharedItems.length > 0 && playbooks.length > 0 && (
                       <div className="px-4 pt-2 pb-1">
