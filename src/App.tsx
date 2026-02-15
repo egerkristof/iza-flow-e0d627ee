@@ -13,6 +13,7 @@ import ContextManagementPage from "./pages/ContextManagement";
 import OversightPage from "./pages/Oversight";
 import MyKnowledgePage from "./pages/MyKnowledge";
 import AdminPromptsPage from "./pages/AdminPrompts";
+import ResearchTemplatesPage from "./pages/ResearchTemplates";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/oversight" element={<ProtectedRoute><OversightPage /></ProtectedRoute>} />
             <Route path="/my-knowledge" element={<ProtectedRoute><MyKnowledgePage /></ProtectedRoute>} />
             <Route path="/admin/prompts" element={<ProtectedRoute blockedRoles={["operator"]}><AdminPromptsPage /></ProtectedRoute>} />
+            <Route path="/research-templates" element={<ProtectedRoute blockedRoles={["operator"]}><ResearchTemplatesPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

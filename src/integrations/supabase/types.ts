@@ -669,6 +669,7 @@ export type Database = {
           id: string
           is_required: boolean
           protocol_id: string
+          research_template_id: string | null
           source_item_id: string | null
           step_order: number
           step_type: string
@@ -684,6 +685,7 @@ export type Database = {
           id?: string
           is_required?: boolean
           protocol_id: string
+          research_template_id?: string | null
           source_item_id?: string | null
           step_order?: number
           step_type?: string
@@ -699,6 +701,7 @@ export type Database = {
           id?: string
           is_required?: boolean
           protocol_id?: string
+          research_template_id?: string | null
           source_item_id?: string | null
           step_order?: number
           step_type?: string
@@ -714,6 +717,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "protocol_steps_research_template_id_fkey"
+            columns: ["research_template_id"]
+            isOneToOne: false
+            referencedRelation: "research_templates"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "protocol_steps_source_item_id_fkey"
             columns: ["source_item_id"]
             isOneToOne: false
@@ -721,6 +731,54 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      research_templates: {
+        Row: {
+          agent_model: string
+          agent_system_prompt: string | null
+          created_at: string
+          description: string | null
+          estimated_minutes: number | null
+          id: string
+          is_public: boolean
+          owner_id: string
+          research_type: string
+          steps: Json
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          agent_model?: string
+          agent_system_prompt?: string | null
+          created_at?: string
+          description?: string | null
+          estimated_minutes?: number | null
+          id?: string
+          is_public?: boolean
+          owner_id: string
+          research_type?: string
+          steps?: Json
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          agent_model?: string
+          agent_system_prompt?: string | null
+          created_at?: string
+          description?: string | null
+          estimated_minutes?: number | null
+          id?: string
+          is_public?: boolean
+          owner_id?: string
+          research_type?: string
+          steps?: Json
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       step_executions: {
         Row: {
