@@ -613,6 +613,89 @@ interface ExtractionResult {
   bundles: any[];
   advisor?: any;
   extraction_depth?: string;
+  chunk_info?: { total: number; processed: number };
+}
+
+/**
+ * Build page-range chunks for PDF extraction using the detected structure skeleton.
+ * Falls back to fixed-size page ranges if no skeleton is available.
+ */
+function buildPdfPageChunks(
+  documentStructure: any | null,
+  totalPagesEstimate: number,
+): { label: string; pageRange: string; focusInstructions: string }[] {
+  // If we have a high-confidence skeleton, use it to build natural chunks
+  if (documentStructure?.skeleton?.length > 0 && documentStructure.confidence !== "low") {
+    const sections = documentStructure.skeleton as any[];
+    const chunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
+    
+    // Group sections into chunks of ~15 pages each
+    const PAGES_PER_CHUNK = 15;
+    let currentChunk: any[] = [];
+    let currentPageCount = 0;
+
+    for (const section of sections) {
+      const range = section.page_or_slide_range || "";
+      // Estimate page count from range like "slides 4-8" or "slide 1"
+      const rangeMatch = range.match(/(\d+)\s*[-–]\s*(\d+)/);
+      const singleMatch = range.match(/(\d+)/);
+      const pageCount = rangeMatch 
+        ? (parseInt(rangeMatch[2]) - parseInt(rangeMatch[1]) + 1) 
+        : singleMatch ? 1 : 1;
+
+      if (currentPageCount + pageCount > PAGES_PER_CHUNK && currentChunk.length > 0) {
+        // Flush current chunk
+        const firstRange = currentChunk[0].page_or_slide_range || "";
+        const lastRange = currentChunk[currentChunk.length - 1].page_or_slide_range || "";
+        chunks.push({
+          label: currentChunk.map(s => s.label).join(", "),
+          pageRange: `${firstRange} to ${lastRange}`,
+          focusInstructions: `Focus ONLY on these sections:\n${currentChunk.map(s => 
+            `- "${s.label}" (${s.page_or_slide_range || "unknown pages"}, density: ${s.content_density || "unknown"})`
+          ).join("\n")}`,
+        });
+        currentChunk = [];
+        currentPageCount = 0;
+      }
+      
+      currentChunk.push(section);
+      currentPageCount += pageCount;
+    }
+
+    // Flush remaining
+    if (currentChunk.length > 0) {
+      const firstRange = currentChunk[0].page_or_slide_range || "";
+      const lastRange = currentChunk[currentChunk.length - 1].page_or_slide_range || "";
+      chunks.push({
+        label: currentChunk.map(s => s.label).join(", "),
+        pageRange: `${firstRange} to ${lastRange}`,
+        focusInstructions: `Focus ONLY on these sections:\n${currentChunk.map(s => 
+          `- "${s.label}" (${s.page_or_slide_range || "unknown pages"}, density: ${s.content_density || "unknown"})`
+        ).join("\n")}`,
+      });
+    }
+
+    // Only chunk if we got >1 chunk, otherwise single pass is fine
+    if (chunks.length > 1) return chunks;
+  }
+
+  // Fallback: fixed page ranges
+  if (totalPagesEstimate > 20) {
+    const PAGES_PER_CHUNK = 15;
+    const chunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
+    for (let start = 1; start <= totalPagesEstimate; start += PAGES_PER_CHUNK) {
+      const end = Math.min(start + PAGES_PER_CHUNK - 1, totalPagesEstimate);
+      chunks.push({
+        label: `Pages ${start}-${end}`,
+        pageRange: `pages ${start} to ${end}`,
+        focusInstructions: `Focus ONLY on pages ${start} through ${end}. Extract ALL content from these pages and IGNORE content from other pages.`,
+      });
+    }
+    if (chunks.length > 1) return chunks;
+  }
+
+  // Single pass — no chunking needed
+  return [];
 }
 
 function mergeExtractionResults(results: ExtractionResult[]): ExtractionResult {
@@ -972,7 +1055,110 @@ You are in **deep analysis mode**. This means:
 
     // ── Chunked extraction ──────────────────────────────────────────────
     if (pdfBase64) {
-      // PDF: single extraction (multimodal handles full document)
+      // Estimate total pages from structure or file size (~3KB per page for compressed PDFs)
+      const estimatedPages = documentStructure?.total_sections_detected
+        ? Math.max(documentStructure.total_sections_detected * 5, 30) // rough heuristic
+        : Math.max(Math.ceil(pdfBase64.length / 4000), 10); // ~3KB base64 per page
+      
+      const pdfChunks = buildPdfPageChunks(documentStructure, estimatedPages);
+
+      if (pdfChunks.length > 1) {
+        // Multi-chunk PDF extraction with SSE streaming
+        console.log(`PDF chunked extraction: ${pdfChunks.length} chunks from ~${estimatedPages} pages`);
+        const encoder = new TextEncoder();
+        const stream = new ReadableStream({
+          async start(controller) {
+            try {
+              const chunkResults: ExtractionResult[] = [];
+              const existingBundleTitles: string[] = [];
+
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: 0, total: pdfChunks.length })}\n\n`));
+
+              for (let i = 0; i < pdfChunks.length; i++) {
+                const pdfChunk = pdfChunks[i];
+                console.log(`PDF chunk ${i + 1}/${pdfChunks.length}: ${pdfChunk.label}`);
+
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: i + 1, total: pdfChunks.length })}\n\n`));
+
+                // Build a chunk-specific user prompt that focuses on specific pages
+                const chunkPrefix = i > 0
+                  ? `## CONTINUATION EXTRACTION (Chunk ${i + 1} of ${pdfChunks.length})
+You are continuing extraction from a LARGE PDF document. Previous chunks already extracted these bundles:
+${existingBundleTitles.map(t => `- "${t}"`).join("\n")}
+
+**RULES FOR CONTINUATION:**
+- If content in THIS chunk belongs to an EXISTING bundle listed above, use the EXACT SAME bundle title so results can be merged.
+- If content introduces a NEW phase/section not covered above, create a NEW bundle.
+- Do NOT re-extract content that was already covered. Focus on NEW content in this page range.
+- This is chunk ${i + 1} of ${pdfChunks.length} — ${i + 1 === pdfChunks.length ? "this is the FINAL chunk, ensure nothing is missed" : "more chunks will follow"}.
+
+`
+                  : "";
+
+                const userPrompt = `${chunkPrefix}## PAGE RANGE FOCUS: ${pdfChunk.pageRange}
+${pdfChunk.focusInstructions}
+
+Analyze the specified pages/slides of this PDF document. Extract ALL knowledge elements from ONLY these pages.
+
+**Document metadata:**
+- File name: ${meta.file_name || "Unknown"}
+- Category: ${meta.category || "other"}
+- Type: PDF (multimodal)
+
+**CRITICAL INSTRUCTIONS:**
+1. ONLY extract content from ${pdfChunk.pageRange}. IGNORE content from other pages.
+2. Extract EXHAUSTIVELY from the target pages — every slide, paragraph, bullet, table row, diagram element.
+3. Follow all PROCEDURE, PLAYBOOK, and BUNDLE rules from the system prompt.
+4. Set step_order_hint on all PROCEDURE items.
+5. Mark AI-generated gap-fillers with is_suggestion=true.`;
+
+                const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey, pdfBase64);
+                if (!result) {
+                  console.error(`PDF chunk ${i + 1} failed — skipping`);
+                  continue;
+                }
+
+                chunkResults.push(result);
+                for (const b of (result.bundles || [])) {
+                  if (!existingBundleTitles.includes(b.title)) {
+                    existingBundleTitles.push(b.title);
+                  }
+                }
+              }
+
+              if (chunkResults.length === 0) {
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "error", error: "PDF extraction failed — no chunks produced results" })}\n\n`));
+                controller.close();
+                return;
+              }
+
+              const merged = mergeExtractionResults(chunkResults);
+              if (advisorPersona) merged.advisor = advisorPersona;
+              merged.extraction_depth = extractionDepth;
+              merged.analysis_notes = `[PDF chunked extraction: ${pdfChunks.length} chunks processed]\n\n${merged.analysis_notes}`;
+              merged.chunk_info = { total: pdfChunks.length, processed: chunkResults.length };
+
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "result", data: merged })}\n\n`));
+              controller.close();
+            } catch (err) {
+              console.error("PDF streaming extraction error:", err);
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "error", error: err instanceof Error ? err.message : "Unknown error" })}\n\n`));
+              controller.close();
+            }
+          },
+        });
+
+        return new Response(stream, {
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+          },
+        });
+      }
+
+      // Small PDF — single pass (no chunking needed)
       const userPrompt = buildUserPrompt(sourceType, textContent, meta);
       const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey, pdfBase64);
       if (!result) throw new Error("Extraction failed after retries");
