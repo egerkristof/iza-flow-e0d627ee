@@ -536,7 +536,7 @@ export function InlineContextCopilot({
       ) : (
         /* ─── Chat Messages ─────────────────────────────────────────────── */
         <>
-          <ScrollArea className="flex-1 min-h-0" style={{ maxHeight: "280px" }}>
+          <ScrollArea className="flex-1 min-h-0 overflow-y-auto" style={{ height: "280px" }}>
             <div className="p-3 space-y-3">
               {messages.length === 0 && (
                 <div className="text-center py-4">
