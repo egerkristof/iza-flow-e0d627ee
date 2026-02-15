@@ -574,13 +574,21 @@ serve(async (req) => {
       if (!documentId) throw new Error("documentId required");
 
       const adminClient = createClient(supabaseUrl, supabaseKey);
-      const { data: doc, error: docError } = await adminClient
-        .from("personal_documents")
-        .select("*")
-        .eq("id", documentId)
-        .eq("user_id", user.id)
-        .single();
-      if (docError || !doc) throw new Error("Document not found");
+
+      // Retry document lookup — handles race condition where the row may not
+      // be visible immediately after insert (replication lag / commit timing).
+      let doc: any = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const { data, error: docError } = await adminClient
+          .from("personal_documents")
+          .select("*")
+          .eq("id", documentId)
+          .eq("user_id", user.id)
+          .maybeSingle();
+        if (data) { doc = data; break; }
+        if (attempt < 2) await new Promise(r => setTimeout(r, 1000)); // wait 1s before retry
+      }
+      if (!doc) throw new Error(`Document not found (id=${documentId}, user=${user.id})`);
 
       const { data: fileData, error: dlError } = await adminClient.storage
         .from("personal-documents")
