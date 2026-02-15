@@ -1004,12 +1004,53 @@ You are being advised by a **${advisorPersona.persona_title}** (${advisorPersona
 Use the advisor's guidance to improve categorization precision and extraction depth. The advisor's domain expertise should inform your decisions about what to extract and how to structure it.`;
     }
 
-    // ── Inject document structure skeleton if detected ─────────────────
+    // ── Inject document structure blueprint if detected ──────────────────
     if (documentStructure && documentStructure.confidence !== "low") {
-      const isMandatory = documentStructure.confidence === "high";
-      const skeletonJson = JSON.stringify(documentStructure.skeleton, null, 2);
-      
-      systemPrompt += `\n\n## DOCUMENT STRUCTURE BLUEPRINT (${isMandatory ? "MANDATORY" : "SUGGESTED"})
+      const hasOptimizedBlueprint = documentStructure.optimized_blueprint && 
+        Array.isArray(documentStructure.optimized_blueprint) && 
+        documentStructure.optimized_blueprint.length > 0;
+
+      if (hasOptimizedBlueprint) {
+        // ── OPTIMIZED BLUEPRINT MODE ──────────────────────────────────────
+        // The optimize-structure pass has already performed semantic analysis,
+        // merged overlapping sections, and produced a definitive hierarchy.
+        // This is the SOLE AUTHORITY for bundle/playbook structure.
+        const blueprintJson = JSON.stringify(documentStructure.optimized_blueprint, null, 2);
+        const consolidationNotes = documentStructure.consolidation_decisions
+          ?.map((d: any) => `- ${d.action}: ${d.original_labels.join(" + ")} → "${d.result_label}" (${d.result_role}) [confidence: ${d.semantic_confidence}]`)
+          .join("\n") || "None";
+
+        systemPrompt += `\n\n## OPTIMIZED STRUCTURE BLUEPRINT (MANDATORY — SOLE AUTHORITY)
+An intelligent structure optimization pass has analyzed this document's semantics and produced a definitive bundle→playbook→procedure hierarchy. This blueprint has ALREADY performed merges, reclassifications, and consolidations.
+
+**YOU MUST FOLLOW THIS BLUEPRINT EXACTLY:**
+- Create ONE BUNDLE for each entry in the blueprint. Use the \`bundle_title\` as the bundle title.
+- For each bundle, create ONE PLAYBOOK per entry in its \`playbooks\` array. Use the \`playbook_title\` as the PLAYBOOK item title.
+- For each playbook, extract PROCEDURE items corresponding to its \`procedures\` array. These are hints — extract actual content from the document.
+- Items listed in \`shared_knowledge_labels\` become shared KNOWLEDGE/DIRECTIVE items at bundle level (no parent_playbook_title).
+- Do NOT create additional bundles beyond what the blueprint defines.
+- Do NOT create additional PLAYBOOKs beyond what the blueprint defines.
+- Do NOT merge or split bundles — the optimization pass has already made those decisions.
+- Do NOT independently apply the "PLAYBOOK multiplicity" rules — the blueprint has already determined the correct number of PLAYBOOKs per bundle.
+- Focus ALL your effort on exhaustive CONTENT extraction within the structure defined by this blueprint.
+
+### Consolidation Decisions (already applied):
+${consolidationNotes}
+
+${documentStructure.optimization_summary ? `**Optimization summary:** ${documentStructure.optimization_summary}` : ""}
+
+### Optimized Blueprint:
+\`\`\`json
+${blueprintJson}
+\`\`\`
+
+${documentStructure.notes ? `**Original structural notes:** ${documentStructure.notes}` : ""}`;
+      } else {
+        // ── RAW SKELETON MODE (fallback) ──────────────────────────────────
+        const isMandatory = documentStructure.confidence === "high";
+        const skeletonJson = JSON.stringify(documentStructure.skeleton, null, 2);
+        
+        systemPrompt += `\n\n## DOCUMENT STRUCTURE BLUEPRINT (${isMandatory ? "MANDATORY" : "SUGGESTED"})
 A structural analysis pass has detected this document's organizational blueprint.
 Structure type: **${documentStructure.structure_type}** | Confidence: **${documentStructure.confidence}** | Sections: ${documentStructure.total_sections_detected}
 
@@ -1034,6 +1075,7 @@ ${skeletonJson}
 \`\`\`
 
 ${documentStructure.notes ? `**Structural notes:** ${documentStructure.notes}` : ""}`;
+      }
     }
 
     if (extractionDepth === "deep") {
