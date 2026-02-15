@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   Sparkles, X, Check, Shield, RefreshCw, Loader2,
   Tag, FileText, Scissors, Merge, Archive, ChevronDown, ChevronUp,
-  Send, MessageSquare, Pencil, Plus, History, Trash2, Clock,
+  Send, MessageSquare, Pencil, Plus, History, Trash2, Clock, Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -96,6 +96,7 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
   // Persistence state
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
+  const [historySearch, setHistorySearch] = useState("");
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -566,44 +567,63 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
             /* History panel */
             <div className="flex-1 flex flex-col min-h-0">
               <div className="flex items-center justify-between px-3 pt-2 pb-1">
-                <span className="text-xs font-medium text-muted-foreground">Chat History</span>
-                <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1" onClick={() => setShowHistory(false)}>
+                <span className="text-xs font-semibold">Chat History</span>
+                <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1" onClick={() => { setShowHistory(false); setHistorySearch(""); }}>
                   <X className="h-2.5 w-2.5" /> Close
                 </Button>
               </div>
+              <div className="px-3 pb-1.5">
+                <div className="relative">
+                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                  <Input
+                    value={historySearch}
+                    onChange={e => setHistorySearch(e.target.value)}
+                    placeholder="Search conversations…"
+                    className="h-7 text-[11px] pl-7 pr-2"
+                  />
+                </div>
+              </div>
               <ScrollArea className="flex-1 px-3 pb-2">
                 <div className="space-y-1">
-                  {conversations.length === 0 ? (
-                    <p className="text-xs text-muted-foreground text-center py-4">No previous chats</p>
-                  ) : conversations.map(conv => (
-                    <div
-                      key={conv.id}
-                      className={cn(
-                        "flex items-center gap-2 rounded-md px-2.5 py-2 cursor-pointer transition-colors group",
-                        conv.id === activeConversationId
-                          ? "bg-primary/10 border border-primary/30"
-                          : "hover:bg-muted/50 border border-transparent"
-                      )}
-                      onClick={() => loadConversation(conv.id)}
-                    >
-                      <MessageSquare className="h-3 w-3 text-muted-foreground shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium truncate">{conv.title}</p>
-                        <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-2.5 w-2.5" />
-                          {formatRelative(conv.updated_at)}
-                        </p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-5 w-5 opacity-0 group-hover:opacity-100 shrink-0 text-destructive"
-                        onClick={(e) => { e.stopPropagation(); deleteConversation(conv.id); }}
+                  {(() => {
+                    const q = historySearch.toLowerCase().trim();
+                    const filtered = q
+                      ? conversations.filter(c => c.title.toLowerCase().includes(q))
+                      : conversations;
+                    return filtered.length === 0 ? (
+                      <p className="text-xs text-muted-foreground text-center py-4">
+                        {q ? "No matching chats" : "No previous chats"}
+                      </p>
+                    ) : filtered.map(conv => (
+                      <div
+                        key={conv.id}
+                        className={cn(
+                          "flex items-center gap-2 rounded-md px-2.5 py-2 cursor-pointer transition-colors group",
+                          conv.id === activeConversationId
+                            ? "bg-primary/10 border border-primary/30"
+                            : "hover:bg-muted/50 border border-transparent"
+                        )}
+                        onClick={() => loadConversation(conv.id)}
                       >
-                        <Trash2 className="h-2.5 w-2.5" />
-                      </Button>
-                    </div>
-                  ))}
+                        <MessageSquare className="h-3 w-3 text-muted-foreground shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-medium truncate">{conv.title}</p>
+                          <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                            <Clock className="h-2.5 w-2.5" />
+                            {formatRelative(conv.updated_at)}
+                          </p>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-5 w-5 opacity-0 group-hover:opacity-100 shrink-0 text-destructive"
+                          onClick={(e) => { e.stopPropagation(); deleteConversation(conv.id); }}
+                        >
+                          <Trash2 className="h-2.5 w-2.5" />
+                        </Button>
+                      </div>
+                    ));
+                  })()}
                 </div>
               </ScrollArea>
             </div>
