@@ -763,12 +763,14 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
         // Check manual override first, then AI match
         const manualOverride = bundleMergeOverrides[i];
         const match = bundleMatches.find(m => m.extracted_index === i);
+        // Validate target_bundle_id is a real UUID (not a hallucinated placeholder)
+        const isValidUuid = (id?: string) => id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
         const autoMerge = match && 
           (match.match_type === "exact" || match.match_type === "absorb") && 
           match.confidence >= 0.9 && 
-          match.target_bundle_id;
+          isValidUuid(match.target_bundle_id);
 
-        const mergeTargetId = (manualOverride && manualOverride !== "new")
+        const mergeTargetId = (manualOverride && manualOverride !== "new" && isValidUuid(manualOverride))
           ? manualOverride
           : (autoMerge ? match.target_bundle_id : null);
 
