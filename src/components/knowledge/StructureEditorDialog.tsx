@@ -10,9 +10,12 @@ import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   ChevronRight, ChevronDown, Layers, BookOpen, ListCheck,
   Merge, Trash2, Edit2, Check, X, ArrowRight, Sparkles,
-  Info, AlertTriangle,
+  Info, AlertTriangle, MoveRight,
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -365,6 +368,29 @@ export function StructureEditorDialog({
                               <Button variant="ghost" size="icon" className="h-4 w-4" onClick={() => startEdit("playbook", bi, pi)}>
                                 <Edit2 className="h-2.5 w-2.5" />
                               </Button>
+                              {blueprint.length > 1 && (
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="h-4 w-4 text-primary/60 hover:text-primary">
+                                      <MoveRight className="h-2.5 w-2.5" />
+                                    </Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent side="right" align="start" className="z-50 bg-popover border-border min-w-[160px]">
+                                    {blueprint.map((targetBundle, ti) =>
+                                      ti !== bi ? (
+                                        <DropdownMenuItem
+                                          key={ti}
+                                          className="text-xs gap-2 cursor-pointer"
+                                          onClick={() => movePlaybook(bi, pi, ti)}
+                                        >
+                                          <Layers className="h-3 w-3 text-primary shrink-0" />
+                                          <span className="truncate">{targetBundle.bundle_title}</span>
+                                        </DropdownMenuItem>
+                                      ) : null,
+                                    )}
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              )}
                               {bundle.playbooks.length > 1 && (
                                 <Button variant="ghost" size="icon" className="h-4 w-4 text-destructive/60 hover:text-destructive" onClick={() => removePlaybook(bi, pi)}>
                                   <Trash2 className="h-2.5 w-2.5" />
