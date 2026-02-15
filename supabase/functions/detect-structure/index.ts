@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
+import { loadPrompt } from "../_shared/load-prompt.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -226,8 +227,10 @@ ${pdfBase64 ? "[PDF document provided as inline image for analysis]" : contentPr
 Return the structural skeleton. Do NOT extract content — only map architecture.`;
 
     // ── Call AI (use fast model — this is lightweight) ───────────────────
+    const activePrompt = await loadPrompt("detect-structure-system", SYSTEM_PROMPT);
+
     const messages: any[] = [
-      { role: "system", content: SYSTEM_PROMPT },
+      { role: "system", content: activePrompt },
     ];
 
     if (pdfBase64) {
