@@ -227,8 +227,26 @@ serve(async (req) => {
       throw new Error("skeleton (from detect-structure) is required");
     }
 
+    // Safety: prune skeleton if still too large for reliable AI processing
+    let skeletonForPrompt = { ...skeleton };
+    if (skeleton.skeleton.length > 100) {
+      console.log(`Pruning skeleton from ${skeleton.skeleton.length} to ≤100 entries for optimization`);
+      const entries = [...skeleton.skeleton];
+      // Keep all level 1-2, then level 3 by density, drop level 4+
+      const important = entries.filter((e: any) => (e.level || 1) <= 2);
+      const medium = entries.filter((e: any) => (e.level || 1) === 3);
+      const densityRank: Record<string, number> = { rich: 3, moderate: 2, sparse: 1, empty: 0 };
+      medium.sort((a: any, b: any) => (densityRank[b.content_density] ?? 0) - (densityRank[a.content_density] ?? 0));
+      const remaining = 100 - important.length;
+      skeletonForPrompt = {
+        ...skeleton,
+        skeleton: [...important, ...medium.slice(0, Math.max(0, remaining))],
+        total_sections_detected: Math.min(skeleton.skeleton.length, 100),
+      };
+    }
+
     // Build the user prompt with both skeleton and content
-    const skeletonText = JSON.stringify(skeleton, null, 2);
+    const skeletonText = JSON.stringify(skeletonForPrompt, null, 2);
     const contentSection = content_preview
       ? `\n\n## DOCUMENT CONTENT PREVIEW (first ~30K chars)\n${content_preview}`
       : "";

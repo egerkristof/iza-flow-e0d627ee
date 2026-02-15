@@ -207,43 +207,87 @@ async function callStructureAI(
   return JSON.parse(toolCall.function.arguments);
 }
 
-/** Merge multiple skeleton results into one consolidated result */
+/** Normalize a label for deduplication: lowercase, collapse whitespace, strip punctuation */
+function normalizeLabel(label: string): string {
+  return label
+    .toLowerCase()
+    .replace(/[\s\-–—_:,;.!?()\/]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/** Check if two normalized labels are near-duplicates (one contains the other or high overlap) */
+function areNearDuplicates(a: string, b: string): boolean {
+  if (a === b) return true;
+  if (a.includes(b) || b.includes(a)) return true;
+  // Check word overlap: if 80%+ words match, consider duplicate
+  const wordsA = new Set(a.split(" ").filter(w => w.length > 2));
+  const wordsB = new Set(b.split(" ").filter(w => w.length > 2));
+  if (wordsA.size === 0 || wordsB.size === 0) return false;
+  const overlap = [...wordsA].filter(w => wordsB.has(w)).length;
+  const minSize = Math.min(wordsA.size, wordsB.size);
+  return minSize > 0 && overlap / minSize >= 0.8;
+}
+
+/** Merge multiple skeleton results into one consolidated result, with aggressive pruning */
 function mergeSkeletons(results: any[]): any {
   const valid = results.filter(Boolean);
   if (valid.length === 0) return null;
   if (valid.length === 1) return valid[0];
 
-  // Use the first result as the base for metadata
   const base = valid[0];
-  const seenLabels = new Set<string>();
   const mergedSkeleton: any[] = [];
+  const seenNormalized: string[] = [];
 
-  // Merge all skeleton entries, deduplicating by normalized label
+  // Merge all skeleton entries with near-duplicate detection
   for (const result of valid) {
     for (const entry of (result.skeleton || [])) {
-      const key = entry.label?.toLowerCase().trim();
-      if (key && !seenLabels.has(key)) {
-        seenLabels.add(key);
+      const norm = normalizeLabel(entry.label || "");
+      if (!norm) continue;
+
+      const existingIdx = seenNormalized.findIndex(s => areNearDuplicates(s, norm));
+
+      if (existingIdx < 0) {
+        seenNormalized.push(norm);
         mergedSkeleton.push(entry);
-      } else if (key && seenLabels.has(key)) {
-        // If duplicate but the new one has richer data, replace
-        const existingIdx = mergedSkeleton.findIndex(
-          (e) => e.label?.toLowerCase().trim() === key
-        );
-        if (existingIdx >= 0) {
-          const existing = mergedSkeleton[existingIdx];
-          const densityRank: Record<string, number> = { rich: 3, moderate: 2, sparse: 1, empty: 0 };
-          const existingRank = densityRank[existing.content_density] ?? 0;
-          const newRank = densityRank[entry.content_density] ?? 0;
-          if (newRank > existingRank || entry.child_count > existing.child_count) {
-            mergedSkeleton[existingIdx] = entry;
-          }
+      } else {
+        // Keep the richer version
+        const existing = mergedSkeleton[existingIdx];
+        const densityRank: Record<string, number> = { rich: 3, moderate: 2, sparse: 1, empty: 0 };
+        const existingRank = densityRank[existing.content_density] ?? 0;
+        const newRank = densityRank[entry.content_density] ?? 0;
+        if (newRank > existingRank || entry.child_count > (existing.child_count || 0)) {
+          mergedSkeleton[existingIdx] = entry;
+          seenNormalized[existingIdx] = norm;
         }
       }
     }
   }
 
-  // Pick highest confidence across all chunks
+  // Prune: drop sparse/empty entries at level 4+ to keep skeleton manageable
+  const pruned = mergedSkeleton.filter(entry => {
+    if ((entry.level || 1) >= 4 && (entry.content_density === "sparse" || entry.content_density === "empty")) {
+      return false;
+    }
+    return true;
+  });
+
+  // Hard cap at 120 entries — keep level 1-2 entries first, then level 3 by density
+  let final = pruned;
+  if (final.length > 120) {
+    const high = final.filter(e => (e.level || 1) <= 2);
+    const mid = final.filter(e => (e.level || 1) === 3);
+    const low = final.filter(e => (e.level || 1) >= 4);
+    const densitySort = (a: any, b: any) => {
+      const rank: Record<string, number> = { rich: 3, moderate: 2, sparse: 1, empty: 0 };
+      return (rank[b.content_density] ?? 0) - (rank[a.content_density] ?? 0);
+    };
+    mid.sort(densitySort);
+    low.sort(densitySort);
+    final = [...high, ...mid, ...low].slice(0, 120);
+  }
+
+  // Pick highest confidence
   const confRank: Record<string, number> = { high: 3, medium: 2, low: 1 };
   let bestConf = "low";
   for (const r of valid) {
@@ -255,9 +299,15 @@ function mergeSkeletons(results: any[]): any {
   return {
     structure_type: base.structure_type,
     confidence: bestConf,
-    total_sections_detected: mergedSkeleton.length,
-    skeleton: mergedSkeleton,
+    total_sections_detected: final.length,
+    skeleton: final,
     notes: valid.map((r) => r.notes).filter(Boolean).join(" | "),
+    _merge_stats: {
+      raw_entries: valid.reduce((sum, r) => sum + (r.skeleton?.length || 0), 0),
+      after_dedup: mergedSkeleton.length,
+      after_prune: pruned.length,
+      after_cap: final.length,
+    },
   };
 }
 
