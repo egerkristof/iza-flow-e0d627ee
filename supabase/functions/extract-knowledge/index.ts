@@ -286,15 +286,26 @@ function buildUserPrompt(
   sourceType: string,
   content: string,
   meta: Record<string, string>,
+  chunkInfo?: { chunkIndex: number; totalChunks: number; existingBundleTitles: string[] },
 ): string {
-  const truncated = content.slice(0, 60000);
-  const overflow = content.length > 60000
-    ? `\n\n[... content truncated at 60,000 characters. Original length: ${content.length} characters. IMPORTANT: Extract from ALL content above — do not skip sections just because the document is long.]`
+  const chunkPrefix = chunkInfo && chunkInfo.chunkIndex > 0
+    ? `## CONTINUATION EXTRACTION (Chunk ${chunkInfo.chunkIndex + 1} of ${chunkInfo.totalChunks})
+You are continuing extraction from a LARGE document. Previous chunks already extracted these bundles:
+${chunkInfo.existingBundleTitles.map(t => `- "${t}"`).join("\n")}
+
+**RULES FOR CONTINUATION:**
+- If content in THIS chunk belongs to an EXISTING bundle listed above, use the EXACT SAME bundle title so results can be merged.
+- If content introduces a NEW phase/section not covered above, create a NEW bundle.
+- Do NOT re-extract content that was already covered. Focus on NEW content in this chunk.
+- Maintain phase label sequence consistency with existing bundles.
+- This is chunk ${chunkInfo.chunkIndex + 1} of ${chunkInfo.totalChunks} — ${chunkInfo.chunkIndex + 1 === chunkInfo.totalChunks ? "this is the FINAL chunk, ensure nothing is missed" : "more chunks will follow"}.
+
+`
     : "";
 
   switch (sourceType) {
     case "chat":
-      return `Analyze the following chat conversation and extract ALL knowledge elements — decisions made, preferences expressed, procedures discussed, principles stated, and any actionable insights.
+      return `${chunkPrefix}Analyze the following chat conversation and extract ALL knowledge elements — decisions made, preferences expressed, procedures discussed, principles stated, and any actionable insights.
 
 **Chat metadata:**
 - Chat title: ${meta.title || "Untitled"}
@@ -302,12 +313,12 @@ function buildUserPrompt(
 - Participants: ${meta.participants || "N/A"}
 
 **Conversation content:**
-${truncated}${overflow}
+${content}
 
 Now extract every meaningful element. Pay special attention to decisions, action items, and implicit preferences expressed by participants.`;
 
     case "task":
-      return `Analyze the following task output/notes and extract ALL knowledge elements — procedures followed, lessons learned, research findings, and reusable knowledge.
+      return `${chunkPrefix}Analyze the following task output/notes and extract ALL knowledge elements — procedures followed, lessons learned, research findings, and reusable knowledge.
 
 **Task metadata:**
 - Task title: ${meta.title || "Untitled"}
@@ -315,26 +326,26 @@ Now extract every meaningful element. Pay special attention to decisions, action
 - Status: ${meta.status || "N/A"}
 
 **Task content:**
-${truncated}${overflow}
+${content}
 
 Extract every piece of reusable knowledge, procedure, or finding.`;
 
     case "research":
-      return `Analyze the following research content and extract ALL knowledge elements — findings, data points, competitive intelligence, and actionable insights.
+      return `${chunkPrefix}Analyze the following research content and extract ALL knowledge elements — findings, data points, competitive intelligence, and actionable insights.
 
 **Research metadata:**
 - Title: ${meta.title || "Untitled"}
 - Source: ${meta.source || "N/A"}
 
 **Research content:**
-${truncated}${overflow}
+${content}
 
 Focus on creating well-structured RESEARCH items with specific data points and findings. Bundle related findings together.`;
 
     case "document":
     case "loom":
     default:
-      return `Analyze the following document thoroughly. First, identify the COMPLETE structural architecture (all sections, phases, stages, parallel tracks), then extract ALL knowledge elements EXHAUSTIVELY — leave NOTHING on the table.
+      return `${chunkPrefix}Analyze the following document thoroughly. First, identify the COMPLETE structural architecture (all sections, phases, stages, parallel tracks), then extract ALL knowledge elements EXHAUSTIVELY — leave NOTHING on the table.
 
 **Document metadata:**
 - File name: ${meta.file_name || "Unknown"}
@@ -342,7 +353,7 @@ Focus on creating well-structured RESEARCH items with specific data points and f
 - Type: ${meta.file_type || "text"}
 
 **Document content:**
-${truncated}${overflow}
+${content}
 
 **CRITICAL INSTRUCTIONS:**
 1. FIRST: Map the document's full structure — identify every section, stage, phase, or track, including those visible only in diagrams/headers/tables
@@ -538,6 +549,255 @@ const TOOL_DEFINITION = {
   },
 };
 
+// ── Chunking helpers ──────────────────────────────────────────────────────────
+
+const CHUNK_SIZE = 45000; // 45K chars per chunk
+const CHUNK_OVERLAP = 3000; // 3K overlap to avoid cutting mid-section
+
+function splitIntoChunks(content: string): string[] {
+  if (content.length <= CHUNK_SIZE) return [content];
+
+  const chunks: string[] = [];
+  let start = 0;
+
+  while (start < content.length) {
+    let end = start + CHUNK_SIZE;
+
+    // Try to break at a natural boundary (double newline, heading, etc.)
+    if (end < content.length) {
+      // Look backward from `end` for a good break point (within 5K chars)
+      const searchWindow = content.slice(Math.max(start, end - 5000), end);
+      
+      // Prefer breaking at section boundaries
+      const sectionBreaks = [
+        searchWindow.lastIndexOf("\n\n## "),
+        searchWindow.lastIndexOf("\n\n### "),
+        searchWindow.lastIndexOf("\n\n---"),
+        searchWindow.lastIndexOf("\n\nSlide "),
+        searchWindow.lastIndexOf("\n\nPage "),
+        searchWindow.lastIndexOf("\n\n"),
+      ];
+
+      for (const breakPos of sectionBreaks) {
+        if (breakPos > 0) {
+          end = (end - 5000 + breakPos) + (breakPos > 0 ? breakPos : 0);
+          // Recalculate: offset is relative to searchWindow start
+          end = Math.max(start, end - 5000) + breakPos;
+          break;
+        }
+      }
+    }
+
+    end = Math.min(end, content.length);
+    chunks.push(content.slice(start, end));
+
+    // Next chunk starts with overlap
+    start = end - CHUNK_OVERLAP;
+    if (start >= content.length) break;
+    // Prevent infinite loop
+    if (end >= content.length) break;
+  }
+
+  return chunks;
+}
+
+interface ExtractionResult {
+  analysis_notes: string;
+  preferences: any[];
+  context_items: any[];
+  bundles: any[];
+  advisor?: any;
+  extraction_depth?: string;
+}
+
+function mergeExtractionResults(results: ExtractionResult[]): ExtractionResult {
+  if (results.length === 1) return results[0];
+
+  const merged: ExtractionResult = {
+    analysis_notes: results.map((r, i) => `[Chunk ${i + 1}] ${r.analysis_notes}`).join("\n\n"),
+    preferences: [],
+    context_items: [],
+    bundles: [],
+  };
+
+  // Deduplicate preferences by key+value
+  const prefSet = new Set<string>();
+  for (const r of results) {
+    for (const p of (r.preferences || [])) {
+      const key = `${p.preference_key}::${p.preference_value}`;
+      if (!prefSet.has(key)) {
+        prefSet.add(key);
+        merged.preferences.push(p);
+      }
+    }
+  }
+
+  // Deduplicate standalone items by title
+  const itemTitleSet = new Set<string>();
+  for (const r of results) {
+    for (const item of (r.context_items || [])) {
+      const normTitle = item.title.toLowerCase().trim();
+      if (!itemTitleSet.has(normTitle)) {
+        itemTitleSet.add(normTitle);
+        merged.context_items.push(item);
+      }
+    }
+  }
+
+  // Merge bundles: combine bundles with matching titles
+  const bundleMap = new Map<string, any>();
+
+  for (const r of results) {
+    for (const bundle of (r.bundles || [])) {
+      const normTitle = bundle.title.toLowerCase().trim();
+      
+      if (bundleMap.has(normTitle)) {
+        // Merge items into existing bundle
+        const existing = bundleMap.get(normTitle)!;
+        const existingItemTitles = new Set(
+          existing.items.map((it: any) => it.title.toLowerCase().trim())
+        );
+        
+        for (const item of (bundle.items || [])) {
+          if (!existingItemTitles.has(item.title.toLowerCase().trim())) {
+            existing.items.push(item);
+            existingItemTitles.add(item.title.toLowerCase().trim());
+          }
+        }
+
+        // Upgrade completeness if later chunk had more
+        const completenessRank: Record<string, number> = { skeleton: 0, partial: 1, full: 2 };
+        if ((completenessRank[bundle.content_completeness] || 0) > (completenessRank[existing.content_completeness] || 0)) {
+          existing.content_completeness = bundle.content_completeness;
+        }
+
+        // Merge coverage gaps
+        const gapSet = new Set(existing.coverage_gaps || []);
+        for (const gap of (bundle.coverage_gaps || [])) {
+          gapSet.add(gap);
+        }
+        existing.coverage_gaps = [...gapSet];
+
+        // Append description if different
+        if (bundle.description && !existing.description.includes(bundle.description)) {
+          existing.description += " " + bundle.description;
+        }
+      } else {
+        bundleMap.set(normTitle, { ...bundle });
+      }
+    }
+  }
+
+  merged.bundles = [...bundleMap.values()];
+
+  // Copy advisor and depth from first result
+  if (results[0].advisor) merged.advisor = results[0].advisor;
+  if (results[0].extraction_depth) merged.extraction_depth = results[0].extraction_depth;
+
+  return merged;
+}
+
+// ── Single-chunk AI extraction call ───────────────────────────────────────────
+
+async function extractChunk(
+  systemPrompt: string,
+  userPrompt: string,
+  model: string,
+  lovableApiKey: string,
+  pdfBase64?: string,
+): Promise<ExtractionResult | null> {
+  const messages: any[] = [
+    { role: "system", content: systemPrompt },
+  ];
+
+  if (pdfBase64) {
+    messages.push({
+      role: "user",
+      content: [
+        { type: "text", text: userPrompt },
+        {
+          type: "image_url",
+          image_url: { url: `data:application/pdf;base64,${pdfBase64}` },
+        },
+      ],
+    });
+  } else {
+    messages.push({ role: "user", content: userPrompt });
+  }
+
+  const requestBody = JSON.stringify({
+    model,
+    messages,
+    tools: [TOOL_DEFINITION],
+    tool_choice: { type: "function", function: { name: "extract_knowledge" } },
+  });
+
+  const MAX_RETRIES = 2;
+
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    if (attempt > 0) {
+      console.log(`Retry attempt ${attempt}...`);
+      await new Promise(r => setTimeout(r, 1000 * attempt));
+    }
+
+    const aiResponse = await fetch(
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${lovableApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: requestBody,
+      },
+    );
+
+    if (!aiResponse.ok) {
+      const errText = await aiResponse.text();
+      console.error("AI error:", aiResponse.status, errText);
+      if (aiResponse.status === 429 || aiResponse.status === 402) {
+        throw new Error(aiResponse.status === 429
+          ? "Rate limit exceeded. Please try again in a moment."
+          : "AI credits exhausted. Please add credits.");
+      }
+      continue; // retry on other errors
+    }
+
+    const aiData = await aiResponse.json();
+    const message = aiData.choices?.[0]?.message;
+    const toolCall = message?.tool_calls?.[0];
+
+    if (toolCall) {
+      const extracted = JSON.parse(toolCall.function.arguments);
+      if (!extracted.bundles) extracted.bundles = [];
+      if (!extracted.analysis_notes) extracted.analysis_notes = "";
+      return extracted;
+    }
+
+    // Try to recover from content fallback
+    if (message?.content) {
+      const jsonMatch = message.content.match(/```(?:json)?\s*([\s\S]*?)```/) ||
+                        message.content.match(/(\{[\s\S]*\})/);
+      if (jsonMatch?.[1]) {
+        try {
+          const parsed = JSON.parse(jsonMatch[1]);
+          if (parsed.bundles) {
+            console.log("Recovered extraction from content fallback");
+            if (!parsed.analysis_notes) parsed.analysis_notes = "";
+            return parsed;
+          }
+        } catch {}
+      }
+    }
+
+    console.error(`Attempt ${attempt + 1}: No tool call. finish_reason: ${aiData.choices?.[0]?.finish_reason}`);
+  }
+
+  return null; // all retries failed for this chunk
+}
+
+// ── Main handler ──────────────────────────────────────────────────────────────
+
 serve(async (req) => {
   if (req.method === "OPTIONS")
     return new Response(null, { headers: corsHeaders });
@@ -567,6 +827,7 @@ serve(async (req) => {
     const extractionDepth: string = body.extraction_depth || "quick";
     let textContent = "";
     let meta: Record<string, string> = {};
+    let pdfBase64: string | undefined;
 
     // ── Route by source type ──────────────────────────────────────────────
     if (sourceType === "document" || sourceType === "loom") {
@@ -575,8 +836,7 @@ serve(async (req) => {
 
       const adminClient = createClient(supabaseUrl, supabaseKey);
 
-      // Retry document lookup — handles race condition where the row may not
-      // be visible immediately after insert (replication lag / commit timing).
+      // Retry document lookup
       let doc: any = null;
       for (let attempt = 0; attempt < 3; attempt++) {
         const { data, error: docError } = await adminClient
@@ -586,7 +846,7 @@ serve(async (req) => {
           .eq("user_id", user.id)
           .maybeSingle();
         if (data) { doc = data; break; }
-        if (attempt < 2) await new Promise(r => setTimeout(r, 1000)); // wait 1s before retry
+        if (attempt < 2) await new Promise(r => setTimeout(r, 1000));
       }
       if (!doc) throw new Error(`Document not found (id=${documentId}, user=${user.id})`);
 
@@ -598,20 +858,18 @@ serve(async (req) => {
       const isPdf = doc.file_type === "application/pdf" || doc.file_name.toLowerCase().endsWith(".pdf");
       
       if (isPdf) {
-        // For PDFs, convert to base64 and use Gemini multimodal
+        // PDFs: use multimodal (no chunking needed — Gemini handles full PDFs)
         const arrayBuffer = await fileData.arrayBuffer();
         const bytes = new Uint8Array(arrayBuffer);
         let binary = "";
         for (let i = 0; i < bytes.length; i++) {
           binary += String.fromCharCode(bytes[i]);
         }
-        const base64Content = btoa(binary);
-        
+        pdfBase64 = btoa(binary);
         meta = {
           file_name: doc.file_name,
           category: doc.document_category,
           file_type: doc.file_type,
-          _pdf_base64: base64Content, // special key for multimodal
         };
         textContent = "[PDF document — content provided as inline image/pdf for multimodal analysis]";
       } else {
@@ -630,7 +888,6 @@ serve(async (req) => {
         .eq("id", documentId);
 
     } else if (sourceType === "chat" || sourceType === "task" || sourceType === "research") {
-      // Direct content extraction — content & meta passed in the body
       textContent = body.content || "";
       meta = body.meta || {};
       if (!textContent) throw new Error("content required for " + sourceType);
@@ -641,8 +898,7 @@ serve(async (req) => {
       if (!textContent) throw new Error("content required");
     }
 
-    // ── Call AI ──────────────────────────────────────────────────────────
-    // Load system prompt from DB (admin-editable), fallback to hardcoded
+    // ── Build system prompt ──────────────────────────────────────────────
     let systemPrompt = await loadPrompt("extract-knowledge-system", SYSTEM_PROMPT);
     if (advisorPersona) {
       systemPrompt += `\n\n## DOMAIN ADVISOR CONSULTATION
@@ -659,7 +915,6 @@ You are being advised by a **${advisorPersona.persona_title}** (${advisorPersona
 Use the advisor's guidance to improve categorization precision and extraction depth. The advisor's domain expertise should inform your decisions about what to extract and how to structure it.`;
     }
 
-    // For "deep" extraction, add extra instructions for thoroughness
     if (extractionDepth === "deep") {
       systemPrompt += `\n\n## DEEP ANALYSIS MODE
 You are in **deep analysis mode**. This means:
@@ -675,141 +930,70 @@ You are in **deep analysis mode**. This means:
 - IMPORTANT: Deep mode may surface additional PLAYBOOKs (activatable actions) within bundles — this is expected. But each PLAYBOOK must still pass the PLAYBOOK Test and represent a distinct operator action.`;
     }
 
-    // Model selection: flash for quick+guided, pro only for deep
     const model = extractionDepth === "deep" ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash";
 
-    const requestBody = JSON.stringify({
-      model,
-      messages: [
-        { role: "system", content: systemPrompt },
-        meta._pdf_base64
-          ? {
-              role: "user",
-              content: [
-                {
-                  type: "text",
-                  text: buildUserPrompt(sourceType, textContent, meta),
-                },
-                {
-                  type: "image_url",
-                  image_url: {
-                    url: `data:application/pdf;base64,${meta._pdf_base64}`,
-                  },
-                },
-              ],
-            }
-          : {
-              role: "user",
-              content: buildUserPrompt(sourceType, textContent, meta),
-            },
-      ],
-      tools: [TOOL_DEFINITION],
-      tool_choice: {
-        type: "function",
-        function: { name: "extract_knowledge" },
-      },
-    });
+    // ── Chunked extraction ──────────────────────────────────────────────
+    if (pdfBase64) {
+      // PDF: single extraction (multimodal handles full document)
+      const userPrompt = buildUserPrompt(sourceType, textContent, meta);
+      const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey, pdfBase64);
+      if (!result) throw new Error("Extraction failed after retries");
 
-    const MAX_RETRIES = 2;
-    let lastError: Error | null = null;
+      if (advisorPersona) result.advisor = advisorPersona;
+      result.extraction_depth = extractionDepth;
 
-    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-      if (attempt > 0) {
-        console.log(`Retry attempt ${attempt} for extraction...`);
-        // Brief backoff before retry
-        await new Promise(r => setTimeout(r, 1000 * attempt));
-      }
-
-      const aiResponse = await fetch(
-        "https://ai.gateway.lovable.dev/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${lovableApiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: requestBody,
-        },
-      );
-
-      if (!aiResponse.ok) {
-        const errText = await aiResponse.text();
-        console.error("AI error:", aiResponse.status, errText);
-        if (aiResponse.status === 429) {
-          return new Response(
-            JSON.stringify({
-              error: "Rate limit exceeded. Please try again in a moment.",
-            }),
-            {
-              status: 429,
-              headers: { ...corsHeaders, "Content-Type": "application/json" },
-            },
-          );
-        }
-        if (aiResponse.status === 402) {
-          return new Response(
-            JSON.stringify({
-              error: "AI credits exhausted. Please add credits.",
-            }),
-            {
-              status: 402,
-              headers: { ...corsHeaders, "Content-Type": "application/json" },
-            },
-          );
-        }
-        lastError = new Error("AI extraction failed");
-        continue; // retry
-      }
-
-      const aiData = await aiResponse.json();
-      const message = aiData.choices?.[0]?.message;
-      const toolCall = message?.tool_calls?.[0];
-
-      if (!toolCall) {
-        const finishReason = aiData.choices?.[0]?.finish_reason;
-        const contentPreview = message?.content?.substring(0, 500) || "(no content)";
-        console.error(`Attempt ${attempt + 1}: No tool call. finish_reason: ${finishReason}, content: ${contentPreview}`);
-
-        // Try to recover from content fallback
-        if (message?.content) {
-          const jsonMatch = message.content.match(/```(?:json)?\s*([\s\S]*?)```/) ||
-                            message.content.match(/(\{[\s\S]*\})/);
-          if (jsonMatch?.[1]) {
-            try {
-              const parsed = JSON.parse(jsonMatch[1]);
-              if (parsed.bundles) {
-                console.log("Recovered extraction from content fallback");
-                if (!parsed.analysis_notes) parsed.analysis_notes = "";
-                if (advisorPersona) parsed.advisor = advisorPersona;
-                parsed.extraction_depth = extractionDepth;
-                return new Response(JSON.stringify(parsed), {
-                  headers: { ...corsHeaders, "Content-Type": "application/json" },
-                });
-              }
-            } catch {}
-          }
-        }
-
-        lastError = new Error(`No extraction result (finish_reason: ${finishReason})`);
-        continue; // retry
-      }
-
-      // Success — parse and return
-      const extracted = JSON.parse(toolCall.function.arguments);
-      if (!extracted.bundles) extracted.bundles = [];
-      if (!extracted.analysis_notes) extracted.analysis_notes = "";
-      if (advisorPersona) {
-        extracted.advisor = advisorPersona;
-      }
-      extracted.extraction_depth = extractionDepth;
-
-      return new Response(JSON.stringify(extracted), {
+      return new Response(JSON.stringify(result), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    // All retries exhausted
-    throw lastError || new Error("Extraction failed after retries");
+    // Text content: chunk if needed
+    const chunks = splitIntoChunks(textContent);
+    console.log(`Document length: ${textContent.length} chars → ${chunks.length} chunk(s)`);
+
+    const chunkResults: ExtractionResult[] = [];
+    const existingBundleTitles: string[] = [];
+
+    for (let i = 0; i < chunks.length; i++) {
+      const chunkInfo = chunks.length > 1
+        ? { chunkIndex: i, totalChunks: chunks.length, existingBundleTitles: [...existingBundleTitles] }
+        : undefined;
+
+      const userPrompt = buildUserPrompt(sourceType, chunks[i], meta, chunkInfo);
+      console.log(`Extracting chunk ${i + 1}/${chunks.length} (${chunks[i].length} chars)...`);
+
+      const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey);
+      if (!result) {
+        console.error(`Chunk ${i + 1} failed — skipping`);
+        continue;
+      }
+
+      chunkResults.push(result);
+
+      // Collect bundle titles for subsequent chunks
+      for (const b of (result.bundles || [])) {
+        if (!existingBundleTitles.includes(b.title)) {
+          existingBundleTitles.push(b.title);
+        }
+      }
+    }
+
+    if (chunkResults.length === 0) {
+      throw new Error("Extraction failed — no chunks produced results");
+    }
+
+    const merged = mergeExtractionResults(chunkResults);
+    if (advisorPersona) merged.advisor = advisorPersona;
+    merged.extraction_depth = extractionDepth;
+
+    if (chunks.length > 1) {
+      merged.analysis_notes = `[Chunked extraction: ${chunks.length} chunks processed, ${textContent.length} total chars]\n\n${merged.analysis_notes}`;
+    }
+
+    return new Response(JSON.stringify(merged), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+
   } catch (e) {
     console.error("extract-knowledge error:", e);
     return new Response(
