@@ -26,6 +26,7 @@ import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import { ExtractionProgressDialog, type ExtractionPhase } from "@/components/knowledge/ExtractionProgressDialog";
+import { StructureEditorDialog, type StructureEditorData } from "@/components/knowledge/StructureEditorDialog";
 import { ContextCopilotPanel } from "@/components/knowledge/ContextCopilotPanel";
 import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
 import { TaxonomyDiagramDialog } from "@/components/knowledge/TaxonomyDiagramDialog";
@@ -233,6 +234,10 @@ export default function ContextManagementPage() {
   const [chunkProgress, setChunkProgress] = useState<{ current: number; total: number } | null>(null);
   const extractionAbortRef = useRef<AbortController | null>(null);
   const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
+  // Structure editor state
+  const [structureEditorOpen, setStructureEditorOpen] = useState(false);
+  const [structureEditorData, setStructureEditorData] = useState<StructureEditorData | null>(null);
+  const pendingExtractionRef = useRef<{ docId: string; filePath: string; abortController: AbortController; advisorPersona: AdvisorPersona | null } | null>(null);
   // Governance state
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
   const [impactSimOpen, setImpactSimOpen] = useState(false);
@@ -441,6 +446,30 @@ export default function ContextManagementPage() {
                 optimization_stats: optData.stats,
               };
               console.log(`Structure optimized: bundles=${optData.stats?.final_bundles}, playbooks=${optData.stats?.final_playbooks}, merges=${optData.stats?.merges_performed}`);
+
+              // ── PAUSE: Show Structure Editor for user review ──────────
+              // Generate advisor in parallel while user reviews
+              let advisorPersona: AdvisorPersona | null = null;
+              if (extractionDepth !== "quick") {
+                try {
+                  const { data: advData } = await supabase.functions.invoke("generate-advisor", {
+                    body: { content: file.name, meta: { title: file.name, file_type: file.type } },
+                  });
+                  if (advData && !advData.error) advisorPersona = advData as AdvisorPersona;
+                } catch {} // best-effort
+              }
+
+              // Pause extraction and show structure editor
+              setLoomExtracting(false);
+              setStructureEditorData(documentStructure as StructureEditorData);
+              pendingExtractionRef.current = {
+                docId: docRow.id,
+                filePath: filePath!,
+                abortController,
+                advisorPersona,
+              };
+              setStructureEditorOpen(true);
+              return; // Flow continues in handleStructureConfirm / handleStructureSkip
             } else {
               documentStructure = structData;
             }
@@ -451,7 +480,7 @@ export default function ContextManagementPage() {
       } catch {} // best-effort
       if (abortController.signal.aborted) throw new Error("Cancelled");
 
-      // ── Generate advisor for guided/deep modes ──────────────────────
+      // ── Generate advisor for guided/deep modes (no blueprint path) ──
       setExtractionPhase("analyzing");
       let advisorPersona: AdvisorPersona | null = null;
       if (extractionDepth !== "quick") {
@@ -591,6 +620,139 @@ export default function ContextManagementPage() {
     extractionAbortRef.current?.abort();
     extractionAbortRef.current = null;
     setLoomExtracting(false);
+  };
+
+  // ── Structure Editor callbacks ─────────────────────────────────────
+  const continueExtractionWithStructure = async (documentStructure: any) => {
+    const pending = pendingExtractionRef.current;
+    if (!pending) return;
+    pendingExtractionRef.current = null;
+    setStructureEditorOpen(false);
+    setStructureEditorData(null);
+    setLoomExtracting(true);
+    setExtractionPhase("extracting");
+    setChunkProgress(null);
+
+    try {
+      const { docId, abortController, advisorPersona } = pending;
+      if (abortController.signal.aborted) throw new Error("Cancelled");
+      extractionAbortRef.current = abortController;
+
+      // Use raw fetch to support SSE streaming for chunk progress
+      const session = (await supabase.auth.getSession()).data.session;
+      const extractRes = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({
+            documentId: docId,
+            source_type: "loom",
+            extraction_depth: extractionDepth,
+            ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+            ...(documentStructure ? { document_structure: documentStructure } : {}),
+          }),
+          signal: abortController.signal,
+        },
+      );
+      if (!extractRes.ok) {
+        const errText = await extractRes.text();
+        throw new Error(errText || `Extraction failed (${extractRes.status})`);
+      }
+
+      let extracted: ExtractionResult;
+      const contentType = extractRes.headers.get("content-type") || "";
+
+      if (contentType.includes("text/event-stream")) {
+        const reader = extractRes.body!.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let result: ExtractionResult | null = null;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const parts = buffer.split("\n\n");
+          buffer = parts.pop() || "";
+          for (const part of parts) {
+            if (!part.startsWith("data: ")) continue;
+            const jsonStr = part.slice(6);
+            try {
+              const parsed = JSON.parse(jsonStr);
+              if (parsed.type === "chunk_progress") {
+                setChunkProgress({ current: parsed.current, total: parsed.total });
+              } else if (parsed.type === "result") {
+                result = parsed.data as ExtractionResult;
+              } else if (parsed.type === "error") {
+                throw new Error(parsed.error);
+              }
+            } catch (parseErr) {
+              if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
+            }
+          }
+        }
+        if (!result) throw new Error("No extraction result received");
+        extracted = result;
+      } else {
+        const data = await extractRes.json();
+        if (data.error) throw new Error(data.error);
+        extracted = data as ExtractionResult;
+      }
+
+      if (documentStructure) extracted.document_structure = documentStructure;
+
+      // ── Bundle Matching Pass ──────────────────────────────────────────
+      if (extracted.bundles && extracted.bundles.length > 0) {
+        setExtractionPhase("matching");
+        try {
+          const { data: matchResult } = await supabase.functions.invoke("match-bundles", {
+            body: {
+              extracted_bundles: extracted.bundles.map(b => ({
+                title: b.title,
+                description: b.description,
+                items: b.items.map(it => ({ title: it.title, category: it.category })),
+              })),
+            },
+          });
+          if (matchResult?.matches) extracted.bundle_matches = matchResult.matches;
+        } catch {} // best-effort
+      }
+
+      setExtractionPhase("done");
+      await new Promise(r => setTimeout(r, 800));
+      setExtractionResult(extracted);
+      setReviewOpen(true);
+    } catch (err: any) {
+      if (err.message !== "Cancelled") {
+        toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
+      }
+    } finally {
+      extractionAbortRef.current = null;
+      setLoomExtracting(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleStructureConfirm = (editedData: StructureEditorData) => {
+    // Build the full documentStructure with user edits
+    const editedStructure = {
+      ...(structureEditorData || {}),
+      optimized_blueprint: editedData.optimized_blueprint,
+      consolidation_decisions: editedData.consolidation_decisions,
+      optimization_summary: editedData.optimization_summary,
+      optimization_stats: editedData.optimization_stats,
+    };
+    continueExtractionWithStructure(editedStructure);
+  };
+
+  const handleStructureSkip = () => {
+    // Continue with unedited structure
+    continueExtractionWithStructure(structureEditorData);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -953,6 +1115,16 @@ export default function ContextManagementPage() {
         phase={extractionPhase}
         chunkProgress={chunkProgress}
         onCancel={handleCancelExtraction}
+      />
+
+      {/* Structure Editor Dialog */}
+      <StructureEditorDialog
+        open={structureEditorOpen}
+        onOpenChange={setStructureEditorOpen}
+        data={structureEditorData}
+        fileName={extractionDocName}
+        onConfirm={handleStructureConfirm}
+        onSkip={handleStructureSkip}
       />
 
       {/* Import Copilot (Knowledge Loom) */}
