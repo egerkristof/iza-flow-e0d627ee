@@ -675,119 +675,141 @@ You are in **deep analysis mode**. This means:
 - IMPORTANT: Deep mode may surface additional PLAYBOOKs (activatable actions) within bundles — this is expected. But each PLAYBOOK must still pass the PLAYBOOK Test and represent a distinct operator action.`;
     }
 
-    const aiResponse = await fetch(
-      "https://ai.gateway.lovable.dev/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${lovableApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: extractionDepth === "quick" ? "google/gemini-2.5-flash" : "google/gemini-2.5-pro",
-          messages: [
-            { role: "system", content: systemPrompt },
-            meta._pdf_base64
-              ? {
-                  role: "user",
-                  content: [
-                    {
-                      type: "text",
-                      text: buildUserPrompt(sourceType, textContent, meta),
-                    },
-                    {
-                      type: "image_url",
-                      image_url: {
-                        url: `data:application/pdf;base64,${meta._pdf_base64}`,
-                      },
-                    },
-                  ],
-                }
-              : {
-                  role: "user",
-                  content: buildUserPrompt(sourceType, textContent, meta),
+    // Model selection: flash for quick+guided, pro only for deep
+    const model = extractionDepth === "deep" ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash";
+
+    const requestBody = JSON.stringify({
+      model,
+      messages: [
+        { role: "system", content: systemPrompt },
+        meta._pdf_base64
+          ? {
+              role: "user",
+              content: [
+                {
+                  type: "text",
+                  text: buildUserPrompt(sourceType, textContent, meta),
                 },
-          ],
-          tools: [TOOL_DEFINITION],
-          tool_choice: {
-            type: "function",
-            function: { name: "extract_knowledge" },
-          },
-        }),
-      },
-    );
-
-    if (!aiResponse.ok) {
-      const errText = await aiResponse.text();
-      console.error("AI error:", aiResponse.status, errText);
-      if (aiResponse.status === 429) {
-        return new Response(
-          JSON.stringify({
-            error: "Rate limit exceeded. Please try again in a moment.",
-          }),
-          {
-            status: 429,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          },
-        );
-      }
-      if (aiResponse.status === 402) {
-        return new Response(
-          JSON.stringify({
-            error: "AI credits exhausted. Please add credits.",
-          }),
-          {
-            status: 402,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          },
-        );
-      }
-      throw new Error("AI extraction failed");
-    }
-
-    const aiData = await aiResponse.json();
-    const message = aiData.choices?.[0]?.message;
-    const toolCall = message?.tool_calls?.[0];
-    if (!toolCall) {
-      // Log the actual response for debugging
-      const finishReason = aiData.choices?.[0]?.finish_reason;
-      const contentPreview = message?.content?.substring(0, 500) || "(no content)";
-      console.error("No tool call in AI response. finish_reason:", finishReason, "content:", contentPreview);
-      
-      // If the model returned content instead of a tool call, try to parse it as JSON
-      if (message?.content) {
-        const jsonMatch = message.content.match(/```(?:json)?\s*([\s\S]*?)```/) || 
-                          message.content.match(/(\{[\s\S]*\})/);
-        if (jsonMatch?.[1]) {
-          try {
-            const parsed = JSON.parse(jsonMatch[1]);
-            if (parsed.bundles) {
-              console.log("Recovered extraction from content fallback");
-              if (!parsed.analysis_notes) parsed.analysis_notes = "";
-              if (advisorPersona) parsed.advisor = advisorPersona;
-              parsed.extraction_depth = extractionDepth;
-              return new Response(JSON.stringify(parsed), {
-                headers: { ...corsHeaders, "Content-Type": "application/json" },
-              });
+                {
+                  type: "image_url",
+                  image_url: {
+                    url: `data:application/pdf;base64,${meta._pdf_base64}`,
+                  },
+                },
+              ],
             }
-          } catch {}
-        }
-      }
-      throw new Error(`No extraction result (finish_reason: ${finishReason})`);
-    }
-
-    const extracted = JSON.parse(toolCall.function.arguments);
-    if (!extracted.bundles) extracted.bundles = [];
-    if (!extracted.analysis_notes) extracted.analysis_notes = "";
-    // Attach advisor info if used
-    if (advisorPersona) {
-      extracted.advisor = advisorPersona;
-    }
-    extracted.extraction_depth = extractionDepth;
-
-    return new Response(JSON.stringify(extracted), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+          : {
+              role: "user",
+              content: buildUserPrompt(sourceType, textContent, meta),
+            },
+      ],
+      tools: [TOOL_DEFINITION],
+      tool_choice: {
+        type: "function",
+        function: { name: "extract_knowledge" },
+      },
     });
+
+    const MAX_RETRIES = 2;
+    let lastError: Error | null = null;
+
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      if (attempt > 0) {
+        console.log(`Retry attempt ${attempt} for extraction...`);
+        // Brief backoff before retry
+        await new Promise(r => setTimeout(r, 1000 * attempt));
+      }
+
+      const aiResponse = await fetch(
+        "https://ai.gateway.lovable.dev/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${lovableApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: requestBody,
+        },
+      );
+
+      if (!aiResponse.ok) {
+        const errText = await aiResponse.text();
+        console.error("AI error:", aiResponse.status, errText);
+        if (aiResponse.status === 429) {
+          return new Response(
+            JSON.stringify({
+              error: "Rate limit exceeded. Please try again in a moment.",
+            }),
+            {
+              status: 429,
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+            },
+          );
+        }
+        if (aiResponse.status === 402) {
+          return new Response(
+            JSON.stringify({
+              error: "AI credits exhausted. Please add credits.",
+            }),
+            {
+              status: 402,
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+            },
+          );
+        }
+        lastError = new Error("AI extraction failed");
+        continue; // retry
+      }
+
+      const aiData = await aiResponse.json();
+      const message = aiData.choices?.[0]?.message;
+      const toolCall = message?.tool_calls?.[0];
+
+      if (!toolCall) {
+        const finishReason = aiData.choices?.[0]?.finish_reason;
+        const contentPreview = message?.content?.substring(0, 500) || "(no content)";
+        console.error(`Attempt ${attempt + 1}: No tool call. finish_reason: ${finishReason}, content: ${contentPreview}`);
+
+        // Try to recover from content fallback
+        if (message?.content) {
+          const jsonMatch = message.content.match(/```(?:json)?\s*([\s\S]*?)```/) ||
+                            message.content.match(/(\{[\s\S]*\})/);
+          if (jsonMatch?.[1]) {
+            try {
+              const parsed = JSON.parse(jsonMatch[1]);
+              if (parsed.bundles) {
+                console.log("Recovered extraction from content fallback");
+                if (!parsed.analysis_notes) parsed.analysis_notes = "";
+                if (advisorPersona) parsed.advisor = advisorPersona;
+                parsed.extraction_depth = extractionDepth;
+                return new Response(JSON.stringify(parsed), {
+                  headers: { ...corsHeaders, "Content-Type": "application/json" },
+                });
+              }
+            } catch {}
+          }
+        }
+
+        lastError = new Error(`No extraction result (finish_reason: ${finishReason})`);
+        continue; // retry
+      }
+
+      // Success — parse and return
+      const extracted = JSON.parse(toolCall.function.arguments);
+      if (!extracted.bundles) extracted.bundles = [];
+      if (!extracted.analysis_notes) extracted.analysis_notes = "";
+      if (advisorPersona) {
+        extracted.advisor = advisorPersona;
+      }
+      extracted.extraction_depth = extractionDepth;
+
+      return new Response(JSON.stringify(extracted), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // All retries exhausted
+    throw lastError || new Error("Extraction failed after retries");
   } catch (e) {
     console.error("extract-knowledge error:", e);
     return new Response(
