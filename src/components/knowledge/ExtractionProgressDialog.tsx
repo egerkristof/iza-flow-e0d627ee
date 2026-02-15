@@ -115,7 +115,7 @@ export function ExtractionProgressDialog({ open, fileName, phase, chunkProgress,
   return (
     <Dialog open={open} onOpenChange={() => {}}>
       <DialogContent
-        className="sm:max-w-md border-border/50 bg-card"
+        className="sm:max-w-lg border-border/50 bg-card"
         onPointerDownOutside={e => e.preventDefault()}
         onEscapeKeyDown={e => e.preventDefault()}
       >
