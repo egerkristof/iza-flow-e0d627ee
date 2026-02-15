@@ -128,6 +128,18 @@ const WorkbooksPage = () => {
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
   });
 
+  const deleteWorkbook = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("workbooks").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workbooks"] });
+      toast({ title: "Workbook deleted" });
+    },
+    onError: (e: any) => toast({ title: "Delete failed", description: e.message, variant: "destructive" }),
+  });
+
   const filtered = useMemo(() => {
     return workbooks.filter((wb) => {
       const matchesSearch =
@@ -141,6 +153,10 @@ const WorkbooksPage = () => {
 
   const handleOpen = (id: string) => {
     navigate(`/workbooks/${id}`);
+  };
+
+  const handleDelete = (id: string) => {
+    deleteWorkbook.mutate(id);
   };
 
   const handleCreate = () => {
@@ -232,7 +248,7 @@ const WorkbooksPage = () => {
           </button>
 
           {filtered.map((wb) => (
-            <WorkbookCard key={wb.id} workbook={wb} onClick={handleOpen} />
+            <WorkbookCard key={wb.id} workbook={wb} onClick={handleOpen} onDelete={handleDelete} />
           ))}
         </div>
       ) : (
