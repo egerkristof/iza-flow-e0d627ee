@@ -22,6 +22,7 @@ export default function MyKnowledgePage() {
         .from("context_items")
         .select("*", { count: "exact", head: true })
         .eq("owner_id", user!.id)
+        .is("deleted_at", null)
         .filter("capture_status", "eq", "draft");
       if (error) throw error;
       return count ?? 0;

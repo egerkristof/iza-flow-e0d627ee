@@ -40,7 +40,8 @@ export async function findDuplicates(
   const { data: existing, error } = await supabase
     .from("context_items")
     .select("id, title, content_full, category, bundle_id")
-    .eq("owner_id", ownerId);
+    .eq("owner_id", ownerId)
+    .is("deleted_at", null);
 
   if (error || !existing) return [];
 
