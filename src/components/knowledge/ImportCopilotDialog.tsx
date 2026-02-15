@@ -22,6 +22,7 @@ import {
   type BundleReadiness,
   type BundleMatch,
   type DocumentStructureSkeleton,
+  type SkeletonSection,
   CONTEXT_CATEGORIES,
   CATEGORY_COLORS,
   PREFERENCE_KEY_LABELS,
@@ -1179,27 +1180,97 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
 
         <div className="flex-1 overflow-y-auto space-y-4 -mx-6 px-6" style={{ maxHeight: "calc(85vh - 200px)" }}>
           {/* Document Structure Detection Banner */}
-          {data.document_structure && (
-            <div className="rounded-lg border border-cyan-500/20 bg-cyan-500/5 px-3 py-2 flex items-center gap-2.5">
-              <ScanSearch className="h-4 w-4 text-cyan-400 shrink-0" />
-              <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
-                <span className="text-[11px] font-medium text-cyan-400">Structure Detected</span>
-                <Badge variant="outline" className="text-[9px] border-cyan-500/30 text-cyan-400 capitalize">
-                  {data.document_structure.structure_type === "toc" ? "Table of Contents" : data.document_structure.structure_type}
-                </Badge>
-                <Badge variant="outline" className={cn("text-[9px]", 
-                  data.document_structure.confidence === "high" 
-                    ? "border-emerald-500/30 text-emerald-400" 
-                    : "border-amber-500/30 text-amber-400"
-                )}>
-                  {data.document_structure.confidence === "high" ? "✓ Mandatory blueprint" : "~ Suggested guide"}
-                </Badge>
-                <span className="text-[10px] text-muted-foreground">
-                  {data.document_structure.total_sections_detected} sections mapped
-                </span>
+          {data.document_structure && (() => {
+            const ds = data.document_structure!;
+            const hasSkeleton = ds.skeleton && ds.skeleton.length > 0;
+            const [structureExpanded, setStructureExpanded] = [
+              expandedBundles.has(-999),
+              (v: boolean) => setExpandedBundles(prev => {
+                const next = new Set(prev);
+                v ? next.add(-999) : next.delete(-999);
+                return next;
+              }),
+            ];
+            const densityIcon: Record<string, string> = { rich: "█", moderate: "▓", sparse: "░", empty: "·" };
+            const densityColor: Record<string, string> = { rich: "text-emerald-400", moderate: "text-cyan-400", sparse: "text-amber-400", empty: "text-muted-foreground" };
+
+            return (
+              <div className="rounded-lg border border-cyan-500/20 bg-cyan-500/5">
+                <button
+                  type="button"
+                  className="w-full px-3 py-2 flex items-center gap-2.5 text-left"
+                  onClick={() => hasSkeleton && setStructureExpanded(!structureExpanded)}
+                >
+                  <ScanSearch className="h-4 w-4 text-cyan-400 shrink-0" />
+                  <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
+                    <span className="text-[11px] font-medium text-cyan-400">Structure Detected</span>
+                    <Badge variant="outline" className="text-[9px] border-cyan-500/30 text-cyan-400 capitalize">
+                      {ds.structure_type === "toc" ? "Table of Contents" : ds.structure_type}
+                    </Badge>
+                    <Badge variant="outline" className={cn("text-[9px]",
+                      ds.confidence === "high"
+                        ? "border-emerald-500/30 text-emerald-400"
+                        : "border-amber-500/30 text-amber-400"
+                    )}>
+                      {ds.confidence === "high" ? "✓ Mandatory blueprint" : "~ Suggested guide"}
+                    </Badge>
+                    <span className="text-[10px] text-muted-foreground">
+                      {ds.total_sections_detected} sections mapped
+                    </span>
+                  </div>
+                  {hasSkeleton && (
+                    structureExpanded
+                      ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                      : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                  )}
+                </button>
+
+                {structureExpanded && hasSkeleton && (
+                  <div className="px-3 pb-2.5 pt-0 space-y-0.5">
+                    <div className="border-t border-cyan-500/10 pt-2 space-y-0.5">
+                      {ds.skeleton!.map((section, si) => (
+                        <div
+                          key={si}
+                          className="flex items-start gap-1.5 text-[10px]"
+                          style={{ paddingLeft: `${(section.level - 1) * 14}px` }}
+                        >
+                          <span className={cn("font-mono text-[9px] shrink-0 mt-px", densityColor[section.content_density] || "text-muted-foreground")}>
+                            {densityIcon[section.content_density] || "·"}
+                          </span>
+                          <span className={cn(
+                            "flex-1 min-w-0 truncate",
+                            section.is_bundle_candidate ? "font-semibold text-cyan-300" : "text-muted-foreground"
+                          )}>
+                            {section.label}
+                          </span>
+                          {section.is_bundle_candidate && (
+                            <Badge variant="outline" className="text-[8px] border-cyan-500/30 text-cyan-400 shrink-0 py-0 h-3.5">
+                              bundle
+                            </Badge>
+                          )}
+                          {section.child_count > 0 && (
+                            <span className="text-[9px] text-muted-foreground shrink-0">
+                              {section.child_count} sub
+                            </span>
+                          )}
+                          {section.page_or_slide_range && (
+                            <span className="text-[9px] text-muted-foreground shrink-0">
+                              {section.page_or_slide_range}
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    {ds.notes && (
+                      <p className="text-[10px] text-muted-foreground pt-1.5 border-t border-cyan-500/10 mt-1.5 italic">
+                        {ds.notes}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Advisor Persona Banner */}
           {data.advisor && (

@@ -198,10 +198,21 @@ export interface BundleMatch {
   suggested_merged_title?: string;
 }
 
+export interface SkeletonSection {
+  label: string;
+  level: number;
+  is_bundle_candidate: boolean;
+  playbook_candidates?: { title: string; rationale: string }[];
+  content_density: "rich" | "moderate" | "sparse" | "empty";
+  child_count: number;
+  page_or_slide_range?: string;
+}
+
 export interface DocumentStructureSkeleton {
   structure_type: "toc" | "presentation" | "hierarchical" | "phased" | "tabular" | "flat";
   confidence: "high" | "medium" | "low";
   total_sections_detected: number;
+  skeleton?: SkeletonSection[];
   notes?: string;
 }
 
