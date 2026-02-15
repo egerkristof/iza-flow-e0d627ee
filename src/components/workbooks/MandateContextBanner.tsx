@@ -202,7 +202,8 @@ export function MandateContextBanner({ workbookId, compact = false }: { workbook
         .select("id, title, content_full, enforcement_level, mandate_description, mandate_scope, priority, category")
         .eq("is_mandate", true)
         .eq("mandate_status", "active")
-        .eq("owner_id", user!.id);
+        .eq("owner_id", user!.id)
+        .is("deleted_at", null);
       if (error) throw error;
 
       // Filter to mandates that apply to this workbook

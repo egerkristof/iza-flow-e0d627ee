@@ -358,6 +358,7 @@ export function MandatesDashboard({ compact = false }: { compact?: boolean }) {
         .from("context_items")
         .select("*")
         .eq("is_mandate", true)
+        .is("deleted_at", null)
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data as unknown as Mandate[];

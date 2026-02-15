@@ -61,6 +61,7 @@ export function CapturesInbox() {
         .select("*")
         .eq("owner_id", user!.id)
         .eq("capture_status", "draft")
+        .is("deleted_at", null)
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data as unknown as DraftCapture[];
