@@ -4,7 +4,7 @@ import {
   Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
   Layers, Tag, Loader2, Rocket, BookOpen, Circle, CheckCircle2, ArrowUpCircle,
-  Eraser,
+  Eraser, GripVertical,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -28,6 +28,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+export interface CreateItemContext {
+  bundleId?: string;
+  category?: string;
+  parentPlaybookId?: string;
+}
+
 interface BundleFirstViewProps {
   items: MockContextItem[];
   bundles: MockBundle[];
@@ -36,7 +42,7 @@ interface BundleFirstViewProps {
   onDestroyItem: (item: MockContextItem) => void;
   onEditBundle: (bundle: MockBundle) => void;
   onDeleteBundle: (id: string) => void;
-  onCreateItem: (bundleId?: string) => void;
+  onCreateItem: (ctx?: CreateItemContext) => void;
   onCreateBundle: () => void;
   onOpenCopilot: () => void;
   copilotOpen: boolean;
@@ -46,6 +52,7 @@ interface BundleFirstViewProps {
   onExtractionDepthChange: (depth: ExtractionDepth) => void;
   onClearAll?: () => void;
   clearingAll?: boolean;
+  onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
 }
 
 const scopeColors: Record<string, string> = {
@@ -149,6 +156,106 @@ function DeploymentBadges({ deployments }: { deployments: { workbook_id: string;
   );
 }
 
+// ── Draggable Item List for reordering ──
+function DraggableItemList({
+  items,
+  bundleId,
+  onEditItem,
+  onDestroyItem,
+  onReorderItems,
+  renderPrefix,
+  className = "",
+}: {
+  items: MockContextItem[];
+  bundleId: string;
+  onEditItem: (item: MockContextItem) => void;
+  onDestroyItem: (item: MockContextItem) => void;
+  onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
+  renderPrefix?: (item: MockContextItem, index: number) => React.ReactNode;
+  className?: string;
+}) {
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [localItems, setLocalItems] = useState(items);
+
+  // Sync when items prop changes
+  if (items !== localItems && !draggedId) {
+    setLocalItems(items);
+  }
+
+  const handleDragStart = (e: React.DragEvent, id: string) => {
+    setDraggedId(id);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", id);
+  };
+
+  const handleDragOver = (e: React.DragEvent, id: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (id !== draggedId) setDragOverId(id);
+  };
+
+  const handleDrop = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    if (!draggedId || draggedId === targetId) {
+      setDraggedId(null);
+      setDragOverId(null);
+      return;
+    }
+    const fromIdx = localItems.findIndex(i => i.id === draggedId);
+    const toIdx = localItems.findIndex(i => i.id === targetId);
+    if (fromIdx === -1 || toIdx === -1) return;
+    const reordered = [...localItems];
+    const [moved] = reordered.splice(fromIdx, 1);
+    reordered.splice(toIdx, 0, moved);
+    setLocalItems(reordered);
+    setDraggedId(null);
+    setDragOverId(null);
+    onReorderItems?.(bundleId, reordered.map(i => i.id));
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+    setDragOverId(null);
+  };
+
+  return (
+    <>
+      {localItems.map((item, idx) => (
+        <div
+          key={item.id}
+          draggable
+          onDragStart={e => handleDragStart(e, item.id)}
+          onDragOver={e => handleDragOver(e, item.id)}
+          onDrop={e => handleDrop(e, item.id)}
+          onDragEnd={handleDragEnd}
+          className={`flex items-center gap-3 ${className} py-1.5 group/item hover:bg-secondary/20 transition-colors ${
+            draggedId === item.id ? "opacity-40" : ""
+          } ${dragOverId === item.id ? "border-t-2 border-primary/50" : ""}`}
+        >
+          <GripVertical className="h-3 w-3 text-muted-foreground/30 cursor-grab active:cursor-grabbing shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+          {renderPrefix?.(item, idx)}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium truncate">{item.title}</span>
+              <CategoryBadge category={item.category} />
+            </div>
+            <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+          </div>
+          <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+              <Pencil className="h-3 w-3" />
+            </Button>
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+              <Trash2 className="h-3 w-3" />
+            </Button>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
+
 function BundleExpandable({
   bundle,
   bundleItems,
@@ -157,6 +264,7 @@ function BundleExpandable({
   onEditBundle,
   onDeleteBundle,
   onCreateItem,
+  onReorderItems,
 }: {
   bundle: MockBundle;
   bundleItems: MockContextItem[];
@@ -164,7 +272,8 @@ function BundleExpandable({
   onDestroyItem: (item: MockContextItem) => void;
   onEditBundle: (bundle: MockBundle) => void;
   onDeleteBundle: (id: string) => void;
-  onCreateItem: (bundleId?: string) => void;
+  onCreateItem: (ctx?: CreateItemContext) => void;
+  onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
 }) {
   const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -233,13 +342,19 @@ function BundleExpandable({
             {bundleItems.length === 0 ? (
               <div className="p-4 text-center text-xs text-muted-foreground">
                 No items in this bundle yet.
+                <div className="flex items-center justify-center gap-2 mt-2">
+                  <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => onCreateItem({ bundleId: bundle.id, category: "PLAYBOOK" })}>
+                    <Plus className="h-2.5 w-2.5" /> Playbook
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => onCreateItem({ bundleId: bundle.id, category: "KNOWLEDGE" })}>
+                    <Plus className="h-2.5 w-2.5" /> Knowledge
+                  </Button>
+                </div>
               </div>
             ) : (
               (() => {
-                // Sort all bundle items by extraction order (sort_order)
                 const sortedBundleItems = [...bundleItems].sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999));
                 const playbooks = sortedBundleItems.filter(i => i.category === "PLAYBOOK");
-                // Items owned by a playbook (have parent_playbook_id)
                 const ownedByPlaybook = new Map<string, MockContextItem[]>();
                 const sharedItems: MockContextItem[] = [];
 
@@ -259,7 +374,6 @@ function BundleExpandable({
                     {/* Playbook trees with owned children */}
                     {playbooks.map(playbook => {
                       const children = ownedByPlaybook.get(playbook.id) || [];
-                      // Children are already in extraction order from sorting above
                       const procedures = children.filter(i => i.category === "PROCEDURE");
                       const others = children.filter(i => i.category !== "PROCEDURE");
                       return (
@@ -291,32 +405,34 @@ function BundleExpandable({
                               </Button>
                             </div>
                           </div>
-                          {/* Procedures (steps) grouped together */}
+                          {/* Procedures (steps) - draggable */}
                           {procedures.length > 0 && (
                             <div className="ml-4 border-l-2 border-orange-500/10">
                               <div className="px-4 pt-1.5 pb-0.5 pl-10">
                                 <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Steps</span>
                               </div>
-                              {procedures.map((item, idx) => (
-                                <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-1.5 group/item hover:bg-secondary/20 transition-colors">
+                              <DraggableItemList
+                                items={procedures}
+                                bundleId={bundle.id}
+                                onEditItem={onEditItem}
+                                onDestroyItem={onDestroyItem}
+                                onReorderItems={onReorderItems}
+                                renderPrefix={(_, idx) => (
                                   <span className="text-[9px] font-mono text-muted-foreground/50 w-4 text-right shrink-0">{idx + 1}.</span>
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2">
-                                      <span className="text-xs font-medium truncate">{item.title}</span>
-                                      <CategoryBadge category={item.category} />
-                                    </div>
-                                    <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
-                                  </div>
-                                  <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
-                                      <Pencil className="h-3 w-3" />
-                                    </Button>
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
-                                      <Trash2 className="h-3 w-3" />
-                                    </Button>
-                                  </div>
-                                </div>
-                              ))}
+                                )}
+                                className="pl-10 pr-4"
+                              />
+                              {/* Add step button */}
+                              <div className="pl-10 pr-4 py-1">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                                  onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}
+                                >
+                                  <Plus className="h-2.5 w-2.5" /> Add step
+                                </Button>
+                              </div>
                             </div>
                           )}
                           {/* Other owned items (DIRECTIVEs, etc.) */}
@@ -349,10 +465,35 @@ function BundleExpandable({
                               ))}
                             </div>
                           )}
+                          {/* Add gate/directive to playbook */}
+                          {procedures.length === 0 && others.length === 0 && (
+                            <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                                onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}
+                              >
+                                <Plus className="h-2.5 w-2.5" /> Add step
+                              </Button>
+                            </div>
+                          )}
+                          {others.length > 0 || procedures.length > 0 ? (
+                            <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                                onClick={() => onCreateItem({ bundleId: bundle.id, category: "DIRECTIVE", parentPlaybookId: playbook.id })}
+                              >
+                                <Plus className="h-2.5 w-2.5" /> Add gate / directive
+                              </Button>
+                            </div>
+                          ) : null}
                         </div>
                       );
                     })}
-                    {/* Shared context items (no parent_playbook_id) */}
+                    {/* Shared context items */}
                     {sharedItems.length > 0 && playbooks.length > 0 && (
                       <div className="px-4 pt-2 pb-1">
                         <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
@@ -383,21 +524,37 @@ function BundleExpandable({
                         </div>
                       </div>
                     ))}
+                    {/* Contextual add buttons at bundle level */}
+                    <div className="px-4 py-2 flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
+                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "PLAYBOOK" })}
+                      >
+                        <Plus className="h-2.5 w-2.5" /> Playbook
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
+                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "KNOWLEDGE" })}
+                      >
+                        <Plus className="h-2.5 w-2.5" /> Knowledge
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
+                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "PRINCIPLE" })}
+                      >
+                        <Plus className="h-2.5 w-2.5" /> Principle
+                      </Button>
+                    </div>
                   </div>
                 );
               })()
             )}
-            {/* Add item to this bundle */}
-            <div className="px-4 py-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-7 w-full text-xs gap-1.5 border border-dashed border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/40"
-                onClick={() => onCreateItem(bundle.id)}
-              >
-                <Plus className="h-3 w-3" /> Add item to bundle
-              </Button>
-            </div>
           </div>
         </CollapsibleContent>
       </div>
@@ -429,6 +586,7 @@ export function BundleFirstView({
   onExtractionDepthChange,
   onClearAll,
   clearingAll,
+  onReorderItems,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -657,6 +815,7 @@ export function BundleFirstView({
             onEditBundle={onEditBundle}
             onDeleteBundle={onDeleteBundle}
             onCreateItem={onCreateItem}
+            onReorderItems={onReorderItems}
           />
         ))}
 
