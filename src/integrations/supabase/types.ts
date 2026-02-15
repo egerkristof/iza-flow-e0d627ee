@@ -143,6 +143,7 @@ export type Database = {
           created_at: string
           id: string
           parent_playbook_id: string | null
+          sort_order: number
         }
         Insert: {
           bundle_id: string
@@ -150,6 +151,7 @@ export type Database = {
           created_at?: string
           id?: string
           parent_playbook_id?: string | null
+          sort_order?: number
         }
         Update: {
           bundle_id?: string
@@ -157,6 +159,7 @@ export type Database = {
           created_at?: string
           id?: string
           parent_playbook_id?: string | null
+          sort_order?: number
         }
         Relationships: [
           {

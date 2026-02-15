@@ -234,12 +234,14 @@ function BundleExpandable({
               </div>
             ) : (
               (() => {
-                const playbooks = bundleItems.filter(i => i.category === "PLAYBOOK");
+                // Sort all bundle items by extraction order (sort_order)
+                const sortedBundleItems = [...bundleItems].sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999));
+                const playbooks = sortedBundleItems.filter(i => i.category === "PLAYBOOK");
                 // Items owned by a playbook (have parent_playbook_id)
                 const ownedByPlaybook = new Map<string, MockContextItem[]>();
                 const sharedItems: MockContextItem[] = [];
 
-                for (const item of bundleItems) {
+                for (const item of sortedBundleItems) {
                   if (item.category === "PLAYBOOK") continue;
                   if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) {
                     const existing = ownedByPlaybook.get(item.parent_playbook_id) || [];
@@ -255,13 +257,9 @@ function BundleExpandable({
                     {/* Playbook trees with owned children */}
                     {playbooks.map(playbook => {
                       const children = ownedByPlaybook.get(playbook.id) || [];
-                      // Sort: PROCEDUREs first (they are the playbook's steps), then DIRECTIVEs, then others
-                      const sortedChildren = [...children].sort((a, b) => {
-                        const order = (cat: string) => cat === "PROCEDURE" ? 0 : cat === "DIRECTIVE" ? 1 : 2;
-                        return order(a.category) - order(b.category);
-                      });
-                      const procedures = sortedChildren.filter(i => i.category === "PROCEDURE");
-                      const others = sortedChildren.filter(i => i.category !== "PROCEDURE");
+                      // Children are already in extraction order from sorting above
+                      const procedures = children.filter(i => i.category === "PROCEDURE");
+                      const others = children.filter(i => i.category !== "PROCEDURE");
                       return (
                         <div key={playbook.id}>
                           {/* Playbook header */}
