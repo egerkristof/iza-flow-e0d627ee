@@ -208,12 +208,34 @@ export interface SkeletonSection {
   page_or_slide_range?: string;
 }
 
+export interface ConsolidationDecision {
+  action: string;
+  original_labels: string[];
+  result_label: string;
+  result_role: string;
+  rationale: string;
+  semantic_confidence: number;
+}
+
+export interface OptimizationStats {
+  original_sections: number;
+  final_bundles: number;
+  final_playbooks: number;
+  merges_performed: number;
+  reclassifications: number;
+}
+
 export interface DocumentStructureSkeleton {
   structure_type: "toc" | "presentation" | "hierarchical" | "phased" | "tabular" | "flat";
   confidence: "high" | "medium" | "low";
   total_sections_detected: number;
   skeleton?: SkeletonSection[];
   notes?: string;
+  /** From optimize-structure pass */
+  optimized_blueprint?: any[];
+  consolidation_decisions?: ConsolidationDecision[];
+  optimization_summary?: string;
+  optimization_stats?: OptimizationStats;
 }
 
 export interface ExtractionResult {
