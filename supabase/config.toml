@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.generate-protocols]
 verify_jwt = false
+
+[functions.detect-structure]
+verify_jwt = false

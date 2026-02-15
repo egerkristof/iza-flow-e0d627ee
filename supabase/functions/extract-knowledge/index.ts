@@ -829,6 +829,7 @@ serve(async (req) => {
     const body = await req.json();
     const sourceType: string = body.source_type || "document";
     const advisorPersona: any = body.advisor_persona || null;
+    const documentStructure: any = body.document_structure || null;
     const extractionDepth: string = body.extraction_depth || "quick";
     let textContent = "";
     let meta: Record<string, string> = {};
@@ -918,6 +919,38 @@ You are being advised by a **${advisorPersona.persona_title}** (${advisorPersona
 - KNOWLEDGE in this domain: ${advisorPersona.category_hints?.likely_knowledge || "N/A"}
 
 Use the advisor's guidance to improve categorization precision and extraction depth. The advisor's domain expertise should inform your decisions about what to extract and how to structure it.`;
+    }
+
+    // ── Inject document structure skeleton if detected ─────────────────
+    if (documentStructure && documentStructure.confidence !== "low") {
+      const isMandatory = documentStructure.confidence === "high";
+      const skeletonJson = JSON.stringify(documentStructure.skeleton, null, 2);
+      
+      systemPrompt += `\n\n## DOCUMENT STRUCTURE BLUEPRINT (${isMandatory ? "MANDATORY" : "SUGGESTED"})
+A structural analysis pass has detected this document's organizational blueprint.
+Structure type: **${documentStructure.structure_type}** | Confidence: **${documentStructure.confidence}** | Sections: ${documentStructure.total_sections_detected}
+
+${isMandatory 
+  ? `**THIS IS A MANDATORY BLUEPRINT.** The document has clear, explicit structure. You MUST use it:
+- Create ONE BUNDLE for each skeleton entry where is_bundle_candidate=true
+- Use the EXACT labels from the skeleton as bundle titles
+- Create PLAYBOOKs matching the playbook_candidates listed for each section
+- Do NOT invent additional bundles beyond what the skeleton defines (unless you find major sections it missed)
+- Do NOT merge or rename skeleton sections — preserve the document's own organization
+- Content density hints tell you what to expect: "rich" sections should yield many items, "sparse"/"empty" sections should be skeleton bundles`
+  : `**THIS IS A SUGGESTED BLUEPRINT.** The document has some detectable structure. Use it as guidance:
+- Prefer the skeleton's section labels as bundle titles where they align with the content
+- Use playbook_candidates as hints for PLAYBOOK items, but apply the PLAYBOOK Test to each
+- You may adjust, merge, or add bundles if the content justifies it
+- Content density hints help you calibrate extraction depth per section`
+}
+
+### Detected Skeleton:
+\`\`\`json
+${skeletonJson}
+\`\`\`
+
+${documentStructure.notes ? `**Structural notes:** ${documentStructure.notes}` : ""}`;
     }
 
     if (extractionDepth === "deep") {

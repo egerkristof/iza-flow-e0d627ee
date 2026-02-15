@@ -20,7 +20,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
   const { toast } = useToast();
   const [extracting, setExtracting] = useState(false);
   const [depth, setDepth] = useState<ExtractionDepth>("guided");
-  const [advisorPhase, setAdvisorPhase] = useState<"idle" | "generating-advisor" | "extracting" | "matching">("idle");
+  const [advisorPhase, setAdvisorPhase] = useState<"idle" | "detecting-structure" | "generating-advisor" | "extracting" | "matching">("idle");
 
   const extract = useCallback(async (
     body: Record<string, any>,
@@ -31,8 +31,33 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
 
     try {
       let advisorPersona: AdvisorPersona | null = null;
+      let documentStructure: any = null;
 
-      // For guided/deep: generate advisor first
+      // ── Pass 1: Structure Detection ──────────────────────────────────
+      // Detect document structure before extraction (for document/loom sources)
+      const isDocumentSource = !body.source_type || body.source_type === "document" || body.source_type === "loom";
+      if (isDocumentSource) {
+        setAdvisorPhase("detecting-structure");
+        try {
+          const structureBody: Record<string, any> = {};
+          if (body.documentId) structureBody.documentId = body.documentId;
+          else if (body.content) structureBody.content = body.content;
+
+          const { data: structData, error: structError } = await supabase.functions.invoke("detect-structure", {
+            body: structureBody,
+          });
+          if (!structError && structData && !structData.error && structData.confidence !== "low") {
+            documentStructure = structData;
+            console.log(`Structure detected: type=${structData.structure_type}, confidence=${structData.confidence}, sections=${structData.total_sections_detected}`);
+          } else {
+            console.log("Structure detection returned low confidence or failed — using heuristic extraction");
+          }
+        } catch (structErr) {
+          console.warn("Structure detection failed (non-fatal):", structErr);
+        }
+      }
+
+      // For guided/deep: generate advisor
       if (depth !== "quick") {
         setAdvisorPhase("generating-advisor");
         const contentPreview = body.content || body.documentId || "";
@@ -45,7 +70,6 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
         if (!advisorError && advisorData && !advisorData.error) {
           advisorPersona = advisorData as AdvisorPersona;
         }
-        // Advisor generation is best-effort — continue even if it fails
       }
 
       setAdvisorPhase("extracting");
@@ -54,6 +78,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
           ...body,
           extraction_depth: depth,
           ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+          ...(documentStructure ? { document_structure: documentStructure } : {}),
         },
       });
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FileText, Brain, Sparkles, CheckCircle2, X, GitMerge } from "lucide-react";
+import { FileText, Brain, Sparkles, CheckCircle2, X, GitMerge, ScanSearch } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
-export type ExtractionPhase = "uploading" | "analyzing" | "extracting" | "matching" | "done";
+export type ExtractionPhase = "uploading" | "detecting-structure" | "analyzing" | "extracting" | "matching" | "done";
 
 interface ExtractionProgressDialogProps {
   open: boolean;
@@ -18,11 +18,17 @@ const PHASE_CONFIG: Record<ExtractionPhase, { label: string; subtitle: string; i
     label: "Uploading document",
     subtitle: "Securely storing your file…",
     icon: FileText,
-    progress: 15,
+    progress: 10,
+  },
+  "detecting-structure": {
+    label: "Detecting structure",
+    subtitle: "Mapping document architecture (ToC, sections, phases)…",
+    icon: ScanSearch,
+    progress: 25,
   },
   analyzing: {
-    label: "Analyzing content",
-    subtitle: "Reading and understanding your document…",
+    label: "Generating advisor",
+    subtitle: "Creating a domain-specific advisor…",
     icon: Brain,
     progress: 40,
   },
@@ -119,12 +125,13 @@ export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: Ex
 
           {/* Phase steps */}
           <div className="flex items-center gap-3 text-[11px]">
-            {(["uploading", "analyzing", "extracting", "matching"] as ExtractionPhase[]).map((p, i) => {
+            {(["uploading", "detecting-structure", "analyzing", "extracting", "matching"] as ExtractionPhase[]).map((p, i) => {
               const isActive = p === phase;
               const isDone = config.progress > PHASE_CONFIG[p].progress || phase === "done";
+              const shortLabel = p === "uploading" ? "Upload" : p === "detecting-structure" ? "Structure" : p === "analyzing" ? "Advisor" : p === "matching" ? "Match" : "Extract";
               return (
                 <div key={p} className="flex items-center gap-1.5">
-                  {i > 0 && <div className={`w-6 h-px ${isDone ? "bg-emerald-500/50" : "bg-border"}`} />}
+                  {i > 0 && <div className={`w-4 h-px ${isDone ? "bg-emerald-500/50" : "bg-border"}`} />}
                   <div className={`flex items-center gap-1 ${
                     isDone ? "text-emerald-400" : isActive ? "text-primary font-medium" : "text-muted-foreground"
                   }`}>
@@ -133,7 +140,7 @@ export function ExtractionProgressDialog({ open, fileName, phase, onCancel }: Ex
                     ) : (
                       <div className={`h-2 w-2 rounded-full ${isActive ? "bg-primary animate-pulse" : "bg-muted-foreground/30"}`} />
                     )}
-                    <span className="capitalize">{p === "uploading" ? "Upload" : p === "analyzing" ? "Analyze" : p === "matching" ? "Consolidate" : "Extract"}</span>
+                    <span>{shortLabel}</span>
                   </div>
                 </div>
               );
