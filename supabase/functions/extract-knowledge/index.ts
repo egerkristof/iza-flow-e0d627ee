@@ -1097,16 +1097,32 @@ You are in **deep analysis mode**. This means:
 
     // ── Chunked extraction ──────────────────────────────────────────────
     if (pdfBase64) {
-      // Estimate total pages from structure or file size (~3KB per page for compressed PDFs)
-      const estimatedPages = documentStructure?.total_sections_detected
-        ? Math.max(documentStructure.total_sections_detected * 5, 30) // rough heuristic
-        : Math.max(Math.ceil(pdfBase64.length / 4000), 10); // ~3KB base64 per page
+      // Estimate total pages from file size (~50KB raw = ~67KB base64 per page)
+      const estimatedPages = Math.max(Math.ceil(pdfBase64.length / 67000), 10);
+      console.log(`PDF page estimate: ~${estimatedPages} pages (base64 size: ${Math.round(pdfBase64.length / 1024)}KB)`);
       
       const pdfChunks = buildPdfPageChunks(documentStructure, estimatedPages);
 
-      if (pdfChunks.length > 1) {
-        // Multi-chunk PDF extraction with SSE streaming
-        console.log(`PDF chunked extraction: ${pdfChunks.length} chunks from ~${estimatedPages} pages`);
+    if (pdfChunks.length > 1) {
+        // Cap at 4 chunks max to avoid edge function timeout (~60s per AI call)
+        const cappedChunks = pdfChunks.length > 4 
+          ? (() => {
+              // Merge chunks evenly to get ≤4
+              const merged: typeof pdfChunks = [];
+              const groupSize = Math.ceil(pdfChunks.length / 4);
+              for (let g = 0; g < pdfChunks.length; g += groupSize) {
+                const group = pdfChunks.slice(g, g + groupSize);
+                merged.push({
+                  label: group.map(c => c.label).join(", "),
+                  pageRange: `${group[0].pageRange.split(" to ")[0]} to ${group[group.length - 1].pageRange.split(" to ").pop()}`,
+                  focusInstructions: group.map(c => c.focusInstructions).join("\n\n"),
+                });
+              }
+              return merged;
+            })()
+          : pdfChunks;
+
+        console.log(`PDF chunked extraction: ${cappedChunks.length} chunks (from ${pdfChunks.length} original) from ~${estimatedPages} pages`);
         const encoder = new TextEncoder();
         const stream = new ReadableStream({
           async start(controller) {
@@ -1114,17 +1130,17 @@ You are in **deep analysis mode**. This means:
               const chunkResults: ExtractionResult[] = [];
               const existingBundleTitles: string[] = [];
 
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: 0, total: pdfChunks.length })}\n\n`));
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: 0, total: cappedChunks.length })}\n\n`));
 
-              for (let i = 0; i < pdfChunks.length; i++) {
-                const pdfChunk = pdfChunks[i];
-                console.log(`PDF chunk ${i + 1}/${pdfChunks.length}: ${pdfChunk.label}`);
+              for (let i = 0; i < cappedChunks.length; i++) {
+                const pdfChunk = cappedChunks[i];
+                console.log(`PDF chunk ${i + 1}/${cappedChunks.length}: ${pdfChunk.label}`);
 
-                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: i + 1, total: pdfChunks.length })}\n\n`));
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: i + 1, total: cappedChunks.length })}\n\n`));
 
                 // Build a chunk-specific user prompt that focuses on specific pages
                 const chunkPrefix = i > 0
-                  ? `## CONTINUATION EXTRACTION (Chunk ${i + 1} of ${pdfChunks.length})
+                  ? `## CONTINUATION EXTRACTION (Chunk ${i + 1} of ${cappedChunks.length})
 You are continuing extraction from a LARGE PDF document. Previous chunks already extracted these bundles:
 ${existingBundleTitles.map(t => `- "${t}"`).join("\n")}
 
@@ -1132,7 +1148,7 @@ ${existingBundleTitles.map(t => `- "${t}"`).join("\n")}
 - If content in THIS chunk belongs to an EXISTING bundle listed above, use the EXACT SAME bundle title so results can be merged.
 - If content introduces a NEW phase/section not covered above, create a NEW bundle.
 - Do NOT re-extract content that was already covered. Focus on NEW content in this page range.
-- This is chunk ${i + 1} of ${pdfChunks.length} — ${i + 1 === pdfChunks.length ? "this is the FINAL chunk, ensure nothing is missed" : "more chunks will follow"}.
+- This is chunk ${i + 1} of ${cappedChunks.length} — ${i + 1 === cappedChunks.length ? "this is the FINAL chunk, ensure nothing is missed" : "more chunks will follow"}.
 
 `
                   : "";
@@ -1177,8 +1193,8 @@ Analyze the specified pages/slides of this PDF document. Extract ALL knowledge e
               const merged = mergeExtractionResults(chunkResults);
               if (advisorPersona) merged.advisor = advisorPersona;
               merged.extraction_depth = extractionDepth;
-              merged.analysis_notes = `[PDF chunked extraction: ${pdfChunks.length} chunks processed]\n\n${merged.analysis_notes}`;
-              merged.chunk_info = { total: pdfChunks.length, processed: chunkResults.length };
+              merged.analysis_notes = `[PDF chunked extraction: ${cappedChunks.length} chunks processed]\n\n${merged.analysis_notes}`;
+              merged.chunk_info = { total: cappedChunks.length, processed: chunkResults.length };
 
               controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "result", data: merged })}\n\n`));
               controller.close();
