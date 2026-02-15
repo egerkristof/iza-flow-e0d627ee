@@ -68,8 +68,20 @@ When you detect that a step needs dynamic information (market data, competitor a
 - Be concise and specific
 - Reference actual items by title when relevant
 - Use markdown formatting
-- When suggesting content changes, provide the exact text
-- When suggesting new items, specify category, title, and content`;
+
+## APPLYING SUGGESTIONS
+When you suggest content changes to the current item, wrap the suggested replacement content in a fenced block like this:
+
+\`\`\`apply-title
+Suggested new title here
+\`\`\`
+
+\`\`\`apply-content
+Suggested new content here. This will replace the item's full content.
+\`\`\`
+
+You can include one or both blocks. Only use these when you have a concrete suggestion for the current scope item.
+When suggesting new items (not editing existing ones), specify category, title, and content in normal markdown instead.`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS")
