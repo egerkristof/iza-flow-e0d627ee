@@ -230,6 +230,7 @@ export default function ContextManagementPage() {
   const [extractionDocName, setExtractionDocName] = useState("");
   const [reviewOpen, setReviewOpen] = useState(false);
   const [extractionPhase, setExtractionPhase] = useState<ExtractionPhase>("uploading");
+  const [chunkProgress, setChunkProgress] = useState<{ current: number; total: number } | null>(null);
   const extractionAbortRef = useRef<AbortController | null>(null);
   const [extractionDepth, setExtractionDepth] = useState<ExtractionDepth>("guided");
   // Governance state
@@ -443,20 +444,67 @@ export default function ContextManagementPage() {
       if (abortController.signal.aborted) throw new Error("Cancelled");
 
       setExtractionPhase("extracting");
-      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
-        body: {
-          documentId: docRow.id,
-          source_type: "loom",
-          extraction_depth: extractionDepth,
-          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
-          ...(documentStructure ? { document_structure: documentStructure } : {}),
-        },
-      });
-      if (abortController.signal.aborted) throw new Error("Cancelled");
-      if (error) throw error;
-      if (data.error) throw new Error(data.error);
+      setChunkProgress(null);
 
-      const extracted = data as ExtractionResult;
+      // Use raw fetch to support SSE streaming for chunk progress
+      const session = (await supabase.auth.getSession()).data.session;
+      const extractRes = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({
+            documentId: docRow.id,
+            source_type: "loom",
+            extraction_depth: extractionDepth,
+            ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+            ...(documentStructure ? { document_structure: documentStructure } : {}),
+          }),
+          signal: abortController.signal,
+        },
+      );
+      if (!extractRes.ok) {
+        const errText = await extractRes.text();
+        throw new Error(errText || `Extraction failed (${extractRes.status})`);
+      }
+
+      let extracted: ExtractionResult;
+      const contentType = extractRes.headers.get("content-type") || "";
+
+      if (contentType.includes("text/event-stream")) {
+        const text = await extractRes.text();
+        const events = text.split("\n\n").filter(e => e.startsWith("data: "));
+        let result: ExtractionResult | null = null;
+
+        for (const event of events) {
+          const jsonStr = event.replace("data: ", "");
+          try {
+            const parsed = JSON.parse(jsonStr);
+            if (parsed.type === "chunk_progress") {
+              setChunkProgress({ current: parsed.current, total: parsed.total });
+            } else if (parsed.type === "result") {
+              result = parsed.data as ExtractionResult;
+            } else if (parsed.type === "error") {
+              throw new Error(parsed.error);
+            }
+          } catch (parseErr) {
+            if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
+          }
+        }
+
+        if (!result) throw new Error("No extraction result received");
+        extracted = result;
+      } else {
+        const data = await extractRes.json();
+        if (data.error) throw new Error(data.error);
+        extracted = data as ExtractionResult;
+      }
+
+      if (abortController.signal.aborted) throw new Error("Cancelled");
       // Attach detected structure metadata for Import Copilot display
       if (documentStructure) {
         extracted.document_structure = documentStructure;
@@ -870,6 +918,7 @@ export default function ContextManagementPage() {
         open={loomExtracting}
         fileName={extractionDocName}
         phase={extractionPhase}
+        chunkProgress={chunkProgress}
         onCancel={handleCancelExtraction}
       />
 

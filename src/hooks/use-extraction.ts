@@ -21,6 +21,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
   const [extracting, setExtracting] = useState(false);
   const [depth, setDepth] = useState<ExtractionDepth>("guided");
   const [advisorPhase, setAdvisorPhase] = useState<"idle" | "detecting-structure" | "generating-advisor" | "extracting" | "matching">("idle");
+  const [chunkProgress, setChunkProgress] = useState<{ current: number; total: number } | null>(null);
 
   const extract = useCallback(async (
     body: Record<string, any>,
@@ -28,6 +29,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
   ) => {
     setExtracting(true);
     setAdvisorPhase("idle");
+    setChunkProgress(null);
 
     try {
       let advisorPersona: AdvisorPersona | null = null;
@@ -73,19 +75,69 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
       }
 
       setAdvisorPhase("extracting");
-      const { data, error } = await supabase.functions.invoke("extract-knowledge", {
-        body: {
-          ...body,
-          extraction_depth: depth,
-          ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
-          ...(documentStructure ? { document_structure: documentStructure } : {}),
+      setChunkProgress(null);
+
+      // Use raw fetch for extraction to support SSE streaming (chunk progress)
+      const session = (await supabase.auth.getSession()).data.session;
+      const extractBody = {
+        ...body,
+        extraction_depth: depth,
+        ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+        ...(documentStructure ? { document_structure: documentStructure } : {}),
+      };
+
+      const extractRes = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify(extractBody),
         },
-      });
+      );
 
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
+      if (!extractRes.ok) {
+        const errText = await extractRes.text();
+        throw new Error(errText || `Extraction failed (${extractRes.status})`);
+      }
 
-      const extracted = data as ExtractionResult;
+      let extracted: ExtractionResult;
+      const contentType = extractRes.headers.get("content-type") || "";
+
+      if (contentType.includes("text/event-stream")) {
+        // SSE streaming — parse events for chunk progress + final result
+        const text = await extractRes.text();
+        const events = text.split("\n\n").filter(e => e.startsWith("data: "));
+        let result: ExtractionResult | null = null;
+
+        for (const event of events) {
+          const jsonStr = event.replace("data: ", "");
+          try {
+            const parsed = JSON.parse(jsonStr);
+            if (parsed.type === "chunk_progress") {
+              setChunkProgress({ current: parsed.current, total: parsed.total });
+            } else if (parsed.type === "result") {
+              result = parsed.data as ExtractionResult;
+            } else if (parsed.type === "error") {
+              throw new Error(parsed.error);
+            }
+          } catch (parseErr) {
+            if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
+            console.warn("Failed to parse SSE event:", jsonStr);
+          }
+        }
+
+        if (!result) throw new Error("No extraction result received");
+        extracted = result;
+      } else {
+        // Standard JSON response (single chunk / PDF)
+        const data = await extractRes.json();
+        if (data?.error) throw new Error(data.error);
+        extracted = data as ExtractionResult;
+      }
       // Attach detected structure metadata for Import Copilot display
       if (documentStructure) {
         extracted.document_structure = documentStructure;
@@ -163,6 +215,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     } finally {
       setExtracting(false);
       setAdvisorPhase("idle");
+      setChunkProgress(null);
     }
   }, [depth, onResult, toast]);
 
@@ -172,5 +225,6 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     depth,
     setDepth,
     advisorPhase,
+    chunkProgress,
   };
 }
