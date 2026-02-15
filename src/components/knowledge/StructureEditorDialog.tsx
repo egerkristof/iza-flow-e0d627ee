@@ -16,6 +16,7 @@ import {
   ChevronRight, ChevronDown, Layers, BookOpen, ListCheck,
   Merge, Trash2, Edit2, Check, X, ArrowRight, Sparkles,
   Info, AlertTriangle, MoveRight, GripVertical,
+  Eye, Hash, Layout, Table2, GitBranch, Presentation, Brain,
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -67,6 +68,7 @@ export interface StructureEditorData {
   total_sections_detected?: number;
   total_markers_detected?: number;
   markers_beyond_preview?: number;
+  skeleton_layout_types?: Record<string, string>;
   notes?: string;
 }
 
@@ -77,6 +79,31 @@ interface StructureEditorDialogProps {
   fileName: string;
   onConfirm: (editedData: StructureEditorData) => void;
   onSkip: () => void;
+}
+
+// ── Layout type helpers ──────────────────────────────────────────────────────
+
+const LAYOUT_TYPE_META: Record<string, { icon: typeof Eye; label: string; color: string }> = {
+  heading: { icon: Hash, label: "Text heading", color: "text-blue-400" },
+  numbered: { icon: ListCheck, label: "Numbered section", color: "text-emerald-400" },
+  visual_group: { icon: Eye, label: "Visual grouping", color: "text-violet-400" },
+  table: { icon: Table2, label: "Table/matrix", color: "text-amber-400" },
+  diagram: { icon: GitBranch, label: "Diagram/flowchart", color: "text-pink-400" },
+  slide_divider: { icon: Presentation, label: "Slide divider", color: "text-cyan-400" },
+  implicit: { icon: Brain, label: "Semantically inferred", color: "text-orange-400" },
+};
+
+function getLayoutTypesForPlaybook(
+  skeletonLabels: string[],
+  layoutTypes?: Record<string, string>,
+): string[] {
+  if (!layoutTypes) return [];
+  const types = new Set<string>();
+  for (const label of skeletonLabels) {
+    const lt = layoutTypes[label];
+    if (lt) types.add(lt);
+  }
+  return Array.from(types);
 }
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -452,6 +479,21 @@ export function StructureEditorDialog({
                             )}
 
                             <Badge variant="outline" className="text-[9px]">{pb.procedures.length} steps</Badge>
+                            {getLayoutTypesForPlaybook(pb.original_skeleton_labels, data.skeleton_layout_types).map(lt => {
+                              const meta = LAYOUT_TYPE_META[lt];
+                              if (!meta) return null;
+                              const Icon = meta.icon;
+                              return (
+                                <TooltipProvider key={lt}>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <span className={`${meta.color}`}><Icon className="h-3 w-3" /></span>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="top"><p className="text-xs">{meta.label}</p></TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              );
+                            })}
 
                             <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                               <Button variant="ghost" size="icon" className="h-4 w-4" onClick={() => startEdit("playbook", bi, pi)}>

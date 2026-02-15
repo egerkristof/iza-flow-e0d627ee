@@ -318,6 +318,16 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
                   rawStructure: structData,
                 };
 
+                // Build layout_type map from raw skeleton
+                const skeletonLayoutTypes: Record<string, string> = {};
+                if (structData.skeleton && Array.isArray(structData.skeleton)) {
+                  for (const entry of structData.skeleton) {
+                    if (entry.label && entry.layout_type) {
+                      skeletonLayoutTypes[entry.label] = entry.layout_type;
+                    }
+                  }
+                }
+
                 const editorData: StructureEditorData = {
                   optimized_blueprint: optData.optimized_blueprint,
                   consolidation_decisions: optData.consolidation_decisions,
@@ -328,6 +338,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
                   total_sections_detected: structData.total_sections_detected,
                   total_markers_detected: structData.total_markers_detected,
                   markers_beyond_preview: structData.markers_beyond_preview,
+                  skeleton_layout_types: skeletonLayoutTypes,
                   notes: structData.notes,
                 };
 
