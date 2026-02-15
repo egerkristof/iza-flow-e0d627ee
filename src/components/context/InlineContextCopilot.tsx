@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import {
-  Sparkles, X, Send, Loader2, AtSign, ChevronDown,
+  Sparkles, X, Send, Loader2, AtSign, ChevronDown, Check, Pencil,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -30,6 +31,11 @@ export interface CopilotHierarchy {
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+}
+
+interface ParsedSuggestion {
+  title?: string;
+  content?: string;
 }
 
 interface MentionableItem {
@@ -62,14 +68,61 @@ export function InlineContextCopilot({
   className,
 }: InlineContextCopilotProps) {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [showMentions, setShowMentions] = useState(false);
   const [mentionQuery, setMentionQuery] = useState("");
   const [mentionStart, setMentionStart] = useState(-1);
+  const [applyingIdx, setApplyingIdx] = useState<number | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Parse apply-title / apply-content blocks from assistant messages
+  const parseSuggestion = useCallback((text: string): ParsedSuggestion | null => {
+    const titleMatch = text.match(/```apply-title\s*\n([\s\S]*?)```/);
+    const contentMatch = text.match(/```apply-content\s*\n([\s\S]*?)```/);
+    if (!titleMatch && !contentMatch) return null;
+    return {
+      title: titleMatch?.[1]?.trim(),
+      content: contentMatch?.[1]?.trim(),
+    };
+  }, []);
+
+  // Strip apply blocks from display text
+  const stripApplyBlocks = useCallback((text: string): string => {
+    return text
+      .replace(/```apply-title\s*\n[\s\S]*?```/g, "")
+      .replace(/```apply-content\s*\n[\s\S]*?```/g, "")
+      .trim();
+  }, []);
+
+  // Apply suggestion to the context item
+  const applySuggestion = async (suggestion: ParsedSuggestion, msgIdx: number) => {
+    if (!scopeId) return;
+    setApplyingIdx(msgIdx);
+    try {
+      const update: Record<string, string> = {};
+      if (suggestion.title) update.title = suggestion.title;
+      if (suggestion.content) update.content_full = suggestion.content;
+
+      const { error } = await supabase
+        .from("context_items")
+        .update(update as any)
+        .eq("id", scopeId);
+
+      if (error) throw error;
+
+      queryClient.invalidateQueries({ queryKey: ["context-items"] });
+      queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
+      toast({ title: "Suggestion applied", description: `Updated "${suggestion.title || scopeTitle}"` });
+    } catch (e: any) {
+      toast({ title: "Apply failed", description: e.message, variant: "destructive" });
+    } finally {
+      setApplyingIdx(null);
+    }
+  };
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -322,19 +375,53 @@ export function InlineContextCopilot({
               </div>
             </div>
           )}
-          {messages.map((msg, idx) => (
-            <div key={idx} className={cn("text-xs", msg.role === "user" ? "text-right" : "")}>
-              {msg.role === "user" ? (
-                <div className="inline-block bg-primary/10 rounded-lg px-3 py-2 text-left max-w-[90%]">
-                  <p className="whitespace-pre-wrap">{msg.content}</p>
-                </div>
-              ) : (
-                <div className="prose prose-sm prose-invert max-w-none text-xs [&>*]:text-xs [&_p]:text-xs [&_li]:text-xs [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px]">
-                  <ReactMarkdown>{msg.content}</ReactMarkdown>
-                </div>
-              )}
-            </div>
-          ))}
+          {messages.map((msg, idx) => {
+            const suggestion = msg.role === "assistant" ? parseSuggestion(msg.content) : null;
+            const displayContent = msg.role === "assistant" ? stripApplyBlocks(msg.content) : msg.content;
+            const isApplying = applyingIdx === idx;
+
+            return (
+              <div key={idx} className={cn("text-xs", msg.role === "user" ? "text-right" : "")}>
+                {msg.role === "user" ? (
+                  <div className="inline-block bg-primary/10 rounded-lg px-3 py-2 text-left max-w-[90%]">
+                    <p className="whitespace-pre-wrap">{displayContent}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="prose prose-sm prose-invert max-w-none text-xs [&>*]:text-xs [&_p]:text-xs [&_li]:text-xs [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px]">
+                      <ReactMarkdown>{displayContent}</ReactMarkdown>
+                    </div>
+                    {suggestion && !isStreaming && (
+                      <div className="mt-2 flex items-center gap-2 p-2 rounded-md border border-primary/20 bg-primary/5">
+                        <Pencil className="h-3 w-3 text-primary shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[10px] text-muted-foreground">
+                            Suggested changes:{" "}
+                            {suggestion.title && <span className="font-medium text-foreground">title</span>}
+                            {suggestion.title && suggestion.content && " + "}
+                            {suggestion.content && <span className="font-medium text-foreground">content</span>}
+                          </p>
+                        </div>
+                        <Button
+                          size="sm"
+                          className="h-6 text-[10px] px-2 gap-1"
+                          disabled={isApplying}
+                          onClick={() => applySuggestion(suggestion, idx)}
+                        >
+                          {isApplying ? (
+                            <Loader2 className="h-3 w-3 animate-spin" />
+                          ) : (
+                            <Check className="h-3 w-3" />
+                          )}
+                          Apply
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
           {isStreaming && messages[messages.length - 1]?.role !== "assistant" && (
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Loader2 className="h-3 w-3 animate-spin" />
