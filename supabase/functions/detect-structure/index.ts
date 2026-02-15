@@ -11,18 +11,11 @@ const corsHeaders = {
 /**
  * detect-structure — Pass 1 of two-pass extraction.
  * 
- * Performs a lightweight structural analysis of a document to detect its
- * organizational blueprint BEFORE the heavy extraction pass.
- * 
- * Returns a skeleton that guides the extraction engine with explicit
- * bundle boundaries, playbook candidates, and hierarchy info.
- * 
- * If the document is well-structured (ToC, slides with section dividers,
- * clear headers), the skeleton is "high-confidence" and extraction will
- * use it as a MANDATORY blueprint.
- * 
- * If the document is unstructured prose, the skeleton is "low-confidence"
- * and extraction falls back to heuristic phase-based grouping.
+ * For PDFs, uses a chunked strategy: splits the document into page-range
+ * chunks, analyzes each in parallel, then merges the skeleton results.
+ * This ensures sections in the latter half of large documents (e.g.,
+ * "Farming" / Account Management) are detected with the same depth
+ * as early sections.
  */
 
 const SYSTEM_PROMPT = `You are a **Document Structure Analyst**. Your ONLY job is to analyze a document's organizational structure and return a JSON skeleton. You do NOT extract content — you map architecture.
@@ -108,51 +101,43 @@ const TOOL_DEFINITION = {
             properties: {
               label: {
                 type: "string",
-                description: "Exact section label/title from the document (e.g., 'Phase B: Discovery & Qualification', 'Chapter 3: Risk Management')",
+                description: "Exact section label/title from the document",
               },
               level: {
                 type: "integer",
-                description: "Hierarchy level: 1 = top-level section (bundle candidate), 2 = sub-section (playbook candidate), 3+ = sub-sub-section (item-level)",
+                description: "Hierarchy level: 1 = top-level, 2 = sub-section, 3+ = sub-sub-section",
               },
               layout_type: {
                 type: "string",
                 enum: ["heading", "numbered", "visual_group", "table", "diagram", "slide_divider", "implicit"],
-                description: "How this section was detected: 'heading' = text header (H1/H2/#), 'numbered' = numbered section (1.1, A.2), 'visual_group' = spatial/visual grouping (circle, quadrant, radial layout), 'table' = table or matrix structure, 'diagram' = flow diagram or process chart, 'slide_divider' = presentation section divider slide, 'implicit' = inferred from content semantics rather than explicit formatting",
+                description: "How this section was detected",
               },
               is_bundle_candidate: {
                 type: "boolean",
-                description: "Should this section become its own bundle? true for level-1 sections and significant level-2 sections that pass the deployability test.",
+                description: "Should this section become its own bundle?",
               },
               playbook_candidates: {
                 type: "array",
                 items: {
                   type: "object",
                   properties: {
-                    title: {
-                      type: "string",
-                      description: "Exact title of the sub-section that could become a PLAYBOOK",
-                    },
-                    rationale: {
-                      type: "string",
-                      description: "Brief reason why this is an activatable action (1 sentence)",
-                    },
+                    title: { type: "string" },
+                    rationale: { type: "string" },
                   },
                   required: ["title", "rationale"],
                 },
-                description: "Sub-sections within this section that represent distinct activatable actions (PLAYBOOK candidates)",
+                description: "Sub-sections that represent distinct activatable actions (PLAYBOOK candidates)",
               },
               content_density: {
                 type: "string",
                 enum: ["rich", "moderate", "sparse", "empty"],
-                description: "Estimate of how much content is under this section",
               },
               child_count: {
                 type: "integer",
-                description: "Number of sub-sections or sub-items detected under this section",
               },
               page_or_slide_range: {
                 type: "string",
-                description: "Approximate page/slide range (e.g., 'slides 12-18', 'pages 15-22'). Optional.",
+                description: "Approximate page/slide range. Optional.",
               },
             },
             required: ["label", "level", "layout_type", "is_bundle_candidate", "playbook_candidates", "content_density", "child_count"],
@@ -160,7 +145,7 @@ const TOOL_DEFINITION = {
         },
         notes: {
           type: "string",
-          description: "Brief notes about the document architecture: gaps detected, asymmetries, special patterns. 2-4 sentences max.",
+          description: "Brief notes about the document architecture. 2-4 sentences max.",
         },
       },
       required: ["structure_type", "confidence", "total_sections_detected", "skeleton", "notes"],
@@ -168,6 +153,140 @@ const TOOL_DEFINITION = {
     },
   },
 };
+
+// ── Helpers ──────────────────────────────────────────────────────────────
+
+/** Call the AI with a specific prompt and optional PDF, return parsed skeleton result */
+async function callStructureAI(
+  lovableApiKey: string,
+  systemPrompt: string,
+  userPrompt: string,
+  pdfBase64?: string,
+): Promise<any | null> {
+  const messages: any[] = [{ role: "system", content: systemPrompt }];
+
+  if (pdfBase64) {
+    messages.push({
+      role: "user",
+      content: [
+        { type: "text", text: userPrompt },
+        { type: "image_url", image_url: { url: `data:application/pdf;base64,${pdfBase64}` } },
+      ],
+    });
+  } else {
+    messages.push({ role: "user", content: userPrompt });
+  }
+
+  const aiResponse = await fetch(
+    "https://ai.gateway.lovable.dev/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${lovableApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages,
+        tools: [TOOL_DEFINITION],
+        tool_choice: { type: "function", function: { name: "detect_structure" } },
+      }),
+    },
+  );
+
+  if (!aiResponse.ok) {
+    const errText = await aiResponse.text();
+    console.error("AI chunk error:", aiResponse.status, errText);
+    return null;
+  }
+
+  const aiData = await aiResponse.json();
+  const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+  if (!toolCall) return null;
+
+  return JSON.parse(toolCall.function.arguments);
+}
+
+/** Merge multiple skeleton results into one consolidated result */
+function mergeSkeletons(results: any[]): any {
+  const valid = results.filter(Boolean);
+  if (valid.length === 0) return null;
+  if (valid.length === 1) return valid[0];
+
+  // Use the first result as the base for metadata
+  const base = valid[0];
+  const seenLabels = new Set<string>();
+  const mergedSkeleton: any[] = [];
+
+  // Merge all skeleton entries, deduplicating by normalized label
+  for (const result of valid) {
+    for (const entry of (result.skeleton || [])) {
+      const key = entry.label?.toLowerCase().trim();
+      if (key && !seenLabels.has(key)) {
+        seenLabels.add(key);
+        mergedSkeleton.push(entry);
+      } else if (key && seenLabels.has(key)) {
+        // If duplicate but the new one has richer data, replace
+        const existingIdx = mergedSkeleton.findIndex(
+          (e) => e.label?.toLowerCase().trim() === key
+        );
+        if (existingIdx >= 0) {
+          const existing = mergedSkeleton[existingIdx];
+          const densityRank: Record<string, number> = { rich: 3, moderate: 2, sparse: 1, empty: 0 };
+          const existingRank = densityRank[existing.content_density] ?? 0;
+          const newRank = densityRank[entry.content_density] ?? 0;
+          if (newRank > existingRank || entry.child_count > existing.child_count) {
+            mergedSkeleton[existingIdx] = entry;
+          }
+        }
+      }
+    }
+  }
+
+  // Pick highest confidence across all chunks
+  const confRank: Record<string, number> = { high: 3, medium: 2, low: 1 };
+  let bestConf = "low";
+  for (const r of valid) {
+    if ((confRank[r.confidence] ?? 0) > (confRank[bestConf] ?? 0)) {
+      bestConf = r.confidence;
+    }
+  }
+
+  return {
+    structure_type: base.structure_type,
+    confidence: bestConf,
+    total_sections_detected: mergedSkeleton.length,
+    skeleton: mergedSkeleton,
+    notes: valid.map((r) => r.notes).filter(Boolean).join(" | "),
+  };
+}
+
+/** Extract structural markers from full text (headings, numbered sections, etc.) */
+function extractStructuralMarkers(fullText: string): string[] {
+  const markers: string[] = [];
+  const lines = fullText.split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+
+    if (/^#{1,4}\s+\S/.test(line)) { markers.push(line); continue; }
+    if (/^(?:\d+\.[\d.]*|[A-Z]\.)\s+\S/.test(line) && line.length < 200) { markers.push(line); continue; }
+    if (/^(?:Phase|Stage|Part|Chapter|Section|Module|Unit|Appendix|Step)\s+[\dIVXA-Z]/i.test(line) && line.length < 200) { markers.push(line); continue; }
+    if (/^[A-Z][A-Z\s\d&:,\-–—/()]{4,119}$/.test(line) && /[A-Z]{2}/.test(line) && !/[a-z]/.test(line)) { markers.push(line); continue; }
+    if (line.length < 120 && line.length > 3 && /^[A-Z][a-zA-Z\s\d&:,\-–—/()]+$/.test(line) && !/[.!?;]$/.test(line)) {
+      const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : "";
+      if (!nextLine || /^[-─═#*]/.test(nextLine)) { markers.push(line); continue; }
+    }
+    if (/^[=\-─]{3,}$/.test(line) && i > 0) {
+      const prevLine = lines[i - 1].trim();
+      if (prevLine && prevLine.length < 200 && !markers.includes(prevLine)) { markers.push(prevLine); }
+    }
+  }
+  const seen = new Set<string>();
+  return markers.filter(m => { if (seen.has(m)) return false; seen.add(m); return true; });
+}
+
+// ── Main handler ─────────────────────────────────────────────────────────
 
 serve(async (req) => {
   if (req.method === "OPTIONS")
@@ -182,7 +301,6 @@ serve(async (req) => {
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!lovableApiKey) throw new Error("LOVABLE_API_KEY not configured");
 
-    // Verify auth
     const anonClient = createClient(supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY")!);
     const { data: { user }, error: authError } = await anonClient.auth.getUser(
       authHeader.replace("Bearer ", "")
@@ -193,7 +311,7 @@ serve(async (req) => {
     let textContent = "";
     let pdfBase64: string | undefined;
 
-    // ── Get document content ────────────────────────────────────────────
+    // ── Get document content ──────────────────────────────────────────
     if (body.documentId) {
       const adminClient = createClient(supabaseUrl, supabaseKey);
       const { data: doc } = await adminClient
@@ -210,7 +328,7 @@ serve(async (req) => {
       if (dlError || !fileData) throw new Error("Failed to download file");
 
       const isPdf = doc.file_type === "application/pdf" || doc.file_name.toLowerCase().endsWith(".pdf");
-      
+
       if (isPdf) {
         const arrayBuffer = await fileData.arrayBuffer();
         const bytes = new Uint8Array(arrayBuffer);
@@ -228,52 +346,112 @@ serve(async (req) => {
       throw new Error("documentId or content required");
     }
 
-    // ── Extract structural markers from the FULL document ──────────────
-    // Scan entire text for headings, numbered sections, phase labels so
-    // sections beyond the 30K preview are still visible to the AI.
-    const extractStructuralMarkers = (fullText: string): string[] => {
-      const markers: string[] = [];
-      const lines = fullText.split("\n");
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
+    const activePrompt = await loadPrompt("detect-structure-system", SYSTEM_PROMPT);
 
-        // Markdown headings
-        if (/^#{1,4}\s+\S/.test(line)) { markers.push(line); continue; }
+    // ── PDF path: chunked analysis ────────────────────────────────────
+    if (pdfBase64) {
+      // Estimate page count from base64 size (~50KB per page for presentations)
+      const fileSizeBytes = (pdfBase64.length * 3) / 4;
+      const estimatedPages = Math.max(1, Math.round(fileSizeBytes / (50 * 1024)));
+      // Cap at 3 chunks max to stay within edge function timeout (~60s)
+      const MAX_CHUNKS = 3;
+      const CHUNK_SIZE = Math.max(10, Math.ceil(estimatedPages / MAX_CHUNKS));
 
-        // Numbered sections: "1.", "1.1", "A."
-        if (/^(?:\d+\.[\d.]*|[A-Z]\.)\s+\S/.test(line) && line.length < 200) { markers.push(line); continue; }
+      console.log(`PDF analysis: estimated ${estimatedPages} pages, file size ${Math.round(fileSizeBytes / 1024)}KB`);
 
-        // Phase/Stage/Part/Chapter/Section labels
-        if (/^(?:Phase|Stage|Part|Chapter|Section|Module|Unit|Appendix|Step)\s+[\dIVXA-Z]/i.test(line) && line.length < 200) { markers.push(line); continue; }
+      if (estimatedPages <= 15) {
+        // Small PDF — single pass
+        const userPrompt = `Analyze the structure of this document and return its organizational skeleton.
 
-        // ALL-CAPS headings (≥5 chars, no lowercase)
-        if (/^[A-Z][A-Z\s\d&:,\-–—/()]{4,119}$/.test(line) && /[A-Z]{2}/.test(line) && !/[a-z]/.test(line)) { markers.push(line); continue; }
+[PDF document provided as inline image for analysis]
 
-        // Title-case lines that look like headings (short, no trailing punctuation)
-        if (line.length < 120 && line.length > 3 && /^[A-Z][a-zA-Z\s\d&:,\-–—/()]+$/.test(line) && !/[.!?;]$/.test(line)) {
-          const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : "";
-          if (!nextLine || /^[-─═#*]/.test(nextLine)) { markers.push(line); continue; }
+**FOCUS ON:**
+- Table of contents, agenda slides, overview sections
+- Section headers and their hierarchy
+- Phase/stage labels and sequences
+- Section dividers or transition markers
+- How content is organized (by topic, by phase, by role, etc.)
+- ALL pages of the document — ensure no sections are missed
+
+Return the structural skeleton. Do NOT extract content — only map architecture.`;
+
+        const result = await callStructureAI(lovableApiKey, activePrompt, userPrompt, pdfBase64);
+
+        if (!result) {
+          return new Response(JSON.stringify({
+            structure_type: "flat", confidence: "low", total_sections_detected: 0,
+            skeleton: [], notes: "Structure detection did not produce results.",
+          }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
         }
 
-        // Underline-style headings (=== or ---)
-        if (/^[=\-─]{3,}$/.test(line) && i > 0) {
-          const prevLine = lines[i - 1].trim();
-          if (prevLine && prevLine.length < 200 && !markers.includes(prevLine)) { markers.push(prevLine); }
-        }
+        result.total_markers_detected = 0;
+        result.markers_beyond_preview = 0;
+        console.log(`Structure detected (single pass): type=${result.structure_type}, confidence=${result.confidence}, sections=${result.total_sections_detected}`);
+        return new Response(JSON.stringify(result), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
-      // Deduplicate preserving order
-      const seen = new Set<string>();
-      return markers.filter(m => { if (seen.has(m)) return false; seen.add(m); return true; });
-    };
 
-    // ── Build content for the AI ────────────────────────────────────────
+      // Large PDF — chunked parallel analysis
+      const chunks: { start: number; end: number }[] = [];
+      for (let start = 1; start <= estimatedPages; start += CHUNK_SIZE) {
+        chunks.push({ start, end: Math.min(start + CHUNK_SIZE - 1, estimatedPages) });
+      }
+
+      console.log(`Chunked PDF analysis: ${chunks.length} chunks for ~${estimatedPages} pages`);
+
+      const chunkPromises = chunks.map((chunk, idx) => {
+        const isFirst = idx === 0;
+        const isLast = idx === chunks.length - 1;
+        const rangeLabel = `pages ${chunk.start}-${isLast ? "end" : chunk.end}`;
+
+        const userPrompt = `Analyze the structure of this document. You MUST focus **exclusively on ${rangeLabel}** of this document. Ignore content outside this page range.
+
+[PDF document provided as inline image for analysis]
+
+**YOUR PAGE RANGE: ${rangeLabel}**
+
+**FOCUS ON:**
+- Section headers, phase labels, and hierarchy within ${rangeLabel}
+- Visual groupings, diagrams, and spatial layouts on these pages
+- Sub-sections, steps, checklists, and detailed breakdowns
+- Section dividers or transition markers
+${isFirst ? "- Any Table of Contents, agenda, or overview that maps the FULL document" : ""}
+${isLast ? "- Appendices, summary sections, backup slides, and any final sections" : ""}
+
+**IMPORTANT:** Be thorough for YOUR page range. Every section, sub-section, and visual group on ${rangeLabel} must appear in your skeleton. Do NOT skip sections because they seem minor.
+
+Return the structural skeleton for ${rangeLabel}. Do NOT extract content — only map architecture.`;
+
+        return callStructureAI(lovableApiKey, activePrompt, userPrompt, pdfBase64);
+      });
+
+      const chunkResults = await Promise.all(chunkPromises);
+      const result = mergeSkeletons(chunkResults);
+
+      if (!result) {
+        return new Response(JSON.stringify({
+          structure_type: "flat", confidence: "low", total_sections_detected: 0,
+          skeleton: [], notes: "Chunked structure detection did not produce results.",
+        }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+
+      result.total_markers_detected = 0;
+      result.markers_beyond_preview = 0;
+      result.chunks_used = chunks.length;
+      console.log(`Structure detected (chunked, ${chunks.length} chunks): type=${result.structure_type}, confidence=${result.confidence}, sections=${result.total_sections_detected}`);
+
+      return new Response(JSON.stringify(result), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // ── Text path (unchanged) ─────────────────────────────────────────
     const contentPreview = textContent.length > 60000
       ? textContent.slice(0, 60000) + "\n\n[... document continues for " + (textContent.length - 60000) + " more characters ...]"
       : textContent;
 
-    // Extract markers from the FULL document
-    const allMarkers = textContent ? extractStructuralMarkers(textContent) : [];
+    const allMarkers = extractStructuralMarkers(textContent);
     const markersFromBeyondPreview = textContent.length > 60000
       ? extractStructuralMarkers(textContent.slice(60000))
       : [];
@@ -292,10 +470,9 @@ serve(async (req) => {
       fullIndexNote = `\n\n---\n**COMPLETE STRUCTURAL INDEX (${allMarkers.length} markers across full document):**\n` + fullList + "\n";
     }
 
-    const mainContent = pdfBase64 ? "[PDF document provided as inline image for analysis]" : contentPreview;
     const userPrompt = `Analyze the structure of this document and return its organizational skeleton.
 
-${mainContent}${structuralIndexNote}${fullIndexNote}
+${contentPreview}${structuralIndexNote}${fullIndexNote}
 
 **FOCUS ON:**
 - Table of contents, agenda slides, overview sections
@@ -307,67 +484,15 @@ ${mainContent}${structuralIndexNote}${fullIndexNote}
 
 Return the structural skeleton. Do NOT extract content — only map architecture.`;
 
-    // ── Call AI (use fast model — this is lightweight) ───────────────────
-    const activePrompt = await loadPrompt("detect-structure-system", SYSTEM_PROMPT);
+    const result = await callStructureAI(lovableApiKey, activePrompt, userPrompt);
 
-    const messages: any[] = [
-      { role: "system", content: activePrompt },
-    ];
-
-    if (pdfBase64) {
-      messages.push({
-        role: "user",
-        content: [
-          { type: "text", text: userPrompt },
-          { type: "image_url", image_url: { url: `data:application/pdf;base64,${pdfBase64}` } },
-        ],
-      });
-    } else {
-      messages.push({ role: "user", content: userPrompt });
-    }
-
-    const aiResponse = await fetch(
-      "https://ai.gateway.lovable.dev/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${lovableApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemini-2.5-flash",
-          messages,
-          tools: [TOOL_DEFINITION],
-          tool_choice: { type: "function", function: { name: "detect_structure" } },
-        }),
-      },
-    );
-
-    if (!aiResponse.ok) {
-      const errText = await aiResponse.text();
-      console.error("AI error:", aiResponse.status, errText);
-      throw new Error("Structure detection failed: " + aiResponse.status);
-    }
-
-    const aiData = await aiResponse.json();
-    const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
-
-    if (!toolCall) {
-      console.error("No tool call returned for structure detection");
-      // Return a low-confidence fallback
+    if (!result) {
       return new Response(JSON.stringify({
-        structure_type: "flat",
-        confidence: "low",
-        total_sections_detected: 0,
-        skeleton: [],
-        notes: "Structure detection did not produce results. Falling back to heuristic extraction.",
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+        structure_type: "flat", confidence: "low", total_sections_detected: 0,
+        skeleton: [], notes: "Structure detection did not produce results. Falling back to heuristic extraction.",
+      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const result = JSON.parse(toolCall.function.arguments);
-    // Attach marker stats to the response
     result.total_markers_detected = allMarkers.length;
     result.markers_beyond_preview = markersFromBeyondPreview.length;
     console.log(`Structure detected: type=${result.structure_type}, confidence=${result.confidence}, sections=${result.total_sections_detected}, markers=${allMarkers.length}, beyond_preview=${markersFromBeyondPreview.length}`);
