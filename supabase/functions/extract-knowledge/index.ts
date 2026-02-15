@@ -746,8 +746,35 @@ You are in **deep analysis mode**. This means:
     }
 
     const aiData = await aiResponse.json();
-    const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
-    if (!toolCall) throw new Error("No extraction result");
+    const message = aiData.choices?.[0]?.message;
+    const toolCall = message?.tool_calls?.[0];
+    if (!toolCall) {
+      // Log the actual response for debugging
+      const finishReason = aiData.choices?.[0]?.finish_reason;
+      const contentPreview = message?.content?.substring(0, 500) || "(no content)";
+      console.error("No tool call in AI response. finish_reason:", finishReason, "content:", contentPreview);
+      
+      // If the model returned content instead of a tool call, try to parse it as JSON
+      if (message?.content) {
+        const jsonMatch = message.content.match(/```(?:json)?\s*([\s\S]*?)```/) || 
+                          message.content.match(/(\{[\s\S]*\})/);
+        if (jsonMatch?.[1]) {
+          try {
+            const parsed = JSON.parse(jsonMatch[1]);
+            if (parsed.bundles) {
+              console.log("Recovered extraction from content fallback");
+              if (!parsed.analysis_notes) parsed.analysis_notes = "";
+              if (advisorPersona) parsed.advisor = advisorPersona;
+              parsed.extraction_depth = extractionDepth;
+              return new Response(JSON.stringify(parsed), {
+                headers: { ...corsHeaders, "Content-Type": "application/json" },
+              });
+            }
+          } catch {}
+        }
+      }
+      throw new Error(`No extraction result (finish_reason: ${finishReason})`);
+    }
 
     const extracted = JSON.parse(toolCall.function.arguments);
     if (!extracted.bundles) extracted.bundles = [];
