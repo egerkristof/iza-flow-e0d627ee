@@ -65,6 +65,8 @@ export interface StructureEditorData {
   structure_type?: string;
   confidence?: string;
   total_sections_detected?: number;
+  total_markers_detected?: number;
+  markers_beyond_preview?: number;
   notes?: string;
 }
 
@@ -290,6 +292,20 @@ export function StructureEditorDialog({
               <Merge className="h-3 w-3" /> {data.optimization_stats.merges_performed} merges applied
             </Badge>
           ) : null}
+          {(data.markers_beyond_preview ?? 0) > 0 && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge variant="outline" className="text-xs gap-1 border-primary/30 text-primary">
+                    <Info className="h-3 w-3" /> {data.markers_beyond_preview} markers beyond preview
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-xs">
+                  <p className="text-xs">{data.markers_beyond_preview} structural headings were detected beyond the content preview window ({data.total_markers_detected} total markers across the full document)</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
           <span className="text-[10px] text-muted-foreground ml-auto truncate max-w-[200px]">{fileName}</span>
         </div>
 

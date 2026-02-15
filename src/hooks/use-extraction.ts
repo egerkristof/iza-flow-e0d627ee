@@ -326,6 +326,8 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
                   structure_type: structData.structure_type,
                   confidence: structData.confidence,
                   total_sections_detected: structData.total_sections_detected,
+                  total_markers_detected: structData.total_markers_detected,
+                  markers_beyond_preview: structData.markers_beyond_preview,
                   notes: structData.notes,
                 };
 

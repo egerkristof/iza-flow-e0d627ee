@@ -353,7 +353,10 @@ Return the structural skeleton. Do NOT extract content — only map architecture
     }
 
     const result = JSON.parse(toolCall.function.arguments);
-    console.log(`Structure detected: type=${result.structure_type}, confidence=${result.confidence}, sections=${result.total_sections_detected}`);
+    // Attach marker stats to the response
+    result.total_markers_detected = allMarkers.length;
+    result.markers_beyond_preview = markersFromBeyondPreview.length;
+    console.log(`Structure detected: type=${result.structure_type}, confidence=${result.confidence}, sections=${result.total_sections_detected}, markers=${allMarkers.length}, beyond_preview=${markersFromBeyondPreview.length}`);
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
