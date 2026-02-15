@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
-  Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield, Loader2,
+  Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield, Loader2, Microscope,
   Sparkles, LayoutGrid, List, Network,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -129,6 +129,20 @@ export default function ContextManagementPage() {
     },
   });
 
+  // Fetch research templates for the picker
+  const { data: researchTemplates = [] } = useQuery({
+    queryKey: ["research-templates-picker", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("research_templates")
+        .select("id, title, research_type")
+        .order("title", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+  });
+
   // Build lookups: item_id → parent_playbook_id and sort_order (per bundle)
   const { parentPlaybookMap, sortOrderMap } = useMemo(() => {
     const ppMap = new Map<string, string | null>();
@@ -170,6 +184,7 @@ export default function ContextManagementPage() {
       sort_order: row.bundle_id
         ? (sortOrderMap.get(`${row.id}:${row.bundle_id}`) ?? sortOrderMap.get(row.id) ?? 999)
         : 999,
+      target_reference_id: row.target_reference_id ?? null,
     })),
   [dbItems, parentPlaybookMap, sortOrderMap]);
 
@@ -210,11 +225,13 @@ export default function ContextManagementPage() {
     action_type: "APPEND" | "OVERRIDE" | "BLOCK";
     trigger_intent: string; domain_tags_input: string; bundle_ids: string[];
     parent_playbook_id: string | null;
+    target_reference_id: string | null;
   } = {
     title: "", content_preview: "", category: "KNOWLEDGE", priority: "STANDARD",
     security_level: "INTERNAL", action_type: "APPEND",
     trigger_intent: "", domain_tags_input: "", bundle_ids: [],
     parent_playbook_id: null,
+    target_reference_id: null,
   };
   const [newItem, setNewItem] = useState(emptyItem);
   const [bundleSearch, setBundleSearch] = useState("");
@@ -280,6 +297,7 @@ export default function ContextManagementPage() {
         trigger_intent: newItem.trigger_intent || null,
         domain_scope: domainScope,
         bundle_id: newItem.bundle_ids[0] ?? null,
+        target_reference_id: (newItem.category === "PROCEDURE" || newItem.category === "RESEARCH") ? (newItem.target_reference_id || null) : null,
       }).eq("id", editingItemId);
       if (error) { toast({ title: "Update failed", description: error.message, variant: "destructive" }); return; }
       setItemDialog(false);
@@ -299,6 +317,7 @@ export default function ContextManagementPage() {
         trigger_intent: newItem.trigger_intent || null,
         domain_scope: domainScope,
         bundle_id: newItem.bundle_ids[0] ?? null,
+        target_reference_id: (newItem.category === "PROCEDURE" || newItem.category === "RESEARCH") ? (newItem.target_reference_id || null) : null,
       }).select("id").single();
       if (error) { toast({ title: "Create failed", description: error.message, variant: "destructive" }); return; }
       // If parent_playbook_id provided, create junction entry
@@ -340,6 +359,7 @@ export default function ContextManagementPage() {
       domain_tags_input: item.domain_tags.join(", "),
       bundle_ids: [...item.bundle_ids],
       parent_playbook_id: item.parent_playbook_id ?? null,
+      target_reference_id: item.target_reference_id ?? null,
     });
     setItemDialog(true);
   };
@@ -1242,6 +1262,33 @@ export default function ContextManagementPage() {
               <Label className="text-xs">Trigger Intent</Label>
               <Input placeholder="e.g. pricing negotiation (optional)" value={newItem.trigger_intent} onChange={e => setNewItem(p => ({ ...p, trigger_intent: e.target.value }))} />
             </div>
+            {(newItem.category === "PROCEDURE" || newItem.category === "RESEARCH") && (
+              <div className="space-y-1.5">
+                <Label className="text-xs flex items-center gap-1.5">
+                  <Microscope className="h-3 w-3" /> Research Template
+                </Label>
+                <Select
+                  value={newItem.target_reference_id ?? "none"}
+                  onValueChange={v => setNewItem(p => ({ ...p, target_reference_id: v === "none" ? null : v }))}
+                >
+                  <SelectTrigger className="bg-secondary/50">
+                    <SelectValue placeholder="No template attached" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover z-50">
+                    <SelectItem value="none">No template</SelectItem>
+                    {researchTemplates.map(t => (
+                      <SelectItem key={t.id} value={t.id}>
+                        <span className="flex items-center gap-1.5">
+                          <span>{t.title}</span>
+                          <Badge variant="outline" className="text-[8px] ml-1">{t.research_type}</Badge>
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-[10px] text-muted-foreground">Attach a research template to trigger dynamic information gathering during protocol execution.</p>
+              </div>
+            )}
             <div className="space-y-1.5">
               <Label className="text-xs">Domain Tags</Label>
               <Input placeholder="Comma-separated: sales, pricing" value={newItem.domain_tags_input} onChange={e => setNewItem(p => ({ ...p, domain_tags_input: e.target.value }))} />
