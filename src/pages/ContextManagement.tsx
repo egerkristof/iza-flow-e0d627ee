@@ -20,7 +20,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { ContextItemRow } from "@/components/context/ContextItemRow";
 import { CategoryFilterBadge } from "@/components/knowledge/CategoryFilterBadge";
 import { BundleCard } from "@/components/context/BundleCard";
-import { BundleFirstView } from "@/components/context/BundleFirstView";
+import { BundleFirstView, type CreateItemContext } from "@/components/context/BundleFirstView";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
@@ -209,10 +209,12 @@ export default function ContextManagementPage() {
     security_level: "INTERNAL" | "CONFIDENTIAL" | "ADMIN_ONLY";
     action_type: "APPEND" | "OVERRIDE" | "BLOCK";
     trigger_intent: string; domain_tags_input: string; bundle_ids: string[];
+    parent_playbook_id: string | null;
   } = {
     title: "", content_preview: "", category: "KNOWLEDGE", priority: "STANDARD",
     security_level: "INTERNAL", action_type: "APPEND",
     trigger_intent: "", domain_tags_input: "", bundle_ids: [],
+    parent_playbook_id: null,
   };
   const [newItem, setNewItem] = useState(emptyItem);
   const [bundleSearch, setBundleSearch] = useState("");
@@ -286,7 +288,7 @@ export default function ContextManagementPage() {
       queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
       toast({ title: "Context item updated", description: `"${newItem.title}" saved.` });
     } else {
-      const { error } = await supabase.from("context_items").insert({
+      const { data: newRow, error } = await supabase.from("context_items").insert({
         owner_id: user.id,
         title: newItem.title,
         content_full: newItem.content_preview,
@@ -297,11 +299,29 @@ export default function ContextManagementPage() {
         trigger_intent: newItem.trigger_intent || null,
         domain_scope: domainScope,
         bundle_id: newItem.bundle_ids[0] ?? null,
-      });
+      }).select("id").single();
       if (error) { toast({ title: "Create failed", description: error.message, variant: "destructive" }); return; }
+      // If parent_playbook_id provided, create junction entry
+      if (newRow && newItem.parent_playbook_id && newItem.bundle_ids[0]) {
+        // Get max sort_order for siblings
+        const { data: siblings } = await supabase.from("context_item_bundles")
+          .select("sort_order")
+          .eq("bundle_id", newItem.bundle_ids[0])
+          .eq("parent_playbook_id", newItem.parent_playbook_id)
+          .order("sort_order", { ascending: false })
+          .limit(1);
+        const nextOrder = (siblings?.[0]?.sort_order ?? -1) + 1;
+        await supabase.from("context_item_bundles").insert({
+          context_item_id: newRow.id,
+          bundle_id: newItem.bundle_ids[0],
+          parent_playbook_id: newItem.parent_playbook_id,
+          sort_order: nextOrder,
+        });
+      }
       setItemDialog(false);
       setNewItem(emptyItem);
       queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+      queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
       toast({ title: "Context item created", description: `"${newItem.title}" added.` });
     }
   };
@@ -319,6 +339,7 @@ export default function ContextManagementPage() {
       trigger_intent: item.trigger_intent ?? "",
       domain_tags_input: item.domain_tags.join(", "),
       bundle_ids: [...item.bundle_ids],
+      parent_playbook_id: item.parent_playbook_id ?? null,
     });
     setItemDialog(true);
   };
@@ -854,7 +875,25 @@ export default function ContextManagementPage() {
             onDestroyItem={handleDestroyItem}
             onEditBundle={(bundle) => { setEditingBundle(bundle); setBundleDialog(true); }}
             onDeleteBundle={handleDeleteBundle}
-            onCreateItem={(bundleId?: string) => { setEditingItemId(null); setNewItem({ ...emptyItem, bundle_ids: bundleId ? [bundleId] : [] }); setItemDialog(true); }}
+            onCreateItem={(ctx?: CreateItemContext) => {
+              setEditingItemId(null);
+              setNewItem({
+                ...emptyItem,
+                bundle_ids: ctx?.bundleId ? [ctx.bundleId] : [],
+                category: (ctx?.category as ContextCategory) ?? "KNOWLEDGE",
+                parent_playbook_id: ctx?.parentPlaybookId ?? null,
+              });
+              setItemDialog(true);
+            }}
+            onReorderItems={async (bundleId, orderedItemIds) => {
+              for (let i = 0; i < orderedItemIds.length; i++) {
+                await supabase.from("context_item_bundles")
+                  .update({ sort_order: i } as any)
+                  .eq("context_item_id", orderedItemIds[i])
+                  .eq("bundle_id", bundleId);
+              }
+              queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
+            }}
             onCreateBundle={() => { setEditingBundle(null); setBundleDialog(true); }}
             onOpenCopilot={() => setCopilotOpen(!copilotOpen)}
             copilotOpen={copilotOpen}
