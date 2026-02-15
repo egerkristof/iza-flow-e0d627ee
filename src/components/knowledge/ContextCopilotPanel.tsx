@@ -1,13 +1,14 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sparkles, X, Check, Shield, RefreshCw, Loader2,
   Tag, FileText, Scissors, Merge, Archive, ChevronDown, ChevronUp,
-  Send, MessageSquare, Pencil,
+  Send, MessageSquare, Pencil, Plus, History, Trash2, Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -35,6 +36,13 @@ interface ChatMessage {
   content: string;
 }
 
+interface Conversation {
+  id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface ContextCopilotPanelProps {
   items: any[];
   onClose: () => void;
@@ -52,9 +60,24 @@ const TYPE_META: Record<string, { icon: any; label: string; color: string }> = {
   archive: { icon: Archive, label: "Archive", color: "text-muted-foreground bg-muted/50 border-border" },
 };
 
+function formatRelative(dateStr: string) {
+  const d = new Date(dateStr);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  if (days < 7) return `${days}d ago`;
+  return d.toLocaleDateString();
+}
+
 export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps) {
   const { toast } = useToast();
   const qc = useQueryClient();
+  const { user } = useAuth();
   const [suggestions, setSuggestions] = useState<AuditSuggestion[]>([]);
   const [summary, setSummary] = useState("");
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
@@ -70,9 +93,87 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
   const chatEndRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState("suggestions");
 
+  // Persistence state
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
+
+  // Fetch conversation list
+  const { data: conversations = [], refetch: refetchConversations } = useQuery({
+    queryKey: ["copilot-conversations", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("copilot_conversations")
+        .select("id, title, created_at, updated_at")
+        .eq("user_id", user!.id)
+        .order("updated_at", { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      return data as Conversation[];
+    },
+  });
+
+  // Load messages for active conversation
+  const loadConversation = useCallback(async (convId: string) => {
+    const { data, error } = await supabase
+      .from("copilot_messages")
+      .select("role, content")
+      .eq("conversation_id", convId)
+      .order("created_at", { ascending: true });
+    if (error) { toast({ title: "Load failed", description: error.message, variant: "destructive" }); return; }
+    setChatMessages((data || []).map(m => ({ role: m.role as "user" | "assistant", content: m.content })));
+    setActiveConversationId(convId);
+    setShowHistory(false);
+    setActiveTab("chat");
+  }, [toast]);
+
+  // Create new conversation
+  const startNewChat = useCallback(async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from("copilot_conversations")
+      .insert({ user_id: user.id, title: "New Chat" })
+      .select("id")
+      .single();
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    setChatMessages([]);
+    setActiveConversationId(data.id);
+    setShowHistory(false);
+    setActiveTab("chat");
+    refetchConversations();
+  }, [user, toast, refetchConversations]);
+
+  // Delete conversation
+  const deleteConversation = async (convId: string) => {
+    await supabase.from("copilot_conversations").delete().eq("id", convId);
+    if (activeConversationId === convId) {
+      setChatMessages([]);
+      setActiveConversationId(null);
+    }
+    refetchConversations();
+  };
+
+  // Save messages to DB after send
+  const persistMessages = useCallback(async (convId: string, userMsg: ChatMessage, assistantMsg: ChatMessage) => {
+    await supabase.from("copilot_messages").insert([
+      { conversation_id: convId, role: userMsg.role, content: userMsg.content },
+      { conversation_id: convId, role: assistantMsg.role, content: assistantMsg.content },
+    ]);
+    // Auto-title from first user message
+    const { data: conv } = await supabase.from("copilot_conversations").select("title").eq("id", convId).single();
+    if (conv?.title === "New Chat") {
+      const autoTitle = userMsg.content.slice(0, 60) + (userMsg.content.length > 60 ? "…" : "");
+      await supabase.from("copilot_conversations").update({ title: autoTitle }).eq("id", convId);
+      refetchConversations();
+    }
+    // Touch updated_at
+    await supabase.from("copilot_conversations").update({ updated_at: new Date().toISOString() } as any).eq("id", convId);
+    refetchConversations();
+  }, [refetchConversations]);
 
   // Get the effective suggestion (with edits applied)
   const getEffective = (idx: number, s: AuditSuggestion): AuditSuggestion => {
@@ -159,6 +260,21 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
     const text = chatInput.trim();
     if (!text || isStreaming) return;
     setChatInput("");
+
+    // Auto-create conversation if none active
+    let convId = activeConversationId;
+    if (!convId && user) {
+      const { data, error } = await supabase
+        .from("copilot_conversations")
+        .insert({ user_id: user.id, title: "New Chat" })
+        .select("id")
+        .single();
+      if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+      convId = data.id;
+      setActiveConversationId(convId);
+      refetchConversations();
+    }
+
     const userMsg: ChatMessage = { role: "user", content: text };
     const allMessages = [...chatMessages, userMsg];
     setChatMessages(allMessages);
@@ -234,16 +350,20 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
         }
       }
 
-      // Check for re-audit trigger in the final assistant message
+      // Check for re-audit trigger
       if (assistantSoFar.includes("[TRIGGER_REAUDIT]")) {
-        // Clean the marker from the displayed message
         const cleaned = assistantSoFar.replace(/\s*\[TRIGGER_REAUDIT\]\s*/g, "").trim();
         setChatMessages(prev =>
           prev.map((m, i) => (i === prev.length - 1 && m.role === "assistant" ? { ...m, content: cleaned } : m))
         );
-        // Auto-switch to suggestions tab and trigger audit
+        assistantSoFar = cleaned;
         setActiveTab("suggestions");
         setTimeout(() => auditMutation.mutate(), 300);
+      }
+
+      // Persist to DB
+      if (convId && assistantSoFar) {
+        await persistMessages(convId, userMsg, { role: "assistant", content: assistantSoFar });
       }
     } catch (e: any) {
       console.error("Chat error:", e);
@@ -255,6 +375,8 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
 
   const getItemTitle = (id: string) => items.find(i => i.id === id)?.title || "Unknown";
   const activeSuggestions = suggestions.filter(s => !dismissed.has(s.item_id + s.type));
+
+  const activeConvTitle = conversations.find(c => c.id === activeConversationId)?.title;
 
   return (
     <div className="border border-primary/20 rounded-lg bg-card/80 backdrop-blur-sm flex flex-col" style={{ maxHeight: '70vh' }}>
@@ -355,7 +477,7 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
                                 {isEditing ? (
                                   <Select value={effective.suggested_category || ""} onValueChange={(v) => updateEdit(idx, { suggested_category: v })}>
                                     <SelectTrigger className="h-6 text-[11px] w-36"><SelectValue /></SelectTrigger>
-                                    <SelectContent>
+                                    <SelectContent className="bg-popover z-50">
                                       {CATEGORIES.map(c => <SelectItem key={c} value={c} className="text-xs">{c}</SelectItem>)}
                                     </SelectContent>
                                   </Select>
@@ -382,7 +504,7 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
                                 {isEditing ? (
                                   <Select value={effective.enforcement_level || "required_ack"} onValueChange={(v) => updateEdit(idx, { enforcement_level: v })}>
                                     <SelectTrigger className="h-6 text-[11px] w-36"><SelectValue /></SelectTrigger>
-                                    <SelectContent>
+                                    <SelectContent className="bg-popover z-50">
                                       {ENFORCEMENT_LEVELS.map(l => <SelectItem key={l} value={l} className="text-xs">{l}</SelectItem>)}
                                     </SelectContent>
                                   </Select>
@@ -440,83 +562,149 @@ export function ContextCopilotPanel({ items, onClose }: ContextCopilotPanelProps
 
         {/* Chat Tab */}
         <TabsContent value="chat" className="flex-1 flex flex-col overflow-hidden m-0">
-          <ScrollArea className="flex-1 p-3">
-            <div className="space-y-3">
-              {chatMessages.length === 0 && (
-                <div className="text-center py-6 text-sm text-muted-foreground">
-                  <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-30" />
-                  <p>Ask the copilot about your knowledge graph.</p>
-                  <div className="flex flex-wrap gap-1.5 mt-3 justify-center">
-                    {["How should I audit my graph?", "Which items need attention?", "Tips for better organization"].map(q => (
-                      <button key={q} onClick={() => { setChatInput(q); }} className="text-[10px] px-2 py-1 rounded-full border border-border hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors">
-                        {q}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {chatMessages.map((m, i) => (
-                <div key={i} className={cn("text-xs", m.role === "user" ? "text-right" : "")}>
-                  <div className={cn(
-                    "inline-block max-w-[90%] rounded-lg px-3 py-2 text-left",
-                    m.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted/50 text-foreground"
-                  )}>
-                    {m.role === "user" ? (
-                      <p className="whitespace-pre-wrap">{m.content}</p>
-                    ) : (
-                      <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px] [&_code]:bg-muted [&_code]:px-1 [&_code]:rounded">
-                        <ReactMarkdown
-                          components={{
-                            code({ className, children, ...props }) {
-                              const match = /language-(\w+)/.exec(className || "");
-                              const code = String(children).replace(/\n$/, "");
-                              return match ? (
-                                <SyntaxHighlighter
-                                  style={oneDark}
-                                  language={match[1]}
-                                  PreTag="div"
-                                  customStyle={{ fontSize: "10px", borderRadius: "6px", margin: "4px 0", padding: "8px" }}
-                                >
-                                  {code}
-                                </SyntaxHighlighter>
-                              ) : (
-                                <code className={className} {...props}>{children}</code>
-                              );
-                            },
-                          }}
-                        >
-                          {m.content}
-                        </ReactMarkdown>
+          {showHistory ? (
+            /* History panel */
+            <div className="flex-1 flex flex-col min-h-0">
+              <div className="flex items-center justify-between px-3 pt-2 pb-1">
+                <span className="text-xs font-medium text-muted-foreground">Chat History</span>
+                <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1" onClick={() => setShowHistory(false)}>
+                  <X className="h-2.5 w-2.5" /> Close
+                </Button>
+              </div>
+              <ScrollArea className="flex-1 px-3 pb-2">
+                <div className="space-y-1">
+                  {conversations.length === 0 ? (
+                    <p className="text-xs text-muted-foreground text-center py-4">No previous chats</p>
+                  ) : conversations.map(conv => (
+                    <div
+                      key={conv.id}
+                      className={cn(
+                        "flex items-center gap-2 rounded-md px-2.5 py-2 cursor-pointer transition-colors group",
+                        conv.id === activeConversationId
+                          ? "bg-primary/10 border border-primary/30"
+                          : "hover:bg-muted/50 border border-transparent"
+                      )}
+                      onClick={() => loadConversation(conv.id)}
+                    >
+                      <MessageSquare className="h-3 w-3 text-muted-foreground shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-medium truncate">{conv.title}</p>
+                        <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                          <Clock className="h-2.5 w-2.5" />
+                          {formatRelative(conv.updated_at)}
+                        </p>
                       </div>
-                    )}
-                  </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-5 w-5 opacity-0 group-hover:opacity-100 shrink-0 text-destructive"
+                        onClick={(e) => { e.stopPropagation(); deleteConversation(conv.id); }}
+                      >
+                        <Trash2 className="h-2.5 w-2.5" />
+                      </Button>
+                    </div>
+                  ))}
                 </div>
-              ))}
-              {isStreaming && chatMessages[chatMessages.length - 1]?.role !== "assistant" && (
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <Loader2 className="h-3 w-3 animate-spin" /> Thinking…
+              </ScrollArea>
+            </div>
+          ) : (
+            /* Chat messages */
+            <>
+              {/* Chat toolbar */}
+              <div className="flex items-center gap-1 px-3 pt-2 pb-1">
+                <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={startNewChat}>
+                  <Plus className="h-2.5 w-2.5" /> New Chat
+                </Button>
+                <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => setShowHistory(true)}>
+                  <History className="h-2.5 w-2.5" /> History
+                  {conversations.length > 0 && (
+                    <Badge variant="secondary" className="text-[8px] h-3.5 px-1 ml-0.5">{conversations.length}</Badge>
+                  )}
+                </Button>
+                {activeConvTitle && activeConvTitle !== "New Chat" && (
+                  <span className="text-[10px] text-muted-foreground truncate ml-1 flex-1">{activeConvTitle}</span>
+                )}
+              </div>
+
+              <ScrollArea className="flex-1 p-3">
+                <div className="space-y-3">
+                  {chatMessages.length === 0 && (
+                    <div className="text-center py-6 text-sm text-muted-foreground">
+                      <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-30" />
+                      <p>Ask the copilot about your knowledge graph.</p>
+                      <div className="flex flex-wrap gap-1.5 mt-3 justify-center">
+                        {["How should I audit my graph?", "Which items need attention?", "Tips for better organization"].map(q => (
+                          <button key={q} onClick={() => { setChatInput(q); }} className="text-[10px] px-2 py-1 rounded-full border border-border hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors">
+                            {q}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {chatMessages.map((m, i) => (
+                    <div key={i} className={cn("text-xs", m.role === "user" ? "text-right" : "")}>
+                      <div className={cn(
+                        "inline-block max-w-[90%] rounded-lg px-3 py-2 text-left",
+                        m.role === "user"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted/50 text-foreground"
+                      )}>
+                        {m.role === "user" ? (
+                          <p className="whitespace-pre-wrap">{m.content}</p>
+                        ) : (
+                          <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px] [&_code]:bg-muted [&_code]:px-1 [&_code]:rounded">
+                            <ReactMarkdown
+                              components={{
+                                code({ className, children, ...props }) {
+                                  const match = /language-(\w+)/.exec(className || "");
+                                  const code = String(children).replace(/\n$/, "");
+                                  return match ? (
+                                    <SyntaxHighlighter
+                                      style={oneDark}
+                                      language={match[1]}
+                                      PreTag="div"
+                                      customStyle={{ fontSize: "10px", borderRadius: "6px", margin: "4px 0", padding: "8px" }}
+                                    >
+                                      {code}
+                                    </SyntaxHighlighter>
+                                  ) : (
+                                    <code className={className} {...props}>{children}</code>
+                                  );
+                                },
+                              }}
+                            >
+                              {m.content}
+                            </ReactMarkdown>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  {isStreaming && chatMessages[chatMessages.length - 1]?.role !== "assistant" && (
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <Loader2 className="h-3 w-3 animate-spin" /> Thinking…
+                    </div>
+                  )}
+                  <div ref={chatEndRef} />
                 </div>
-              )}
-              <div ref={chatEndRef} />
-            </div>
-          </ScrollArea>
-          <div className="p-3 pt-0 border-t border-border/50">
-            <div className="flex gap-1.5 mt-2">
-              <Input
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendChatMessage(); } }}
-                placeholder="Ask about auditing, organizing, deduplication…"
-                className="text-xs h-8"
-                disabled={isStreaming}
-              />
-              <Button size="icon" className="h-8 w-8 shrink-0" onClick={sendChatMessage} disabled={isStreaming || !chatInput.trim()}>
-                {isStreaming ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
-              </Button>
-            </div>
-          </div>
+              </ScrollArea>
+              <div className="p-3 pt-0 border-t border-border/50">
+                <div className="flex gap-1.5 mt-2">
+                  <Input
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendChatMessage(); } }}
+                    placeholder="Ask about auditing, organizing, deduplication…"
+                    className="text-xs h-8"
+                    disabled={isStreaming}
+                  />
+                  <Button size="icon" className="h-8 w-8 shrink-0" onClick={sendChatMessage} disabled={isStreaming || !chatInput.trim()}>
+                    {isStreaming ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
         </TabsContent>
       </Tabs>
     </div>
