@@ -8,7 +8,7 @@ import {
   Play, ChevronRight, ChevronLeft, Lock, Unlock, Check, Shield,
   AlertTriangle, Ban, Info, Loader2, Package, FileText, MessageSquare,
   Zap, GitBranch, Clock, CheckCircle2, Circle, PauseCircle, XCircle,
-  Sparkles, Flag, BookOpen, Search,
+  Sparkles, Flag, BookOpen, Search, Copy, Save, Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -409,6 +409,7 @@ export function ProtocolExecutionView({
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
   const [captureOpen, setCaptureOpen] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [savingDraftIdx, setSavingDraftIdx] = useState<number | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const currentStepIndex = useMemo(() => {
@@ -974,9 +975,86 @@ export function ProtocolExecutionView({
                   : "bg-secondary text-secondary-foreground"
               }`}>
                 {msg.role === "assistant" ? (
-                  <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px] [&_code]:bg-muted [&_code]:px-1 [&_code]:rounded">
-                    <ReactMarkdown>{msg.text}</ReactMarkdown>
-                  </div>
+                  <>
+                    <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px] [&_code]:bg-muted [&_code]:px-1 [&_code]:rounded">
+                      <ReactMarkdown>{msg.text}</ReactMarkdown>
+                    </div>
+                    {/* Draft export actions */}
+                    {!isStreaming && msg.text.length > 20 && (
+                      <div className="flex items-center gap-1 mt-2 pt-2 border-t border-border/30">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground"
+                          onClick={async () => {
+                            try {
+                              await navigator.clipboard.writeText(msg.text);
+                              toast({ title: "Copied to clipboard" });
+                            } catch {
+                              toast({ title: "Copy failed", variant: "destructive" });
+                            }
+                          }}
+                        >
+                          <Copy className="h-3 w-3" /> Copy
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground"
+                          disabled={savingDraftIdx === i}
+                          onClick={async () => {
+                            if (!user) return;
+                            setSavingDraftIdx(i);
+                            try {
+                              const stepTitle = currentStep?.title ?? "Draft";
+                              const outputType = (currentStep as any)?.output_type ?? "free_text";
+                              const draftTitle = `${stepTitle} — ${outputType.replace(/_/g, " ")} draft`;
+                              const { error } = await supabase.from("workbook_resources").insert({
+                                workbook_id: workbookId,
+                                created_by: user.id,
+                                title: draftTitle,
+                                resource_type: "text",
+                                content: msg.text,
+                                metadata: {
+                                  source: "draft_factory",
+                                  protocol_id: protocol.id,
+                                  step_id: currentStep?.id,
+                                  output_type: outputType,
+                                  generated_at: new Date().toISOString(),
+                                },
+                              } as any);
+                              if (error) throw error;
+                              qc.invalidateQueries({ queryKey: ["workbook-resources", workbookId] });
+                              toast({ title: "Saved to Repository", description: `"${draftTitle}" added to this workbook's repository.` });
+                            } catch (err: any) {
+                              toast({ title: "Save failed", description: err.message, variant: "destructive" });
+                            } finally {
+                              setSavingDraftIdx(null);
+                            }
+                          }}
+                        >
+                          {savingDraftIdx === i ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />}
+                          Save to Repository
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground"
+                          onClick={() => {
+                            const blob = new Blob([msg.text], { type: "text/markdown" });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement("a");
+                            a.href = url;
+                            a.download = `${(currentStep?.title ?? "draft").replace(/\s+/g, "-").toLowerCase()}.md`;
+                            a.click();
+                            URL.revokeObjectURL(url);
+                          }}
+                        >
+                          <Download className="h-3 w-3" /> Download .md
+                        </Button>
+                      </div>
+                    )}
+                  </>
                 ) : (
                   msg.text
                 )}
