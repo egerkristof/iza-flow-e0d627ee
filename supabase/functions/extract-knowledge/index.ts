@@ -259,6 +259,7 @@ If any check fails, fix it before returning.
 10. **Skeleton bundles for top-level gaps only**: Create with content_completeness="skeleton" for undocumented PHASES, not sub-sections.
 11. **MINIMIZE standalone context_items**: Nearly ALL items should be placed INSIDE bundles. The standalone context_items array should contain ONLY items that truly don't belong to any phase/bundle (e.g., cross-cutting meta-information about the document itself). If an item relates to a phase, it goes IN that phase's bundle. Target: <5% of total items as standalone.
 12. **Phase sequence integrity**: Preserve document's sequential labels exactly. Create skeletons for any gaps in the sequence.
+13. **Source provenance (REQUIRED for document extractions)**: Every extracted item MUST include \`source_pages\` — the page or slide range it was extracted from (e.g., "slides 3-5", "pages 12-14"). This enables traceability back to the source document. For AI-generated suggestions, set source_pages to the nearest relevant section's page range.
 
 ## ITEM DENSITY TARGETS PER BUNDLE
 A "full" bundle should have 8-15 items on average. Specifically:
@@ -468,6 +469,10 @@ const TOOL_DEFINITION = {
                 type: "boolean",
                 description: "true if this content was AI-generated to fill a gap (not from the source document). false or omitted if the content comes from the source document. MUST be true for all skeleton bundle placeholders and any inferred/recommended content.",
               },
+              source_pages: {
+                type: "string",
+                description: "Page or slide range this item was extracted from (e.g., 'slides 3-5', 'pages 12-14'). REQUIRED for all items extracted from documents.",
+              },
             },
             required: ["title", "content", "category"],
             additionalProperties: false,
@@ -536,6 +541,10 @@ const TOOL_DEFINITION = {
                     parent_playbook_title: {
                       type: "string",
                       description: "EXACT title of the PLAYBOOK item this belongs to. REQUIRED for PROCEDURE and DIRECTIVE items. Must match a PLAYBOOK title in the same bundle. Leave unset for PLAYBOOK items themselves and for shared context items (KNOWLEDGE, RESEARCH, PRINCIPLE, PREFERENCE).",
+                    },
+                    source_pages: {
+                      type: "string",
+                      description: "Page or slide range this item was extracted from (e.g., 'slides 3-5', 'pages 12-14'). REQUIRED for all items extracted from documents.",
                     },
                   },
                   required: ["title", "content", "category"],

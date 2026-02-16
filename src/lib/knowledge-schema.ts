@@ -131,6 +131,8 @@ export interface ExtractedContextItem {
   /** EXACT title of the parent PLAYBOOK this item belongs to within the same bundle.
    *  REQUIRED for PROCEDURE and DIRECTIVE items. Unset for PLAYBOOKs themselves and shared context items. */
   parent_playbook_title?: string;
+  /** Source provenance: page/slide range this item was extracted from (e.g., "slides 3-5") */
+  source_pages?: string;
 }
 
 // ─── Bundle Readiness ────────────────────────────────────────────────────────

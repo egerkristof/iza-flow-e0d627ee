@@ -100,7 +100,7 @@ serve(async (req) => {
     if (authError || !user) throw new Error("Unauthorized");
 
     const body = await req.json();
-    const { messages, scope, hierarchy, referencedItems } = body;
+    const { messages, scope, hierarchy, referencedItems, sourceMetadata } = body;
 
     if (!messages || !Array.isArray(messages)) throw new Error("messages array required");
 
@@ -166,6 +166,16 @@ serve(async (req) => {
       for (const ri of referencedItems) {
         contextBlock += `- [${ri.category}] "${ri.title}": ${(ri.content || "").slice(0, 500)}\n`;
       }
+    }
+
+    if (sourceMetadata) {
+      contextBlock += "\n### Source Document Provenance\n";
+      if (sourceMetadata.source_document) contextBlock += `Source: ${sourceMetadata.source_document}\n`;
+      if (sourceMetadata.pages) contextBlock += `Extracted from: ${sourceMetadata.pages}\n`;
+      if (sourceMetadata.chunk_text) {
+        contextBlock += `\nOriginal source text:\n${sourceMetadata.chunk_text.slice(0, 2000)}\n`;
+      }
+      contextBlock += "\n**When the user asks for enhancements, ground your suggestions in the source document context above. Reference specific details, data points, or terminology from the original source.**\n";
     }
 
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {

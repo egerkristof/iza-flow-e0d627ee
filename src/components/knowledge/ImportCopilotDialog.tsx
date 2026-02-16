@@ -803,6 +803,10 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
           for (let j = 0; j < bundle.items.length; j++) {
             const resolved = resolveItem(bundle.items[j], bundleItemEdits[`${i}-${j}`]);
             const mandate = mandateFlags[`bundle-${i}-${j}`];
+            const sourceItem = bundle.items[j];
+            const sourceMetadata = sourceItem.source_pages
+              ? { pages: sourceItem.source_pages, source_document: sourceName }
+              : null;
             const row = {
               owner_id: user.id,
               title: resolved.title,
@@ -810,6 +814,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
               category: resolved.category as any,
               action_type: "APPEND" as any,
               bundle_id: createdBundleIds[i],
+              ...(sourceMetadata ? { source_metadata: sourceMetadata } : {}),
               ...(mandate?.is_mandate ? {
                 is_mandate: true,
                 enforcement_level: mandate.enforcement_level as any,
@@ -886,6 +891,10 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             }
           }
           const mandate = mandateFlags[`standalone-${originalIdx}`];
+          const sourceItem = ci;
+          const sourceMetadata = sourceItem.source_pages
+            ? { pages: sourceItem.source_pages, source_document: sourceName }
+            : null;
           const row = {
             owner_id: user.id,
             title: resolved.title,
@@ -893,6 +902,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
             category: resolved.category as any,
             action_type: "APPEND" as any,
             bundle_id: bundleId,
+            ...(sourceMetadata ? { source_metadata: sourceMetadata } : {}),
             ...(mandate?.is_mandate ? {
               is_mandate: true,
               enforcement_level: mandate.enforcement_level as any,
