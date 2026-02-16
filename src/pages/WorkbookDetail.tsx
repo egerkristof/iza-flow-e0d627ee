@@ -22,6 +22,7 @@ import { WorkbookChats, ChatSidebarPanel } from "@/components/workbooks/Workbook
 import { WorkbookMembers, MembersSidebarPanel } from "@/components/workbooks/WorkbookMembers";
 import { WorkbookAgentConfig, AgentsSidebarPanel } from "@/components/workbooks/WorkbookAgentConfig";
 import { WorkbookResources } from "@/components/workbooks/WorkbookResources";
+import { RepositorySidebarPanel } from "@/components/workbooks/RepositorySidebarPanel";
 import { ChatToolbar } from "@/components/workbooks/ChatToolbar";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { WorkbookStatusTransition } from "@/components/workbooks/WorkbookStatusTransition";
@@ -411,6 +412,11 @@ export default function WorkbookDetailPage() {
               <ChatSidebarPanel workbookId={id ?? "1"} />
             </div>
 
+            {/* Repository */}
+            <div className="mb-4">
+              <RepositorySidebarPanel workbookId={id ?? "1"} />
+            </div>
+
             {/* Active agents */}
             <AgentsSidebarPanel workbookId={id ?? "1"} />
           </div>
@@ -524,10 +530,11 @@ export default function WorkbookDetailPage() {
               </>
             )}
 
-            {/* Team & Chats & Agents */}
+            {/* Team, Chats, Repository & Agents */}
             <div className="mt-5 space-y-4">
               <MembersSidebarPanel workbookId={id ?? "1"} />
               <ChatSidebarPanel workbookId={id ?? "1"} />
+              <RepositorySidebarPanel workbookId={id ?? "1"} />
               <AgentsSidebarPanel workbookId={id ?? "1"} />
             </div>
           </div>
