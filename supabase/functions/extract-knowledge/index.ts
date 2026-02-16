@@ -1166,21 +1166,50 @@ Analyze the specified pages/slides of this PDF document. Extract ALL knowledge e
       const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey, pdfBase64);
       if (!result) throw new Error(`Chunk ${chunkIndex + 1} extraction failed after retries`);
 
+      console.log(`Chunk ${chunkIndex + 1} result: bundles=${result.bundles?.length || 0}, items=${result.context_items?.length || 0}, prefs=${result.preferences?.length || 0}`);
+
       return new Response(JSON.stringify(result), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    // ── PDF extraction (single pass — small documents) ──────────────────
+    // ── PDF extraction ──────────────────────────────────────────────────
     if (pdfBase64) {
       // Estimate total pages from file size
       const estimatedPages = Math.max(Math.ceil(pdfBase64.length / 67000), 10);
-      console.log(`PDF page estimate: ~${estimatedPages} pages — single pass`);
       
       const pdfChunks = buildPdfPageChunks(documentStructure, estimatedPages);
+      console.log(`PDF page estimate: ~${estimatedPages} pages, chunks determined: ${pdfChunks.length}`);
+
+      // Force chunking for any PDF over 15 estimated pages, even if buildPdfPageChunks returned <=1
+      if (pdfChunks.length <= 1 && estimatedPages > 15) {
+        console.log(`Forcing fallback chunking for large PDF (${estimatedPages} pages)`);
+        const PAGES_PER_CHUNK = 8;
+        const forcedChunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
+        for (let start = 1; start <= estimatedPages; start += PAGES_PER_CHUNK) {
+          const end = Math.min(start + PAGES_PER_CHUNK - 1, estimatedPages);
+          forcedChunks.push({
+            label: `Pages ${start}-${end}`,
+            pageRange: `pages ${start} to ${end}`,
+            focusInstructions: `Focus ONLY on pages ${start} through ${end}. Extract ALL content from these pages and IGNORE content from other pages.`,
+          });
+        }
+        if (forcedChunks.length > 1) {
+          console.log(`Forced chunking: ${forcedChunks.length} chunks for ${estimatedPages} pages`);
+          return new Response(JSON.stringify({
+            needs_chunking: true,
+            chunks: forcedChunks,
+            estimated_pages: estimatedPages,
+            model,
+          }), {
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+      }
 
       // If chunking is needed, return a plan for the client to orchestrate
       if (pdfChunks.length > 1) {
+        console.log(`Structure-based chunking: ${pdfChunks.length} chunks`);
         return new Response(JSON.stringify({
           needs_chunking: true,
           chunks: pdfChunks,
@@ -1192,6 +1221,7 @@ Analyze the specified pages/slides of this PDF document. Extract ALL knowledge e
       }
 
       // Small PDF — single pass (no chunking needed)
+      console.log(`Small PDF — single pass extraction`);
       const userPrompt = buildUserPrompt(sourceType, textContent, meta);
       const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey, pdfBase64);
       if (!result) throw new Error("Extraction failed after retries");
