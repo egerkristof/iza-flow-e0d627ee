@@ -17,6 +17,7 @@ import {
   Merge, Trash2, Edit2, Check, X, ArrowRight, Sparkles,
   Info, AlertTriangle, MoveRight, GripVertical,
   Eye, Hash, Layout, Table2, GitBranch, Presentation, Brain,
+  Undo2,
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -130,6 +131,7 @@ export function StructureEditorDialog({
   const [editValue, setEditValue] = useState("");
   const [dragState, setDragState] = useState<{ bundleIdx: number; playbookIdx: number } | null>(null);
   const [dropTarget, setDropTarget] = useState<{ bundleIdx: number; playbookIdx: number } | null>(null);
+  const [restoredLabels, setRestoredLabels] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     if (data?.optimized_blueprint) {
@@ -288,6 +290,72 @@ export function StructureEditorDialog({
     setDropTarget(null);
   };
 
+  // ── Restore pruned section ─────────────────────────────────────────────────
+  const restorePrunedSection = (prunedIdx: number) => {
+    const pl = data?.pruning_stats?.pruned_labels?.[prunedIdx];
+    if (!pl) return;
+    // Add as a new playbook under a "Restored Sections" bundle, or create one
+    setBlueprint(prev => {
+      const next = [...prev];
+      const restoredBundleIdx = next.findIndex(b => b.bundle_title === "Restored Sections");
+      const newPlaybook: BlueprintPlaybook = {
+        playbook_title: pl.label,
+        original_skeleton_labels: [pl.label],
+        procedures: [],
+      };
+      if (restoredBundleIdx >= 0) {
+        next[restoredBundleIdx] = {
+          ...next[restoredBundleIdx],
+          playbooks: [...next[restoredBundleIdx].playbooks, newPlaybook],
+        };
+      } else {
+        next.push({
+          bundle_title: "Restored Sections",
+          bundle_description: "Sections restored from pruned skeleton entries for manual inclusion.",
+          original_skeleton_labels: [],
+          playbooks: [newPlaybook],
+        });
+        // Expand it
+        setExpandedBundles(prev => new Set([...prev, next.length - 1]));
+      }
+      return next;
+    });
+    setRestoredLabels(prev => new Set([...prev, prunedIdx]));
+  };
+
+  const restoreAllPruned = () => {
+    const labels = data?.pruning_stats?.pruned_labels;
+    if (!labels) return;
+    const newPlaybooks: BlueprintPlaybook[] = labels
+      .filter((_, i) => !restoredLabels.has(i))
+      .map(pl => ({
+        playbook_title: pl.label,
+        original_skeleton_labels: [pl.label],
+        procedures: [],
+      }));
+    if (newPlaybooks.length === 0) return;
+    setBlueprint(prev => {
+      const next = [...prev];
+      const restoredBundleIdx = next.findIndex(b => b.bundle_title === "Restored Sections");
+      if (restoredBundleIdx >= 0) {
+        next[restoredBundleIdx] = {
+          ...next[restoredBundleIdx],
+          playbooks: [...next[restoredBundleIdx].playbooks, ...newPlaybooks],
+        };
+      } else {
+        next.push({
+          bundle_title: "Restored Sections",
+          bundle_description: "Sections restored from pruned skeleton entries for manual inclusion.",
+          original_skeleton_labels: [],
+          playbooks: newPlaybooks,
+        });
+        setExpandedBundles(prev => new Set([...prev, next.length - 1]));
+      }
+      return next;
+    });
+    setRestoredLabels(new Set(labels.map((_, i) => i)));
+  };
+
   const handleConfirm = () => {
     if (!data) return;
     onConfirm({
@@ -389,14 +457,42 @@ export function StructureEditorDialog({
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-1.5 px-1">
               <div className="rounded-md border border-orange-500/20 bg-orange-500/5 p-2 space-y-1 max-h-40 overflow-y-auto">
-                <p className="text-[10px] text-muted-foreground mb-1.5">
-                  Raw skeleton had {data.pruning_stats.raw_skeleton_count} entries — capped to {data.pruning_stats.pruned_to} for AI context limits. These low-density deep sections were excluded:
-                </p>
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-[10px] text-muted-foreground">
+                    Raw skeleton had {data.pruning_stats.raw_skeleton_count} entries — capped to {data.pruning_stats.pruned_to}. These sections were excluded:
+                  </p>
+                  {restoredLabels.size < data.pruning_stats.pruned_labels.length && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-5 px-1.5 text-[10px] text-orange-400 hover:text-orange-300 shrink-0"
+                      onClick={restoreAllPruned}
+                    >
+                      <Undo2 className="h-3 w-3 mr-1" />
+                      Restore all
+                    </Button>
+                  )}
+                </div>
                 {data.pruning_stats.pruned_labels.map((pl, i) => (
                   <div key={i} className="flex items-center gap-2 text-[10px]">
                     <span className="text-muted-foreground/60 w-4 text-right shrink-0">L{pl.level}</span>
-                    <span className="text-foreground/80 truncate flex-1">{pl.label}</span>
+                    <span className={`flex-1 truncate ${restoredLabels.has(i) ? "text-muted-foreground/40 line-through" : "text-foreground/80"}`}>
+                      {pl.label}
+                    </span>
                     <Badge variant="outline" className="text-[8px] shrink-0 h-4 px-1">{pl.content_density}</Badge>
+                    {restoredLabels.has(i) ? (
+                      <Badge variant="outline" className="text-[8px] shrink-0 h-4 px-1 text-emerald-400 border-emerald-500/30">restored</Badge>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-4 px-1 text-[9px] text-orange-400 hover:text-orange-300"
+                        onClick={() => restorePrunedSection(i)}
+                      >
+                        <Undo2 className="h-2.5 w-2.5 mr-0.5" />
+                        Restore
+                      </Button>
+                    )}
                   </div>
                 ))}
               </div>
