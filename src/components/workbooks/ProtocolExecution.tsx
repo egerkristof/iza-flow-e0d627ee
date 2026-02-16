@@ -152,11 +152,21 @@ function useProtocolContext(protocolId: string | null) {
   });
 }
 
-function useActiveExecution(protocolId: string | null, userId: string | undefined) {
+function useActiveExecution(protocolId: string | null, userId: string | undefined, resumeExecutionId?: string | null) {
   return useQuery({
-    queryKey: ["protocol-execution", protocolId, userId],
+    queryKey: ["protocol-execution", protocolId, userId, resumeExecutionId],
     enabled: !!protocolId && !!userId,
     queryFn: async () => {
+      // If a specific execution ID is provided, fetch that one directly
+      if (resumeExecutionId) {
+        const { data, error } = await supabase
+          .from("protocol_executions")
+          .select("*")
+          .eq("id", resumeExecutionId)
+          .maybeSingle();
+        if (error) throw error;
+        return data as unknown as ProtocolExecution | null;
+      }
       const { data, error } = await supabase
         .from("protocol_executions")
         .select("*")
@@ -391,11 +401,13 @@ export function ProtocolExecutionView({
   workbookId,
   workbookTitle,
   onExit,
+  resumeExecutionId,
 }: {
   protocol: Protocol;
   workbookId: string;
   workbookTitle: string;
   onExit: () => void;
+  resumeExecutionId?: string | null;
 }) {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -403,7 +415,7 @@ export function ProtocolExecutionView({
 
   const { data: steps = [] } = useProtocolSteps(protocol.id);
   const { data: contextItems = [] } = useProtocolContext(protocol.id);
-  const { data: activeExecution, refetch: refetchExecution } = useActiveExecution(protocol.id, user?.id);
+  const { data: activeExecution, refetch: refetchExecution } = useActiveExecution(protocol.id, user?.id, resumeExecutionId);
   const { data: stepExecs = [], refetch: refetchStepExecs } = useStepExecutions(activeExecution?.id ?? null);
   const { data: captures = [] } = useExecutionCaptures(activeExecution?.id ?? null);
 

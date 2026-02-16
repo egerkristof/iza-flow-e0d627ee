@@ -94,6 +94,7 @@ export default function WorkbookDetailPage() {
   const [lockedPlaybook, setLockedPlaybook] = useState<Playbook | null>(null);
   const [freeSession, setFreeSession] = useState(false);
   const [activeProtocol, setActiveProtocol] = useState<any>(null);
+  const [resumeExecutionId, setResumeExecutionId] = useState<string | null>(null);
 
   // Fetch real protocols from deployed bundles
   const { data: realProtocols = [] } = useWorkbookProtocols(id ?? "");
@@ -256,7 +257,8 @@ export default function WorkbookDetailPage() {
         protocol={activeProtocol}
         workbookId={id ?? ""}
         workbookTitle={wb.title}
-        onExit={() => setActiveProtocol(null)}
+        onExit={() => { setActiveProtocol(null); setResumeExecutionId(null); }}
+        resumeExecutionId={resumeExecutionId}
       />
     );
   }
@@ -647,9 +649,12 @@ export default function WorkbookDetailPage() {
             workbookId={id ?? "1"}
             focusChatId={focusChatId}
             onFocusChatHandled={() => setFocusChatId(null)}
-            onResumeProtocol={(protocolId) => {
+            onResumeProtocol={(protocolId, executionId) => {
               const proto = realProtocols.find(p => p.id === protocolId);
-              if (proto) setActiveProtocol(proto);
+              if (proto) {
+                setResumeExecutionId(executionId);
+                setActiveProtocol(proto);
+              }
             }}
           />
         </TabsContent>
