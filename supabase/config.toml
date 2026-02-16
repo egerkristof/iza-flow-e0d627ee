@@ -32,3 +32,6 @@ verify_jwt = false
 
 [functions.match-bundles]
 verify_jwt = false
+
+[functions.merge-extraction]
+verify_jwt = false
