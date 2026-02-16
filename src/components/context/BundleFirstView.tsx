@@ -683,13 +683,26 @@ function BundleExpandable({
                 const ownedByPlaybook = new Map<string, MockContextItem[]>();
                 const sharedItems: MockContextItem[] = [];
 
+                // Categories that are truly "shared" domain-level context
+                const SHARED_CATEGORIES = new Set(["KNOWLEDGE", "PRINCIPLE", "PREFERENCE", "RESEARCH"]);
+
                 for (const item of sortedBundleItems) {
                   if (item.category === "PLAYBOOK") continue;
                   if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) {
                     const existing = ownedByPlaybook.get(item.parent_playbook_id) || [];
                     existing.push(item);
                     ownedByPlaybook.set(item.parent_playbook_id, existing);
+                  } else if (SHARED_CATEGORIES.has(item.category)) {
+                    // Only knowledge-type items go to shared context
+                    sharedItems.push(item);
+                  } else if (playbooks.length === 1) {
+                    // Auto-nest orphan procedures/directives under the single playbook
+                    const onlyPb = playbooks[0];
+                    const existing = ownedByPlaybook.get(onlyPb.id) || [];
+                    existing.push(item);
+                    ownedByPlaybook.set(onlyPb.id, existing);
                   } else {
+                    // Multiple playbooks: still nest under shared but shouldn't normally happen
                     sharedItems.push(item);
                   }
                 }
