@@ -69,8 +69,9 @@ Given the raw skeleton and content preview:
 - **CRITICAL: MAXIMIZE INCLUSION.** Every skeleton section MUST appear as either a bundle, playbook, or procedure in the output. Even sections with sparse or no content are valuable — the label itself carries strategic meaning for the user. NEVER drop, skip, or omit a section because it seems empty or thin. An empty playbook with a meaningful title is far more valuable than a missing one.
 - **CRITICAL: Every bundle MUST contain at least one playbook.** If a bundle would end up with zero playbooks, either: (a) create a playbook from the bundle's own content/label, or (b) promote sub-sections to playbook level. A bundle with no playbooks is invalid.
 - **CRITICAL: NEVER reclassify a level-1 or level-2 section as a PROCEDURE.** Top-level sections represent major strategic domains. If they seem small, they should become a PLAYBOOK at minimum, or remain a BUNDLE. Demoting them to procedure destroys all sub-content.
-- **CRITICAL: Sections that represent fundamentally different STRATEGIC APPROACHES (e.g., "Account Management / Farming" vs "Sales / Hunting") must NEVER be merged into a single procedure.** They are distinct operational domains and should each be at least a PLAYBOOK, ideally separate BUNDLES with their own playbooks underneath.
-- When two sections describe contrasting or complementary strategies (hunting vs farming, inbound vs outbound, new business vs retention), keep them as separate playbooks or bundles — do NOT collapse them into a single "differentiate X and Y" procedure.
+- **CRITICAL: Sections that represent fundamentally different STRATEGIC APPROACHES (e.g., "Account Management / Farming" vs "Sales / Hunting") must ALWAYS be SEPARATE BUNDLES — never merged into one bundle, never demoted to playbooks under a shared bundle.** They are distinct operational domains. If the document shows them as two sides of a process (e.g., left vs right in a diagram), they are SEPARATE bundles.
+- When two sections describe contrasting or complementary strategies (hunting vs farming, inbound vs outbound, new business vs retention), they MUST be separate bundles with their own playbooks — do NOT collapse them under a single "overview" bundle.
+- **If a STRUCTURAL MANIFEST is provided**, its parent_group assignments are AUTHORITATIVE. Sections with different parent_groups MUST be in different bundles.
 - **PREFER OVER-INCLUSION over consolidation.** When in doubt, keep a section as its own playbook rather than merging it. Users can always merge later, but they cannot recover dropped sections.
 
 Return results via the optimize_structure tool.`;
@@ -228,7 +229,7 @@ serve(async (req) => {
     if (authError || !user) throw new Error("Unauthorized");
 
     const body = await req.json();
-    const { skeleton, content_preview, documentId } = body;
+    const { skeleton, content_preview, documentId, manifest } = body;
 
     if (!skeleton || !skeleton.skeleton || skeleton.skeleton.length === 0) {
       throw new Error("skeleton (from detect-structure) is required");
@@ -313,13 +314,27 @@ serve(async (req) => {
       ? `\n\n## DOCUMENT CONTENT PREVIEW (first ~60K chars)\n${resolvedContentPreview}`
       : "";
 
+    // Build manifest section if available
+    let manifestSection = "";
+    if (manifest && manifest.manifest_sections?.length > 0) {
+      const sectionList = manifest.manifest_sections
+        .map((s: any, i: number) => {
+          let entry = `${i + 1}. "${s.label}" (${s.source_type})`;
+          if (s.parent_group) entry += ` → belongs to domain: **${s.parent_group}**`;
+          return entry;
+        })
+        .join("\n");
+      const patterns = (manifest.structural_patterns || []).join("; ");
+      manifestSection = `\n\n## STRUCTURAL MANIFEST (from document overview/ToC/diagrams)\nThe document's own structural overview elements identified these domains and sections:\n${sectionList}\n\nDetected patterns: ${patterns}\n\n**CRITICAL:** Sections belonging to DIFFERENT parent domains (e.g., "Hunting" vs "Farming") MUST become SEPARATE BUNDLES. The manifest reveals the document author's intended organizational structure — respect it.\n`;
+    }
+
     const userPrompt = `## RAW SKELETON (from structure detection)
 \`\`\`json
 ${skeletonText}
 \`\`\`
-${contentSection}
+${manifestSection}${contentSection}
 
-Analyze the semantic relationships between these sections. Identify overlaps, misclassifications, and opportunities to create a cleaner bundle→playbook→procedure hierarchy. Apply the PLAYBOOK Test to every section and produce the optimized blueprint.`;
+Analyze the semantic relationships between these sections. Identify overlaps, misclassifications, and opportunities to create a cleaner bundle→playbook→procedure hierarchy. Apply the PLAYBOOK Test to every section and produce the optimized blueprint. **If a STRUCTURAL MANIFEST is provided, use it as the authoritative source for top-level bundle organization.**`;
 
     const activePrompt = await loadPrompt("optimize-structure-system", SYSTEM_PROMPT);
 

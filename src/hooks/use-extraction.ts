@@ -304,6 +304,10 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
               if (body.documentId) {
                 optimizeBody.documentId = body.documentId;
               }
+              // Pass manifest from detect-structure so optimizer knows about distinct domains
+              if (structData._manifest) {
+                optimizeBody.manifest = structData._manifest;
+              }
 
               const optController = new AbortController();
               const optTimer = setTimeout(() => optController.abort(), STRUCTURE_TIMEOUT);
