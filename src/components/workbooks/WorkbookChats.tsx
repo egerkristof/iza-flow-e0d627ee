@@ -531,7 +531,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
         <div className="relative flex-1">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <Input
-            placeholder="Search chats…"
+            placeholder="Search sessions…"
             value={chatSearch}
             onChange={e => setChatSearch(e.target.value)}
             className="pl-8 h-8 text-xs"
@@ -552,15 +552,15 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
           ))}
         </div>
         <Button size="sm" className="gap-1.5 text-xs" onClick={() => setNewChatOpen(true)}>
-          <Plus className="h-3 w-3" /> New Chat
+          <Plus className="h-3 w-3" /> New Session
         </Button>
       </div>
 
       {chatsLoading ? (
-        <p className="text-sm text-muted-foreground text-center py-8">Loading chats…</p>
+        <p className="text-sm text-muted-foreground text-center py-8">Loading sessions…</p>
       ) : filtered.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border/50 p-8 text-center text-sm text-muted-foreground">
-          No chats yet. Start a new conversation.
+          No sessions yet. Start a new session or run a playbook.
         </div>
       ) : (
         <div className="space-y-2">
@@ -602,14 +602,14 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
       {/* New Chat Dialog */}
       <Dialog open={newChatOpen} onOpenChange={setNewChatOpen}>
         <DialogContent className="sm:max-w-sm">
-          <DialogHeader><DialogTitle>New Chat</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>New Session</DialogTitle></DialogHeader>
           <div className="space-y-3 pt-2">
             <Input
-              placeholder="Chat title (optional)"
+              placeholder="Session title (optional)"
               value={newChatTitle}
               onChange={e => setNewChatTitle(e.target.value)}
             />
-            <p className="text-xs text-muted-foreground">Creates a private chat thread within this workbook.</p>
+            <p className="text-xs text-muted-foreground">Creates a free session within this workbook.</p>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setNewChatOpen(false)}>Cancel</Button>
@@ -629,9 +629,9 @@ export function ChatSidebarPanel({ workbookId }: { workbookId: string }) {
 
   return (
     <div className="space-y-2">
-      <p className="text-[11px] font-medium text-muted-foreground">Recent Threads</p>
+      <p className="text-[11px] font-medium text-muted-foreground">Recent Sessions</p>
       {chats.length === 0 ? (
-        <p className="text-[10px] text-muted-foreground">No chats yet</p>
+        <p className="text-[10px] text-muted-foreground">No sessions yet</p>
       ) : (
         chats.slice(0, 3).map(c => (
           <div key={c.id} className="flex items-center gap-2 rounded-md bg-secondary/50 px-3 py-2 text-xs">

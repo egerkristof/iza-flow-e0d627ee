@@ -808,10 +808,10 @@ export function ProtocolExecutionView({
         </div>
         <Button onClick={() => startExecution.mutate()} disabled={startExecution.isPending} className="gap-2">
           {startExecution.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />}
-          Start Protocol
+          Start Session
         </Button>
         <Button variant="ghost" size="sm" onClick={onExit} className="text-xs text-muted-foreground">
-          ← Back to protocols
+          ← Back to playbooks
         </Button>
       </div>
     );
@@ -821,7 +821,7 @@ export function ProtocolExecutionView({
     return (
       <div className="flex h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-4">
         <CheckCircle2 className="h-12 w-12 text-emerald-500" />
-        <h2 className="text-lg font-semibold">Protocol Complete</h2>
+        <h2 className="text-lg font-semibold">Playbook Complete</h2>
         <p className="text-sm text-muted-foreground">{protocol.title} — finished successfully</p>
         <div className="flex items-center gap-3 text-sm">
           <Badge variant="outline" className="border-emerald-500/30 text-emerald-500">
@@ -834,7 +834,7 @@ export function ProtocolExecutionView({
           )}
         </div>
         <Button onClick={onExit} className="gap-2">
-          ← Back to protocols
+          ← Back to playbooks
         </Button>
       </div>
     );
@@ -842,10 +842,10 @@ export function ProtocolExecutionView({
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] flex-col" style={{ background: "hsl(205 85% 55% / 0.03)" }}>
-      {/* Protocol Banner */}
+      {/* Playbook Session Banner */}
       <div className="flex items-center justify-between border-b border-primary/20 bg-primary/5 px-6 py-3">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={onExit} title="Back to protocols">
+          <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={onExit} title="Back to playbooks">
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Lock className="h-4 w-4 text-primary" />

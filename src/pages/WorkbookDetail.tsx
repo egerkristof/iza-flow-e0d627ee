@@ -102,17 +102,19 @@ export default function WorkbookDetailPage() {
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
   const [detectedIntents, setDetectedIntents] = useState<string[]>([]);
   const [stackViewerOpen, setStackViewerOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("protocols");
+  const [activeTab, setActiveTab] = useState("playbooks");
   const [focusTaskId, setFocusTaskId] = useState<string | null>(null);
   const [focusChatId, setFocusChatId] = useState<string | null>(null);
 
-  const handleGraphNodeNavigate = useCallback((nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat") => {
+  const handleGraphNodeNavigate = useCallback((nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat" | "resource") => {
     if (nodeType === "task" || nodeType === "subtask") {
       setFocusTaskId(nodeId);
       setActiveTab("tasks");
     } else if (nodeType === "chat") {
       setFocusChatId(nodeId);
-      setActiveTab("chats");
+      setActiveTab("sessions");
+    } else if (nodeType === "resource") {
+      setActiveTab("resources");
     }
   }, []);
 
@@ -435,7 +437,7 @@ export default function WorkbookDetailPage() {
               <ChevronLeft className="h-4 w-4" />
             </Button>
             <Lock className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Active Protocol: {lockedPlaybook.title}</span>
+            <span className="text-sm font-medium text-primary">Active Playbook: {lockedPlaybook.title}</span>
             <Badge variant="outline" className="border-primary/30 text-primary text-xs">Step {currentStepIndex + 1} of {lockedPlaybook.steps.length}</Badge>
             {playbookPrefs.length > 0 && (
               <Badge variant="secondary" className="text-[10px] gap-0.5"><Settings className="h-2 w-2" />{playbookPrefs.length} pref{playbookPrefs.length > 1 ? "s" : ""} active</Badge>
@@ -574,9 +576,9 @@ export default function WorkbookDetailPage() {
       {/* Tabbed sections — role-filtered */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList>
-          <TabsTrigger value="protocols">Protocols</TabsTrigger>
+          <TabsTrigger value="playbooks">Playbooks</TabsTrigger>
+          <TabsTrigger value="sessions"><MessageSquare className="mr-1.5 h-3.5 w-3.5" />Sessions</TabsTrigger>
           <TabsTrigger value="tasks"><ListTodo className="mr-1.5 h-3.5 w-3.5" />Tasks</TabsTrigger>
-          <TabsTrigger value="chats"><MessageSquare className="mr-1.5 h-3.5 w-3.5" />Chats</TabsTrigger>
           <TabsTrigger value="members"><Users className="mr-1.5 h-3.5 w-3.5" />Members</TabsTrigger>
           <TabsTrigger value="resources"><Package className="mr-1.5 h-3.5 w-3.5" />Repository</TabsTrigger>
           <TabsTrigger value="graph"><Network className="mr-1.5 h-3.5 w-3.5" />Graph</TabsTrigger>
@@ -584,8 +586,8 @@ export default function WorkbookDetailPage() {
           {showSettings && <TabsTrigger value="settings"><Settings className="mr-1.5 h-3.5 w-3.5" />Settings</TabsTrigger>}
         </TabsList>
 
-        <TabsContent value="protocols" className="mt-4">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Select a Protocol</h2>
+        <TabsContent value="playbooks" className="mt-4">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Select a Playbook</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* Free Session card — always first */}
             <button onClick={handleStartFreeSession} className="group flex flex-col gap-3 rounded-lg border border-dashed border-emerald-500/30 bg-emerald-500/5 p-5 text-left transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10">
@@ -595,7 +597,7 @@ export default function WorkbookDetailPage() {
                 </div>
                 <div>
                   <h3 className="font-medium">Free Session</h3>
-                  <p className="text-xs text-muted-foreground">No protocol — just start working</p>
+                  <p className="text-xs text-muted-foreground">No playbook — just start working</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -603,7 +605,7 @@ export default function WorkbookDetailPage() {
               </div>
             </button>
 
-            {/* Real protocols from deployed bundles */}
+            {/* Real playbooks from deployed bundles */}
             {realProtocols.map(proto => (
               <ProtocolCard
                 key={proto.id}
@@ -630,7 +632,7 @@ export default function WorkbookDetailPage() {
 
             {realProtocols.length === 0 && (
               <div className="col-span-full text-center py-4 text-xs text-muted-foreground">
-                Deploy bundles with playbooks to generate real protocols. Showing sample protocols above.
+                Deploy domains with playbooks to generate executable playbooks. Showing sample playbooks above.
               </div>
             )}
           </div>
@@ -640,7 +642,7 @@ export default function WorkbookDetailPage() {
           <WorkbookTasks workbookId={id ?? "1"} workbookTitle={wb.title} focusTaskId={focusTaskId} onFocusTaskHandled={() => setFocusTaskId(null)} />
         </TabsContent>
 
-        <TabsContent value="chats" className="mt-4">
+        <TabsContent value="sessions" className="mt-4">
           <WorkbookChats workbookId={id ?? "1"} focusChatId={focusChatId} onFocusChatHandled={() => setFocusChatId(null)} />
         </TabsContent>
 
