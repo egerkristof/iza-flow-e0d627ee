@@ -638,8 +638,8 @@ function buildPdfPageChunks(
     const sections = documentStructure.skeleton as any[];
     const chunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
     
-    // Group sections into chunks of ~15 pages each
-    const PAGES_PER_CHUNK = 15;
+    // Group sections into chunks of ~8 pages each for faster processing
+    const PAGES_PER_CHUNK = 8;
     let currentChunk: any[] = [];
     let currentPageCount = 0;
 
@@ -690,7 +690,7 @@ function buildPdfPageChunks(
 
   // Fallback: fixed page ranges
   if (totalPagesEstimate > 20) {
-    const PAGES_PER_CHUNK = 15;
+    const PAGES_PER_CHUNK = 8;
     const chunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
     for (let start = 1; start <= totalPagesEstimate; start += PAGES_PER_CHUNK) {
       const end = Math.min(start + PAGES_PER_CHUNK - 1, totalPagesEstimate);
@@ -1113,12 +1113,12 @@ You are in **deep analysis mode**. This means:
       const pdfChunks = buildPdfPageChunks(documentStructure, estimatedPages);
 
     if (pdfChunks.length > 1) {
-        // Cap at 4 chunks max to avoid edge function timeout (~60s per AI call)
-        const cappedChunks = pdfChunks.length > 4 
+        // Cap at 8 chunks max — smaller chunks process faster within edge function timeout
+        const cappedChunks = pdfChunks.length > 8 
           ? (() => {
-              // Merge chunks evenly to get ≤4
+              // Merge chunks evenly to get ≤8
               const merged: typeof pdfChunks = [];
-              const groupSize = Math.ceil(pdfChunks.length / 4);
+              const groupSize = Math.ceil(pdfChunks.length / 8);
               for (let g = 0; g < pdfChunks.length; g += groupSize) {
                 const group = pdfChunks.slice(g, g + groupSize);
                 merged.push({

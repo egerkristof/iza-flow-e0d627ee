@@ -116,6 +116,10 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
       ...(documentStructure ? { document_structure: documentStructure } : {}),
     };
 
+    const EXTRACT_TIMEOUT = 10 * 60 * 1000; // 10 minutes for chunked extraction
+    const extractController = new AbortController();
+    const extractTimer = setTimeout(() => extractController.abort(), EXTRACT_TIMEOUT);
+
     const extractRes = await fetch(
       `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`,
       {
@@ -126,8 +130,10 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
           apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
         },
         body: JSON.stringify(extractBody),
+        signal: extractController.signal,
       },
     );
+    clearTimeout(extractTimer);
 
     if (!extractRes.ok) {
       const errText = await extractRes.text();
@@ -265,7 +271,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
           else if (body.content) structureBody.content = body.content;
 
           const session = (await supabase.auth.getSession()).data.session;
-          const STRUCTURE_TIMEOUT = 5 * 60 * 1000; // 5 minutes for large PDFs
+          const STRUCTURE_TIMEOUT = 10 * 60 * 1000; // 10 minutes for large PDFs
 
           // Use raw fetch with extended timeout — supabase.functions.invoke times out on large PDFs
           const structController = new AbortController();
