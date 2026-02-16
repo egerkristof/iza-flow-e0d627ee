@@ -23,7 +23,7 @@ interface StatusConfig {
 }
 
 const STATUS_CONFIG: Record<WorkbookStatus, StatusConfig> = {
-  draft: { label: "Draft", color: "bg-muted text-muted-foreground", icon: <FileEdit className="h-3 w-3" />, description: "Setup phase — defining scope, protocols, and team." },
+  draft: { label: "Draft", color: "bg-muted text-muted-foreground", icon: <FileEdit className="h-3 w-3" />, description: "Setup phase — defining scope, playbooks, and team." },
   active: { label: "Active", color: "bg-info/10 text-info", icon: <Play className="h-3 w-3" />, description: "Live execution — tasks running, drift tracked." },
   review: { label: "Review", color: "bg-warning/10 text-warning", icon: <Eye className="h-3 w-3" />, description: "Paused for assessment and quality check." },
   completed: { label: "Completed", color: "bg-success/10 text-success", icon: <CheckCircle className="h-3 w-3" />, description: "Outcome achieved — preserved as reference." },
