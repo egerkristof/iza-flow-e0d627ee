@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageSquare, Plus, Users, User, X, Hash, Search, Loader2, Sparkles, GitCompareArrows, BookUp, Package, Play, CheckCircle2, PauseCircle, Clock } from "lucide-react";
+import { MessageSquare, Plus, Users, User, X, Hash, Search, Loader2, Sparkles, GitCompareArrows, BookUp, Package, Play, CheckCircle2, PauseCircle, Clock, Trash2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -342,6 +342,23 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
       toast({ title: "Chat created" });
     },
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
+  });
+
+  // ── Delete chat mutation ──
+  const deleteChat = useMutation({
+    mutationFn: async (chatId: string) => {
+      // Delete messages, participants, then chat
+      await supabase.from("workbook_chat_messages").delete().eq("chat_id", chatId);
+      await supabase.from("workbook_chat_participants").delete().eq("chat_id", chatId);
+      const { error } = await supabase.from("workbook_chats").delete().eq("id", chatId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workbook-chats", workbookId] });
+      if (activeThread) setActiveThread(null);
+      toast({ title: "Session deleted" });
+    },
+    onError: (e: any) => toast({ title: "Delete failed", description: e.message, variant: "destructive" }),
   });
 
   // ── Send message mutation ──
@@ -704,7 +721,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
                     setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
                   }
                 }}
-                className={`flex w-full items-center gap-3 rounded-lg border p-4 text-left transition-all ${
+                className={`group flex w-full items-center gap-3 rounded-lg border p-4 text-left transition-all ${
                   highlightedChatId === chat.id
                     ? "border-primary bg-primary/15 ring-2 ring-primary/40 animate-pulse"
                     : "border-border/50 bg-card hover:border-primary/30 hover:bg-primary/5"
@@ -719,7 +736,16 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
                       <span className="text-sm font-medium truncate">{chat.title || "Untitled Session"}</span>
                       <Badge variant="outline" className="text-[9px] border-muted-foreground/30 text-muted-foreground shrink-0">Free Session</Badge>
                     </div>
-                    <span className="text-[10px] text-muted-foreground shrink-0 ml-2">{timeAgo(chat.updated_at)}</span>
+                    <div className="flex items-center gap-2 shrink-0 ml-2">
+                      <span className="text-[10px] text-muted-foreground">{timeAgo(chat.updated_at)}</span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); deleteChat.mutate(chat.id); }}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive"
+                        title="Delete session"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
                   </div>
                   {last && (
                     <p className="text-xs text-muted-foreground truncate mt-0.5">{last.content.slice(0, 80)}</p>
