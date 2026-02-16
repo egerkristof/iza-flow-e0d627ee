@@ -2,8 +2,9 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import {
   Sparkles, X, Send, Loader2, AtSign, ChevronDown, Check, Pencil,
-  Plus, History, Trash2, Clock, MessageSquare, Search,
+  Plus, History, Trash2, Clock, MessageSquare, Search, FileText,
 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -101,6 +102,7 @@ export function InlineContextCopilot({
   const [mentionQuery, setMentionQuery] = useState("");
   const [mentionStart, setMentionStart] = useState(-1);
   const [applyingIdx, setApplyingIdx] = useState<number | null>(null);
+  const [useSourceMaterial, setUseSourceMaterial] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -108,6 +110,23 @@ export function InlineContextCopilot({
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [historySearch, setHistorySearch] = useState("");
+
+  // Fetch source metadata for the current scope item
+  const { data: currentItemMeta } = useQuery({
+    queryKey: ["item-source-metadata", scopeId],
+    enabled: !!scopeId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("context_items")
+        .select("source_metadata")
+        .eq("id", scopeId)
+        .maybeSingle();
+      if (error) return null;
+      return data?.source_metadata as { pages?: string; source_document?: string; chunk_text?: string } | null;
+    },
+  });
+
+  const hasSourceMaterial = !!currentItemMeta?.pages;
 
   // Fetch conversation list
   const { data: conversations = [], refetch: refetchConversations } = useQuery({
@@ -357,6 +376,7 @@ export function InlineContextCopilot({
           scope: { level: scope, id: scopeId, title: scopeTitle },
           hierarchy,
           referencedItems,
+          ...(useSourceMaterial && currentItemMeta ? { sourceMetadata: currentItemMeta } : {}),
         }),
       });
 
@@ -462,6 +482,16 @@ export function InlineContextCopilot({
           </Badge>
         </div>
         <div className="flex items-center gap-0.5 shrink-0">
+          {hasSourceMaterial && (
+            <div className="flex items-center gap-1 mr-1" title="Include source document context in suggestions">
+              <FileText className="h-3 w-3 text-muted-foreground" />
+              <Switch
+                checked={useSourceMaterial}
+                onCheckedChange={setUseSourceMaterial}
+                className="h-4 w-7 data-[state=checked]:bg-primary [&>span]:h-3 [&>span]:w-3"
+              />
+            </div>
+          )}
           <Button variant="ghost" size="icon" className="h-6 w-6" title="New Chat" onClick={startNewChat}>
             <Plus className="h-3 w-3" />
           </Button>

@@ -213,6 +213,7 @@ export type Database = {
           published_by: string | null
           security_level: Database["public"]["Enums"]["security_scope"]
           source_chat_id: string | null
+          source_metadata: Json | null
           source_workbook_id: string | null
           superseded_by: string | null
           target_reference_id: string | null
@@ -248,6 +249,7 @@ export type Database = {
           published_by?: string | null
           security_level?: Database["public"]["Enums"]["security_scope"]
           source_chat_id?: string | null
+          source_metadata?: Json | null
           source_workbook_id?: string | null
           superseded_by?: string | null
           target_reference_id?: string | null
@@ -283,6 +285,7 @@ export type Database = {
           published_by?: string | null
           security_level?: Database["public"]["Enums"]["security_scope"]
           source_chat_id?: string | null
+          source_metadata?: Json | null
           source_workbook_id?: string | null
           superseded_by?: string | null
           target_reference_id?: string | null
