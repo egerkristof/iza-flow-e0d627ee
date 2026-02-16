@@ -1181,6 +1181,56 @@ export type Database = {
           },
         ]
       }
+      workbook_resource_versions: {
+        Row: {
+          change_note: string | null
+          content: string | null
+          created_at: string
+          created_by: string
+          file_name: string | null
+          file_path: string | null
+          file_type: string | null
+          id: string
+          metadata: Json | null
+          resource_id: string
+          version_number: number
+        }
+        Insert: {
+          change_note?: string | null
+          content?: string | null
+          created_at?: string
+          created_by: string
+          file_name?: string | null
+          file_path?: string | null
+          file_type?: string | null
+          id?: string
+          metadata?: Json | null
+          resource_id: string
+          version_number?: number
+        }
+        Update: {
+          change_note?: string | null
+          content?: string | null
+          created_at?: string
+          created_by?: string
+          file_name?: string | null
+          file_path?: string | null
+          file_type?: string | null
+          id?: string
+          metadata?: Json | null
+          resource_id?: string
+          version_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workbook_resource_versions_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "workbook_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       workbook_resources: {
         Row: {
           content: string | null

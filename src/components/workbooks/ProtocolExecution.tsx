@@ -1009,23 +1009,77 @@ export function ProtocolExecutionView({
                               const stepTitle = currentStep?.title ?? "Draft";
                               const outputType = (currentStep as any)?.output_type ?? "free_text";
                               const draftTitle = `${stepTitle} — ${outputType.replace(/_/g, " ")} draft`;
-                              const { error } = await supabase.from("workbook_resources").insert({
-                                workbook_id: workbookId,
-                                created_by: user.id,
-                                title: draftTitle,
-                                resource_type: "text",
-                                content: msg.text,
-                                metadata: {
-                                  source: "draft_factory",
-                                  protocol_id: protocol.id,
-                                  step_id: currentStep?.id,
-                                  output_type: outputType,
-                                  generated_at: new Date().toISOString(),
-                                },
-                              } as any);
-                              if (error) throw error;
-                              qc.invalidateQueries({ queryKey: ["workbook-resources", workbookId] });
-                              toast({ title: "Saved to Repository", description: `"${draftTitle}" added to this workbook's repository.` });
+                              const stepId = currentStep?.id;
+
+                              // Check for existing resource from same step
+                              const { data: existing } = await supabase
+                                .from("workbook_resources")
+                                .select("id, content, metadata")
+                                .eq("workbook_id", workbookId)
+                                .eq("resource_type", "text")
+                                .order("created_at", { ascending: false });
+
+                              const matchingResource = (existing ?? []).find((r: any) => {
+                                const meta = r.metadata as Record<string, unknown> | null;
+                                return meta?.step_id === stepId && meta?.source === "draft_factory";
+                              });
+
+                              if (matchingResource) {
+                                // Snapshot previous content as a version
+                                const { data: latestVersions } = await supabase
+                                  .from("workbook_resource_versions")
+                                  .select("version_number")
+                                  .eq("resource_id", matchingResource.id)
+                                  .order("version_number", { ascending: false })
+                                  .limit(1);
+                                const nextVersion = ((latestVersions as any)?.[0]?.version_number ?? 0) + 1;
+
+                                await supabase.from("workbook_resource_versions").insert({
+                                  resource_id: matchingResource.id,
+                                  version_number: nextVersion,
+                                  content: matchingResource.content,
+                                  metadata: matchingResource.metadata,
+                                  created_by: user.id,
+                                  change_note: `Replaced by new generation`,
+                                } as any);
+
+                                // Update existing resource with new content
+                                const { error: updateErr } = await supabase
+                                  .from("workbook_resources")
+                                  .update({
+                                    content: msg.text,
+                                    metadata: {
+                                      ...((matchingResource.metadata as any) ?? {}),
+                                      generated_at: new Date().toISOString(),
+                                      version: nextVersion + 1,
+                                    },
+                                  } as any)
+                                  .eq("id", matchingResource.id);
+                                if (updateErr) throw updateErr;
+
+                                qc.invalidateQueries({ queryKey: ["workbook-resources", workbookId] });
+                                toast({ title: "Draft Updated (v" + (nextVersion + 1) + ")", description: `Previous version saved to history.` });
+                              } else {
+                                // Create new resource
+                                const { error } = await supabase.from("workbook_resources").insert({
+                                  workbook_id: workbookId,
+                                  created_by: user.id,
+                                  title: draftTitle,
+                                  resource_type: "text",
+                                  content: msg.text,
+                                  metadata: {
+                                    source: "draft_factory",
+                                    protocol_id: protocol.id,
+                                    step_id: stepId,
+                                    output_type: outputType,
+                                    generated_at: new Date().toISOString(),
+                                    version: 1,
+                                  },
+                                } as any);
+                                if (error) throw error;
+                                qc.invalidateQueries({ queryKey: ["workbook-resources", workbookId] });
+                                toast({ title: "Saved to Repository", description: `"${draftTitle}" added.` });
+                              }
                             } catch (err: any) {
                               toast({ title: "Save failed", description: err.message, variant: "destructive" });
                             } finally {
