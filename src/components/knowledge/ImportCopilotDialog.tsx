@@ -122,8 +122,8 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
   const bundlesWithoutPlaybook = (data.bundles || []).filter(b => !b.items.some(i => i.category === "PLAYBOOK"));
   if (bundlesWithoutPlaybook.length > 0) {
     suggestions.push({
-      label: `Add protocol drivers to ${bundlesWithoutPlaybook.length} bundle${bundlesWithoutPlaybook.length > 1 ? "s" : ""}`,
-      instruction: `These bundles lack a PLAYBOOK item to drive protocol execution: ${bundlesWithoutPlaybook.slice(0, 2).map(b => `"${b.title}"`).join(", ")}. Create a PLAYBOOK item for each that describes the strategic intent, goals, and approach. This becomes the protocol template when the bundle is deployed to a workbook.`,
+      label: `Add protocol drivers to ${bundlesWithoutPlaybook.length} domain${bundlesWithoutPlaybook.length > 1 ? "s" : ""}`,
+      instruction: `These domains lack a PLAYBOOK item to drive protocol execution: ${bundlesWithoutPlaybook.slice(0, 2).map(b => `"${b.title}"`).join(", ")}. Create a PLAYBOOK item for each that describes the strategic intent, goals, and approach. This becomes the protocol template when the domain is deployed to a workbook.`,
       scope: "all",
     });
   }
@@ -132,8 +132,8 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
   const skeletonBundles = (data.bundles || []).filter(b => b.content_completeness === "skeleton");
   if (skeletonBundles.length > 0) {
     suggestions.push({
-      label: `Expand ${skeletonBundles.length} skeleton bundle${skeletonBundles.length > 1 ? "s" : ""} with inferred content`,
-      instruction: `These bundles were detected from the document structure but lack content: ${skeletonBundles.slice(0, 3).map(b => `"${b.title}"`).join(", ")}. Based on the context of surrounding well-documented bundles and the domain, infer and generate likely PROCEDUREs, DIRECTIVEs, and KNOWLEDGE items for each. Mark inferred items clearly in their content.`,
+      label: `Expand ${skeletonBundles.length} skeleton domain${skeletonBundles.length > 1 ? "s" : ""} with inferred content`,
+      instruction: `These domains were detected from the document structure but lack content: ${skeletonBundles.slice(0, 3).map(b => `"${b.title}"`).join(", ")}. Based on the context of surrounding well-documented domains and the domain, infer and generate likely PROCEDUREs, DIRECTIVEs, and KNOWLEDGE items for each. Mark inferred items clearly in their content.`,
       scope: "all",
     });
   }
@@ -141,8 +141,8 @@ function generateSmartSuggestions(data: ExtractionResult | null): SmartSuggestio
   // 6. Standalone items that could form a bundle (3+ items share words in title)
   if (data.context_items.length >= 3 && (data.bundles || []).length === 0) {
     suggestions.push({
-      label: "Group related items into executable bundles",
-      instruction: `There are ${data.context_items.length} standalone items but no bundles. Analyze them for thematic clusters. Create bundles with proper protocol structure: a PLAYBOOK as the strategic driver, PROCEDUREs as ordered execution steps, DIRECTIVEs as compliance gates, and other items as context.`,
+      label: "Group related items into executable domains",
+      instruction: `There are ${data.context_items.length} standalone items but no domains. Analyze them for thematic clusters. Create domains with proper protocol structure: a PLAYBOOK as the strategic driver, PROCEDUREs as ordered execution steps, DIRECTIVEs as compliance gates, and other items as context.`,
       scope: "all",
     });
   }

@@ -82,7 +82,7 @@ export function DeployToWorkbookDialog({
 
       const wb = workbooks.find((w) => w.id === workbookId);
       toast({
-        title: "Bundle deployed",
+        title: "Domain deployed",
         description: `"${bundleTitle}" attached to "${wb?.title ?? "workbook"}". Protocols generated.`,
       });
       qc.invalidateQueries({ queryKey: ["workbook-resources"] });
@@ -130,7 +130,7 @@ export function DeployToWorkbookDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
             <Rocket className="h-4 w-4 text-primary" />
-            Deploy Bundle to Workbook
+            Deploy Domain to Workbook
           </DialogTitle>
           <p className="text-xs text-muted-foreground mt-1">
             Attach <span className="font-medium text-foreground">"{bundleTitle}"</span> to a workbook so its context is available during execution.
@@ -146,7 +146,7 @@ export function DeployToWorkbookDialog({
               </div>
               <p className="text-sm font-medium">No workbooks yet</p>
               <p className="text-xs text-muted-foreground max-w-xs">
-                Create your first workbook and this bundle will be deployed to it automatically.
+                Create your first workbook and this domain will be deployed to it automatically.
               </p>
             </div>
             <div className="flex gap-2">
