@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Brain, BookOpen, Library, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope } from "lucide-react";
+import { Brain, BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/lib/auth";
@@ -21,7 +21,7 @@ const roleLabels: Record<AppRole, string> = {
 const navItems = [
   { title: "Dashboard", url: "/", icon: Brain, hideForRoles: [] as string[] },
   { title: "Workbooks", url: "/workbooks", icon: BookOpen, hideForRoles: [] as string[] },
-  { title: "Context", url: "/context", icon: Library, hideForRoles: ["operator"] },
+  { title: "Playbooks", url: "/context", icon: Target, hideForRoles: ["operator"] },
   { title: "Research", url: "/research-templates", icon: Microscope, hideForRoles: ["operator"] },
   { title: "Oversight", url: "/oversight", icon: BarChart3, hideForRoles: [] as string[] },
   { title: "My Knowledge", url: "/my-knowledge", icon: User, hideForRoles: [] as string[] },

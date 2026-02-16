@@ -660,7 +660,7 @@ function BundleExpandable({
 
             {bundleItems.length === 0 ? (
               <div className="p-4 text-center text-xs text-muted-foreground">
-                No items in this bundle yet.
+                No items in this domain yet.
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => onCreateItem({ bundleId: bundle.id, category: "PLAYBOOK" })}>
                     <Plus className="h-2.5 w-2.5" /> Playbook
@@ -869,7 +869,7 @@ export function BundleFirstView({
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search bundles & items…"
+              placeholder="Search playbooks & domains…"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-9 h-9"
@@ -914,7 +914,7 @@ export function BundleFirstView({
           <div className="h-5 w-px bg-border/50" />
 
           <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs" onClick={onCreateBundle}>
-            <Package className="h-3.5 w-3.5" /> Bundle
+            <Package className="h-3.5 w-3.5" /> Domain
           </Button>
           <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => onCreateItem()}>
             <Plus className="h-3.5 w-3.5" /> Item
@@ -934,7 +934,7 @@ export function BundleFirstView({
                   <AlertDialogHeader>
                     <AlertDialogTitle>Clear all knowledge?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will permanently delete all context items and bundles. This action cannot be undone.
+                      This will permanently delete all context items and domains. This action cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -1008,10 +1008,10 @@ export function BundleFirstView({
       <div className="flex-1 overflow-auto px-4 pb-4 space-y-3">
         {/* Summary */}
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>{bundles.length} bundles · {looseItems.length} unbundled items</span>
+          <span>{bundles.length} domains · {looseItems.length} unassigned items</span>
           {activeFilterCount > 0 && (
             <span className="text-primary">
-              Filtered: {filteredBundles.length} bundles · {filteredLooseItems.length} loose items
+              Filtered: {filteredBundles.length} domains · {filteredLooseItems.length} unassigned items
             </span>
           )}
         </div>
@@ -1034,14 +1034,14 @@ export function BundleFirstView({
         {filteredBundles.length === 0 && !search && !categoryFilter && !domainFilter && (
           <div className="rounded-lg border border-dashed border-border/50 p-8 text-center">
             <Package className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
-            <p className="text-sm font-medium">No bundles yet</p>
+            <p className="text-sm font-medium">No domains yet</p>
             <p className="text-xs text-muted-foreground mt-1">
-              Create a bundle to group related knowledge items, or import a document to auto-generate them.
+              Create a domain to organize your playbooks, or import a document to auto-generate them.
             </p>
             <div className="flex flex-col items-center gap-3 mt-3">
               <div className="flex items-center gap-2">
                 <Button size="sm" className="gap-1.5" onClick={onCreateBundle}>
-                  <Plus className="h-3 w-3" /> Create Bundle
+                  <Plus className="h-3 w-3" /> Create Domain
                 </Button>
                 <Button size="sm" variant="outline" className="gap-1.5" onClick={onOpenLoom}>
                   <Upload className="h-3 w-3" /> Import Document
@@ -1065,12 +1065,12 @@ export function BundleFirstView({
           <div className="mt-4">
             <div className="flex items-center gap-2 mb-3">
               <Inbox className="h-4 w-4 text-muted-foreground" />
-              <h3 className="text-sm font-semibold text-muted-foreground">Unbundled Items</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground">Unassigned Items</h3>
               <Badge variant="secondary" className="text-[10px]">{filteredLooseItems.length}</Badge>
               {filteredLooseItems.length >= 3 && (
                 <div className="flex items-center gap-1 ml-auto text-[10px] text-primary">
                   <Sparkles className="h-3 w-3" />
-                  <span>AI can group these into bundles</span>
+                  <span>AI can organize these into domains</span>
                 </div>
               )}
             </div>

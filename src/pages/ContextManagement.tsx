@@ -2,7 +2,7 @@ import { useState, useMemo, useRef } from "react";
 import {
   Search, Plus, Filter, X, Layers, Upload, AlertTriangle, ChevronRight,
   Archive, FileText, Check, Gauge, GitBranch, Zap, Pencil, Shield, Loader2, Microscope,
-  Sparkles, LayoutGrid, List, Network,
+  Sparkles, LayoutGrid, List, Network, SlidersHorizontal,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -369,7 +369,7 @@ export default function ContextManagementPage() {
     if (error) { toast({ title: "Delete failed", description: error.message, variant: "destructive" }); return; }
     if (selectedBundleId === id) setSelectedBundleId(null);
     queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
-    toast({ title: "Bundle deleted" });
+    toast({ title: "Domain deleted" });
   };
 
   const handleSaveBundle = async () => {
@@ -380,16 +380,16 @@ export default function ContextManagementPage() {
         description: editingBundle.description,
       }).eq("id", editingBundle.id);
       if (error) { toast({ title: "Update failed", description: error.message, variant: "destructive" }); return; }
-      toast({ title: "Bundle updated" });
+      toast({ title: "Domain updated" });
     } else {
       const { error } = await supabase.from("bundles").insert({
         owner_id: user.id,
-        title: editingBundle?.title || "New Bundle",
+        title: editingBundle?.title || "New Domain",
         description: editingBundle?.description || "Description",
         scope_level: "draft",
       });
       if (error) { toast({ title: "Create failed", description: error.message, variant: "destructive" }); return; }
-      toast({ title: "Bundle created" });
+      toast({ title: "Domain created" });
     }
     setBundleDialog(false);
     setEditingBundle(null);
@@ -819,37 +819,33 @@ export default function ContextManagementPage() {
       <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.csv,.json" onChange={handleLoomFileInput} />
       {/* Header */}
       <div className="shrink-0 p-6 pb-4 border-b border-border/50 space-y-3">
-        <TaxonomyOnboarding />
+        {viewMode === "classic" && <TaxonomyOnboarding />}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold tracking-tight">
-            📚 Context
+            🎯 Playbooks
             <span className="text-sm font-normal text-muted-foreground ml-3">
-              {totalItems} items · {bundles.length} bundles · <span className={Math.round(avgHealth * 100) > 80 ? "text-emerald-400" : Math.round(avgHealth * 100) >= 50 ? "text-yellow-400" : "text-red-400"}>{Math.round(avgHealth * 100)}% health</span>
+              {totalItems} items · {bundles.length} domains · <span className={Math.round(avgHealth * 100) > 80 ? "text-emerald-400" : Math.round(avgHealth * 100) >= 50 ? "text-yellow-400" : "text-red-400"}>{Math.round(avgHealth * 100)}% health</span>
             </span>
-            <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground ml-1" onClick={() => setTaxonomyOpen(true)}>
-              <Network className="h-3 w-3" /> Taxonomy
-            </Button>
-            <div className="relative inline-block">
-              <TaxonomyHelpButton onOpenDiagram={() => setTaxonomyOpen(true)} />
-            </div>
+            {viewMode === "classic" && (
+              <>
+                <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground ml-1" onClick={() => setTaxonomyOpen(true)}>
+                  <Network className="h-3 w-3" /> Taxonomy
+                </Button>
+                <div className="relative inline-block">
+                  <TaxonomyHelpButton onOpenDiagram={() => setTaxonomyOpen(true)} />
+                </div>
+              </>
+            )}
           </h1>
-          {/* View toggle in header */}
-          <div className="flex items-center gap-1 rounded-lg border border-border/50 p-0.5 bg-secondary/30">
+          {/* Power Tools toggle */}
+          <div className="flex items-center gap-2">
             <Button
-              variant={viewMode === "simplified" ? "default" : "ghost"}
+              variant={viewMode === "classic" ? "secondary" : "ghost"}
               size="sm"
               className="h-7 text-xs gap-1.5 px-3"
-              onClick={() => setViewMode("simplified")}
+              onClick={() => setViewMode(viewMode === "classic" ? "simplified" : "classic")}
             >
-              <LayoutGrid className="h-3 w-3" /> Bundles
-            </Button>
-            <Button
-              variant={viewMode === "classic" ? "default" : "ghost"}
-              size="sm"
-              className="h-7 text-xs gap-1.5 px-3"
-              onClick={() => setViewMode("classic")}
-            >
-              <List className="h-3 w-3" /> Classic
+              <SlidersHorizontal className="h-3 w-3" /> Power Tools
             </Button>
           </div>
         </div>
@@ -866,7 +862,7 @@ export default function ContextManagementPage() {
               <Zap className="h-3.5 w-3.5" /> Impact Sim
             </Button>
             <Button onClick={() => { setEditingBundle(null); setBundleDialog(true); }} variant="outline" className="gap-1.5">
-              <Plus className="h-4 w-4" /> New Bundle
+              <Plus className="h-4 w-4" /> New Domain
             </Button>
             <Button onClick={() => { setEditingItemId(null); setNewItem(emptyItem); setItemDialog(true); }} className="gap-1.5">
               <Plus className="h-4 w-4" /> New Item
@@ -874,7 +870,7 @@ export default function ContextManagementPage() {
           </div>
         ) : (
           <p className="text-xs text-muted-foreground mt-2">
-            Organize and deploy your knowledge bundles. Expand a bundle to see its items.
+            Your playbooks organized by domain. Expand to see steps, gates, and shared knowledge.
           </p>
         )}
       </div>
@@ -946,7 +942,7 @@ export default function ContextManagementPage() {
                 queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
                 queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
                 queryClient.invalidateQueries({ queryKey: ["context-item-bundles"] });
-                toast({ title: "All cleared", description: "All context items and bundles have been deleted." });
+                toast({ title: "All cleared", description: "All context items and domains have been deleted." });
               } catch (e: any) {
                 toast({ title: "Error", description: e.message, variant: "destructive" });
               } finally {
@@ -1158,9 +1154,9 @@ export default function ContextManagementPage() {
       {/* Bundle CRUD Dialog */}
       <Dialog open={bundleDialog} onOpenChange={setBundleDialog}>
         <DialogContent>
-          <DialogHeader><DialogTitle>{editingBundle ? "Edit Bundle" : "Create Bundle"}</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{editingBundle ? "Edit Domain" : "Create Domain"}</DialogTitle></DialogHeader>
           <div className="space-y-3">
-            <Input placeholder="Bundle title" value={editingBundle?.title ?? ""} onChange={e => setEditingBundle(prev => prev ? { ...prev, title: e.target.value } : { id: "", title: e.target.value, description: "", scope_level: "draft", version: "v0.1", health_score: 1, item_count: 0, domain_tags: [], created_at: new Date().toISOString() })} />
+            <Input placeholder="Domain name" value={editingBundle?.title ?? ""} onChange={e => setEditingBundle(prev => prev ? { ...prev, title: e.target.value } : { id: "", title: e.target.value, description: "", scope_level: "draft", version: "v0.1", health_score: 1, item_count: 0, domain_tags: [], created_at: new Date().toISOString() })} />
             <Input placeholder="Description" value={editingBundle?.description ?? ""} onChange={e => setEditingBundle(prev => prev ? { ...prev, description: e.target.value } : null)} />
           </div>
           <DialogFooter>
@@ -1294,9 +1290,9 @@ export default function ContextManagementPage() {
               <Input placeholder="Comma-separated: sales, pricing" value={newItem.domain_tags_input} onChange={e => setNewItem(p => ({ ...p, domain_tags_input: e.target.value }))} />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs">Assign to Bundles</Label>
+              <Label className="text-xs">Assign to Domains</Label>
               <div className="rounded-md border border-border/50 p-3 space-y-2 max-h-36 overflow-y-auto">
-                {bundles.length === 0 && <p className="text-xs text-muted-foreground">No bundles available</p>}
+                {bundles.length === 0 && <p className="text-xs text-muted-foreground">No domains available</p>}
                 {bundles.map(b => (
                   <label key={b.id} className="flex items-center gap-2 cursor-pointer">
                     <Checkbox
