@@ -210,6 +210,7 @@ serve(async (req) => {
     if (!authHeader) throw new Error("Missing auth");
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!lovableApiKey) throw new Error("LOVABLE_API_KEY not configured");
 
@@ -221,34 +222,83 @@ serve(async (req) => {
     if (authError || !user) throw new Error("Unauthorized");
 
     const body = await req.json();
-    const { skeleton, content_preview } = body;
+    const { skeleton, content_preview, documentId } = body;
 
     if (!skeleton || !skeleton.skeleton || skeleton.skeleton.length === 0) {
       throw new Error("skeleton (from detect-structure) is required");
     }
 
+    // ── Resolve content preview ─────────────────────────────────────
+    // For PDF documents, content_preview won't be available from the client.
+    // If documentId is provided, fetch the document and extract text for context.
+    let resolvedContentPreview = content_preview || "";
+
+    if (!resolvedContentPreview && documentId) {
+      console.log("No content_preview provided — fetching document text for PDF context");
+      try {
+        const adminClient = createClient(supabaseUrl, supabaseKey);
+        const { data: doc } = await adminClient
+          .from("personal_documents")
+          .select("*")
+          .eq("id", documentId)
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+        if (doc) {
+          const isPdf = doc.file_type === "application/pdf" || doc.file_name.toLowerCase().endsWith(".pdf");
+          const { data: fileData, error: dlError } = await adminClient.storage
+            .from("personal-documents")
+            .download(doc.file_path);
+
+          if (!dlError && fileData) {
+            if (isPdf) {
+              // For PDFs, send the PDF itself to the AI for content understanding
+              // We'll include skeleton labels as context since we can't easily extract PDF text in Deno
+              const skeletonLabels = (skeleton.skeleton || [])
+                .map((e: any, i: number) => `${i + 1}. ${"  ".repeat((e.level || 1) - 1)}${e.label} [${e.content_density || "unknown"}]`)
+                .join("\n");
+              resolvedContentPreview = `[PDF Document: ${doc.file_name}]\n\nStructural outline:\n${skeletonLabels}`;
+            } else {
+              const text = await fileData.text();
+              resolvedContentPreview = text.slice(0, 60000);
+            }
+          }
+        }
+      } catch (fetchErr) {
+        console.warn("Failed to fetch document for content preview (non-fatal):", fetchErr);
+      }
+    }
+
     // Safety: prune skeleton if still too large for reliable AI processing
+    // Use a higher cap (150) to avoid dropping important sections like "Farming"
+    const SKELETON_CAP = 150;
     let skeletonForPrompt = { ...skeleton };
-    if (skeleton.skeleton.length > 100) {
-      console.log(`Pruning skeleton from ${skeleton.skeleton.length} to ≤100 entries for optimization`);
+    if (skeleton.skeleton.length > SKELETON_CAP) {
+      console.log(`Pruning skeleton from ${skeleton.skeleton.length} to ≤${SKELETON_CAP} entries for optimization`);
       const entries = [...skeleton.skeleton];
-      // Keep all level 1-2, then level 3 by density, drop level 4+
-      const important = entries.filter((e: any) => (e.level || 1) <= 2);
-      const medium = entries.filter((e: any) => (e.level || 1) === 3);
+      // Keep all level 1-2 and bundle candidates unconditionally
+      const important = entries.filter((e: any) => (e.level || 1) <= 2 || e.is_bundle_candidate);
+      const medium = entries.filter((e: any) => (e.level || 1) === 3 && !e.is_bundle_candidate);
+      const low = entries.filter((e: any) => (e.level || 1) >= 4 && !e.is_bundle_candidate);
       const densityRank: Record<string, number> = { rich: 3, moderate: 2, sparse: 1, empty: 0 };
       medium.sort((a: any, b: any) => (densityRank[b.content_density] ?? 0) - (densityRank[a.content_density] ?? 0));
-      const remaining = 100 - important.length;
+      low.sort((a: any, b: any) => (densityRank[b.content_density] ?? 0) - (densityRank[a.content_density] ?? 0));
+      const remaining = SKELETON_CAP - important.length;
+      const mediumSlice = medium.slice(0, Math.max(0, remaining));
+      const lowRemaining = SKELETON_CAP - important.length - mediumSlice.length;
+      const lowSlice = low.slice(0, Math.max(0, lowRemaining));
       skeletonForPrompt = {
         ...skeleton,
-        skeleton: [...important, ...medium.slice(0, Math.max(0, remaining))],
-        total_sections_detected: Math.min(skeleton.skeleton.length, 100),
+        skeleton: [...important, ...mediumSlice, ...lowSlice],
+        total_sections_detected: skeleton.skeleton.length,
+        _pruned_to: important.length + mediumSlice.length + lowSlice.length,
       };
     }
 
     // Build the user prompt with both skeleton and content
     const skeletonText = JSON.stringify(skeletonForPrompt, null, 2);
-    const contentSection = content_preview
-      ? `\n\n## DOCUMENT CONTENT PREVIEW (first ~30K chars)\n${content_preview}`
+    const contentSection = resolvedContentPreview
+      ? `\n\n## DOCUMENT CONTENT PREVIEW (first ~60K chars)\n${resolvedContentPreview}`
       : "";
 
     const userPrompt = `## RAW SKELETON (from structure detection)
