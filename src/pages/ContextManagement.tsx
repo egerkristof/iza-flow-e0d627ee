@@ -41,6 +41,141 @@ import {
 } from "@/data/mockContextItems";
 import type { Json } from "@/integrations/supabase/types";
 
+// Helper: run extraction with needs_chunking support
+async function runExtractionWithChunking(
+  extractRes: Response,
+  setChunkProgress: (p: { current: number; total: number } | null) => void,
+  abortSignal: AbortSignal,
+): Promise<ExtractionResult> {
+  const contentType = extractRes.headers.get("content-type") || "";
+
+  if (contentType.includes("text/event-stream")) {
+    const reader = extractRes.body!.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let result: ExtractionResult | null = null;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const parts = buffer.split("\n\n");
+      buffer = parts.pop() || "";
+      for (const part of parts) {
+        if (!part.startsWith("data: ")) continue;
+        const jsonStr = part.slice(6);
+        try {
+          const parsed = JSON.parse(jsonStr);
+          if (parsed.type === "chunk_progress") {
+            setChunkProgress({ current: parsed.current, total: parsed.total });
+          } else if (parsed.type === "result") {
+            result = parsed.data as ExtractionResult;
+          } else if (parsed.type === "error") {
+            throw new Error(parsed.error);
+          }
+        } catch (parseErr) {
+          if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
+        }
+      }
+    }
+    if (!result) throw new Error("No extraction result received");
+    return result;
+  }
+
+  const data = await extractRes.json();
+  if (data.error) throw new Error(data.error);
+
+  // Handle needs_chunking: server returned chunk plan, client must orchestrate
+  if (data.needs_chunking && data.chunks) {
+    const chunks = data.chunks as { label: string; pageRange: string; focusInstructions: string }[];
+    const echo = data._echo || {};
+    console.log(`[Loom] Client-orchestrated chunked extraction: ${chunks.length} chunks`);
+
+    const session = (await supabase.auth.getSession()).data.session;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${session?.access_token}`,
+      apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+    };
+    const extractUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`;
+
+    const chunkResults: any[] = [];
+    const existingBundleTitles: string[] = [];
+    setChunkProgress({ current: 0, total: chunks.length });
+
+    for (let i = 0; i < chunks.length; i++) {
+      if (abortSignal.aborted) throw new Error("Cancelled");
+      setChunkProgress({ current: i + 1, total: chunks.length });
+      console.log(`[Loom] Extracting chunk ${i + 1}/${chunks.length}: ${chunks[i].label}`);
+
+      try {
+        const chunkRes = await fetch(extractUrl, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            documentId: echo.documentId,
+            source_type: echo.source_type || "loom",
+            extraction_depth: echo.extraction_depth,
+            advisor_persona: echo.advisor_persona,
+            document_structure: echo.document_structure,
+            chunk_mode: "single",
+            chunk_index: i,
+            total_chunks: chunks.length,
+            existing_bundle_titles: existingBundleTitles,
+            pdf_chunk: chunks[i],
+          }),
+          signal: abortSignal,
+        });
+
+        if (!chunkRes.ok) {
+          console.error(`[Loom] Chunk ${i + 1} HTTP error: ${chunkRes.status}`);
+          continue;
+        }
+
+        const chunkResult = await chunkRes.json();
+        if (chunkResult && !chunkResult.error) {
+          chunkResults.push(chunkResult);
+          for (const b of (chunkResult.bundles || [])) {
+            if (!existingBundleTitles.includes(b.title)) {
+              existingBundleTitles.push(b.title);
+            }
+          }
+        } else {
+          console.error(`[Loom] Chunk ${i + 1} error:`, chunkResult?.error);
+        }
+      } catch (chunkErr: any) {
+        if (chunkErr.message === "Cancelled") throw chunkErr;
+        console.error(`[Loom] Chunk ${i + 1} error (non-fatal):`, chunkErr.message);
+      }
+    }
+
+    if (chunkResults.length === 0) {
+      throw new Error("All extraction chunks failed — no results produced");
+    }
+
+    // Merge via edge function
+    const mergeRes = await fetch(
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/merge-extraction`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          chunk_results: chunkResults,
+          advisor_persona: echo.advisor_persona,
+          extraction_depth: echo.extraction_depth,
+          total_chunks: chunks.length,
+        }),
+        signal: abortSignal,
+      },
+    );
+    if (!mergeRes.ok) throw new Error("Merge failed");
+    const merged = await mergeRes.json();
+    if (merged.error) throw new Error(merged.error);
+    return merged as ExtractionResult;
+  }
+
+  return data as ExtractionResult;
+}
+
 // Helper: parse domain_scope jsonb to string[]
 function parseDomainTags(domainScope: Json | null): string[] {
   if (Array.isArray(domainScope)) return domainScope.filter((t): t is string => typeof t === "string");
@@ -565,49 +700,7 @@ export default function ContextManagementPage() {
         throw new Error(errText || `Extraction failed (${extractRes.status})`);
       }
 
-      let extracted: ExtractionResult;
-      const contentType = extractRes.headers.get("content-type") || "";
-
-      if (contentType.includes("text/event-stream")) {
-        // Use ReadableStream reader for real-time chunk progress updates
-        const reader = extractRes.body!.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
-        let result: ExtractionResult | null = null;
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-
-          const parts = buffer.split("\n\n");
-          buffer = parts.pop() || "";
-
-          for (const part of parts) {
-            if (!part.startsWith("data: ")) continue;
-            const jsonStr = part.slice(6);
-            try {
-              const parsed = JSON.parse(jsonStr);
-              if (parsed.type === "chunk_progress") {
-                setChunkProgress({ current: parsed.current, total: parsed.total });
-              } else if (parsed.type === "result") {
-                result = parsed.data as ExtractionResult;
-              } else if (parsed.type === "error") {
-                throw new Error(parsed.error);
-              }
-            } catch (parseErr) {
-              if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
-            }
-          }
-        }
-
-        if (!result) throw new Error("No extraction result received");
-        extracted = result;
-      } else {
-        const data = await extractRes.json();
-        if (data.error) throw new Error(data.error);
-        extracted = data as ExtractionResult;
-      }
+      const extracted = await runExtractionWithChunking(extractRes, setChunkProgress, abortController.signal);
 
       if (abortController.signal.aborted) throw new Error("Cancelled");
       // Attach detected structure metadata for Import Copilot display
@@ -707,45 +800,7 @@ export default function ContextManagementPage() {
         throw new Error(errText || `Extraction failed (${extractRes.status})`);
       }
 
-      let extracted: ExtractionResult;
-      const contentType = extractRes.headers.get("content-type") || "";
-
-      if (contentType.includes("text/event-stream")) {
-        const reader = extractRes.body!.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
-        let result: ExtractionResult | null = null;
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const parts = buffer.split("\n\n");
-          buffer = parts.pop() || "";
-          for (const part of parts) {
-            if (!part.startsWith("data: ")) continue;
-            const jsonStr = part.slice(6);
-            try {
-              const parsed = JSON.parse(jsonStr);
-              if (parsed.type === "chunk_progress") {
-                setChunkProgress({ current: parsed.current, total: parsed.total });
-              } else if (parsed.type === "result") {
-                result = parsed.data as ExtractionResult;
-              } else if (parsed.type === "error") {
-                throw new Error(parsed.error);
-              }
-            } catch (parseErr) {
-              if (parseErr instanceof Error && parseErr.message !== jsonStr) throw parseErr;
-            }
-          }
-        }
-        if (!result) throw new Error("No extraction result received");
-        extracted = result;
-      } else {
-        const data = await extractRes.json();
-        if (data.error) throw new Error(data.error);
-        extracted = data as ExtractionResult;
-      }
+      const extracted = await runExtractionWithChunking(extractRes, setChunkProgress, abortController.signal);
 
       if (documentStructure) extracted.document_structure = documentStructure;
 
