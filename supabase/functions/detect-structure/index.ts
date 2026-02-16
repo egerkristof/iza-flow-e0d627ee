@@ -325,17 +325,33 @@ async function callStructureAI(
     },
   );
 
+  const responseText = await aiResponse.text();
+
   if (!aiResponse.ok) {
-    const errText = await aiResponse.text();
-    console.error("AI chunk error:", aiResponse.status, errText);
+    console.error("AI chunk error:", aiResponse.status, responseText.slice(0, 500));
     return null;
   }
 
-  const aiData = await aiResponse.json();
-  const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
-  if (!toolCall) return null;
+  let aiData: any;
+  try {
+    aiData = JSON.parse(responseText);
+  } catch (parseErr) {
+    console.error("AI response JSON parse error:", parseErr, "body length:", responseText.length, "preview:", responseText.slice(0, 200));
+    return null;
+  }
 
-  return JSON.parse(toolCall.function.arguments);
+  const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+  if (!toolCall) {
+    console.error("No tool call in AI response, keys:", Object.keys(aiData));
+    return null;
+  }
+
+  try {
+    return JSON.parse(toolCall.function.arguments);
+  } catch (argErr) {
+    console.error("Tool call arguments parse error:", argErr, "args preview:", toolCall.function.arguments?.slice(0, 200));
+    return null;
+  }
 }
 
 /** Normalize a label for deduplication: lowercase, collapse whitespace, strip punctuation */
