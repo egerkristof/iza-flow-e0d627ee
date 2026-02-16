@@ -941,27 +941,33 @@ export default function ContextManagementPage() {
               if (!user) return;
               setClearingAll(true);
               try {
-                // 1. Delete junction rows first (via item ownership)
-                const { data: userItems, error: fetchErr } = await supabase.from("context_items").select("id").eq("owner_id", user.id);
+                // 1. Fetch ALL visible items (architect sees all, operator sees own)
+                const { data: visibleItems, error: fetchErr } = await supabase.from("context_items").select("id").is("deleted_at", null);
                 if (fetchErr) throw fetchErr;
-                console.log("[ClearAll] Found items to delete:", userItems?.length ?? 0);
-                if (userItems && userItems.length > 0) {
-                  const itemIds = userItems.map(i => i.id);
+                console.log("[ClearAll] Found items to delete:", visibleItems?.length ?? 0);
+                if (visibleItems && visibleItems.length > 0) {
+                  const itemIds = visibleItems.map(i => i.id);
+                  // Delete junction rows in batches
                   for (let i = 0; i < itemIds.length; i += 100) {
                     const batch = itemIds.slice(i, i + 100);
-                    const { error: jErr, count } = await supabase.from("context_item_bundles").delete({ count: "exact" }).in("context_item_id", batch);
-                    console.log("[ClearAll] Junction batch delete:", { batch: batch.length, deleted: count, error: jErr?.message });
+                    const { error: jErr } = await supabase.from("context_item_bundles").delete().in("context_item_id", batch);
                     if (jErr) throw jErr;
                   }
+                  // Delete context items in batches
+                  for (let i = 0; i < itemIds.length; i += 100) {
+                    const batch = itemIds.slice(i, i + 100);
+                    const { error: iErr } = await supabase.from("context_items").delete().in("id", batch);
+                    if (iErr) throw iErr;
+                  }
                 }
-                // 2. Delete context items (cascades remaining junction rows)
-                const { error: itemsErr, count: itemCount } = await supabase.from("context_items").delete({ count: "exact" }).eq("owner_id", user.id);
-                console.log("[ClearAll] Items deleted:", itemCount, "error:", itemsErr?.message);
-                if (itemsErr) throw itemsErr;
-                // 3. Delete bundles
-                const { error: bundlesErr, count: bundleCount } = await supabase.from("bundles").delete({ count: "exact" }).eq("owner_id", user.id);
-                console.log("[ClearAll] Bundles deleted:", bundleCount, "error:", bundlesErr?.message);
-                if (bundlesErr) throw bundlesErr;
+                // 2. Delete all visible bundles
+                const { data: visibleBundles } = await supabase.from("bundles").select("id");
+                if (visibleBundles && visibleBundles.length > 0) {
+                  const bundleIds = visibleBundles.map(b => b.id);
+                  const { error: bundlesErr } = await supabase.from("bundles").delete().in("id", bundleIds);
+                  if (bundlesErr) throw bundlesErr;
+                }
+                // (bundle errors handled above)
                 // 4. Invalidate all related caches
                 queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
                 queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
