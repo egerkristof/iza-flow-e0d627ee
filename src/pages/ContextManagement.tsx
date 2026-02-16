@@ -88,7 +88,7 @@ export default function ContextManagementPage() {
   const [clearingAll, setClearingAll] = useState(false);
 
   // Fetch real DB items
-  const { data: dbItems = [] } = useQuery({
+  const { data: dbItems = [], isPending: itemsPending } = useQuery({
     queryKey: ["context-items-all", user?.id],
     enabled: !!user,
     queryFn: async () => {
@@ -103,7 +103,7 @@ export default function ContextManagementPage() {
   });
 
   // Fetch real DB bundles
-  const { data: dbBundles = [] } = useQuery({
+  const { data: dbBundles = [], isPending: bundlesPending } = useQuery({
     queryKey: ["bundles-all", user?.id],
     enabled: !!user,
     queryFn: async () => {
@@ -117,7 +117,7 @@ export default function ContextManagementPage() {
   });
 
   // Fetch junction table for parent_playbook_id ownership and sort_order
-  const { data: junctionRows = [] } = useQuery({
+  const { data: junctionRows = [], isPending: junctionPending } = useQuery({
     queryKey: ["context-item-bundles-all", user?.id],
     enabled: !!user,
     queryFn: async () => {
@@ -128,6 +128,8 @@ export default function ContextManagementPage() {
       return data;
     },
   });
+
+  const dataLoading = itemsPending || bundlesPending || junctionPending;
 
   // Fetch research templates for the picker
   const { data: researchTemplates = [] } = useQuery({
@@ -883,6 +885,23 @@ export default function ContextManagementPage() {
               <ContextCopilotPanel items={dbItems} onClose={() => setCopilotOpen(false)} />
             </div>
           )}
+          {dataLoading ? (
+            <div className="flex-1 flex flex-col gap-3 p-4">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="rounded-lg border border-border/50 bg-card p-4 space-y-3 animate-pulse">
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded bg-muted" />
+                    <div className="h-4 w-48 rounded bg-muted" />
+                    <div className="h-4 w-16 rounded bg-muted ml-auto" />
+                  </div>
+                  <div className="space-y-2 pl-11">
+                    <div className="h-3 w-64 rounded bg-muted/60" />
+                    <div className="h-3 w-40 rounded bg-muted/60" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
           <BundleFirstView
             items={items}
             bundles={bundles}
@@ -950,6 +969,7 @@ export default function ContextManagementPage() {
               }
             }}
           />
+          )}
         </div>
       ) : (
         /* ─── CLASSIC MODE ─── */
