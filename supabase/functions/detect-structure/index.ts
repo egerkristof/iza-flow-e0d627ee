@@ -680,6 +680,50 @@ Return the structural skeleton for ${rangeLabel}. Do NOT extract content — onl
         }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
       }
 
+      // ── POST-MERGE MANIFEST VALIDATION ──────────────────────────────
+      // Ensure ALL manifest sections appear in the final skeleton.
+      // If the AI missed a manifest section (common for visual-heavy sections
+      // like "Farming" or diagram-based domains), inject it as a skeleton entry.
+      if (manifest && manifest.manifest_sections?.length > 0 && result.skeleton) {
+        const skeletonNorms = result.skeleton.map((e: any) => normalizeLabel(e.label || ""));
+        let injected = 0;
+
+        for (const ms of manifest.manifest_sections) {
+          const msNorm = normalizeLabel(ms.label || "");
+          if (!msNorm) continue;
+
+          // Check if this manifest section already exists in skeleton
+          const found = skeletonNorms.some((sn: string) => areNearDuplicates(sn, msNorm));
+          if (!found) {
+            // Determine level: items with a parent_group are level 2, otherwise level 1
+            const level = ms.parent_group ? 2 : 1;
+            const injectedEntry = {
+              label: ms.label,
+              level,
+              layout_type: ms.source_type === "diagram_label" ? "visual_group" 
+                         : ms.source_type === "toc_entry" ? "heading"
+                         : ms.source_type === "agenda_item" ? "slide_divider"
+                         : "implicit",
+              is_bundle_candidate: level === 1,
+              playbook_candidates: [],
+              content_density: "sparse" as const,
+              child_count: 0,
+              page_or_slide_range: ms.approximate_page || "",
+              _injected_from_manifest: true,
+            };
+            result.skeleton.push(injectedEntry);
+            skeletonNorms.push(msNorm);
+            injected++;
+            console.log(`Manifest injection: "${ms.label}" (L${level}) was missing from skeleton — injected`);
+          }
+        }
+
+        if (injected > 0) {
+          console.log(`Manifest validation: injected ${injected} missing sections into skeleton`);
+          result.total_sections_detected = result.skeleton.length;
+        }
+      }
+
       result.total_markers_detected = 0;
       result.markers_beyond_preview = 0;
       result.chunks_used = chunks.length;
