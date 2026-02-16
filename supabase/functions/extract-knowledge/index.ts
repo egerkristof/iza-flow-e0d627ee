@@ -849,9 +849,10 @@ async function extractChunk(
       },
     );
 
+    const responseText = await aiResponse.text();
+
     if (!aiResponse.ok) {
-      const errText = await aiResponse.text();
-      console.error("AI error:", aiResponse.status, errText);
+      console.error("AI error:", aiResponse.status, responseText.slice(0, 500));
       if (aiResponse.status === 429 || aiResponse.status === 402) {
         throw new Error(aiResponse.status === 429
           ? "Rate limit exceeded. Please try again in a moment."
@@ -860,15 +861,27 @@ async function extractChunk(
       continue; // retry on other errors
     }
 
-    const aiData = await aiResponse.json();
+    let aiData: any;
+    try {
+      aiData = JSON.parse(responseText);
+    } catch (parseErr) {
+      console.error(`Attempt ${attempt + 1}: JSON parse error, body length=${responseText.length}, preview=${responseText.slice(0, 300)}`);
+      continue; // retry
+    }
+
     const message = aiData.choices?.[0]?.message;
     const toolCall = message?.tool_calls?.[0];
 
     if (toolCall) {
-      const extracted = JSON.parse(toolCall.function.arguments);
-      if (!extracted.bundles) extracted.bundles = [];
-      if (!extracted.analysis_notes) extracted.analysis_notes = "";
-      return extracted;
+      try {
+        const extracted = JSON.parse(toolCall.function.arguments);
+        if (!extracted.bundles) extracted.bundles = [];
+        if (!extracted.analysis_notes) extracted.analysis_notes = "";
+        return extracted;
+      } catch (argErr) {
+        console.error(`Attempt ${attempt + 1}: tool_call arguments parse error, preview=${toolCall.function.arguments?.slice(0, 300)}`);
+        continue; // retry
+      }
     }
 
     // Try to recover from content fallback
