@@ -58,9 +58,16 @@ interface OptimizationStats {
   reclassifications: number;
 }
 
+interface PrunedLabel {
+  label: string;
+  level: number;
+  content_density: string;
+}
+
 interface PruningStats {
   raw_skeleton_count: number;
   pruned_to: number;
+  pruned_labels?: PrunedLabel[];
 }
 
 export interface StructureEditorData {
@@ -326,18 +333,9 @@ export function StructureEditorDialog({
             </Badge>
           ) : null}
           {data.pruning_stats && data.pruning_stats.pruned_to < data.pruning_stats.raw_skeleton_count && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Badge variant="outline" className="text-xs gap-1 border-orange-500/30 text-orange-400">
-                    <AlertTriangle className="h-3 w-3" /> {data.pruning_stats.raw_skeleton_count - data.pruning_stats.pruned_to} sections pruned
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent side="bottom" className="max-w-xs">
-                  <p className="text-xs">The raw skeleton had {data.pruning_stats.raw_skeleton_count} entries. {data.pruning_stats.raw_skeleton_count - data.pruning_stats.pruned_to} low-density entries (level 4+) were pruned to {data.pruning_stats.pruned_to} before optimization to stay within AI context limits.</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Badge variant="outline" className="text-xs gap-1 border-orange-500/30 text-orange-400">
+              <AlertTriangle className="h-3 w-3" /> {data.pruning_stats.raw_skeleton_count - data.pruning_stats.pruned_to} pruned
+            </Badge>
           )}
           {(data.markers_beyond_preview ?? 0) > 0 && (
             <TooltipProvider>
@@ -374,6 +372,31 @@ export function StructureEditorDialog({
                       <span className="text-foreground font-medium">{d.result_label}</span>
                       <span className="text-muted-foreground/70"> — {d.rationale}</span>
                     </span>
+                  </div>
+                ))}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        )}
+
+        {/* Pruned sections detail */}
+        {data.pruning_stats?.pruned_labels && data.pruning_stats.pruned_labels.length > 0 && (
+          <Collapsible>
+            <CollapsibleTrigger className="flex items-center gap-1.5 text-xs text-orange-400 hover:text-orange-300 transition-colors px-1">
+              <AlertTriangle className="h-3 w-3" />
+              <span>{data.pruning_stats.pruned_labels.length} sections pruned before optimization</span>
+              <ChevronRight className="h-3 w-3" />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-1.5 px-1">
+              <div className="rounded-md border border-orange-500/20 bg-orange-500/5 p-2 space-y-1 max-h-40 overflow-y-auto">
+                <p className="text-[10px] text-muted-foreground mb-1.5">
+                  Raw skeleton had {data.pruning_stats.raw_skeleton_count} entries — capped to {data.pruning_stats.pruned_to} for AI context limits. These low-density deep sections were excluded:
+                </p>
+                {data.pruning_stats.pruned_labels.map((pl, i) => (
+                  <div key={i} className="flex items-center gap-2 text-[10px]">
+                    <span className="text-muted-foreground/60 w-4 text-right shrink-0">L{pl.level}</span>
+                    <span className="text-foreground/80 truncate flex-1">{pl.label}</span>
+                    <Badge variant="outline" className="text-[8px] shrink-0 h-4 px-1">{pl.content_density}</Badge>
                   </div>
                 ))}
               </div>
