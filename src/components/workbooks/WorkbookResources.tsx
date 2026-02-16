@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Plus, FileText, Link2, Type, Trash2, ExternalLink, Upload, Image, File, Download,
-  History, Clock, ChevronRight, Eye, Edit3,
+  History, Clock, ChevronRight, Eye, Edit3, Search, X, SortAsc, SortDesc, Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -306,6 +306,9 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [historyResource, setHistoryResource] = useState<WorkbookResource | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState<"all" | "text" | "link" | "file">("all");
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest" | "alpha">("newest");
 
   const { data: resources = [], isLoading } = useQuery({
     queryKey: ["workbook-resources", workbookId],
@@ -429,19 +432,34 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
 
   const canSubmit = newType === "file" ? !!selectedFile : !!newTitle.trim();
 
+  const filteredResources = resources
+    .filter(r => {
+      if (filterType !== "all" && r.resource_type !== filterType) return false;
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        return (
+          r.title.toLowerCase().includes(q) ||
+          r.content?.toLowerCase().includes(q) ||
+          r.file_name?.toLowerCase().includes(q)
+        );
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortOrder === "oldest") return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      if (sortOrder === "alpha") return a.title.localeCompare(b.title);
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+
   if (isLoading) return <div className="text-sm text-muted-foreground p-4">Loading repository…</div>;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
+      {/* Header row */}
       <div className="flex items-center justify-between">
         <p className="text-xs text-muted-foreground">{resources.length} item{resources.length !== 1 ? "s" : ""}</p>
         <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            className="gap-1.5 text-xs"
-            onClick={() => { setNewType("file"); setCreateOpen(true); }}
-          >
+          <Button size="sm" variant="outline" className="gap-1.5 text-xs" onClick={() => { setNewType("file"); setCreateOpen(true); }}>
             <Upload className="h-3 w-3" /> Upload File
           </Button>
           <Button size="sm" className="gap-1.5 text-xs" onClick={() => setCreateOpen(true)}>
@@ -450,13 +468,79 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
         </div>
       </div>
 
+      {/* Search & filters */}
+      {resources.length > 0 && (
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="relative flex-1 min-w-[180px]">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+            <Input
+              placeholder="Search items…"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="h-8 pl-8 pr-8 text-xs"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery("")} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Type filter */}
+          <Select value={filterType} onValueChange={v => setFilterType(v as any)}>
+            <SelectTrigger className="h-8 w-[110px] text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All types</SelectItem>
+              <SelectItem value="text">Text</SelectItem>
+              <SelectItem value="link">Links</SelectItem>
+              <SelectItem value="file">Files</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Sort */}
+          <Select value={sortOrder} onValueChange={v => setSortOrder(v as any)}>
+            <SelectTrigger className="h-8 w-[120px] text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="newest">Newest first</SelectItem>
+              <SelectItem value="oldest">Oldest first</SelectItem>
+              <SelectItem value="alpha">A → Z</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {/* Active filter badges */}
+      {(searchQuery || filterType !== "all") && (
+        <div className="flex items-center gap-1.5">
+          {searchQuery && (
+            <Badge variant="secondary" className="text-[10px] gap-1 cursor-pointer" onClick={() => setSearchQuery("")}>
+              "{searchQuery}" <X className="h-2.5 w-2.5" />
+            </Badge>
+          )}
+          {filterType !== "all" && (
+            <Badge variant="secondary" className="text-[10px] gap-1 cursor-pointer" onClick={() => setFilterType("all")}>
+              {filterType} <X className="h-2.5 w-2.5" />
+            </Badge>
+          )}
+          <span className="text-[10px] text-muted-foreground">{filteredResources.length} result{filteredResources.length !== 1 ? "s" : ""}</span>
+        </div>
+      )}
+
       {resources.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border/50 p-8 text-center text-sm text-muted-foreground">
           No items yet. Add text, links, or upload files to this workbook's repository.
         </div>
+      ) : filteredResources.length === 0 ? (
+        <div className="rounded-lg border border-dashed border-border/50 p-6 text-center text-sm text-muted-foreground">
+          No items match your search or filter.
+        </div>
       ) : (
         <div className="space-y-2">
-          {resources.map(r => (
+          {filteredResources.map(r => (
             <ResourceCard key={r.id} resource={r} workbookId={workbookId} onDelete={(id) => deleteResource.mutate(id)} onViewHistory={(r) => setHistoryResource(r)} />
           ))}
         </div>
