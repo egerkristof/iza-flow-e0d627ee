@@ -898,7 +898,7 @@ function WorkbookSettings({ workbookId }: { workbookId: string }) {
             <h3 className="text-sm font-semibold flex items-center gap-2">
               <FileText className="h-4 w-4 text-primary" /> Playbook Ordering
             </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">Reorder and enable/disable protocols shown to operators.</p>
+            <p className="text-xs text-muted-foreground mt-0.5">Reorder and enable/disable playbooks shown to operators.</p>
           </div>
         </div>
         <div className="space-y-1.5">
