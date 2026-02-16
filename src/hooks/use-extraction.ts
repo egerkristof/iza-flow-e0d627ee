@@ -264,9 +264,30 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
           if (body.documentId) structureBody.documentId = body.documentId;
           else if (body.content) structureBody.content = body.content;
 
-          const { data: structData, error: structError } = await supabase.functions.invoke("detect-structure", {
-            body: structureBody,
-          });
+          const session = (await supabase.auth.getSession()).data.session;
+          const STRUCTURE_TIMEOUT = 5 * 60 * 1000; // 5 minutes for large PDFs
+
+          // Use raw fetch with extended timeout instead of supabase.functions.invoke
+          const structController = new AbortController();
+          const structTimer = setTimeout(() => structController.abort(), STRUCTURE_TIMEOUT);
+
+          const structRes = await fetch(
+            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/detect-structure`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session?.access_token}`,
+                apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+              },
+              body: JSON.stringify(structureBody),
+              signal: structController.signal,
+            },
+          );
+          clearTimeout(structTimer);
+
+          const structData = structRes.ok ? await structRes.json() : null;
+          const structError = !structRes.ok || !structData || structData.error;
           if (!structError && structData && !structData.error && structData.confidence !== "low") {
             console.log(`Structure detected: type=${structData.structure_type}, confidence=${structData.confidence}, sections=${structData.total_sections_detected}`);
 
@@ -284,9 +305,26 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
                 optimizeBody.documentId = body.documentId;
               }
 
-              const { data: optData, error: optError } = await supabase.functions.invoke("optimize-structure", {
-                body: optimizeBody,
-              });
+              const optController = new AbortController();
+              const optTimer = setTimeout(() => optController.abort(), STRUCTURE_TIMEOUT);
+
+              const optRes = await fetch(
+                `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/optimize-structure`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${session?.access_token}`,
+                    apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+                  },
+                  body: JSON.stringify(optimizeBody),
+                  signal: optController.signal,
+                },
+              );
+              clearTimeout(optTimer);
+
+              const optData = optRes.ok ? await optRes.json() : null;
+              const optError = !optRes.ok || !optData || optData.error;
 
               if (!optError && optData && !optData.error && !optData.fallback) {
                 documentStructure = {
