@@ -556,8 +556,8 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
 
   const handleOpenChange = (v: boolean) => {
     if (v && initialData) {
-      setData(initialData);
-      initSelections(initialData);
+      setData(normalizeData(initialData));
+      initSelections(normalizeData(initialData));
     }
     onOpenChange(v);
   };
