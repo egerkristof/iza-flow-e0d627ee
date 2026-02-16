@@ -11,9 +11,10 @@ import { Input } from "@/components/ui/input";
 interface GraphNode {
   id: string;
   label: string;
-  type: "workbook" | "task" | "subtask" | "chat";
+  type: "workbook" | "task" | "subtask" | "chat" | "resource";
   status?: string;
   priority?: string;
+  resourceType?: string;
   parentId: string | null;
   x: number;
   y: number;
@@ -33,6 +34,7 @@ const NODE_STYLES = {
   task: { color: "hsl(200, 80%, 55%)", glow: "hsl(200, 80%, 55% / 0.3)", radius: 16 },
   subtask: { color: "hsl(260, 70%, 60%)", glow: "hsl(260, 70%, 60% / 0.3)", radius: 10 },
   chat: { color: "hsl(150, 70%, 50%)", glow: "hsl(150, 70%, 50% / 0.3)", radius: 14 },
+  resource: { color: "hsl(35, 80%, 55%)", glow: "hsl(35, 80%, 55% / 0.3)", radius: 12 },
 };
 
 const STATUS_COLORS: Record<string, string> = {
@@ -49,6 +51,7 @@ function computeRadialLayout(
   workbookTitle: string,
   tasks: any[],
   chats: any[],
+  resources: any[],
   centerX: number,
   centerY: number,
 ): { nodes: GraphNode[]; edges: GraphEdge[] } {
@@ -79,7 +82,7 @@ function computeRadialLayout(
     }
   });
 
-  const totalTopLevel = topTasks.length + chats.length;
+  const totalTopLevel = topTasks.length + chats.length + resources.length;
   if (totalTopLevel === 0) return { nodes, edges };
 
   const ringRadius1 = 160; // Tasks + chats ring
@@ -161,6 +164,27 @@ function computeRadialLayout(
     idx++;
   });
 
+  // Resources
+  resources.forEach(res => {
+    const angle = startAngle + idx * angleStep;
+    const x = centerX + ringRadius1 * Math.cos(angle);
+    const y = centerY + ringRadius1 * Math.sin(angle);
+
+    nodes.push({
+      id: res.id,
+      label: res.title,
+      type: "resource",
+      resourceType: res.resource_type,
+      parentId: workbookId,
+      x, y,
+      radius: NODE_STYLES.resource.radius,
+      color: NODE_STYLES.resource.color,
+      glowColor: NODE_STYLES.resource.glow,
+    });
+    edges.push({ from: workbookId, to: res.id });
+    idx++;
+  });
+
   return { nodes, edges };
 }
 
@@ -222,7 +246,7 @@ function GraphNodeElement({
   isSelected: boolean;
   onSelect: (id: string | null) => void;
   onHover: (id: string | null) => void;
-  onNavigate?: (id: string, type: "task" | "subtask" | "chat") => void;
+  onNavigate?: (id: string, type: "task" | "subtask" | "chat" | "resource") => void;
 }) {
   return (
     <g
@@ -281,7 +305,7 @@ function GraphNodeElement({
         fontSize={node.type === "workbook" ? 14 : node.type === "subtask" ? 8 : 10}
         fontWeight="bold"
       >
-        {node.type === "workbook" ? "⬡" : node.type === "task" ? "◆" : node.type === "chat" ? "💬" : "◇"}
+        {node.type === "workbook" ? "⬡" : node.type === "task" ? "◆" : node.type === "chat" ? "💬" : node.type === "resource" ? "📄" : "◇"}
       </text>
       {/* Label */}
       <text
@@ -313,7 +337,7 @@ function GraphNodeElement({
 }
 
 // ── Main Component ──
-export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { workbookId: string; workbookTitle: string; onNodeNavigate?: (nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat") => void }) {
+export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { workbookId: string; workbookTitle: string; onNodeNavigate?: (nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat" | "resource") => void }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -355,7 +379,21 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
     },
   });
 
-  // Realtime: auto-refresh graph when tasks or chats change
+  // Fetch resources
+  const { data: resources = [] } = useQuery({
+    queryKey: ["workbook-resources-graph", workbookId],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workbook_resources")
+        .select("id, title, resource_type")
+        .eq("workbook_id", workbookId);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  // Realtime: auto-refresh graph when tasks, chats, or resources change
   useEffect(() => {
     const taskChannel = supabase
       .channel(`graph-tasks-${workbookId}`)
@@ -381,9 +419,22 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
       })
       .subscribe();
 
+    const resourceChannel = supabase
+      .channel(`graph-resources-${workbookId}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "workbook_resources",
+        filter: `workbook_id=eq.${workbookId}`,
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ["workbook-resources-graph", workbookId] });
+      })
+      .subscribe();
+
     return () => {
       supabase.removeChannel(taskChannel);
       supabase.removeChannel(chatChannel);
+      supabase.removeChannel(resourceChannel);
     };
   }, [workbookId, queryClient]);
 
@@ -391,8 +442,8 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
   const centerY = 350;
 
   const { nodes, edges } = useMemo(
-    () => computeRadialLayout(workbookId, workbookTitle, tasks, chats, centerX, centerY),
-    [workbookId, workbookTitle, tasks, chats]
+    () => computeRadialLayout(workbookId, workbookTitle, tasks, chats, resources, centerX, centerY),
+    [workbookId, workbookTitle, tasks, chats, resources]
   );
 
   const matchingNodeIds = useMemo(() => {
@@ -479,6 +530,9 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
         </span>
         <span className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.chat.color }} /> Chat
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.resource.color }} /> Resource
         </span>
       </div>
 
@@ -586,7 +640,7 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
                     className="h-6 text-[10px] gap-1"
                     onClick={() => onNodeNavigate(selectedInfo.id, selectedInfo.type)}
                   >
-                    Open {selectedInfo.type === "chat" ? "Chat" : "Subchat"} →
+                    Open {selectedInfo.type === "chat" ? "Chat" : selectedInfo.type === "resource" ? "Resource" : "Subchat"} →
                   </Button>
                 )}
                 <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => setSelectedNode(null)}>
