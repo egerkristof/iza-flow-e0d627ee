@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageSquare, Plus, Users, User, X, Hash, Search, Loader2, Sparkles, GitCompareArrows, BookUp } from "lucide-react";
+import { MessageSquare, Plus, Users, User, X, Hash, Search, Loader2, Sparkles, GitCompareArrows, BookUp, Package, Play, CheckCircle2, PauseCircle, Clock } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -189,8 +189,73 @@ function useLastMessages(chatIds: string[]) {
   });
 }
 
+// ── Protocol Executions hook for Sessions list ──
+interface ProtocolExecutionSession {
+  id: string;
+  protocol_id: string;
+  workbook_id: string;
+  executed_by: string;
+  status: string;
+  current_step_id: string | null;
+  started_at: string | null;
+  completed_at: string | null;
+  drift_score: number;
+  compliance_score: number;
+  created_at: string;
+  updated_at: string;
+  protocol_title?: string;
+  total_steps?: number;
+  completed_steps?: number;
+}
+
+function useProtocolExecutionSessions(workbookId: string) {
+  const { user } = useAuth();
+  return useQuery({
+    queryKey: ["protocol-execution-sessions", workbookId],
+    enabled: !!user,
+    queryFn: async () => {
+      // Fetch executions for this workbook
+      const { data: executions, error } = await supabase
+        .from("protocol_executions")
+        .select("*, workbook_protocols(title)")
+        .eq("workbook_id", workbookId)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+
+      // For each execution, get step counts
+      const results: ProtocolExecutionSession[] = [];
+      for (const exec of executions ?? []) {
+        const proto = (exec as any).workbook_protocols;
+        const { count: totalSteps } = await supabase
+          .from("step_executions")
+          .select("*", { count: "exact", head: true })
+          .eq("execution_id", exec.id);
+        const { count: completedSteps } = await supabase
+          .from("step_executions")
+          .select("*", { count: "exact", head: true })
+          .eq("execution_id", exec.id)
+          .eq("status", "completed");
+
+        results.push({
+          ...exec,
+          updated_at: exec.completed_at ?? exec.started_at ?? exec.created_at,
+          protocol_title: proto?.title ?? "Playbook",
+          total_steps: totalSteps ?? 0,
+          completed_steps: completedSteps ?? 0,
+        } as ProtocolExecutionSession);
+      }
+      return results;
+    },
+  });
+}
+
+// ── Unified session item type ──
+type SessionItem =
+  | { kind: "chat"; data: DbChat; sortKey: string }
+  | { kind: "execution"; data: ProtocolExecutionSession; sortKey: string };
+
 // ── Main Component ──
-export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: { workbookId: string; focusChatId?: string | null; onFocusChatHandled?: () => void }) {
+export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onResumeProtocol }: { workbookId: string; focusChatId?: string | null; onFocusChatHandled?: () => void; onResumeProtocol?: (protocolId: string) => void }) {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -215,6 +280,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
 
   // DB queries
   const { data: chats = [], isLoading: chatsLoading } = useWorkbookChats(workbookId);
+  const { data: execSessions = [], isLoading: execLoading } = useProtocolExecutionSessions(workbookId);
   const { data: messages = [], isLoading: msgsLoading } = useChatMessages(activeThread);
   const { data: lastMessages = {} } = useLastMessages(chats.map(c => c.id));
 
@@ -383,12 +449,23 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
     setMessageInput("");
   };
 
-  // ── Filters ──
-  const filtered = chats.filter(c => {
+  // ── Build unified session list ──
+  const filteredChats = chats.filter(c => {
     const matchesType = typeFilter === "all" || c.chat_type === typeFilter;
     const matchesSearch = !chatSearch || (c.title ?? "").toLowerCase().includes(chatSearch.toLowerCase());
     return matchesType && matchesSearch;
   });
+
+  const filteredExecs = execSessions.filter(e => {
+    if (typeFilter !== "all") return false; // protocol sessions only show on "all"
+    const matchesSearch = !chatSearch || (e.protocol_title ?? "").toLowerCase().includes(chatSearch.toLowerCase());
+    return matchesSearch;
+  });
+
+  const unifiedSessions: SessionItem[] = [
+    ...filteredChats.map(c => ({ kind: "chat" as const, data: c, sortKey: c.updated_at })),
+    ...filteredExecs.map(e => ({ kind: "execution" as const, data: e, sortKey: e.updated_at })),
+  ].sort((a, b) => new Date(b.sortKey).getTime() - new Date(a.sortKey).getTime());
 
   // ── Active chat view ──
   if (activeChat) {
@@ -556,15 +633,67 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
         </Button>
       </div>
 
-      {chatsLoading ? (
+      {(chatsLoading || execLoading) ? (
         <p className="text-sm text-muted-foreground text-center py-8">Loading sessions…</p>
-      ) : filtered.length === 0 ? (
+      ) : unifiedSessions.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border/50 p-8 text-center text-sm text-muted-foreground">
           No sessions yet. Start a new session or run a playbook.
         </div>
       ) : (
         <div className="space-y-2">
-          {filtered.map(chat => {
+          {unifiedSessions.map(session => {
+            if (session.kind === "execution") {
+              const exec = session.data;
+              const progress = exec.total_steps ? Math.round((exec.completed_steps ?? 0) / exec.total_steps * 100) : 0;
+              const statusIcon = exec.status === "completed"
+                ? <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                : exec.status === "paused"
+                ? <PauseCircle className="h-4 w-4 text-warning" />
+                : exec.status === "in_progress"
+                ? <Play className="h-4 w-4 text-primary" />
+                : <Clock className="h-4 w-4 text-muted-foreground" />;
+              const statusLabel = exec.status === "completed" ? "Completed"
+                : exec.status === "paused" ? "Paused"
+                : exec.status === "in_progress" ? "In Progress"
+                : "Not Started";
+
+              return (
+                <button
+                  key={`exec-${exec.id}`}
+                  onClick={() => onResumeProtocol?.(exec.protocol_id)}
+                  className="flex w-full items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 p-4 text-left transition-all hover:border-primary/40 hover:bg-primary/10"
+                >
+                  <div className="flex h-9 w-9 items-center justify-center rounded-md shrink-0 bg-primary/10 text-primary">
+                    <Package className="h-4 w-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-sm font-medium truncate">{exec.protocol_title}</span>
+                        <Badge variant="outline" className="text-[9px] border-primary/30 text-primary shrink-0">Playbook</Badge>
+                      </div>
+                      <span className="text-[10px] text-muted-foreground shrink-0 ml-2">{timeAgo(exec.updated_at)}</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        {statusIcon}
+                        <span>{statusLabel}</span>
+                      </div>
+                      <span className="text-muted-foreground text-[10px]">·</span>
+                      <span className="text-[10px] text-muted-foreground">{exec.completed_steps ?? 0}/{exec.total_steps ?? 0} steps</span>
+                      {exec.total_steps ? (
+                        <div className="flex-1 max-w-[80px] h-1.5 rounded-full bg-muted overflow-hidden">
+                          <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progress}%` }} />
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+                </button>
+              );
+            }
+
+            // Chat session
+            const chat = session.data;
             const last = lastMessages[chat.id];
             return (
               <button

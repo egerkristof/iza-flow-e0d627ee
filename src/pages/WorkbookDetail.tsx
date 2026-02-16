@@ -643,7 +643,15 @@ export default function WorkbookDetailPage() {
         </TabsContent>
 
         <TabsContent value="sessions" className="mt-4">
-          <WorkbookChats workbookId={id ?? "1"} focusChatId={focusChatId} onFocusChatHandled={() => setFocusChatId(null)} />
+          <WorkbookChats
+            workbookId={id ?? "1"}
+            focusChatId={focusChatId}
+            onFocusChatHandled={() => setFocusChatId(null)}
+            onResumeProtocol={(protocolId) => {
+              const proto = realProtocols.find(p => p.id === protocolId);
+              if (proto) setActiveProtocol(proto);
+            }}
+          />
         </TabsContent>
 
         <TabsContent value="members" className="mt-4">
