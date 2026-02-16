@@ -279,6 +279,10 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
                   ? body.content.slice(0, 60000)
                   : "";
               }
+              // For PDF documents, pass documentId so optimizer can fetch content
+              if (body.documentId) {
+                optimizeBody.documentId = body.documentId;
+              }
 
               const { data: optData, error: optError } = await supabase.functions.invoke("optimize-structure", {
                 body: optimizeBody,
