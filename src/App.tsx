@@ -14,6 +14,7 @@ import OversightPage from "./pages/Oversight";
 import MyKnowledgePage from "./pages/MyKnowledge";
 import AdminPromptsPage from "./pages/AdminPrompts";
 import ResearchTemplatesPage from "./pages/ResearchTemplates";
+import ResourceEditorPage from "./pages/ResourceEditor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />
+            <Route path="/workbooks/:workbookId/resources/:resourceId" element={<ProtectedRoute><ResourceEditorPage /></ProtectedRoute>} />
             <Route path="/context" element={<ProtectedRoute blockedRoles={["operator"]}><ContextManagementPage /></ProtectedRoute>} />
             <Route path="/oversight" element={<ProtectedRoute><OversightPage /></ProtectedRoute>} />
             <Route path="/my-knowledge" element={<ProtectedRoute><MyKnowledgePage /></ProtectedRoute>} />

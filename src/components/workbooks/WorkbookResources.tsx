@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Plus, FileText, Link2, Type, Trash2, ExternalLink, Upload, Image, File, Download,
-  History, Clock, ChevronRight, Eye,
+  History, Clock, ChevronRight, Eye, Edit3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -76,7 +77,8 @@ function formatFileSize(bytes: number) {
 }
 
 // ── Resource Card ──
-function ResourceCard({ resource, onDelete, onViewHistory }: { resource: WorkbookResource; onDelete: (id: string) => void; onViewHistory?: (r: WorkbookResource) => void }) {
+function ResourceCard({ resource, workbookId, onDelete, onViewHistory }: { resource: WorkbookResource; workbookId: string; onDelete: (id: string) => void; onViewHistory?: (r: WorkbookResource) => void }) {
+  const navigate = useNavigate();
   const isImage = isImageFile(resource.file_type);
   const publicUrl = resource.file_path ? getPublicUrl(resource.file_path) : null;
 
@@ -122,6 +124,18 @@ function ResourceCard({ resource, onDelete, onViewHistory }: { resource: Workboo
       </div>
 
       <div className="flex items-center gap-1 shrink-0">
+        {/* Edit button for text resources */}
+        {resource.resource_type === "text" && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 opacity-0 group-hover:opacity-100"
+            onClick={() => navigate(`/workbooks/${workbookId}/resources/${resource.id}`)}
+            title="Edit"
+          >
+            <Edit3 className="h-3.5 w-3.5" />
+          </Button>
+        )}
         {/* Version history button */}
         {resource.resource_type === "text" && (
           <Button
@@ -443,7 +457,7 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
       ) : (
         <div className="space-y-2">
           {resources.map(r => (
-            <ResourceCard key={r.id} resource={r} onDelete={(id) => deleteResource.mutate(id)} onViewHistory={(r) => setHistoryResource(r)} />
+            <ResourceCard key={r.id} resource={r} workbookId={workbookId} onDelete={(id) => deleteResource.mutate(id)} onViewHistory={(r) => setHistoryResource(r)} />
           ))}
         </div>
       )}
