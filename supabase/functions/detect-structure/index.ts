@@ -238,6 +238,7 @@ function mergeSkeletons(results: any[]): any {
   const base = valid[0];
   const mergedSkeleton: any[] = [];
   const seenNormalized: string[] = [];
+  const deduped: string[] = []; // track what got deduped for diagnostics
 
   // Merge all skeleton entries with near-duplicate detection
   for (const result of valid) {
@@ -251,6 +252,7 @@ function mergeSkeletons(results: any[]): any {
         seenNormalized.push(norm);
         mergedSkeleton.push(entry);
       } else {
+        deduped.push(`"${entry.label}" (L${entry.level || 1}) ≈ "${mergedSkeleton[existingIdx].label}"`);
         // Keep the richer version
         const existing = mergedSkeleton[existingIdx];
         const densityRank: Record<string, number> = { rich: 3, moderate: 2, sparse: 1, empty: 0 };
@@ -264,6 +266,16 @@ function mergeSkeletons(results: any[]): any {
     }
   }
 
+  if (deduped.length > 0) {
+    console.log(`Dedup decisions (${deduped.length}): ${deduped.join(" | ")}`);
+  }
+
+  // Log all level-1 and level-2 labels for diagnostics
+  const topLabels = mergedSkeleton
+    .filter(e => (e.level || 1) <= 2)
+    .map(e => `[L${e.level || 1}] ${e.label}`);
+  console.log(`Level 1-2 labels after merge (${topLabels.length}): ${topLabels.join(" | ")}`);
+
   // Prune: drop sparse/empty entries at level 4+ to keep skeleton manageable
   const pruned = mergedSkeleton.filter(entry => {
     if ((entry.level || 1) >= 4 && (entry.content_density === "sparse" || entry.content_density === "empty")) {
@@ -272,9 +284,10 @@ function mergeSkeletons(results: any[]): any {
     return true;
   });
 
-  // Hard cap at 120 entries — keep level 1-2 entries first, then level 3 by density
+  // Hard cap — but NEVER drop level 1-2 entries
+  const HARD_CAP = 150;
   let final = pruned;
-  if (final.length > 120) {
+  if (final.length > HARD_CAP) {
     const high = final.filter(e => (e.level || 1) <= 2);
     const mid = final.filter(e => (e.level || 1) === 3);
     const low = final.filter(e => (e.level || 1) >= 4);
@@ -284,7 +297,16 @@ function mergeSkeletons(results: any[]): any {
     };
     mid.sort(densitySort);
     low.sort(densitySort);
-    final = [...high, ...mid, ...low].slice(0, 120);
+    // Always keep ALL level 1-2, then fill remaining with level 3+
+    const remaining = HARD_CAP - high.length;
+    const midSlice = mid.slice(0, Math.max(0, remaining));
+    const lowRemaining = HARD_CAP - high.length - midSlice.length;
+    const lowSlice = low.slice(0, Math.max(0, lowRemaining));
+    final = [...high, ...midSlice, ...lowSlice];
+    const dropped = pruned.length - final.length;
+    if (dropped > 0) {
+      console.log(`Hard cap: dropped ${dropped} level-3+ entries (kept all ${high.length} level-1/2 entries)`);
+    }
   }
 
   // Pick highest confidence
