@@ -3,7 +3,7 @@ import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  ListTodo, Paperclip, Plus, X, Send, FileText, Link2,
+  ListTodo, Paperclip, Plus, X, Send, FileText, Link2, Search,
   Type as TypeIcon, ExternalLink, Lightbulb, Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -72,6 +72,8 @@ export function ChatToolbar({
 
   // Resource attachment popover
   const [attachPopoverOpen, setAttachPopoverOpen] = useState(false);
+  const [attachSearch, setAttachSearch] = useState("");
+  const [attachTypeFilter, setAttachTypeFilter] = useState<"all" | "text" | "link" | "file">("all");
   const [pendingAttachment, setPendingAttachment] = useState<WorkbookResource | null>(null);
 
   // Capture dialog
@@ -309,27 +311,61 @@ export function ChatToolbar({
               <Paperclip className={iconSize} />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-72 p-2" align="start">
+          <PopoverContent className="w-80 p-2" align="start">
             <p className="text-xs font-medium text-muted-foreground px-2 py-1">Attach from repository</p>
-            {resources.length === 0 ? (
-              <p className="text-xs text-muted-foreground px-2 py-3 text-center">Repository is empty.</p>
-            ) : (
-              <ScrollArea className="max-h-48">
-                <div className="space-y-0.5">
-                  {resources.map(r => (
-                    <button
-                      key={r.id}
-                      className="flex items-center gap-2 w-full rounded-md px-2 py-1.5 text-xs text-left hover:bg-primary/5 transition-colors"
-                      onClick={() => { setPendingAttachment(r); setAttachPopoverOpen(false); }}
+            {resources.length > 0 && (
+              <div className="px-1 pb-1.5 space-y-1.5">
+                <div className="relative">
+                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                  <Input
+                    placeholder="Search items…"
+                    value={attachSearch}
+                    onChange={e => setAttachSearch(e.target.value)}
+                    className="h-7 pl-7 text-xs bg-secondary/50"
+                  />
+                </div>
+                <div className="flex gap-1">
+                  {(["all", "text", "link", "file"] as const).map(t => (
+                    <Badge
+                      key={t}
+                      variant={attachTypeFilter === t ? "default" : "outline"}
+                      className="text-[10px] cursor-pointer hover:bg-primary/10"
+                      onClick={() => setAttachTypeFilter(t)}
                     >
-                      {r.resource_type === "link" ? <Link2 className="h-3 w-3 text-blue-400 shrink-0" /> : r.resource_type === "file" ? <FileText className="h-3 w-3 text-amber-400 shrink-0" /> : <TypeIcon className="h-3 w-3 text-primary shrink-0" />}
-                      <span className="truncate">{r.title}</span>
-                      <Badge variant="outline" className="text-[9px] ml-auto shrink-0">{r.resource_type}</Badge>
-                    </button>
+                      {t === "all" ? "All" : t.charAt(0).toUpperCase() + t.slice(1)}
+                    </Badge>
                   ))}
                 </div>
-              </ScrollArea>
+              </div>
             )}
+            {resources.length === 0 ? (
+              <p className="text-xs text-muted-foreground px-2 py-3 text-center">Repository is empty.</p>
+            ) : (() => {
+              const filtered = resources.filter(r => {
+                const matchesType = attachTypeFilter === "all" || r.resource_type === attachTypeFilter;
+                const matchesSearch = !attachSearch || r.title.toLowerCase().includes(attachSearch.toLowerCase());
+                return matchesType && matchesSearch;
+              });
+              return filtered.length === 0 ? (
+                <p className="text-xs text-muted-foreground px-2 py-3 text-center">No matching items.</p>
+              ) : (
+                <ScrollArea className="max-h-48">
+                  <div className="space-y-0.5">
+                    {filtered.map(r => (
+                      <button
+                        key={r.id}
+                        className="flex items-center gap-2 w-full rounded-md px-2 py-1.5 text-xs text-left hover:bg-primary/5 transition-colors"
+                        onClick={() => { setPendingAttachment(r); setAttachPopoverOpen(false); setAttachSearch(""); setAttachTypeFilter("all"); }}
+                      >
+                        {r.resource_type === "link" ? <Link2 className="h-3 w-3 text-primary shrink-0" /> : r.resource_type === "file" ? <FileText className="h-3 w-3 text-primary shrink-0" /> : <TypeIcon className="h-3 w-3 text-primary shrink-0" />}
+                        <span className="truncate">{r.title}</span>
+                        <Badge variant="outline" className="text-[9px] ml-auto shrink-0">{r.resource_type}</Badge>
+                      </button>
+                    ))}
+                  </div>
+                </ScrollArea>
+              );
+            })()}
           </PopoverContent>
         </Popover>
 
