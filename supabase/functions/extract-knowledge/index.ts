@@ -638,21 +638,14 @@ function buildPdfPageChunks(
     const sections = documentStructure.skeleton as any[];
     const chunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
     
-    // Group sections into chunks of ~8 pages each for faster processing
-    const PAGES_PER_CHUNK = 8;
+    // Target ~6 chunks max regardless of skeleton granularity
+    const maxChunks = Math.max(3, Math.min(6, Math.ceil(totalPagesEstimate / 12)));
+    const sectionsPerChunk = Math.max(1, Math.ceil(sections.length / maxChunks));
+    
     let currentChunk: any[] = [];
-    let currentPageCount = 0;
 
     for (const section of sections) {
-      const range = section.page_or_slide_range || "";
-      // Estimate page count from range like "slides 4-8" or "slide 1"
-      const rangeMatch = range.match(/(\d+)\s*[-–]\s*(\d+)/);
-      const singleMatch = range.match(/(\d+)/);
-      const pageCount = rangeMatch 
-        ? (parseInt(rangeMatch[2]) - parseInt(rangeMatch[1]) + 1) 
-        : singleMatch ? 1 : 1;
-
-      if (currentPageCount + pageCount > PAGES_PER_CHUNK && currentChunk.length > 0) {
+      if (currentChunk.length >= sectionsPerChunk && currentChunk.length > 0) {
         // Flush current chunk
         const firstRange = currentChunk[0].page_or_slide_range || "";
         const lastRange = currentChunk[currentChunk.length - 1].page_or_slide_range || "";
@@ -664,11 +657,9 @@ function buildPdfPageChunks(
           ).join("\n")}`,
         });
         currentChunk = [];
-        currentPageCount = 0;
       }
       
       currentChunk.push(section);
-      currentPageCount += pageCount;
     }
 
     // Flush remaining
@@ -688,9 +679,9 @@ function buildPdfPageChunks(
     if (chunks.length > 1) return chunks;
   }
 
-  // Fallback: fixed page ranges
+  // Fallback: fixed page ranges with larger chunks
   if (totalPagesEstimate > 20) {
-    const PAGES_PER_CHUNK = 8;
+    const PAGES_PER_CHUNK = 15;
     const chunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
     for (let start = 1; start <= totalPagesEstimate; start += PAGES_PER_CHUNK) {
       const end = Math.min(start + PAGES_PER_CHUNK - 1, totalPagesEstimate);
@@ -1197,7 +1188,7 @@ Analyze the specified pages/slides of this PDF document. Extract ALL knowledge e
       // Force chunking for any PDF over 15 estimated pages, even if buildPdfPageChunks returned <=1
       if (pdfChunks.length <= 1 && estimatedPages > 15) {
         console.log(`Forcing fallback chunking for large PDF (${estimatedPages} pages)`);
-        const PAGES_PER_CHUNK = 8;
+        const PAGES_PER_CHUNK = 15;
         const forcedChunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
         for (let start = 1; start <= estimatedPages; start += PAGES_PER_CHUNK) {
           const end = Math.min(start + PAGES_PER_CHUNK - 1, estimatedPages);
