@@ -639,7 +639,7 @@ function buildPdfPageChunks(
     const chunks: { label: string; pageRange: string; focusInstructions: string }[] = [];
     
     // Target ~6 chunks max regardless of skeleton granularity
-    const maxChunks = Math.max(3, Math.min(6, Math.ceil(totalPagesEstimate / 12)));
+    const maxChunks = Math.max(3, Math.min(8, Math.ceil(totalPagesEstimate / 12)));
     const sectionsPerChunk = Math.max(1, Math.ceil(sections.length / maxChunks));
     
     let currentChunk: any[] = [];
