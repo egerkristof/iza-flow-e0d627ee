@@ -195,9 +195,17 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
 
     try {
       // First call — may return full result, or needs_chunking signal
-      console.log("[EXTRACT] Calling extract-knowledge...");
+      console.log("[EXTRACT] Calling extract-knowledge with keys:", Object.keys(extractBody));
       const firstResult = await edgeFetch("extract-knowledge", extractBody, extractController.signal);
-      console.log("[EXTRACT] extract-knowledge returned:", firstResult?.needs_chunking ? "needs_chunking" : "direct result", "keys:", Object.keys(firstResult || {}));
+      console.log("[EXTRACT] extract-knowledge returned:", JSON.stringify({
+        needs_chunking: firstResult?.needs_chunking,
+        chunks_count: firstResult?.chunks?.length,
+        bundles_count: firstResult?.bundles?.length,
+        items_count: firstResult?.context_items?.length,
+        prefs_count: firstResult?.preferences?.length,
+        has_error: !!firstResult?.error,
+        keys: Object.keys(firstResult || {}),
+      }));
 
       let extracted: ExtractionResult;
 
@@ -224,6 +232,13 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
               existing_bundle_titles: existingBundleTitles,
               pdf_chunk: chunks[i],
             }, extractController.signal);
+
+            console.log(`[EXTRACT] Chunk ${i + 1} result:`, JSON.stringify({
+              bundles: chunkResult?.bundles?.length ?? 0,
+              items: chunkResult?.context_items?.length ?? 0,
+              prefs: chunkResult?.preferences?.length ?? 0,
+              error: chunkResult?.error,
+            }));
 
             if (chunkResult && !chunkResult.error) {
               chunkResults.push(chunkResult);
