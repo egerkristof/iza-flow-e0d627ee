@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Badge } from "@/components/ui/badge";
@@ -315,6 +315,7 @@ function GraphNodeElement({
 // ── Main Component ──
 export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { workbookId: string; workbookTitle: string; onNodeNavigate?: (nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat") => void }) {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
@@ -353,6 +354,38 @@ export function WorkbookGraph({ workbookId, workbookTitle, onNodeNavigate }: { w
       return data ?? [];
     },
   });
+
+  // Realtime: auto-refresh graph when tasks or chats change
+  useEffect(() => {
+    const taskChannel = supabase
+      .channel(`graph-tasks-${workbookId}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "workbook_tasks",
+        filter: `workbook_id=eq.${workbookId}`,
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ["workbook-tasks-graph", workbookId] });
+      })
+      .subscribe();
+
+    const chatChannel = supabase
+      .channel(`graph-chats-${workbookId}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "workbook_chats",
+        filter: `workbook_id=eq.${workbookId}`,
+      }, () => {
+        queryClient.invalidateQueries({ queryKey: ["workbook-chats-graph", workbookId] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(taskChannel);
+      supabase.removeChannel(chatChannel);
+    };
+  }, [workbookId, queryClient]);
 
   const centerX = 400;
   const centerY = 350;
