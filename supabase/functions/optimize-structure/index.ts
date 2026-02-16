@@ -388,6 +388,32 @@ Analyze the semantic relationships between these sections. Identify overlaps, mi
     }
 
     const result = JSON.parse(toolCall.function.arguments);
+
+    // ── Post-process: ensure every bundle has at least one playbook ──────
+    // If the optimizer created bundles with zero playbooks (e.g., from diagram-only
+    // labels with no elaborated content), generate skeleton playbooks so that
+    // downstream extraction has targets to work with.
+    if (result.optimized_blueprint && Array.isArray(result.optimized_blueprint)) {
+      for (const bundle of result.optimized_blueprint) {
+        if (!bundle.playbooks || bundle.playbooks.length === 0) {
+          // Derive a skeleton playbook from the bundle title and its skeleton labels
+          const labels = bundle.original_skeleton_labels || [];
+          const subLabels = labels.slice(0, 5); // use first few labels as procedure hints
+          bundle.playbooks = [{
+            playbook_title: `Execute ${bundle.bundle_title}`,
+            original_skeleton_labels: labels,
+            is_skeleton: true,
+            procedures: subLabels.map((l: string) => ({
+              label: l,
+              original_skeleton_label: l,
+              is_skeleton: true,
+            })),
+          }];
+          console.log(`Generated skeleton playbook for empty bundle: "${bundle.bundle_title}"`);
+        }
+      }
+    }
+
     // Attach pruning stats if pruning occurred
     const rawCount = skeleton.skeleton?.length || 0;
     const prunedTo = skeletonForPrompt._pruned_to || rawCount;

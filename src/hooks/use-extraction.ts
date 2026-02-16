@@ -256,6 +256,79 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
         extracted.document_structure = documentStructure;
       }
 
+      // ── Fill skeleton bundles for blueprint entries that yielded no items ──
+      if (documentStructure?.optimized_blueprint?.length > 0 && extracted.bundles) {
+        const existingBundleTitles = new Set(
+          extracted.bundles.map((b: any) => b.title.toLowerCase().trim())
+        );
+
+        for (const bpEntry of documentStructure.optimized_blueprint) {
+          const normTitle = bpEntry.bundle_title?.toLowerCase().trim();
+          if (!normTitle || existingBundleTitles.has(normTitle)) continue;
+
+          // This blueprint bundle was not produced by extraction — generate skeleton
+          const skeletonItems: any[] = [];
+
+          for (const pb of (bpEntry.playbooks || [])) {
+            skeletonItems.push({
+              title: pb.playbook_title,
+              category: "PLAYBOOK",
+              content: `[Skeleton] This playbook was detected in the document structure but no detailed content was found. It should define the strategic approach for: ${pb.playbook_title}.`,
+              is_suggestion: true,
+            });
+
+            for (const proc of (pb.procedures || [])) {
+              skeletonItems.push({
+                title: proc.label,
+                category: "PROCEDURE",
+                content: `[Skeleton] Procedure detected in document structure but not elaborated. This step should describe: ${proc.label}.`,
+                is_suggestion: true,
+                parent_playbook_title: pb.playbook_title,
+                step_order_hint: (pb.procedures || []).indexOf(proc) + 1,
+              });
+            }
+          }
+
+          if (skeletonItems.length > 0) {
+            extracted.bundles.push({
+              title: bpEntry.bundle_title,
+              description: bpEntry.bundle_description || `Skeleton bundle — detected in document structure but lacking detailed content.`,
+              items: skeletonItems,
+              content_completeness: "skeleton",
+              coverage_gaps: ["No elaborated content found in source document — all items are AI-generated placeholders"],
+            });
+            console.log(`Generated skeleton bundle for missing blueprint entry: "${bpEntry.bundle_title}"`);
+          }
+        }
+
+        // Also check existing bundles that have zero playbook items
+        for (const bundle of extracted.bundles) {
+          const hasPlaybook = (bundle.items || []).some((it: any) => it.category === "PLAYBOOK");
+          if (!hasPlaybook && bundle.items?.length > 0) {
+            // Find the blueprint entry for this bundle
+            const bpEntry = documentStructure.optimized_blueprint.find(
+              (bp: any) => bp.bundle_title?.toLowerCase().trim() === bundle.title.toLowerCase().trim()
+            );
+            if (bpEntry?.playbooks?.length > 0) {
+              for (const pb of bpEntry.playbooks) {
+                const alreadyHas = bundle.items.some(
+                  (it: any) => it.title.toLowerCase().trim() === pb.playbook_title.toLowerCase().trim()
+                );
+                if (!alreadyHas) {
+                  bundle.items.unshift({
+                    title: pb.playbook_title,
+                    category: "PLAYBOOK",
+                    content: `[Skeleton] Playbook from blueprint — extraction found supporting content but no explicit playbook driver. This playbook should define the strategic approach for: ${pb.playbook_title}.`,
+                    is_suggestion: true,
+                  });
+                }
+              }
+              console.log(`Injected skeleton playbook(s) into bundle "${bundle.title}" which had items but no PLAYBOOKs`);
+            }
+          }
+        }
+      }
+
       // ── Bundle Matching Pass ──────────────────────────────────────────
       if (extracted.bundles && extracted.bundles.length > 0) {
         setAdvisorPhase("matching");
