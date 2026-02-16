@@ -83,45 +83,11 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     resumeExtraction(null);
   }, [resumeExtraction]);
 
-  // ── Core extraction (advisor → extract → match) ─────────────────────
-  const runExtraction = async (
-    body: Record<string, any>,
-    sourceName: string,
-    advisorPersona: AdvisorPersona | null,
-    documentStructure: any,
-  ) => {
-    // For guided/deep: generate advisor if not already done
-    if (depth !== "quick" && !advisorPersona) {
-      setAdvisorPhase("generating-advisor");
-      const contentPreview = body.content || body.documentId || "";
-      const { data: advisorData, error: advisorError } = await supabase.functions.invoke("generate-advisor", {
-        body: {
-          content: typeof contentPreview === "string" ? contentPreview : sourceName,
-          meta: body.meta || { title: sourceName },
-        },
-      });
-      if (!advisorError && advisorData && !advisorData.error) {
-        advisorPersona = advisorData as AdvisorPersona;
-      }
-    }
-
-    setAdvisorPhase("extracting");
-    setChunkProgress(null);
-
+  // ── Helper: make authenticated fetch to edge function ─────────────
+  const edgeFetch = async (fnName: string, payload: Record<string, any>, signal?: AbortSignal) => {
     const session = (await supabase.auth.getSession()).data.session;
-    const extractBody = {
-      ...body,
-      extraction_depth: depth,
-      ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
-      ...(documentStructure ? { document_structure: documentStructure } : {}),
-    };
-
-    const EXTRACT_TIMEOUT = 10 * 60 * 1000; // 10 minutes for chunked extraction
-    const extractController = new AbortController();
-    const extractTimer = setTimeout(() => extractController.abort(), EXTRACT_TIMEOUT);
-
-    const extractRes = await fetch(
-      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/extract-knowledge`,
+    const res = await fetch(
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${fnName}`,
       {
         method: "POST",
         headers: {
@@ -129,22 +95,20 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
           Authorization: `Bearer ${session?.access_token}`,
           apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
         },
-        body: JSON.stringify(extractBody),
-        signal: extractController.signal,
+        body: JSON.stringify(payload),
+        signal,
       },
     );
-    clearTimeout(extractTimer);
-
-    if (!extractRes.ok) {
-      const errText = await extractRes.text();
-      throw new Error(errText || `Extraction failed (${extractRes.status})`);
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText || `${fnName} failed (${res.status})`);
     }
 
-    let extracted: ExtractionResult;
-    const contentType = extractRes.headers.get("content-type") || "";
+    const contentType = res.headers.get("content-type") || "";
 
+    // Handle SSE responses (text-based chunked extraction)
     if (contentType.includes("text/event-stream")) {
-      const reader = extractRes.body!.getReader();
+      const reader = res.body!.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
       let result: ExtractionResult | null = null;
@@ -176,77 +140,184 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
         }
       }
 
-      if (!result) throw new Error("No extraction result received");
-      extracted = result;
-    } else {
-      const data = await extractRes.json();
-      if (data?.error) throw new Error(data.error);
-      extracted = data as ExtractionResult;
+      if (!result) throw new Error("No extraction result received from SSE stream");
+      return result;
     }
 
-    if (documentStructure) {
-      extracted.document_structure = documentStructure;
-    }
+    return res.json();
+  };
 
-    // ── Bundle Matching Pass ──────────────────────────────────────────
-    if (extracted.bundles && extracted.bundles.length > 0) {
-      setAdvisorPhase("matching");
-      try {
-        const { data: matchResult, error: matchErr } = await supabase.functions.invoke("match-bundles", {
-          body: {
-            extracted_bundles: extracted.bundles.map(b => ({
-              title: b.title,
-              description: b.description,
-              items: b.items.map(it => ({ title: it.title, category: it.category })),
-            })),
-          },
-        });
-
-        if (!matchErr && matchResult && !matchResult.error && matchResult.matches) {
-          extracted.bundle_matches = matchResult.matches as BundleMatch[];
-
-          const consolidations = (matchResult.matches as BundleMatch[])
-            .filter(m => m.match_type === "consolidate" && m.confidence >= 0.9 && m.consolidate_with?.length);
-
-          if (consolidations.length > 0) {
-            const merged = new Set<number>();
-            const newBundles = [...extracted.bundles];
-            
-            for (const c of consolidations) {
-              if (merged.has(c.extracted_index)) continue;
-              const targets = (c.consolidate_with || []).filter(i => !merged.has(i));
-              if (targets.length === 0) continue;
-
-              for (const t of targets) {
-                if (t < newBundles.length) {
-                  newBundles[c.extracted_index] = {
-                    ...newBundles[c.extracted_index],
-                    title: c.suggested_merged_title || newBundles[c.extracted_index].title,
-                    items: [...newBundles[c.extracted_index].items, ...newBundles[t].items],
-                  };
-                  merged.add(t);
-                }
-              }
-            }
-
-            const mergedIndices = [...merged].sort((a, b) => b - a);
-            for (const idx of mergedIndices) {
-              newBundles.splice(idx, 1);
-            }
-
-            if (merged.size > 0) {
-              extracted.bundles = newBundles;
-              extracted.bundle_matches = (matchResult.matches as BundleMatch[])
-                .filter(m => !merged.has(m.extracted_index));
-            }
-          }
-        }
-      } catch (matchError) {
-        console.warn("Bundle matching failed (non-fatal):", matchError);
+  // ── Core extraction (advisor → extract → match) ─────────────────────
+  const runExtraction = async (
+    body: Record<string, any>,
+    sourceName: string,
+    advisorPersona: AdvisorPersona | null,
+    documentStructure: any,
+  ) => {
+    // For guided/deep: generate advisor if not already done
+    if (depth !== "quick" && !advisorPersona) {
+      setAdvisorPhase("generating-advisor");
+      const contentPreview = body.content || body.documentId || "";
+      const { data: advisorData, error: advisorError } = await supabase.functions.invoke("generate-advisor", {
+        body: {
+          content: typeof contentPreview === "string" ? contentPreview : sourceName,
+          meta: body.meta || { title: sourceName },
+        },
+      });
+      if (!advisorError && advisorData && !advisorData.error) {
+        advisorPersona = advisorData as AdvisorPersona;
       }
     }
 
-    onResult(extracted, sourceName);
+    setAdvisorPhase("extracting");
+    setChunkProgress(null);
+
+    const EXTRACT_TIMEOUT = 10 * 60 * 1000; // 10 minutes overall
+    const extractController = new AbortController();
+    const extractTimer = setTimeout(() => extractController.abort(), EXTRACT_TIMEOUT);
+
+    const extractBody = {
+      ...body,
+      extraction_depth: depth,
+      ...(advisorPersona ? { advisor_persona: advisorPersona } : {}),
+      ...(documentStructure ? { document_structure: documentStructure } : {}),
+    };
+
+    try {
+      // First call — may return full result, or needs_chunking signal
+      const firstResult = await edgeFetch("extract-knowledge", extractBody, extractController.signal);
+
+      let extracted: ExtractionResult;
+
+      if (firstResult.needs_chunking && firstResult.chunks) {
+        // ── Client-orchestrated chunked extraction ──────────────────────
+        const chunks = firstResult.chunks as { label: string; pageRange: string; focusInstructions: string }[];
+        console.log(`Client-orchestrated chunked extraction: ${chunks.length} chunks`);
+        
+        const chunkResults: ExtractionResult[] = [];
+        const existingBundleTitles: string[] = [];
+
+        setChunkProgress({ current: 0, total: chunks.length });
+
+        for (let i = 0; i < chunks.length; i++) {
+          setChunkProgress({ current: i + 1, total: chunks.length });
+          console.log(`Extracting chunk ${i + 1}/${chunks.length}: ${chunks[i].label}`);
+
+          try {
+            const chunkResult = await edgeFetch("extract-knowledge", {
+              ...extractBody,
+              chunk_mode: "single",
+              chunk_index: i,
+              total_chunks: chunks.length,
+              existing_bundle_titles: existingBundleTitles,
+              pdf_chunk: chunks[i],
+            }, extractController.signal);
+
+            if (chunkResult && !chunkResult.error) {
+              chunkResults.push(chunkResult);
+              for (const b of (chunkResult.bundles || [])) {
+                if (!existingBundleTitles.includes(b.title)) {
+                  existingBundleTitles.push(b.title);
+                }
+              }
+            } else {
+              console.error(`Chunk ${i + 1} failed:`, chunkResult?.error);
+            }
+          } catch (chunkErr: any) {
+            console.error(`Chunk ${i + 1} error (non-fatal):`, chunkErr.message);
+          }
+        }
+
+        if (chunkResults.length === 0) {
+          throw new Error("All extraction chunks failed — no results produced");
+        }
+
+        // Merge results via edge function
+        setAdvisorPhase("matching"); // reuse "matching" phase label for merge step
+        const mergeResult = await edgeFetch("merge-extraction", {
+          chunk_results: chunkResults,
+          advisor_persona: advisorPersona,
+          extraction_depth: depth,
+          total_chunks: chunks.length,
+        }, extractController.signal);
+
+        if (mergeResult.error) throw new Error(mergeResult.error);
+        extracted = mergeResult as ExtractionResult;
+      } else if (firstResult.error) {
+        throw new Error(firstResult.error);
+      } else {
+        // Non-chunked result — use directly
+        extracted = firstResult as ExtractionResult;
+      }
+
+      clearTimeout(extractTimer);
+
+      if (documentStructure) {
+        extracted.document_structure = documentStructure;
+      }
+
+      // ── Bundle Matching Pass ──────────────────────────────────────────
+      if (extracted.bundles && extracted.bundles.length > 0) {
+        setAdvisorPhase("matching");
+        try {
+          const { data: matchResult, error: matchErr } = await supabase.functions.invoke("match-bundles", {
+            body: {
+              extracted_bundles: extracted.bundles.map(b => ({
+                title: b.title,
+                description: b.description,
+                items: b.items.map((it: any) => ({ title: it.title, category: it.category })),
+              })),
+            },
+          });
+
+          if (!matchErr && matchResult && !matchResult.error && matchResult.matches) {
+            extracted.bundle_matches = matchResult.matches as BundleMatch[];
+
+            const consolidations = (matchResult.matches as BundleMatch[])
+              .filter(m => m.match_type === "consolidate" && m.confidence >= 0.9 && m.consolidate_with?.length);
+
+            if (consolidations.length > 0) {
+              const merged = new Set<number>();
+              const newBundles = [...extracted.bundles];
+              
+              for (const c of consolidations) {
+                if (merged.has(c.extracted_index)) continue;
+                const targets = (c.consolidate_with || []).filter(i => !merged.has(i));
+                if (targets.length === 0) continue;
+
+                for (const t of targets) {
+                  if (t < newBundles.length) {
+                    newBundles[c.extracted_index] = {
+                      ...newBundles[c.extracted_index],
+                      title: c.suggested_merged_title || newBundles[c.extracted_index].title,
+                      items: [...newBundles[c.extracted_index].items, ...newBundles[t].items],
+                    };
+                    merged.add(t);
+                  }
+                }
+              }
+
+              const mergedIndices = [...merged].sort((a, b) => b - a);
+              for (const idx of mergedIndices) {
+                newBundles.splice(idx, 1);
+              }
+
+              if (merged.size > 0) {
+                extracted.bundles = newBundles;
+                extracted.bundle_matches = (matchResult.matches as BundleMatch[])
+                  .filter(m => !merged.has(m.extracted_index));
+              }
+            }
+          }
+        } catch (matchError) {
+          console.warn("Bundle matching failed (non-fatal):", matchError);
+        }
+      }
+
+      onResult(extracted, sourceName);
+    } finally {
+      clearTimeout(extractTimer);
+    }
   };
 
   const extract = useCallback(async (

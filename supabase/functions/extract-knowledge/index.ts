@@ -1104,65 +1104,48 @@ You are in **deep analysis mode**. This means:
 
     const model = extractionDepth === "deep" ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash";
 
-    // ── Chunked extraction ──────────────────────────────────────────────
-    if (pdfBase64) {
-      // Estimate total pages from file size (~50KB raw = ~67KB base64 per page)
+    // ── Client-orchestrated chunk mode ─────────────────────────────────
+    const chunkMode: string = body.chunk_mode || "";
+    
+    // ── chunk_mode="plan": return chunk plan for client orchestration ──
+    if (chunkMode === "plan" && pdfBase64) {
       const estimatedPages = Math.max(Math.ceil(pdfBase64.length / 67000), 10);
       console.log(`PDF page estimate: ~${estimatedPages} pages (base64 size: ${Math.round(pdfBase64.length / 1024)}KB)`);
-      
       const pdfChunks = buildPdfPageChunks(documentStructure, estimatedPages);
+      
+      return new Response(JSON.stringify({
+        chunks: pdfChunks,
+        estimated_pages: estimatedPages,
+        model,
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-    if (pdfChunks.length > 1) {
-        // Cap at 8 chunks max — smaller chunks process faster within edge function timeout
-        const cappedChunks = pdfChunks.length > 8 
-          ? (() => {
-              // Merge chunks evenly to get ≤8
-              const merged: typeof pdfChunks = [];
-              const groupSize = Math.ceil(pdfChunks.length / 8);
-              for (let g = 0; g < pdfChunks.length; g += groupSize) {
-                const group = pdfChunks.slice(g, g + groupSize);
-                merged.push({
-                  label: group.map(c => c.label).join(", "),
-                  pageRange: `${group[0].pageRange.split(" to ")[0]} to ${group[group.length - 1].pageRange.split(" to ").pop()}`,
-                  focusInstructions: group.map(c => c.focusInstructions).join("\n\n"),
-                });
-              }
-              return merged;
-            })()
-          : pdfChunks;
+    // ── chunk_mode="single": process exactly ONE chunk ────────────────
+    if (chunkMode === "single" && pdfBase64) {
+      const chunkIndex: number = body.chunk_index ?? 0;
+      const totalChunks: number = body.total_chunks ?? 1;
+      const existingBundleTitles: string[] = body.existing_bundle_titles || [];
+      const pdfChunk = body.pdf_chunk; // { label, pageRange, focusInstructions }
 
-        console.log(`PDF chunked extraction: ${cappedChunks.length} chunks (from ${pdfChunks.length} original) from ~${estimatedPages} pages`);
-        const encoder = new TextEncoder();
-        const stream = new ReadableStream({
-          async start(controller) {
-            try {
-              const chunkResults: ExtractionResult[] = [];
-              const existingBundleTitles: string[] = [];
+      if (!pdfChunk) throw new Error("pdf_chunk required for chunk_mode=single");
 
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: 0, total: cappedChunks.length })}\n\n`));
-
-              for (let i = 0; i < cappedChunks.length; i++) {
-                const pdfChunk = cappedChunks[i];
-                console.log(`PDF chunk ${i + 1}/${cappedChunks.length}: ${pdfChunk.label}`);
-
-                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "chunk_progress", current: i + 1, total: cappedChunks.length })}\n\n`));
-
-                // Build a chunk-specific user prompt that focuses on specific pages
-                const chunkPrefix = i > 0
-                  ? `## CONTINUATION EXTRACTION (Chunk ${i + 1} of ${cappedChunks.length})
+      const chunkPrefix = chunkIndex > 0
+        ? `## CONTINUATION EXTRACTION (Chunk ${chunkIndex + 1} of ${totalChunks})
 You are continuing extraction from a LARGE PDF document. Previous chunks already extracted these bundles:
-${existingBundleTitles.map(t => `- "${t}"`).join("\n")}
+${existingBundleTitles.map((t: string) => `- "${t}"`).join("\n")}
 
 **RULES FOR CONTINUATION:**
 - If content in THIS chunk belongs to an EXISTING bundle listed above, use the EXACT SAME bundle title so results can be merged.
 - If content introduces a NEW phase/section not covered above, create a NEW bundle.
 - Do NOT re-extract content that was already covered. Focus on NEW content in this page range.
-- This is chunk ${i + 1} of ${cappedChunks.length} — ${i + 1 === cappedChunks.length ? "this is the FINAL chunk, ensure nothing is missed" : "more chunks will follow"}.
+- This is chunk ${chunkIndex + 1} of ${totalChunks} — ${chunkIndex + 1 === totalChunks ? "this is the FINAL chunk, ensure nothing is missed" : "more chunks will follow"}.
 
 `
-                  : "";
+        : "";
 
-                const userPrompt = `${chunkPrefix}## PAGE RANGE FOCUS: ${pdfChunk.pageRange}
+      const userPrompt = `${chunkPrefix}## PAGE RANGE FOCUS: ${pdfChunk.pageRange}
 ${pdfChunk.focusInstructions}
 
 Analyze the specified pages/slides of this PDF document. Extract ALL knowledge elements from ONLY these pages.
@@ -1179,49 +1162,32 @@ Analyze the specified pages/slides of this PDF document. Extract ALL knowledge e
 4. Set step_order_hint on all PROCEDURE items.
 5. Mark AI-generated gap-fillers with is_suggestion=true.`;
 
-                const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey, pdfBase64);
-                if (!result) {
-                  console.error(`PDF chunk ${i + 1} failed — skipping`);
-                  continue;
-                }
+      console.log(`Single chunk extraction: chunk ${chunkIndex + 1}/${totalChunks} — ${pdfChunk.label}`);
+      const result = await extractChunk(systemPrompt, userPrompt, model, lovableApiKey, pdfBase64);
+      if (!result) throw new Error(`Chunk ${chunkIndex + 1} extraction failed after retries`);
 
-                chunkResults.push(result);
-                for (const b of (result.bundles || [])) {
-                  if (!existingBundleTitles.includes(b.title)) {
-                    existingBundleTitles.push(b.title);
-                  }
-                }
-              }
+      return new Response(JSON.stringify(result), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-              if (chunkResults.length === 0) {
-                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "error", error: "PDF extraction failed — no chunks produced results" })}\n\n`));
-                controller.close();
-                return;
-              }
+    // ── PDF extraction (single pass — small documents) ──────────────────
+    if (pdfBase64) {
+      // Estimate total pages from file size
+      const estimatedPages = Math.max(Math.ceil(pdfBase64.length / 67000), 10);
+      console.log(`PDF page estimate: ~${estimatedPages} pages — single pass`);
+      
+      const pdfChunks = buildPdfPageChunks(documentStructure, estimatedPages);
 
-              const merged = mergeExtractionResults(chunkResults);
-              if (advisorPersona) merged.advisor = advisorPersona;
-              merged.extraction_depth = extractionDepth;
-              merged.analysis_notes = `[PDF chunked extraction: ${cappedChunks.length} chunks processed]\n\n${merged.analysis_notes}`;
-              merged.chunk_info = { total: cappedChunks.length, processed: chunkResults.length };
-
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "result", data: merged })}\n\n`));
-              controller.close();
-            } catch (err) {
-              console.error("PDF streaming extraction error:", err);
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "error", error: err instanceof Error ? err.message : "Unknown error" })}\n\n`));
-              controller.close();
-            }
-          },
-        });
-
-        return new Response(stream, {
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "text/event-stream",
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-          },
+      // If chunking is needed, return a plan for the client to orchestrate
+      if (pdfChunks.length > 1) {
+        return new Response(JSON.stringify({
+          needs_chunking: true,
+          chunks: pdfChunks,
+          estimated_pages: estimatedPages,
+          model,
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
 
