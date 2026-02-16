@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
+import { MarkdownToolbar, markdownTools, type ToolAction } from "@/components/workbooks/MarkdownToolbar";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -90,6 +91,7 @@ export default function ResourceEditorPage() {
   const [viewMode, setViewMode] = useState<"edit" | "preview" | "split">("edit");
   const [showHistory, setShowHistory] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const editorRef = useRef<HTMLTextAreaElement>(null);
 
   // Fetch resource
   const { data: resource, isLoading } = useQuery({
@@ -276,11 +278,30 @@ export default function ResourceEditorPage() {
       <div className="flex flex-1 min-h-0 overflow-hidden">
         {/* Editor pane */}
         {(viewMode === "edit" || viewMode === "split") && (
-          <div className={`min-w-0 ${viewMode === "split" ? "w-1/2 border-r border-border/50" : "flex-1"}`}>
+          <div className={`min-w-0 flex flex-col ${viewMode === "split" ? "w-1/2 border-r border-border/50" : "flex-1"}`}>
+            <MarkdownToolbar textareaRef={editorRef} content={content} onChange={handleContentChange} />
             <Textarea
+              ref={editorRef}
               value={content}
               onChange={e => handleContentChange(e.target.value)}
-              className="h-full w-full resize-none border-none rounded-none bg-transparent p-8 font-mono text-sm focus-visible:ring-0 leading-relaxed"
+              onKeyDown={e => {
+                const mod = e.ctrlKey || e.metaKey;
+                const key = e.key.toLowerCase();
+                const shortcuts: Record<string, string> = { b: "Bold", i: "Italic", k: "Link" };
+                if (mod && shortcuts[key]) {
+                  e.preventDefault();
+                  const tool = markdownTools.find(t => t !== "sep" && (t as ToolAction).label === shortcuts[key]) as ToolAction | undefined;
+                  if (tool && editorRef.current) {
+                    const { newContent, cursorStart, cursorEnd } = tool.action(editorRef.current, content);
+                    handleContentChange(newContent);
+                    requestAnimationFrame(() => {
+                      editorRef.current?.focus();
+                      editorRef.current?.setSelectionRange(cursorStart, cursorEnd);
+                    });
+                  }
+                }
+              }}
+              className="flex-1 w-full resize-none border-none rounded-none bg-transparent px-8 py-6 font-mono text-sm focus-visible:ring-0 leading-relaxed"
               placeholder="Start writing in Markdown…"
             />
           </div>
