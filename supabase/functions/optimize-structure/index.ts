@@ -276,7 +276,6 @@ serve(async (req) => {
     if (skeleton.skeleton.length > SKELETON_CAP) {
       console.log(`Pruning skeleton from ${skeleton.skeleton.length} to ≤${SKELETON_CAP} entries for optimization`);
       const entries = [...skeleton.skeleton];
-      // Keep all level 1-2 and bundle candidates unconditionally
       const important = entries.filter((e: any) => (e.level || 1) <= 2 || e.is_bundle_candidate);
       const medium = entries.filter((e: any) => (e.level || 1) === 3 && !e.is_bundle_candidate);
       const low = entries.filter((e: any) => (e.level || 1) >= 4 && !e.is_bundle_candidate);
@@ -287,11 +286,18 @@ serve(async (req) => {
       const mediumSlice = medium.slice(0, Math.max(0, remaining));
       const lowRemaining = SKELETON_CAP - important.length - mediumSlice.length;
       const lowSlice = low.slice(0, Math.max(0, lowRemaining));
+      const kept = new Set([...important, ...mediumSlice, ...lowSlice]);
+      const prunedEntries = entries.filter((e: any) => !kept.has(e));
       skeletonForPrompt = {
         ...skeleton,
-        skeleton: [...important, ...mediumSlice, ...lowSlice],
+        skeleton: [...kept],
         total_sections_detected: skeleton.skeleton.length,
-        _pruned_to: important.length + mediumSlice.length + lowSlice.length,
+        _pruned_to: kept.size,
+        _pruned_labels: prunedEntries.map((e: any) => ({
+          label: e.label,
+          level: e.level || 1,
+          content_density: e.content_density || "unknown",
+        })),
       };
     }
 
@@ -365,8 +371,12 @@ Analyze the semantic relationships between these sections. Identify overlaps, mi
     const rawCount = skeleton.skeleton?.length || 0;
     const prunedTo = skeletonForPrompt._pruned_to || rawCount;
     if (prunedTo < rawCount) {
-      result.pruning_stats = { raw_skeleton_count: rawCount, pruned_to: prunedTo };
-      console.log(`Skeleton pruned: ${rawCount} → ${prunedTo} entries`);
+      result.pruning_stats = {
+        raw_skeleton_count: rawCount,
+        pruned_to: prunedTo,
+        pruned_labels: skeletonForPrompt._pruned_labels || [],
+      };
+      console.log(`Skeleton pruned: ${rawCount} → ${prunedTo} entries (${result.pruning_stats.pruned_labels.length} labels)`);
     }
     console.log(`Structure optimized: bundles=${result.stats?.final_bundles}, playbooks=${result.stats?.final_playbooks}, merges=${result.stats?.merges_performed}`);
 
