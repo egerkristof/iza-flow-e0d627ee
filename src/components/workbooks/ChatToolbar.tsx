@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -75,6 +75,13 @@ export function ChatToolbar({
   const [attachSearch, setAttachSearch] = useState("");
   const [attachTypeFilter, setAttachTypeFilter] = useState<"all" | "text" | "link" | "file">("all");
   const [pendingAttachment, setPendingAttachment] = useState<WorkbookResource | null>(null);
+
+  // @mention autocomplete
+  const [mentionQuery, setMentionQuery] = useState<string | null>(null);
+  const [mentionIndex, setMentionIndex] = useState(0);
+  const [mentionAnchor, setMentionAnchor] = useState<{ top: number; left: number } | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const mentionListRef = useRef<HTMLDivElement>(null);
 
   // Capture dialog
   const [captureDialogOpen, setCaptureDialogOpen] = useState(false);
@@ -252,6 +259,88 @@ export function ChatToolbar({
     setPendingAttachment(null);
   };
 
+  // ── @mention helpers ──
+  const mentionFiltered = mentionQuery !== null
+    ? resources.filter(r => r.title.toLowerCase().includes(mentionQuery.toLowerCase())).slice(0, 6)
+    : [];
+
+  const getMentionContext = useCallback((value: string, cursorPos: number) => {
+    const textBeforeCursor = value.slice(0, cursorPos);
+    const atIdx = textBeforeCursor.lastIndexOf("@");
+    if (atIdx === -1) return null;
+    // Ensure @ is at start or preceded by a space
+    if (atIdx > 0 && textBeforeCursor[atIdx - 1] !== " ") return null;
+    const query = textBeforeCursor.slice(atIdx + 1);
+    // No spaces in mention query (single token autocomplete)
+    if (/\s/.test(query) && query.length > 30) return null;
+    return { atIdx, query };
+  }, []);
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setMessageInput(value);
+    const cursorPos = e.target.selectionStart ?? value.length;
+    const ctx = getMentionContext(value, cursorPos);
+    if (ctx) {
+      setMentionQuery(ctx.query);
+      setMentionIndex(0);
+      // Position the dropdown near the input
+      if (inputRef.current) {
+        const rect = inputRef.current.getBoundingClientRect();
+        setMentionAnchor({ top: rect.top, left: rect.left + Math.min(ctx.atIdx * 7, rect.width - 100) });
+      }
+    } else {
+      setMentionQuery(null);
+      setMentionAnchor(null);
+    }
+  }, [setMessageInput, getMentionContext]);
+
+  const insertMention = useCallback((resource: WorkbookResource) => {
+    const cursorPos = inputRef.current?.selectionStart ?? messageInput.length;
+    const ctx = getMentionContext(messageInput, cursorPos);
+    if (!ctx) return;
+    const before = messageInput.slice(0, ctx.atIdx);
+    const after = messageInput.slice(cursorPos);
+    const mention = `@[${resource.title}] `;
+    setMessageInput(before + mention + after);
+    setMentionQuery(null);
+    setMentionAnchor(null);
+    // Also auto-attach the resource
+    setPendingAttachment(resource);
+    setTimeout(() => inputRef.current?.focus(), 0);
+  }, [messageInput, setMessageInput, getMentionContext]);
+
+  const handleMentionKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (mentionQuery === null || mentionFiltered.length === 0) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setMentionIndex(i => Math.min(i + 1, mentionFiltered.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setMentionIndex(i => Math.max(i - 1, 0));
+    } else if (e.key === "Enter" || e.key === "Tab") {
+      e.preventDefault();
+      insertMention(mentionFiltered[mentionIndex]);
+    } else if (e.key === "Escape") {
+      setMentionQuery(null);
+      setMentionAnchor(null);
+    }
+  }, [mentionQuery, mentionFiltered, mentionIndex, insertMention]);
+
+  // Close mention on click outside
+  useEffect(() => {
+    if (mentionQuery === null) return;
+    const handleClick = (e: MouseEvent) => {
+      if (mentionListRef.current && !mentionListRef.current.contains(e.target as Node) &&
+          inputRef.current && !inputRef.current.contains(e.target as Node)) {
+        setMentionQuery(null);
+        setMentionAnchor(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [mentionQuery]);
+
   const btnSize = compact ? "h-8 w-8" : "h-10 w-10";
   const iconSize = compact ? "h-3 w-3" : "h-4 w-4";
   const inputHeight = compact ? "h-8 text-xs" : "";
@@ -369,14 +458,48 @@ export function ChatToolbar({
           </PopoverContent>
         </Popover>
 
-        {/* Message input */}
-        <Input
-          value={messageInput}
-          onChange={e => setMessageInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && handleSend()}
-          placeholder={placeholder}
-          className={`flex-1 bg-secondary/50 ${inputHeight}`}
-        />
+        {/* Message input with @mention */}
+        <div className="relative flex-1">
+          <Input
+            ref={inputRef}
+            value={messageInput}
+            onChange={handleInputChange}
+            onKeyDown={e => {
+              handleMentionKeyDown(e);
+              if (mentionQuery === null && e.key === "Enter") handleSend();
+            }}
+            placeholder={placeholder}
+            className={`w-full bg-secondary/50 ${inputHeight}`}
+          />
+          {/* @mention dropdown */}
+          {mentionQuery !== null && mentionFiltered.length > 0 && (
+            <div
+              ref={mentionListRef}
+              className="absolute bottom-full left-0 mb-1 w-72 rounded-md border border-border bg-popover shadow-lg z-50 overflow-hidden"
+            >
+              <p className="text-[10px] font-medium text-muted-foreground px-2 pt-1.5 pb-1">Repository items</p>
+              <ScrollArea className="max-h-40">
+                <div className="space-y-0.5 px-1 pb-1">
+                  {mentionFiltered.map((r, i) => (
+                    <button
+                      key={r.id}
+                      className={`flex items-center gap-2 w-full rounded-md px-2 py-1.5 text-xs text-left transition-colors ${
+                        i === mentionIndex ? "bg-accent text-accent-foreground" : "hover:bg-primary/5"
+                      }`}
+                      onMouseDown={e => { e.preventDefault(); insertMention(r); }}
+                      onMouseEnter={() => setMentionIndex(i)}
+                    >
+                      {r.resource_type === "link" ? <Link2 className="h-3 w-3 text-primary shrink-0" /> : r.resource_type === "file" ? <FileText className="h-3 w-3 text-primary shrink-0" /> : <TypeIcon className="h-3 w-3 text-primary shrink-0" />}
+                      <span className="truncate">{r.title}</span>
+                      <Badge variant="outline" className="text-[9px] ml-auto shrink-0">{r.resource_type}</Badge>
+                    </button>
+                  ))}
+                </div>
+              </ScrollArea>
+              <p className="text-[9px] text-muted-foreground px-2 py-1 border-t border-border">↑↓ navigate · Enter select · Esc dismiss</p>
+            </div>
+          )}
+        </div>
         <Button onClick={handleSend} size="icon" className={compact ? "h-8 w-8" : ""} disabled={!messageInput.trim() && !pendingAttachment}>
           <Send className={iconSize} />
         </Button>
@@ -384,7 +507,7 @@ export function ChatToolbar({
 
       {!compact && (
         <p className="text-[10px] text-muted-foreground mt-1 ml-[10.5rem]">
-          <ListTodo className="h-2.5 w-2.5 inline" /> tasks · <Lightbulb className="h-2.5 w-2.5 inline" /> capture · <Plus className="h-2.5 w-2.5 inline" /> repository · <Paperclip className="h-2.5 w-2.5 inline" /> attach · <code className="bg-muted px-1 rounded">/task</code> · <code className="bg-muted px-1 rounded">/capture</code>
+          <ListTodo className="h-2.5 w-2.5 inline" /> tasks · <Lightbulb className="h-2.5 w-2.5 inline" /> capture · <Plus className="h-2.5 w-2.5 inline" /> repository · <Paperclip className="h-2.5 w-2.5 inline" /> attach · <code className="bg-muted px-1 rounded">@</code> mention · <code className="bg-muted px-1 rounded">/task</code> · <code className="bg-muted px-1 rounded">/capture</code>
         </p>
       )}
 
