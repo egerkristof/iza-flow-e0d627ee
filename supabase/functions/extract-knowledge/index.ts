@@ -1214,6 +1214,7 @@ Analyze the specified pages/slides of this PDF document. Extract ALL knowledge e
             chunks: forcedChunks,
             estimated_pages: estimatedPages,
             model,
+            _echo: { documentId: body.documentId, source_type: sourceType, extraction_depth: extractionDepth, advisor_persona: advisorPersona, document_structure: documentStructure },
           }), {
             headers: { ...corsHeaders, "Content-Type": "application/json" },
           });
@@ -1228,6 +1229,7 @@ Analyze the specified pages/slides of this PDF document. Extract ALL knowledge e
           chunks: pdfChunks,
           estimated_pages: estimatedPages,
           model,
+          _echo: { documentId: body.documentId, source_type: sourceType, extraction_depth: extractionDepth, advisor_persona: advisorPersona, document_structure: documentStructure },
         }), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
