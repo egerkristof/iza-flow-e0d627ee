@@ -101,6 +101,42 @@ export const PREFERENCE_KEY_LABELS: Record<PreferenceKey, string> = {
 export const SCOPE_LEVELS = ["personal", "team", "organization"] as const;
 export type ScopeLevel = (typeof SCOPE_LEVELS)[number];
 
+// ─── Output Types (Draft Artifact Types) ─────────────────────────────────────
+export const OUTPUT_TYPES = [
+  "email_draft",
+  "slide_outline",
+  "document_section",
+  "checklist",
+  "analysis_brief",
+  "call_prep",
+  "proposal_section",
+  "free_text",
+] as const;
+
+export type OutputType = (typeof OUTPUT_TYPES)[number];
+
+export const OUTPUT_TYPE_LABELS: Record<OutputType, string> = {
+  email_draft: "Email Draft",
+  slide_outline: "Slide Outline",
+  document_section: "Document Section",
+  checklist: "Checklist",
+  analysis_brief: "Analysis Brief",
+  call_prep: "Call Prep Brief",
+  proposal_section: "Proposal Section",
+  free_text: "Free Text",
+};
+
+export const OUTPUT_TYPE_ICONS: Record<OutputType, string> = {
+  email_draft: "✉️",
+  slide_outline: "📊",
+  document_section: "📄",
+  checklist: "☑️",
+  analysis_brief: "📋",
+  call_prep: "📞",
+  proposal_section: "📑",
+  free_text: "💬",
+};
+
 // ─── Extraction Source Types ─────────────────────────────────────────────────
 export const EXTRACTION_SOURCE_TYPES = [
   "document",     // Personal document upload
@@ -133,6 +169,10 @@ export interface ExtractedContextItem {
   parent_playbook_title?: string;
   /** Source provenance: page/slide range this item was extracted from (e.g., "slides 3-5") */
   source_pages?: string;
+  /** For PROCEDURE items: what type of draft artifact this step produces when executed */
+  output_type?: OutputType;
+  /** For PROCEDURE items: human-readable description of what the step produces */
+  output_description?: string;
 }
 
 // ─── Bundle Readiness ────────────────────────────────────────────────────────

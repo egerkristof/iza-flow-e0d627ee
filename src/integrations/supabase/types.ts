@@ -207,6 +207,8 @@ export type Database = {
           mandate_scope: Json | null
           mandate_status: Database["public"]["Enums"]["mandate_status"] | null
           operation_mode: Json | null
+          output_description: string | null
+          output_type: string | null
           owner_id: string
           priority: Database["public"]["Enums"]["priority_level"]
           published_at: string | null
@@ -243,6 +245,8 @@ export type Database = {
           mandate_scope?: Json | null
           mandate_status?: Database["public"]["Enums"]["mandate_status"] | null
           operation_mode?: Json | null
+          output_description?: string | null
+          output_type?: string | null
           owner_id: string
           priority?: Database["public"]["Enums"]["priority_level"]
           published_at?: string | null
@@ -279,6 +283,8 @@ export type Database = {
           mandate_scope?: Json | null
           mandate_status?: Database["public"]["Enums"]["mandate_status"] | null
           operation_mode?: Json | null
+          output_description?: string | null
+          output_type?: string | null
           owner_id?: string
           priority?: Database["public"]["Enums"]["priority_level"]
           published_at?: string | null
@@ -727,6 +733,8 @@ export type Database = {
           gate_enforcement: string | null
           id: string
           is_required: boolean
+          output_description: string | null
+          output_type: string | null
           protocol_id: string
           research_template_id: string | null
           source_item_id: string | null
@@ -743,6 +751,8 @@ export type Database = {
           gate_enforcement?: string | null
           id?: string
           is_required?: boolean
+          output_description?: string | null
+          output_type?: string | null
           protocol_id: string
           research_template_id?: string | null
           source_item_id?: string | null
@@ -759,6 +769,8 @@ export type Database = {
           gate_enforcement?: string | null
           id?: string
           is_required?: boolean
+          output_description?: string | null
+          output_type?: string | null
           protocol_id?: string
           research_template_id?: string | null
           source_item_id?: string | null

@@ -33,6 +33,11 @@ const SYSTEM_PROMPT = `You are a **Senior Knowledge Architect** — an expert at
    - In protocols: becomes an **executable step**
    - **CRITICAL**: If content contains a numbered list of actions, EACH action = separate PROCEDURE
    - Set step_order_hint to indicate execution sequence (1, 2, 3...)
+   - **OUTPUT SPECIFICATION (IMPORTANT)**: For each PROCEDURE, determine what draft artifact it should produce when executed:
+     - Set \`output_type\` to one of: email_draft, slide_outline, document_section, checklist, analysis_brief, call_prep, proposal_section, free_text
+     - Set \`output_description\` to describe the specific deliverable, e.g. "Pricing rationale email to client after discovery call"
+     - This tells the AI execution engine WHAT to produce, dramatically improving draft quality
+     - If no clear output type, leave as free_text
 
 3. **Is it a STRATEGY, METHODOLOGY, or MULTI-PHASE APPROACH?** → **PLAYBOOK**
    - Describes the overall WHAT and WHY — the strategic intent
@@ -473,6 +478,15 @@ const TOOL_DEFINITION = {
                 type: "string",
                 description: "Page or slide range this item was extracted from (e.g., 'slides 3-5', 'pages 12-14'). REQUIRED for all items extracted from documents.",
               },
+              output_type: {
+                type: "string",
+                enum: ["email_draft", "slide_outline", "document_section", "checklist", "analysis_brief", "call_prep", "proposal_section", "free_text"],
+                description: "For PROCEDURE items: what type of draft artifact this step should produce when executed.",
+              },
+              output_description: {
+                type: "string",
+                description: "For PROCEDURE items with output_type: human-readable description of what the step produces.",
+              },
             },
             required: ["title", "content", "category"],
             additionalProperties: false,
@@ -545,6 +559,15 @@ const TOOL_DEFINITION = {
                     source_pages: {
                       type: "string",
                       description: "Page or slide range this item was extracted from (e.g., 'slides 3-5', 'pages 12-14'). REQUIRED for all items extracted from documents.",
+                    },
+                    output_type: {
+                      type: "string",
+                      enum: ["email_draft", "slide_outline", "document_section", "checklist", "analysis_brief", "call_prep", "proposal_section", "free_text"],
+                      description: "For PROCEDURE items: what type of draft artifact this step should produce when executed. Only set for procedures that have a clear deliverable.",
+                    },
+                    output_description: {
+                      type: "string",
+                      description: "For PROCEDURE items with output_type: human-readable description of what the step produces, e.g. 'Pricing rationale email to client after discovery call'. Be specific about the audience and purpose.",
                     },
                   },
                   required: ["title", "content", "category"],
