@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Plus, FileText, Link2, Type, Trash2, ExternalLink, Upload, Image, File, Download,
+  History, Clock, ChevronRight, Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +14,22 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import ReactMarkdown from "react-markdown";
+
+interface ResourceVersion {
+  id: string;
+  resource_id: string;
+  version_number: number;
+  content: string | null;
+  file_path: string | null;
+  file_name: string | null;
+  file_type: string | null;
+  metadata: Record<string, unknown>;
+  created_by: string;
+  created_at: string;
+  change_note: string | null;
+}
 
 interface WorkbookResource {
   id: string;
@@ -59,7 +76,7 @@ function formatFileSize(bytes: number) {
 }
 
 // ── Resource Card ──
-function ResourceCard({ resource, onDelete }: { resource: WorkbookResource; onDelete: (id: string) => void }) {
+function ResourceCard({ resource, onDelete, onViewHistory }: { resource: WorkbookResource; onDelete: (id: string) => void; onViewHistory?: (r: WorkbookResource) => void }) {
   const isImage = isImageFile(resource.file_type);
   const publicUrl = resource.file_path ? getPublicUrl(resource.file_path) : null;
 
@@ -105,6 +122,18 @@ function ResourceCard({ resource, onDelete }: { resource: WorkbookResource; onDe
       </div>
 
       <div className="flex items-center gap-1 shrink-0">
+        {/* Version history button */}
+        {resource.resource_type === "text" && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 opacity-0 group-hover:opacity-100"
+            onClick={() => onViewHistory?.(resource)}
+            title="Version history"
+          >
+            <History className="h-3.5 w-3.5" />
+          </Button>
+        )}
         {resource.resource_type === "file" && publicUrl && (
           <a href={publicUrl} target="_blank" rel="noopener noreferrer" download={resource.file_name ?? undefined}>
             <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100">
@@ -125,6 +154,130 @@ function ResourceCard({ resource, onDelete }: { resource: WorkbookResource; onDe
   );
 }
 
+// ── Version History Dialog ──
+function VersionHistoryDialog({
+  resource,
+  open,
+  onOpenChange,
+}: {
+  resource: WorkbookResource | null;
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+}) {
+  const [selectedVersion, setSelectedVersion] = useState<ResourceVersion | null>(null);
+
+  const { data: versions = [], isLoading } = useQuery({
+    queryKey: ["resource-versions", resource?.id],
+    enabled: !!resource?.id && open,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workbook_resource_versions")
+        .select("*")
+        .eq("resource_id", resource!.id)
+        .order("version_number", { ascending: false });
+      if (error) throw error;
+      return data as unknown as ResourceVersion[];
+    },
+  });
+
+  // Include current version as "latest"
+  const allVersions = resource
+    ? [
+        {
+          id: "current",
+          resource_id: resource.id,
+          version_number: (versions[0]?.version_number ?? 0) + 1,
+          content: resource.content,
+          file_path: resource.file_path,
+          file_name: resource.file_name,
+          file_type: resource.file_type,
+          metadata: resource.metadata,
+          created_by: resource.created_by,
+          created_at: resource.updated_at,
+          change_note: "Current version",
+        } as ResourceVersion,
+        ...versions,
+      ]
+    : versions;
+
+  const viewing = selectedVersion ?? allVersions[0] ?? null;
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
+        <DialogHeader>
+          <DialogTitle className="text-base flex items-center gap-2">
+            <History className="h-4 w-4 text-primary" />
+            Version History — {resource?.title}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-1 gap-3 min-h-0 overflow-hidden">
+          {/* Version list */}
+          <div className="w-48 shrink-0 border-r border-border/50 pr-3">
+            <ScrollArea className="h-[400px]">
+              <div className="space-y-1">
+                {isLoading ? (
+                  <p className="text-xs text-muted-foreground p-2">Loading…</p>
+                ) : allVersions.length === 0 ? (
+                  <p className="text-xs text-muted-foreground p-2">No versions yet</p>
+                ) : (
+                  allVersions.map((v) => (
+                    <button
+                      key={v.id}
+                      onClick={() => setSelectedVersion(v.id === "current" ? null : v)}
+                      className={`w-full text-left rounded-md px-3 py-2 text-xs transition-colors ${
+                        (viewing?.id === v.id)
+                          ? "bg-primary/10 text-primary border border-primary/20"
+                          : "hover:bg-secondary"
+                      }`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {v.id === "current" && (
+                          <Badge variant="outline" className="text-[8px] border-primary/30 text-primary px-1">
+                            Latest
+                          </Badge>
+                        )}
+                        <span className="font-medium">v{v.version_number}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-0.5">
+                        <Clock className="h-2.5 w-2.5" />
+                        {new Date(v.created_at).toLocaleDateString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </div>
+                      {v.change_note && v.id !== "current" && (
+                        <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-2">
+                          {v.change_note}
+                        </p>
+                      )}
+                    </button>
+                  ))
+                )}
+              </div>
+            </ScrollArea>
+          </div>
+
+          {/* Version content preview */}
+          <div className="flex-1 min-w-0">
+            <ScrollArea className="h-[400px]">
+              {viewing?.content ? (
+                <div className="prose prose-sm prose-invert max-w-none p-2 [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px] [&_code]:bg-muted [&_code]:px-1 [&_code]:rounded">
+                  <ReactMarkdown>{viewing.content}</ReactMarkdown>
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground p-4">No content for this version.</p>
+              )}
+            </ScrollArea>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // ── Main Component ──
 export function WorkbookResources({ workbookId }: { workbookId: string }) {
   const { user } = useAuth();
@@ -138,6 +291,7 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [historyResource, setHistoryResource] = useState<WorkbookResource | null>(null);
 
   const { data: resources = [], isLoading } = useQuery({
     queryKey: ["workbook-resources", workbookId],
@@ -289,7 +443,7 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
       ) : (
         <div className="space-y-2">
           {resources.map(r => (
-            <ResourceCard key={r.id} resource={r} onDelete={(id) => deleteResource.mutate(id)} />
+            <ResourceCard key={r.id} resource={r} onDelete={(id) => deleteResource.mutate(id)} onViewHistory={(r) => setHistoryResource(r)} />
           ))}
         </div>
       )}
@@ -385,6 +539,13 @@ export function WorkbookResources({ workbookId }: { workbookId: string }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Version History Dialog */}
+      <VersionHistoryDialog
+        resource={historyResource}
+        open={!!historyResource}
+        onOpenChange={(open) => { if (!open) setHistoryResource(null); }}
+      />
     </div>
   );
 }
