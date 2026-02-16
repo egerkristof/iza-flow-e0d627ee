@@ -47,16 +47,7 @@ const MOCK_PLAYBOOKS: Playbook[] = [
 ];
 
 // Mock workbook data lookup
-const MOCK_WORKBOOK_DATA: Record<string, { title: string; description: string; strategicOutcome: string; status: string }> = {
-  "1": { title: "Q1 OKR Planning", description: "Define success metrics and align team objectives for Q1 growth targets.", strategicOutcome: "Growth 30% YoY", status: "active" },
-  "2": { title: "Market Expansion APAC", description: "Feasibility study and go-to-market strategy for Southeast Asia entry.", strategicOutcome: "Enter 3 new markets", status: "active" },
-  "3": { title: "Client Onboarding — Acme Corp", description: "90-day activation plan including system setup, training, and SLA alignment.", strategicOutcome: "90-day activation", status: "active" },
-  "4": { title: "Proposal Pipeline — Enterprise", description: "Enterprise deal pipeline with pricing, technical scope, and executive summary.", strategicOutcome: "Close by Q1", status: "review" },
-  "5": { title: "Deal Retrospective — Beta Inc", description: "Win/loss analysis and process improvement documentation.", strategicOutcome: "Process Improvement", status: "completed" },
-  "6": { title: "Annual Contract Renewal", description: "Contract renewal processing for key accounts, terms negotiation.", strategicOutcome: "100% renewal rate", status: "completed" },
-  "7": { title: "Competitive Intel — Q1", description: "Battlecard updates and competitive positioning refresh.", strategicOutcome: "Market awareness", status: "draft" },
-  "8": { title: "Product Launch — v3.0", description: "Cross-functional launch plan including messaging, enablement, and rollout.", strategicOutcome: "Launch by March", status: "draft" },
-};
+// No mock workbook data — all workbooks come from DB
 
 export default function WorkbookDetailPage() {
   const { id } = useParams();
@@ -80,7 +71,7 @@ export default function WorkbookDetailPage() {
 
   const wb = dbWorkbook
     ? { title: dbWorkbook.title, description: dbWorkbook.description ?? "", strategicOutcome: dbWorkbook.strategic_outcome ?? "", status: dbWorkbook.status }
-    : MOCK_WORKBOOK_DATA[id ?? ""] ?? { title: "Unknown Workbook", description: "", strategicOutcome: "", status: "draft" };
+    : { title: "Loading…", description: "", strategicOutcome: "", status: "draft" };
 
   const showAnalytics = activeRole === "manager" || activeRole === "architect";
   const showSettings = activeRole === "architect";
@@ -567,12 +558,7 @@ export default function WorkbookDetailPage() {
                 workbookId={id ?? ""}
                 currentStatus={wb.status as "draft" | "active" | "review" | "completed" | "archived"}
                 isOwner={true}
-                onStatusChanged={(newStatus) => {
-                  // Update local mock data for immediate UI feedback
-                  if (MOCK_WORKBOOK_DATA[id ?? ""]) {
-                    MOCK_WORKBOOK_DATA[id ?? ""].status = newStatus;
-                  }
-                }}
+                onStatusChanged={() => {}}
               />
             </div>
           </div>
