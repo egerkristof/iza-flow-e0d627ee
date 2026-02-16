@@ -614,7 +614,21 @@ export function StructureEditorDialog({
                                 <Button variant="ghost" size="icon" className="h-4 w-4" onClick={cancelEdit}><X className="h-2.5 w-2.5" /></Button>
                               </div>
                             ) : (
-                              <span className="text-xs flex-1 truncate">{pb.playbook_title}</span>
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <span className="text-xs flex-1 truncate">{pb.playbook_title}</span>
+                                  </TooltipTrigger>
+                                  {pb.original_skeleton_labels.length > 0 && (
+                                    <TooltipContent side="bottom" className="max-w-xs">
+                                      <p className="text-[10px] text-muted-foreground mb-0.5">Source sections:</p>
+                                      {pb.original_skeleton_labels.map((sl, si) => (
+                                        <p key={si} className="text-[10px]">• {sl}</p>
+                                      ))}
+                                    </TooltipContent>
+                                  )}
+                                </Tooltip>
+                              </TooltipProvider>
                             )}
 
                             <Badge variant="outline" className="text-[9px]">{pb.procedures.length} steps</Badge>
