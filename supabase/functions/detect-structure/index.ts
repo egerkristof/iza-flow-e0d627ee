@@ -485,13 +485,17 @@ Return the structural skeleton. Do NOT extract content — only map architecture
 
 **FOCUS ON:**
 - Section headers, phase labels, and hierarchy within ${rangeLabel}
-- Visual groupings, diagrams, and spatial layouts on these pages
+- **VISUAL ELEMENTS:** Diagrams, process flows, circular layouts, quadrant charts, radial groupings, infographics — these often represent major strategic sections (e.g., "Account Management", "Farming", "Customer Success") that have NO text heading but ARE top-level sections
 - Sub-sections, steps, checklists, and detailed breakdowns
 - Section dividers or transition markers
+- **Content that introduces a fundamentally different ROLE or STRATEGY** (e.g., shifting from "hunting/new business" to "farming/account management/CSM") — these are always separate level-1 sections even if visually subtle
 ${isFirst ? "- Any Table of Contents, agenda, or overview that maps the FULL document" : ""}
 ${isLast ? "- Appendices, summary sections, backup slides, and any final sections" : ""}
 
-**IMPORTANT:** Be thorough for YOUR page range. Every section, sub-section, and visual group on ${rangeLabel} must appear in your skeleton. Do NOT skip sections because they seem minor.
+**IMPORTANT:** 
+- Be thorough for YOUR page range. Every section, sub-section, and visual group on ${rangeLabel} must appear in your skeleton. 
+- Do NOT skip sections because they seem minor or because they use visual layout instead of text headings.
+- Sections communicated through **diagrams, graphics, or spatial layouts** are EQUALLY important as text-based headings. Mark them with layout_type="visual_group" or "diagram".
 
 Return the structural skeleton for ${rangeLabel}. Do NOT extract content — only map architecture.`;
 
