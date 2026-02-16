@@ -40,6 +40,9 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     rawStructure: any;
   } | null>(null);
 
+  // Keep a ref to the latest runExtraction to avoid stale closures in resumeExtraction
+  const runExtractionRef = useRef<typeof runExtraction>(null as any);
+
   // ── Resume extraction after structure editor confirm/skip ────────────
   const resumeExtraction = useCallback(async (
     editedStructure: StructureEditorData | null,
@@ -48,7 +51,12 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     setPendingStructure(null);
 
     const pending = pendingExtraction.current;
-    if (!pending) return;
+    if (!pending) {
+      console.warn("resumeExtraction called but pendingExtraction ref is null");
+      setExtracting(false);
+      setAdvisorPhase("idle");
+      return;
+    }
     pendingExtraction.current = null;
 
     const { body, sourceName, advisorPersona, rawStructure } = pending;
@@ -65,7 +73,8 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
       : rawStructure;
 
     try {
-      await runExtraction(body, sourceName, advisorPersona, documentStructure);
+      // Use ref to avoid stale closure — always calls the latest runExtraction
+      await runExtractionRef.current(body, sourceName, advisorPersona, documentStructure);
     } catch (err: any) {
       toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
     } finally {
@@ -393,6 +402,9 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     }
   };
 
+  // Keep ref updated so resumeExtraction always calls the latest version
+  runExtractionRef.current = runExtraction;
+
   const extract = useCallback(async (
     body: Record<string, any>,
     sourceName: string,
@@ -438,6 +450,10 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
 
           const structData = structRes.ok ? await structRes.json() : null;
           const structError = !structRes.ok || !structData || structData.error;
+          if (!structRes.ok) {
+            console.warn(`detect-structure returned ${structRes.status} — falling back to direct extraction`);
+            toast({ title: "Structure detection timed out", description: "Proceeding with direct extraction (no structure optimization)." });
+          }
           if (!structError && structData && !structData.error && structData.confidence !== "low") {
             console.log(`Structure detected: type=${structData.structure_type}, confidence=${structData.confidence}, sections=${structData.total_sections_detected}`);
 
