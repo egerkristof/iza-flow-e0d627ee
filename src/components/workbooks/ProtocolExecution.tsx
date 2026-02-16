@@ -1225,7 +1225,7 @@ export function ProtocolExecutionView({
                   ) : (
                     <ChevronRight className="h-3 w-3" />
                   )}
-                  {currentStepIndex + 1 >= steps.length ? "Complete Protocol" : "Next Step"}
+                  {currentStepIndex + 1 >= steps.length ? "Complete Playbook" : "Next Step"}
                 </Button>
               </div>
             </div>
@@ -1234,7 +1234,7 @@ export function ProtocolExecutionView({
 
         {/* Context Sidebar */}
         <div className="w-72 border-l border-border/50 bg-card/50 p-4 overflow-auto space-y-4">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Protocol Context</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Playbook Context</h3>
 
           {/* Context items by category */}
           {contextItems.length > 0 && (
