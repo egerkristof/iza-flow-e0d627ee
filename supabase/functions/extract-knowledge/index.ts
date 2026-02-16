@@ -782,6 +782,41 @@ function mergeExtractionResults(results: ExtractionResult[]): ExtractionResult {
   if (results[0].advisor) merged.advisor = results[0].advisor;
   if (results[0].extraction_depth) merged.extraction_depth = results[0].extraction_depth;
 
+  // ── Post-merge validation: fix misclassified items ──────────────────
+  for (const bundle of merged.bundles) {
+    if (!bundle.items) continue;
+    
+    // Collect playbook titles in this bundle
+    const playbookTitles = new Set(
+      bundle.items
+        .filter((it: any) => it.category === "PLAYBOOK")
+        .map((it: any) => it.title)
+    );
+
+    // Framework/model keywords that should NEVER be PROCEDURE
+    const frameworkPatterns = /\b(framework|model|matrix|analysis|assessment|methodology|approach|concept|theory|overview|definition|reference|template|canvas|diagram|structure|taxonomy|classification|criteria|principles?|philosophy|mindset|scorecard)\b/i;
+    
+    for (const item of bundle.items) {
+      // 1. Reclassify PROCEDUREs that look like frameworks/models → KNOWLEDGE
+      if (item.category === "PROCEDURE" && frameworkPatterns.test(item.title)) {
+        console.log(`Reclassify: "${item.title}" PROCEDURE→KNOWLEDGE (framework pattern)`);
+        item.category = "KNOWLEDGE";
+        item.type = "APPEND";
+        delete item.step_order_hint;
+        delete item.parent_playbook_title;
+      }
+      
+      // 2. Ensure PROCEDUREs/DIRECTIVEs have parent_playbook_title
+      if ((item.category === "PROCEDURE" || item.category === "DIRECTIVE") && !item.parent_playbook_title) {
+        // Try to assign to the first playbook if there's only one
+        if (playbookTitles.size === 1) {
+          item.parent_playbook_title = [...playbookTitles][0];
+        }
+        // Otherwise leave as orphan — the UI handles this with the "Unassigned" section
+      }
+    }
+  }
+
   return merged;
 }
 
