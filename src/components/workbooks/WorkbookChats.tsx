@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
@@ -268,6 +272,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
   const [newChatTitle, setNewChatTitle] = useState("");
   const [highlightedChatId, setHighlightedChatId] = useState<string | null>(null);
   const [chatSearch, setChatSearch] = useState("");
+  const [deleteChatId, setDeleteChatId] = useState<string | null>(null);
 
   // Knowledge extraction state
   const [extracting, setExtracting] = useState(false);
@@ -347,6 +352,10 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
   // ── Delete chat mutation ──
   const deleteChat = useMutation({
     mutationFn: async (chatId: string) => {
+      // Detach tasks that were sourced from this chat (mark as orphaned)
+      await supabase.from("workbook_tasks").update({ source_protocol_id: `detached:${chatId}` } as any)
+        .eq("workbook_id", workbookId)
+        .filter("source_protocol_id", "eq", chatId);
       // Delete messages, participants, then chat
       await supabase.from("workbook_chat_messages").delete().eq("chat_id", chatId);
       await supabase.from("workbook_chat_participants").delete().eq("chat_id", chatId);
@@ -355,10 +364,12 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workbook-chats", workbookId] });
+      queryClient.invalidateQueries({ queryKey: ["workbook-tasks", workbookId] });
       if (activeThread) setActiveThread(null);
+      setDeleteChatId(null);
       toast({ title: "Session deleted" });
     },
-    onError: (e: any) => toast({ title: "Delete failed", description: e.message, variant: "destructive" }),
+    onError: (e: any) => { setDeleteChatId(null); toast({ title: "Delete failed", description: e.message, variant: "destructive" }); },
   });
 
   // ── Send message mutation ──
@@ -739,7 +750,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
                     <div className="flex items-center gap-2 shrink-0 ml-2">
                       <span className="text-[10px] text-muted-foreground">{timeAgo(chat.updated_at)}</span>
                       <button
-                        onClick={(e) => { e.stopPropagation(); deleteChat.mutate(chat.id); }}
+                        onClick={(e) => { e.stopPropagation(); setDeleteChatId(chat.id); }}
                         className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive"
                         title="Delete session"
                       >
@@ -777,6 +788,27 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Delete Session Confirmation */}
+      <AlertDialog open={!!deleteChatId} onOpenChange={(open) => { if (!open) setDeleteChatId(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete this session?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete the session and all its messages. Tasks and repository items created from this session will be kept but marked as detached.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => { if (deleteChatId) deleteChat.mutate(deleteChatId); }}
+            >
+              Delete Session
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
