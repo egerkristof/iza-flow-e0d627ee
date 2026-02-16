@@ -66,6 +66,9 @@ Given the raw skeleton and content preview:
 - Bundle titles should be thematic/domain-oriented (noun-led).
 - Include a "semantic_confidence" score per merge decision (0.0-1.0) so downstream can audit.
 - Be THOROUGH — this blueprint becomes the mandatory extraction guide.
+- **CRITICAL: NEVER reclassify a level-1 or level-2 section as a PROCEDURE.** Top-level sections represent major strategic domains. If they seem small, they should become a PLAYBOOK at minimum, or remain a BUNDLE. Demoting them to procedure destroys all sub-content.
+- **CRITICAL: Sections that represent fundamentally different STRATEGIC APPROACHES (e.g., "Account Management / Farming" vs "Sales / Hunting") must NEVER be merged into a single procedure.** They are distinct operational domains and should each be at least a PLAYBOOK, ideally separate BUNDLES with their own playbooks underneath.
+- When two sections describe contrasting or complementary strategies (hunting vs farming, inbound vs outbound, new business vs retention), keep them as separate playbooks or bundles — do NOT collapse them into a single "differentiate X and Y" procedure.
 
 Return results via the optimize_structure tool.`;
 
