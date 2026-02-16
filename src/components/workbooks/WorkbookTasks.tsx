@@ -15,6 +15,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
@@ -396,6 +400,7 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
   const [newPriority, setNewPriority] = useState<TaskPriority>("medium");
   const [contextDialog, setContextDialog] = useState<WorkbookTask | null>(null);
   const [editTask, setEditTask] = useState<WorkbookTask | null>(null);
+  const [deleteTaskId, setDeleteTaskId] = useState<string | null>(null);
 
   // Knowledge extraction state
   const [extractingTaskId, setExtractingTaskId] = useState<string | null>(null);
@@ -812,6 +817,11 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
               <MessageSquare className="h-2 w-2" /> subchat
             </Badge>
           )}
+          {task.source_protocol_id?.startsWith("detached:") && (
+            <Badge variant="outline" className="text-[9px] border-warning/30 text-warning gap-0.5 shrink-0">
+              detached
+            </Badge>
+          )}
 
           <Badge className={`text-[10px] shrink-0 ${PRIORITY_COLORS[task.priority]}`}>{task.priority}</Badge>
 
@@ -842,7 +852,7 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={(e) => { e.stopPropagation(); setContextDialog(task); }} title="Context config">
               <Settings2 className="h-3 w-3" />
             </Button>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={(e) => { e.stopPropagation(); deleteTask.mutate(task.id); }} title="Delete">
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={(e) => { e.stopPropagation(); setDeleteTaskId(task.id); }} title="Delete">
               <Trash2 className="h-3 w-3" />
             </Button>
           </div>
@@ -1085,6 +1095,27 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
         sourceName={extractionSourceName}
         sourceType="task"
       />
+
+      {/* Delete Task Confirmation */}
+      <AlertDialog open={!!deleteTaskId} onOpenChange={(open) => { if (!open) setDeleteTaskId(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete this task?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete the task and all its subtasks. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => { if (deleteTaskId) { deleteTask.mutate(deleteTaskId); setDeleteTaskId(null); } }}
+            >
+              Delete Task
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
