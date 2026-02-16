@@ -66,9 +66,12 @@ Given the raw skeleton and content preview:
 - Bundle titles should be thematic/domain-oriented (noun-led).
 - Include a "semantic_confidence" score per merge decision (0.0-1.0) so downstream can audit.
 - Be THOROUGH — this blueprint becomes the mandatory extraction guide.
+- **CRITICAL: MAXIMIZE INCLUSION.** Every skeleton section MUST appear as either a bundle, playbook, or procedure in the output. Even sections with sparse or no content are valuable — the label itself carries strategic meaning for the user. NEVER drop, skip, or omit a section because it seems empty or thin. An empty playbook with a meaningful title is far more valuable than a missing one.
+- **CRITICAL: Every bundle MUST contain at least one playbook.** If a bundle would end up with zero playbooks, either: (a) create a playbook from the bundle's own content/label, or (b) promote sub-sections to playbook level. A bundle with no playbooks is invalid.
 - **CRITICAL: NEVER reclassify a level-1 or level-2 section as a PROCEDURE.** Top-level sections represent major strategic domains. If they seem small, they should become a PLAYBOOK at minimum, or remain a BUNDLE. Demoting them to procedure destroys all sub-content.
 - **CRITICAL: Sections that represent fundamentally different STRATEGIC APPROACHES (e.g., "Account Management / Farming" vs "Sales / Hunting") must NEVER be merged into a single procedure.** They are distinct operational domains and should each be at least a PLAYBOOK, ideally separate BUNDLES with their own playbooks underneath.
 - When two sections describe contrasting or complementary strategies (hunting vs farming, inbound vs outbound, new business vs retention), keep them as separate playbooks or bundles — do NOT collapse them into a single "differentiate X and Y" procedure.
+- **PREFER OVER-INCLUSION over consolidation.** When in doubt, keep a section as its own playbook rather than merging it. Users can always merge later, but they cannot recover dropped sections.
 
 Return results via the optimize_structure tool.`;
 
