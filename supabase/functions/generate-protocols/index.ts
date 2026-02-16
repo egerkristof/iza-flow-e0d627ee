@@ -176,6 +176,8 @@ Deno.serve(async (req) => {
           is_required: true,
           agent_prompt: proc.content_full ?? null,
           research_template_id: proc.target_reference_id ?? null,
+          output_type: proc.output_type ?? "free_text",
+          output_description: proc.output_description ?? null,
         });
       }
 

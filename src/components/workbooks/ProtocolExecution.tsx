@@ -48,6 +48,8 @@ interface ProtocolStep {
   agent_prompt: string | null;
   estimated_minutes: number | null;
   research_template_id: string | null;
+  output_type: string | null;
+  output_description: string | null;
 }
 
 interface ProtocolContextItem {
@@ -646,14 +648,120 @@ export function ProtocolExecutionView({
         setIsStreaming(false);
       }
     } else {
-      // Non-research steps: existing mock behavior
-      setChatMessages(prev => [
-        ...prev,
-        {
-          role: "assistant",
-          text: `[Step ${currentStepIndex + 1}: ${currentStep?.title}] Processing your input for "${protocol.title}"…\n\nContext loaded: ${contextItems.length} knowledge items active. ${captures.length} capture${captures.length !== 1 ? "s" : ""} recorded.`,
-        },
-      ]);
+      // Action steps: use AI Draft Generator
+      setIsStreaming(true);
+      let assistantSoFar = "";
+      const upsert = (chunk: string) => {
+        assistantSoFar += chunk;
+        setChatMessages(prev => {
+          const last = prev[prev.length - 1];
+          if (last?.role === "assistant") {
+            return prev.map((m, i) => i === prev.length - 1 ? { ...m, text: assistantSoFar } : m);
+          }
+          return [...prev, { role: "assistant", text: assistantSoFar }];
+        });
+      };
+
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) {
+          toast({ title: "Not authenticated", variant: "destructive" });
+          setIsStreaming(false);
+          return;
+        }
+
+        const protocolCtx = contextItems
+          .filter(ci => ci.context_items)
+          .map(ci => ({
+            title: ci.context_items!.title,
+            category: ci.context_items!.category,
+            content: ci.context_items!.content_full,
+          }));
+
+        // Build conversation history for refinement
+        const history = chatMessages.map(m => ({ role: m.role, text: m.text }));
+
+        const resp = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-draft`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session.access_token}`,
+              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+            body: JSON.stringify({
+              step_context: {
+                title: currentStep.title,
+                description: currentStep.description,
+                agent_prompt: currentStep.agent_prompt,
+                output_type: (currentStep as any).output_type ?? "free_text",
+                output_description: (currentStep as any).output_description ?? null,
+              },
+              protocol_context: protocolCtx,
+              user_input: text,
+              conversation_history: history,
+            }),
+          }
+        );
+
+        if (!resp.ok || !resp.body) {
+          if (resp.status === 429) { toast({ title: "Rate limited", description: "Please try again shortly.", variant: "destructive" }); }
+          else if (resp.status === 402) { toast({ title: "Credits exhausted", description: "Please add funds.", variant: "destructive" }); }
+          else { const errData = await resp.json().catch(() => ({})); toast({ title: "Draft generation failed", description: (errData as any).error || `Error ${resp.status}`, variant: "destructive" }); }
+          setIsStreaming(false);
+          return;
+        }
+
+        const reader = resp.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          let newlineIdx: number;
+          while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+            let line = buffer.slice(0, newlineIdx);
+            buffer = buffer.slice(newlineIdx + 1);
+            if (line.endsWith("\r")) line = line.slice(0, -1);
+            if (line.startsWith(":") || line.trim() === "") continue;
+            if (!line.startsWith("data: ")) continue;
+            const jsonStr = line.slice(6).trim();
+            if (jsonStr === "[DONE]") break;
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+              if (content) upsert(content);
+            } catch {
+              buffer = line + "\n" + buffer;
+              break;
+            }
+          }
+        }
+
+        // Flush remaining
+        if (buffer.trim()) {
+          for (let raw of buffer.split("\n")) {
+            if (!raw || raw.startsWith(":") || raw.trim() === "" || !raw.startsWith("data: ")) continue;
+            if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+            const jsonStr = raw.slice(6).trim();
+            if (jsonStr === "[DONE]") continue;
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+              if (content) upsert(content);
+            } catch { /* ignore */ }
+          }
+        }
+      } catch (e: any) {
+        console.error("Draft stream error:", e);
+        toast({ title: "Draft error", description: e.message, variant: "destructive" });
+      } finally {
+        setIsStreaming(false);
+      }
     }
   }, [chatInput, isStreaming, currentStep, contextItems, captures, currentStepIndex, protocol.title, toast]);
 
@@ -817,6 +925,38 @@ export function ProtocolExecutionView({
             </div>
           )}
 
+          {/* Draft Workspace banner for action steps */}
+          {currentStep && currentStep.step_type === "action" && (
+            <div className="mx-6 mt-4 rounded-lg border border-primary/30 bg-primary/5 p-4 space-y-2">
+              <div className="flex items-center gap-2">
+                {isStreaming ? (
+                  <Loader2 className="h-5 w-5 text-primary animate-spin" />
+                ) : (
+                  <FileText className="h-5 w-5 text-primary" />
+                )}
+                <h3 className="text-sm font-semibold text-primary">
+                  {isStreaming ? "Generating Draft…" : "Draft Workspace"}
+                </h3>
+                {(currentStep as any).output_type && (currentStep as any).output_type !== "free_text" && (
+                  <Badge variant="outline" className="text-[9px] border-primary/30 text-primary">
+                    📄 {((currentStep as any).output_type as string).replace(/_/g, " ")}
+                  </Badge>
+                )}
+                <Badge variant="outline" className="text-[9px] border-primary/30 text-primary">
+                  {isStreaming ? "Streaming…" : "AI-Powered"}
+                </Badge>
+              </div>
+              {(currentStep as any).output_description && (
+                <p className="text-sm text-primary/80 font-medium">
+                  → Produces: {(currentStep as any).output_description}
+                </p>
+              )}
+              <p className="text-sm text-muted-foreground">
+                {currentStep.description ?? "Describe what you need and the AI will generate a draft using your organization's context."}
+              </p>
+            </div>
+          )}
+
           {/* Chat messages */}
           <div className="flex-1 overflow-auto p-6 space-y-3">
             {chatMessages.length === 0 && currentStep && (
@@ -858,8 +998,11 @@ export function ProtocolExecutionView({
               setMessageInput={setChatInput}
               onSend={handleSend}
               placeholder={
-                isStreaming ? "Researching…" :
+                isStreaming ? "Generating draft…" :
                 currentStep?.step_type === "research" ? "Ask your research question…" :
+                currentStep?.step_type === "action" && (currentStep as any).output_type && (currentStep as any).output_type !== "free_text"
+                  ? `Describe what to include in your ${((currentStep as any).output_type as string).replace(/_/g, " ")}…`
+                  : currentStep?.step_type === "action" ? "Describe what you need — the AI will generate a draft…" :
                 currentStep?.agent_prompt?.substring(0, 100) ?? "Enter your input…"
               }
             />
