@@ -42,6 +42,19 @@ interface ParsedSuggestion {
   content?: string;
 }
 
+interface ApplyOperation {
+  op: "update" | "create" | "delete" | "move";
+  id?: string;
+  category?: string;
+  title?: string;
+  content_full?: string;
+  parent_playbook_id?: string | null;
+}
+
+interface ParsedOperations {
+  operations: ApplyOperation[];
+}
+
 interface MentionableItem {
   id: string;
   title: string;
@@ -208,15 +221,175 @@ export function InlineContextCopilot({
     };
   }, []);
 
+  // Parse apply-operations block (structured refactoring)
+  const parseOperations = useCallback((text: string): ParsedOperations | null => {
+    const match = text.match(/```apply-operations\s*\n([\s\S]*?)```/);
+    if (!match) return null;
+    try {
+      const ops = JSON.parse(match[1].trim());
+      if (Array.isArray(ops) && ops.length > 0) return { operations: ops };
+    } catch { /* ignore parse errors */ }
+    return null;
+  }, []);
+
   // Strip apply blocks from display text
   const stripApplyBlocks = useCallback((text: string): string => {
     return text
       .replace(/```apply-title\s*\n[\s\S]*?```/g, "")
       .replace(/```apply-content\s*\n[\s\S]*?```/g, "")
+      .replace(/```apply-operations\s*\n[\s\S]*?```/g, "")
       .trim();
   }, []);
 
-  // Apply suggestion to the context item
+  // Regenerate protocols for workbooks that have this bundle deployed
+  const redeployBundleProtocols = async (bundleId: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) return;
+
+      // Find workbooks with this bundle deployed via workbook_resources
+      const { data: deployments } = await supabase
+        .from("workbook_resources")
+        .select("workbook_id")
+        .eq("resource_type", "bundle")
+        .eq("content", bundleId);
+
+      if (!deployments?.length) return;
+
+      // Also check workbook_protocols for direct bundle references
+      const { data: protocolDeployments } = await supabase
+        .from("workbook_protocols")
+        .select("workbook_id")
+        .eq("bundle_id", bundleId);
+
+      const allWorkbookIds = new Set([
+        ...(deployments?.map(d => d.workbook_id) || []),
+        ...(protocolDeployments?.map(p => p.workbook_id) || []),
+      ]);
+
+      // Regenerate protocols for each workbook
+      for (const workbookId of allWorkbookIds) {
+        await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-protocols`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.access_token}`,
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({ workbook_id: workbookId, bundle_id: bundleId }),
+        });
+      }
+
+      if (allWorkbookIds.size > 0) {
+        queryClient.invalidateQueries({ queryKey: ["workbook-protocols"] });
+        queryClient.invalidateQueries({ queryKey: ["protocol-steps"] });
+        toast({
+          title: "Protocols regenerated",
+          description: `Updated ${allWorkbookIds.size} workbook(s)`,
+        });
+      }
+    } catch (e) {
+      console.error("Redeploy error:", e);
+    }
+  };
+
+  // Apply structured operations (split, merge, create, delete, move)
+  const applyOperations = async (ops: ApplyOperation[], msgIdx: number) => {
+    if (!user) return;
+    setApplyingIdx(msgIdx);
+    try {
+      const bundleId = hierarchy.bundle.id;
+      const newIdMap: Record<string, string> = {};
+      let createCounter = 0;
+
+      for (const op of ops) {
+        if (op.op === "create") {
+          createCounter++;
+          const placeholderKey = `__NEW_${createCounter}__`;
+
+          // Resolve parent_playbook_id placeholders
+          let parentId = op.parent_playbook_id;
+          if (parentId && parentId.startsWith("__NEW_") && newIdMap[parentId]) {
+            parentId = newIdMap[parentId];
+          }
+
+          const { data: newItem, error } = await supabase
+            .from("context_items")
+            .insert({
+              owner_id: user.id,
+              category: (op.category || "KNOWLEDGE") as any,
+              title: op.title || "New Item",
+              content_full: op.content_full || "",
+            })
+            .select("id")
+            .single();
+
+          if (error) throw error;
+          newIdMap[placeholderKey] = newItem.id;
+
+          // Link to bundle
+          await supabase.from("context_item_bundles").insert({
+            context_item_id: newItem.id,
+            bundle_id: bundleId,
+            parent_playbook_id: parentId || null,
+          });
+
+        } else if (op.op === "update" && op.id) {
+          const update: Record<string, string> = {};
+          if (op.title) update.title = op.title;
+          if (op.content_full) update.content_full = op.content_full;
+          if (Object.keys(update).length > 0) {
+            const { error } = await supabase
+              .from("context_items")
+              .update(update as any)
+              .eq("id", op.id);
+            if (error) throw error;
+          }
+
+        } else if (op.op === "delete" && op.id) {
+          const { error } = await supabase
+            .from("context_items")
+            .update({ deleted_at: new Date().toISOString() } as any)
+            .eq("id", op.id);
+          if (error) throw error;
+
+        } else if (op.op === "move" && op.id) {
+          let parentId = op.parent_playbook_id;
+          if (parentId && parentId.startsWith("__NEW_") && newIdMap[parentId]) {
+            parentId = newIdMap[parentId];
+          }
+          const { error } = await supabase
+            .from("context_item_bundles")
+            .update({ parent_playbook_id: parentId || null } as any)
+            .eq("context_item_id", op.id)
+            .eq("bundle_id", bundleId);
+          if (error) throw error;
+        }
+      }
+
+      // Invalidate all relevant caches
+      queryClient.invalidateQueries({ queryKey: ["context-items"] });
+      queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+      queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
+      queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
+      queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
+
+      toast({
+        title: "Operations applied",
+        description: `Executed ${ops.length} operation(s)`,
+      });
+
+      // Auto-redeploy protocols
+      await redeployBundleProtocols(bundleId);
+
+    } catch (e: any) {
+      toast({ title: "Apply failed", description: e.message, variant: "destructive" });
+    } finally {
+      setApplyingIdx(null);
+    }
+  };
+
+  // Apply simple suggestion to the context item
   const applySuggestion = async (suggestion: ParsedSuggestion, msgIdx: number) => {
     if (!scopeId) return;
     setApplyingIdx(msgIdx);
@@ -238,6 +411,10 @@ export function InlineContextCopilot({
       queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
       queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
       toast({ title: "Suggestion applied", description: `Updated "${suggestion.title || scopeTitle}"` });
+
+      // Auto-redeploy protocols for simple edits too
+      await redeployBundleProtocols(hierarchy.bundle.id);
+
     } catch (e: any) {
       toast({ title: "Apply failed", description: e.message, variant: "destructive" });
     } finally {
@@ -602,6 +779,7 @@ export function InlineContextCopilot({
               )}
               {messages.map((msg, idx) => {
                 const suggestion = msg.role === "assistant" ? parseSuggestion(msg.content) : null;
+                const structuredOps = msg.role === "assistant" ? parseOperations(msg.content) : null;
                 const displayContent = msg.role === "assistant" ? stripApplyBlocks(msg.content) : msg.content;
                 const isApplying = applyingIdx === idx;
 
@@ -616,7 +794,8 @@ export function InlineContextCopilot({
                         <div className="prose prose-sm prose-invert max-w-none text-xs [&>*]:text-xs [&_p]:text-xs [&_li]:text-xs [&_h1]:text-sm [&_h2]:text-xs [&_h3]:text-xs [&_code]:text-[10px]">
                           <ReactMarkdown>{displayContent}</ReactMarkdown>
                         </div>
-                        {suggestion && !isStreaming && (
+                        {/* Simple title/content suggestion */}
+                        {suggestion && !structuredOps && !isStreaming && (
                           <div className="mt-2 flex items-center gap-2 p-2 rounded-md border border-primary/20 bg-primary/5">
                             <Pencil className="h-3 w-3 text-primary shrink-0" />
                             <div className="flex-1 min-w-0">
@@ -639,6 +818,41 @@ export function InlineContextCopilot({
                                 <Check className="h-3 w-3" />
                               )}
                               Apply
+                            </Button>
+                          </div>
+                        )}
+                        {/* Structured operations (split, merge, create, delete, move) */}
+                        {structuredOps && !isStreaming && (
+                          <div className="mt-2 p-2 rounded-md border border-amber-500/30 bg-amber-500/5 space-y-1.5">
+                            <div className="flex items-center gap-2">
+                              <Pencil className="h-3 w-3 text-amber-500 shrink-0" />
+                              <p className="text-[10px] font-medium text-amber-600 dark:text-amber-400">
+                                Structural changes ({structuredOps.operations.length} operations)
+                              </p>
+                            </div>
+                            <div className="space-y-0.5">
+                              {structuredOps.operations.map((op, oi) => (
+                                <p key={oi} className="text-[9px] text-muted-foreground">
+                                  <span className="font-mono font-medium text-foreground">{op.op.toUpperCase()}</span>
+                                  {" "}
+                                  {op.title || op.id?.slice(0, 8) || "item"}
+                                  {op.category && <span className="ml-1 text-amber-500">({op.category})</span>}
+                                </p>
+                              ))}
+                            </div>
+                            <Button
+                              size="sm"
+                              className="h-6 text-[10px] px-2 gap-1 w-full"
+                              variant="outline"
+                              disabled={isApplying}
+                              onClick={() => applyOperations(structuredOps.operations, idx)}
+                            >
+                              {isApplying ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Check className="h-3 w-3" />
+                              )}
+                              Apply All & Redeploy
                             </Button>
                           </div>
                         )}
