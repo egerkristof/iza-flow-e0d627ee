@@ -110,6 +110,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     );
     if (!res.ok) {
       const errText = await res.text();
+      console.error(`[EDGE_FETCH] ${fnName} failed: status=${res.status}, body=${errText.slice(0, 500)}`);
       throw new Error(errText || `${fnName} failed (${res.status})`);
     }
 
@@ -194,7 +195,9 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
 
     try {
       // First call — may return full result, or needs_chunking signal
+      console.log("[EXTRACT] Calling extract-knowledge...");
       const firstResult = await edgeFetch("extract-knowledge", extractBody, extractController.signal);
+      console.log("[EXTRACT] extract-knowledge returned:", firstResult?.needs_chunking ? "needs_chunking" : "direct result", "keys:", Object.keys(firstResult || {}));
 
       let extracted: ExtractionResult;
 
@@ -396,6 +399,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
         }
       }
 
+      console.log("[EXTRACT] Calling onResult with", extracted.bundles?.length, "bundles,", extracted.context_items?.length, "items,", extracted.preferences?.length, "prefs");
       onResult(extracted, sourceName);
     } finally {
       clearTimeout(extractTimer);
@@ -409,6 +413,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
     body: Record<string, any>,
     sourceName: string,
   ) => {
+    console.log("[EXTRACT] Starting extraction for:", sourceName, "depth:", depth);
     setExtracting(true);
     setAdvisorPhase("idle");
     setChunkProgress(null);
@@ -578,8 +583,10 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
       }
 
       // No structure editor pause — proceed directly
+      console.log("[EXTRACT] No structure editor pause — calling runExtraction directly");
       await runExtraction(body, sourceName, advisorPersona, documentStructure);
     } catch (err: any) {
+      console.error("[EXTRACT] Top-level extraction error:", err);
       toast({ title: "Extraction failed", description: err.message, variant: "destructive" });
     } finally {
       // Only clean up if we're not waiting for structure editor
