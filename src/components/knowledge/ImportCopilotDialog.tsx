@@ -208,9 +208,11 @@ export function ImportCopilotDialog({ open, onOpenChange, data: initialData, sou
   const qc = useQueryClient();
 
   // Mutable extraction data — updated when AI refines items
-  const [data, setData] = useState<ExtractionResult | null>(initialData);
+  const normalizeData = (d: ExtractionResult | null): ExtractionResult | null =>
+    d ? { ...d, preferences: d.preferences || [], context_items: d.context_items || [], bundles: d.bundles || [] } : null;
+  const [data, setData] = useState<ExtractionResult | null>(() => normalizeData(initialData));
   // Sync when parent passes new data
-  useEffect(() => { setData(initialData); }, [initialData]);
+  useEffect(() => { setData(normalizeData(initialData)); }, [initialData]);
 
   const [selectedPrefs, setSelectedPrefs] = useState<Set<number>>(new Set());
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
@@ -1001,6 +1003,8 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
 
   if (!data) return null;
 
+  const preferences = data.preferences || [];
+  const contextItems = data.context_items || [];
   const bundles = data.bundles || [];
 
   const totalSelected = selectedPrefs.size + selectedItems.size + selectedBundles.size;
@@ -1150,7 +1154,7 @@ function SmartSuggestionChips({ data, onSelect, onLocalAction }: {
           </DialogTitle>
           <p className="text-xs text-muted-foreground mt-1">
             <Badge variant="secondary" className="text-[9px] mr-1.5">{sourceLabel}</Badge>
-            AI extracted {data.preferences.length} preferences, {data.context_items.length} standalone items, and {bundles.length} bundles.
+            AI extracted {preferences.length} preferences, {contextItems.length} standalone items, and {bundles.length} bundles.
             {" "}
             {(() => {
               const readinessCounts = bundles.reduce((acc, b, i) => {
