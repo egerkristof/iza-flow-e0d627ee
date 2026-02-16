@@ -156,6 +156,137 @@ const TOOL_DEFINITION = {
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 
+// ── Manifest pre-scan tool definition ────────────────────────────────
+const MANIFEST_TOOL = {
+  type: "function",
+  function: {
+    name: "extract_manifest",
+    description: "Return the structural manifest — all top-level sections/phases/domains visible in overview slides, ToC, diagrams, or process maps",
+    parameters: {
+      type: "object",
+      properties: {
+        manifest_sections: {
+          type: "array",
+          description: "ALL top-level sections, phases, or strategic domains found in overview/ToC/diagram slides",
+          items: {
+            type: "object",
+            properties: {
+              label: { type: "string", description: "Section/phase/domain label exactly as shown" },
+              source_type: {
+                type: "string",
+                enum: ["toc_entry", "agenda_item", "diagram_label", "process_phase", "overview_heading", "section_divider"],
+                description: "How was this section identified?"
+              },
+              parent_group: { type: "string", description: "If this section belongs to a larger group/side (e.g., 'Hunting', 'Farming'), state the group name. Otherwise null." },
+              approximate_page: { type: "string", description: "Approximate page/slide where this was found" },
+            },
+            required: ["label", "source_type"],
+          },
+        },
+        structural_patterns: {
+          type: "array",
+          description: "High-level structural patterns detected (e.g., 'Document has two major domains: Hunting and Farming')",
+          items: { type: "string" },
+        },
+        has_toc: { type: "boolean", description: "Does the document have an explicit Table of Contents?" },
+        has_overview_diagram: { type: "boolean", description: "Does the document have overview/process diagrams showing the full structure?" },
+        has_agenda: { type: "boolean", description: "Does the document have an agenda slide?" },
+      },
+      required: ["manifest_sections", "structural_patterns", "has_toc", "has_overview_diagram", "has_agenda"],
+      additionalProperties: false,
+    },
+  },
+};
+
+const MANIFEST_SYSTEM_PROMPT = `You are a **Document Structure Scout**. Your ONLY job is to quickly scan a document and identify ALL structural overview information — Tables of Contents, agenda slides, overview diagrams, process maps, section dividers, and any visual or textual element that reveals the FULL structure of the document.
+
+## YOUR TASK
+Scan the ENTIRE document and find:
+
+1. **Tables of Contents / Agendas** — Any page that lists all sections, topics, or phases
+2. **Overview diagrams** — Process maps, circular diagrams, flowcharts, quadrant charts that show the document's major domains or phases (e.g., a "Sales Cycle" wheel showing all stages)
+3. **Section dividers** — Slides or pages that mark the beginning of a new major section
+4. **Structural labels from visuals** — Labels inside diagrams, process flows, or infographics that name strategic domains (these are often the MOST important structural markers)
+
+## CRITICAL RULES
+- Extract EVERY label you can see in overview diagrams — even small ones
+- If a diagram shows two "sides" or "domains" (e.g., left side = "Farming", right side = "Hunting"), capture BOTH sides and ALL their sub-labels
+- Include labels from circular process diagrams, radial layouts, quadrant charts
+- Do NOT extract detailed content — only structural markers
+- Be EXHAUSTIVE — missing a label here means an entire section gets skipped later
+
+Return results via the extract_manifest tool.`;
+
+/** Perform a quick pre-scan of the full PDF to extract structural manifest (ToC, overview diagrams, agendas) */
+async function callManifestScan(
+  lovableApiKey: string,
+  pdfBase64: string,
+): Promise<any | null> {
+  const userPrompt = `Quickly scan this ENTIRE document. Find ALL structural overview information: Tables of Contents, agenda slides, overview/process diagrams, section dividers, and any visual element that maps out the document's full structure.
+
+[PDF document provided for structural manifest extraction]
+
+Pay special attention to:
+- Circular diagrams, process wheels, or flow charts that show ALL phases/stages
+- Diagrams that show contrasting domains (e.g., left side vs right side, with different labels for each)
+- Agenda or overview slides that list ALL topics
+- Section divider slides
+
+Extract EVERY label visible in these structural overview elements.`;
+
+  const messages: any[] = [
+    { role: "system", content: MANIFEST_SYSTEM_PROMPT },
+    {
+      role: "user",
+      content: [
+        { type: "text", text: userPrompt },
+        { type: "image_url", image_url: { url: `data:application/pdf;base64,${pdfBase64}` } },
+      ],
+    },
+  ];
+
+  try {
+    const aiResponse = await fetch(
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${lovableApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages,
+          tools: [MANIFEST_TOOL],
+          tool_choice: { type: "function", function: { name: "extract_manifest" } },
+        }),
+      },
+    );
+
+    if (!aiResponse.ok) {
+      console.error("Manifest scan failed:", aiResponse.status, await aiResponse.text());
+      return null;
+    }
+
+    const aiData = await aiResponse.json();
+    const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+    if (!toolCall) return null;
+
+    const manifest = JSON.parse(toolCall.function.arguments);
+    console.log(`Manifest pre-scan: ${manifest.manifest_sections?.length || 0} sections found, patterns: ${(manifest.structural_patterns || []).join(" | ")}`);
+    if (manifest.manifest_sections?.length > 0) {
+      const labels = manifest.manifest_sections.map((s: any) => 
+        `${s.label}${s.parent_group ? ` [${s.parent_group}]` : ""} (${s.source_type})`
+      );
+      console.log(`Manifest labels: ${labels.join(" | ")}`);
+    }
+    return manifest;
+  } catch (err) {
+    console.error("Manifest scan error (non-fatal):", err);
+    return null;
+  }
+}
+
 /** Call the AI with a specific prompt and optional PDF, return parsed skeleton result */
 async function callStructureAI(
   lovableApiKey: string,
@@ -425,18 +556,36 @@ serve(async (req) => {
       // Estimate page count from base64 size (~50KB per page for presentations)
       const fileSizeBytes = (pdfBase64.length * 3) / 4;
       const estimatedPages = Math.max(1, Math.round(fileSizeBytes / (50 * 1024)));
-      // Cap at 3 chunks max to stay within edge function timeout (~60s)
       const MAX_CHUNKS = 3;
       const CHUNK_SIZE = Math.max(10, Math.ceil(estimatedPages / MAX_CHUNKS));
 
       console.log(`PDF analysis: estimated ${estimatedPages} pages, file size ${Math.round(fileSizeBytes / 1024)}KB`);
 
+      // ── Phase 1: Manifest pre-scan ──────────────────────────────────
+      // Quick scan of the FULL PDF to extract structural overview info
+      // (ToC entries, overview diagrams, agenda items, process maps)
+      const manifest = await callManifestScan(lovableApiKey, pdfBase64);
+
+      // Build manifest hint text to inject into chunk prompts
+      let manifestHint = "";
+      if (manifest && manifest.manifest_sections?.length > 0) {
+        const sectionList = manifest.manifest_sections
+          .map((s: any, i: number) => {
+            let entry = `${i + 1}. "${s.label}" (detected from: ${s.source_type})`;
+            if (s.parent_group) entry += ` [part of: ${s.parent_group}]`;
+            return entry;
+          })
+          .join("\n");
+        const patterns = (manifest.structural_patterns || []).join("; ");
+        manifestHint = `\n\n---\n**STRUCTURAL MANIFEST (from document overview/ToC/diagrams):**\nThe document's own overview elements reveal these sections and domains:\n${sectionList}\n\nStructural patterns: ${patterns || "none detected"}\n\n**YOU MUST look for content matching ALL of these sections in your page range.** If you find pages covering any of these sections, include them in your skeleton — even if they use visual layouts rather than text headings. Missing a manifest section means losing an entire knowledge domain.\n---\n`;
+      }
+
       if (estimatedPages <= 15) {
-        // Small PDF — single pass
+        // Small PDF — single pass (still benefits from manifest context)
         const userPrompt = `Analyze the structure of this document and return its organizational skeleton.
 
 [PDF document provided as inline image for analysis]
-
+${manifestHint}
 **FOCUS ON:**
 - Table of contents, agenda slides, overview sections
 - Section headers and their hierarchy
@@ -444,6 +593,7 @@ serve(async (req) => {
 - Section dividers or transition markers
 - How content is organized (by topic, by phase, by role, etc.)
 - ALL pages of the document — ensure no sections are missed
+- **VISUAL ELEMENTS:** Diagrams, process flows, circular layouts — these often represent major sections
 
 Return the structural skeleton. Do NOT extract content — only map architecture.`;
 
@@ -458,13 +608,14 @@ Return the structural skeleton. Do NOT extract content — only map architecture
 
         result.total_markers_detected = 0;
         result.markers_beyond_preview = 0;
+        if (manifest) result._manifest = manifest;
         console.log(`Structure detected (single pass): type=${result.structure_type}, confidence=${result.confidence}, sections=${result.total_sections_detected}`);
         return new Response(JSON.stringify(result), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
 
-      // Large PDF — chunked parallel analysis
+      // ── Phase 2: Chunked parallel analysis with manifest context ────
       const chunks: { start: number; end: number }[] = [];
       for (let start = 1; start <= estimatedPages; start += CHUNK_SIZE) {
         chunks.push({ start, end: Math.min(start + CHUNK_SIZE - 1, estimatedPages) });
@@ -480,15 +631,15 @@ Return the structural skeleton. Do NOT extract content — only map architecture
         const userPrompt = `Analyze the structure of this document. You MUST focus **exclusively on ${rangeLabel}** of this document. Ignore content outside this page range.
 
 [PDF document provided as inline image for analysis]
-
+${manifestHint}
 **YOUR PAGE RANGE: ${rangeLabel}**
 
 **FOCUS ON:**
 - Section headers, phase labels, and hierarchy within ${rangeLabel}
-- **VISUAL ELEMENTS:** Diagrams, process flows, circular layouts, quadrant charts, radial groupings, infographics — these often represent major strategic sections (e.g., "Account Management", "Farming", "Customer Success") that have NO text heading but ARE top-level sections
+- **VISUAL ELEMENTS:** Diagrams, process flows, circular layouts, quadrant charts, radial groupings, infographics — these often represent major strategic sections that have NO text heading but ARE top-level sections
 - Sub-sections, steps, checklists, and detailed breakdowns
 - Section dividers or transition markers
-- **Content that introduces a fundamentally different ROLE or STRATEGY** (e.g., shifting from "hunting/new business" to "farming/account management/CSM") — these are always separate level-1 sections even if visually subtle
+- **Content that introduces a fundamentally different ROLE or STRATEGY** — these are always separate level-1 sections even if visually subtle
 ${isFirst ? "- Any Table of Contents, agenda, or overview that maps the FULL document" : ""}
 ${isLast ? "- Appendices, summary sections, backup slides, and any final sections" : ""}
 
@@ -496,6 +647,7 @@ ${isLast ? "- Appendices, summary sections, backup slides, and any final section
 - Be thorough for YOUR page range. Every section, sub-section, and visual group on ${rangeLabel} must appear in your skeleton. 
 - Do NOT skip sections because they seem minor or because they use visual layout instead of text headings.
 - Sections communicated through **diagrams, graphics, or spatial layouts** are EQUALLY important as text-based headings. Mark them with layout_type="visual_group" or "diagram".
+- Cross-reference against the STRUCTURAL MANIFEST above — if any manifest section falls within your page range, it MUST appear in your skeleton.
 
 Return the structural skeleton for ${rangeLabel}. Do NOT extract content — only map architecture.`;
 
@@ -515,6 +667,7 @@ Return the structural skeleton for ${rangeLabel}. Do NOT extract content — onl
       result.total_markers_detected = 0;
       result.markers_beyond_preview = 0;
       result.chunks_used = chunks.length;
+      if (manifest) result._manifest = manifest;
       console.log(`Structure detected (chunked, ${chunks.length} chunks): type=${result.structure_type}, confidence=${result.confidence}, sections=${result.total_sections_detected}`);
 
       return new Response(JSON.stringify(result), {
