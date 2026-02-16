@@ -233,7 +233,10 @@ export function InlineContextCopilot({
       if (error) throw error;
 
       queryClient.invalidateQueries({ queryKey: ["context-items"] });
+      queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
       queryClient.invalidateQueries({ queryKey: ["my-context-items"] });
+      queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
+      queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
       toast({ title: "Suggestion applied", description: `Updated "${suggestion.title || scopeTitle}"` });
     } catch (e: any) {
       toast({ title: "Apply failed", description: e.message, variant: "destructive" });
