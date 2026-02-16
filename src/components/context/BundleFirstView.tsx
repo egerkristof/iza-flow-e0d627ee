@@ -535,7 +535,6 @@ function BundleExpandable({
     const playbooks = sortedItems.filter(i => i.category === "PLAYBOOK");
     const sharedItems: { id: string; title: string; content?: string; category: string }[] = [];
     const playbookEntries: CopilotHierarchy["playbooks"] = [];
-    const SHARED_CATS = ["KNOWLEDGE", "PRINCIPLE", "PREFERENCE", "RESEARCH"];
 
     for (const pb of playbooks) {
       const children = sortedItems
@@ -547,15 +546,7 @@ function BundleExpandable({
     for (const item of sortedItems) {
       if (item.category === "PLAYBOOK") continue;
       if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) continue;
-      // Only shared-category items go to shared; orphan procedures/directives are auto-nested or unassigned
-      if (SHARED_CATS.includes(item.category)) {
-        sharedItems.push({ id: item.id, title: item.title, content: item.content_preview, category: item.category });
-      } else if (playbooks.length === 1) {
-        // Auto-nest under the single playbook
-        const pb = playbookEntries[0];
-        pb.children.push({ id: item.id, title: item.title, content: item.content_preview, category: item.category });
-      }
-      // else: multiple playbooks, unassigned — omit from hierarchy (shown separately in UI)
+      sharedItems.push({ id: item.id, title: item.title, content: item.content_preview, category: item.category });
     }
 
     return {
@@ -685,30 +676,15 @@ function BundleExpandable({
                 const playbooks = sortedBundleItems.filter(i => i.category === "PLAYBOOK");
                 const ownedByPlaybook = new Map<string, MockContextItem[]>();
                 const sharedItems: MockContextItem[] = [];
-                const unassignedItems: MockContextItem[] = [];
-
-                // Categories that are inherently "shared context" (not steps/gates)
-                const SHARED_CATEGORIES = ["KNOWLEDGE", "PRINCIPLE", "PREFERENCE", "RESEARCH"];
 
                 for (const item of sortedBundleItems) {
                   if (item.category === "PLAYBOOK") continue;
-                  // Item explicitly owned by a playbook
                   if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) {
                     const existing = ownedByPlaybook.get(item.parent_playbook_id) || [];
                     existing.push(item);
                     ownedByPlaybook.set(item.parent_playbook_id, existing);
-                  } else if (SHARED_CATEGORIES.includes(item.category)) {
-                    // Knowledge, Principles, Preferences, Research are genuinely shared
-                    sharedItems.push(item);
-                  } else if (playbooks.length === 1) {
-                    // Single playbook in domain: auto-nest orphan procedures/directives
-                    const pbId = playbooks[0].id;
-                    const existing = ownedByPlaybook.get(pbId) || [];
-                    existing.push(item);
-                    ownedByPlaybook.set(pbId, existing);
                   } else {
-                    // Multiple playbooks: show as "unassigned" (not shared)
-                    unassignedItems.push(item);
+                    sharedItems.push(item);
                   }
                 }
 
@@ -729,56 +705,50 @@ function BundleExpandable({
                       allMentionableItems={allMentionableItems}
                     />
 
-                    {/* Unassigned items (procedures/directives without a parent playbook) */}
-                    {unassignedItems.length > 0 && (
-                      <>
-                        <div className="px-4 pt-2 pb-1">
-                          <span className="text-[10px] font-medium text-amber-400 uppercase tracking-wider">
-                            ⚠️ Unassigned steps/gates (assign to a playbook)
-                          </span>
-                        </div>
-                        {unassignedItems.map(item => (
-                          <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-secondary/20 transition-colors border-l-2 border-amber-500/20">
-                            <FileText className="h-3.5 w-3.5 text-amber-400/60 shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs font-medium truncate">{item.title}</span>
-                                <CategoryBadge category={item.category} />
-                                <span className="text-[9px] text-amber-400/60">(unassigned)</span>
-                              </div>
-                              <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
-                            </div>
-                            <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
-                                <Pencil className="h-3 w-3" />
-                              </Button>
-                              <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
-                      </>
-                    )}
-
-                    {/* Shared context items (knowledge, principles, preferences, research) */}
+                    {/* Shared context items — collapsible */}
                     {sharedItems.length > 0 && playbooks.length > 0 && (
-                      <div className="px-4 pt-2 pb-1">
-                        <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
-                          📘 Shared context (injected into all protocols)
-                        </span>
-                      </div>
+                      <Collapsible defaultOpen={false}>
+                        <CollapsibleTrigger asChild>
+                          <button className="w-full px-4 pt-2 pb-1 flex items-center gap-1.5 text-left hover:bg-secondary/10 transition-colors">
+                            <ChevronRight className="h-3 w-3 text-muted-foreground" />
+                            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                              📘 Shared context ({sharedItems.length} items)
+                            </span>
+                          </button>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          {sharedItems.map(item => (
+                            <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-secondary/20 transition-colors">
+                              <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-xs font-medium truncate">{item.title}</span>
+                                  <CategoryBadge category={item.category} />
+                                  <span className="text-[9px] text-muted-foreground/60">(shared)</span>
+                                </div>
+                                <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                              </div>
+                              <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                                  <Pencil className="h-3 w-3" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </CollapsibleContent>
+                      </Collapsible>
                     )}
-                    {sharedItems.map(item => (
+                    {/* No playbooks — show all items flat */}
+                    {playbooks.length === 0 && sharedItems.map(item => (
                       <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-secondary/20 transition-colors">
                         <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="text-xs font-medium truncate">{item.title}</span>
                             <CategoryBadge category={item.category} />
-                            {playbooks.length > 0 && (
-                              <span className="text-[9px] text-muted-foreground/60">(shared)</span>
-                            )}
                           </div>
                           <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
                         </div>
@@ -794,28 +764,16 @@ function BundleExpandable({
                     ))}
                     {/* Contextual add buttons at bundle level */}
                     <div className="px-4 py-2 flex items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
-                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "PLAYBOOK" })}
-                      >
+                      <Button variant="ghost" size="sm" className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
+                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "PLAYBOOK" })}>
                         <Plus className="h-2.5 w-2.5" /> Playbook
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
-                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "KNOWLEDGE" })}
-                      >
+                      <Button variant="ghost" size="sm" className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
+                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "KNOWLEDGE" })}>
                         <Plus className="h-2.5 w-2.5" /> Knowledge
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
-                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "PRINCIPLE" })}
-                      >
+                      <Button variant="ghost" size="sm" className="h-6 flex-1 text-[10px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-border/40 hover:border-primary/30"
+                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "PRINCIPLE" })}>
                         <Plus className="h-2.5 w-2.5" /> Principle
                       </Button>
                     </div>
