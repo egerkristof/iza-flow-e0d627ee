@@ -70,6 +70,8 @@ When you detect that a step needs dynamic information (market data, competitor a
 - Use markdown formatting
 
 ## APPLYING SUGGESTIONS
+
+### Simple edits (single item title/content change)
 When you suggest content changes to the current item, wrap the suggested replacement content in a fenced block like this:
 
 \`\`\`apply-title
@@ -81,7 +83,29 @@ Suggested new content here. This will replace the item's full content.
 \`\`\`
 
 You can include one or both blocks. Only use these when you have a concrete suggestion for the current scope item.
-When suggesting new items (not editing existing ones), specify category, title, and content in normal markdown instead.`;
+
+### Complex refactorings (split, merge, create, delete, move)
+For structural changes involving multiple items, use the \`\`\`apply-operations block with a JSON array.
+Each operation is an object with an "op" field. Available operations:
+
+- **update**: Update an existing item. Fields: op, id, title?, content_full?
+- **create**: Create a new item in the bundle. Fields: op, category (PLAYBOOK|PROCEDURE|DIRECTIVE|KNOWLEDGE|PRINCIPLE|PREFERENCE|RESEARCH), title, content_full, parent_playbook_id? (ID of owning playbook, null for shared items)
+- **delete**: Soft-delete an item. Fields: op, id
+- **move**: Move an item to a different parent playbook. Fields: op, id, parent_playbook_id (new parent, null to make shared)
+
+Example — splitting a playbook into two:
+\`\`\`apply-operations
+[
+  {"op":"update","id":"existing-playbook-id","title":"Narrowed Playbook Title","content_full":"Updated focused content"},
+  {"op":"create","category":"PLAYBOOK","title":"New Split Playbook","content_full":"Content for the new playbook","parent_playbook_id":null},
+  {"op":"move","id":"procedure-id-to-move","parent_playbook_id":"__NEW_1__"}
+]
+\`\`\`
+
+When creating items that other operations reference, use placeholder IDs like __NEW_1__, __NEW_2__ etc. in parent_playbook_id. The system maps these to real IDs after creation (in order).
+
+IMPORTANT: Use real item IDs from the hierarchy context for update, delete, and move operations. Only use __NEW_N__ placeholders to reference items you're creating in the same batch.
+After structural changes, the system automatically regenerates protocols for any workbooks using this bundle.`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS")
