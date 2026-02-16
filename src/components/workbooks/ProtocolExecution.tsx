@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { type WorkbookResource } from "./WorkbookResources";
+import { ResourceAttachmentCard } from "./ResourceAttachmentCard";
 import { useToast } from "@/hooks/use-toast";
 import {
   Play, ChevronRight, ChevronLeft, Lock, Unlock, Check, Shield,
@@ -406,7 +408,7 @@ export function ProtocolExecutionView({
   const { data: captures = [] } = useExecutionCaptures(activeExecution?.id ?? null);
 
   const [chatInput, setChatInput] = useState("");
-  const [chatMessages, setChatMessages] = useState<{ role: string; text: string }[]>([]);
+  const [chatMessages, setChatMessages] = useState<{ role: string; text: string; attachment?: { id: string; title: string; type: string; url?: string; content?: string; metadata?: Record<string, unknown> } }[]>([]);
   const [captureOpen, setCaptureOpen] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [savingDraftIdx, setSavingDraftIdx] = useState<number | null>(null);
@@ -528,12 +530,24 @@ export function ProtocolExecutionView({
     },
   });
 
-  const handleSend = useCallback(async () => {
+  const handleSend = useCallback(async (extra?: { attachment?: WorkbookResource }) => {
     const text = chatInput.trim();
-    if (!text || isStreaming) return;
+    if (!text && !extra?.attachment) return;
+    if (isStreaming) return;
     setChatInput("");
 
-    const userMsg = { role: "user", text };
+    const attachmentData = extra?.attachment ? {
+      id: extra.attachment.id,
+      title: extra.attachment.title,
+      type: extra.attachment.resource_type,
+      url: extra.attachment.file_path
+        ? supabase.storage.from("workbook-resources").getPublicUrl(extra.attachment.file_path).data.publicUrl
+        : undefined,
+      content: extra.attachment.content ?? undefined,
+      metadata: extra.attachment.metadata as Record<string, unknown> | undefined,
+    } : undefined;
+
+    const userMsg = { role: "user", text: text || (attachmentData ? `📎 Referenced: ${attachmentData.title}` : ""), attachment: attachmentData };
     setChatMessages(prev => [...prev, userMsg]);
 
     // If current step is a research step, invoke the AI research agent
@@ -679,8 +693,18 @@ export function ProtocolExecutionView({
             content: ci.context_items!.content_full,
           }));
 
-        // Build conversation history for refinement
-        const history = chatMessages.map(m => ({ role: m.role, text: m.text }));
+        // Build conversation history for refinement (include attachment content)
+        const history = chatMessages.map(m => ({
+          role: m.role,
+          text: m.attachment?.content
+            ? `${m.text}\n\n[Referenced: ${m.attachment.title}]\n${m.attachment.content}`
+            : m.text,
+        }));
+
+        // Include current attachment content if present
+        const fullInput = attachmentData?.content
+          ? `${text}\n\n[Referenced: ${attachmentData.title}]\n${attachmentData.content}`
+          : text;
 
         const resp = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-draft`,
@@ -700,7 +724,7 @@ export function ProtocolExecutionView({
                 output_description: (currentStep as any).output_description ?? null,
               },
               protocol_context: protocolCtx,
-              user_input: text,
+              user_input: fullInput,
               conversation_history: history,
             }),
           }
@@ -1110,7 +1134,12 @@ export function ProtocolExecutionView({
                     )}
                   </>
                 ) : (
-                  msg.text
+                  <>
+                    {msg.attachment && (
+                      <ResourceAttachmentCard attachment={msg.attachment} isOwn />
+                    )}
+                    {msg.text && <span>{msg.text}</span>}
+                  </>
                 )}
               </div>
             ))}

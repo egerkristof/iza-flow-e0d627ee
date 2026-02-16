@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ChatToolbar } from "./ChatToolbar";
 import { type WorkbookResource } from "./WorkbookResources";
 import { MandateContextBanner } from "./MandateContextBanner";
+import { ResourceAttachmentCard } from "./ResourceAttachmentCard";
 import { FileText, Link2, Type as TypeIcon, ExternalLink } from "lucide-react";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
 import { ExtractionDepthSelector } from "@/components/knowledge/ExtractionDepthSelector";
@@ -268,16 +269,10 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled }: {
                 <div className={`max-w-[75%] rounded-lg px-3 py-2 text-sm ${msg.isOwn ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
                   {!msg.isOwn && <p className="text-[10px] font-medium mb-0.5 opacity-70">{msg.sender.name}</p>}
                   {msg.attachment && (
-                    <div className={`flex items-center gap-2 rounded-md px-2 py-1.5 mb-1.5 text-xs ${msg.isOwn ? "bg-primary-foreground/10" : "bg-muted/50"}`}>
-                      {msg.attachment.type === "link" ? <Link2 className="h-3 w-3 shrink-0" /> : msg.attachment.type === "file" ? <FileText className="h-3 w-3 shrink-0" /> : <TypeIcon className="h-3 w-3 shrink-0" />}
-                      <span className="font-medium truncate">{msg.attachment.title}</span>
-                      {msg.attachment.url && (
-                        <a href={msg.attachment.url} target="_blank" rel="noopener noreferrer" className="shrink-0"><ExternalLink className="h-3 w-3" /></a>
-                      )}
-                      {msg.attachment.type === "link" && msg.attachment.content && (
-                        <a href={msg.attachment.content} target="_blank" rel="noopener noreferrer" className="shrink-0"><ExternalLink className="h-3 w-3" /></a>
-                      )}
-                    </div>
+                    <ResourceAttachmentCard
+                      attachment={msg.attachment}
+                      isOwn={msg.isOwn}
+                    />
                   )}
                   {msg.content && <p>{msg.content}</p>}
                   <p className={`text-[10px] mt-1 ${msg.isOwn ? "text-primary-foreground/60" : "text-muted-foreground"}`}>{msg.time}</p>
