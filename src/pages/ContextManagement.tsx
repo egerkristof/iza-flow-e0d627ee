@@ -322,6 +322,8 @@ export default function ContextManagementPage() {
         ? (sortOrderMap.get(`${row.id}:${row.bundle_id}`) ?? sortOrderMap.get(row.id) ?? 999)
         : 999,
       target_reference_id: row.target_reference_id ?? null,
+      output_type: row.output_type ?? null,
+      output_description: row.output_description ?? null,
     })),
   [dbItems, parentPlaybookMap, sortOrderMap]);
 

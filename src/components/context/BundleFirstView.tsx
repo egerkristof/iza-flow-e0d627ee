@@ -1,10 +1,11 @@
 import { useState, useMemo, useCallback } from "react";
-import type { ExtractionDepth } from "@/lib/knowledge-schema";
+import type { ExtractionDepth, OutputType } from "@/lib/knowledge-schema";
+import { OUTPUT_TYPES, OUTPUT_TYPE_LABELS, OUTPUT_TYPE_ICONS } from "@/lib/knowledge-schema";
 import {
   Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
   Layers, Tag, Loader2, Rocket, BookOpen, Circle, CheckCircle2, ArrowUpCircle,
-  Eraser, GripVertical, Wand2,
+  Eraser, GripVertical, Wand2, FileOutput,
 } from "lucide-react";
 import { InlineContextCopilot, type CopilotScope, type CopilotHierarchy } from "@/components/context/InlineContextCopilot";
 import { useQuery } from "@tanstack/react-query";
@@ -23,6 +24,8 @@ import {
 } from "@/components/ui/tooltip";
 import { type MockBundle, type MockContextItem, ALL_CATEGORIES } from "@/data/mockContextItems";
 import { DeployToWorkbookDialog } from "@/components/context/DeployToWorkbookDialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
@@ -157,6 +160,65 @@ function DeploymentBadges({ deployments }: { deployments: { workbook_id: string;
   );
 }
 
+// ── Inline Output Spec Editor for PROCEDURE items ──
+function OutputSpecEditor({ item }: { item: MockContextItem }) {
+  const { toast } = useToast();
+  const [outputType, setOutputType] = useState<string>(item.output_type || "free_text");
+  const [outputDesc, setOutputDesc] = useState<string>(item.output_description || "");
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async (field: "output_type" | "output_description", value: string) => {
+    setSaving(true);
+    const update = field === "output_type" ? { output_type: value } : { output_description: value };
+    const { error } = await supabase.from("context_items").update(update as any).eq("id", item.id);
+    setSaving(false);
+    if (error) {
+      toast({ title: "Save failed", description: error.message, variant: "destructive" });
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-2 mt-1 ml-0.5">
+      <FileOutput className="h-3 w-3 text-muted-foreground shrink-0" />
+      <Select
+        value={outputType}
+        onValueChange={(val) => {
+          setOutputType(val);
+          handleSave("output_type", val);
+        }}
+      >
+        <SelectTrigger className="h-6 text-[10px] w-[130px] border-dashed border-muted-foreground/30 bg-transparent px-2">
+          <SelectValue placeholder="Output type" />
+        </SelectTrigger>
+        <SelectContent>
+          {OUTPUT_TYPES.map(t => (
+            <SelectItem key={t} value={t} className="text-xs">
+              <span className="mr-1">{OUTPUT_TYPE_ICONS[t]}</span> {OUTPUT_TYPE_LABELS[t]}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Input
+        className="h-6 text-[10px] flex-1 border-dashed border-muted-foreground/30 bg-transparent px-2 placeholder:text-muted-foreground/50"
+        placeholder="What does this step produce?"
+        value={outputDesc}
+        onChange={e => setOutputDesc(e.target.value)}
+        onBlur={() => {
+          if (outputDesc !== (item.output_description || "")) {
+            handleSave("output_description", outputDesc);
+          }
+        }}
+        onKeyDown={e => {
+          if (e.key === "Enter") {
+            (e.target as HTMLInputElement).blur();
+          }
+        }}
+      />
+      {saving && <Loader2 className="h-3 w-3 animate-spin text-muted-foreground shrink-0" />}
+    </div>
+  );
+}
+
 // ── Draggable Item List for reordering ──
 function DraggableItemList({
   items,
@@ -234,36 +296,49 @@ function DraggableItemList({
           onDragOver={e => handleDragOver(e, item.id)}
           onDrop={e => handleDrop(e, item.id)}
           onDragEnd={handleDragEnd}
-          className={`flex items-center gap-3 ${className} py-1.5 group/item hover:bg-secondary/20 transition-colors ${
+          className={`${className} py-1.5 group/item hover:bg-secondary/20 transition-colors ${
             draggedId === item.id ? "opacity-40" : ""
           } ${dragOverId === item.id ? "border-t-2 border-primary/50" : ""}`}
         >
-          <GripVertical className="h-3 w-3 text-muted-foreground/30 cursor-grab active:cursor-grabbing shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />
-          {renderPrefix?.(item, idx)}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-medium truncate">{item.title}</span>
-              <CategoryBadge category={item.category} />
+          <div className="flex items-center gap-3">
+            <GripVertical className="h-3 w-3 text-muted-foreground/30 cursor-grab active:cursor-grabbing shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+            {renderPrefix?.(item, idx)}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium truncate">{item.title}</span>
+                <CategoryBadge category={item.category} />
+                {item.category === "PROCEDURE" && item.output_type && item.output_type !== "free_text" && (
+                  <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4 gap-0.5 border-primary/20 text-primary/70">
+                    {OUTPUT_TYPE_ICONS[item.output_type as OutputType]} {OUTPUT_TYPE_LABELS[item.output_type as OutputType]}
+                  </Badge>
+                )}
+              </div>
+              <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
             </div>
-            <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
-          </div>
-          <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-            {onToggleCopilot && item.category === "PROCEDURE" && (
-              <Button
-                variant={activeCopilot?.scope === "step" && activeCopilot.id === item.id ? "secondary" : "ghost"}
-                size="icon" className="h-6 w-6"
-                onClick={() => onToggleCopilot("step", item.id, item.title)}
-              >
-                <Wand2 className="h-3 w-3 text-primary" />
+            <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+              {onToggleCopilot && item.category === "PROCEDURE" && (
+                <Button
+                  variant={activeCopilot?.scope === "step" && activeCopilot.id === item.id ? "secondary" : "ghost"}
+                  size="icon" className="h-6 w-6"
+                  onClick={() => onToggleCopilot("step", item.id, item.title)}
+                >
+                  <Wand2 className="h-3 w-3 text-primary" />
+                </Button>
+              )}
+              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                <Pencil className="h-3 w-3" />
               </Button>
-            )}
-            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
-              <Pencil className="h-3 w-3" />
-            </Button>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
-              <Trash2 className="h-3 w-3" />
-            </Button>
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                <Trash2 className="h-3 w-3" />
+              </Button>
+            </div>
           </div>
+          {/* Inline output spec editor for PROCEDURE items */}
+          {item.category === "PROCEDURE" && (
+            <div className="ml-6 pl-3">
+              <OutputSpecEditor item={item} />
+            </div>
+          )}
         </div>
       ))}
     </>
