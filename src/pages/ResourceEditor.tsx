@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  ChevronLeft, Save, History, Clock, Download, Eye, Edit3,
+  ChevronLeft, Save, History, Clock, Download, Eye, Edit3, Columns,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,59 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+/** Reusable markdown renderer with nice formatting */
+function MarkdownPreview({ content }: { content: string }) {
+  return (
+    <div className="prose prose-sm prose-invert max-w-none
+      [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:border-b [&_h1]:border-border/40 [&_h1]:pb-2 [&_h1]:mb-4
+      [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:mt-8 [&_h2]:mb-3
+      [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-2
+      [&_h4]:text-base [&_h4]:font-medium [&_h4]:mt-4 [&_h4]:mb-2
+      [&_p]:my-3 [&_p]:leading-7 [&_p]:text-muted-foreground
+      [&_ul]:my-3 [&_ul]:pl-6 [&_ul]:list-disc
+      [&_ol]:my-3 [&_ol]:pl-6 [&_ol]:list-decimal
+      [&_li]:my-1.5 [&_li]:leading-7 [&_li]:text-muted-foreground
+      [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-primary/80
+      [&_strong]:text-foreground [&_strong]:font-semibold
+      [&_em]:text-foreground/80
+      [&_blockquote]:border-l-2 [&_blockquote]:border-primary/40 [&_blockquote]:bg-primary/5 [&_blockquote]:px-4 [&_blockquote]:py-3 [&_blockquote]:rounded-r-md [&_blockquote]:my-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground
+      [&_hr]:border-border/40 [&_hr]:my-8
+      [&_table]:border-collapse [&_table]:w-full [&_table]:my-4
+      [&_th]:border [&_th]:border-border/40 [&_th]:bg-secondary/50 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_th]:text-foreground
+      [&_td]:border [&_td]:border-border/40 [&_td]:px-3 [&_td]:py-2 [&_td]:text-sm [&_td]:text-muted-foreground
+      [&_img]:rounded-md [&_img]:border [&_img]:border-border/40 [&_img]:my-4
+      [&_code:not(pre_code)]:text-xs [&_code:not(pre_code)]:bg-secondary [&_code:not(pre_code)]:text-primary [&_code:not(pre_code)]:px-1.5 [&_code:not(pre_code)]:py-0.5 [&_code:not(pre_code)]:rounded [&_code:not(pre_code)]:font-mono
+      [&_pre]:my-4 [&_pre]:rounded-lg [&_pre]:overflow-hidden
+    ">
+      <ReactMarkdown
+        components={{
+          code({ className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "");
+            const codeStr = String(children).replace(/\n$/, "");
+            if (match) {
+              return (
+                <SyntaxHighlighter
+                  style={oneDark}
+                  language={match[1]}
+                  PreTag="div"
+                  customStyle={{ margin: 0, borderRadius: "0.5rem", fontSize: "0.8rem" }}
+                >
+                  {codeStr}
+                </SyntaxHighlighter>
+              );
+            }
+            return <code className={className} {...props}>{children}</code>;
+          },
+        }}
+      >
+        {content || "*No content yet*"}
+      </ReactMarkdown>
+    </div>
+  );
+}
 
 interface ResourceVersion {
   id: string;
@@ -34,7 +87,7 @@ export default function ResourceEditorPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [changeNote, setChangeNote] = useState("");
-  const [previewMode, setPreviewMode] = useState(false);
+  const [viewMode, setViewMode] = useState<"edit" | "preview" | "split">("edit");
   const [showHistory, setShowHistory] = useState(false);
   const [dirty, setDirty] = useState(false);
 
@@ -167,15 +220,26 @@ export default function ResourceEditorPage() {
           {dirty && <Badge variant="outline" className="text-[10px] border-amber-500/30 text-amber-400 shrink-0">Unsaved</Badge>}
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-xs gap-1.5"
-            onClick={() => setPreviewMode(!previewMode)}
-          >
-            {previewMode ? <Edit3 className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
-            {previewMode ? "Edit" : "Preview"}
-          </Button>
+          <div className="flex items-center rounded-md border border-border/50 overflow-hidden">
+            <button
+              onClick={() => setViewMode("edit")}
+              className={`px-2.5 py-1.5 text-xs flex items-center gap-1 transition-colors ${viewMode === "edit" ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              <Edit3 className="h-3 w-3" /> Edit
+            </button>
+            <button
+              onClick={() => setViewMode("split")}
+              className={`px-2.5 py-1.5 text-xs flex items-center gap-1 transition-colors border-x border-border/50 ${viewMode === "split" ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              <Columns className="h-3 w-3" /> Split
+            </button>
+            <button
+              onClick={() => setViewMode("preview")}
+              className={`px-2.5 py-1.5 text-xs flex items-center gap-1 transition-colors ${viewMode === "preview" ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              <Eye className="h-3 w-3" /> Preview
+            </button>
+          </div>
           <Button
             variant="ghost"
             size="sm"
@@ -210,23 +274,28 @@ export default function ResourceEditorPage() {
 
       {/* Body */}
       <div className="flex flex-1 min-h-0 overflow-hidden">
-        {/* Editor / Preview */}
-        <div className="flex-1 min-w-0">
-          {previewMode ? (
-            <ScrollArea className="h-full">
-              <div className="max-w-3xl mx-auto p-8 prose prose-sm prose-invert [&_p]:my-2 [&_ul]:my-2 [&_ol]:my-2 [&_li]:my-1 [&_h1]:text-xl [&_h2]:text-lg [&_h3]:text-base [&_code]:text-xs [&_code]:bg-muted [&_code]:px-1.5 [&_code]:rounded [&_blockquote]:border-primary/30 [&_blockquote]:bg-primary/5 [&_blockquote]:px-4 [&_blockquote]:py-2 [&_blockquote]:rounded-r-md">
-                <ReactMarkdown>{content || "*No content yet*"}</ReactMarkdown>
-              </div>
-            </ScrollArea>
-          ) : (
+        {/* Editor pane */}
+        {(viewMode === "edit" || viewMode === "split") && (
+          <div className={`min-w-0 ${viewMode === "split" ? "w-1/2 border-r border-border/50" : "flex-1"}`}>
             <Textarea
               value={content}
               onChange={e => handleContentChange(e.target.value)}
               className="h-full w-full resize-none border-none rounded-none bg-transparent p-8 font-mono text-sm focus-visible:ring-0 leading-relaxed"
               placeholder="Start writing in Markdown…"
             />
-          )}
-        </div>
+          </div>
+        )}
+
+        {/* Preview pane */}
+        {(viewMode === "preview" || viewMode === "split") && (
+          <div className={`min-w-0 ${viewMode === "split" ? "w-1/2" : "flex-1"}`}>
+            <ScrollArea className="h-full">
+              <div className="max-w-3xl mx-auto p-8">
+                <MarkdownPreview content={content} />
+              </div>
+            </ScrollArea>
+          </div>
+        )}
 
         {/* Version history sidebar */}
         {showHistory && (
