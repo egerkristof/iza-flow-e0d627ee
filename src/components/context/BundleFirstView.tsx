@@ -347,155 +347,161 @@ function DraggablePlaybookList({
         const procedures = children.filter(i => i.category === "PROCEDURE");
         const others = children.filter(i => i.category !== "PROCEDURE");
         return (
-          <div
-            key={playbook.id}
-            draggable
-            onDragStart={e => handleDragStart(e, playbook.id)}
-            onDragOver={e => handleDragOver(e, playbook.id)}
-            onDrop={e => handleDrop(e, playbook.id)}
-            onDragEnd={handleDragEnd}
-            className={`${draggedId === playbook.id ? "opacity-40" : ""} ${dragOverId === playbook.id ? "border-t-2 border-primary/50" : ""}`}
-          >
-            {/* Playbook header */}
-            <div className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-orange-500/5 transition-colors border-l-2 border-orange-500/30">
-              <GripVertical className="h-3 w-3 text-muted-foreground/30 cursor-grab active:cursor-grabbing shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />
-              <span className="text-[9px] shrink-0">🎯</span>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold truncate">{playbook.title}</span>
-                  <CategoryBadge category={playbook.category} />
-                  <Badge variant="outline" className="text-[9px] border-orange-500/30 text-orange-400 bg-orange-500/5">
-                    Protocol Driver
-                  </Badge>
-                  {children.length > 0 && (
-                    <span className="text-[9px] text-muted-foreground">
-                      → {procedures.length} step{procedures.length !== 1 ? "s" : ""}{others.length > 0 ? `, ${others.length} gate${others.length !== 1 ? "s" : ""}` : ""}
-                    </span>
-                  )}
+          <Collapsible key={playbook.id} defaultOpen={false}>
+            <div
+              draggable
+              onDragStart={e => handleDragStart(e, playbook.id)}
+              onDragOver={e => handleDragOver(e, playbook.id)}
+              onDrop={e => handleDrop(e, playbook.id)}
+              onDragEnd={handleDragEnd}
+              className={`${draggedId === playbook.id ? "opacity-40" : ""} ${dragOverId === playbook.id ? "border-t-2 border-primary/50" : ""}`}
+            >
+              {/* Playbook header */}
+              <CollapsibleTrigger asChild>
+                <div className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-orange-500/5 transition-colors border-l-2 border-orange-500/30 cursor-pointer">
+                  <GripVertical className="h-3 w-3 text-muted-foreground/30 cursor-grab active:cursor-grabbing shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" onClick={e => e.stopPropagation()} />
+                  <ChevronRight className="h-3 w-3 text-muted-foreground shrink-0 transition-transform duration-200 [[data-state=open]_&]:rotate-90" />
+                  <span className="text-[9px] shrink-0">🎯</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold truncate">{playbook.title}</span>
+                      <CategoryBadge category={playbook.category} />
+                      <Badge variant="outline" className="text-[9px] border-orange-500/30 text-orange-400 bg-orange-500/5">
+                        Protocol Driver
+                      </Badge>
+                      {children.length > 0 && (
+                        <span className="text-[9px] text-muted-foreground">
+                          → {procedures.length} step{procedures.length !== 1 ? "s" : ""}{others.length > 0 ? `, ${others.length} gate${others.length !== 1 ? "s" : ""}` : ""}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{playbook.content_preview}</p>
+                  </div>
+                  <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0" onClick={e => e.stopPropagation()}>
+                    {onToggleCopilot && (
+                      <Button
+                        variant={activeCopilot?.scope === "playbook" && activeCopilot.id === playbook.id ? "secondary" : "ghost"}
+                        size="icon" className="h-6 w-6"
+                        onClick={() => onToggleCopilot("playbook", playbook.id, playbook.title)}
+                      >
+                        <Wand2 className="h-3 w-3 text-primary" />
+                      </Button>
+                    )}
+                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(playbook)}>
+                      <Pencil className="h-3 w-3" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(playbook)}>
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </div>
                 </div>
-                <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{playbook.content_preview}</p>
-              </div>
-              <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                {onToggleCopilot && (
-                  <Button
-                    variant={activeCopilot?.scope === "playbook" && activeCopilot.id === playbook.id ? "secondary" : "ghost"}
-                    size="icon" className="h-6 w-6"
-                    onClick={() => onToggleCopilot("playbook", playbook.id, playbook.title)}
-                  >
-                    <Wand2 className="h-3 w-3 text-primary" />
-                  </Button>
-                )}
-                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(playbook)}>
-                  <Pencil className="h-3 w-3" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(playbook)}>
-                  <Trash2 className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
+              </CollapsibleTrigger>
 
-            {/* Playbook-level copilot */}
-            {activeCopilot?.scope === "playbook" && activeCopilot.id === playbook.id && buildHierarchy && allMentionableItems && (
-              <div className="ml-4 border-l-2 border-orange-500/10 px-4 py-2">
-                <InlineContextCopilot
-                  scope="playbook"
-                  scopeId={playbook.id}
-                  scopeTitle={playbook.title}
-                  hierarchy={buildHierarchy(playbook)}
-                  allItems={allMentionableItems}
-                  onClose={() => onToggleCopilot?.("playbook", playbook.id, playbook.title)}
-                />
-              </div>
-            )}
-
-            {/* Procedures (steps) - draggable */}
-            {procedures.length > 0 && (
-              <div className="ml-4 border-l-2 border-orange-500/10">
-                <div className="px-4 pt-1.5 pb-0.5 pl-10">
-                  <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Steps</span>
-                </div>
-                <DraggableItemList
-                  items={procedures}
-                  bundleId={bundle.id}
-                  onEditItem={onEditItem}
-                  onDestroyItem={onDestroyItem}
-                  onReorderItems={onReorderItems}
-                  renderPrefix={(_, idx) => (
-                    <span className="text-[9px] font-mono text-muted-foreground/50 w-4 text-right shrink-0">{idx + 1}.</span>
-                  )}
-                  className="pl-10 pr-4"
-                  onToggleCopilot={onToggleCopilot}
-                  activeCopilot={activeCopilot}
-                />
-                {/* Step-level copilot */}
-                {activeCopilot?.scope === "step" && procedures.some(p => p.id === activeCopilot.id) && buildHierarchy && allMentionableItems && (
-                  <div className="pl-10 pr-4 py-2">
+              <CollapsibleContent>
+                {/* Playbook-level copilot */}
+                {activeCopilot?.scope === "playbook" && activeCopilot.id === playbook.id && buildHierarchy && allMentionableItems && (
+                  <div className="ml-4 border-l-2 border-orange-500/10 px-4 py-2">
                     <InlineContextCopilot
-                      scope="step"
-                      scopeId={activeCopilot.id}
-                      scopeTitle={activeCopilot.title}
-                      hierarchy={buildHierarchy(procedures.find(p => p.id === activeCopilot.id))}
+                      scope="playbook"
+                      scopeId={playbook.id}
+                      scopeTitle={playbook.title}
+                      hierarchy={buildHierarchy(playbook)}
                       allItems={allMentionableItems}
-                      onClose={() => onToggleCopilot?.("step", activeCopilot.id, activeCopilot.title)}
+                      onClose={() => onToggleCopilot?.("playbook", playbook.id, playbook.title)}
                     />
                   </div>
                 )}
-                <div className="pl-10 pr-4 py-1">
-                  <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
-                    onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}>
-                    <Plus className="h-2.5 w-2.5" /> Add step
-                  </Button>
-                </div>
-              </div>
-            )}
-            {/* Other owned items (DIRECTIVEs, etc.) */}
-            {others.length > 0 && (
-              <div className="ml-4 border-l-2 border-orange-500/10">
+
+                {/* Procedures (steps) - draggable */}
                 {procedures.length > 0 && (
-                  <div className="px-4 pt-1.5 pb-0.5 pl-10">
-                    <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Gates & Context</span>
+                  <div className="ml-4 border-l-2 border-orange-500/10">
+                    <div className="px-4 pt-1.5 pb-0.5 pl-10">
+                      <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Steps</span>
+                    </div>
+                    <DraggableItemList
+                      items={procedures}
+                      bundleId={bundle.id}
+                      onEditItem={onEditItem}
+                      onDestroyItem={onDestroyItem}
+                      onReorderItems={onReorderItems}
+                      renderPrefix={(_, idx) => (
+                        <span className="text-[9px] font-mono text-muted-foreground/50 w-4 text-right shrink-0">{idx + 1}.</span>
+                      )}
+                      className="pl-10 pr-4"
+                      onToggleCopilot={onToggleCopilot}
+                      activeCopilot={activeCopilot}
+                    />
+                    {/* Step-level copilot */}
+                    {activeCopilot?.scope === "step" && procedures.some(p => p.id === activeCopilot.id) && buildHierarchy && allMentionableItems && (
+                      <div className="pl-10 pr-4 py-2">
+                        <InlineContextCopilot
+                          scope="step"
+                          scopeId={activeCopilot.id}
+                          scopeTitle={activeCopilot.title}
+                          hierarchy={buildHierarchy(procedures.find(p => p.id === activeCopilot.id))}
+                          allItems={allMentionableItems}
+                          onClose={() => onToggleCopilot?.("step", activeCopilot.id, activeCopilot.title)}
+                        />
+                      </div>
+                    )}
+                    <div className="pl-10 pr-4 py-1">
+                      <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                        onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}>
+                        <Plus className="h-2.5 w-2.5" /> Add step
+                      </Button>
+                    </div>
                   </div>
                 )}
-                {others.map(item => (
-                  <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-1.5 group/item hover:bg-secondary/20 transition-colors">
-                    <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium truncate">{item.title}</span>
-                        <CategoryBadge category={item.category} />
+                {/* Other owned items (DIRECTIVEs, etc.) */}
+                {others.length > 0 && (
+                  <div className="ml-4 border-l-2 border-orange-500/10">
+                    {procedures.length > 0 && (
+                      <div className="px-4 pt-1.5 pb-0.5 pl-10">
+                        <span className="text-[9px] font-medium text-muted-foreground/70 uppercase tracking-wider">Gates & Context</span>
                       </div>
-                      <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
-                    </div>
-                    <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
-                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
-                        <Pencil className="h-3 w-3" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    </div>
+                    )}
+                    {others.map(item => (
+                      <div key={item.id} className="flex items-center gap-3 pl-10 pr-4 py-1.5 group/item hover:bg-secondary/20 transition-colors">
+                        <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium truncate">{item.title}</span>
+                            <CategoryBadge category={item.category} />
+                          </div>
+                          <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                        </div>
+                        <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                            <Pencil className="h-3 w-3" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
-            {/* Add buttons */}
-            {procedures.length === 0 && others.length === 0 && (
-              <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
-                <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
-                  onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}>
-                  <Plus className="h-2.5 w-2.5" /> Add step
-                </Button>
-              </div>
-            )}
-            {(others.length > 0 || procedures.length > 0) && (
-              <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
-                <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
-                  onClick={() => onCreateItem({ bundleId: bundle.id, category: "DIRECTIVE", parentPlaybookId: playbook.id })}>
-                  <Plus className="h-2.5 w-2.5" /> Add gate / directive
-                </Button>
-              </div>
-            )}
-          </div>
+                )}
+                {/* Add buttons */}
+                {procedures.length === 0 && others.length === 0 && (
+                  <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
+                    <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                      onClick={() => onCreateItem({ bundleId: bundle.id, category: "PROCEDURE", parentPlaybookId: playbook.id })}>
+                      <Plus className="h-2.5 w-2.5" /> Add step
+                    </Button>
+                  </div>
+                )}
+                {(others.length > 0 || procedures.length > 0) && (
+                  <div className="ml-4 border-l-2 border-orange-500/10 pl-10 pr-4 py-1">
+                    <Button variant="ghost" size="sm" className="h-5 w-full text-[9px] gap-1 text-muted-foreground hover:text-foreground border border-dashed border-transparent hover:border-primary/30"
+                      onClick={() => onCreateItem({ bundleId: bundle.id, category: "DIRECTIVE", parentPlaybookId: playbook.id })}>
+                      <Plus className="h-2.5 w-2.5" /> Add gate / directive
+                    </Button>
+                  </div>
+                )}
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
         );
       })}
     </>
