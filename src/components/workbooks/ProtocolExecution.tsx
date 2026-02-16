@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { type WorkbookResource } from "./WorkbookResources";
+import { useWorkbookResources } from "./WorkbookResources";
 import { ResourceAttachmentCard } from "./ResourceAttachmentCard";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -418,6 +419,20 @@ export function ProtocolExecutionView({
   const { data: activeExecution, refetch: refetchExecution } = useActiveExecution(protocol.id, user?.id, resumeExecutionId);
   const { data: stepExecs = [], refetch: refetchStepExecs } = useStepExecutions(activeExecution?.id ?? null);
   const { data: captures = [] } = useExecutionCaptures(activeExecution?.id ?? null);
+  const { data: resources = [] } = useWorkbookResources(workbookId);
+  const { data: tasks = [] } = useQuery({
+    queryKey: ["workbook-tasks-sidebar", workbookId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workbook_tasks")
+        .select("id, title, status, priority")
+        .eq("workbook_id", workbookId)
+        .order("created_at", { ascending: false })
+        .limit(20);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
 
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string; attachment?: { id: string; title: string; type: string; url?: string; content?: string; metadata?: Record<string, unknown> } }[]>([]);
@@ -1278,6 +1293,47 @@ export function ProtocolExecutionView({
               );
             })}
           </div>
+
+          {/* Tasks */}
+          {tasks.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-[11px] font-medium text-muted-foreground">
+                Tasks ({tasks.length})
+              </p>
+              {tasks.slice(0, 8).map(t => {
+                const statusColors: Record<string, string> = {
+                  todo: "text-muted-foreground",
+                  in_progress: "text-primary",
+                  done: "text-emerald-500",
+                  blocked: "text-destructive",
+                  cancelled: "text-muted-foreground line-through",
+                };
+                return (
+                  <div key={t.id} className="flex items-center gap-2 rounded-md bg-secondary/50 px-3 py-1.5 text-xs">
+                    <Circle className={`h-2.5 w-2.5 shrink-0 ${statusColors[t.status] ?? "text-muted-foreground"}`} />
+                    <span className="truncate flex-1">{t.title}</span>
+                    <Badge variant="outline" className="text-[8px] px-1 py-0 shrink-0">{t.status}</Badge>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Repository */}
+          {resources.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-[11px] font-medium text-muted-foreground">
+                Repository ({resources.length})
+              </p>
+              {resources.slice(0, 8).map(r => (
+                <div key={r.id} className="flex items-center gap-2 rounded-md bg-secondary/50 px-3 py-1.5 text-xs">
+                  <FileText className="h-2.5 w-2.5 text-primary shrink-0" />
+                  <span className="truncate flex-1">{r.title}</span>
+                  <Badge variant="outline" className="text-[8px] px-1 py-0 shrink-0">{r.resource_type}</Badge>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
