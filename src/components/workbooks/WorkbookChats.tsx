@@ -710,13 +710,16 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
                     : "border-border/50 bg-card hover:border-primary/30 hover:bg-primary/5"
                 }`}
               >
-                <div className={`flex h-9 w-9 items-center justify-center rounded-md shrink-0 ${chat.chat_type === "group" ? "bg-primary/10 text-primary" : "bg-secondary"}`}>
-                  {chat.chat_type === "group" ? <Hash className="h-4 w-4" /> : <User className="h-4 w-4 text-muted-foreground" />}
+                <div className="flex h-9 w-9 items-center justify-center rounded-md shrink-0 bg-secondary">
+                  <MessageSquare className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">{chat.title || "Untitled Chat"}</span>
-                    <span className="text-[10px] text-muted-foreground">{timeAgo(chat.updated_at)}</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-sm font-medium truncate">{chat.title || "Untitled Session"}</span>
+                      <Badge variant="outline" className="text-[9px] border-muted-foreground/30 text-muted-foreground shrink-0">Free Session</Badge>
+                    </div>
+                    <span className="text-[10px] text-muted-foreground shrink-0 ml-2">{timeAgo(chat.updated_at)}</span>
                   </div>
                   {last && (
                     <p className="text-xs text-muted-foreground truncate mt-0.5">{last.content.slice(0, 80)}</p>
