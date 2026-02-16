@@ -54,7 +54,7 @@ Given the raw skeleton and content preview:
    - HIGH semantic similarity between sections → MERGE (combine into one playbook/bundle)
    - CLEAR semantic distinction → PRESERVE as separate
    - AMBIGUOUS → Keep separate but group under the same parent bundle
-   - Target: fewer, richer bundles (4-8) with well-defined playbooks (2-5 per bundle)
+   - Target: **6-12 bundles** with well-defined playbooks (2-5 per bundle). Documents with 50+ skeleton sections should produce at LEAST 6 bundles. Collapsing everything into 2-3 mega-bundles destroys the navigability of the knowledge graph.
 
 5. **Produce the optimized blueprint** with explicit assignments for every section.
 
