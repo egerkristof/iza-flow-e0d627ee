@@ -17,7 +17,7 @@ import {
   Merge, Trash2, Edit2, Check, X, ArrowRight, Sparkles,
   Info, AlertTriangle, MoveRight, GripVertical,
   Eye, Hash, Layout, Table2, GitBranch, Presentation, Brain,
-  Undo2,
+  Undo2, Compass,
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -83,6 +83,7 @@ export interface StructureEditorData {
   total_markers_detected?: number;
   markers_beyond_preview?: number;
   skeleton_layout_types?: Record<string, string>;
+  manifest_injected_labels?: string[];
   notes?: string;
 }
 
@@ -120,7 +121,15 @@ function getLayoutTypesForPlaybook(
   return Array.from(types);
 }
 
-// ── Component ────────────────────────────────────────────────────────────────
+/** Check if a playbook/bundle originates from a manifest-injected section */
+function hasManifestOrigin(
+  skeletonLabels: string[],
+  manifestInjectedLabels?: string[],
+): boolean {
+  if (!manifestInjectedLabels || manifestInjectedLabels.length === 0) return false;
+  const injectedNorm = new Set(manifestInjectedLabels.map(l => l.toLowerCase().trim()));
+  return skeletonLabels.some(l => injectedNorm.has(l.toLowerCase().trim()));
+}
 
 export function StructureEditorDialog({
   open, onOpenChange, data, fileName, onConfirm, onSkip,
@@ -419,6 +428,23 @@ export function StructureEditorDialog({
               </Tooltip>
             </TooltipProvider>
           )}
+          {(data.manifest_injected_labels?.length ?? 0) > 0 && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge variant="outline" className="text-xs gap-1 border-teal-500/30 text-teal-400">
+                    <Compass className="h-3 w-3" /> {data.manifest_injected_labels!.length} manifest-recovered
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-xs">
+                  <p className="text-xs mb-1">These sections were missing from AI detection but recovered from the document's overview diagrams/ToC:</p>
+                  {data.manifest_injected_labels!.map((l, i) => (
+                    <p key={i} className="text-[10px] text-teal-300">• {l}</p>
+                  ))}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
           <span className="text-[10px] text-muted-foreground ml-auto truncate max-w-[200px]">{fileName}</span>
         </div>
 
@@ -531,6 +557,16 @@ export function StructureEditorDialog({
                       <span className="text-sm font-medium flex-1 truncate">{bundle.bundle_title}</span>
                     )}
 
+                    {hasManifestOrigin(bundle.original_skeleton_labels, data.manifest_injected_labels) && (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="text-teal-400"><Compass className="h-3.5 w-3.5" /></span>
+                          </TooltipTrigger>
+                          <TooltipContent side="top"><p className="text-xs">Recovered from document manifest (overview diagram/ToC)</p></TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
                     <Badge variant="secondary" className="text-[9px]">{bundle.playbooks.length} PB</Badge>
 
                     <TooltipProvider>
@@ -632,6 +668,16 @@ export function StructureEditorDialog({
                             )}
 
                             <Badge variant="outline" className="text-[9px]">{pb.procedures.length} steps</Badge>
+                            {hasManifestOrigin(pb.original_skeleton_labels, data.manifest_injected_labels) && (
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <span className="text-teal-400"><Compass className="h-3 w-3" /></span>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top"><p className="text-xs">Manifest-recovered section</p></TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            )}
                             {getLayoutTypesForPlaybook(pb.original_skeleton_labels, data.skeleton_layout_types).map(lt => {
                               const meta = LAYOUT_TYPE_META[lt];
                               if (!meta) return null;

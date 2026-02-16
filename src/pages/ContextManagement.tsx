@@ -616,14 +616,20 @@ export default function ContextManagementPage() {
               body: { skeleton: structData },
             });
             if (!optError && optData && !optData.error && !optData.fallback) {
+              // Collect labels that were injected from manifest (safety net)
+              const manifestInjectedLabels = (structData.skeleton || [])
+                .filter((s: any) => s._injected_from_manifest)
+                .map((s: any) => s.label as string);
+
               documentStructure = {
                 ...structData,
                 optimized_blueprint: optData.optimized_blueprint,
                 consolidation_decisions: optData.consolidation_decisions,
                 optimization_summary: optData.optimization_summary,
                 optimization_stats: optData.stats,
+                manifest_injected_labels: manifestInjectedLabels,
               };
-              console.log(`Structure optimized: bundles=${optData.stats?.final_bundles}, playbooks=${optData.stats?.final_playbooks}, merges=${optData.stats?.merges_performed}`);
+              console.log(`Structure optimized: bundles=${optData.stats?.final_bundles}, playbooks=${optData.stats?.final_playbooks}, merges=${optData.stats?.merges_performed}, manifest_injected=${manifestInjectedLabels.length}`);
 
               // ── PAUSE: Show Structure Editor for user review ──────────
               // Generate advisor in parallel while user reviews
