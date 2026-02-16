@@ -361,6 +361,13 @@ Analyze the semantic relationships between these sections. Identify overlaps, mi
     }
 
     const result = JSON.parse(toolCall.function.arguments);
+    // Attach pruning stats if pruning occurred
+    const rawCount = skeleton.skeleton?.length || 0;
+    const prunedTo = skeletonForPrompt._pruned_to || rawCount;
+    if (prunedTo < rawCount) {
+      result.pruning_stats = { raw_skeleton_count: rawCount, pruned_to: prunedTo };
+      console.log(`Skeleton pruned: ${rawCount} → ${prunedTo} entries`);
+    }
     console.log(`Structure optimized: bundles=${result.stats?.final_bundles}, playbooks=${result.stats?.final_playbooks}, merges=${result.stats?.merges_performed}`);
 
     return new Response(JSON.stringify(result), {

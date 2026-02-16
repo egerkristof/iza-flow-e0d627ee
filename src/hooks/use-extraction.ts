@@ -337,6 +337,7 @@ export function useExtraction({ onResult }: UseExtractionOptions) {
                   consolidation_decisions: optData.consolidation_decisions,
                   optimization_summary: optData.optimization_summary,
                   optimization_stats: optData.stats,
+                  pruning_stats: optData.pruning_stats || undefined,
                   structure_type: structData.structure_type,
                   confidence: structData.confidence,
                   total_sections_detected: structData.total_sections_detected,

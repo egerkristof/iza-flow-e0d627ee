@@ -58,11 +58,17 @@ interface OptimizationStats {
   reclassifications: number;
 }
 
+interface PruningStats {
+  raw_skeleton_count: number;
+  pruned_to: number;
+}
+
 export interface StructureEditorData {
   optimized_blueprint: BlueprintBundle[];
   consolidation_decisions?: ConsolidationDecision[];
   optimization_summary?: string;
   optimization_stats?: OptimizationStats;
+  pruning_stats?: PruningStats;
   structure_type?: string;
   confidence?: string;
   total_sections_detected?: number;
@@ -319,6 +325,20 @@ export function StructureEditorDialog({
               <Merge className="h-3 w-3" /> {data.optimization_stats.merges_performed} merges applied
             </Badge>
           ) : null}
+          {data.pruning_stats && data.pruning_stats.pruned_to < data.pruning_stats.raw_skeleton_count && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge variant="outline" className="text-xs gap-1 border-orange-500/30 text-orange-400">
+                    <AlertTriangle className="h-3 w-3" /> {data.pruning_stats.raw_skeleton_count - data.pruning_stats.pruned_to} sections pruned
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-xs">
+                  <p className="text-xs">The raw skeleton had {data.pruning_stats.raw_skeleton_count} entries. {data.pruning_stats.raw_skeleton_count - data.pruning_stats.pruned_to} low-density entries (level 4+) were pruned to {data.pruning_stats.pruned_to} before optimization to stay within AI context limits.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
           {(data.markers_beyond_preview ?? 0) > 0 && (
             <TooltipProvider>
               <Tooltip>
