@@ -11,7 +11,7 @@ import {
   Play, ChevronRight, ChevronLeft, Lock, Unlock, Check, Shield,
   AlertTriangle, Ban, Info, Loader2, Package, FileText, MessageSquare,
   Zap, GitBranch, Clock, CheckCircle2, Circle, PauseCircle, XCircle,
-  Sparkles, Flag, BookOpen, Search, Copy, Save, Download,
+  Sparkles, Flag, BookOpen, Search, Copy, Save, Download, Plus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -156,7 +156,7 @@ function useProtocolContext(protocolId: string | null) {
 function useActiveExecution(protocolId: string | null, userId: string | undefined, resumeExecutionId?: string | null) {
   return useQuery({
     queryKey: ["protocol-execution", protocolId, userId, resumeExecutionId],
-    enabled: !!protocolId && !!userId,
+    enabled: !!protocolId && !!userId && resumeExecutionId !== "__force_new__",
     queryFn: async () => {
       // If a specific execution ID is provided, fetch that one directly
       if (resumeExecutionId) {
@@ -413,10 +413,24 @@ export function ProtocolExecutionView({
   const { user } = useAuth();
   const { toast } = useToast();
   const qc = useQueryClient();
+  const [chosenExecutionId, setChosenExecutionId] = useState<string | null | undefined>(resumeExecutionId);
+  const [forceNew, setForceNew] = useState(false);
+
+
 
   const { data: steps = [] } = useProtocolSteps(protocol.id);
   const { data: contextItems = [] } = useProtocolContext(protocol.id);
-  const { data: activeExecution, refetch: refetchExecution } = useActiveExecution(protocol.id, user?.id, resumeExecutionId);
+  const { data: activeExecution, refetch: refetchExecution } = useActiveExecution(
+    protocol.id,
+    user?.id,
+    forceNew ? "__force_new__" : chosenExecutionId
+  );
+
+  // Check for existing active execution when no explicit resume was requested
+  const { data: existingExecution } = useActiveExecution(
+    !resumeExecutionId ? protocol.id : null,
+    user?.id,
+  );
   const { data: stepExecs = [], refetch: refetchStepExecs } = useStepExecutions(activeExecution?.id ?? null);
   const { data: captures = [] } = useExecutionCaptures(activeExecution?.id ?? null);
   const { data: resources = [] } = useWorkbookResources(workbookId);
@@ -479,9 +493,15 @@ export function ProtocolExecutionView({
       }
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // If we just created a new execution, switch to it
+      if (data?.id && forceNew) {
+        setForceNew(false);
+        setChosenExecutionId(data.id);
+      }
       refetchExecution();
       refetchStepExecs();
+      qc.invalidateQueries({ queryKey: ["protocol-execution-sessions", workbookId] });
     },
     onError: (e: any) => {
       toast({ title: "Error", description: e.message, variant: "destructive" });
@@ -816,6 +836,42 @@ export function ProtocolExecutionView({
       }
     }
   }, [chatInput, isStreaming, currentStep, contextItems, captures, currentStepIndex, protocol.title, toast]);
+
+  // Show choice screen when existing session found but no explicit resume
+  if (!resumeExecutionId && !forceNew && existingExecution && steps.length > 0) {
+    const statusLabel = existingExecution.status === "in_progress" ? "In Progress"
+      : existingExecution.status === "paused" ? "Paused" : "Not Started";
+    return (
+      <div className="flex h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-6">
+        <Package className="h-12 w-12 text-primary/50" />
+        <h2 className="text-lg font-semibold">{protocol.title}</h2>
+        <p className="text-sm text-muted-foreground max-w-md text-center">
+          You have an existing session for this playbook.
+        </p>
+        <Badge variant="outline" className="text-xs">
+          {statusLabel} — started {new Date(existingExecution.started_at ?? existingExecution.created_at).toLocaleDateString()}
+        </Badge>
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={() => setChosenExecutionId(existingExecution.id)}
+            className="gap-2"
+          >
+            <Play className="h-4 w-4" /> Resume Session
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setForceNew(true)}
+            className="gap-2"
+          >
+            <Plus className="h-4 w-4" /> Start New Session
+          </Button>
+        </div>
+        <Button variant="ghost" size="sm" onClick={onExit} className="text-xs text-muted-foreground">
+          ← Back to playbooks
+        </Button>
+      </div>
+    );
+  }
 
   // Auto-start execution
   if (!activeExecution && steps.length > 0) {
