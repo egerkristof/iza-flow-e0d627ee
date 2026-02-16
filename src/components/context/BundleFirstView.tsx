@@ -535,6 +535,7 @@ function BundleExpandable({
     const playbooks = sortedItems.filter(i => i.category === "PLAYBOOK");
     const sharedItems: { id: string; title: string; content?: string; category: string }[] = [];
     const playbookEntries: CopilotHierarchy["playbooks"] = [];
+    const SHARED_CATS = ["KNOWLEDGE", "PRINCIPLE", "PREFERENCE", "RESEARCH"];
 
     for (const pb of playbooks) {
       const children = sortedItems
@@ -546,7 +547,15 @@ function BundleExpandable({
     for (const item of sortedItems) {
       if (item.category === "PLAYBOOK") continue;
       if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) continue;
-      sharedItems.push({ id: item.id, title: item.title, content: item.content_preview, category: item.category });
+      // Only shared-category items go to shared; orphan procedures/directives are auto-nested or unassigned
+      if (SHARED_CATS.includes(item.category)) {
+        sharedItems.push({ id: item.id, title: item.title, content: item.content_preview, category: item.category });
+      } else if (playbooks.length === 1) {
+        // Auto-nest under the single playbook
+        const pb = playbookEntries[0];
+        pb.children.push({ id: item.id, title: item.title, content: item.content_preview, category: item.category });
+      }
+      // else: multiple playbooks, unassigned — omit from hierarchy (shown separately in UI)
     }
 
     return {
@@ -676,15 +685,30 @@ function BundleExpandable({
                 const playbooks = sortedBundleItems.filter(i => i.category === "PLAYBOOK");
                 const ownedByPlaybook = new Map<string, MockContextItem[]>();
                 const sharedItems: MockContextItem[] = [];
+                const unassignedItems: MockContextItem[] = [];
+
+                // Categories that are inherently "shared context" (not steps/gates)
+                const SHARED_CATEGORIES = ["KNOWLEDGE", "PRINCIPLE", "PREFERENCE", "RESEARCH"];
 
                 for (const item of sortedBundleItems) {
                   if (item.category === "PLAYBOOK") continue;
+                  // Item explicitly owned by a playbook
                   if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) {
                     const existing = ownedByPlaybook.get(item.parent_playbook_id) || [];
                     existing.push(item);
                     ownedByPlaybook.set(item.parent_playbook_id, existing);
-                  } else {
+                  } else if (SHARED_CATEGORIES.includes(item.category)) {
+                    // Knowledge, Principles, Preferences, Research are genuinely shared
                     sharedItems.push(item);
+                  } else if (playbooks.length === 1) {
+                    // Single playbook in domain: auto-nest orphan procedures/directives
+                    const pbId = playbooks[0].id;
+                    const existing = ownedByPlaybook.get(pbId) || [];
+                    existing.push(item);
+                    ownedByPlaybook.set(pbId, existing);
+                  } else {
+                    // Multiple playbooks: show as "unassigned" (not shared)
+                    unassignedItems.push(item);
                   }
                 }
 
@@ -705,7 +729,39 @@ function BundleExpandable({
                       allMentionableItems={allMentionableItems}
                     />
 
-                    {/* Shared context items */}
+                    {/* Unassigned items (procedures/directives without a parent playbook) */}
+                    {unassignedItems.length > 0 && (
+                      <>
+                        <div className="px-4 pt-2 pb-1">
+                          <span className="text-[10px] font-medium text-amber-400 uppercase tracking-wider">
+                            ⚠️ Unassigned steps/gates (assign to a playbook)
+                          </span>
+                        </div>
+                        {unassignedItems.map(item => (
+                          <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 group/item hover:bg-secondary/20 transition-colors border-l-2 border-amber-500/20">
+                            <FileText className="h-3.5 w-3.5 text-amber-400/60 shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-medium truncate">{item.title}</span>
+                                <CategoryBadge category={item.category} />
+                                <span className="text-[9px] text-amber-400/60">(unassigned)</span>
+                              </div>
+                              <p className="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">{item.content_preview}</p>
+                            </div>
+                            <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 shrink-0">
+                              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onEditItem(item)}>
+                                <Pencil className="h-3 w-3" />
+                              </Button>
+                              <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => onDestroyItem(item)}>
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                    )}
+
+                    {/* Shared context items (knowledge, principles, preferences, research) */}
                     {sharedItems.length > 0 && playbooks.length > 0 && (
                       <div className="px-4 pt-2 pb-1">
                         <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
