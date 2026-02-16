@@ -255,7 +255,7 @@ type SessionItem =
   | { kind: "execution"; data: ProtocolExecutionSession; sortKey: string };
 
 // ── Main Component ──
-export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onResumeProtocol }: { workbookId: string; focusChatId?: string | null; onFocusChatHandled?: () => void; onResumeProtocol?: (protocolId: string) => void }) {
+export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onResumeProtocol }: { workbookId: string; focusChatId?: string | null; onFocusChatHandled?: () => void; onResumeProtocol?: (protocolId: string, executionId: string) => void }) {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -660,7 +660,7 @@ export function WorkbookChats({ workbookId, focusChatId, onFocusChatHandled, onR
               return (
                 <button
                   key={`exec-${exec.id}`}
-                  onClick={() => onResumeProtocol?.(exec.protocol_id)}
+                  onClick={() => onResumeProtocol?.(exec.protocol_id, exec.id)}
                   className="flex w-full items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 p-4 text-left transition-all hover:border-primary/40 hover:bg-primary/10"
                 >
                   <div className="flex h-9 w-9 items-center justify-center rounded-md shrink-0 bg-primary/10 text-primary">
