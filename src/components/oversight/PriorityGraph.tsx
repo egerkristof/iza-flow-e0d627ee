@@ -1,5 +1,6 @@
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback, useRef, forwardRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -7,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ZoomIn, ZoomOut, Maximize2, Search, X, Plus, Clock, Calendar, CalendarDays } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Minimize2, Search, X, Plus, Clock, Calendar, CalendarDays, Expand } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // ── Types ──
@@ -265,6 +266,7 @@ export function PriorityGraph() {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [graphSearch, setGraphSearch] = useState("");
   const [addHorizon, setAddHorizon] = useState<string>("today");
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Fetch saved plan preferences
   const { data: savedPrefs = [] } = useQuery({
@@ -447,7 +449,8 @@ export function PriorityGraph() {
           </div>
           <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setZoom(z => Math.min(3, z + 0.2))}><ZoomIn className="h-3.5 w-3.5" /></Button>
           <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setZoom(z => Math.max(0.3, z - 0.2))}><ZoomOut className="h-3.5 w-3.5" /></Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={resetView}><Maximize2 className="h-3.5 w-3.5" /></Button>
+          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={resetView} title="Reset view"><Minimize2 className="h-3.5 w-3.5" /></Button>
+          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setIsFullscreen(true)} title="Fullscreen"><Expand className="h-3.5 w-3.5" /></Button>
         </div>
       </div>
 
@@ -579,6 +582,161 @@ export function PriorityGraph() {
           </div>
         )}
       </div>
+      {/* Fullscreen Modal */}
+      <Dialog open={isFullscreen} onOpenChange={setIsFullscreen}>
+        <DialogContent className="max-w-[95vw] w-[95vw] h-[90vh] max-h-[90vh] p-0 overflow-hidden flex flex-col">
+          {/* Fullscreen header */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-foreground">🧠 Priority Map</h3>
+              <Badge variant="outline" className="text-[9px] gap-1">
+                {nodes.length} nodes · {edges.length} connections
+              </Badge>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="relative">
+                <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                <Input placeholder="Search…" value={graphSearch} onChange={e => setGraphSearch(e.target.value)} className="pl-7 h-7 w-40 text-xs" />
+                {graphSearch && (
+                  <button onClick={() => setGraphSearch("")} className="absolute right-1.5 top-1/2 -translate-y-1/2">
+                    <X className="h-3 w-3 text-muted-foreground" />
+                  </button>
+                )}
+              </div>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setZoom(z => Math.min(3, z + 0.2))}><ZoomIn className="h-3.5 w-3.5" /></Button>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setZoom(z => Math.max(0.3, z - 0.2))}><ZoomOut className="h-3.5 w-3.5" /></Button>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={resetView}><Minimize2 className="h-3.5 w-3.5" /></Button>
+            </div>
+          </div>
+
+          {/* Fullscreen legend */}
+          <div className="flex items-center justify-between gap-2 px-4 py-2 border-b border-border/30 flex-wrap">
+            <div className="flex items-center gap-4 text-[10px] text-muted-foreground flex-wrap">
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.task.color }} /> Task</span>
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.session.color }} /> Session</span>
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.delegation.color }} /> Delegation</span>
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.plan_item.color }} /> Planned</span>
+            </div>
+            {Object.keys(parsedPrefs).length > 0 && (
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Priorities:</span>
+                {Object.entries(parsedPrefs).map(([h, p]) => (
+                  <Badge key={h} variant="outline" className="text-[8px] gap-0.5 capitalize">
+                    {h.replace("_", " ")}: {p.focusMode.replace("_", " ")} · {p.priorityWeight === "urgency" ? "Urgent" : p.priorityWeight === "impact" ? "Impact" : "Bal."}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Fullscreen SVG */}
+          <div
+            className="flex-1 relative bg-card/50 overflow-hidden select-none"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onWheel={handleWheel}
+          >
+            <svg width="100%" height="100%" viewBox="0 0 800 640" preserveAspectRatio="xMidYMid meet" className="cursor-grab active:cursor-grabbing">
+              <defs>
+                <radialGradient id="priority-bg-gradient-fs" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="hsl(var(--primary) / 0.03)" />
+                  <stop offset="100%" stopColor="transparent" />
+                </radialGradient>
+                <filter id="priority-node-glow-fs" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+              </defs>
+
+              <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
+                <rect width="800" height="640" fill="url(#priority-bg-gradient-fs)" />
+                <circle cx={centerX} cy={centerY} r={140} fill="none" stroke="hsl(var(--border) / 0.15)" strokeWidth={0.5} strokeDasharray="4 6" />
+                <circle cx={centerX} cy={centerY} r={260} fill="none" stroke="hsl(var(--border) / 0.1)" strokeWidth={0.5} strokeDasharray="4 6" />
+
+                {edges.map(edge => (
+                  <NeuralEdge key={`fs-${edge.from}-${edge.to}`} from={edge.from} to={edge.to} nodes={nodes} />
+                ))}
+
+                {nodes.map(node => (
+                  <g key={`fs-${node.id}`} opacity={matchingNodeIds && !matchingNodeIds.has(node.id) ? 0.15 : 1}>
+                    <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} />
+                  </g>
+                ))}
+              </g>
+            </svg>
+
+            {/* Hover tooltip in fullscreen */}
+            {hoveredNode && hoveredNode !== selectedNode && (() => {
+              const n = nodes.find(nd => nd.id === hoveredNode);
+              if (!n) return null;
+              return (
+                <div
+                  className="absolute pointer-events-none bg-popover border border-border rounded-lg px-3 py-2 shadow-lg text-xs z-10"
+                  style={{
+                    left: `${(n.x * zoom + pan.x) / 800 * 100}%`,
+                    top: `${(n.y * zoom + pan.y) / 640 * 100 - 6}%`,
+                    transform: "translate(-50%, -100%)",
+                  }}
+                >
+                  <div className="font-medium">{n.label}</div>
+                  <div className="text-muted-foreground capitalize">{n.type.replace("_", " ")}{n.status ? ` · ${n.status.replace("_", " ")}` : ""}{n.horizon ? ` · ${n.horizon.replace("_", " ")}` : ""}</div>
+                </div>
+              );
+            })()}
+
+            {/* Selected detail panel in fullscreen */}
+            {selectedInfo && selectedInfo.type !== "hub" && (
+              <div className="absolute bottom-3 left-3 right-3 bg-popover/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="h-3 w-3 rounded-full" style={{ background: selectedInfo.color }} />
+                    <span className="text-sm font-medium">{selectedInfo.label}</span>
+                    <Badge variant="outline" className="text-[9px] capitalize">{selectedInfo.type.replace("_", " ")}</Badge>
+                    {selectedInfo.status && <Badge variant="secondary" className="text-[9px] capitalize">{selectedInfo.status.replace("_", " ")}</Badge>}
+                    {selectedInfo.priority && <Badge variant="secondary" className="text-[9px] capitalize">{selectedInfo.priority}</Badge>}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {isAddable && (
+                      <div className="flex items-center gap-1">
+                        <Select value={addHorizon} onValueChange={setAddHorizon}>
+                          <SelectTrigger className="h-6 text-[10px] w-[110px]">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="next_hour" className="text-xs"><span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Next Hour</span></SelectItem>
+                            <SelectItem value="today" className="text-xs"><span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Today</span></SelectItem>
+                            <SelectItem value="this_week" className="text-xs"><span className="flex items-center gap-1"><CalendarDays className="h-3 w-3" /> This Week</span></SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Button
+                          variant="default"
+                          size="sm"
+                          className="h-6 text-[10px] gap-1"
+                          disabled={addToPlan.isPending}
+                          onClick={() => addToPlan.mutate({ node: selectedInfo, horizon: addHorizon })}
+                        >
+                          <Plus className="h-3 w-3" />
+                          Add
+                        </Button>
+                      </div>
+                    )}
+                    {selectedInfo.workbookId && (
+                      <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => navigate(`/workbooks/${selectedInfo.workbookId}`)}>
+                        Open Workbook →
+                      </Button>
+                    )}
+                    <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => setSelectedNode(null)}>
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
