@@ -208,7 +208,7 @@ export function DomainsView({ bundles, items, onSelectDomain, bundleDomainMap }:
         return;
       }
 
-      const { error } = await supabase.from("bundle_domains").insert(newAssignments as any);
+      const { error } = await supabase.from("bundle_domains").upsert(newAssignments as any, { onConflict: "bundle_id,domain_id", ignoreDuplicates: true });
       if (error) {
         toast({ title: "Auto-assign failed", description: error.message, variant: "destructive" });
       } else {

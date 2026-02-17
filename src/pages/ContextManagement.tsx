@@ -310,7 +310,7 @@ export default function ContextManagementPage() {
   // Toggle domain assignment for a bundle
   const handleToggleBundleDomain = async (bundleId: string, domainId: string, assigned: boolean) => {
     if (assigned) {
-      const { error } = await supabase.from("bundle_domains").insert({ bundle_id: bundleId, domain_id: domainId } as any);
+      const { error } = await supabase.from("bundle_domains").upsert({ bundle_id: bundleId, domain_id: domainId } as any, { onConflict: "bundle_id,domain_id", ignoreDuplicates: true });
       if (error) { toast({ title: "Failed to assign domain", description: error.message, variant: "destructive" }); return; }
     } else {
       const { error } = await supabase.from("bundle_domains").delete().eq("bundle_id", bundleId).eq("domain_id", domainId);
