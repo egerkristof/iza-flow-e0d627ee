@@ -264,6 +264,31 @@ export function PriorityGraph() {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [graphSearch, setGraphSearch] = useState("");
 
+  // Fetch saved plan preferences
+  const { data: savedPrefs = [] } = useQuery({
+    queryKey: ["plan-prefs-all", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("working_preferences")
+        .select("preference_key, preference_value")
+        .eq("user_id", user!.id)
+        .eq("scope_type", "personal")
+        .like("preference_key", "plan_priorities_%");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const parsedPrefs = useMemo(() => {
+    const map: Record<string, { focusMode: string; priorityWeight: string; maxItems: number }> = {};
+    savedPrefs.forEach(p => {
+      const horizon = p.preference_key.replace("plan_priorities_", "");
+      try { map[horizon] = JSON.parse(p.preference_value); } catch {}
+    });
+    return map;
+  }, [savedPrefs]);
+
   // Fetch plan items
   const { data: planItems = [] } = useQuery({
     queryKey: ["priority-graph-plans", user?.id],
@@ -423,12 +448,24 @@ export function PriorityGraph() {
         </div>
       </div>
 
-      {/* Legend */}
-      <div className="flex items-center gap-4 text-[10px] text-muted-foreground flex-wrap">
-        <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.task.color }} /> Task</span>
-        <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.session.color }} /> Session</span>
-        <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.delegation.color }} /> Delegation</span>
-        <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.plan_item.color }} /> Planned</span>
+      {/* Legend + Saved Preferences */}
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-4 text-[10px] text-muted-foreground flex-wrap">
+          <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.task.color }} /> Task</span>
+          <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.session.color }} /> Session</span>
+          <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.delegation.color }} /> Delegation</span>
+          <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: NODE_STYLES.plan_item.color }} /> Planned</span>
+        </div>
+        {Object.keys(parsedPrefs).length > 0 && (
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Priorities:</span>
+            {Object.entries(parsedPrefs).map(([h, p]) => (
+              <Badge key={h} variant="outline" className="text-[8px] gap-0.5 capitalize">
+                {h.replace("_", " ")}: {p.focusMode.replace("_", " ")} · {p.priorityWeight === "urgency" ? "Urgent" : p.priorityWeight === "impact" ? "Impact" : "Bal."}
+              </Badge>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* SVG Canvas */}
