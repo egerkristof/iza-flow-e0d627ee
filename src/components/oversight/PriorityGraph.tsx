@@ -1,12 +1,13 @@
 import { useState, useMemo, useCallback, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ZoomIn, ZoomOut, Maximize2, Search, X } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Search, X, Plus } from "lucide-react";
 
 // ── Types ──
 interface GraphNode {
@@ -251,7 +252,9 @@ function GraphNodeEl({
 // ── Main Component ──
 export function PriorityGraph() {
   const { user } = useAuth();
+  const { toast } = useToast();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const containerRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -361,6 +364,39 @@ export function PriorityGraph() {
 
   const resetView = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
 
+  // Add unplanned item to today's plan
+  const addToPlan = useMutation({
+    mutationFn: async (node: GraphNode) => {
+      if (!user) throw new Error("Not authenticated");
+      // Extract the real source id from the node id (feed-<uuid>)
+      const sourceId = node.id.startsWith("feed-") ? node.id.slice(5) : null;
+      const sourceType = node.type === "session" ? "session" : node.type === "delegation" ? "task" : "task";
+      const { error } = await supabase.from("operator_plan_items").insert({
+        user_id: user.id,
+        title: node.label,
+        source_type: sourceType,
+        source_id: sourceId,
+        time_horizon: "today",
+        planned_date: new Date().toISOString().split("T")[0],
+        sort_order: 0,
+        ai_suggested: false,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["operator-plan"] });
+      queryClient.invalidateQueries({ queryKey: ["priority-graph-plans"] });
+      setSelectedNode(null);
+      toast({ title: "Added to today's plan" });
+    },
+  });
+
+  // Check if selected node is an unplanned feed item (addable)
+  const isAddable = selectedInfo
+    && selectedInfo.id.startsWith("feed-")
+    && selectedInfo.type !== "hub"
+    && selectedInfo.type !== "horizon";
+
   return (
     <div className="space-y-3">
       {/* Header */}
@@ -466,6 +502,18 @@ export function PriorityGraph() {
                 {selectedInfo.priority && <Badge variant="secondary" className="text-[9px] capitalize">{selectedInfo.priority}</Badge>}
               </div>
               <div className="flex items-center gap-1">
+                {isAddable && (
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="h-6 text-[10px] gap-1"
+                    disabled={addToPlan.isPending}
+                    onClick={() => addToPlan.mutate(selectedInfo)}
+                  >
+                    <Plus className="h-3 w-3" />
+                    Add to Today
+                  </Button>
+                )}
                 {selectedInfo.workbookId && (
                   <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => navigate(`/workbooks/${selectedInfo.workbookId}`)}>
                     Open Workbook →
