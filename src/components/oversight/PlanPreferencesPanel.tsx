@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { Sparkles, Loader2, Zap, Target, Scale, ListOrdered, Replace, ListPlus } from "lucide-react";
+import { Sparkles, Loader2, Zap, Target, Scale, ListOrdered } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
@@ -15,18 +15,16 @@ interface PlanPreferences {
   maxItems: number;
 }
 
-export type GenerateMode = "replace" | "append";
-
 const FOCUS_OPTIONS: { value: PlanPreferences["focusMode"]; label: string; icon: React.ReactNode; desc: string }[] = [
   { value: "deep_work", label: "Deep Work", icon: <Target className="h-3 w-3" />, desc: "Long focus blocks" },
   { value: "clear_blockers", label: "Clear Blockers", icon: <Zap className="h-3 w-3" />, desc: "Unblock progress" },
   { value: "catch_up", label: "Catch Up", icon: <ListOrdered className="h-3 w-3" />, desc: "Process backlog" },
 ];
 
-const WEIGHT_OPTIONS: { value: PlanPreferences["priorityWeight"]; label: string; desc: string }[] = [
-  { value: "urgency", label: "Urgency first", desc: "Deadlines & blockers" },
-  { value: "balanced", label: "Balanced", desc: "Mix of both" },
-  { value: "impact", label: "Impact first", desc: "High-value outcomes" },
+const WEIGHT_OPTIONS: { value: PlanPreferences["priorityWeight"]; label: string }[] = [
+  { value: "urgency", label: "Urgency first" },
+  { value: "balanced", label: "Balanced" },
+  { value: "impact", label: "Impact first" },
 ];
 
 const MAX_ITEMS_RANGE: Record<Horizon, { min: number; max: number; default: number }> = {
@@ -47,12 +45,10 @@ export function PlanPreferencesPanel({
   horizon,
   onGenerate,
   isGenerating,
-  hasExistingItems = false,
 }: {
   horizon: Horizon;
-  onGenerate: (prefs: PlanPreferences, mode: GenerateMode) => void;
+  onGenerate: (prefs: PlanPreferences) => void;
   isGenerating: boolean;
-  hasExistingItems?: boolean;
 }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -61,9 +57,7 @@ export function PlanPreferencesPanel({
   const range = MAX_ITEMS_RANGE[horizon];
 
   const [prefs, setPrefs] = useState<PlanPreferences>(defaults);
-  const [mode, setMode] = useState<GenerateMode>("replace");
 
-  // Load saved preferences
   const { data: savedPref } = useQuery({
     queryKey: ["plan-prefs", user?.id, horizon],
     enabled: !!user,
@@ -90,13 +84,10 @@ export function PlanPreferencesPanel({
     }
   }, [savedPref, horizon]);
 
-  // Save preferences
   const savePref = useMutation({
     mutationFn: async (newPrefs: PlanPreferences) => {
       if (!user) return;
       const value = JSON.stringify(newPrefs);
-
-      // Upsert: check if exists
       const { data: existing } = await supabase
         .from("working_preferences")
         .select("id")
@@ -106,20 +97,15 @@ export function PlanPreferencesPanel({
         .maybeSingle();
 
       if (existing) {
-        await supabase
-          .from("working_preferences")
-          .update({ preference_value: value })
-          .eq("id", existing.id);
+        await supabase.from("working_preferences").update({ preference_value: value }).eq("id", existing.id);
       } else {
-        await supabase
-          .from("working_preferences")
-          .insert({
-            user_id: user.id,
-            preference_key: prefKey,
-            preference_value: value,
-            scope_type: "personal",
-            description: `AI plan preferences for ${horizon}`,
-          });
+        await supabase.from("working_preferences").insert({
+          user_id: user.id,
+          preference_key: prefKey,
+          preference_value: value,
+          scope_type: "personal",
+          description: `AI plan preferences for ${horizon}`,
+        });
       }
     },
     onSuccess: () => {
@@ -131,9 +117,9 @@ export function PlanPreferencesPanel({
     setPrefs(prev => ({ ...prev, [key]: val }));
   };
 
-  const handleGenerate = (selectedMode: GenerateMode) => {
+  const handleGenerate = () => {
     savePref.mutate(prefs);
-    onGenerate(prefs, selectedMode);
+    onGenerate(prefs);
   };
 
   return (
@@ -162,9 +148,8 @@ export function PlanPreferencesPanel({
         </div>
       </div>
 
-      {/* Priority Weight + Max Items row */}
+      {/* Priority Weight + Max Items */}
       <div className="flex gap-4">
-        {/* Priority Weight */}
         <div className="flex-1 space-y-1.5">
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium flex items-center gap-1">
             <Scale className="h-3 w-3" /> Priority Weight
@@ -186,7 +171,6 @@ export function PlanPreferencesPanel({
           </div>
         </div>
 
-        {/* Max Items */}
         <div className="w-32 space-y-1.5">
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium flex items-center gap-1">
             Max Items
@@ -207,36 +191,20 @@ export function PlanPreferencesPanel({
         </div>
       </div>
 
-      {/* Generate buttons — append or replace */}
-      <div className="flex gap-2">
-        <Button
-          size="sm"
-          variant="outline"
-          className="flex-1 text-xs gap-1.5"
-          disabled={isGenerating}
-          onClick={() => handleGenerate("append")}
-        >
-          {isGenerating ? (
-            <Loader2 className="h-3 w-3 animate-spin" />
-          ) : (
-            <ListPlus className="h-3 w-3" />
-          )}
-          Append to List
-        </Button>
-        <Button
-          size="sm"
-          className="flex-1 text-xs gap-1.5"
-          disabled={isGenerating}
-          onClick={() => handleGenerate("replace")}
-        >
-          {isGenerating ? (
-            <Loader2 className="h-3 w-3 animate-spin" />
-          ) : (
-            <Replace className="h-3 w-3" />
-          )}
-          Replace List
-        </Button>
-      </div>
+      {/* Single Generate button */}
+      <Button
+        size="sm"
+        className="w-full text-xs gap-1.5"
+        disabled={isGenerating}
+        onClick={handleGenerate}
+      >
+        {isGenerating ? (
+          <Loader2 className="h-3 w-3 animate-spin" />
+        ) : (
+          <Sparkles className="h-3 w-3" />
+        )}
+        Generate Suggestions
+      </Button>
     </div>
   );
 }

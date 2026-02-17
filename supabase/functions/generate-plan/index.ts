@@ -20,21 +20,66 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get user from auth token
     const anonClient = createClient(supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY")!);
     const { data: { user }, error: authError } = await anonClient.auth.getUser(
       authHeader.replace("Bearer ", "")
     );
     if (authError || !user) throw new Error("Invalid auth token");
 
-    const { time_horizon, existing_plans, preferences, mode } = await req.json();
+    const { time_horizon, existing_plans, preferences, mode, selected_items } = await req.json();
     const horizon = time_horizon || "today";
-    const generateMode = mode || "replace";
+    const generateMode = mode || "preview"; // default to preview now
     const focusMode = preferences?.focusMode || "balanced";
     const priorityWeight = preferences?.priorityWeight || "balanced";
     const maxItems = preferences?.maxItems || (horizon === "next_hour" ? 2 : horizon === "today" ? 5 : 8);
 
-    // Fetch user's active tasks
+    // ─── If mode is "append" or "replace", we persist selected_items directly ───
+    if ((generateMode === "append" || generateMode === "replace") && selected_items) {
+      const today = new Date().toISOString().split("T")[0];
+      let existingCount = 0;
+
+      if (generateMode === "replace") {
+        await supabase
+          .from("operator_plan_items")
+          .delete()
+          .eq("user_id", user.id)
+          .eq("time_horizon", horizon)
+          .eq("is_completed", false);
+      } else {
+        const { data: existing } = await supabase
+          .from("operator_plan_items")
+          .select("sort_order")
+          .eq("user_id", user.id)
+          .eq("time_horizon", horizon)
+          .eq("is_completed", false)
+          .order("sort_order", { ascending: false })
+          .limit(1);
+        existingCount = (existing?.[0]?.sort_order ?? -1) + 1;
+      }
+
+      const inserts = selected_items.map((item: any, idx: number) => ({
+        user_id: user.id,
+        source_type: item.source_type || "custom",
+        source_id: item.source_id || null,
+        title: item.title,
+        description: item.description,
+        time_horizon: horizon,
+        planned_date: item.planned_date || today,
+        sort_order: existingCount + idx,
+        ai_suggested: true,
+      }));
+
+      if (inserts.length > 0) {
+        await supabase.from("operator_plan_items").insert(inserts);
+      }
+
+      return new Response(
+        JSON.stringify({ items: selected_items, count: inserts.length, persisted: true }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // ─── Preview mode: generate suggestions without persisting ───
     const { data: tasks = [] } = await supabase
       .from("workbook_tasks")
       .select("id, title, status, priority, due_date, workbook_id, updated_at")
@@ -43,7 +88,6 @@ serve(async (req) => {
       .order("updated_at", { ascending: false })
       .limit(50);
 
-    // Fetch active sessions
     const { data: sessions = [] } = await supabase
       .from("protocol_executions")
       .select(`
@@ -55,7 +99,6 @@ serve(async (req) => {
       .in("status", ["in_progress", "paused", "not_started"])
       .limit(20);
 
-    // Fetch workbook titles for tasks
     const wbIds = [...new Set(tasks.map((t: any) => t.workbook_id))];
     const { data: workbooks = [] } = await supabase
       .from("workbooks")
@@ -64,7 +107,6 @@ serve(async (req) => {
     const wbMap: Record<string, string> = {};
     workbooks.forEach((w: any) => { wbMap[w.id] = w.title; });
 
-    // Build context
     const taskSummary = tasks.map((t: any) =>
       `- [${t.priority}/${t.status}] "${t.title}" (Workbook: ${wbMap[t.workbook_id] ?? "Unknown"}${t.due_date ? `, Due: ${t.due_date}` : ""})`
     ).join("\n");
@@ -76,7 +118,6 @@ serve(async (req) => {
     const today = new Date().toISOString().split("T")[0];
     const dayOfWeek = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
-    // Build existing plans context
     const existingPlansContext = existing_plans && existing_plans.length > 0
       ? `\nEXISTING PLANS (other horizons — avoid duplicating these):\n${existing_plans.map((p: any) => `- [${p.horizon}] "${p.title}" (${p.source_type})`).join("\n")}\n`
       : "";
@@ -118,7 +159,6 @@ For each item, provide:
 2. A brief description of why this should be done now and how to approach it
 3. The source type ("task" or "session") and source_id if applicable`;
 
-    // Call AI with tool calling for structured output
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -191,48 +231,9 @@ For each item, provide:
       }
     }
 
-    // Persist plan items
-    let existingCount = 0;
-    if (generateMode === "replace") {
-      // Clear existing non-completed items for this horizon
-      await supabase
-        .from("operator_plan_items")
-        .delete()
-        .eq("user_id", user.id)
-        .eq("time_horizon", horizon)
-        .eq("is_completed", false);
-    } else {
-      // Append mode: get current max sort_order
-      const { data: existing } = await supabase
-        .from("operator_plan_items")
-        .select("sort_order")
-        .eq("user_id", user.id)
-        .eq("time_horizon", horizon)
-        .eq("is_completed", false)
-        .order("sort_order", { ascending: false })
-        .limit(1);
-      existingCount = (existing?.[0]?.sort_order ?? -1) + 1;
-    }
-
-    // Insert new items
-    const inserts = planItems.map((item: any, idx: number) => ({
-      user_id: user.id,
-      source_type: item.source_type || "custom",
-      source_id: item.source_id || null,
-      title: item.title,
-      description: item.description,
-      time_horizon: horizon,
-      planned_date: item.planned_date || today,
-      sort_order: existingCount + idx,
-      ai_suggested: true,
-    }));
-
-    if (inserts.length > 0) {
-      await supabase.from("operator_plan_items").insert(inserts);
-    }
-
+    // Return suggestions without persisting (preview mode)
     return new Response(
-      JSON.stringify({ items: planItems, count: planItems.length }),
+      JSON.stringify({ items: planItems, count: planItems.length, persisted: false }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (e) {
