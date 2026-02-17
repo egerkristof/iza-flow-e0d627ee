@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import {
   TrendingUp, Settings, DollarSign, Users, Code, HeartHandshake, Shield, Target,
-  Globe, Plus, Pencil, Trash2, Loader2, Package, Folder,
+  Globe, Plus, Pencil, Trash2, Loader2, Package, Folder, Wand2,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -149,6 +149,77 @@ export function DomainsView({ bundles, items, onSelectDomain, bundleDomainMap }:
   const [deleteConfirm, setDeleteConfirm] = useState<DomainRow | null>(null);
   const [form, setForm] = useState({ title: "", description: "", tag: "", icon: "Folder", color: "blue" });
   const [saving, setSaving] = useState(false);
+  const [autoAssigning, setAutoAssigning] = useState(false);
+
+  // Auto-assign bundles to domains based on items' domain_scope tags
+  const handleAutoAssign = async () => {
+    if (!user || domains.length === 0 || bundles.length === 0) return;
+    setAutoAssigning(true);
+    try {
+      // Build tag→domain_id lookup
+      const tagToDomainId = new Map<string, string>();
+      for (const d of domains) {
+        tagToDomainId.set(d.tag.toLowerCase(), d.id);
+        // Also map common aliases
+        if (d.tag === "GLOBAL") {
+          tagToDomainId.set("general", d.id);
+        }
+      }
+
+      // Existing assignments to avoid duplicates
+      const existingPairs = new Set<string>();
+      if (bundleDomainMap) {
+        for (const [bundleId, domainIds] of bundleDomainMap.entries()) {
+          for (const did of domainIds) {
+            existingPairs.add(`${bundleId}::${did}`);
+          }
+        }
+      }
+
+      // For each bundle, look at its items' domain_tags and match to domains
+      const newAssignments: { bundle_id: string; domain_id: string }[] = [];
+      for (const bundle of bundles) {
+        // Collect domain tags from bundle's items
+        const bundleItems = items.filter(i => i.bundle_id === bundle.id || i.bundle_ids?.includes(bundle.id));
+        const allTags = new Set<string>();
+        for (const item of bundleItems) {
+          for (const tag of item.domain_tags) {
+            allTags.add(tag.toLowerCase());
+          }
+        }
+        // Also use bundle's own domain_tags
+        for (const tag of bundle.domain_tags) {
+          allTags.add(tag.toLowerCase());
+        }
+
+        // Match tags to domains
+        for (const tag of allTags) {
+          const domainId = tagToDomainId.get(tag);
+          if (domainId && !existingPairs.has(`${bundle.id}::${domainId}`)) {
+            newAssignments.push({ bundle_id: bundle.id, domain_id: domainId });
+            existingPairs.add(`${bundle.id}::${domainId}`);
+          }
+        }
+      }
+
+      if (newAssignments.length === 0) {
+        toast({ title: "No new assignments", description: "All bundles are already assigned to their matching domains." });
+        setAutoAssigning(false);
+        return;
+      }
+
+      const { error } = await supabase.from("bundle_domains").insert(newAssignments as any);
+      if (error) {
+        toast({ title: "Auto-assign failed", description: error.message, variant: "destructive" });
+      } else {
+        toast({ title: "Auto-assigned", description: `${newAssignments.length} bundle-domain links created.` });
+        queryClient.invalidateQueries({ queryKey: ["bundle-domains-all"] });
+        queryClient.invalidateQueries({ queryKey: ["domains"] });
+      }
+    } finally {
+      setAutoAssigning(false);
+    }
+  };
 
   const openCreate = () => {
     setEditingDomain(null);
@@ -218,6 +289,16 @@ export function DomainsView({ bundles, items, onSelectDomain, bundleDomainMap }:
 
   return (
     <div className="flex-1 overflow-auto px-4 pb-4 pt-3">
+      <div className="flex items-center justify-end mb-3">
+        <Button
+          variant="outline" size="sm" className="gap-1.5 text-xs"
+          onClick={handleAutoAssign}
+          disabled={autoAssigning || bundles.length === 0}
+        >
+          {autoAssigning ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />}
+          Auto-assign bundles
+        </Button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {domains.map(domain => {
           const Icon = ICON_MAP[domain.icon ?? "Folder"] ?? Folder;
