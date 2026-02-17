@@ -697,13 +697,16 @@ function PlanItemRow({
 
       <div className="flex items-center gap-1 shrink-0">
         {workbookId && (
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => navigate(`/workbooks/${workbookId}`)}
-            className="opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-primary"
+            className="h-7 px-2 text-xs gap-1 text-muted-foreground hover:text-primary"
             title="Open in workbook"
           >
-            <ExternalLink className="h-3.5 w-3.5" />
-          </button>
+            <ExternalLink className="h-3 w-3" />
+            Go to
+          </Button>
         )}
         <button
           onClick={onDelete}
