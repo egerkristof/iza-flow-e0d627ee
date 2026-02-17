@@ -1077,7 +1077,8 @@ export function BundleFirstView({
   const matchesFilter = (item: MockContextItem) => {
     if (search && !item.title.toLowerCase().includes(search.toLowerCase()) && !item.content_preview.toLowerCase().includes(search.toLowerCase())) return false;
     if (categoryFilter && item.category !== categoryFilter) return false;
-    if (domainFilter && !item.domain_tags.includes(domainFilter)) return false;
+    // Skip domain_tags check on items when drilling from a domain — bundles are already filtered by bundle_domains
+    if (domainFilter && !activeDomainId && !item.domain_tags.includes(domainFilter)) return false;
     return true;
   };
 
