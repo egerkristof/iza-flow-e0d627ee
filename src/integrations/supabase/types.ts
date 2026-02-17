@@ -425,6 +425,56 @@ export type Database = {
           },
         ]
       }
+      document_sync_logs: {
+        Row: {
+          bundle_id: string
+          changeset: Json
+          document_snapshot: string
+          errors: Json | null
+          id: string
+          items_created: number
+          items_deleted: number
+          items_updated: number
+          summary: string | null
+          synced_at: string
+          user_id: string
+        }
+        Insert: {
+          bundle_id: string
+          changeset?: Json
+          document_snapshot: string
+          errors?: Json | null
+          id?: string
+          items_created?: number
+          items_deleted?: number
+          items_updated?: number
+          summary?: string | null
+          synced_at?: string
+          user_id: string
+        }
+        Update: {
+          bundle_id?: string
+          changeset?: Json
+          document_snapshot?: string
+          errors?: Json | null
+          id?: string
+          items_created?: number
+          items_deleted?: number
+          items_updated?: number
+          summary?: string | null
+          synced_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_sync_logs_bundle_id_fkey"
+            columns: ["bundle_id"]
+            isOneToOne: false
+            referencedRelation: "bundles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       domains: {
         Row: {
           color: string | null
