@@ -38,7 +38,15 @@ Deno.serve(async (req) => {
     }
 
     const body = await req.json();
-    const { document_markdown, bundle_id, bundle_title, existing_items, preview_only, apply_operations } = body;
+    const {
+      document_markdown,
+      original_document,
+      bundle_id,
+      bundle_title,
+      existing_items,
+      preview_only,
+      apply_operations,
+    } = body;
 
     if (!document_markdown || !bundle_id) {
       return new Response(JSON.stringify({ error: "document_markdown and bundle_id required" }), {
@@ -49,115 +57,85 @@ Deno.serve(async (req) => {
 
     // ── MODE 2: Apply confirmed operations ──
     if (apply_operations && Array.isArray(apply_operations)) {
-      const results = { updated: 0, created: 0, deleted: 0, errors: [] as string[] };
-
-      for (const op of apply_operations) {
-        try {
-          if (op.op === "update" && op.id) {
-            const updateData: Record<string, unknown> = {};
-            if (op.title) updateData.title = op.title;
-            if (op.content_full) updateData.content_full = op.content_full;
-            if (op.category) updateData.category = op.category;
-
-            const { error } = await serviceClient
-              .from("context_items")
-              .update(updateData)
-              .eq("id", op.id)
-              .eq("owner_id", user.id);
-
-            if (error) results.errors.push(`Update ${op.id}: ${error.message}`);
-            else results.updated++;
-          } else if (op.op === "create") {
-            const { error } = await serviceClient
-              .from("context_items")
-              .insert({
-                title: op.title,
-                content_full: op.content_full || "",
-                category: op.category || "KNOWLEDGE",
-                owner_id: user.id,
-                bundle_id: bundle_id,
-              });
-
-            if (error) results.errors.push(`Create "${op.title}": ${error.message}`);
-            else results.created++;
-          } else if (op.op === "delete" && op.id) {
-            const { error } = await serviceClient
-              .from("context_items")
-              .update({ deleted_at: new Date().toISOString() })
-              .eq("id", op.id)
-              .eq("owner_id", user.id);
-
-            if (error) results.errors.push(`Delete ${op.id}: ${error.message}`);
-            else results.deleted++;
-          }
-        } catch (e) {
-          results.errors.push(`Op ${op.op}: ${e instanceof Error ? e.message : "Unknown error"}`);
-        }
-      }
-
-      // Log the sync
-      try {
-        await serviceClient.from("document_sync_logs").insert({
-          bundle_id,
-          user_id: user.id,
-          document_snapshot: document_markdown,
-          changeset: { operations: apply_operations },
-          summary: `Synced ${results.updated} updated, ${results.created} created, ${results.deleted} removed`,
-          items_created: results.created,
-          items_updated: results.updated,
-          items_deleted: results.deleted,
-          errors: results.errors.length > 0 ? results.errors : [],
-        });
-      } catch (logErr) {
-        console.error("Failed to log sync:", logErr);
-      }
-
-      return new Response(JSON.stringify({
-        success: true,
-        summary: "Sync completed",
-        results,
-        operations: apply_operations,
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return await applyOperations(serviceClient, user.id, bundle_id, document_markdown, apply_operations, corsHeaders);
     }
 
-    // ── MODE 1: AI-powered diff analysis (preview or direct apply) ──
+    // ── MODE 1: AI-powered diff analysis ──
+
+    // Build a precise existing-items map with FULL content
     const existingDesc = (existing_items || []).map((item: any) =>
-      `- ID: ${item.id} | Category: ${item.category} | Title: ${item.title} | Parent Playbook: ${item.parent_playbook_id || "none"} | Content: ${(item.content_preview || "").substring(0, 100)}`
-    ).join("\n");
+      `<item id="${item.id}" category="${item.category}" title="${item.title}" parent_playbook="${item.parent_playbook_id || "none"}">\n${item.content_full || ""}\n</item>`
+    ).join("\n\n");
 
-    const systemPrompt = `You are a Knowledge Architect that parses structured markdown documents back into discrete context items for a playbook management system.
+    // If we have the original generated document, compute a simple text diff first
+    // to help the AI focus only on what actually changed
+    let diffHint = "";
+    if (original_document && original_document !== document_markdown) {
+      const origLines = original_document.split("\n");
+      const newLines = document_markdown.split("\n");
+      const changes: string[] = [];
+      const maxLen = Math.max(origLines.length, newLines.length);
+      
+      for (let i = 0; i < maxLen; i++) {
+        const origLine = origLines[i] ?? "";
+        const newLine = newLines[i] ?? "";
+        if (origLine !== newLine) {
+          changes.push(`Line ${i + 1}:\n  OLD: ${origLine}\n  NEW: ${newLine}`);
+        }
+      }
+      
+      if (changes.length === 0) {
+        // No actual text changes detected
+        return new Response(JSON.stringify({
+          success: true,
+          summary: "No changes detected",
+          operations: [],
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      
+      diffHint = `\n## ACTUAL LINE-LEVEL CHANGES (only these lines differ from the original)\nThere are exactly ${changes.length} changed lines:\n\n${changes.slice(0, 100).join("\n\n")}\n\nIMPORTANT: ONLY generate operations for items affected by these specific line changes. If a heading changed from "Customer Contract Flow" to "Customer Contract Flow 2", that is ONE update to ONE item's title. Do NOT touch any other items.`;
+    }
 
-## YOUR TASK
-Given an edited markdown document and the list of existing items that were used to generate it, produce a JSON array of operations to synchronize the playbook items with the document content.
+    const systemPrompt = `You are a PRECISION DIFF ENGINE. Your job is to detect ONLY the exact changes between an edited markdown document and the existing structured items.
+
+## CRITICAL RULES — READ CAREFULLY
+
+1. You MUST compare the document content against each existing item's FULL content (provided below in <item> tags)
+2. ONLY produce operations for items where the title OR content has ACTUALLY changed character-by-character
+3. If a section's content is identical or semantically identical to the existing item, DO NOT include it
+4. Minor whitespace or formatting differences are NOT changes — ignore them
+5. If only a title changed (e.g., "Flow" → "Flow 2"), produce an update with ONLY the new title
+6. Do NOT rewrite or rephrase content — only report actual textual differences
+7. When in doubt, DO NOT include the operation
+8. An update operation should include ONLY the fields that changed (title and/or content_full)
+9. For updates, also include "prev_title" and "prev_content" showing the PREVIOUS values
 
 ## EXISTING ITEMS IN THIS BUNDLE
 ${existingDesc || "No existing items"}
+${diffHint}
 
-## RULES
-1. Compare the document structure against the existing items
-2. For each section, determine if it maps to an existing item (match by title similarity) or is new
-3. Produce operations: "update" (changed content), "create" (new sections), "delete" (removed sections)
-4. PLAYBOOKs are ## headings, PROCEDUREs are numbered steps under ### Steps, DIRECTIVEs are blockquotes with ⚠️, PRINCIPLEs are other blockquotes, KNOWLEDGE is #### sections
-5. Keep item categories consistent with AACE taxonomy
-6. For updates, include the "id" of the existing item plus any changed fields (title, content_full, category)
-7. For updates, also include "prev_title" and "prev_content" fields showing the PREVIOUS values for diff display
-8. For creates, include: category, title, content_full, parent_playbook_id (if under a playbook)
-9. Only include operations for things that actually changed — do NOT include no-op updates
+## CATEGORY MAPPING
+- PLAYBOOKs = ## headings
+- PROCEDUREs = numbered steps under ### Steps  
+- DIRECTIVEs = blockquotes with ⚠️
+- PRINCIPLEs = other blockquotes
+- KNOWLEDGE = #### sections
 
 ## OUTPUT FORMAT
-Return ONLY a JSON object:
-\`\`\`json
+Return ONLY valid JSON:
 {
   "operations": [
-    { "op": "update", "id": "existing-id", "title": "Updated Title", "content_full": "Updated content...", "prev_title": "Old Title", "prev_content": "Old content..." },
-    { "op": "create", "category": "PROCEDURE", "title": "New Step", "content_full": "...", "parent_playbook_id": "pb-id-or-null" },
+    { "op": "update", "id": "existing-id", "title": "New Title", "prev_title": "Old Title" },
+    { "op": "update", "id": "existing-id", "content_full": "New content...", "prev_content": "Old content..." },
+    { "op": "create", "category": "PROCEDURE", "title": "New Step", "content_full": "..." },
     { "op": "delete", "id": "removed-item-id", "title": "Removed Item Title" }
   ],
-  "summary": "Brief description of changes made"
+  "summary": "Changed title of 'Customer Contract Flow' to 'Customer Contract Flow 2'"
 }
-\`\`\``;
+
+If nothing changed, return: { "operations": [], "summary": "No changes detected" }`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -169,7 +147,7 @@ Return ONLY a JSON object:
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
-          { role: "user", content: `## Document to Parse\n\n${document_markdown}` },
+          { role: "user", content: `## Edited Document\n\n${document_markdown}` },
         ],
       }),
     });
@@ -222,42 +200,7 @@ Return ONLY a JSON object:
     }
 
     // Legacy direct-apply mode (fallback)
-    const results = { updated: 0, created: 0, deleted: 0, errors: [] as string[] };
-    for (const op of (parsed.operations || [])) {
-      try {
-        if (op.op === "update" && op.id) {
-          const updateData: Record<string, unknown> = {};
-          if (op.title) updateData.title = op.title;
-          if (op.content_full) updateData.content_full = op.content_full;
-          if (op.category) updateData.category = op.category;
-          const { error } = await serviceClient.from("context_items").update(updateData).eq("id", op.id).eq("owner_id", user.id);
-          if (error) results.errors.push(`Update ${op.id}: ${error.message}`);
-          else results.updated++;
-        } else if (op.op === "create") {
-          const { error } = await serviceClient.from("context_items").insert({
-            title: op.title, content_full: op.content_full || "", category: op.category || "KNOWLEDGE",
-            owner_id: user.id, bundle_id: bundle_id,
-          });
-          if (error) results.errors.push(`Create "${op.title}": ${error.message}`);
-          else results.created++;
-        } else if (op.op === "delete" && op.id) {
-          const { error } = await serviceClient.from("context_items").update({ deleted_at: new Date().toISOString() }).eq("id", op.id).eq("owner_id", user.id);
-          if (error) results.errors.push(`Delete ${op.id}: ${error.message}`);
-          else results.deleted++;
-        }
-      } catch (e) {
-        results.errors.push(`Op ${op.op}: ${e instanceof Error ? e.message : "Unknown error"}`);
-      }
-    }
-
-    return new Response(JSON.stringify({
-      success: true,
-      summary: parsed.summary || "Sync completed",
-      results,
-      operations: parsed.operations || [],
-    }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return await applyOperations(serviceClient, user.id, bundle_id, document_markdown, parsed.operations || [], corsHeaders);
   } catch (err) {
     console.error("sync-document-to-playbooks error:", err);
     return new Response(
@@ -266,3 +209,87 @@ Return ONLY a JSON object:
     );
   }
 });
+
+// ── Shared apply logic ──
+async function applyOperations(
+  serviceClient: any,
+  userId: string,
+  bundleId: string,
+  documentMarkdown: string,
+  operations: any[],
+  headers: Record<string, string>,
+) {
+  const results = { updated: 0, created: 0, deleted: 0, errors: [] as string[] };
+
+  for (const op of operations) {
+    try {
+      if (op.op === "update" && op.id) {
+        const updateData: Record<string, unknown> = {};
+        if (op.title) updateData.title = op.title;
+        if (op.content_full) updateData.content_full = op.content_full;
+        if (op.category) updateData.category = op.category;
+
+        if (Object.keys(updateData).length === 0) continue;
+
+        const { error } = await serviceClient
+          .from("context_items")
+          .update(updateData)
+          .eq("id", op.id)
+          .eq("owner_id", userId);
+
+        if (error) results.errors.push(`Update ${op.id}: ${error.message}`);
+        else results.updated++;
+      } else if (op.op === "create") {
+        const { error } = await serviceClient
+          .from("context_items")
+          .insert({
+            title: op.title,
+            content_full: op.content_full || "",
+            category: op.category || "KNOWLEDGE",
+            owner_id: userId,
+            bundle_id: bundleId,
+          });
+
+        if (error) results.errors.push(`Create "${op.title}": ${error.message}`);
+        else results.created++;
+      } else if (op.op === "delete" && op.id) {
+        const { error } = await serviceClient
+          .from("context_items")
+          .update({ deleted_at: new Date().toISOString() })
+          .eq("id", op.id)
+          .eq("owner_id", userId);
+
+        if (error) results.errors.push(`Delete ${op.id}: ${error.message}`);
+        else results.deleted++;
+      }
+    } catch (e) {
+      results.errors.push(`Op ${op.op}: ${e instanceof Error ? e.message : "Unknown error"}`);
+    }
+  }
+
+  // Log the sync
+  try {
+    await serviceClient.from("document_sync_logs").insert({
+      bundle_id: bundleId,
+      user_id: userId,
+      document_snapshot: documentMarkdown,
+      changeset: { operations },
+      summary: `Synced ${results.updated} updated, ${results.created} created, ${results.deleted} removed`,
+      items_created: results.created,
+      items_updated: results.updated,
+      items_deleted: results.deleted,
+      errors: results.errors.length > 0 ? results.errors : [],
+    });
+  } catch (logErr) {
+    console.error("Failed to log sync:", logErr);
+  }
+
+  return new Response(JSON.stringify({
+    success: true,
+    summary: "Sync completed",
+    results,
+    operations,
+  }), {
+    headers: { ...headers, "Content-Type": "application/json" },
+  });
+}

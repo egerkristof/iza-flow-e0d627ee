@@ -236,7 +236,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
         title: i.title,
         category: i.category,
         parent_playbook_id: i.parent_playbook_id,
-        content_preview: i.content_preview,
+        content_full: i.content_preview || "",
       }));
 
       const resp = await fetch(
@@ -249,6 +249,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
           },
           body: JSON.stringify({
             document_markdown: content,
+            original_document: generatedContent,
             bundle_id: bundle.id,
             bundle_title: bundle.title,
             existing_items: existingItems,
