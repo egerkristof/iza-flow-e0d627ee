@@ -1,99 +1,104 @@
 
 
-# Playbook-Centric UI Refactor (Bundles View Focus)
+# Domains Tab -- EOS-Inspired Domain Navigation
 
 ## Overview
-The current default view is the **BundleFirstView** ("simplified" / "Bundles" mode) -- not the Classic view. This plan focuses entirely on refactoring that view. The key insight: playbooks already have their own child items (procedures as "Steps", directives as "Gates & Context", plus any other owned items). The refactor reframes bundles as "Domains" and makes playbooks the visual hero, while preserving the existing hierarchy.
+Add a new "Domains" tab to the Playbooks page that presents business domains as visual cards (based on the Traction/EOS framework). Clicking a domain card drills into the existing BundleFirstView, filtered to show only bundles belonging to that domain. Users can also add custom domains beyond the EOS defaults.
 
-## What Changes for the User
+## User Experience
 
-### Navigation
-- Sidebar: "Context" (Library icon) becomes **"Playbooks"** (Target icon)
-- Route stays `/context` (no URL breakage)
+### New "Domains" tab (default landing)
+- A tab bar at the top of the Playbooks page: **Domains** | **All Playbooks** (the current BundleFirstView)
+- The Domains tab shows a responsive card grid (2-3 columns)
+- Each card displays:
+  - Domain name and icon (e.g. "Sales & Marketing" with a TrendingUp icon)
+  - Bundle count badge ("3 bundles")
+  - Item count ("12 items")
+  - A brief description
+  - Color accent per domain
+- An "Org-Wide" card always appears first for items/bundles tagged "GLOBAL" or "general"
+- A "+ Add Domain" card at the end for creating custom domains
 
-### Page Header (`ContextManagement.tsx`)
-- Title: `"Context"` becomes **"Playbooks"**
-- Stats: `"X items - Y bundles"` becomes `"X items - Y domains"`
-- Taxonomy button, TaxonomyOnboarding, and TaxonomyHelpButton move behind a **"Power Tools"** toggle (small wrench/settings icon)
-- The Bundles/Classic view toggle becomes a **"Power Tools"** toggle instead. When off (default): only BundleFirstView is shown. When on: reveals Classic tabs (Items & Bundles, Mandates, Drift, Garbage Collection), Context Stack, Impact Sim, and Taxonomy buttons
-- Subtitle text: `"Organize and deploy your knowledge bundles..."` becomes `"Your playbooks organized by domain. Expand to see steps, gates, and shared knowledge."`
+### Drill-down behavior
+- Clicking a domain card switches to the BundleFirstView with that domain pre-filtered
+- A breadcrumb or back button appears: "Domains > Sales & Marketing"
+- The domain filter in BundleFirstView is pre-set to the clicked domain's tag
 
-### BundleFirstView Toolbar (`BundleFirstView.tsx`)
-- Search placeholder: `"Search bundles & items..."` becomes `"Search playbooks & domains..."`
-- `"+ Bundle"` button becomes `"+ Domain"` (Package icon stays)
-- `"+ Item"` button stays (useful for adding knowledge/principles directly)
-- `"Clear All"` stays (useful during setup, already behind confirmation dialog)
-- Summary line: `"X bundles - Y unbundled items"` becomes `"X domains - Y unassigned items"`
-- Filter label "Domains" stays as-is (already correct)
+### Default EOS Domains (seeded)
+These are stored in a new `domains` table and seeded on first load:
+1. **Sales & Marketing** -- tag: "sales", icon: TrendingUp
+2. **Operations** -- tag: "operations", icon: Settings
+3. **Finance** -- tag: "finance", icon: DollarSign
+4. **People (HR)** -- tag: "hr", icon: Users
+5. **Product & Engineering** -- tag: "engineering", icon: Code
+6. **Customer Success** -- tag: "cs", icon: HeartHandshake
+7. **Legal & Compliance** -- tag: "compliance", icon: Shield
+8. **Strategy** -- tag: "strategy", icon: Target
 
-### BundleExpandable Cards (the main content cards)
-- The card header currently shows Package icon + bundle title. This stays structurally the same but the icon could shift to a folder/domain icon
-- **No structural changes needed** -- the card already renders:
-  - Playbook items with target emoji, "Protocol Driver" badge, step/gate counts
-  - Procedures nested under "Steps" sub-header with numbered indices
-  - Other owned items (directives, knowledge) under "Gates & Context" sub-header
-  - Shared context items at the bottom with "(shared)" label
-  - Add buttons for "+ Playbook", "+ Knowledge", "+ Principle"
-- Labels stay since they already use correct playbook-centric vocabulary
-- The Deploy button stays prominent (already exists and is always visible)
+### Custom domains
+- Users can create additional domains via the "+ Add Domain" card
+- Simple dialog: name, description, tag, icon choice (from a preset list)
+- Users can edit or delete custom domains (EOS defaults can be hidden but not deleted)
 
-### Empty States
-- No bundles empty state: `"No bundles yet"` becomes `"No domains yet"`, description becomes `"Create a domain to organize your playbooks, or import a document to auto-generate them."`
-- `"Create Bundle"` button becomes `"Create Domain"`
+## Technical Plan
 
-### Unbundled/Loose Items Section
-- `"Unbundled Items"` becomes `"Unassigned Items"`
-- `"AI can group these into bundles"` becomes `"AI can organize these into domains"`
+### 1. Database: New `domains` table
 
-### Bundle CRUD Dialog (`ContextManagement.tsx`)
-- Dialog title: `"Create Bundle"` / `"Edit Bundle"` becomes `"Create Domain"` / `"Edit Domain"`
-- Input placeholder: `"Bundle title"` becomes `"Domain name"`
-- Description placeholder updated accordingly
+```text
+domains
+  id           uuid PK default gen_random_uuid()
+  owner_id     uuid NOT NULL (references auth.users)
+  title        text NOT NULL
+  description  text
+  tag          text NOT NULL (the domain_scope value that links to items)
+  icon         text (lucide icon name)
+  color        text (tailwind color key like "blue", "amber")
+  is_default   boolean default false (true for EOS seeds)
+  sort_order   integer default 0
+  created_at   timestamptz default now()
+  updated_at   timestamptz default now()
+```
 
-### Other Dialogs
-- `DeployToWorkbookDialog.tsx`: Update any "bundle" references in user-facing text to "domain"
-- `ImportCopilotDialog.tsx`: Update "bundle" references to "domain" in UI labels
+- RLS: Users can CRUD their own domains
+- A database function `seed_default_domains(user_id)` inserts the 8 EOS defaults when a user has zero domains
+
+### 2. Files to create
+
+**`src/components/context/DomainsView.tsx`** (new)
+- Fetches domains from the `domains` table
+- On first load, if no domains exist, calls an RPC to seed defaults
+- Renders a card grid
+- Each card shows bundle/item counts (computed from existing data by matching `domain_scope` tags)
+- Handles create/edit/delete domain dialogs
+- Emits `onSelectDomain(tag)` when a card is clicked
+
+### 3. Files to modify
+
+**`src/pages/ContextManagement.tsx`**
+- Add a tab state: "domains" (default) vs "playbooks" (current BundleFirstView)
+- When in "domains" tab, render DomainsView
+- When a domain is clicked, switch to "playbooks" tab with domainFilter pre-set
+- Add breadcrumb navigation for drill-down
+- Pass selected domain context to BundleFirstView
+
+**`src/components/context/BundleFirstView.tsx`**
+- Accept an optional `initialDomainFilter` prop
+- When set, pre-populate the domain filter and show a back/breadcrumb button
+- Minor: expose a callback for "back to domains"
+
+**`src/data/mockContextItems.ts`**
+- No changes needed (domain_tags already exist on MockBundle)
+
+### 4. Domain-to-bundle mapping
+Bundles already derive their `domain_tags` from the `domain_scope` field of their child items. The DomainsView will count bundles per domain by matching `bundle.domain_tags.includes(domain.tag)`. No schema changes needed for the mapping -- the existing `domain_scope` JSONB on `context_items` is the link.
+
+### 5. Migration SQL
+- CREATE TABLE `domains` with RLS policies
+- CREATE FUNCTION `seed_default_domains(p_user_id uuid)` that inserts 8 EOS rows if none exist for that user
 
 ## What Stays the Same
-- The entire data model (bundles table, context_items table, context_item_bundles junction table)
-- The playbook hierarchy inside each domain card (already correct: playbook header with Protocol Driver badge, nested Steps with drag-and-drop, Gates & Context section, shared items)
-- The Copilot at bundle/playbook/step levels (already works correctly)
-- All extraction, import, and deploy flows
-- The internal code variable names (bundles, bundleId, etc.) -- only user-facing strings change
-- Filter mechanics (domain tags and category filters)
-
-## Technical Changes (6 files)
-
-### 1. `src/components/AppSidebar.tsx`
-- Change nav item label: `"Context"` to `"Playbooks"`
-- Change icon: `Library` to `Target` (from lucide-react)
-
-### 2. `src/pages/ContextManagement.tsx`
-- Header title: `"Context"` to `"Playbooks"`
-- Stats text: `"bundles"` to `"domains"`
-- Replace Bundles/Classic toggle with a Power Tools toggle
-- When Power Tools is OFF: show only BundleFirstView (the default experience)
-- When Power Tools is ON: reveal the Classic tab bar, Context Stack button, Impact Sim button, Taxonomy buttons
-- Move TaxonomyOnboarding and TaxonomyHelpButton behind Power Tools
-- Bundle CRUD dialog labels: `"Bundle"` to `"Domain"` in title, placeholder, description
-
-### 3. `src/components/context/BundleFirstView.tsx`
-- Search placeholder: `"Search bundles & items..."` to `"Search playbooks & domains..."`
-- Summary: `"bundles"` to `"domains"`, `"unbundled"` to `"unassigned"`
-- `"+ Bundle"` button label to `"+ Domain"`
-- Empty state: `"No bundles yet"` to `"No domains yet"`, `"Create Bundle"` to `"Create Domain"`, description text updated
-- Loose items header: `"Unbundled Items"` to `"Unassigned Items"`, AI suggestion text updated
-- Filter summary text: `"bundles"` to `"domains"`, `"loose items"` to `"unassigned items"`
-
-### 4. `src/components/context/DeployToWorkbookDialog.tsx`
-- Any user-facing `"bundle"` text to `"domain"`
-
-### 5. `src/components/knowledge/ImportCopilotDialog.tsx`
-- Any user-facing `"bundle"` text to `"domain"` in labels and descriptions
-
-### 6. `src/lib/knowledge-schema.ts`
-- No changes (internal data model stays as-is)
-
-## No Database Changes
-Purely a UI vocabulary and layout refactor. The `bundles` table name and all relationships remain unchanged.
+- The entire BundleFirstView and its playbook hierarchy
+- The bundle/item data model
+- All extraction, import, deploy flows
+- The domain_scope field on context_items (used as the linking mechanism)
 
