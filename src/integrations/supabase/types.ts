@@ -774,6 +774,57 @@ export type Database = {
         }
         Relationships: []
       }
+      operator_plan_items: {
+        Row: {
+          ai_suggested: boolean
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_completed: boolean
+          planned_date: string | null
+          sort_order: number
+          source_id: string | null
+          source_type: string
+          time_horizon: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_suggested?: boolean
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_completed?: boolean
+          planned_date?: string | null
+          sort_order?: number
+          source_id?: string | null
+          source_type?: string
+          time_horizon?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_suggested?: boolean
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_completed?: boolean
+          planned_date?: string | null
+          sort_order?: number
+          source_id?: string | null
+          source_type?: string
+          time_horizon?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       personal_documents: {
         Row: {
           created_at: string
