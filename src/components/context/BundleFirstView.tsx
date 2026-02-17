@@ -7,6 +7,7 @@ import {
   Layers, Tag, Loader2, Rocket, BookOpen, Circle, CheckCircle2, ArrowUpCircle,
   Eraser, GripVertical, Wand2, FileOutput, Globe,
 } from "lucide-react";
+import { GlobalChangelogFeed } from "@/components/context/GlobalChangelogFeed";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InlineContextCopilot, type CopilotScope, type CopilotHierarchy } from "@/components/context/InlineContextCopilot";
@@ -1289,6 +1290,11 @@ export function BundleFirstView({
 
       {/* Content */}
       <div className="flex-1 overflow-auto px-4 pb-4 space-y-3">
+        {/* Global changelog feed */}
+        <GlobalChangelogFeed
+          bundleTitles={new Map(bundles.map(b => [b.id, b.title]))}
+        />
+
         {/* Summary */}
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span>{bundles.length} domains · {looseItems.length} unassigned items</span>
