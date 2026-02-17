@@ -1,15 +1,36 @@
-import { BookOpen, Library, BarChart3, Shield, Zap } from "lucide-react";
+import { useState } from "react";
+import { BookOpen, Library, BarChart3, Shield, Zap, ChevronRight, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import { NerveCenterFeed } from "@/components/oversight/NerveCenterFeed";
 import { WeeklyProgressWidget } from "@/components/oversight/WeeklyProgressWidget";
 import { QuickActionsBar } from "@/components/oversight/QuickActionsBar";
 import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const Index = () => {
-  const { activeRole } = useAuth();
+  const { activeRole, user } = useAuth();
   const isLeader = activeRole === "manager";
   const isOperator = activeRole === "operator";
+  const [mandatesOpen, setMandatesOpen] = useState(false);
+
+  // Fetch active mandate count for the notification badge
+  const { data: activeMandateCount = 0 } = useQuery({
+    queryKey: ["active-mandate-count", user?.id],
+    enabled: !!user && isOperator,
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("context_items")
+        .select("id", { count: "exact", head: true })
+        .eq("is_mandate", true)
+        .eq("mandate_status", "active")
+        .is("deleted_at", null);
+      if (error) throw error;
+      return count ?? 0;
+    },
+  });
 
   // ─── Operator Dashboard ───
   if (isOperator) {
@@ -31,8 +52,23 @@ const Index = () => {
         {/* Weekly Progress */}
         <WeeklyProgressWidget />
 
-        {/* Mandate alerts */}
-        <MandatesDashboard compact />
+        {/* Collapsible Mandate alerts */}
+        <Collapsible open={mandatesOpen} onOpenChange={setMandatesOpen}>
+          <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
+            <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${mandatesOpen ? "rotate-90" : ""}`} />
+            <Shield className="h-4 w-4 text-warning" />
+            <span className="text-sm font-medium">Active Mandates</span>
+            {activeMandateCount > 0 && (
+              <Badge className="ml-1.5 text-[9px] bg-warning/20 text-warning border-warning/30">
+                <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
+                {activeMandateCount} active
+              </Badge>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2">
+            <MandatesDashboard compact />
+          </CollapsibleContent>
+        </Collapsible>
 
         {/* Embedded Nerve Center (compact) */}
         <div>

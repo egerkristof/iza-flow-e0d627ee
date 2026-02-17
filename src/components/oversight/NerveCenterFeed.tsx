@@ -3,10 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  ListTodo, Target, Users, Filter, ArrowUpDown, LayoutGrid,
+  ListTodo, Target, Users, Filter, ArrowUpDown, LayoutGrid, Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeedItem } from "./FeedItem";
 import { SessionResumeCard } from "./SessionResumeCard";
@@ -26,6 +27,7 @@ export function NerveCenterFeed({ statusFilter }: NerveCenterFeedProps) {
   const { user } = useAuth();
   const [grouping, setGrouping] = useState<"priority" | "workbook">("priority");
   const [activeTab, setActiveTab] = useState("feed");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Fetch tasks assigned to me or created by me
   const { data: myTasks = [] } = useQuery({
@@ -232,9 +234,25 @@ export function NerveCenterFeed({ statusFilter }: NerveCenterFeedProps) {
       });
   }, [myTasks, user?.id, workbookMap, profileMap]);
 
-  const sortedFeed = sortByScore(feedItems);
-  const groupedFeed = groupByWorkbook(feedItems);
-  const heroItem = sortedFeed[0] ?? null;
+  // Search filter
+  const filterBySearch = (items: ScoredFeedItem[]) => {
+    if (!searchQuery.trim()) return items;
+    const q = searchQuery.toLowerCase();
+    return items.filter(item =>
+      item.title.toLowerCase().includes(q) ||
+      item.workbookTitle.toLowerCase().includes(q) ||
+      (item.assigneeName?.toLowerCase().includes(q)) ||
+      (item.sessionSummary?.toLowerCase().includes(q)) ||
+      (item.protocolTitle?.toLowerCase().includes(q)) ||
+      item.type.toLowerCase().includes(q) ||
+      item.status.toLowerCase().includes(q)
+    );
+  };
+
+  const filteredFeed = filterBySearch(sortByScore(feedItems));
+  const filteredDelegations = filterBySearch(delegationItems);
+  const groupedFeed = groupByWorkbook(filteredFeed);
+  const heroItem = filteredFeed[0] ?? null;
 
   // Stats
   const myActiveTasks = feedItems.filter(i => i.type === "task").length;
@@ -255,7 +273,17 @@ export function NerveCenterFeed({ statusFilter }: NerveCenterFeedProps) {
       {/* Hero: Where You Left Off */}
       {heroItem && <WhereYouLeftOff item={heroItem} />}
 
-      {/* Tabs */}
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search tasks, sessions, people, workbooks…"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          className="pl-9 h-9 text-sm"
+        />
+      </div>
+
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <div className="flex items-center justify-between">
           <TabsList>
@@ -287,13 +315,13 @@ export function NerveCenterFeed({ statusFilter }: NerveCenterFeedProps) {
 
         {/* Priority Feed */}
         <TabsContent value="feed" className="mt-4">
-          {sortedFeed.length === 0 ? (
+          {filteredFeed.length === 0 ? (
             <div className="rounded-lg border border-border/50 bg-card p-8 text-center text-sm text-muted-foreground">
-              No active tasks or sessions. Start a workbook session to begin!
+              {searchQuery ? "No results match your search." : "No active tasks or sessions. Start a workbook session to begin!"}
             </div>
           ) : grouping === "priority" ? (
             <div className="space-y-2">
-              {sortedFeed.map(item => (
+              {filteredFeed.map(item => (
                 <FeedItem key={`${item.type}-${item.id}`} item={item} />
               ))}
             </div>
@@ -317,13 +345,13 @@ export function NerveCenterFeed({ statusFilter }: NerveCenterFeedProps) {
 
         {/* Sessions */}
         <TabsContent value="sessions" className="mt-4">
-          {feedItems.filter(i => i.type === "session").length === 0 ? (
+          {filteredFeed.filter(i => i.type === "session").length === 0 ? (
             <div className="rounded-lg border border-border/50 bg-card p-8 text-center text-sm text-muted-foreground">
-              No active sessions. Start a playbook session from a workbook.
+              {searchQuery ? "No sessions match your search." : "No active sessions. Start a playbook session from a workbook."}
             </div>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">
-              {feedItems.filter(i => i.type === "session").sort((a, b) => b.score - a.score).map(item => (
+              {filteredFeed.filter(i => i.type === "session").sort((a, b) => b.score - a.score).map(item => (
                 <SessionResumeCard key={item.id} item={item} />
               ))}
             </div>
@@ -332,7 +360,7 @@ export function NerveCenterFeed({ statusFilter }: NerveCenterFeedProps) {
 
         {/* Delegations */}
         <TabsContent value="delegations" className="mt-4">
-          <DelegationTracker items={delegationItems} />
+          <DelegationTracker items={filteredDelegations} />
         </TabsContent>
       </Tabs>
     </div>

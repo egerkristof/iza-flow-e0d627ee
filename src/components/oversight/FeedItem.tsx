@@ -11,6 +11,28 @@ import {
 } from "@/lib/priority-scoring";
 import { formatDistanceToNow } from "date-fns";
 
+function getActionSummary(item: ScoredFeedItem): string {
+  if (item.type === "session") {
+    const progress = item.totalSteps ? `${item.completedSteps ?? 0}/${item.totalSteps} steps done` : "";
+    const who = item.protocolTitle ? `Protocol: ${item.protocolTitle}` : "";
+    const parts = [who, progress].filter(Boolean);
+    if (item.status === "paused") return `Resume session — ${parts.join(" · ")}`;
+    if (item.status === "in_progress") return `Continue working — ${parts.join(" · ")}`;
+    return `Start session — ${parts.join(" · ")}`;
+  }
+  if (item.type === "delegation") {
+    const who = item.assigneeName ? `Assigned to ${item.assigneeName}` : "Delegated";
+    if (item.status === "done") return `${who} — review their completed work`;
+    if (item.status === "blocked") return `${who} — needs your help to unblock`;
+    return `${who} — awaiting progress`;
+  }
+  // task
+  if (item.status === "blocked") return `Unblock this task in ${item.workbookTitle}`;
+  if (item.status === "in_progress") return `Continue working on this task`;
+  if (item.status === "todo") return `Pick up this task in ${item.workbookTitle}`;
+  return `Review this task`;
+}
+
 function formatRelative(dateStr: string): string {
   try {
     return formatDistanceToNow(new Date(dateStr), { addSuffix: true });
@@ -99,6 +121,12 @@ export function FeedItem({ item }: { item: ScoredFeedItem }) {
             </Badge>
           )}
         </div>
+
+        {/* Action summary line */}
+        <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-1">
+          {getActionSummary(item)}
+        </p>
+
         <div className="flex items-center gap-2 mt-0.5">
           <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
             {typeIcon}
