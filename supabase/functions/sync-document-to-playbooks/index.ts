@@ -67,12 +67,27 @@ Deno.serve(async (req) => {
       `<item id="${item.id}" category="${item.category}" title="${item.title}" parent_playbook="${item.parent_playbook_id || "none"}">\n${item.content_full || ""}\n</item>`
     ).join("\n\n");
 
-    // If we have the original generated document, compute a simple text diff first
-    // to help the AI focus only on what actually changed
+    // Compute a line-level diff between the baseline and edited document
+    // to give the AI precise context about what actually changed
     let diffHint = "";
-    if (original_document && original_document !== document_markdown) {
-      const origLines = original_document.split("\n");
-      const newLines = document_markdown.split("\n");
+    if (original_document) {
+      // Normalize both documents for comparison
+      const origTrimmed = original_document.trim();
+      const newTrimmed = document_markdown.trim();
+      
+      if (origTrimmed === newTrimmed) {
+        return new Response(JSON.stringify({
+          success: true,
+          summary: "No changes detected",
+          operations: [],
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // Use a smarter diff: find actual changed lines
+      const origLines = origTrimmed.split("\n");
+      const newLines = newTrimmed.split("\n");
       const changes: string[] = [];
       const maxLen = Math.max(origLines.length, newLines.length);
       
@@ -84,18 +99,9 @@ Deno.serve(async (req) => {
         }
       }
       
-      if (changes.length === 0) {
-        // No actual text changes detected
-        return new Response(JSON.stringify({
-          success: true,
-          summary: "No changes detected",
-          operations: [],
-        }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+      if (changes.length > 0) {
+        diffHint = `\n## ACTUAL LINE-LEVEL CHANGES (only these lines differ from the baseline)\nThere are exactly ${changes.length} changed lines:\n\n${changes.slice(0, 100).join("\n\n")}\n\nIMPORTANT: ONLY generate operations for items affected by these specific line changes. If a heading changed from "Customer Contract Flow" to "Customer Contract Flow 2", that is ONE update to ONE item's title. Do NOT touch any other items.`;
       }
-      
-      diffHint = `\n## ACTUAL LINE-LEVEL CHANGES (only these lines differ from the original)\nThere are exactly ${changes.length} changed lines:\n\n${changes.slice(0, 100).join("\n\n")}\n\nIMPORTANT: ONLY generate operations for items affected by these specific line changes. If a heading changed from "Customer Contract Flow" to "Customer Contract Flow 2", that is ONE update to ONE item's title. Do NOT touch any other items.`;
     }
 
     const systemPrompt = `You are a PRECISION DIFF ENGINE. Your job is to detect ONLY the exact changes between an edited markdown document and the existing structured items.

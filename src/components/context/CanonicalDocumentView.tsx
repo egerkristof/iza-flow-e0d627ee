@@ -148,6 +148,16 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
 
   const generatedContent = useMemo(() => generateCanonicalDocument(bundle, items), [bundle, items]);
 
+  // Stable baseline: captured at generation time, only updated on regenerate/sync success
+  const baselineRef = useRef(generatedContent);
+  // Update baseline only when generatedContent changes AND content hasn't been edited (no draft)
+  useEffect(() => {
+    const hasDraft = localStorage.getItem(`doc-draft-${bundle.id}`);
+    if (!hasDraft) {
+      baselineRef.current = generatedContent;
+    }
+  }, [generatedContent, bundle.id]);
+
   const [content, setContent] = useState(generatedContent);
   const [viewMode, setViewMode] = useState<"edit" | "preview" | "split">("split");
   const [dirty, setDirty] = useState(false);
@@ -196,6 +206,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
     setDirty(false);
     setDraftSaved(false);
     localStorage.removeItem(`doc-draft-${bundle.id}`);
+    baselineRef.current = fresh;
     onDraftChange?.(bundle.id, false);
     toast({ title: "Document regenerated", description: "Content rebuilt from current playbook items." });
   }, [bundle, items, toast, onDraftChange]);
@@ -249,7 +260,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
           },
           body: JSON.stringify({
             document_markdown: content,
-            original_document: generatedContent,
+            original_document: baselineRef.current,
             bundle_id: bundle.id,
             bundle_title: bundle.title,
             existing_items: existingItems,
@@ -322,6 +333,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
       });
 
       localStorage.removeItem(`doc-draft-${bundle.id}`);
+      baselineRef.current = content; // Update baseline to current content after successful sync
       setDirty(false);
       setDraftSaved(false);
       onDraftChange?.(bundle.id, false);
@@ -480,7 +492,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
             <GutterDiffEditor
               ref={editorRef}
               value={content}
-              baseline={generatedContent}
+              baseline={baselineRef.current}
               onChange={handleContentChange}
               onMouseUp={handleMouseUp}
               copilotRange={copilotRange}
