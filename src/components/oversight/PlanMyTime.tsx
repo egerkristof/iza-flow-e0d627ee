@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import {
   Clock, Calendar, CalendarDays, Sparkles, Plus, Brain,
-  Check, Trash2, ChevronRight, Loader2, ListPlus, X,
+  Check, Trash2, ChevronRight, Loader2, ListPlus, X, Replace, CheckSquare, Square,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PriorityGraph } from "./PriorityGraph";
 import { PlanPreferencesPanel } from "./PlanPreferencesPanel";
-import type { PlanPreferences, GenerateMode } from "./PlanPreferencesPanel";
+import type { PlanPreferences } from "./PlanPreferencesPanel";
 
 type Horizon = "next_hour" | "today" | "this_week";
 
@@ -31,6 +31,15 @@ interface PlanItem {
   is_completed: boolean;
   ai_suggested: boolean;
   created_at: string;
+}
+
+interface AiSuggestion {
+  title: string;
+  description: string;
+  source_type: string;
+  source_id?: string;
+  planned_date?: string;
+  selected: boolean;
 }
 
 const HORIZON_CONFIG: Record<Horizon, { label: string; icon: React.ReactNode; description: string }> = {
@@ -49,6 +58,10 @@ export function PlanMyTime() {
   const [showFeedPicker, setShowFeedPicker] = useState(false);
   const [feedPickerSearch, setFeedPickerSearch] = useState("");
   const [showPrefsPanel, setShowPrefsPanel] = useState(false);
+
+  // AI suggestion preview state
+  const [aiSuggestions, setAiSuggestions] = useState<AiSuggestion[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // Fetch saved preferences for all horizons
   const { data: savedPrefs = [] } = useQuery({
@@ -152,9 +165,9 @@ export function PlanMyTime() {
     return items;
   }, [myTasks, mySessions, plannedSourceIds, feedPickerSearch]);
 
-  // AI generate plan — passes existing plans from other horizons as context
-  const generatePlan = useMutation({
-    mutationFn: async ({ horizon, preferences, mode }: { horizon: Horizon; preferences?: PlanPreferences; mode?: GenerateMode }) => {
+  // AI generate preview (no persistence)
+  const generatePreview = useMutation({
+    mutationFn: async ({ horizon, preferences }: { horizon: Horizon; preferences?: PlanPreferences }) => {
       const otherHorizonItems = planItems
         .filter(p => p.time_horizon !== horizon && !p.is_completed)
         .map(p => ({ title: p.title, horizon: p.time_horizon, source_type: p.source_type }));
@@ -164,23 +177,54 @@ export function PlanMyTime() {
           time_horizon: horizon,
           existing_plans: otherHorizonItems,
           preferences: preferences ?? null,
-          mode: mode ?? "replace",
+          mode: "preview",
         },
       });
       if (error) throw error;
       return data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["operator-plan"] });
+      const items: AiSuggestion[] = (data.items ?? []).map((item: any) => ({
+        ...item,
+        selected: true, // select all by default
+      }));
+      setAiSuggestions(items);
+      setShowSuggestions(true);
       setShowPrefsPanel(false);
+    },
+    onError: (e: any) => {
+      toast({ title: "Failed to generate suggestions", description: e.message, variant: "destructive" });
+    },
+  });
+
+  // Persist selected suggestions
+  const persistSuggestions = useMutation({
+    mutationFn: async ({ horizon, mode }: { horizon: Horizon; mode: "append" | "replace" }) => {
+      const selected = aiSuggestions.filter(s => s.selected);
+      if (selected.length === 0) throw new Error("No items selected");
+
+      const { data, error } = await supabase.functions.invoke("generate-plan", {
+        body: {
+          time_horizon: horizon,
+          mode,
+          selected_items: selected,
+        },
+      });
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (data, { mode }) => {
+      queryClient.invalidateQueries({ queryKey: ["operator-plan"] });
+      setShowSuggestions(false);
+      setAiSuggestions([]);
       const horizon = activeTab as Horizon;
       toast({
-        title: "Plan generated",
-        description: `${data.count} items suggested by AI for your ${HORIZON_CONFIG[horizon]?.label?.toLowerCase() ?? activeTab}.`,
+        title: mode === "replace" ? "List replaced" : "Items appended",
+        description: `${data.count} items added to your ${HORIZON_CONFIG[horizon]?.label?.toLowerCase() ?? activeTab}.`,
       });
     },
     onError: (e: any) => {
-      toast({ title: "Failed to generate plan", description: e.message, variant: "destructive" });
+      toast({ title: "Failed to save", description: e.message, variant: "destructive" });
     },
   });
 
@@ -250,6 +294,17 @@ export function PlanMyTime() {
     },
   });
 
+  const toggleSuggestion = (idx: number) => {
+    setAiSuggestions(prev => prev.map((s, i) => i === idx ? { ...s, selected: !s.selected } : s));
+  };
+
+  const toggleAllSuggestions = () => {
+    const allSelected = aiSuggestions.every(s => s.selected);
+    setAiSuggestions(prev => prev.map(s => ({ ...s, selected: !allSelected })));
+  };
+
+  const selectedCount = aiSuggestions.filter(s => s.selected).length;
+
   const isHorizonTab = ["next_hour", "today", "this_week"].includes(activeTab);
   const activeHorizon = activeTab as Horizon;
   const filteredItems = isHorizonTab ? planItems.filter(i => i.time_horizon === activeTab) : [];
@@ -273,7 +328,7 @@ export function PlanMyTime() {
 
       <CollapsibleContent className="mt-2">
         <div className="rounded-lg border border-border/50 bg-card p-4 space-y-4">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <Tabs value={activeTab} onValueChange={(v) => { setActiveTab(v); setShowSuggestions(false); setAiSuggestions([]); }}>
             <div className="flex items-center justify-between">
               <TabsList>
                 {(Object.keys(HORIZON_CONFIG) as Horizon[]).map(h => (
@@ -307,10 +362,10 @@ export function PlanMyTime() {
                     size="sm"
                     variant="outline"
                     className="text-xs gap-1.5"
-                    disabled={generatePlan.isPending}
+                    disabled={generatePreview.isPending}
                     onClick={() => setShowPrefsPanel(prev => !prev)}
                   >
-                    {generatePlan.isPending ? (
+                    {generatePreview.isPending ? (
                       <Loader2 className="h-3 w-3 animate-spin" />
                     ) : (
                       <Sparkles className="h-3 w-3" />
@@ -321,15 +376,103 @@ export function PlanMyTime() {
               )}
             </div>
 
-            {/* Preferences panel (inline, shown when AI Suggest clicked) */}
-            {showPrefsPanel && isHorizonTab && (
+            {/* Preferences panel */}
+            {showPrefsPanel && isHorizonTab && !showSuggestions && (
               <div className="mt-3">
                 <PlanPreferencesPanel
                   horizon={activeHorizon}
-                  onGenerate={(prefs, mode) => generatePlan.mutate({ horizon: activeHorizon, preferences: prefs, mode })}
-                  isGenerating={generatePlan.isPending}
-                  hasExistingItems={pendingItems.length > 0}
+                  onGenerate={(prefs) => generatePreview.mutate({ horizon: activeHorizon, preferences: prefs })}
+                  isGenerating={generatePreview.isPending}
                 />
+              </div>
+            )}
+
+            {/* AI Suggestions Preview */}
+            {showSuggestions && aiSuggestions.length > 0 && isHorizonTab && (
+              <div className="mt-3 rounded-lg border border-primary/30 bg-primary/5 p-3 space-y-3 animate-in slide-in-from-top-2 duration-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-medium">AI Suggestions</span>
+                    <Badge variant="secondary" className="text-[9px]">
+                      {selectedCount}/{aiSuggestions.length} selected
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Button size="sm" variant="ghost" className="text-[10px] h-6 px-2" onClick={toggleAllSuggestions}>
+                      {aiSuggestions.every(s => s.selected) ? "Deselect All" : "Select All"}
+                    </Button>
+                    <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={() => { setShowSuggestions(false); setAiSuggestions([]); }}>
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-1 max-h-64 overflow-y-auto">
+                  {aiSuggestions.map((suggestion, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => toggleSuggestion(idx)}
+                      className={`flex items-start gap-3 rounded-md px-3 py-2.5 cursor-pointer transition-colors ${
+                        suggestion.selected ? "bg-primary/10 border border-primary/20" : "bg-card border border-border/30 hover:border-primary/20"
+                      }`}
+                    >
+                      <div className="mt-0.5 shrink-0">
+                        {suggestion.selected ? (
+                          <CheckSquare className="h-4 w-4 text-primary" />
+                        ) : (
+                          <Square className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">
+                          {suggestion.source_type === "session" ? "🎯" : suggestion.source_type === "task" ? "📋" : "✏️"}{" "}
+                          {suggestion.title}
+                        </p>
+                        {suggestion.description && (
+                          <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-2">{suggestion.description}</p>
+                        )}
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <Badge variant="secondary" className="text-[8px] gap-0.5">
+                            <Sparkles className="h-2 w-2" /> AI
+                          </Badge>
+                          <Badge variant="outline" className="text-[8px] capitalize">{suggestion.source_type}</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Append / Replace actions */}
+                <div className="flex gap-2 pt-1">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 text-xs gap-1.5"
+                    disabled={selectedCount === 0 || persistSuggestions.isPending}
+                    onClick={() => persistSuggestions.mutate({ horizon: activeHorizon, mode: "append" })}
+                  >
+                    {persistSuggestions.isPending ? (
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                    ) : (
+                      <ListPlus className="h-3 w-3" />
+                    )}
+                    Append Selected ({selectedCount})
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="flex-1 text-xs gap-1.5"
+                    disabled={selectedCount === 0 || persistSuggestions.isPending}
+                    onClick={() => persistSuggestions.mutate({ horizon: activeHorizon, mode: "replace" })}
+                  >
+                    {persistSuggestions.isPending ? (
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                    ) : (
+                      <Replace className="h-3 w-3" />
+                    )}
+                    Replace with Selected ({selectedCount})
+                  </Button>
+                </div>
               </div>
             )}
 
