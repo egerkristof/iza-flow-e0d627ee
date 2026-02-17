@@ -91,6 +91,7 @@ export function DomainsView({ bundles, items, onSelectDomain, bundleDomainMap }:
       const { data, error } = await supabase
         .from("domains")
         .select("*")
+        .eq("owner_id", user!.id)
         .order("sort_order", { ascending: true });
       if (error) throw error;
       return data as DomainRow[];
