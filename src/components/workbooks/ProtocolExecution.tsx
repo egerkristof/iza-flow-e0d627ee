@@ -838,7 +838,8 @@ export function ProtocolExecutionView({
   }, [chatInput, isStreaming, currentStep, contextItems, captures, currentStepIndex, protocol.title, toast]);
 
   // Show choice screen when existing session found but no explicit resume
-  if (!resumeExecutionId && !forceNew && existingExecution && steps.length > 0) {
+  // Also skip if user already chose to resume (chosenExecutionId set) or start new (forceNew)
+  if (!resumeExecutionId && !forceNew && !chosenExecutionId && existingExecution && steps.length > 0) {
     const statusLabel = existingExecution.status === "in_progress" ? "In Progress"
       : existingExecution.status === "paused" ? "Paused" : "Not Started";
     return (
@@ -873,8 +874,8 @@ export function ProtocolExecutionView({
     );
   }
 
-  // Auto-start execution
-  if (!activeExecution && steps.length > 0) {
+  // Auto-start execution (only show when not waiting for a chosen execution to load)
+  if (!activeExecution && !chosenExecutionId && steps.length > 0) {
     return (
       <div className="flex h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-4">
         <Package className="h-12 w-12 text-primary/50" />
