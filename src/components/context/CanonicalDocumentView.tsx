@@ -153,21 +153,15 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     const other = children.filter(i => !["PROCEDURE", "PRINCIPLE", "DIRECTIVE", "KNOWLEDGE", "RESEARCH"].includes(i.category));
 
     if (procedures.length > 0) {
-      lines.push("### Steps", "");
-      let stepNum = 0;
-      procedures.forEach((proc) => {
-        // Skip empty procedures (no content and no output spec)
-        const hasContent = !!proc.content_preview?.trim();
-        const hasOutput = proc.output_type && proc.output_type !== "free_text";
-        if (!hasContent && !hasOutput) return;
-
-        stepNum++;
+      procedures.forEach((proc, idx) => {
+        const stepNum = idx + 1;
         lines.push(`<!-- item:${proc.id} -->`);
         lines.push(`${stepNum}. **${proc.title}**`);
-        if (proc.content_preview) {
+        if (proc.content_preview?.trim()) {
           for (const cl of proc.content_preview.split("\n")) lines.push(`   ${cl}`);
         }
         // Render output spec if present
+        const hasOutput = proc.output_type && proc.output_type !== "free_text";
         if (hasOutput) {
           const label = OUTPUT_TYPE_LABELS[proc.output_type as OutputType] || proc.output_type;
           const icon = OUTPUT_TYPE_ICONS[proc.output_type as OutputType] || "📄";
@@ -179,7 +173,6 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     }
 
     if (directives.length > 0) {
-      lines.push("### Gates & Directives", "");
       for (const d of directives) {
         lines.push(`<!-- item:${d.id} -->`);
         lines.push(`> **⚠️ ${d.title}**`);
@@ -189,7 +182,6 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     }
 
     if (knowledge.length > 0) {
-      lines.push("### Knowledge", "");
       for (const k of knowledge) {
         lines.push(`<!-- item:${k.id} -->`);
         lines.push(`#### ${k.title}`);
@@ -199,7 +191,6 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     }
 
     if (principles.length > 0) {
-      lines.push("### Principles", "");
       for (const p of principles) {
         lines.push(`<!-- item:${p.id} -->`);
         lines.push(`> **${p.title}**`);
@@ -209,7 +200,6 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     }
 
     if (research.length > 0) {
-      lines.push("### Research", "");
       for (const r of research) {
         lines.push(`<!-- item:${r.id} -->`);
         lines.push(`#### ${r.title}`);
