@@ -1,10 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import {
   Plus, FileText, Pencil, Trash2, Loader2, Clock, ArrowLeft,
   Save, History, ChevronDown, Upload, BookOpen, Eye, GitBranch,
-  AlertTriangle, Activity,
+  AlertTriangle, Activity, Sparkles, File,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,9 +24,15 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { CategoryBadge } from "@/components/knowledge/CategoryBadge";
+import { useExtraction } from "@/hooks/use-extraction";
+import { ExtractionDepthSelector } from "./ExtractionDepthSelector";
+import { ImportCopilotDialog } from "./ImportCopilotDialog";
+import { StructureEditorDialog } from "./StructureEditorDialog";
+import { CompareExtractionsDialog } from "./CompareExtractionsDialog";
+import { type ExtractionResult, type ExtractionDepth, EXTRACTION_DEPTH_META } from "@/lib/knowledge-schema";
 
 interface KnowledgeSource {
   id: string;
@@ -62,10 +69,29 @@ interface LineageItem {
   source_knowledge_id: string;
 }
 
+interface PersonalDoc {
+  id: string;
+  user_id: string;
+  file_name: string;
+  file_path: string;
+  file_type: string;
+  document_category: string;
+  description: string | null;
+  parsed_status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+const DOC_CATEGORIES: Record<string, string> = {
+  cv: "CV / Resume", linkedin: "LinkedIn Export", certification: "Certification",
+  gartner: "Gartner / Analyst", other: "Other",
+};
+
 export function KnowledgeSources() {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const fileRef = useRef<HTMLInputElement>(null);
 
   // State
   const [editingSource, setEditingSource] = useState<KnowledgeSource | null>(null);
@@ -83,6 +109,15 @@ export function KnowledgeSources() {
   const [editorDirty, setEditorDirty] = useState(false);
   const [changeNote, setChangeNote] = useState("");
   const [historyOpen, setHistoryOpen] = useState(false);
+
+  // Document state
+  const [uploading, setUploading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("other");
+  const [extractingDocId, setExtractingDocId] = useState<string | null>(null);
+  const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
+  const [extractionDocName, setExtractionDocName] = useState("");
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [compareDoc, setCompareDoc] = useState<{ id: string; name: string } | null>(null);
 
   // Fetch sources
   const { data: sources = [], isPending } = useQuery({
@@ -163,6 +198,100 @@ export function KnowledgeSources() {
     const bundleNames = [...new Set(items.map(i => i.bundle_title).filter(Boolean))] as string[];
     bundlesBySource[sourceId] = bundleNames;
   }
+
+  // ── Extraction hook ──
+  const {
+    extract,
+    extracting,
+    depth: extractionDepth,
+    setDepth: setExtractionDepth,
+    advisorPhase,
+    chunkProgress,
+    structureEditorOpen,
+    setStructureEditorOpen,
+    pendingStructure,
+    pendingFileName,
+    handleStructureConfirm,
+    handleStructureSkip,
+  } = useExtraction({
+    onResult: (data, sourceName) => {
+      setExtractionResult(data);
+      setExtractionDocName(sourceName);
+      setReviewOpen(true);
+      setExtractingDocId(null);
+      queryClient.invalidateQueries({ queryKey: ["personal-documents"] });
+    },
+  });
+
+  // ── Fetch personal documents ──
+  const { data: docs = [], isPending: docsLoading } = useQuery({
+    queryKey: ["personal-documents", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("personal_documents")
+        .select("*")
+        .eq("user_id", user!.id)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data as PersonalDoc[];
+    },
+  });
+
+  // ── Upload handler ──
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    if (file.size > 20 * 1024 * 1024) {
+      toast({ title: "File too large", description: "Max 20MB", variant: "destructive" });
+      return;
+    }
+    setUploading(true);
+    try {
+      const filePath = `${user.id}/${Date.now()}-${file.name}`;
+      const { error: uploadErr } = await supabase.storage
+        .from("personal-documents")
+        .upload(filePath, file);
+      if (uploadErr) throw uploadErr;
+      const { error: insertErr } = await supabase.from("personal_documents").insert({
+        user_id: user.id,
+        file_name: file.name,
+        file_path: filePath,
+        file_type: file.type || "application/octet-stream",
+        document_category: selectedCategory,
+        parsed_status: "pending",
+      });
+      if (insertErr) throw insertErr;
+      queryClient.invalidateQueries({ queryKey: ["personal-documents"] });
+      toast({ title: "Document uploaded", description: file.name });
+    } catch (err: any) {
+      toast({ title: "Upload failed", description: err.message, variant: "destructive" });
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  };
+
+  // ── Delete document ──
+  const deleteDocMutation = useMutation({
+    mutationFn: async (doc: { id: string; file_path: string }) => {
+      await supabase.storage.from("personal-documents").remove([doc.file_path]);
+      const { error } = await supabase.from("personal_documents").delete().eq("id", doc.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["personal-documents"] });
+      toast({ title: "Document removed" });
+    },
+  });
+
+  // ── Extract from document ──
+  const handleExtractDoc = (docId: string, docName: string) => {
+    setExtractingDocId(docId);
+    extract({ documentId: docId, source_type: "document" }, docName);
+  };
+
+  const isDocExtracting = (docId: string) => extractingDocId === docId && extracting;
 
   // Lineage for current editing source
   const currentLineage = editingSource ? (lineageBySource[editingSource.id] || []) : [];
@@ -450,7 +579,7 @@ export function KnowledgeSources() {
   }
 
   // ──── List view ────
-  if (isPending) {
+  if (isPending && docsLoading) {
     return (
       <div className="flex items-center justify-center p-12">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -458,13 +587,15 @@ export function KnowledgeSources() {
     );
   }
 
+  const hasAnything = sources.length > 0 || docs.length > 0;
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-sm font-semibold">My Sources</h2>
           <p className="text-xs text-muted-foreground">
-            Living documents where you develop and maintain your expertise. Edit here, then extract context items into playbooks.
+            Living documents and uploaded files. Edit sources, extract context items into playbooks.
           </p>
         </div>
         <Button size="sm" className="gap-1.5" onClick={() => setCreateOpen(true)}>
@@ -472,15 +603,35 @@ export function KnowledgeSources() {
         </Button>
       </div>
 
-      {sources.length === 0 ? (
+      {/* Upload strip */}
+      <div className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed border-border p-3 bg-muted/30">
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <SelectTrigger className="w-40 h-8 text-xs">
+            <SelectValue placeholder="Category" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(DOC_CATEGORIES).map(([val, label]) => (
+              <SelectItem key={val} value={val}>{label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <input ref={fileRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.csv,.json" onChange={handleUpload} />
+        <Button variant="outline" size="sm" onClick={() => fileRef.current?.click()} disabled={uploading} className="gap-1.5 h-8">
+          {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+          {uploading ? "Uploading…" : "Upload Document"}
+        </Button>
+        <ExtractionDepthSelector value={extractionDepth} onChange={setExtractionDepth} compact />
+        <span className="text-[10px] text-muted-foreground">PDF, DOC, TXT, CSV — max 20MB</span>
+      </div>
+
+      {!hasAnything ? (
         <Card className="border-dashed">
           <CardContent className="p-8 text-center space-y-3">
             <FileText className="h-10 w-10 text-muted-foreground mx-auto" />
             <div>
-              <h3 className="text-sm font-medium">No knowledge sources yet</h3>
+              <h3 className="text-sm font-medium">No sources or documents yet</h3>
               <p className="text-xs text-muted-foreground mt-1 max-w-md mx-auto">
-                Create a knowledge source to document your expertise, processes, and thinking. 
-                Sources are living documents that you can edit and version over time.
+                Upload a document or create a knowledge source to get started.
               </p>
             </div>
             <Button size="sm" className="gap-1.5" onClick={() => setCreateOpen(true)}>
@@ -489,74 +640,145 @@ export function KnowledgeSources() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {sources.map(source => {
-            const linkedCount = linkedItemCounts[source.id] ?? 0;
-            const sourceBundles = bundlesBySource[source.id] || [];
-            return (
-              <Card
-                key={source.id}
-                className="group cursor-pointer hover:border-primary/40 transition-all hover:shadow-sm"
-                onClick={() => openEditor(source)}
-              >
-                <CardContent className="p-4 space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-sm font-semibold truncate">{source.title}</h3>
-                      {source.description && (
-                        <p className="text-[11px] text-muted-foreground line-clamp-2 mt-0.5">{source.description}</p>
-                      )}
+        <div className="space-y-4">
+          {/* Knowledge Sources grid */}
+          {sources.length > 0 && (
+            <div className="space-y-2">
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+                <BookOpen className="h-3 w-3" /> Knowledge Sources
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {sources.map(source => {
+                  const linkedCount = linkedItemCounts[source.id] ?? 0;
+                  const sourceBundles = bundlesBySource[source.id] || [];
+                  return (
+                    <Card
+                      key={source.id}
+                      className="group cursor-pointer hover:border-primary/40 transition-all hover:shadow-sm"
+                      onClick={() => openEditor(source)}
+                    >
+                      <CardContent className="p-4 space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0 flex-1">
+                            <h3 className="text-sm font-semibold truncate">{source.title}</h3>
+                            {source.description && (
+                              <p className="text-[11px] text-muted-foreground line-clamp-2 mt-0.5">{source.description}</p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                            <Button
+                              variant="ghost" size="icon" className="h-6 w-6 text-destructive"
+                              onClick={e => { e.stopPropagation(); setDeleteConfirm(source); }}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <Badge variant="secondary" className="text-[10px]">v{source.current_version}</Badge>
+                          <Badge variant="outline" className="text-[10px]">{source.status}</Badge>
+                          {linkedCount > 0 && (
+                            <Badge variant="outline" className="text-[10px] gap-0.5">
+                              <BookOpen className="h-2.5 w-2.5" /> {linkedCount} items
+                            </Badge>
+                          )}
+                          {linkedCount === 0 && (
+                            <Badge variant="outline" className="text-[10px] gap-0.5 border-primary/30 text-primary">
+                              Extract now
+                            </Badge>
+                          )}
+                          <span className="text-[10px] text-muted-foreground ml-auto">
+                            <Clock className="h-2.5 w-2.5 inline mr-0.5" />
+                            {formatDistanceToNow(new Date(source.updated_at), { addSuffix: true })}
+                          </span>
+                        </div>
+                        {sourceBundles.length > 0 && (
+                          <div className="flex items-center gap-1.5 flex-wrap pt-1 border-t border-border/50">
+                            <GitBranch className="h-2.5 w-2.5 text-muted-foreground shrink-0" />
+                            {sourceBundles.slice(0, 3).map(name => (
+                              <Badge key={name} variant="secondary" className="text-[9px] h-4 px-1.5">{name}</Badge>
+                            ))}
+                            {sourceBundles.length > 3 && (
+                              <span className="text-[9px] text-muted-foreground">+{sourceBundles.length - 3} more</span>
+                            )}
+                          </div>
+                        )}
+                        {source.content && sourceBundles.length === 0 && (
+                          <p className="text-[11px] text-muted-foreground line-clamp-2 pt-1 border-t border-border/50">
+                            {source.content.substring(0, 200)}
+                          </p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Uploaded Documents grid */}
+          {docs.length > 0 && (
+            <div className="space-y-2">
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+                <File className="h-3 w-3" /> Uploaded Documents
+              </h3>
+              <div className="space-y-1.5">
+                {docs.map(doc => (
+                  <div
+                    key={doc.id}
+                    className="flex items-center justify-between rounded-md border border-border bg-muted/20 px-4 py-2.5"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <FileText className="h-4 w-4 text-primary shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium truncate">{doc.file_name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(doc.created_at).toLocaleDateString()}
+                          {isDocExtracting(doc.id) && advisorPhase !== "idle" && (
+                            <span className="ml-2 text-primary">
+                              {advisorPhase === "detecting-structure" && "Detecting structure…"}
+                              {advisorPhase === "optimizing-structure" && "Optimizing structure…"}
+                              {advisorPhase === "generating-advisor" && "Generating advisor…"}
+                              {advisorPhase === "extracting" && (
+                                chunkProgress
+                                  ? `Extracting chunk ${chunkProgress.current}/${chunkProgress.total}…`
+                                  : "Extracting…"
+                              )}
+                              {advisorPhase === "matching" && "Matching bundles…"}
+                            </span>
+                          )}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <Badge variant="secondary" className="text-[10px]">{DOC_CATEGORIES[doc.document_category] ?? doc.document_category}</Badge>
+                      <Badge variant={doc.parsed_status === "parsed" ? "default" : "outline"} className="text-[10px]">
+                        {doc.parsed_status}
+                      </Badge>
                       <Button
-                        variant="ghost" size="icon" className="h-6 w-6 text-destructive"
-                        onClick={e => { e.stopPropagation(); setDeleteConfirm(source); }}
+                        variant="ghost" size="icon" className="h-7 w-7 text-primary"
+                        title="Extract preferences & context with AI"
+                        disabled={isDocExtracting(doc.id)}
+                        onClick={() => handleExtractDoc(doc.id, doc.file_name)}
                       >
-                        <Trash2 className="h-3 w-3" />
+                        {isDocExtracting(doc.id) ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <Sparkles className="h-3.5 w-3.5" />
+                        )}
+                      </Button>
+                      <Button
+                        variant="ghost" size="icon" className="h-7 w-7 text-destructive"
+                        onClick={() => deleteDocMutation.mutate({ id: doc.id, file_path: doc.file_path })}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Badge variant="secondary" className="text-[10px]">v{source.current_version}</Badge>
-                    <Badge variant="outline" className="text-[10px]">
-                      {source.status}
-                    </Badge>
-                    {linkedCount > 0 && (
-                      <Badge variant="outline" className="text-[10px] gap-0.5">
-                        <BookOpen className="h-2.5 w-2.5" /> {linkedCount} items
-                      </Badge>
-                    )}
-                    {linkedCount === 0 && (
-                      <Badge variant="outline" className="text-[10px] gap-0.5 border-primary/30 text-primary">
-                        Extract now
-                      </Badge>
-                    )}
-                    <span className="text-[10px] text-muted-foreground ml-auto">
-                      <Clock className="h-2.5 w-2.5 inline mr-0.5" />
-                      {formatDistanceToNow(new Date(source.updated_at), { addSuffix: true })}
-                    </span>
-                  </div>
-                  {/* Show which playbooks/bundles this source feeds */}
-                  {sourceBundles.length > 0 && (
-                    <div className="flex items-center gap-1.5 flex-wrap pt-1 border-t border-border/50">
-                      <GitBranch className="h-2.5 w-2.5 text-muted-foreground shrink-0" />
-                      {sourceBundles.slice(0, 3).map(name => (
-                        <Badge key={name} variant="secondary" className="text-[9px] h-4 px-1.5">{name}</Badge>
-                      ))}
-                      {sourceBundles.length > 3 && (
-                        <span className="text-[9px] text-muted-foreground">+{sourceBundles.length - 3} more</span>
-                      )}
-                    </div>
-                  )}
-                  {source.content && sourceBundles.length === 0 && (
-                    <p className="text-[11px] text-muted-foreground line-clamp-2 pt-1 border-t border-border/50">
-                      {source.content.substring(0, 200)}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })}
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -598,13 +820,13 @@ export function KnowledgeSources() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete confirmation */}
+      {/* Delete source confirmation */}
       <AlertDialog open={!!deleteConfirm} onOpenChange={open => !open && setDeleteConfirm(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete "{deleteConfirm?.title}"?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete this knowledge source and its version history. Linked context items will not be deleted but will lose their source reference.
+              This will permanently delete this knowledge source and its version history.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -618,6 +840,37 @@ export function KnowledgeSources() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Extraction dialogs */}
+      <StructureEditorDialog
+        open={structureEditorOpen}
+        onOpenChange={setStructureEditorOpen}
+        data={pendingStructure}
+        fileName={pendingFileName}
+        onConfirm={handleStructureConfirm}
+        onSkip={handleStructureSkip}
+      />
+
+      <ImportCopilotDialog
+        open={reviewOpen}
+        onOpenChange={setReviewOpen}
+        data={extractionResult}
+        sourceName={extractionDocName}
+        sourceType="document"
+      />
+
+      <CompareExtractionsDialog
+        open={!!compareDoc}
+        onOpenChange={(v) => { if (!v) setCompareDoc(null); }}
+        sourceName={compareDoc?.name ?? ""}
+        buildBody={() => ({ documentId: compareDoc?.id ?? "", source_type: "document" })}
+        onSelectResult={(data, depth) => {
+          setExtractionResult(data);
+          setExtractionDocName(`${compareDoc?.name ?? ""} (${EXTRACTION_DEPTH_META[depth].label})`);
+          setCompareDoc(null);
+          setReviewOpen(true);
+        }}
+      />
     </div>
   );
 }
