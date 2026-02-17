@@ -108,12 +108,18 @@ serve(async (req) => {
     workbooks.forEach((w: any) => { wbMap[w.id] = w.title; });
 
     const taskSummary = tasks.map((t: any) =>
-      `- [${t.priority}/${t.status}] "${t.title}" (Workbook: ${wbMap[t.workbook_id] ?? "Unknown"}${t.due_date ? `, Due: ${t.due_date}` : ""})`
+      `- ID:${t.id} [${t.priority}/${t.status}] "${t.title}" (Workbook: ${wbMap[t.workbook_id] ?? "Unknown"}${t.due_date ? `, Due: ${t.due_date}` : ""})`
     ).join("\n");
 
     const sessionSummary = sessions.map((s: any) =>
-      `- [${s.status}] "${s.workbook_protocols?.title ?? "Session"}" in "${s.workbooks?.title ?? "Workbook"}" (Drift: ${s.drift_score ?? 0}${s.session_summary ? `, Summary: ${s.session_summary}` : ""})`
+      `- ID:${s.id} [${s.status}] "${s.workbook_protocols?.title ?? "Session"}" in "${s.workbooks?.title ?? "Workbook"}" (Drift: ${s.drift_score ?? 0}${s.session_summary ? `, Summary: ${s.session_summary}` : ""})`
     ).join("\n");
+
+    // Build lookup maps for post-processing
+    const taskLookup = new Map<string, string>();
+    tasks.forEach((t: any) => { taskLookup.set(t.id, t.id); taskLookup.set(t.title.toLowerCase(), t.id); });
+    const sessionLookup = new Map<string, string>();
+    sessions.forEach((s: any) => { sessionLookup.set(s.id, s.id); const title = s.workbook_protocols?.title; if (title) sessionLookup.set(title.toLowerCase(), s.id); });
 
     const today = new Date().toISOString().split("T")[0];
     const dayOfWeek = new Date().toLocaleDateString("en-US", { weekday: "long" });
@@ -153,11 +159,12 @@ Generate a focused plan for time horizon: "${horizon}".
 Return exactly ${maxItems} or fewer items, honoring the operator's focus mode and priority weight preferences.
 
 IMPORTANT: Do NOT duplicate items already planned in other horizons listed above.
+CRITICAL: For each item, you MUST include the source_id (the UUID shown as "ID:" in the lists above) so the item can be linked back. Every suggestion should map to a real task or session from the lists above.
 
 For each item, provide:
 1. A clear action-oriented title (what to DO, not just the item name)
 2. A brief description of why this should be done now and how to approach it
-3. The source type ("task" or "session") and source_id if applicable`;
+3. The source type ("task" or "session") and the source_id (UUID from the list above)`;
 
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -230,6 +237,42 @@ For each item, provide:
         console.error("Failed to parse AI tool call");
       }
     }
+
+    // Post-process: ensure source_id is set by matching against known tasks/sessions
+    planItems = planItems.map((item: any) => {
+      let sourceId = item.source_id || null;
+      
+      // Validate source_id actually exists in our data
+      if (sourceId) {
+        const isValid = taskLookup.has(sourceId) || sessionLookup.has(sourceId);
+        if (!isValid) sourceId = null;
+      }
+      
+      // If no valid source_id, try fuzzy matching by title
+      if (!sourceId && item.title) {
+        const titleLower = item.title.toLowerCase();
+        if (item.source_type === "session") {
+          for (const [key, id] of sessionLookup.entries()) {
+            if (titleLower.includes(key) || key.includes(titleLower.slice(0, 20))) {
+              sourceId = id;
+              break;
+            }
+          }
+        }
+        // Try tasks (default)
+        if (!sourceId) {
+          for (const [key, id] of taskLookup.entries()) {
+            if (key.length > 10 && (titleLower.includes(key) || key.includes(titleLower.slice(0, 20)))) {
+              sourceId = id;
+              item.source_type = "task";
+              break;
+            }
+          }
+        }
+      }
+
+      return { ...item, source_id: sourceId };
+    });
 
     // Return suggestions without persisting (preview mode)
     return new Response(
