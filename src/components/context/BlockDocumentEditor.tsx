@@ -474,9 +474,13 @@ interface BlockDocumentEditorProps {
   items: MockContextItem[];
   onChange: (newMarkdown: string) => void;
   className?: string;
+  /** Called when the user selects text, with the selected text and position */
+  onTextSelect?: (selectedText: string, position: { top: number; left: number }) => void;
+  /** Called when selection is cleared */
+  onSelectionClear?: () => void;
 }
 
-export function BlockDocumentEditor({ content, baseline, items, onChange, className }: BlockDocumentEditorProps) {
+export function BlockDocumentEditor({ content, baseline, items, onChange, className, onTextSelect, onSelectionClear }: BlockDocumentEditorProps) {
   const [editingBlock, setEditingBlock] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -496,7 +500,23 @@ export function BlockDocumentEditor({ content, baseline, items, onChange, classN
     onChange(blocksToMarkdown(updated));
   }, [currentBlocks, onChange]);
 
-  // Click outside to deselect
+  // Text selection detection for copilot
+  useEffect(() => {
+    const handler = () => {
+      const sel = window.getSelection();
+      if (sel && sel.toString().trim().length > 3 && containerRef.current?.contains(sel.anchorNode)) {
+        const range = sel.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        onTextSelect?.(sel.toString(), { top: rect.bottom + 8, left: rect.left });
+      } else {
+        onSelectionClear?.();
+      }
+    };
+    document.addEventListener("mouseup", handler);
+    return () => document.removeEventListener("mouseup", handler);
+  }, [onTextSelect, onSelectionClear]);
+
+  // Click outside to deselect block editing
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
