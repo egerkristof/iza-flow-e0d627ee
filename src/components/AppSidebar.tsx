@@ -24,7 +24,7 @@ const navItems = [
   { title: "Workbooks", url: "/workbooks", icon: BookOpen, hideForRoles: [] as string[] },
   { title: "Playbooks", url: "/context", icon: Target, hideForRoles: ["operator"] },
   { title: "Research", url: "/research-templates", icon: Microscope, hideForRoles: ["operator"] },
-  { title: "Oversight", url: "/oversight", icon: BarChart3, hideForRoles: [] as string[] },
+  { title: "Oversight", url: "/oversight", icon: BarChart3, hideForRoles: ["operator"] },
   { title: "My Knowledge", url: "/my-knowledge", icon: User, hideForRoles: [] as string[] },
   { title: "AI Prompts", url: "/admin/prompts", icon: FileCode2, hideForRoles: ["operator", "manager"] },
 ];
