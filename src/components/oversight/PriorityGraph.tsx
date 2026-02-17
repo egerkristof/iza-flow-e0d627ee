@@ -606,6 +606,7 @@ export function PriorityGraph() {
               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setZoom(z => Math.min(3, z + 0.2))}><ZoomIn className="h-3.5 w-3.5" /></Button>
               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setZoom(z => Math.max(0.3, z - 0.2))}><ZoomOut className="h-3.5 w-3.5" /></Button>
               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={resetView}><Minimize2 className="h-3.5 w-3.5" /></Button>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setIsFullscreen(false)} title="Close fullscreen"><X className="h-3.5 w-3.5" /></Button>
             </div>
           </div>
 
