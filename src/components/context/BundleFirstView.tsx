@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/tooltip";
 import { type MockBundle, type MockContextItem, ALL_CATEGORIES } from "@/data/mockContextItems";
 import { DeployToWorkbookDialog } from "@/components/context/DeployToWorkbookDialog";
+import { CanonicalDocumentView } from "@/components/context/CanonicalDocumentView";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -681,6 +682,7 @@ function BundleExpandable({
 }) {
   const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [documentMode, setDocumentMode] = useState(false);
   const { data: deployments = [] } = useDeployments(bundle.id);
   const readiness = getReadiness(bundle.scope_level, deployments.length);
 
@@ -792,6 +794,16 @@ function BundleExpandable({
                   <span className="text-[10px] text-muted-foreground">{Math.round(bundle.health_score * 100)}%</span>
                 </div>
               </div>
+              {/* Document View toggle */}
+              <Button
+                variant={documentMode ? "secondary" : "ghost"}
+                size="sm"
+                className="h-7 gap-1 text-[11px]"
+                onClick={(e) => { e.stopPropagation(); setDocumentMode(!documentMode); if (!open) setOpen(true); }}
+              >
+                <FileText className="h-3 w-3" />
+                {documentMode ? "Playbooks" : "Document"}
+              </Button>
               {/* Always-visible Deploy button */}
               <Button
                 variant="outline"
@@ -824,6 +836,13 @@ function BundleExpandable({
           </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
+          {documentMode ? (
+            <CanonicalDocumentView
+              bundle={bundle}
+              items={bundleItems}
+              onClose={() => setDocumentMode(false)}
+            />
+          ) : (
           <div className="border-t border-border/30 bg-secondary/5">
             {/* Bundle-level copilot */}
             {activeCopilot?.scope === "bundle" && activeCopilot.id === bundle.id && (
@@ -971,6 +990,7 @@ function BundleExpandable({
               })()
             )}
           </div>
+          )}
         </CollapsibleContent>
       </div>
       <DeployToWorkbookDialog
