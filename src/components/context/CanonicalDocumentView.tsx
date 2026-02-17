@@ -447,19 +447,20 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
       const itemOps = selectedOps.filter(op => op.id !== "__header__");
 
       for (const hop of headerOps) {
+        // Title changed — content_full holds the plain new title (from block.title)
         if (hop.content_full !== undefined) {
-          // Parse the new H1 title from content
-          const titleMatch = hop.content_full.match(/^#\s+(.+)/m);
-          if (titleMatch) {
-            const newTitle = titleMatch[1].trim();
+          const newTitle = hop.content_full.trim();
+          if (newTitle) {
             await supabase.from("bundles").update({ title: newTitle }).eq("id", bundle.id);
           }
-          // Parse description (lines after H1)
-          const lines = hop.content_full.split("\n");
-          const descLines = lines.slice(1).join("\n").trim();
-          if (descLines) {
-            await supabase.from("bundles").update({ description: descLines }).eq("id", bundle.id);
-          }
+        }
+        // Description changed — prev_content holds old, we use the current block body
+        if (hop.prev_content !== undefined) {
+          // The header block's body is the description
+          const curBlocks = parseMarkdownToBlocks(content, items);
+          const headerBlock = curBlocks.find(b => b.id === "__header__");
+          const newDesc = headerBlock?.body?.trim() || "";
+          await supabase.from("bundles").update({ description: newDesc || null }).eq("id", bundle.id);
         }
       }
 
