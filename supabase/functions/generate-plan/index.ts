@@ -27,8 +27,11 @@ serve(async (req) => {
     );
     if (authError || !user) throw new Error("Invalid auth token");
 
-    const { time_horizon, existing_plans } = await req.json();
+    const { time_horizon, existing_plans, preferences } = await req.json();
     const horizon = time_horizon || "today";
+    const focusMode = preferences?.focusMode || "balanced";
+    const priorityWeight = preferences?.priorityWeight || "balanced";
+    const maxItems = preferences?.maxItems || (horizon === "next_hour" ? 2 : horizon === "today" ? 5 : 8);
 
     // Fetch user's active tasks
     const { data: tasks = [] } = await supabase
@@ -77,7 +80,24 @@ serve(async (req) => {
       ? `\nEXISTING PLANS (other horizons — avoid duplicating these):\n${existing_plans.map((p: any) => `- [${p.horizon}] "${p.title}" (${p.source_type})`).join("\n")}\n`
       : "";
 
+    const focusModeDesc: Record<string, string> = {
+      deep_work: "Prioritize tasks requiring sustained concentration and deep focus. Minimize context-switching.",
+      clear_blockers: "Prioritize unblocking stalled work—blocked tasks, pending reviews, delegated items needing attention.",
+      catch_up: "Prioritize processing accumulated items—overdue tasks, stale items, and backlog.",
+    };
+
+    const weightDesc: Record<string, string> = {
+      urgency: "Weight heavily toward deadlines, overdue items, and time-sensitive blockers.",
+      impact: "Weight heavily toward high-impact strategic outcomes over urgent but low-value tasks.",
+      balanced: "Balance urgency and impact equally.",
+    };
+
     const prompt = `You are a productivity assistant for a professional operator. Today is ${dayOfWeek}, ${today}.
+
+OPERATOR PREFERENCES:
+- Focus mode: ${focusMode} — ${focusModeDesc[focusMode] || ""}
+- Priority weight: ${priorityWeight} — ${weightDesc[priorityWeight] || ""}
+- Maximum items to suggest: ${maxItems}
 
 The operator has the following active work items:
 
@@ -88,9 +108,7 @@ SESSIONS (${sessions.length}):
 ${sessionSummary || "No active sessions"}
 ${existingPlansContext}
 Generate a focused plan for time horizon: "${horizon}".
-- "next_hour": Pick 1-3 most urgent items to focus on right now
-- "today": Pick 3-7 items ordered by importance for the full day
-- "this_week": Pick 5-10 items spread across the week with suggested days
+Return exactly ${maxItems} or fewer items, honoring the operator's focus mode and priority weight preferences.
 
 IMPORTANT: Do NOT duplicate items already planned in other horizons listed above.
 

@@ -14,6 +14,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PriorityGraph } from "./PriorityGraph";
+import { PlanPreferencesPanel } from "./PlanPreferencesPanel";
+import type { PlanPreferences } from "./PlanPreferencesPanel";
 
 type Horizon = "next_hour" | "today" | "this_week";
 
@@ -46,6 +48,7 @@ export function PlanMyTime() {
   const [newItemTitle, setNewItemTitle] = useState("");
   const [showFeedPicker, setShowFeedPicker] = useState(false);
   const [feedPickerSearch, setFeedPickerSearch] = useState("");
+  const [showPrefsPanel, setShowPrefsPanel] = useState(false);
 
   // Fetch plan items
   const { data: planItems = [], isLoading } = useQuery({
@@ -129,20 +132,24 @@ export function PlanMyTime() {
 
   // AI generate plan — passes existing plans from other horizons as context
   const generatePlan = useMutation({
-    mutationFn: async (horizon: Horizon) => {
-      // Collect existing plans from other horizons as context
+    mutationFn: async ({ horizon, preferences }: { horizon: Horizon; preferences?: PlanPreferences }) => {
       const otherHorizonItems = planItems
         .filter(p => p.time_horizon !== horizon && !p.is_completed)
         .map(p => ({ title: p.title, horizon: p.time_horizon, source_type: p.source_type }));
 
       const { data, error } = await supabase.functions.invoke("generate-plan", {
-        body: { time_horizon: horizon, existing_plans: otherHorizonItems },
+        body: {
+          time_horizon: horizon,
+          existing_plans: otherHorizonItems,
+          preferences: preferences ?? null,
+        },
       });
       if (error) throw error;
       return data;
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["operator-plan"] });
+      setShowPrefsPanel(false);
       const horizon = activeTab as Horizon;
       toast({
         title: "Plan generated",
@@ -278,7 +285,7 @@ export function PlanMyTime() {
                     variant="outline"
                     className="text-xs gap-1.5"
                     disabled={generatePlan.isPending}
-                    onClick={() => generatePlan.mutate(activeHorizon)}
+                    onClick={() => setShowPrefsPanel(prev => !prev)}
                   >
                     {generatePlan.isPending ? (
                       <Loader2 className="h-3 w-3 animate-spin" />
@@ -290,6 +297,17 @@ export function PlanMyTime() {
                 </div>
               )}
             </div>
+
+            {/* Preferences panel (inline, shown when AI Suggest clicked) */}
+            {showPrefsPanel && isHorizonTab && (
+              <div className="mt-3">
+                <PlanPreferencesPanel
+                  horizon={activeHorizon}
+                  onGenerate={(prefs) => generatePlan.mutate({ horizon: activeHorizon, preferences: prefs })}
+                  isGenerating={generatePlan.isPending}
+                />
+              </div>
+            )}
 
             {/* Horizon tab contents */}
             {(Object.keys(HORIZON_CONFIG) as Horizon[]).map(h => (
