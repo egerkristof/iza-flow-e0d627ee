@@ -1,104 +1,109 @@
 
 
-# Domains Tab -- EOS-Inspired Domain Navigation
+# Closing the Knowledge-to-Playbook Loop
 
-## Overview
-Add a new "Domains" tab to the Playbooks page that presents business domains as visual cards (based on the Traction/EOS framework). Clicking a domain card drills into the existing BundleFirstView, filtered to show only bundles belonging to that domain. Users can also add custom domains beyond the EOS defaults.
+## The Problem
 
-## User Experience
+Right now, the process owner's world is split across two disconnected screens:
 
-### New "Domains" tab (default landing)
-- A tab bar at the top of the Playbooks page: **Domains** | **All Playbooks** (the current BundleFirstView)
-- The Domains tab shows a responsive card grid (2-3 columns)
-- Each card displays:
-  - Domain name and icon (e.g. "Sales & Marketing" with a TrendingUp icon)
-  - Bundle count badge ("3 bundles")
-  - Item count ("12 items")
-  - A brief description
-  - Color accent per domain
-- An "Org-Wide" card always appears first for items/bundles tagged "GLOBAL" or "general"
-- A "+ Add Domain" card at the end for creating custom domains
+- **My Knowledge** (6 confusing tabs): Captures, Documents, Sources, Goals, Working Style, My Context Items -- all flat, no clear workflow, unclear what to do with them
+- **Playbooks** (domains/bundles): Where extracted knowledge lives operationally, but with zero connection back to the source thinking
 
-### Drill-down behavior
-- Clicking a domain card switches to the BundleFirstView with that domain pre-filtered
-- A breadcrumb or back button appears: "Domains > Sales & Marketing"
-- The domain filter in BundleFirstView is pre-set to the clicked domain's tag
-
-### Default EOS Domains (seeded)
-These are stored in a new `domains` table and seeded on first load:
-1. **Sales & Marketing** -- tag: "sales", icon: TrendingUp
-2. **Operations** -- tag: "operations", icon: Settings
-3. **Finance** -- tag: "finance", icon: DollarSign
-4. **People (HR)** -- tag: "hr", icon: Users
-5. **Product & Engineering** -- tag: "engineering", icon: Code
-6. **Customer Success** -- tag: "cs", icon: HeartHandshake
-7. **Legal & Compliance** -- tag: "compliance", icon: Shield
-8. **Strategy** -- tag: "strategy", icon: Target
-
-### Custom domains
-- Users can create additional domains via the "+ Add Domain" card
-- Simple dialog: name, description, tag, icon choice (from a preset list)
-- Users can edit or delete custom domains (EOS defaults can be hidden but not deleted)
-
-## Technical Plan
-
-### 1. Database: New `domains` table
-
+The lifecycle is broken:
 ```text
-domains
-  id           uuid PK default gen_random_uuid()
-  owner_id     uuid NOT NULL (references auth.users)
-  title        text NOT NULL
-  description  text
-  tag          text NOT NULL (the domain_scope value that links to items)
-  icon         text (lucide icon name)
-  color        text (tailwind color key like "blue", "amber")
-  is_default   boolean default false (true for EOS seeds)
-  sort_order   integer default 0
-  created_at   timestamptz default now()
-  updated_at   timestamptz default now()
+Source Thinking --> Extract --> Playbooks --> Execute --> Feedback --> ???
+       ^                                                              |
+       |______________________________________________________________|
+                          (this loop doesn't exist)
 ```
 
-- RLS: Users can CRUD their own domains
-- A database function `seed_default_domains(user_id)` inserts the 8 EOS defaults when a user has zero domains
+## The Solution: Two-Phase Restructure
 
-### 2. Files to create
+### Phase 1: Simplify "My Knowledge" into a Source-Centric Hub
 
-**`src/components/context/DomainsView.tsx`** (new)
-- Fetches domains from the `domains` table
-- On first load, if no domains exist, calls an RPC to seed defaults
-- Renders a card grid
-- Each card shows bundle/item counts (computed from existing data by matching `domain_scope` tags)
-- Handles create/edit/delete domain dialogs
-- Emits `onSelectDomain(tag)` when a card is clicked
+**Consolidate 6 tabs down to 3:**
 
-### 3. Files to modify
+| Current Tab | What Happens |
+|---|---|
+| Sources | PROMOTED to the hero of the page -- renamed "My Sources" |
+| Documents | MERGED into Sources (uploaded docs become sources automatically) |
+| Captures | KEPT as a lightweight inbox -- but visually subordinated |
+| Goals and KPIs | MOVED into a collapsible "Profile" section at the top |
+| Working Style | MOVED into the same "Profile" section |
+| My Context Items | REMOVED from this page (these already live in Playbooks) |
 
-**`src/pages/ContextManagement.tsx`**
-- Add a tab state: "domains" (default) vs "playbooks" (current BundleFirstView)
-- When in "domains" tab, render DomainsView
-- When a domain is clicked, switch to "playbooks" tab with domainFilter pre-set
-- Add breadcrumb navigation for drill-down
-- Pass selected domain context to BundleFirstView
+**New "My Knowledge" layout:**
 
-**`src/components/context/BundleFirstView.tsx`**
-- Accept an optional `initialDomainFilter` prop
-- When set, pre-populate the domain filter and show a back/breadcrumb button
-- Minor: expose a callback for "back to domains"
+```text
++----------------------------------------------------------+
+| My Knowledge                                              |
+|                                                           |
+| [Profile card - collapsed by default]                     |
+|   Goals & KPIs | Working Style preferences                |
+|                                                           |
+| [Captures Inbox badge: 3 drafts]  (small strip, not tab) |
+|                                                           |
+| === My Sources ===  (hero section, always visible)        |
+| +------------------+  +------------------+                |
+| | Sales Process    |  | Onboarding Guide |                |
+| | v3 - 12 items    |  | v1 - 0 items     |                |
+| | Domains: Sales,  |  | [Extract now]    |                |
+| |   Pricing        |  |                  |                |
+| | [Edit] [Lineage] |  | [Edit]           |                |
+| +------------------+  +------------------+                |
++----------------------------------------------------------+
+```
 
-**`src/data/mockContextItems.ts`**
-- No changes needed (domain_tags already exist on MockBundle)
+Each source card shows:
+- How many context items were extracted from it
+- Which domains/bundles those items landed in
+- A "View Lineage" action to see the full tree
 
-### 4. Domain-to-bundle mapping
-Bundles already derive their `domain_tags` from the `domain_scope` field of their child items. The DomainsView will count bundles per domain by matching `bundle.domain_tags.includes(domain.tag)`. No schema changes needed for the mapping -- the existing `domain_scope` JSONB on `context_items` is the link.
+### Phase 2: Add Source Lineage to Both Sides
 
-### 5. Migration SQL
-- CREATE TABLE `domains` with RLS policies
-- CREATE FUNCTION `seed_default_domains(p_user_id uuid)` that inserts 8 EOS rows if none exist for that user
+**On each Source card** (in My Knowledge):
+- "Lineage" button opens a panel showing all context items extracted from this source, grouped by the bundle/domain they belong to
+- When you edit the source content, a banner shows: "3 playbook items were extracted from this source -- changes here may warrant re-extraction"
 
-## What Stays the Same
-- The entire BundleFirstView and its playbook hierarchy
-- The bundle/item data model
-- All extraction, import, deploy flows
-- The domain_scope field on context_items (used as the linking mechanism)
+**On each Bundle card** (in Playbooks):
+- A small "Source" indicator showing which Knowledge Source(s) fed into this bundle
+- Clicking it navigates to My Knowledge with that source open in the editor
+
+This creates the bidirectional link:
+```text
+My Knowledge (Source editor)  <-->  Playbooks (Bundle cards)
+         source_knowledge_id column (already exists!)
+```
+
+### Phase 3: Feedback Strip on Source Editor
+
+When viewing a source in the editor, show a collapsible "Execution Signals" strip at the bottom:
+- Drift clusters from playbooks that were extracted from this source
+- "Last executed: 2 days ago by 3 operators"
+- This closes the loop: source thinking is informed by what actually happened in execution
+
+## Technical Details
+
+### Changes to `src/pages/MyKnowledge.tsx`
+- Remove the 6-tab structure
+- Replace with: collapsible Profile section (goals + preferences) at top, captures inbox as a compact strip, and Sources as the main content area
+- Sources component gets enhanced with lineage data
+
+### Changes to `src/components/knowledge/KnowledgeSources.tsx`
+- Add lineage query: fetch `context_items` where `source_knowledge_id = source.id`, joined with `bundles` to show domain/bundle placement
+- Add "Lineage" panel view alongside the editor
+- Add "Execution Signals" collapsible strip (initially with placeholder data from the existing drift mock)
+
+### Changes to `src/components/context/BundleFirstView.tsx`
+- On each bundle card header, show a small "Source" badge if any of its items have a `source_knowledge_id`
+- Badge links back to `/my-knowledge` with a query param to auto-open that source
+
+### Changes to `src/pages/ContextManagement.tsx`
+- Pass source metadata through to BundleFirstView
+- Fetch distinct `source_knowledge_id` values per bundle
+
+### No database changes needed
+- The `source_knowledge_id` column on `context_items` already exists
+- The `knowledge_sources` and `knowledge_source_versions` tables already exist
+- All data relationships are already in place -- we just need to surface them in the UI
 
