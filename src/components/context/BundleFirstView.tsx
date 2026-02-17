@@ -5,8 +5,10 @@ import {
   Package, ChevronDown, ChevronRight, Search, Plus,
   FileText, Pencil, Trash2, Sparkles, Inbox, Upload, SlidersHorizontal,
   Layers, Tag, Loader2, Rocket, BookOpen, Circle, CheckCircle2, ArrowUpCircle,
-  Eraser, GripVertical, Wand2, FileOutput,
+  Eraser, GripVertical, Wand2, FileOutput, Globe,
 } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
 import { InlineContextCopilot, type CopilotScope, type CopilotHierarchy } from "@/components/context/InlineContextCopilot";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -59,6 +61,9 @@ interface BundleFirstViewProps {
   onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
   initialDomainFilter?: string | null;
   onBackToDomains?: () => void;
+  domains?: DomainInfo[];
+  bundleDomainMap?: Map<string, string[]>;
+  onToggleBundleDomain?: (bundleId: string, domainId: string, assigned: boolean) => void;
 }
 
 const scopeColors: Record<string, string> = {
@@ -585,6 +590,67 @@ function DraggablePlaybookList({
   );
 }
 
+interface DomainInfo {
+  id: string;
+  title: string;
+  tag: string;
+  color: string | null;
+}
+
+function BundleDomainAssigner({
+  bundleId,
+  domains,
+  bundleDomainIds,
+  onToggleDomain,
+}: {
+  bundleId: string;
+  domains: DomainInfo[];
+  bundleDomainIds: string[];
+  onToggleDomain: (bundleId: string, domainId: string, assigned: boolean) => void;
+}) {
+  if (domains.length === 0) return null;
+
+  const assignedDomains = domains.filter(d => bundleDomainIds.includes(d.id));
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-6 gap-1 text-[10px] text-muted-foreground hover:text-foreground"
+          onClick={e => e.stopPropagation()}
+        >
+          <Globe className="h-3 w-3" />
+          {assignedDomains.length > 0
+            ? assignedDomains.map(d => d.title).join(", ")
+            : "Assign domains"}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-56 p-2" align="start" onClick={e => e.stopPropagation()}>
+        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider px-2 pb-1.5">Assign to domains</p>
+        <div className="space-y-0.5 max-h-48 overflow-auto">
+          {domains.map(domain => {
+            const checked = bundleDomainIds.includes(domain.id);
+            return (
+              <label
+                key={domain.id}
+                className="flex items-center gap-2 px-2 py-1.5 rounded-sm hover:bg-secondary/50 cursor-pointer text-xs"
+              >
+                <Checkbox
+                  checked={checked}
+                  onCheckedChange={() => onToggleDomain(bundleId, domain.id, !checked)}
+                />
+                {domain.title}
+              </label>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function BundleExpandable({
   bundle,
   bundleItems,
@@ -594,6 +660,9 @@ function BundleExpandable({
   onDeleteBundle,
   onCreateItem,
   onReorderItems,
+  domains,
+  bundleDomainIds,
+  onToggleDomain,
 }: {
   bundle: MockBundle;
   bundleItems: MockContextItem[];
@@ -603,6 +672,9 @@ function BundleExpandable({
   onDeleteBundle: (id: string) => void;
   onCreateItem: (ctx?: CreateItemContext) => void;
   onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
+  domains?: DomainInfo[];
+  bundleDomainIds?: string[];
+  onToggleDomain?: (bundleId: string, domainId: string, assigned: boolean) => void;
 }) {
   const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -679,7 +751,17 @@ function BundleExpandable({
                 />
               </div>
               <p className="text-xs text-muted-foreground line-clamp-1">{bundle.description}</p>
-              <DeploymentBadges deployments={deployments} />
+              <div className="flex items-center gap-2 flex-wrap">
+                <DeploymentBadges deployments={deployments} />
+                {domains && onToggleDomain && (
+                  <BundleDomainAssigner
+                    bundleId={bundle.id}
+                    domains={domains}
+                    bundleDomainIds={bundleDomainIds ?? []}
+                    onToggleDomain={onToggleDomain}
+                  />
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <div className="text-right mr-1">
@@ -906,6 +988,9 @@ export function BundleFirstView({
   onReorderItems,
   initialDomainFilter,
   onBackToDomains,
+  domains: domainsProp,
+  bundleDomainMap,
+  onToggleBundleDomain,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -946,19 +1031,43 @@ export function BundleFirstView({
     return true;
   };
 
+  // Find domain ID for the initialDomainFilter tag (for bundle_domains filtering)
+  const activeDomainId = useMemo(() => {
+    if (!initialDomainFilter || !domainsProp) return null;
+    return domainsProp.find(d => d.tag === initialDomainFilter)?.id ?? null;
+  }, [initialDomainFilter, domainsProp]);
+
   const filteredBundles = useMemo(() => {
-    if (!search && !categoryFilter && !domainFilter) return bundles;
-    return bundles.filter(b => {
-      const bItems = bundledItemsMap.get(b.id) || [];
-      if (search && !b.title.toLowerCase().includes(search.toLowerCase()) && !b.description.toLowerCase().includes(search.toLowerCase())) {
-        return bItems.some(matchesFilter);
-      }
-      if (categoryFilter || domainFilter) {
-        return bItems.some(matchesFilter);
-      }
-      return true;
-    });
-  }, [bundles, search, categoryFilter, domainFilter, bundledItemsMap]);
+    let result = bundles;
+
+    // If drilling down from a domain and we have bundleDomainMap, filter by domain assignment
+    if (activeDomainId && bundleDomainMap && bundleDomainMap.size > 0) {
+      result = result.filter(b => (bundleDomainMap.get(b.id) || []).includes(activeDomainId));
+    } else if (domainFilter) {
+      // Manual domain tag filter (from filter panel)
+      result = result.filter(b => {
+        const bItems = bundledItemsMap.get(b.id) || [];
+        return bItems.some(i => i.domain_tags.includes(domainFilter));
+      });
+    }
+
+    if (search) {
+      result = result.filter(b => {
+        if (b.title.toLowerCase().includes(search.toLowerCase()) || b.description.toLowerCase().includes(search.toLowerCase())) return true;
+        const bItems = bundledItemsMap.get(b.id) || [];
+        return bItems.some(i => i.title.toLowerCase().includes(search.toLowerCase()) || i.content_preview.toLowerCase().includes(search.toLowerCase()));
+      });
+    }
+
+    if (categoryFilter) {
+      result = result.filter(b => {
+        const bItems = bundledItemsMap.get(b.id) || [];
+        return bItems.some(i => i.category === categoryFilter);
+      });
+    }
+
+    return result;
+  }, [bundles, search, categoryFilter, domainFilter, bundledItemsMap, activeDomainId, bundleDomainMap]);
 
   const filteredLooseItems = useMemo(() =>
     looseItems.filter(matchesFilter),
@@ -1155,6 +1264,9 @@ export function BundleFirstView({
             onDeleteBundle={onDeleteBundle}
             onCreateItem={onCreateItem}
             onReorderItems={onReorderItems}
+            domains={domainsProp}
+            bundleDomainIds={bundleDomainMap?.get(bundle.id) ?? []}
+            onToggleDomain={onToggleBundleDomain}
           />
         ))}
 

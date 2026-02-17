@@ -100,6 +100,42 @@ export type Database = {
         }
         Relationships: []
       }
+      bundle_domains: {
+        Row: {
+          bundle_id: string
+          created_at: string
+          domain_id: string
+          id: string
+        }
+        Insert: {
+          bundle_id: string
+          created_at?: string
+          domain_id: string
+          id?: string
+        }
+        Update: {
+          bundle_id?: string
+          created_at?: string
+          domain_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bundle_domains_bundle_id_fkey"
+            columns: ["bundle_id"]
+            isOneToOne: false
+            referencedRelation: "bundles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bundle_domains_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bundles: {
         Row: {
           created_at: string
