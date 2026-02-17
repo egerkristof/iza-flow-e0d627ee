@@ -25,7 +25,7 @@ export function SyncHistoryDialog({ open, onOpenChange, bundleId, bundleTitle }:
     queryKey: ["sync-history", bundleId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("document_sync_logs" as any)
+        .from("document_sync_logs")
         .select("*")
         .eq("bundle_id", bundleId)
         .order("synced_at", { ascending: false })
