@@ -657,6 +657,7 @@ function BundleDomainAssigner({
 function BundleExpandable({
   bundle,
   bundleItems,
+  allBundleItems,
   allBundles,
   onEditItem,
   onDestroyItem,
@@ -671,6 +672,7 @@ function BundleExpandable({
 }: {
   bundle: MockBundle;
   bundleItems: MockContextItem[];
+  allBundleItems: MockContextItem[];
   allBundles?: MockBundle[];
   onEditItem: (item: MockContextItem) => void;
   onDestroyItem: (item: MockContextItem) => void;
@@ -792,7 +794,7 @@ function BundleExpandable({
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <div className="text-right mr-1">
-                <span className="text-xs font-medium">{bundleItems.length} items</span>
+                <span className="text-xs font-medium">{allBundleItems.length} items</span>
                 <div className="flex items-center gap-1 mt-0.5">
                   <div className="h-1.5 w-16 rounded-full bg-secondary overflow-hidden">
                     <div
@@ -848,7 +850,7 @@ function BundleExpandable({
           {documentMode ? (
             <CanonicalDocumentView
               bundle={bundle}
-              items={bundleItems}
+              items={allBundleItems}
               allBundles={allBundles}
               onClose={() => setDocumentMode(false)}
               onDraftChange={(_, has) => setHasDraft(has)}
@@ -1311,6 +1313,7 @@ export function BundleFirstView({
             key={bundle.id}
             bundle={bundle}
             bundleItems={filteredBundleItems(bundle.id)}
+            allBundleItems={bundledItemsMap.get(bundle.id) || []}
             allBundles={bundles}
             onEditItem={onEditItem}
             onDestroyItem={onDestroyItem}
