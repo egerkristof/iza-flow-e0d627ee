@@ -4,6 +4,7 @@ import {
   Download, RefreshCw, ArrowUpFromLine,
   Loader2, AlertTriangle, Save, FileCheck, History,
 } from "lucide-react";
+import { OUTPUT_TYPE_LABELS, OUTPUT_TYPE_ICONS, type OutputType } from "@/lib/knowledge-schema";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -113,11 +114,14 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
   }
   lines.push("");
 
-  const playbooks = items.filter(i => i.category === "PLAYBOOK");
+  // Sort all items by sort_order to match the playbook view ordering
+  const sortedItems = [...items].sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999));
+
+  const playbooks = sortedItems.filter(i => i.category === "PLAYBOOK");
   const ownedByPlaybook = new Map<string, MockContextItem[]>();
   const sharedItems: MockContextItem[] = [];
 
-  for (const item of items) {
+  for (const item of sortedItems) {
     if (item.category === "PLAYBOOK") continue;
     if (item.parent_playbook_id && playbooks.some(p => p.id === item.parent_playbook_id)) {
       const existing = ownedByPlaybook.get(item.parent_playbook_id) || [];
@@ -140,7 +144,8 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     lines.push("");
 
     const children = ownedByPlaybook.get(pb.id) || [];
-    const procedures = children.filter(i => i.category === "PROCEDURE").sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999));
+    // Children are already sorted by sort_order from sortedItems
+    const procedures = children.filter(i => i.category === "PROCEDURE");
     const principles = children.filter(i => i.category === "PRINCIPLE");
     const directives = children.filter(i => i.category === "DIRECTIVE");
     const knowledge = children.filter(i => i.category === "KNOWLEDGE");
@@ -149,11 +154,25 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
 
     if (procedures.length > 0) {
       lines.push("### Steps", "");
-      procedures.forEach((proc, idx) => {
+      let stepNum = 0;
+      procedures.forEach((proc) => {
+        // Skip empty procedures (no content and no output spec)
+        const hasContent = !!proc.content_preview?.trim();
+        const hasOutput = proc.output_type && proc.output_type !== "free_text";
+        if (!hasContent && !hasOutput) return;
+
+        stepNum++;
         lines.push(`<!-- item:${proc.id} -->`);
-        lines.push(`${idx + 1}. **${proc.title}**`);
+        lines.push(`${stepNum}. **${proc.title}**`);
         if (proc.content_preview) {
           for (const cl of proc.content_preview.split("\n")) lines.push(`   ${cl}`);
+        }
+        // Render output spec if present
+        if (hasOutput) {
+          const label = OUTPUT_TYPE_LABELS[proc.output_type as OutputType] || proc.output_type;
+          const icon = OUTPUT_TYPE_ICONS[proc.output_type as OutputType] || "📄";
+          const desc = proc.output_description ? `: ${proc.output_description}` : "";
+          lines.push(`   **Output** → ${icon} ${label}${desc}`);
         }
         lines.push("");
       });
