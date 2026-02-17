@@ -1,19 +1,15 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
-  Edit3, Eye, Columns, Download, RefreshCw, ArrowUpFromLine,
+  Download, RefreshCw, ArrowUpFromLine,
   Loader2, AlertTriangle, Save, FileCheck, History,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
-import { MarkdownToolbar, markdownTools, type ToolAction } from "@/components/workbooks/MarkdownToolbar";
-import { DocumentCopilot } from "@/components/context/DocumentCopilot";
-import { MarkdownPreview } from "@/components/context/MarkdownPreview";
-import { GutterDiffEditor } from "@/components/context/GutterDiffEditor";
 import { SyncConfirmationDialog, type SyncOperation } from "@/components/context/SyncConfirmationDialog";
 import { SyncHistoryDialog } from "@/components/context/SyncHistoryDialog";
+import { BlockDocumentEditor } from "@/components/context/BlockDocumentEditor";
 import { supabase } from "@/integrations/supabase/client";
 import type { MockBundle, MockContextItem } from "@/data/mockContextItems";
 
@@ -243,7 +239,7 @@ interface CanonicalDocumentViewProps {
 export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose, onDraftChange }: CanonicalDocumentViewProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const editorRef = useRef<HTMLTextAreaElement>(null);
+  
 
   const generatedContent = useMemo(() => generateCanonicalDocument(bundle, items), [bundle, items]);
 
@@ -258,16 +254,9 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
   }, [generatedContent, bundle.id]);
 
   const [content, setContent] = useState(generatedContent);
-  const [viewMode, setViewMode] = useState<"edit" | "preview" | "split">("split");
   const [dirty, setDirty] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [draftSaved, setDraftSaved] = useState(false);
-
-  // Copilot state
-  const [copilotOpen, setCopilotOpen] = useState(false);
-  const [selectedText, setSelectedText] = useState("");
-  const [copilotPosition, setCopilotPosition] = useState({ top: 0, left: 0 });
-  const [copilotRange, setCopilotRange] = useState<{ start: number; end: number } | null>(null);
 
   // Sync confirmation
   const [syncOps, setSyncOps] = useState<SyncOperation[]>([]);
@@ -503,53 +492,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
     }
   }, [content, bundle, items, toast, onDraftChange]);
 
-  // Text selection handler for copilot
-  const handleMouseUp = useCallback(() => {
-    if (viewMode === "preview") return;
-    const textarea = editorRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    if (start === end) return;
-
-    const selected = content.substring(start, end);
-    if (selected.trim().length < 5) return;
-
-    setSelectedText(selected);
-    const rect = textarea.getBoundingClientRect();
-    setCopilotPosition({
-      top: rect.top + 60,
-      left: rect.left + rect.width / 2 - 180,
-    });
-    setCopilotOpen(true);
-  }, [content, viewMode]);
-
-  const handleCopilotReplace = useCallback((newText: string) => {
-    const textarea = editorRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const before = content.substring(0, start);
-    const after = content.substring(end);
-    const newContent = before + newText + after;
-
-    // Calculate line range for the highlight
-    const startLine = before.split("\n").length - 1;
-    const endLine = startLine + newText.split("\n").length - 1;
-    setCopilotRange({ start: startLine, end: endLine });
-
-    handleContentChange(newContent);
-
-    requestAnimationFrame(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start, start + newText.length);
-    });
-  }, [content]);
-
   const isDiverged = content !== generatedContent;
-  const otherBundles = allBundles.filter(b => b.id !== bundle.id).map(b => ({ title: b.title, description: b.description }));
 
   return (
     <div className="flex flex-col h-[600px] border-t border-border/30 bg-card/50">
@@ -574,28 +517,6 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
           )}
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          {/* View mode toggle */}
-          <div className="flex items-center rounded-md border border-border/50 overflow-hidden">
-            <button
-              onClick={() => setViewMode("edit")}
-              className={`px-2 py-1 text-[11px] flex items-center gap-1 transition-colors ${viewMode === "edit" ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-            >
-              <Edit3 className="h-3 w-3" /> Edit
-            </button>
-            <button
-              onClick={() => setViewMode("split")}
-              className={`px-2 py-1 text-[11px] flex items-center gap-1 transition-colors border-x border-border/50 ${viewMode === "split" ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-            >
-              <Columns className="h-3 w-3" /> Split
-            </button>
-            <button
-              onClick={() => setViewMode("preview")}
-              className={`px-2 py-1 text-[11px] flex items-center gap-1 transition-colors ${viewMode === "preview" ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-            >
-              <Eye className="h-3 w-3" /> Read
-            </button>
-          </div>
-
           <Button variant="ghost" size="sm" className="h-7 text-[11px] gap-1" onClick={handleRegenerate}>
             <RefreshCw className="h-3 w-3" /> Regenerate
           </Button>
@@ -641,70 +562,14 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
         </div>
       )}
 
-      {/* Editor body */}
-      <div className="flex flex-1 min-h-0 overflow-hidden relative">
-        {/* Edit pane */}
-        {(viewMode === "edit" || viewMode === "split") && (
-          <div className={`min-w-0 flex flex-col ${viewMode === "split" ? "w-1/2 border-r border-border/50" : "flex-1"}`}>
-            <MarkdownToolbar textareaRef={editorRef} content={content} onChange={handleContentChange} />
-            <GutterDiffEditor
-              ref={editorRef}
-              value={content}
-              baseline={baselineRef.current}
-              onChange={handleContentChange}
-              onMouseUp={handleMouseUp}
-              copilotRange={copilotRange}
-              onKeyDown={e => {
-                const mod = e.ctrlKey || e.metaKey;
-                const key = e.key.toLowerCase();
-                const shortcuts: Record<string, string> = { b: "Bold", i: "Italic", k: "Link" };
-                if (mod && shortcuts[key]) {
-                  e.preventDefault();
-                  const tool = markdownTools.find(t => t !== "sep" && (t as ToolAction).label === shortcuts[key]) as ToolAction | undefined;
-                  if (tool && editorRef.current) {
-                    const { newContent, cursorStart, cursorEnd } = tool.action(editorRef.current, content);
-                    handleContentChange(newContent);
-                    requestAnimationFrame(() => {
-                      editorRef.current?.focus();
-                      editorRef.current?.setSelectionRange(cursorStart, cursorEnd);
-                    });
-                  }
-                }
-                if (mod && key === "s") {
-                  e.preventDefault();
-                  handleSaveDraft();
-                }
-              }}
-              placeholder="Start writing…"
-            />
-          </div>
-        )}
-
-        {/* Preview pane */}
-        {(viewMode === "preview" || viewMode === "split") && (
-          <div className={`min-w-0 ${viewMode === "split" ? "w-1/2" : "flex-1"}`}>
-            <ScrollArea className="h-full">
-              <div className="max-w-3xl mx-auto p-6">
-                <MarkdownPreview content={content} />
-              </div>
-            </ScrollArea>
-          </div>
-        )}
-
-        {/* Inline AI Copilot */}
-        {copilotOpen && selectedText && (
-          <DocumentCopilot
-            selectedText={selectedText}
-            fullDocument={content}
-            bundle={bundle}
-            items={items}
-            otherBundles={otherBundles}
-            position={copilotPosition}
-            onReplace={handleCopilotReplace}
-            onClose={() => setCopilotOpen(false)}
-          />
-        )}
-      </div>
+      {/* Block Document Editor */}
+      <BlockDocumentEditor
+        content={content}
+        baseline={baselineRef.current}
+        items={items}
+        onChange={handleContentChange}
+        className="flex-1 min-h-0"
+      />
 
       {/* Sync Confirmation Dialog */}
       <SyncConfirmationDialog
