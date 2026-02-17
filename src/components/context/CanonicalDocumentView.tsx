@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Edit3, Eye, Columns, Download, RefreshCw, ArrowUpFromLine,
   Loader2, AlertTriangle, Save, FileCheck, History,
@@ -241,6 +242,7 @@ interface CanonicalDocumentViewProps {
 
 export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose, onDraftChange }: CanonicalDocumentViewProps) {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const editorRef = useRef<HTMLTextAreaElement>(null);
 
   const generatedContent = useMemo(() => generateCanonicalDocument(bundle, items), [bundle, items]);
@@ -440,6 +442,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
       // If only header ops, skip edge function call
       if (itemOps.length === 0) {
         toast({ title: "Synced to Playbooks", description: "Bundle header updated." });
+        queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
         localStorage.removeItem(`doc-draft-${bundle.id}`);
         baselineRef.current = content;
         setDirty(false);
@@ -485,10 +488,13 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
       });
 
       localStorage.removeItem(`doc-draft-${bundle.id}`);
-      baselineRef.current = content; // Update baseline to current content after successful sync
+      baselineRef.current = content;
       setDirty(false);
       setDraftSaved(false);
       onDraftChange?.(bundle.id, false);
+      queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
+      queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+      queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
       setSyncDialogOpen(false);
     } catch (err) {
       toast({ title: "Sync error", description: String(err), variant: "destructive" });
