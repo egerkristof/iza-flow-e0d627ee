@@ -48,15 +48,7 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Quick Actions */}
-        <QuickActionsBar />
-
-        {/* Weekly Progress */}
-        <WeeklyProgressWidget />
-
-        {/* Plan My Time (includes Priority Map tab) */}
-        <PlanMyTime />
-
+        {/* Active Mandates — top of dashboard */}
         <Collapsible open={mandatesOpen} onOpenChange={setMandatesOpen}>
           <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
             <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${mandatesOpen ? "rotate-90" : ""}`} />
@@ -73,6 +65,15 @@ const Index = () => {
             <MandatesDashboard compact />
           </CollapsibleContent>
         </Collapsible>
+
+        {/* Quick Actions */}
+        <QuickActionsBar />
+
+        {/* Weekly Progress */}
+        <WeeklyProgressWidget />
+
+        {/* Plan My Time (includes Priority Map tab) */}
+        <PlanMyTime />
 
         {/* Priority Feed — collapsed by default */}
         <Collapsible open={feedOpen} onOpenChange={setFeedOpen}>
