@@ -136,13 +136,39 @@ export function PlanMyTime() {
     },
   });
 
-  // Build source_id → workbook_id lookup
+  // Build source_id → workbook_id lookup from tasks, sessions, AND plan items themselves
   const sourceToWorkbook = useMemo(() => {
     const map = new Map<string, string>();
     myTasks.forEach(t => map.set(t.id, t.workbook_id));
     mySessions.forEach(s => map.set(s.id, s.workbook_id));
     return map;
   }, [myTasks, mySessions]);
+
+  // For plan items with source_id that aren't in the task/session maps, fetch their workbook_ids
+  const unmappedSourceIds = useMemo(() => {
+    return planItems
+      .filter(p => p.source_id && !sourceToWorkbook.has(p.source_id) && (p.source_type === "task" || p.source_type === "session"))
+      .map(p => p.source_id!);
+  }, [planItems, sourceToWorkbook]);
+
+  const { data: extraMappings = [] } = useQuery({
+    queryKey: ["plan-extra-workbook-mappings", unmappedSourceIds],
+    enabled: unmappedSourceIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workbook_tasks")
+        .select("id, workbook_id")
+        .in("id", unmappedSourceIds);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const fullSourceToWorkbook = useMemo(() => {
+    const map = new Map(sourceToWorkbook);
+    extraMappings.forEach(m => map.set(m.id, m.workbook_id));
+    return map;
+  }, [sourceToWorkbook, extraMappings]);
   // Already-planned source IDs
   const plannedSourceIds = useMemo(() => {
     const activeHorizon = activeTab as Horizon;
@@ -524,7 +550,7 @@ export function PlanMyTime() {
                         item={item}
                         onToggle={() => toggleComplete.mutate({ id: item.id, completed: true })}
                         onDelete={() => deleteItem.mutate(item.id)}
-                        workbookId={item.source_id ? sourceToWorkbook.get(item.source_id) : undefined}
+                        workbookId={item.source_id ? fullSourceToWorkbook.get(item.source_id) : undefined}
                       />
                     ))}
                     {completedItems.length > 0 && (
@@ -538,7 +564,7 @@ export function PlanMyTime() {
                             item={item}
                             onToggle={() => toggleComplete.mutate({ id: item.id, completed: false })}
                             onDelete={() => deleteItem.mutate(item.id)}
-                            workbookId={item.source_id ? sourceToWorkbook.get(item.source_id) : undefined}
+                            workbookId={item.source_id ? fullSourceToWorkbook.get(item.source_id) : undefined}
                           />
                         ))}
                       </div>
