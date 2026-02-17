@@ -656,6 +656,7 @@ function BundleDomainAssigner({
 function BundleExpandable({
   bundle,
   bundleItems,
+  allBundles,
   onEditItem,
   onDestroyItem,
   onEditBundle,
@@ -669,6 +670,7 @@ function BundleExpandable({
 }: {
   bundle: MockBundle;
   bundleItems: MockContextItem[];
+  allBundles?: MockBundle[];
   onEditItem: (item: MockContextItem) => void;
   onDestroyItem: (item: MockContextItem) => void;
   onEditBundle: (bundle: MockBundle) => void;
@@ -683,6 +685,7 @@ function BundleExpandable({
   const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [documentMode, setDocumentMode] = useState(false);
+  const [hasDraft, setHasDraft] = useState(() => !!localStorage.getItem(`doc-draft-${bundle.id}`));
   const { data: deployments = [] } = useDeployments(bundle.id);
   const readiness = getReadiness(bundle.scope_level, deployments.length);
 
@@ -754,6 +757,11 @@ function BundleExpandable({
                   state={readiness}
                   onClick={readiness === "draft" ? () => onEditBundle(bundle) : readiness === "ready" ? () => setDeployOpen(true) : undefined}
                 />
+                {hasDraft && (
+                  <Badge variant="outline" className="text-[10px] border-amber-500/30 text-amber-400 gap-0.5">
+                    📝 Draft
+                  </Badge>
+                )}
               </div>
               <p className="text-xs text-muted-foreground line-clamp-1">{bundle.description}</p>
               <div className="flex items-center gap-2 flex-wrap">
@@ -840,7 +848,9 @@ function BundleExpandable({
             <CanonicalDocumentView
               bundle={bundle}
               items={bundleItems}
+              allBundles={allBundles}
               onClose={() => setDocumentMode(false)}
+              onDraftChange={(_, has) => setHasDraft(has)}
             />
           ) : (
           <div className="border-t border-border/30 bg-secondary/5">
@@ -1295,6 +1305,7 @@ export function BundleFirstView({
             key={bundle.id}
             bundle={bundle}
             bundleItems={filteredBundleItems(bundle.id)}
+            allBundles={bundles}
             onEditItem={onEditItem}
             onDestroyItem={onDestroyItem}
             onEditBundle={onEditBundle}

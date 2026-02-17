@@ -38,3 +38,9 @@ verify_jwt = false
 
 [functions.generate-draft]
 verify_jwt = false
+
+[functions.sync-document-to-playbooks]
+verify_jwt = false
+
+[functions.document-copilot]
+verify_jwt = false

@@ -1,7 +1,7 @@
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import {
   Edit3, Eye, Columns, Download, RefreshCw, ArrowUpFromLine,
-  Loader2, AlertTriangle,
+  Loader2, AlertTriangle, Save, FileCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,63 +9,13 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { MarkdownToolbar, markdownTools, type ToolAction } from "@/components/workbooks/MarkdownToolbar";
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { DocumentCopilot } from "@/components/context/DocumentCopilot";
+import { MarkdownPreview } from "@/components/context/MarkdownPreview";
+import { supabase } from "@/integrations/supabase/client";
 import type { MockBundle, MockContextItem } from "@/data/mockContextItems";
 
-/** Reusable markdown renderer */
-function MarkdownPreview({ content }: { content: string }) {
-  return (
-    <div className="prose prose-sm prose-invert max-w-none
-      [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:border-b [&_h1]:border-border/40 [&_h1]:pb-2 [&_h1]:mb-4
-      [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:mt-8 [&_h2]:mb-3
-      [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-2
-      [&_h4]:text-base [&_h4]:font-medium [&_h4]:mt-4 [&_h4]:mb-2
-      [&_p]:my-3 [&_p]:leading-7 [&_p]:text-muted-foreground
-      [&_ul]:my-3 [&_ul]:pl-6 [&_ul]:list-disc
-      [&_ol]:my-3 [&_ol]:pl-6 [&_ol]:list-decimal
-      [&_li]:my-1.5 [&_li]:leading-7 [&_li]:text-muted-foreground
-      [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-primary/80
-      [&_strong]:text-foreground [&_strong]:font-semibold
-      [&_em]:text-foreground/80
-      [&_blockquote]:border-l-2 [&_blockquote]:border-primary/40 [&_blockquote]:bg-primary/5 [&_blockquote]:px-4 [&_blockquote]:py-3 [&_blockquote]:rounded-r-md [&_blockquote]:my-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground
-      [&_hr]:border-border/40 [&_hr]:my-8
-      [&_table]:border-collapse [&_table]:w-full [&_table]:my-4
-      [&_th]:border [&_th]:border-border/40 [&_th]:bg-secondary/50 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_th]:text-foreground
-      [&_td]:border [&_td]:border-border/40 [&_td]:px-3 [&_td]:py-2 [&_td]:text-sm [&_td]:text-muted-foreground
-      [&_code:not(pre_code)]:text-xs [&_code:not(pre_code)]:bg-secondary [&_code:not(pre_code)]:text-primary [&_code:not(pre_code)]:px-1.5 [&_code:not(pre_code)]:py-0.5 [&_code:not(pre_code)]:rounded [&_code:not(pre_code)]:font-mono
-      [&_pre]:my-4 [&_pre]:rounded-lg [&_pre]:overflow-hidden
-    ">
-      <ReactMarkdown
-        components={{
-          code({ className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || "");
-            const codeStr = String(children).replace(/\n$/, "");
-            if (match) {
-              return (
-                <SyntaxHighlighter
-                  style={oneDark}
-                  language={match[1]}
-                  PreTag="div"
-                  customStyle={{ margin: 0, borderRadius: "0.5rem", fontSize: "0.8rem" }}
-                >
-                  {codeStr}
-                </SyntaxHighlighter>
-              );
-            }
-            return <code className={className} {...props}>{children}</code>;
-          },
-        }}
-      >
-        {content || "*No content yet*"}
-      </ReactMarkdown>
-    </div>
-  );
-}
-
 // ── Generate canonical markdown from bundle items ──
-function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[]): string {
+export function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[]): string {
   const lines: string[] = [];
 
   lines.push(`# ${bundle.title}`);
@@ -74,7 +24,6 @@ function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[])
   }
   lines.push("");
 
-  // Group items by playbook ownership
   const playbooks = items.filter(i => i.category === "PLAYBOOK");
   const ownedByPlaybook = new Map<string, MockContextItem[]>();
   const sharedItems: MockContextItem[] = [];
@@ -86,7 +35,6 @@ function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[])
       existing.push(item);
       ownedByPlaybook.set(item.parent_playbook_id, existing);
     } else if (item.category === "PROCEDURE" && !item.parent_playbook_id && playbooks.length === 1) {
-      // Auto-nest orphan procedures under single playbook
       const pbId = playbooks[0].id;
       const existing = ownedByPlaybook.get(pbId) || [];
       existing.push(item);
@@ -96,60 +44,41 @@ function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[])
     }
   }
 
-  // Render each playbook as a section
   for (const pb of playbooks) {
     lines.push(`## ${pb.title}`);
-    if (pb.content_preview) {
-      lines.push("", pb.content_preview);
-    }
+    if (pb.content_preview) lines.push("", pb.content_preview);
     lines.push("");
 
     const children = ownedByPlaybook.get(pb.id) || [];
-    const procedures = children
-      .filter(i => i.category === "PROCEDURE")
-      .sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999));
+    const procedures = children.filter(i => i.category === "PROCEDURE").sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999));
     const principles = children.filter(i => i.category === "PRINCIPLE");
     const directives = children.filter(i => i.category === "DIRECTIVE");
     const knowledge = children.filter(i => i.category === "KNOWLEDGE");
     const research = children.filter(i => i.category === "RESEARCH");
-    const other = children.filter(i =>
-      !["PROCEDURE", "PRINCIPLE", "DIRECTIVE", "KNOWLEDGE", "RESEARCH"].includes(i.category)
-    );
+    const other = children.filter(i => !["PROCEDURE", "PRINCIPLE", "DIRECTIVE", "KNOWLEDGE", "RESEARCH"].includes(i.category));
 
-    // Procedures as numbered steps
     if (procedures.length > 0) {
-      lines.push("### Steps");
-      lines.push("");
+      lines.push("### Steps", "");
       procedures.forEach((proc, idx) => {
         lines.push(`${idx + 1}. **${proc.title}**`);
         if (proc.content_preview) {
-          // Indent content under the numbered item
-          const contentLines = proc.content_preview.split("\n");
-          for (const cl of contentLines) {
-            lines.push(`   ${cl}`);
-          }
+          for (const cl of proc.content_preview.split("\n")) lines.push(`   ${cl}`);
         }
         lines.push("");
       });
     }
 
-    // Directives as callouts
     if (directives.length > 0) {
-      lines.push("### Gates & Directives");
-      lines.push("");
+      lines.push("### Gates & Directives", "");
       for (const d of directives) {
         lines.push(`> **⚠️ ${d.title}**`);
-        if (d.content_preview) {
-          lines.push(`> ${d.content_preview.replace(/\n/g, "\n> ")}`);
-        }
+        if (d.content_preview) lines.push(`> ${d.content_preview.replace(/\n/g, "\n> ")}`);
         lines.push("");
       }
     }
 
-    // Knowledge items
     if (knowledge.length > 0) {
-      lines.push("### Knowledge");
-      lines.push("");
+      lines.push("### Knowledge", "");
       for (const k of knowledge) {
         lines.push(`#### ${k.title}`);
         if (k.content_preview) lines.push("", k.content_preview);
@@ -157,23 +86,17 @@ function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[])
       }
     }
 
-    // Principles as blockquotes
     if (principles.length > 0) {
-      lines.push("### Principles");
-      lines.push("");
+      lines.push("### Principles", "");
       for (const p of principles) {
         lines.push(`> **${p.title}**`);
-        if (p.content_preview) {
-          lines.push(`> ${p.content_preview.replace(/\n/g, "\n> ")}`);
-        }
+        if (p.content_preview) lines.push(`> ${p.content_preview.replace(/\n/g, "\n> ")}`);
         lines.push("");
       }
     }
 
-    // Research
     if (research.length > 0) {
-      lines.push("### Research");
-      lines.push("");
+      lines.push("### Research", "");
       for (const r of research) {
         lines.push(`#### ${r.title}`);
         if (r.content_preview) lines.push("", r.content_preview);
@@ -181,7 +104,6 @@ function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[])
       }
     }
 
-    // Other
     if (other.length > 0) {
       for (const o of other) {
         lines.push(`#### ${o.title}`);
@@ -190,21 +112,15 @@ function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[])
       }
     }
 
-    lines.push("---");
-    lines.push("");
+    lines.push("---", "");
   }
 
-  // Shared context at the bottom
   if (sharedItems.length > 0) {
-    lines.push("## Shared Context");
-    lines.push("");
+    lines.push("## Shared Context", "");
     for (const item of sharedItems) {
-      const prefix = item.category === "PRINCIPLE" ? "> " : "";
       if (item.category === "PRINCIPLE") {
         lines.push(`> **${item.title}**`);
-        if (item.content_preview) {
-          lines.push(`> ${item.content_preview.replace(/\n/g, "\n> ")}`);
-        }
+        if (item.content_preview) lines.push(`> ${item.content_preview.replace(/\n/g, "\n> ")}`);
       } else {
         lines.push(`### ${item.title}`);
         if (item.content_preview) lines.push("", item.content_preview);
@@ -219,32 +135,68 @@ function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[])
 interface CanonicalDocumentViewProps {
   bundle: MockBundle;
   items: MockContextItem[];
+  allBundles?: MockBundle[];
   onClose: () => void;
+  onDraftChange?: (bundleId: string, hasDraft: boolean) => void;
 }
 
-export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocumentViewProps) {
+export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose, onDraftChange }: CanonicalDocumentViewProps) {
   const { toast } = useToast();
   const editorRef = useRef<HTMLTextAreaElement>(null);
 
-  // Generate the canonical document on first render
   const generatedContent = useMemo(() => generateCanonicalDocument(bundle, items), [bundle, items]);
 
   const [content, setContent] = useState(generatedContent);
   const [viewMode, setViewMode] = useState<"edit" | "preview" | "split">("split");
   const [dirty, setDirty] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [draftSaved, setDraftSaved] = useState(false);
+
+  // Copilot state
+  const [copilotOpen, setCopilotOpen] = useState(false);
+  const [selectedText, setSelectedText] = useState("");
+  const [copilotPosition, setCopilotPosition] = useState({ top: 0, left: 0 });
+
+  // Load draft from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(`doc-draft-${bundle.id}`);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.content && parsed.content !== generatedContent) {
+          setContent(parsed.content);
+          setDirty(true);
+          setDraftSaved(true);
+        }
+      } catch { /* ignore */ }
+    }
+  }, [bundle.id, generatedContent]);
 
   const handleContentChange = (v: string) => {
     setContent(v);
     setDirty(true);
+    setDraftSaved(false);
   };
 
   const handleRegenerate = useCallback(() => {
     const fresh = generateCanonicalDocument(bundle, items);
     setContent(fresh);
     setDirty(false);
+    setDraftSaved(false);
+    localStorage.removeItem(`doc-draft-${bundle.id}`);
+    onDraftChange?.(bundle.id, false);
     toast({ title: "Document regenerated", description: "Content rebuilt from current playbook items." });
-  }, [bundle, items, toast]);
+  }, [bundle, items, toast, onDraftChange]);
+
+  const handleSaveDraft = useCallback(() => {
+    localStorage.setItem(`doc-draft-${bundle.id}`, JSON.stringify({
+      content,
+      savedAt: new Date().toISOString(),
+    }));
+    setDraftSaved(true);
+    onDraftChange?.(bundle.id, true);
+    toast({ title: "Draft saved", description: "Your edits are saved locally. Use 'Sync to Playbooks' to push changes." });
+  }, [content, bundle.id, toast, onDraftChange]);
 
   const handleDownload = useCallback(() => {
     const blob = new Blob([content], { type: "text/markdown" });
@@ -258,16 +210,111 @@ export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocum
 
   const handleSyncToPlaybooks = useCallback(async () => {
     setSyncing(true);
-    // For now, show a toast indicating this will be available soon
-    toast({
-      title: "Coming soon",
-      description: "Re-extraction from edited document to playbooks will be available in a future update.",
-    });
-    setSyncing(false);
-  }, [toast]);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({ title: "Not authenticated", variant: "destructive" });
+        setSyncing(false);
+        return;
+      }
 
-  // Detect divergence from generated
+      const existingItems = items.map(i => ({
+        id: i.id,
+        title: i.title,
+        category: i.category,
+        parent_playbook_id: i.parent_playbook_id,
+        content_preview: i.content_preview,
+      }));
+
+      const resp = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sync-document-to-playbooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            document_markdown: content,
+            bundle_id: bundle.id,
+            bundle_title: bundle.title,
+            existing_items: existingItems,
+          }),
+        }
+      );
+
+      if (!resp.ok) {
+        const errData = await resp.json().catch(() => ({ error: "Sync failed" }));
+        toast({ title: "Sync failed", description: errData.error, variant: "destructive" });
+        setSyncing(false);
+        return;
+      }
+
+      const result = await resp.json();
+      const { results, summary } = result;
+
+      toast({
+        title: "Synced to Playbooks",
+        description: `${summary}. Updated: ${results.updated}, Created: ${results.created}, Removed: ${results.deleted}${results.errors?.length ? ` (${results.errors.length} errors)` : ""}`,
+      });
+
+      // Clear draft after successful sync
+      localStorage.removeItem(`doc-draft-${bundle.id}`);
+      setDirty(false);
+      setDraftSaved(false);
+      onDraftChange?.(bundle.id, false);
+    } catch (err) {
+      toast({ title: "Sync error", description: String(err), variant: "destructive" });
+    } finally {
+      setSyncing(false);
+    }
+  }, [content, bundle, items, toast, onDraftChange]);
+
+  // Text selection handler for copilot
+  const handleMouseUp = useCallback(() => {
+    if (viewMode === "preview") return; // Only works in edit modes
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    if (start === end) return; // No selection
+
+    const selected = content.substring(start, end);
+    if (selected.trim().length < 5) return; // Too short
+
+    setSelectedText(selected);
+
+    // Position copilot near the textarea caret
+    const rect = textarea.getBoundingClientRect();
+    setCopilotPosition({
+      top: rect.top + 60,
+      left: rect.left + rect.width / 2 - 180,
+    });
+    setCopilotOpen(true);
+  }, [content, viewMode]);
+
+  const handleCopilotReplace = useCallback((newText: string) => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const before = content.substring(0, start);
+    const after = content.substring(end);
+    const newContent = before + newText + after;
+
+    handleContentChange(newContent);
+
+    // Re-focus and select the new text
+    requestAnimationFrame(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start, start + newText.length);
+    });
+  }, [content]);
+
   const isDiverged = content !== generatedContent;
+  const otherBundles = allBundles.filter(b => b.id !== bundle.id).map(b => ({ title: b.title, description: b.description }));
 
   return (
     <div className="flex flex-col h-[600px] border-t border-border/30 bg-card/50">
@@ -275,9 +322,14 @@ export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocum
       <div className="flex items-center justify-between border-b border-border/50 px-4 py-2 bg-card/80 shrink-0">
         <div className="flex items-center gap-2 min-w-0">
           <h3 className="text-sm font-semibold truncate">📖 {bundle.title} — Document View</h3>
-          {dirty && (
+          {dirty && !draftSaved && (
             <Badge variant="outline" className="text-[10px] border-amber-500/30 text-amber-400 shrink-0">
-              Edited
+              Unsaved
+            </Badge>
+          )}
+          {draftSaved && (
+            <Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-400 shrink-0 flex items-center gap-1">
+              <FileCheck className="h-2.5 w-2.5" /> Draft Saved
             </Badge>
           )}
           {isDiverged && !dirty && (
@@ -314,16 +366,26 @@ export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocum
           </Button>
 
           {dirty && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7 text-[11px] gap-1 border-primary/30 text-primary"
-              onClick={handleSyncToPlaybooks}
-              disabled={syncing}
-            >
-              {syncing ? <Loader2 className="h-3 w-3 animate-spin" /> : <ArrowUpFromLine className="h-3 w-3" />}
-              Sync to Playbooks
-            </Button>
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-7 text-[11px] gap-1 border-emerald-500/30 text-emerald-400"
+                onClick={handleSaveDraft}
+              >
+                <Save className="h-3 w-3" /> Save Draft
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-7 text-[11px] gap-1 border-primary/30 text-primary"
+                onClick={handleSyncToPlaybooks}
+                disabled={syncing}
+              >
+                {syncing ? <Loader2 className="h-3 w-3 animate-spin" /> : <ArrowUpFromLine className="h-3 w-3" />}
+                Sync to Playbooks
+              </Button>
+            </>
           )}
 
           <Button variant="ghost" size="sm" className="h-7 text-[11px] gap-1" onClick={handleDownload}>
@@ -336,12 +398,12 @@ export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocum
       {isDiverged && dirty && (
         <div className="flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border-b border-amber-500/20 text-amber-400 text-[11px]">
           <AlertTriangle className="h-3 w-3 shrink-0" />
-          <span>Your document has been edited. Use "Sync to Playbooks" to push changes, or "Regenerate" to reset from current playbook state.</span>
+          <span>Your document has been edited. Use "Save Draft" to preserve edits, or "Sync to Playbooks" to push changes back.</span>
         </div>
       )}
 
       {/* Editor body */}
-      <div className="flex flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-1 min-h-0 overflow-hidden relative">
         {/* Edit pane */}
         {(viewMode === "edit" || viewMode === "split") && (
           <div className={`min-w-0 flex flex-col ${viewMode === "split" ? "w-1/2 border-r border-border/50" : "flex-1"}`}>
@@ -350,6 +412,7 @@ export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocum
               ref={editorRef}
               value={content}
               onChange={e => handleContentChange(e.target.value)}
+              onMouseUp={handleMouseUp}
               onKeyDown={e => {
                 const mod = e.ctrlKey || e.metaKey;
                 const key = e.key.toLowerCase();
@@ -365,6 +428,11 @@ export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocum
                       editorRef.current?.setSelectionRange(cursorStart, cursorEnd);
                     });
                   }
+                }
+                // Ctrl+S to save draft
+                if (mod && key === "s") {
+                  e.preventDefault();
+                  handleSaveDraft();
                 }
               }}
               className="flex-1 w-full resize-none border-none rounded-none bg-transparent px-6 py-4 font-mono text-sm focus-visible:ring-0 leading-relaxed"
@@ -382,6 +450,20 @@ export function CanonicalDocumentView({ bundle, items, onClose }: CanonicalDocum
               </div>
             </ScrollArea>
           </div>
+        )}
+
+        {/* Inline AI Copilot */}
+        {copilotOpen && selectedText && (
+          <DocumentCopilot
+            selectedText={selectedText}
+            fullDocument={content}
+            bundle={bundle}
+            items={items}
+            otherBundles={otherBundles}
+            position={copilotPosition}
+            onReplace={handleCopilotReplace}
+            onClose={() => setCopilotOpen(false)}
+          />
         )}
       </div>
     </div>
