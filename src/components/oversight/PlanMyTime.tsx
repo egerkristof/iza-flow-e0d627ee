@@ -1,11 +1,12 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import {
   Clock, Calendar, CalendarDays, Sparkles, Plus, Brain,
-  Check, Trash2, ChevronRight, Loader2, ListPlus, X, Replace, CheckSquare, Square,
+  Check, Trash2, ChevronRight, Loader2, ListPlus, X, Replace, CheckSquare, Square, ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -127,6 +128,7 @@ export function PlanMyTime() {
       if (error) throw error;
       return (data ?? []).map(s => ({
         id: s.id,
+        workbook_id: s.workbook_id,
         title: (s as any).workbook_protocols?.title ?? "Session",
         status: s.status,
         sourceType: "session" as const,
@@ -134,6 +136,13 @@ export function PlanMyTime() {
     },
   });
 
+  // Build source_id → workbook_id lookup
+  const sourceToWorkbook = useMemo(() => {
+    const map = new Map<string, string>();
+    myTasks.forEach(t => map.set(t.id, t.workbook_id));
+    mySessions.forEach(s => map.set(s.id, s.workbook_id));
+    return map;
+  }, [myTasks, mySessions]);
   // Already-planned source IDs
   const plannedSourceIds = useMemo(() => {
     const activeHorizon = activeTab as Horizon;
@@ -515,6 +524,7 @@ export function PlanMyTime() {
                         item={item}
                         onToggle={() => toggleComplete.mutate({ id: item.id, completed: true })}
                         onDelete={() => deleteItem.mutate(item.id)}
+                        workbookId={item.source_id ? sourceToWorkbook.get(item.source_id) : undefined}
                       />
                     ))}
                     {completedItems.length > 0 && (
@@ -528,6 +538,7 @@ export function PlanMyTime() {
                             item={item}
                             onToggle={() => toggleComplete.mutate({ id: item.id, completed: false })}
                             onDelete={() => deleteItem.mutate(item.id)}
+                            workbookId={item.source_id ? sourceToWorkbook.get(item.source_id) : undefined}
                           />
                         ))}
                       </div>
@@ -635,11 +646,14 @@ function PlanItemRow({
   item,
   onToggle,
   onDelete,
+  workbookId,
 }: {
   item: PlanItem;
   onToggle: () => void;
   onDelete: () => void;
+  workbookId?: string;
 }) {
+  const navigate = useNavigate();
   const sourceIcon = item.source_type === "session" ? "🎯" : item.source_type === "task" ? "📋" : "✏️";
 
   return (
@@ -681,12 +695,23 @@ function PlanItemRow({
         </div>
       </div>
 
-      <button
-        onClick={onDelete}
-        className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive"
-      >
-        <Trash2 className="h-3.5 w-3.5" />
-      </button>
+      <div className="flex items-center gap-1 shrink-0">
+        {workbookId && (
+          <button
+            onClick={() => navigate(`/workbooks/${workbookId}`)}
+            className="opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-primary"
+            title="Open in workbook"
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+          </button>
+        )}
+        <button
+          onClick={onDelete}
+          className="opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive"
+        >
+          <Trash2 className="h-3.5 w-3.5" />
+        </button>
+      </div>
     </div>
   );
 }
