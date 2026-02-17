@@ -194,19 +194,43 @@ If nothing changed, return: { "operations": [], "summary": "No changes detected"
       }
     }
 
+    // ── CRITICAL: Filter out no-op operations where nothing actually changed ──
+    const existingMap = new Map((existing_items || []).map((item: any) => [item.id, item]));
+    const validatedOps = (parsed.operations || []).filter((op: any) => {
+      if (op.op === "create" || op.op === "delete") return true;
+      if (op.op === "update" && op.id) {
+        const existing = existingMap.get(op.id);
+        if (!existing) return true; // can't validate, keep it
+        
+        // Check if title actually changed
+        const titleChanged = op.title && op.title.trim() !== existing.title?.trim();
+        // Check if content actually changed
+        const contentChanged = op.content_full && op.content_full.trim() !== (existing.content_full || "").trim();
+        // Check if category changed
+        const categoryChanged = op.category && op.category !== existing.category;
+        
+        return titleChanged || contentChanged || categoryChanged;
+      }
+      return false;
+    });
+
+    const filteredSummary = validatedOps.length === 0
+      ? "No changes detected"
+      : parsed.summary || `${validatedOps.length} change(s) detected`;
+
     // If preview_only, return operations without applying
     if (preview_only) {
       return new Response(JSON.stringify({
         success: true,
-        summary: parsed.summary || "Changes detected",
-        operations: parsed.operations || [],
+        summary: filteredSummary,
+        operations: validatedOps,
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
     // Legacy direct-apply mode (fallback)
-    return await applyOperations(serviceClient, user.id, bundle_id, document_markdown, parsed.operations || [], corsHeaders);
+    return await applyOperations(serviceClient, user.id, bundle_id, document_markdown, validatedOps, corsHeaders);
   } catch (err) {
     console.error("sync-document-to-playbooks error:", err);
     return new Response(
