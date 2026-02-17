@@ -104,7 +104,10 @@ function parseSection(content: string): {
   const stepMatch = first.match(/^(\d+)\.\s+\*\*(.+?)\*\*(.*)/);
   if (stepMatch) {
     const rest = stepMatch[3] ? stepMatch[3].trim() : "";
-    const bodyLines = lines.slice(firstNonEmpty + 1).join("\n").trim();
+    // Strip 3-space indentation that generateCanonicalDocument adds
+    const bodyLines = lines.slice(firstNonEmpty + 1)
+      .map(l => l.replace(/^   /, ""))
+      .join("\n").trim();
     return {
       title: stepMatch[2].trim(),
       body: rest ? `${rest}\n${bodyLines}`.trim() : bodyLines,
@@ -165,11 +168,10 @@ export function blocksToMarkdown(blocks: DocBlock[]): string {
         lines.push(...block.body.split("\n").map(l => `> ${l}`));
       }
     } else if (block.isStep && block.stepNumber) {
+      lines.push(`${block.stepNumber}. **${block.title}**`);
       if (block.body) {
-        lines.push(`${block.stepNumber}. **${block.title}**`);
-        lines.push(block.body);
-      } else {
-        lines.push(`${block.stepNumber}. **${block.title}**`);
+        // Add 3-space indentation to match generateCanonicalDocument format
+        lines.push(...block.body.split("\n").map(l => `   ${l}`));
       }
     } else {
       const hashes = "#".repeat(block.level || 2);
