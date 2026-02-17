@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Library, BarChart3, Shield, Zap, ChevronRight, AlertTriangle } from "lucide-react";
+import { BookOpen, Library, BarChart3, Shield, Zap, ChevronRight, AlertTriangle, TrendingUp } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,6 +17,7 @@ const Index = () => {
   const isOperator = activeRole === "operator";
   const [mandatesOpen, setMandatesOpen] = useState(false);
   const [feedOpen, setFeedOpen] = useState(false);
+  const [weekOpen, setWeekOpen] = useState(false);
 
   // Fetch active mandate count for the notification badge
   const { data: activeMandateCount = 0 } = useQuery({
@@ -69,8 +70,17 @@ const Index = () => {
         {/* Quick Actions */}
         <QuickActionsBar />
 
-        {/* Weekly Progress */}
-        <WeeklyProgressWidget />
+        {/* Weekly Progress — collapsed by default */}
+        <Collapsible open={weekOpen} onOpenChange={setWeekOpen}>
+          <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
+            <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${weekOpen ? "rotate-90" : ""}`} />
+            <TrendingUp className="h-4 w-4 text-success" />
+            <span className="text-sm font-medium">My Week Statistics</span>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2">
+            <WeeklyProgressWidget />
+          </CollapsibleContent>
+        </Collapsible>
 
         {/* Plan My Time (includes Priority Map tab) */}
         <PlanMyTime />

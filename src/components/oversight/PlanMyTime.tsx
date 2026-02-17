@@ -50,6 +50,28 @@ export function PlanMyTime() {
   const [feedPickerSearch, setFeedPickerSearch] = useState("");
   const [showPrefsPanel, setShowPrefsPanel] = useState(false);
 
+  // Fetch saved preferences for all horizons
+  const { data: savedPrefs = [] } = useQuery({
+    queryKey: ["plan-prefs-all", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("working_preferences")
+        .select("preference_key, preference_value")
+        .eq("user_id", user!.id)
+        .eq("scope_type", "personal")
+        .like("preference_key", "plan_priorities_%");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const prefsForHorizon = (h: Horizon): PlanPreferences | null => {
+    const row = savedPrefs.find(p => p.preference_key === `plan_priorities_${h}`);
+    if (!row) return null;
+    try { return JSON.parse(row.preference_value); } catch { return null; }
+  };
+
   // Fetch plan items
   const { data: planItems = [], isLoading } = useQuery({
     queryKey: ["operator-plan", user?.id],
@@ -310,8 +332,25 @@ export function PlanMyTime() {
             )}
 
             {/* Horizon tab contents */}
-            {(Object.keys(HORIZON_CONFIG) as Horizon[]).map(h => (
+            {(Object.keys(HORIZON_CONFIG) as Horizon[]).map(h => {
+              const hPrefs = prefsForHorizon(h);
+              return (
               <TabsContent key={h} value={h} className="mt-3 space-y-2">
+                {/* Saved priority preferences */}
+                {hPrefs && (
+                  <div className="flex items-center gap-1.5 flex-wrap pb-1">
+                    <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Priorities:</span>
+                    <Badge variant="outline" className="text-[8px] gap-1 capitalize">
+                      {hPrefs.focusMode.replace("_", " ")}
+                    </Badge>
+                    <Badge variant="outline" className="text-[8px] gap-1 capitalize">
+                      {hPrefs.priorityWeight === "urgency" ? "Urgency first" : hPrefs.priorityWeight === "impact" ? "Impact first" : "Balanced"}
+                    </Badge>
+                    <Badge variant="outline" className="text-[8px] gap-1">
+                      Max {hPrefs.maxItems}
+                    </Badge>
+                  </div>
+                )}
                 {isLoading ? (
                   <div className="text-center text-sm text-muted-foreground py-6">Loading plan…</div>
                 ) : pendingItems.length === 0 && completedItems.length === 0 ? (
@@ -375,7 +414,8 @@ export function PlanMyTime() {
                   Custom items are saved to your plan. They are not linked to any workbook task.
                 </p>
               </TabsContent>
-            ))}
+              );
+            })}
 
             {/* Priority Map tab */}
             <TabsContent value="priority_map" className="mt-3">
