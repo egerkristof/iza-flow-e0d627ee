@@ -8,6 +8,7 @@ import { NerveCenterFeed } from "@/components/oversight/NerveCenterFeed";
 import { WeeklyProgressWidget } from "@/components/oversight/WeeklyProgressWidget";
 import { QuickActionsBar } from "@/components/oversight/QuickActionsBar";
 import { PlanMyTime } from "@/components/oversight/PlanMyTime";
+import { PriorityGraph } from "@/components/oversight/PriorityGraph";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
@@ -72,6 +73,9 @@ const Index = () => {
             <MandatesDashboard compact />
           </CollapsibleContent>
         </Collapsible>
+
+        {/* Priority Map Graph */}
+        <PriorityGraph />
 
         {/* Embedded Nerve Center (compact) */}
         <div>
