@@ -16,6 +16,71 @@ import { SyncHistoryDialog } from "@/components/context/SyncHistoryDialog";
 import { supabase } from "@/integrations/supabase/client";
 import type { MockBundle, MockContextItem } from "@/data/mockContextItems";
 
+// Item marker format: <!-- item:UUID -->
+const ITEM_MARKER_RE = /<!-- item:([a-f0-9-]+) -->/g;
+
+/** Strip item markers from markdown (for display) */
+export function stripItemMarkers(md: string): string {
+  return md.replace(/<!-- item:[a-f0-9-]+ -->\n?/g, "");
+}
+
+/** Parse a marked document into a map of item-id → content block */
+export function parseMarkedSections(doc: string): Map<string, string> {
+  const sections = new Map<string, string>();
+  const markers = [...doc.matchAll(ITEM_MARKER_RE)];
+  for (let i = 0; i < markers.length; i++) {
+    const id = markers[i][1];
+    const start = markers[i].index! + markers[i][0].length;
+    const end = i + 1 < markers.length ? markers[i + 1].index! : doc.length;
+    // Trim the leading newline and trailing whitespace of each section
+    sections.set(id, doc.slice(start, end).replace(/^\n/, "").trimEnd());
+  }
+  return sections;
+}
+
+/** Deterministic diff: compare marked sections between baseline and edited document.
+ *  Returns operations for items whose content actually changed. */
+export function diffMarkedDocuments(
+  baseline: string,
+  edited: string,
+  items: { id: string; title: string; category: string }[]
+): { op: "update"; id: string; title: string; newContent: string; oldContent: string }[] {
+  const baseSections = parseMarkedSections(baseline);
+  const editSections = parseMarkedSections(edited);
+  const ops: { op: "update"; id: string; title: string; newContent: string; oldContent: string }[] = [];
+
+  for (const [id, editContent] of editSections) {
+    const baseContent = baseSections.get(id);
+    if (baseContent === undefined) continue; // new marker — shouldn't happen in normal flow
+    if (editContent !== baseContent) {
+      const item = items.find(i => i.id === id);
+      ops.push({
+        op: "update",
+        id,
+        title: item?.title || id,
+        newContent: editContent,
+        oldContent: baseContent,
+      });
+    }
+  }
+
+  // Detect deleted markers
+  for (const [id] of baseSections) {
+    if (!editSections.has(id)) {
+      const item = items.find(i => i.id === id);
+      ops.push({
+        op: "update" as const,
+        id,
+        title: item?.title || id,
+        newContent: "",
+        oldContent: baseSections.get(id) || "",
+      });
+    }
+  }
+
+  return ops;
+}
+
 // ── Generate canonical markdown from bundle items ──
 export function generateCanonicalDocument(bundle: MockBundle, items: MockContextItem[]): string {
   const lines: string[] = [];
@@ -47,6 +112,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
   }
 
   for (const pb of playbooks) {
+    lines.push(`<!-- item:${pb.id} -->`);
     lines.push(`## ${pb.title}`);
     if (pb.content_preview) lines.push("", pb.content_preview);
     lines.push("");
@@ -62,6 +128,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     if (procedures.length > 0) {
       lines.push("### Steps", "");
       procedures.forEach((proc, idx) => {
+        lines.push(`<!-- item:${proc.id} -->`);
         lines.push(`${idx + 1}. **${proc.title}**`);
         if (proc.content_preview) {
           for (const cl of proc.content_preview.split("\n")) lines.push(`   ${cl}`);
@@ -73,6 +140,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     if (directives.length > 0) {
       lines.push("### Gates & Directives", "");
       for (const d of directives) {
+        lines.push(`<!-- item:${d.id} -->`);
         lines.push(`> **⚠️ ${d.title}**`);
         if (d.content_preview) lines.push(`> ${d.content_preview.replace(/\n/g, "\n> ")}`);
         lines.push("");
@@ -82,6 +150,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     if (knowledge.length > 0) {
       lines.push("### Knowledge", "");
       for (const k of knowledge) {
+        lines.push(`<!-- item:${k.id} -->`);
         lines.push(`#### ${k.title}`);
         if (k.content_preview) lines.push("", k.content_preview);
         lines.push("");
@@ -91,6 +160,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     if (principles.length > 0) {
       lines.push("### Principles", "");
       for (const p of principles) {
+        lines.push(`<!-- item:${p.id} -->`);
         lines.push(`> **${p.title}**`);
         if (p.content_preview) lines.push(`> ${p.content_preview.replace(/\n/g, "\n> ")}`);
         lines.push("");
@@ -100,6 +170,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
     if (research.length > 0) {
       lines.push("### Research", "");
       for (const r of research) {
+        lines.push(`<!-- item:${r.id} -->`);
         lines.push(`#### ${r.title}`);
         if (r.content_preview) lines.push("", r.content_preview);
         lines.push("");
@@ -108,6 +179,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
 
     if (other.length > 0) {
       for (const o of other) {
+        lines.push(`<!-- item:${o.id} -->`);
         lines.push(`#### ${o.title}`);
         if (o.content_preview) lines.push("", o.content_preview);
         lines.push("");
@@ -120,6 +192,7 @@ export function generateCanonicalDocument(bundle: MockBundle, items: MockContext
   if (sharedItems.length > 0) {
     lines.push("## Shared Context", "");
     for (const item of sharedItems) {
+      lines.push(`<!-- item:${item.id} -->`);
       if (item.category === "PRINCIPLE") {
         lines.push(`> **${item.title}**`);
         if (item.content_preview) lines.push(`> ${item.content_preview.replace(/\n/g, "\n> ")}`);
@@ -231,61 +304,71 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
     URL.revokeObjectURL(url);
   }, [content, bundle.title]);
 
-  // Step 1: Request AI to compute operations (preview mode)
-  const handleRequestSync = useCallback(async () => {
+  /** Extract title from a marked section's markdown content based on category patterns */
+  const extractTitleFromSection = (sectionContent: string): string | null => {
+    const lines = sectionContent.split("\n").filter(l => l.trim());
+    if (!lines.length) return null;
+    const first = lines[0];
+    // ## Heading or ### Heading or #### Heading
+    const headingMatch = first.match(/^#{1,4}\s+(.+)/);
+    if (headingMatch) return headingMatch[1].trim();
+    // Numbered step: 1. **Title**
+    const stepMatch = first.match(/^\d+\.\s+\*\*(.+?)\*\*/);
+    if (stepMatch) return stepMatch[1].trim();
+    // Blockquote: > **⚠️ Title** or > **Title**
+    const bqMatch = first.match(/^>\s+\*\*(?:⚠️\s*)?(.+?)\*\*/);
+    if (bqMatch) return bqMatch[1].trim();
+    return null;
+  };
+
+  /** Extract body content (everything after the title line) from a section */
+  const extractBodyFromSection = (sectionContent: string): string => {
+    const lines = sectionContent.split("\n");
+    // Skip the title line, join the rest, trimmed
+    return lines.slice(1).join("\n").trim();
+  };
+
+  // Step 1: Deterministic marker-based diff (NO AI needed)
+  const handleRequestSync = useCallback(() => {
     setSyncing(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        toast({ title: "Not authenticated", variant: "destructive" });
+      const diffs = diffMarkedDocuments(baselineRef.current, content, items);
+
+      if (diffs.length === 0) {
+        toast({ title: "No changes detected", description: "The document matches the current playbook items." });
         setSyncing(false);
         return;
       }
 
-      const existingItems = items.map(i => ({
-        id: i.id,
-        title: i.title,
-        category: i.category,
-        parent_playbook_id: i.parent_playbook_id,
-        content_full: i.content_preview || "",
-      }));
+      // Convert deterministic diffs into SyncOperations
+      const ops: SyncOperation[] = diffs.map(d => {
+        const newTitle = extractTitleFromSection(d.newContent);
+        const oldTitle = extractTitleFromSection(d.oldContent);
+        const newBody = extractBodyFromSection(d.newContent);
+        const oldBody = extractBodyFromSection(d.oldContent);
 
-      const resp = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sync-document-to-playbooks`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session.access_token}`,
-          },
-          body: JSON.stringify({
-            document_markdown: content,
-            original_document: baselineRef.current,
-            bundle_id: bundle.id,
-            bundle_title: bundle.title,
-            existing_items: existingItems,
-            preview_only: true,
-          }),
-        }
-      );
+        const titleChanged = newTitle && oldTitle && newTitle !== oldTitle;
+        const contentChanged = newBody !== oldBody;
 
-      if (!resp.ok) {
-        const errData = await resp.json().catch(() => ({ error: "Sync failed" }));
-        toast({ title: "Sync failed", description: errData.error, variant: "destructive" });
-        setSyncing(false);
-        return;
-      }
+        return {
+          op: "update" as const,
+          id: d.id,
+          title: titleChanged ? newTitle : d.title,
+          prev_title: titleChanged ? oldTitle : undefined,
+          content_full: contentChanged ? newBody : undefined,
+          prev_content: contentChanged ? oldBody : undefined,
+        };
+      });
 
-      const result = await resp.json();
-      setSyncOps(result.operations || []);
-      setSyncSummary(result.summary || "Changes detected");
+      setSyncOps(ops);
+      setSyncSummary(`${ops.length} item(s) changed`);
       setSyncDialogOpen(true);
     } catch (err) {
       toast({ title: "Sync error", description: String(err), variant: "destructive" });
     } finally {
       setSyncing(false);
     }
-  }, [content, bundle, items, toast]);
+  }, [content, items, toast]);
 
   // Step 2: Apply confirmed operations
   const handleConfirmSync = useCallback(async (selectedOps: SyncOperation[]) => {
