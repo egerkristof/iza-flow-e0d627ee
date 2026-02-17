@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState, useMemo, forwardRef, useImperativeHandle } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
 } from "@/components/ui/tooltip";
@@ -53,6 +52,14 @@ const statusLabels: Record<LineStatus, string> = {
   deleted: "Removed",
 };
 
+// Inline background colors for changed lines
+const lineHighlightColors: Record<LineStatus, string> = {
+  unchanged: "",
+  modified: "bg-amber-500/10",
+  added: "bg-emerald-500/10",
+  deleted: "bg-red-500/10",
+};
+
 export const GutterDiffEditor = forwardRef<HTMLTextAreaElement, GutterDiffEditorProps>(
   ({ value, baseline, onChange, onMouseUp, onKeyDown, className = "", placeholder, copilotRange }, ref) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -90,6 +97,25 @@ export const GutterDiffEditor = forwardRef<HTMLTextAreaElement, GutterDiffEditor
       }
     }, [copilotRange]);
 
+    // Build inline diff highlight overlays for changed lines
+    const changedLineOverlays = useMemo(() => {
+      if (!hasChanges) return null;
+      const overlays: { top: number; height: number; color: string }[] = [];
+      
+      for (let i = 0; i < lineCount; i++) {
+        const diff = lineDiffs[i];
+        if (!diff || diff.status === "unchanged") continue;
+        const color = lineHighlightColors[diff.status];
+        if (!color) continue;
+        overlays.push({
+          top: 16 + i * lineHeight, // 16px padding-top
+          height: lineHeight,
+          color,
+        });
+      }
+      return overlays;
+    }, [lineDiffs, lineCount, lineHeight, hasChanges]);
+
     return (
       <div className={`flex flex-1 min-h-0 ${className}`}>
         {/* Gutter */}
@@ -123,8 +149,22 @@ export const GutterDiffEditor = forwardRef<HTMLTextAreaElement, GutterDiffEditor
           </div>
         </div>
 
-        {/* Textarea with optional copilot highlight overlay */}
+        {/* Textarea with inline diff highlight overlay */}
         <div className="flex-1 relative">
+          {/* Inline diff line highlights */}
+          {changedLineOverlays && changedLineOverlays.map((overlay, idx) => (
+            <div
+              key={idx}
+              className={`absolute left-0 right-0 pointer-events-none z-[1] ${overlay.color}`}
+              style={{
+                top: `${overlay.top}px`,
+                height: `${overlay.height}px`,
+                transform: `translateY(-${scrollTop}px)`,
+              }}
+            />
+          ))}
+
+          {/* Copilot highlight */}
           {fadingRange && (
             <div
               className="absolute left-0 right-0 pointer-events-none z-10 bg-emerald-500/15 transition-opacity duration-2000"
@@ -141,7 +181,7 @@ export const GutterDiffEditor = forwardRef<HTMLTextAreaElement, GutterDiffEditor
             onChange={e => onChange(e.target.value)}
             onMouseUp={onMouseUp}
             onKeyDown={onKeyDown}
-            className="flex-1 w-full h-full resize-none border-none rounded-none bg-transparent px-4 py-4 font-mono text-sm focus-visible:ring-0 leading-[20px]"
+            className="flex-1 w-full h-full resize-none border-none rounded-none bg-transparent px-4 py-4 font-mono text-sm focus-visible:ring-0 leading-[20px] relative z-[2]"
             placeholder={placeholder}
           />
         </div>

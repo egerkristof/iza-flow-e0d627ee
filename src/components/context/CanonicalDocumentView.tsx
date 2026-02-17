@@ -24,15 +24,24 @@ export function stripItemMarkers(md: string): string {
   return md.replace(/<!-- item:[a-f0-9-]+ -->\n?/g, "");
 }
 
-/** Parse a marked document into a map of item-id → content block */
+/** Parse a marked document into a map of item-id → content block.
+ *  The special key "__header__" captures content before the first marker. */
 export function parseMarkedSections(doc: string): Map<string, string> {
   const sections = new Map<string, string>();
   const markers = [...doc.matchAll(ITEM_MARKER_RE)];
+
+  // Capture header (everything before the first marker)
+  if (markers.length > 0) {
+    const headerContent = doc.slice(0, markers[0].index!).trimEnd();
+    sections.set("__header__", headerContent);
+  } else {
+    sections.set("__header__", doc.trimEnd());
+  }
+
   for (let i = 0; i < markers.length; i++) {
     const id = markers[i][1];
     const start = markers[i].index! + markers[i][0].length;
     const end = i + 1 < markers.length ? markers[i + 1].index! : doc.length;
-    // Trim the leading newline and trailing whitespace of each section
     sections.set(id, doc.slice(start, end).replace(/^\n/, "").trimEnd());
   }
   return sections;
@@ -49,9 +58,23 @@ export function diffMarkedDocuments(
   const editSections = parseMarkedSections(edited);
   const ops: { op: "update"; id: string; title: string; newContent: string; oldContent: string }[] = [];
 
+  // Check header (bundle title/description) changes
+  const baseHeader = baseSections.get("__header__") || "";
+  const editHeader = editSections.get("__header__") || "";
+  if (baseHeader !== editHeader) {
+    ops.push({
+      op: "update",
+      id: "__header__",
+      title: "Bundle Title / Description",
+      newContent: editHeader,
+      oldContent: baseHeader,
+    });
+  }
+
   for (const [id, editContent] of editSections) {
+    if (id === "__header__") continue;
     const baseContent = baseSections.get(id);
-    if (baseContent === undefined) continue; // new marker — shouldn't happen in normal flow
+    if (baseContent === undefined) continue;
     if (editContent !== baseContent) {
       const item = items.find(i => i.id === id);
       ops.push({
@@ -66,6 +89,7 @@ export function diffMarkedDocuments(
 
   // Detect deleted markers
   for (const [id] of baseSections) {
+    if (id === "__header__") continue;
     if (!editSections.has(id)) {
       const item = items.find(i => i.id === id);
       ops.push({
@@ -342,6 +366,17 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
 
       // Convert deterministic diffs into SyncOperations
       const ops: SyncOperation[] = diffs.map(d => {
+        // Special handling for bundle header
+        if (d.id === "__header__") {
+          return {
+            op: "update" as const,
+            id: "__header__",
+            title: "Bundle Title / Description",
+            content_full: d.newContent,
+            prev_content: d.oldContent,
+          };
+        }
+
         const newTitle = extractTitleFromSection(d.newContent);
         const oldTitle = extractTitleFromSection(d.oldContent);
         const newBody = extractBodyFromSection(d.newContent);
@@ -381,6 +416,40 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
         return;
       }
 
+      // Handle header (bundle title/description) changes locally
+      const headerOps = selectedOps.filter(op => op.id === "__header__");
+      const itemOps = selectedOps.filter(op => op.id !== "__header__");
+
+      for (const hop of headerOps) {
+        if (hop.content_full !== undefined) {
+          // Parse the new H1 title from content
+          const titleMatch = hop.content_full.match(/^#\s+(.+)/m);
+          if (titleMatch) {
+            const newTitle = titleMatch[1].trim();
+            await supabase.from("bundles").update({ title: newTitle }).eq("id", bundle.id);
+          }
+          // Parse description (lines after H1)
+          const lines = hop.content_full.split("\n");
+          const descLines = lines.slice(1).join("\n").trim();
+          if (descLines) {
+            await supabase.from("bundles").update({ description: descLines }).eq("id", bundle.id);
+          }
+        }
+      }
+
+      // If only header ops, skip edge function call
+      if (itemOps.length === 0) {
+        toast({ title: "Synced to Playbooks", description: "Bundle header updated." });
+        localStorage.removeItem(`doc-draft-${bundle.id}`);
+        baselineRef.current = content;
+        setDirty(false);
+        setDraftSaved(false);
+        onDraftChange?.(bundle.id, false);
+        setSyncDialogOpen(false);
+        setConfirming(false);
+        return;
+      }
+
       const resp = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sync-document-to-playbooks`,
         {
@@ -397,7 +466,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
               id: i.id, title: i.title, category: i.category,
               parent_playbook_id: i.parent_playbook_id, content_preview: i.content_preview,
             })),
-            apply_operations: selectedOps,
+            apply_operations: itemOps,
           }),
         }
       );
