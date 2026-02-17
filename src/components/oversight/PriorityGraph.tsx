@@ -7,7 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ZoomIn, ZoomOut, Maximize2, Search, X, Plus } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Search, X, Plus, Clock, Calendar, CalendarDays } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // ── Types ──
 interface GraphNode {
@@ -263,6 +264,7 @@ export function PriorityGraph() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [graphSearch, setGraphSearch] = useState("");
+  const [addHorizon, setAddHorizon] = useState<string>("today");
 
   // Fetch saved plan preferences
   const { data: savedPrefs = [] } = useQuery({
@@ -389,19 +391,18 @@ export function PriorityGraph() {
 
   const resetView = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
 
-  // Add unplanned item to today's plan
+  // Add unplanned item to selected horizon
   const addToPlan = useMutation({
-    mutationFn: async (node: GraphNode) => {
+    mutationFn: async ({ node, horizon }: { node: GraphNode; horizon: string }) => {
       if (!user) throw new Error("Not authenticated");
-      // Extract the real source id from the node id (feed-<uuid>)
       const sourceId = node.id.startsWith("feed-") ? node.id.slice(5) : null;
-      const sourceType = node.type === "session" ? "session" : node.type === "delegation" ? "task" : "task";
+      const sourceType = node.type === "session" ? "session" : "task";
       const { error } = await supabase.from("operator_plan_items").insert({
         user_id: user.id,
         title: node.label,
         source_type: sourceType,
         source_id: sourceId,
-        time_horizon: "today",
+        time_horizon: horizon,
         planned_date: new Date().toISOString().split("T")[0],
         sort_order: 0,
         ai_suggested: false,
@@ -411,8 +412,10 @@ export function PriorityGraph() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["operator-plan"] });
       queryClient.invalidateQueries({ queryKey: ["priority-graph-plans"] });
+      queryClient.invalidateQueries({ queryKey: ["plan-feed-tasks"] });
       setSelectedNode(null);
-      toast({ title: "Added to today's plan" });
+      const labels: Record<string, string> = { next_hour: "Next Hour", today: "Today", this_week: "This Week" };
+      toast({ title: `Added to ${labels[addHorizon] || addHorizon}` });
     },
   });
 
@@ -540,16 +543,28 @@ export function PriorityGraph() {
               </div>
               <div className="flex items-center gap-1">
                 {isAddable && (
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="h-6 text-[10px] gap-1"
-                    disabled={addToPlan.isPending}
-                    onClick={() => addToPlan.mutate(selectedInfo)}
-                  >
-                    <Plus className="h-3 w-3" />
-                    Add to Today
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    <Select value={addHorizon} onValueChange={setAddHorizon}>
+                      <SelectTrigger className="h-6 text-[10px] w-[110px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="next_hour" className="text-xs"><span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Next Hour</span></SelectItem>
+                        <SelectItem value="today" className="text-xs"><span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Today</span></SelectItem>
+                        <SelectItem value="this_week" className="text-xs"><span className="flex items-center gap-1"><CalendarDays className="h-3 w-3" /> This Week</span></SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="h-6 text-[10px] gap-1"
+                      disabled={addToPlan.isPending}
+                      onClick={() => addToPlan.mutate({ node: selectedInfo, horizon: addHorizon })}
+                    >
+                      <Plus className="h-3 w-3" />
+                      Add
+                    </Button>
+                  </div>
                 )}
                 {selectedInfo.workbookId && (
                   <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => navigate(`/workbooks/${selectedInfo.workbookId}`)}>

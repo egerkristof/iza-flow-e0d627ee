@@ -27,8 +27,9 @@ serve(async (req) => {
     );
     if (authError || !user) throw new Error("Invalid auth token");
 
-    const { time_horizon, existing_plans, preferences } = await req.json();
+    const { time_horizon, existing_plans, preferences, mode } = await req.json();
     const horizon = time_horizon || "today";
+    const generateMode = mode || "replace";
     const focusMode = preferences?.focusMode || "balanced";
     const priorityWeight = preferences?.priorityWeight || "balanced";
     const maxItems = preferences?.maxItems || (horizon === "next_hour" ? 2 : horizon === "today" ? 5 : 8);
@@ -191,13 +192,27 @@ For each item, provide:
     }
 
     // Persist plan items
-    // First clear existing items for this horizon
-    await supabase
-      .from("operator_plan_items")
-      .delete()
-      .eq("user_id", user.id)
-      .eq("time_horizon", horizon)
-      .eq("is_completed", false);
+    let existingCount = 0;
+    if (generateMode === "replace") {
+      // Clear existing non-completed items for this horizon
+      await supabase
+        .from("operator_plan_items")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("time_horizon", horizon)
+        .eq("is_completed", false);
+    } else {
+      // Append mode: get current max sort_order
+      const { data: existing } = await supabase
+        .from("operator_plan_items")
+        .select("sort_order")
+        .eq("user_id", user.id)
+        .eq("time_horizon", horizon)
+        .eq("is_completed", false)
+        .order("sort_order", { ascending: false })
+        .limit(1);
+      existingCount = (existing?.[0]?.sort_order ?? -1) + 1;
+    }
 
     // Insert new items
     const inserts = planItems.map((item: any, idx: number) => ({
@@ -208,7 +223,7 @@ For each item, provide:
       description: item.description,
       time_horizon: horizon,
       planned_date: item.planned_date || today,
-      sort_order: idx,
+      sort_order: existingCount + idx,
       ai_suggested: true,
     }));
 

@@ -15,7 +15,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PriorityGraph } from "./PriorityGraph";
 import { PlanPreferencesPanel } from "./PlanPreferencesPanel";
-import type { PlanPreferences } from "./PlanPreferencesPanel";
+import type { PlanPreferences, GenerateMode } from "./PlanPreferencesPanel";
 
 type Horizon = "next_hour" | "today" | "this_week";
 
@@ -154,7 +154,7 @@ export function PlanMyTime() {
 
   // AI generate plan — passes existing plans from other horizons as context
   const generatePlan = useMutation({
-    mutationFn: async ({ horizon, preferences }: { horizon: Horizon; preferences?: PlanPreferences }) => {
+    mutationFn: async ({ horizon, preferences, mode }: { horizon: Horizon; preferences?: PlanPreferences; mode?: GenerateMode }) => {
       const otherHorizonItems = planItems
         .filter(p => p.time_horizon !== horizon && !p.is_completed)
         .map(p => ({ title: p.title, horizon: p.time_horizon, source_type: p.source_type }));
@@ -164,6 +164,7 @@ export function PlanMyTime() {
           time_horizon: horizon,
           existing_plans: otherHorizonItems,
           preferences: preferences ?? null,
+          mode: mode ?? "replace",
         },
       });
       if (error) throw error;
@@ -325,8 +326,9 @@ export function PlanMyTime() {
               <div className="mt-3">
                 <PlanPreferencesPanel
                   horizon={activeHorizon}
-                  onGenerate={(prefs) => generatePlan.mutate({ horizon: activeHorizon, preferences: prefs })}
+                  onGenerate={(prefs, mode) => generatePlan.mutate({ horizon: activeHorizon, preferences: prefs, mode })}
                   isGenerating={generatePlan.isPending}
+                  hasExistingItems={pendingItems.length > 0}
                 />
               </div>
             )}
