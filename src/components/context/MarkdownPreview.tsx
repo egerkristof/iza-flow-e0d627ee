@@ -1,8 +1,10 @@
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { stripItemMarkers } from "@/components/context/CanonicalDocumentView";
 
 export function MarkdownPreview({ content }: { content: string }) {
+  const cleanContent = stripItemMarkers(content);
   return (
     <div className="prose prose-sm prose-invert max-w-none
       [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:border-b [&_h1]:border-border/40 [&_h1]:pb-2 [&_h1]:mb-4
@@ -45,7 +47,7 @@ export function MarkdownPreview({ content }: { content: string }) {
           },
         }}
       >
-        {content || "*No content yet*"}
+        {cleanContent || "*No content yet*"}
       </ReactMarkdown>
     </div>
   );
