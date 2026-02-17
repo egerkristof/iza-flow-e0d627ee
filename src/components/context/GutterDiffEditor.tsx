@@ -55,9 +55,9 @@ const statusLabels: Record<LineStatus, string> = {
 // Inline background colors for changed lines
 const lineHighlightColors: Record<LineStatus, string> = {
   unchanged: "",
-  modified: "bg-amber-500/10",
-  added: "bg-emerald-500/10",
-  deleted: "bg-red-500/10",
+  modified: "bg-amber-500/20 border-l-2 border-amber-500",
+  added: "bg-emerald-500/20 border-l-2 border-emerald-500",
+  deleted: "bg-red-500/20 border-l-2 border-red-500",
 };
 
 export const GutterDiffEditor = forwardRef<HTMLTextAreaElement, GutterDiffEditorProps>(
