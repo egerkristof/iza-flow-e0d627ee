@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import type { ExtractionDepth, OutputType } from "@/lib/knowledge-schema";
 import { OUTPUT_TYPES, OUTPUT_TYPE_LABELS, OUTPUT_TYPE_ICONS } from "@/lib/knowledge-schema";
 import {
@@ -57,6 +57,8 @@ interface BundleFirstViewProps {
   onClearAll?: () => void;
   clearingAll?: boolean;
   onReorderItems?: (bundleId: string, orderedItemIds: string[]) => void;
+  initialDomainFilter?: string | null;
+  onBackToDomains?: () => void;
 }
 
 const scopeColors: Record<string, string> = {
@@ -902,11 +904,20 @@ export function BundleFirstView({
   onClearAll,
   clearingAll,
   onReorderItems,
+  initialDomainFilter,
+  onBackToDomains,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [domainFilter, setDomainFilter] = useState<string | null>(null);
+  const [domainFilter, setDomainFilter] = useState<string | null>(initialDomainFilter ?? null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+
+  // Sync when initialDomainFilter changes (drill-down from DomainsView)
+  useEffect(() => {
+    if (initialDomainFilter !== undefined) {
+      setDomainFilter(initialDomainFilter);
+    }
+  }, [initialDomainFilter]);
 
   const activeFilterCount = (domainFilter ? 1 : 0) + (categoryFilter ? 1 : 0);
 
@@ -968,6 +979,19 @@ export function BundleFirstView({
     <div className="flex flex-col flex-1 min-h-0">
       {/* Toolbar */}
       <div className="shrink-0 px-4 pt-3 pb-2 space-y-2">
+        {/* Back to Domains breadcrumb */}
+        {onBackToDomains && initialDomainFilter && (
+          <div className="flex items-center gap-1.5 text-xs">
+            <button
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              onClick={onBackToDomains}
+            >
+              Domains
+            </button>
+            <ChevronRight className="h-3 w-3 text-muted-foreground" />
+            <span className="text-foreground font-medium">{initialDomainFilter}</span>
+          </div>
+        )}
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

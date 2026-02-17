@@ -373,6 +373,48 @@ export type Database = {
           },
         ]
       }
+      domains: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          is_default: boolean | null
+          owner_id: string
+          sort_order: number | null
+          tag: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_default?: boolean | null
+          owner_id: string
+          sort_order?: number | null
+          tag: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_default?: boolean | null
+          owner_id?: string
+          sort_order?: number | null
+          tag?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       execution_captures: {
         Row: {
           capture_type: Database["public"]["Enums"]["capture_type"]
@@ -1477,6 +1519,7 @@ export type Database = {
         Args: { _user_id: string; _workbook_id: string }
         Returns: boolean
       }
+      seed_default_domains: { Args: { p_user_id: string }; Returns: undefined }
       user_accessible_workbook_ids: {
         Args: { _user_id: string }
         Returns: string[]
