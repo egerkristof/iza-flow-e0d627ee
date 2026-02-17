@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, Target, Settings2, BookOpen, Lightbulb } from "lucide-react";
+import { FileText, Target, Settings2, BookOpen, Lightbulb, PenLine } from "lucide-react";
 import { PersonalDocuments } from "@/components/knowledge/PersonalDocuments";
 import { PersonalGoals } from "@/components/knowledge/PersonalGoals";
 import { WorkingPreferences } from "@/components/knowledge/WorkingPreferences";
 import { MyContextItems } from "@/components/knowledge/MyContextItems";
 import { CapturesInbox } from "@/components/knowledge/CapturesInbox";
+import { KnowledgeSources } from "@/components/knowledge/KnowledgeSources";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -51,6 +52,9 @@ export default function MyKnowledgePage() {
           <TabsTrigger value="documents" className="gap-1.5">
             <FileText className="h-3.5 w-3.5" /> Documents
           </TabsTrigger>
+          <TabsTrigger value="sources" className="gap-1.5">
+            <PenLine className="h-3.5 w-3.5" /> Sources
+          </TabsTrigger>
           <TabsTrigger value="goals" className="gap-1.5">
             <Target className="h-3.5 w-3.5" /> Goals & KPIs
           </TabsTrigger>
@@ -67,6 +71,9 @@ export default function MyKnowledgePage() {
         </TabsContent>
         <TabsContent value="documents">
           <PersonalDocuments />
+        </TabsContent>
+        <TabsContent value="sources">
+          <KnowledgeSources />
         </TabsContent>
         <TabsContent value="goals">
           <PersonalGoals />

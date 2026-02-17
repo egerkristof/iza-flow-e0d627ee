@@ -236,6 +236,7 @@ export type Database = {
             | Database["public"]["Enums"]["mandate_enforcement"]
             | null
           expiry_date: string | null
+          extraction_version: number | null
           id: string
           is_mandate: boolean
           last_used_at: string | null
@@ -251,7 +252,9 @@ export type Database = {
           published_by: string | null
           security_level: Database["public"]["Enums"]["security_scope"]
           source_chat_id: string | null
+          source_knowledge_id: string | null
           source_metadata: Json | null
+          source_section_ref: string | null
           source_workbook_id: string | null
           superseded_by: string | null
           target_reference_id: string | null
@@ -274,6 +277,7 @@ export type Database = {
             | Database["public"]["Enums"]["mandate_enforcement"]
             | null
           expiry_date?: string | null
+          extraction_version?: number | null
           id?: string
           is_mandate?: boolean
           last_used_at?: string | null
@@ -289,7 +293,9 @@ export type Database = {
           published_by?: string | null
           security_level?: Database["public"]["Enums"]["security_scope"]
           source_chat_id?: string | null
+          source_knowledge_id?: string | null
           source_metadata?: Json | null
+          source_section_ref?: string | null
           source_workbook_id?: string | null
           superseded_by?: string | null
           target_reference_id?: string | null
@@ -312,6 +318,7 @@ export type Database = {
             | Database["public"]["Enums"]["mandate_enforcement"]
             | null
           expiry_date?: string | null
+          extraction_version?: number | null
           id?: string
           is_mandate?: boolean
           last_used_at?: string | null
@@ -327,7 +334,9 @@ export type Database = {
           published_by?: string | null
           security_level?: Database["public"]["Enums"]["security_scope"]
           source_chat_id?: string | null
+          source_knowledge_id?: string | null
           source_metadata?: Json | null
+          source_section_ref?: string | null
           source_workbook_id?: string | null
           superseded_by?: string | null
           target_reference_id?: string | null
@@ -342,6 +351,13 @@ export type Database = {
             columns: ["source_chat_id"]
             isOneToOne: false
             referencedRelation: "workbook_chats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "context_items_source_knowledge_id_fkey"
+            columns: ["source_knowledge_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_sources"
             referencedColumns: ["id"]
           },
           {
@@ -517,6 +533,103 @@ export type Database = {
             columns: ["step_id"]
             isOneToOne: false
             referencedRelation: "protocol_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      knowledge_source_versions: {
+        Row: {
+          change_note: string | null
+          changed_by: string
+          content: string
+          created_at: string
+          id: string
+          source_id: string
+          version_number: number
+        }
+        Insert: {
+          change_note?: string | null
+          changed_by: string
+          content?: string
+          created_at?: string
+          id?: string
+          source_id: string
+          version_number?: number
+        }
+        Update: {
+          change_note?: string | null
+          changed_by?: string
+          content?: string
+          created_at?: string
+          id?: string
+          source_id?: string
+          version_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_source_versions_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      knowledge_sources: {
+        Row: {
+          content: string
+          created_at: string
+          current_version: number
+          description: string | null
+          domain_tag: string | null
+          id: string
+          metadata: Json | null
+          original_document_id: string | null
+          owner_id: string
+          source_type: string
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          current_version?: number
+          description?: string | null
+          domain_tag?: string | null
+          id?: string
+          metadata?: Json | null
+          original_document_id?: string | null
+          owner_id: string
+          source_type?: string
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          current_version?: number
+          description?: string | null
+          domain_tag?: string | null
+          id?: string
+          metadata?: Json | null
+          original_document_id?: string | null
+          owner_id?: string
+          source_type?: string
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_sources_original_document_id_fkey"
+            columns: ["original_document_id"]
+            isOneToOne: false
+            referencedRelation: "personal_documents"
             referencedColumns: ["id"]
           },
         ]
