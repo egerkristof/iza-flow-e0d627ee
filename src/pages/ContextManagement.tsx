@@ -21,6 +21,7 @@ import { ContextItemRow } from "@/components/context/ContextItemRow";
 import { CategoryFilterBadge } from "@/components/knowledge/CategoryFilterBadge";
 import { BundleCard } from "@/components/context/BundleCard";
 import { BundleFirstView, type CreateItemContext } from "@/components/context/BundleFirstView";
+import { DomainsView } from "@/components/context/DomainsView";
 import { ContextStackViewer } from "@/components/governance/ContextStackViewer";
 import { ImpactSimulator } from "@/components/governance/ImpactSimulator";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
@@ -221,6 +222,9 @@ export default function ContextManagementPage() {
   const [copilotOpen, setCopilotOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"simplified" | "classic">("simplified");
   const [clearingAll, setClearingAll] = useState(false);
+  const [activeTab, setActiveTab] = useState<"domains" | "playbooks">("domains");
+  const [selectedDomainTag, setSelectedDomainTag] = useState<string | null>(null);
+  const [selectedDomainTitle, setSelectedDomainTitle] = useState<string | null>(null);
 
   // Fetch real DB items
   const { data: dbItems = [], isPending: itemsPending } = useQuery({
@@ -934,117 +938,163 @@ export default function ContextManagementPage() {
             </Button>
           </div>
         ) : (
-          <p className="text-xs text-muted-foreground mt-2">
-            Your playbooks organized by domain. Expand to see steps, gates, and shared knowledge.
-          </p>
-        )}
-      </div>
+           <p className="text-xs text-muted-foreground mt-2">
+             Your playbooks organized by domain. Expand to see steps, gates, and shared knowledge.
+           </p>
+         )}
+       </div>
 
-      {/* ─── SIMPLIFIED (BUNDLES) MODE ─── */}
-      {viewMode === "simplified" ? (
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {copilotOpen && (
-            <div className="px-4 pt-3 shrink-0">
-              <ContextCopilotPanel items={dbItems} onClose={() => setCopilotOpen(false)} />
-            </div>
-          )}
-          {dataLoading ? (
-            <div className="flex-1 flex flex-col gap-3 p-4">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="rounded-lg border border-border/50 bg-card p-4 space-y-3 animate-pulse">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded bg-muted" />
-                    <div className="h-4 w-48 rounded bg-muted" />
-                    <div className="h-4 w-16 rounded bg-muted ml-auto" />
-                  </div>
-                  <div className="space-y-2 pl-11">
-                    <div className="h-3 w-64 rounded bg-muted/60" />
-                    <div className="h-3 w-40 rounded bg-muted/60" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-          <BundleFirstView
-            items={items}
-            bundles={bundles}
-            allDomainTags={allDomainTags}
-            onEditItem={openEditDialog}
-            onDestroyItem={handleDestroyItem}
-            onEditBundle={(bundle) => { setEditingBundle(bundle); setBundleDialog(true); }}
-            onDeleteBundle={handleDeleteBundle}
-            onCreateItem={(ctx?: CreateItemContext) => {
-              setEditingItemId(null);
-              setNewItem({
-                ...emptyItem,
-                bundle_ids: ctx?.bundleId ? [ctx.bundleId] : [],
-                category: (ctx?.category as ContextCategory) ?? "KNOWLEDGE",
-                parent_playbook_id: ctx?.parentPlaybookId ?? null,
-              });
-              setItemDialog(true);
-            }}
-            onReorderItems={async (bundleId, orderedItemIds) => {
-              for (let i = 0; i < orderedItemIds.length; i++) {
-                await supabase.from("context_item_bundles")
-                  .update({ sort_order: i } as any)
-                  .eq("context_item_id", orderedItemIds[i])
-                  .eq("bundle_id", bundleId);
-              }
-              queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
-            }}
-            onCreateBundle={() => { setEditingBundle(null); setBundleDialog(true); }}
-            onOpenCopilot={() => setCopilotOpen(!copilotOpen)}
-            copilotOpen={copilotOpen}
-            onOpenLoom={() => { if (fileInputRef.current) { fileInputRef.current.value = ""; fileInputRef.current.click(); } }}
-            loomExtracting={loomExtracting}
-            extractionDepth={extractionDepth}
-            onExtractionDepthChange={setExtractionDepth}
-            clearingAll={clearingAll}
-            onClearAll={async () => {
-              if (!user) return;
-              setClearingAll(true);
-              try {
-                // 1. Fetch ALL visible items (architect sees all, operator sees own)
-                const { data: visibleItems, error: fetchErr } = await supabase.from("context_items").select("id").is("deleted_at", null);
-                if (fetchErr) throw fetchErr;
-                console.log("[ClearAll] Found items to delete:", visibleItems?.length ?? 0);
-                if (visibleItems && visibleItems.length > 0) {
-                  const itemIds = visibleItems.map(i => i.id);
-                  // Delete junction rows in batches
-                  for (let i = 0; i < itemIds.length; i += 100) {
-                    const batch = itemIds.slice(i, i + 100);
-                    const { error: jErr } = await supabase.from("context_item_bundles").delete().in("context_item_id", batch);
-                    if (jErr) throw jErr;
-                  }
-                  // Delete context items in batches
-                  for (let i = 0; i < itemIds.length; i += 100) {
-                    const batch = itemIds.slice(i, i + 100);
-                    const { error: iErr } = await supabase.from("context_items").delete().in("id", batch);
-                    if (iErr) throw iErr;
-                  }
-                }
-                // 2. Delete all visible bundles
-                const { data: visibleBundles } = await supabase.from("bundles").select("id");
-                if (visibleBundles && visibleBundles.length > 0) {
-                  const bundleIds = visibleBundles.map(b => b.id);
-                  const { error: bundlesErr } = await supabase.from("bundles").delete().in("id", bundleIds);
-                  if (bundlesErr) throw bundlesErr;
-                }
-                // (bundle errors handled above)
-                // 4. Invalidate all related caches
-                queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
-                queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
-                queryClient.invalidateQueries({ queryKey: ["context-item-bundles"] });
-                toast({ title: "All cleared", description: "All context items and domains have been deleted." });
-              } catch (e: any) {
-                toast({ title: "Error", description: e.message, variant: "destructive" });
-              } finally {
-                setClearingAll(false);
-              }
-            }}
-          />
-          )}
-        </div>
+       {/* ─── SIMPLIFIED (BUNDLES) MODE ─── */}
+       {viewMode === "simplified" ? (
+         <div className="flex-1 flex flex-col overflow-hidden">
+           {/* Domains / All Playbooks tab bar */}
+           <div className="shrink-0 px-4 pt-2">
+             <div className="inline-flex h-9 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
+               <button
+                 className={`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all ${
+                   activeTab === "domains" ? "bg-background text-foreground shadow-sm" : ""
+                 }`}
+                 onClick={() => { setActiveTab("domains"); setSelectedDomainTag(null); setSelectedDomainTitle(null); }}
+               >
+                 Domains
+               </button>
+               <button
+                 className={`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all ${
+                   activeTab === "playbooks" ? "bg-background text-foreground shadow-sm" : ""
+                 }`}
+                 onClick={() => { setActiveTab("playbooks"); setSelectedDomainTag(null); setSelectedDomainTitle(null); }}
+               >
+                 All Playbooks
+               </button>
+             </div>
+           </div>
+           {copilotOpen && (
+             <div className="px-4 pt-3 shrink-0">
+               <ContextCopilotPanel items={dbItems} onClose={() => setCopilotOpen(false)} />
+             </div>
+           )}
+
+           {/* Domains tab */}
+           {activeTab === "domains" && !selectedDomainTag && (
+             dataLoading ? (
+               <div className="flex-1 flex flex-col gap-3 p-4">
+                 {[1, 2, 3].map(i => (
+                   <div key={i} className="rounded-lg border border-border/50 bg-card p-4 space-y-3 animate-pulse">
+                     <div className="flex items-center gap-3">
+                       <div className="h-10 w-10 rounded bg-muted" />
+                       <div className="h-4 w-48 rounded bg-muted" />
+                     </div>
+                   </div>
+                 ))}
+               </div>
+             ) : (
+               <DomainsView
+                 bundles={bundles}
+                 items={items}
+                 onSelectDomain={(tag, title) => {
+                   setSelectedDomainTag(tag);
+                   setSelectedDomainTitle(title);
+                   setActiveTab("domains"); // stay in domains tab, show drill-down
+                 }}
+               />
+             )
+           )}
+
+           {/* Playbooks view (either "All Playbooks" tab or drill-down from a domain) */}
+           {(activeTab === "playbooks" || selectedDomainTag) && (
+             dataLoading ? (
+               <div className="flex-1 flex flex-col gap-3 p-4">
+                 {[1, 2, 3].map(i => (
+                   <div key={i} className="rounded-lg border border-border/50 bg-card p-4 space-y-3 animate-pulse">
+                     <div className="flex items-center gap-3">
+                       <div className="h-8 w-8 rounded bg-muted" />
+                       <div className="h-4 w-48 rounded bg-muted" />
+                       <div className="h-4 w-16 rounded bg-muted ml-auto" />
+                     </div>
+                     <div className="space-y-2 pl-11">
+                       <div className="h-3 w-64 rounded bg-muted/60" />
+                       <div className="h-3 w-40 rounded bg-muted/60" />
+                     </div>
+                   </div>
+                 ))}
+               </div>
+             ) : (
+             <BundleFirstView
+               items={items}
+               bundles={bundles}
+               allDomainTags={allDomainTags}
+               onEditItem={openEditDialog}
+               onDestroyItem={handleDestroyItem}
+               onEditBundle={(bundle) => { setEditingBundle(bundle); setBundleDialog(true); }}
+               onDeleteBundle={handleDeleteBundle}
+               onCreateItem={(ctx?: CreateItemContext) => {
+                 setEditingItemId(null);
+                 setNewItem({
+                   ...emptyItem,
+                   bundle_ids: ctx?.bundleId ? [ctx.bundleId] : [],
+                   category: (ctx?.category as ContextCategory) ?? "KNOWLEDGE",
+                   parent_playbook_id: ctx?.parentPlaybookId ?? null,
+                 });
+                 setItemDialog(true);
+               }}
+               onReorderItems={async (bundleId, orderedItemIds) => {
+                 for (let i = 0; i < orderedItemIds.length; i++) {
+                   await supabase.from("context_item_bundles")
+                     .update({ sort_order: i } as any)
+                     .eq("context_item_id", orderedItemIds[i])
+                     .eq("bundle_id", bundleId);
+                 }
+                 queryClient.invalidateQueries({ queryKey: ["context-item-bundles-all"] });
+               }}
+               onCreateBundle={() => { setEditingBundle(null); setBundleDialog(true); }}
+               onOpenCopilot={() => setCopilotOpen(!copilotOpen)}
+               copilotOpen={copilotOpen}
+               onOpenLoom={() => { if (fileInputRef.current) { fileInputRef.current.value = ""; fileInputRef.current.click(); } }}
+               loomExtracting={loomExtracting}
+               extractionDepth={extractionDepth}
+               onExtractionDepthChange={setExtractionDepth}
+               clearingAll={clearingAll}
+               initialDomainFilter={selectedDomainTag}
+               onBackToDomains={() => { setSelectedDomainTag(null); setSelectedDomainTitle(null); }}
+               onClearAll={async () => {
+                 if (!user) return;
+                 setClearingAll(true);
+                 try {
+                   const { data: visibleItems, error: fetchErr } = await supabase.from("context_items").select("id").is("deleted_at", null);
+                   if (fetchErr) throw fetchErr;
+                   if (visibleItems && visibleItems.length > 0) {
+                     const itemIds = visibleItems.map(i => i.id);
+                     for (let i = 0; i < itemIds.length; i += 100) {
+                       const batch = itemIds.slice(i, i + 100);
+                       const { error: jErr } = await supabase.from("context_item_bundles").delete().in("context_item_id", batch);
+                       if (jErr) throw jErr;
+                     }
+                     for (let i = 0; i < itemIds.length; i += 100) {
+                       const batch = itemIds.slice(i, i + 100);
+                       const { error: iErr } = await supabase.from("context_items").delete().in("id", batch);
+                       if (iErr) throw iErr;
+                     }
+                   }
+                   const { data: visibleBundles } = await supabase.from("bundles").select("id");
+                   if (visibleBundles && visibleBundles.length > 0) {
+                     const bundleIds = visibleBundles.map(b => b.id);
+                     const { error: bundlesErr } = await supabase.from("bundles").delete().in("id", bundleIds);
+                     if (bundlesErr) throw bundlesErr;
+                   }
+                   queryClient.invalidateQueries({ queryKey: ["context-items-all"] });
+                   queryClient.invalidateQueries({ queryKey: ["bundles-all"] });
+                   queryClient.invalidateQueries({ queryKey: ["context-item-bundles"] });
+                   toast({ title: "All cleared", description: "All context items and domains have been deleted." });
+                 } catch (e: any) {
+                   toast({ title: "Error", description: e.message, variant: "destructive" });
+                 } finally {
+                   setClearingAll(false);
+                 }
+               }}
+             />
+             )
+           )}
+         </div>
       ) : (
         /* ─── CLASSIC MODE ─── */
         <Tabs defaultValue="items" className="flex-1 flex flex-col overflow-hidden">
