@@ -3,6 +3,7 @@ import { Brain, BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/lib/auth";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
   SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarFooter,
@@ -80,9 +81,12 @@ export function AppSidebar() {
       <SidebarFooter className="border-t border-sidebar-border p-3">
         <div className="flex items-center justify-between">
           <span className="truncate text-xs text-sidebar-foreground">{profile?.display_name ?? "User"}</span>
-          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={signOut}>
-            <LogOut className="h-3.5 w-3.5" />
-          </Button>
+          <div className="flex items-center gap-1">
+            <NotificationBell />
+            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={signOut}>
+              <LogOut className="h-3.5 w-3.5" />
+            </Button>
+          </div>
         </div>
       </SidebarFooter>
     </Sidebar>

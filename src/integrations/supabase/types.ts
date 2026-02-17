@@ -729,6 +729,51 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          actor_id: string | null
+          body: string | null
+          created_at: string
+          id: string
+          is_read: boolean
+          read_at: string | null
+          source_id: string
+          source_type: string
+          title: string
+          type: string
+          user_id: string
+          workbook_id: string | null
+        }
+        Insert: {
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          read_at?: string | null
+          source_id: string
+          source_type: string
+          title: string
+          type: string
+          user_id: string
+          workbook_id?: string | null
+        }
+        Update: {
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          read_at?: string | null
+          source_id?: string
+          source_type?: string
+          title?: string
+          type?: string
+          user_id?: string
+          workbook_id?: string | null
+        }
+        Relationships: []
+      }
       personal_documents: {
         Row: {
           created_at: string
@@ -904,8 +949,10 @@ export type Database = {
           metadata: Json | null
           notes: string | null
           protocol_id: string
+          session_summary: string | null
           started_at: string | null
           status: Database["public"]["Enums"]["protocol_execution_status"]
+          summary_generated_at: string | null
           updated_at: string
           workbook_id: string
         }
@@ -920,8 +967,10 @@ export type Database = {
           metadata?: Json | null
           notes?: string | null
           protocol_id: string
+          session_summary?: string | null
           started_at?: string | null
           status?: Database["public"]["Enums"]["protocol_execution_status"]
+          summary_generated_at?: string | null
           updated_at?: string
           workbook_id: string
         }
@@ -936,8 +985,10 @@ export type Database = {
           metadata?: Json | null
           notes?: string | null
           protocol_id?: string
+          session_summary?: string | null
           started_at?: string | null
           status?: Database["public"]["Enums"]["protocol_execution_status"]
+          summary_generated_at?: string | null
           updated_at?: string
           workbook_id?: string
         }
