@@ -8,7 +8,6 @@ import { NerveCenterFeed } from "@/components/oversight/NerveCenterFeed";
 import { WeeklyProgressWidget } from "@/components/oversight/WeeklyProgressWidget";
 import { QuickActionsBar } from "@/components/oversight/QuickActionsBar";
 import { PlanMyTime } from "@/components/oversight/PlanMyTime";
-import { PriorityGraph } from "@/components/oversight/PriorityGraph";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
@@ -17,6 +16,7 @@ const Index = () => {
   const isLeader = activeRole === "manager";
   const isOperator = activeRole === "operator";
   const [mandatesOpen, setMandatesOpen] = useState(false);
+  const [feedOpen, setFeedOpen] = useState(false);
 
   // Fetch active mandate count for the notification badge
   const { data: activeMandateCount = 0 } = useQuery({
@@ -54,7 +54,7 @@ const Index = () => {
         {/* Weekly Progress */}
         <WeeklyProgressWidget />
 
-        {/* Plan My Time */}
+        {/* Plan My Time (includes Priority Map tab) */}
         <PlanMyTime />
 
         <Collapsible open={mandatesOpen} onOpenChange={setMandatesOpen}>
@@ -74,16 +74,17 @@ const Index = () => {
           </CollapsibleContent>
         </Collapsible>
 
-        {/* Priority Map Graph */}
-        <PriorityGraph />
-
-        {/* Embedded Nerve Center (compact) */}
-        <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-1.5">
-            <Zap className="h-3.5 w-3.5 text-primary" /> Priority Feed
-          </h2>
-          <NerveCenterFeed />
-        </div>
+        {/* Priority Feed — collapsed by default */}
+        <Collapsible open={feedOpen} onOpenChange={setFeedOpen}>
+          <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
+            <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${feedOpen ? "rotate-90" : ""}`} />
+            <Zap className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium">Priority Feed</span>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2">
+            <NerveCenterFeed />
+          </CollapsibleContent>
+        </Collapsible>
       </div>
     );
   }

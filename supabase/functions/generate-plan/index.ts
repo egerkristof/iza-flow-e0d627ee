@@ -27,7 +27,7 @@ serve(async (req) => {
     );
     if (authError || !user) throw new Error("Invalid auth token");
 
-    const { time_horizon } = await req.json();
+    const { time_horizon, existing_plans } = await req.json();
     const horizon = time_horizon || "today";
 
     // Fetch user's active tasks
@@ -72,6 +72,11 @@ serve(async (req) => {
     const today = new Date().toISOString().split("T")[0];
     const dayOfWeek = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
+    // Build existing plans context
+    const existingPlansContext = existing_plans && existing_plans.length > 0
+      ? `\nEXISTING PLANS (other horizons — avoid duplicating these):\n${existing_plans.map((p: any) => `- [${p.horizon}] "${p.title}" (${p.source_type})`).join("\n")}\n`
+      : "";
+
     const prompt = `You are a productivity assistant for a professional operator. Today is ${dayOfWeek}, ${today}.
 
 The operator has the following active work items:
@@ -81,11 +86,13 @@ ${taskSummary || "No active tasks"}
 
 SESSIONS (${sessions.length}):
 ${sessionSummary || "No active sessions"}
-
+${existingPlansContext}
 Generate a focused plan for time horizon: "${horizon}".
 - "next_hour": Pick 1-3 most urgent items to focus on right now
 - "today": Pick 3-7 items ordered by importance for the full day
 - "this_week": Pick 5-10 items spread across the week with suggested days
+
+IMPORTANT: Do NOT duplicate items already planned in other horizons listed above.
 
 For each item, provide:
 1. A clear action-oriented title (what to DO, not just the item name)
