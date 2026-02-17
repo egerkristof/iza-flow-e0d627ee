@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Target, Clock, ArrowRight, Zap } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Target, Clock, ArrowRight, Zap, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { getStaleness, getStalenessColor, type ScoredFeedItem } from "@/lib/priority-scoring";
@@ -19,11 +22,33 @@ interface SessionResumeCardProps {
 
 export function SessionResumeCard({ item }: SessionResumeCardProps) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const staleness = getStaleness(item.updatedAt);
   const stalenessColor = getStalenessColor(staleness);
   const progress = item.totalSteps && item.totalSteps > 0
     ? ((item.completedSteps ?? 0) / item.totalSteps) * 100
     : 0;
+
+  // Auto-trigger summary generation for sessions without one
+  const generateSummary = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke("summarize-session", {
+        body: { execution_id: item.executionId ?? item.id },
+      });
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["nerve-center-sessions"] });
+    },
+  });
+
+  // Auto-generate summary if missing
+  useEffect(() => {
+    if (!item.sessionSummary && item.executionId && !generateSummary.isPending && !generateSummary.isSuccess) {
+      generateSummary.mutate();
+    }
+  }, [item.sessionSummary, item.executionId]);
 
   return (
     <div
@@ -72,11 +97,16 @@ export function SessionResumeCard({ item }: SessionResumeCardProps) {
       )}
 
       {/* AI summary */}
-      {item.sessionSummary && (
+      {item.sessionSummary ? (
         <p className="text-[11px] text-muted-foreground italic mt-2 line-clamp-2">
           {item.sessionSummary}
         </p>
-      )}
+      ) : generateSummary.isPending ? (
+        <div className="flex items-center gap-1.5 mt-2 text-[11px] text-muted-foreground">
+          <Loader2 className="h-3 w-3 animate-spin" />
+          Generating summary…
+        </div>
+      ) : null}
 
       {/* Footer */}
       <div className={`flex items-center gap-1 mt-2 text-[10px] ${stalenessColor}`}>
