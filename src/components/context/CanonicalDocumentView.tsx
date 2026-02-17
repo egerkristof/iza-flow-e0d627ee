@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { SyncConfirmationDialog, type SyncOperation } from "@/components/context/SyncConfirmationDialog";
 import { SyncHistoryDialog } from "@/components/context/SyncHistoryDialog";
-import { BlockDocumentEditor } from "@/components/context/BlockDocumentEditor";
+import { BlockDocumentEditor, parseMarkdownToBlocks, computeBlockDiffs, type DocBlock } from "@/components/context/BlockDocumentEditor";
 import { supabase } from "@/integrations/supabase/client";
 import type { MockBundle, MockContextItem } from "@/data/mockContextItems";
 
@@ -343,48 +343,59 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
     return lines.slice(1).join("\n").trim();
   };
 
-  // Step 1: Deterministic marker-based diff (NO AI needed)
+  // Step 1: Block-level diff (no markdown reformatting issues)
   const handleRequestSync = useCallback(() => {
     setSyncing(true);
     try {
-      const diffs = diffMarkedDocuments(baselineRef.current, content, items);
+      const curBlocks = parseMarkdownToBlocks(content, items);
+      const baseBlocks = parseMarkdownToBlocks(baselineRef.current, items);
+      const blockDiffs = computeBlockDiffs(baseBlocks, curBlocks);
 
-      if (diffs.length === 0) {
+      if (blockDiffs.size === 0) {
         toast({ title: "No changes detected", description: "The document matches the current playbook items." });
         setSyncing(false);
         return;
       }
 
-      // Convert deterministic diffs into SyncOperations
-      const ops: SyncOperation[] = diffs.map(d => {
-        // Special handling for bundle header
-        if (d.id === "__header__") {
-          return {
-            op: "update" as const,
-            id: "__header__",
-            title: "Bundle Title / Description",
-            content_full: d.newContent,
-            prev_content: d.oldContent,
-          };
+      const currentBlockMap = new Map<string, DocBlock>(curBlocks.map(b => [b.id, b]));
+      const baselineBlockMap = new Map<string, DocBlock>(baseBlocks.map(b => [b.id, b]));
+
+      const ops: SyncOperation[] = [];
+      for (const [blockId, diff] of blockDiffs) {
+        if (diff.isDeleted) {
+          const base = baselineBlockMap.get(blockId);
+          ops.push({ op: "delete", id: blockId, title: base?.title || blockId });
+          continue;
+        }
+        if (diff.isNew) {
+          const block = currentBlockMap.get(blockId);
+          if (block) {
+            ops.push({ op: "create", title: block.title, content_full: block.body, category: block.category });
+          }
+          continue;
+        }
+        const block = currentBlockMap.get(blockId);
+        const base = baselineBlockMap.get(blockId);
+        if (!block || !base) continue;
+
+        if (blockId === "__header__") {
+          ops.push({
+            op: "update", id: "__header__", title: "Bundle Title / Description",
+            content_full: block.title !== base.title ? block.title : undefined,
+            prev_title: block.title !== base.title ? base.title : undefined,
+            prev_content: block.body !== base.body ? base.body : undefined,
+          });
+          continue;
         }
 
-        const newTitle = extractTitleFromSection(d.newContent);
-        const oldTitle = extractTitleFromSection(d.oldContent);
-        const newBody = extractBodyFromSection(d.newContent);
-        const oldBody = extractBodyFromSection(d.oldContent);
-
-        const titleChanged = newTitle && oldTitle && newTitle !== oldTitle;
-        const contentChanged = newBody !== oldBody;
-
-        return {
-          op: "update" as const,
-          id: d.id,
-          title: titleChanged ? newTitle : d.title,
-          prev_title: titleChanged ? oldTitle : undefined,
-          content_full: contentChanged ? newBody : undefined,
-          prev_content: contentChanged ? oldBody : undefined,
-        };
-      });
+        ops.push({
+          op: "update", id: blockId,
+          title: diff.titleChanged ? block.title : (base.title || blockId),
+          prev_title: diff.titleChanged ? base.title : undefined,
+          content_full: diff.bodyChanged ? block.body : undefined,
+          prev_content: diff.bodyChanged ? base.body : undefined,
+        });
+      }
 
       setSyncOps(ops);
       setSyncSummary(`${ops.length} item(s) changed`);
