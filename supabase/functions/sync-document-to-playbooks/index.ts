@@ -37,7 +37,8 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { document_markdown, bundle_id, bundle_title, existing_items } = await req.json();
+    const body = await req.json();
+    const { document_markdown, bundle_id, bundle_title, existing_items, preview_only, apply_operations } = body;
 
     if (!document_markdown || !bundle_id) {
       return new Response(JSON.stringify({ error: "document_markdown and bundle_id required" }), {
@@ -46,9 +47,84 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Build a description of existing items for the AI
+    // ── MODE 2: Apply confirmed operations ──
+    if (apply_operations && Array.isArray(apply_operations)) {
+      const results = { updated: 0, created: 0, deleted: 0, errors: [] as string[] };
+
+      for (const op of apply_operations) {
+        try {
+          if (op.op === "update" && op.id) {
+            const updateData: Record<string, unknown> = {};
+            if (op.title) updateData.title = op.title;
+            if (op.content_full) updateData.content_full = op.content_full;
+            if (op.category) updateData.category = op.category;
+
+            const { error } = await serviceClient
+              .from("context_items")
+              .update(updateData)
+              .eq("id", op.id)
+              .eq("owner_id", user.id);
+
+            if (error) results.errors.push(`Update ${op.id}: ${error.message}`);
+            else results.updated++;
+          } else if (op.op === "create") {
+            const { error } = await serviceClient
+              .from("context_items")
+              .insert({
+                title: op.title,
+                content_full: op.content_full || "",
+                category: op.category || "KNOWLEDGE",
+                owner_id: user.id,
+                bundle_id: bundle_id,
+              });
+
+            if (error) results.errors.push(`Create "${op.title}": ${error.message}`);
+            else results.created++;
+          } else if (op.op === "delete" && op.id) {
+            const { error } = await serviceClient
+              .from("context_items")
+              .update({ deleted_at: new Date().toISOString() })
+              .eq("id", op.id)
+              .eq("owner_id", user.id);
+
+            if (error) results.errors.push(`Delete ${op.id}: ${error.message}`);
+            else results.deleted++;
+          }
+        } catch (e) {
+          results.errors.push(`Op ${op.op}: ${e instanceof Error ? e.message : "Unknown error"}`);
+        }
+      }
+
+      // Log the sync
+      try {
+        await serviceClient.from("document_sync_logs").insert({
+          bundle_id,
+          user_id: user.id,
+          document_snapshot: document_markdown,
+          changeset: { operations: apply_operations },
+          summary: `Synced ${results.updated} updated, ${results.created} created, ${results.deleted} removed`,
+          items_created: results.created,
+          items_updated: results.updated,
+          items_deleted: results.deleted,
+          errors: results.errors.length > 0 ? results.errors : [],
+        });
+      } catch (logErr) {
+        console.error("Failed to log sync:", logErr);
+      }
+
+      return new Response(JSON.stringify({
+        success: true,
+        summary: "Sync completed",
+        results,
+        operations: apply_operations,
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // ── MODE 1: AI-powered diff analysis (preview or direct apply) ──
     const existingDesc = (existing_items || []).map((item: any) =>
-      `- ID: ${item.id} | Category: ${item.category} | Title: ${item.title} | Parent Playbook: ${item.parent_playbook_id || "none"}`
+      `- ID: ${item.id} | Category: ${item.category} | Title: ${item.title} | Parent Playbook: ${item.parent_playbook_id || "none"} | Content: ${(item.content_preview || "").substring(0, 100)}`
     ).join("\n");
 
     const systemPrompt = `You are a Knowledge Architect that parses structured markdown documents back into discrete context items for a playbook management system.
@@ -65,17 +141,19 @@ ${existingDesc || "No existing items"}
 3. Produce operations: "update" (changed content), "create" (new sections), "delete" (removed sections)
 4. PLAYBOOKs are ## headings, PROCEDUREs are numbered steps under ### Steps, DIRECTIVEs are blockquotes with ⚠️, PRINCIPLEs are other blockquotes, KNOWLEDGE is #### sections
 5. Keep item categories consistent with AACE taxonomy
-6. For updates, include ONLY the fields that changed
-7. For creates, include: category, title, content_full, parent_playbook_id (if under a playbook)
+6. For updates, include the "id" of the existing item plus any changed fields (title, content_full, category)
+7. For updates, also include "prev_title" and "prev_content" fields showing the PREVIOUS values for diff display
+8. For creates, include: category, title, content_full, parent_playbook_id (if under a playbook)
+9. Only include operations for things that actually changed — do NOT include no-op updates
 
 ## OUTPUT FORMAT
-Return ONLY a JSON object with this structure:
+Return ONLY a JSON object:
 \`\`\`json
 {
   "operations": [
-    { "op": "update", "id": "existing-id", "title": "Updated Title", "content_full": "Updated content..." },
+    { "op": "update", "id": "existing-id", "title": "Updated Title", "content_full": "Updated content...", "prev_title": "Old Title", "prev_content": "Old content..." },
     { "op": "create", "category": "PROCEDURE", "title": "New Step", "content_full": "...", "parent_playbook_id": "pb-id-or-null" },
-    { "op": "delete", "id": "removed-item-id" }
+    { "op": "delete", "id": "removed-item-id", "title": "Removed Item Title" }
   ],
   "summary": "Brief description of changes made"
 }
@@ -88,7 +166,7 @@ Return ONLY a JSON object with this structure:
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `## Document to Parse\n\n${document_markdown}` },
@@ -99,88 +177,71 @@ Return ONLY a JSON object with this structure:
     if (!response.ok) {
       if (response.status === 429) {
         return new Response(JSON.stringify({ error: "Rate limited. Please try again shortly." }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Credits exhausted. Please add funds." }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        return new Response(JSON.stringify({ error: "Credits exhausted." }), {
+          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       const errText = await response.text();
       console.error("AI gateway error:", response.status, errText);
       return new Response(JSON.stringify({ error: "AI generation failed" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
     const aiResult = await response.json();
     const rawContent = aiResult.choices?.[0]?.message?.content || "";
-    
-    // Extract JSON from the response
+
     let parsed;
     try {
       const jsonMatch = rawContent.match(/```(?:json)?\s*([\s\S]*?)```/);
       const jsonStr = jsonMatch ? jsonMatch[1].trim() : rawContent.trim();
       parsed = JSON.parse(jsonStr);
     } catch {
-      // Try direct parse
       try {
         parsed = JSON.parse(rawContent);
       } catch {
         return new Response(JSON.stringify({ error: "Failed to parse AI response", raw: rawContent }), {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
     }
 
-    // Apply the operations
-    const results = { updated: 0, created: 0, deleted: 0, errors: [] as string[] };
+    // If preview_only, return operations without applying
+    if (preview_only) {
+      return new Response(JSON.stringify({
+        success: true,
+        summary: parsed.summary || "Changes detected",
+        operations: parsed.operations || [],
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
+    // Legacy direct-apply mode (fallback)
+    const results = { updated: 0, created: 0, deleted: 0, errors: [] as string[] };
     for (const op of (parsed.operations || [])) {
       try {
         if (op.op === "update" && op.id) {
-          const updateData: any = {};
+          const updateData: Record<string, unknown> = {};
           if (op.title) updateData.title = op.title;
           if (op.content_full) updateData.content_full = op.content_full;
           if (op.category) updateData.category = op.category;
-          
-          const { error } = await serviceClient
-            .from("context_items")
-            .update(updateData)
-            .eq("id", op.id)
-            .eq("owner_id", user.id);
-          
+          const { error } = await serviceClient.from("context_items").update(updateData).eq("id", op.id).eq("owner_id", user.id);
           if (error) results.errors.push(`Update ${op.id}: ${error.message}`);
           else results.updated++;
         } else if (op.op === "create") {
-          const { error } = await serviceClient
-            .from("context_items")
-            .insert({
-              title: op.title,
-              content_full: op.content_full || "",
-              category: op.category || "KNOWLEDGE",
-              owner_id: user.id,
-              bundle_id: bundle_id,
-            });
-
+          const { error } = await serviceClient.from("context_items").insert({
+            title: op.title, content_full: op.content_full || "", category: op.category || "KNOWLEDGE",
+            owner_id: user.id, bundle_id: bundle_id,
+          });
           if (error) results.errors.push(`Create "${op.title}": ${error.message}`);
-          else {
-            results.created++;
-            // Also add to bundle junction if needed
-          }
+          else results.created++;
         } else if (op.op === "delete" && op.id) {
-          // Soft delete - just mark as deleted
-          const { error } = await serviceClient
-            .from("context_items")
-            .update({ deleted_at: new Date().toISOString() })
-            .eq("id", op.id)
-            .eq("owner_id", user.id);
-          
+          const { error } = await serviceClient.from("context_items").update({ deleted_at: new Date().toISOString() }).eq("id", op.id).eq("owner_id", user.id);
           if (error) results.errors.push(`Delete ${op.id}: ${error.message}`);
           else results.deleted++;
         }

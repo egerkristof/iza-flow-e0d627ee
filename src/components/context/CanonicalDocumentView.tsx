@@ -1,16 +1,18 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import {
   Edit3, Eye, Columns, Download, RefreshCw, ArrowUpFromLine,
-  Loader2, AlertTriangle, Save, FileCheck,
+  Loader2, AlertTriangle, Save, FileCheck, History,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { MarkdownToolbar, markdownTools, type ToolAction } from "@/components/workbooks/MarkdownToolbar";
 import { DocumentCopilot } from "@/components/context/DocumentCopilot";
 import { MarkdownPreview } from "@/components/context/MarkdownPreview";
+import { GutterDiffEditor } from "@/components/context/GutterDiffEditor";
+import { SyncConfirmationDialog, type SyncOperation } from "@/components/context/SyncConfirmationDialog";
+import { SyncHistoryDialog } from "@/components/context/SyncHistoryDialog";
 import { supabase } from "@/integrations/supabase/client";
 import type { MockBundle, MockContextItem } from "@/data/mockContextItems";
 
@@ -156,6 +158,16 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
   const [copilotOpen, setCopilotOpen] = useState(false);
   const [selectedText, setSelectedText] = useState("");
   const [copilotPosition, setCopilotPosition] = useState({ top: 0, left: 0 });
+  const [copilotRange, setCopilotRange] = useState<{ start: number; end: number } | null>(null);
+
+  // Sync confirmation
+  const [syncOps, setSyncOps] = useState<SyncOperation[]>([]);
+  const [syncSummary, setSyncSummary] = useState("");
+  const [syncDialogOpen, setSyncDialogOpen] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+
+  // Sync history
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   // Load draft from localStorage on mount
   useEffect(() => {
@@ -195,7 +207,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
     }));
     setDraftSaved(true);
     onDraftChange?.(bundle.id, true);
-    toast({ title: "Draft saved", description: "Your edits are saved locally. Use 'Sync to Playbooks' to push changes." });
+    toast({ title: "Draft saved", description: "Your edits are saved locally." });
   }, [content, bundle.id, toast, onDraftChange]);
 
   const handleDownload = useCallback(() => {
@@ -208,7 +220,8 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
     URL.revokeObjectURL(url);
   }, [content, bundle.title]);
 
-  const handleSyncToPlaybooks = useCallback(async () => {
+  // Step 1: Request AI to compute operations (preview mode)
+  const handleRequestSync = useCallback(async () => {
     setSyncing(true);
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -239,6 +252,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
             bundle_id: bundle.id,
             bundle_title: bundle.title,
             existing_items: existingItems,
+            preview_only: true,
           }),
         }
       );
@@ -251,41 +265,87 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
       }
 
       const result = await resp.json();
-      const { results, summary } = result;
-
-      toast({
-        title: "Synced to Playbooks",
-        description: `${summary}. Updated: ${results.updated}, Created: ${results.created}, Removed: ${results.deleted}${results.errors?.length ? ` (${results.errors.length} errors)` : ""}`,
-      });
-
-      // Clear draft after successful sync
-      localStorage.removeItem(`doc-draft-${bundle.id}`);
-      setDirty(false);
-      setDraftSaved(false);
-      onDraftChange?.(bundle.id, false);
+      setSyncOps(result.operations || []);
+      setSyncSummary(result.summary || "Changes detected");
+      setSyncDialogOpen(true);
     } catch (err) {
       toast({ title: "Sync error", description: String(err), variant: "destructive" });
     } finally {
       setSyncing(false);
     }
+  }, [content, bundle, items, toast]);
+
+  // Step 2: Apply confirmed operations
+  const handleConfirmSync = useCallback(async (selectedOps: SyncOperation[]) => {
+    setConfirming(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({ title: "Not authenticated", variant: "destructive" });
+        setConfirming(false);
+        return;
+      }
+
+      const resp = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sync-document-to-playbooks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            document_markdown: content,
+            bundle_id: bundle.id,
+            bundle_title: bundle.title,
+            existing_items: items.map(i => ({
+              id: i.id, title: i.title, category: i.category,
+              parent_playbook_id: i.parent_playbook_id, content_preview: i.content_preview,
+            })),
+            apply_operations: selectedOps,
+          }),
+        }
+      );
+
+      if (!resp.ok) {
+        const errData = await resp.json().catch(() => ({ error: "Apply failed" }));
+        toast({ title: "Apply failed", description: errData.error, variant: "destructive" });
+        setConfirming(false);
+        return;
+      }
+
+      const result = await resp.json();
+      toast({
+        title: "Synced to Playbooks",
+        description: `${result.summary}. Updated: ${result.results.updated}, Created: ${result.results.created}, Removed: ${result.results.deleted}`,
+      });
+
+      localStorage.removeItem(`doc-draft-${bundle.id}`);
+      setDirty(false);
+      setDraftSaved(false);
+      onDraftChange?.(bundle.id, false);
+      setSyncDialogOpen(false);
+    } catch (err) {
+      toast({ title: "Sync error", description: String(err), variant: "destructive" });
+    } finally {
+      setConfirming(false);
+    }
   }, [content, bundle, items, toast, onDraftChange]);
 
   // Text selection handler for copilot
   const handleMouseUp = useCallback(() => {
-    if (viewMode === "preview") return; // Only works in edit modes
+    if (viewMode === "preview") return;
     const textarea = editorRef.current;
     if (!textarea) return;
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    if (start === end) return; // No selection
+    if (start === end) return;
 
     const selected = content.substring(start, end);
-    if (selected.trim().length < 5) return; // Too short
+    if (selected.trim().length < 5) return;
 
     setSelectedText(selected);
-
-    // Position copilot near the textarea caret
     const rect = textarea.getBoundingClientRect();
     setCopilotPosition({
       top: rect.top + 60,
@@ -304,9 +364,13 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
     const after = content.substring(end);
     const newContent = before + newText + after;
 
+    // Calculate line range for the highlight
+    const startLine = before.split("\n").length - 1;
+    const endLine = startLine + newText.split("\n").length - 1;
+    setCopilotRange({ start: startLine, end: endLine });
+
     handleContentChange(newContent);
 
-    // Re-focus and select the new text
     requestAnimationFrame(() => {
       textarea.focus();
       textarea.setSelectionRange(start, start + newText.length);
@@ -365,6 +429,10 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
             <RefreshCw className="h-3 w-3" /> Regenerate
           </Button>
 
+          <Button variant="ghost" size="sm" className="h-7 text-[11px] gap-1" onClick={() => setHistoryOpen(true)}>
+            <History className="h-3 w-3" /> History
+          </Button>
+
           {dirty && (
             <>
               <Button
@@ -379,7 +447,7 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
                 variant="outline"
                 size="sm"
                 className="h-7 text-[11px] gap-1 border-primary/30 text-primary"
-                onClick={handleSyncToPlaybooks}
+                onClick={handleRequestSync}
                 disabled={syncing}
               >
                 {syncing ? <Loader2 className="h-3 w-3 animate-spin" /> : <ArrowUpFromLine className="h-3 w-3" />}
@@ -408,11 +476,13 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
         {(viewMode === "edit" || viewMode === "split") && (
           <div className={`min-w-0 flex flex-col ${viewMode === "split" ? "w-1/2 border-r border-border/50" : "flex-1"}`}>
             <MarkdownToolbar textareaRef={editorRef} content={content} onChange={handleContentChange} />
-            <Textarea
+            <GutterDiffEditor
               ref={editorRef}
               value={content}
-              onChange={e => handleContentChange(e.target.value)}
+              baseline={generatedContent}
+              onChange={handleContentChange}
               onMouseUp={handleMouseUp}
+              copilotRange={copilotRange}
               onKeyDown={e => {
                 const mod = e.ctrlKey || e.metaKey;
                 const key = e.key.toLowerCase();
@@ -429,13 +499,11 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
                     });
                   }
                 }
-                // Ctrl+S to save draft
                 if (mod && key === "s") {
                   e.preventDefault();
                   handleSaveDraft();
                 }
               }}
-              className="flex-1 w-full resize-none border-none rounded-none bg-transparent px-6 py-4 font-mono text-sm focus-visible:ring-0 leading-relaxed"
               placeholder="Start writing…"
             />
           </div>
@@ -466,6 +534,24 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
           />
         )}
       </div>
+
+      {/* Sync Confirmation Dialog */}
+      <SyncConfirmationDialog
+        open={syncDialogOpen}
+        onOpenChange={setSyncDialogOpen}
+        operations={syncOps}
+        summary={syncSummary}
+        onConfirm={handleConfirmSync}
+        confirming={confirming}
+      />
+
+      {/* Sync History Dialog */}
+      <SyncHistoryDialog
+        open={historyOpen}
+        onOpenChange={setHistoryOpen}
+        bundleId={bundle.id}
+        bundleTitle={bundle.title}
+      />
     </div>
   );
 }
