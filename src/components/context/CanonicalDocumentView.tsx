@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { SyncConfirmationDialog, type SyncOperation } from "@/components/context/SyncConfirmationDialog";
 import { SyncHistoryDialog } from "@/components/context/SyncHistoryDialog";
 import { BlockDocumentEditor, parseMarkdownToBlocks, computeBlockDiffs, type DocBlock } from "@/components/context/BlockDocumentEditor";
+import { DocumentCopilot } from "@/components/context/DocumentCopilot";
 import { supabase } from "@/integrations/supabase/client";
 import type { MockBundle, MockContextItem } from "@/data/mockContextItems";
 
@@ -266,6 +267,10 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
 
   // Sync history
   const [historyOpen, setHistoryOpen] = useState(false);
+
+  // Copilot state
+  const [selectedText, setSelectedText] = useState("");
+  const [copilotPos, setCopilotPos] = useState<{ top: number; left: number } | null>(null);
 
   // Load draft from localStorage on mount
   useEffect(() => {
@@ -580,7 +585,26 @@ export function CanonicalDocumentView({ bundle, items, allBundles = [], onClose,
         items={items}
         onChange={handleContentChange}
         className="flex-1 min-h-0"
+        onTextSelect={(text, pos) => { setSelectedText(text); setCopilotPos(pos); }}
+        onSelectionClear={() => { if (!copilotPos) return; /* keep open if copilot is showing */ }}
       />
+
+      {/* Document Copilot (floating, triggered by text selection) */}
+      {copilotPos && selectedText && (
+        <DocumentCopilot
+          selectedText={selectedText}
+          fullDocument={content}
+          bundle={bundle}
+          items={items}
+          otherBundles={allBundles.filter(b => b.id !== bundle.id).map(b => ({ title: b.title, description: b.description || "" }))}
+          position={copilotPos}
+          onReplace={(newText) => {
+            const updated = content.replace(selectedText, newText);
+            handleContentChange(updated);
+          }}
+          onClose={() => { setSelectedText(""); setCopilotPos(null); }}
+        />
+      )}
 
       {/* Sync Confirmation Dialog */}
       <SyncConfirmationDialog
