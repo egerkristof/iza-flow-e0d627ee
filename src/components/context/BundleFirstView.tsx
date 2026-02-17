@@ -64,6 +64,7 @@ interface BundleFirstViewProps {
   domains?: DomainInfo[];
   bundleDomainMap?: Map<string, string[]>;
   onToggleBundleDomain?: (bundleId: string, domainId: string, assigned: boolean) => void;
+  bundleSourceNames?: Map<string, string[]>;
 }
 
 const scopeColors: Record<string, string> = {
@@ -663,6 +664,7 @@ function BundleExpandable({
   domains,
   bundleDomainIds,
   onToggleDomain,
+  sourceNames,
 }: {
   bundle: MockBundle;
   bundleItems: MockContextItem[];
@@ -675,6 +677,7 @@ function BundleExpandable({
   domains?: DomainInfo[];
   bundleDomainIds?: string[];
   onToggleDomain?: (bundleId: string, domainId: string, assigned: boolean) => void;
+  sourceNames?: string[];
 }) {
   const [deployOpen, setDeployOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -753,6 +756,19 @@ function BundleExpandable({
               <p className="text-xs text-muted-foreground line-clamp-1">{bundle.description}</p>
               <div className="flex items-center gap-2 flex-wrap">
                 <DeploymentBadges deployments={deployments} />
+                {sourceNames && sourceNames.length > 0 && (
+                  <a href="/my-knowledge" className="flex items-center gap-1 no-underline" onClick={e => e.stopPropagation()}>
+                    <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
+                    {sourceNames.slice(0, 2).map(name => (
+                      <Badge key={name} variant="outline" className="text-[9px] h-4 px-1.5 gap-0.5 border-primary/20 text-primary/70 hover:border-primary/40 cursor-pointer">
+                        {name}
+                      </Badge>
+                    ))}
+                    {sourceNames.length > 2 && (
+                      <span className="text-[9px] text-muted-foreground">+{sourceNames.length - 2}</span>
+                    )}
+                  </a>
+                )}
                 {domains && onToggleDomain && (
                   <BundleDomainAssigner
                     bundleId={bundle.id}
@@ -991,6 +1007,7 @@ export function BundleFirstView({
   domains: domainsProp,
   bundleDomainMap,
   onToggleBundleDomain,
+  bundleSourceNames,
 }: BundleFirstViewProps) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -1267,6 +1284,7 @@ export function BundleFirstView({
             domains={domainsProp}
             bundleDomainIds={bundleDomainMap?.get(bundle.id) ?? []}
             onToggleDomain={onToggleBundleDomain}
+            sourceNames={bundleSourceNames?.get(bundle.id)}
           />
         ))}
 

@@ -307,6 +307,53 @@ export default function ContextManagementPage() {
     return map;
   }, [bundleDomainRows]);
 
+  // Fetch source names per bundle (via context_items.source_knowledge_id → knowledge_sources.title)
+  const bundleSourceNames = useMemo(() => {
+    const map = new Map<string, string[]>();
+    // Group items by bundle, collect distinct source_knowledge_ids
+    const bundleSourceIds = new Map<string, Set<string>>();
+    for (const item of dbItems) {
+      if (item.bundle_id && item.source_knowledge_id) {
+        if (!bundleSourceIds.has(item.bundle_id)) bundleSourceIds.set(item.bundle_id, new Set());
+        bundleSourceIds.get(item.bundle_id)!.add(item.source_knowledge_id);
+      }
+    }
+    return { bundleSourceIds };
+  }, [dbItems]);
+
+  // Fetch knowledge source titles for all referenced source IDs
+  const allSourceIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const item of dbItems) {
+      if (item.source_knowledge_id) ids.add(item.source_knowledge_id);
+    }
+    return [...ids];
+  }, [dbItems]);
+
+  const { data: knowledgeSourceTitles = {} } = useQuery({
+    queryKey: ["knowledge-source-titles", allSourceIds],
+    enabled: allSourceIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("knowledge_sources")
+        .select("id, title")
+        .in("id", allSourceIds);
+      if (error) throw error;
+      const titleMap: Record<string, string> = {};
+      for (const row of data || []) titleMap[row.id] = row.title;
+      return titleMap;
+    },
+  });
+
+  const bundleSourceNameMap = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const [bundleId, sourceIds] of bundleSourceNames.bundleSourceIds) {
+      const names = [...sourceIds].map(id => knowledgeSourceTitles[id]).filter(Boolean);
+      if (names.length > 0) map.set(bundleId, names);
+    }
+    return map;
+  }, [bundleSourceNames, knowledgeSourceTitles]);
+
   // Toggle domain assignment for a bundle
   const handleToggleBundleDomain = async (bundleId: string, domainId: string, assigned: boolean) => {
     if (assigned) {
@@ -1111,7 +1158,8 @@ export default function ContextManagementPage() {
                 onBackToDomains={() => { setSelectedDomainTag(null); setSelectedDomainTitle(null); }}
                 domains={domainsForBundles}
                 bundleDomainMap={bundleDomainMap}
-                onToggleBundleDomain={handleToggleBundleDomain}
+                 onToggleBundleDomain={handleToggleBundleDomain}
+                 bundleSourceNames={bundleSourceNameMap}
                onClearAll={async () => {
                  if (!user) return;
                  setClearingAll(true);
