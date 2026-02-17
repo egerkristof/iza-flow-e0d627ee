@@ -289,6 +289,7 @@ export default function ContextManagementPage() {
       const { data, error } = await supabase
         .from("domains")
         .select("id, title, tag, color")
+        .eq("owner_id", user!.id)
         .order("sort_order", { ascending: true });
       if (error) throw error;
       return data as { id: string; title: string; tag: string; color: string | null }[];
