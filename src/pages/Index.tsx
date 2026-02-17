@@ -1,11 +1,51 @@
-import { BookOpen, Library, BarChart3, Shield } from "lucide-react";
+import { BookOpen, Library, BarChart3, Shield, Zap } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
+import { NerveCenterFeed } from "@/components/oversight/NerveCenterFeed";
+import { WeeklyProgressWidget } from "@/components/oversight/WeeklyProgressWidget";
+import { QuickActionsBar } from "@/components/oversight/QuickActionsBar";
+import { Badge } from "@/components/ui/badge";
 
 const Index = () => {
   const { activeRole } = useAuth();
   const isLeader = activeRole === "manager";
+  const isOperator = activeRole === "operator";
 
+  // ─── Operator Dashboard ───
+  if (isOperator) {
+    return (
+      <div className="flex flex-col gap-6 p-6 lg:p-8">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-semibold tracking-tight">⚡ Dashboard</h1>
+            <Badge variant="outline" className="text-[10px]">Operator</Badge>
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Your personalized work hub — what needs your attention right now.
+          </p>
+        </div>
+
+        {/* Quick Actions */}
+        <QuickActionsBar />
+
+        {/* Weekly Progress */}
+        <WeeklyProgressWidget />
+
+        {/* Mandate alerts */}
+        <MandatesDashboard compact />
+
+        {/* Embedded Nerve Center (compact) */}
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-1.5">
+            <Zap className="h-3.5 w-3.5 text-primary" /> Priority Feed
+          </h2>
+          <NerveCenterFeed />
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Leader / Process Owner Dashboard ───
   return (
     <div className="flex flex-col gap-8 p-8">
       <div>
@@ -36,7 +76,6 @@ const Index = () => {
         />
       </div>
 
-      {/* Leader-only: Mandates summary */}
       {isLeader && (
         <div className="rounded-lg border border-warning/20 bg-warning/5 p-5">
           <MandatesDashboard compact />

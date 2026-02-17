@@ -4,14 +4,15 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  Eye, ArrowRight, AlertTriangle, CheckCircle, Clock, LayoutGrid, Columns,
-  ListTodo, TrendingUp, Target, Users, ChevronRight, ChevronDown, Archive,
+  Eye, AlertTriangle, CheckCircle, Clock, LayoutGrid, Columns,
+  ListTodo, TrendingUp, Target, ChevronRight, ChevronDown, Archive,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { NerveCenterFeed } from "@/components/oversight/NerveCenterFeed";
 import { formatDistanceToNow } from "date-fns";
 
 function formatRelativeTime(dateStr: string): string {
@@ -19,7 +20,6 @@ function formatRelativeTime(dateStr: string): string {
   catch { return "—"; }
 }
 
-// Workbook shape from DB
 interface OversightWorkbook {
   id: string;
   title: string;
@@ -45,21 +45,24 @@ export default function OversightPage() {
   const [showArchived, setShowArchived] = useState(false);
   const [peekWorkbook, setPeekWorkbook] = useState<OversightWorkbook | null>(null);
 
-  // Realtime subscription for task + workbook updates
   useEffect(() => {
     const channel = supabase
       .channel("oversight-realtime")
       .on("postgres_changes", { event: "*", schema: "public", table: "workbook_tasks" }, () => {
         queryClient.invalidateQueries({ queryKey: ["oversight-tasks"] });
+        queryClient.invalidateQueries({ queryKey: ["nerve-center-tasks"] });
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "workbooks" }, () => {
         queryClient.invalidateQueries({ queryKey: ["oversight-workbooks"] });
+        queryClient.invalidateQueries({ queryKey: ["nerve-center-workbooks"] });
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "protocol_executions" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["nerve-center-sessions"] });
       })
       .subscribe();
     return () => { supabase.removeChannel(channel); };
   }, [queryClient]);
 
-  // Fetch real workbooks from DB
   const { data: workbooks = [] } = useQuery({
     queryKey: ["oversight-workbooks"],
     enabled: !!user,
@@ -80,10 +83,9 @@ export default function OversightPage() {
     },
   });
 
-  // Fetch real tasks for stats
   const { data: allTasks = [] } = useQuery({
     queryKey: ["oversight-tasks"],
-    enabled: !!user,
+    enabled: !!user && activeRole !== "operator",
     queryFn: async () => {
       const { data, error } = await supabase
         .from("workbook_tasks")
@@ -95,24 +97,19 @@ export default function OversightPage() {
 
   const getDriftColor = (score: number) => score < 0.2 ? "bg-success" : score < 0.5 ? "bg-warning" : "bg-destructive";
 
-  // Role-based descriptions
   const roleLabel = activeRole === "manager" ? "Leader" : activeRole === "architect" ? "Process Owner" : "Operator";
-  const roleDescription = activeRole === "manager"
-    ? "Cross-workbook oversight — monitor progress, drift, and task completion across your organization."
-    : activeRole === "architect"
-      ? "Process health & task hierarchy — oversee workbook execution quality and system design."
-      : "Your active tasks and workbooks — focus on what needs your attention next.";
+  const roleDescription = activeRole === "operator"
+    ? "Your command center — prioritized tasks, active sessions, and delegations at a glance."
+    : activeRole === "manager"
+      ? "Cross-workbook oversight — monitor progress, drift, and task completion across your organization."
+      : "Process health & task hierarchy — oversee workbook execution quality and system design.";
 
-  // Aggregate stats
+  // Leader/architect stats
   const totalTasks = allTasks.length;
   const doneTasks = allTasks.filter(t => t.status === "done").length;
   const blockedTasks = allTasks.filter(t => t.status === "blocked").length;
-  const inProgressTasks = allTasks.filter(t => t.status === "in_progress").length;
-  const myTasks = allTasks.filter(t => t.assigned_to === user?.id || t.created_by === user?.id);
-  const myActive = myTasks.filter(t => t.status === "in_progress" || t.status === "todo");
   const criticalTasks = allTasks.filter(t => t.priority === "critical" && t.status !== "done" && t.status !== "cancelled");
 
-  // Tasks by workbook for stats overlay
   const tasksByWorkbook = useMemo(() => {
     const map: Record<string, { total: number; done: number; blocked: number; inProgress: number }> = {};
     allTasks.forEach(t => {
@@ -125,9 +122,25 @@ export default function OversightPage() {
     return map;
   }, [allTasks]);
 
+  // ─── Operator gets the Nerve Center ───
+  if (activeRole === "operator") {
+    return (
+      <div className="flex flex-col gap-6 p-6 lg:p-8">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-semibold tracking-tight">⚡ Nerve Center</h1>
+            <Badge variant="outline" className="text-[10px]">{roleLabel}</Badge>
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">{roleDescription}</p>
+        </div>
+        <NerveCenterFeed />
+      </div>
+    );
+  }
+
+  // ─── Leader / Process Owner views (unchanged) ───
   return (
     <div className="flex flex-col gap-6 p-6 lg:p-8">
-      {/* Header with role context */}
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
@@ -155,67 +168,21 @@ export default function OversightPage() {
         </div>
       </div>
 
-      {/* KPI strip — role-aware */}
+      {/* KPI strip */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {activeRole === "operator" ? (
-          <>
-            <StatCard label="My Active Tasks" value={myActive.length} icon={<ListTodo className="h-4 w-4 text-info" />} />
-            <StatCard label="My Done" value={myTasks.filter(t => t.status === "done").length} icon={<CheckCircle className="h-4 w-4 text-success" />} />
-            <StatCard label="Blocked" value={myTasks.filter(t => t.status === "blocked").length} icon={<AlertTriangle className="h-4 w-4 text-destructive" />} />
-            <StatCard label="Active Workbooks" value={workbooks.filter(w => w.status === "active").length} icon={<Target className="h-4 w-4 text-primary" />} />
-          </>
-        ) : (
-          <>
-            <StatCard label="Total Tasks" value={totalTasks} sub={`${doneTasks} done`} icon={<ListTodo className="h-4 w-4 text-info" />} />
-            <StatCard label="Completion" value={totalTasks > 0 ? `${Math.round((doneTasks / totalTasks) * 100)}%` : "—"} icon={<TrendingUp className="h-4 w-4 text-success" />} />
-            <StatCard label="Blocked" value={blockedTasks} icon={<AlertTriangle className="h-4 w-4 text-destructive" />} />
-            <StatCard label="Critical Open" value={criticalTasks.length} icon={<AlertTriangle className="h-4 w-4 text-warning" />} />
-          </>
-        )}
+        <StatCard label="Total Tasks" value={totalTasks} sub={`${doneTasks} done`} icon={<ListTodo className="h-4 w-4 text-info" />} />
+        <StatCard label="Completion" value={totalTasks > 0 ? `${Math.round((doneTasks / totalTasks) * 100)}%` : "—"} icon={<TrendingUp className="h-4 w-4 text-success" />} />
+        <StatCard label="Blocked" value={blockedTasks} icon={<AlertTriangle className="h-4 w-4 text-destructive" />} />
+        <StatCard label="Critical Open" value={criticalTasks.length} icon={<AlertTriangle className="h-4 w-4 text-warning" />} />
       </div>
 
-      {/* Tabbed view: Workbooks vs My Tasks (operator gets tasks-first) */}
-      <Tabs defaultValue={activeRole === "operator" ? "my-tasks" : "workbooks"}>
+      {/* Tabs */}
+      <Tabs defaultValue="workbooks">
         <TabsList>
-          {activeRole === "operator" && <TabsTrigger value="my-tasks"><ListTodo className="mr-1.5 h-3.5 w-3.5" />My Tasks</TabsTrigger>}
           <TabsTrigger value="workbooks"><Columns className="mr-1.5 h-3.5 w-3.5" />Workbooks</TabsTrigger>
-          {(activeRole === "manager" || activeRole === "architect") && (
-            <TabsTrigger value="task-hierarchy"><Target className="mr-1.5 h-3.5 w-3.5" />Task Hierarchy</TabsTrigger>
-          )}
+          <TabsTrigger value="task-hierarchy"><Target className="mr-1.5 h-3.5 w-3.5" />Task Hierarchy</TabsTrigger>
         </TabsList>
 
-        {/* My Tasks tab — operator focus */}
-        {activeRole === "operator" && (
-          <TabsContent value="my-tasks" className="mt-4">
-            <div className="space-y-2">
-              {myActive.length === 0 ? (
-                <div className="rounded-lg border border-border/50 bg-card p-8 text-center text-sm text-muted-foreground">
-                  No active tasks assigned to you. Check your workbooks for new work.
-                </div>
-              ) : (
-                myActive.map(task => (
-                  <div key={task.id} className="flex items-center gap-3 rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors cursor-pointer"
-                    onClick={() => navigate(`/workbooks/${task.workbook_id}`)}>
-                    <div className={`shrink-0 ${task.status === "in_progress" ? "text-info" : "text-muted-foreground"}`}>
-                      {task.status === "in_progress" ? <Clock className="h-4 w-4" /> : <ListTodo className="h-4 w-4" />}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{task.title}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {workbooks.find(w => w.id === task.workbook_id)?.title ?? "Workbook"}
-                      </p>
-                    </div>
-                    <Badge className={`text-[10px] ${task.priority === "critical" ? "bg-destructive/10 text-destructive" : task.priority === "high" ? "bg-warning/10 text-warning" : "bg-muted text-muted-foreground"}`}>
-                      {task.priority}
-                    </Badge>
-                  </div>
-                ))
-              )}
-            </div>
-          </TabsContent>
-        )}
-
-        {/* Workbooks board/grid */}
         <TabsContent value="workbooks" className="mt-4">
           {view === "board" ? (
             <div className="flex gap-4 overflow-x-auto pb-4">
@@ -261,15 +228,12 @@ export default function OversightPage() {
           )}
         </TabsContent>
 
-        {/* Task Hierarchy — leader/owner view */}
-        {(activeRole === "manager" || activeRole === "architect") && (
-          <TabsContent value="task-hierarchy" className="mt-4">
-            <TaskHierarchyView tasks={allTasks} workbooks={workbooks} onNavigate={(wbId) => navigate(`/workbooks/${wbId}`)} />
-          </TabsContent>
-        )}
+        <TabsContent value="task-hierarchy" className="mt-4">
+          <TaskHierarchyView tasks={allTasks} workbooks={workbooks} onNavigate={(wbId) => navigate(`/workbooks/${wbId}`)} />
+        </TabsContent>
       </Tabs>
 
-      {/* Lineage Peek Modal */}
+      {/* Peek Modal */}
       <Dialog open={!!peekWorkbook} onOpenChange={() => setPeekWorkbook(null)}>
         <DialogContent className="max-w-md">
           <DialogHeader><DialogTitle className="text-base">{peekWorkbook?.title}</DialogTitle></DialogHeader>
@@ -292,7 +256,6 @@ export default function OversightPage() {
                   <span className="text-xs">{Math.round(peekWorkbook.driftScore * 100)}%</span>
                 </div>
               </div>
-              {/* Task stats in peek */}
               {tasksByWorkbook[peekWorkbook.id] && (
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Task Progress</p>
@@ -314,7 +277,6 @@ export default function OversightPage() {
   );
 }
 
-// ── Stat Card ──
 function StatCard({ label, value, sub, icon }: { label: string; value: string | number; sub?: string; icon: React.ReactNode }) {
   return (
     <div className="rounded-lg border border-border/50 bg-card p-4">
@@ -328,7 +290,6 @@ function StatCard({ label, value, sub, icon }: { label: string; value: string | 
   );
 }
 
-// ── Oversight Card with task stats ──
 function OversightCard({ workbook, getDriftColor, onPeek, onOpen, taskStats }: {
   workbook: OversightWorkbook;
   getDriftColor: (s: number) => string;
@@ -346,7 +307,6 @@ function OversightCard({ workbook, getDriftColor, onPeek, onOpen, taskStats }: {
           </div>
           {workbook.strategicOutcome && <p className="mt-1 text-xs text-primary">{workbook.strategicOutcome}</p>}
           <p className="mt-1 text-xs text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" /> {workbook.lastActivity}</p>
-          {/* Task progress bar */}
           {taskStats && taskStats.total > 0 && (
             <div className="flex items-center gap-2 mt-2">
               <div className="h-1.5 flex-1 rounded-full bg-secondary overflow-hidden">
@@ -364,7 +324,6 @@ function OversightCard({ workbook, getDriftColor, onPeek, onOpen, taskStats }: {
   );
 }
 
-// ── Task Hierarchy View (Leaders & Process Owners) ──
 function TaskHierarchyView({ tasks, workbooks, onNavigate }: {
   tasks: any[];
   workbooks: OversightWorkbook[];
@@ -392,7 +351,7 @@ function TaskHierarchyView({ tasks, workbooks, onNavigate }: {
   if (workbooksWithTasks.length === 0) {
     return (
       <div className="rounded-lg border border-border/50 bg-card p-8 text-center text-sm text-muted-foreground">
-        No tasks across workbooks yet. Tasks created within workbooks will appear here for oversight.
+        No tasks across workbooks yet.
       </div>
     );
   }
@@ -454,7 +413,7 @@ function HierarchyTaskRow({ task, allTasks, depth }: { task: any; allTasks: any[
             {expanded ? <ChevronDown className="h-3 w-3 text-muted-foreground" /> : <ChevronRight className="h-3 w-3 text-muted-foreground" />}
           </button>
         ) : <span className="w-3" />}
-        <span className={`${statusColor}`}>
+        <span className={statusColor}>
           {task.status === "done" ? <CheckCircle className="h-3.5 w-3.5" /> : task.status === "in_progress" ? <Clock className="h-3.5 w-3.5" /> : task.status === "blocked" ? <AlertTriangle className="h-3.5 w-3.5" /> : <ListTodo className="h-3.5 w-3.5" />}
         </span>
         <span className={`text-sm ${task.status === "done" ? "line-through text-muted-foreground" : ""}`}>{task.title}</span>
