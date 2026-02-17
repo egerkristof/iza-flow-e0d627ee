@@ -75,9 +75,10 @@ interface DomainsViewProps {
   bundles: MockBundle[];
   items: MockContextItem[];
   onSelectDomain: (tag: string, title: string) => void;
+  bundleDomainMap?: Map<string, string[]>;
 }
 
-export function DomainsView({ bundles, items, onSelectDomain }: DomainsViewProps) {
+export function DomainsView({ bundles, items, onSelectDomain, bundleDomainMap }: DomainsViewProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -112,25 +113,34 @@ export function DomainsView({ bundles, items, onSelectDomain }: DomainsViewProps
     })();
   }, [user, isPending, domains.length, seeding]);
 
-  // Compute counts per domain
+  // Compute counts per domain using bundle_domains junction table
   const domainStats = useMemo(() => {
     const stats = new Map<string, { bundleCount: number; itemCount: number }>();
     for (const d of domains) {
-      const tag = d.tag;
-      const matchingBundles = bundles.filter(b =>
-        tag === "GLOBAL"
-          ? b.domain_tags.some(t => t === "GLOBAL" || t === "general")
-          : b.domain_tags.includes(tag)
-      );
-      const matchingItems = items.filter(i =>
-        tag === "GLOBAL"
-          ? i.domain_tags.some(t => t === "GLOBAL" || t === "general")
-          : i.domain_tags.includes(tag)
-      );
-      stats.set(d.id, { bundleCount: matchingBundles.length, itemCount: matchingItems.length });
+      let matchingBundleIds: string[];
+      if (bundleDomainMap && bundleDomainMap.size > 0) {
+        // Use explicit bundle_domains assignments
+        matchingBundleIds = bundles
+          .filter(b => (bundleDomainMap.get(b.id) || []).includes(d.id))
+          .map(b => b.id);
+      } else {
+        // Fallback to tag-based matching from items' domain_scope
+        const tag = d.tag;
+        matchingBundleIds = bundles
+          .filter(b =>
+            tag === "GLOBAL"
+              ? b.domain_tags.some(t => t === "GLOBAL" || t === "general")
+              : b.domain_tags.includes(tag)
+          )
+          .map(b => b.id);
+      }
+      const matchingItemCount = items.filter(i =>
+        i.bundle_id && matchingBundleIds.includes(i.bundle_id)
+      ).length;
+      stats.set(d.id, { bundleCount: matchingBundleIds.length, itemCount: matchingItemCount });
     }
     return stats;
-  }, [domains, bundles, items]);
+  }, [domains, bundles, items, bundleDomainMap]);
 
   // Dialog state
   const [dialogOpen, setDialogOpen] = useState(false);

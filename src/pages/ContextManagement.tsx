@@ -268,6 +268,57 @@ export default function ContextManagementPage() {
     },
   });
 
+  // Fetch bundle_domains junction for domain assignment
+  const { data: bundleDomainRows = [] } = useQuery({
+    queryKey: ["bundle-domains-all", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("bundle_domains")
+        .select("bundle_id, domain_id");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Fetch domains for passing to BundleFirstView
+  const { data: domainsForBundles = [] } = useQuery({
+    queryKey: ["domains-for-bundles", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("domains")
+        .select("id, title, tag, color")
+        .order("sort_order", { ascending: true });
+      if (error) throw error;
+      return data as { id: string; title: string; tag: string; color: string | null }[];
+    },
+  });
+
+  // Build bundle→domain_ids map
+  const bundleDomainMap = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const row of bundleDomainRows) {
+      const existing = map.get(row.bundle_id) || [];
+      existing.push(row.domain_id);
+      map.set(row.bundle_id, existing);
+    }
+    return map;
+  }, [bundleDomainRows]);
+
+  // Toggle domain assignment for a bundle
+  const handleToggleBundleDomain = async (bundleId: string, domainId: string, assigned: boolean) => {
+    if (assigned) {
+      const { error } = await supabase.from("bundle_domains").insert({ bundle_id: bundleId, domain_id: domainId } as any);
+      if (error) { toast({ title: "Failed to assign domain", description: error.message, variant: "destructive" }); return; }
+    } else {
+      const { error } = await supabase.from("bundle_domains").delete().eq("bundle_id", bundleId).eq("domain_id", domainId);
+      if (error) { toast({ title: "Failed to remove domain", description: error.message, variant: "destructive" }); return; }
+    }
+    queryClient.invalidateQueries({ queryKey: ["bundle-domains-all"] });
+    queryClient.invalidateQueries({ queryKey: ["domains"] });
+  };
+
   const dataLoading = itemsPending || bundlesPending || junctionPending;
 
   // Fetch research templates for the picker
@@ -988,15 +1039,16 @@ export default function ContextManagementPage() {
                  ))}
                </div>
              ) : (
-               <DomainsView
-                 bundles={bundles}
-                 items={items}
-                 onSelectDomain={(tag, title) => {
-                   setSelectedDomainTag(tag);
-                   setSelectedDomainTitle(title);
-                   setActiveTab("domains"); // stay in domains tab, show drill-down
-                 }}
-               />
+                <DomainsView
+                  bundles={bundles}
+                  items={items}
+                  bundleDomainMap={bundleDomainMap}
+                  onSelectDomain={(tag, title) => {
+                    setSelectedDomainTag(tag);
+                    setSelectedDomainTitle(title);
+                    setActiveTab("domains"); // stay in domains tab, show drill-down
+                  }}
+                />
              )
            )}
 
@@ -1055,7 +1107,10 @@ export default function ContextManagementPage() {
                onExtractionDepthChange={setExtractionDepth}
                clearingAll={clearingAll}
                initialDomainFilter={selectedDomainTag}
-               onBackToDomains={() => { setSelectedDomainTag(null); setSelectedDomainTitle(null); }}
+                onBackToDomains={() => { setSelectedDomainTag(null); setSelectedDomainTitle(null); }}
+                domains={domainsForBundles}
+                bundleDomainMap={bundleDomainMap}
+                onToggleBundleDomain={handleToggleBundleDomain}
                onClearAll={async () => {
                  if (!user) return;
                  setClearingAll(true);
