@@ -102,10 +102,11 @@ serve(async (req) => {
     const sessions: any[] = sessionsRaw ?? [];
 
     const wbIds = [...new Set(tasks.map((t: any) => t.workbook_id))];
-    const { data: workbooks = [] } = await supabase
+    const { data: workbooksRaw } = await supabase
       .from("workbooks")
       .select("id, title")
       .in("id", wbIds.length > 0 ? wbIds : ["none"]);
+    const workbooks: any[] = workbooksRaw ?? [];
     const wbMap: Record<string, string> = {};
     workbooks.forEach((w: any) => { wbMap[w.id] = w.title; });
 
