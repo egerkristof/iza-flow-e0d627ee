@@ -80,6 +80,9 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: var(--font-sans);
+    background-image:
+      radial-gradient(ellipse 70% 40% at 50% 0%, hsl(200 90% 52% / 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 10%, hsl(155 72% 46% / 0.03) 0%, transparent 50%);
   }
 }
 

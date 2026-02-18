@@ -50,11 +50,11 @@ const Index = () => {
         }}
       >
         <div>
+          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Your Organisational Intelligence</p>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-semibold tracking-tight">Command Centre</h1>
-            <Badge variant="outline" className="text-[10px] uppercase tracking-widest">Operator</Badge>
+            <h1 className="text-3xl font-bold tracking-tight brand-gradient-text">Good to have you back.</h1>
           </div>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm text-muted-foreground">
             Your operational context — active mandates, sessions, and priorities.
           </p>
         </div>
@@ -114,31 +114,33 @@ const Index = () => {
   return (
     <div className="flex flex-col gap-8 p-8">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Your <span className="brand-gradient-text">Organisational Intelligence</span>
-        </h1>
+        <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Your Organisational Intelligence</p>
+        <h1 className="text-3xl font-bold tracking-tight brand-gradient-text">Good to have you back.</h1>
         <p className="mt-2 text-muted-foreground">
-          Select a workspace from the sidebar to get started.
+          Your team's best thinking, made executable. Not just documentation — working systems.
         </p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <QuickCard
           icon={<BookOpen className="h-5 w-5 text-primary" />}
+          label="EXECUTE"
           title="Workbooks"
-          description="Open a Workbook to execute playbook-guided protocols and manage strategic outcomes."
+          description="Where expertise meets action. Run protocol-guided work and capture what you learn."
           href="/workbooks"
         />
         <QuickCard
           icon={<Library className="h-5 w-5 text-success" />}
-          title="Context"
-          description="Curate items & bundles, review drift, ingest knowledge, and manage the graph."
+          label="DESIGN"
+          title="Playbooks"
+          description="Combine explicit knowledge into reusable systems your whole team can execute with."
           href="/context"
         />
         <QuickCard
           icon={<BarChart3 className="h-5 w-5 text-warning" />}
+          label="OVERSEE"
           title="Oversight"
-          description="Kanban view of workbooks, drift indicators, and task lineage for leaders."
+          description="See the full picture — workbook progress, drift, and strategic intent in one view."
           href="/oversight"
         />
       </div>
@@ -152,17 +154,24 @@ const Index = () => {
   );
 };
 
-function QuickCard({ icon, title, description, href }: { icon: React.ReactNode; title: string; description: string; href: string }) {
+function QuickCard({ icon, title, description, href, label }: { icon: React.ReactNode; title: string; description: string; href: string; label?: string }) {
   return (
     <a
       href={href}
-      className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 transition-all hover:border-primary/30 hover:glow-sm"
+      className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 transition-all hover:border-primary/30 hover:glow-sm relative overflow-hidden"
     >
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-secondary">{icon}</div>
-        <h3 className="font-medium">{title}</h3>
+      {label && (
+        <span className="absolute top-4 right-4 text-[10px] font-semibold tracking-[0.15em] uppercase text-primary">
+          {label}
+        </span>
+      )}
+      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 border border-primary/20">
+        {icon}
       </div>
-      <p className="text-sm text-muted-foreground">{description}</p>
+      <div>
+        <h3 className="font-semibold text-foreground">{title}</h3>
+        <p className="text-sm text-muted-foreground mt-1">{description}</p>
+      </div>
     </a>
   );
 }

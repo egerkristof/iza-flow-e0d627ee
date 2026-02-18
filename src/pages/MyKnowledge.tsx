@@ -37,9 +37,10 @@ export default function MyKnowledgePage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6 lg:p-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">My Knowledge</h1>
+        <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Learn</p>
+        <h1 className="text-2xl font-bold tracking-tight brand-gradient-text">My Knowledge</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Your source thinking hub. Create and evolve knowledge sources, then extract playbooks from them.
         </p>

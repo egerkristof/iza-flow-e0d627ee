@@ -13,13 +13,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <div className="flex flex-1 flex-col">
-          <header className="flex h-14 items-center justify-between border-b border-border px-4">
-            <SidebarTrigger className="mr-2" />
+          <header className="flex h-14 items-center justify-between border-b border-sidebar-border bg-sidebar/40 backdrop-blur-sm px-4">
+            <SidebarTrigger className="mr-2 text-muted-foreground hover:text-primary transition-colors" />
             <div className="flex items-center gap-2">
-            <Button
+              <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 gap-2 text-xs uppercase tracking-widest border border-border/40 hover:border-primary/40 hover:text-primary hover:shadow-[0_0_12px_-4px_hsl(var(--primary)/0.35)] transition-all text-muted-foreground"
+                className="h-8 gap-2 text-xs uppercase tracking-widest border border-border/40 hover:border-primary/50 hover:text-primary hover:shadow-[0_0_12px_-4px_hsl(var(--primary)/0.4)] transition-all text-muted-foreground"
                 title="Research Lens (⌘K)"
                 onClick={() => setLensOpen(true)}
               >

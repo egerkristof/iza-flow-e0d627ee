@@ -188,12 +188,13 @@ const WorkbooksPage = () => {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Workbooks</h1>
+          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Execute</p>
+          <h1 className="text-2xl font-bold tracking-tight brand-gradient-text">Workbooks</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {isLoading ? "Loading…" : `${filtered.length} workbook${filtered.length !== 1 ? "s" : ""} · ${workbooks.filter((w) => w.status === "active").length} active`}
           </p>
         </div>
-        <Button className="gap-2 self-start" onClick={openCreateDialog}>
+        <Button className="gap-2 self-start brand-gradient-btn border-0 hover:opacity-90" onClick={openCreateDialog}>
           <Plus className="h-4 w-4" />
           New Workbook
         </Button>
