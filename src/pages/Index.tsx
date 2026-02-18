@@ -1,11 +1,10 @@
 import { useState, useMemo } from "react";
-import { BookOpen, Library, BarChart3, Shield, Zap, ChevronRight, AlertTriangle, TrendingUp, Target, ListTodo, Clock } from "lucide-react";
+import { BookOpen, Library, BarChart3, Shield, Zap, ChevronRight, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import { NerveCenterFeed } from "@/components/oversight/NerveCenterFeed";
-import { WeeklyProgressWidget } from "@/components/oversight/WeeklyProgressWidget";
 import { QuickActionsBar } from "@/components/oversight/QuickActionsBar";
 import { PlanMyTime } from "@/components/oversight/PlanMyTime";
 import { WhereYouLeftOff } from "@/components/oversight/WhereYouLeftOff";
@@ -19,7 +18,6 @@ const Index = () => {
   const isOperator = activeRole === "operator";
   const [mandatesOpen, setMandatesOpen] = useState(false);
   const [feedOpen, setFeedOpen] = useState(false);
-  const [weekOpen, setWeekOpen] = useState(false);
 
   // Fetch active mandate count
   const { data: activeMandateCount = 0 } = useQuery({
@@ -216,18 +214,6 @@ const Index = () => {
           </CollapsibleContent>
         </Collapsible>
 
-        {/* ── 6. WEEKLY METRICS — last, collapsed ── */}
-        <Collapsible open={weekOpen} onOpenChange={setWeekOpen}>
-          <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-2.5 hover:border-success/30 transition-colors text-left">
-            <ChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${weekOpen ? "rotate-90" : ""}`} />
-            <TrendingUp className="h-3.5 w-3.5 text-success" />
-            <span className="text-[11px] font-medium uppercase tracking-widest flex-1">Weekly Metrics</span>
-            <span className="text-[10px] text-muted-foreground">Performance overview</span>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-1.5">
-            <WeeklyProgressWidget />
-          </CollapsibleContent>
-        </Collapsible>
       </div>
     );
   }
