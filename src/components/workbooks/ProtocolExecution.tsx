@@ -905,7 +905,7 @@ export function ProtocolExecutionView({
     );
   }
 
-  if (activeExecution?.status === "completed") {
+  if (activeExecution?.status === "completed" && !aarOpen) {
     return (
       <div className="flex h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-4">
         <CheckCircle2 className="h-12 w-12 text-emerald-500" />
