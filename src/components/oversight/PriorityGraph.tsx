@@ -214,12 +214,13 @@ function NeuralEdge({ from, to, nodes }: { from: string; to: string; nodes: Grap
 
 // ── Node component ──
 function GraphNodeEl({
-  node, isSelected, onSelect, onHover,
+  node, isSelected, onSelect, onHover, onNavigate,
 }: {
   node: GraphNode;
   isSelected: boolean;
   onSelect: (id: string | null) => void;
   onHover: (id: string | null) => void;
+  onNavigate?: (workbookId: string) => void;
 }) {
   const icon = node.type === "hub" ? "⚡" : node.type === "horizon" ? "◉"
     : node.type === "task" ? "◆" : node.type === "session" ? "▶"
@@ -229,6 +230,9 @@ function GraphNodeEl({
     <g
       className="cursor-pointer"
       onClick={() => onSelect(isSelected ? null : node.id)}
+      onDoubleClick={() => {
+        if (node.workbookId) onNavigate?.(node.workbookId);
+      }}
       onMouseEnter={() => onHover(node.id)}
       onMouseLeave={() => onHover(null)}
     >
@@ -508,7 +512,7 @@ export function PriorityGraph() {
 
             {nodes.map(node => (
               <g key={node.id} opacity={matchingNodeIds && !matchingNodeIds.has(node.id) ? 0.15 : 1}>
-                <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} />
+                <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} onNavigate={(wbId) => navigate(`/workbooks/${wbId}`)} />
               </g>
             ))}
           </g>
@@ -661,7 +665,7 @@ export function PriorityGraph() {
 
                 {nodes.map(node => (
                   <g key={`fs-${node.id}`} opacity={matchingNodeIds && !matchingNodeIds.has(node.id) ? 0.15 : 1}>
-                    <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} />
+                    <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} onNavigate={(wbId) => navigate(`/workbooks/${wbId}`)} />
                   </g>
                 ))}
               </g>
