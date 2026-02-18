@@ -4,63 +4,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LizaOS Dark Enterprise Design System — All colors HSL */
+/* LIZA — Organisational Intelligence Design System — All colors HSL */
 
 @layer base {
   :root {
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
-    /* Force dark — enterprise data-dense UI */
-    --background: 225 25% 6%;
-    --foreground: 210 20% 92%;
+    /* Pure deep black — infrastructure ground */
+    --background: 222 20% 4%;
+    --foreground: 210 18% 92%;
 
-    --card: 225 22% 9%;
-    --card-foreground: 210 20% 92%;
+    --card: 222 18% 7%;
+    --card-foreground: 210 18% 92%;
 
-    --popover: 225 22% 9%;
-    --popover-foreground: 210 20% 92%;
+    --popover: 222 18% 7%;
+    --popover-foreground: 210 18% 92%;
 
-    /* Accent: electric cyan-blue */
-    --primary: 205 85% 55%;
-    --primary-foreground: 225 25% 6%;
+    /* LIZA Brand Primary: Electric Cyan → Emerald */
+    --primary: 200 90% 52%;
+    --primary-foreground: 222 20% 4%;
 
-    --secondary: 225 18% 14%;
-    --secondary-foreground: 210 20% 85%;
+    /* Secondary brand tone: emerald */
+    --brand-green: 155 72% 46%;
+    --brand-blue: 200 90% 52%;
 
-    --muted: 225 15% 13%;
-    --muted-foreground: 215 12% 52%;
+    --secondary: 222 16% 12%;
+    --secondary-foreground: 210 18% 85%;
 
-    --accent: 225 18% 16%;
-    --accent-foreground: 210 20% 92%;
+    --muted: 222 14% 11%;
+    --muted-foreground: 215 10% 50%;
+
+    --accent: 222 16% 14%;
+    --accent-foreground: 210 18% 92%;
 
     --destructive: 0 72% 63%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 15% 15%;
-    --input: 225 15% 15%;
-    --ring: 205 85% 55%;
+    --border: 222 14% 13%;
+    --input: 222 14% 13%;
+    --ring: 200 90% 52%;
 
     --radius: 0.5rem;
 
     /* Status colors */
-    --success: 142 60% 45%;
+    --success: 155 72% 46%;
     --warning: 38 92% 50%;
-    --info: 205 85% 55%;
+    --info: 200 90% 52%;
 
-    /* Sidebar — slightly darker panel */
-    --sidebar-background: 225 28% 5%;
-    --sidebar-foreground: 215 15% 70%;
-    --sidebar-primary: 205 85% 55%;
+    /* Sidebar — deepest panel */
+    --sidebar-background: 222 22% 3%;
+    --sidebar-foreground: 215 12% 65%;
+    --sidebar-primary: 200 90% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 225 20% 10%;
-    --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 225 15% 12%;
-    --sidebar-ring: 205 85% 55%;
+    --sidebar-accent: 222 18% 8%;
+    --sidebar-accent-foreground: 210 18% 92%;
+    --sidebar-border: 222 14% 10%;
+    --sidebar-ring: 200 90% 52%;
 
     /* Custom tokens */
-    --surface-elevated: 225 20% 11%;
-    --glow-primary: 205 85% 55%;
+    --surface-elevated: 222 16% 9%;
+    --glow-primary: 200 90% 52%;
+    --glow-green: 155 72% 46%;
+
+    /* Brand gradient */
+    --gradient-brand: linear-gradient(135deg, hsl(200 90% 52%), hsl(155 72% 46%));
+    --gradient-brand-subtle: linear-gradient(135deg, hsl(200 90% 52% / 0.15), hsl(155 72% 46% / 0.15));
   }
 
   * {
@@ -80,11 +89,39 @@
   .glow-md {
     box-shadow: 0 0 24px -4px hsl(var(--glow-primary) / 0.3);
   }
+  .glow-green-sm {
+    box-shadow: 0 0 12px -3px hsl(var(--glow-green) / 0.3);
+  }
   .surface-elevated {
     background: hsl(var(--surface-elevated));
   }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .brand-gradient {
+    background: var(--gradient-brand);
+  }
+  .brand-gradient-text {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  /* Active sidebar item: left border glow */
+  .sidebar-active {
+    position: relative;
+    background: hsl(var(--sidebar-accent));
+  }
+  .sidebar-active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gradient-brand);
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 8px hsl(var(--glow-primary) / 0.6);
+  }
 }
 
 @keyframes neural-pulse {

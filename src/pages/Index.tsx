@@ -41,7 +41,7 @@ const Index = () => {
       <div className="flex flex-col gap-6 p-6 lg:p-8">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-semibold tracking-tight">⚡ Dashboard</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
             <Badge variant="outline" className="text-[10px]">Operator</Badge>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -104,9 +104,11 @@ const Index = () => {
   return (
     <div className="flex flex-col gap-8 p-8">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Welcome to LizaOS</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Your <span className="brand-gradient-text">Organisational Intelligence</span>
+        </h1>
         <p className="mt-2 text-muted-foreground">
-          Your context management cockpit. Select a workspace from the sidebar to get started.
+          Select a workspace from the sidebar to get started.
         </p>
       </div>
 
