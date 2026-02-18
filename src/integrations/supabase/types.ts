@@ -1244,6 +1244,50 @@ export type Database = {
           },
         ]
       }
+      step_annotations: {
+        Row: {
+          annotation_type: Database["public"]["Enums"]["annotation_type"]
+          author_id: string
+          content: string
+          created_at: string
+          id: string
+          is_visible: boolean
+          sort_order: number
+          step_id: string
+          updated_at: string
+        }
+        Insert: {
+          annotation_type?: Database["public"]["Enums"]["annotation_type"]
+          author_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          sort_order?: number
+          step_id: string
+          updated_at?: string
+        }
+        Update: {
+          annotation_type?: Database["public"]["Enums"]["annotation_type"]
+          author_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          sort_order?: number
+          step_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "step_annotations_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "protocol_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       step_executions: {
         Row: {
           completed_at: string | null
@@ -1680,6 +1724,7 @@ export type Database = {
       workbook_tasks: {
         Row: {
           assigned_to: string | null
+          coaching_notes: string | null
           completed_at: string | null
           context_config: Json
           created_at: string
@@ -1698,6 +1743,7 @@ export type Database = {
         }
         Insert: {
           assigned_to?: string | null
+          coaching_notes?: string | null
           completed_at?: string | null
           context_config?: Json
           created_at?: string
@@ -1716,6 +1762,7 @@ export type Database = {
         }
         Update: {
           assigned_to?: string | null
+          coaching_notes?: string | null
           completed_at?: string | null
           context_config?: Json
           created_at?: string
@@ -1878,6 +1925,7 @@ export type Database = {
     }
     Enums: {
       action_logic: "APPEND" | "OVERRIDE" | "BLOCK"
+      annotation_type: "tip" | "warning" | "example" | "context"
       app_role: "operator" | "architect" | "manager"
       capture_type:
         | "friction"
@@ -2046,6 +2094,7 @@ export const Constants = {
   public: {
     Enums: {
       action_logic: ["APPEND", "OVERRIDE", "BLOCK"],
+      annotation_type: ["tip", "warning", "example", "context"],
       app_role: ["operator", "architect", "manager"],
       capture_type: [
         "friction",
