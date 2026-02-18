@@ -1,4 +1,4 @@
-import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope } from "lucide-react";
+import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope, Brain } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/lib/auth";
@@ -28,25 +28,14 @@ const navItems = [
   { title: "AI Prompts", url: "/admin/prompts", icon: FileCode2, hideForRoles: ["operator", "manager"] },
 ];
 
-/** LIZA geometric wordmark — matches brand lettermark style */
+/** Original LizaOS logo — Brain icon + wordmark */
 function LizaWordmark() {
   return (
     <div className="flex items-center gap-2.5">
-      {/* Orb accent — the brand's circular energy motif */}
-      <div
-        className="h-5 w-5 rounded-full flex-shrink-0"
-        style={{
-          background: "var(--gradient-brand)",
-          boxShadow: "0 0 10px hsl(200 90% 52% / 0.5), 0 0 20px hsl(155 72% 46% / 0.2)",
-        }}
-      />
-      {/* LIZA tracked caps — geometric brand lettermark */}
-      <span
-        className="text-sm font-semibold tracking-[0.18em] uppercase"
-        style={{ fontFamily: "var(--font-sans)" }}
-      >
-        <span className="text-foreground">LIZ</span>
-        <span className="brand-gradient-text font-bold">A</span>
+      <Brain className="h-5 w-5 text-primary" />
+      <span className="text-sm font-semibold tracking-tight">
+        <span className="text-foreground">Liza</span>
+        <span className="text-primary">OS</span>
       </span>
     </div>
   );
