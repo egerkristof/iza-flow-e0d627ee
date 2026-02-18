@@ -1,4 +1,4 @@
-import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope, Brain } from "lucide-react";
+import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope, Home } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/lib/auth";
@@ -13,13 +13,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const roleLabels: Record<AppRole, string> = {
-  operator: "Operator",
-  architect: "Process Owner",
-  manager: "Leader",
+  operator: "🚀 Operator",
+  architect: "🏗️ Process Owner",
+  manager: "📊 Leader",
 };
 
 const navItems = [
-  { title: "Command", url: "/", icon: BarChart3, hideForRoles: [] as string[] },
+  { title: "Home", url: "/", icon: Home, hideForRoles: [] as string[] },
   { title: "Execute", url: "/workbooks", icon: BookOpen, hideForRoles: [] as string[] },
   { title: "Design", url: "/context", icon: Target, hideForRoles: ["operator"] },
   { title: "Research", url: "/research-templates", icon: Microscope, hideForRoles: ["operator"] },
@@ -28,14 +28,15 @@ const navItems = [
   { title: "Configure", url: "/admin/prompts", icon: FileCode2, hideForRoles: ["operator", "manager"] },
 ];
 
-/** Original LizaOS logo — Brain icon + wordmark */
+/** LIZA wordmark — matching reference image style */
 function LizaWordmark() {
   return (
-    <div className="flex items-center gap-2.5">
-      <Brain className="h-5 w-5 text-primary" />
-      <span className="text-sm font-semibold tracking-tight">
-        <span className="text-foreground">Liza</span>
-        <span className="text-primary">OS</span>
+    <div className="flex items-center gap-1.5">
+      <span className="text-xl font-bold tracking-tight leading-none brand-gradient-text">
+        LIZA
+      </span>
+      <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground/60 leading-none mt-0.5">
+        OS
       </span>
     </div>
   );
@@ -58,12 +59,10 @@ export function AppSidebar() {
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full justify-between text-xs border-border/50 bg-transparent hover:bg-accent"
+                className="w-full justify-between text-xs border-sidebar-border bg-sidebar-accent/60 hover:bg-sidebar-accent text-foreground"
               >
-                <span className="text-muted-foreground uppercase tracking-widest text-[10px]">
-                  {roleLabels[activeRole]}
-                </span>
-                <ChevronDown className="h-3 w-3 opacity-40" />
+                <span className="text-[13px]">{roleLabels[activeRole]}</span>
+                <ChevronDown className="h-3.5 w-3.5 opacity-50" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-48">
@@ -71,7 +70,7 @@ export function AppSidebar() {
                 <DropdownMenuItem
                   key={role}
                   onClick={() => setActiveRole(role)}
-                  className="text-xs uppercase tracking-widest"
+                  className="text-[13px]"
                 >
                   {roleLabels[role]}
                 </DropdownMenuItem>
@@ -81,8 +80,8 @@ export function AppSidebar() {
         </div>
 
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] tracking-widest uppercase text-muted-foreground/60">
-            Navigation
+          <SidebarGroupLabel className="text-[10px] tracking-widest uppercase text-muted-foreground/50 mb-1">
+            Spaces
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -92,10 +91,10 @@ export function AppSidebar() {
                     <NavLink
                       to={item.url}
                       end={item.url === "/"}
-                      className="hover:bg-sidebar-accent rounded-md transition-colors"
+                      className="flex items-center gap-3 rounded-md px-3 py-2 text-sidebar-foreground hover:bg-sidebar-accent hover:text-foreground transition-colors"
                       activeClassName="sidebar-active text-primary font-medium"
                     >
-                      <item.icon className="mr-2 h-4 w-4 shrink-0" />
+                      <item.icon className="h-4 w-4 shrink-0" />
                       <span className="text-[13px]">{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
