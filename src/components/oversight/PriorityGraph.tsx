@@ -34,22 +34,22 @@ interface GraphEdge {
   to: string;
 }
 
-// ── Color palette ──
+// ── Color palette — brand-aligned ──
 const NODE_STYLES: Record<string, { color: string; glow: string; radius: number }> = {
-  hub:        { color: "hsl(var(--primary))",    glow: "hsl(var(--primary) / 0.4)", radius: 30 },
-  horizon:    { color: "hsl(var(--accent-foreground) / 0.6)", glow: "hsl(var(--accent-foreground) / 0.15)", radius: 20 },
-  task:       { color: "hsl(200, 80%, 55%)",     glow: "hsl(200, 80%, 55% / 0.3)", radius: 13 },
-  session:    { color: "hsl(150, 70%, 50%)",     glow: "hsl(150, 70%, 50% / 0.3)", radius: 13 },
-  delegation: { color: "hsl(38, 92%, 50%)",      glow: "hsl(38, 92%, 50% / 0.3)",  radius: 12 },
-  plan_item:  { color: "hsl(260, 70%, 60%)",     glow: "hsl(260, 70%, 60% / 0.3)", radius: 11 },
+  hub:        { color: "hsl(200 90% 52%)",  glow: "hsl(200 90% 52% / 0.5)", radius: 30 },
+  horizon:    { color: "hsl(215 30% 55%)",  glow: "hsl(215 30% 55% / 0.2)", radius: 20 },
+  task:       { color: "hsl(200 90% 55%)",  glow: "hsl(200 90% 55% / 0.45)", radius: 13 },
+  session:    { color: "hsl(155 72% 46%)",  glow: "hsl(155 72% 46% / 0.45)", radius: 13 },
+  delegation: { color: "hsl(38 92% 50%)",   glow: "hsl(38 92% 50% / 0.4)",  radius: 12 },
+  plan_item:  { color: "hsl(175 65% 48%)",  glow: "hsl(175 65% 48% / 0.4)", radius: 11 },
 };
 
 const STATUS_COLORS: Record<string, string> = {
   todo: "hsl(var(--muted-foreground))",
-  in_progress: "hsl(200, 80%, 55%)",
-  done: "hsl(150, 70%, 50%)",
-  blocked: "hsl(0, 70%, 55%)",
-  paused: "hsl(38, 92%, 50%)",
+  in_progress: "hsl(200 90% 55%)",
+  done: "hsl(155 72% 46%)",
+  blocked: "hsl(0 70% 55%)",
+  paused: "hsl(38 92% 50%)",
   not_started: "hsl(var(--muted-foreground) / 0.6)",
 };
 
@@ -61,10 +61,10 @@ const PRIORITY_BOOST: Record<string, number> = {
 };
 
 const HORIZON_LABELS: Record<string, string> = {
-  next_hour: "⏱ Next Hour",
-  today: "📅 Today",
-  this_week: "📆 This Week",
-  unplanned: "📋 Unplanned",
+  next_hour: "Next Hour",
+  today: "Today",
+  this_week: "This Week",
+  unplanned: "Unplanned",
 };
 
 // ── Layout ──
@@ -191,7 +191,7 @@ function computeDashboardGraph(
   return { nodes, edges };
 }
 
-// ── Edge component ──
+// ── Edge component — brand neural aesthetic ──
 function NeuralEdge({ from, to, nodes }: { from: string; to: string; nodes: GraphNode[] }) {
   const fromNode = nodes.find(n => n.id === from);
   const toNode = nodes.find(n => n.id === to);
@@ -204,23 +204,23 @@ function NeuralEdge({ from, to, nodes }: { from: string; to: string; nodes: Grap
 
   const mx = (fromNode.x + toNode.x) / 2;
   const my = (fromNode.y + toNode.y) / 2;
-  const perpX = -dy / dist * (dist * 0.1);
-  const perpY = dx / dist * (dist * 0.1);
-
+  const perpX = -dy / dist * (dist * 0.08);
+  const perpY = dx / dist * (dist * 0.08);
   const path = `M ${fromNode.x} ${fromNode.y} Q ${mx + perpX} ${my + perpY} ${toNode.x} ${toNode.y}`;
+  const isHubEdge = from === "hub";
 
   return (
     <g>
-      <path d={path} fill="none" stroke="hsl(var(--muted-foreground) / 0.15)" strokeWidth={1.5} />
-      <path d={path} fill="none" stroke={toNode.color} strokeWidth={1} opacity={0.4} strokeDasharray="6 8" className="animate-neural-pulse" />
-      <circle r={2.5} fill={toNode.color} opacity={0.8}>
-        <animateMotion dur={`${2 + Math.random() * 2}s`} repeatCount="indefinite" path={path} />
+      <path d={path} fill="none" stroke={isHubEdge ? "hsl(200 90% 52% / 0.12)" : "hsl(var(--muted-foreground) / 0.1)"} strokeWidth={isHubEdge ? 1.5 : 1} />
+      <path d={path} fill="none" stroke={toNode.color} strokeWidth={isHubEdge ? 1.2 : 0.8} opacity={0.35} strokeDasharray="5 9" className="animate-neural-pulse" />
+      <circle r={isHubEdge ? 2.5 : 1.8} fill={toNode.color} opacity={0.9}>
+        <animateMotion dur={`${2.5 + Math.random() * 2}s`} repeatCount="indefinite" path={path} />
       </circle>
     </g>
   );
 }
 
-// ── Node component ──
+// ── Node component — illuminated brand aesthetic ──
 function GraphNodeEl({
   node, isSelected, onSelect, onHover, onNavigate,
 }: {
@@ -230,38 +230,44 @@ function GraphNodeEl({
   onHover: (id: string | null) => void;
   onNavigate?: (node: GraphNode) => void;
 }) {
-  const icon = node.type === "hub" ? "⚡" : node.type === "horizon" ? "◉"
-    : node.type === "task" ? "◆" : node.type === "session" ? "▶"
-    : node.type === "delegation" ? "↗" : "◇";
+  const isHub = node.type === "hub";
+  const isHorizon = node.type === "horizon";
 
   return (
     <g
       className="cursor-pointer"
       onClick={() => onSelect(isSelected ? null : node.id)}
-      onDoubleClick={() => {
-        if (node.workbookId) onNavigate?.(node);
-      }}
+      onDoubleClick={() => { if (node.workbookId) onNavigate?.(node); }}
       onMouseEnter={() => onHover(node.id)}
       onMouseLeave={() => onHover(null)}
     >
-      <circle cx={node.x} cy={node.y} r={node.radius + (isSelected ? 8 : 4)} fill="none" stroke={node.color} strokeWidth={isSelected ? 2 : 1} opacity={isSelected ? 0.6 : 0.2} className={isSelected ? "animate-pulse" : ""} />
-      <circle cx={node.x} cy={node.y} r={node.radius + 12} fill={node.glowColor} opacity={isSelected ? 0.15 : 0.05} />
-      <circle cx={node.x} cy={node.y} r={node.radius} fill={node.color} opacity={0.9} stroke={isSelected ? "hsl(var(--foreground))" : "transparent"} strokeWidth={isSelected ? 2 : 0} />
-      <circle cx={node.x - node.radius * 0.25} cy={node.y - node.radius * 0.25} r={node.radius * 0.35} fill="white" opacity={0.15} />
-      <text x={node.x} y={node.y} textAnchor="middle" dominantBaseline="central" fill="white" fontSize={node.type === "hub" ? 14 : node.type === "horizon" ? 11 : 9} fontWeight="bold">
-        {icon}
-      </text>
-      <text x={node.x} y={node.y + node.radius + 14} textAnchor="middle" fill="hsl(var(--foreground))" fontSize={node.type === "hub" ? 11 : 9} fontWeight={node.type === "hub" ? 600 : 400} opacity={0.85}>
+      {/* Outer glow halo */}
+      <circle cx={node.x} cy={node.y} r={node.radius + (isSelected ? 14 : isHub ? 10 : 7)} fill={node.glowColor} opacity={isSelected ? 0.35 : isHub ? 0.2 : 0.12} />
+      {/* Pulsing selection ring */}
+      {isSelected && (
+        <circle cx={node.x} cy={node.y} r={node.radius + 6} fill="none" stroke={node.color} strokeWidth={1.5} opacity={0.7} className="animate-pulse" />
+      )}
+      {/* Orbital ring */}
+      <circle cx={node.x} cy={node.y} r={node.radius + 3} fill="none" stroke={node.color} strokeWidth={isHub ? 1.2 : 0.8} opacity={isSelected ? 0.5 : 0.18} />
+      {/* Core node */}
+      <circle cx={node.x} cy={node.y} r={node.radius} fill={node.color} opacity={isHub ? 1 : 0.88} />
+      {/* Hub green overlay (brand two-tone) */}
+      {isHub && <circle cx={node.x} cy={node.y} r={node.radius * 0.6} fill="hsl(155 72% 46%)" opacity={0.35} />}
+      {/* Specular highlight */}
+      <circle cx={node.x - node.radius * 0.28} cy={node.y - node.radius * 0.28} r={node.radius * 0.32} fill="white" opacity={isHub ? 0.25 : 0.12} />
+      {/* Label */}
+      <text x={node.x} y={node.y + node.radius + 13} textAnchor="middle" fill="hsl(var(--foreground))" fontSize={isHub ? 10 : isHorizon ? 9 : 8} fontWeight={isHub ? 700 : isHorizon ? 500 : 400} opacity={0.9} letterSpacing={isHorizon ? "0.06em" : "0"}>
         {node.label.length > 22 ? node.label.slice(0, 20) + "…" : node.label}
       </text>
       {node.status && (
-        <text x={node.x} y={node.y + node.radius + 25} textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize={7} opacity={0.7}>
+        <text x={node.x} y={node.y + node.radius + 23} textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize={7} opacity={0.6}>
           {node.status.replace("_", " ")}
         </text>
       )}
     </g>
   );
 }
+
 
 // ── Main Component ──
 export function PriorityGraph() {
@@ -451,7 +457,7 @@ export function PriorityGraph() {
       {/* Header */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-foreground">🧠 Priority Map</h3>
+          <h3 className="text-sm font-semibold text-foreground tracking-wide">Priority Map</h3>
           <Badge variant="outline" className="text-[9px] gap-1">
             {nodes.length} nodes · {edges.length} connections
           </Badge>
@@ -496,8 +502,11 @@ export function PriorityGraph() {
       {/* SVG Canvas */}
       <div
         ref={containerRef}
-        className="relative rounded-xl border border-border/50 bg-card/50 overflow-hidden select-none"
-        style={{ height: 420 }}
+        className="relative rounded-xl border border-border/40 overflow-hidden select-none"
+        style={{
+          height: 420,
+          background: "radial-gradient(ellipse 70% 60% at 50% 50%, hsl(200 90% 52% / 0.04) 0%, hsl(155 72% 46% / 0.02) 40%, hsl(222 20% 4%) 100%)",
+        }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -506,20 +515,29 @@ export function PriorityGraph() {
       >
         <svg width="100%" height="100%" viewBox="0 0 800 640" className="cursor-grab active:cursor-grabbing">
           <defs>
-            <radialGradient id="priority-bg-gradient" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="hsl(var(--primary) / 0.03)" />
+            <radialGradient id="priority-hub-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="hsl(200 90% 52% / 0.08)" />
+              <stop offset="60%" stopColor="hsl(155 72% 46% / 0.03)" />
               <stop offset="100%" stopColor="transparent" />
             </radialGradient>
-            <filter id="priority-node-glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
+            <filter id="priority-node-glow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
               <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
             </filter>
+            {/* Dot grid pattern */}
+            <pattern id="dot-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="0.8" fill="hsl(var(--foreground) / 0.06)" />
+            </pattern>
           </defs>
 
           <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
-            <rect width="800" height="640" fill="url(#priority-bg-gradient)" />
-            <circle cx={centerX} cy={centerY} r={140} fill="none" stroke="hsl(var(--border) / 0.15)" strokeWidth={0.5} strokeDasharray="4 6" />
-            <circle cx={centerX} cy={centerY} r={260} fill="none" stroke="hsl(var(--border) / 0.1)" strokeWidth={0.5} strokeDasharray="4 6" />
+            {/* Dot grid */}
+            <rect width="800" height="640" fill="url(#dot-grid)" />
+            {/* Radial hub glow */}
+            <rect width="800" height="640" fill="url(#priority-hub-glow)" />
+            {/* Orbit rings */}
+            <circle cx={centerX} cy={centerY} r={140} fill="none" stroke="hsl(200 90% 52% / 0.08)" strokeWidth={0.8} strokeDasharray="3 7" />
+            <circle cx={centerX} cy={centerY} r={260} fill="none" stroke="hsl(155 72% 46% / 0.06)" strokeWidth={0.6} strokeDasharray="3 7" />
 
             {edges.map(edge => (
               <NeuralEdge key={`${edge.from}-${edge.to}`} from={edge.from} to={edge.to} nodes={nodes} />
