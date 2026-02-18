@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { MandatesDashboard } from "@/components/mandates/MandatesDashboard";
 import { NerveCenterFeed } from "@/components/oversight/NerveCenterFeed";
-import { QuickActionsBar } from "@/components/oversight/QuickActionsBar";
+
 import { PlanMyTime } from "@/components/oversight/PlanMyTime";
 import { WhereYouLeftOff } from "@/components/oversight/WhereYouLeftOff";
 import { Badge } from "@/components/ui/badge";
@@ -195,10 +195,6 @@ const Index = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* Quick nav */}
-          <div className="px-1">
-            <QuickActionsBar />
-          </div>
         </div>
 
         {/* ── 5. PRIORITY FEED — full feed, collapsed ── */}
