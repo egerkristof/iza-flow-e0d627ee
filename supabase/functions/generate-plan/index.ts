@@ -80,15 +80,16 @@ serve(async (req) => {
     }
 
     // ─── Preview mode: generate suggestions without persisting ───
-    const { data: tasks = [] } = await supabase
+    const { data: tasksRaw } = await supabase
       .from("workbook_tasks")
       .select("id, title, status, priority, due_date, workbook_id, updated_at")
       .or(`assigned_to.eq.${user.id},created_by.eq.${user.id}`)
       .in("status", ["todo", "in_progress", "blocked"])
       .order("updated_at", { ascending: false })
       .limit(50);
+    const tasks: any[] = tasksRaw ?? [];
 
-    const { data: sessions = [] } = await supabase
+    const { data: sessionsRaw } = await supabase
       .from("protocol_executions")
       .select(`
         id, status, drift_score, updated_at, session_summary,
@@ -98,6 +99,7 @@ serve(async (req) => {
       .eq("executed_by", user.id)
       .in("status", ["in_progress", "paused", "not_started"])
       .limit(20);
+    const sessions: any[] = sessionsRaw ?? [];
 
     const wbIds = [...new Set(tasks.map((t: any) => t.workbook_id))];
     const { data: workbooks = [] } = await supabase
