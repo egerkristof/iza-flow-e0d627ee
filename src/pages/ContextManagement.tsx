@@ -989,22 +989,15 @@ export default function ContextManagementPage() {
       <div className="shrink-0 p-6 pb-4 border-b border-border/50 space-y-3">
         {viewMode === "classic" && <TaxonomyOnboarding />}
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            🎯 Playbooks
-            <span className="text-sm font-normal text-muted-foreground ml-3">
-              {totalItems} items · {bundles.length} domains · <span className={Math.round(avgHealth * 100) > 80 ? "text-emerald-400" : Math.round(avgHealth * 100) >= 50 ? "text-yellow-400" : "text-red-400"}>{Math.round(avgHealth * 100)}% health</span>
-            </span>
-            {viewMode === "classic" && (
-              <>
-                <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 text-muted-foreground hover:text-foreground ml-1" onClick={() => setTaxonomyOpen(true)}>
-                  <Network className="h-3 w-3" /> Taxonomy
-                </Button>
-                <div className="relative inline-block">
-                  <TaxonomyHelpButton onOpenDiagram={() => setTaxonomyOpen(true)} />
-                </div>
-              </>
-            )}
-          </h1>
+          <div>
+            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Design</p>
+            <h1 className="text-2xl font-bold tracking-tight brand-gradient-text inline-flex items-center gap-2">
+              Playbooks
+              <span className="text-sm font-normal text-muted-foreground bg-transparent" style={{WebkitTextFillColor: 'hsl(var(--muted-foreground))'}}>
+                {totalItems} items · {bundles.length} domains · <span className={Math.round(avgHealth * 100) > 80 ? "text-success" : Math.round(avgHealth * 100) >= 50 ? "text-warning" : "text-destructive"}>{Math.round(avgHealth * 100)}% health</span>
+              </span>
+            </h1>
+          </div>
           {/* Power Tools toggle */}
           <div className="flex items-center gap-2">
             <Button

@@ -127,10 +127,8 @@ export default function OversightPage() {
     return (
       <div className="flex flex-col gap-6 p-6 lg:p-8">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-semibold tracking-tight">⚡ Nerve Center</h1>
-            <Badge variant="outline" className="text-[10px]">{roleLabel}</Badge>
-          </div>
+          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Oversee</p>
+          <h1 className="text-2xl font-bold tracking-tight brand-gradient-text">Nerve Center</h1>
           <p className="mt-1 text-sm text-muted-foreground">{roleDescription}</p>
         </div>
         <NerveCenterFeed />
@@ -143,10 +141,8 @@ export default function OversightPage() {
     <div className="flex flex-col gap-6 p-6 lg:p-8">
       <div className="flex items-center justify-between">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-semibold tracking-tight">📊 Oversight</h1>
-            <Badge variant="outline" className="text-[10px]">{roleLabel}</Badge>
-          </div>
+          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Oversee</p>
+          <h1 className="text-2xl font-bold tracking-tight brand-gradient-text">Oversight</h1>
           <p className="mt-1 text-sm text-muted-foreground">{roleDescription}</p>
         </div>
         <div className="flex items-center gap-3">
