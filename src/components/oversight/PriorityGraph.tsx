@@ -20,6 +20,8 @@ interface GraphNode {
   priority?: string;
   horizon?: string;
   workbookId?: string;
+  sourceId?: string;
+  sourceType?: string;
   x: number;
   y: number;
   radius: number;
@@ -164,6 +166,9 @@ function computeDashboardGraph(
       const status = isFromPlan ? undefined : item.status;
       const style = NODE_STYLES[nodeType] || NODE_STYLES.task;
 
+      const rawSourceId = isFromPlan ? item.source_id : item.id;
+      const rawSourceType = isFromPlan ? (item.source_type || "task") : (item.type === "session" ? "session" : "task");
+
       nodes.push({
         id: isFromPlan ? `plan-${item.id}` : `feed-${item.id}`,
         label: item.title,
@@ -171,6 +176,8 @@ function computeDashboardGraph(
         status,
         priority: isFromPlan ? undefined : item.priority,
         workbookId: isFromPlan ? (item.source_id ? sourceWorkbookMap?.get(item.source_id) : undefined) : item.workbook_id || item.workbookId,
+        sourceId: rawSourceId || undefined,
+        sourceType: rawSourceType,
         x: cx,
         y: cy,
         radius: style.radius,
@@ -221,7 +228,7 @@ function GraphNodeEl({
   isSelected: boolean;
   onSelect: (id: string | null) => void;
   onHover: (id: string | null) => void;
-  onNavigate?: (workbookId: string) => void;
+  onNavigate?: (node: GraphNode) => void;
 }) {
   const icon = node.type === "hub" ? "⚡" : node.type === "horizon" ? "◉"
     : node.type === "task" ? "◆" : node.type === "session" ? "▶"
@@ -232,7 +239,7 @@ function GraphNodeEl({
       className="cursor-pointer"
       onClick={() => onSelect(isSelected ? null : node.id)}
       onDoubleClick={() => {
-        if (node.workbookId) onNavigate?.(node.workbookId);
+        if (node.workbookId) onNavigate?.(node);
       }}
       onMouseEnter={() => onHover(node.id)}
       onMouseLeave={() => onHover(null)}
@@ -520,7 +527,11 @@ export function PriorityGraph() {
 
             {nodes.map(node => (
               <g key={node.id} opacity={matchingNodeIds && !matchingNodeIds.has(node.id) ? 0.15 : 1}>
-                <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} onNavigate={(wbId) => navigate(`/workbooks/${wbId}`)} />
+                <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} onNavigate={(n) => {
+                  const tab = n.sourceType === "session" ? "sessions" : "tasks";
+                  const params = n.sourceId ? `?tab=${tab}&focusId=${n.sourceId}` : "";
+                  navigate(`/workbooks/${n.workbookId}${params}`);
+                }} />
               </g>
             ))}
           </g>
@@ -582,7 +593,11 @@ export function PriorityGraph() {
                   </div>
                 )}
                 {selectedInfo.workbookId && (
-                  <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => navigate(`/workbooks/${selectedInfo.workbookId}`)}>
+                  <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => {
+                    const tab = selectedInfo.sourceType === "session" ? "sessions" : "tasks";
+                    const params = selectedInfo.sourceId ? `?tab=${tab}&focusId=${selectedInfo.sourceId}` : "";
+                    navigate(`/workbooks/${selectedInfo.workbookId}${params}`);
+                  }}>
                     Open Workbook →
                   </Button>
                 )}
@@ -673,7 +688,11 @@ export function PriorityGraph() {
 
                 {nodes.map(node => (
                   <g key={`fs-${node.id}`} opacity={matchingNodeIds && !matchingNodeIds.has(node.id) ? 0.15 : 1}>
-                    <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} onNavigate={(wbId) => navigate(`/workbooks/${wbId}`)} />
+                    <GraphNodeEl node={node} isSelected={selectedNode === node.id} onSelect={setSelectedNode} onHover={setHoveredNode} onNavigate={(n) => {
+                      const tab = n.sourceType === "session" ? "sessions" : "tasks";
+                      const params = n.sourceId ? `?tab=${tab}&focusId=${n.sourceId}` : "";
+                      navigate(`/workbooks/${n.workbookId}${params}`);
+                    }} />
                   </g>
                 ))}
               </g>
@@ -735,7 +754,11 @@ export function PriorityGraph() {
                       </div>
                     )}
                     {selectedInfo.workbookId && (
-                      <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => navigate(`/workbooks/${selectedInfo.workbookId}`)}>
+                      <Button variant="outline" size="sm" className="h-6 text-[10px] gap-1" onClick={() => {
+                        const tab = selectedInfo.sourceType === "session" ? "sessions" : "tasks";
+                        const params = selectedInfo.sourceId ? `?tab=${tab}&focusId=${selectedInfo.sourceId}` : "";
+                        navigate(`/workbooks/${selectedInfo.workbookId}${params}`);
+                      }}>
                         Open Workbook →
                       </Button>
                     )}

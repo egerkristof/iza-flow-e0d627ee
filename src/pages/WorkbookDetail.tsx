@@ -1,5 +1,5 @@
-import { useState, useMemo, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -106,6 +106,22 @@ export default function WorkbookDetailPage() {
   const [activeTab, setActiveTab] = useState("playbooks");
   const [focusTaskId, setFocusTaskId] = useState<string | null>(null);
   const [focusChatId, setFocusChatId] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Deep-link from URL params (e.g. ?tab=tasks&focusId=xxx)
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    const focusId = searchParams.get("focusId");
+    if (tab) {
+      setActiveTab(tab);
+      if (focusId) {
+        if (tab === "tasks") setFocusTaskId(focusId);
+        else if (tab === "sessions") setFocusChatId(focusId);
+      }
+      // Clear params after consuming
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   const handleGraphNodeNavigate = useCallback((nodeId: string, nodeType: "workbook" | "task" | "subtask" | "chat" | "resource") => {
     if (nodeType === "task" || nodeType === "subtask") {
