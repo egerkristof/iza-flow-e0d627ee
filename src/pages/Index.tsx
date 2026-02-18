@@ -51,11 +51,11 @@ const Index = () => {
       >
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">Command Centre</h1>
             <Badge variant="outline" className="text-[10px] uppercase tracking-widest">Operator</Badge>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Your personalized work hub — what needs your attention right now.
+            Your operational context — active mandates, sessions, and priorities.
           </p>
         </div>
 
@@ -64,7 +64,7 @@ const Index = () => {
           <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
             <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${mandatesOpen ? "rotate-90" : ""}`} />
             <Shield className="h-4 w-4 text-warning" />
-            <span className="text-sm font-medium">Active Mandates</span>
+            <span className="text-sm font-medium uppercase tracking-widest text-[11px]">Active Mandates</span>
             {activeMandateCount > 0 && (
               <Badge className="ml-1.5 text-[9px] bg-warning/20 text-warning border-warning/30">
                 <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
@@ -85,7 +85,7 @@ const Index = () => {
           <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
             <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${weekOpen ? "rotate-90" : ""}`} />
             <TrendingUp className="h-4 w-4 text-success" />
-            <span className="text-sm font-medium">My Week Statistics</span>
+            <span className="text-sm font-medium uppercase tracking-widest text-[11px]">Weekly Metrics</span>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-2">
             <WeeklyProgressWidget />
@@ -100,7 +100,7 @@ const Index = () => {
           <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
             <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${feedOpen ? "rotate-90" : ""}`} />
             <Zap className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">Priority Feed</span>
+            <span className="text-sm font-medium uppercase tracking-widest text-[11px]">Priority Feed</span>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-2">
             <NerveCenterFeed />

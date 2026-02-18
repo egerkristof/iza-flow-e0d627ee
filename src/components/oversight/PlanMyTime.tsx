@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Clock, Calendar, CalendarDays, Sparkles, Plus, Brain,
   Check, Trash2, ChevronRight, Loader2, ListPlus, X, Replace, CheckSquare, Square, ExternalLink,
+  Target, ClipboardList, PenLine,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -353,7 +354,7 @@ export function PlanMyTime() {
       <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-3 hover:border-primary/30 transition-colors text-left">
         <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-90" : ""}`} />
         <Sparkles className="h-4 w-4 text-primary" />
-        <span className="text-sm font-medium">Plan My Time</span>
+        <span className="text-[11px] font-medium uppercase tracking-widest">Operational Horizon</span>
         {planItems.length > 0 && (
           <Badge variant="secondary" className="text-[9px] ml-1.5">
             {planItems.filter(i => !i.is_completed).length} pending
@@ -379,7 +380,7 @@ export function PlanMyTime() {
                 ))}
                 <TabsTrigger value="priority_map" className="text-xs gap-1.5">
                   <Brain className="h-4 w-4" />
-                  Priority Map
+                  Neural Map
                 </TabsTrigger>
               </TabsList>
               {isHorizonTab && (
@@ -460,8 +461,8 @@ export function PlanMyTime() {
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium">
-                          {suggestion.source_type === "session" ? "🎯" : suggestion.source_type === "task" ? "📋" : "✏️"}{" "}
+                        <p className="text-sm font-medium flex items-center gap-1.5">
+                          {suggestion.source_type === "session" ? <Target className="h-3.5 w-3.5 text-muted-foreground shrink-0" /> : suggestion.source_type === "task" ? <ClipboardList className="h-3.5 w-3.5 text-muted-foreground shrink-0" /> : <PenLine className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
                           {suggestion.title}
                         </p>
                         {suggestion.description && (
@@ -640,9 +641,10 @@ export function PlanMyTime() {
                     addFromFeed.mutate({ id: item.id, title: item.title, sourceType: item.sourceType });
                   }}
                 >
-                  <span className="text-sm">
-                    {item.sourceType === "session" ? "🎯" : "📋"}
-                  </span>
+                  {item.sourceType === "session"
+                    ? <Target className="h-4 w-4 text-muted-foreground shrink-0" />
+                    : <ClipboardList className="h-4 w-4 text-muted-foreground shrink-0" />
+                  }
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{item.title}</p>
                     <div className="flex items-center gap-2 mt-0.5">
@@ -680,7 +682,7 @@ function PlanItemRow({
   workbookId?: string;
 }) {
   const navigate = useNavigate();
-  const sourceIcon = item.source_type === "session" ? "🎯" : item.source_type === "task" ? "📋" : "✏️";
+  const SourceIcon = item.source_type === "session" ? Target : item.source_type === "task" ? ClipboardList : PenLine;
 
   return (
     <div className={`flex items-start gap-3 rounded-md px-3 py-2.5 group transition-colors ${
@@ -698,8 +700,9 @@ function PlanItemRow({
       </button>
 
       <div className="flex-1 min-w-0">
-        <p className={`text-sm ${item.is_completed ? "line-through text-muted-foreground" : "font-medium"}`}>
-          {sourceIcon} {item.title}
+        <p className={`text-sm flex items-center gap-1.5 ${item.is_completed ? "line-through text-muted-foreground" : "font-medium"}`}>
+          <SourceIcon className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+          {item.title}
         </p>
         {item.description && (
           <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-2">{item.description}</p>

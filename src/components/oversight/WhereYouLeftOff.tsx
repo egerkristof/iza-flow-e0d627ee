@@ -55,6 +55,7 @@ export function WhereYouLeftOff({ item }: WhereYouLeftOffProps) {
         </div>
         <Button
           size="sm"
+          variant="brand"
           className="shrink-0"
           onClick={() => navigate(`/workbooks/${item.workbookId}`)}
         >
