@@ -622,15 +622,8 @@ export function ProtocolExecutionView({
   );
   const { data: stepExecs = [], refetch: refetchStepExecs } = useStepExecutions(activeExecution?.id ?? null);
   const { data: captures = [] } = useExecutionCaptures(activeExecution?.id ?? null);
-  const { data: userRoles = [] } = useQuery({
-    queryKey: ["user-roles", user?.id],
-    enabled: !!user?.id,
-    queryFn: async () => {
-      const { data } = await supabase.from("user_roles").select("role").eq("user_id", user!.id);
-      return data ?? [];
-    },
-  });
-  const isArchitect = userRoles.some((r: any) => r.role === "architect");
+  const { activeRole } = useAuth();
+  const isArchitect = activeRole === "architect";
   const { data: resources = [] } = useWorkbookResources(workbookId);
   const { data: tasks = [] } = useQuery({
     queryKey: ["workbook-tasks-sidebar", workbookId],
