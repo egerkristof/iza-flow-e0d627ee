@@ -6,7 +6,6 @@ import {
   Plus, ChevronRight, ChevronDown, Circle, CheckCircle2, Clock, AlertTriangle,
   XCircle, Settings2, Trash2, Play, X, MessageSquare, Zap, FileText, Send,
   Minimize2, Maximize2, Search, Filter, Pencil, GripVertical, BookUp, Loader2,
-  GraduationCap,
 } from "lucide-react";
 import { ChatToolbar } from "./ChatToolbar";
 import { ImportCopilotDialog } from "@/components/knowledge/ImportCopilotDialog";
@@ -257,17 +256,6 @@ function TaskSubchat({ task, workbookId, workbookTitle, allTasks, onClose, onMin
         <Badge variant="outline" className="text-[9px] gap-0.5">Depth: {task.context_config.depth_limit}</Badge>
       </div>
 
-      {/* Coaching notes — shown prominently if the delegator left guidance */}
-      {(task as any).coaching_notes && (
-        <div className="mx-3 mt-2 rounded-lg border border-amber-500/30 bg-amber-500/8 p-3 space-y-1">
-          <div className="flex items-center gap-1.5">
-            <GraduationCap className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-400">Coaching Notes</span>
-          </div>
-          <p className="text-xs text-amber-200/80 leading-relaxed whitespace-pre-line">{(task as any).coaching_notes}</p>
-        </div>
-      )}
-
       {/* Active mandates in context */}
       <div className="px-2 py-1.5 border-b border-info/10">
         <MandateContextBanner workbookId={workbookId} compact />
@@ -308,17 +296,16 @@ function TaskSubchat({ task, workbookId, workbookTitle, allTasks, onClose, onMin
 
 // ── TASK EDIT MODAL ──
 function TaskEditModal({ task, open, onOpenChange, onSave }: {
-  task: WorkbookTask & { coaching_notes?: string | null };
+  task: WorkbookTask;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (updates: { title: string; description: string | null; status: TaskStatus; priority: TaskPriority; due_date: string | null; coaching_notes: string | null }) => void;
+  onSave: (updates: { title: string; description: string | null; status: TaskStatus; priority: TaskPriority; due_date: string | null }) => void;
 }) {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description || "");
   const [status, setStatus] = useState<TaskStatus>(task.status);
   const [priority, setPriority] = useState<TaskPriority>(task.priority);
   const [dueDate, setDueDate] = useState(task.due_date ? task.due_date.slice(0, 10) : "");
-  const [coachingNotes, setCoachingNotes] = useState((task as any).coaching_notes || "");
 
   useEffect(() => {
     setTitle(task.title);
@@ -326,7 +313,6 @@ function TaskEditModal({ task, open, onOpenChange, onSave }: {
     setStatus(task.status);
     setPriority(task.priority);
     setDueDate(task.due_date ? task.due_date.slice(0, 10) : "");
-    setCoachingNotes((task as any).coaching_notes || "");
   }, [task]);
 
   return (
@@ -377,23 +363,6 @@ function TaskEditModal({ task, open, onOpenChange, onSave }: {
             <label className="text-xs font-medium text-muted-foreground mb-1 block">Due Date</label>
             <Input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} />
           </div>
-          {/* Coaching notes — delegation knowledge transfer */}
-          <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 space-y-2">
-            <div className="flex items-center gap-1.5">
-              <GraduationCap className="h-3.5 w-3.5 text-amber-400" />
-              <label className="text-xs font-semibold text-amber-400 uppercase tracking-wider">Coaching Notes</label>
-            </div>
-            <p className="text-[11px] text-muted-foreground">
-              Add guidance for the assignee — tips, caveats, or context they should know before starting.
-            </p>
-            <Textarea
-              value={coachingNotes}
-              onChange={e => setCoachingNotes(e.target.value)}
-              placeholder="e.g. Check with legal before submitting — their requirements changed last month. The key contact is Sarah in procurement..."
-              rows={3}
-              className="text-xs resize-none bg-background/50"
-            />
-          </div>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
@@ -405,7 +374,6 @@ function TaskEditModal({ task, open, onOpenChange, onSave }: {
                 status,
                 priority,
                 due_date: dueDate ? new Date(dueDate).toISOString() : null,
-                coaching_notes: coachingNotes || null,
               });
               onOpenChange(false);
             }}
@@ -854,11 +822,7 @@ export function WorkbookTasks({ workbookId, workbookTitle, focusTaskId, onFocusT
               detached
             </Badge>
           )}
-          {(task as any).coaching_notes && (
-            <Badge variant="outline" className="text-[9px] border-amber-500/40 text-amber-400 gap-0.5 shrink-0" title={(task as any).coaching_notes}>
-              <GraduationCap className="h-2.5 w-2.5" /> coached
-            </Badge>
-          )}
+
           <Badge className={`text-[10px] shrink-0 ${PRIORITY_COLORS[task.priority]}`}>{task.priority}</Badge>
 
           <div className="hidden group-hover:flex items-center gap-0.5">

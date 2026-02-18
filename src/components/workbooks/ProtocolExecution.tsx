@@ -1,5 +1,4 @@
 import { useState, useMemo, useCallback, useRef } from "react";
-import { AfterActionReviewModal } from "@/components/workbooks/AfterActionReviewModal";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,7 +12,6 @@ import {
   AlertTriangle, Ban, Info, Loader2, Package, FileText, MessageSquare,
   Zap, GitBranch, Clock, CheckCircle2, Circle, PauseCircle, XCircle,
   Sparkles, Flag, BookOpen, Search, Copy, Save, Download, Plus,
-  GraduationCap, Lightbulb, X, ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -214,193 +212,6 @@ function useExecutionCaptures(executionId: string | null) {
       return (data ?? []) as unknown as CaptureItem[];
     },
   });
-}
-
-interface StepAnnotation {
-  id: string;
-  step_id: string;
-  author_id: string;
-  annotation_type: "tip" | "warning" | "example" | "context";
-  content: string;
-  is_visible: boolean;
-  sort_order: number;
-  created_at: string;
-}
-
-function useStepAnnotations(stepId: string | null) {
-  return useQuery({
-    queryKey: ["step-annotations", stepId],
-    enabled: !!stepId,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("step_annotations")
-        .select("*")
-        .eq("step_id", stepId!)
-        .eq("is_visible", true)
-        .order("sort_order");
-      if (error) throw error;
-      return (data ?? []) as unknown as StepAnnotation[];
-    },
-  });
-}
-
-const ANNOTATION_CONFIG: Record<StepAnnotation["annotation_type"], { icon: typeof Lightbulb; color: string; label: string; bg: string }> = {
-  tip:     { icon: Lightbulb,        color: "text-amber-400",  label: "Tip",     bg: "border-amber-500/20 bg-amber-500/5"  },
-  warning: { icon: AlertTriangle,    color: "text-destructive",label: "Warning", bg: "border-destructive/20 bg-destructive/5" },
-  example: { icon: BookOpen,         color: "text-info",       label: "Example", bg: "border-info/20 bg-info/5"            },
-  context: { icon: Info,             color: "text-primary",    label: "Context", bg: "border-primary/20 bg-primary/5"      },
-};
-
-// ── Coach's Notes Panel ───────────────────────────────────────────
-function CoachingPanel({
-  stepId,
-  isArchitect,
-}: {
-  stepId: string;
-  isArchitect: boolean;
-}) {
-  const { data: annotations = [] } = useStepAnnotations(stepId);
-  const { user } = useAuth();
-  const { toast } = useToast();
-  const qc = useQueryClient();
-  const [addOpen, setAddOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
-  const [newType, setNewType] = useState<StepAnnotation["annotation_type"]>("tip");
-  const [newContent, setNewContent] = useState("");
-  const [saving, setSaving] = useState(false);
-
-  const handleAdd = async () => {
-    if (!user || !newContent.trim()) return;
-    setSaving(true);
-    try {
-      const { error } = await supabase.from("step_annotations").insert({
-        step_id: stepId,
-        author_id: user.id,
-        annotation_type: newType,
-        content: newContent.trim(),
-        sort_order: annotations.length,
-      } as any);
-      if (error) throw error;
-      qc.invalidateQueries({ queryKey: ["step-annotations", stepId] });
-      setNewContent("");
-      setAddOpen(false);
-      toast({ title: "Annotation added" });
-    } catch (err: any) {
-      toast({ title: "Error", description: err.message, variant: "destructive" });
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    await supabase.from("step_annotations").delete().eq("id", id);
-    qc.invalidateQueries({ queryKey: ["step-annotations", stepId] });
-  };
-
-  if (annotations.length === 0 && !isArchitect) return null;
-
-  return (
-    <div className="mx-6 mt-3 rounded-lg border border-amber-500/25 bg-amber-500/5">
-      {/* Header */}
-      <button
-        className="flex w-full items-center justify-between px-4 py-2.5 text-left"
-        onClick={() => setCollapsed(c => !c)}
-      >
-        <div className="flex items-center gap-2">
-          <GraduationCap className="h-4 w-4 text-amber-400" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
-            Coach's Notes
-          </span>
-          {annotations.length > 0 && (
-            <span className="rounded-full bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-semibold text-amber-400">
-              {annotations.length}
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          {isArchitect && !addOpen && (
-            <button
-              className="flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] text-amber-400 hover:bg-amber-500/10 transition-colors"
-              onClick={(e) => { e.stopPropagation(); setAddOpen(true); setCollapsed(false); }}
-            >
-              <Plus className="h-3 w-3" /> Add Note
-            </button>
-          )}
-          <ChevronDown className={`h-3.5 w-3.5 text-amber-400/60 transition-transform ${collapsed ? "-rotate-90" : ""}`} />
-        </div>
-      </button>
-
-      {!collapsed && (
-        <div className="px-4 pb-3 space-y-2">
-          {annotations.map(ann => {
-            const cfg = ANNOTATION_CONFIG[ann.annotation_type];
-            const Icon = cfg.icon;
-            return (
-              <div key={ann.id} className={`rounded-lg border p-3 space-y-1 ${cfg.bg}`}>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1.5">
-                    <Icon className={`h-3.5 w-3.5 shrink-0 ${cfg.color}`} />
-                    <span className={`text-[10px] font-semibold uppercase tracking-wider ${cfg.color}`}>{cfg.label}</span>
-                  </div>
-                  {isArchitect && (
-                    <button
-                      onClick={() => handleDelete(ann.id)}
-                      className="text-muted-foreground hover:text-destructive transition-colors"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  )}
-                </div>
-                <p className="text-xs text-foreground/80 leading-relaxed whitespace-pre-line pl-5">{ann.content}</p>
-              </div>
-            );
-          })}
-
-          {annotations.length === 0 && !addOpen && isArchitect && (
-            <p className="text-[11px] text-muted-foreground py-1">
-              No coaching notes yet. Add tips, warnings, or examples for operators running this step.
-            </p>
-          )}
-
-          {/* Inline add form */}
-          {addOpen && (
-            <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3 space-y-2">
-              <div className="flex gap-2">
-                {(["tip", "warning", "example", "context"] as const).map(t => (
-                  <button
-                    key={t}
-                    onClick={() => setNewType(t)}
-                    className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider border transition-colors ${
-                      newType === t
-                        ? `${ANNOTATION_CONFIG[t].bg} ${ANNOTATION_CONFIG[t].color} border-current`
-                        : "border-border/40 text-muted-foreground hover:border-amber-500/30"
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-              <Textarea
-                value={newContent}
-                onChange={e => setNewContent(e.target.value)}
-                placeholder="Write your coaching note…"
-                rows={3}
-                className="text-xs resize-none bg-background/50"
-                autoFocus
-              />
-              <div className="flex items-center justify-end gap-2">
-                <Button variant="ghost" size="sm" className="text-xs" onClick={() => { setAddOpen(false); setNewContent(""); }}>Cancel</Button>
-                <Button size="sm" className="text-xs gap-1" onClick={handleAdd} disabled={!newContent.trim() || saving}>
-                  {saving ? <Loader2 className="h-3 w-3 animate-spin" /> : <GraduationCap className="h-3 w-3" />}
-                  Add Note
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
 }
 
 // ── Step Type Config ───────────────────────────────────────────────
@@ -622,8 +433,6 @@ export function ProtocolExecutionView({
   );
   const { data: stepExecs = [], refetch: refetchStepExecs } = useStepExecutions(activeExecution?.id ?? null);
   const { data: captures = [] } = useExecutionCaptures(activeExecution?.id ?? null);
-  const { activeRole } = useAuth();
-  const isArchitect = activeRole === "architect";
   const { data: resources = [] } = useWorkbookResources(workbookId);
   const { data: tasks = [] } = useQuery({
     queryKey: ["workbook-tasks-sidebar", workbookId],
@@ -642,7 +451,6 @@ export function ProtocolExecutionView({
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string; attachment?: { id: string; title: string; type: string; url?: string; content?: string; metadata?: Record<string, unknown> } }[]>([]);
   const [captureOpen, setCaptureOpen] = useState(false);
-  const [aarOpen, setAarOpen] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [savingDraftIdx, setSavingDraftIdx] = useState<number | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -701,8 +509,8 @@ export function ProtocolExecutionView({
   });
 
   const completeStep = useMutation({
-    mutationFn: async ({ stepId, isLast }: { stepId: string; isLast: boolean }) => {
-      if (!activeExecution) return { isLast };
+    mutationFn: async (stepId: string) => {
+      if (!activeExecution) return;
       // Update step execution
       await supabase
         .from("step_executions")
@@ -713,9 +521,9 @@ export function ProtocolExecutionView({
         .eq("execution_id", activeExecution.id)
         .eq("step_id", stepId);
 
-      if (!isLast) {
-        // Move to next step
-        const nextIdx = currentStepIndex + 1;
+      // Move to next step or complete
+      const nextIdx = currentStepIndex + 1;
+      if (nextIdx < steps.length) {
         await supabase
           .from("protocol_executions")
           .update({
@@ -740,14 +548,12 @@ export function ProtocolExecutionView({
           } as any)
           .eq("id", activeExecution.id);
       }
-      return { isLast };
     },
-    onSuccess: (result) => {
+    onSuccess: () => {
       refetchExecution();
       refetchStepExecs();
-      if (result?.isLast) {
-        // Trigger After-Action Review modal when protocol is complete
-        setAarOpen(true);
+      if (currentStepIndex + 1 >= steps.length) {
+        toast({ title: "Protocol Complete", description: `"${protocol.title}" finished successfully.` });
       }
     },
   });
@@ -1095,7 +901,7 @@ export function ProtocolExecutionView({
     );
   }
 
-  if (activeExecution?.status === "completed" && !aarOpen) {
+  if (activeExecution?.status === "completed") {
     return (
       <div className="flex h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-4">
         <CheckCircle2 className="h-12 w-12 text-emerald-500" />
@@ -1226,11 +1032,6 @@ export function ProtocolExecutionView({
                 </Badge>
               )}
             </div>
-          )}
-
-          {/* Coach's Notes Panel — shown for all users if annotations exist, plus author controls for architects */}
-          {currentStep && (
-            <CoachingPanel stepId={currentStep.id} isArchitect={isArchitect} />
           )}
 
           {/* Draft Workspace banner for action steps */}
@@ -1468,7 +1269,7 @@ export function ProtocolExecutionView({
                 <Button
                   size="sm"
                   className="text-xs gap-1"
-                  onClick={() => currentStep && completeStep.mutate({ stepId: currentStep.id, isLast: currentStepIndex + 1 >= steps.length })}
+                  onClick={() => currentStep && completeStep.mutate(currentStep.id)}
                   disabled={
                     completeStep.isPending ||
                     (currentStep?.step_type === "gate" && !currentStepExec?.gate_acknowledged)
@@ -1600,22 +1401,6 @@ export function ProtocolExecutionView({
           onOpenChange={setCaptureOpen}
           executionId={activeExecution.id}
           stepId={currentStep?.id ?? null}
-        />
-      )}
-
-      {/* After-Action Review modal — triggered on session completion */}
-      {activeExecution && (
-        <AfterActionReviewModal
-          open={aarOpen}
-          onOpenChange={setAarOpen}
-          executionId={activeExecution.id}
-          protocolTitle={protocol.title}
-          workbookTitle={workbookTitle}
-          onComplete={() => {
-            toast({ title: "Session complete", description: `"${protocol.title}" finished. Learnings captured.` });
-            qc.invalidateQueries({ queryKey: ["protocol-execution-sessions", workbookId] });
-            qc.invalidateQueries({ queryKey: ["operator-hero-sessions"] });
-          }}
         />
       )}
     </div>
