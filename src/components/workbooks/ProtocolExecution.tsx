@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useRef } from "react";
+import { AfterActionReviewModal } from "@/components/workbooks/AfterActionReviewModal";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
@@ -451,6 +452,7 @@ export function ProtocolExecutionView({
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState<{ role: string; text: string; attachment?: { id: string; title: string; type: string; url?: string; content?: string; metadata?: Record<string, unknown> } }[]>([]);
   const [captureOpen, setCaptureOpen] = useState(false);
+  const [aarOpen, setAarOpen] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [savingDraftIdx, setSavingDraftIdx] = useState<number | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -553,7 +555,8 @@ export function ProtocolExecutionView({
       refetchExecution();
       refetchStepExecs();
       if (currentStepIndex + 1 >= steps.length) {
-        toast({ title: "Protocol Complete", description: `"${protocol.title}" finished successfully.` });
+        // Trigger After-Action Review modal when protocol is complete
+        setAarOpen(true);
       }
     },
   });
@@ -1401,6 +1404,22 @@ export function ProtocolExecutionView({
           onOpenChange={setCaptureOpen}
           executionId={activeExecution.id}
           stepId={currentStep?.id ?? null}
+        />
+      )}
+
+      {/* After-Action Review modal — triggered on session completion */}
+      {activeExecution && (
+        <AfterActionReviewModal
+          open={aarOpen}
+          onOpenChange={setAarOpen}
+          executionId={activeExecution.id}
+          protocolTitle={protocol.title}
+          workbookTitle={workbookTitle}
+          onComplete={() => {
+            toast({ title: "Session complete", description: `"${protocol.title}" finished. Learnings captured.` });
+            qc.invalidateQueries({ queryKey: ["protocol-execution-sessions", workbookId] });
+            qc.invalidateQueries({ queryKey: ["operator-hero-sessions"] });
+          }}
         />
       )}
     </div>
