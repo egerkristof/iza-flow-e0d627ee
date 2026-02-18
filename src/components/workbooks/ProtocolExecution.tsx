@@ -511,8 +511,8 @@ export function ProtocolExecutionView({
   });
 
   const completeStep = useMutation({
-    mutationFn: async (stepId: string) => {
-      if (!activeExecution) return;
+    mutationFn: async ({ stepId, isLast }: { stepId: string; isLast: boolean }) => {
+      if (!activeExecution) return { isLast };
       // Update step execution
       await supabase
         .from("step_executions")
@@ -523,9 +523,9 @@ export function ProtocolExecutionView({
         .eq("execution_id", activeExecution.id)
         .eq("step_id", stepId);
 
-      // Move to next step or complete
-      const nextIdx = currentStepIndex + 1;
-      if (nextIdx < steps.length) {
+      if (!isLast) {
+        // Move to next step
+        const nextIdx = currentStepIndex + 1;
         await supabase
           .from("protocol_executions")
           .update({
@@ -550,11 +550,12 @@ export function ProtocolExecutionView({
           } as any)
           .eq("id", activeExecution.id);
       }
+      return { isLast };
     },
-    onSuccess: () => {
+    onSuccess: (result) => {
       refetchExecution();
       refetchStepExecs();
-      if (currentStepIndex + 1 >= steps.length) {
+      if (result?.isLast) {
         // Trigger After-Action Review modal when protocol is complete
         setAarOpen(true);
       }
@@ -1272,7 +1273,7 @@ export function ProtocolExecutionView({
                 <Button
                   size="sm"
                   className="text-xs gap-1"
-                  onClick={() => currentStep && completeStep.mutate(currentStep.id)}
+                  onClick={() => currentStep && completeStep.mutate({ stepId: currentStep.id, isLast: currentStepIndex + 1 >= steps.length })}
                   disabled={
                     completeStep.isPending ||
                     (currentStep?.step_type === "gate" && !currentStepExec?.gate_acknowledged)
