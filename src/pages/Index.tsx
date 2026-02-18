@@ -38,11 +38,21 @@ const Index = () => {
   // ─── Operator Dashboard ───
   if (isOperator) {
     return (
-      <div className="flex flex-col gap-6 p-6 lg:p-8">
+      <div
+        className="flex flex-col gap-6 p-6 lg:p-8 relative min-h-screen"
+        style={{
+          backgroundImage: `
+            radial-gradient(ellipse 80% 50% at 50% 0%, hsl(200 90% 52% / 0.04) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 40% at 85% 20%, hsl(155 72% 46% / 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 1px 1px, hsl(var(--foreground) / 0.04) 1px, transparent 0)
+          `,
+          backgroundSize: "100% 100%, 100% 100%, 28px 28px",
+        }}
+      >
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-            <Badge variant="outline" className="text-[10px]">Operator</Badge>
+            <Badge variant="outline" className="text-[10px] uppercase tracking-widest">Operator</Badge>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
             Your personalized work hub — what needs your attention right now.
