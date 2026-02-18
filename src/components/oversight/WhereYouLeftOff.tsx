@@ -21,11 +21,15 @@ export function WhereYouLeftOff({ item }: WhereYouLeftOffProps) {
   try { timeAgo = formatDistanceToNow(new Date(item.updatedAt), { addSuffix: true }); } catch {}
 
   return (
-    <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+    <div className="rounded-lg border-r border-t border-b border-primary/20 border-l-2 border-l-primary bg-primary/5 p-4 glow-sm">
       <div className="flex items-center gap-2 mb-2">
         <Zap className="h-4 w-4 text-primary" />
-        <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Resume where you left off
+        <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary">
+          Active Protocol
+        </span>
+        <span className="ml-auto inline-flex items-center gap-1 rounded border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[9px] font-semibold tracking-widest uppercase text-primary">
+          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse inline-block" />
+          Protocol Active
         </span>
       </div>
       <div className="flex items-center justify-between">

@@ -31,12 +31,17 @@ const navItems = [
 /** LIZA wordmark — matching reference image style */
 function LizaWordmark() {
   return (
-    <div className="flex items-center gap-1.5">
-      <span className="text-xl font-bold tracking-tight leading-none brand-gradient-text">
-        LIZA
-      </span>
-      <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground/60 leading-none mt-0.5">
-        OS
+    <div className="flex flex-col gap-0.5">
+      <div className="flex items-center gap-1.5">
+        <span className="text-xl font-bold tracking-tight leading-none brand-gradient-text">
+          LIZA
+        </span>
+        <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground/60 leading-none mt-0.5">
+          OS
+        </span>
+      </div>
+      <span className="text-[9px] tracking-[0.18em] uppercase text-muted-foreground/35 leading-none font-medium">
+        Your Organisational Intelligence
       </span>
     </div>
   );

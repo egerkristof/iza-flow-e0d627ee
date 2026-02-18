@@ -158,11 +158,17 @@ const Index = () => {
       >
         {/* ── 1. GREETING ── */}
         <div>
-          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Mission Briefing</p>
+          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Operational Briefing</p>
           <h1 className="text-3xl font-bold tracking-tight brand-gradient-text">{greeting}</h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
-            Here's where you stand. Pick up where you left off, or set your horizon for today.
+            Turning intentions into outcomes. Your execution infrastructure is live.
           </p>
+          {mySessions.length > 0 && (
+            <p className="mt-2 text-[11px] font-semibold tracking-wider text-success flex items-center gap-1.5">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
+              {mySessions.length} PROTOCOL{mySessions.length !== 1 ? "S" : ""} IN MOTION
+            </p>
+          )}
         </div>
 
         {/* ── 2. RESUME HERO — top priority session ── */}
@@ -180,7 +186,7 @@ const Index = () => {
             <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-2.5 hover:border-warning/30 transition-colors text-left">
               <ChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${mandatesOpen ? "rotate-90" : ""}`} />
               <Shield className="h-3.5 w-3.5 text-warning" />
-              <span className="text-[11px] font-medium uppercase tracking-widest flex-1">Leadership Mandates</span>
+              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase flex-1">Directive Stream</span>
               {activeMandateCount > 0 ? (
                 <Badge className="text-[9px] bg-warning/15 text-warning border-warning/30 flex items-center gap-0.5">
                   <AlertTriangle className="h-2.5 w-2.5" />
@@ -202,7 +208,7 @@ const Index = () => {
           <CollapsibleTrigger className="flex items-center gap-2 w-full rounded-lg border border-border/50 bg-card px-4 py-2.5 hover:border-primary/30 transition-colors text-left">
             <ChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${feedOpen ? "rotate-90" : ""}`} />
             <Zap className="h-3.5 w-3.5 text-primary" />
-            <span className="text-[11px] font-medium uppercase tracking-widest flex-1">Priority Feed</span>
+            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase flex-1">Nerve Centre</span>
             <span className="text-[10px] text-muted-foreground">All tasks & sessions</span>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-1.5">
@@ -221,7 +227,7 @@ const Index = () => {
         <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-1">Your Organisational Intelligence</p>
         <h1 className="text-3xl font-bold tracking-tight brand-gradient-text">Good to have you back.</h1>
         <p className="mt-2 text-muted-foreground">
-          Your team's best thinking, made executable. Not just documentation — working systems.
+          The infrastructure shaping the future of your organisation.
         </p>
       </div>
 
@@ -229,23 +235,26 @@ const Index = () => {
         <QuickCard
           icon={<BookOpen className="h-5 w-5 text-primary" />}
           label="EXECUTE"
-          title="Workbooks"
+          title="The Launchpad"
           description="Where expertise meets action. Run protocol-guided work and capture what you learn."
           href="/workbooks"
+          accent="primary"
         />
         <QuickCard
           icon={<Library className="h-5 w-5 text-success" />}
           label="DESIGN"
-          title="Playbooks"
+          title="Process Studio"
           description="Combine explicit knowledge into reusable systems your whole team can execute with."
           href="/context"
+          accent="success"
         />
         <QuickCard
           icon={<BarChart3 className="h-5 w-5 text-warning" />}
           label="OVERSEE"
-          title="Oversight"
+          title="Command Centre"
           description="See the full picture — workbook progress, drift, and strategic intent in one view."
           href="/oversight"
+          accent="warning"
         />
       </div>
 
@@ -258,18 +267,33 @@ const Index = () => {
   );
 };
 
-function QuickCard({ icon, title, description, href, label }: { icon: React.ReactNode; title: string; description: string; href: string; label?: string }) {
+function QuickCard({ icon, title, description, href, label, accent = "primary" }: { icon: React.ReactNode; title: string; description: string; href: string; label?: string; accent?: "primary" | "success" | "warning" }) {
+  const accentClasses = {
+    primary: "hover:border-primary/40 hover:glow-sm",
+    success: "hover:border-success/40 hover:glow-green-sm",
+    warning: "hover:border-warning/40",
+  };
+  const iconBgClasses = {
+    primary: "bg-primary/10 border-primary/20",
+    success: "bg-success/10 border-success/20",
+    warning: "bg-warning/10 border-warning/20",
+  };
+  const labelClasses = {
+    primary: "text-primary",
+    success: "text-success",
+    warning: "text-warning",
+  };
   return (
     <a
       href={href}
-      className="group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 transition-all hover:border-primary/30 hover:glow-sm relative overflow-hidden"
+      className={`group flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-5 transition-all relative overflow-hidden ${accentClasses[accent]}`}
     >
       {label && (
-        <span className="absolute top-4 right-4 text-[10px] font-semibold tracking-[0.15em] uppercase text-primary">
+        <span className={`absolute top-4 right-4 text-[10px] font-semibold tracking-[0.15em] uppercase ${labelClasses[accent]}`}>
           {label}
         </span>
       )}
-      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 border border-primary/20">
+      <div className={`flex h-10 w-10 items-center justify-center rounded-md border ${iconBgClasses[accent]}`}>
         {icon}
       </div>
       <div>
