@@ -16,10 +16,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <header className="flex h-14 items-center justify-between border-b border-border px-4">
             <SidebarTrigger className="mr-2" />
             <div className="flex items-center gap-2">
-              <Button
+            <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 gap-2 text-xs text-muted-foreground hover:text-foreground uppercase tracking-widest"
+                className="h-8 gap-2 text-xs uppercase tracking-widest border border-border/40 hover:border-primary/40 hover:text-primary hover:shadow-[0_0_12px_-4px_hsl(var(--primary)/0.35)] transition-all text-muted-foreground"
                 title="Research Lens (⌘K)"
                 onClick={() => setLensOpen(true)}
               >

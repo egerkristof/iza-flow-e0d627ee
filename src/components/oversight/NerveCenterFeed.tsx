@@ -264,10 +264,10 @@ export function NerveCenterFeed({ statusFilter }: NerveCenterFeedProps) {
     <div className="space-y-6">
       {/* KPI strip */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <MiniStat label="My Tasks" value={myActiveTasks} icon={<ListTodo className="h-4 w-4 text-info" />} />
-        <MiniStat label="Active Sessions" value={myActiveSessions} icon={<Target className="h-4 w-4 text-primary" />} />
+        <MiniStat label="Active Tasks" value={myActiveTasks} icon={<ListTodo className="h-4 w-4 text-info" />} />
+        <MiniStat label="Live Sessions" value={myActiveSessions} icon={<Target className="h-4 w-4 text-primary" />} />
         <MiniStat label="Blocked" value={blockedCount} icon={<Filter className="h-4 w-4 text-destructive" />} />
-        <MiniStat label="Delegations Pending" value={delegationNeedingAttention} icon={<Users className="h-4 w-4 text-warning" />} />
+        <MiniStat label="Delegations" value={delegationNeedingAttention} icon={<Users className="h-4 w-4 text-warning" />} />
       </div>
 
       {/* Hero: Where You Left Off */}

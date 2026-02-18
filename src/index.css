@@ -70,6 +70,7 @@
     /* Brand gradient */
     --gradient-brand: linear-gradient(135deg, hsl(200 90% 52%), hsl(155 72% 46%));
     --gradient-brand-subtle: linear-gradient(135deg, hsl(200 90% 52% / 0.15), hsl(155 72% 46% / 0.15));
+    --gradient-brand-btn: linear-gradient(135deg, hsl(200 90% 52%), hsl(155 72% 46%));
   }
 
   * {
@@ -99,6 +100,10 @@
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .brand-gradient {
     background: var(--gradient-brand);
+  }
+  .brand-gradient-btn {
+    background: var(--gradient-brand-btn);
+    color: hsl(var(--primary-foreground));
   }
   .brand-gradient-text {
     background: var(--gradient-brand);
