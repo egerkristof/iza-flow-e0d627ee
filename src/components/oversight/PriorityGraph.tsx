@@ -71,6 +71,7 @@ function computeDashboardGraph(
   planItems: any[],
   centerX: number,
   centerY: number,
+  sourceWorkbookMap?: Map<string, string>,
 ): { nodes: GraphNode[]; edges: GraphEdge[] } {
   const nodes: GraphNode[] = [];
   const edges: GraphEdge[] = [];
@@ -169,7 +170,7 @@ function computeDashboardGraph(
         type: nodeType,
         status,
         priority: isFromPlan ? undefined : item.priority,
-        workbookId: isFromPlan ? undefined : item.workbook_id || item.workbookId,
+        workbookId: isFromPlan ? (item.source_id ? sourceWorkbookMap?.get(item.source_id) : undefined) : item.workbook_id || item.workbookId,
         x: cx,
         y: cy,
         radius: style.radius,
@@ -364,9 +365,16 @@ export function PriorityGraph() {
   const centerX = 400;
   const centerY = 320;
 
+  const sourceWorkbookMap = useMemo(() => {
+    const map = new Map<string, string>();
+    myTasks.forEach(t => map.set(t.id, t.workbook_id));
+    mySessions.forEach(s => map.set(s.id, s.workbook_id));
+    return map;
+  }, [myTasks, mySessions]);
+
   const { nodes, edges } = useMemo(
-    () => computeDashboardGraph(feedItems, planItems, centerX, centerY),
-    [feedItems, planItems]
+    () => computeDashboardGraph(feedItems, planItems, centerX, centerY, sourceWorkbookMap),
+    [feedItems, planItems, sourceWorkbookMap]
   );
 
   const matchingNodeIds = useMemo(() => {
