@@ -37,7 +37,7 @@ function Nav() {
       style={{ background: "hsl(222 22% 4% / 0.95)", borderColor: "hsl(222 18% 10%)", backdropFilter: "blur(12px)" }}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm" style={{ background: `hsl(${PRI})`, color: "hsl(222 22% 5%)" }}>L</div>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm" style={{ background: "var(--gradient-brand-btn)", color: "hsl(222 22% 5%)" }}>L</div>
             <span className="font-bold text-lg tracking-tight" style={{ color: `hsl(${C})` }}>LIZA <span style={{ color: `hsl(${MUT})`, fontWeight: 400 }}>OS</span></span>
           </Link>
         <a
