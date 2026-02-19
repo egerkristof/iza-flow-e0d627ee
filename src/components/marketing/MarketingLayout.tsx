@@ -71,7 +71,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="https://cal.com"
+              href="https://calendar.app.google/3v8jevUcsgRQnLyL9"
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
@@ -112,7 +112,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
               <a
-                href="https://cal.com"
+                href="https://calendar.app.google/3v8jevUcsgRQnLyL9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 px-5 py-3 rounded-lg text-sm font-semibold text-center"
@@ -166,7 +166,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>Start</p>
               <div className="flex flex-col gap-2">
-                <a href="https://cal.com" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Book a Call</a>
+                <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Book a Call</a>
                 <Link to="/advisory" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Apply for a Sprint</Link>
               </div>
             </div>
