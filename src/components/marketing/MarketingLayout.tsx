@@ -37,7 +37,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/liza" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center gap-3 group">
             <div
               className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm"
               style={{ background: "var(--gradient-brand-btn)" }}
