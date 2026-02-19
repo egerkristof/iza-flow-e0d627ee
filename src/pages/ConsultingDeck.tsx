@@ -450,6 +450,7 @@ function Slide06Differentiator() {
       <Bar />
     </div>
   );
+}
 
 // ─── Slide 07 — The Sandbox ──────────────────────────────────────────────────
 
@@ -922,3 +923,4 @@ export default function ConsultingDeck() {
     </div>
   );
 }
+
