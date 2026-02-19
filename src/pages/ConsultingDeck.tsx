@@ -104,33 +104,33 @@ function Slide01Cover() {
         <div className="flex items-center gap-4 mb-12">
           <div className="w-3 h-3 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-semibold tracking-[0.3em] uppercase" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Organizational Intelligence Sprint
+            AI Effectiveness Sprint
           </span>
         </div>
 
         <h1 className="font-bold leading-[1.05] mb-10"
-          style={{ fontSize: 112, color: `hsl(${C})` }}>
-          Your Best Experts
+          style={{ fontSize: 104, color: `hsl(${C})` }}>
+          Can your team use
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${AMBER}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
           }}>
-            Leave Every Day.
+            LLMs effectively?
           </span>
         </h1>
 
-        <p className="mb-14 leading-relaxed max-w-[860px]"
+        <p className="mb-14 leading-relaxed max-w-[960px]"
           style={{ fontSize: 38, color: `hsl(${MUT})` }}>
-          A 4-week consulting engagement that captures senior judgment,
+          Most teams have access to the tools but no structure to use them well.
           <br />
-          turns it into executable protocols, and makes it run without them.
+          In a few weeks, you leave with <strong style={{ color: `hsl(${C})` }}>2 specific, executable playbooks</strong> your team can run tomorrow.
         </p>
 
         <div className="flex items-center gap-8">
-          <Pill color={AMBER}>4 Weeks</Pill>
-          <Pill color={TEAL}>€25k – €40k</Pill>
-          <Pill color={SLATE}>High-Intensity</Pill>
+          <Pill color={AMBER}>3–4 Weeks</Pill>
+          <Pill color={TEAL}>€25k – €35k</Pill>
+          <Pill color={SLATE}>2 Playbooks. Delivered.</Pill>
         </div>
       </div>
 
@@ -145,18 +145,18 @@ function Slide02Problem() {
   const pains = [
     {
       icon: <Users style={{ width: 52, height: 52 }} />,
-      title: "The Knowledge Walk-Out",
-      desc: "When your top consultant leaves, 80% of their methodology goes with them. What remains is a folder of decks nobody knows how to use.",
+      title: "The Tool Without the Method",
+      desc: "Every team has ChatGPT. Almost none have a structured way to use it. The result: wildly inconsistent outputs and no way to scale what works.",
     },
     {
       icon: <AlertTriangle style={{ width: 52, height: 52 }} />,
-      title: "The Junior Gap",
-      desc: "Juniors execute inconsistently because the 'right way' lives in senior heads, not in systems. Quality is person-dependent, not process-dependent.",
+      title: "The Prompt Wizard Problem",
+      desc: "One person on the team gets great results. Nobody knows why. Their method lives in their head — and can't be shared, taught, or replicated.",
     },
     {
       icon: <BarChart3 style={{ width: 52, height: 52 }} />,
-      title: "The Scaling Ceiling",
-      desc: "Growth is gated by senior capacity. You can't serve more clients without hiring more expensive people who hold the same knowledge in their heads.",
+      title: "The Advice Overload",
+      desc: "Everyone has an opinion on AI: frameworks, courses, tips. But nobody walks in and builds something specific that your team can execute on Monday morning.",
     },
   ];
 
@@ -169,11 +169,12 @@ function Slide02Problem() {
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
         <Tag label="The Problem" />
         <h2 className="font-bold mb-16" style={{ fontSize: 80, color: `hsl(${C})` }}>
-          Expertise is a<br />
+          Everyone talks AI.
+          <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(0 72% 63%), hsl(${AMBER}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>single point of failure.</span>
+          }}>Nobody runs it.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-10">
@@ -198,23 +199,23 @@ function Slide02Problem() {
 function Slide03ICP() {
   const profiles = [
     {
+      role: "Head of Operations / COO",
+      firm: "Professional services firm (30–150 staff)",
+      pain: "\"We rolled out Copilot. People use it randomly. Some get great outputs. Most don't. Nothing is consistent.\"",
+      fit: "Primary Buyer",
+      color: TEAL,
+    },
+    {
       role: "Managing Partner",
-      firm: "Boutique Consulting Firm",
-      pain: "\"I can't clone myself. Every new project depends on me being personally involved to ensure quality.\"",
+      firm: "Consulting or agency (10–60 consultants)",
+      pain: "\"I want AI in our workflow but I don't know how to make it part of our actual process, not just a toy people use on the side.\"",
       fit: "Primary Buyer",
       color: TEAL,
     },
     {
-      role: "Chief of Staff / COO",
-      firm: "Professional Services (50–150 staff)",
-      pain: "\"We have great people but no playbook. When Sarah left, three client relationships wobbled.\"",
-      fit: "Primary Buyer",
-      color: TEAL,
-    },
-    {
-      role: "Head of Operations",
-      firm: "Scale-up (post Series A)",
-      pain: "\"Our sales process 'works' but nobody can explain exactly why. It's entirely inside Mark's head.\"",
+      role: "L&D / Enablement Lead",
+      firm: "Scale-up or mid-market (post Series A)",
+      pain: "\"We've done the AI training. It didn't change behaviour. People need something they can actually pick up and use.\"",
       fit: "Strong Fit",
       color: AMBER,
     },
@@ -229,9 +230,9 @@ function Slide03ICP() {
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
         <Tag label="Ideal Client Profile" />
         <h2 className="font-bold mb-16" style={{ fontSize: 80, color: `hsl(${C})` }}>
-          Knowledge-intensive firms
+          Teams that have the tools
           <br />
-          <span style={{ color: `hsl(${TEAL})` }}>where people are the product.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>but not the system to use them.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-10">
@@ -277,25 +278,22 @@ function Slide04Insight() {
 
         <p className="font-bold leading-tight mb-12"
           style={{ fontSize: 84, color: `hsl(${C})` }}>
-          Tacit knowledge can be
+          LLMs don't fail because of the model.
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${AMBER}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
           }}>
-            extracted, structured, and executed
+            They fail because there's no playbook.
           </span>
-          <br />
-          by anyone.
         </p>
 
         <p style={{ fontSize: 38, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
-          The SECI model (Nonaka & Takeuchi) proves that expert knowledge moves through four phases:
+          The teams that get consistent, high-quality AI output all share one thing:
           <br />
-          <span style={{ color: `hsl(${TEAL})` }}>Socialise → Externalise → Combine → Internalise.</span>
+          <span style={{ color: `hsl(${C})` }}>a structured method for how they work with it — specific to their role, their context, their goals.</span>
           <br /><br />
-          Most firms are stuck at <strong style={{ color: `hsl(${C})` }}>Socialise</strong>.
-          We run the full cycle — in 4 weeks.
+          That method is what we build with you. <strong style={{ color: `hsl(${TEAL})` }}>Not a course. Not a framework. Two playbooks you can run.</strong>
         </p>
       </div>
 
@@ -310,38 +308,38 @@ function Slide05Sprint() {
   const weeks = [
     {
       wk: "Week 1",
-      label: "Audit",
+      label: "Diagnose",
       icon: <Search style={{ width: 44, height: 44 }} />,
-      action: "Knowledge Cartography",
-      desc: "We map where expertise lives, how it flows, and where it breaks. 15-question SECI diagnostic + 6 senior interviews.",
-      output: "Bottleneck Map",
+      action: "AI Effectiveness Audit",
+      desc: "We map exactly how your team currently uses LLMs — what works, what doesn't, and where the biggest value gap is. Interviews + workflow shadowing.",
+      output: "Gap Map",
       color: TEAL,
     },
     {
       wk: "Week 2",
       label: "Extract",
       icon: <Brain style={{ width: 44, height: 44 }} />,
-      action: "Structured Externalisation",
-      desc: "We shadow your top performers and convert implicit heuristics into explicit Playbooks and Decision Protocols.",
-      output: "3–5 Core Playbooks",
+      action: "Playbook Design",
+      desc: "We work with your best performers to extract what they actually do. We turn those patterns into two structured, step-by-step AI playbooks for your specific use cases.",
+      output: "2 Core Playbooks",
       color: AMBER,
     },
     {
       wk: "Week 3",
       label: "Test",
       icon: <Zap style={{ width: 44, height: 44 }} />,
-      action: "Execution Simulation",
-      desc: "Juniors run the protocols in a live sandbox. We measure drift from senior execution and refine until quality is consistent.",
-      output: "Validated Protocols",
+      action: "Execution Run",
+      desc: "The team runs the playbooks live in our sandbox. We measure output quality and refine until results are consistent — not just for the expert, but for everyone.",
+      output: "Validated Playbooks",
       color: TEAL,
     },
     {
       wk: "Week 4",
       label: "Embed",
       icon: <BookOpen style={{ width: 44, height: 44 }} />,
-      action: "Architecture Delivery",
-      desc: "Full Knowledge Architecture Blueprint handed over. Optionally embedded into your operating infrastructure permanently.",
-      output: "Institutional Blueprint",
+      action: "Handover & Activation",
+      desc: "Playbooks are embedded in your actual workflow. Your team knows exactly when to trigger them, how to run them, and how to keep them improving.",
+      output: "Live in Your Workflow",
       color: AMBER,
     },
   ];
@@ -353,9 +351,9 @@ function Slide05Sprint() {
         style={{ background: `linear-gradient(180deg, hsl(${TEAL}), hsl(${AMBER}))` }} />
 
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
-        <Tag label="The Sprint Arc" />
+        <Tag label="How It Works" />
         <h2 className="font-bold mb-14" style={{ fontSize: 72, color: `hsl(${C})` }}>
-          4 weeks. Full cycle.
+          3–4 weeks. 2 playbooks. Running.
         </h2>
 
         <div className="grid grid-cols-4 gap-8">
@@ -392,10 +390,10 @@ function Slide05Sprint() {
 
 function Slide06Differentiator() {
   const rows = [
-    { label: "Traditional Management Consulting", a: "Slide decks & recommendations", b: "Strategy gathers dust", us: false },
-    { label: "Knowledge Management Software", a: "Wiki / document tools", b: "Content without structure", us: false },
-    { label: "Process Consulting", a: "ISO frameworks & flowcharts", b: "Rigid, not executable", us: false },
-    { label: "Org. Intelligence Sprint", a: "Live protocols in a sandbox", b: "Judgment that runs without you", us: true },
+    { label: "AI Training / Courses", a: "Generic frameworks & videos", b: "Knowledge without application", us: false },
+    { label: "Traditional Consulting", a: "Slide decks & recommendations", b: "Strategy that gathers dust", us: false },
+    { label: "Prompt Engineering Consultants", a: "Better prompts for one person", b: "Still stuck at individual level", us: false },
+    { label: "AI Effectiveness Sprint", a: "2 tailored playbooks built with your team", b: "Consistent AI execution — for everyone", us: true },
   ];
 
   return (
@@ -452,7 +450,6 @@ function Slide06Differentiator() {
       <Bar />
     </div>
   );
-}
 
 // ─── Slide 07 — The Sandbox ──────────────────────────────────────────────────
 
@@ -460,23 +457,23 @@ function Slide07Sandbox() {
   const features = [
     {
       icon: <BookOpen style={{ width: 42, height: 42 }} />,
-      title: "Live Protocol Capture",
-      desc: "Playbooks are built in real-time as we extract them from your experts. Nothing typed after the fact.",
+      title: "Built Live, Not After the Fact",
+      desc: "Playbooks are constructed in real-time during working sessions with your team — not written up in a back office based on notes.",
     },
     {
       icon: <Zap style={{ width: 42, height: 42 }} />,
-      title: "Execution Simulation",
-      desc: "Juniors run the same tasks in the sandbox. The system measures deviation from the senior baseline.",
+      title: "Run in a Structured Sandbox",
+      desc: "Your team executes the playbooks in a controlled environment. We see exactly what's working, what breaks down, and where output quality drops.",
     },
     {
       icon: <Target style={{ width: 42, height: 42 }} />,
-      title: "Drift Detection",
-      desc: "When execution deviates from the protocol, the system flags it — so you can refine before it becomes a habit.",
+      title: "Refined Until Consistent",
+      desc: "We iterate until the same playbook produces strong output regardless of who runs it — senior or junior. That's when it's done.",
     },
     {
       icon: <TrendingUp style={{ width: 42, height: 42 }} />,
-      title: "Institutional Memory",
-      desc: "Everything captured during the Sprint stays in a structured architecture. No knowledge evaporates when we leave.",
+      title: "Yours to Keep and Evolve",
+      desc: "The playbooks don't live in our system. They're handed over in formats your team can use, update, and expand without us.",
     },
   ];
 
@@ -491,14 +488,14 @@ function Slide07Sandbox() {
         style={{ background: `radial-gradient(circle, hsl(${AMBER}), transparent 70%)`, transform: "translate(30%, -20%)" }} />
 
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
-        <Tag label="The Differentiator" />
+        <Tag label="How We're Different" />
         <h2 className="font-bold mb-6" style={{ fontSize: 78, color: `hsl(${C})` }}>
-          We don't just advise.
+          We don't train.
           <br />
-          <span style={{ color: `hsl(${TEAL})` }}>We build it, live, with you.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>We build with you and test it.</span>
         </h2>
         <p className="mb-14" style={{ fontSize: 34, color: `hsl(${MUT})` }}>
-          Our proprietary sandbox infrastructure captures and tests your protocols in real-time during the engagement.
+          Our proprietary infrastructure lets us capture, run, and validate your playbooks in real-time — so you leave with something that actually works.
         </p>
 
         <div className="grid grid-cols-2 gap-8">
@@ -524,11 +521,11 @@ function Slide07Sandbox() {
 
 function Slide08Deliverables() {
   const deliverables = [
-    { n: "01", title: "Knowledge Architecture Blueprint", desc: "A full map of who knows what, how it should flow, and what protocols govern execution." },
-    { n: "02", title: "3–5 Executable Playbooks", desc: "Your core methodologies written as step-by-step protocols that juniors can follow without guesswork." },
-    { n: "03", title: "SECI Gap Report", desc: "Ranked list of knowledge bottlenecks, with a prioritised roadmap for the next 90 days." },
-    { n: "04", title: "Drift Baseline", desc: "Quantified measurement of current execution variance. The benchmark for all future improvement." },
-    { n: "05", title: "Sandbox Access (90 days)", desc: "Post-Sprint access to your protocol environment so you can run onboarding and refine without us." },
+    { n: "01", title: "Playbook #1: [Your Use Case A]", desc: "A step-by-step AI workflow for your highest-value, most repeatable task. Structured for team-wide use from day one." },
+    { n: "02", title: "Playbook #2: [Your Use Case B]", desc: "A second executable playbook targeting a different use case — identified during the audit as the next highest-value target." },
+    { n: "03", title: "AI Effectiveness Gap Report", desc: "A clear map of where your team is losing value from AI today, and a prioritised list of next improvements." },
+    { n: "04", title: "Execution Quality Baseline", desc: "Measured output consistency before and after. The benchmark you use to know if the playbooks are actually working." },
+    { n: "05", title: "Sandbox Access (90 days)", desc: "Your playbooks stay live in the environment for 90 days — use it for onboarding, refinement, and training new hires." },
   ];
 
   return (
@@ -540,7 +537,7 @@ function Slide08Deliverables() {
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
         <Tag label="What You Walk Away With" />
         <h2 className="font-bold mb-14" style={{ fontSize: 78, color: `hsl(${C})` }}>
-          Tangible. Structured. Yours.
+          Specific. Runnable. Yours.
         </h2>
 
         <div className="space-y-5">
@@ -562,34 +559,32 @@ function Slide08Deliverables() {
   );
 }
 
-// ─── Slide 09 — Pricing ──────────────────────────────────────────────────────
-
 function Slide09Pricing() {
   const tiers = [
     {
-      name: "Discovery Sprint",
-      price: "€20k",
+      name: "Proof of Concept",
+      price: "€15k",
       duration: "2 weeks",
-      desc: "Rapid Knowledge Audit + 1 Core Playbook. Ideal for first engagement or proof-of-concept.",
-      items: ["SECI Diagnostic", "6 Expert Interviews", "1 Validated Playbook", "Gap Report"],
+      desc: "AI Effectiveness Audit + 1 executable playbook. Ideal for a first engagement to prove value before committing.",
+      items: ["AI usage audit", "Team interviews", "1 validated playbook", "Gap report"],
       color: AMBER,
       tag: "Entry Point",
     },
     {
-      name: "Full Sprint",
-      price: "€35k",
-      duration: "4 weeks",
-      desc: "Complete extraction cycle. 3–5 Playbooks, full architecture, sandbox access, and 90-day follow-on.",
-      items: ["Everything in Discovery", "3–5 Core Playbooks", "Drift Baseline", "Sandbox Access (90d)", "Blueprint Delivery"],
+      name: "AI Effectiveness Sprint",
+      price: "€28k",
+      duration: "3–4 weeks",
+      desc: "Full engagement. 2 tailored playbooks, validated in a live sandbox with your team, handed over ready to run.",
+      items: ["AI effectiveness audit", "2 custom playbooks", "Sandbox validation", "Execution baseline", "90-day access"],
       color: TEAL,
       tag: "Most Impactful",
     },
     {
-      name: "Embedded Partner",
-      price: "€6k/mo",
+      name: "Embedded Advisor",
+      price: "€5k/mo",
       duration: "Ongoing retainer",
-      desc: "We stay in the system, monitor drift, synthesise new findings, and update Playbooks quarterly.",
-      items: ["Monthly Drift Review", "Quarterly Playbook Updates", "Unlimited Captures", "Priority Response"],
+      desc: "We stay close. Monthly review of how the playbooks perform, quarterly updates as your AI tools and workflows evolve.",
+      items: ["Monthly playbook review", "Quarterly updates", "New use case scoping", "Priority access"],
       color: SLATE,
       tag: "Long-Term",
     },
@@ -648,10 +643,10 @@ function Slide09Pricing() {
 
 function Slide10About() {
   const signals = [
-    { n: "SECI", label: "Proven framework from Nonaka & Takeuchi — the gold standard of knowledge management science." },
-    { n: "4-Wk", label: "A constrained, high-intensity engagement that respects your team's time and delivers fast." },
-    { n: "Live", label: "Every output is built live with your team — not in a back office. You own it from day one." },
-    { n: "Infra", label: "Proprietary sandbox infrastructure provides what no other consultant can: measurable execution." },
+    { n: "Domain", label: "We only work in areas where we have deep domain expertise — so the playbooks we build are grounded in how the work actually gets done." },
+    { n: "Specific", label: "No generic frameworks. Every playbook is built for your use cases, your tools, your team. You couldn't get this off-the-shelf." },
+    { n: "Tested", label: "We validate in a live sandbox — not a workshop. You see the output quality before we hand anything over." },
+    { n: "Infra", label: "Our proprietary execution infrastructure lets us capture, run, and refine protocols in real-time. No other consultant can do this." },
   ];
 
   return (
@@ -663,14 +658,14 @@ function Slide10About() {
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
         <Tag label="Why Us" />
         <h2 className="font-bold mb-6" style={{ fontSize: 78, color: `hsl(${C})` }}>
-          Grounded in science.
+          Not a course. Not a consultant.
           <br />
-          <span style={{ color: `hsl(${TEAL})` }}>Built for practice.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>A builder who tests what they build.</span>
         </h2>
         <p className="mb-16 max-w-[900px]"
           style={{ fontSize: 34, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-          We combine 25 years of knowledge science with a proprietary execution infrastructure
-          that no traditional consultant has access to.
+          We combine domain expertise with proprietary infrastructure
+          to deliver something no traditional consultant can.
         </p>
 
         <div className="grid grid-cols-2 gap-8">
@@ -694,9 +689,9 @@ function Slide10About() {
 
 function Slide11CTA() {
   const steps = [
-    { n: "01", label: "30-min call to qualify fit" },
-    { n: "02", label: "Scoping session with key stakeholders" },
-    { n: "03", label: "Proposal + Sprint kickoff within 2 weeks" },
+    { n: "01", label: "30-min call to assess your current AI usage" },
+    { n: "02", label: "We scope 2 use cases with your team" },
+    { n: "03", label: "Sprint kicks off within 2 weeks" },
   ];
 
   return (
@@ -711,23 +706,23 @@ function Slide11CTA() {
       <div className="relative z-10 text-center px-40 max-w-[1500px]">
         <Tag label="Next Step" />
         <h2 className="font-bold mb-8" style={{ fontSize: 96, color: `hsl(${C})` }}>
-          Ready to make your
+          Your team could be running
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${AMBER}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>expertise bulletproof?</span>
+          }}>2 AI playbooks in 4 weeks.</span>
         </h2>
 
         <p className="mb-16" style={{ fontSize: 36, color: `hsl(${MUT})` }}>
-          It starts with a conversation. Three steps to a Sprint:
+          It starts with a 30-minute conversation.
         </p>
 
         <div className="flex items-center justify-center gap-10 mb-16">
           {steps.map((s, i) => (
             <div key={i} className="flex items-center gap-6">
               <div className="flex flex-col items-center gap-3 px-8 py-6 rounded-2xl border"
-                style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.2)`, minWidth: 280 }}>
+                style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.2)`, minWidth: 300 }}>
                 <span className="font-mono font-bold" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>{s.n}</span>
                 <span style={{ fontSize: 26, color: `hsl(${C})` }}>{s.label}</span>
               </div>
@@ -741,7 +736,7 @@ function Slide11CTA() {
         <div className="flex items-center justify-center gap-8">
           <div className="px-12 py-6 rounded-2xl border font-bold"
             style={{ fontSize: 32, background: `hsl(${TEAL} / 0.12)`, borderColor: `hsl(${TEAL} / 0.4)`, color: `hsl(${TEAL})` }}>
-            Organizational Intelligence Sprint
+            AI Effectiveness Sprint
           </div>
         </div>
       </div>
@@ -841,7 +836,7 @@ export default function ConsultingDeck() {
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${TEAL})` }} />
           <span className="text-[11px] font-semibold tracking-widest uppercase"
-            style={{ color: `hsl(${TEAL})` }}>Org. Intelligence Sprint</span>
+            style={{ color: `hsl(${TEAL})` }}>AI Effectiveness Sprint</span>
           <span className="text-[10px] font-mono ml-2" style={{ color: `hsl(${MUT})` }}>
             {current + 1} / {TOTAL}
           </span>
