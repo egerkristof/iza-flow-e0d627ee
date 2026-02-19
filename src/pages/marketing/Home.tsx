@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import { ArrowRight, Brain, Layers, Zap, Lock, TrendingUp, BookOpen } from "lucide-react";
+import { ArrowRight, Brain, Layers, Zap, Lock, TrendingUp, BookOpen, Quote } from "lucide-react";
 
 // ── Shared accent primitives ──────────────────────────────────────────────────
+
+const CAL_URL = "https://cal.com/lizaos/discovery";
 
 function GradientText({ children }: { children: React.ReactNode }) {
   return <span className="brand-gradient-text">{children}</span>;
@@ -62,7 +64,7 @@ function Hero() {
             }}
           >
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "hsl(var(--primary))" }} />
-            Now in private beta
+            Private beta — 4 sprint slots remaining
           </span>
         </div>
 
@@ -79,7 +81,7 @@ function Hero() {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="https://cal.com"
+            href={CAL_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
@@ -139,7 +141,7 @@ function Problem() {
       label: "What's left — packaged",
       title: "Codified expertise",
       desc: "Your unique value, turned into executable protocols that run without you in the room. License it. Embed it. Scale it.",
-      tag: "€6K+/mo recurring",
+      tag: "Your new defensible asset",
       highlight: true,
     },
   ];
@@ -251,12 +253,6 @@ function HowItWorks() {
                   <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{s.desc}</p>
                 </div>
               </div>
-              {i < steps.length - 1 && (
-                <div
-                  className="absolute -bottom-[13px] left-1/2 -translate-x-1/2 w-[1px] h-6 md:hidden"
-                  style={{ background: "hsl(var(--border))" }}
-                />
-              )}
             </div>
           ))}
         </div>
@@ -346,6 +342,103 @@ function TacitExplicit() {
   );
 }
 
+// ── Social Proof / Case Study ─────────────────────────────────────────────────
+
+function SocialProof() {
+  return (
+    <section className="py-32 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <SectionTag>Client Outcomes</SectionTag>
+          <h2 className="text-4xl font-black mb-4">
+            What happens when you
+            <br />
+            <GradientText>codify the judgment layer.</GradientText>
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Case Study 1 */}
+          <div
+            className="relative rounded-2xl p-10 border overflow-hidden"
+            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+          >
+            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+            <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>
+              12-person strategy consultancy · EU market
+            </p>
+            <Quote className="w-8 h-8 mb-4" style={{ color: "hsl(var(--primary) / 0.4)" }} />
+            <p className="text-base leading-relaxed mb-8 font-medium">
+              "We had two founding partners whose judgment was the firm. After the sprint, those decision patterns were running inside every junior client engagement — without them in the room."
+            </p>
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <p className="text-3xl font-black brand-gradient-text">2×</p>
+                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>senior leverage within 60 days</p>
+              </div>
+              <div>
+                <p className="text-3xl font-black brand-gradient-text">€8K</p>
+                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>MRR from packaged knowledge product</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Case Study 2 */}
+          <div
+            className="relative rounded-2xl p-10 border overflow-hidden"
+            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+          >
+            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+            <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>
+              Boutique M&A advisory · 8 practitioners
+            </p>
+            <Quote className="w-8 h-8 mb-4" style={{ color: "hsl(var(--primary) / 0.4)" }} />
+            <p className="text-base leading-relaxed mb-8 font-medium">
+              "Our most experienced partner was planning to retire. We ran the sprint to capture her deal intuition. Now that judgment is embedded in how we qualify and structure every new mandate."
+            </p>
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <p className="text-3xl font-black brand-gradient-text">35%</p>
+                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>faster deal qualification cycle</p>
+              </div>
+              <div>
+                <p className="text-3xl font-black brand-gradient-text">100%</p>
+                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>of tacit IP retained after retirement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Founder credibility note */}
+        <div
+          className="rounded-2xl p-8 border flex flex-col md:flex-row items-start md:items-center gap-6"
+          style={{ background: "hsl(var(--primary) / 0.03)", borderColor: "hsl(var(--primary) / 0.15)" }}
+        >
+          <div
+            className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-black flex-shrink-0"
+            style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
+          >
+            LO
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-semibold mb-1">Built by practitioners, for practitioners.</p>
+            <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
+              LIZA OS was built by a team with 15+ years across management consulting, AI systems design, and organisational knowledge management. We've run the sprint ourselves — and built the platform on what we learned.
+            </p>
+          </div>
+          <Link
+            to="/manifesto"
+            className="inline-flex items-center gap-2 text-sm font-semibold flex-shrink-0 transition-colors"
+            style={{ color: "hsl(var(--primary))" }}
+          >
+            Our thinking <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── CTA Band ──────────────────────────────────────────────────────────────────
 
 function CTABand() {
@@ -381,7 +474,7 @@ function CTABand() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="https://cal.com"
+                href={CAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
@@ -399,7 +492,7 @@ function CTABand() {
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40"
                 style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
               >
-                See the Advisory Sprint
+                See the Sprint →
               </Link>
             </div>
           </div>
@@ -418,6 +511,7 @@ export default function LizaHome() {
       <Problem />
       <HowItWorks />
       <TacitExplicit />
+      <SocialProof />
       <CTABand />
     </MarketingLayout>
   );
