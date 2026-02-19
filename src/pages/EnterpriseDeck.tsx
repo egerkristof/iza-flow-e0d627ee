@@ -91,38 +91,38 @@ function Slide01Cover() {
           <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border font-semibold"
             style={{ fontSize: 21, borderColor: `hsl(${PRI} / 0.4)`, background: `hsl(${PRI} / 0.07)`, color: `hsl(${PRI})` }}>
             <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${PRI})` }} />
-            AI Governance Workshop · Enterprise Teams
+            AI Operating Model · Enterprise Teams
           </span>
         </div>
 
-        <h1 className="font-black leading-[1.02] mb-10" style={{ fontSize: 96, color: `hsl(${C})` }}>
-          Your teams are all
-          <br />using AI differently.
+        <h1 className="font-black leading-[1.02] mb-10" style={{ fontSize: 88, color: `hsl(${C})` }}>
+          Your teams are using AI.
+          <br />Nobody knows how.
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${PRI}), hsl(${GRN}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
           }}>
-            In one day, fix that.
+            We help you build the system.
           </span>
         </h1>
 
-        <p style={{ fontSize: 32, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 880 }}>
-          A focused workshop that gives your team leads a shared operating model for AI — standards, workflows, and governance that actually stick.
+        <p style={{ fontSize: 30, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 880 }}>
+          A structured engagement where we work directly with your teams — mapping workflows, surfacing tacit knowledge, and turning it into a shared operating model that governs how AI gets used.
         </p>
 
         <div className="flex items-center gap-6 mt-14">
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border font-semibold"
             style={{ fontSize: 20, borderColor: `hsl(${PRI} / 0.4)`, background: `hsl(${PRI} / 0.08)`, color: `hsl(${PRI})` }}>
-            <Calendar size={18} /> Full-Day Workshop
+            <GitBranch size={18} /> Multi-session engagement
           </span>
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border font-semibold"
             style={{ fontSize: 20, borderColor: `hsl(${GRN} / 0.4)`, background: `hsl(${GRN} / 0.08)`, color: `hsl(${GRN})` }}>
-            <Users size={18} /> Up to 20 Participants
+            <Users size={18} /> Team-level, not individual
           </span>
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border font-semibold"
             style={{ fontSize: 20, borderColor: `hsl(${AMB} / 0.4)`, background: `hsl(${AMB} / 0.08)`, color: `hsl(${AMB})` }}>
-            <FileText size={18} /> Deliverables Included
+            <FileText size={18} /> Infrastructure you keep
           </span>
         </div>
       </div>
@@ -299,7 +299,7 @@ function Slide04WhyTraining() {
   );
 }
 
-// ─── Slide 05 — The Workshop ──────────────────────────────────────────────────
+// ─── Slide 05 — The Engagement ───────────────────────────────────────────────
 
 function Slide05TheWorkshop() {
   return (
@@ -316,17 +316,17 @@ function Slide05TheWorkshop() {
           <span style={{
             background: `linear-gradient(135deg, hsl(${PRI}), hsl(${GRN}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>Workshop</span>
+          }}>Programme</span>
         </h2>
-        <p className="mb-14" style={{ fontSize: 32, color: `hsl(${MUT})`, maxWidth: 1200, lineHeight: 1.5 }}>
-          A full-day facilitated session with your team leads. We leave with a defined operating model for AI — agreed by the people who need to use it and enforce it.
+        <p className="mb-14" style={{ fontSize: 30, color: `hsl(${MUT})`, maxWidth: 1200, lineHeight: 1.55 }}>
+          A structured, multi-session engagement where we work inside your teams — mapping how work actually happens, what knowledge drives good decisions, and turning that into a governed operating model for AI.
         </p>
 
         <div className="flex gap-8 w-full justify-center">
           {[
-            { icon: <Target size={40} />, label: "Diagnose", desc: "Surface how AI is actually being used today — the gaps, the risks, the missed opportunities hidden in current practice.", color: RED },
-            { icon: <Lightbulb size={40} />, label: "Design", desc: "Co-create a shared operating model: agreed workflow standards, quality criteria, and governance rules for your specific context.", color: PRI },
-            { icon: <Zap size={40} />, label: "Embed", desc: "Turn decisions into artefacts your team can use immediately — protocol templates, standards, and a 90-day activation plan.", color: GRN },
+            { icon: <Target size={40} />, label: "Surface", desc: "We observe and interview your teams to map real workflows — the tacit logic, judgment calls, and quality standards that currently live only in people's heads.", color: RED },
+            { icon: <Lightbulb size={40} />, label: "Structure", desc: "Together we externalise what we find: agreed standards, workflow protocols, and quality criteria — co-authored by the people who need to use them.", color: PRI },
+            { icon: <Zap size={40} />, label: "Embed", desc: "The model gets built into how work is done. Protocols run inside LIZA OS. Knowledge compounds. New team members onboard to a standard, not tribal habits.", color: GRN },
           ].map(({ icon, label, desc, color }, i) => (
             <div key={i} className="flex-1 flex flex-col rounded-2xl border p-10 relative overflow-hidden"
               style={{ background: `hsl(${color} / 0.06)`, borderColor: `hsl(${color} / 0.25)` }}>
@@ -344,14 +344,14 @@ function Slide05TheWorkshop() {
   );
 }
 
-// ─── Slide 06 — The Agenda ────────────────────────────────────────────────────
+// ─── Slide 06 — The Programme Structure ──────────────────────────────────────
 
 function Slide06Agenda() {
   const sessions = [
-    { time: "09:00 – 10:30", label: "Morning Session 1", title: "Reality Audit", desc: "Map how AI is actually being used across the team. Anonymised prompting examples, quality review, gap analysis. The point: make the invisible visible.", col: RED },
-    { time: "10:45 – 12:30", label: "Morning Session 2", title: "The Standard We Want", desc: "Define what good looks like for your specific work types. Co-create quality criteria, appropriate use boundaries, and the workflow patterns we want everyone on.", col: AMB },
-    { time: "13:30 – 15:00", label: "Afternoon Session 1", title: "Build the Operating Model", desc: "Turn agreements into structure: workflow templates, prompt scaffolds, governance checkpoints, and a shared vocabulary for AI work in your function.", col: PRI },
-    { time: "15:15 – 17:00", label: "Afternoon Session 2", title: "Activation & Ownership", desc: "Who owns what. 30/60/90-day milestones. How new learnings get captured and standards evolve. Leaving with a plan, not just a workshop report.", col: GRN },
+    { n: "Phase 1", title: "Workflow Discovery", desc: "We embed with your team leads across 2–3 working sessions. We observe how work is done, what AI is being used for, and — critically — where undocumented judgment calls are being made. The goal: make the invisible visible.", col: RED },
+    { n: "Phase 2", title: "Knowledge Mapping", desc: "We run structured workshops to externalise what we found. Teams articulate the decision logic, quality standards, and operating principles that currently live only in people's heads — not in any system.", col: AMB },
+    { n: "Phase 3", title: "Operating Model Design", desc: "Working collaboratively, we structure those insights into usable artefacts: workflow protocols, AI usage standards, governance checkpoints, and a shared vocabulary for how AI work gets done in your function.", col: PRI },
+    { n: "Phase 4", title: "Embed & Activate", desc: "The model goes live inside LIZA OS. Teams run protocols. Knowledge accumulates. Managers get visibility. The operating model stops being a document and becomes the default way work happens.", col: GRN },
   ];
 
   return (
@@ -361,20 +361,19 @@ function Slide06Agenda() {
 
       <div className="relative z-10 flex flex-col h-full pl-[160px] pr-[120px] pt-14 pb-12">
         <div className="mb-12">
-          <Tag label="Workshop Agenda" />
+          <Tag label="Programme Structure" />
           <h2 className="font-black" style={{ fontSize: 68, color: `hsl(${C})`, lineHeight: 1.1 }}>
-            One day. Four sessions. One operating model.
+            Four phases. One coherent system.
           </h2>
         </div>
 
         <div className="grid grid-cols-2 gap-6 flex-1">
-          {sessions.map(({ time, label, title, desc, col }) => (
+          {sessions.map(({ n, title, desc, col }) => (
             <div key={title} className="rounded-2xl p-9 border relative overflow-hidden"
               style={{ background: `hsl(${col} / 0.05)`, borderColor: `hsl(${col} / 0.22)` }}>
               <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${col})` }} />
               <div className="flex items-center gap-4 mb-4">
-                <span className="font-bold tracking-widest uppercase" style={{ fontSize: 16, color: `hsl(${col})` }}>{label}</span>
-                <span style={{ fontSize: 16, color: `hsl(${MUT})` }}>· {time}</span>
+                <span className="font-bold tracking-widest uppercase" style={{ fontSize: 16, color: `hsl(${col})` }}>{n}</span>
               </div>
               <h3 className="font-black mb-4" style={{ fontSize: 38, color: `hsl(${C})` }}>{title}</h3>
               <p style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{desc}</p>
@@ -392,12 +391,12 @@ function Slide06Agenda() {
 
 function Slide07Deliverables() {
   const items = [
-    { icon: <FileText size={30} />, title: "AI Operating Model document", desc: "Your agreed standards, workflow patterns, and quality criteria — authored in the workshop, owned by your team.", col: PRI },
-    { icon: <BookOpen size={30} />, title: "Workflow protocol templates", desc: "Ready-to-use protocol scaffolds for your most common AI-assisted tasks — so teams have a starting point, not a blank prompt.", col: GRN },
-    { icon: <Shield size={30} />, title: "Governance framework", desc: "Clarity on what's appropriate, what's risky, and who decides — with escalation paths and audit-ready rationale.", col: PRI },
-    { icon: <Target size={30} />, title: "90-day activation plan", desc: "Milestones, owners, and a structured rollout plan so the operating model gets embedded — not filed away.", col: GRN },
-    { icon: <TrendingUp size={30} />, title: "Metrics baseline", desc: "Before/after measures so you can demonstrate impact to leadership and track improvement over the next quarter.", col: PRI },
-    { icon: <Users size={30} />, title: "Team alignment", desc: "A room full of leads who've built the model together. Shared language. Shared standards. Shared ownership.", col: GRN },
+    { icon: <FileText size={30} />, title: "Workflow maps", desc: "Documented maps of how work actually happens — the real sequence, the key decision points, and where AI fits in each.", col: PRI },
+    { icon: <BookOpen size={30} />, title: "Executable protocol library", desc: "Your most critical workflows converted into structured protocols inside LIZA OS — ready to run, not just reference.", col: GRN },
+    { icon: <Brain size={30} />, title: "Codified judgment layer", desc: "The heuristics, quality standards, and decision logic that senior team members carry — externalised, structured, and usable by everyone.", col: PRI },
+    { icon: <Shield size={30} />, title: "AI governance framework", desc: "Clarity on what's appropriate, what's risky, and who decides — with escalation paths your team actually understands.", col: GRN },
+    { icon: <TrendingUp size={30} />, title: "Knowledge capture loop", desc: "A feedback mechanism so that every execution makes the system smarter — learnings flow back into the operating model.", col: PRI },
+    { icon: <Users size={30} />, title: "Team ownership", desc: "A model built by the people who use it. Shared language. Shared standards. Designed to outlast any individual.", col: GRN },
   ];
 
   return (
@@ -406,9 +405,9 @@ function Slide07Deliverables() {
       <LeftAccent />
 
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
-        <Tag label="What You Walk Away With" />
+        <Tag label="What You Get" />
         <h2 className="font-black mb-12" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          Not a slide deck. Actual artefacts.
+          Not a report. A working system.
         </h2>
 
         <div className="grid grid-cols-3 gap-5">
@@ -429,6 +428,7 @@ function Slide07Deliverables() {
     </div>
   );
 }
+
 
 // ─── Slide 08 — Who This Is For ───────────────────────────────────────────────
 
@@ -585,30 +585,30 @@ function Slide11CTA() {
         <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border mb-10"
           style={{ borderColor: `hsl(${PRI} / 0.4)`, background: `hsl(${PRI} / 0.07)` }}>
           <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${PRI})` }} />
-          <span className="font-bold tracking-[0.25em] uppercase" style={{ fontSize: 20, color: `hsl(${PRI})` }}>Book the Workshop</span>
+          <span className="font-bold tracking-[0.25em] uppercase" style={{ fontSize: 20, color: `hsl(${PRI})` }}>Start the Engagement</span>
         </span>
 
-        <h2 className="font-black mb-8" style={{ fontSize: 90, color: `hsl(${C})`, lineHeight: 1.05 }}>
-          Your team won't align itself.
+        <h2 className="font-black mb-8" style={{ fontSize: 88, color: `hsl(${C})`, lineHeight: 1.05 }}>
+          Your team's knowledge is
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${PRI}), hsl(${GRN}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>Give it a day to do it properly.</span>
+          }}>already there. Let's build with it.</span>
         </h2>
 
-        <p className="mb-10" style={{ fontSize: 32, color: `hsl(${MUT})`, maxWidth: 1100, lineHeight: 1.55 }}>
-          One focused day with your leads. A defined operating model you own. Standards your team will actually use.
+        <p className="mb-10" style={{ fontSize: 30, color: `hsl(${MUT})`, maxWidth: 1100, lineHeight: 1.55 }}>
+          We start with a scoping call to understand your team structure, workflows, and what a successful operating model looks like for your context. No commitments — just clarity.
         </p>
 
         {/* Logistics bar */}
         <div className="flex items-center gap-10 mb-12 px-12 py-6 rounded-2xl border"
           style={{ background: BG2, borderColor: `hsl(${PRI} / 0.2)` }}>
           {[
-            { label: "Format", value: "Full-day facilitated workshop" },
-            { label: "Participants", value: "Up to 20 team leads" },
-            { label: "Location", value: "Your offices or offsite" },
-            { label: "Follow-up", value: "30-day check-in included" },
+            { label: "Format", value: "Multi-session, embedded engagement" },
+            { label: "Who", value: "Teams + managers, not individuals" },
+            { label: "Location", value: "On-site or remote" },
+            { label: "Output", value: "A live system, not a report" },
           ].map((item, i) => (
             <div key={i} className="flex flex-col items-center gap-1">
               <p className="font-bold tracking-widest uppercase" style={{ fontSize: 15, color: `hsl(${PRI})` }}>{item.label}</p>
@@ -634,7 +634,7 @@ function Slide11CTA() {
         </a>
 
         <p className="mt-8" style={{ fontSize: 22, color: `hsl(${MUT})` }}>
-          30 minutes. We scope the workshop to your team, your work types, and your timeline.
+          30 minutes. We map your team's needs and scope the right engagement.
         </p>
       </div>
 
