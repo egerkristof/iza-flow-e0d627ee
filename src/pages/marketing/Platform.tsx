@@ -4,7 +4,7 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { ArrowRight, Brain, Layers, Zap, BookOpen, CheckCircle2, Lock, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-const CAL_URL = "https://cal.com/lizaos/discovery";
+const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
 function GradientText({ children }: { children: React.ReactNode }) {
   return <span className="brand-gradient-text">{children}</span>;
