@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import { ArrowRight, Brain, Layers, Zap, Lock, TrendingUp, BookOpen, Quote } from "lucide-react";
-
-// ── Shared accent primitives ──────────────────────────────────────────────────
+import {
+  ArrowRight, Brain, Zap, Shield, Users, Layers, BookOpen, Target, BarChart3,
+} from "lucide-react";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
@@ -33,20 +33,15 @@ function Hero() {
       {/* Background glows */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse, hsl(200 90% 52% / 0.08) 0%, transparent 65%)",
-        }}
+        style={{ background: "radial-gradient(ellipse, hsl(200 90% 52% / 0.08) 0%, transparent 65%)" }}
       />
       <div
         className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, hsl(155 72% 46% / 0.05) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(circle, hsl(155 72% 46% / 0.05) 0%, transparent 70%)" }}
       />
-
-      {/* Grid */}
+      {/* Subtle grid */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.02]"
+        className="absolute inset-0 pointer-events-none opacity-[0.018]"
         style={{
           backgroundImage: `linear-gradient(hsl(200 90% 52%) 1px, transparent 1px), linear-gradient(90deg, hsl(200 90% 52%) 1px, transparent 1px)`,
           backgroundSize: "80px 80px",
@@ -64,26 +59,26 @@ function Hero() {
             }}
           >
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "hsl(var(--primary))" }} />
-            Private beta — 4 sprint slots remaining
+            Your Organisational Intelligence
           </span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black leading-[1.0] mb-8 tracking-tight">
-          Your expertise is
+        <h1 className="text-5xl md:text-7xl font-black leading-[1.02] mb-8 tracking-tight">
+          Turn intentions
           <br />
-          <GradientText>your last moat.</GradientText>
+          <GradientText>into outcomes.</GradientText>
         </h1>
 
-        <p className="text-lg md:text-xl leading-relaxed mb-12 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-          LIZA OS turns the judgment in your seniors' heads into executable infrastructure —
-          so your firm scales without losing what makes you different.
+        <p className="text-lg md:text-xl leading-relaxed mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+          LIZA OS is the execution infrastructure for complex organisations — synthesising the fluid reality of human expertise with the precision of structured process.
+        </p>
+        <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+          A small, high-agency team runs on LIZA and achieves exponentially more than a massive, disconnected workforce.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/platform"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -91,20 +86,18 @@ function Hero() {
               boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.45)",
             }}
           >
-            Book a Discovery Call
+            See the Platform
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <Link
-            to="/platform"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40 hover:text-foreground"
-            style={{
-              color: "hsl(var(--muted-foreground))",
-              borderColor: "hsl(var(--border))",
-            }}
-          >
-            See the platform
-            <ArrowRight className="w-4 h-4" />
           </Link>
+          <a
+            href={CAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40 hover:text-foreground"
+            style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
+          >
+            Book a Discovery Call
+          </a>
         </div>
       </div>
 
@@ -116,224 +109,75 @@ function Hero() {
   );
 }
 
-// ── Problem ───────────────────────────────────────────────────────────────────
+// ── The Problem ───────────────────────────────────────────────────────────────
 
-function Problem() {
-  const cols = [
-    {
-      icon: <BookOpen className="w-5 h-5" />,
-      label: "Replicable by AI",
-      title: "Frameworks & templates",
-      desc: "The deliverables your clients used to pay €300/hr for. ChatGPT does it in 30 seconds.",
-      tag: "Commoditised",
-      dim: true,
-    },
-    {
-      icon: <Lock className="w-5 h-5" />,
-      label: "Hard to scale",
-      title: "Senior expert time",
-      desc: "The judgment your clients really pay for. Can't be replicated — but can't scale without the person in the room.",
-      tag: "Bottlenecked",
-      dim: true,
-    },
-    {
-      icon: <TrendingUp className="w-5 h-5" />,
-      label: "What's left — packaged",
-      title: "Codified expertise",
-      desc: "Your unique value, turned into executable protocols that run without you in the room. License it. Embed it. Scale it.",
-      tag: "Your new defensible asset",
-      highlight: true,
-    },
-  ];
-
-  return (
-    <section className="py-32 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <SectionTag>The Three-Layer Problem</SectionTag>
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Clients won't pay for what
-            <br />
-            <GradientText>ChatGPT can do.</GradientText>
-          </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            See where your value sits — and what it takes to protect it.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {cols.map((c, i) => (
-            <div
-              key={i}
-              className="relative rounded-2xl p-8 border overflow-hidden"
-              style={{
-                background: c.highlight ? "hsl(var(--primary) / 0.04)" : "hsl(var(--card))",
-                borderColor: c.highlight ? "hsl(var(--primary) / 0.4)" : "hsl(var(--border))",
-                opacity: c.dim ? 0.65 : 1,
-              }}
-            >
-              {c.highlight && (
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px]"
-                  style={{ background: "var(--gradient-brand)" }}
-                />
-              )}
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center mb-5"
-                style={{
-                  background: c.highlight ? "hsl(var(--primary) / 0.12)" : "hsl(var(--muted))",
-                  color: c.highlight ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
-                }}
-              >
-                {c.icon}
-              </div>
-              <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: c.highlight ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))" }}>
-                {c.label}
-              </p>
-              <h3 className="text-xl font-bold mb-3">{c.title}</h3>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>{c.desc}</p>
-              <span
-                className="text-xs font-bold px-3 py-1.5 rounded-full"
-                style={{
-                  background: c.highlight ? "hsl(var(--primary) / 0.1)" : "hsl(var(--muted))",
-                  color: c.highlight ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
-                }}
-              >
-                {c.tag}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── How it works ──────────────────────────────────────────────────────────────
-
-function HowItWorks() {
-  const steps = [
-    { n: "01", title: "Audit the Judgment Gap", desc: "We map what your seniors know that isn't written down anywhere — the heuristics, pattern recognition, and decision logic that drive real outcomes." },
-    { n: "02", title: "Extract the Tacit Layer", desc: "Through structured interviews and LIZA OS capture tools, we surface and codify the judgment that lives in your senior heads." },
-    { n: "03", title: "Build Executable Protocols", desc: "Your knowledge becomes structured protocols inside LIZA OS — not static documents, but living instruction sets that run in AI workflows." },
-    { n: "04", title: "Scale Without You in the Room", desc: "Your packaged expertise runs through juniors, clients, and partner firms. The institutional knowledge is now infrastructure." },
-  ];
-
+function TheProblem() {
   return (
     <section className="py-32 px-6" style={{ background: "hsl(var(--card))" }}>
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <SectionTag>How LIZA OS Works</SectionTag>
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            From judgment to
-            <br />
-            <GradientText>infrastructure.</GradientText>
-          </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            A four-step system that turns tacit expertise into scalable, executable knowledge.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {steps.map((s, i) => (
-            <div
-              key={i}
-              className="relative rounded-2xl p-8 border"
-              style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
-            >
-              <div className="flex items-start gap-5">
-                <span
-                  className="text-4xl font-black tabular-nums flex-shrink-0 leading-none"
-                  style={{ color: "hsl(var(--primary) / 0.25)" }}
-                >
-                  {s.n}
-                </span>
-                <div>
-                  <h3 className="text-lg font-bold mb-2">{s.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{s.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Concept: Tacit vs Explicit ────────────────────────────────────────────────
-
-function TacitExplicit() {
-  return (
-    <section className="py-32 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <SectionTag>The Core Insight</SectionTag>
+            <SectionTag>The Challenge</SectionTag>
             <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
-              AI already has
+              Knowledge stays
               <br />
-              your documents.
-              <br />
-              <GradientText>Not your judgment.</GradientText>
+              <GradientText>trapped in heads.</GradientText>
             </h2>
-            <p className="text-base leading-relaxed mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Every competitor loads the same frameworks, SOPs, and templates into their AI. The explicit layer is commoditised by default.
+            <p className="text-base leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
+              Companies are full of senior expertise — but struggling to scale it. Handoffs break. Junior teams can't execute with the same judgment. Tools capture tasks, not thinking.
             </p>
             <p className="text-base leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-              What clients actually pay for — the pattern recognition, contextual judgment, and heuristics your seniors carry — was never written down. That's the tacit layer. And it's your only real defensible asset.
+              They miss the decisions, the pattern recognition, the "why" that makes expert work valuable. That tacit layer walks out the door every time someone leaves the room.
             </p>
             <Link
               to="/manifesto"
-              className="inline-flex items-center gap-2 text-sm font-semibold transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-semibold"
               style={{ color: "hsl(var(--primary))" }}
             >
-              Read our manifesto <ArrowRight className="w-4 h-4" />
+              Read our thinking <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
           <div className="flex flex-col gap-4">
-            {/* Explicit */}
-            <div
-              className="rounded-2xl p-7 border"
-              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))", opacity: 0.6 }}
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <BookOpen className="w-5 h-5" style={{ color: "hsl(var(--muted-foreground))" }} />
-                <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  Explicit Layer — Already Commoditised
-                </span>
-              </div>
-              <p className="text-sm" style={{ color: "hsl(var(--muted-foreground))" }}>
-                Documents · Frameworks · Templates · SOPs · Research reports
-              </p>
-            </div>
-
-            {/* Divider */}
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-px" style={{ background: "hsl(var(--primary) / 0.3)" }} />
-              <span className="text-xs font-bold" style={{ color: "hsl(var(--primary))" }}>LIZA OS surfaces this</span>
-              <div className="flex-1 h-px" style={{ background: "hsl(var(--primary) / 0.3)" }} />
-            </div>
-
-            {/* Tacit */}
-            <div
-              className="relative rounded-2xl p-7 border overflow-hidden"
-              style={{ background: "hsl(var(--primary) / 0.04)", borderColor: "hsl(var(--primary) / 0.35)" }}
-            >
+            {[
+              {
+                icon: <BookOpen className="w-4 h-4" />,
+                label: "What gets captured",
+                value: "Documents, SOPs, templates, task lists",
+                dim: true,
+              },
+              {
+                icon: <Brain className="w-4 h-4" />,
+                label: "What actually drives outcomes",
+                value: "Pattern recognition · Judgment · Heuristics · Contextual decision-making",
+                highlight: true,
+              },
+            ].map((item, i) => (
               <div
-                className="absolute top-0 left-0 right-0 h-[2px]"
-                style={{ background: "var(--gradient-brand)" }}
-              />
-              <div className="flex items-center gap-3 mb-3">
-                <Brain className="w-5 h-5" style={{ color: "hsl(var(--primary))" }} />
-                <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(var(--primary))" }}>
-                  Tacit Layer — Your Real Moat
-                </span>
+                key={i}
+                className="relative rounded-2xl p-7 border overflow-hidden"
+                style={{
+                  background: item.highlight ? "hsl(var(--primary) / 0.04)" : "hsl(var(--background))",
+                  borderColor: item.highlight ? "hsl(var(--primary) / 0.35)" : "hsl(var(--border))",
+                  opacity: item.dim ? 0.6 : 1,
+                }}
+              >
+                {item.highlight && (
+                  <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+                )}
+                <div className="flex items-center gap-2 mb-3">
+                  <span style={{ color: item.highlight ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))" }}>{item.icon}</span>
+                  <span className="text-xs font-bold tracking-widest uppercase" style={{ color: item.highlight ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))" }}>
+                    {item.label}
+                  </span>
+                </div>
+                <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{item.value}</p>
               </div>
-              <p className="text-sm" style={{ color: "hsl(var(--muted-foreground))" }}>
-                Pattern recognition · Contextual judgment · Decision heuristics · Risk intuition · Senior expertise
-              </p>
+            ))}
+            <div className="flex items-center gap-3 px-1">
+              <div className="flex-1 h-px" style={{ background: "hsl(var(--primary) / 0.25)" }} />
+              <span className="text-xs font-bold" style={{ color: "hsl(var(--primary))" }}>LIZA bridges this gap</span>
+              <div className="flex-1 h-px" style={{ background: "hsl(var(--primary) / 0.25)" }} />
             </div>
           </div>
         </div>
@@ -342,96 +186,83 @@ function TacitExplicit() {
   );
 }
 
-// ── Social Proof / Case Study ─────────────────────────────────────────────────
+// ── What LIZA Is ──────────────────────────────────────────────────────────────
 
-function SocialProof() {
+const PILLARS = [
+  {
+    icon: <Brain className="w-5 h-5" />,
+    title: "Knowledge Infrastructure",
+    desc: "Capture and structure the tacit judgment that drives real outcomes — Playbooks, Procedures, Directives, Principles — not just documents.",
+  },
+  {
+    icon: <Zap className="w-5 h-5" />,
+    title: "Execution Engine",
+    desc: "Run knowledge in real workflows. Context-aware protocols guide teams through complex decisions with the right intelligence at every step.",
+  },
+  {
+    icon: <BarChart3 className="w-5 h-5" />,
+    title: "Oversight & Learning",
+    desc: "Every execution feeds back into your knowledge base. The system learns, improves, and compounds — turning every run into institutional memory.",
+  },
+  {
+    icon: <Shield className="w-5 h-5" />,
+    title: "Governance & Control",
+    desc: "Mandates, compliance layers, and delegation tracking ensure your standards are upheld even as you scale capacity across teams.",
+  },
+  {
+    icon: <Users className="w-5 h-5" />,
+    title: "Team Collaboration",
+    desc: "Workbooks bring teams together around shared context. Not chat — structured collaboration with the right knowledge injected at the right moment.",
+  },
+  {
+    icon: <Layers className="w-5 h-5" />,
+    title: "Scalable by Design",
+    desc: "A small, high-agency team runs on LIZA and achieves what a large, disconnected workforce can't. Build once, scale infinitely.",
+  },
+];
+
+function WhatLizaIs() {
   return (
-    <section className="py-32 px-6" style={{ background: "hsl(var(--card))" }}>
+    <section className="py-32 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <SectionTag>Client Outcomes</SectionTag>
-          <h2 className="text-4xl font-black mb-4">
-            What happens when you
+          <SectionTag>The Platform</SectionTag>
+          <h2 className="text-4xl md:text-5xl font-black mb-4">
+            Execution infrastructure
             <br />
-            <GradientText>codify the judgment layer.</GradientText>
+            <GradientText>for complex organisations.</GradientText>
           </h2>
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Not another task manager. Not a knowledge base. LIZA OS is the operating layer where human expertise meets structured execution.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {/* Case Study 1 */}
-          <div
-            className="relative rounded-2xl p-10 border overflow-hidden"
-            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
-          >
-            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
-            <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>
-              12-person strategy consultancy · EU market
-            </p>
-            <Quote className="w-8 h-8 mb-4" style={{ color: "hsl(var(--primary) / 0.4)" }} />
-            <p className="text-base leading-relaxed mb-8 font-medium">
-              "We had two founding partners whose judgment was the firm. After the sprint, those decision patterns were running inside every junior client engagement — without them in the room."
-            </p>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <p className="text-3xl font-black brand-gradient-text">2×</p>
-                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>senior leverage within 60 days</p>
+        <div className="grid md:grid-cols-3 gap-5">
+          {PILLARS.map((p, i) => (
+            <div
+              key={i}
+              className="rounded-2xl p-8 border"
+              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+            >
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center mb-5"
+                style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
+              >
+                {p.icon}
               </div>
-              <div>
-                <p className="text-3xl font-black brand-gradient-text">€8K</p>
-                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>MRR from packaged knowledge product</p>
-              </div>
+              <h3 className="text-base font-bold mb-3">{p.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{p.desc}</p>
             </div>
-          </div>
-
-          {/* Case Study 2 */}
-          <div
-            className="relative rounded-2xl p-10 border overflow-hidden"
-            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
-          >
-            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
-            <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Boutique M&A advisory · 8 practitioners
-            </p>
-            <Quote className="w-8 h-8 mb-4" style={{ color: "hsl(var(--primary) / 0.4)" }} />
-            <p className="text-base leading-relaxed mb-8 font-medium">
-              "Our most experienced partner was planning to retire. We ran the sprint to capture her deal intuition. Now that judgment is embedded in how we qualify and structure every new mandate."
-            </p>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <p className="text-3xl font-black brand-gradient-text">35%</p>
-                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>faster deal qualification cycle</p>
-              </div>
-              <div>
-                <p className="text-3xl font-black brand-gradient-text">100%</p>
-                <p className="text-xs mt-1" style={{ color: "hsl(var(--muted-foreground))" }}>of tacit IP retained after retirement</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Founder credibility note */}
-        <div
-          className="rounded-2xl p-8 border flex flex-col md:flex-row items-start md:items-center gap-6"
-          style={{ background: "hsl(var(--primary) / 0.03)", borderColor: "hsl(var(--primary) / 0.15)" }}
-        >
-          <div
-            className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-black flex-shrink-0"
-            style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
-          >
-            LO
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-semibold mb-1">Built by practitioners, for practitioners.</p>
-            <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-              LIZA OS was built by a team with 15+ years across management consulting, AI systems design, and organisational knowledge management. We've run the sprint ourselves — and built the platform on what we learned.
-            </p>
-          </div>
+        <div className="text-center mt-10">
           <Link
-            to="/manifesto"
-            className="inline-flex items-center gap-2 text-sm font-semibold flex-shrink-0 transition-colors"
+            to="/platform"
+            className="inline-flex items-center gap-2 text-sm font-semibold"
             style={{ color: "hsl(var(--primary))" }}
           >
-            Our thinking <ArrowRight className="w-4 h-4" />
+            Explore the full platform <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -439,38 +270,182 @@ function SocialProof() {
   );
 }
 
-// ── CTA Band ──────────────────────────────────────────────────────────────────
+// ── Purpose ───────────────────────────────────────────────────────────────────
+
+function Purpose() {
+  return (
+    <section className="py-32 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <SectionTag>Our Purpose</SectionTag>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
+              Scale your
+              <br />
+              <GradientText>best thinking.</GradientText>
+            </h2>
+            <p className="text-base leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
+              We believe the true value of an organisation lies in scaling its best thinking — not just managing its tasks.
+            </p>
+            <p className="text-base leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
+              LIZA creates the conditions where a small, high-agency team can achieve exponentially more than a massive, disconnected workforce. We're here to turn intentions into outcomes — creating the space where human potential truly comes to life.
+            </p>
+            <Link
+              to="/manifesto"
+              className="inline-flex items-center gap-2 text-sm font-semibold"
+              style={{ color: "hsl(var(--primary))" }}
+            >
+              Read the manifesto <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {/* Vision + Mission stat cards */}
+          <div className="flex flex-col gap-5">
+            {[
+              {
+                label: "Vision",
+                text: "Transform the friction of complex organisational growth into a smooth, high-speed superhighway for the agentic era.",
+              },
+              {
+                label: "Mission",
+                text: "Build the execution infrastructure for complex businesses — a holistic OS that synthesises human communication with the precision of process.",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="relative rounded-2xl p-7 border overflow-hidden"
+                style={{
+                  background: i === 0 ? "hsl(var(--primary) / 0.04)" : "hsl(var(--background))",
+                  borderColor: i === 0 ? "hsl(var(--primary) / 0.3)" : "hsl(var(--border))",
+                }}
+              >
+                {i === 0 && <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />}
+                <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "hsl(var(--primary))" }}>
+                  {item.label}
+                </p>
+                <p className="text-sm leading-relaxed font-medium">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Who It's For ──────────────────────────────────────────────────────────────
+
+const WHO_FOR = [
+  {
+    icon: <Target className="w-5 h-5" />,
+    title: "Knowledge-intensive teams",
+    desc: "Legal, consulting, research, finance — anywhere expertise is the product and scale is the constraint.",
+  },
+  {
+    icon: <Users className="w-5 h-5" />,
+    title: "Scaling organisations",
+    desc: "Growing fast without losing institutional memory. LIZA ensures your best practices compound as your team grows.",
+  },
+  {
+    icon: <Shield className="w-5 h-5" />,
+    title: "Operators of complex processes",
+    desc: "Firms running repeatable, high-stakes workflows that need consistency, governance, and continuous improvement built in.",
+  },
+];
+
+function WhoItsFor() {
+  return (
+    <section className="py-32 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <SectionTag>Who it's for</SectionTag>
+          <h2 className="text-4xl md:text-5xl font-black mb-4">
+            Built for teams where
+            <br />
+            <GradientText>expertise is the edge.</GradientText>
+          </h2>
+          <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+            If your competitive advantage lives in how your people think — not just what they do — LIZA is your operating infrastructure.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-14">
+          {WHO_FOR.map((w, i) => (
+            <div
+              key={i}
+              className="rounded-2xl p-8 border"
+              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+            >
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center mb-5"
+                style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
+              >
+                {w.icon}
+              </div>
+              <h3 className="text-base font-bold mb-2">{w.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{w.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Professional services callout */}
+        <div
+          className="relative rounded-2xl p-8 border overflow-hidden flex flex-col md:flex-row items-start md:items-center gap-6"
+          style={{ background: "hsl(var(--primary) / 0.03)", borderColor: "hsl(var(--primary) / 0.2)" }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+          <div className="flex-1">
+            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "hsl(var(--primary))" }}>
+              Professional Services
+            </p>
+            <p className="text-base font-semibold mb-1">Managing partner at a consultancy or advisory firm?</p>
+            <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
+              We have a dedicated engagement for firms that need to capture, codify, and package their senior expertise into a scalable knowledge product — in 4 weeks.
+            </p>
+          </div>
+          <Link
+            to="/for-professional-services"
+            className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold flex-shrink-0 transition-all"
+            style={{
+              background: "var(--gradient-brand-btn)",
+              color: "hsl(var(--primary-foreground))",
+              boxShadow: "0 0 20px -4px hsl(200 90% 52% / 0.35)",
+            }}
+          >
+            See the Sprint
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── CTA ───────────────────────────────────────────────────────────────────────
 
 function CTABand() {
   return (
-    <section className="py-32 px-6">
+    <section className="py-32 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto text-center">
         <div
           className="relative rounded-3xl p-16 border overflow-hidden"
-          style={{
-            background: "hsl(var(--card))",
-            borderColor: "hsl(var(--primary) / 0.2)",
-          }}
+          style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--primary) / 0.2)" }}
         >
-          {/* Glow */}
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
             style={{ background: "radial-gradient(ellipse, hsl(200 90% 52% / 0.07) 0%, transparent 65%)" }}
           />
-          <div
-            className="absolute top-0 left-0 right-0 h-[1px]"
-            style={{ background: "var(--gradient-brand)" }}
-          />
+          <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
 
           <div className="relative z-10">
-            <SectionTag>Ready to start?</SectionTag>
+            <SectionTag>Get started</SectionTag>
             <h2 className="text-4xl md:text-5xl font-black mb-6">
-              The window is
+              The infrastructure
               <br />
-              <GradientText>12–18 months.</GradientText>
+              <GradientText>shaping organisations.</GradientText>
             </h2>
             <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-              The firms that codify their expertise now will be the ones clients see as "the standard." Everyone else competes on price.
+              Book a 30-minute discovery call to see how LIZA fits your team — no commitment required.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
@@ -484,15 +459,15 @@ function CTABand() {
                   boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
                 }}
               >
-                Book a 30-min Discovery Call
+                Book a Discovery Call
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <Link
-                to="/advisory"
+                to="/platform"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40"
                 style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
               >
-                See the Sprint →
+                Explore the Platform →
               </Link>
             </div>
           </div>
@@ -508,10 +483,10 @@ export default function LizaHome() {
   return (
     <MarketingLayout>
       <Hero />
-      <Problem />
-      <HowItWorks />
-      <TacitExplicit />
-      <SocialProof />
+      <TheProblem />
+      <WhatLizaIs />
+      <Purpose />
+      <WhoItsFor />
       <CTABand />
     </MarketingLayout>
   );

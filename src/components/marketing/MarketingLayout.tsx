@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 const NAV = [
   { label: "Platform", href: "/platform" },
   { label: "Advisory", href: "/advisory" },
+  { label: "For Professional Services", href: "/for-professional-services" },
   { label: "Manifesto", href: "/manifesto" },
 ];
 
@@ -167,7 +168,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>Start</p>
               <div className="flex flex-col gap-2">
                 <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Book a Call</a>
-                <Link to="/advisory" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Apply for a Sprint</Link>
+                <Link to="/for-professional-services" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Apply for a Sprint</Link>
               </div>
             </div>
           </div>
