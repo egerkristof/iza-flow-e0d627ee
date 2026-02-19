@@ -223,7 +223,7 @@ function Slide03Signals() {
           <span style={{ color: `hsl(${PRI})` }}>happening<br />in your org.</span>
         </h2>
         <p style={{ fontSize: 27, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
-          The problem isn't that people aren't using AI. It's that everyone's using it differently — and nobody has a clear answer when the exec team asks "how are we governing this?"
+          Everyone's using it differently — and nobody has a clear answer when the exec asks "how are we governing this?"
         </p>
       </div>
 
@@ -231,7 +231,7 @@ function Slide03Signals() {
       <div className="flex flex-col justify-center flex-1 pr-[120px] gap-6 relative z-10">
         {signals.map((s, i) => (
           <div key={i} className="rounded-2xl p-7 border" style={{ background: BG2, borderColor: `hsl(${PRI} / 0.12)` }}>
-            <p className="font-semibold mb-3" style={{ fontSize: 24, color: `hsl(${C})`, lineHeight: 1.4 }}>"{s.q}"</p>
+            <p className="font-semibold mb-3" style={{ fontSize: 24, color: `hsl(${C})`, lineHeight: 1.4 }}>{s.q}</p>
             <p className="font-bold tracking-widest uppercase" style={{ fontSize: 16, color: `hsl(${PRI})` }}>{s.type}</p>
           </div>
         ))}
@@ -284,7 +284,7 @@ function Slide04WhyTraining() {
         <div className="mt-8 p-7 rounded-2xl border" style={{ background: `hsl(${PRI} / 0.06)`, borderColor: `hsl(${PRI} / 0.3)` }}>
           <p style={{ fontSize: 26, color: `hsl(${C})`, lineHeight: 1.5 }}>
             <strong style={{ color: `hsl(${PRI})` }}>The missing piece:</strong>{" "}
-            A shared operating model — agreed standards, defined workflows, and the infrastructure to make them stick in daily practice. That's what the workshop builds.
+            A shared operating model — agreed standards, defined workflows, and the infrastructure to make them stick.
           </p>
         </div>
       </div>
@@ -313,15 +313,15 @@ function Slide05TheWorkshop() {
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
           }}>Programme</span>
         </h2>
-        <p className="mb-14" style={{ fontSize: 30, color: `hsl(${MUT})`, maxWidth: 1200, lineHeight: 1.55 }}>
-          A structured, multi-session engagement where we work inside your teams — mapping how work actually happens, what knowledge drives good decisions, and turning that into a governed operating model for AI.
+        <p className="mb-14" style={{ fontSize: 30, color: `hsl(${MUT})`, maxWidth: 1100, lineHeight: 1.55 }}>
+          Multi-session. Embedded. We map how your teams work and turn it into a governed operating model for AI.
         </p>
 
         <div className="flex gap-8 w-full justify-center">
           {[
-            { icon: <Target size={40} />, label: "Surface", desc: "We observe and interview your teams to map real workflows — the tacit logic, judgment calls, and quality standards that currently live only in people's heads.", color: RED },
-            { icon: <Lightbulb size={40} />, label: "Structure", desc: "Together we externalise what we find: agreed standards, workflow protocols, and quality criteria — co-authored by the people who need to use them.", color: PRI },
-            { icon: <Zap size={40} />, label: "Embed", desc: "The model gets built into how work is done. Protocols run inside LIZA OS. Knowledge compounds. New team members onboard to a standard, not tribal habits.", color: GRN },
+            { icon: <Target size={40} />, label: "Surface", desc: "Map real workflows — the tacit logic, judgment calls, and quality standards that live only in people's heads.", color: RED },
+            { icon: <Lightbulb size={40} />, label: "Structure", desc: "Externalise what we find into agreed standards and protocols — co-authored by the people who use them.", color: PRI },
+            { icon: <Zap size={40} />, label: "Embed", desc: "The model goes live in LIZA OS. Knowledge compounds. New hires onboard to a standard, not tribal habits.", color: GRN },
           ].map(({ icon, label, desc, color }, i) => (
             <div key={i} className="flex-1 flex flex-col rounded-2xl border p-10 relative overflow-hidden"
               style={{ background: `hsl(${color} / 0.06)`, borderColor: `hsl(${color} / 0.25)` }}>
@@ -343,10 +343,10 @@ function Slide05TheWorkshop() {
 
 function Slide06Agenda() {
   const sessions = [
-    { n: "Phase 1", title: "Workflow Discovery", desc: "We embed with your team leads across 2–3 working sessions. We observe how work is done, what AI is being used for, and — critically — where undocumented judgment calls are being made. The goal: make the invisible visible.", col: RED },
-    { n: "Phase 2", title: "Knowledge Mapping", desc: "We run structured workshops to externalise what we found. Teams articulate the decision logic, quality standards, and operating principles that currently live only in people's heads — not in any system.", col: AMB },
-    { n: "Phase 3", title: "Operating Model Design", desc: "Working collaboratively, we structure those insights into usable artefacts: workflow protocols, AI usage standards, governance checkpoints, and a shared vocabulary for how AI work gets done in your function.", col: PRI },
-    { n: "Phase 4", title: "Embed & Activate", desc: "The model goes live inside LIZA OS. Teams run protocols. Knowledge accumulates. Managers get visibility. The operating model stops being a document and becomes the default way work happens.", col: GRN },
+    { n: "Phase 1", title: "Workflow Discovery", desc: "We embed with your teams to observe how work is done and surface the undocumented judgment calls. Make the invisible visible.", col: RED },
+    { n: "Phase 2", title: "Knowledge Mapping", desc: "Structured workshops to externalise what we found — decision logic, quality standards, and operating principles articulated by the people who hold them.", col: AMB },
+    { n: "Phase 3", title: "Operating Model Design", desc: "Those insights become usable artefacts: workflow protocols, AI usage standards, governance checkpoints, and a shared vocabulary.", col: PRI },
+    { n: "Phase 4", title: "Embed & Activate", desc: "The model goes live in LIZA OS. Teams run protocols. Knowledge compounds. The operating model becomes how work happens — not a document.", col: GRN },
   ];
 
   return (
@@ -533,9 +533,10 @@ function Slide10Facilitators() {
           <span style={{ color: `hsl(${PRI})` }}>this workshop runs on.</span>
         </h2>
         <p style={{ fontSize: 27, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
-          LIZA OS is an operating system for knowledge-intensive organisations — built specifically to solve the problem of inconsistent AI usage, missing institutional context, and knowledge that never gets captured.
-          <br /><br />
-          We don't teach generic AI skills. We help organisations build the governance layer that makes AI work at the team level — and we've structured a workshop that gets you there in a single focused day.
+          LIZA OS is an operating system built for knowledge-intensive organisations — designed to solve inconsistent AI usage, missing institutional context, and knowledge that never gets captured.
+        </p>
+        <p className="mt-6" style={{ fontSize: 27, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
+          We don't teach generic AI skills. We build the governance layer that makes AI work at the team level.
         </p>
       </div>
 
@@ -592,8 +593,8 @@ function Slide11CTA() {
           }}>already there. Let's build with it.</span>
         </h2>
 
-        <p className="mb-10" style={{ fontSize: 30, color: `hsl(${MUT})`, maxWidth: 1100, lineHeight: 1.55 }}>
-          We start with a scoping call to understand your team structure, workflows, and what a successful operating model looks like for your context. No commitments — just clarity.
+        <p className="mb-10" style={{ fontSize: 30, color: `hsl(${MUT})`, maxWidth: 900, lineHeight: 1.55 }}>
+          30 minutes. We map your needs and scope the right engagement. No commitments.
         </p>
 
         {/* Logistics bar */}
