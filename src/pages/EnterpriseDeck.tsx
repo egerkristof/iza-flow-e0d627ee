@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Brain, Target, Zap, BookOpen, TrendingUp, CheckCircle2,
   ArrowRight, AlertTriangle, Clock, Users, Shield, BarChart3,
@@ -35,7 +36,7 @@ function Nav() {
     <header className="sticky top-0 z-50 border-b"
       style={{ background: "hsl(222 22% 4% / 0.95)", borderColor: "hsl(222 18% 10%)", backdropFilter: "blur(12px)" }}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <span className="font-black tracking-widest text-sm" style={{ color: `hsl(${PRI})` }}>LIZA OS</span>
+        <Link to="/" className="font-black tracking-widest text-sm hover:opacity-80 transition-opacity" style={{ color: `hsl(${PRI})` }}>LIZA OS</Link>
         <a
           href={CAL_URL}
           target="_blank"
