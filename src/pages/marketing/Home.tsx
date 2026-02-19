@@ -469,6 +469,13 @@ function CTABand() {
               >
                 Explore the Platform →
               </Link>
+              <Link
+                to="/enterprise"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40"
+                style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
+              >
+                Enterprise Programme →
+              </Link>
             </div>
           </div>
         </div>
