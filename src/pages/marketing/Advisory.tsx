@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import { ArrowRight, CheckCircle2, Clock, Target, Layers, Brain, TrendingUp } from "lucide-react";
+import { ArrowRight, CheckCircle2, Layers, Brain, TrendingUp, Target } from "lucide-react";
+
+const CAL_URL = "https://cal.com/lizaos/discovery";
 
 function GradientText({ children }: { children: React.ReactNode }) {
   return <span className="brand-gradient-text">{children}</span>;
@@ -39,16 +41,16 @@ const DELIVERABLES = [
 
 const WEEKS = [
   { n: "Week 1", title: "Audit & Discovery", desc: "We map your existing knowledge assets and identify the highest-value tacit layer — the judgment that isn't captured anywhere." },
-  { n: "Week 2", title: "Extraction Sessions", desc: "Structured interviews with your 2–3 most senior practitioners. LIZA OS capture tools accelerate the process." },
-  { n: "Week 3", title: "Codification in LIZA OS", desc: "We build your knowledge bundles — categorised, versioned, and structured as executable protocols." },
+  { n: "Week 2", title: "Extraction Sessions", desc: "Structured interviews with your 2–3 most senior practitioners. LIZA OS capture tools accelerate and structure the process." },
+  { n: "Week 3", title: "Codification in LIZA OS", desc: "We build your knowledge bundles — categorised, versioned, and structured as executable protocols ready to deploy." },
   { n: "Week 4", title: "Productisation Strategy", desc: "We define how your packaged expertise becomes a scalable offering: licensing model, pricing, and go-to-market." },
 ];
 
 const WHO = [
   "Agency founders or Managing Partners who see margin compression on standard deliverables",
-  "Consultancies worried about losing IP when senior practitioners leave",
-  "Professional services firms that want to scale without hiring headcount",
-  "Practice leads looking to create a new recurring revenue stream from existing expertise",
+  "Consultancies worried about losing IP when senior practitioners retire or leave",
+  "Professional services firms that want to scale capacity without adding headcount",
+  "Practice leads looking to create a recurring revenue stream from existing expertise",
 ];
 
 export default function AdvisoryPage() {
@@ -64,35 +66,48 @@ export default function AdvisoryPage() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <SectionTag>AI Effectiveness Sprint</SectionTag>
+              {/* Above-the-fold buyer clarity */}
+              <p className="text-sm font-semibold mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
+                For Managing Partners &amp; Practice Leaders in professional services
+              </p>
               <h1 className="text-5xl font-black mb-6 leading-tight">
                 4 weeks to
                 <br />
                 <GradientText>packaged expertise.</GradientText>
               </h1>
               <p className="text-lg leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-                A hands-on advisory engagement where we work directly with your senior practitioners to extract, codify, and package the tacit knowledge that makes your firm different.
+                A hands-on advisory engagement where we work directly with your senior practitioners to extract, codify, and package the tacit knowledge that makes your firm different — before it walks out the door.
               </p>
               <div className="flex flex-col gap-3 mb-10">
-                {["€20,000 – €35,000 engagement fee", "2–3 senior practitioners required", "4 weeks, structured sprints", "Delivered inside LIZA OS"].map((item, i) => (
+                {["€20,000 – €35,000 engagement fee", "2–3 senior practitioners required", "4 weeks, structured sprints", "Delivered inside LIZA OS — yours to keep"].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "hsl(var(--brand-green))" }} />
                     <span className="text-sm font-medium">{item}</span>
                   </div>
                 ))}
               </div>
-              <a
-                href="https://cal.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
-                style={{
-                  background: "var(--gradient-brand-btn)",
-                  color: "hsl(var(--primary-foreground))",
-                  boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
-                }}
-              >
-                Apply for a Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={CAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
+                  style={{
+                    background: "var(--gradient-brand-btn)",
+                    color: "hsl(var(--primary-foreground))",
+                    boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
+                  }}
+                >
+                  Apply for a Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <Link
+                  to="/platform"
+                  className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border"
+                  style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
+                >
+                  See the Platform
+                </Link>
+              </div>
             </div>
 
             {/* Pricing card */}
@@ -104,7 +119,7 @@ export default function AdvisoryPage() {
               <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "hsl(var(--muted-foreground))" }}>Engagement Fee</p>
               <p className="text-5xl font-black mb-2">€20–35k</p>
               <p className="text-sm mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-                Depending on firm size and complexity. Fixed price, no hourly billing.
+                Fixed price. No hourly billing. No scope creep.
               </p>
               <div className="h-px mb-8" style={{ background: "hsl(var(--border))" }} />
               <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>What's included</p>
@@ -176,7 +191,7 @@ export default function AdvisoryPage() {
                 <GradientText>professional services leaders.</GradientText>
               </h2>
               <p className="text-base leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-                This engagement is not for teams that haven't started thinking about AI. It's for leaders who've already seen the margin pressure and are ready to act.
+                This engagement is not for teams that haven't started thinking about AI. It's for leaders who've already seen the margin pressure and are ready to act on it.
               </p>
               <div className="flex flex-col gap-4">
                 {WHO.map((w, i) => (
@@ -193,7 +208,7 @@ export default function AdvisoryPage() {
               style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--primary) / 0.15)" }}
             >
               <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
-              <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>Expected Outcomes</p>
+              <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>Typical Client Outcomes</p>
               {[
                 { metric: "35%", label: "avg productivity gain in execution teams within 60 days" },
                 { metric: "2×", label: "senior leverage — same team, double the output capacity" },
@@ -226,11 +241,14 @@ export default function AdvisoryPage() {
               <h2 className="text-3xl font-black mb-4">
                 Ready to <GradientText>protect your moat?</GradientText>
               </h2>
-              <p className="text-base mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-                Book a 30-minute discovery call. We'll tell you whether the sprint is right for your firm — no commitment required.
+              <p className="text-base mb-2" style={{ color: "hsl(var(--muted-foreground))" }}>
+                Book a 30-minute discovery call. We'll assess whether the sprint is right for your firm — no commitment required.
+              </p>
+              <p className="text-xs mb-8 font-semibold" style={{ color: "hsl(var(--primary))" }}>
+                We take on 3 sprint engagements per quarter. Currently booking Q2.
               </p>
               <a
-                href="https://cal.com"
+                href={CAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
@@ -240,7 +258,7 @@ export default function AdvisoryPage() {
                   boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
                 }}
               >
-                Book a 30-min Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Apply for a Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </div>

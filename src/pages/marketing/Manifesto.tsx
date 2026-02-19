@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { ArrowRight } from "lucide-react";
 
+const CAL_URL = "https://cal.com/lizaos/discovery";
+
 function GradientText({ children }: { children: React.ReactNode }) {
   return <span className="brand-gradient-text">{children}</span>;
 }
@@ -10,7 +12,7 @@ function Pull({ children }: { children: React.ReactNode }) {
   return (
     <blockquote
       className="relative pl-6 my-10 text-xl font-semibold leading-relaxed"
-      style={{ borderLeft: "3px solid", borderImage: "var(--gradient-brand) 1", color: "hsl(var(--foreground))" }}
+      style={{ borderLeft: "3px solid hsl(var(--primary))", color: "hsl(var(--foreground))" }}
     >
       {children}
     </blockquote>
@@ -162,7 +164,7 @@ export default function ManifestoPage() {
 
         {/* CTA */}
         <div
-          className="mt-16 rounded-2xl p-10 border text-center"
+          className="relative mt-16 rounded-2xl p-10 border text-center overflow-hidden"
           style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--primary) / 0.2)" }}
         >
           <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
@@ -172,7 +174,7 @@ export default function ManifestoPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://cal.com"
+              href={CAL_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold"

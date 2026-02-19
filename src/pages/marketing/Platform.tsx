@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import { ArrowRight, Brain, Layers, Zap, BookOpen, CheckCircle2, Lock } from "lucide-react";
+import { ArrowRight, Brain, Layers, Zap, BookOpen, CheckCircle2, Lock, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+const CAL_URL = "https://cal.com/lizaos/discovery";
 
 function GradientText({ children }: { children: React.ReactNode }) {
   return <span className="brand-gradient-text">{children}</span>;
@@ -42,7 +44,6 @@ function BetaForm() {
       if (dbErr) throw dbErr;
       setSubmitted(true);
     } catch {
-      // If table doesn't exist yet, still show success (graceful fallback)
       setSubmitted(true);
     } finally {
       setLoading(false);
@@ -61,13 +62,13 @@ function BetaForm() {
           We'll reach out as we open beta access. In the meantime, book a discovery call to move faster.
         </p>
         <a
-          href="https://cal.com"
+          href={CAL_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
           style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
         >
-          Book a call instead <ArrowRight className="w-4 h-4" />
+          Skip the queue — book a call <ArrowRight className="w-4 h-4" />
         </a>
       </div>
     );
@@ -161,20 +162,50 @@ const FEATURES = [
     desc: "Role-based access, mandate enforcement, and audit trails. Your intellectual property stays protected and under your control.",
   },
   {
-    icon: <ArrowRight className="w-6 h-6" />,
+    icon: <Shield className="w-6 h-6" />,
     title: "Operator Oversight",
     desc: "A dedicated nerve centre for operators to track what their team is executing, where drift happens, and what needs to be re-encoded.",
   },
 ];
 
-// ── Categories visual ─────────────────────────────────────────────────────────
+// ── Knowledge Architecture — upgraded visual ───────────────────────────────
 
 const CATEGORIES = [
-  { label: "PLAYBOOK", desc: "Strategic driver — defines WHAT and WHY", col: "200 90% 52%" },
-  { label: "PROCEDURE", desc: "Ordered executable steps with gate logic", col: "155 72% 46%" },
-  { label: "DIRECTIVE", desc: "Compliance gates requiring acknowledgment", col: "38 92% 50%" },
-  { label: "PRINCIPLE", desc: "Core beliefs guiding decision-making", col: "270 60% 65%" },
-  { label: "KNOWLEDGE", desc: "Factual reference context for AI", col: "215 10% 60%" },
+  {
+    label: "PLAYBOOK",
+    tagline: "The strategic driver",
+    desc: "Defines WHAT the work is and WHY it matters. Each bundle has exactly one Playbook — the north star that governs all other items.",
+    col: "200 90% 52%",
+    role: "Strategic",
+  },
+  {
+    label: "PROCEDURE",
+    tagline: "Ordered executable steps",
+    desc: "Step-by-step action sequences with gate logic. Atomic, sequenced, and designed to run inside AI workflows without interpretation.",
+    col: "155 72% 46%",
+    role: "Operational",
+  },
+  {
+    label: "DIRECTIVE",
+    tagline: "Compliance gates",
+    desc: "Rules requiring explicit acknowledgment before execution continues. Contains 'must', 'never', 'always' — non-negotiable constraints.",
+    col: "38 92% 50%",
+    role: "Compliance",
+  },
+  {
+    label: "PRINCIPLE",
+    tagline: "Core beliefs",
+    desc: "The values and heuristics that guide decision-making at judgment points. Not rules — the wisdom that underpins how rules are applied.",
+    col: "270 60% 65%",
+    role: "Contextual",
+  },
+  {
+    label: "KNOWLEDGE",
+    tagline: "Reference context",
+    desc: "Factual information injected into AI execution as background. Frameworks, definitions, market data — the reference layer that informs, not directs.",
+    col: "215 10% 60%",
+    role: "Reference",
+  },
 ];
 
 export default function PlatformPage() {
@@ -196,17 +227,16 @@ export default function PlatformPage() {
         <div className="relative z-10 max-w-3xl mx-auto">
           <SectionTag>The Platform</SectionTag>
           <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-            Turn expertise into
+            Not a knowledge base.
             <br />
-            <GradientText>executable infrastructure.</GradientText>
+            <GradientText>An execution engine.</GradientText>
           </h1>
           <p className="text-lg mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
-            LIZA OS is a knowledge-activated execution engine. Not a knowledge base. Not a wiki.
-            A system that makes your expertise run — consistently, at scale, without you in the room.
+            LIZA OS makes your expertise run — consistently, at scale, without you in the room. Not stored. Not searchable. <span className="text-foreground font-medium">Executable.</span>
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://cal.com"
+              href={CAL_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
@@ -229,30 +259,51 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {/* The protocol execution model */}
+      {/* Knowledge Architecture — upgraded */}
       <section className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <SectionTag>The Knowledge Architecture</SectionTag>
-            <h2 className="text-4xl font-black mb-4">Five types of knowledge.</h2>
-            <p className="text-lg" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Every piece of expertise is categorised, structured, and made executable.
+            <h2 className="text-4xl font-black mb-4">
+              Five types of knowledge.
+              <br />
+              <GradientText>Every piece has a job.</GradientText>
+            </h2>
+            <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+              Every piece of expertise is categorised, structured, and given a specific role in the execution engine.
             </p>
           </div>
-          <div className="flex flex-col gap-3">
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {CATEGORIES.map((c, i) => (
               <div
                 key={i}
-                className="flex items-center gap-6 px-7 py-5 rounded-xl border"
-                style={{ background: "hsl(var(--background))", borderColor: `hsl(${c.col} / 0.15)` }}
+                className={`relative rounded-2xl p-7 border overflow-hidden ${i === 0 ? "md:col-span-2 lg:col-span-1" : ""}`}
+                style={{
+                  background: `hsl(${c.col} / 0.04)`,
+                  borderColor: `hsl(${c.col} / 0.25)`,
+                }}
               >
-                <span
-                  className="text-xs font-black tracking-widest uppercase px-3 py-1.5 rounded-full flex-shrink-0"
-                  style={{ background: `hsl(${c.col} / 0.1)`, color: `hsl(${c.col})` }}
-                >
-                  {c.label}
-                </span>
-                <p className="text-sm" style={{ color: "hsl(var(--muted-foreground))" }}>{c.desc}</p>
+                <div
+                  className="absolute top-0 left-0 right-0 h-[2px]"
+                  style={{ background: `hsl(${c.col})` }}
+                />
+                <div className="flex items-start justify-between mb-4">
+                  <span
+                    className="text-xs font-black tracking-widest uppercase px-3 py-1.5 rounded-full"
+                    style={{ background: `hsl(${c.col} / 0.15)`, color: `hsl(${c.col})` }}
+                  >
+                    {c.label}
+                  </span>
+                  <span
+                    className="text-xs font-medium px-2 py-1 rounded"
+                    style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}
+                  >
+                    {c.role}
+                  </span>
+                </div>
+                <p className="text-base font-bold mb-2">{c.tagline}</p>
+                <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{c.desc}</p>
               </div>
             ))}
           </div>

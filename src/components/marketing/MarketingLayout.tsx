@@ -50,23 +50,22 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {NAV.map((n) => (
-              <Link
-                key={n.href}
-                to={n.href}
-                className="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                style={{
-                  color: location.pathname === n.href
-                    ? "hsl(var(--primary))"
-                    : "hsl(var(--muted-foreground))",
-                  background: location.pathname === n.href
-                    ? "hsl(var(--primary) / 0.08)"
-                    : "transparent",
-                }}
-              >
-                {n.label}
-              </Link>
-            ))}
+            {NAV.map((n) => {
+              const isActive = location.pathname === n.href || (n.href !== "/liza" && location.pathname.startsWith(n.href));
+              return (
+                <Link
+                  key={n.href}
+                  to={n.href}
+                  className="px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                  style={{
+                    color: isActive ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                    background: isActive ? "hsl(var(--primary) / 0.08)" : "transparent",
+                  }}
+                >
+                  {n.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* CTA */}
