@@ -109,22 +109,23 @@ function Slide01Cover() {
         </div>
 
         <h1 className="font-bold leading-[1.05] mb-10"
-          style={{ fontSize: 104, color: `hsl(${C})` }}>
-          Can your team use
+          style={{ fontSize: 96, color: `hsl(${C})` }}>
+          Your AI has your documents.
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${AMBER}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
           }}>
-            LLMs effectively?
+            Does it have your expertise?
           </span>
         </h1>
 
-        <p className="mb-14 leading-relaxed max-w-[960px]"
-          style={{ fontSize: 38, color: `hsl(${MUT})` }}>
-          Most teams have access to the tools but no structure to use them well.
+        <p className="mb-14 leading-relaxed max-w-[1060px]"
+          style={{ fontSize: 36, color: `hsl(${MUT})` }}>
+          Companies load their best <strong style={{ color: `hsl(${C})` }}>explicit</strong> knowledge into AI. What stays locked away
+          is the <strong style={{ color: `hsl(${C})` }}>tacit layer</strong> — how your best people actually think, adapt, and decide.
           <br />
-          In a few weeks, you leave with <strong style={{ color: `hsl(${C})` }}>2 specific, executable playbooks</strong> your team can run tomorrow.
+          We surface that layer and turn it into <strong style={{ color: `hsl(${C})` }}>2 executable playbooks</strong> your team runs from day one.
         </p>
 
         <div className="flex items-center gap-8">
@@ -144,19 +145,19 @@ function Slide01Cover() {
 function Slide02Problem() {
   const pains = [
     {
-      icon: <Users style={{ width: 52, height: 52 }} />,
-      title: "The Tool Without the Method",
-      desc: "Every team has ChatGPT. Almost none have a structured way to use it. The result: wildly inconsistent outputs and no way to scale what works.",
+      icon: <BookOpen style={{ width: 52, height: 52 }} />,
+      title: "AI Already Loaded With Explicit Knowledge",
+      desc: "Most teams have connected AI to their documents, SOPs, and manuals. That's the easy part — and your competitors have done it too. Explicit knowledge is table stakes.",
+    },
+    {
+      icon: <Brain style={{ width: 52, height: 52 }} />,
+      title: "The Tacit Layer Is Still Locked Away",
+      desc: "What your best people actually do — their judgment calls, their heuristics, the way they adapt when things don't go to plan — none of that is in any document. So it never reaches the AI.",
     },
     {
       icon: <AlertTriangle style={{ width: 52, height: 52 }} />,
-      title: "The Prompt Wizard Problem",
-      desc: "One person on the team gets great results. Nobody knows why. Their method lives in their head — and can't be shared, taught, or replicated.",
-    },
-    {
-      icon: <BarChart3 style={{ width: 52, height: 52 }} />,
-      title: "The Advice Overload",
-      desc: "Everyone has an opinion on AI: frameworks, courses, tips. But nobody walks in and builds something specific that your team can execute on Monday morning.",
+      title: "Generic Output Despite Great Tools",
+      desc: "The result: AI that sounds competent but misses the nuance. It produces what the manual says, not what your expert would do. Good enough to demo. Not good enough to deploy.",
     },
   ];
 
@@ -167,14 +168,14 @@ function Slide02Problem() {
         style={{ background: `linear-gradient(180deg, hsl(${TEAL}), hsl(${AMBER}))` }} />
 
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
-        <Tag label="The Problem" />
-        <h2 className="font-bold mb-16" style={{ fontSize: 80, color: `hsl(${C})` }}>
-          Everyone talks AI.
+        <Tag label="The Real Problem" />
+        <h2 className="font-bold mb-14" style={{ fontSize: 72, color: `hsl(${C})` }}>
+          Your AI has your documents.
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(0 72% 63%), hsl(${AMBER}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>Nobody runs it.</span>
+          }}>It doesn't have your expertise.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-10">
@@ -182,8 +183,8 @@ function Slide02Problem() {
             <div key={i} className="rounded-2xl p-10 border"
               style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.15)` }}>
               <div className="mb-6" style={{ color: `hsl(${AMBER})` }}>{p.icon}</div>
-              <h3 className="font-bold mb-4" style={{ fontSize: 34, color: `hsl(${C})` }}>{p.title}</h3>
-              <p style={{ fontSize: 26, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{p.desc}</p>
+              <h3 className="font-bold mb-4" style={{ fontSize: 32, color: `hsl(${C})` }}>{p.title}</h3>
+              <p style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{p.desc}</p>
             </div>
           ))}
         </div>
@@ -201,21 +202,21 @@ function Slide03ICP() {
     {
       role: "Head of Operations / COO",
       firm: "Professional services firm (30–150 staff)",
-      pain: "\"We rolled out Copilot. People use it randomly. Some get great outputs. Most don't. Nothing is consistent.\"",
+      pain: "\"We have AI tools, we have a prompt library, people use it — but outputs are all over the place. Our best people still get better results than everyone else and we don't know why.\"",
       fit: "Primary Buyer",
       color: TEAL,
     },
     {
       role: "Managing Partner",
       firm: "Consulting or agency (10–60 consultants)",
-      pain: "\"I want AI in our workflow but I don't know how to make it part of our actual process, not just a toy people use on the side.\"",
+      pain: "\"I want AI to think like our best consultants, not like a smart intern who read our website. The gap is always in the judgment — the stuff that's never written down.\"",
       fit: "Primary Buyer",
       color: TEAL,
     },
     {
       role: "L&D / Enablement Lead",
       firm: "Scale-up or mid-market (post Series A)",
-      pain: "\"We've done the AI training. It didn't change behaviour. People need something they can actually pick up and use.\"",
+      pain: "\"We've done the AI training. People know how to prompt. But we haven't cracked how to capture what makes our seniors effective and make it replicable by juniors.\"",
       fit: "Strong Fit",
       color: AMBER,
     },
@@ -229,10 +230,10 @@ function Slide03ICP() {
 
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
         <Tag label="Ideal Client Profile" />
-        <h2 className="font-bold mb-16" style={{ fontSize: 80, color: `hsl(${C})` }}>
-          Teams that have the tools
+        <h2 className="font-bold mb-14" style={{ fontSize: 72, color: `hsl(${C})` }}>
+          You have tools. You may even have a process.
           <br />
-          <span style={{ color: `hsl(${TEAL})` }}>but not the system to use them.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>But you're missing the expert layer.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-10">
@@ -247,9 +248,9 @@ function Slide03ICP() {
                   {p.fit}
                 </span>
               </div>
-              <h3 className="font-bold mb-1" style={{ fontSize: 32, color: `hsl(${C})` }}>{p.role}</h3>
-              <p className="mb-6" style={{ fontSize: 22, color: `hsl(${MUT})` }}>{p.firm}</p>
-              <p className="italic" style={{ fontSize: 24, color: `hsl(210 18% 75%)`, lineHeight: 1.5 }}>{p.pain}</p>
+              <h3 className="font-bold mb-1" style={{ fontSize: 30, color: `hsl(${C})` }}>{p.role}</h3>
+              <p className="mb-6" style={{ fontSize: 20, color: `hsl(${MUT})` }}>{p.firm}</p>
+              <p className="italic" style={{ fontSize: 22, color: `hsl(210 18% 75%)`, lineHeight: 1.5 }}>{p.pain}</p>
             </div>
           ))}
         </div>
@@ -264,37 +265,71 @@ function Slide03ICP() {
 
 function Slide04Insight() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
       <div className="absolute left-0 top-0 bottom-0 w-[6px]"
         style={{ background: `linear-gradient(180deg, hsl(${TEAL}), hsl(${AMBER}))` }} />
 
-      {/* Big glow center */}
       <div className="absolute w-[800px] h-[800px] rounded-full opacity-[0.07]"
-        style={{ background: `radial-gradient(circle, hsl(${TEAL}), transparent 70%)` }} />
+        style={{ background: `radial-gradient(circle, hsl(${TEAL}), transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
 
-      <div className="relative z-10 text-center px-40 max-w-[1500px]">
-        <Tag label="The Core Insight" />
+      <div className="relative z-10 flex h-full">
+        {/* Left column — the concept */}
+        <div className="flex flex-col justify-center pl-[160px] pr-[80px] w-[960px] flex-shrink-0">
+          <Tag label="The Core Insight" />
+          <p className="font-bold leading-tight mb-10" style={{ fontSize: 74, color: `hsl(${C})` }}>
+            AI gives you access
+            <br />to explicit knowledge.
+            <br />
+            <span style={{
+              background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${AMBER}))`,
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+            }}>
+              We surface the tacit layer.
+            </span>
+          </p>
+          <p style={{ fontSize: 28, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
+            Every organisation has loaded AI with what's written down.
+            The gap — and the real value — is in what's <em style={{ color: `hsl(${C})` }}>not</em> written down:
+            the judgment, the heuristics, the way your best people adapt when reality doesn't match the plan.
+          </p>
+        </div>
 
-        <p className="font-bold leading-tight mb-12"
-          style={{ fontSize: 84, color: `hsl(${C})` }}>
-          LLMs don't fail because of the model.
-          <br />
-          <span style={{
-            background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${AMBER}))`,
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>
-            They fail because there's no playbook.
-          </span>
-        </p>
+        {/* Right column — the two-layer diagram */}
+        <div className="flex flex-col justify-center flex-1 pr-[120px] gap-6">
+          {/* Explicit block */}
+          <div className="rounded-2xl p-10 border" style={{ background: BG2, borderColor: `hsl(${MUT} / 0.2)` }}>
+            <div className="flex items-center gap-4 mb-4">
+              <BookOpen style={{ width: 36, height: 36, color: `hsl(${MUT})` }} />
+              <span className="font-bold tracking-widest uppercase" style={{ fontSize: 20, color: `hsl(${MUT})` }}>Explicit Layer — What AI Already Has</span>
+            </div>
+            <p style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
+              Documents · SOPs · Manuals · FAQs · Email templates<br />
+              <em>Your competitors have connected the same things.</em>
+            </p>
+          </div>
 
-        <p style={{ fontSize: 38, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
-          The teams that get consistent, high-quality AI output all share one thing:
-          <br />
-          <span style={{ color: `hsl(${C})` }}>a structured method for how they work with it — specific to their role, their context, their goals.</span>
-          <br /><br />
-          That method is what we build with you. <strong style={{ color: `hsl(${TEAL})` }}>Not a course. Not a framework. Two playbooks you can run.</strong>
-        </p>
+          {/* Arrow */}
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-[2px] h-8" style={{ background: `hsl(${TEAL} / 0.4)` }} />
+              <span style={{ fontSize: 20, color: `hsl(${TEAL})`, fontWeight: 600 }}>What we unlock</span>
+              <div className="w-[2px] h-8" style={{ background: `hsl(${TEAL} / 0.4)` }} />
+            </div>
+          </div>
+
+          {/* Tacit block */}
+          <div className="rounded-2xl p-10 border" style={{ background: `hsl(${TEAL} / 0.06)`, borderColor: `hsl(${TEAL} / 0.35)` }}>
+            <div className="flex items-center gap-4 mb-4">
+              <Brain style={{ width: 36, height: 36, color: `hsl(${TEAL})` }} />
+              <span className="font-bold tracking-widest uppercase" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>Tacit Layer — What Lives in Expert Heads</span>
+            </div>
+            <p style={{ fontSize: 24, color: `hsl(${C})`, lineHeight: 1.5 }}>
+              Judgment calls · Adaptive heuristics · Situational pattern-matching<br />
+              <em style={{ color: `hsl(${TEAL})` }}>Structured into executable playbooks — for everyone on the team.</em>
+            </p>
+          </div>
+        </div>
       </div>
 
       <Bar />
@@ -390,10 +425,11 @@ function Slide05Sprint() {
 
 function Slide06Differentiator() {
   const rows = [
-    { label: "AI Training / Courses", a: "Generic frameworks & videos", b: "Knowledge without application", us: false },
-    { label: "Traditional Consulting", a: "Slide decks & recommendations", b: "Strategy that gathers dust", us: false },
-    { label: "Prompt Engineering Consultants", a: "Better prompts for one person", b: "Still stuck at individual level", us: false },
-    { label: "AI Effectiveness Sprint", a: "2 tailored playbooks built with your team", b: "Consistent AI execution — for everyone", us: true },
+    { label: "Connect docs to AI (RAG/Copilot)", a: "Explicit layer only", b: "AI knows your manuals — not your judgment", us: false },
+    { label: "AI Training / Prompt Courses", a: "Explicit instruction on technique", b: "Individual skill, no institutional memory", us: false },
+    { label: "Bring in Another AI Tool", a: "Different interface, same explicit layer", b: "Better UI, same knowledge gap underneath", us: false },
+    { label: "Traditional Consulting", a: "Recommendations based on interviews", b: "A report — not a system that runs", us: false },
+    { label: "AI Effectiveness Sprint", a: "Surface & encode the tacit expert layer", b: "Playbooks that carry expert judgment — executable by anyone", us: true },
   ];
 
   return (
@@ -403,9 +439,11 @@ function Slide06Differentiator() {
         style={{ background: `linear-gradient(180deg, hsl(${TEAL}), hsl(${AMBER}))` }} />
 
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
-        <Tag label="Why Not The Others?" />
-        <h2 className="font-bold mb-14" style={{ fontSize: 78, color: `hsl(${C})` }}>
-          The gap no one else fills.
+        <Tag label="Why We're Different" />
+        <h2 className="font-bold mb-10" style={{ fontSize: 68, color: `hsl(${C})` }}>
+          Every approach gets you the explicit layer.
+          <br />
+          <span style={{ color: `hsl(${TEAL})` }}>Only we surface the tacit layer underneath.</span>
         </h2>
 
         <div className="rounded-2xl border overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.15)` }}>
