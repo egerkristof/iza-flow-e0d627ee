@@ -687,7 +687,7 @@ export default function EnterpriseDeck() {
 
   return (
     <div
-      className={cn("flex flex-col", fullscreen ? "fixed inset-0 z-50" : "min-h-screen")}
+      className={cn("flex flex-col", fullscreen ? "fixed inset-0 z-50" : "h-screen")}
       style={{ background: "hsl(222 22% 3%)" }}
     >
       {/* Grid overlay */}
