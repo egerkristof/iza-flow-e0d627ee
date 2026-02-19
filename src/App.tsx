@@ -16,6 +16,7 @@ import AdminPromptsPage from "./pages/AdminPrompts";
 import ResearchTemplatesPage from "./pages/ResearchTemplates";
 import ResourceEditorPage from "./pages/ResourceEditor";
 import NotFound from "./pages/NotFound";
+import PitchDeck from "./pages/PitchDeck";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
+            <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />
