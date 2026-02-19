@@ -19,6 +19,7 @@ import NotFound from "./pages/NotFound";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
+import EnterpriseDeck from "./pages/EnterpriseDeck";
 import LizaHome from "./pages/marketing/Home";
 import PlatformPage from "./pages/marketing/Platform";
 import AdvisoryPage from "./pages/marketing/Advisory";
@@ -60,6 +61,7 @@ const App = () => (
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/consulting" element={<ConsultingDeck />} />
+            <Route path="/enterprise" element={<EnterpriseDeck />} />
             <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />
