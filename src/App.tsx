@@ -17,6 +17,7 @@ import ResearchTemplatesPage from "./pages/ResearchTemplates";
 import ResourceEditorPage from "./pages/ResourceEditor";
 import NotFound from "./pages/NotFound";
 import PitchDeck from "./pages/PitchDeck";
+import InvestorDeck from "./pages/InvestorDeck";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
             <Route path="/pitch" element={<PitchDeck />} />
+            <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />
