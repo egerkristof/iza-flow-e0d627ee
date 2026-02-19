@@ -19,7 +19,7 @@ const roleLabels: Record<AppRole, string> = {
 };
 
 const navItems = [
-  { title: "Home", url: "/", icon: Home, hideForRoles: [] as string[] },
+  { title: "Home", url: "/app", icon: Home, hideForRoles: [] as string[] },
   { title: "Execute", url: "/workbooks", icon: BookOpen, hideForRoles: [] as string[] },
   { title: "Design", url: "/context", icon: Target, hideForRoles: ["operator"] },
   { title: "Research", url: "/research-templates", icon: Microscope, hideForRoles: ["operator"] },

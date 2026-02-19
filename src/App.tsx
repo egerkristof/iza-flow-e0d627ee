@@ -30,14 +30,14 @@ function ProtectedRoute({ children, blockedRoles }: { children: React.ReactNode;
   const { user, loading, activeRole } = useAuth();
   if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
   if (!user) return <Navigate to="/auth" replace />;
-  if (blockedRoles?.includes(activeRole)) return <Navigate to="/" replace />;
+  if (blockedRoles?.includes(activeRole)) return <Navigate to="/app" replace />;
   return <AppLayout>{children}</AppLayout>;
 }
 
 function AuthRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) return null;
-  if (user) return <Navigate to="/" replace />;
+  if (user) return <Navigate to="/app" replace />;
   return <>{children}</>;
 }
 
@@ -50,6 +50,7 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
+            <Route path="/" element={<LizaHome />} />
             <Route path="/liza" element={<LizaHome />} />
             <Route path="/platform" element={<PlatformPage />} />
             <Route path="/advisory" element={<AdvisoryPage />} />
@@ -57,7 +58,7 @@ const App = () => (
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/consulting" element={<ConsultingDeck />} />
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />
             <Route path="/workbooks/:workbookId/resources/:resourceId" element={<ProtectedRoute><ResourceEditorPage /></ProtectedRoute>} />
