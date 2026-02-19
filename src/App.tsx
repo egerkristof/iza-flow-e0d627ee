@@ -19,6 +19,10 @@ import NotFound from "./pages/NotFound";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
+import LizaHome from "./pages/marketing/Home";
+import PlatformPage from "./pages/marketing/Platform";
+import AdvisoryPage from "./pages/marketing/Advisory";
+import ManifestoPage from "./pages/marketing/Manifesto";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +50,10 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
+            <Route path="/liza" element={<LizaHome />} />
+            <Route path="/platform" element={<PlatformPage />} />
+            <Route path="/advisory" element={<AdvisoryPage />} />
+            <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/consulting" element={<ConsultingDeck />} />

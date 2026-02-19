@@ -100,6 +100,27 @@ export type Database = {
         }
         Relationships: []
       }
+      beta_signups: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          role_description: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          role_description?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          role_description?: string | null
+        }
+        Relationships: []
+      }
       bundle_domains: {
         Row: {
           bundle_id: string
