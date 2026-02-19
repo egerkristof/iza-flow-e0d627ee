@@ -671,6 +671,21 @@ export default function EnterpriseDeck() {
   const prev = () => setCurrent(c => Math.max(0, c - 1));
   const next = () => setCurrent(c => Math.min(TOTAL - 1, c + 1));
 
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 50) {
+      delta > 0 ? next() : prev();
+    }
+    touchStartX.current = null;
+  };
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); next(); }
@@ -762,7 +777,12 @@ export default function EnterpriseDeck() {
 
       {/* Slide */}
       {!grid && (
-        <div className="flex-1 relative" style={{ minHeight: 0 }}>
+        <div
+          className="flex-1 relative"
+          style={{ minHeight: 0 }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <ScaledSlide>
             <SlideComponent />
           </ScaledSlide>
