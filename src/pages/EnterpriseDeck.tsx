@@ -493,7 +493,7 @@ function Slide09BeforeAfter() {
       <div className="relative z-10 flex flex-col justify-center h-full pl-[160px] pr-[120px]">
         <Tag label="The Shift" />
         <h2 className="font-black mb-12" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          One day. Measurable change.
+          Structured engagement. Lasting change.
         </h2>
 
         <div className="grid grid-cols-2 gap-5">
