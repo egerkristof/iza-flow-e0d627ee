@@ -95,33 +95,28 @@ function Slide01Cover() {
           </span>
         </div>
 
-        <h1 className="font-black leading-[1.02] mb-10" style={{ fontSize: 88, color: `hsl(${C})` }}>
+        <h1 className="font-black leading-[1.05] mb-10" style={{ fontSize: 96, color: `hsl(${C})` }}>
           Your teams are using AI.
-          <br />Nobody knows how.
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${PRI}), hsl(${GRN}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
           }}>
-            We help you build the system.
+            Nobody governs how.
           </span>
         </h1>
 
-        <p style={{ fontSize: 30, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 880 }}>
-          A structured engagement where we work directly with your teams — mapping workflows, surfacing tacit knowledge, and turning it into a shared operating model that governs how AI gets used.
+        <p style={{ fontSize: 32, color: `hsl(${MUT})`, lineHeight: 1.55, maxWidth: 820 }}>
+          We work with your teams to map how work actually happens — and turn it into a shared AI operating model your organisation keeps.
         </p>
 
-        <div className="flex items-center gap-6 mt-14">
+        <div className="flex items-center gap-5 mt-12">
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border font-semibold"
             style={{ fontSize: 20, borderColor: `hsl(${PRI} / 0.4)`, background: `hsl(${PRI} / 0.08)`, color: `hsl(${PRI})` }}>
-            <GitBranch size={18} /> Multi-session engagement
+            <Users size={18} /> Team-level engagement
           </span>
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border font-semibold"
             style={{ fontSize: 20, borderColor: `hsl(${GRN} / 0.4)`, background: `hsl(${GRN} / 0.08)`, color: `hsl(${GRN})` }}>
-            <Users size={18} /> Team-level, not individual
-          </span>
-          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border font-semibold"
-            style={{ fontSize: 20, borderColor: `hsl(${AMB} / 0.4)`, background: `hsl(${AMB} / 0.08)`, color: `hsl(${AMB})` }}>
             <FileText size={18} /> Infrastructure you keep
           </span>
         </div>
@@ -130,14 +125,14 @@ function Slide01Cover() {
       {/* Right — urgency stats */}
       <div className="flex flex-col justify-center flex-1 pr-[100px] gap-6 relative z-10">
         {[
-          { stat: "78%", desc: "of enterprise employees are using AI tools their employer hasn't approved", col: RED },
-          { stat: "14×", desc: "variance in output quality when AI is used without shared standards", col: AMB },
-          { stat: "0%", desc: "of those sessions feed back into institutional knowledge — it evaporates", col: PRI },
+          { stat: "78%", label: "Using unapproved AI tools", col: RED },
+          { stat: "14×", label: "Output variance with no shared standard", col: AMB },
+          { stat: "0%", label: "Feeds back into institutional knowledge", col: PRI },
         ].map((item, i) => (
           <div key={i} className="rounded-2xl px-10 py-8 border"
             style={{ background: BG2, borderColor: `hsl(${item.col} / 0.2)` }}>
-            <p className="font-black mb-2" style={{ fontSize: 64, color: `hsl(${item.col})`, lineHeight: 1 }}>{item.stat}</p>
-            <p style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{item.desc}</p>
+            <p className="font-black mb-3" style={{ fontSize: 72, color: `hsl(${item.col})`, lineHeight: 1 }}>{item.stat}</p>
+            <p className="font-semibold" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.4 }}>{item.label}</p>
           </div>
         ))}
       </div>
