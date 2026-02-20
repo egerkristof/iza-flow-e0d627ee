@@ -1,22 +1,22 @@
-import teamPhoto from "@/assets/team-photo.png";
-
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
-// ── Update these with real headshots and LinkedIn URLs ──────────────────────
+// ── Update LinkedIn URLs and add photos when available ──────────────────────
 const TEAM = [
   {
-    name: "Kristof Eger",
-    role: "Co-founder & CEO",
-    bio: "Operator and strategist who has spent the last decade building and scaling knowledge-intensive teams. Obsessed with the gap between how experts actually think and how organisations try to capture it.",
-    linkedin: "https://linkedin.com/in/kristofeger", // ← replace with real URL
-    initials: "KE",
+    name: "István Boscha",
+    role: "Data & AI Implementation",
+    bio: "Founder of a Google Cloud Service partner firm. 15 years implementing data and AI solutions for digital transformation.\n\nThe core of differentiation: what no one else has vs. what digital technologies can automate.",
+    linkedin: "https://linkedin.com", // ← replace with real URL
+    initials: "IB",
+    photo: null as string | null,
   },
   {
-    name: "Co-founder",
-    role: "Co-founder & CTO",
-    bio: "Builder of the AACE engine — the architecture that turns tacit expertise into governed, executable systems. Brings rigour from years at the intersection of AI research and enterprise software.",
-    linkedin: "https://linkedin.com", // ← replace with real URL
-    initials: "CF",
+    name: "Kristóf Éger",
+    role: "Business Model Innovation",
+    bio: "Business model innovation advisor and executive coach with years of experience defining and scaling business value.\n\nConnecting unique expertise to business outcomes—scaling what makes organizations irreplaceable: their best people.",
+    linkedin: "https://linkedin.com/in/kristofeger", // ← replace with real URL
+    initials: "KÉ",
+    photo: null as string | null,
   },
 ];
 
@@ -26,18 +26,16 @@ interface TeamSectionProps {
 }
 
 export function TeamSection({ dark = false }: TeamSectionProps) {
-  const BG      = dark ? "hsl(222 18% 8%)"  : "hsl(var(--card))";
-  const C       = dark ? "210 18% 92%"       : "var(--foreground)";
-  const MUT     = dark ? "215 10% 50%"       : "var(--muted-foreground)";
-  const PRI     = "200 90% 52%";
-  const GRN     = "155 72% 46%";
+  const BG  = dark ? "hsl(222 18% 8%)"  : "hsl(var(--card))";
+  const C   = dark ? "210 18% 92%"       : "var(--foreground)";
+  const MUT = dark ? "215 10% 50%"       : "var(--muted-foreground)";
+  const PRI = "200 90% 52%";
+  const GRN = "155 72% 46%";
 
   return (
-    <section
-      className="py-24 px-6"
-      style={{ background: BG }}
-    >
+    <section className="py-24 px-6" style={{ background: BG }}>
       <div className="max-w-5xl mx-auto">
+
         {/* Header */}
         <div className="text-center mb-16">
           <p
@@ -48,7 +46,7 @@ export function TeamSection({ dark = false }: TeamSectionProps) {
               background: `hsl(${PRI} / 0.06)`,
             }}
           >
-            Who's behind this
+            From the creators of LizaOS
           </p>
           <h2
             className="font-black mb-4 leading-tight"
@@ -57,33 +55,18 @@ export function TeamSection({ dark = false }: TeamSectionProps) {
               color: dark ? `hsl(${C})` : "hsl(var(--foreground))",
             }}
           >
-            Practitioners, not theorists.
+            Who's behind this
           </h2>
           <p
             className="text-lg max-w-xl mx-auto"
             style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))", lineHeight: 1.7 }}
           >
-            LIZA OS was built because we ran into the same problem ourselves. We know what it's like to have senior judgment that can't scale — and we built the infrastructure to fix it.
+            4 years building infrastructure for complex human work.
           </p>
         </div>
 
-        {/* Team photo */}
-        <div className="mb-16 rounded-2xl overflow-hidden border relative"
-          style={{ borderColor: `hsl(${PRI} / 0.15)` }}>
-          <img
-            src={teamPhoto}
-            alt="The LIZA OS founding team"
-            className="w-full object-cover"
-            style={{ maxHeight: "420px", objectPosition: "center top" }}
-          />
-          <div
-            className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-            style={{ background: `linear-gradient(to top, ${BG}, transparent)` }}
-          />
-        </div>
-
         {/* Individual cards */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
           {TEAM.map((member) => (
             <div
               key={member.name}
@@ -98,17 +81,25 @@ export function TeamSection({ dark = false }: TeamSectionProps) {
                 style={{ background: `linear-gradient(90deg, hsl(${PRI}), hsl(${GRN}))` }}
               />
               <div className="flex items-center gap-4">
-                {/* Avatar placeholder — swap for <img src={member.photo} /> once you have headshots */}
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center font-black text-lg shrink-0"
-                  style={{
-                    background: `linear-gradient(135deg, hsl(${PRI} / 0.25), hsl(${GRN} / 0.2))`,
-                    color: `hsl(${PRI})`,
-                    border: `2px solid hsl(${PRI} / 0.3)`,
-                  }}
-                >
-                  {member.initials}
-                </div>
+                {member.photo ? (
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="w-14 h-14 rounded-full object-cover shrink-0"
+                    style={{ border: `2px solid hsl(${PRI} / 0.3)` }}
+                  />
+                ) : (
+                  <div
+                    className="w-14 h-14 rounded-full flex items-center justify-center font-black text-lg shrink-0"
+                    style={{
+                      background: `linear-gradient(135deg, hsl(${PRI} / 0.25), hsl(${GRN} / 0.2))`,
+                      color: `hsl(${PRI})`,
+                      border: `2px solid hsl(${PRI} / 0.3)`,
+                    }}
+                  >
+                    {member.initials}
+                  </div>
+                )}
                 <div>
                   <p
                     className="font-black text-lg leading-tight"
@@ -116,20 +107,24 @@ export function TeamSection({ dark = false }: TeamSectionProps) {
                   >
                     {member.name}
                   </p>
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: `hsl(${PRI})` }}
-                  >
+                  <p className="text-sm font-semibold" style={{ color: `hsl(${PRI})` }}>
                     {member.role}
                   </p>
                 </div>
               </div>
-              <p
-                className="text-sm leading-relaxed flex-1"
-                style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
-              >
-                {member.bio}
-              </p>
+
+              <div className="flex flex-col gap-3">
+                {member.bio.split("\n\n").map((para, i) => (
+                  <p
+                    key={i}
+                    className="text-sm leading-relaxed"
+                    style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
+                  >
+                    {para}
+                  </p>
+                ))}
+              </div>
+
               <a
                 href={member.linkedin}
                 target="_blank"
@@ -144,6 +139,56 @@ export function TeamSection({ dark = false }: TeamSectionProps) {
               </a>
             </div>
           ))}
+        </div>
+
+        {/* Why we built it */}
+        <div
+          className="rounded-2xl border p-10 relative overflow-hidden"
+          style={{
+            background: dark ? `hsl(${PRI} / 0.04)` : "hsl(var(--background))",
+            borderColor: `hsl(${PRI} / 0.18)`,
+          }}
+        >
+          <div
+            className="absolute top-0 left-0 right-0 h-[2px]"
+            style={{ background: `linear-gradient(90deg, hsl(${GRN}), hsl(${PRI}))` }}
+          />
+          <h3
+            className="font-black text-xl mb-4"
+            style={{ color: dark ? `hsl(${C})` : "hsl(var(--foreground))" }}
+          >
+            Why we built LizaOS
+          </h3>
+          <div className="flex flex-col gap-3 mb-6">
+            <p
+              className="text-sm leading-relaxed"
+              style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
+            >
+              We kept seeing the same pattern: firms full of senior expertise, but no way to scale it. The knowledge stayed trapped in heads. Handoffs broke. Junior team members couldn't execute with the same judgment.
+            </p>
+            <p
+              className="text-sm leading-relaxed"
+              style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
+            >
+              Existing tools—Jira, Asana, Notion—capture tasks, not thinking. They miss the decisions, the pattern recognition, the "why" that makes expert work valuable.
+            </p>
+            <p
+              className="text-sm leading-relaxed"
+              style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
+            >
+              So we built infrastructure specifically for this: execution systems that capture and run on tacit human knowledge. Not documentation—working systems.
+            </p>
+          </div>
+          <div
+            className="rounded-xl p-5 text-sm"
+            style={{
+              background: `hsl(${GRN} / 0.08)`,
+              borderLeft: `3px solid hsl(${GRN})`,
+              color: dark ? `hsl(${C})` : "hsl(var(--foreground))",
+            }}
+          >
+            <span className="font-bold">Recent engagement:</span> 6 months with an 80-person B2B marketing agency. First knowledge product in 4 weeks. <span className="font-bold">35% avg. productivity gain</span> per product deployed.
+          </div>
         </div>
 
         {/* Bottom trust nudge */}
@@ -162,6 +207,7 @@ export function TeamSection({ dark = false }: TeamSectionProps) {
             </a>
           </p>
         </div>
+
       </div>
     </section>
   );
