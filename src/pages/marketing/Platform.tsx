@@ -243,9 +243,6 @@ export default function PlatformPage() {
           <p className="text-lg mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
             LIZA OS makes your expertise run — consistently, at scale, without you in the room. Not stored. Not searchable. <span className="text-foreground font-medium">Executable.</span>
           </p>
-          <p className="text-base mb-10 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            A holistic operating system that synthesises the fluid reality of human collaboration with the precision of digitalised processes.
-          </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href={CAL_URL}
