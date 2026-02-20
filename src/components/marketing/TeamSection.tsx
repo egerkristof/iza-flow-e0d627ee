@@ -141,56 +141,6 @@ export function TeamSection({ dark = false }: TeamSectionProps) {
           ))}
         </div>
 
-        {/* Why we built it */}
-        <div
-          className="rounded-2xl border p-10 relative overflow-hidden"
-          style={{
-            background: dark ? `hsl(${PRI} / 0.04)` : "hsl(var(--background))",
-            borderColor: `hsl(${PRI} / 0.18)`,
-          }}
-        >
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{ background: `linear-gradient(90deg, hsl(${GRN}), hsl(${PRI}))` }}
-          />
-          <h3
-            className="font-black text-xl mb-4"
-            style={{ color: dark ? `hsl(${C})` : "hsl(var(--foreground))" }}
-          >
-            Why we built LizaOS
-          </h3>
-          <div className="flex flex-col gap-3 mb-6">
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
-            >
-              We kept seeing the same pattern: firms full of senior expertise, but no way to scale it. The knowledge stayed trapped in heads. Handoffs broke. Junior team members couldn't execute with the same judgment.
-            </p>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
-            >
-              Existing tools—Jira, Asana, Notion—capture tasks, not thinking. They miss the decisions, the pattern recognition, the "why" that makes expert work valuable.
-            </p>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: dark ? `hsl(${MUT})` : "hsl(var(--muted-foreground))" }}
-            >
-              So we built infrastructure specifically for this: execution systems that capture and run on tacit human knowledge. Not documentation—working systems.
-            </p>
-          </div>
-          <div
-            className="rounded-xl p-5 text-sm"
-            style={{
-              background: `hsl(${GRN} / 0.08)`,
-              borderLeft: `3px solid hsl(${GRN})`,
-              color: dark ? `hsl(${C})` : "hsl(var(--foreground))",
-            }}
-          >
-            <span className="font-bold">Recent engagement:</span> 6 months with an 80-person B2B marketing agency. First knowledge product in 4 weeks. <span className="font-bold">35% avg. productivity gain</span> per product deployed.
-          </div>
-        </div>
-
         {/* Bottom trust nudge */}
         <div className="mt-12 text-center">
           <p
