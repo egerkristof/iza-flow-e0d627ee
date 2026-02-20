@@ -62,9 +62,6 @@ function Hero() {
               What they actually pay for — the pattern recognition, contextual judgment, and heuristics your seniors carry — was never written down.{" "}
               <span className="font-semibold" style={{ color: "hsl(var(--foreground))" }}>We help you change that. In 4 weeks.</span>
             </p>
-            <p className="text-base leading-relaxed mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Because the best-run firms don't just deliver faster — they create the conditions where their people's best thinking can finally scale.
-            </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={CAL_URL}

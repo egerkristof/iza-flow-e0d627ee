@@ -51,9 +51,6 @@ function Hero() {
         <p className="text-base mb-6 max-w-xl mx-auto" style={{ color: `hsl(${MUT})` }}>
           We build the operating model that changes that. In weeks, not years.
         </p>
-        <p className="text-base mb-12 max-w-xl mx-auto" style={{ color: `hsl(${MUT})` }}>
-          Because the best-run organisations don't just execute faster — they create the conditions where their people do their best work.
-        </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
