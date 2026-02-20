@@ -109,6 +109,27 @@ function Hero() {
   );
 }
 
+// ── Our Story ─────────────────────────────────────────────────────────────────
+
+function OurStory() {
+  return (
+    <section className="py-28 px-6">
+      <div className="max-w-3xl mx-auto">
+        <SectionTag>Our Story</SectionTag>
+        <p className="text-2xl md:text-3xl font-semibold leading-relaxed mb-8">
+          Collaborating with our partners, we kept seeing the same pattern: companies are full of senior expertise, but struggling to scale it.
+        </p>
+        <p className="text-base md:text-lg leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
+          The knowledge stayed trapped in heads. Handoffs broke. Junior team members couldn't execute with the same judgment. Existing tools capture tasks, not thinking — they miss the decisions, the pattern recognition, the "why" that makes expert work valuable.
+        </p>
+        <p className="text-base md:text-lg leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
+          So we built infrastructure specifically for this: execution systems that capture and run on tacit human knowledge. Not just documentation, but working systems.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // ── The Problem ───────────────────────────────────────────────────────────────
 
 function TheProblem() {
@@ -233,7 +254,7 @@ function WhatLizaIs() {
             <GradientText>for complex organisations.</GradientText>
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Not another task manager. Not a knowledge base. LIZA OS is the operating layer where human expertise meets structured execution.
+            LIZA synthesises the fluid reality of human collaboration with the precision of structured process. Not another tool — a working system.
           </p>
         </div>
 
@@ -490,6 +511,7 @@ export default function LizaHome() {
   return (
     <MarketingLayout>
       <Hero />
+      <OurStory />
       <TheProblem />
       <WhatLizaIs />
       <Purpose />
