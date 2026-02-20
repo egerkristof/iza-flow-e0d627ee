@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import {
   Brain, ArrowRight, CheckCircle2, XCircle, AlertTriangle,
   Users, Shield, TrendingUp, Layers, Lock, Award, BookOpen,
@@ -17,26 +18,7 @@ const AMB  = "38 92% 55%";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
-// ─── Nav ──────────────────────────────────────────────────────────────────────
-function Nav() {
-  return (
-    <header className="sticky top-0 z-50 border-b"
-      style={{ background: "hsl(222 22% 4% / 0.95)", borderColor: "hsl(222 18% 10%)", backdropFilter: "blur(12px)" }}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm"
-            style={{ background: `linear-gradient(135deg, hsl(${PRI}), hsl(${GRN}))`, color: "hsl(222 22% 5%)" }}>L</div>
-          <span className="font-bold text-lg tracking-tight" style={{ color: `hsl(${C})` }}>LIZA <span style={{ color: `hsl(${MUT})`, fontWeight: 400 }}>OS</span></span>
-        </Link>
-        <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
-          style={{ background: `hsl(${PRI})`, color: "hsl(222 22% 5%)" }}>
-          Book a scoping call <ArrowRight size={14} />
-        </a>
-      </div>
-    </header>
-  );
-}
+
 
 // ─── HERO ─────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -952,24 +934,11 @@ function LogoStrip() {
   );
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer className="py-8 border-t" style={{ background: BG, borderColor: "hsl(222 18% 10%)" }}>
-      <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <span className="font-black tracking-widest text-sm" style={{ color: `hsl(${PRI})` }}>LIZA OS</span>
-        <p className="text-xs" style={{ color: `hsl(${MUT})` }}>AI Operating Model Programme · Enterprise</p>
-        <Link to="/" className="text-xs hover:opacity-80" style={{ color: `hsl(${MUT})` }}>← Back to liza.ai</Link>
-      </div>
-    </footer>
-  );
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function EnterpriseDeck() {
   return (
-    <div style={{ background: BG }}>
-      <Nav />
+    <MarketingLayout>
       <Hero />
       <MaturityInfographic />
       <LizaDifferentiator />
@@ -979,7 +948,6 @@ export default function EnterpriseDeck() {
       <AvoidFailure />
       <Success />
       <LogoStrip />
-      <Footer />
-    </div>
+    </MarketingLayout>
   );
 }
