@@ -292,32 +292,128 @@ function TheProgramme() {
   );
 }
 
-// ─── Programme Structure ──────────────────────────────────────────────────────
-function ProgrammeStructure() {
-  const phases = [
-    { n: "Phase 1", title: "Workflow Discovery", desc: "We embed with your teams to observe how work is done and surface the undocumented judgment calls. Make the invisible visible.", col: RED },
-    { n: "Phase 2", title: "Knowledge Mapping", desc: "Structured workshops to externalise what we found — decision logic, quality standards, and operating principles articulated by the people who hold them.", col: AMB },
-    { n: "Phase 3", title: "Operating Model Design", desc: "Those insights become usable artefacts: workflow protocols, AI usage standards, governance checkpoints, and a shared vocabulary.", col: PRI },
-    { n: "Phase 4", title: "Embed & Activate", desc: "The model goes live in LIZA OS. Teams run protocols. Knowledge compounds. The operating model becomes how work happens — not a document.", col: GRN },
+// ─── Seven-Step Story ─────────────────────────────────────────────────────────
+function SevenSteps() {
+  const steps = [
+    {
+      n: "01",
+      phase: "Surface",
+      title: "Diagnose the real workflow",
+      desc: "We embed with your teams — not to audit, but to observe. We map how work actually gets done: the shortcuts, the judgment calls, the knowledge that lives only in people's heads.",
+      outcome: "A clear picture of where AI is already happening and where it's creating invisible risk.",
+      col: RED,
+    },
+    {
+      n: "02",
+      phase: "Surface",
+      title: "Name the gaps",
+      desc: "We identify where inconsistency lives. Not the obvious stuff — the subtle divergences in quality, the decisions that aren't documented, the standards your best people apply instinctively but can't explain.",
+      outcome: "A prioritised map of the highest-value knowledge your organisation hasn't captured yet.",
+      col: RED,
+    },
+    {
+      n: "03",
+      phase: "Structure",
+      title: "Externalise expert judgment",
+      desc: "Structured sessions with your senior leads. We draw out their mental models — the heuristics, frameworks, and decision logic that define 'good' in your context — and turn them into shareable artefacts.",
+      outcome: "Your team's tacit knowledge, made explicit and ready to use.",
+      col: AMB,
+    },
+    {
+      n: "04",
+      phase: "Structure",
+      title: "Design the operating model",
+      desc: "The raw insights become a coherent system: agreed workflow protocols, AI usage standards, governance checkpoints, and a shared vocabulary. Co-authored by the people who will use it.",
+      outcome: "A draft operating model that reflects how your function actually works — not a generic template.",
+      col: AMB,
+    },
+    {
+      n: "05",
+      phase: "Structure",
+      title: "Build the governance layer",
+      desc: "Define what's appropriate, what's risky, and who decides. Escalation paths. Ownership rules. Compliance guardrails. A framework your managers can explain to any exec without hesitation.",
+      outcome: "AI governance your organisation owns — not borrowed from a policy document.",
+      col: PRI,
+    },
+    {
+      n: "06",
+      phase: "Embed",
+      title: "Activate in LIZA OS",
+      desc: "The operating model goes live. Protocols are runnable. Context is loaded. Teams execute against shared standards — not individual instinct. The system gets smarter with every use.",
+      outcome: "Your operating model is no longer a document. It's how work gets done.",
+      col: GRN,
+    },
+    {
+      n: "07",
+      phase: "Embed",
+      title: "Compound and scale",
+      desc: "Every execution feeds back in. Learnings are captured. The model evolves with the organisation. New hires onboard to a defined standard. Your function's quality floor rises — permanently.",
+      outcome: "Institutional knowledge that compounds. A function that gets better without depending on any single person.",
+      col: GRN,
+    },
   ];
+
+  const phaseColors: Record<string, string> = { Surface: RED, Structure: AMB, Embed: GRN };
 
   return (
     <section className="py-24" style={{ background: BG }}>
       <div className="max-w-6xl mx-auto px-6">
-        <SectionTag label="Programme Structure" />
-        <h2 className="font-black mb-14" style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
-          Four phases. One coherent system.
+        <SectionTag label="The Programme: Step by Step" />
+        <h2 className="font-black mb-4" style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
+          Seven steps. One governing system.
         </h2>
+        <p className="text-lg mb-14 max-w-2xl" style={{ color: `hsl(${MUT})`, lineHeight: 1.65 }}>
+          Not a workshop. Not a toolkit. A structured engagement that moves from observation to an operating model your team actually runs on.
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {phases.map(({ n, title, desc, col }) => (
-            <div key={title} className="rounded-2xl p-8 border relative overflow-hidden"
-              style={{ background: `hsl(${col} / 0.05)`, borderColor: `hsl(${col} / 0.22)` }}>
-              <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${col})` }} />
-              <p className="font-bold tracking-widest uppercase text-xs mb-3" style={{ color: `hsl(${col})` }}>{n}</p>
-              <h3 className="font-black text-2xl mb-3" style={{ color: `hsl(${C})` }}>{title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: `hsl(${MUT})` }}>{desc}</p>
-            </div>
+        <div className="relative">
+          {/* Vertical connector line */}
+          <div className="absolute left-[2.375rem] top-8 bottom-8 w-px hidden md:block"
+            style={{ background: `linear-gradient(to bottom, hsl(${RED} / 0.4), hsl(${AMB} / 0.4), hsl(${GRN} / 0.4))` }} />
+
+          <div className="flex flex-col gap-5">
+            {steps.map((step, i) => (
+              <div key={i} className="flex gap-6 items-start group">
+                {/* Step badge */}
+                <div className="relative shrink-0 z-10">
+                  <div className="w-[4.75rem] h-[4.75rem] rounded-2xl border flex flex-col items-center justify-center"
+                    style={{ background: `hsl(${step.col} / 0.1)`, borderColor: `hsl(${step.col} / 0.35)` }}>
+                    <span className="font-black text-lg leading-none" style={{ color: `hsl(${step.col})` }}>{step.n}</span>
+                    <span className="font-bold tracking-widest uppercase text-[9px] mt-0.5" style={{ color: `hsl(${step.col} / 0.7)` }}>{step.phase}</span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 rounded-2xl border px-7 py-6 relative overflow-hidden"
+                  style={{ background: `hsl(${step.col} / 0.04)`, borderColor: `hsl(${step.col} / 0.18)` }}>
+                  <div className="absolute top-0 left-0 bottom-0 w-[3px]" style={{ background: `hsl(${step.col})` }} />
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:gap-8">
+                    <div className="flex-1">
+                      <h3 className="font-black text-lg mb-2" style={{ color: `hsl(${C})` }}>{step.title}</h3>
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: `hsl(${MUT})` }}>{step.desc}</p>
+                    </div>
+                    <div className="shrink-0 sm:max-w-[260px]">
+                      <div className="rounded-xl border px-4 py-3"
+                        style={{ background: `hsl(${step.col} / 0.07)`, borderColor: `hsl(${step.col} / 0.25)` }}>
+                        <p className="font-bold tracking-widest uppercase text-[10px] mb-1" style={{ color: `hsl(${step.col})` }}>Output</p>
+                        <p className="text-sm font-semibold leading-snug" style={{ color: `hsl(${C} / 0.85)` }}>{step.outcome}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Phase legend */}
+        <div className="flex flex-wrap gap-4 mt-10">
+          {Object.entries(phaseColors).map(([phase, col]) => (
+            <span key={phase} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-semibold"
+              style={{ borderColor: `hsl(${col} / 0.35)`, background: `hsl(${col} / 0.07)`, color: `hsl(${col})` }}>
+              <span className="w-2 h-2 rounded-full" style={{ background: `hsl(${col})` }} />
+              {phase}
+            </span>
           ))}
         </div>
       </div>
@@ -568,7 +664,7 @@ export default function EnterpriseDeck() {
       <Signals />
       <WhyTraining />
       <TheProgramme />
-      <ProgrammeStructure />
+      <SevenSteps />
       <Deliverables />
       <WhoFor />
       <BeforeAfter />
