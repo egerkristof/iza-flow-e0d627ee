@@ -162,6 +162,21 @@ export default function ManifestoPage() {
           "Turn judgment into infrastructure. That's the mandate."
         </Pull>
 
+        {/* Values closing */}
+        <H2>What We Are Building Toward</H2>
+
+        <P>
+          We are here to build, not just react. While others respond to the market, we are architecting where it goes next — toward a future where the collective whole is exponentially greater than the sum of its parts.
+        </P>
+
+        <P>
+          We believe that human dignity sits at the core of every AI-driven decision. The best-run organisations of the next decade won't just execute faster — they will create the conditions where their people do their best work. That is what we mean by infrastructure.
+        </P>
+
+        <Pull>
+          "Turn intentions into outcomes. Create the space where human potential truly comes to life."
+        </Pull>
+
         {/* CTA */}
         <div
           className="relative mt-16 rounded-2xl p-10 border text-center overflow-hidden"
