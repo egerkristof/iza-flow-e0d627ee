@@ -175,7 +175,10 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
         </div>
         <div className="max-w-7xl mx-auto px-6 py-6 border-t flex items-center justify-between" style={{ borderColor: "hsl(222 14% 13%)" }}>
           <p className="text-xs" style={{ color: "hsl(var(--muted-foreground))" }}>© 2025 LIZA OS. All rights reserved.</p>
-          <p className="text-xs brand-gradient-text font-semibold">Turn judgment into infrastructure.</p>
+          <div className="flex items-center gap-4">
+            <a href="mailto:kristof.eger@lizaos.ai" className="text-xs hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>kristof.eger@lizaos.ai</a>
+            <p className="text-xs brand-gradient-text font-semibold">Turn judgment into infrastructure.</p>
+          </div>
         </div>
       </footer>
     </div>
