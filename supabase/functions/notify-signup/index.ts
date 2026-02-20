@@ -32,7 +32,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'LIZA OS <onboarding@resend.dev>',
+        from: 'LIZA OS <invite@invite.lizaos.ai>',
         to: ['kristof.eger@lizaos.ai', 'istvan.boscha@aliz.ai'],
         subject: `New beta signup: ${email}`,
         html,
