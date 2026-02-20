@@ -42,6 +42,15 @@ function BetaForm() {
         .insert({ email, role_description: role });
 
       if (dbErr) throw dbErr;
+
+      // Fire email notification (best-effort, don't block on failure)
+      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+      fetch(`https://${projectId}.supabase.co/functions/v1/notify-signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, role_description: role }),
+      }).catch(() => {/* silent */});
+
       setSubmitted(true);
     } catch {
       setSubmitted(true);
