@@ -964,8 +964,8 @@ export default function EnterpriseDeck() {
       <Nav />
       <Hero />
       <MaturityInfographic />
-      <Proof />
       <Guide />
+      <Proof />
       <Plan />
       <AvoidFailure />
       <Success />
