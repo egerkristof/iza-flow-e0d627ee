@@ -98,6 +98,228 @@ function Character() {
   );
 }
 
+// ─── AI MATURITY LADDER ───────────────────────────────────────────────────────
+// "You are here. Here is where you could be."
+function MaturityLadder() {
+  const levels = [
+    {
+      n: 5,
+      label: "Organisational Intelligence",
+      desc: "AI compounds institutional knowledge. Every execution makes the system smarter. The organisation learns as a living entity.",
+      sub: "The compounding organisation",
+      col: GRN,
+      destination: true,
+    },
+    {
+      n: 4,
+      label: "Governed AI Operating Model",
+      desc: "Shared standards, codified judgment, governed usage. AI is loaded with your context and runs on agreed protocols.",
+      sub: "Where we take you",
+      col: PRI,
+      destination: true,
+    },
+    {
+      n: 3,
+      label: "Workflow Integration",
+      desc: "AI is embedded in specific workflows. Some teams have standards. But it's siloed, undocumented, and fragile.",
+      sub: "Patchy adoption",
+      col: AMB,
+      destination: false,
+    },
+    {
+      n: 2,
+      label: "Departmental Tools",
+      desc: "Departments have adopted AI tools. Productivity gains exist. But every person uses them differently — same brief, different outputs.",
+      sub: "Individual improvisation",
+      col: AMB,
+      destination: false,
+    },
+    {
+      n: 1,
+      label: "Chatbot Usage",
+      desc: "AI is treated like a search engine. Individuals prompt for answers. No shared standards, no memory, no governance, no institutional benefit.",
+      sub: "This is most organisations right now",
+      col: RED,
+      destination: false,
+      current: true,
+    },
+  ];
+
+  return (
+    <section className="py-28 relative overflow-hidden" style={{ background: BG2 }}>
+      {/* Ambient glow at top (the destination) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 50% 0%, hsl(${GRN} / 0.12), transparent 65%)` }} />
+      {/* Amber fog at bottom (current state) */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 50% 100%, hsl(${RED} / 0.08), transparent 65%)` }} />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <SectionTag label="The AI Maturity Gap" color={PRI} />
+          <h2 className="font-black mb-4" style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
+            Every organisation is on this ladder.{" "}
+            <span style={{ color: `hsl(${PRI})` }}>Most are stuck at the bottom.</span>
+          </h2>
+          <p className="text-lg max-w-xl mx-auto" style={{ color: `hsl(${MUT})`, lineHeight: 1.65 }}>
+            The gap between Level 1 and Level 4 isn't about tools. It's about governance, structure, and shared standards. That's what we build.
+          </p>
+        </div>
+
+        {/* The Ladder */}
+        <div className="relative">
+          {/* Central spine line */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden lg:block"
+            style={{ background: `linear-gradient(to top, hsl(${RED} / 0.4), hsl(${AMB} / 0.3), hsl(${GRN} / 0.5))` }} />
+
+          <div className="flex flex-col gap-3">
+            {levels.map((level, i) => {
+              const isDestination = level.destination;
+              const isCurrent = level.current;
+              const widthMap = ["w-full", "w-[96%]", "w-[88%]", "w-[80%]", "w-[72%]"];
+              const widthClass = widthMap[i];
+
+              return (
+                <div key={level.n} className={`mx-auto transition-all ${widthClass}`}>
+                  <div
+                    className="relative rounded-2xl border overflow-hidden"
+                    style={{
+                      background: isDestination
+                        ? `hsl(${level.col} / 0.09)`
+                        : isCurrent
+                        ? `hsl(${level.col} / 0.06)`
+                        : `hsl(${level.col} / 0.04)`,
+                      borderColor: isDestination
+                        ? `hsl(${level.col} / 0.45)`
+                        : isCurrent
+                        ? `hsl(${level.col} / 0.5)`
+                        : `hsl(${level.col} / 0.18)`,
+                      boxShadow: isDestination
+                        ? `0 0 30px -8px hsl(${level.col} / 0.25)`
+                        : isCurrent
+                        ? `0 0 20px -6px hsl(${level.col} / 0.2)`
+                        : "none",
+                    }}
+                  >
+                    {/* Top accent bar */}
+                    <div className="absolute top-0 left-0 right-0 h-[2px]"
+                      style={{ background: `hsl(${level.col})`, opacity: isDestination ? 1 : isCurrent ? 0.8 : 0.3 }} />
+
+                    <div className="flex items-center gap-6 px-6 py-5">
+                      {/* Level badge */}
+                      <div className="shrink-0 flex flex-col items-center justify-center w-14 h-14 rounded-xl border"
+                        style={{
+                          background: `hsl(${level.col} / ${isDestination ? 0.15 : isCurrent ? 0.12 : 0.07})`,
+                          borderColor: `hsl(${level.col} / ${isDestination ? 0.5 : 0.3})`,
+                        }}>
+                        <span className="font-black text-xl leading-none" style={{ color: `hsl(${level.col})` }}>
+                          {level.n}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
+                          <h3 className="font-black text-base" style={{ color: `hsl(${C})` }}>
+                            {level.label}
+                          </h3>
+                          {isCurrent && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border"
+                              style={{
+                                background: `hsl(${RED} / 0.12)`,
+                                borderColor: `hsl(${RED} / 0.4)`,
+                                color: `hsl(${RED})`,
+                              }}>
+                              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: `hsl(${RED})` }} />
+                              You are here
+                            </span>
+                          )}
+                          {level.n === 4 && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border"
+                              style={{
+                                background: `hsl(${PRI} / 0.12)`,
+                                borderColor: `hsl(${PRI} / 0.4)`,
+                                color: `hsl(${PRI})`,
+                              }}>
+                              ✦ Where we take you
+                            </span>
+                          )}
+                          {level.n === 5 && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border"
+                              style={{
+                                background: `hsl(${GRN} / 0.12)`,
+                                borderColor: `hsl(${GRN} / 0.4)`,
+                                color: `hsl(${GRN})`,
+                              }}>
+                              ▲ The north star
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs font-semibold mb-1.5 tracking-wide uppercase"
+                          style={{ color: `hsl(${level.col} / 0.8)` }}>{level.sub}</p>
+                        <p className="text-sm leading-relaxed" style={{ color: `hsl(${MUT})` }}>
+                          {level.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Bridge: the journey arrow between L1 and L4 */}
+          <div className="relative mt-10 mb-2">
+            <div className="max-w-2xl mx-auto rounded-2xl border overflow-hidden"
+              style={{
+                background: `linear-gradient(135deg, hsl(${RED} / 0.06), hsl(${PRI} / 0.08))`,
+                borderColor: `hsl(${PRI} / 0.25)`,
+              }}>
+              <div className="absolute top-0 left-0 right-0 h-[2px]"
+                style={{ background: `linear-gradient(90deg, hsl(${RED}), hsl(${PRI}), hsl(${GRN}))` }} />
+              <div className="px-8 py-7 flex flex-col sm:flex-row items-center gap-6">
+                <div className="text-center sm:text-left">
+                  <p className="font-black text-base mb-1" style={{ color: `hsl(${C})` }}>
+                    Level 1 → Level 4
+                  </p>
+                  <p className="text-sm" style={{ color: `hsl(${MUT})` }}>
+                    This is the journey. Most organisations attempt it alone — and stall at Level 2.
+                  </p>
+                </div>
+                <div className="shrink-0 flex items-center gap-2">
+                  <div className="w-px h-10 hidden sm:block" style={{ background: `hsl(${PRI} / 0.25)` }} />
+                  <div className="text-center px-4">
+                    <p className="font-black text-2xl" style={{ color: `hsl(${PRI})` }}>~8 wks</p>
+                    <p className="text-xs font-semibold" style={{ color: `hsl(${MUT})` }}>with us</p>
+                  </div>
+                  <div className="w-px h-10 hidden sm:block" style={{ background: `hsl(${PRI} / 0.25)` }} />
+                  <div className="text-center px-4">
+                    <p className="font-black text-2xl" style={{ color: `hsl(${RED})` }}>2–3 yrs</p>
+                    <p className="text-xs font-semibold" style={{ color: `hsl(${MUT})` }}>alone (if ever)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA nudge */}
+        <div className="text-center mt-12">
+          <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base transition-opacity hover:opacity-90"
+            style={{
+              background: `linear-gradient(135deg, hsl(${PRI}), hsl(${GRN}))`,
+              color: "hsl(222 22% 5%)",
+              boxShadow: `0 0 32px -8px hsl(${PRI} / 0.4)`,
+            }}>
+            Show me how to get to Level 4 <ArrowRight size={18} />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── STEP 2: PROBLEM ──────────────────────────────────────────────────────────
 // Villain (external), internal frustration, philosophical wrong
 function Problem() {
@@ -553,6 +775,7 @@ export default function EnterpriseDeck() {
     <div style={{ background: BG }}>
       <Nav />
       <Character />
+      <MaturityLadder />
       <Problem />
       <Guide />
       <Plan />
