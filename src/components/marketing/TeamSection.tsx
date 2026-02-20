@@ -1,22 +1,22 @@
-const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
+import istvanPhoto from "@/assets/istvan-boscha.png";
+import kristofPhoto from "@/assets/kristof-eger.png";
 
-// ── Update LinkedIn URLs and add photos when available ──────────────────────
 const TEAM = [
   {
     name: "István Boscha",
     role: "Data & AI Implementation",
     bio: "Founder of a Google Cloud Service partner firm. 15 years implementing data and AI solutions for digital transformation.\n\nThe core of differentiation: what no one else has vs. what digital technologies can automate.",
-    linkedin: "https://linkedin.com", // ← replace with real URL
+    linkedin: "https://www.linkedin.com/in/istv%C3%A1n-boscha-3a436328/",
     initials: "IB",
-    photo: null as string | null,
+    photo: istvanPhoto,
   },
   {
     name: "Kristóf Éger",
     role: "Business Model Innovation",
     bio: "Business model innovation advisor and executive coach with years of experience defining and scaling business value.\n\nConnecting unique expertise to business outcomes—scaling what makes organizations irreplaceable: their best people.",
-    linkedin: "https://linkedin.com/in/kristofeger", // ← replace with real URL
+    linkedin: "https://www.linkedin.com/in/kristofeger/",
     initials: "KÉ",
-    photo: null as string | null,
+    photo: kristofPhoto,
   },
 ];
 
