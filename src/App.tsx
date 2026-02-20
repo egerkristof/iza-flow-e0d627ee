@@ -22,7 +22,6 @@ import ConsultingDeck from "./pages/ConsultingDeck";
 import EnterpriseDeck from "./pages/EnterpriseDeck";
 import LizaHome from "./pages/marketing/Home";
 import PlatformPage from "./pages/marketing/Platform";
-import AdvisoryPage from "./pages/marketing/Advisory";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
 
@@ -55,7 +54,7 @@ const App = () => (
             <Route path="/" element={<LizaHome />} />
             <Route path="/liza" element={<LizaHome />} />
             <Route path="/platform" element={<PlatformPage />} />
-            <Route path="/advisory" element={<AdvisoryPage />} />
+            <Route path="/advisory" element={<Navigate to="/for-professional-services" replace />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/for-professional-services" element={<ProfessionalServicesPage />} />
             <Route path="/pitch" element={<PitchDeck />} />
