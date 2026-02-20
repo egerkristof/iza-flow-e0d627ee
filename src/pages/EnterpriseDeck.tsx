@@ -5,6 +5,7 @@ import {
   Users, Shield, TrendingUp, Layers, Lock, Award, BookOpen,
   Map, ChevronRight, Star, BarChart3, Zap,
 } from "lucide-react";
+import { TeamSection } from "@/components/marketing/TeamSection";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const BG   = "hsl(222 22% 5%)";
@@ -947,6 +948,7 @@ export default function EnterpriseDeck() {
       <Plan />
       <AvoidFailure />
       <Success />
+      <TeamSection dark />
       <LogoStrip />
     </MarketingLayout>
   );

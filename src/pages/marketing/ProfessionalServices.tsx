@@ -4,6 +4,7 @@ import {
   ArrowRight, CheckCircle2, XCircle, Brain, Layers, TrendingUp,
   BookOpen, Lock, Quote, Zap, Shield, BarChart3,
 } from "lucide-react";
+import { TeamSection } from "@/components/marketing/TeamSection";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
@@ -646,6 +647,7 @@ export default function ProfessionalServicesPage() {
       <Deliverables />
       <SocialProof />
       <WhoItsFor />
+      <TeamSection />
       <CTA />
     </MarketingLayout>
   );
