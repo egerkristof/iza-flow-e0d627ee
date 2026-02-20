@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 
 const NAV = [
   { label: "Platform", href: "/platform" },
+  { label: "Use Cases", href: "/use-cases" },
   { label: "For Enterprise", href: "/enterprise" },
   { label: "For Professional Services", href: "/for-professional-services" },
   { label: "Manifesto", href: "/manifesto" },

@@ -24,6 +24,7 @@ import LizaHome from "./pages/marketing/Home";
 import PlatformPage from "./pages/marketing/Platform";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
+import UseCasesPage from "./pages/marketing/UseCases";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/advisory" element={<Navigate to="/for-professional-services" replace />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/for-professional-services" element={<ProfessionalServicesPage />} />
+            <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/consulting" element={<ConsultingDeck />} />
