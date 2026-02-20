@@ -3,6 +3,7 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { TeamSection } from "@/components/marketing/TeamSection";
 import {
   ArrowRight, Brain, Zap, Shield, Users, Layers, BookOpen, Target, BarChart3,
+  ClipboardCheck, MessageSquare, TrendingUp, GitBranch,
 } from "lucide-react";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
@@ -443,6 +444,92 @@ function WhoItsFor() {
   );
 }
 
+// ── Use Cases teaser ──────────────────────────────────────────────────────────
+
+const USE_CASE_TEASERS = [
+  {
+    icon: <ClipboardCheck className="w-5 h-5" />,
+    col: "200 90% 52%",
+    tag: "Audit Automation",
+    stat: "23× faster",
+    desc: "Encode every auditing criterion and rule. Run audits with 80% less groundwork and 72% higher accuracy.",
+  },
+  {
+    icon: <MessageSquare className="w-5 h-5" />,
+    col: "155 72% 46%",
+    tag: "Meeting Intelligence",
+    stat: "Week 1 ready",
+    desc: "Submit meeting transcripts. Get organisational knowledge — not summaries. Kick off your knowledge transformation immediately.",
+  },
+  {
+    icon: <TrendingUp className="w-5 h-5" />,
+    col: "38 92% 50%",
+    tag: "Sales Playbook",
+    stat: "8 weeks vs 9 months",
+    desc: "Encode your best seller's judgment. Every team member executes at senior level from day one.",
+  },
+  {
+    icon: <GitBranch className="w-5 h-5" />,
+    col: "270 60% 65%",
+    tag: "Smart Delegation",
+    stat: "0 check-ins needed",
+    desc: "Delegate with full context. People execute correctly — without chasing, without clarification, without disappointment.",
+  },
+];
+
+function UseCasesTeaser() {
+  return (
+    <section className="py-32 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-14">
+          <SectionTag>Real-world results</SectionTag>
+          <h2 className="text-4xl md:text-5xl font-black mb-4">
+            Not theory.
+            <br />
+            <GradientText>Already running.</GradientText>
+          </h2>
+          <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Four use cases we've already deployed — with numbers to prove it.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-5 mb-10">
+          {USE_CASE_TEASERS.map((uc, i) => (
+            <div
+              key={i}
+              className="relative rounded-2xl p-7 border overflow-hidden"
+              style={{ background: `hsl(${uc.col} / 0.03)`, borderColor: `hsl(${uc.col} / 0.2)` }}
+            >
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${uc.col})` }} />
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: `hsl(${uc.col} / 0.15)`, color: `hsl(${uc.col})` }}
+                >
+                  {uc.icon}
+                </div>
+                <span className="text-xs font-black tracking-widest uppercase" style={{ color: `hsl(${uc.col})` }}>
+                  {uc.tag}
+                </span>
+              </div>
+              <p className="text-2xl font-black mb-2">{uc.stat}</p>
+              <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{uc.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="text-center">
+          <Link
+            to="/use-cases"
+            className="group inline-flex items-center gap-2 text-sm font-semibold"
+            style={{ color: "hsl(var(--primary))" }}
+          >
+            See all use cases in detail <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── CTA ───────────────────────────────────────────────────────────────────────
 
 function CTABand() {
@@ -515,6 +602,7 @@ export default function LizaHome() {
       <OurStory />
       <TheProblem />
       <WhatLizaIs />
+      <UseCasesTeaser />
       <Purpose />
       <TeamSection />
       <WhoItsFor />
