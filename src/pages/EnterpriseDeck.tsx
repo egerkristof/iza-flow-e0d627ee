@@ -556,10 +556,17 @@ function LizaDifferentiator() {
                 </div>
               ))}
             </div>
-            <p className="text-sm mt-6 font-semibold" style={{ color: `hsl(${C})` }}>
-              Full ownership. No lock-in.{" "}
-              <span style={{ color: `hsl(${MUT})` }}>The protocols, playbooks, and knowledge base are yours — export or continue independently at any time.</span>
-            </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-6">
+              <p className="text-sm font-semibold" style={{ color: `hsl(${C})` }}>
+                Full ownership. No lock-in.{" "}
+                <span style={{ color: `hsl(${MUT})` }}>The protocols, playbooks, and knowledge base are yours — export or continue independently at any time.</span>
+              </p>
+              <Link to="/platform"
+                className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all hover:opacity-80 whitespace-nowrap"
+                style={{ borderColor: `hsl(${PRI} / 0.4)`, color: `hsl(${PRI})`, background: `hsl(${PRI} / 0.08)` }}>
+                Explore the platform <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
