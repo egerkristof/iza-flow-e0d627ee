@@ -443,182 +443,183 @@ function Proof() {
   );
 }
 
-// ─── GUIDE + LIZA OS DIFFERENTIATOR ──────────────────────────────────────────
-function Guide() {
+// ─── LIZA OS DIFFERENTIATOR (moved up — after maturity ladder) ───────────────
+function LizaDifferentiator() {
   return (
-    <>
-      {/* Guide: Why different */}
-      <section className="py-24 px-6 relative overflow-hidden" style={{ background: BG2 }}>
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[500px] h-[500px] rounded-full"
-            style={{ background: `radial-gradient(circle, hsl(${PRI} / 0.05), transparent 70%)` }} />
+    <section className="py-20 px-6 border-t border-b" style={{ background: BG, borderColor: `hsl(${PRI} / 0.1)` }}>
+      <div className="max-w-6xl mx-auto">
+        {/* Pull-quote headline */}
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-bold mb-6"
+            style={{ borderColor: `hsl(${PRI} / 0.3)`, background: `hsl(${PRI} / 0.06)`, color: `hsl(${PRI})` }}>
+            <Zap size={11} /> What makes LIZA OS the differentiator
+          </div>
+          <h2 className="font-black mb-4" style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
+            Not interviews with a report at the end.
+          </h2>
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: `hsl(${MUT})`, lineHeight: 1.65 }}>
+            The extraction, codification, and governance all happen{" "}
+            <span style={{ color: `hsl(${C})`, fontWeight: 600 }}>inside LIZA OS</span> — where we stress-test your methodology in real scenarios, so you leave with a system that actually runs.
+          </p>
         </div>
-        <div className="relative z-10 max-w-6xl mx-auto">
-          <p className="font-bold tracking-[0.2em] uppercase text-sm mb-4" style={{ color: `hsl(${PRI})` }}>Why We're Different</p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="font-black mb-6" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
-                Not a training programme.{" "}
-                <span style={{ color: `hsl(${PRI})` }}>An operating model you own.</span>
-              </h2>
-              <p className="text-lg mb-6" style={{ color: `hsl(${MUT})`, lineHeight: 1.7 }}>
-                We've worked inside these organisations. We built LIZA OS because we couldn't find anything that could hold organisational knowledge and make it executable — not a document, not a wiki, not a chat tool.
-              </p>
-              <p className="text-base mb-8" style={{ color: `hsl(${MUT})`, lineHeight: 1.7 }}>
-                You get senior consulting expertise to surface and codify your organisation's judgment — <em style={{ color: `hsl(${C})` }}>and</em> LIZA OS to operationalise it at scale. The consulting without the platform gives you a report. The platform without the consulting gives you an empty system. The combination gets you to Level 4.
-              </p>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "Senior consultants embedded in your workflows", icon: <Award size={16} /> },
-                  { label: "LIZA OS platform — your standards, live and enforced", icon: <Layers size={16} /> },
-                  { label: "Infrastructure you own — not locked to us", icon: <Lock size={16} /> },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div style={{ color: `hsl(${GRN})` }}>{item.icon}</div>
-                    <p className="font-semibold text-sm" style={{ color: `hsl(${C})` }}>{item.label}</p>
-                  </div>
-                ))}
+
+        {/* Three-column contrast */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {[
+            {
+              label: "Traditional consulting",
+              items: ["Interviews and workshops", "Knowledge captured in notes", "Delivered as a PDF report", "Sits on a shelf after handoff"],
+              outcome: "A document you own",
+              col: RED,
+              icon: <BookOpen size={20} />,
+              cross: true,
+            },
+            {
+              label: "AI tool rollout",
+              items: ["Licences bought, training run", "Each person prompts their own way", "No shared standard or governance", "Knowledge stays in individual heads"],
+              outcome: "Access without alignment",
+              col: AMB,
+              icon: <Brain size={20} />,
+              cross: true,
+            },
+            {
+              label: "LIZA OS programme",
+              items: ["Your experts define knowledge inside LIZA OS", "Tacit judgment becomes executable playbooks", "Protocols run live — enforced at point of use", "Every session feeds back into the system"],
+              outcome: "A living operating model",
+              col: GRN,
+              icon: <Zap size={20} />,
+              cross: false,
+            },
+          ].map((col, i) => (
+            <div key={i} className="rounded-2xl border overflow-hidden flex flex-col"
+              style={{
+                background: col.cross ? `hsl(${col.col} / 0.03)` : `hsl(${col.col} / 0.07)`,
+                borderColor: col.cross ? `hsl(${col.col} / 0.15)` : `hsl(${col.col} / 0.4)`,
+                boxShadow: col.cross ? "none" : `0 0 28px -8px hsl(${col.col} / 0.2)`,
+              }}>
+              <div className="h-[3px]" style={{ background: `hsl(${col.col})`, opacity: col.cross ? 0.4 : 1 }} />
+              <div className="p-7 flex-1 flex flex-col">
+                <div className="flex items-center gap-2 mb-5">
+                  <div style={{ color: `hsl(${col.col})`, opacity: col.cross ? 0.6 : 1 }}>{col.icon}</div>
+                  <p className="font-bold text-sm" style={{ color: col.cross ? `hsl(${col.col} / 0.7)` : `hsl(${col.col})` }}>{col.label}</p>
+                </div>
+                <ul className="flex flex-col gap-2.5 flex-1 mb-6">
+                  {col.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2.5 text-sm" style={{ color: `hsl(${MUT})` }}>
+                      {col.cross
+                        ? <XCircle size={13} className="shrink-0 mt-0.5" style={{ color: `hsl(${col.col} / 0.5)` }} />
+                        : <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: `hsl(${col.col})` }} />
+                      }
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="rounded-lg px-4 py-3 border"
+                  style={{
+                    background: col.cross ? `hsl(${col.col} / 0.04)` : `hsl(${col.col} / 0.12)`,
+                    borderColor: col.cross ? `hsl(${col.col} / 0.15)` : `hsl(${col.col} / 0.4)`,
+                  }}>
+                  <p className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: col.cross ? `hsl(${col.col} / 0.6)` : `hsl(${col.col})` }}>
+                    Result
+                  </p>
+                  <p className="font-semibold text-sm" style={{ color: col.cross ? `hsl(${MUT})` : `hsl(${C})` }}>{col.outcome}</p>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
 
-            <div className="flex flex-col gap-4">
+        {/* What "inside LIZA OS" actually means */}
+        <div className="rounded-2xl border p-8 relative overflow-hidden"
+          style={{ background: `hsl(${PRI} / 0.05)`, borderColor: `hsl(${PRI} / 0.25)` }}>
+          <div className="absolute right-0 top-0 w-[400px] h-[300px] pointer-events-none"
+            style={{ background: `radial-gradient(circle, hsl(${PRI} / 0.08), transparent 65%)`, transform: "translate(30%, -20%)" }} />
+          <div className="relative z-10">
+            <p className="font-bold tracking-widest uppercase text-xs mb-4" style={{ color: `hsl(${PRI})` }}>
+              What "inside LIZA OS" means in practice
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { stat: "78%", label: "of employees are using unapproved AI tools right now", col: RED },
-                { stat: "14×", label: "output variance when there's no shared standard", col: AMB },
-                { stat: "0%", label: "of AI sessions feed back into institutional knowledge by default", col: PRI },
+                { step: "1", tag: "Surface", label: "Your experts describe their highest-value tasks in plain language — inside LIZA OS.", col: RED },
+                { step: "2", tag: "Codify", label: "LIZA OS structures that into playbooks: intent, protocol steps, and knowledge injection.", col: AMB },
+                { step: "3", tag: "Test", label: "We run real-work scenarios inside LIZA OS — stress-testing the playbooks before go-live.", col: PRI },
+                { step: "4", tag: "Embed", label: "Your teams execute against the live protocols. Every session compresses back in.", col: GRN },
               ].map((item, i) => (
-                <div key={i} className="rounded-2xl px-7 py-5 border flex items-center gap-6"
-                  style={{ background: BG, borderColor: `hsl(${item.col} / 0.2)` }}>
-                  <p className="font-black shrink-0 w-20 text-right" style={{ fontSize: "2.25rem", color: `hsl(${item.col})`, lineHeight: 1 }}>{item.stat}</p>
-                  <div className="w-px self-stretch" style={{ background: `hsl(${item.col} / 0.2)` }} />
-                  <p className="font-semibold text-sm" style={{ color: `hsl(${MUT})` }}>{item.label}</p>
+                <div key={i} className="rounded-xl border p-5"
+                  style={{ background: `hsl(${item.col} / 0.05)`, borderColor: `hsl(${item.col} / 0.2)` }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-6 h-6 rounded-md flex items-center justify-center font-black text-xs"
+                      style={{ background: `hsl(${item.col} / 0.15)`, color: `hsl(${item.col})` }}>{item.step}</div>
+                    <span className="font-bold text-xs tracking-widest uppercase" style={{ color: `hsl(${item.col})` }}>{item.tag}</span>
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: `hsl(${MUT})` }}>{item.label}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm mt-6 font-semibold" style={{ color: `hsl(${C})` }}>
+              Full ownership. No lock-in.{" "}
+              <span style={{ color: `hsl(${MUT})` }}>The protocols, playbooks, and knowledge base are yours — export or continue independently at any time.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── GUIDE: Why We're Different ───────────────────────────────────────────────
+function Guide() {
+  return (
+    <section className="py-24 px-6 relative overflow-hidden" style={{ background: BG2 }}>
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[500px] h-[500px] rounded-full"
+          style={{ background: `radial-gradient(circle, hsl(${PRI} / 0.05), transparent 70%)` }} />
+      </div>
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <p className="font-bold tracking-[0.2em] uppercase text-sm mb-4" style={{ color: `hsl(${PRI})` }}>Why We're Different</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="font-black mb-6" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
+              Not a training programme.{" "}
+              <span style={{ color: `hsl(${PRI})` }}>An operating model you own.</span>
+            </h2>
+            <p className="text-lg mb-6" style={{ color: `hsl(${MUT})`, lineHeight: 1.7 }}>
+              We've worked inside these organisations. We built LIZA OS because we couldn't find anything that could hold organisational knowledge and make it executable — not a document, not a wiki, not a chat tool.
+            </p>
+            <p className="text-base mb-8" style={{ color: `hsl(${MUT})`, lineHeight: 1.7 }}>
+              You get senior consulting expertise to surface and codify your organisation's judgment — <em style={{ color: `hsl(${C})` }}>and</em> LIZA OS to operationalise it at scale. The consulting without the platform gives you a report. The platform without the consulting gives you an empty system. The combination gets you to Level 4.
+            </p>
+            <div className="flex flex-col gap-3">
+              {[
+                { label: "Senior consultants embedded in your workflows", icon: <Award size={16} /> },
+                { label: "LIZA OS platform — your standards, live and enforced", icon: <Layers size={16} /> },
+                { label: "Infrastructure you own — not locked to us", icon: <Lock size={16} /> },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div style={{ color: `hsl(${GRN})` }}>{item.icon}</div>
+                  <p className="font-semibold text-sm" style={{ color: `hsl(${C})` }}>{item.label}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* LIZA OS: What makes it different — the platform is the work */}
-      <section className="py-20 px-6 border-t border-b" style={{ background: BG, borderColor: `hsl(${PRI} / 0.1)` }}>
-        <div className="max-w-6xl mx-auto">
-          {/* Pull-quote headline */}
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-bold mb-6"
-              style={{ borderColor: `hsl(${PRI} / 0.3)`, background: `hsl(${PRI} / 0.06)`, color: `hsl(${PRI})` }}>
-              <Zap size={11} /> What makes LIZA OS the differentiator
-            </div>
-            <h2 className="font-black mb-4" style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
-              Not interviews with a report at the end.
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: `hsl(${MUT})`, lineHeight: 1.65 }}>
-              The extraction, codification, and governance all happen{" "}
-              <span style={{ color: `hsl(${C})`, fontWeight: 600 }}>inside LIZA OS</span> — where we stress-test your methodology in real scenarios, so you leave with a system that actually runs.
-            </p>
-          </div>
-
-          {/* Three-column contrast */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="flex flex-col gap-4">
             {[
-              {
-                label: "Traditional consulting",
-                items: ["Interviews and workshops", "Knowledge captured in notes", "Delivered as a PDF report", "Sits on a shelf after handoff"],
-                outcome: "A document you own",
-                col: RED,
-                icon: <BookOpen size={20} />,
-                cross: true,
-              },
-              {
-                label: "AI tool rollout",
-                items: ["Licences bought, training run", "Each person prompts their own way", "No shared standard or governance", "Knowledge stays in individual heads"],
-                outcome: "Access without alignment",
-                col: AMB,
-                icon: <Brain size={20} />,
-                cross: true,
-              },
-              {
-                label: "LIZA OS programme",
-                items: ["Your experts define knowledge inside LIZA OS", "Tacit judgment becomes executable playbooks", "Protocols run live — enforced at point of use", "Every session feeds back into the system"],
-                outcome: "A living operating model",
-                col: GRN,
-                icon: <Zap size={20} />,
-                cross: false,
-              },
-            ].map((col, i) => (
-              <div key={i} className="rounded-2xl border overflow-hidden flex flex-col"
-                style={{
-                  background: col.cross ? `hsl(${col.col} / 0.03)` : `hsl(${col.col} / 0.07)`,
-                  borderColor: col.cross ? `hsl(${col.col} / 0.15)` : `hsl(${col.col} / 0.4)`,
-                  boxShadow: col.cross ? "none" : `0 0 28px -8px hsl(${col.col} / 0.2)`,
-                }}>
-                <div className="h-[3px]" style={{ background: `hsl(${col.col})`, opacity: col.cross ? 0.4 : 1 }} />
-                <div className="p-7 flex-1 flex flex-col">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div style={{ color: `hsl(${col.col})`, opacity: col.cross ? 0.6 : 1 }}>{col.icon}</div>
-                    <p className="font-bold text-sm" style={{ color: col.cross ? `hsl(${col.col} / 0.7)` : `hsl(${col.col})` }}>{col.label}</p>
-                  </div>
-                  <ul className="flex flex-col gap-2.5 flex-1 mb-6">
-                    {col.items.map((item, j) => (
-                      <li key={j} className="flex items-start gap-2.5 text-sm" style={{ color: `hsl(${MUT})` }}>
-                        {col.cross
-                          ? <XCircle size={13} className="shrink-0 mt-0.5" style={{ color: `hsl(${col.col} / 0.5)` }} />
-                          : <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: `hsl(${col.col})` }} />
-                        }
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="rounded-lg px-4 py-3 border"
-                    style={{
-                      background: col.cross ? `hsl(${col.col} / 0.04)` : `hsl(${col.col} / 0.12)`,
-                      borderColor: col.cross ? `hsl(${col.col} / 0.15)` : `hsl(${col.col} / 0.4)`,
-                    }}>
-                    <p className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: col.cross ? `hsl(${col.col} / 0.6)` : `hsl(${col.col})` }}>
-                      Result
-                    </p>
-                    <p className="font-semibold text-sm" style={{ color: col.cross ? `hsl(${MUT})` : `hsl(${C})` }}>{col.outcome}</p>
-                  </div>
-                </div>
+              { stat: "78%", label: "of employees are using unapproved AI tools right now", col: RED },
+              { stat: "14×", label: "output variance when there's no shared standard", col: AMB },
+              { stat: "0%", label: "of AI sessions feed back into institutional knowledge by default", col: PRI },
+            ].map((item, i) => (
+              <div key={i} className="rounded-2xl px-7 py-5 border flex items-center gap-6"
+                style={{ background: BG, borderColor: `hsl(${item.col} / 0.2)` }}>
+                <p className="font-black shrink-0 w-20 text-right" style={{ fontSize: "2.25rem", color: `hsl(${item.col})`, lineHeight: 1 }}>{item.stat}</p>
+                <div className="w-px self-stretch" style={{ background: `hsl(${item.col} / 0.2)` }} />
+                <p className="font-semibold text-sm" style={{ color: `hsl(${MUT})` }}>{item.label}</p>
               </div>
             ))}
           </div>
-
-          {/* What "inside LIZA OS" actually means */}
-          <div className="rounded-2xl border p-8 relative overflow-hidden"
-            style={{ background: `hsl(${PRI} / 0.05)`, borderColor: `hsl(${PRI} / 0.25)` }}>
-            <div className="absolute right-0 top-0 w-[400px] h-[300px] pointer-events-none"
-              style={{ background: `radial-gradient(circle, hsl(${PRI} / 0.08), transparent 65%)`, transform: "translate(30%, -20%)" }} />
-            <div className="relative z-10">
-              <p className="font-bold tracking-widest uppercase text-xs mb-4" style={{ color: `hsl(${PRI})` }}>
-                What "inside LIZA OS" means in practice
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { step: "1", tag: "Surface", label: "Your experts describe their highest-value tasks in plain language — inside LIZA OS.", col: RED },
-                  { step: "2", tag: "Codify", label: "LIZA OS structures that into playbooks: intent, protocol steps, and knowledge injection.", col: AMB },
-                  { step: "3", tag: "Test", label: "We run real-work scenarios inside LIZA OS — stress-testing the playbooks before go-live.", col: PRI },
-                  { step: "4", tag: "Embed", label: "Your teams execute against the live protocols. Every session compresses back in.", col: GRN },
-                ].map((item, i) => (
-                  <div key={i} className="rounded-xl border p-5"
-                    style={{ background: `hsl(${item.col} / 0.05)`, borderColor: `hsl(${item.col} / 0.2)` }}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-6 h-6 rounded-md flex items-center justify-center font-black text-xs"
-                        style={{ background: `hsl(${item.col} / 0.15)`, color: `hsl(${item.col})` }}>{item.step}</div>
-                      <span className="font-bold text-xs tracking-widest uppercase" style={{ color: `hsl(${item.col})` }}>{item.tag}</span>
-                    </div>
-                    <p className="text-xs leading-relaxed" style={{ color: `hsl(${MUT})` }}>{item.label}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm mt-6 font-semibold" style={{ color: `hsl(${C})` }}>
-                Full ownership. No lock-in.{" "}
-                <span style={{ color: `hsl(${MUT})` }}>The protocols, playbooks, and knowledge base are yours — export or continue independently at any time.</span>
-              </p>
-            </div>
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
@@ -964,8 +965,9 @@ export default function EnterpriseDeck() {
       <Nav />
       <Hero />
       <MaturityInfographic />
-      <Guide />
+      <LizaDifferentiator />
       <Proof />
+      <Guide />
       <Plan />
       <AvoidFailure />
       <Success />
