@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
+import { TeamSection } from "@/components/marketing/TeamSection";
 import {
   ArrowRight, Brain, Zap, Shield, Users, Layers, BookOpen, Target, BarChart3,
 } from "lucide-react";
@@ -515,6 +516,7 @@ export default function LizaHome() {
       <TheProblem />
       <WhatLizaIs />
       <Purpose />
+      <TeamSection />
       <WhoItsFor />
       <CTABand />
     </MarketingLayout>
