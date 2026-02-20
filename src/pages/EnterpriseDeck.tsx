@@ -95,222 +95,275 @@ function Hero() {
 }
 
 // ─── AI MATURITY VISUAL ───────────────────────────────────────────────────────
-// The centrepiece infographic. Nuanced — orgs can identify their real level.
-const LEVELS = [
+// Research sources: EY GenAI Maturity Model (2024), McKinsey State of AI (2025),
+// Oxford Economics / ServiceNow Enterprise AI Maturity Index (2024)
+// EY: "90% of orgs are still in early stages" (Level 1–3)
+// McKinsey 2025: "most are still in early stages of scaling AI and capturing enterprise-level value"
+// Oxford Economics: surveyed 4,470 executives — "AI use is still nascent"
+
+const STEPS = [
   {
-    n: 5,
-    label: "Organisational Intelligence",
-    tag: "The north star",
-    desc: "AI compounds institutional knowledge. Every execution teaches the system. The organisation becomes a living learning entity.",
-    signals: ["Knowledge compounds automatically", "Every run refines the standard", "New hires onboard to a living model"],
-    col: GRN,
-    icon: "◆",
-    pct: 5,
-  },
-  {
-    n: 4,
-    label: "Governed AI Operating Model",
-    tag: "Where we take you",
-    desc: "Shared standards. Codified judgment. Governed usage. AI runs loaded with your organisation's context and agreed protocols.",
-    signals: ["Shared prompt standards across teams", "Governance framework exec can explain", "AI loaded with institutional context"],
-    col: PRI,
-    icon: "▲",
-    pct: 12,
-    destination: true,
-  },
-  {
-    n: 3,
-    label: "Workflow Integration",
-    tag: "Patchy adoption",
-    desc: "AI is embedded in specific workflows. Some teams have personal standards. But it's undocumented, fragile, and siloed between people.",
-    signals: ["Some power users emerge", "Inconsistency between team members", "No shared standard or governance"],
-    col: AMB,
-    icon: "◈",
-    pct: 28,
+    n: 1,
+    label: "Experimenting",
+    sublabel: "Individual chatbot use",
+    desc: "Individuals use ChatGPT or Copilot ad-hoc. No shared standards, no memory across sessions, no institutional benefit. AI is a personal productivity hack.",
+    signals: ["ChatGPT used individually", "No shared prompts", "Zero governance"],
+    pct: 22,
+    pctNote: "of enterprises",
+    source: "EY / McKinsey",
+    col: RED,
+    isStart: true,
   },
   {
     n: 2,
-    label: "Departmental Tool Adoption",
-    tag: "Individual improvisation",
-    desc: "Departments use AI tools. Real productivity gains exist. But everyone prompts differently — same brief, wildly different outputs.",
-    signals: ["Copilot / ChatGPT rolled out", "Adoption is patchy (20–40%)", "14× output variance per team"],
-    col: AMB,
-    icon: "◉",
+    label: "Piloting",
+    sublabel: "Departmental tools & proofs of concept",
+    desc: "Departments run isolated pilots. Real enthusiasm exists, but projects are siloed. Leadership is watching but not yet embedding. Same brief — wildly different outputs between people.",
+    signals: ["Isolated pilots per department", "20–40% active adoption", "No cross-team standard"],
     pct: 40,
+    pctNote: "of enterprises",
+    source: "Oxford Economics 2024",
+    col: AMB,
   },
   {
-    n: 1,
-    label: "Chatbot Usage",
-    tag: "Where most organisations start",
-    desc: "AI is treated like a search engine. Individuals prompt for answers. No shared standards, no memory, no governance, no institutional benefit.",
-    signals: ["Ad-hoc chatbot use by individuals", "No shared prompts or standards", "Zero institutional knowledge capture"],
-    col: RED,
-    icon: "●",
-    pct: 15,
+    n: 3,
+    label: "Optimising",
+    sublabel: "Workflow integration — fragmented",
+    desc: "AI is embedded in specific workflows. Some power users set informal standards. But it's undocumented and fragile. Knowledge stays in people's heads, not the system.",
+    signals: ["Power users emerge", "Fragile, undocumented standards", "No governance framework"],
+    pct: 28,
+    pctNote: "of enterprises",
+    source: "EY GenAI Model 2024",
+    col: AMB,
+    isSweet: true,
+  },
+  {
+    n: 4,
+    label: "Transforming",
+    sublabel: "Governed AI operating model ← We take you here",
+    desc: "Shared standards. Codified judgment. Governed usage. AI runs loaded with your organisation's context and agreed protocols. New hires onboard to a living system.",
+    signals: ["Shared prompt & protocol library", "Exec-explainable governance", "AI loaded with institutional context"],
+    pct: 8,
+    pctNote: "of enterprises",
+    source: "EY / Oxford Economics",
+    col: PRI,
+    isTarget: true,
+  },
+  {
+    n: 5,
+    label: "Leading",
+    sublabel: "Organisational intelligence",
+    desc: "AI compounds institutional knowledge automatically. Every execution teaches the system. The organisation becomes a self-improving learning entity. Competitive moat.",
+    signals: ["Knowledge compounds automatically", "AI trains itself on your outcomes", "Industry benchmark"],
+    pct: 2,
+    pctNote: "of enterprises",
+    source: "EY / McKinsey",
+    col: GRN,
+    isNorth: true,
   },
 ];
 
+// Desktop: genuine staircase — each step is wider+taller than the one below
+// Mobile: clean vertical stack
 function MaturityInfographic() {
   return (
-    <section id="maturity" className="py-28 px-6 relative overflow-hidden" style={{ background: BG2 }}>
-      {/* Ambient glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at 50% 0%, hsl(${GRN} / 0.1), transparent 65%)` }} />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at 50% 100%, hsl(${RED} / 0.07), transparent 60%)` }} />
+    <section id="maturity" className="py-24 px-4 sm:px-6 relative overflow-hidden" style={{ background: BG2 }}>
+      {/* Subtle top glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[280px] pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 50% 0%, hsl(${GRN} / 0.08), transparent 65%)` }} />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[220px] pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 50% 100%, hsl(${RED} / 0.06), transparent 60%)` }} />
 
-      <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Heading */}
-        <div className="text-center mb-16">
-          <p className="font-bold tracking-[0.2em] uppercase text-sm mb-4" style={{ color: `hsl(${PRI})` }}>
-            The AI Maturity Map
+      <div className="relative z-10 max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <p className="font-bold tracking-[0.2em] uppercase text-xs mb-4" style={{ color: `hsl(${PRI})` }}>
+            The AI Maturity Ladder · Based on EY, McKinsey & Oxford Economics research
           </p>
-          <h2 className="font-black mb-5" style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
-            Every organisation sits{" "}
-            <span style={{ color: `hsl(${PRI})` }}>somewhere on this ladder.</span>
-            <br />Where are you?
+          <h2 className="font-black mb-5" style={{ fontSize: "clamp(1.85rem, 4vw, 3rem)", color: `hsl(${C})`, lineHeight: 1.1 }}>
+            Where does your organisation sit?
           </h2>
-          <p className="text-lg max-w-2xl mx-auto" style={{ color: `hsl(${MUT})`, lineHeight: 1.65 }}>
-            It's not black and white. Most organisations are at Level 2–3 — with islands of progress. The gap to Level 4 isn't about tools. It's about governance and shared standards.
+          <p className="text-base max-w-xl mx-auto" style={{ color: `hsl(${MUT})`, lineHeight: 1.7 }}>
+            90% of enterprises are still at Level 1–3.{" "}
+            <span style={{ color: `hsl(${C})` }}>The gap to Level 4 isn't about tools — it's about governance and shared standards.</span>
           </p>
         </div>
 
-        {/* The ladder */}
-        <div className="relative flex flex-col gap-0">
-          {/* Vertical connector line */}
-          <div className="absolute left-7 top-10 bottom-10 w-[2px] hidden lg:block"
-            style={{ background: `linear-gradient(to top, hsl(${RED} / 0.45), hsl(${AMB} / 0.35) 40%, hsl(${PRI} / 0.6) 70%, hsl(${GRN} / 0.7))` }} />
+        {/* ═══ DESKTOP STAIRCASE ═══ */}
+        <div className="hidden lg:block">
+          {/* The staircase itself — each step is a horizontal "rung" that gets progressively narrower at the bottom */}
+          {/* We render from top (L5) to bottom (L1) so CSS stacking works naturally */}
+          <div className="relative" style={{ height: "500px" }}>
+            {/* Step definitions: [leftInset%, rightInset%, topOffset%, height%] */}
+            {(() => {
+              // Each step: slightly narrower base → pyramid-staircase feel
+              const stepDefs = [
+                { inset: 0,  top: 0,   h: 80,  step: STEPS[4] }, // L5 — full width, top
+                { inset: 3,  top: 85,  h: 88,  step: STEPS[3] }, // L4
+                { inset: 6,  top: 178, h: 88,  step: STEPS[2] }, // L3
+                { inset: 9,  top: 271, h: 88,  step: STEPS[1] }, // L2
+                { inset: 12, top: 364, h: 88,  step: STEPS[0] }, // L1 — narrowest, bottom
+              ];
 
-          {LEVELS.map((level, idx) => {
-            const isDestination = level.destination;
-            const isNorthStar = level.n === 5;
-            const isBottom = level.n === 1;
+              return stepDefs.map(({ inset, top, h, step }) => {
+                const isTarget = step.isTarget;
+                const isNorth = step.isNorth;
+                const isStart = step.isStart;
+                const isSweet = step.isSweet;
 
-            return (
-              <div
-                key={level.n}
-                className="relative flex gap-0 group"
-                style={{ marginBottom: idx < LEVELS.length - 1 ? "0" : "0" }}
-              >
-                {/* Left: level node */}
-                <div className="relative hidden lg:flex flex-col items-center" style={{ width: "60px", minWidth: "60px" }}>
-                  {/* Connector dot */}
-                  <div className="relative z-10 w-4 h-4 rounded-full border-2 mt-8 shrink-0 transition-all"
-                    style={{
-                      borderColor: `hsl(${level.col})`,
-                      background: isDestination || isNorthStar ? `hsl(${level.col})` : `hsl(${level.col} / 0.25)`,
-                      boxShadow: (isDestination || isNorthStar) ? `0 0 12px hsl(${level.col} / 0.6)` : "none",
-                    }} />
-                </div>
-
-                {/* Right: card */}
-                <div className="flex-1 mb-3">
+                return (
                   <div
-                    className="relative rounded-2xl border overflow-hidden transition-all"
+                    key={step.n}
+                    className="absolute rounded-xl border overflow-hidden flex"
                     style={{
-                      background: isNorthStar
-                        ? `hsl(${level.col} / 0.08)`
-                        : isDestination
-                        ? `hsl(${level.col} / 0.07)`
-                        : isBottom
-                        ? `hsl(${level.col} / 0.04)`
-                        : `hsl(${level.col} / 0.03)`,
-                      borderColor: (isDestination || isNorthStar)
-                        ? `hsl(${level.col} / 0.5)`
-                        : `hsl(${level.col} / 0.2)`,
-                      boxShadow: (isDestination || isNorthStar) ? `0 0 32px -10px hsl(${level.col} / 0.3)` : "none",
-                    }}>
-                    {/* Top bar */}
-                    <div className="absolute top-0 left-0 right-0 h-[2px]"
-                      style={{ background: `hsl(${level.col})`, opacity: (isDestination || isNorthStar || isBottom) ? 1 : 0.3 }} />
+                      left: `${inset}%`,
+                      right: `${inset}%`,
+                      top: `${top}px`,
+                      height: `${h}px`,
+                      background: (isNorth || isTarget)
+                        ? `hsl(${step.col} / 0.09)`
+                        : `hsl(${step.col} / 0.04)`,
+                      borderColor: (isNorth || isTarget)
+                        ? `hsl(${step.col} / 0.5)`
+                        : `hsl(${step.col} / 0.22)`,
+                      boxShadow: (isNorth || isTarget)
+                        ? `0 0 28px -8px hsl(${step.col} / 0.3), inset 0 0 0 1px hsl(${step.col} / 0.08)`
+                        : "none",
+                    }}
+                  >
+                    {/* Left accent bar */}
+                    <div className="shrink-0 w-1 h-full" style={{ background: `hsl(${step.col})`, opacity: isNorth || isTarget ? 1 : 0.4 }} />
 
-                    <div className="p-6 flex flex-col lg:flex-row gap-6">
-                      {/* Level number + tag */}
-                      <div className="shrink-0 flex flex-row lg:flex-col items-center lg:items-start gap-3">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-xl border font-black text-2xl shrink-0"
-                          style={{
-                            background: `hsl(${level.col} / ${(isDestination || isNorthStar) ? 0.18 : 0.08})`,
-                            borderColor: `hsl(${level.col} / ${(isDestination || isNorthStar) ? 0.5 : 0.25})`,
-                            color: `hsl(${level.col})`,
-                          }}>
-                          {level.n}
-                        </div>
-                        {/* Pill badges */}
-                        <div className="flex flex-wrap gap-1.5">
-                          {isBottom && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border"
-                              style={{ background: `hsl(${RED} / 0.12)`, borderColor: `hsl(${RED} / 0.4)`, color: `hsl(${RED})` }}>
-                              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: `hsl(${RED})` }} />
-                              Many orgs start here
+                    {/* Level badge */}
+                    <div className="shrink-0 flex items-center justify-center px-4 border-r"
+                      style={{ borderColor: `hsl(${step.col} / 0.15)`, width: "64px", background: `hsl(${step.col} / 0.06)` }}>
+                      <div className="text-center">
+                        <p className="font-black text-xs" style={{ color: `hsl(${step.col} / 0.6)` }}>L</p>
+                        <p className="font-black text-2xl leading-none" style={{ color: `hsl(${step.col})` }}>{step.n}</p>
+                      </div>
+                    </div>
+
+                    {/* Main content */}
+                    <div className="flex-1 flex items-center gap-6 px-5 min-w-0">
+                      {/* Title + desc */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                          <p className="font-black text-sm" style={{ color: `hsl(${C})` }}>{step.label}</p>
+                          {isStart && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border animate-pulse"
+                              style={{ background: `hsl(${RED} / 0.12)`, borderColor: `hsl(${RED} / 0.35)`, color: `hsl(${RED})` }}>
+                              ← most start here
                             </span>
                           )}
-                          {isDestination && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border"
-                              style={{ background: `hsl(${PRI} / 0.12)`, borderColor: `hsl(${PRI} / 0.4)`, color: `hsl(${PRI})` }}>
+                          {isSweet && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border"
+                              style={{ background: `hsl(${AMB} / 0.1)`, borderColor: `hsl(${AMB} / 0.3)`, color: `hsl(${AMB})` }}>
+                              where most are stuck
+                            </span>
+                          )}
+                          {isTarget && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border"
+                              style={{ background: `hsl(${PRI} / 0.14)`, borderColor: `hsl(${PRI} / 0.5)`, color: `hsl(${PRI})` }}>
                               ✦ We take you here
                             </span>
                           )}
-                          {isNorthStar && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border"
+                          {isNorth && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border"
                               style={{ background: `hsl(${GRN} / 0.12)`, borderColor: `hsl(${GRN} / 0.4)`, color: `hsl(${GRN})` }}>
                               ▲ North star
                             </span>
                           )}
                         </div>
+                        <p className="text-xs leading-relaxed truncate" style={{ color: `hsl(${MUT})` }}>
+                          {step.sublabel}
+                        </p>
                       </div>
 
-                      {/* Main content */}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: `hsl(${level.col} / 0.8)` }}>
-                          Level {level.n} · {level.tag}
-                        </p>
-                        <h3 className="font-black text-lg mb-2" style={{ color: `hsl(${C})` }}>
-                          {level.label}
-                        </h3>
-                        <p className="text-sm leading-relaxed mb-4" style={{ color: `hsl(${MUT})` }}>
-                          {level.desc}
-                        </p>
-                        {/* Signals: what this looks like in practice */}
-                        <div className="flex flex-wrap gap-2">
-                          {level.signals.map((s, i) => (
-                            <span key={i} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border"
-                              style={{
-                                background: `hsl(${level.col} / 0.06)`,
-                                borderColor: `hsl(${level.col} / 0.2)`,
-                                color: `hsl(${level.col} / 0.9)`,
-                              }}>
-                              {s}
-                            </span>
-                          ))}
-                        </div>
+                      {/* Signals — hidden on smaller desktop */}
+                      <div className="hidden xl:flex gap-1.5 flex-wrap max-w-[280px]">
+                        {step.signals.map((s, i) => (
+                          <span key={i} className="text-[10px] px-2 py-0.5 rounded border font-medium"
+                            style={{
+                              background: `hsl(${step.col} / 0.06)`,
+                              borderColor: `hsl(${step.col} / 0.2)`,
+                              color: `hsl(${step.col} / 0.85)`,
+                            }}>
+                            {s}
+                          </span>
+                        ))}
                       </div>
 
-                      {/* Prevalence bar: how common is this level */}
-                      <div className="shrink-0 flex flex-row lg:flex-col items-center gap-2 min-w-[72px]">
-                        <div className="hidden lg:block">
-                          <p className="text-[10px] font-bold tracking-widest uppercase text-center mb-1.5" style={{ color: `hsl(${MUT})` }}>
-                            Est. share
-                          </p>
-                          <div className="relative w-full h-[80px] flex items-end justify-center">
-                            <div className="w-10 rounded-t-md" style={{
-                              height: `${level.pct * 2}px`,
-                              background: `linear-gradient(to top, hsl(${level.col} / 0.15), hsl(${level.col} / 0.45))`,
-                              borderTop: `2px solid hsl(${level.col} / 0.6)`,
-                            }} />
-                          </div>
-                          <p className="font-black text-base text-center" style={{ color: `hsl(${level.col})` }}>
-                            ~{level.pct}%
-                          </p>
-                          <p className="text-[10px] text-center" style={{ color: `hsl(${MUT})` }}>of orgs</p>
-                        </div>
-                        <div className="lg:hidden flex items-center gap-2">
-                          <div className="h-2 rounded-full" style={{
-                            width: `${level.pct * 2}px`,
-                            background: `hsl(${level.col} / 0.5)`,
-                          }} />
-                          <span className="text-xs font-bold" style={{ color: `hsl(${level.col})` }}>~{level.pct}%</span>
+                      {/* % bar */}
+                      <div className="shrink-0 text-right min-w-[72px]">
+                        <p className="font-black text-xl leading-none" style={{ color: `hsl(${step.col})` }}>~{step.pct}%</p>
+                        <p className="text-[10px] mt-0.5" style={{ color: `hsl(${MUT})` }}>{step.pctNote}</p>
+                        {/* Mini bar */}
+                        <div className="mt-1.5 h-1 rounded-full overflow-hidden" style={{ background: `hsl(${step.col} / 0.15)` }}>
+                          <div className="h-full rounded-full" style={{ width: `${step.pct * 2}%`, background: `hsl(${step.col} / 0.7)` }} />
                         </div>
                       </div>
+                    </div>
+                  </div>
+                );
+              });
+            })()}
+
+            {/* Vertical "ladder rail" left side */}
+            <div className="absolute left-[0.5%] top-2 bottom-2 w-[2px] rounded-full"
+              style={{ background: `linear-gradient(to bottom, hsl(${GRN} / 0.6), hsl(${PRI} / 0.5), hsl(${AMB} / 0.4), hsl(${RED} / 0.35))` }} />
+          </div>
+
+          {/* Arrow pointing up with label */}
+          <div className="flex items-center gap-3 mt-4 mb-2 pl-2">
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-px h-6 rounded" style={{ background: `linear-gradient(to top, hsl(${GRN}), transparent)` }} />
+              <div className="w-0 h-0" style={{ borderLeft: "4px solid transparent", borderRight: "4px solid transparent", borderBottom: `6px solid hsl(${GRN})` }} />
+            </div>
+            <p className="text-xs font-bold tracking-widest uppercase" style={{ color: `hsl(${GRN} / 0.7)` }}>
+              Increasing maturity → more consistent output, faster onboarding, compounding institutional value
+            </p>
+          </div>
+        </div>
+
+        {/* ═══ MOBILE STACK (clean & focused) ═══ */}
+        <div className="lg:hidden flex flex-col gap-2">
+          {[...STEPS].reverse().map((step) => {
+            const isTarget = step.isTarget;
+            const isNorth = step.isNorth;
+            const isStart = step.isStart;
+            const isSweet = step.isSweet;
+            return (
+              <div key={step.n} className="rounded-xl border overflow-hidden"
+                style={{
+                  background: (isNorth || isTarget) ? `hsl(${step.col} / 0.08)` : `hsl(${step.col} / 0.03)`,
+                  borderColor: (isNorth || isTarget) ? `hsl(${step.col} / 0.45)` : `hsl(${step.col} / 0.2)`,
+                }}>
+                <div className="flex items-start gap-3 p-4">
+                  {/* Level number */}
+                  <div className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-black text-lg border"
+                    style={{ background: `hsl(${step.col} / 0.1)`, borderColor: `hsl(${step.col} / 0.3)`, color: `hsl(${step.col})` }}>
+                    {step.n}
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                      <p className="font-black text-sm" style={{ color: `hsl(${C})` }}>{step.label}</p>
+                      {isStart && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full border animate-pulse"
+                        style={{ background: `hsl(${RED}/0.12)`, borderColor: `hsl(${RED}/0.3)`, color: `hsl(${RED})` }}>← many orgs start here</span>}
+                      {isSweet && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full border"
+                        style={{ background: `hsl(${AMB}/0.1)`, borderColor: `hsl(${AMB}/0.3)`, color: `hsl(${AMB})` }}>where most get stuck</span>}
+                      {isTarget && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full border"
+                        style={{ background: `hsl(${PRI}/0.12)`, borderColor: `hsl(${PRI}/0.45)`, color: `hsl(${PRI})` }}>✦ We take you here</span>}
+                      {isNorth && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full border"
+                        style={{ background: `hsl(${GRN}/0.1)`, borderColor: `hsl(${GRN}/0.35)`, color: `hsl(${GRN})` }}>▲ North star</span>}
+                    </div>
+                    <p className="text-xs mb-2" style={{ color: `hsl(${MUT})` }}>{step.sublabel}</p>
+                    <p className="text-xs leading-relaxed mb-2" style={{ color: `hsl(${MUT} / 0.8)` }}>{step.desc}</p>
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: `hsl(${step.col} / 0.15)` }}>
+                        <div className="h-full rounded-full" style={{ width: `${step.pct * 2}%`, background: `hsl(${step.col} / 0.7)` }} />
+                      </div>
+                      <span className="font-black text-sm shrink-0" style={{ color: `hsl(${step.col})` }}>~{step.pct}%</span>
                     </div>
                   </div>
                 </div>
@@ -319,157 +372,83 @@ function MaturityInfographic() {
           })}
         </div>
 
-        {/* Journey Timeline Infographic */}
-        <div className="mt-14 rounded-3xl border overflow-hidden" style={{ background: BG, borderColor: `hsl(${PRI} / 0.2)` }}>
-          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `linear-gradient(90deg, hsl(${RED}), hsl(${AMB}), hsl(${PRI}), hsl(${GRN}))` }} />
+        {/* ═══ SOURCE NOTE ═══ */}
+        <p className="text-center text-[11px] mt-5 mb-10" style={{ color: `hsl(${MUT} / 0.55)` }}>
+          Distribution estimates based on EY GenAI Maturity Model (2024), McKinsey State of AI Survey (2025) &amp; Oxford Economics / ServiceNow Enterprise AI Maturity Index (2024)
+        </p>
 
-          {/* Header */}
-          <div className="px-8 pt-8 pb-0 border-b" style={{ borderColor: `hsl(${PRI} / 0.12)` }}>
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 pb-8">
-              <div>
-                <p className="font-bold tracking-widest uppercase text-xs mb-2" style={{ color: `hsl(${PRI})` }}>
-                  The Journey Visualised
-                </p>
-                <h3 className="font-black text-2xl" style={{ color: `hsl(${C})`, lineHeight: 1.15 }}>
-                  From where you are →{" "}
-                  <span style={{ color: `hsl(${PRI})` }}>to Level 4.</span>
-                  <br />
-                  Two very different timelines.
-                </h3>
-              </div>
-              <div className="flex items-center gap-3 shrink-0">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${PRI})` }} />
-                  <span className="text-xs font-semibold" style={{ color: `hsl(${MUT})` }}>With LIZA</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${RED} / 0.6)` }} />
-                  <span className="text-xs font-semibold" style={{ color: `hsl(${MUT})` }}>Without</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* ═══ TIMELINE COMPARISON (simplified) ═══ */}
+        <div className="rounded-2xl border overflow-hidden" style={{ background: BG, borderColor: `hsl(${PRI} / 0.2)` }}>
+          <div className="h-[3px]" style={{ background: `linear-gradient(90deg, hsl(${RED}), hsl(${AMB}), hsl(${PRI}), hsl(${GRN}))` }} />
+          <div className="p-8">
+            <p className="font-bold tracking-widest uppercase text-xs mb-2" style={{ color: `hsl(${PRI})` }}>The journey to Level 4</p>
+            <h3 className="font-black text-xl mb-8" style={{ color: `hsl(${C})`, lineHeight: 1.15 }}>
+              Two very different timelines.
+            </h3>
 
-          {/* Timeline comparison */}
-          <div className="px-8 py-10">
-            {/* Visual timeline */}
-            <div className="mb-10">
-              {/* Track labels */}
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div className="rounded-xl px-5 py-4 border" style={{ background: `hsl(${PRI} / 0.05)`, borderColor: `hsl(${PRI} / 0.25)` }}>
-                  <p className="font-bold text-sm mb-0.5" style={{ color: `hsl(${PRI})` }}>With LIZA OS · The Programme</p>
-                  <p className="text-xs" style={{ color: `hsl(${MUT})` }}>Structured, embedded engagement. Weeks, not years.</p>
-                </div>
-                <div className="rounded-xl px-5 py-4 border" style={{ background: `hsl(${RED} / 0.04)`, borderColor: `hsl(${RED} / 0.15)` }}>
-                  <p className="font-bold text-sm mb-0.5" style={{ color: `hsl(${RED})` }}>Without LIZA · Self-guided</p>
-                  <p className="text-xs" style={{ color: `hsl(${MUT})` }}>Trial and error. Committees. Stalling at Level 2–3.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+              {/* With LIZA */}
+              <div className="rounded-xl border p-5" style={{ background: `hsl(${PRI} / 0.05)`, borderColor: `hsl(${PRI} / 0.3)` }}>
+                <p className="font-bold text-sm mb-1" style={{ color: `hsl(${PRI})` }}>With LIZA OS</p>
+                <p className="font-black" style={{ fontSize: "2.5rem", color: `hsl(${PRI})`, lineHeight: 1 }}>8 wks</p>
+                <p className="text-xs mt-1 mb-4" style={{ color: `hsl(${MUT})` }}>Surface → Structure → Embed. Operating model live.</p>
+                <div className="flex gap-1">
+                  {["Wk 1–2 Surface", "Wk 3–5 Structure", "Wk 6–8 Embed", "✓ Level 4"].map((m, i) => (
+                    <div key={i} className="flex-1 rounded text-center py-1.5 text-[9px] font-bold"
+                      style={{
+                        background: i === 3 ? `hsl(${GRN} / 0.18)` : `hsl(${PRI} / 0.1)`,
+                        color: i === 3 ? `hsl(${GRN})` : `hsl(${PRI})`,
+                        border: i === 3 ? `1px solid hsl(${GRN} / 0.4)` : `1px solid hsl(${PRI} / 0.2)`,
+                      }}>
+                      {m}
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Timeline bars */}
-              <div className="flex flex-col gap-4">
-                {/* With LIZA */}
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-3 h-3 rounded-full shrink-0" style={{ background: `hsl(${PRI})` }} />
-                    <p className="text-xs font-bold" style={{ color: `hsl(${PRI})` }}>WITH LIZA</p>
-                  </div>
-                  <div className="relative h-12 rounded-xl overflow-hidden border" style={{ borderColor: `hsl(${PRI} / 0.2)` }}>
-                    {/* Full bar background */}
-                    <div className="absolute inset-0" style={{ background: `hsl(${PRI} / 0.04)` }} />
-                    {/* Progress: reaches L4 at ~week 8 (out of implied 2yr scale, show as short) */}
-                    <div className="absolute left-0 top-0 bottom-0 rounded-xl flex items-center"
-                      style={{ width: "22%", background: `linear-gradient(90deg, hsl(${RED} / 0.4), hsl(${PRI}))` }}>
+              {/* Without */}
+              <div className="rounded-xl border p-5" style={{ background: `hsl(${RED} / 0.03)`, borderColor: `hsl(${RED} / 0.18)` }}>
+                <p className="font-bold text-sm mb-1" style={{ color: `hsl(${RED})` }}>Self-guided</p>
+                <p className="font-black" style={{ fontSize: "2.5rem", color: `hsl(${RED})`, lineHeight: 1 }}>2–3 yrs</p>
+                <p className="text-xs mt-1 mb-4" style={{ color: `hsl(${MUT})` }}>Pilots. Policy docs. Committees. Stalls at L2–3.</p>
+                <div className="flex gap-1">
+                  {["Pilots", "Policy docs", "Committees", "Stalls…"].map((m, i) => (
+                    <div key={i} className="flex-1 rounded text-center py-1.5 text-[9px] font-bold"
+                      style={{
+                        background: `hsl(${RED} / 0.08)`,
+                        color: `hsl(${RED} / 0.7)`,
+                        border: `1px solid hsl(${RED} / 0.15)`,
+                        opacity: 0.6 + i * 0.1,
+                      }}>
+                      {m}
                     </div>
-                    {/* Milestone markers */}
-                    {[
-                      { pos: "7%", label: "Wk 2 · Surface", col: RED },
-                      { pos: "14%", label: "Wk 4–5 · Structure", col: AMB },
-                      { pos: "20%", label: "Wk 6–8 · Embed", col: PRI },
-                      { pos: "22.5%", label: "L4 ✓", col: GRN },
-                    ].map((m, i) => (
-                      <div key={i} className="absolute top-0 bottom-0 flex flex-col items-center justify-center" style={{ left: m.pos }}>
-                        <div className="w-px h-full opacity-60" style={{ background: `hsl(${m.col})` }} />
-                      </div>
-                    ))}
-                    <div className="absolute inset-0 flex items-center px-4 gap-6">
-                      {[
-                        { label: "Wk 1–2", sub: "Surface" },
-                        { label: "Wk 3–5", sub: "Structure" },
-                        { label: "Wk 6–8", sub: "Embed" },
-                        { label: "Level 4 ✓", sub: "Operating model live" },
-                      ].map((m, i) => (
-                        <div key={i} className="flex flex-col">
-                          <span className="text-[10px] font-black leading-tight" style={{ color: `hsl(${C})` }}>{m.label}</span>
-                          <span className="text-[9px]" style={{ color: `hsl(${MUT})` }}>{m.sub}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Without LIZA */}
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-3 h-3 rounded-full shrink-0" style={{ background: `hsl(${RED} / 0.6)` }} />
-                    <p className="text-xs font-bold" style={{ color: `hsl(${RED})` }}>WITHOUT LIZA</p>
-                  </div>
-                  <div className="relative h-12 rounded-xl overflow-hidden border" style={{ borderColor: `hsl(${RED} / 0.15)` }}>
-                    <div className="absolute inset-0" style={{ background: `hsl(${RED} / 0.03)` }} />
-                    {/* Stalls at ~L2/3 area, never reaches L4 in this time */}
-                    <div className="absolute left-0 top-0 bottom-0 rounded-xl"
-                      style={{ width: "38%", background: `linear-gradient(90deg, hsl(${RED} / 0.3), hsl(${AMB} / 0.35))` }}>
-                    </div>
-                    {/* Stall marker */}
-                    <div className="absolute top-0 bottom-0" style={{ left: "38%" }}>
-                      <div className="h-full w-[2px] opacity-60" style={{ background: `hsl(${AMB})` }} />
-                    </div>
-                    <div className="absolute inset-0 flex items-center px-4 gap-6">
-                      {[
-                        { label: "Months 1–3", sub: "Pilots & discussions" },
-                        { label: "Months 4–6", sub: "Policy docs (unused)" },
-                        { label: "Month 6+", sub: "Stalls at L2–L3" },
-                        { label: "2–3 yrs", sub: "L4 (if ever)" },
-                      ].map((m, i) => (
-                        <div key={i} className="flex flex-col">
-                          <span className="text-[10px] font-black leading-tight" style={{ color: `hsl(${RED} / 0.8)` }}>{m.label}</span>
-                          <span className="text-[9px]" style={{ color: `hsl(${MUT})` }}>{m.sub}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Big comparison numbers */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-2xl border text-center px-6 py-7"
-                style={{ background: `hsl(${PRI} / 0.06)`, borderColor: `hsl(${PRI} / 0.3)` }}>
-                <p className="font-black" style={{ fontSize: "3rem", color: `hsl(${PRI})`, lineHeight: 1 }}>8</p>
-                <p className="font-bold text-sm" style={{ color: `hsl(${C})` }}>weeks with us</p>
-                <p className="text-xs mt-1" style={{ color: `hsl(${MUT})` }}>to a live operating model</p>
-              </div>
-              <div className="rounded-2xl border text-center px-6 py-7"
-                style={{ background: `hsl(${RED} / 0.04)`, borderColor: `hsl(${RED} / 0.18)` }}>
-                <p className="font-black" style={{ fontSize: "3rem", color: `hsl(${RED})`, lineHeight: 1 }}>2–3</p>
-                <p className="font-bold text-sm" style={{ color: `hsl(${C})` }}>years alone</p>
-                <p className="text-xs mt-1" style={{ color: `hsl(${MUT})` }}>if organisations get there at all</p>
-              </div>
-              <div className="rounded-2xl border text-center px-6 py-7"
-                style={{ background: `hsl(${GRN} / 0.05)`, borderColor: `hsl(${GRN} / 0.2)` }}>
-                <p className="font-black" style={{ fontSize: "3rem", color: `hsl(${GRN})`, lineHeight: 1 }}>14×</p>
-                <p className="font-bold text-sm" style={{ color: `hsl(${C})` }}>output variance</p>
-                <p className="text-xs mt-1" style={{ color: `hsl(${MUT})` }}>with no shared AI standard in place</p>
-              </div>
+            {/* 3 stat cards */}
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { n: "8", unit: "weeks", sub: "to a live operating model", col: PRI },
+                { n: "2–3", unit: "years", sub: "self-guided (if reached at all)", col: RED },
+                { n: "14×", unit: "variance", sub: "output spread with no shared standard", col: AMB },
+              ].map((s, i) => (
+                <div key={i} className="rounded-xl border text-center px-4 py-5"
+                  style={{ background: `hsl(${s.col} / 0.05)`, borderColor: `hsl(${s.col} / 0.2)` }}>
+                  <p className="font-black leading-none mb-1" style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", color: `hsl(${s.col})` }}>{s.n}</p>
+                  <p className="font-bold text-xs mb-1" style={{ color: `hsl(${C})` }}>{s.unit}</p>
+                  <p className="text-[10px]" style={{ color: `hsl(${MUT})` }}>{s.sub}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Self-identification prompt */}
+        {/* CTA prompt */}
         <div className="mt-10 text-center">
-          <p className="text-base mb-6" style={{ color: `hsl(${MUT})` }}>
-            Most of our clients come in at <span className="font-bold" style={{ color: `hsl(${AMB})` }}>Level 2–3</span>. Some at Level 1. A few at 3 but highly fragmented. Wherever you are, we start there.
+          <p className="text-sm mb-5" style={{ color: `hsl(${MUT})` }}>
+            Most clients come in at <span className="font-bold" style={{ color: `hsl(${AMB})` }}>Level 2–3</span>. Some at Level 1. A few at 3 but fragmented. Wherever you are — we start there.
           </p>
           <button
             onClick={() => document.getElementById("cta")?.scrollIntoView({ behavior: "smooth", block: "center" })}
@@ -486,6 +465,7 @@ function MaturityInfographic() {
     </section>
   );
 }
+
 
 // ─── PROBLEM SECTION ──────────────────────────────────────────────────────────
 function Problem() {
