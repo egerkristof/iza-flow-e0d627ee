@@ -471,7 +471,8 @@ function MaturityInfographic() {
           <p className="text-base mb-6" style={{ color: `hsl(${MUT})` }}>
             Most of our clients come in at <span className="font-bold" style={{ color: `hsl(${AMB})` }}>Level 2–3</span>. Some at Level 1. A few at 3 but highly fragmented. Wherever you are, we start there.
           </p>
-          <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
+          <button
+            onClick={() => document.getElementById("cta")?.scrollIntoView({ behavior: "smooth", block: "center" })}
             className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base transition-opacity hover:opacity-90"
             style={{
               background: `linear-gradient(135deg, hsl(${PRI}), hsl(${GRN}))`,
@@ -479,7 +480,7 @@ function MaturityInfographic() {
               boxShadow: `0 0 32px -8px hsl(${PRI} / 0.4)`,
             }}>
             Find out where your org sits <ArrowRight size={18} />
-          </a>
+          </button>
         </div>
       </div>
     </section>
@@ -872,7 +873,7 @@ function Success() {
           </div>
 
           {/* Final CTA */}
-          <div className="rounded-2xl border p-10 flex flex-col items-center text-center relative overflow-hidden"
+          <div id="cta" className="rounded-2xl border p-10 flex flex-col items-center text-center relative overflow-hidden"
             style={{ background: `hsl(${PRI} / 0.06)`, borderColor: `hsl(${PRI} / 0.3)` }}>
             <div className="absolute inset-0 pointer-events-none"
               style={{ background: `radial-gradient(ellipse at 50% 0%, hsl(${PRI} / 0.1), transparent 60%)` }} />
