@@ -148,7 +148,7 @@ const FEATURES = [
   {
     icon: <Brain className="w-6 h-6" />,
     title: "Knowledge Extraction Engine",
-    desc: "AI-assisted structured interviews and capture tools that surface the tacit layer from your senior experts — the judgment that was never written down.",
+    desc: "AI-assisted structured interviews and capture tools that surface the tacit layer from your senior experts: the judgment that was never written down.",
   },
   {
     icon: <Layers className="w-6 h-6" />,

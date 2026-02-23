@@ -11,6 +11,69 @@
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
+    /* Light mode — clean corporate */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 210 20% 98%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* LIZA Brand Primary: Electric Cyan → Emerald */
+    --primary: 200 90% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary brand tone: emerald */
+    --brand-green: 155 72% 36%;
+    --brand-blue: 200 90% 40%;
+
+    --secondary: 210 18% 96%;
+    --secondary-foreground: 222 30% 30%;
+
+    --muted: 210 16% 96%;
+    --muted-foreground: 215 14% 40%;
+
+    --accent: 210 18% 94%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 18% 88%;
+    --input: 214 18% 88%;
+    --ring: 200 90% 40%;
+
+    --radius: 0.5rem;
+
+    /* Status colors */
+    --success: 155 72% 36%;
+    --warning: 38 92% 50%;
+    --info: 200 90% 40%;
+
+    /* Sidebar */
+    --sidebar-background: 210 18% 97%;
+    --sidebar-foreground: 215 14% 40%;
+    --sidebar-primary: 200 90% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 18% 94%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 18% 88%;
+    --sidebar-ring: 200 90% 40%;
+
+    /* Custom tokens */
+    --surface-elevated: 210 18% 97%;
+    --glow-primary: 200 90% 40%;
+    --glow-green: 155 72% 36%;
+
+    /* Brand gradient */
+    --gradient-brand: linear-gradient(135deg, hsl(200 90% 40%), hsl(155 72% 36%));
+    --gradient-brand-subtle: linear-gradient(135deg, hsl(200 90% 40% / 0.1), hsl(155 72% 36% / 0.1));
+    --gradient-brand-btn: linear-gradient(135deg, hsl(200 90% 40%), hsl(155 72% 36%));
+  }
+
+  .dark {
     /* Pure deep black — infrastructure ground */
     --background: 222 20% 4%;
     --foreground: 210 18% 92%;
@@ -21,11 +84,9 @@
     --popover: 222 18% 7%;
     --popover-foreground: 210 18% 92%;
 
-    /* LIZA Brand Primary: Electric Cyan → Emerald */
     --primary: 200 90% 52%;
     --primary-foreground: 222 20% 4%;
 
-    /* Secondary brand tone: emerald */
     --brand-green: 155 72% 46%;
     --brand-blue: 200 90% 52%;
 
@@ -45,14 +106,10 @@
     --input: 222 14% 13%;
     --ring: 200 90% 52%;
 
-    --radius: 0.5rem;
-
-    /* Status colors */
     --success: 155 72% 46%;
     --warning: 38 92% 50%;
     --info: 200 90% 52%;
 
-    /* Sidebar — deepest panel */
     --sidebar-background: 222 22% 3%;
     --sidebar-foreground: 215 12% 65%;
     --sidebar-primary: 200 90% 52%;
@@ -62,12 +119,10 @@
     --sidebar-border: 222 14% 10%;
     --sidebar-ring: 200 90% 52%;
 
-    /* Custom tokens */
     --surface-elevated: 222 16% 9%;
     --glow-primary: 200 90% 52%;
     --glow-green: 155 72% 46%;
 
-    /* Brand gradient */
     --gradient-brand: linear-gradient(135deg, hsl(200 90% 52%), hsl(155 72% 46%));
     --gradient-brand-subtle: linear-gradient(135deg, hsl(200 90% 52% / 0.15), hsl(155 72% 46% / 0.15));
     --gradient-brand-btn: linear-gradient(135deg, hsl(200 90% 52%), hsl(155 72% 46%));
@@ -80,6 +135,9 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: var(--font-sans);
+  }
+
+  .dark body {
     background-image:
       radial-gradient(ellipse 70% 40% at 50% 0%, hsl(200 90% 52% / 0.04) 0%, transparent 60%),
       radial-gradient(ellipse 30% 30% at 80% 10%, hsl(155 72% 46% / 0.03) 0%, transparent 50%);

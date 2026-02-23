@@ -115,7 +115,7 @@ export default function ManifestoPage() {
         <H2>The New Infrastructure</H2>
 
         <P>
-          We built LIZA OS because we believe the knowledge economy needs a different kind of infrastructure — one designed not for storing information, but for making expertise executable.
+          We built LIZA OS because we believe the knowledge economy needs a different kind of infrastructure, one designed not for storing information, but for making expertise executable.
         </P>
 
         <P>
@@ -123,7 +123,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          That's a protocol, not a document. It's a structured set of heuristics, decision gates, and contextual cues that run inside an AI execution environment — carrying your senior judgment into every interaction, every deliverable, every client engagement.
+          That's a protocol, not a document. It's a structured set of heuristics, decision gates, and contextual cues that run inside an AI execution environment, carrying your senior judgment into every interaction, every deliverable, every client engagement.
         </P>
 
         <Pull>
@@ -133,7 +133,7 @@ export default function ManifestoPage() {
         <H2>The SECI Flywheel</H2>
 
         <P>
-          The Japanese organisational theorist Ikujiro Nonaka described four modes of knowledge creation: Socialisation, Externalisation, Combination, and Internalisation — the SECI model. The insight was simple: organisations that learn don't just store knowledge. They convert it.
+          The Japanese organisational theorist Ikujiro Nonaka described four modes of knowledge creation: Socialisation, Externalisation, Combination, and Internalisation (the SECI model). The insight was simple: organisations that learn don't just store knowledge. They convert it.
         </P>
 
         <P>

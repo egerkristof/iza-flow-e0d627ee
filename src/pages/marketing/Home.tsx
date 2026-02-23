@@ -72,7 +72,7 @@ function Hero() {
         </h1>
 
         <p className="text-lg md:text-xl leading-relaxed mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-          LIZA OS is the execution infrastructure for complex organisations — synthesising the fluid reality of human expertise with the precision of structured process.
+          LIZA OS is the execution infrastructure for complex organisations, synthesising the fluid reality of human expertise with the precision of structured process.
         </p>
         <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
           A small, high-agency team runs on LIZA and achieves exponentially more than a massive, disconnected workforce.
@@ -122,7 +122,7 @@ function OurStory() {
           Collaborating with our partners, we kept seeing the same pattern: companies are full of senior expertise, but struggling to scale it.
         </p>
         <p className="text-base md:text-lg leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-          The knowledge stayed trapped in heads. Handoffs broke. Junior team members couldn't execute with the same judgment. Existing tools capture tasks, not thinking — they miss the decisions, the pattern recognition, the "why" that makes expert work valuable.
+          The knowledge stayed trapped in heads. Handoffs broke. Junior team members couldn't execute with the same judgment. Existing tools capture tasks, not thinking. They miss the decisions, the pattern recognition, the "why" that makes expert work valuable.
         </p>
         <p className="text-base md:text-lg leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
           So we built infrastructure specifically for this: execution systems that capture and run on tacit human knowledge. Not just documentation, but working systems.
@@ -147,7 +147,7 @@ function TheProblem() {
               <GradientText>trapped in heads.</GradientText>
             </h2>
             <p className="text-base leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Companies are full of senior expertise — but struggling to scale it. Handoffs break. Junior teams can't execute with the same judgment. Tools capture tasks, not thinking.
+              Companies are full of senior expertise, but struggling to scale it. Handoffs break. Junior teams can't execute with the same judgment. Tools capture tasks, not thinking.
             </p>
             <p className="text-base leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
               They miss the decisions, the pattern recognition, the "why" that makes expert work valuable. That tacit layer walks out the door every time someone leaves the room.
@@ -215,7 +215,7 @@ const PILLARS = [
   {
     icon: <Brain className="w-5 h-5" />,
     title: "Knowledge Infrastructure",
-    desc: "Capture and structure the tacit judgment that drives real outcomes — Playbooks, Procedures, Directives, Principles — not just documents.",
+    desc: "Capture and structure the tacit judgment that drives real outcomes: Playbooks, Procedures, Directives, and Principles. Not just documents.",
   },
   {
     icon: <Zap className="w-5 h-5" />,
@@ -225,7 +225,7 @@ const PILLARS = [
   {
     icon: <BarChart3 className="w-5 h-5" />,
     title: "Oversight & Learning",
-    desc: "Every execution feeds back into your knowledge base. The system learns, improves, and compounds — turning every run into institutional memory.",
+    desc: "Every execution feeds back into your knowledge base. The system learns, improves, and compounds, turning every run into institutional memory.",
   },
   {
     icon: <Shield className="w-5 h-5" />,
@@ -235,7 +235,7 @@ const PILLARS = [
   {
     icon: <Users className="w-5 h-5" />,
     title: "Team Collaboration",
-    desc: "Workbooks bring teams together around shared context. Not chat — structured collaboration with the right knowledge injected at the right moment.",
+    desc: "Workbooks bring teams together around shared context. Not chat, but structured collaboration with the right knowledge injected at the right moment.",
   },
   {
     icon: <Layers className="w-5 h-5" />,
@@ -256,7 +256,7 @@ function WhatLizaIs() {
             <GradientText>for complex organisations.</GradientText>
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            LIZA synthesises the fluid reality of human collaboration with the precision of structured process. Not another tool — a working system.
+            LIZA synthesises the fluid reality of human collaboration with the precision of structured process. Not another tool. A working system.
           </p>
         </div>
 
@@ -308,10 +308,10 @@ function Purpose() {
               <GradientText>best thinking.</GradientText>
             </h2>
             <p className="text-base leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-              We believe the true value of an organisation lies in scaling its best thinking — not just managing its tasks.
+              We believe the true value of an organisation lies in scaling its best thinking, not just managing its tasks.
             </p>
             <p className="text-base leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-              LIZA creates the conditions where a small, high-agency team can achieve exponentially more than a massive, disconnected workforce. We're here to turn intentions into outcomes — creating the space where human potential truly comes to life.
+              LIZA creates the conditions where a small, high-agency team can achieve exponentially more than a massive, disconnected workforce. We're here to turn intentions into outcomes, creating the space where human potential truly comes to life.
             </p>
             <Link
               to="/manifesto"
@@ -331,7 +331,7 @@ function Purpose() {
               },
               {
                 label: "Mission",
-                text: "Build the execution infrastructure for complex businesses — a holistic OS that synthesises human communication with the precision of process.",
+                text: "Build the execution infrastructure for complex businesses. A holistic OS that synthesises human communication with the precision of process.",
               },
             ].map((item, i) => (
               <div
@@ -362,7 +362,7 @@ const WHO_FOR = [
   {
     icon: <Target className="w-5 h-5" />,
     title: "Knowledge-intensive teams",
-    desc: "Legal, consulting, research, finance — anywhere expertise is the product and scale is the constraint.",
+    desc: "Legal, consulting, research, and finance. Anywhere expertise is the product and scale is the constraint.",
   },
   {
     icon: <Users className="w-5 h-5" />,
@@ -388,7 +388,7 @@ function WhoItsFor() {
             <GradientText>expertise is the edge.</GradientText>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            If your competitive advantage lives in how your people think — not just what they do — LIZA is your operating infrastructure.
+            If your competitive advantage lives in how your people think, not just what they do, LIZA is your operating infrastructure.
           </p>
         </div>
 
@@ -423,7 +423,7 @@ function WhoItsFor() {
             </p>
             <p className="text-base font-semibold mb-1">Managing partner at a consultancy or advisory firm?</p>
             <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-              We have a dedicated engagement for firms that need to capture, codify, and package their senior expertise into a scalable knowledge product — in 4 weeks.
+              We have a dedicated engagement for firms that need to capture, codify, and package their senior expertise into a scalable knowledge product. In 4 weeks.
             </p>
           </div>
           <Link
@@ -459,7 +459,7 @@ const USE_CASE_TEASERS = [
     col: "155 72% 46%",
     tag: "Meeting Intelligence",
     stat: "Week 1 ready",
-    desc: "Submit meeting transcripts. Get organisational knowledge — not summaries. Kick off your knowledge transformation immediately.",
+    desc: "Submit meeting transcripts. Get organisational knowledge, not summaries. Kick off your knowledge transformation immediately.",
   },
   {
     icon: <TrendingUp className="w-5 h-5" />,
