@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const NAV = [
   { label: "Platform", href: "/platform" },
@@ -13,7 +14,11 @@ const NAV = [
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -27,13 +32,12 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl"
         style={{
           background: scrolled
-            ? "hsl(222 20% 4% / 0.95)"
-            : "hsl(222 20% 4% / 0.6)",
-          backdropFilter: "blur(16px)",
-          borderBottom: scrolled ? "1px solid hsl(222 14% 13%)" : "1px solid transparent",
+            ? "hsl(var(--background) / 0.95)"
+            : "hsl(var(--background) / 0.6)",
+          borderBottom: scrolled ? "1px solid hsl(var(--border))" : "1px solid transparent",
         }}
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -41,7 +45,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
           <Link to="/" className="flex items-center gap-3 group">
             <div
               className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm"
-              style={{ background: "var(--gradient-brand-btn)" }}
+              style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
             >
               L
             </div>
@@ -70,8 +74,21 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          {/* CTA */}
+          {/* CTA + Theme toggle */}
           <div className="hidden md:flex items-center gap-3">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-lg transition-colors hover:bg-accent"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4 text-muted-foreground" />
+                ) : (
+                  <Moon className="w-4 h-4 text-muted-foreground" />
+                )}
+              </button>
+            )}
             <a
               href="https://calendar.app.google/3v8jevUcsgRQnLyL9"
               target="_blank"
@@ -80,7 +97,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               style={{
                 background: "var(--gradient-brand-btn)",
                 color: "hsl(var(--primary-foreground))",
-                boxShadow: "0 0 20px -4px hsl(200 90% 52% / 0.4)",
+                boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
               Book a Discovery Call
@@ -88,19 +105,30 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Mobile toggle */}
-          <button
-            className="md:hidden p-2 text-muted-foreground hover:text-foreground"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 text-muted-foreground hover:text-foreground"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+            )}
+            <button
+              className="p-2 text-muted-foreground hover:text-foreground"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
         {mobileOpen && (
           <div
             className="md:hidden border-t"
-            style={{ background: "hsl(222 20% 4%)", borderColor: "hsl(222 14% 13%)" }}
+            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
           >
             <div className="px-6 py-4 flex flex-col gap-2">
               {NAV.map((n) => (
@@ -134,50 +162,47 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
       <main className="pt-16">{children}</main>
 
       {/* Footer */}
-      <footer
-        className="border-t mt-32"
-        style={{ borderColor: "hsl(222 14% 13%)" }}
-      >
+      <footer className="border-t border-border mt-32">
         <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-start justify-between gap-12">
           <div className="max-w-xs">
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm"
-                style={{ background: "var(--gradient-brand-btn)" }}
+                style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
               >
                 L
               </div>
               <span className="font-bold text-lg tracking-tight">LIZA OS</span>
             </div>
-            <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
+            <p className="text-sm leading-relaxed text-muted-foreground">
               The knowledge-activated execution engine for the knowledge economy.
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row gap-12">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>Product</p>
+              <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Product</p>
               <div className="flex flex-col gap-2">
                 {NAV.map((n) => (
-                  <Link key={n.href} to={n.href} className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>
+                  <Link key={n.href} to={n.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {n.label}
                   </Link>
                 ))}
               </div>
             </div>
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>Start</p>
+              <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Start</p>
               <div className="flex flex-col gap-2">
-                <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Book a Call</a>
-                <Link to="/for-professional-services" className="text-sm hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>Apply for a Sprint</Link>
+                <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Book a Call</a>
+                <Link to="/for-professional-services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Apply for a Sprint</Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 py-6 border-t flex items-center justify-between" style={{ borderColor: "hsl(222 14% 13%)" }}>
-          <p className="text-xs" style={{ color: "hsl(var(--muted-foreground))" }}>© 2025 LIZA OS. All rights reserved.</p>
+        <div className="max-w-7xl mx-auto px-6 py-6 border-t border-border flex items-center justify-between">
+          <p className="text-xs text-muted-foreground">© 2025 LIZA OS. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <a href="mailto:kristof.eger@lizaos.ai" className="text-xs hover:text-foreground transition-colors" style={{ color: "hsl(var(--muted-foreground))" }}>kristof.eger@lizaos.ai</a>
+            <a href="mailto:kristof.eger@lizaos.ai" className="text-xs text-muted-foreground hover:text-foreground transition-colors">kristof.eger@lizaos.ai</a>
             <p className="text-xs brand-gradient-text font-semibold">Turn judgment into infrastructure.</p>
           </div>
         </div>

@@ -25,6 +25,7 @@ import PlatformPage from "./pages/marketing/Platform";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
 import UseCasesPage from "./pages/marketing/UseCases";
+import { ThemeProvider } from "next-themes";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function AuthRoute({ children }: { children: React.ReactNode }) {
 }
 
 const App = () => (
+  <ThemeProvider attribute="class" defaultTheme="light">
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
@@ -78,6 +80,7 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;
