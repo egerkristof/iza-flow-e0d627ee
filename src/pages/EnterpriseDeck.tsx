@@ -345,9 +345,9 @@ function Proof() {
         {/* 3 problem dimensions — visually distinct */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { type: "The visibility gap", icon: <BarChart3 size={22} />, title: "Same brief, 14 outputs", desc: "Every person prompts differently. No shared standard. You're responsible for delivery quality, but you can't see what AI is contributing.", accent: "38 92% 50%" },
+            { type: "The visibility gap", icon: <BarChart3 size={22} />, title: "Same brief, 14 outputs", desc: "Every person prompts differently. No shared standard. You're responsible for delivery quality, but you can't see what AI is contributing.", accent: "0 72% 55%" },
             { type: "The governance gap", icon: <Brain size={22} />, title: "Accountable but blind", desc: "AI is running in your organisation right now. You can't explain how it's being used, what it's based on, or whether it's making you better or just faster.", accent: "0 72% 55%" },
-            { type: "The adoption gap", icon: <AlertTriangle size={22} />, title: "You paid. It should work.", desc: "Licences bought. Training done. Adoption at 20%. The same brief still produces wildly different outputs. The tools aren't the problem.", accent: "var(--primary)" },
+            { type: "The adoption gap", icon: <AlertTriangle size={22} />, title: "You paid. It should work.", desc: "Licences bought. Training done. Adoption at 20%. The same brief still produces wildly different outputs. The tools aren't the problem.", accent: "0 72% 55%" },
           ].map((c, i) => (
             <div key={i} className="rounded-2xl p-7 border relative overflow-hidden"
               style={{ background: `hsl(${c.accent} / 0.05)`, borderColor: `hsl(${c.accent} / 0.2)` }}>
