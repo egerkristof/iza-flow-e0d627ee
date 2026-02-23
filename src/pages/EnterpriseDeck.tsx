@@ -334,26 +334,26 @@ function Proof() {
             { q: "My team uses AI constantly — I don't know if it's making us better or just faster at being inconsistent.", role: "Managing Director, Internal Consulting" },
           ].map((s, i) => (
             <div key={i} className="rounded-2xl p-7 border relative overflow-hidden"
-              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}>
-              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "hsl(var(--muted-foreground) / 0.3)" }} />
+              style={{ background: `hsl(var(--primary) / 0.04)`, borderColor: `hsl(var(--primary) / 0.15)` }}>
+              <div className="absolute top-0 left-0 bottom-0 w-[3px]" style={{ background: `hsl(var(--primary) / 0.5)` }} />
               <p className="font-semibold mb-3 text-base leading-relaxed text-foreground">"{s.q}"</p>
               <p className="font-bold tracking-widest uppercase text-xs text-muted-foreground">{s.role}</p>
             </div>
           ))}
         </div>
 
-        {/* 3 problem dimensions — all neutral/muted */}
+        {/* 3 problem dimensions — visually distinct */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { type: "The visibility gap", icon: <BarChart3 size={22} />, title: "Same brief, 14 outputs", desc: "Every person prompts differently. No shared standard. You're responsible for delivery quality, but you can't see what AI is contributing." },
-            { type: "The governance gap", icon: <Brain size={22} />, title: "Accountable but blind", desc: "AI is running in your organisation right now. You can't explain how it's being used, what it's based on, or whether it's making you better or just faster." },
-            { type: "The adoption gap", icon: <AlertTriangle size={22} />, title: "You paid. It should work.", desc: "Licences bought. Training done. Adoption at 20%. The same brief still produces wildly different outputs. The tools aren't the problem." },
+            { type: "The visibility gap", icon: <BarChart3 size={22} />, title: "Same brief, 14 outputs", desc: "Every person prompts differently. No shared standard. You're responsible for delivery quality, but you can't see what AI is contributing.", accent: "38 92% 50%" },
+            { type: "The governance gap", icon: <Brain size={22} />, title: "Accountable but blind", desc: "AI is running in your organisation right now. You can't explain how it's being used, what it's based on, or whether it's making you better or just faster.", accent: "0 72% 55%" },
+            { type: "The adoption gap", icon: <AlertTriangle size={22} />, title: "You paid. It should work.", desc: "Licences bought. Training done. Adoption at 20%. The same brief still produces wildly different outputs. The tools aren't the problem.", accent: "var(--primary)" },
           ].map((c, i) => (
             <div key={i} className="rounded-2xl p-7 border relative overflow-hidden"
-              style={{ background: "hsl(var(--muted) / 0.3)", borderColor: "hsl(var(--border))" }}>
-              <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "hsl(var(--muted-foreground) / 0.3)" }} />
-              <p className="font-bold tracking-widest uppercase text-xs mb-4 text-muted-foreground">{c.type}</p>
-              <div className="mb-4 text-muted-foreground">{c.icon}</div>
+              style={{ background: `hsl(${c.accent} / 0.05)`, borderColor: `hsl(${c.accent} / 0.2)` }}>
+              <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${c.accent} / 0.6)` }} />
+              <p className="font-bold tracking-widest uppercase text-xs mb-4" style={{ color: `hsl(${c.accent})` }}>{c.type}</p>
+              <div className="mb-4" style={{ color: `hsl(${c.accent})` }}>{c.icon}</div>
               <h3 className="font-black text-lg mb-3 text-foreground">{c.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
             </div>
@@ -679,8 +679,8 @@ function AvoidFailure() {
             { label: "Every new AI rollout hits the same wall — adoption without alignment", icon: <Layers size={18} /> },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-4 rounded-xl border px-6 py-5"
-              style={{ background: "hsl(var(--muted) / 0.3)", borderColor: "hsl(var(--border))" }}>
-              <XCircle size={18} className="shrink-0 text-muted-foreground/60" />
+              style={{ background: "hsl(0 72% 55% / 0.05)", borderColor: "hsl(0 72% 55% / 0.18)" }}>
+              <XCircle size={18} className="shrink-0" style={{ color: "hsl(0 72% 55% / 0.6)" }} />
               <p className="font-semibold text-sm text-foreground/85">{item.label}</p>
             </div>
           ))}
