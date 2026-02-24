@@ -76,11 +76,11 @@ function Hero() {
                 Book a Protocol Assessment <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <Link
-                to="/platform"
+                to="/product"
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground"
                 style={{ borderColor: "hsl(var(--border))" }}
               >
-                See the Platform
+                See the Product
               </Link>
             </div>
           </div>
@@ -564,7 +564,7 @@ function CTA() {
                 }}>
                 Book a Protocol Assessment <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
-              <Link to="/platform"
+              <Link to="/product"
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground"
                 style={{ borderColor: "hsl(var(--border))" }}>
                 Explore LIZA OS
