@@ -148,7 +148,7 @@ const FEATURES = [
   {
     icon: <Brain className="w-6 h-6" />,
     title: "Knowledge Extraction Engine",
-    desc: "AI-assisted structured interviews and capture tools that surface the tacit layer from your senior experts: the judgment that was never written down.",
+    desc: "Learns from your existing process documentation, protocols, meeting transcripts, and senior expert interviews to surface the tacit layer: the judgment that was never written down.",
   },
   {
     icon: <Layers className="w-6 h-6" />,
@@ -242,6 +242,9 @@ export default function PlatformPage() {
           </h1>
           <p className="text-lg mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
             LIZA OS standardises your best practices and scales them across your organisation. Consistently, at every level. Not stored. Not searchable. <span className="text-foreground font-medium">Executable.</span>
+          </p>
+          <p className="text-base mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
+            The challenge of standardising how your best people work existed long before AI. AI just made the cost of not solving it impossible to absorb.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a

@@ -124,8 +124,11 @@ function OurStory() {
         <p className="text-base md:text-lg leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
           The knowledge stayed trapped in heads. Handoffs broke. Junior team members couldn't execute with the same judgment. Existing tools capture tasks, not thinking. They miss the decisions, the pattern recognition, the "why" that makes expert work valuable.
         </p>
+        <p className="text-base md:text-lg leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
+          This problem isn't new. Organisations have tried to solve it with wikis, knowledge bases, and better documentation for decades. AI didn't create the gap. It just made the cost of leaving it open impossible to justify.
+        </p>
         <p className="text-base md:text-lg leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-          So we built infrastructure specifically for this: execution systems that capture and run on tacit human knowledge. Not just documentation, but working systems.
+          So we built infrastructure specifically for this: systems that learn from your existing process documentation, meeting transcripts, and senior expertise, then turn all of it into executable protocols. Not documentation. Working systems.
         </p>
       </div>
     </section>
@@ -215,7 +218,7 @@ const PILLARS = [
   {
     icon: <Brain className="w-5 h-5" />,
     title: "Knowledge Infrastructure",
-    desc: "Capture and structure the tacit judgment that drives real outcomes: Playbooks, Procedures, Directives, and Principles. Not just documents.",
+    desc: "Learn from your existing process documentation, protocols, meeting transcripts, and senior interviews. Structure tacit judgment into Playbooks, Procedures, Directives, and Principles.",
   },
   {
     icon: <Zap className="w-5 h-5" />,
