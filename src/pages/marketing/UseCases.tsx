@@ -91,7 +91,7 @@ const USE_CASES = [
     icon: <MessageSquare className="w-7 h-7" />,
     tag: "03 · The Decision Extractor",
     col: "155 72% 46%",
-    headline: "Not a transcript tool. A decision extractor.",
+    headline: "Extract decisions. Route them where they matter.",
     subheading: "Your meetings are already building your knowledge base. You just can't see it yet.",
     competitors: ["Otter.ai", "Fireflies", "Fathom", "Notion AI", "Grain"],
     competitorNote: "These tools give you transcripts, summaries, and searchable recordings. Useful, but fundamentally passive. They capture what was said. They don't understand what it means for your organisation, and they don't route it anywhere actionable.",
@@ -318,9 +318,9 @@ export default function UseCasesPage() {
           <div className="text-center mb-14">
             <SectionTag>The bigger picture</SectionTag>
             <h2 className="text-4xl font-black mb-4">
-              These aren't four tools.
+              One operating system.
               <br />
-              <GradientText>It's one operating system.</GradientText>
+              <GradientText>Four compounding results.</GradientText>
             </h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
               Each use case feeds the next. Together, they close the knowledge spiral, turning tacit expertise into organisational infrastructure that compounds over time.
