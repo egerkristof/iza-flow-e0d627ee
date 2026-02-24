@@ -884,10 +884,10 @@ const DEMANDS = [
     build: "Clear role boundaries: AI handles execution, your people handle judgment calls. Accountability shifts from \"doing\" to \"steering.\"",
   },
   {
-    icon: <Zap size={22} />,
-    demand: "We tried to scale AI and hit a wall of undocumented processes.",
-    why: "Years of shortcuts, tribal knowledge, and \"ask Sarah\" culture. AI forces you to confront what was never written down.",
-    build: "A diagnostic extraction that surfaces every undocumented dependency, unclear decision, and knowledge gap — then codifies them.",
+    icon: <Lock size={22} />,
+    demand: "People are afraid AI will expose what they don't know.",
+    why: "No visibility into what AI is doing or who's accountable when it's wrong. Fear of exposure kills adoption.",
+    build: "Full transparency: every AI action traces to a governed protocol with a visible owner. People see what it follows, and they stay in control.",
   },
   {
     icon: <BarChart3 size={22} />,
@@ -902,10 +902,10 @@ const DEMANDS = [
     build: "Knowledge packaged around complete end-to-end workflows, not point solutions. One Sprint codifies a whole process, not a feature.",
   },
   {
-    icon: <Lock size={22} />,
-    demand: "People are afraid AI will expose what they don't know.",
-    why: "No visibility into what AI is doing or who's accountable when it's wrong. Fear of exposure kills adoption.",
-    build: "Full transparency: every AI action traces to a governed protocol with a visible owner. People see what it follows, and they stay in control.",
+    icon: <Zap size={22} />,
+    demand: "We tried to scale AI and hit a wall of undocumented processes.",
+    why: "Years of shortcuts, tribal knowledge, and \"ask Sarah\" culture. AI forces you to confront what was never written down.",
+    build: "A diagnostic extraction that surfaces every undocumented dependency, unclear decision, and knowledge gap — then codifies them.",
   },
 ];
 
