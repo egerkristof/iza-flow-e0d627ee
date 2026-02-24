@@ -66,16 +66,16 @@ function Hero() {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-black leading-[1.02] mb-8 tracking-tight">
-          Make your best people's
+          Standardise your best people's
           <br />
-          <GradientText>judgment run without them.</GradientText>
+          <GradientText>judgment across every team.</GradientText>
         </h1>
 
         <p className="text-lg md:text-xl leading-relaxed mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-          LIZA OS extracts senior expertise and turns it into executable protocols. Your team runs on your best thinking from day one. Audits 23x faster. Sales reps productive in 8 weeks, not 9 months.
+          LIZA OS extracts senior expertise and turns it into executable protocols your entire organisation can run on. Audits 23x faster. Sales reps productive in 8 weeks, not 9 months.
         </p>
         <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-          Not a knowledge base. Not a chatbot. An execution engine for the knowledge economy.
+          The problem of standardising best practices existed before AI. AI just made the gap impossible to ignore.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -466,7 +466,7 @@ const USE_CASE_TEASERS = [
     col: "155 72% 46%",
     tag: "Decision Extraction",
     stat: "Week 1 ready",
-    desc: "Not transcripts — structured decisions, routed to where they matter. Start with last Monday's meetings.",
+    desc: "Not transcripts. Structured decisions, routed to where they matter. Start with last Monday's meetings.",
   },
   {
     icon: <GitBranch className="w-5 h-5" />,
@@ -489,7 +489,7 @@ function UseCasesTeaser() {
             <GradientText>Already running.</GradientText>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Four use cases we've already deployed — with numbers to prove it.
+            Four use cases we've already deployed, with numbers to prove it.
           </p>
         </div>
         <div className="grid md:grid-cols-2 gap-5 mb-10">
@@ -554,7 +554,7 @@ function CTABand() {
               <GradientText>shaping organisations.</GradientText>
             </h2>
             <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Book a 30-minute discovery call to see how LIZA fits your team — no commitment required.
+              Book a 30-minute discovery call to see how LIZA fits your team. No commitment required.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a

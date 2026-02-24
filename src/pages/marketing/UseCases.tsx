@@ -58,7 +58,7 @@ const USE_CASES = [
     body: [
       "Complex B2B sales are expertise-driven. Your best sellers aren't following a script. They're pattern-matching, reading signals, applying the kind of judgment that takes years to develop. That's tacit knowledge, and it typically takes 6–9 months of full-time salary before a new hire delivers meaningful pipeline.",
       "With LIZA OS, you encode that judgment. Your senior sellers' discovery frameworks, objection-handling logic, qualification instincts, stakeholder mapping heuristics, all structured into executable protocols. Every team member then runs on that same intelligence from week one.",
-      "The knowledge encoded here doesn't just live in the sales team. The competitive insights, the objection patterns, the deal-breaker signals — these feed directly back into your organisational knowledge base, sharpening everything from product positioning to hiring criteria.",
+      "The knowledge encoded here doesn't just live in the sales team. The competitive insights, the objection patterns, the deal-breaker signals: these feed directly back into your organisational knowledge base, sharpening everything from product positioning to hiring criteria.",
     ],
     carries: "Sales patterns reveal what your market actually values. That insight shapes your playbooks, your onboarding, and eventually your product.",
     stats: [
@@ -117,8 +117,8 @@ const USE_CASES = [
     competitorNote: "Task management tools are excellent at tracking what needs to be done. They don't transfer why, in what sequence, under what constraints, and with what judgment. Context is always stripped out. That's why you end up chasing.",
     body: [
       "Every working day, leaders face the same choice: do it yourself, or delegate and spend more time chasing the outcome than it would have taken to just do it. Delegation breaks not because people are incapable, but because context doesn't transfer. They execute the letter, not the intent.",
-      "LIZA OS solves this by packaging your intent, your standards, and your judgment into every delegated task. The recipient gets the full context: the what, the why, the sequencing logic, the quality gates, the constraints. They execute correctly, without check-ins, without clarification spirals, without the result being something you'd have done differently.",
-      "Delegation at this level closes the loop on everything else in LIZA. The knowledge encoded from your audits, your meetings, your sales processes all flows into how work actually gets done, by the right people, at the right standard, without you in the room.",
+      "LIZA OS solves this by packaging your intent, your standards, and your judgment into every delegated task. The recipient gets the full context: the what, the why, the sequencing logic, the quality gates, the constraints. They execute correctly, with fewer check-ins, fewer clarification spirals, and results that match your standard.",
+      "Delegation at this level closes the loop on everything else in LIZA. The knowledge encoded from your audits, your meetings, your sales processes all flows into how work actually gets done, by the right people, at the right standard, consistently across your organisation.",
     ],
     carries: null,
     stats: [
@@ -320,7 +320,7 @@ export default function UseCasesPage() {
               <GradientText>It's one operating system.</GradientText>
             </h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Each use case feeds the next. Together, they close the knowledge spiral — turning tacit expertise into organisational infrastructure that compounds over time.
+              Each use case feeds the next. Together, they close the knowledge spiral, turning tacit expertise into organisational infrastructure that compounds over time.
             </p>
           </div>
 
@@ -380,14 +380,14 @@ export default function UseCasesPage() {
                   boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
                 }}
               >
-                Fix One Process — The Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Fix One Process: The Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 to="/enterprise"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border"
                 style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
               >
-                Fix The Company — The OS →
+                Fix The Company: The OS →
               </Link>
             </div>
           </div>

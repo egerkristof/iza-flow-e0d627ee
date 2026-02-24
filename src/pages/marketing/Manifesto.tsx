@@ -59,7 +59,7 @@ export default function ManifestoPage() {
       {/* Body */}
       <article className="max-w-2xl mx-auto px-6 pb-32">
         <P>
-          We are living through the fastest compression of expertise value in history. The tools that took decades to build — the frameworks, the methodologies, the strategy decks — are now generated in seconds by anyone with a subscription to ChatGPT.
+          We are living through the fastest compression of expertise value in history. The tools that took decades to build, the frameworks, the methodologies, the strategy decks, are now generated in seconds by anyone with a subscription to ChatGPT.
         </P>
 
         <P>
@@ -73,7 +73,7 @@ export default function ManifestoPage() {
         <H2>What AI Already Has</H2>
 
         <P>
-          Every knowledge worker in your space is loading the same things into their AI: their SOPs, their frameworks, their playbooks. The explicit layer — the knowledge that was written down, documented, and formalised — is now a commodity. It lives in public models trained on the entire internet.
+          Every knowledge worker in your space is loading the same things into their AI: their SOPs, their frameworks, their playbooks. The explicit layer, the knowledge that was written down, documented, and formalised, is now a commodity. It lives in public models trained on the entire internet.
         </P>
 
         <P>
@@ -105,7 +105,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          Every time a senior practitioner leaves — retires, moves on, burns out — decades of compounded judgment evaporates. The documentation they leave behind captures the what. It never captures the why. The junior who inherits their desk gets the framework. They don't get the wisdom.
+          Every time a senior practitioner leaves, retires, moves on, or burns out, decades of compounded judgment evaporates. The documentation they leave behind captures the what. It never captures the why. The junior who inherits their desk gets the framework. They don't get the wisdom.
         </P>
 
         <P>
@@ -141,7 +141,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          LIZA OS is built on this principle. Every execution is a learning event. Every learning event feeds the encoding layer. The system gets smarter every time your team uses it. The institutional memory doesn't just persist — it grows.
+          LIZA OS is built on this principle. Every execution is a learning event. Every learning event feeds the encoding layer. The system gets smarter every time your team uses it. The institutional memory doesn't just persist. It grows.
         </P>
 
         <H2>What We Believe</H2>
@@ -151,7 +151,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          We believe judgment can be captured, structured, and made executable — without losing the nuance that makes it valuable.
+          We believe judgment can be captured, structured, and made executable, without losing the nuance that makes it valuable.
         </P>
 
         <P>
@@ -166,11 +166,11 @@ export default function ManifestoPage() {
         <H2>What We Are Building Toward</H2>
 
         <P>
-          We are here to build, not just react. While others respond to the market, we are architecting where it goes next — toward a future where the collective whole is exponentially greater than the sum of its parts.
+          We are here to build, not just react. While others respond to the market, we are architecting where it goes next: toward a future where the collective whole is exponentially greater than the sum of its parts.
         </P>
 
         <P>
-          We believe that human dignity sits at the core of every AI-driven decision. The best-run organisations of the next decade won't just execute faster — they will create the conditions where their people do their best work. That is what we mean by infrastructure.
+          We believe that human dignity sits at the core of every AI-driven decision. The best-run organisations of the next decade won't just execute faster. They will create the conditions where their people do their best work. That is what we mean by infrastructure.
         </P>
 
         <Pull>
@@ -185,7 +185,7 @@ export default function ManifestoPage() {
           <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
           <h3 className="text-2xl font-black mb-4">Ready to close your Judgment Gap?</h3>
           <p className="text-sm mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Start with a 30-minute discovery call — or explore the platform.
+            Start with a 30-minute discovery call, or explore the platform.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a

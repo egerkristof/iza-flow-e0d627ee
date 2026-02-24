@@ -77,7 +77,7 @@ function BetaForm() {
           className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
           style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
         >
-          Skip the queue — book a call <ArrowRight className="w-4 h-4" />
+          Skip the queue: book a call <ArrowRight className="w-4 h-4" />
         </a>
       </div>
     );
@@ -158,7 +158,7 @@ const FEATURES = [
   {
     icon: <Zap className="w-6 h-6" />,
     title: "Protocol Execution",
-    desc: "Deploy knowledge bundles as executable protocols inside AI workbooks. Your expertise runs as infrastructure — consistent, auditable, and scalable.",
+    desc: "Deploy knowledge bundles as executable protocols inside AI workbooks. Your expertise runs as infrastructure: consistent, auditable, and scalable.",
   },
   {
     icon: <BookOpen className="w-6 h-6" />,
@@ -183,7 +183,7 @@ const CATEGORIES = [
   {
     label: "PLAYBOOK",
     tagline: "The strategic driver",
-    desc: "Defines WHAT the work is and WHY it matters. Each bundle has exactly one Playbook — the north star that governs all other items.",
+    desc: "Defines WHAT the work is and WHY it matters. Each bundle has exactly one Playbook: the north star that governs all other items.",
     col: "200 90% 52%",
     role: "Strategic",
   },
@@ -197,21 +197,21 @@ const CATEGORIES = [
   {
     label: "DIRECTIVE",
     tagline: "Compliance gates",
-    desc: "Rules requiring explicit acknowledgment before execution continues. Contains 'must', 'never', 'always' — non-negotiable constraints.",
+    desc: "Rules requiring explicit acknowledgment before execution continues. Contains 'must', 'never', 'always': non-negotiable constraints.",
     col: "38 92% 50%",
     role: "Compliance",
   },
   {
     label: "PRINCIPLE",
     tagline: "Core beliefs",
-    desc: "The values and heuristics that guide decision-making at judgment points. Not rules — the wisdom that underpins how rules are applied.",
+    desc: "The values and heuristics that guide decision-making at judgment points. Not rules, but the wisdom that underpins how rules are applied.",
     col: "270 60% 65%",
     role: "Contextual",
   },
   {
     label: "KNOWLEDGE",
     tagline: "Reference context",
-    desc: "Factual information injected into AI execution as background. Frameworks, definitions, market data — the reference layer that informs, not directs.",
+    desc: "Factual information injected into AI execution as background. Frameworks, definitions, market data: the reference layer that informs, not directs.",
     col: "215 10% 60%",
     role: "Reference",
   },
@@ -241,7 +241,7 @@ export default function PlatformPage() {
             <GradientText>An execution engine.</GradientText>
           </h1>
           <p className="text-lg mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
-            LIZA OS makes your expertise run — consistently, at scale, without you in the room. Not stored. Not searchable. <span className="text-foreground font-medium">Executable.</span>
+            LIZA OS standardises your best practices and scales them across your organisation. Consistently, at every level. Not stored. Not searchable. <span className="text-foreground font-medium">Executable.</span>
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -279,14 +279,14 @@ export default function PlatformPage() {
               <GradientText>Real outcomes, real numbers.</GradientText>
             </h2>
             <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Four use cases we've deployed — with the numbers to prove it.
+              Four use cases we've deployed, with the numbers to prove it.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-5 mb-10">
             {[
               { tag: "Sales Protocol Engine", stat: "8 wks vs 9 months", desc: "Encode your best seller's judgment. Every rep executes at senior level from day one.", col: "38 92% 50%" },
               { tag: "Audit Automation", stat: "23× faster", desc: "Encode every criterion and rule. Run audits with 80% less groundwork and 72% higher accuracy.", col: "200 90% 52%" },
-              { tag: "Decision Extraction", stat: "Week 1 ready", desc: "Not transcripts — structured decisions, routed to where they matter. Start with last Monday's meetings.", col: "155 72% 46%" },
+              { tag: "Decision Extraction", stat: "Week 1 ready", desc: "Not transcripts. Structured decisions, routed to where they matter. Start with last Monday's meetings.", col: "155 72% 46%" },
               { tag: "Smart Briefing", stat: "0 check-ins", desc: "Don't delegate tasks. Generate briefs with full context. People execute correctly first time.", col: "270 60% 65%" },
             ].map((uc, i) => (
               <div

@@ -13,7 +13,7 @@ const TEAM = [
   {
     name: "Kristóf Éger",
     role: "Business Model Innovation",
-    bio: "Business model innovation advisor and executive coach with years of experience defining and scaling business value.\n\nConnecting unique expertise to business outcomes—scaling what makes organizations irreplaceable: their best people.",
+    bio: "Business model innovation advisor and executive coach with years of experience defining and scaling business value.\n\nConnecting unique expertise to business outcomes, scaling what makes organizations irreplaceable: their best people.",
     linkedin: "https://www.linkedin.com/in/kristofeger/",
     initials: "KÉ",
     photo: kristofPhoto,
