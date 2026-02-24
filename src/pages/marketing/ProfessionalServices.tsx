@@ -577,6 +577,60 @@ function CTA() {
   );
 }
 
+// ── CROSS-QUALIFY: Enterprise Operations ──────────────────────────────────────
+function CrossQualifyEnterprise() {
+  return (
+    <section className="py-20 px-6 border-t border-border">
+      <div className="max-w-4xl mx-auto">
+        <div
+          className="relative rounded-2xl border overflow-hidden p-10"
+          style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+          <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center">
+            <div>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3 text-muted-foreground">
+                Thinking bigger?
+              </p>
+              <h3 className="text-2xl font-black mb-3">
+                Need to govern AI across your <span className="brand-gradient-text">entire operation?</span>
+              </h3>
+              <p className="text-base leading-relaxed text-muted-foreground mb-4">
+                The Knowledge Extraction Sprint codifies one expert's judgment. The Enterprise Operations programme builds the governed AI operating model across your whole team: shared standards, visible governance, compounding knowledge.
+              </p>
+              <div className="flex flex-col gap-2 mb-6">
+                {[
+                  "8-week structured programme (Surface, Structure, Embed)",
+                  "Designed for COOs, Heads of Function, and Managing Directors",
+                  "Goes beyond one protocol to a full organisational operating model",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
+                    <p className="text-sm text-muted-foreground">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <Link
+                to="/enterprise"
+                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold border transition-all hover:opacity-80 whitespace-nowrap"
+                style={{
+                  borderColor: "hsl(var(--primary) / 0.4)",
+                  color: "hsl(var(--primary))",
+                  background: "hsl(var(--primary) / 0.08)",
+                }}
+              >
+                Explore Enterprise Operations <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── PAGE ──────────────────────────────────────────────────────────────────────
 export default function ProfessionalServicesPage() {
   return (
@@ -588,6 +642,7 @@ export default function ProfessionalServicesPage() {
       <LizaDifferentiator />
       <SocialProof />
       <WhoItsFor />
+      <CrossQualifyEnterprise />
       <TeamSection />
       <CTA />
     </MarketingLayout>

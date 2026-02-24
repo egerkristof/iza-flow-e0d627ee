@@ -7,8 +7,8 @@ const NAV = [
   { label: "Product", href: "/product" },
   { label: "Platform", href: "/platform" },
   { label: "Use Cases", href: "/use-cases" },
-  { label: "For Enterprise", href: "/enterprise" },
-  { label: "Protocol Sprint", href: "/for-professional-services" },
+  { label: "Enterprise Operations", href: "/enterprise" },
+  { label: "Codify Senior Knowledge", href: "/for-professional-services" },
 ];
 
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -194,7 +194,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Start</p>
               <div className="flex flex-col gap-2">
                 <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Book a Call</a>
-                <Link to="/for-professional-services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Apply for a Sprint</Link>
+                <Link to="/for-professional-services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Codify Senior Knowledge</Link>
               </div>
             </div>
             <div>
