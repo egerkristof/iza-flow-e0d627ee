@@ -313,56 +313,7 @@ function MaturityInfographic() {
 }
 
 // ─── PROOF / PROBLEM ──────────────────────────────────────────────────────────
-function Proof() {
-  return (
-    <section className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        <p className="font-bold tracking-[0.2em] uppercase text-sm mb-4 text-muted-foreground">Sound familiar?</p>
-        <h2 className="font-black mb-4 text-foreground" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 1.1 }}>
-          AI happened fast.<br />Governance didn't follow.
-        </h2>
-        <p className="text-lg mb-14 max-w-2xl text-muted-foreground" style={{ lineHeight: 1.65 }}>
-          These aren't hypothetical risks. We hear these conversations in every engagement.
-        </p>
-
-        {/* Quotes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-14">
-          {[
-            { q: "We all use AI, but we get completely different results for the same brief.", role: "Head of Strategy, Financial Services" },
-            { q: "I've got no idea what our AI outputs are based on. That scares me.", role: "Chief Compliance Officer, 1,200-person firm" },
-            { q: "We bought Copilot for everyone. Three months later, adoption is 20% and quality is patchy.", role: "COO, Professional Services Group" },
-            { q: "My team uses AI constantly — I don't know if it's making us better or just faster at being inconsistent.", role: "Managing Director, Internal Consulting" },
-          ].map((s, i) => (
-            <div key={i} className="rounded-2xl p-7 border relative overflow-hidden"
-              style={{ background: `hsl(var(--primary) / 0.04)`, borderColor: `hsl(var(--primary) / 0.15)` }}>
-              <div className="absolute top-0 left-0 bottom-0 w-[3px]" style={{ background: `hsl(var(--primary) / 0.5)` }} />
-              <p className="font-semibold mb-3 text-base leading-relaxed text-foreground">"{s.q}"</p>
-              <p className="font-bold tracking-widest uppercase text-xs text-muted-foreground">{s.role}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* 3 problem dimensions — visually distinct */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { type: "The visibility gap", icon: <BarChart3 size={22} />, title: "Same brief, 14 outputs", desc: "Every person prompts differently. No shared standard. You're responsible for delivery quality, but you can't see what AI is contributing.", accent: "0 72% 55%" },
-            { type: "The governance gap", icon: <Brain size={22} />, title: "Accountable but blind", desc: "AI is running in your organisation right now. You can't explain how it's being used, what it's based on, or whether it's making you better or just faster.", accent: "0 72% 55%" },
-            { type: "The adoption gap", icon: <AlertTriangle size={22} />, title: "You paid. It should work.", desc: "Licences bought. Training done. Adoption at 20%. The same brief still produces wildly different outputs. The tools aren't the problem.", accent: "0 72% 55%" },
-          ].map((c, i) => (
-            <div key={i} className="rounded-2xl p-7 border relative overflow-hidden"
-              style={{ background: `hsl(${c.accent} / 0.05)`, borderColor: `hsl(${c.accent} / 0.2)` }}>
-              <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${c.accent} / 0.6)` }} />
-              <p className="font-bold tracking-widest uppercase text-xs mb-4" style={{ color: `hsl(${c.accent})` }}>{c.type}</p>
-              <div className="mb-4" style={{ color: `hsl(${c.accent})` }}>{c.icon}</div>
-              <h3 className="font-black text-lg mb-3 text-foreground">{c.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// Proof section removed — merged into TransformationFramework
 
 // ─── LIZA OS DIFFERENTIATOR ─────────────────────────────────────────────────
 function LizaDifferentiator() {
@@ -962,18 +913,31 @@ function TransformationFramework() {
   return (
     <section className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <p className="font-bold tracking-[0.2em] uppercase text-xs mb-4" style={{ color: `hsl(var(--primary))` }}>
-            Sound familiar?
+            The 7 barriers
           </p>
           <h2 className="font-black mb-4 text-foreground" style={{ fontSize: "clamp(1.85rem, 4vw, 3rem)", lineHeight: 1.1 }}>
-            Seven things every organisation hits
-            <br className="hidden sm:block" />
-            when they try to scale AI.
+            Sound familiar?
           </h2>
           <p className="text-base max-w-xl mx-auto text-muted-foreground" style={{ lineHeight: 1.7 }}>
-            We've built the answer to each one.
+            Every organisation hits these when they try to scale AI. We've built the answer to each one.
           </p>
+        </div>
+
+        {/* Executive quotes — social proof */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+          {[
+            { q: "We all use AI, but we get completely different results for the same brief.", role: "Head of Strategy, Financial Services" },
+            { q: "We bought Copilot for everyone. Three months later, adoption is 20% and quality is patchy.", role: "COO, Professional Services Group" },
+          ].map((s, i) => (
+            <div key={i} className="rounded-2xl p-6 border relative overflow-hidden"
+              style={{ background: `hsl(var(--primary) / 0.04)`, borderColor: `hsl(var(--primary) / 0.15)` }}>
+              <div className="absolute top-0 left-0 bottom-0 w-[3px]" style={{ background: `hsl(var(--primary) / 0.5)` }} />
+              <p className="font-semibold mb-2 text-sm leading-relaxed text-foreground">"{s.q}"</p>
+              <p className="font-bold tracking-widest uppercase text-[10px] text-muted-foreground">{s.role}</p>
+            </div>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -1035,7 +999,7 @@ export default function EnterpriseDeck() {
       <MaturityInfographic />
       <TransformationFramework />
       <LizaDifferentiator />
-      <Proof />
+      
       <Guide />
       <Plan />
       <AvoidFailure />
