@@ -25,6 +25,7 @@ import PlatformPage from "./pages/marketing/Platform";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
 import UseCasesPage from "./pages/marketing/UseCases";
+import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 
 const queryClient = new QueryClient();
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/" element={<LizaHome />} />
             <Route path="/liza" element={<LizaHome />} />
             <Route path="/platform" element={<PlatformPage />} />
+            <Route path="/product" element={<ProductPage />} />
             <Route path="/advisory" element={<Navigate to="/for-professional-services" replace />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/for-professional-services" element={<ProfessionalServicesPage />} />

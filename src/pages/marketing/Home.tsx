@@ -66,16 +66,16 @@ function Hero() {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-black leading-[1.02] mb-8 tracking-tight">
-          Turn intentions
+          Make your best people's
           <br />
-          <GradientText>into outcomes.</GradientText>
+          <GradientText>judgment run without them.</GradientText>
         </h1>
 
         <p className="text-lg md:text-xl leading-relaxed mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-          LIZA OS is the execution infrastructure for complex organisations, synthesising the fluid reality of human expertise with the precision of structured process.
+          LIZA OS extracts senior expertise and turns it into executable protocols. Your team runs on your best thinking from day one. Audits 23x faster. Sales reps productive in 8 weeks, not 9 months.
         </p>
         <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-          A small, high-agency team runs on LIZA and achieves exponentially more than a massive, disconnected workforce.
+          Not a knowledge base. Not a chatbot. An execution engine for the knowledge economy.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -599,10 +599,10 @@ export default function LizaHome() {
   return (
     <MarketingLayout>
       <Hero />
+      <UseCasesTeaser />
       <OurStory />
       <TheProblem />
       <WhatLizaIs />
-      <UseCasesTeaser />
       <Purpose />
       <TeamSection />
       <WhoItsFor />
