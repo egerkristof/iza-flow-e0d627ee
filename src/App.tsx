@@ -21,7 +21,7 @@ import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
 import EnterpriseDeck from "./pages/EnterpriseDeck";
 import LizaHome from "./pages/marketing/Home";
-import PlatformPage from "./pages/marketing/Platform";
+// PlatformPage merged into ProductPage
 import ManifestoPage from "./pages/marketing/Manifesto";
 import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
 import UseCasesPage from "./pages/marketing/UseCases";
@@ -57,7 +57,7 @@ const App = () => (
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
             <Route path="/" element={<LizaHome />} />
             <Route path="/liza" element={<LizaHome />} />
-            <Route path="/platform" element={<PlatformPage />} />
+            <Route path="/platform" element={<Navigate to="/product" replace />} />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/advisory" element={<Navigate to="/for-professional-services" replace />} />
             <Route path="/manifesto" element={<ManifestoPage />} />

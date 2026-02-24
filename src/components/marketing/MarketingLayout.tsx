@@ -3,12 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-const NAV = [
-  { label: "Product", href: "/product" },
-  { label: "Platform", href: "/platform" },
-  { label: "Use Cases", href: "/use-cases" },
-  { label: "Enterprise Operations", href: "/enterprise" },
+const NAV_LEFT = [
   { label: "Codify Senior Knowledge", href: "/for-professional-services" },
+  { label: "Scale with AI", href: "/enterprise" },
+  { label: "Product", href: "/product" },
+];
+
+const NAV_RIGHT = [
+  { label: "Use Cases", href: "/use-cases" },
 ];
 
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -56,7 +58,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {NAV.map((n) => {
+            {[...NAV_LEFT, ...NAV_RIGHT].map((n) => {
               const isActive = location.pathname === n.href || (n.href !== "/liza" && location.pathname.startsWith(n.href));
               return (
                 <Link
@@ -131,7 +133,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
           >
             <div className="px-6 py-4 flex flex-col gap-2">
-              {NAV.map((n) => (
+              {[...NAV_LEFT, ...NAV_RIGHT].map((n) => (
                 <Link
                   key={n.href}
                   to={n.href}
@@ -183,7 +185,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Product</p>
               <div className="flex flex-col gap-2">
-                {NAV.map((n) => (
+                {[...NAV_LEFT, ...NAV_RIGHT].map((n) => (
                   <Link key={n.href} to={n.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {n.label}
                   </Link>
