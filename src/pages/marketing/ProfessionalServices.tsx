@@ -358,9 +358,9 @@ function LizaDifferentiator() {
     <section className="py-20 px-6 border-t border-b border-border">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
-          <SectionTag label="Why this isn't consulting" icon={<Zap className="w-3 h-3" />} />
+          <SectionTag label="How we're different" icon={<Zap className="w-3 h-3" />} />
           <h2 className="text-4xl font-black mb-4">
-            Not interviews with a report at the end.
+            A living system, <GradientText>built in 5 days.</GradientText>
           </h2>
           <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
             The extraction, codification, and governance all happen{" "}
@@ -497,9 +497,9 @@ function WhoItsFor() {
               <br />
               <GradientText>professional services leaders.</GradientText>
             </h2>
-            <p className="text-base leading-relaxed mb-8 text-muted-foreground">
-              This engagement is not for teams that haven't started thinking about AI. It's for leaders who've already seen the margin pressure and are ready to act on it.
-            </p>
+             <p className="text-base leading-relaxed mb-8 text-muted-foreground">
+               You've already seen the margin pressure. You know AI changes the game. Now you need infrastructure to act on it.
+             </p>
             <div className="flex flex-col gap-4">
               {[
                 "Agency founders or Managing Partners who see margin compression on standard deliverables",

@@ -79,8 +79,10 @@ function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            to="/platform"
+          <a
+            href={CAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -88,18 +90,16 @@ function Hero() {
               boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.45)",
             }}
           >
-            See the Platform
+            Book a Protocol Assessment
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          </a>
+          <Link
+            to="/platform"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40 hover:text-foreground"
             style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
           >
-            Book a Discovery Call
-          </a>
+            See the Platform →
+          </Link>
         </div>
       </div>
 
@@ -119,16 +119,16 @@ function OurStory() {
       <div className="max-w-3xl mx-auto">
         <SectionTag>Our Story</SectionTag>
         <p className="text-2xl md:text-3xl font-semibold leading-relaxed mb-8">
-          Collaborating with our partners, we kept seeing the same pattern: companies are full of senior expertise, but struggling to scale it.
+          Collaborating with professional services firms, we discovered the same pattern everywhere: companies invest heavily in senior expertise, then struggle to scale it beyond a handful of individuals.
         </p>
         <p className="text-base md:text-lg leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-          The knowledge stayed trapped in heads. Handoffs broke. Junior team members couldn't execute with the same judgment. Existing tools capture tasks, not thinking. They miss the decisions, the pattern recognition, the "why" that makes expert work valuable.
+          Knowledge stays trapped in heads. Handoffs break. Junior team members execute tasks without the judgment that makes senior work valuable. Existing tools capture what happened. They miss the decisions, the pattern recognition, the "why" behind every expert move.
         </p>
         <p className="text-base md:text-lg leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
           This problem isn't new. Organisations have tried to solve it with wikis, knowledge bases, and better documentation for decades. AI didn't create the gap. It just made the cost of leaving it open impossible to justify.
         </p>
         <p className="text-base md:text-lg leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-          So we built infrastructure specifically for this: systems that learn from your existing process documentation, meeting transcripts, and senior expertise, then turn all of it into executable protocols. Not documentation. Working systems.
+          So we built infrastructure for exactly this: a system that learns from your existing process documentation, meeting transcripts, and senior expertise, then turns all of it into executable protocols your team runs on every day.
         </p>
       </div>
     </section>
@@ -150,10 +150,10 @@ function TheProblem() {
               <GradientText>trapped in heads.</GradientText>
             </h2>
             <p className="text-base leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Companies are full of senior expertise, but struggling to scale it. Handoffs break. Junior teams can't execute with the same judgment. Tools capture tasks, not thinking.
+              Your organisation runs on senior expertise. Handoffs break. Junior teams execute tasks without the judgment that drives results. Current tools track what happened. They miss the thinking behind it.
             </p>
             <p className="text-base leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-              They miss the decisions, the pattern recognition, the "why" that makes expert work valuable. That tacit layer walks out the door every time someone leaves the room.
+              The decisions, the pattern recognition, the "why" behind every expert move: that tacit layer walks out the door every time someone leaves the room.
             </p>
             <Link
               to="/manifesto"
@@ -487,9 +487,9 @@ function UseCasesTeaser() {
         <div className="text-center mb-14">
           <SectionTag>Real-world results</SectionTag>
           <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Not theory.
+            Already running.
             <br />
-            <GradientText>Already running.</GradientText>
+            <GradientText>Already proving it.</GradientText>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
             Four use cases we've already deployed, with numbers to prove it.
@@ -552,9 +552,9 @@ function CTABand() {
           <div className="relative z-10">
             <SectionTag>Get started</SectionTag>
             <h2 className="text-4xl md:text-5xl font-black mb-6">
-              The infrastructure
+              Your best practices,
               <br />
-              <GradientText>shaping organisations.</GradientText>
+              <GradientText>running across every team.</GradientText>
             </h2>
             <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
               Book a 30-minute discovery call to see how LIZA fits your team. No commitment required.
@@ -571,22 +571,15 @@ function CTABand() {
                   boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
                 }}
               >
-                Book a Discovery Call
+                Book a Protocol Assessment
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <Link
-                to="/platform"
+                to="/for-professional-services"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40"
                 style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
               >
-                Explore the Platform →
-              </Link>
-              <Link
-                to="/enterprise"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border transition-all hover:border-primary/40"
-                style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
-              >
-                Enterprise Programme →
+                See the 5-Day Sprint →
               </Link>
             </div>
           </div>

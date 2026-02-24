@@ -208,9 +208,9 @@ export default function ProductPage() {
         <div className="max-w-4xl mx-auto text-center">
           <SectionTag>The deliverable</SectionTag>
           <h2 className="text-4xl font-black mb-4">
-            Not a document.
+            A working system
             <br />
-            <GradientText>A working system.</GradientText>
+            <GradientText>you deploy on day one.</GradientText>
           </h2>
           <p className="text-lg mb-12 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
             Your Master Protocol isn't a PDF that sits in a drawer. It's a living, versioned, executable asset that runs inside LIZA workbooks, guides your AI agents, and gets smarter with every use.

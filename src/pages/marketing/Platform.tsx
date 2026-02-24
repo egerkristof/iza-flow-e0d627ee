@@ -236,9 +236,9 @@ export default function PlatformPage() {
         <div className="relative z-10 max-w-3xl mx-auto">
           <SectionTag>The Platform</SectionTag>
           <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-            Not a knowledge base.
+            The execution engine
             <br />
-            <GradientText>An execution engine.</GradientText>
+            <GradientText>for expert judgment.</GradientText>
           </h1>
           <p className="text-lg mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
             LIZA OS standardises your best practices and scales them across your organisation. Consistently, at every level. Not stored. Not searchable. <span className="text-foreground font-medium">Executable.</span>
@@ -258,10 +258,10 @@ export default function PlatformPage() {
                 boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
               }}
             >
-              Book a Demo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              Book a Protocol Assessment <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
             <Link
-              to="/advisory"
+              to="/for-professional-services"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border"
               style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
             >
@@ -277,9 +277,9 @@ export default function PlatformPage() {
           <div className="text-center mb-14">
             <SectionTag>Already running</SectionTag>
             <h2 className="text-4xl font-black mb-4">
-              Not theory.
+              Real outcomes.
               <br />
-              <GradientText>Real outcomes, real numbers.</GradientText>
+              <GradientText>Real numbers.</GradientText>
             </h2>
             <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
               Four use cases we've deployed, with the numbers to prove it.
