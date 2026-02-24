@@ -974,25 +974,18 @@ function TransformationFramework() {
           ))}
         </div>
 
-        {/* First 3 cards */}
+        {/* 6 paired cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {DEMANDS.slice(0, 4).map((d, i) => (
+          {DEMANDS.map((d, i) => (
             <DemandCard key={i} d={d} />
           ))}
         </div>
 
-        {/* Centered highlight card */}
-        <div className="flex justify-center my-5">
+        {/* Centered closing card */}
+        <div className="flex justify-center mt-5">
           <div className="w-full md:w-[calc(50%-0.625rem)]">
             <DemandCard d={CENTER_CARD} highlight />
           </div>
-        </div>
-
-        {/* Last 3 cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {DEMANDS.slice(4).map((d, i) => (
-            <DemandCard key={i + 4} d={d} />
-          ))}
         </div>
 
         {/* CTA */}
