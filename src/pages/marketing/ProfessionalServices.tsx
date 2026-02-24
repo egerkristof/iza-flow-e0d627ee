@@ -45,7 +45,7 @@ function Hero() {
           <div>
             <SectionTag label="The Knowledge Extraction Sprint" />
             <p className="text-sm font-semibold mb-4" style={{ color: `hsl(var(--primary) / 0.8)` }}>
-              For Managing Partners &amp; Practice Leaders
+              For leaders whose competitive edge lives in their people's heads
             </p>
             <h1 className="text-5xl font-black mb-6 leading-[1.08]">
               Productize your
@@ -450,12 +450,17 @@ function SocialProof() {
             <GradientText>codify the judgment layer.</GradientText>
           </h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 mb-10">
+        <div className="grid md:grid-cols-3 gap-8 mb-10">
           {[
             {
-              firm: "12-person strategy consultancy · EU market",
-              quote: "\"We had two founding partners whose judgment was the firm. After the sprint, those decision patterns were standardised inside every junior client engagement, consistently and at scale.\"",
+              firm: "Strategy consultancy · 12 practitioners",
+              quote: "\"We had two founding partners whose judgment was the firm. After the sprint, those decision patterns were standardised inside every junior engagement, consistently and at scale.\"",
               metrics: [{ v: "2×", l: "senior leverage within 60 days" }, { v: "40%", l: "reduction in senior time per engagement" }],
+            },
+            {
+              firm: "Industrial engineering group · 200 employees",
+              quote: "\"Our master engineers are retiring faster than we can train replacements. The sprint captured 30 years of diagnostic judgment and turned it into a protocol our field teams run daily.\"",
+              metrics: [{ v: "70%", l: "faster onboarding for new engineers" }, { v: "100%", l: "of critical domain knowledge retained" }],
             },
             {
               firm: "Boutique M&A advisory · 8 practitioners",
@@ -463,15 +468,15 @@ function SocialProof() {
               metrics: [{ v: "35%", l: "faster deal qualification cycle" }, { v: "100%", l: "of tacit IP retained after retirement" }],
             },
           ].map((cs, i) => (
-            <div key={i} className="relative rounded-2xl p-10 border overflow-hidden" style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}>
+            <div key={i} className="relative rounded-2xl p-8 border overflow-hidden" style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}>
               <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
               <p className="text-xs font-bold tracking-widest uppercase mb-6 text-muted-foreground">{cs.firm}</p>
-              <Quote className="w-8 h-8 mb-4" style={{ color: `hsl(var(--primary) / 0.4)` }} />
-              <p className="text-base leading-relaxed mb-8 font-medium">{cs.quote}</p>
-              <div className="grid grid-cols-2 gap-6">
+              <Quote className="w-6 h-6 mb-3" style={{ color: `hsl(var(--primary) / 0.4)` }} />
+              <p className="text-sm leading-relaxed mb-6 font-medium">{cs.quote}</p>
+              <div className="grid grid-cols-2 gap-4">
                 {cs.metrics.map((m, j) => (
                   <div key={j}>
-                    <p className="text-3xl font-black brand-gradient-text">{m.v}</p>
+                    <p className="text-2xl font-black brand-gradient-text">{m.v}</p>
                     <p className="text-xs mt-1 text-muted-foreground">{m.l}</p>
                   </div>
                 ))}
@@ -493,19 +498,19 @@ function WhoItsFor() {
           <div>
             <SectionTag label="Who It's For" />
             <h2 className="text-4xl font-black mb-6">
-              Built for senior
+              Built for leaders who
               <br />
-              <GradientText>professional services leaders.</GradientText>
+              <GradientText>scale through expertise.</GradientText>
             </h2>
              <p className="text-base leading-relaxed mb-8 text-muted-foreground">
                You've already seen the margin pressure. You know AI changes the game. Now you need infrastructure to act on it.
              </p>
             <div className="flex flex-col gap-4">
               {[
-                "Agency founders or Managing Partners who see margin compression on standard deliverables",
-                "Consultancies worried about losing IP when senior practitioners retire or leave",
-                "Professional services firms that want to scale capacity without adding headcount",
-                "Practice leads whose best work is trapped inside the heads of two or three people",
+                "Professional services leaders seeing margin compression on standard deliverables",
+                "Operations directors scaling specialist teams without adding headcount",
+                "Technical leaders with retiring domain experts whose knowledge must be retained",
+                "Any leader whose best work is trapped inside the heads of two or three people",
               ].map((w, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <TrendingUp className="w-4 h-4 flex-shrink-0 mt-1" style={{ color: `hsl(var(--primary))` }} />
