@@ -884,10 +884,10 @@ const DEMANDS = [
     build: "Clear role boundaries: AI handles execution, your people handle judgment calls. Accountability shifts from \"doing\" to \"steering.\"",
   },
   {
-    icon: <Lock size={22} />,
-    demand: "People are afraid AI will expose what they don't know.",
-    why: "No visibility into what AI is doing or who's accountable when it's wrong. Fear of exposure kills adoption.",
-    build: "Full transparency: every AI action traces to a governed protocol with a visible owner. People see what it follows, and they stay in control.",
+    icon: <Zap size={22} />,
+    demand: "We tried to scale AI and hit a wall of undocumented processes.",
+    why: "Years of shortcuts, tribal knowledge, and \"ask Sarah\" culture. AI forces you to confront what was never written down.",
+    build: "A diagnostic extraction that surfaces every undocumented dependency, unclear decision, and knowledge gap — then codifies them.",
   },
   {
     icon: <BarChart3 size={22} />,
@@ -901,13 +901,47 @@ const DEMANDS = [
     why: "Pilots are isolated experiments. Nobody reorganised the actual workflow around them.",
     build: "Knowledge packaged around complete end-to-end workflows, not point solutions. One Sprint codifies a whole process, not a feature.",
   },
-  {
-    icon: <Zap size={22} />,
-    demand: "We tried to scale AI and hit a wall of undocumented processes.",
-    why: "Years of shortcuts, tribal knowledge, and \"ask Sarah\" culture. AI forces you to confront what was never written down.",
-    build: "A diagnostic extraction that surfaces every undocumented dependency, unclear decision, and knowledge gap — then codifies them.",
-  },
 ];
+
+const CENTER_CARD = {
+  icon: <Lock size={22} />,
+  demand: "People are afraid AI will expose what they don't know.",
+  why: "No visibility into what AI is doing or who's accountable when it's wrong. Fear of exposure kills adoption.",
+  build: "Full transparency: every AI action traces to a governed protocol with a visible owner. People see what it follows, and they stay in control.",
+};
+
+function DemandCard({ d, highlight }: { d: { icon: React.ReactNode; demand: string; why: string; build: string }; highlight?: boolean }) {
+  return (
+    <div className="rounded-2xl border overflow-hidden"
+      style={{
+        background: highlight ? `hsl(var(--primary) / 0.06)` : "hsl(var(--card))",
+        borderColor: highlight ? `hsl(var(--primary) / 0.3)` : "hsl(var(--border))",
+        boxShadow: highlight ? `0 0 28px -8px hsl(var(--primary) / 0.2)` : "none",
+      }}>
+      <div className="h-[2px]" style={{ background: highlight ? `hsl(var(--primary) / 0.5)` : `hsl(var(--primary) / 0.3)` }} />
+      <div className="p-7">
+        <div className="flex items-start gap-3 mb-5">
+          <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center"
+            style={{ background: `hsl(var(--primary) / 0.1)`, color: `hsl(var(--primary))` }}>
+            {d.icon}
+          </div>
+          <p className="font-black text-base leading-snug text-foreground pt-1.5">
+            "{d.demand}"
+          </p>
+        </div>
+        <div className="mb-4">
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1.5 text-muted-foreground">Why it happens</p>
+          <p className="text-sm leading-relaxed text-muted-foreground">{d.why}</p>
+        </div>
+        <div className="rounded-xl px-4 py-3 border"
+          style={{ background: `hsl(${GRN} / 0.06)`, borderColor: `hsl(${GRN} / 0.25)` }}>
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1.5" style={{ color: `hsl(${GRN})` }}>What we build together</p>
+          <p className="text-sm leading-relaxed" style={{ color: `hsl(${GRN} / 0.85)` }}>{d.build}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function TransformationFramework() {
   return (
@@ -940,37 +974,24 @@ function TransformationFramework() {
           ))}
         </div>
 
+        {/* First 3 cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {DEMANDS.map((d, i) => (
-            <div key={i} className="rounded-2xl border overflow-hidden"
-              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}>
-              <div className="h-[2px]" style={{ background: `hsl(var(--primary) / 0.3)` }} />
-              <div className="p-7">
-                {/* Icon + Demand */}
-                <div className="flex items-start gap-3 mb-5">
-                  <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center"
-                    style={{ background: `hsl(var(--primary) / 0.1)`, color: `hsl(var(--primary))` }}>
-                    {d.icon}
-                  </div>
-                  <p className="font-black text-base leading-snug text-foreground pt-1.5">
-                    "{d.demand}"
-                  </p>
-                </div>
+          {DEMANDS.slice(0, 4).map((d, i) => (
+            <DemandCard key={i} d={d} />
+          ))}
+        </div>
 
-                {/* Why */}
-                <div className="mb-4">
-                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1.5 text-muted-foreground">Why it happens</p>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{d.why}</p>
-                </div>
+        {/* Centered highlight card */}
+        <div className="flex justify-center my-5">
+          <div className="w-full md:w-[calc(50%-0.625rem)]">
+            <DemandCard d={CENTER_CARD} highlight />
+          </div>
+        </div>
 
-                {/* What we build */}
-                <div className="rounded-xl px-4 py-3 border"
-                  style={{ background: `hsl(${GRN} / 0.06)`, borderColor: `hsl(${GRN} / 0.25)` }}>
-                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1.5" style={{ color: `hsl(${GRN})` }}>What we build together</p>
-                  <p className="text-sm leading-relaxed" style={{ color: `hsl(${GRN} / 0.85)` }}>{d.build}</p>
-                </div>
-              </div>
-            </div>
+        {/* Last 3 cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {DEMANDS.slice(4).map((d, i) => (
+            <DemandCard key={i + 4} d={d} />
           ))}
         </div>
 
