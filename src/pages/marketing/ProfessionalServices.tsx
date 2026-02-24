@@ -59,7 +59,7 @@ function Hero() {
             </p>
             <p className="text-base leading-relaxed mb-5 text-muted-foreground">
               You walk in with knowledge trapped in people.{" "}
-              <span className="font-semibold text-foreground">You walk out with a system that runs without them.</span>
+              <span className="font-semibold text-foreground">You walk out with a system that standardises their best practices across your entire team.</span>
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
@@ -227,9 +227,9 @@ function ProductBox() {
               <div className="grid gap-3">
                 {[
                   "90-Minute Tacit Knowledge Interview with your senior practitioner",
-                  "Liza Semantic Analysis & Structuring — automated codification",
-                  'The "Master Protocol" — delivered as PDF & live digital system in LIZA OS',
-                  "Implementation Guide — rollout plan for your team",
+                  "Liza Semantic Analysis & Structuring: automated codification",
+                  'The "Master Protocol": delivered as PDF & live digital system in LIZA OS',
+                  "Implementation Guide: rollout plan for your team",
                 ].map((d, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
@@ -290,7 +290,7 @@ function Proof() {
           <h2 className="text-4xl font-black mb-4">
             The problem isn't your expertise.
             <br />
-            <GradientText>It's that it can't scale without you.</GradientText>
+            <GradientText>It's that your best practices don't scale.</GradientText>
           </h2>
           <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
             Every professional services firm faces the same ceiling.
@@ -300,23 +300,23 @@ function Proof() {
           {[
             {
               icon: <BookOpen className="w-5 h-5" />,
-              tag: "Layer 1 — Commoditised",
+              tag: "Layer 1: Commoditised",
               title: "Frameworks & templates",
               desc: "The structured deliverables your firm built over years. ChatGPT produces them in seconds. Clients know it.",
               desired: false,
             },
             {
               icon: <Lock className="w-5 h-5" />,
-              tag: "Layer 2 — Bottlenecked",
+              tag: "Layer 2: Bottlenecked",
               title: "Senior expert judgment",
-              desc: "The real differentiator. Pattern recognition built over decades. But it lives inside two or three people — and can't scale without them in the room.",
+              desc: "The real differentiator. Pattern recognition built over decades. But it lives inside two or three people and can't be standardised across the firm.",
               desired: false,
             },
             {
               icon: <TrendingUp className="w-5 h-5" />,
-              tag: "Layer 3 — The Opportunity",
+              tag: "Layer 3: The Opportunity",
               title: "Codified expertise",
-              desc: "Your unique value, turned into executable protocols that run without you. This is the layer that protects your margin and lets your firm scale.",
+              desc: "Your unique value, turned into executable protocols that standardise your best practices. This is the layer that protects your margin and lets your firm scale.",
               desired: true,
             },
           ].map((c, i) => (
@@ -363,7 +363,7 @@ function LizaDifferentiator() {
           </h2>
           <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
             The extraction, codification, and governance all happen{" "}
-            <span className="font-semibold text-foreground">inside LIZA OS</span> — so you leave with a system that actually runs, not a slide deck.
+            <span className="font-semibold text-foreground">inside LIZA OS</span>, so you leave with a system that actually runs, not a slide deck.
           </p>
         </div>
 
@@ -383,7 +383,7 @@ function LizaDifferentiator() {
             },
             {
               label: "LIZA OS Sprint", cross: false,
-              items: ["Experts define knowledge inside LIZA OS", "Tacit judgment becomes executable playbooks", "Protocols run live — enforced at point of use", "Every session feeds back into the system"],
+              items: ["Experts define knowledge inside LIZA OS", "Tacit judgment becomes executable playbooks", "Protocols run live, enforced at point of use", "Every session feeds back into the system"],
               outcome: "A living operating system",
               icon: <Zap className="w-5 h-5" />,
             },
@@ -450,7 +450,7 @@ function SocialProof() {
           {[
             {
               firm: "12-person strategy consultancy · EU market",
-              quote: "\"We had two founding partners whose judgment was the firm. After the sprint, those decision patterns were running inside every junior client engagement — without them in the room.\"",
+              quote: "\"We had two founding partners whose judgment was the firm. After the sprint, those decision patterns were standardised inside every junior client engagement, consistently and at scale.\"",
               metrics: [{ v: "2×", l: "senior leverage within 60 days" }, { v: "40%", l: "reduction in senior time per engagement" }],
             },
             {
@@ -515,7 +515,7 @@ function WhoItsFor() {
             <p className="text-xs font-bold tracking-widest uppercase mb-6 text-muted-foreground">Typical Outcomes</p>
             {[
               { metric: "35%", label: "avg productivity gain in execution teams within 60 days" },
-              { metric: "2×", label: "senior leverage — same team, double the output capacity" },
+              { metric: "2×", label: "senior leverage: same team, double the output capacity" },
               { metric: "5 days", label: "from kickoff to a fully governed knowledge protocol" },
             ].map((o, i) => (
               <div key={i} className="mb-8">
@@ -545,7 +545,7 @@ function CTA() {
               Ready to <GradientText>productize your judgment?</GradientText>
             </h2>
             <p className="text-base mb-2 text-muted-foreground">
-              Book a 30-minute Protocol Assessment. We'll diagnose whether your expertise is extractable — and show you exactly what the output looks like.
+              Book a 30-minute Protocol Assessment. We'll diagnose whether your expertise is extractable and show you exactly what the output looks like.
             </p>
             <p className="text-xs mb-8 font-semibold" style={{ color: `hsl(var(--primary))` }}>
               We take on 4 sprint engagements per month. Currently booking March.
