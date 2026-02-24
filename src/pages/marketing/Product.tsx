@@ -25,15 +25,17 @@ const PIPELINE_STEPS = [
   {
     icon: <Mic className="w-7 h-7" />,
     label: "INPUT",
-    title: "Senior Voice Recording",
-    desc: "A 90-minute structured interview with your senior expert. Unstructured, natural conversation. The tacit layer: judgment, heuristics, pattern recognition.",
+    title: "Your Existing Knowledge",
+    desc: "Existing process documents, protocols, meeting transcripts, and structured interviews with your senior experts. The raw material your organisation already has.",
     col: "200 90% 52%",
     visual: (
       <div className="rounded-xl p-5 border font-mono text-xs leading-relaxed" style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
-        <p className="mb-2 opacity-60">// Raw transcript excerpt</p>
-        <p>"...when I see a client pushing for speed on the SOW, that's usually a red flag. It means they haven't scoped internally. What I do is slow them down with three questions..."</p>
-        <p className="mt-2">"...the margin risk isn't in the deliverable, it's in the change requests. So I always build a clause that..."</p>
-        <p className="mt-2 opacity-60">// 47 more minutes of unstructured expertise</p>
+        <p className="mb-2 opacity-60">// Process documentation</p>
+        <p>"Client Scoping SOP v4.2: When a client pushes for speed, apply the qualification checklist before proceeding..."</p>
+        <p className="mt-2 opacity-60">// Meeting transcript</p>
+        <p>"...the margin risk isn't in the deliverable, it's in the change requests. So I always build a clause that..."</p>
+        <p className="mt-2 opacity-60">// Senior interview excerpt</p>
+        <p>"...when I see that pattern, I slow them down with three questions before we even talk about scope..."</p>
       </div>
     ),
   },
@@ -118,12 +120,15 @@ export default function ProductPage() {
         <div className="relative z-10 max-w-3xl mx-auto">
           <SectionTag>The Product</SectionTag>
           <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-            We input your conversation.
+            We input your knowledge.
             <br />
             <GradientText>LIZA outputs your Operating System.</GradientText>
           </h1>
-          <p className="text-lg mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
-            See exactly what happens when senior expertise meets the LIZA Context Engine. Messy knowledge goes in. Structured, executable protocols come out.
+          <p className="text-lg mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
+            See exactly what happens when your existing documentation and expertise meet the LIZA Context Engine. Messy knowledge goes in. Structured, executable protocols come out.
+          </p>
+          <p className="text-base mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Standardising best practices has always been the challenge. AI didn't create the problem. It just made solving it both urgent and possible.
           </p>
           <a
             href={CAL_URL}
@@ -147,7 +152,7 @@ export default function ProductPage() {
           <div className="text-center mb-16">
             <SectionTag>How it works</SectionTag>
             <h2 className="text-4xl font-black mb-4">
-              Voice recording in.
+              Your knowledge in.
               <br />
               <GradientText>Executable protocol out.</GradientText>
             </h2>

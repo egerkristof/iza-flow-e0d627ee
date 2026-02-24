@@ -157,8 +157,11 @@ export default function UseCasesPage() {
           <p className="text-lg mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
             Most teams start with one use case. Audit automation, meeting intelligence, sales playbooks, or delegation. Within months, they're running all four because each one compounds the last.
           </p>
-          <p className="text-base mb-10 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+          <p className="text-base mb-4 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
             This is the SECI flywheel in practice: tacit knowledge becomes explicit, explicit knowledge becomes infrastructure, infrastructure enables better execution, better execution generates new tacit knowledge.
+          </p>
+          <p className="text-sm mb-10 max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Organisations have wrestled with this problem for decades. AI didn't create it. But AI made ignoring it a competitive liability.
           </p>
           <a
             href={CAL_URL}

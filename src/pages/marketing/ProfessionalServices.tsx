@@ -55,7 +55,7 @@ function Hero() {
               <GradientText>in 5 days.</GradientText>
             </h1>
             <p className="text-lg leading-relaxed mb-5 text-muted-foreground">
-              Stop relying on your Senior Partner's brain as a bottleneck. We use the <span className="font-semibold text-foreground">Liza Context Engine</span> to extract, structure, and clone their expertise into an executable Digital Protocol.
+              Stop relying on your Senior Partner's brain as a bottleneck. We feed your existing process documentation, protocols, meeting transcripts, and a structured senior interview into the <span className="font-semibold text-foreground">Liza Context Engine</span>, and it outputs an executable Digital Protocol.
             </p>
             <p className="text-base leading-relaxed mb-5 text-muted-foreground">
               You walk in with knowledge trapped in people.{" "}
@@ -139,7 +139,7 @@ function Hero() {
 // ── PROCESS VISUALIZATION ("The Asset") ───────────────────────────────────────
 function ProcessVisualization() {
   const steps = [
-    { icon: <Mic className="w-6 h-6" />, label: "Senior Voice\nRecording", sub: "90-min tacit knowledge interview" },
+    { icon: <FileText className="w-6 h-6" />, label: "Your Existing\nKnowledge", sub: "Docs, protocols, transcripts, interviews" },
     { icon: <Cpu className="w-6 h-6" />, label: "Liza Context\nEngine", sub: "Semantic analysis & structuring" },
     { icon: <FileText className="w-6 h-6" />, label: "Master\nProtocol", sub: "PDF + Digital executable system" },
   ];
@@ -150,7 +150,7 @@ function ProcessVisualization() {
         <div className="text-center mb-12">
           <SectionTag label="How It Works" icon={<Zap className="w-3 h-3" />} />
           <h2 className="text-4xl font-black mb-4">
-            We input your conversation.
+            We input your knowledge.
             <br />
             <GradientText>Liza outputs your Operating System.</GradientText>
           </h2>
@@ -226,7 +226,8 @@ function ProductBox() {
               <p className="text-xs font-bold tracking-widest uppercase mb-4 text-muted-foreground">Deliverables</p>
               <div className="grid gap-3">
                 {[
-                  "90-Minute Tacit Knowledge Interview with your senior practitioner",
+                  "Document intake: your existing process docs, protocols, and meeting transcripts",
+                  "90-minute structured interview with your senior practitioner",
                   "Liza Semantic Analysis & Structuring: automated codification",
                   'The "Master Protocol": delivered as PDF & live digital system in LIZA OS',
                   "Implementation Guide: rollout plan for your team",
@@ -364,6 +365,9 @@ function LizaDifferentiator() {
           <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
             The extraction, codification, and governance all happen{" "}
             <span className="font-semibold text-foreground">inside LIZA OS</span>, so you leave with a system that actually runs, not a slide deck.
+          </p>
+          <p className="text-base max-w-2xl mx-auto mt-4 text-muted-foreground">
+            This isn't about AI. Firms have struggled to standardise senior expertise for decades. AI just made the extraction possible at a speed and depth that wasn't feasible before.
           </p>
         </div>
 
