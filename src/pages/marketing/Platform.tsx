@@ -268,8 +268,49 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      {/* Knowledge Architecture — upgraded */}
+      {/* What it does — outcomes first */}
       <section className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <SectionTag>Already running</SectionTag>
+            <h2 className="text-4xl font-black mb-4">
+              Not theory.
+              <br />
+              <GradientText>Real outcomes, real numbers.</GradientText>
+            </h2>
+            <p className="text-lg max-w-xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+              Four use cases we've deployed — with the numbers to prove it.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-5 mb-10">
+            {[
+              { tag: "Sales Protocol Engine", stat: "8 wks vs 9 months", desc: "Encode your best seller's judgment. Every rep executes at senior level from day one.", col: "38 92% 50%" },
+              { tag: "Audit Automation", stat: "23× faster", desc: "Encode every criterion and rule. Run audits with 80% less groundwork and 72% higher accuracy.", col: "200 90% 52%" },
+              { tag: "Decision Extraction", stat: "Week 1 ready", desc: "Not transcripts — structured decisions, routed to where they matter. Start with last Monday's meetings.", col: "155 72% 46%" },
+              { tag: "Smart Briefing", stat: "0 check-ins", desc: "Don't delegate tasks. Generate briefs with full context. People execute correctly first time.", col: "270 60% 65%" },
+            ].map((uc, i) => (
+              <div
+                key={i}
+                className="relative rounded-2xl p-7 border overflow-hidden"
+                style={{ background: `hsl(${uc.col} / 0.03)`, borderColor: `hsl(${uc.col} / 0.2)` }}
+              >
+                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${uc.col})` }} />
+                <span className="text-xs font-black tracking-widest uppercase" style={{ color: `hsl(${uc.col})` }}>{uc.tag}</span>
+                <p className="text-2xl font-black mt-3 mb-2">{uc.stat}</p>
+                <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{uc.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <Link to="/use-cases" className="inline-flex items-center gap-2 text-sm font-semibold" style={{ color: "hsl(var(--primary))" }}>
+              See all use cases in detail <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Knowledge Architecture — below outcomes */}
+      <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <SectionTag>The Knowledge Architecture</SectionTag>
@@ -320,7 +361,7 @@ export default function PlatformPage() {
       </section>
 
       {/* Features grid */}
-      <section className="py-24 px-6">
+      <section className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <SectionTag>Platform Features</SectionTag>
@@ -335,7 +376,7 @@ export default function PlatformPage() {
               <div
                 key={i}
                 className="rounded-2xl p-8 border"
-                style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+                style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
               >
                 <div
                   className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"

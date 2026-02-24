@@ -423,7 +423,7 @@ function WhoItsFor() {
             </p>
             <p className="text-base font-semibold mb-1">Managing partner at a consultancy or advisory firm?</p>
             <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-              We have a dedicated engagement for firms that need to capture, codify, and package their senior expertise into a scalable knowledge product. In 4 weeks.
+              We have a dedicated engagement for firms that need to capture, codify, and package their senior expertise into a scalable knowledge product. In 5 days.
             </p>
           </div>
           <Link
@@ -448,6 +448,13 @@ function WhoItsFor() {
 
 const USE_CASE_TEASERS = [
   {
+    icon: <TrendingUp className="w-5 h-5" />,
+    col: "38 92% 50%",
+    tag: "Sales Protocol Engine",
+    stat: "8 weeks vs 9 months",
+    desc: "Encode your best seller's judgment. Every team member executes at senior level from day one.",
+  },
+  {
     icon: <ClipboardCheck className="w-5 h-5" />,
     col: "200 90% 52%",
     tag: "Audit Automation",
@@ -457,23 +464,16 @@ const USE_CASE_TEASERS = [
   {
     icon: <MessageSquare className="w-5 h-5" />,
     col: "155 72% 46%",
-    tag: "Meeting Intelligence",
+    tag: "Decision Extraction",
     stat: "Week 1 ready",
-    desc: "Submit meeting transcripts. Get organisational knowledge, not summaries. Kick off your knowledge transformation immediately.",
-  },
-  {
-    icon: <TrendingUp className="w-5 h-5" />,
-    col: "38 92% 50%",
-    tag: "Sales Playbook",
-    stat: "8 weeks vs 9 months",
-    desc: "Encode your best seller's judgment. Every team member executes at senior level from day one.",
+    desc: "Not transcripts — structured decisions, routed to where they matter. Start with last Monday's meetings.",
   },
   {
     icon: <GitBranch className="w-5 h-5" />,
     col: "270 60% 65%",
-    tag: "Smart Delegation",
+    tag: "Smart Briefing",
     stat: "0 check-ins needed",
-    desc: "Delegate with full context. People execute correctly — without chasing, without clarification, without disappointment.",
+    desc: "Don't delegate tasks. Generate briefs with full context. People execute correctly first time.",
   },
 ];
 
