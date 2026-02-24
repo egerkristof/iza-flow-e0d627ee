@@ -858,6 +858,60 @@ function LogoStrip() {
 }
 
 
+// ─── CROSS-QUALIFY: Codify Senior Knowledge ──────────────────────────────────
+function CrossQualifySprint() {
+  return (
+    <section className="py-20 px-6 border-t border-border">
+      <div className="max-w-4xl mx-auto">
+        <div
+          className="relative rounded-2xl border overflow-hidden p-10"
+          style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+          <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center">
+            <div>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3 text-muted-foreground">
+                Start smaller?
+              </p>
+              <h3 className="text-2xl font-black mb-3">
+                Codify one expert's judgment <span className="brand-gradient-text">in 5 days.</span>
+              </h3>
+              <p className="text-base leading-relaxed text-muted-foreground mb-4">
+                The Enterprise Operations programme builds your full AI operating model. But if you want to start with a single high-value process, the Knowledge Extraction Sprint turns one senior expert's judgment into an executable Digital Protocol in one week.
+              </p>
+              <div className="flex flex-col gap-2 mb-6">
+                {[
+                  "5-day fixed-scope engagement, from kickoff to delivered protocol",
+                  "Ideal for Managing Partners and Practice Leaders",
+                  "Feeds directly into a broader operating model when you're ready",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <CheckCircle2 size={16} className="shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
+                    <p className="text-sm text-muted-foreground">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <Link
+                to="/for-professional-services"
+                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold border transition-all hover:opacity-80 whitespace-nowrap"
+                style={{
+                  borderColor: `hsl(${GRN} / 0.4)`,
+                  color: `hsl(${GRN})`,
+                  background: `hsl(${GRN} / 0.08)`,
+                }}
+              >
+                See the 5-Day Sprint <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function EnterpriseDeck() {
   return (
@@ -870,6 +924,7 @@ export default function EnterpriseDeck() {
       <Plan />
       <AvoidFailure />
       <Success />
+      <CrossQualifySprint />
       <TeamSection />
       <LogoStrip />
     </MarketingLayout>
