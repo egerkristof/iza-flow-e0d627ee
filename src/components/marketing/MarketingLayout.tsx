@@ -4,7 +4,6 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 const NAV_LEFT = [
-  { label: "Codify Senior Knowledge", href: "/for-professional-services" },
   { label: "Scale with AI", href: "/enterprise" },
   { label: "Product", href: "/product" },
 ];
