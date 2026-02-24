@@ -912,12 +912,128 @@ function CrossQualifySprint() {
   );
 }
 
+// ─── TRANSFORMATION FRAMEWORK (7 Demand-Driven Cards) ────────────────────────
+const DEMANDS = [
+  {
+    icon: <Shield size={22} />,
+    demand: "We bought AI tools and nothing changed.",
+    why: "AI amplifies whatever process it's given. If the process was never documented properly, AI just automates the mess.",
+    build: "A structured knowledge base where every process has an owner, a version, and a scope — so AI has something worth executing.",
+  },
+  {
+    icon: <Layers size={22} />,
+    demand: "We're still doing everything the same way, just with a chatbot.",
+    why: "Most firms bolt AI onto existing human workflows. The process stays the same; AI just sits on top.",
+    build: "Workflows redesigned for AI execution with human steering — not the other way around. The system runs the process; your people steer it.",
+  },
+  {
+    icon: <Brain size={22} />,
+    demand: "We gave everyone AI access and productivity didn't move.",
+    why: "People are still doing the work manually and using AI as a spell-checker. The role hasn't changed, just the tools.",
+    build: "Clear role boundaries: AI handles execution, your people handle judgment calls. Accountability shifts from \"doing\" to \"steering.\"",
+  },
+  {
+    icon: <Zap size={22} />,
+    demand: "We tried to scale AI and hit a wall of undocumented processes.",
+    why: "Years of shortcuts, tribal knowledge, and \"ask Sarah\" culture. AI forces you to confront what was never written down.",
+    build: "A diagnostic extraction that surfaces every undocumented dependency, unclear decision, and knowledge gap — then codifies them.",
+  },
+  {
+    icon: <BarChart3 size={22} />,
+    demand: "AI is an IT project. The business doesn't own it.",
+    why: "Central AI teams build tools; business teams don't adopt them. There's no ownership where value is actually created.",
+    build: "Business teams own their own protocols inside LIZA. IT enables the platform; the business defines what runs on it.",
+  },
+  {
+    icon: <TrendingUp size={22} />,
+    demand: "We have 30 AI use cases but nothing that actually scales.",
+    why: "Pilots are isolated experiments. Nobody reorganised the actual workflow around them.",
+    build: "Knowledge packaged around complete end-to-end workflows, not point solutions. One Sprint codifies a whole process, not a feature.",
+  },
+  {
+    icon: <Lock size={22} />,
+    demand: "People are afraid AI will expose what they don't know.",
+    why: "No visibility into what AI is doing or who's accountable when it's wrong. Fear of exposure kills adoption.",
+    build: "Full transparency: every AI action traces to a governed protocol with a visible owner. People see what it follows, and they stay in control.",
+  },
+];
+
+function TransformationFramework() {
+  return (
+    <section className="py-24 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-14">
+          <p className="font-bold tracking-[0.2em] uppercase text-xs mb-4" style={{ color: `hsl(var(--primary))` }}>
+            Sound familiar?
+          </p>
+          <h2 className="font-black mb-4 text-foreground" style={{ fontSize: "clamp(1.85rem, 4vw, 3rem)", lineHeight: 1.1 }}>
+            Seven things every organisation hits
+            <br className="hidden sm:block" />
+            when they try to scale AI.
+          </h2>
+          <p className="text-base max-w-xl mx-auto text-muted-foreground" style={{ lineHeight: 1.7 }}>
+            We've built the answer to each one.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {DEMANDS.map((d, i) => (
+            <div key={i} className="rounded-2xl border overflow-hidden"
+              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}>
+              <div className="h-[2px]" style={{ background: `hsl(var(--primary) / 0.3)` }} />
+              <div className="p-7">
+                {/* Icon + Demand */}
+                <div className="flex items-start gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center"
+                    style={{ background: `hsl(var(--primary) / 0.1)`, color: `hsl(var(--primary))` }}>
+                    {d.icon}
+                  </div>
+                  <p className="font-black text-base leading-snug text-foreground pt-1.5">
+                    "{d.demand}"
+                  </p>
+                </div>
+
+                {/* Why */}
+                <div className="mb-4">
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1.5 text-muted-foreground">Why it happens</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{d.why}</p>
+                </div>
+
+                {/* What we build */}
+                <div className="rounded-xl px-4 py-3 border"
+                  style={{ background: `hsl(${GRN} / 0.06)`, borderColor: `hsl(${GRN} / 0.25)` }}>
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1.5" style={{ color: `hsl(${GRN})` }}>What we build together</p>
+                  <p className="text-sm leading-relaxed" style={{ color: `hsl(${GRN} / 0.85)` }}>{d.build}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base transition-opacity hover:opacity-90"
+            style={{
+              background: "var(--gradient-brand-btn)",
+              color: "hsl(var(--primary-foreground))",
+              boxShadow: `0 0 32px -8px hsl(var(--primary) / 0.4)`,
+            }}>
+            Let's solve these together <ArrowRight size={18} />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function EnterpriseDeck() {
   return (
     <MarketingLayout>
       <Hero />
       <MaturityInfographic />
+      <TransformationFramework />
       <LizaDifferentiator />
       <Proof />
       <Guide />

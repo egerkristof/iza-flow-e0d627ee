@@ -352,6 +352,24 @@ function Proof() {
   );
 }
 
+// ── VALIDATION BRIDGE ─────────────────────────────────────────────────────────
+function ValidationBridge() {
+  return (
+    <section className="py-12 px-6">
+      <div className="max-w-3xl mx-auto">
+        <div className="rounded-2xl border px-8 py-7 relative overflow-hidden"
+          style={{ background: `hsl(var(--primary) / 0.04)`, borderColor: `hsl(var(--primary) / 0.2)` }}>
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+          <p className="text-base leading-relaxed text-muted-foreground italic">
+            "AI transformation fails when companies automate broken processes. We start by codifying the judgment layer — the part that was never written down.{" "}
+            <span className="text-foreground font-semibold not-italic">That's the foundation everything else scales on.</span>"
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── LIZA OS DIFFERENTIATOR ────────────────────────────────────────────────────
 function LizaDifferentiator() {
   return (
@@ -644,6 +662,7 @@ export default function ProfessionalServicesPage() {
       <ProcessVisualization />
       <ProductBox />
       <Proof />
+      <ValidationBridge />
       <LizaDifferentiator />
       <SocialProof />
       <WhoItsFor />
