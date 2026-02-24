@@ -48,48 +48,8 @@ function FlowConnector({ text }: { text: string }) {
 
 const USE_CASES = [
   {
-    icon: <ClipboardCheck className="w-7 h-7" />,
-    tag: "01 · Audit Automation",
-    col: "200 90% 52%",
-    headline: "Make audits 23× faster.",
-    subheading: "We made auditing great again.",
-    competitors: ["Workiva", "AuditBoard", "TeamMate+", "Excel"],
-    competitorNote: "These tools structure the audit process. They manage workflows, house documents, and track findings. What they cannot do is encode expertise. Your criteria still lives in your senior auditor's head. Every audit still starts from scratch.",
-    body: [
-      "Auditing is one of the most expertise-dense, detail-critical activities in any organisation: long criteria checklists, best-practice frameworks, domain-specific rules that exist entirely in the judgment of a specialist. Current audit tools are good at managing the process. They don't capture the knowledge driving it.",
-      "With LIZA OS, we encode all of that. Every criterion, every compliance gate, every domain heuristic gets structured and packaged into executable protocols. The system then applies all criteria automatically and consistently, eliminating up to 80% of the groundwork.",
-      "Audits run 23× faster with 72% higher accuracy. And crucially: every audit execution feeds new findings back into your organisational knowledge. Your firm gets smarter with every engagement.",
-    ],
-    carries: "Audits surface issues. Those issues become tasks, structured, contextualised, and delegated with full intent.",
-    stats: [
-      { value: "23×", label: "Faster audit execution" },
-      { value: "72%", label: "Accuracy improvement" },
-      { value: "80%", label: "Groundwork eliminated" },
-    ],
-  },
-  {
-    icon: <MessageSquare className="w-7 h-7" />,
-    tag: "02 · Meeting Intelligence",
-    col: "155 72% 46%",
-    headline: "Your meetings are already building your knowledge base.",
-    subheading: "You just can't see it yet.",
-    competitors: ["Otter.ai", "Fireflies", "Fathom", "Notion AI", "Grain"],
-    competitorNote: "These tools give you transcripts, summaries, and searchable recordings. Useful, but fundamentally passive. They capture what was said. They don't understand what it means for your organisation, and they don't route it anywhere actionable.",
-    body: [
-      "Every week, your organisation runs dozens of meetings. Each one is packed with decisions, rationale, pattern recognition, and strategic signal, and most of it evaporates. The transcript tools give you a wall of text. The summaries give you three bullet points. Neither builds anything.",
-      "LIZA OS takes your meeting transcripts and extracts structured organisational intelligence from them: what was decided and why, what new principles emerged, what knowledge needs encoding, what issues surfaced that need to become tasks. You get a synthesised view of what actually happened across your organisation without sitting in every meeting.",
-      "This is often how organisations start with LIZA. Not with a months-long implementation project, but with last Monday's meetings. Within a week, you have the foundations of your organisational knowledge base, built from conversations that were already happening.",
-    ],
-    carries: "Meetings surface tacit knowledge. That knowledge gets encoded. Encoded knowledge powers your sales team, your auditors, your delegated work.",
-    stats: [
-      { value: "Week 1", label: "Knowledge base starts immediately" },
-      { value: "0", label: "Hours lost reading summaries" },
-      { value: "100%", label: "Decisions captured with context" },
-    ],
-  },
-  {
     icon: <TrendingUp className="w-7 h-7" />,
-    tag: "03 · Sales Playbook Automation",
+    tag: "01 · The Sales Protocol Engine",
     col: "38 92% 50%",
     headline: "Onboard sales reps in 8 weeks, not 6–9 months.",
     subheading: "Scale your senior seller's judgment across your entire go-to-market team.",
@@ -108,10 +68,50 @@ const USE_CASES = [
     ],
   },
   {
+    icon: <ClipboardCheck className="w-7 h-7" />,
+    tag: "02 · Audit Automation",
+    col: "200 90% 52%",
+    headline: "Make audits 23× faster.",
+    subheading: "If we can handle compliance audits, we can handle your marketing briefs.",
+    competitors: ["Workiva", "AuditBoard", "TeamMate+", "Excel"],
+    competitorNote: "These tools structure the audit process. They manage workflows, house documents, and track findings. What they cannot do is encode expertise. Your criteria still lives in your senior auditor's head. Every audit still starts from scratch.",
+    body: [
+      "Auditing is one of the most expertise-dense, detail-critical activities in any organisation: long criteria checklists, best-practice frameworks, domain-specific rules that exist entirely in the judgment of a specialist. Current audit tools are good at managing the process. They don't capture the knowledge driving it.",
+      "With LIZA OS, we encode all of that. Every criterion, every compliance gate, every domain heuristic gets structured and packaged into executable protocols. The system then applies all criteria automatically and consistently, eliminating up to 80% of the groundwork.",
+      "Audits run 23× faster with 72% higher accuracy. And crucially: every audit execution feeds new findings back into your organisational knowledge. Your firm gets smarter with every engagement.",
+    ],
+    carries: "Audits surface issues. Those issues become tasks, structured, contextualised, and delegated with full intent.",
+    stats: [
+      { value: "23×", label: "Faster audit execution" },
+      { value: "72%", label: "Accuracy improvement" },
+      { value: "80%", label: "Groundwork eliminated" },
+    ],
+  },
+  {
+    icon: <MessageSquare className="w-7 h-7" />,
+    tag: "03 · The Decision Extractor",
+    col: "155 72% 46%",
+    headline: "Not a transcript tool. A decision extractor.",
+    subheading: "Your meetings are already building your knowledge base. You just can't see it yet.",
+    competitors: ["Otter.ai", "Fireflies", "Fathom", "Notion AI", "Grain"],
+    competitorNote: "These tools give you transcripts, summaries, and searchable recordings. Useful, but fundamentally passive. They capture what was said. They don't understand what it means for your organisation, and they don't route it anywhere actionable.",
+    body: [
+      "Every week, your organisation runs dozens of meetings. Each one is packed with decisions, rationale, pattern recognition, and strategic signal, and most of it evaporates. The transcript tools give you a wall of text. The summaries give you three bullet points. Neither builds anything.",
+      "LIZA OS takes your meeting transcripts and extracts structured organisational intelligence from them: what was decided and why, what new principles emerged, what knowledge needs encoding, what issues surfaced that need to become tasks. You get a synthesised view of what actually happened across your organisation without sitting in every meeting.",
+      "This is often how organisations start with LIZA. Not with a months-long implementation project, but with last Monday's meetings. Within a week, you have the foundations of your organisational knowledge base, built from conversations that were already happening.",
+    ],
+    carries: "Meetings surface tacit knowledge. That knowledge gets encoded. Encoded knowledge powers your sales team, your auditors, your delegated work.",
+    stats: [
+      { value: "Week 1", label: "Knowledge base starts immediately" },
+      { value: "0", label: "Hours lost reading summaries" },
+      { value: "100%", label: "Decisions captured with context" },
+    ],
+  },
+  {
     icon: <GitBranch className="w-7 h-7" />,
-    tag: "04 · Smart Delegation",
+    tag: "04 · The Smart Brief",
     col: "270 60% 65%",
-    headline: "Delegate once. Get it done right.",
+    headline: "Don't delegate tasks. Generate briefs.",
     subheading: "The infrastructure for working through others at the highest standard.",
     competitors: ["Asana", "Monday.com", "ClickUp", "Linear", "Jira"],
     competitorNote: "Task management tools are excellent at tracking what needs to be done. They don't transfer why, in what sequence, under what constraints, and with what judgment. Context is always stripped out. That's why you end up chasing.",
@@ -123,7 +123,7 @@ const USE_CASES = [
     carries: null,
     stats: [
       { value: "0", label: "Check-ins needed" },
-      { value: "100%", label: "Intent transferred with every task" },
+      { value: "100%", label: "Intent transferred with every brief" },
       { value: "∞", label: "Scalable across your organisation" },
     ],
   },
@@ -171,7 +171,7 @@ export default function UseCasesPage() {
               boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
             }}
           >
-            Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            Book a Protocol Assessment <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
       </section>
@@ -299,9 +299,9 @@ export default function UseCasesPage() {
               {/* Flow connector between use cases */}
               {i < USE_CASES.length - 1 && (
                 <FlowConnector text={
-                  i === 0 ? "Issues surface → become structured tasks" :
-                  i === 1 ? "Knowledge encodes → powers your teams" :
-                  "Playbooks run → work gets delegated with intent"
+                  i === 0 ? "Playbooks run → audits execute with encoded judgment" :
+                  i === 1 ? "Issues surface → knowledge encodes from every meeting" :
+                  "Knowledge compounds → work gets delegated with intent"
                 } />
               )}
             </div>
@@ -371,10 +371,8 @@ export default function UseCasesPage() {
               <span style={{ color: "hsl(var(--primary))" }}>Within months, they're running the full OS.</span>
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/for-professional-services"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
                 style={{
                   background: "var(--gradient-brand-btn)",
@@ -382,14 +380,14 @@ export default function UseCasesPage() {
                   boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
                 }}
               >
-                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+                Fix One Process — The Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
               <Link
-                to="/platform"
+                to="/enterprise"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border"
                 style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
               >
-                See the full platform →
+                Fix The Company — The OS →
               </Link>
             </div>
           </div>
