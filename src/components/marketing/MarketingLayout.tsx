@@ -7,7 +7,7 @@ const NAV = [
   { label: "Platform", href: "/platform" },
   { label: "Use Cases", href: "/use-cases" },
   { label: "For Enterprise", href: "/enterprise" },
-  { label: "For Professional Services", href: "/for-professional-services" },
+  { label: "Protocol Sprint", href: "/for-professional-services" },
   { label: "Manifesto", href: "/manifesto" },
 ];
 
@@ -100,7 +100,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              Book a Discovery Call
+                Book a Protocol Assessment
             </a>
           </div>
 
@@ -151,7 +151,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                   color: "hsl(var(--primary-foreground))",
                 }}
               >
-                Book a Discovery Call
+                Book a Protocol Assessment
               </a>
             </div>
           </div>
