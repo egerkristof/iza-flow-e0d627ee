@@ -25,6 +25,7 @@ import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
 import UseCasesPage from "./pages/marketing/UseCases";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <AuthProvider>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
