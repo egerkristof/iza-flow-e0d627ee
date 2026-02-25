@@ -277,57 +277,68 @@ function Slide04Solution() {
 // ─── Slide 05 — Product ──────────────────────────────────────────────────────
 
 function Slide05Product() {
-  const features = [
-    { label: "Action Grid", desc: "Replaces blank chat with protocol-mapped action cards", color: ACCENT },
-    { label: "Intent Lock", desc: "Activates full AI alignment to the current protocol step", color: GREEN },
-    { label: "Knowledge Bundles", desc: "Structured context inheritance from Org → Team → Workbook", color: ACCENT },
-    { label: "Drift Detection", desc: "Real-time deviation scoring against locked playbooks", color: GREEN },
-    { label: "Smart Ingestion", desc: "Drag-and-drop docs → instant candidate Playbook extraction", color: ACCENT },
-    { label: "After-Action Synthesis", desc: "AI-powered session review → knowledge graph updates", color: GREEN },
-  ];
-
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <SlideGrid />
-
-      <div className="relative z-10 flex h-full w-full px-28 pt-16 pb-12 gap-16">
-        {/* Left */}
-        <div className="flex flex-col justify-center w-2/5">
+      <div className="relative z-10 flex h-full w-full px-20 pt-14 pb-10 gap-12">
+        {/* Left — screenshots */}
+        <div className="w-[55%] flex flex-col gap-4">
           <Tag label="Product" color={ACCENT} />
-          <h2 className="font-bold mb-10" style={{ fontSize: 68, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+          <h2 className="font-bold mb-4" style={{ fontSize: 52, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
             Three operating modes.<br />
             <span style={{ color: `hsl(${ACCENT})` }}>One system.</span>
           </h2>
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
             {[
-              { role: "The Launchpad", persona: "Frontline / Operator", color: ACCENT, icon: <Target size={28} /> },
-              { role: "The Process Studio", persona: "Expert / Architect", color: GREEN, icon: <Brain size={28} /> },
-              { role: "The Command Center", persona: "Manager / Leader", color: GOLD, icon: <BarChart3 size={28} /> },
-            ].map(({ role, persona, color, icon }) => (
-              <div key={role} className="flex items-center gap-5 rounded-xl border p-6"
-                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.05)` }}>
-                <div style={{ color: `hsl(${color})` }}>{icon}</div>
-                <div>
-                  <p className="font-bold" style={{ fontSize: 28, color: "hsl(210 18% 92%)" }}>{role}</p>
-                  <p style={{ fontSize: 22, color: "hsl(215 10% 45%)" }}>{persona}</p>
-                </div>
+              { src: "/images/product-domains.png", label: "Design — Domain Playbooks" },
+              { src: "/images/product-playbooks.png", label: "Design — Protocol Builder" },
+              { src: "/images/product-oversight.png", label: "Oversee — Board View" },
+              { src: "/images/product-workbook.png", label: "Execute — Workbook Launchpad" },
+            ].map(({ src, label }) => (
+              <div key={label} className="rounded-xl border overflow-hidden flex flex-col"
+                style={{ borderColor: `hsl(${ACCENT} / 0.2)` }}>
+                <img src={src} alt={label} className="w-full flex-1 object-cover object-top" style={{ minHeight: 0 }} />
+                <p className="px-3 py-2 font-semibold" style={{ fontSize: 16, color: `hsl(${ACCENT})`, background: "hsl(222 18% 5%)" }}>{label}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right */}
-        <div className="flex flex-col justify-center w-3/5">
-          <p className="font-semibold mb-8" style={{ fontSize: 26, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Core Capabilities</p>
-          <div className="grid grid-cols-2 gap-6">
-            {features.map(({ label, desc, color }) => (
-              <div key={label} className="rounded-xl border p-7 flex flex-col gap-3"
-                style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.05)` }}>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 size={24} style={{ color: `hsl(${color})` }} />
-                  <p className="font-bold" style={{ fontSize: 28, color: "hsl(210 18% 92%)" }}>{label}</p>
+        {/* Right — modes + capabilities */}
+        <div className="w-[45%] flex flex-col justify-center gap-6">
+          <div className="flex flex-col gap-4 mb-4">
+            {[
+              { role: "The Launchpad", persona: "Frontline / Operator", color: ACCENT, icon: <Target size={26} /> },
+              { role: "The Process Studio", persona: "Expert / Architect", color: GREEN, icon: <Brain size={26} /> },
+              { role: "The Command Center", persona: "Manager / Leader", color: GOLD, icon: <BarChart3 size={26} /> },
+            ].map(({ role, persona, color, icon }) => (
+              <div key={role} className="flex items-center gap-4 rounded-xl border p-5"
+                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.05)` }}>
+                <div style={{ color: `hsl(${color})` }}>{icon}</div>
+                <div>
+                  <p className="font-bold" style={{ fontSize: 24, color: "hsl(210 18% 92%)" }}>{role}</p>
+                  <p style={{ fontSize: 18, color: "hsl(215 10% 45%)" }}>{persona}</p>
                 </div>
-                <p style={{ fontSize: 21, color: "hsl(215 10% 50%)", lineHeight: 1.45 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="font-semibold mb-2" style={{ fontSize: 18, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Core Capabilities</p>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { label: "Action Grid", desc: "Protocol-mapped action cards", color: ACCENT },
+              { label: "Intent Lock", desc: "AI aligned to each step", color: GREEN },
+              { label: "Knowledge Bundles", desc: "Org → Team → Workbook", color: ACCENT },
+              { label: "Drift Detection", desc: "Real-time deviation scoring", color: GREEN },
+              { label: "Smart Ingestion", desc: "Drag-drop → Playbook extraction", color: ACCENT },
+              { label: "After-Action Synthesis", desc: "Session → knowledge updates", color: GREEN },
+            ].map(({ label, desc, color }) => (
+              <div key={label} className="rounded-lg border px-4 py-3 flex items-center gap-2"
+                style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.05)` }}>
+                <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0 }} />
+                <div>
+                  <p className="font-bold" style={{ fontSize: 18, color: "hsl(210 18% 92%)" }}>{label}</p>
+                  <p style={{ fontSize: 14, color: "hsl(215 10% 50%)" }}>{desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -398,17 +409,17 @@ function Slide07BusinessModel() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
-        <Tag label="Business Model" color={ACCENT} />
+        <Tag label="Business Model — Product-Led Sales" color={ACCENT} />
         <h2 className="font-bold mb-6" style={{ fontSize: 64, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
-          Platform SaaS + usage-based AI.<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>Expanding with each project.</span>
+          Product-Led Sales + usage-based AI.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Land with one team. Expand org-wide.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-6 mb-6 flex-1 min-h-0">
           {[
             {
               tier: "Team", price: "€40k/yr", seats: "Single team",
-              desc: "Core workbooks, action grid, protocol execution. Entry hook — one team adopts, others follow.", color: "215 10% 45%",
+              desc: "Core workbooks, action grid, protocol execution. Product-led entry — one team adopts, others follow.", color: "215 10% 45%",
               features: ["Unlimited workbooks", "Action Grid + Protocols", "Basic knowledge bundles"],
             },
             {
@@ -481,8 +492,8 @@ function Slide08GTM() {
             {[
               {
                 phase: "Phase 1: 0–12 months", color: ACCENT,
-                headline: "Self-serve platform launch",
-                points: ["Target: EU professional services firms 50–500 people", "Product-led growth with pre-built playbook templates", "Self-onboarding: senior experts build playbooks directly in the platform", "CAC target: €2,000 | LTV target: €85,000+"],
+                headline: "Product-led sales launch",
+                points: ["Target: EU professional services firms 50–500 people", "Product-led sales with pre-built playbook templates", "Expert-driven onboarding: seniors build playbooks in the platform", "CAC target: €2,000 | LTV target: €85,000+"],
               },
               {
                 phase: "Phase 2: 12–30 months", color: GREEN,
@@ -512,8 +523,8 @@ function Slide08GTM() {
           <div className="w-2/5 flex flex-col gap-4">
             <p className="font-semibold" style={{ fontSize: 24, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Target Metrics — Year 3</p>
             {[
-              { label: "ARR", val: "€10M+", color: ACCENT },
-              { label: "Customers", val: "94", color: GREEN },
+              { label: "ARR", val: "€8M+", color: ACCENT },
+              { label: "Customers", val: "65", color: GREEN },
               { label: "NRR", val: ">120%", color: ACCENT },
               { label: "Gross Margin", val: "78%", color: GREEN },
               { label: "CAC Payback", val: "<12 mo", color: ACCENT },
@@ -666,7 +677,7 @@ function Slide10Team() {
 
 function Slide11Financials() {
   const quarters = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"];
-  const arr = [0, 230, 640, 1200, 1860, 2320, 3260, 4600, 5580, 6500, 7820, 10350]; // €k
+  const arr = [0, 80, 220, 500, 900, 1500, 2200, 3500, 4400, 5600, 6800, 8200]; // €k
   const maxArr = Math.max(...arr);
   const barW = 1400 / quarters.length;
 
@@ -676,7 +687,7 @@ function Slide11Financials() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Financial Projections" color={ACCENT} />
         <h2 className="font-bold mb-10" style={{ fontSize: 72, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
-          Path to €10M ARR in 36 months.
+          Path to €8M ARR in 36 months.
         </h2>
 
         {/* Bar chart */}
@@ -716,9 +727,9 @@ function Slide11Financials() {
 
         <div className="flex gap-8 mt-6">
           {[
-            { phase: "Phase 1 (Q1–Q4)", goal: "€1.2M ARR", note: "14 customers across 3 tiers. Direct sales. Prove retention + expansion.", color: ACCENT },
-            { phase: "Phase 2 (Q5–Q8)", goal: "€4.6M ARR", note: "44 customers. Channel partners live. Series A at month 18.", color: GREEN },
-            { phase: "Phase 3 (Q9–Q12)", goal: "€10.3M ARR", note: "94 customers. NRR >120%. Platform API + white-label.", color: GOLD },
+            { phase: "Phase 1 (Q1–Q4)", goal: "€500k ARR", note: "6 customers, mostly Team tier. Direct product-led sales. Prove retention + expansion.", color: ACCENT },
+            { phase: "Phase 2 (Q5–Q8)", goal: "€3.5M ARR", note: "30 customers. Channel partners live. Series A at month 18.", color: GREEN },
+            { phase: "Phase 3 (Q9–Q12)", goal: "€8.2M ARR", note: "65 customers. NRR >120%. Platform API + white-label.", color: GOLD },
           ].map(({ phase, goal, note, color }) => (
             <div key={phase} className="flex-1 rounded-xl border p-6"
               style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
@@ -841,7 +852,7 @@ function Slide13TheAsk() {
           {[
             { label: "Round Structure", val: "€1.5M Seed", sub: "SAFE or priced round. Flexible to lead investor preference.", color: GOLD },
             { label: "What We're Looking For", val: "Strategic LP", sub: "Investors with professional services network and SaaS operational experience", color: ACCENT },
-            { label: "Milestones Unlocked", val: "Series A Ready", sub: "€2.3M ARR, 25 customers, NRR>110%. Reached at month 18 per operating model.", color: GREEN },
+            { label: "Milestones Unlocked", val: "Series A Ready", sub: "€1.5M ARR, 15 customers, NRR>110%. Reached at month 18 per operating model.", color: GREEN },
           ].map(({ label, val, sub, color }) => (
             <div key={label} className="rounded-2xl border p-10 flex flex-col gap-4"
               style={{ borderColor: `hsl(${color} / 0.3)`, background: `hsl(${color} / 0.07)` }}>
