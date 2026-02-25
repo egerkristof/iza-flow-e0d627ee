@@ -44,9 +44,6 @@ function Hero() {
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
             <SectionTag label="The Knowledge Extraction Sprint" />
-            <p className="text-sm font-semibold mb-4" style={{ color: `hsl(var(--primary) / 0.8)` }}>
-              For leaders whose competitive edge lives in their people's heads
-            </p>
             <h1 className="text-5xl font-black mb-6 leading-[1.08]">
               Productize your
               <br />
@@ -55,11 +52,7 @@ function Hero() {
               <GradientText>in 5 days.</GradientText>
             </h1>
             <p className="text-lg leading-relaxed mb-5 text-muted-foreground">
-              Stop relying on your Senior Partner's brain as a bottleneck. We feed your existing process documentation, protocols, meeting transcripts, and a structured senior interview into the <span className="font-semibold text-foreground">Liza Context Engine</span>, and it outputs an executable Digital Protocol.
-            </p>
-            <p className="text-base leading-relaxed mb-5 text-muted-foreground">
-              You walk in with knowledge trapped in people.{" "}
-              <span className="font-semibold text-foreground">You walk out with a system that standardises their best practices across your entire team.</span>
+              Walk in with knowledge trapped in heads. Walk out with executable protocols your entire team runs on.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
