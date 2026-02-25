@@ -317,15 +317,12 @@ export default function ProductPage() {
         <div className="relative z-10 max-w-3xl mx-auto">
           <SectionTag>The Product</SectionTag>
           <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-            We input your knowledge.
+            Your knowledge in.
             <br />
-            <GradientText>LIZA outputs your Operating System.</GradientText>
+            <GradientText>Your operating system out.</GradientText>
           </h1>
-          <p className="text-lg mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
-            See exactly what happens when your existing documentation and expertise meet the LIZA Context Engine. Messy knowledge goes in. Structured, executable protocols come out.
-          </p>
-          <p className="text-base mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Standardising best practices has always been the challenge. AI didn't create the problem. It just made solving it both urgent and possible.
+          <p className="text-lg mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Messy knowledge goes in. Structured, executable protocols come out.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a

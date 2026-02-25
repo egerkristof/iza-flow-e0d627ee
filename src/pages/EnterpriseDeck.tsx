@@ -38,11 +38,8 @@ function Hero() {
           <br className="hidden md:block" />
           <span className="brand-gradient-text">But not the same AI.</span>
         </h1>
-        <p className="text-xl mb-4 max-w-2xl mx-auto text-muted-foreground" style={{ lineHeight: 1.7 }}>
-          You want consistent, confident AI usage across your team. Instead, you have individuals improvising — same brief, 14 different outputs, zero institutional benefit.
-        </p>
-        <p className="text-base mb-6 max-w-xl mx-auto text-muted-foreground">
-          We build the operating model that changes that. In weeks, not years.
+        <p className="text-xl mb-6 max-w-2xl mx-auto text-muted-foreground" style={{ lineHeight: 1.7 }}>
+          Same brief, 14 different outputs. We build the operating model that fixes that — in weeks, not years.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
