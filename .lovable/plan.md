@@ -1,52 +1,72 @@
+# Update Investor Deck and Sales Deck
+
+Both slide decks need to be aligned with the current marketing site narrative and updated with correct specifics.
+
+## Investor Deck (InvestorDeck.tsx) -- 14 slides
 
 
-# Merge the Two "Sound Familiar?" Sections
 
-## The Problem
+This affects:
 
-Two sections on the Enterprise page serve the same narrative purpose — "here's why AI isn't working." The original `Proof` section (4 quotes + 3 gap cards) and the new `TransformationFramework` (7 demand cards) overlap and dilute each other.
 
-## The Solution
+| &nbsp; | &nbsp; | &nbsp; |
+| ------ | ------ | ------ |
+| &nbsp; | &nbsp; | &nbsp; |
+| &nbsp; | &nbsp; | &nbsp; |
+| &nbsp; | &nbsp; | &nbsp; |
+| &nbsp; | &nbsp; | &nbsp; |
+| &nbsp; | &nbsp; | &nbsp; |
+| &nbsp; | &nbsp; | &nbsp; |
+| &nbsp; | &nbsp; | &nbsp; |
+| &nbsp; | &nbsp; | &nbsp; |
 
-Merge them into one powerful section. The 7 demand-driven cards are the stronger framing. The executive quotes from `Proof` are useful social proof — they validate the demands. The 3 abstract gap cards (visibility, governance, adoption) are redundant since the 7 demands cover all of those more concretely.
 
-## What Changes
+### Narrative alignment with marketing site
 
-### 1. Remove the standalone `Proof` component
+Update slide copy to match the "standardisation" narrative and the AI Operating Model framing used across the website:
 
-Delete the entire `Proof()` function (lines 316-365) and its usage in the page composition. The 3 gap cards ("Same brief, 14 outputs", "Accountable but blind", "You paid. It should work.") are fully covered by demands 1, 3, and 7.
+- **Slide 01 Cover**: Subtitle updated to match the home page hero -- "standardise senior judgment across every team"
+- **Slide 02 Problem**: Tighten the three cards to match the "7 barriers" framing from the enterprise page (inconsistency, knowledge loss, AI making it worse)
+- **Slide 04 Solution**: Subtitle "Knowledge-Activated Execution Engine" stays, but body copy aligned with the SECI flywheel language from the marketing site
+- **Slide 06 Traction**: Update "3 Verticals" language to be clearer and more specific
+- **Slide 08 GTM**: Phase 1 entry hook updated to match the "AI Operating Model Programme" language from the enterprise page
 
-### 2. Add the best quotes into the TransformationFramework section
+Market research numbers (TAM $47B, SAM $12B, SOM $800M, 23% CAGR) remain untouched.
 
-Move 2-3 of the strongest executive quotes into the `TransformationFramework` as a compact row above the 7 cards. This gives the section real-world validation before presenting the framework. Suggested quotes to keep:
+---
 
-- "We all use AI, but we get completely different results for the same brief." (Head of Strategy)
-- "We bought Copilot for everyone. Three months later, adoption is 20% and quality is patchy." (COO)
+## Sales/Consulting Deck (ConsultingDeck.tsx) -- 11 slides
 
-These two directly map to demands 1 and 3, creating a natural "you've said this... here's why" flow.
+### Align with marketing site narrative
 
-### 3. Update the section heading
+The consulting deck currently leads with "Clients won't pay for what ChatGPT can do" which is strong but slightly disconnected from the enterprise page's "AI Operating Model Programme" framing. Updates:
 
-Change from the duplicate "Sound familiar?" tag to something that flows from the Maturity Ladder above it. New structure:
+- **Slide 01 Cover**: Keep the provocative hook but add the "DriveImpact x LIZA OS" branding chip and tighten the "4-Week Engagement" chip to match "4-week sprint" language from the site
+- **Slide 02 Reality**: Update the three-column descriptions to be crisper and match the language used on the home page ("standardise judgment", "executable protocols")
+- **Slide 05 Root Cause**: Tighten to match the "tacit vs explicit" framing from the enterprise page Maturity Ladder section
+- **Slide 06 Mechanism**: Update the step descriptions to mirror the "Surface / Structure / Embed" three-phase language used consistently on the enterprise page
+- **Slide 07 Deliverables**: Sharpen deliverable descriptions to match what the enterprise page promises
+- **Slide 10 Who Built This**: Update bios to be consistent with the TeamSection component used on the marketing site (same role titles and descriptions)
+- **Slide 11 CTA**: Update "driveimpact.ai" to use the actual calendar link and contact info from the marketing site ([kristof.eger@lizaos.ai](mailto:kristof.eger@lizaos.ai))
 
-- Tag: "The 7 barriers"
-- Heading: "Sound familiar?" (keep as the main heading -- it's strong)
-- Subheading: "Every organisation hits these when they try to scale AI. We've built the answer to each one."
+### Text clarity pass
 
-### 4. Update page composition
+Both decks get a clarity pass on all body copy:
 
-Remove `<Proof />` from the page render. The flow becomes:
+- Remove jargon where possible
+- Shorten sentences that run too long
+- Make every slide's "so what" immediately obvious
+- Ensure consistent terminology (e.g., always "playbooks" not sometimes "instruction sets")
 
-```
-Hero -> MaturityInfographic -> TransformationFramework (with quotes) -> LizaDifferentiator -> ...
-```
-
-This eliminates the repetition while making the single combined section stronger.
+---
 
 ## Technical Details
 
-| File | Change |
-|---|---|
-| `src/pages/EnterpriseDeck.tsx` | Delete `Proof()` function (~50 lines). Add 2 quote cards to `TransformationFramework` above the grid. Remove `<Proof />` from page composition. Update section tag from "Sound familiar?" to "The 7 barriers". |
 
-No new files or dependencies needed. Single file edit.
+| File                           | Changes                                                                                                                   |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `src/pages/InvestorDeck.tsx`   | Align narrative copy with marketing site. Tighten body text throughout.                                                   |
+| `src/pages/ConsultingDeck.tsx` | Align slide copy with marketing site narrative. Update team bios. Update CTA contact info. Clarity pass on all body text. |
+
+
+No new files, dependencies, or structural changes. Pure content updates within existing slide components.
