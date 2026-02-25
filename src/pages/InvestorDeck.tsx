@@ -89,20 +89,20 @@ function Slide01Cover() {
         </div>
 
         <h1 className="font-black mb-10" style={{ fontSize: 110, lineHeight: 1.0, color: "hsl(210 18% 94%)" }}>
-          The Operating System<br />
+          Standardise Senior Judgment<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${GREEN}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for Institutional Intelligence.
+            Across Every Team.
           </span>
         </h1>
 
         <p style={{ fontSize: 38, color: "hsl(215 10% 52%)", maxWidth: 1200, lineHeight: 1.55 }}>
-          We make expertise scalable — so professional firms stop losing
-          their best thinking every time a senior person leaves.
+          We extract senior expertise and turn it into executable protocols
+          your entire organisation can run on — consistently.
         </p>
 
         <div className="mt-20 flex items-center gap-16">
           {[
-            ["Seed Round", "€2M target"],
+            ["Seed Round", "€1.5M target"],
             ["Market", "$47B TAM"],
             ["Model", "SaaS + Usage"],
           ].map(([k, v]) => (
@@ -135,18 +135,18 @@ function Slide02Problem() {
           {[
             {
               icon: <Users size={56} />, color: RED,
-              title: "Expertise is personal, not systemic",
-              body: "Your best people carry your firm's methodology in their heads. Remove three seniors and quality collapses. Every resignation is a knowledge loss event."
+              title: "Knowledge walks out the door",
+              body: "Your best people carry your methodology in their heads. Every resignation is a knowledge loss event. Remove three seniors and quality collapses overnight."
             },
             {
               icon: <Target size={56} />, color: "38 92% 50%",
               title: "Execution is inconsistent",
-              body: "Strategy is set in Q1. By Q3, teams are executing their own version of it. Junior output ranges from excellent to embarrassing — depending on who's supervising."
+              body: "Same brief, 14 different outputs. Junior work ranges from excellent to embarrassing depending on who supervises. No shared standard exists."
             },
             {
               icon: <BarChart3 size={56} />, color: RED,
-              title: "AI makes it worse, not better",
-              body: "Generic AI tools give everyone access to content generation — but no organizational context. Teams get faster at producing the wrong thing, confidently."
+              title: "AI accelerates the problem",
+              body: "Generic AI gives everyone content generation — with zero organisational context. Teams get faster at producing the wrong thing, confidently."
             },
           ].map(({ icon, color, title, body }) => (
             <div key={title} className="flex flex-col gap-6 rounded-2xl border p-10"
@@ -231,17 +231,17 @@ function Slide04Solution() {
             {
               icon: <Target size={52} />, color: ACCENT, step: "01",
               title: "Execute",
-              desc: "Protocol-driven workflows replace blank-page anxiety. Every team member follows your firm's best methodology, automatically, with AI adapting to each step.",
+              desc: "Protocol-driven workflows replace blank-page guessing. Every team member runs your best methodology, with AI adapting guidance at each step.",
             },
             {
               icon: <Brain size={52} />, color: GREEN, step: "02",
               title: "Learn",
-              desc: "After every session, the system captures decisions, deviations, and insights. Structured after-action reviews synthesize patterns into institutional intelligence.",
+              desc: "After every session, the system captures decisions, deviations, and insights. Structured reviews synthesise patterns into institutional knowledge.",
             },
             {
               icon: <Zap size={52} />, color: ACCENT, step: "03",
               title: "Encode",
-              desc: "Approved learnings flow back into the knowledge graph — making every future execution smarter. The organization improves with each project, automatically.",
+              desc: "Approved learnings flow back into the knowledge graph — making every future execution smarter. The organisation compounds with each project.",
             },
           ].map(({ icon, color, step, title, desc }) => (
             <div key={title} className="flex-1 rounded-2xl border p-10 flex flex-col gap-6"
@@ -349,9 +349,9 @@ function Slide06Traction() {
         <div className="grid grid-cols-4 gap-7 mb-10">
           {[
             { stat: "Egon Zehnder", sub: "Origin client — global executive search firm. Platform born from solving their knowledge consistency challenge.", color: ACCENT },
-            { stat: "3 Verticals", sub: "Exec search, management consulting, legal advisory — all validated the same core pain.", color: GREEN },
-            { stat: "Live Product", sub: "Functional application with supabase backend, AI edge functions, and role-based operating modes.", color: ACCENT },
-            { stat: "AACE v3.1", sub: "Proprietary AI context architecture spec. Built for intent-locking and structured knowledge injection.", color: GREEN },
+            { stat: "3 Verticals", sub: "Executive search, management consulting, and legal advisory — all validated the same core pain: scaling senior judgment.", color: GREEN },
+            { stat: "Live Product", sub: "Functional platform with AI edge functions, role-based operating modes, and protocol execution engine.", color: ACCENT },
+            { stat: "AACE v3.1", sub: "Proprietary AI context architecture. Intent-locking, hierarchical knowledge injection, and drift detection.", color: GREEN },
           ].map(({ stat, sub, color }) => (
             <div key={stat} className="rounded-2xl border p-8 flex flex-col gap-4"
               style={{ background: `hsl(${color} / 0.06)`, borderColor: `hsl(${color} / 0.22)` }}>
@@ -477,8 +477,8 @@ function Slide08GTM() {
             {[
               {
                 phase: "Phase 1 — 0–12 months", color: ACCENT,
-                headline: "Direct sales to professional services",
-                points: ["Target: EU consulting, exec search, legal advisory firms 50–200 people", "Entry hook: 'Consistent high-stakes deliverable quality'", "Proof of value: Onboarding acceleration (weeks → days)", "CAC target: €8,000 | LTV target: €85,000+"],
+                headline: "AI Operating Model Programme — direct sales",
+                points: ["Target: EU professional services firms 50–500 people", "Entry hook: 5-day Protocol Sprint → codify senior judgment", "Proof of value: Onboarding acceleration (months → weeks)", "CAC target: €8,000 | LTV target: €85,000+"],
               },
               {
                 phase: "Phase 2 — 12–30 months", color: GREEN,
@@ -736,10 +736,10 @@ function Slide11Financials() {
 
 function Slide12UseOfFunds() {
   const allocations = [
-    { label: "Product & Engineering", pct: 45, amt: "€900k", desc: "Core team (2 senior engineers + 1 AI specialist). Complete the SECI flywheel — AAR synthesis, smart ingestion, drift detection.", color: ACCENT },
-    { label: "Sales & GTM", pct: 30, amt: "€600k", desc: "First 2 enterprise sales hires + marketing. Channel partner program development. Template marketplace.", color: GREEN },
-    { label: "Research & AI Infrastructure", pct: 15, amt: "€300k", desc: "AACE v4 spec + LLM inference costs. Academic partnership on SECI-AI validation.", color: GOLD },
-    { label: "Operations & Legal", pct: 10, amt: "€200k", desc: "EU data compliance, IP protection, financial runway management.", color: "215 10% 45%" },
+    { label: "Product & Engineering", pct: 45, amt: "€675k", desc: "Core team (2 senior engineers + 1 AI specialist). Complete the SECI flywheel — after-action synthesis, smart ingestion, drift detection.", color: ACCENT },
+    { label: "Sales & GTM", pct: 30, amt: "€450k", desc: "First 2 enterprise sales hires + marketing. Channel partner program development. Template marketplace.", color: GREEN },
+    { label: "Research & AI Infrastructure", pct: 15, amt: "€225k", desc: "AACE v4 spec + LLM inference costs. Academic partnership on SECI-AI validation.", color: GOLD },
+    { label: "Operations & Legal", pct: 10, amt: "€150k", desc: "EU data compliance, IP protection, financial runway management.", color: "215 10% 45%" },
   ];
 
   return (
@@ -748,7 +748,7 @@ function Slide12UseOfFunds() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Use of Funds" color={ACCENT} />
         <h2 className="font-bold mb-12" style={{ fontSize: 76, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
-          €2M seed. 24-month runway.<br />
+          €1.5M seed. 18-month runway.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Series A ready by month 18.</span>
         </h2>
 
@@ -779,7 +779,7 @@ function Slide12UseOfFunds() {
                   return <path key={label} d={d} fill={colors[i]} opacity={0.8} />;
                 });
               })()}
-              <text x="170" y="162" textAnchor="middle" fill="hsl(210 18% 92%)" fontSize="36" fontWeight="900">€2M</text>
+              <text x="170" y="162" textAnchor="middle" fill="hsl(210 18% 92%)" fontSize="36" fontWeight="900">€1.5M</text>
               <text x="170" y="192" textAnchor="middle" fill="hsl(215 10% 45%)" fontSize="22">Seed Round</text>
             </svg>
             <div className="flex flex-col gap-2 mt-2">
@@ -828,16 +828,16 @@ function Slide13TheAsk() {
         <div className="text-center mb-16">
           <Tag label="The Ask" color={GOLD} />
           <h2 className="font-black" style={{ fontSize: 96, color: "hsl(210 18% 92%)", lineHeight: 1.0 }}>
-            €2M Seed Round
+            €1.5M Seed Round
           </h2>
           <p style={{ fontSize: 36, color: "hsl(215 10% 50%)", marginTop: 16 }}>
-            Target close: Q3 2026 &nbsp;·&nbsp; 24-month runway &nbsp;·&nbsp; Series A at 18 months
+            Target close: Q3 2026 &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; Series A at 18 months
           </p>
         </div>
 
         <div className="grid grid-cols-3 gap-10 mb-14">
           {[
-            { label: "Round Structure", val: "€2M Seed", sub: "SAFE or priced round — flexible to lead investor preference", color: GOLD },
+            { label: "Round Structure", val: "€1.5M Seed", sub: "SAFE or priced round — flexible to lead investor preference", color: GOLD },
             { label: "What We're Looking For", val: "Strategic LP", sub: "Investors with professional services network and SaaS operational experience", color: ACCENT },
             { label: "Milestones Unlocked", val: "Series A Ready", sub: "€120k ARR, 10 proven customers, NRR>110% before raising next round", color: GREEN },
           ].map(({ label, val, sub, color }) => (
@@ -913,7 +913,7 @@ function Slide14Closing() {
         </div>
 
         <p className="mt-14" style={{ fontSize: 26, color: "hsl(215 10% 30%)" }}>
-          liza.ai &nbsp;·&nbsp; hello@liza.ai &nbsp;·&nbsp; Confidential — Not for distribution
+          lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential — Not for distribution
         </p>
       </div>
       <SlideBar from={GREEN} to={ACCENT} />

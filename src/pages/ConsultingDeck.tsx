@@ -94,8 +94,9 @@ function Slide01Cover() {
 
       {/* Left — main message */}
       <div className="flex flex-col justify-center pl-[160px] pr-[80px] w-[1080px] relative z-10">
-        <div className="mb-10">
-          <Chip>For agencies & consultancies</Chip>
+        <div className="mb-10 flex items-center gap-4">
+          <Chip>DriveImpact × LIZA OS</Chip>
+          <Chip color={TEAL}>For agencies & consultancies</Chip>
         </div>
 
         <h1 className="font-black leading-[1.0] mb-10" style={{ fontSize: 108, color: `hsl(${C})` }}>
@@ -118,7 +119,7 @@ function Slide01Cover() {
         </p>
 
         <div className="flex items-center gap-6 mt-14">
-          <Chip color={ORG}>4-Week Engagement</Chip>
+          <Chip color={ORG}>4-Week Sprint</Chip>
           <Chip color={TEAL}>Identify → Package → Defend</Chip>
         </div>
       </div>
@@ -177,21 +178,21 @@ function Slide02Reality() {
               label: "Replicable by AI",
               col: RED,
               title: "Your frameworks & templates",
-              desc: "The standard deliverables your clients used to pay €200–400/hr for. Strategy decks, campaign briefs, research reports — ChatGPT produces these in 30 seconds.",
+              desc: "The standard deliverables your clients used to pay premium rates for. Strategy decks, campaign briefs, research reports — AI produces these in seconds.",
               tag: "€0 — commodity",
             },
             {
               label: "Hard to scale",
               col: MUT,
               title: "Your senior expert time",
-              desc: "The consulting, coaching, judgment calls. How you help clients apply frameworks to their unique situation. AI can't do this — but it doesn't scale without you in the room.",
+              desc: "The judgment calls, the pattern recognition, the contextual decision-making. AI can't do this — but it doesn't scale without you in the room.",
               tag: "Limited by headcount",
             },
             {
               label: "What's left — packaged",
               col: ORG,
-              title: "Your unique value, codified",
-              desc: "Package your senior expertise into instruction sets that run without you in the room. License to other firms, embed in client systems, scale via juniors.",
+              title: "Your judgment, standardised",
+              desc: "Turn senior expertise into executable protocols that run without you in the room. Standardise judgment across every team member.",
               tag: "€6K+/mo recurring",
             },
           ].map((c, i) => (
@@ -331,17 +332,17 @@ function Slide05RootCause() {
       <div className="flex flex-col justify-center pl-[160px] pr-[80px] w-[900px] relative z-10">
         <Tag label="The Root Cause" />
         <h2 className="font-black leading-tight mb-10" style={{ fontSize: 78, color: `hsl(${C})` }}>
-          Every approach focuses
-          <br />on the wrong data.
+          Everything you've documented
+          <br />is already commoditised.
           <br />
           <span style={{ color: `hsl(${ORG})` }}>The tacit layer is untouched.</span>
         </h2>
         <p style={{ fontSize: 28, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
-          Your documents, SOPs, and frameworks are your explicit knowledge.
-          They're already commoditised — ChatGPT can approximate them.
+          Your documents, SOPs, and frameworks are explicit knowledge.
+          AI can approximate them today.
           <br /><br />
-          What clients <em style={{ color: `hsl(${C})` }}>actually</em> pay for is the layer underneath:
-          the judgment your seniors carry in their heads that was never written down.
+          What clients <em style={{ color: `hsl(${C})` }}>actually</em> pay for is the tacit layer:
+          the judgment, pattern recognition, and decision logic your seniors carry in their heads — never written down.
         </p>
       </div>
 
@@ -427,23 +428,23 @@ function Slide06Mechanism() {
 
         {[
           {
-            n: "1", icon: <Target style={{ width: 32, height: 32 }} />, label: "Audit",
-            desc: "Leadership conversation captured in LizaOS. Methodology map produced automatically.",
+            n: "1", icon: <Target style={{ width: 32, height: 32 }} />, label: "Surface",
+            desc: "Map your methodology landscape. Identify what's uniquely yours vs. what AI already commoditises.",
             col: ORG,
           },
           {
-            n: "2", icon: <Brain style={{ width: 32, height: 32 }} />, label: "Extract",
-            desc: "Your experts define their most demanding tasks in LizaOS — tacit knowledge becomes structured knowledge sets.",
+            n: "2", icon: <Brain style={{ width: 32, height: 32 }} />, label: "Structure",
+            desc: "Your experts work in LizaOS on their hardest tasks. Tacit judgment becomes structured playbooks — executable, not theoretical.",
             col: ORG,
           },
           {
-            n: "3", icon: <Layers style={{ width: 32, height: 32 }} />, label: "Codify",
-            desc: "Knowledge sets become playbooks — instruction sets that run on any AI, stress-tested in real scenarios.",
+            n: "3", icon: <Layers style={{ width: 32, height: 32 }} />, label: "Embed",
+            desc: "Playbooks run in real workflows. Every team member follows your best methodology, with AI adapting at each step.",
             col: TEAL,
           },
           {
             n: "4", icon: <Lock style={{ width: 32, height: 32 }} />, label: "Package",
-            desc: "Final audit, packaging, 30-day roadmap. You own everything. No lock-in.",
+            desc: "Final audit, 30-day implementation roadmap. You own everything. No lock-in.",
             col: TEAL,
           },
         ].map((s, i) => (
@@ -488,14 +489,14 @@ function Slide07Deliverables() {
               n: "01", icon: <BookOpen style={{ width: 52, height: 52 }} />,
               label: "Document",
               title: "Methodology Audit",
-              desc: "Complete map of what makes you distinctive. Your unique decision logic, surfaced and named for the first time.",
+              desc: "Complete map of what makes you distinctive. Your unique judgment, decision logic, and heuristics — surfaced and named.",
               col: ORG,
             },
             {
               n: "02", icon: <Zap style={{ width: 52, height: 52 }} />,
               label: "Executable",
-              title: "Knowledge Products",
-              desc: "Your expertise as instruction sets that run without you in the room — in client AI systems, junior workflows, or licensed to others.",
+              title: "Digital Playbooks",
+              desc: "Your expertise as executable protocols that run without you in the room — standardising judgment across every team member.",
               col: TEAL,
             },
             {
@@ -720,8 +721,8 @@ function Slide10Who() {
           {/* People */}
           <div className="grid grid-cols-2 gap-6">
             {[
-              { name: "István Boscha", role: "Methodology Extraction", note: "15+ methodology audits. Google Cloud partner. 15 years in data & AI implementation." },
-              { name: "Kristóf Éger", role: "Infrastructure Architect", note: "Built 3 SaaS products. Designed LizaOS for complex, judgment-heavy work." },
+              { name: "István Boscha", role: "Data & AI Implementation", note: "Founder of a Google Cloud Service partner firm. 15 years implementing data and AI solutions for digital transformation." },
+              { name: "Kristóf Éger", role: "Business Model Innovation", note: "Business model innovation advisor and executive coach. Years of experience defining and scaling business value." },
             ].map((p, i) => (
               <div key={i} className="rounded-2xl p-8 border" style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.2)` }}>
                 <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center font-bold"
@@ -803,14 +804,18 @@ function Slide11CTA() {
         </div>
 
         <div className="flex items-center justify-center gap-6">
-          <div className="px-10 py-5 rounded-2xl border font-bold"
+          <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer"
+            className="px-10 py-5 rounded-2xl border font-bold inline-block hover:opacity-90 transition-opacity"
             style={{ fontSize: 28, background: `hsl(${ORG} / 0.12)`, borderColor: `hsl(${ORG} / 0.4)`, color: `hsl(${ORG})` }}>
-            Free Discovery Call — driveimpact.ai
-          </div>
-          <div className="flex items-center gap-3 px-6 py-5 rounded-2xl border"
+            Free Discovery Call — Book Now
+          </a>
+          <div className="flex flex-col items-center gap-2 px-6 py-5 rounded-2xl border"
             style={{ borderColor: `hsl(${MUT} / 0.2)` }}>
-            <Award style={{ width: 24, height: 24, color: `hsl(${MUT})` }} />
-            <span style={{ fontSize: 22, color: `hsl(${MUT})` }}>Limited capacity — few firms per quarter</span>
+            <div className="flex items-center gap-3">
+              <Award style={{ width: 24, height: 24, color: `hsl(${MUT})` }} />
+              <span style={{ fontSize: 22, color: `hsl(${MUT})` }}>Limited capacity — few firms per quarter</span>
+            </div>
+            <span style={{ fontSize: 18, color: `hsl(${MUT} / 0.7)` }}>kristof.eger@lizaos.ai</span>
           </div>
         </div>
       </div>
