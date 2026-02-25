@@ -73,8 +73,8 @@ function Tag({ label, color = BLUE }: { label: string; color?: string }) {
 
 function Chip({ children, color = BLUE }: { children: React.ReactNode; color?: string }) {
   return (
-    <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border font-semibold"
-      style={{ fontSize: 21, borderColor: `hsl(${color} / 0.45)`, background: `hsl(${color} / 0.08)`, color: `hsl(${color})` }}>
+    <span className="inline-flex items-center gap-2 px-5 rounded-full border font-semibold"
+      style={{ fontSize: 21, lineHeight: "44px", height: 44, borderColor: `hsl(${color} / 0.45)`, background: `hsl(${color} / 0.08)`, color: `hsl(${color})` }}>
       {children}
     </span>
   );
@@ -92,10 +92,10 @@ function Slide01Cover() {
         style={{ background: `radial-gradient(circle, hsl(${TEAL}), transparent 70%)` }} />
 
       <div className="relative z-10 flex flex-col items-center text-center px-32">
-        <div className="flex items-center gap-3 mb-12 px-7 py-3 rounded-full border"
-          style={{ borderColor: `hsl(${BLUE} / 0.35)`, background: `hsl(${BLUE} / 0.07)` }}>
+        <div className="flex items-center gap-3 mb-12 px-7 rounded-full border"
+          style={{ borderColor: `hsl(${BLUE} / 0.35)`, background: `hsl(${BLUE} / 0.07)`, height: 52, lineHeight: "52px" }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${BLUE})` }} />
-          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${BLUE})` }}>LIZA OS</span>
+          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${BLUE})`, lineHeight: "52px" }}>LIZA OS</span>
         </div>
 
         <h1 className="font-black mb-10" style={{ fontSize: 108, lineHeight: 1.0, color: `hsl(${C})` }}>
@@ -237,11 +237,11 @@ function Slide03RootCause() {
 
 function Slide04Tried() {
   const tried = [
-    { label: "AI workshops & prompt training", why: "Skills without infrastructure. Knowledge evaporates without a system to embed it." },
-    { label: "Workflow automation", why: "You accelerated what AI will do for free. Efficiency without differentiation." },
-    { label: "AI agents & assistants", why: "They run on public data. They can't access the judgment in your senior heads." },
-    { label: "Documentation & playbooks", why: "Static docs capture 'what' but not 'why.' Out of date the moment they're written." },
-    { label: "Knowledge bases & wikis", why: "Searchable information, not executable judgment. You organised your frameworks — the commoditisable part." },
+    { label: "AI workshops & prompt training", why: "Skills without infrastructure. Knowledge evaporates." },
+    { label: "Workflow automation", why: "You accelerated what AI will do for free." },
+    { label: "AI agents & assistants", why: "They run on public data, not your judgment." },
+    { label: "Documentation & playbooks", why: "Static docs capture 'what' but not 'why.'" },
+    { label: "Knowledge bases & wikis", why: "Searchable info, not executable judgment." },
   ];
 
   return (
@@ -250,32 +250,30 @@ function Slide04Tried() {
 
       <div className="relative z-10 flex flex-col justify-center h-full px-[140px]">
         <Tag label="What You've Probably Tried" />
-        <h2 className="font-black mb-4" style={{ fontSize: 74, color: `hsl(${C})` }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 68, color: `hsl(${C})` }}>
           And why it hasn't worked.
         </h2>
-        <p className="mb-10" style={{ fontSize: 28, color: `hsl(${MUT})` }}>
+        <p className="mb-8" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
           Every approach focuses on your frameworks and processes. That's exactly what AI commoditises.
         </p>
 
-        <div className="space-y-3.5">
+        <div className="space-y-3">
           {tried.map((t, i) => (
-            <div key={i} className="flex items-start gap-8 px-8 py-5 rounded-xl border"
+            <div key={i} className="flex items-center gap-6 px-7 py-4 rounded-xl border"
               style={{ background: BG2, borderColor: `hsl(${RED} / 0.12)` }}>
-              <AlertTriangle style={{ width: 28, height: 28, flexShrink: 0, marginTop: 4, color: `hsl(${RED} / 0.6)` }} />
-              <div className="flex items-start gap-8 flex-1">
-                <p className="font-bold flex-shrink-0 w-[420px]" style={{ fontSize: 24, color: `hsl(${C})` }}>{t.label}</p>
-                <div className="w-[1px] self-stretch" style={{ background: `hsl(${RED} / 0.15)` }} />
-                <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.4 }}>→ {t.why}</p>
-              </div>
+              <AlertTriangle style={{ width: 24, height: 24, flexShrink: 0, color: `hsl(${RED} / 0.6)` }} />
+              <p className="font-bold flex-shrink-0 w-[400px]" style={{ fontSize: 23, color: `hsl(${C})` }}>{t.label}</p>
+              <div className="w-[1px] h-6" style={{ background: `hsl(${RED} / 0.15)` }} />
+              <p style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.4 }}>→ {t.why}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-7 p-6 rounded-2xl border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.3)` }}>
-          <p style={{ fontSize: 24, color: `hsl(${C})`, lineHeight: 1.5 }}>
+        <div className="mt-6 p-5 rounded-2xl border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.3)` }}>
+          <p style={{ fontSize: 23, color: `hsl(${C})`, lineHeight: 1.5 }}>
             <strong style={{ color: `hsl(${BLUE})` }}>The systemic issue:</strong>{" "}
-            All these approaches catch the fringes of what makes you different — not the core.
-            The real value is the judgment in your senior heads. None of these approaches touch it.
+            All these approaches catch the fringes of what makes you different, not the core.
+            The real value is the judgment in your senior heads.
           </p>
         </div>
       </div>
@@ -429,75 +427,75 @@ function Slide07TwoPaths() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
 
-      <div className="relative z-10 flex flex-col justify-center h-full px-[140px]">
+      <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
         <Tag label="Two Ways to Start" />
-        <h2 className="font-black mb-4" style={{ fontSize: 78, color: `hsl(${C})`, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 68, color: `hsl(${C})`, lineHeight: 1.05 }}>
           Choose your entry point.
         </h2>
-        <p className="mb-12" style={{ fontSize: 28, color: `hsl(${MUT})` }}>
+        <p className="mb-8" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
           Both paths lead to the same outcome: your organisation running on standardised senior judgment.
         </p>
 
-        <div className="grid grid-cols-2 gap-10 flex-1 min-h-0">
+        <div className="grid grid-cols-2 gap-8">
           {/* Path 1 */}
-          <div className="rounded-2xl border p-12 flex flex-col relative overflow-hidden"
+          <div className="rounded-2xl border p-9 flex flex-col relative overflow-hidden"
             style={{ background: `hsl(${BLUE} / 0.05)`, borderColor: `hsl(${BLUE} / 0.35)` }}>
             <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: `hsl(${BLUE})` }} />
             <Chip color={BLUE}>Path 1</Chip>
-            <h3 className="font-black mt-6 mb-3" style={{ fontSize: 48, color: `hsl(${C})` }}>
+            <h3 className="font-black mt-4 mb-2" style={{ fontSize: 42, color: `hsl(${C})` }}>
               Codify Your Expertise
             </h3>
-            <p className="mb-8" style={{ fontSize: 25, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
+            <p className="mb-5" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
               Start with your core methodology. Surface what makes your senior people exceptional.
               Turn it into executable protocols your entire team can run.
             </p>
-            <div className="space-y-4 flex-1">
+            <div className="space-y-3 flex-1">
               {[
                 "Identify your unique tacit knowledge",
                 "Build executable playbooks in the platform",
                 "Deploy across teams in weeks, not months",
                 "Every new project compounds your knowledge base",
               ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <CheckCircle2 size={22} style={{ color: `hsl(${BLUE})`, flexShrink: 0, marginTop: 3 }} />
-                  <p style={{ fontSize: 24, color: `hsl(${C})` }}>{item}</p>
+                <div key={i} className="flex items-center gap-3">
+                  <CheckCircle2 size={20} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
+                  <p style={{ fontSize: 21, color: `hsl(${C})` }}>{item}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-8 px-6 py-4 rounded-xl" style={{ background: `hsl(${BLUE} / 0.1)` }}>
-              <p className="font-semibold" style={{ fontSize: 22, color: `hsl(${BLUE})` }}>
+            <div className="mt-5 px-5 py-3 rounded-xl" style={{ background: `hsl(${BLUE} / 0.1)` }}>
+              <p className="font-semibold" style={{ fontSize: 19, color: `hsl(${BLUE})` }}>
                 Best for: Firms with strong methodology that needs to scale beyond the founders
               </p>
             </div>
           </div>
 
           {/* Path 2 */}
-          <div className="rounded-2xl border p-12 flex flex-col relative overflow-hidden"
+          <div className="rounded-2xl border p-9 flex flex-col relative overflow-hidden"
             style={{ background: `hsl(${TEAL} / 0.05)`, borderColor: `hsl(${TEAL} / 0.35)` }}>
             <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: `hsl(${TEAL})` }} />
             <Chip color={TEAL}>Path 2</Chip>
-            <h3 className="font-black mt-6 mb-3" style={{ fontSize: 48, color: `hsl(${C})` }}>
+            <h3 className="font-black mt-4 mb-2" style={{ fontSize: 42, color: `hsl(${C})` }}>
               Scale Your AI Motion
             </h3>
-            <p className="mb-8" style={{ fontSize: 25, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
+            <p className="mb-5" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
               Already using AI tools across teams? LIZA gives them organisational context.
               Stop teams producing the wrong thing faster.
             </p>
-            <div className="space-y-4 flex-1">
+            <div className="space-y-3 flex-1">
               {[
                 "Inject your standards into every AI interaction",
                 "Protocol-driven workflows replace prompt guessing",
                 "Drift detection catches when teams go off-standard",
                 "After-action synthesis captures what's working",
               ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <CheckCircle2 size={22} style={{ color: `hsl(${TEAL})`, flexShrink: 0, marginTop: 3 }} />
-                  <p style={{ fontSize: 24, color: `hsl(${C})` }}>{item}</p>
+                <div key={i} className="flex items-center gap-3">
+                  <CheckCircle2 size={20} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+                  <p style={{ fontSize: 21, color: `hsl(${C})` }}>{item}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-8 px-6 py-4 rounded-xl" style={{ background: `hsl(${TEAL} / 0.1)` }}>
-              <p className="font-semibold" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
+            <div className="mt-5 px-5 py-3 rounded-xl" style={{ background: `hsl(${TEAL} / 0.1)` }}>
+              <p className="font-semibold" style={{ fontSize: 19, color: `hsl(${TEAL})` }}>
                 Best for: Organisations already deploying AI that need governance and consistency
               </p>
             </div>
@@ -707,10 +705,10 @@ function Slide11CTA() {
         style={{ background: `radial-gradient(circle, hsl(${BLUE}), transparent 70%)` }} />
 
       <div className="relative z-10 text-center px-40 max-w-[1500px]">
-        <div className="flex items-center justify-center gap-3 mb-10 px-7 py-3 rounded-full border mx-auto w-fit"
-          style={{ borderColor: `hsl(${BLUE} / 0.35)`, background: `hsl(${BLUE} / 0.07)` }}>
+        <div className="flex items-center justify-center gap-3 mb-10 px-7 rounded-full border mx-auto w-fit"
+          style={{ borderColor: `hsl(${BLUE} / 0.35)`, background: `hsl(${BLUE} / 0.07)`, height: 48, lineHeight: "48px" }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${BLUE})` }} />
-          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 24, color: `hsl(${BLUE})` }}>LIZA OS</span>
+          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 24, color: `hsl(${BLUE})`, lineHeight: "48px" }}>LIZA OS</span>
         </div>
 
         <h2 className="font-black mb-6" style={{ fontSize: 96, color: `hsl(${C})`, lineHeight: 1.0 }}>
