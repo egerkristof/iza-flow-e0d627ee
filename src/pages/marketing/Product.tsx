@@ -28,7 +28,7 @@ const PIPELINE_STEPS = [
     icon: <Mic className="w-7 h-7" />,
     label: "INPUT",
     title: "Your Existing Knowledge",
-    desc: "Existing process documents, protocols, meeting transcripts, and structured interviews with your senior experts. The raw material your organisation already has.",
+    desc: "Process documents, protocols, transcripts, and structured senior interviews. The raw material you already have.",
     col: "200 90% 52%",
     visual: (
       <div className="rounded-xl p-5 border font-mono text-xs leading-relaxed" style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
@@ -45,7 +45,7 @@ const PIPELINE_STEPS = [
     icon: <Zap className="w-7 h-7" />,
     label: "PROCESS",
     title: "LIZA Context Engine",
-    desc: "Our AI engine analyses, categorises, and structures every piece of expertise into the five knowledge types: Playbooks, Procedures, Directives, Principles, and Knowledge items.",
+    desc: "Analyses, categorises, and structures every piece of expertise into Playbooks, Procedures, Directives, Principles, and Knowledge items.",
     col: "155 72% 46%",
     visual: (
       <div className="rounded-xl border overflow-hidden" style={{ borderColor: "hsl(155 72% 46% / 0.3)" }}>
@@ -76,7 +76,7 @@ const PIPELINE_STEPS = [
     icon: <FileText className="w-7 h-7" />,
     label: "OUTPUT",
     title: "Your Master Protocol",
-    desc: "A structured, versioned, executable protocol document. Ready to deploy into AI workbooks, delegate to your team, or run as automated workflows.",
+    desc: "A structured, versioned, executable protocol. Ready to deploy into AI workbooks or run as automated workflows.",
     col: "38 92% 50%",
     visual: (
       <div className="rounded-xl border overflow-hidden" style={{ borderColor: "hsl(38 92% 50% / 0.3)" }}>
@@ -114,32 +114,32 @@ const FEATURES = [
   {
     icon: <Brain className="w-6 h-6" />,
     title: "Knowledge Extraction Engine",
-    desc: "Learns from your existing process documentation, protocols, meeting transcripts, and senior expert interviews to surface the tacit layer: the judgment that was never written down.",
+    desc: "Surfaces the tacit layer from your process docs, transcripts, and senior interviews — the judgment never written down.",
   },
   {
     icon: <Layers className="w-6 h-6" />,
     title: "Context Bundles",
-    desc: "Package extracted knowledge into bundles: Playbooks, Procedures, Directives, and Principles. Versioned, governed, and always up to date.",
+    desc: "Playbooks, Procedures, Directives, and Principles — versioned, governed, always current.",
   },
   {
     icon: <Zap className="w-6 h-6" />,
     title: "Protocol Execution",
-    desc: "Deploy knowledge bundles as executable protocols inside AI workbooks. Your expertise runs as infrastructure: consistent, auditable, and scalable.",
+    desc: "Deploy bundles as executable protocols inside AI workbooks. Consistent, auditable, scalable.",
   },
   {
     icon: <BookOpen className="w-6 h-6" />,
     title: "Institutional Memory",
-    desc: "Every execution captures new learning back into the system. The SECI flywheel: Execution → Learning → Encoding. Knowledge compounds over time.",
+    desc: "Every execution captures learning back into the system. Knowledge compounds over time.",
   },
   {
     icon: <Lock className="w-6 h-6" />,
     title: "Governance & Access Control",
-    desc: "Role-based access, mandate enforcement, and audit trails. Your intellectual property stays protected and under your control.",
+    desc: "Role-based access, mandate enforcement, and audit trails. Your IP stays protected.",
   },
   {
     icon: <Shield className="w-6 h-6" />,
     title: "Operator Oversight",
-    desc: "A dedicated nerve centre for operators to track what their team is executing, where drift happens, and what needs to be re-encoded.",
+    desc: "Track what your team executes, where drift happens, and what needs re-encoding.",
   },
 ];
 
@@ -149,35 +149,35 @@ const CATEGORIES = [
   {
     label: "PLAYBOOK",
     tagline: "The strategic driver",
-    desc: "Defines WHAT the work is and WHY it matters. Each bundle has exactly one Playbook: the north star that governs all other items.",
+    desc: "Defines WHAT the work is and WHY it matters. One per bundle: the north star governing all other items.",
     col: "200 90% 52%",
     role: "Strategic",
   },
   {
     label: "PROCEDURE",
     tagline: "Ordered executable steps",
-    desc: "Step-by-step action sequences with gate logic. Atomic, sequenced, and designed to run inside AI workflows without interpretation.",
+    desc: "Atomic, sequenced action steps with gate logic. Designed to run inside AI workflows without interpretation.",
     col: "155 72% 46%",
     role: "Operational",
   },
   {
     label: "DIRECTIVE",
     tagline: "Compliance gates",
-    desc: "Rules requiring explicit acknowledgment before execution continues. Contains 'must', 'never', 'always': non-negotiable constraints.",
+    desc: "Non-negotiable constraints requiring acknowledgment before execution continues.",
     col: "38 92% 50%",
     role: "Compliance",
   },
   {
     label: "PRINCIPLE",
     tagline: "Core beliefs",
-    desc: "The values and heuristics that guide decision-making at judgment points. Not rules, but the wisdom that underpins how rules are applied.",
+    desc: "The heuristics that guide decision-making at judgment points. Not rules — wisdom.",
     col: "270 60% 65%",
     role: "Contextual",
   },
   {
     label: "KNOWLEDGE",
     tagline: "Reference context",
-    desc: "Factual information injected into AI execution as background. Frameworks, definitions, market data: the reference layer that informs, not directs.",
+    desc: "Frameworks, definitions, market data: the reference layer that informs, not directs.",
     col: "215 10% 60%",
     role: "Reference",
   },
@@ -416,14 +416,14 @@ export default function ProductPage() {
             <GradientText>you deploy on day one.</GradientText>
           </h2>
           <p className="text-lg mb-12 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Your Master Protocol isn't a PDF that sits in a drawer. It's a living, versioned, executable asset that runs inside LIZA workbooks, guides your AI agents, and gets smarter with every use.
+            Not a PDF in a drawer. A living, versioned, executable asset that gets smarter with every use.
           </p>
 
           <div className="grid md:grid-cols-3 gap-5 text-left">
             {[
-              { title: "Executable", desc: "Deploy directly into AI workbooks. Your protocols run as structured workflows with gate logic and compliance checks." },
-              { title: "Versioned", desc: "Every change is tracked. Roll back, compare, audit. Your intellectual property is governed and protected." },
-              { title: "Compounding", desc: "Every execution captures new learning back into the system. Your protocols get smarter with every use." },
+              { title: "Executable", desc: "Deploy directly into AI workbooks with gate logic and compliance checks." },
+              { title: "Versioned", desc: "Every change tracked. Roll back, compare, audit. Your IP is governed." },
+              { title: "Compounding", desc: "Every execution captures learning. Protocols get smarter with every use." },
             ].map((item, i) => (
               <div
                 key={i}
