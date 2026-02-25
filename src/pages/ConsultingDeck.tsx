@@ -679,7 +679,7 @@ function Slide10Who() {
           <div className="grid grid-cols-2 gap-4">
             {[
               { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-              { name: "Sylwester Pawluk", role: "Former Head of a Major US Tech Platform (Austria)", bio: "Proven GTM leadership, scaled tech giant in European market (>$100M P&L)." },
+              { name: "Sylwester Pawluk", role: "VP Product Management, GRAPHISOFT", bio: "15+ years driving product strategy across GE Healthcare & GRAPHISOFT. Oxford CS. AI & data advocate scaling product portfolios globally." },
             ].map((a, i) => (
               <div key={i} className="rounded-xl p-5 border" style={{ background: `hsl(${GOLD} / 0.04)`, borderColor: `hsl(${GOLD} / 0.2)` }}>
                 <p className="font-bold mb-1" style={{ fontSize: 20, color: `hsl(${C})` }}>{a.name}</p>
