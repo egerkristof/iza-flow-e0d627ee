@@ -842,10 +842,26 @@ export default function ConsultingDeck() {
 
   const Slide = SLIDES[current].component;
 
+  // ─── Mobile: auto-hide controls ─────────────────────────────────────────────
+  const [mobileControlsVisible, setMobileControlsVisible] = useState(true);
+  const mobileTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const showMobileControls = useCallback(() => {
+    setMobileControlsVisible(true);
+    clearTimeout(mobileTimerRef.current);
+    mobileTimerRef.current = setTimeout(() => setMobileControlsVisible(false), 3000);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile && !isPortrait) showMobileControls();
+    return () => clearTimeout(mobileTimerRef.current);
+  }, [isMobile, isPortrait, showMobileControls]);
+
   // ─── Mobile: clean present mode ─────────────────────────────────────────────
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-[9999]" style={{ background: "hsl(220 18% 3%)" }}>
+      <div className="fixed inset-0 z-[9999]" style={{ background: "hsl(220 18% 3%)" }}
+        onClick={() => { if (!isPortrait) showMobileControls(); }}>
         {/* Rotate hint overlay */}
         {isPortrait && (
           <div className="absolute inset-0 z-[10000] flex flex-col items-center justify-center gap-4 px-8"
@@ -863,18 +879,19 @@ export default function ConsultingDeck() {
             <p className="text-center" style={{ fontSize: 14, color: `hsl(${MUT})` }}>
               for the best viewing experience
             </p>
-            <p className="text-center mt-4" style={{ fontSize: 12, color: `hsl(${MUT} / 0.6)` }}>
-              Or swipe left/right to navigate
-            </p>
           </div>
         )}
 
         {/* Full-bleed slide */}
         <ScaledSlide><Slide /></ScaledSlide>
 
-        {/* Minimal floating controls */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full"
-          style={{ background: "hsl(220 18% 4% / 0.85)", border: "1px solid hsl(220 14% 15%)", backdropFilter: "blur(8px)" }}>
+        {/* Minimal floating controls — auto-hide */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full transition-opacity duration-300"
+          style={{
+            background: "hsl(220 18% 4% / 0.85)", border: "1px solid hsl(220 14% 15%)", backdropFilter: "blur(8px)",
+            opacity: mobileControlsVisible ? 1 : 0, pointerEvents: mobileControlsVisible ? "auto" : "none",
+          }}
+          onClick={(e) => e.stopPropagation()}>
           <button onClick={prev} disabled={current === 0} className="p-1.5 rounded-lg disabled:opacity-20">
             <ChevronLeft size={18} style={{ color: `hsl(${C})` }} />
           </button>
