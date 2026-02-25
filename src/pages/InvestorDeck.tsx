@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
+import zoltanPhoto from "@/assets/zoltan-kauker.png";
 
 // ─── Scaled slide container ──────────────────────────────────────────────────
 
@@ -470,8 +471,8 @@ function Slide08GTM() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Go-To-Market" color={ACCENT} />
         <h2 className="font-bold mb-8" style={{ fontSize: 68, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
-          Sell Level 1 pain.<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>Deliver Level 4 value.</span>
+          Enter with one team's pain.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Expand across the organisation.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -511,7 +512,7 @@ function Slide08GTM() {
           <div className="w-2/5 flex flex-col gap-4">
             <p className="font-semibold" style={{ fontSize: 24, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Target Metrics — Year 3</p>
             {[
-              { label: "ARR", val: "€8M", color: ACCENT },
+              { label: "ARR", val: "€4M+", color: ACCENT },
               { label: "Customers", val: "180+", color: GREEN },
               { label: "NRR", val: ">120%", color: ACCENT },
               { label: "Gross Margin", val: "78%", color: GREEN },
@@ -602,7 +603,7 @@ function Slide10Team() {
   const founders = [
     { name: "István Boscha", role: "Product Vision & Capital-Efficient CEO", bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years in AI transformation globally.", photo: istvanPhoto, initials: "IB", color: ACCENT },
     { name: "Kristóf Éger", role: "Enterprise Narrative & Go-to-Market", bio: "AI-driven business strategist, embedding AI into decision-making workflows.", photo: kristofPhoto, initials: "KÉ", color: GREEN },
-    { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: null as string | null, initials: "ZK", color: GOLD },
+    { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
   ];
   const advisors = [
     { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
