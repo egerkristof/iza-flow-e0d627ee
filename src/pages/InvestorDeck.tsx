@@ -397,24 +397,24 @@ function Slide07BusinessModel() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Business Model" color={ACCENT} />
-        <h2 className="font-bold mb-12" style={{ fontSize: 76, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-6" style={{ fontSize: 64, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
           Platform SaaS + usage-based AI.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Expanding with each project.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-8 mb-10">
+        <div className="grid grid-cols-3 gap-6 mb-6 flex-1 min-h-0">
           {[
             {
               tier: "Team", price: "€40k/yr", seats: "Single team",
               desc: "Core workbooks, action grid, protocol execution. Entry hook — one team adopts, others follow.", color: "215 10% 45%",
-              features: ["Unlimited workbooks", "Action Grid + Protocol execution", "Basic knowledge bundles"],
+              features: ["Unlimited workbooks", "Action Grid + Protocols", "Basic knowledge bundles"],
             },
             {
               tier: "Process", price: "€150k/yr", seats: "Multi-team",
-              desc: "Full SECI flywheel: smart ingestion, drift detection, after-action synthesis. Includes deployment services.", color: ACCENT,
-              features: ["Everything in Team", "Smart document ingestion", "Drift scoring + alerts", "After-action AI synthesis", "Deployment partner services"],
+              desc: "Full SECI flywheel: smart ingestion, drift detection, after-action synthesis. Includes deployment.", color: ACCENT,
+              features: ["Everything in Team", "Smart document ingestion", "Drift scoring + alerts", "After-action AI synthesis", "Deployment services"],
             },
             {
               tier: "Transform", price: "€250k/yr", seats: "Organisation-wide",
@@ -424,16 +424,16 @@ function Slide07BusinessModel() {
           ].map(({ tier, price, seats, desc, color, features }) => (
             <div key={tier} className="flex flex-col rounded-2xl border overflow-hidden"
               style={{ borderColor: `hsl(${color} / 0.3)`, background: `hsl(${color} / 0.05)` }}>
-              <div className="p-8 border-b" style={{ borderColor: `hsl(${color} / 0.2)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 30, color: `hsl(${color})` }}>{tier}</p>
-                <p className="font-black" style={{ fontSize: 48, color: "hsl(210 18% 92%)", lineHeight: 1 }}>{price}</p>
-                <p style={{ fontSize: 22, color: "hsl(215 10% 45%)" }}>{seats}</p>
+              <div className="px-7 py-5 border-b" style={{ borderColor: `hsl(${color} / 0.2)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 26, color: `hsl(${color})` }}>{tier}</p>
+                <p className="font-black" style={{ fontSize: 40, color: "hsl(210 18% 92%)", lineHeight: 1 }}>{price}</p>
+                <p style={{ fontSize: 19, color: "hsl(215 10% 45%)" }}>{seats}</p>
               </div>
-              <div className="p-8 flex flex-col gap-3 flex-1">
-                <p style={{ fontSize: 23, color: "hsl(215 10% 50%)", lineHeight: 1.5, marginBottom: 8 }}>{desc}</p>
+              <div className="px-7 py-5 flex flex-col gap-2 flex-1">
+                <p style={{ fontSize: 19, color: "hsl(215 10% 50%)", lineHeight: 1.45, marginBottom: 4 }}>{desc}</p>
                 {features.map(f => (
-                  <p key={f} className="flex items-center gap-3" style={{ fontSize: 22, color: "hsl(210 18% 75%)" }}>
-                    <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0 }} /> {f}
+                  <p key={f} className="flex items-center gap-2.5" style={{ fontSize: 19, color: "hsl(210 18% 75%)" }}>
+                    <CheckCircle2 size={16} style={{ color: `hsl(${color})`, flexShrink: 0 }} /> {f}
                   </p>
                 ))}
               </div>
@@ -441,17 +441,17 @@ function Slide07BusinessModel() {
           ))}
         </div>
 
-        <div className="flex gap-8">
+        <div className="flex gap-6">
           {[
             { label: "AI Usage Layer", desc: "+€0.10 per AI call above tier limit. Usage expands ARR naturally.", color: GREEN },
-            { label: "Template Marketplace", desc: "Partners (e.g. MEDDIC, ESG frameworks) sell playbooks. 30% revenue share.", color: ACCENT },
+            { label: "Template Marketplace", desc: "Partners (e.g. MEDDIC, ESG frameworks) sell playbooks. 30% rev share.", color: ACCENT },
           ].map(({ label, desc, color }) => (
-            <div key={label} className="flex-1 rounded-xl border p-7 flex items-center gap-6"
+            <div key={label} className="flex-1 rounded-xl border px-6 py-5 flex items-center gap-5"
               style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
-              <DollarSign size={36} style={{ color: `hsl(${color})`, flexShrink: 0 }} />
+              <DollarSign size={30} style={{ color: `hsl(${color})`, flexShrink: 0 }} />
               <div>
-                <p className="font-bold" style={{ fontSize: 28, color: "hsl(210 18% 92%)" }}>{label}</p>
-                <p style={{ fontSize: 22, color: "hsl(215 10% 50%)" }}>{desc}</p>
+                <p className="font-bold" style={{ fontSize: 24, color: "hsl(210 18% 92%)" }}>{label}</p>
+                <p style={{ fontSize: 19, color: "hsl(215 10% 50%)" }}>{desc}</p>
               </div>
             </div>
           ))}
