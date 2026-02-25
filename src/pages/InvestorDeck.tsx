@@ -467,16 +467,16 @@ function Slide08GTM() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Go-To-Market" color={ACCENT} />
-        <h2 className="font-bold mb-12" style={{ fontSize: 76, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-8" style={{ fontSize: 68, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
           Sell Level 1 pain.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Deliver Level 4 value.</span>
         </h2>
 
-        <div className="flex gap-10 flex-1">
+        <div className="flex gap-8 flex-1 min-h-0">
           {/* Phases */}
-          <div className="w-3/5 flex flex-col gap-6">
+          <div className="w-3/5 flex flex-col gap-4">
             {[
               {
                 phase: "Phase 1: 0–12 months", color: ACCENT,
@@ -494,13 +494,13 @@ function Slide08GTM() {
                 points: ["AACE as a service: enterprise workflows plug into the context engine", "White-label for firms to deploy under their own brand"],
               },
             ].map(({ phase, color, headline, points }) => (
-              <div key={phase} className="rounded-xl border p-7"
+              <div key={phase} className="rounded-xl border p-5"
                 style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
-                <p className="font-semibold mb-1" style={{ fontSize: 22, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{phase}</p>
-                <p className="font-bold mb-4" style={{ fontSize: 30, color: "hsl(210 18% 92%)" }}>{headline}</p>
-                <div className="flex flex-col gap-1.5">
+                <p className="font-semibold mb-0.5" style={{ fontSize: 20, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{phase}</p>
+                <p className="font-bold mb-2" style={{ fontSize: 27, color: "hsl(210 18% 92%)" }}>{headline}</p>
+                <div className="flex flex-col gap-1">
                   {points.map(p => (
-                    <p key={p} style={{ fontSize: 22, color: "hsl(215 10% 50%)" }}>→ {p}</p>
+                    <p key={p} style={{ fontSize: 20, color: "hsl(215 10% 50%)" }}>→ {p}</p>
                   ))}
                 </div>
               </div>
@@ -508,8 +508,8 @@ function Slide08GTM() {
           </div>
 
           {/* Key metrics */}
-          <div className="w-2/5 flex flex-col gap-6">
-            <p className="font-semibold" style={{ fontSize: 26, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Target Metrics — Year 3</p>
+          <div className="w-2/5 flex flex-col gap-4">
+            <p className="font-semibold" style={{ fontSize: 24, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Target Metrics — Year 3</p>
             {[
               { label: "ARR", val: "€8M", color: ACCENT },
               { label: "Customers", val: "180+", color: GREEN },
@@ -517,10 +517,10 @@ function Slide08GTM() {
               { label: "Gross Margin", val: "78%", color: GREEN },
               { label: "CAC Payback", val: "<12 mo", color: ACCENT },
             ].map(({ label, val, color }) => (
-              <div key={label} className="flex items-center justify-between rounded-xl border px-8 py-6"
+              <div key={label} className="flex items-center justify-between rounded-xl border px-7 py-5"
                 style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.05)` }}>
-                <span style={{ fontSize: 28, color: "hsl(215 10% 55%)" }}>{label}</span>
-                <span className="font-black" style={{ fontSize: 42, color: `hsl(${color})` }}>{val}</span>
+                <span style={{ fontSize: 26, color: "hsl(215 10% 55%)" }}>{label}</span>
+                <span className="font-black" style={{ fontSize: 38, color: `hsl(${color})` }}>{val}</span>
               </div>
             ))}
           </div>
@@ -953,7 +953,10 @@ export default function InvestorDeck() {
 
   const handleExportPdf = async () => {
     setExporting(true);
-    await new Promise(r => setTimeout(r, 500));
+    // Wait for the export container to render and paint
+    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(undefined))));
+    await new Promise(r => setTimeout(r, 300));
     try {
       const html2canvas = (await import('html2canvas')).default;
       const { jsPDF } = await import('jspdf');
@@ -963,8 +966,19 @@ export default function InvestorDeck() {
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
       for (let i = 0; i < slideEls.length; i++) {
         if (i > 0) pdf.addPage([1920, 1080], 'landscape');
-        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 1, useCORS: true, backgroundColor: null });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 1920, 1080);
+        // Fix gradient text that html2canvas can't render: temporarily swap to solid color
+        const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('[style*="background-clip"]');
+        const origStyles: string[] = [];
+        gradientEls.forEach((el) => {
+          origStyles.push(el.style.cssText);
+          el.style.background = 'none';
+          el.style.webkitBackgroundClip = 'unset';
+          el.style.webkitTextFillColor = 'hsl(180, 80%, 60%)';
+        });
+        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
+        // Restore original styles
+        gradientEls.forEach((el, j) => { el.style.cssText = origStyles[j]; });
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 1920, 1080);
       }
       pdf.save('LIZA-OS-Investor-Deck.pdf');
     } finally {
@@ -1146,15 +1160,13 @@ export default function InvestorDeck() {
         </div>
       </div>
 
-      {exporting && (
-        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920 }}>
-          {SLIDES.map(s => (
-            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
-              {s.component}
-            </div>
-          ))}
-        </div>
-      )}
+      <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
+        {SLIDES.map(s => (
+          <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
+            {s.component}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
