@@ -1068,37 +1068,37 @@ export default function InvestorDeck() {
   return (
     <div className="flex flex-col h-screen" style={{ background: BG }}>
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-5 py-3 border-b shrink-0"
+      <div className="flex items-center justify-between px-3 sm:px-5 py-2 sm:py-3 border-b shrink-0"
         style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GOLD})` }} />
-          <span className="text-sm font-semibold" style={{ color: "hsl(210 18% 92%)" }}>LIZA OS — Investor Deck</span>
-          <span className="text-xs px-2 py-0.5 rounded"
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: `hsl(${GOLD})` }} />
+          <span className="text-xs sm:text-sm font-semibold truncate" style={{ color: "hsl(210 18% 92%)" }}>LIZA OS — Investor Deck</span>
+          <span className="hidden sm:inline text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
             Series Seed · {SLIDES.length} slides
           </span>
-          <span className="text-xs px-2 py-0.5 rounded ml-1"
+          <span className="hidden md:inline text-xs px-2 py-0.5 rounded ml-1"
             style={{ background: "hsl(0 72% 63% / 0.1)", color: "hsl(0 72% 63%)" }}>
             Confidential
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")}>
+        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+          <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn("hidden sm:flex", showGrid && "bg-accent")}>
             <Grid3x3 size={15} className="mr-1.5" /> Grid
           </Button>
           <Button size="sm" variant="ghost" onClick={handleExportPdf} disabled={exporting}>
-            {exporting ? <Loader2 size={15} className="mr-1.5 animate-spin" /> : <Download size={15} className="mr-1.5" />}
-            {exporting ? "Exporting..." : "PDF"}
+            {exporting ? <Loader2 size={15} className="sm:mr-1.5 animate-spin" /> : <Download size={15} className="sm:mr-1.5" />}
+            <span className="hidden sm:inline">{exporting ? "Exporting..." : "PDF"}</span>
           </Button>
-          <Button size="sm" variant="ghost" onClick={enterFullscreen}>
+          <Button size="sm" variant="ghost" onClick={enterFullscreen} className="hidden sm:flex">
             <Maximize2 size={15} className="mr-1.5" /> Present
           </Button>
         </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Thumbnail sidebar */}
-        <div className="w-44 flex flex-col gap-2 p-3 overflow-y-auto border-r shrink-0"
+        {/* Thumbnail sidebar — hidden on mobile */}
+        <div className="hidden md:flex w-44 flex-col gap-2 p-3 overflow-y-auto border-r shrink-0"
           style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
           {SLIDES.map((s, i) => (
             <button key={s.id} onClick={() => goTo(i)}
@@ -1118,8 +1118,8 @@ export default function InvestorDeck() {
         {/* Main canvas */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {showGrid ? (
-            <div className="flex-1 overflow-y-auto p-8">
-              <div className="grid grid-cols-3 gap-6">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {SLIDES.map((s, i) => (
                   <button key={s.id} onClick={() => goTo(i)}
                     className={cn("flex flex-col gap-2 rounded-xl overflow-hidden border-2 transition-all",
@@ -1136,8 +1136,8 @@ export default function InvestorDeck() {
               </div>
             </div>
           ) : (
-            <div className="flex-1 overflow-hidden p-6">
-              <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl border"
+            <div className="flex-1 overflow-hidden p-2 sm:p-6">
+              <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border"
                 style={{ borderColor: "hsl(222 14% 13%)" }}>
                 <ScaledSlide>{slide.component}</ScaledSlide>
               </div>
@@ -1146,19 +1146,19 @@ export default function InvestorDeck() {
 
           {/* Bottom nav */}
           {!showGrid && (
-            <div className="flex items-center justify-between px-8 py-3 border-t shrink-0"
+            <div className="flex items-center justify-between px-4 sm:px-8 py-2 sm:py-3 border-t shrink-0"
               style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5 sm:gap-2 overflow-hidden max-w-[40%]">
                 {SLIDES.map((_, i) => (
                   <button key={i} onClick={() => goTo(i)}
-                    className="h-1.5 rounded-full transition-all"
+                    className="h-1.5 rounded-full transition-all flex-shrink-0"
                     style={{
-                      width: i === current ? 32 : 8,
+                      width: i === current ? 24 : 8,
                       background: i === current ? `hsl(${GOLD})` : "hsl(222 14% 18%)",
                     }} />
                 ))}
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <Button size="sm" variant="outline" onClick={prev} disabled={current === 0}>
                   <ChevronLeft size={16} />
                 </Button>
@@ -1169,7 +1169,7 @@ export default function InvestorDeck() {
                   <ChevronRight size={16} />
                 </Button>
               </div>
-              <p className="text-xs" style={{ color: "hsl(215 10% 30%)" }}>← → navigate &nbsp; G grid &nbsp; F present</p>
+              <p className="hidden sm:block text-xs" style={{ color: "hsl(215 10% 30%)" }}>← → navigate &nbsp; G grid &nbsp; F present</p>
             </div>
           )}
         </div>

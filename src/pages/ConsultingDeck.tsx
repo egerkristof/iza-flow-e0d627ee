@@ -838,32 +838,32 @@ export default function ConsultingDeck() {
   return (
     <div className="flex flex-col h-screen" style={{ background: "hsl(220 18% 3%)" }}>
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-6 py-3 border-b flex-shrink-0"
+      <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 border-b flex-shrink-0"
         style={{ borderColor: "hsl(220 14% 12%)", background: "hsl(220 18% 4%)" }}>
-        <div className="flex items-center gap-4">
-          <div className="w-7 h-7 rounded flex items-center justify-center font-black text-sm"
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          <div className="w-7 h-7 rounded flex items-center justify-center font-black text-sm flex-shrink-0"
             style={{ background: `hsl(${BLUE})`, color: "hsl(220 18% 4%)" }}>L</div>
-          <span className="font-semibold" style={{ fontSize: 14, color: `hsl(${C})` }}>LIZA OS — Sales Deck</span>
-          <span style={{ fontSize: 12, color: `hsl(${MUT})` }}>·</span>
-          <span style={{ fontSize: 13, color: `hsl(${MUT})` }}>{SLIDES[current].label}</span>
+          <span className="font-semibold truncate" style={{ fontSize: 14, color: `hsl(${C})` }}>LIZA OS — Sales Deck</span>
+          <span className="hidden sm:inline" style={{ fontSize: 12, color: `hsl(${MUT})` }}>·</span>
+          <span className="hidden sm:inline truncate" style={{ fontSize: 13, color: `hsl(${MUT})` }}>{SLIDES[current].label}</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 sm:gap-3 flex-shrink-0">
           <button onClick={() => setGrid(v => !v)}
-            className={cn("flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
+            className={cn("hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
               grid ? "text-white" : "text-gray-400 hover:text-white")}
             style={{ background: grid ? `hsl(${BLUE} / 0.15)` : "transparent" }}>
             <Grid3x3 size={15} /> Grid
           </button>
           <button onClick={handleExportPdf} disabled={exporting}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors disabled:opacity-50">
+            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors disabled:opacity-50">
             {exporting ? <Loader2 size={15} className="animate-spin" /> : <Download size={15} />}
-            {exporting ? "Exporting..." : "PDF"}
+            <span className="hidden sm:inline">{exporting ? "Exporting..." : "PDF"}</span>
           </button>
           <button onClick={() => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {}); else document.exitFullscreen().catch(() => {}); }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
+            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
             <Maximize2 size={15} /> {fs ? "Exit" : "Present"}
           </button>
-          <span className="font-mono text-sm" style={{ color: `hsl(${MUT})` }}>
+          <span className="font-mono text-xs sm:text-sm" style={{ color: `hsl(${MUT})` }}>
             {String(current + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
           </span>
         </div>
@@ -871,8 +871,8 @@ export default function ConsultingDeck() {
 
       {/* Main area */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <div className="w-[180px] flex-shrink-0 overflow-y-auto py-4 px-3 border-r space-y-2"
+        {/* Sidebar — hidden on mobile */}
+        <div className="hidden md:block w-[180px] flex-shrink-0 overflow-y-auto py-4 px-3 border-r space-y-2"
           style={{ borderColor: "hsl(220 14% 10%)", background: "hsl(220 18% 3%)" }}>
           {SLIDES.map((s, i) => (
             <button key={s.id} onClick={() => { setCurrent(i); setGrid(false); }}
@@ -899,7 +899,7 @@ export default function ConsultingDeck() {
         {/* Canvas */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {grid ? (
-            <div className="flex-1 overflow-y-auto p-8 grid grid-cols-3 gap-6"
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
               style={{ background: "hsl(220 18% 3%)" }}>
               {SLIDES.map((s, i) => (
                 <button key={s.id} onClick={() => { setCurrent(i); setGrid(false); }}
@@ -917,20 +917,20 @@ export default function ConsultingDeck() {
             </div>
           ) : (
             <div className="flex-1 flex flex-col">
-              <div className="flex-1 p-6">
+              <div className="flex-1 p-2 sm:p-6">
                 <ScaledSlide><Slide /></ScaledSlide>
               </div>
               {/* Nav */}
-              <div className="flex items-center justify-between px-8 py-4 border-t flex-shrink-0"
+              <div className="flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4 border-t flex-shrink-0"
                 style={{ borderColor: "hsl(220 14% 10%)" }}>
                 <button onClick={() => setCurrent(c => Math.max(c - 1, 0))}
                   disabled={current === 0}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
+                  className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
                   style={{ color: `hsl(${C})`, background: "hsl(220 14% 10%)", fontSize: 14 }}>
-                  <ChevronLeft size={18} /> Previous
+                  <ChevronLeft size={18} /> <span className="hidden sm:inline">Previous</span>
                 </button>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   {SLIDES.map((_, i) => (
                     <button key={i} onClick={() => setCurrent(i)}
                       className="rounded-full transition-all"
@@ -943,9 +943,9 @@ export default function ConsultingDeck() {
 
                 <button onClick={() => setCurrent(c => Math.min(c + 1, SLIDES.length - 1))}
                   disabled={current === SLIDES.length - 1}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
+                  className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
                   style={{ color: `hsl(${C})`, background: "hsl(220 14% 10%)", fontSize: 14 }}>
-                  Next <ChevronRight size={18} />
+                  <span className="hidden sm:inline">Next</span> <ChevronRight size={18} />
                 </button>
               </div>
             </div>
