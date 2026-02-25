@@ -287,7 +287,7 @@ function Proof() {
             <GradientText>It's that your best practices don't scale.</GradientText>
           </h2>
           <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
-            Every professional services firm faces the same ceiling.
+            Every professional services firm hits this ceiling.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
@@ -296,21 +296,21 @@ function Proof() {
               icon: <BookOpen className="w-5 h-5" />,
               tag: "Layer 1: Commoditised",
               title: "Frameworks & templates",
-              desc: "The structured deliverables your firm built over years. ChatGPT produces them in seconds. Clients know it.",
+              desc: "The structured deliverables your firm built over years. ChatGPT produces them in seconds.",
               desired: false,
             },
             {
               icon: <Lock className="w-5 h-5" />,
               tag: "Layer 2: Bottlenecked",
               title: "Senior expert judgment",
-              desc: "The real differentiator. Pattern recognition built over decades. But it lives inside two or three people and can't be standardised across the firm.",
+              desc: "Pattern recognition built over decades. But it lives inside two or three people and can't scale.",
               desired: false,
             },
             {
               icon: <TrendingUp className="w-5 h-5" />,
               tag: "Layer 3: The Opportunity",
               title: "Codified expertise",
-              desc: "Your unique value, turned into executable protocols that standardise your best practices. This is the layer that protects your margin and lets your firm scale.",
+              desc: "Your unique value, turned into executable protocols. This protects your margin and lets you scale.",
               desired: true,
             },
           ].map((c, i) => (
@@ -374,11 +374,8 @@ function LizaDifferentiator() {
             A living system, <GradientText>built in 5 days.</GradientText>
           </h2>
           <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
-            The extraction, codification, and governance all happen{" "}
-            <span className="font-semibold text-foreground">inside LIZA OS</span>, so you leave with a system that actually runs, not a slide deck.
-          </p>
-          <p className="text-base max-w-2xl mx-auto mt-4 text-muted-foreground">
-            This isn't about AI. Firms have struggled to standardise senior expertise for decades. AI just made the extraction possible at a speed and depth that wasn't feasible before.
+            Extraction, codification, and governance happen{" "}
+            <span className="font-semibold text-foreground">inside LIZA OS</span> — you leave with a system that runs, not a slide deck.
           </p>
         </div>
 
@@ -564,11 +561,8 @@ function CTA() {
             <h2 className="text-3xl font-black mb-4">
               Ready to <GradientText>productize your judgment?</GradientText>
             </h2>
-            <p className="text-base mb-2 text-muted-foreground">
-              Book a 30-minute Protocol Assessment. We'll diagnose whether your expertise is extractable and show you exactly what the output looks like.
-            </p>
-            <p className="text-xs mb-8 font-semibold" style={{ color: `hsl(var(--primary))` }}>
-              We take on 4 sprint engagements per month. Currently booking March.
+            <p className="text-base mb-8 text-muted-foreground">
+              Book a 30-minute Protocol Assessment. We'll show you exactly what the output looks like.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href={CAL_URL} target="_blank" rel="noopener noreferrer"

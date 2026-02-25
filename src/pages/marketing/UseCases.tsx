@@ -54,11 +54,10 @@ const USE_CASES = [
     headline: "Onboard sales reps in 8 weeks, not 6–9 months.",
     subheading: "Scale your senior seller's judgment across your entire go-to-market team.",
     competitors: ["Gong", "Chorus", "Highspot", "Seismic", "Salesforce Playbooks"],
-    competitorNote: "Gong and Chorus record calls and surface patterns. Highspot and Seismic store playbooks as documents. These are great at capturing what happened. They don't transfer judgment: the instinct to know when to push, when to wait, when to re-qualify.",
+    competitorNote: "They capture what happened. They don't transfer the judgment that wins deals.",
     body: [
-      "Complex B2B sales are expertise-driven. Your best sellers aren't following a script. They're pattern-matching, reading signals, applying the kind of judgment that takes years to develop. That's tacit knowledge, and it typically takes 6–9 months of full-time salary before a new hire delivers meaningful pipeline.",
-      "With LIZA OS, you encode that judgment. Your senior sellers' discovery frameworks, objection-handling logic, qualification instincts, stakeholder mapping heuristics, all structured into executable protocols. Every team member then runs on that same intelligence from week one.",
-      "The knowledge encoded here doesn't just live in the sales team. The competitive insights, the objection patterns, the deal-breaker signals: these feed directly back into your organisational knowledge base, sharpening everything from product positioning to hiring criteria.",
+      "Complex B2B sales are expertise-driven. Your best sellers pattern-match, read signals, and apply judgment that takes years to develop. That's tacit knowledge — and it typically takes 6–9 months before a new hire delivers meaningful pipeline.",
+      "LIZA encodes that judgment into executable protocols. Every team member runs on that intelligence from week one. The insights feed back into your knowledge base, sharpening everything from positioning to hiring.",
     ],
     carries: "Sales patterns reveal what your market actually values. That insight shapes your playbooks, your onboarding, and eventually your product.",
     stats: [
@@ -74,11 +73,10 @@ const USE_CASES = [
     headline: "Make audits 23× faster.",
     subheading: "If we can handle compliance audits, we can handle your marketing briefs.",
     competitors: ["Workiva", "AuditBoard", "TeamMate+", "Excel"],
-    competitorNote: "These tools structure the audit process. They manage workflows, house documents, and track findings. What they cannot do is encode expertise. Your criteria still lives in your senior auditor's head. Every audit still starts from scratch.",
+    competitorNote: "They manage the audit process. They can't encode the expertise driving it.",
     body: [
-      "Auditing is one of the most expertise-dense, detail-critical activities in any organisation: long criteria checklists, best-practice frameworks, domain-specific rules that exist entirely in the judgment of a specialist. Current audit tools are good at managing the process. They don't capture the knowledge driving it.",
-      "With LIZA OS, we encode all of that. Every criterion, every compliance gate, every domain heuristic gets structured and packaged into executable protocols. The system then applies all criteria automatically and consistently, eliminating up to 80% of the groundwork.",
-      "Audits run 23× faster with 72% higher accuracy. And crucially: every audit execution feeds new findings back into your organisational knowledge. Your firm gets smarter with every engagement.",
+      "Auditing is expertise-dense and detail-critical. Current tools manage the process but don't capture the knowledge behind it.",
+      "LIZA encodes every criterion, compliance gate, and domain heuristic into executable protocols. Audits run 23× faster with 72% higher accuracy — and every execution feeds new findings back into your knowledge base.",
     ],
     carries: "Audits surface issues. Those issues become tasks, structured, contextualised, and delegated with full intent.",
     stats: [
@@ -94,11 +92,10 @@ const USE_CASES = [
     headline: "Extract decisions. Route them where they matter.",
     subheading: "Your meetings are already building your knowledge base. You just can't see it yet.",
     competitors: ["Otter.ai", "Fireflies", "Fathom", "Notion AI", "Grain"],
-    competitorNote: "These tools give you transcripts, summaries, and searchable recordings. Useful, but fundamentally passive. They capture what was said. They don't understand what it means for your organisation, and they don't route it anywhere actionable.",
+    competitorNote: "They give you transcripts and summaries. They don't understand what it means or route it anywhere actionable.",
     body: [
-      "Every week, your organisation runs dozens of meetings. Each one is packed with decisions, rationale, pattern recognition, and strategic signal, and most of it evaporates. The transcript tools give you a wall of text. The summaries give you three bullet points. Neither builds anything.",
-      "LIZA OS takes your meeting transcripts and extracts structured organisational intelligence from them: what was decided and why, what new principles emerged, what knowledge needs encoding, what issues surfaced that need to become tasks. You get a synthesised view of what actually happened across your organisation without sitting in every meeting.",
-      "This is often how organisations start with LIZA. Not with a months-long implementation project, but with last Monday's meetings. Within a week, you have the foundations of your organisational knowledge base, built from conversations that were already happening.",
+      "Every week, dozens of meetings packed with decisions, rationale, and strategic signal — and most of it evaporates. Transcript tools give you a wall of text. Summaries give you three bullets. Neither builds anything.",
+      "LIZA extracts structured intelligence: what was decided and why, what principles emerged, what needs encoding. Start with last Monday's meetings — within a week, you have the foundations of your knowledge base.",
     ],
     carries: "Meetings surface tacit knowledge. That knowledge gets encoded. Encoded knowledge powers your sales team, your auditors, your delegated work.",
     stats: [
@@ -114,11 +111,10 @@ const USE_CASES = [
     headline: "Don't delegate tasks. Generate briefs.",
     subheading: "The infrastructure for working through others at the highest standard.",
     competitors: ["Asana", "Monday.com", "ClickUp", "Linear", "Jira"],
-    competitorNote: "Task management tools are excellent at tracking what needs to be done. They don't transfer why, in what sequence, under what constraints, and with what judgment. Context is always stripped out. That's why you end up chasing.",
+    competitorNote: "They track what needs doing. They don't transfer why, in what sequence, or with what judgment.",
     body: [
-      "Every working day, leaders face the same choice: do it yourself, or delegate and spend more time chasing the outcome than it would have taken to just do it. Delegation breaks not because people are incapable, but because context doesn't transfer. They execute the letter, not the intent.",
-      "LIZA OS solves this by packaging your intent, your standards, and your judgment into every delegated task. The recipient gets the full context: the what, the why, the sequencing logic, the quality gates, the constraints. They execute correctly, with fewer check-ins, fewer clarification spirals, and results that match your standard.",
-      "Delegation at this level closes the loop on everything else in LIZA. The knowledge encoded from your audits, your meetings, your sales processes all flows into how work actually gets done, by the right people, at the right standard, consistently across your organisation.",
+      "Delegation breaks not because people are incapable, but because context doesn't transfer. They execute the letter, not the intent.",
+      "LIZA packages your intent, standards, and judgment into every delegated task. The recipient gets full context — fewer check-ins, fewer clarification spirals, results that match your standard.",
     ],
     carries: null,
     stats: [
