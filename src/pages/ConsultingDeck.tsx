@@ -128,37 +128,37 @@ function Slide02Problem() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
         <Tag label="The Problem" color={RED} />
-        <h2 className="font-bold mb-14" style={{ fontSize: 80, color: `hsl(${C})`, lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
           Professional firms scale headcount.
           <br />
           <span style={{ color: `hsl(${RED})` }}>Not capability.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-8 flex-1">
+        <div className="grid grid-cols-3 gap-7 flex-1">
           {[
             {
-              icon: <Users size={52} />, color: RED,
-              title: "Knowledge walks out the door",
-              body: "Your best people carry your methodology in their heads. Every resignation is a knowledge loss event. Remove three seniors and quality collapses overnight."
+              icon: <Users size={44} />, color: RED,
+              title: "Knowledge walks out",
+              body: "Your best people carry methodology in their heads. Every resignation is a knowledge loss event."
             },
             {
-              icon: <Target size={52} />, color: GOLD,
+              icon: <Target size={44} />, color: GOLD,
               title: "Execution is inconsistent",
-              body: "Same brief, 14 different outputs. Junior work ranges from excellent to embarrassing depending on who supervises. No shared standard exists."
+              body: "Same brief, 14 different outputs. Quality depends on who supervises. No shared standard."
             },
             {
-              icon: <BarChart3 size={52} />, color: RED,
+              icon: <BarChart3 size={44} />, color: RED,
               title: "AI accelerates the problem",
-              body: "Generic AI gives everyone content generation — with zero organisational context. Teams get faster at producing the wrong thing, confidently."
+              body: "Generic AI gives everyone content generation — with zero organisational context. Faster at producing the wrong thing."
             },
           ].map(({ icon, color, title, body }) => (
-            <div key={title} className="flex flex-col gap-5 rounded-2xl border p-9"
+            <div key={title} className="flex flex-col gap-4 rounded-2xl border p-8"
               style={{ background: `hsl(${color} / 0.05)`, borderColor: `hsl(${color} / 0.2)` }}>
               <div style={{ color: `hsl(${color})` }}>{icon}</div>
-              <p className="font-bold" style={{ fontSize: 32, color: `hsl(${C})` }}>{title}</p>
-              <p style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.55 }}>{body}</p>
+              <p className="font-bold" style={{ fontSize: 30, color: `hsl(${C})` }}>{title}</p>
+              <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{body}</p>
             </div>
           ))}
         </div>
@@ -250,30 +250,29 @@ function Slide04Tried() {
 
       <div className="relative z-10 flex flex-col justify-center h-full px-[140px]">
         <Tag label="What You've Probably Tried" />
-        <h2 className="font-black mb-3" style={{ fontSize: 68, color: `hsl(${C})` }}>
+        <h2 className="font-black mb-2" style={{ fontSize: 62, color: `hsl(${C})` }}>
           And why it hasn't worked.
         </h2>
-        <p className="mb-8" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
+        <p className="mb-6" style={{ fontSize: 24, color: `hsl(${MUT})` }}>
           Every approach focuses on your frameworks and processes. That's exactly what AI commoditises.
         </p>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {tried.map((t, i) => (
-            <div key={i} className="flex items-center gap-6 px-7 py-4 rounded-xl border"
+            <div key={i} className="flex items-center gap-5 px-6 py-3.5 rounded-xl border"
               style={{ background: BG2, borderColor: `hsl(${RED} / 0.12)` }}>
-              <AlertTriangle style={{ width: 24, height: 24, flexShrink: 0, color: `hsl(${RED} / 0.6)` }} />
-              <p className="font-bold flex-shrink-0 w-[400px]" style={{ fontSize: 23, color: `hsl(${C})` }}>{t.label}</p>
-              <div className="w-[1px] h-6" style={{ background: `hsl(${RED} / 0.15)` }} />
-              <p style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.4 }}>→ {t.why}</p>
+              <AlertTriangle style={{ width: 22, height: 22, flexShrink: 0, color: `hsl(${RED} / 0.6)` }} />
+              <p className="font-bold flex-shrink-0 w-[380px]" style={{ fontSize: 21, color: `hsl(${C})` }}>{t.label}</p>
+              <div className="w-[1px] h-5" style={{ background: `hsl(${RED} / 0.15)` }} />
+              <p style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.4 }}>→ {t.why}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 p-5 rounded-2xl border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.3)` }}>
-          <p style={{ fontSize: 23, color: `hsl(${C})`, lineHeight: 1.5 }}>
+        <div className="mt-5 p-4 rounded-2xl border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.3)` }}>
+          <p style={{ fontSize: 21, color: `hsl(${C})`, lineHeight: 1.5 }}>
             <strong style={{ color: `hsl(${BLUE})` }}>The systemic issue:</strong>{" "}
             All these approaches catch the fringes of what makes you different, not the core.
-            The real value is the judgment in your senior heads.
           </p>
         </div>
       </div>
@@ -303,32 +302,32 @@ function Slide05Solution() {
           </p>
         </div>
 
-        <div className="flex gap-10 justify-center mb-10">
+        <div className="flex gap-8 justify-center mb-8">
           {[
             {
-              icon: <Target size={48} />, color: BLUE, step: "01",
+              icon: <Target size={40} />, color: BLUE, step: "01",
               title: "Execute",
-              desc: "Protocol-driven workflows replace blank-page guessing. Every team member runs your best methodology, with AI adapting guidance at each step.",
+              desc: "Protocol-driven workflows replace blank-page guessing. Every team member runs your best methodology.",
             },
             {
-              icon: <Brain size={48} />, color: TEAL, step: "02",
+              icon: <Brain size={40} />, color: TEAL, step: "02",
               title: "Learn",
-              desc: "After every session, the system captures decisions, deviations, and insights. Structured reviews synthesise patterns into institutional knowledge.",
+              desc: "After every session, the system captures decisions and deviations. Structured reviews synthesise patterns.",
             },
             {
-              icon: <Zap size={48} />, color: BLUE, step: "03",
+              icon: <Zap size={40} />, color: BLUE, step: "03",
               title: "Encode",
-              desc: "Approved learnings flow back into the knowledge graph, making every future execution smarter. The organisation compounds with each project.",
+              desc: "Approved learnings flow back into the knowledge graph. The organisation compounds with each project.",
             },
           ].map(({ icon, color, step, title, desc }) => (
-            <div key={title} className="flex-1 rounded-2xl border p-9 flex flex-col gap-5"
+            <div key={title} className="flex-1 rounded-2xl border p-7 flex flex-col gap-4"
               style={{ background: `hsl(${color} / 0.06)`, borderColor: `hsl(${color} / 0.25)` }}>
-              <div className="flex items-center gap-5">
-                <span className="font-black" style={{ fontSize: 56, color: `hsl(${color} / 0.2)`, lineHeight: 1 }}>{step}</span>
+              <div className="flex items-center gap-4">
+                <span className="font-black" style={{ fontSize: 48, color: `hsl(${color} / 0.2)`, lineHeight: 1 }}>{step}</span>
                 <div style={{ color: `hsl(${color})` }}>{icon}</div>
               </div>
-              <p className="font-bold" style={{ fontSize: 38, color: `hsl(${C})` }}>{title}</p>
-              <p style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.55 }}>{desc}</p>
+              <p className="font-bold" style={{ fontSize: 34, color: `hsl(${C})` }}>{title}</p>
+              <p style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{desc}</p>
             </div>
           ))}
         </div>
@@ -523,33 +522,31 @@ function Slide08Capabilities() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
-      <div className="relative z-10 flex flex-col h-full px-[140px] pt-16 pb-12">
+      <div className="relative z-10 flex flex-col h-full px-[120px] pt-14 pb-10">
         <Tag label="Product Capabilities" />
-        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-8" style={{ fontSize: 64, color: `hsl(${C})`, lineHeight: 1.1 }}>
           Built for how professionals
-          <br />
-          <span style={{ color: `hsl(${BLUE})` }}>actually work.</span>
+          <span style={{ color: `hsl(${BLUE})` }}> actually work.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
+        <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {features.map(({ label, desc, color, icon }) => (
-            <div key={label} className="rounded-xl border p-8 flex flex-col gap-4"
+            <div key={label} className="rounded-xl border p-6 flex flex-col gap-3"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.05)` }}>
               <div className="flex items-center gap-3">
                 <div style={{ color: `hsl(${color})` }}>{icon}</div>
-                <p className="font-bold" style={{ fontSize: 28, color: `hsl(${C})` }}>{label}</p>
+                <p className="font-bold" style={{ fontSize: 25, color: `hsl(${C})` }}>{label}</p>
               </div>
-              <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{desc}</p>
+              <p style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 flex items-center gap-3 px-8 py-5 rounded-xl border"
+        <div className="mt-4 flex items-center gap-3 px-7 py-4 rounded-xl border"
           style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
-          <Award size={28} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
-          <p style={{ fontSize: 22, color: `hsl(${MUT})` }}>
-            Powered by <strong style={{ color: `hsl(${C})` }}>AACE v3.1</strong> — our proprietary AI context architecture.
-            Intent-locking, hierarchical knowledge injection, and drift detection. This is the technical moat.
+          <Award size={24} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 20, color: `hsl(${MUT})` }}>
+            Powered by <strong style={{ color: `hsl(${C})` }}>AACE v3.1</strong> — proprietary AI context architecture with intent-locking, knowledge injection, and drift detection.
           </p>
         </div>
       </div>
@@ -629,60 +626,59 @@ function Slide10Who() {
 
       <div className="relative z-10 flex h-full">
         {/* Left */}
-        <div className="flex flex-col justify-center pl-[140px] pr-[80px] w-[780px]">
+        <div className="flex flex-col justify-center pl-[120px] pr-[60px] w-[700px]">
           <Tag label="Who Built This" />
-          <h2 className="font-black leading-tight mb-8" style={{ fontSize: 70, color: `hsl(${C})` }}>
+          <h2 className="font-black leading-tight mb-6" style={{ fontSize: 62, color: `hsl(${C})` }}>
             Built by Experts,
             <br />Guided by
-            <br />
-            <span style={{ color: `hsl(${TEAL})` }}>Industry Leaders.</span>
+            <span style={{ color: `hsl(${TEAL})` }}> Industry Leaders.</span>
           </h2>
-          <p style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.65, maxWidth: 620 }}>
-            We kept seeing the same pattern: firms full of senior expertise, no way to scale it.
-            Knowledge trapped in heads. Handoffs broken. Junior staff unable to execute with senior judgment.
+          <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 560 }}>
+            Firms full of senior expertise, no way to scale it.
+            Knowledge trapped in heads. Handoffs broken. We built the fix.
           </p>
         </div>
 
         {/* Right */}
-        <div className="flex flex-col justify-center flex-1 pr-[100px] gap-4">
-          <p className="font-bold tracking-widest uppercase mb-1" style={{ fontSize: 18, color: `hsl(${BLUE})` }}>Founding Team</p>
-          <div className="grid grid-cols-3 gap-4">
+        <div className="flex flex-col justify-center flex-1 pr-[80px] gap-3">
+          <p className="font-bold tracking-widest uppercase mb-0.5" style={{ fontSize: 16, color: `hsl(${BLUE})` }}>Founding Team</p>
+          <div className="grid grid-cols-3 gap-3">
             {[
-              { name: "István Boscha", role: "Product Vision & Capital-Efficient CEO", bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years in AI transformation globally.", photo: istvanPhoto, initials: "IB", color: BLUE },
-              { name: "Kristóf Éger", role: "Enterprise Narrative & Go-to-Market", bio: "AI-driven business strategist, embedding AI into decision-making workflows.", photo: kristofPhoto, initials: "KÉ", color: TEAL },
-              { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
+              { name: "István Boscha", role: "Product Vision & CEO", bio: "Founder of Aliz.ai (Google Cloud Partner). 15 years in AI transformation.", photo: istvanPhoto, initials: "IB", color: BLUE },
+              { name: "Kristóf Éger", role: "Narrative & Go-to-Market", bio: "AI-driven business strategist, embedding AI into decision workflows.", photo: kristofPhoto, initials: "KÉ", color: TEAL },
+              { name: "Zoltán Kauker", role: "AI Architecture & Security", bio: "Deep-tech AI and data engineering expert, leading decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
             ].map((p, i) => (
-              <div key={i} className="rounded-xl p-5 border" style={{ background: BG2, borderColor: `hsl(${p.color} / 0.2)` }}>
-                <div className="flex items-center gap-3 mb-3">
+              <div key={i} className="rounded-xl p-4 border" style={{ background: BG2, borderColor: `hsl(${p.color} / 0.2)` }}>
+                <div className="flex items-center gap-2.5 mb-2">
                   {p.photo ? (
-                    <img src={p.photo} alt={p.name} className="w-11 h-11 rounded-full object-cover shrink-0"
+                    <img src={p.photo} alt={p.name} className="w-10 h-10 rounded-full object-cover shrink-0"
                       style={{ border: `2px solid hsl(${p.color} / 0.3)` }} />
                   ) : (
-                    <div className="w-11 h-11 rounded-full flex items-center justify-center font-bold shrink-0"
-                      style={{ background: `hsl(${p.color} / 0.15)`, color: `hsl(${p.color})`, fontSize: 16 }}>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0"
+                      style={{ background: `hsl(${p.color} / 0.15)`, color: `hsl(${p.color})`, fontSize: 15 }}>
                       {p.initials}
                     </div>
                   )}
                   <div>
-                    <p className="font-bold" style={{ fontSize: 20, color: `hsl(${C})` }}>{p.name}</p>
-                    <p style={{ fontSize: 14, color: `hsl(${p.color})` }}>{p.role}</p>
+                    <p className="font-bold" style={{ fontSize: 18, color: `hsl(${C})` }}>{p.name}</p>
+                    <p style={{ fontSize: 13, color: `hsl(${p.color})` }}>{p.role}</p>
                   </div>
                 </div>
-                <p style={{ fontSize: 16, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{p.bio}</p>
+                <p style={{ fontSize: 15, color: `hsl(${MUT})`, lineHeight: 1.4 }}>{p.bio}</p>
               </div>
             ))}
           </div>
 
-          <p className="font-bold tracking-widest uppercase mt-2 mb-1" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>Strategic Advisory Board</p>
-          <div className="grid grid-cols-2 gap-4">
+          <p className="font-bold tracking-widest uppercase mt-1.5 mb-0.5" style={{ fontSize: 16, color: `hsl(${GOLD})` }}>Strategic Advisory Board</p>
+          <div className="grid grid-cols-2 gap-3">
             {[
-              { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-              { name: "Sylwester Pawluk", role: "VP Product Management, GRAPHISOFT", bio: "15+ years driving product strategy across GE Healthcare & GRAPHISOFT. Oxford CS. AI & data advocate scaling product portfolios globally." },
+              { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore", bio: "Scaling global tech service companies and enterprise infrastructure." },
+              { name: "Sylwester Pawluk", role: "VP Product, GRAPHISOFT", bio: "15+ years product strategy at GE Healthcare & GRAPHISOFT. Oxford CS." },
             ].map((a, i) => (
-              <div key={i} className="rounded-xl p-5 border" style={{ background: `hsl(${GOLD} / 0.04)`, borderColor: `hsl(${GOLD} / 0.2)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 20, color: `hsl(${C})` }}>{a.name}</p>
-                <p className="mb-2" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>{a.role}</p>
-                <p style={{ fontSize: 16, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{a.bio}</p>
+              <div key={i} className="rounded-xl p-4 border" style={{ background: `hsl(${GOLD} / 0.04)`, borderColor: `hsl(${GOLD} / 0.2)` }}>
+                <p className="font-bold mb-0.5" style={{ fontSize: 18, color: `hsl(${C})` }}>{a.name}</p>
+                <p className="mb-1.5" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>{a.role}</p>
+                <p style={{ fontSize: 15, color: `hsl(${MUT})`, lineHeight: 1.4 }}>{a.bio}</p>
               </div>
             ))}
           </div>
