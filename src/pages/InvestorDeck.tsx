@@ -2,10 +2,13 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   TrendingUp, Users, Brain, Zap, Target, BarChart3,
-  DollarSign, Shield, CheckCircle2, ArrowRight, Globe, Layers, Award, Briefcase
+  DollarSign, Shield, CheckCircle2, ArrowRight, Globe, Layers, Award, Briefcase,
+  Download, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import istvanPhoto from "@/assets/istvan-boscha.png";
+import kristofPhoto from "@/assets/kristof-eger.png";
 
 // ─── Scaled slide container ──────────────────────────────────────────────────
 
@@ -85,7 +88,7 @@ function Slide01Cover() {
         <div className="flex items-center gap-3 mb-12 px-7 py-3 rounded-full border"
           style={{ borderColor: `hsl(${ACCENT} / 0.35)`, background: `hsl(${ACCENT} / 0.07)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${ACCENT})` }} />
-          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>LIZA OS — Series Seed</span>
+          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>LIZA OS · Series Seed</span>
         </div>
 
         <h1 className="font-black mb-10" style={{ fontSize: 110, lineHeight: 1.0, color: "hsl(210 18% 94%)" }}>
@@ -97,7 +100,7 @@ function Slide01Cover() {
 
         <p style={{ fontSize: 38, color: "hsl(215 10% 52%)", maxWidth: 1200, lineHeight: 1.55 }}>
           We extract senior expertise and turn it into executable protocols
-          your entire organisation can run on — consistently.
+          your entire organisation can run on. Consistently.
         </p>
 
         <div className="mt-20 flex items-center gap-16">
@@ -241,7 +244,7 @@ function Slide04Solution() {
             {
               icon: <Zap size={52} />, color: ACCENT, step: "03",
               title: "Encode",
-              desc: "Approved learnings flow back into the knowledge graph — making every future execution smarter. The organisation compounds with each project.",
+              desc: "Approved learnings flow back into the knowledge graph, making every future execution smarter. The organisation compounds with each project.",
             },
           ].map(({ icon, color, step, title, desc }) => (
             <div key={title} className="flex-1 rounded-2xl border p-10 flex flex-col gap-6"
@@ -260,7 +263,7 @@ function Slide04Solution() {
           style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.05)` }}>
           <Brain size={32} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
           <p style={{ fontSize: 26, color: "hsl(215 10% 60%)" }}>
-            Grounded in the <strong style={{ color: "hsl(210 18% 85%)" }}>SECI model</strong> (Nonaka & Takeuchi) — the proven mechanism behind every learning organization.
+            Grounded in the <strong style={{ color: "hsl(210 18% 85%)" }}>SECI model</strong> (Nonaka & Takeuchi): the proven mechanism behind every learning organization.
             LIZA operationalizes this at software speed.
           </p>
         </div>
@@ -348,8 +351,8 @@ function Slide06Traction() {
 
         <div className="grid grid-cols-4 gap-7 mb-10">
           {[
-            { stat: "Egon Zehnder", sub: "Origin client — global executive search firm. Platform born from solving their knowledge consistency challenge.", color: ACCENT },
-            { stat: "3 Verticals", sub: "Executive search, management consulting, and legal advisory — all validated the same core pain: scaling senior judgment.", color: GREEN },
+            { stat: "Multi-Vertical", sub: "Validated across executive search, professional services, sales operations, architecture, and marketing product companies.", color: ACCENT },
+            { stat: "Cross-Industry Signal", sub: "Every vertical validated the same core pain point: scaling senior judgment beyond the individuals who carry it.", color: GREEN },
             { stat: "Live Product", sub: "Functional platform with AI edge functions, role-based operating modes, and protocol execution engine.", color: ACCENT },
             { stat: "AACE v3.1", sub: "Proprietary AI context architecture. Intent-locking, hierarchical knowledge injection, and drift detection.", color: GREEN },
           ].map(({ stat, sub, color }) => (
@@ -409,7 +412,7 @@ function Slide07BusinessModel() {
             },
             {
               tier: "Professional", price: "€2,200/mo", seats: "Up to 50 seats",
-              desc: "Full SECI flywheel — smart ingestion, drift detection, after-action synthesis.", color: ACCENT,
+              desc: "Full SECI flywheel: smart ingestion, drift detection, after-action synthesis.", color: ACCENT,
               features: ["Everything in Starter", "Smart document ingestion", "Drift scoring + alerts", "After-action AI synthesis"],
             },
             {
@@ -439,7 +442,7 @@ function Slide07BusinessModel() {
 
         <div className="flex gap-8">
           {[
-            { label: "AI Usage Layer", desc: "+€0.08 per AI call above tier limit — usage expands ARR naturally", color: GREEN },
+            { label: "AI Usage Layer", desc: "+€0.08 per AI call above tier limit. Usage expands ARR naturally.", color: GREEN },
             { label: "Template Marketplace", desc: "Partners (e.g. MEDDIC, ESG frameworks) sell playbooks. 30% revenue share.", color: ACCENT },
           ].map(({ label, desc, color }) => (
             <div key={label} className="flex-1 rounded-xl border p-7 flex items-center gap-6"
@@ -476,19 +479,19 @@ function Slide08GTM() {
           <div className="w-3/5 flex flex-col gap-6">
             {[
               {
-                phase: "Phase 1 — 0–12 months", color: ACCENT,
-                headline: "AI Operating Model Programme — direct sales",
-                points: ["Target: EU professional services firms 50–500 people", "Entry hook: 5-day Protocol Sprint → codify senior judgment", "Proof of value: Onboarding acceleration (months → weeks)", "CAC target: €8,000 | LTV target: €85,000+"],
+                phase: "Phase 1: 0–12 months", color: ACCENT,
+                headline: "Self-serve platform launch",
+                points: ["Target: EU professional services firms 50–500 people", "Product-led growth with pre-built playbook templates", "Self-onboarding: senior experts build playbooks directly in the platform", "CAC target: €2,000 | LTV target: €85,000+"],
               },
               {
-                phase: "Phase 2 — 12–30 months", color: GREEN,
-                headline: "Channel partners + methodology licensing",
-                points: ["Partner with framework owners: MEDDIC, ESG, RACI specialists", "Distribution via HR tech and consulting tool ecosystems", "Template marketplace goes live — passive ARR expansion"],
+                phase: "Phase 2: 12–30 months", color: GREEN,
+                headline: "Template marketplace + channel partners",
+                points: ["Partner with framework owners: MEDDIC, ESG, RACI specialists", "Distribution via HR tech and professional services ecosystems", "Template marketplace enables passive ARR expansion"],
               },
               {
-                phase: "Phase 3 — 30+ months", color: GOLD,
+                phase: "Phase 3: 30+ months", color: GOLD,
                 headline: "Platform + API layer",
-                points: ["AACE as a service: enterprise workflows plug into our context engine", "White-label for consulting firms to sell to their own clients"],
+                points: ["AACE as a service: enterprise workflows plug into the context engine", "White-label for firms to deploy under their own brand"],
               },
             ].map(({ phase, color, headline, points }) => (
               <div key={phase} className="rounded-xl border p-7"
@@ -585,7 +588,7 @@ function Slide09Moat() {
         </div>
 
         <p className="mt-6" style={{ fontSize: 24, color: "hsl(215 10% 40%)" }}>
-          The AACE v3.1 specification creates a technical moat — competitors would need 18–24 months to replicate the context architecture alone.
+          The AACE v3.1 specification creates a technical moat. Competitors would need 18–24 months to replicate the context architecture alone.
         </p>
       </div>
       <SlideBar />
@@ -596,61 +599,59 @@ function Slide09Moat() {
 // ─── Slide 10 — Team ─────────────────────────────────────────────────────────
 
 function Slide10Team() {
+  const founders = [
+    { name: "István Boscha", role: "Product Vision & Capital-Efficient CEO", bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years in AI transformation globally.", photo: istvanPhoto, initials: "IB", color: ACCENT },
+    { name: "Kristóf Éger", role: "Enterprise Narrative & Go-to-Market", bio: "AI-driven business strategist, embedding AI into decision-making workflows.", photo: kristofPhoto, initials: "KÉ", color: GREEN },
+    { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: null as string | null, initials: "ZK", color: GOLD },
+  ];
+  const advisors = [
+    { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
+    { name: "Sylwester Pawluk", role: "Former Head of a Major US Tech Platform (Austria)", bio: "Proven GTM leadership, scaled tech giant in European market (>$100M P&L). Track record of leading cross-functional teams and scaling product portfolios internationally." },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Team" color={ACCENT} />
-        <h2 className="font-bold mb-14" style={{ fontSize: 76, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
-          Domain expertise meets<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>technical execution.</span>
+        <h2 className="font-bold mb-6" style={{ fontSize: 68, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+          Built by Experts, Guided by<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Industry Leaders.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-10 flex-1">
-          {[
-            {
-              name: "Founder / CEO", color: ACCENT,
-              bg: "KH",
-              strengths: ["Deep Egon Zehnder domain knowledge", "Proprietary SECI-to-product translation", "Client-zero relationship + feedback loop", "GTM strategy and enterprise sales"],
-              why: "The problem was lived, not theorized. Built from the inside of one of the world's most knowledge-intensive firms."
-            },
-            {
-              name: "CTO / Co-Founder", color: GREEN,
-              bg: "Tech",
-              strengths: ["AI systems architecture (AACE v3.1)", "Full-stack product execution", "Edge function + knowledge graph design", "Supabase-native, production-grade"],
-              why: "Technical co-founder who shipped the AACE architecture and the entire LIZA OS platform in parallel with validation."
-            },
-            {
-              name: "Advisory Board", color: GOLD,
-              bg: "ADV",
-              strengths: ["Professional services GTM expertise", "AI/ML academic validation (SECI research)", "SaaS CFO / unit economics advisory", "Enterprise legal + compliance counsel"],
-              why: "Building out a board that covers the three vectors: distribution, academic credibility, and financial scale."
-            },
-          ].map(({ name, color, bg, strengths, why }) => (
-            <div key={name} className="flex flex-col rounded-2xl border overflow-hidden"
-              style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.05)` }}>
-              <div className="p-8 border-b flex items-center gap-6" style={{ borderColor: `hsl(${color} / 0.18)` }}>
-                <div className="w-20 h-20 rounded-full flex items-center justify-center font-black text-2xl"
-                  style={{ background: `hsl(${color} / 0.2)`, color: `hsl(${color})`, border: `2px solid hsl(${color} / 0.4)` }}>
-                  {bg}
-                </div>
+        <p className="font-semibold mb-5" style={{ fontSize: 22, color: `hsl(${ACCENT})`, letterSpacing: "0.15em", textTransform: "uppercase" }}>Founding Team</p>
+        <div className="grid grid-cols-3 gap-7 mb-8">
+          {founders.map(f => (
+            <div key={f.name} className="flex flex-col gap-4 rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${f.color} / 0.25)`, background: `hsl(${f.color} / 0.05)` }}>
+              <div className="flex items-center gap-4">
+                {f.photo ? (
+                  <img src={f.photo} alt={f.name} className="w-16 h-16 rounded-full object-cover shrink-0"
+                    style={{ border: `2px solid hsl(${f.color} / 0.4)` }} />
+                ) : (
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center font-black text-xl shrink-0"
+                    style={{ background: `hsl(${f.color} / 0.2)`, color: `hsl(${f.color})`, border: `2px solid hsl(${f.color} / 0.4)` }}>
+                    {f.initials}
+                  </div>
+                )}
                 <div>
-                  <p className="font-bold" style={{ fontSize: 30, color: "hsl(210 18% 92%)" }}>{name}</p>
-                  <p style={{ fontSize: 22, color: `hsl(${color})` }}>LIZA OS</p>
+                  <p className="font-bold" style={{ fontSize: 26, color: "hsl(210 18% 92%)" }}>{f.name}</p>
+                  <p style={{ fontSize: 18, color: `hsl(${f.color})` }}>{f.role}</p>
                 </div>
               </div>
-              <div className="p-8 flex flex-col gap-4 flex-1">
-                <div className="flex flex-col gap-2">
-                  {strengths.map(s => (
-                    <p key={s} className="flex items-start gap-3" style={{ fontSize: 21, color: "hsl(215 10% 60%)" }}>
-                      <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />{s}
-                    </p>
-                  ))}
-                </div>
-                <div className="mt-auto pt-4 border-t" style={{ borderColor: `hsl(${color} / 0.15)` }}>
-                  <p style={{ fontSize: 20, color: "hsl(215 10% 45%)", lineHeight: 1.5, fontStyle: "italic" }}>"{why}"</p>
-                </div>
-              </div>
+              <p style={{ fontSize: 20, color: "hsl(215 10% 55%)", lineHeight: 1.5 }}>{f.bio}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="font-semibold mb-5" style={{ fontSize: 22, color: `hsl(${GOLD})`, letterSpacing: "0.15em", textTransform: "uppercase" }}>Strategic Advisory Board</p>
+        <div className="grid grid-cols-2 gap-7">
+          {advisors.map(a => (
+            <div key={a.name} className="rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
+              <p className="font-bold mb-1" style={{ fontSize: 26, color: "hsl(210 18% 92%)" }}>{a.name}</p>
+              <p className="mb-3" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>{a.role}</p>
+              <p style={{ fontSize: 20, color: "hsl(215 10% 55%)", lineHeight: 1.5 }}>{a.bio}</p>
             </div>
           ))}
         </div>
@@ -736,7 +737,7 @@ function Slide11Financials() {
 
 function Slide12UseOfFunds() {
   const allocations = [
-    { label: "Product & Engineering", pct: 45, amt: "€675k", desc: "Core team (2 senior engineers + 1 AI specialist). Complete the SECI flywheel — after-action synthesis, smart ingestion, drift detection.", color: ACCENT },
+    { label: "Product & Engineering", pct: 45, amt: "€675k", desc: "Core team (2 senior engineers + 1 AI specialist). Complete the SECI flywheel: after-action synthesis, smart ingestion, drift detection.", color: ACCENT },
     { label: "Sales & GTM", pct: 30, amt: "€450k", desc: "First 2 enterprise sales hires + marketing. Channel partner program development. Template marketplace.", color: GREEN },
     { label: "Research & AI Infrastructure", pct: 15, amt: "€225k", desc: "AACE v4 spec + LLM inference costs. Academic partnership on SECI-AI validation.", color: GOLD },
     { label: "Operations & Legal", pct: 10, amt: "€150k", desc: "EU data compliance, IP protection, financial runway management.", color: "215 10% 45%" },
@@ -837,7 +838,7 @@ function Slide13TheAsk() {
 
         <div className="grid grid-cols-3 gap-10 mb-14">
           {[
-            { label: "Round Structure", val: "€1.5M Seed", sub: "SAFE or priced round — flexible to lead investor preference", color: GOLD },
+            { label: "Round Structure", val: "€1.5M Seed", sub: "SAFE or priced round. Flexible to lead investor preference.", color: GOLD },
             { label: "What We're Looking For", val: "Strategic LP", sub: "Investors with professional services network and SaaS operational experience", color: ACCENT },
             { label: "Milestones Unlocked", val: "Series A Ready", sub: "€120k ARR, 10 proven customers, NRR>110% before raising next round", color: GREEN },
           ].map(({ label, val, sub, color }) => (
@@ -857,7 +858,7 @@ function Slide13TheAsk() {
             <p className="font-bold mb-3" style={{ fontSize: 32, color: "hsl(210 18% 92%)" }}>Why now?</p>
             <p style={{ fontSize: 26, color: "hsl(215 10% 55%)", lineHeight: 1.55 }}>
               The convergence of GenAI commoditization and workforce mobility has created a $47B gap in the market.
-              Generic AI tools are accelerating the problem — they make teams faster at producing outputs with no organizational context.
+              Generic AI tools are accelerating the problem: they make teams faster at producing outputs with no organizational context.
               <strong style={{ color: "hsl(210 18% 80%)" }}> LIZA is the infrastructure layer that makes organizational knowledge the competitive advantage.</strong>
             </p>
           </div>
@@ -896,7 +897,7 @@ function Slide14Closing() {
 
         <p style={{ fontSize: 34, color: "hsl(215 10% 50%)", maxWidth: 1100, lineHeight: 1.6, marginBottom: 56 }}>
           LIZA is the platform that makes institutional intelligence
-          a compounding asset — not a human-dependent liability.
+          a compounding asset, not a human-dependent liability.
         </p>
 
         <div className="flex gap-10">
@@ -913,7 +914,7 @@ function Slide14Closing() {
         </div>
 
         <p className="mt-14" style={{ fontSize: 26, color: "hsl(215 10% 30%)" }}>
-          lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential — Not for distribution
+          lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential · Not for distribution
         </p>
       </div>
       <SlideBar from={GREEN} to={ACCENT} />
@@ -947,6 +948,29 @@ export default function InvestorDeck() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
   const [showNav, setShowNav] = useState(true);
+  const [exporting, setExporting] = useState(false);
+  const exportRef = useRef<HTMLDivElement>(null);
+
+  const handleExportPdf = async () => {
+    setExporting(true);
+    await new Promise(r => setTimeout(r, 500));
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const { jsPDF } = await import('jspdf');
+      const container = exportRef.current;
+      if (!container) return;
+      const slideEls = Array.from(container.children) as HTMLElement[];
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
+      for (let i = 0; i < slideEls.length; i++) {
+        if (i > 0) pdf.addPage([1920, 1080], 'landscape');
+        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 1, useCORS: true, backgroundColor: null });
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 1920, 1080);
+      }
+      pdf.save('LIZA-OS-Investor-Deck.pdf');
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const goTo = useCallback((idx: number) => {
     setCurrent(Math.max(0, Math.min(SLIDES.length - 1, idx)));
@@ -1033,6 +1057,10 @@ export default function InvestorDeck() {
           <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")}>
             <Grid3x3 size={15} className="mr-1.5" /> Grid
           </Button>
+          <Button size="sm" variant="ghost" onClick={handleExportPdf} disabled={exporting}>
+            {exporting ? <Loader2 size={15} className="mr-1.5 animate-spin" /> : <Download size={15} className="mr-1.5" />}
+            {exporting ? "Exporting..." : "PDF"}
+          </Button>
           <Button size="sm" variant="ghost" onClick={enterFullscreen}>
             <Maximize2 size={15} className="mr-1.5" /> Present
           </Button>
@@ -1117,6 +1145,16 @@ export default function InvestorDeck() {
           )}
         </div>
       </div>
+
+      {exporting && (
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920 }}>
+          {SLIDES.map(s => (
+            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
+              {s.component}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
