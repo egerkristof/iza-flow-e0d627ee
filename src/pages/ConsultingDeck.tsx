@@ -2,9 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import {
   ChevronLeft, ChevronRight, Maximize2, Grid3x3, X,
   Brain, Target, Zap, BookOpen, TrendingUp, CheckCircle2,
-  ArrowRight, AlertTriangle, Clock, Award, Layers, Lock
+  ArrowRight, AlertTriangle, Clock, Award, Layers, Lock,
+  Download, Loader2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import istvanPhoto from "@/assets/istvan-boscha.png";
+import kristofPhoto from "@/assets/kristof-eger.png";
 
 // ─── Scale container ──────────────────────────────────────────────────────────
 
@@ -129,7 +132,7 @@ function Slide01Cover() {
         {[
           { label: "Replicable by AI", sub: "Your frameworks & templates", price: "€0", note: "What clients will pay for this", col: RED, dim: true },
           { label: "Hard to scale", sub: "Your senior expert time", price: "Requires your presence", note: "Limited by headcount", col: MUT, dim: true },
-          { label: "What's left — packaged", sub: "Your unique value, codified", price: "€6K+/mo", note: "Recurring license revenue", col: ORG, dim: false },
+          { label: "What's left, packaged", sub: "Your unique value, codified", price: "€6K+/mo", note: "Recurring license revenue", col: ORG, dim: false },
         ].map((t, i) => (
           <div key={i} className="rounded-2xl p-8 border relative overflow-hidden"
             style={{ background: t.dim ? "transparent" : `hsl(${ORG} / 0.06)`, borderColor: `hsl(${t.col} / ${t.dim ? "0.18" : "0.5"})`, opacity: t.dim ? 0.6 : 1 }}>
@@ -179,17 +182,17 @@ function Slide02Reality() {
               col: RED,
               title: "Your frameworks & templates",
               desc: "The standard deliverables your clients used to pay premium rates for. Strategy decks, campaign briefs, research reports — AI produces these in seconds.",
-              tag: "€0 — commodity",
+              tag: "€0 · commodity",
             },
             {
               label: "Hard to scale",
               col: MUT,
               title: "Your senior expert time",
-              desc: "The judgment calls, the pattern recognition, the contextual decision-making. AI can't do this — but it doesn't scale without you in the room.",
+              desc: "The judgment calls, the pattern recognition, the contextual decision-making. AI can't do this, but it doesn't scale without you in the room.",
               tag: "Limited by headcount",
             },
             {
-              label: "What's left — packaged",
+              label: "What's left, packaged",
               col: ORG,
               title: "Your judgment, standardised",
               desc: "Turn senior expertise into executable protocols that run without you in the room. Standardise judgment across every team member.",
@@ -219,7 +222,7 @@ function Slide02Reality() {
 
 function Slide03Urgency() {
   const signals = [
-    { q: "\"Can't we just use AI for this?\"", desc: "Clients are already questioning your deliverables. The conversation has started — whether you're ready or not." },
+    { q: "\"Can't we just use AI for this?\"", desc: "Clients are already questioning your deliverables. The conversation has started, whether you're ready or not." },
     { q: "Fee pressure on standard work", desc: "What used to be premium is becoming commodity. Margins are compressing on your most common deliverables." },
     { q: "Competitors are moving", desc: "The first movers in your space will define what 'productized expertise' looks like. Everyone else competes on price." },
   ];
@@ -271,7 +274,7 @@ function Slide04Tried() {
     { label: "Workflow automation", why: "You accelerated what AI will do for free. Efficiency without differentiation." },
     { label: "AI agents & assistants", why: "They run on public data. They can't access the judgment in your senior heads." },
     { label: "Documentation & playbooks", why: "Static docs capture 'what' but not 'why.' Out of date the moment they're written." },
-    { label: "Knowledge bases & wikis", why: "Searchable information, not executable judgment. You organised your frameworks — the commoditisable part." },
+    { label: "Knowledge bases & wikis", why: "Searchable information, not executable judgment. You organised your frameworks, the commoditisable part." },
   ];
 
   return (
@@ -285,7 +288,7 @@ function Slide04Tried() {
           And why it hasn't worked.
         </h2>
         <p className="mb-12" style={{ fontSize: 30, color: `hsl(${MUT})` }}>
-          Every approach focuses on the wrong data — your frameworks and processes. That's exactly what AI commoditises.
+          Every approach focuses on the wrong data: your frameworks and processes. That's exactly what AI commoditises.
         </p>
 
         <div className="space-y-4">
@@ -305,7 +308,7 @@ function Slide04Tried() {
         <div className="mt-8 p-7 rounded-2xl border" style={{ background: `hsl(${ORG} / 0.06)`, borderColor: `hsl(${ORG} / 0.3)` }}>
           <p style={{ fontSize: 26, color: `hsl(${C})`, lineHeight: 1.5 }}>
             <strong style={{ color: `hsl(${ORG})` }}>The systemic issue:</strong>{" "}
-            All these approaches catch the fringes of what makes you different — not the core.
+            All these approaches catch the fringes of what makes you different, not the core.
             The real value is the judgment, pattern recognition, and decision-making logic in your senior heads.
             That's what AI can't replicate. And none of these approaches touch it.
           </p>
@@ -342,7 +345,7 @@ function Slide05RootCause() {
           AI can approximate them today.
           <br /><br />
           What clients <em style={{ color: `hsl(${C})` }}>actually</em> pay for is the tacit layer:
-          the judgment, pattern recognition, and decision logic your seniors carry in their heads — never written down.
+          the judgment, pattern recognition, and decision logic your seniors carry in their heads. Never written down.
         </p>
       </div>
 
@@ -352,7 +355,7 @@ function Slide05RootCause() {
         <div className="rounded-2xl p-10 border" style={{ background: BG2, borderColor: `hsl(${MUT} / 0.2)`, opacity: 0.7 }}>
           <div className="flex items-center gap-4 mb-5">
             <BookOpen style={{ width: 36, height: 36, color: `hsl(${MUT})` }} />
-            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 19, color: `hsl(${MUT})` }}>Explicit Layer — What AI Already Has</span>
+            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 19, color: `hsl(${MUT})` }}>Explicit Layer: What AI Already Has</span>
           </div>
           <p style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
             Documents · Frameworks · Templates · SOPs · Playbooks
@@ -372,7 +375,7 @@ function Slide05RootCause() {
         <div className="rounded-2xl p-10 border" style={{ background: `hsl(${ORG} / 0.06)`, borderColor: `hsl(${ORG} / 0.5)` }}>
           <div className="flex items-center gap-4 mb-5">
             <Brain style={{ width: 36, height: 36, color: `hsl(${ORG})` }} />
-            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 19, color: `hsl(${ORG})` }}>Tacit Layer — What Lives in Expert Heads</span>
+            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 19, color: `hsl(${ORG})` }}>Tacit Layer: What Lives in Expert Heads</span>
           </div>
           <p style={{ fontSize: 24, color: `hsl(${C})`, lineHeight: 1.5 }}>
             Judgment calls · Adaptive heuristics · Pattern recognition · Decision logic
@@ -410,7 +413,7 @@ function Slide06Mechanism() {
         </h2>
         <p style={{ fontSize: 28, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
           Most consultants extract knowledge through workshops and hand you a document.
-          We embed into your actual work using LizaOS — execution infrastructure built specifically for complex human judgment.
+          We embed into your actual work using LizaOS: execution infrastructure built specifically for complex human judgment.
           <br /><br />
           <strong style={{ color: `hsl(${C})` }}>You extract by doing, not by documenting.</strong>
         </p>
@@ -434,7 +437,7 @@ function Slide06Mechanism() {
           },
           {
             n: "2", icon: <Brain style={{ width: 32, height: 32 }} />, label: "Structure",
-            desc: "Your experts work in LizaOS on their hardest tasks. Tacit judgment becomes structured playbooks — executable, not theoretical.",
+            desc: "Your experts work in LizaOS on their hardest tasks. Tacit judgment becomes structured playbooks: executable, not theoretical.",
             col: ORG,
           },
           {
@@ -496,7 +499,7 @@ function Slide07Deliverables() {
               n: "02", icon: <Zap style={{ width: 52, height: 52 }} />,
               label: "Executable",
               title: "Digital Playbooks",
-              desc: "Your expertise as executable protocols that run without you in the room — standardising judgment across every team member.",
+              desc: "Your expertise as executable protocols that run without you in the room, standardising judgment across every team member.",
               col: TEAL,
             },
             {
@@ -628,7 +631,7 @@ function Slide09Options() {
         "Upfront investment in unknowns",
         "Senior time on trial and error",
       ],
-      warn: "You're combining three hard things at once — with no proven path.",
+      warn: "You're combining three hard things at once, with no proven path.",
       us: false,
     },
     {
@@ -637,7 +640,7 @@ function Slide09Options() {
       tag: "✓ Fast, combined, testable",
       items: [
         "4 weeks to first knowledge product",
-        "Everything runs in LizaOS — test immediately",
+        "Everything runs in LizaOS. Test immediately.",
         "We handle tech + change management together",
       ],
       warn: "You keep everything you build. No lock-in after.",
@@ -692,57 +695,67 @@ function Slide10Who() {
       <Grid />
       <LeftAccent />
 
-      {/* Glow */}
       <div className="absolute left-[50%] top-[50%] w-[600px] h-[600px] rounded-full opacity-[0.06]"
         style={{ background: `radial-gradient(circle, hsl(${TEAL}), transparent 70%)`, transform: "translate(-50%, -50%)" }} />
 
       <div className="relative z-10 flex h-full">
         {/* Left */}
-        <div className="flex flex-col justify-center pl-[160px] pr-[80px] w-[900px]">
-          <Tag label="Why Us" />
-          <h2 className="font-black leading-tight mb-10" style={{ fontSize: 76, color: `hsl(${C})` }}>
-            Not consultants
-            <br />who talk about this.
+        <div className="flex flex-col justify-center pl-[160px] pr-[80px] w-[800px]">
+          <Tag label="Who Built This" />
+          <h2 className="font-black leading-tight mb-8" style={{ fontSize: 72, color: `hsl(${C})` }}>
+            Built by Experts,
+            <br />Guided by
             <br />
-            <span style={{ color: `hsl(${TEAL})` }}>We built the infrastructure.</span>
+            <span style={{ color: `hsl(${TEAL})` }}>Industry Leaders.</span>
           </h2>
-          <p style={{ fontSize: 28, color: `hsl(${MUT})`, lineHeight: 1.65, maxWidth: 740 }}>
+          <p style={{ fontSize: 26, color: `hsl(${MUT})`, lineHeight: 1.65, maxWidth: 640 }}>
             We kept seeing the same pattern: firms full of senior expertise, no way to scale it.
             Knowledge trapped in heads. Handoffs broken. Junior staff unable to execute with senior judgment.
-            <br /><br />
-            Existing tools — Jira, Asana, Notion — capture tasks, not thinking.
-            So we built <strong style={{ color: `hsl(${C})` }}>LizaOS</strong>: execution infrastructure that captures and runs on tacit human knowledge.
-            Not documentation. Working systems.
           </p>
         </div>
 
         {/* Right */}
-        <div className="flex flex-col justify-center flex-1 pr-[120px] gap-8">
-          {/* People */}
-          <div className="grid grid-cols-2 gap-6">
+        <div className="flex flex-col justify-center flex-1 pr-[100px] gap-4">
+          <p className="font-bold tracking-widest uppercase mb-1" style={{ fontSize: 18, color: `hsl(${ORG})` }}>Founding Team</p>
+          <div className="grid grid-cols-3 gap-4">
             {[
-              { name: "István Boscha", role: "Data & AI Implementation", note: "Founder of a Google Cloud Service partner firm. 15 years implementing data and AI solutions for digital transformation." },
-              { name: "Kristóf Éger", role: "Business Model Innovation", note: "Business model innovation advisor and executive coach. Years of experience defining and scaling business value." },
+              { name: "István Boscha", role: "Product Vision & Capital-Efficient CEO", bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years in AI transformation globally.", photo: istvanPhoto, initials: "IB" },
+              { name: "Kristóf Éger", role: "Enterprise Narrative & Go-to-Market", bio: "AI-driven business strategist, embedding AI into decision-making workflows.", photo: kristofPhoto, initials: "KÉ" },
+              { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: null as string | null, initials: "ZK" },
             ].map((p, i) => (
-              <div key={i} className="rounded-2xl p-8 border" style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.2)` }}>
-                <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center font-bold"
-                  style={{ background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})`, fontSize: 22 }}>
-                  {p.name[0]}
+              <div key={i} className="rounded-xl p-5 border" style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.2)` }}>
+                <div className="flex items-center gap-3 mb-3">
+                  {p.photo ? (
+                    <img src={p.photo} alt={p.name} className="w-10 h-10 rounded-full object-cover shrink-0"
+                      style={{ border: `2px solid hsl(${TEAL} / 0.3)` }} />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0"
+                      style={{ background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})`, fontSize: 16 }}>
+                      {p.initials}
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-bold" style={{ fontSize: 20, color: `hsl(${C})` }}>{p.name}</p>
+                    <p style={{ fontSize: 14, color: `hsl(${ORG})` }}>{p.role}</p>
+                  </div>
                 </div>
-                <p className="font-bold mb-1" style={{ fontSize: 26, color: `hsl(${C})` }}>{p.name}</p>
-                <p className="mb-4" style={{ fontSize: 20, color: `hsl(${ORG})` }}>{p.role}</p>
-                <p style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{p.note}</p>
+                <p style={{ fontSize: 16, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{p.bio}</p>
               </div>
             ))}
           </div>
 
-          {/* Quote */}
-          <div className="p-8 rounded-2xl border" style={{ background: `hsl(${ORG} / 0.05)`, borderColor: `hsl(${ORG} / 0.25)` }}>
-            <p className="italic mb-4" style={{ fontSize: 26, color: `hsl(${C})`, lineHeight: 1.5 }}>
-              "Now our juniors deliver what only seniors could do, and we license our process to 3 other agencies.
-              The methodology extraction alone was worth ten times the investment."
-            </p>
-            <p style={{ fontSize: 20, color: `hsl(${ORG})` }}>— COO, B2B Marketing Agency, 80 staff</p>
+          <p className="font-bold tracking-widest uppercase mt-2 mb-1" style={{ fontSize: 18, color: `hsl(${ORG})` }}>Strategic Advisory Board</p>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
+              { name: "Sylwester Pawluk", role: "Former Head of a Major US Tech Platform (Austria)", bio: "Proven GTM leadership, scaled tech giant in European market (>$100M P&L)." },
+            ].map((a, i) => (
+              <div key={i} className="rounded-xl p-5 border" style={{ background: `hsl(${ORG} / 0.04)`, borderColor: `hsl(${ORG} / 0.2)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 20, color: `hsl(${C})` }}>{a.name}</p>
+                <p className="mb-2" style={{ fontSize: 14, color: `hsl(${ORG})` }}>{a.role}</p>
+                <p style={{ fontSize: 16, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{a.bio}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -847,6 +860,29 @@ export default function ConsultingDeck() {
   const [current, setCurrent] = useState(0);
   const [grid, setGrid] = useState(false);
   const [fs, setFs] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const exportRef = useRef<HTMLDivElement>(null);
+
+  const handleExportPdf = async () => {
+    setExporting(true);
+    await new Promise(r => setTimeout(r, 500));
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const { jsPDF } = await import('jspdf');
+      const container = exportRef.current;
+      if (!container) return;
+      const slideEls = Array.from(container.children) as HTMLElement[];
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
+      for (let i = 0; i < slideEls.length; i++) {
+        if (i > 0) pdf.addPage([1920, 1080], 'landscape');
+        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 1, useCORS: true, backgroundColor: null });
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 1920, 1080);
+      }
+      pdf.save('LIZA-OS-Sales-Deck.pdf');
+    } finally {
+      setExporting(false);
+    }
+  };
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -885,6 +921,11 @@ export default function ConsultingDeck() {
               grid ? "text-white" : "text-gray-400 hover:text-white")}
             style={{ background: grid ? `hsl(${ORG} / 0.15)` : "transparent" }}>
             <Grid3x3 size={15} /> Grid
+          </button>
+          <button onClick={handleExportPdf} disabled={exporting}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors disabled:opacity-50">
+            {exporting ? <Loader2 size={15} className="animate-spin" /> : <Download size={15} />}
+            {exporting ? "Exporting..." : "PDF"}
           </button>
           <button onClick={() => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {}); else document.exitFullscreen().catch(() => {}); }}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
@@ -979,6 +1020,16 @@ export default function ConsultingDeck() {
           )}
         </div>
       </div>
+
+      {exporting && (
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920 }}>
+          {SLIDES.map(s => (
+            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
+              <s.component />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
