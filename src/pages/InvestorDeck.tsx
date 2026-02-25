@@ -443,7 +443,7 @@ function Slide07BusinessModel() {
 
         <div className="flex gap-8">
           {[
-            { label: "AI Usage Layer", desc: "+€0.08 per AI call above tier limit. Usage expands ARR naturally.", color: GREEN },
+            { label: "AI Usage Layer", desc: "+€0.10 per AI call above tier limit. Usage expands ARR naturally.", color: GREEN },
             { label: "Template Marketplace", desc: "Partners (e.g. MEDDIC, ESG frameworks) sell playbooks. 30% revenue share.", color: ACCENT },
           ].map(({ label, desc, color }) => (
             <div key={label} className="flex-1 rounded-xl border p-7 flex items-center gap-6"
