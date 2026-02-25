@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   TrendingUp, Users, Brain, Zap, Target, BarChart3,
@@ -962,10 +963,20 @@ export default function InvestorDeck() {
   const [showNav, setShowNav] = useState(true);
   const [exporting, setExporting] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobileViewport();
+  const isPortrait = useIsPortrait();
+
+  const goTo = useCallback((idx: number) => {
+    setCurrent(Math.max(0, Math.min(SLIDES.length - 1, idx)));
+    setShowGrid(false);
+  }, []);
+
+  const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+  const next = useCallback(() => goTo(current + 1), [current, goTo]);
+  useSwipe(next, prev);
 
   const handleExportPdf = async () => {
     setExporting(true);
-    // Wait for the export container to render and paint
     await new Promise(r => setTimeout(r, 200));
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(undefined))));
     await new Promise(r => setTimeout(r, 300));
@@ -978,7 +989,6 @@ export default function InvestorDeck() {
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
       for (let i = 0; i < slideEls.length; i++) {
         if (i > 0) pdf.addPage([1920, 1080], 'landscape');
-        // Fix gradient text that html2canvas can't render: swap to plain colored text
         const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
         const origStyles: string[] = [];
         const affected: HTMLElement[] = [];
@@ -991,7 +1001,6 @@ export default function InvestorDeck() {
           }
         });
         const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
-        // Restore original styles
         affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
         pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 1920, 1080);
       }
@@ -1000,14 +1009,6 @@ export default function InvestorDeck() {
       setExporting(false);
     }
   };
-
-  const goTo = useCallback((idx: number) => {
-    setCurrent(Math.max(0, Math.min(SLIDES.length - 1, idx)));
-    setShowGrid(false);
-  }, []);
-
-  const prev = useCallback(() => goTo(current - 1), [current, goTo]);
-  const next = useCallback(() => goTo(current + 1), [current, goTo]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -1042,6 +1043,67 @@ export default function InvestorDeck() {
 
   const slide = SLIDES[current];
 
+  // ─── Mobile: clean present mode ─────────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 z-[9999]" style={{ background: BG }}>
+        {/* Rotate hint overlay */}
+        {isPortrait && (
+          <div className="absolute inset-0 z-[10000] flex flex-col items-center justify-center gap-4 px-8"
+            style={{ background: "hsl(224 22% 3% / 0.92)", backdropFilter: "blur(8px)" }}>
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
+              style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={`hsl(${ACCENT})`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" />
+                <path d="M12 18h.01" />
+              </svg>
+            </div>
+            <p className="text-center font-semibold" style={{ fontSize: 18, color: "hsl(210 18% 92%)" }}>
+              Rotate your device to landscape
+            </p>
+            <p className="text-center" style={{ fontSize: 14, color: "hsl(215 10% 50%)" }}>
+              for the best viewing experience
+            </p>
+            <p className="text-center mt-4" style={{ fontSize: 12, color: "hsl(215 10% 35%)" }}>
+              Or swipe left/right to navigate
+            </p>
+          </div>
+        )}
+
+        {/* Full-bleed slide */}
+        <ScaledSlide>{slide.component}</ScaledSlide>
+
+        {/* Minimal floating controls */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full"
+          style={{ background: "hsl(224 22% 4% / 0.85)", border: "1px solid hsl(222 14% 15%)", backdropFilter: "blur(8px)" }}>
+          <button onClick={prev} disabled={current === 0} className="p-1.5 rounded-lg disabled:opacity-20">
+            <ChevronLeft size={18} style={{ color: "hsl(210 18% 92%)" }} />
+          </button>
+          <span className="font-mono text-xs px-1" style={{ color: "hsl(215 10% 50%)" }}>
+            {current + 1}/{SLIDES.length}
+          </span>
+          <button onClick={next} disabled={current === SLIDES.length - 1} className="p-1.5 rounded-lg disabled:opacity-20">
+            <ChevronRight size={18} style={{ color: "hsl(210 18% 92%)" }} />
+          </button>
+          <div className="w-px h-4" style={{ background: "hsl(215 10% 30%)" }} />
+          <button onClick={handleExportPdf} disabled={exporting} className="p-1.5 rounded-lg disabled:opacity-50">
+            {exporting ? <Loader2 size={16} className="animate-spin" style={{ color: "hsl(215 10% 50%)" }} /> : <Download size={16} style={{ color: "hsl(215 10% 50%)" }} />}
+          </button>
+        </div>
+
+        {/* Export container */}
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
+          {SLIDES.map(s => (
+            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
+              {s.component}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Desktop: full chrome ───────────────────────────────────────────────────
   if (isFullscreen) {
     return (
       <div className="fixed inset-0 bg-black z-[9999]" style={{ cursor: showNav ? "default" : "none" }}>
@@ -1068,37 +1130,37 @@ export default function InvestorDeck() {
   return (
     <div className="flex flex-col h-screen" style={{ background: BG }}>
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-3 sm:px-5 py-2 sm:py-3 border-b shrink-0"
+      <div className="flex items-center justify-between px-5 py-3 border-b shrink-0"
         style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: `hsl(${GOLD})` }} />
-          <span className="text-xs sm:text-sm font-semibold truncate" style={{ color: "hsl(210 18% 92%)" }}>LIZA OS — Investor Deck</span>
-          <span className="hidden sm:inline text-xs px-2 py-0.5 rounded"
+        <div className="flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GOLD})` }} />
+          <span className="text-sm font-semibold" style={{ color: "hsl(210 18% 92%)" }}>LIZA OS — Investor Deck</span>
+          <span className="text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
             Series Seed · {SLIDES.length} slides
           </span>
-          <span className="hidden md:inline text-xs px-2 py-0.5 rounded ml-1"
+          <span className="text-xs px-2 py-0.5 rounded ml-1"
             style={{ background: "hsl(0 72% 63% / 0.1)", color: "hsl(0 72% 63%)" }}>
             Confidential
           </span>
         </div>
-        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-          <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn("hidden sm:flex", showGrid && "bg-accent")}>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")}>
             <Grid3x3 size={15} className="mr-1.5" /> Grid
           </Button>
           <Button size="sm" variant="ghost" onClick={handleExportPdf} disabled={exporting}>
-            {exporting ? <Loader2 size={15} className="sm:mr-1.5 animate-spin" /> : <Download size={15} className="sm:mr-1.5" />}
-            <span className="hidden sm:inline">{exporting ? "Exporting..." : "PDF"}</span>
+            {exporting ? <Loader2 size={15} className="mr-1.5 animate-spin" /> : <Download size={15} className="mr-1.5" />}
+            {exporting ? "Exporting..." : "PDF"}
           </Button>
-          <Button size="sm" variant="ghost" onClick={enterFullscreen} className="hidden sm:flex">
+          <Button size="sm" variant="ghost" onClick={enterFullscreen}>
             <Maximize2 size={15} className="mr-1.5" /> Present
           </Button>
         </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Thumbnail sidebar — hidden on mobile */}
-        <div className="hidden md:flex w-44 flex-col gap-2 p-3 overflow-y-auto border-r shrink-0"
+        {/* Thumbnail sidebar */}
+        <div className="w-44 flex flex-col gap-2 p-3 overflow-y-auto border-r shrink-0"
           style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
           {SLIDES.map((s, i) => (
             <button key={s.id} onClick={() => goTo(i)}
@@ -1118,8 +1180,8 @@ export default function InvestorDeck() {
         {/* Main canvas */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {showGrid ? (
-            <div className="flex-1 overflow-y-auto p-4 sm:p-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="flex-1 overflow-y-auto p-8">
+              <div className="grid grid-cols-3 gap-6">
                 {SLIDES.map((s, i) => (
                   <button key={s.id} onClick={() => goTo(i)}
                     className={cn("flex flex-col gap-2 rounded-xl overflow-hidden border-2 transition-all",
@@ -1136,8 +1198,8 @@ export default function InvestorDeck() {
               </div>
             </div>
           ) : (
-            <div className="flex-1 overflow-hidden p-2 sm:p-6">
-              <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border"
+            <div className="flex-1 overflow-hidden p-6">
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl border"
                 style={{ borderColor: "hsl(222 14% 13%)" }}>
                 <ScaledSlide>{slide.component}</ScaledSlide>
               </div>
@@ -1146,19 +1208,19 @@ export default function InvestorDeck() {
 
           {/* Bottom nav */}
           {!showGrid && (
-            <div className="flex items-center justify-between px-4 sm:px-8 py-2 sm:py-3 border-t shrink-0"
+            <div className="flex items-center justify-between px-8 py-3 border-t shrink-0"
               style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
-              <div className="flex gap-1.5 sm:gap-2 overflow-hidden max-w-[40%]">
+              <div className="flex gap-2">
                 {SLIDES.map((_, i) => (
                   <button key={i} onClick={() => goTo(i)}
-                    className="h-1.5 rounded-full transition-all flex-shrink-0"
+                    className="h-1.5 rounded-full transition-all"
                     style={{
-                      width: i === current ? 24 : 8,
+                      width: i === current ? 32 : 8,
                       background: i === current ? `hsl(${GOLD})` : "hsl(222 14% 18%)",
                     }} />
                 ))}
               </div>
-              <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-3">
                 <Button size="sm" variant="outline" onClick={prev} disabled={current === 0}>
                   <ChevronLeft size={16} />
                 </Button>
@@ -1169,7 +1231,7 @@ export default function InvestorDeck() {
                   <ChevronRight size={16} />
                 </Button>
               </div>
-              <p className="hidden sm:block text-xs" style={{ color: "hsl(215 10% 30%)" }}>← → navigate &nbsp; G grid &nbsp; F present</p>
+              <p className="text-xs" style={{ color: "hsl(215 10% 30%)" }}>← → navigate &nbsp; G grid &nbsp; F present</p>
             </div>
           )}
         </div>
