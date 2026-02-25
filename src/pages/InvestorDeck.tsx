@@ -966,18 +966,21 @@ export default function InvestorDeck() {
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
       for (let i = 0; i < slideEls.length; i++) {
         if (i > 0) pdf.addPage([1920, 1080], 'landscape');
-        // Fix gradient text that html2canvas can't render: temporarily swap to solid color
-        const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('[style*="background-clip"]');
+        // Fix gradient text that html2canvas can't render: swap to plain colored text
+        const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
         const origStyles: string[] = [];
+        const affected: HTMLElement[] = [];
         gradientEls.forEach((el) => {
-          origStyles.push(el.style.cssText);
-          el.style.background = 'none';
-          el.style.webkitBackgroundClip = 'unset';
-          el.style.webkitTextFillColor = 'hsl(180, 80%, 60%)';
+          const cs = el.style.cssText;
+          if (cs.includes('background-clip') || cs.includes('BackgroundClip') || cs.includes('text-fill-color') || cs.includes('TextFillColor')) {
+            origStyles.push(cs);
+            affected.push(el);
+            el.style.cssText = `color: hsl(180, 80%, 60%); font: inherit;`;
+          }
         });
         const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
         // Restore original styles
-        gradientEls.forEach((el, j) => { el.style.cssText = origStyles[j]; });
+        affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
         pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 1920, 1080);
       }
       pdf.save('LIZA-OS-Investor-Deck.pdf');
