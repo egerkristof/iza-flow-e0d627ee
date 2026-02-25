@@ -865,7 +865,9 @@ export default function ConsultingDeck() {
 
   const handleExportPdf = async () => {
     setExporting(true);
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(undefined))));
+    await new Promise(r => setTimeout(r, 300));
     try {
       const html2canvas = (await import('html2canvas')).default;
       const { jsPDF } = await import('jspdf');
@@ -875,8 +877,17 @@ export default function ConsultingDeck() {
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
       for (let i = 0; i < slideEls.length; i++) {
         if (i > 0) pdf.addPage([1920, 1080], 'landscape');
-        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 1, useCORS: true, backgroundColor: null });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 1920, 1080);
+        const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('[style*="background-clip"]');
+        const origStyles: string[] = [];
+        gradientEls.forEach((el) => {
+          origStyles.push(el.style.cssText);
+          el.style.background = 'none';
+          el.style.webkitBackgroundClip = 'unset';
+          el.style.webkitTextFillColor = 'hsl(180, 80%, 60%)';
+        });
+        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
+        gradientEls.forEach((el, j) => { el.style.cssText = origStyles[j]; });
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 1920, 1080);
       }
       pdf.save('LIZA-OS-Sales-Deck.pdf');
     } finally {
@@ -1021,15 +1032,13 @@ export default function ConsultingDeck() {
         </div>
       </div>
 
-      {exporting && (
-        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920 }}>
-          {SLIDES.map(s => (
-            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
-              <s.component />
-            </div>
-          ))}
-        </div>
-      )}
+      <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
+        {SLIDES.map(s => (
+          <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
+            <s.component />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
