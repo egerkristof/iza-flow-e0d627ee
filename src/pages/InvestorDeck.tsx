@@ -407,19 +407,19 @@ function Slide07BusinessModel() {
         <div className="grid grid-cols-3 gap-8 mb-10">
           {[
             {
-              tier: "Starter", price: "€499/mo", seats: "Up to 10 seats",
-              desc: "Core workbooks, action grid, basic protocols. Entry hook for SMEs.", color: "215 10% 45%",
+              tier: "Team", price: "€40k/yr", seats: "Single team",
+              desc: "Core workbooks, action grid, protocol execution. Entry hook — one team adopts, others follow.", color: "215 10% 45%",
               features: ["Unlimited workbooks", "Action Grid + Protocol execution", "Basic knowledge bundles"],
             },
             {
-              tier: "Professional", price: "€2,200/mo", seats: "Up to 50 seats",
-              desc: "Full SECI flywheel: smart ingestion, drift detection, after-action synthesis.", color: ACCENT,
-              features: ["Everything in Starter", "Smart document ingestion", "Drift scoring + alerts", "After-action AI synthesis"],
+              tier: "Process", price: "€150k/yr", seats: "Multi-team",
+              desc: "Full SECI flywheel: smart ingestion, drift detection, after-action synthesis. Includes deployment services.", color: ACCENT,
+              features: ["Everything in Team", "Smart document ingestion", "Drift scoring + alerts", "After-action AI synthesis", "Deployment partner services"],
             },
             {
-              tier: "Enterprise", price: "Custom", seats: "Unlimited seats",
-              desc: "White-glove onboarding, custom playbook library, SSO, audit logs.", color: GOLD,
-              features: ["Everything in Professional", "Custom playbook authoring", "SSO + SCIM provisioning", "Dedicated CSM + SLA"],
+              tier: "Transform", price: "€250k/yr", seats: "Organisation-wide",
+              desc: "White-glove onboarding, custom playbook library, SSO, full organisational rollout.", color: GOLD,
+              features: ["Everything in Process", "Custom playbook authoring", "SSO + SCIM provisioning", "Dedicated CSM + SLA"],
             },
           ].map(({ tier, price, seats, desc, color, features }) => (
             <div key={tier} className="flex flex-col rounded-2xl border overflow-hidden"
@@ -512,8 +512,8 @@ function Slide08GTM() {
           <div className="w-2/5 flex flex-col gap-4">
             <p className="font-semibold" style={{ fontSize: 24, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Target Metrics — Year 3</p>
             {[
-              { label: "ARR", val: "€4M+", color: ACCENT },
-              { label: "Customers", val: "180+", color: GREEN },
+              { label: "ARR", val: "€10M+", color: ACCENT },
+              { label: "Customers", val: "94", color: GREEN },
               { label: "NRR", val: ">120%", color: ACCENT },
               { label: "Gross Margin", val: "78%", color: GREEN },
               { label: "CAC Payback", val: "<12 mo", color: ACCENT },
@@ -666,7 +666,7 @@ function Slide10Team() {
 
 function Slide11Financials() {
   const quarters = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"];
-  const arr = [0, 15, 45, 120, 280, 480, 720, 1050, 1500, 2200, 3100, 4200]; // €k
+  const arr = [0, 230, 640, 1200, 1860, 2320, 3260, 4600, 5580, 6500, 7820, 10350]; // €k
   const maxArr = Math.max(...arr);
   const barW = 1400 / quarters.length;
 
@@ -676,14 +676,14 @@ function Slide11Financials() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Financial Projections" color={ACCENT} />
         <h2 className="font-bold mb-10" style={{ fontSize: 72, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
-          Path to €4M ARR in 36 months.
+          Path to €10M ARR in 36 months.
         </h2>
 
         {/* Bar chart */}
         <div className="flex-1 flex items-end gap-3 relative px-4">
           {/* Y-axis label */}
           <div className="absolute left-0 top-0 bottom-10 flex flex-col justify-between">
-            {[4200, 3100, 2200, 1500, 1000, 500, 0].map(v => (
+            {[10000, 8000, 6000, 4000, 2000, 1000, 0].map(v => (
               <span key={v} style={{ fontSize: 20, color: "hsl(215 10% 35%)", fontFamily: "monospace" }}>
                 €{v > 0 ? (v >= 1000 ? (v / 1000).toFixed(1) + "M" : v + "k") : "0"}
               </span>
@@ -716,9 +716,9 @@ function Slide11Financials() {
 
         <div className="flex gap-8 mt-6">
           {[
-            { phase: "Phase 1 (Q1–Q4)", goal: "€120k ARR", note: "First 10 customers. Direct sales. Prove retention.", color: ACCENT },
-            { phase: "Phase 2 (Q5–Q8)", goal: "€1.05M ARR", note: "Channel partners live. Template marketplace. Series A prep.", color: GREEN },
-            { phase: "Phase 3 (Q9–Q12)", goal: "€4.2M ARR", note: "Platform API + white-label. NRR >120%.", color: GOLD },
+            { phase: "Phase 1 (Q1–Q4)", goal: "€1.2M ARR", note: "14 customers across 3 tiers. Direct sales. Prove retention + expansion.", color: ACCENT },
+            { phase: "Phase 2 (Q5–Q8)", goal: "€4.6M ARR", note: "44 customers. Channel partners live. Series A at month 18.", color: GREEN },
+            { phase: "Phase 3 (Q9–Q12)", goal: "€10.3M ARR", note: "94 customers. NRR >120%. Platform API + white-label.", color: GOLD },
           ].map(({ phase, goal, note, color }) => (
             <div key={phase} className="flex-1 rounded-xl border p-6"
               style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
@@ -841,7 +841,7 @@ function Slide13TheAsk() {
           {[
             { label: "Round Structure", val: "€1.5M Seed", sub: "SAFE or priced round. Flexible to lead investor preference.", color: GOLD },
             { label: "What We're Looking For", val: "Strategic LP", sub: "Investors with professional services network and SaaS operational experience", color: ACCENT },
-            { label: "Milestones Unlocked", val: "Series A Ready", sub: "€120k ARR, 10 proven customers, NRR>110% before raising next round", color: GREEN },
+            { label: "Milestones Unlocked", val: "Series A Ready", sub: "€2.3M ARR, 25 customers, NRR>110%. Reached at month 18 per operating model.", color: GREEN },
           ].map(({ label, val, sub, color }) => (
             <div key={label} className="rounded-2xl border p-10 flex flex-col gap-4"
               style={{ borderColor: `hsl(${color} / 0.3)`, background: `hsl(${color} / 0.07)` }}>
