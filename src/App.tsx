@@ -66,7 +66,8 @@ const App = () => (
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
-            <Route path="/consulting" element={<ConsultingDeck />} />
+            <Route path="/sales" element={<ConsultingDeck />} />
+            <Route path="/consulting" element={<Navigate to="/sales" replace />} />
             <Route path="/enterprise" element={<EnterpriseDeck />} />
             <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
