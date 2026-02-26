@@ -45,16 +45,22 @@ function ScaledSlide({ children }: { children: React.ReactNode }) {
 
 // ─── Shared layout helpers ───────────────────────────────────────────────────
 
-const BG = "hsl(224 22% 3%)";
-const GRID_LINE = "hsl(200 80% 50%)";
-const ACCENT = "200 90% 52%";
-const GREEN = "155 72% 46%";
-const GOLD = "45 95% 55%";
-const RED = "0 72% 63%";
+const BG = "hsl(0 0% 100%)";
+const TEXT = "hsl(222 20% 10%)";
+const MUTED = "hsl(215 15% 42%)";
+const SUBTLE = "hsl(215 10% 56%)";
+const CARD_ALT = "hsl(220 15% 97%)";
+const GRID_LINE = "hsl(215 15% 75%)";
+const CHROME_BG = "hsl(220 15% 97%)";
+const CHROME_BORDER = "hsl(220 12% 90%)";
+const ACCENT = "200 90% 42%";
+const GREEN = "155 72% 38%";
+const GOLD = "45 95% 42%";
+const RED = "0 72% 50%";
 
-function SlideGrid({ color = ACCENT }: { color?: string }) {
+function SlideGrid() {
   return (
-    <div className="absolute inset-0 opacity-[0.03]" style={{
+    <div className="absolute inset-0 opacity-[0.06]" style={{
       backgroundImage: `linear-gradient(${GRID_LINE} 1px, transparent 1px), linear-gradient(90deg, ${GRID_LINE} 1px, transparent 1px)`,
       backgroundSize: "80px 80px"
     }} />
@@ -81,9 +87,9 @@ function Slide01Cover() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="absolute top-1/4 left-1/4 w-[700px] h-[700px] rounded-full opacity-[0.08]"
+      <div className="absolute top-1/4 left-1/4 w-[700px] h-[700px] rounded-full opacity-[0.06]"
         style={{ background: `radial-gradient(circle, hsl(${ACCENT}), transparent 70%)` }} />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-[0.06]"
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-[0.04]"
         style={{ background: `radial-gradient(circle, hsl(${GREEN}), transparent 70%)` }} />
 
       <div className="relative z-10 flex flex-col items-center text-center px-32">
@@ -93,14 +99,14 @@ function Slide01Cover() {
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>LIZA OS · Series Seed</span>
         </div>
 
-        <h1 className="font-black mb-10" style={{ fontSize: 110, lineHeight: 1.0, color: "hsl(210 18% 94%)" }}>
+        <h1 className="font-black mb-10" style={{ fontSize: 110, lineHeight: 1.0, color: TEXT }}>
           Standardise Senior Judgment<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${GREEN}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Across Every Team.
           </span>
         </h1>
 
-        <p style={{ fontSize: 38, color: "hsl(215 10% 52%)", maxWidth: 1200, lineHeight: 1.55 }}>
+        <p style={{ fontSize: 38, color: MUTED, maxWidth: 1200, lineHeight: 1.55 }}>
           We extract senior expertise and turn it into executable protocols
           your entire organisation can run on. Consistently.
         </p>
@@ -112,8 +118,8 @@ function Slide01Cover() {
             ["Model", "SaaS + Usage"],
           ].map(([k, v]) => (
             <div key={k} className="flex flex-col items-center gap-2">
-              <span className="font-bold" style={{ fontSize: 42, color: "hsl(210 18% 92%)" }}>{v}</span>
-              <span style={{ fontSize: 24, color: "hsl(215 10% 40%)" }}>{k}</span>
+              <span className="font-bold" style={{ fontSize: 42, color: TEXT }}>{v}</span>
+              <span style={{ fontSize: 24, color: SUBTLE }}>{k}</span>
             </div>
           ))}
         </div>
@@ -131,7 +137,7 @@ function Slide02Problem() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <Tag label="The Problem" color={RED} />
-        <h2 className="font-bold mb-16" style={{ fontSize: 82, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-16" style={{ fontSize: 82, color: TEXT, lineHeight: 1.1 }}>
           Professional firms scale headcount.<br />
           <span style={{ color: `hsl(${RED})` }}>Not capability.</span>
         </h2>
@@ -144,7 +150,7 @@ function Slide02Problem() {
               body: "Your best people carry your methodology in their heads. Every resignation is a knowledge loss event. Remove three seniors and quality collapses overnight."
             },
             {
-              icon: <Target size={56} />, color: "38 92% 50%",
+              icon: <Target size={56} />, color: "38 92% 42%",
               title: "Execution is inconsistent",
               body: "Same brief, 14 different outputs. Junior work ranges from excellent to embarrassing depending on who supervises. No shared standard exists."
             },
@@ -155,15 +161,15 @@ function Slide02Problem() {
             },
           ].map(({ icon, color, title, body }) => (
             <div key={title} className="flex flex-col gap-6 rounded-2xl border p-10"
-              style={{ background: `hsl(${color} / 0.05)`, borderColor: `hsl(${color} / 0.2)` }}>
+              style={{ background: `hsl(${color} / 0.04)`, borderColor: `hsl(${color} / 0.2)` }}>
               <div style={{ color: `hsl(${color})` }}>{icon}</div>
-              <p className="font-bold" style={{ fontSize: 34, color: "hsl(210 18% 92%)" }}>{title}</p>
-              <p style={{ fontSize: 24, color: "hsl(215 10% 50%)", lineHeight: 1.55 }}>{body}</p>
+              <p className="font-bold" style={{ fontSize: 34, color: TEXT }}>{title}</p>
+              <p style={{ fontSize: 24, color: MUTED, lineHeight: 1.55 }}>{body}</p>
             </div>
           ))}
         </div>
       </div>
-      <SlideBar from={RED} to="38 92% 50%" />
+      <SlideBar from={RED} to="38 92% 42%" />
     </div>
   );
 }
@@ -177,32 +183,31 @@ function Slide03Market() {
       <div className="relative z-10 px-28 w-full">
         <div className="text-center mb-16">
           <Tag label="Market Opportunity" color={ACCENT} />
-          <h2 className="font-bold" style={{ fontSize: 80, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+          <h2 className="font-bold" style={{ fontSize: 80, color: TEXT, lineHeight: 1.1 }}>
             A $47B market hiding in plain sight.
           </h2>
         </div>
 
         <div className="flex items-end justify-center gap-20">
-          {/* TAM / SAM / SOM visual */}
           {[
-            { label: "TAM", size: 580, amt: "$47B", sub: "Global knowledge management + enterprise AI software market", color: ACCENT, opacity: "0.1" },
-            { label: "SAM", size: 420, amt: "$12B", sub: "Professional services firms 50–5000 people in EU + US", color: GREEN, opacity: "0.13" },
-            { label: "SOM", size: 280, amt: "$800M", sub: "Reachable via direct + channel GTM in 3 years", color: GOLD, opacity: "0.18" },
+            { label: "TAM", size: 580, amt: "$47B", sub: "Global knowledge management + enterprise AI software market", color: ACCENT, opacity: "0.08" },
+            { label: "SAM", size: 420, amt: "$12B", sub: "Professional services firms 50–5000 people in EU + US", color: GREEN, opacity: "0.1" },
+            { label: "SOM", size: 280, amt: "$800M", sub: "Reachable via direct + channel GTM in 3 years", color: GOLD, opacity: "0.12" },
           ].map(({ label, size, amt, sub, color, opacity }) => (
             <div key={label} className="flex flex-col items-center gap-6">
               <div className="rounded-full flex items-center justify-center border-2"
-                style={{ width: size, height: size, background: `hsl(${color} / ${opacity})`, borderColor: `hsl(${color} / 0.3)` }}>
+                style={{ width: size, height: size, background: `hsl(${color} / ${opacity})`, borderColor: `hsl(${color} / 0.25)` }}>
                 <div className="flex flex-col items-center">
                   <span className="font-black" style={{ fontSize: size * 0.18, color: `hsl(${color})`, lineHeight: 1 }}>{amt}</span>
                   <span className="font-bold mt-1" style={{ fontSize: size * 0.09, color: `hsl(${color} / 0.7)` }}>{label}</span>
                 </div>
               </div>
-              <p className="text-center" style={{ fontSize: 22, color: "hsl(215 10% 45%)", maxWidth: size + 60, lineHeight: 1.5 }}>{sub}</p>
+              <p className="text-center" style={{ fontSize: 22, color: MUTED, maxWidth: size + 60, lineHeight: 1.5 }}>{sub}</p>
             </div>
           ))}
         </div>
 
-        <p className="text-center mt-12" style={{ fontSize: 26, color: "hsl(215 10% 40%)" }}>
+        <p className="text-center mt-12" style={{ fontSize: 26, color: SUBTLE }}>
           The knowledge management market is growing at 23% CAGR driven by AI adoption pressure and workforce mobility
         </p>
       </div>
@@ -217,16 +222,16 @@ function Slide04Solution() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full opacity-[0.06]"
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full opacity-[0.04]"
         style={{ background: `radial-gradient(circle, hsl(${ACCENT}), transparent 70%)` }} />
 
       <div className="relative z-10 px-28 w-full">
         <div className="text-center mb-14">
           <Tag label="The Solution" color={ACCENT} />
-          <h2 className="font-black" style={{ fontSize: 92, color: "hsl(210 18% 92%)", lineHeight: 1.05 }}>
+          <h2 className="font-black" style={{ fontSize: 92, color: TEXT, lineHeight: 1.05 }}>
             LIZA OS
           </h2>
-          <p className="mt-4" style={{ fontSize: 36, color: "hsl(215 10% 50%)" }}>
+          <p className="mt-4" style={{ fontSize: 36, color: MUTED }}>
             Knowledge-Activated Execution Engine
           </p>
         </div>
@@ -250,22 +255,22 @@ function Slide04Solution() {
             },
           ].map(({ icon, color, step, title, desc }) => (
             <div key={title} className="flex-1 rounded-2xl border p-10 flex flex-col gap-6"
-              style={{ background: `hsl(${color} / 0.06)`, borderColor: `hsl(${color} / 0.25)` }}>
+              style={{ background: `hsl(${color} / 0.04)`, borderColor: `hsl(${color} / 0.2)` }}>
               <div className="flex items-center gap-5">
-                <span className="font-black" style={{ fontSize: 64, color: `hsl(${color} / 0.2)`, lineHeight: 1 }}>{step}</span>
+                <span className="font-black" style={{ fontSize: 64, color: `hsl(${color} / 0.15)`, lineHeight: 1 }}>{step}</span>
                 <div style={{ color: `hsl(${color})` }}>{icon}</div>
               </div>
-              <p className="font-bold" style={{ fontSize: 42, color: "hsl(210 18% 92%)" }}>{title}</p>
-              <p style={{ fontSize: 25, color: "hsl(215 10% 50%)", lineHeight: 1.55 }}>{desc}</p>
+              <p className="font-bold" style={{ fontSize: 42, color: TEXT }}>{title}</p>
+              <p style={{ fontSize: 25, color: MUTED, lineHeight: 1.55 }}>{desc}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-10 flex items-center justify-center gap-3 px-10 py-6 rounded-xl border"
-          style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.05)` }}>
+          style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.04)` }}>
           <Brain size={32} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
-          <p style={{ fontSize: 26, color: "hsl(215 10% 60%)" }}>
-            Grounded in the <strong style={{ color: "hsl(210 18% 85%)" }}>SECI model</strong> (Nonaka & Takeuchi): the proven mechanism behind every learning organization.
+          <p style={{ fontSize: 26, color: MUTED }}>
+            Grounded in the <strong style={{ color: TEXT }}>SECI model</strong> (Nonaka & Takeuchi): the proven mechanism behind every learning organization.
             LIZA operationalizes this at software speed.
           </p>
         </div>
@@ -285,7 +290,7 @@ function Slide05Product() {
         {/* Left — screenshots */}
         <div className="w-[55%] flex flex-col gap-4">
           <Tag label="Product" color={ACCENT} />
-          <h2 className="font-bold mb-4" style={{ fontSize: 52, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+          <h2 className="font-bold mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.1 }}>
             Three operating modes.<br />
             <span style={{ color: `hsl(${ACCENT})` }}>One system.</span>
           </h2>
@@ -299,7 +304,7 @@ function Slide05Product() {
               <div key={label} className="rounded-xl border overflow-hidden flex flex-col"
                 style={{ borderColor: `hsl(${ACCENT} / 0.2)` }}>
                 <img src={src} alt={label} className="w-full flex-1 object-cover object-top" style={{ minHeight: 0 }} />
-                <p className="px-3 py-2 font-semibold" style={{ fontSize: 16, color: `hsl(${ACCENT})`, background: "hsl(222 18% 5%)" }}>{label}</p>
+                <p className="px-3 py-2 font-semibold" style={{ fontSize: 16, color: `hsl(${ACCENT})`, background: CARD_ALT }}>{label}</p>
               </div>
             ))}
           </div>
@@ -314,16 +319,16 @@ function Slide05Product() {
               { role: "The Command Center", persona: "Manager / Leader", color: GOLD, icon: <BarChart3 size={26} /> },
             ].map(({ role, persona, color, icon }) => (
               <div key={role} className="flex items-center gap-4 rounded-xl border p-5"
-                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.05)` }}>
+                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
                 <div style={{ color: `hsl(${color})` }}>{icon}</div>
                 <div>
-                  <p className="font-bold" style={{ fontSize: 24, color: "hsl(210 18% 92%)" }}>{role}</p>
-                  <p style={{ fontSize: 18, color: "hsl(215 10% 45%)" }}>{persona}</p>
+                  <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{role}</p>
+                  <p style={{ fontSize: 18, color: MUTED }}>{persona}</p>
                 </div>
               </div>
             ))}
           </div>
-          <p className="font-semibold mb-2" style={{ fontSize: 18, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Core Capabilities</p>
+          <p className="font-semibold mb-2" style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.2em", textTransform: "uppercase" }}>Core Capabilities</p>
           <div className="grid grid-cols-2 gap-3">
             {[
               { label: "Action Grid", desc: "Protocol-mapped action cards", color: ACCENT },
@@ -334,11 +339,11 @@ function Slide05Product() {
               { label: "After-Action Synthesis", desc: "Session → knowledge updates", color: GREEN },
             ].map(({ label, desc, color }) => (
               <div key={label} className="rounded-lg border px-4 py-3 flex items-center gap-2"
-                style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.05)` }}>
+                style={{ borderColor: `hsl(${color} / 0.15)`, background: `hsl(${color} / 0.04)` }}>
                 <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0 }} />
                 <div>
-                  <p className="font-bold" style={{ fontSize: 18, color: "hsl(210 18% 92%)" }}>{label}</p>
-                  <p style={{ fontSize: 14, color: "hsl(215 10% 50%)" }}>{desc}</p>
+                  <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>{label}</p>
+                  <p style={{ fontSize: 14, color: MUTED }}>{desc}</p>
                 </div>
               </div>
             ))}
@@ -358,7 +363,7 @@ function Slide06Traction() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Traction & Validation" color={GREEN} />
-        <h2 className="font-bold mb-14" style={{ fontSize: 76, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-14" style={{ fontSize: 76, color: TEXT, lineHeight: 1.1 }}>
           Built on real-world signal.
         </h2>
 
@@ -370,28 +375,28 @@ function Slide06Traction() {
             { stat: "AACE v3.1", sub: "Proprietary AI context architecture. Intent-locking, hierarchical knowledge injection, and drift detection.", color: GREEN },
           ].map(({ stat, sub, color }) => (
             <div key={stat} className="rounded-2xl border p-8 flex flex-col gap-4"
-              style={{ background: `hsl(${color} / 0.06)`, borderColor: `hsl(${color} / 0.22)` }}>
+              style={{ background: `hsl(${color} / 0.04)`, borderColor: `hsl(${color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 38, color: `hsl(${color})`, lineHeight: 1.1 }}>{stat}</p>
-              <p style={{ fontSize: 22, color: "hsl(215 10% 50%)", lineHeight: 1.5 }}>{sub}</p>
+              <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>{sub}</p>
             </div>
           ))}
         </div>
 
         <div className="flex gap-8 flex-1">
           <div className="flex-1 rounded-2xl border p-10"
-            style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.05)` }}>
+            style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
             <Award size={44} style={{ color: `hsl(${GOLD})` }} className="mb-5" />
-            <p className="font-bold mb-4" style={{ fontSize: 34, color: "hsl(210 18% 92%)" }}>Industry Validation</p>
-            <p style={{ fontSize: 24, color: "hsl(215 10% 50%)", lineHeight: 1.55 }}>
+            <p className="font-bold mb-4" style={{ fontSize: 34, color: TEXT }}>Industry Validation</p>
+            <p style={{ fontSize: 24, color: MUTED, lineHeight: 1.55 }}>
               The "knowledge rot" problem is publicly recognized as a top-3 operational risk in professional services. 
               McKinsey, Deloitte, and EY have all published reports citing institutional memory loss as a strategic liability.
             </p>
           </div>
           <div className="flex-1 rounded-2xl border p-10"
-            style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.05)` }}>
+            style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.04)` }}>
             <Layers size={44} style={{ color: `hsl(${ACCENT})` }} className="mb-5" />
-            <p className="font-bold mb-4" style={{ fontSize: 34, color: "hsl(210 18% 92%)" }}>Technical Foundation</p>
-            <p style={{ fontSize: 24, color: "hsl(215 10% 50%)", lineHeight: 1.55 }}>
+            <p className="font-bold mb-4" style={{ fontSize: 34, color: TEXT }}>Technical Foundation</p>
+            <p style={{ fontSize: 24, color: MUTED, lineHeight: 1.55 }}>
               AACE (AI-Assisted Context Engine) v3.1 is a proprietary specification combining intent-locking,
               hierarchical knowledge injection, and drift detection. This is the IP moat competitors cannot replicate quickly.
             </p>
@@ -411,7 +416,7 @@ function Slide07BusinessModel() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Business Model — Product-Led Sales" color={ACCENT} />
-        <h2 className="font-bold mb-6" style={{ fontSize: 64, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-6" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
           Product-Led Sales + usage-based AI.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Land with one team. Expand org-wide.</span>
         </h2>
@@ -420,7 +425,7 @@ function Slide07BusinessModel() {
           {[
             {
               tier: "Team", price: "€40k/yr", seats: "Single team",
-              desc: "Core workbooks, action grid, protocol execution. Product-led entry — one team adopts, others follow.", color: "215 10% 45%",
+              desc: "Core workbooks, action grid, protocol execution. Product-led entry — one team adopts, others follow.", color: MUTED,
               features: ["Unlimited workbooks", "Action Grid + Protocols", "Basic knowledge bundles"],
             },
             {
@@ -435,16 +440,16 @@ function Slide07BusinessModel() {
             },
           ].map(({ tier, price, seats, desc, color, features }) => (
             <div key={tier} className="flex flex-col rounded-2xl border overflow-hidden"
-              style={{ borderColor: `hsl(${color} / 0.3)`, background: `hsl(${color} / 0.05)` }}>
-              <div className="px-7 py-5 border-b" style={{ borderColor: `hsl(${color} / 0.2)` }}>
+              style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.04)` }}>
+              <div className="px-7 py-5 border-b" style={{ borderColor: `hsl(${color} / 0.15)` }}>
                 <p className="font-bold mb-1" style={{ fontSize: 26, color: `hsl(${color})` }}>{tier}</p>
-                <p className="font-black" style={{ fontSize: 40, color: "hsl(210 18% 92%)", lineHeight: 1 }}>{price}</p>
-                <p style={{ fontSize: 19, color: "hsl(215 10% 45%)" }}>{seats}</p>
+                <p className="font-black" style={{ fontSize: 40, color: TEXT, lineHeight: 1 }}>{price}</p>
+                <p style={{ fontSize: 19, color: MUTED }}>{seats}</p>
               </div>
               <div className="px-7 py-5 flex flex-col gap-2 flex-1">
-                <p style={{ fontSize: 19, color: "hsl(215 10% 50%)", lineHeight: 1.45, marginBottom: 4 }}>{desc}</p>
+                <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.45, marginBottom: 4 }}>{desc}</p>
                 {features.map(f => (
-                  <p key={f} className="flex items-center gap-2.5" style={{ fontSize: 19, color: "hsl(210 18% 75%)" }}>
+                  <p key={f} className="flex items-center gap-2.5" style={{ fontSize: 19, color: "hsl(222 15% 30%)" }}>
                     <CheckCircle2 size={16} style={{ color: `hsl(${color})`, flexShrink: 0 }} /> {f}
                   </p>
                 ))}
@@ -459,11 +464,11 @@ function Slide07BusinessModel() {
             { label: "Template Marketplace", desc: "Partners (e.g. MEDDIC, ESG frameworks) sell playbooks. 30% rev share.", color: ACCENT },
           ].map(({ label, desc, color }) => (
             <div key={label} className="flex-1 rounded-xl border px-6 py-5 flex items-center gap-5"
-              style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
+              style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
               <DollarSign size={30} style={{ color: `hsl(${color})`, flexShrink: 0 }} />
               <div>
-                <p className="font-bold" style={{ fontSize: 24, color: "hsl(210 18% 92%)" }}>{label}</p>
-                <p style={{ fontSize: 19, color: "hsl(215 10% 50%)" }}>{desc}</p>
+                <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{label}</p>
+                <p style={{ fontSize: 19, color: MUTED }}>{desc}</p>
               </div>
             </div>
           ))}
@@ -482,7 +487,7 @@ function Slide08GTM() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Go-To-Market" color={ACCENT} />
-        <h2 className="font-bold mb-8" style={{ fontSize: 68, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-8" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
           Enter with one team's pain.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Expand across the organisation.</span>
         </h2>
@@ -508,12 +513,12 @@ function Slide08GTM() {
               },
             ].map(({ phase, color, headline, points }) => (
               <div key={phase} className="rounded-xl border p-5"
-                style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
+                style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
                 <p className="font-semibold mb-0.5" style={{ fontSize: 20, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{phase}</p>
-                <p className="font-bold mb-2" style={{ fontSize: 27, color: "hsl(210 18% 92%)" }}>{headline}</p>
+                <p className="font-bold mb-2" style={{ fontSize: 27, color: TEXT }}>{headline}</p>
                 <div className="flex flex-col gap-1">
                   {points.map(p => (
-                    <p key={p} style={{ fontSize: 20, color: "hsl(215 10% 50%)" }}>→ {p}</p>
+                    <p key={p} style={{ fontSize: 20, color: MUTED }}>→ {p}</p>
                   ))}
                 </div>
               </div>
@@ -522,7 +527,7 @@ function Slide08GTM() {
 
           {/* Key metrics */}
           <div className="w-2/5 flex flex-col gap-4">
-            <p className="font-semibold" style={{ fontSize: 24, color: "hsl(215 10% 40%)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Target Metrics — Year 3</p>
+            <p className="font-semibold" style={{ fontSize: 24, color: SUBTLE, letterSpacing: "0.2em", textTransform: "uppercase" }}>Target Metrics — Year 3</p>
             {[
               { label: "ARR", val: "€8M+", color: ACCENT },
               { label: "Customers", val: "65", color: GREEN },
@@ -531,8 +536,8 @@ function Slide08GTM() {
               { label: "CAC Payback", val: "<12 mo", color: ACCENT },
             ].map(({ label, val, color }) => (
               <div key={label} className="flex items-center justify-between rounded-xl border px-7 py-5"
-                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.05)` }}>
-                <span style={{ fontSize: 26, color: "hsl(215 10% 55%)" }}>{label}</span>
+                style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
+                <span style={{ fontSize: 26, color: MUTED }}>{label}</span>
                 <span className="font-black" style={{ fontSize: 38, color: `hsl(${color})` }}>{val}</span>
               </div>
             ))}
@@ -562,35 +567,35 @@ function Slide09Moat() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Competitive Moat" color={ACCENT} />
-        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: TEXT, lineHeight: 1.1 }}>
           We are building a new category.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Nobody else is doing this.</span>
         </h2>
 
-        <div className="flex-1 rounded-2xl border overflow-hidden" style={{ borderColor: "hsl(222 14% 12%)" }}>
+        <div className="flex-1 rounded-2xl border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
           <table className="w-full h-full">
             <thead>
-              <tr style={{ background: "hsl(222 18% 6%)" }}>
-                <th className="text-left px-8 py-5 font-medium" style={{ fontSize: 22, color: "hsl(215 10% 45%)", width: "34%" }}>Capability</th>
+              <tr style={{ background: CARD_ALT }}>
+                <th className="text-left px-8 py-5 font-medium" style={{ fontSize: 22, color: MUTED, width: "34%" }}>Capability</th>
                 {[
                   { name: "LIZA OS", h: true }, { name: "Notion AI", h: false },
                   { name: "M365 Copilot", h: false }, { name: "Glean", h: false }, { name: "Guru", h: false }
                 ].map(({ name, h }) => (
-                  <th key={name} className="px-5 py-5 font-bold text-center" style={{ fontSize: 22, color: h ? `hsl(${ACCENT})` : "hsl(215 10% 45%)" }}>{name}</th>
+                  <th key={name} className="px-5 py-5 font-bold text-center" style={{ fontSize: 22, color: h ? `hsl(${ACCENT})` : MUTED }}>{name}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {rows.map(({ cap, liza, notion, copilot, glean, guru }, i) => (
-                <tr key={cap} style={{ background: i % 2 === 0 ? "transparent" : "hsl(222 18% 5%)" }}>
-                  <td className="px-8 py-4" style={{ fontSize: 22, color: "hsl(210 18% 72%)" }}>{cap}</td>
+                <tr key={cap} style={{ background: i % 2 === 0 ? "transparent" : CARD_ALT }}>
+                  <td className="px-8 py-4" style={{ fontSize: 22, color: "hsl(222 15% 30%)" }}>{cap}</td>
                   {[
                     { v: liza, h: true }, { v: notion, h: false }, { v: copilot, h: false }, { v: glean, h: false }, { v: guru, h: false }
                   ].map(({ v, h }, j) => (
                     <td key={j} className="px-5 py-4 text-center">
                       {v
-                        ? <CheckCircle2 size={26} className="mx-auto" style={{ color: h ? `hsl(${GREEN})` : "hsl(215 10% 36%)" }} />
-                        : <X size={26} className="mx-auto" style={{ color: "hsl(222 14% 18%)" }} />
+                        ? <CheckCircle2 size={26} className="mx-auto" style={{ color: h ? `hsl(${GREEN})` : "hsl(215 10% 60%)" }} />
+                        : <X size={26} className="mx-auto" style={{ color: "hsl(215 10% 82%)" }} />
                       }
                     </td>
                   ))}
@@ -600,7 +605,7 @@ function Slide09Moat() {
           </table>
         </div>
 
-        <p className="mt-6" style={{ fontSize: 24, color: "hsl(215 10% 40%)" }}>
+        <p className="mt-6" style={{ fontSize: 24, color: SUBTLE }}>
           The AACE v3.1 specification creates a technical moat. Competitors would need 18–24 months to replicate the context architecture alone.
         </p>
       </div>
@@ -627,7 +632,7 @@ function Slide10Team() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Team" color={ACCENT} />
-        <h2 className="font-bold mb-6" style={{ fontSize: 68, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-6" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
           Built by Experts, Guided by<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Industry Leaders.</span>
         </h2>
@@ -636,23 +641,23 @@ function Slide10Team() {
         <div className="grid grid-cols-3 gap-7 mb-8">
           {founders.map(f => (
             <div key={f.name} className="flex flex-col gap-4 rounded-2xl border p-7"
-              style={{ borderColor: `hsl(${f.color} / 0.25)`, background: `hsl(${f.color} / 0.05)` }}>
+              style={{ borderColor: `hsl(${f.color} / 0.2)`, background: `hsl(${f.color} / 0.04)` }}>
               <div className="flex items-center gap-4">
                 {f.photo ? (
                   <img src={f.photo} alt={f.name} className="w-16 h-16 rounded-full object-cover shrink-0"
                     style={{ border: `2px solid hsl(${f.color} / 0.4)` }} />
                 ) : (
                   <div className="w-16 h-16 rounded-full flex items-center justify-center font-black text-xl shrink-0"
-                    style={{ background: `hsl(${f.color} / 0.2)`, color: `hsl(${f.color})`, border: `2px solid hsl(${f.color} / 0.4)` }}>
+                    style={{ background: `hsl(${f.color} / 0.15)`, color: `hsl(${f.color})`, border: `2px solid hsl(${f.color} / 0.4)` }}>
                     {f.initials}
                   </div>
                 )}
                 <div>
-                  <p className="font-bold" style={{ fontSize: 26, color: "hsl(210 18% 92%)" }}>{f.name}</p>
+                  <p className="font-bold" style={{ fontSize: 26, color: TEXT }}>{f.name}</p>
                   <p style={{ fontSize: 18, color: `hsl(${f.color})` }}>{f.role}</p>
                 </div>
               </div>
-              <p style={{ fontSize: 20, color: "hsl(215 10% 55%)", lineHeight: 1.5 }}>{f.bio}</p>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{f.bio}</p>
             </div>
           ))}
         </div>
@@ -661,10 +666,10 @@ function Slide10Team() {
         <div className="grid grid-cols-2 gap-7">
           {advisors.map(a => (
             <div key={a.name} className="rounded-2xl border p-7"
-              style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
-              <p className="font-bold mb-1" style={{ fontSize: 26, color: "hsl(210 18% 92%)" }}>{a.name}</p>
+              style={{ borderColor: `hsl(${GOLD} / 0.18)`, background: `hsl(${GOLD} / 0.04)` }}>
+              <p className="font-bold mb-1" style={{ fontSize: 26, color: TEXT }}>{a.name}</p>
               <p className="mb-3" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>{a.role}</p>
-              <p style={{ fontSize: 20, color: "hsl(215 10% 55%)", lineHeight: 1.5 }}>{a.bio}</p>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{a.bio}</p>
             </div>
           ))}
         </div>
@@ -678,25 +683,23 @@ function Slide10Team() {
 
 function Slide11Financials() {
   const quarters = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"];
-  const arr = [0, 80, 220, 500, 900, 1500, 2200, 3500, 4400, 5600, 6800, 8200]; // €k
+  const arr = [0, 80, 220, 500, 900, 1500, 2200, 3500, 4400, 5600, 6800, 8200];
   const maxArr = Math.max(...arr);
-  const barW = 1400 / quarters.length;
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Financial Projections" color={ACCENT} />
-        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: TEXT, lineHeight: 1.1 }}>
           Path to €8M ARR in 36 months.
         </h2>
 
         {/* Bar chart */}
         <div className="flex-1 flex items-end gap-3 relative px-4">
-          {/* Y-axis label */}
           <div className="absolute left-0 top-0 bottom-10 flex flex-col justify-between">
             {[10000, 8000, 6000, 4000, 2000, 1000, 0].map(v => (
-              <span key={v} style={{ fontSize: 20, color: "hsl(215 10% 35%)", fontFamily: "monospace" }}>
+              <span key={v} style={{ fontSize: 20, color: SUBTLE, fontFamily: "monospace" }}>
                 €{v > 0 ? (v >= 1000 ? (v / 1000).toFixed(1) + "M" : v + "k") : "0"}
               </span>
             ))}
@@ -712,13 +715,12 @@ function Slide11Financials() {
                     {arr[i] > 0 ? "€" + (arr[i] >= 1000 ? (arr[i] / 1000).toFixed(1) + "M" : arr[i] + "k") : ""}
                   </span>
                   <div className="w-full rounded-t-lg" style={{ height: Math.max(h, 4), background: color, minWidth: 60 }} />
-                  <span style={{ fontSize: 20, color: "hsl(215 10% 40%)" }}>{q}</span>
+                  <span style={{ fontSize: 20, color: SUBTLE }}>{q}</span>
                 </div>
               );
             })}
           </div>
 
-          {/* Phase bands */}
           <div className="absolute bottom-8 left-16 right-0 flex" style={{ height: 4, opacity: 0.3 }}>
             <div className="flex-1" style={{ background: `hsl(${ACCENT})` }} />
             <div className="flex-1" style={{ background: `hsl(${GREEN})` }} />
@@ -733,10 +735,10 @@ function Slide11Financials() {
             { phase: "Phase 3 (Q9–Q12)", goal: "€8.2M ARR", note: "65 customers. NRR >120%. Platform API + white-label.", color: GOLD },
           ].map(({ phase, goal, note, color }) => (
             <div key={phase} className="flex-1 rounded-xl border p-6"
-              style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
+              style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
               <p style={{ fontSize: 20, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{phase}</p>
-              <p className="font-black" style={{ fontSize: 36, color: "hsl(210 18% 92%)" }}>{goal}</p>
-              <p style={{ fontSize: 20, color: "hsl(215 10% 45%)" }}>{note}</p>
+              <p className="font-black" style={{ fontSize: 36, color: TEXT }}>{goal}</p>
+              <p style={{ fontSize: 20, color: MUTED }}>{note}</p>
             </div>
           ))}
         </div>
@@ -753,7 +755,7 @@ function Slide12UseOfFunds() {
     { label: "Product & Engineering", pct: 45, amt: "€675k", desc: "Core team (2 senior engineers + 1 AI specialist). Complete the SECI flywheel: after-action synthesis, smart ingestion, drift detection.", color: ACCENT },
     { label: "Sales & GTM", pct: 30, amt: "€450k", desc: "First 2 enterprise sales hires + marketing. Channel partner program development. Template marketplace.", color: GREEN },
     { label: "Research & AI Infrastructure", pct: 15, amt: "€225k", desc: "AACE v4 spec + LLM inference costs. Academic partnership on SECI-AI validation.", color: GOLD },
-    { label: "Operations & Legal", pct: 10, amt: "€150k", desc: "EU data compliance, IP protection, financial runway management.", color: "215 10% 45%" },
+    { label: "Operations & Legal", pct: 10, amt: "€150k", desc: "EU data compliance, IP protection, financial runway management.", color: MUTED },
   ];
 
   return (
@@ -761,7 +763,7 @@ function Slide12UseOfFunds() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Use of Funds" color={ACCENT} />
-        <h2 className="font-bold mb-12" style={{ fontSize: 76, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-12" style={{ fontSize: 76, color: TEXT, lineHeight: 1.1 }}>
           €1.5M seed. 18-month runway.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Series A ready by month 18.</span>
         </h2>
@@ -772,7 +774,7 @@ function Slide12UseOfFunds() {
             <svg width="340" height="340" viewBox="0 0 340 340">
               {(() => {
                 const total = 100; let startAngle = -90;
-                const colors = [`hsl(${ACCENT})`, `hsl(${GREEN})`, `hsl(${GOLD})`, "hsl(215 10% 35%)"];
+                const colors = [`hsl(${ACCENT})`, `hsl(${GREEN})`, `hsl(${GOLD})`, "hsl(215 10% 65%)"];
                 return allocations.map(({ pct, label }, i) => {
                   const angle = (pct / total) * 360;
                   const endAngle = startAngle + angle;
@@ -788,19 +790,18 @@ function Slide12UseOfFunds() {
                   const yi2 = cy + inner * Math.sin(toRad(endAngle));
                   const largeArc = angle > 180 ? 1 : 0;
                   const d = `M${x1},${y1} A${r},${r} 0 ${largeArc},1 ${x2},${y2} L${xi2},${yi2} A${inner},${inner} 0 ${largeArc},0 ${xi1},${yi1} Z`;
-                  const prevAngle = startAngle;
                   startAngle = endAngle;
                   return <path key={label} d={d} fill={colors[i]} opacity={0.8} />;
                 });
               })()}
-              <text x="170" y="162" textAnchor="middle" fill="hsl(210 18% 92%)" fontSize="36" fontWeight="900">€1.5M</text>
-              <text x="170" y="192" textAnchor="middle" fill="hsl(215 10% 45%)" fontSize="22">Seed Round</text>
+              <text x="170" y="162" textAnchor="middle" fill={TEXT} fontSize="36" fontWeight="900">€1.5M</text>
+              <text x="170" y="192" textAnchor="middle" fill={MUTED} fontSize="22">Seed Round</text>
             </svg>
             <div className="flex flex-col gap-2 mt-2">
               {allocations.map(({ label, pct, color }) => (
                 <div key={label} className="flex items-center gap-3">
                   <div className="w-4 h-4 rounded-full" style={{ background: `hsl(${color})` }} />
-                  <span style={{ fontSize: 20, color: "hsl(215 10% 55%)" }}>{pct}% {label}</span>
+                  <span style={{ fontSize: 20, color: MUTED }}>{pct}% {label}</span>
                 </div>
               ))}
             </div>
@@ -810,14 +811,14 @@ function Slide12UseOfFunds() {
           <div className="flex flex-col gap-6 flex-1">
             {allocations.map(({ label, pct, amt, desc, color }) => (
               <div key={label} className="flex gap-6 rounded-xl border p-7"
-                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.05)` }}>
+                style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
                 <div className="shrink-0 flex flex-col items-center gap-1 w-24">
                   <span className="font-black" style={{ fontSize: 38, color: `hsl(${color})`, lineHeight: 1 }}>{pct}%</span>
                   <span className="font-bold" style={{ fontSize: 24, color: `hsl(${color} / 0.7)` }}>{amt}</span>
                 </div>
                 <div>
-                  <p className="font-bold mb-2" style={{ fontSize: 28, color: "hsl(210 18% 92%)" }}>{label}</p>
-                  <p style={{ fontSize: 22, color: "hsl(215 10% 50%)", lineHeight: 1.5 }}>{desc}</p>
+                  <p className="font-bold mb-2" style={{ fontSize: 28, color: TEXT }}>{label}</p>
+                  <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>{desc}</p>
                 </div>
               </div>
             ))}
@@ -835,16 +836,16 @@ function Slide13TheAsk() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full opacity-[0.06]"
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full opacity-[0.04]"
         style={{ background: `radial-gradient(circle, hsl(${ACCENT}), transparent 70%)` }} />
 
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-16">
           <Tag label="The Ask" color={GOLD} />
-          <h2 className="font-black" style={{ fontSize: 96, color: "hsl(210 18% 92%)", lineHeight: 1.0 }}>
+          <h2 className="font-black" style={{ fontSize: 96, color: TEXT, lineHeight: 1.0 }}>
             €1.5M Seed Round
           </h2>
-          <p style={{ fontSize: 36, color: "hsl(215 10% 50%)", marginTop: 16 }}>
+          <p style={{ fontSize: 36, color: MUTED, marginTop: 16 }}>
             Target close: Q3 2026 &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; Series A at 18 months
           </p>
         </div>
@@ -856,23 +857,23 @@ function Slide13TheAsk() {
             { label: "Milestones Unlocked", val: "Series A Ready", sub: "€1.5M ARR, 15 customers, NRR>110%. Reached at month 18 per operating model.", color: GREEN },
           ].map(({ label, val, sub, color }) => (
             <div key={label} className="rounded-2xl border p-10 flex flex-col gap-4"
-              style={{ borderColor: `hsl(${color} / 0.3)`, background: `hsl(${color} / 0.07)` }}>
+              style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.05)` }}>
               <p className="font-semibold" style={{ fontSize: 24, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{label}</p>
-              <p className="font-black" style={{ fontSize: 44, color: "hsl(210 18% 92%)", lineHeight: 1.1 }}>{val}</p>
-              <p style={{ fontSize: 23, color: "hsl(215 10% 50%)", lineHeight: 1.45 }}>{sub}</p>
+              <p className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1.1 }}>{val}</p>
+              <p style={{ fontSize: 23, color: MUTED, lineHeight: 1.45 }}>{sub}</p>
             </div>
           ))}
         </div>
 
         <div className="rounded-2xl border p-10 flex items-center gap-10"
-          style={{ borderColor: `hsl(${ACCENT} / 0.3)`, background: `hsl(${ACCENT} / 0.06)` }}>
+          style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.04)` }}>
           <Globe size={52} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
           <div>
-            <p className="font-bold mb-3" style={{ fontSize: 32, color: "hsl(210 18% 92%)" }}>Why now?</p>
-            <p style={{ fontSize: 26, color: "hsl(215 10% 55%)", lineHeight: 1.55 }}>
+            <p className="font-bold mb-3" style={{ fontSize: 32, color: TEXT }}>Why now?</p>
+            <p style={{ fontSize: 26, color: MUTED, lineHeight: 1.55 }}>
               The convergence of GenAI commoditization and workforce mobility has created a $47B gap in the market.
               Generic AI tools are accelerating the problem: they make teams faster at producing outputs with no organizational context.
-              <strong style={{ color: "hsl(210 18% 80%)" }}> LIZA is the infrastructure layer that makes organizational knowledge the competitive advantage.</strong>
+              <strong style={{ color: "hsl(222 15% 25%)" }}> LIZA is the infrastructure layer that makes organizational knowledge the competitive advantage.</strong>
             </p>
           </div>
         </div>
@@ -888,9 +889,9 @@ function Slide14Closing() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full opacity-[0.07]"
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full opacity-[0.05]"
         style={{ background: `radial-gradient(circle, hsl(${ACCENT}), transparent 70%)` }} />
-      <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full opacity-[0.05]"
+      <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full opacity-[0.03]"
         style={{ background: `radial-gradient(circle, hsl(${GREEN}), transparent 70%)` }} />
 
       <div className="relative z-10 flex flex-col items-center text-center px-32">
@@ -900,7 +901,7 @@ function Slide14Closing() {
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 26, color: `hsl(${ACCENT})` }}>LIZA OS</span>
         </div>
 
-        <h2 className="font-black mb-10" style={{ fontSize: 96, color: "hsl(210 18% 92%)", lineHeight: 1.0 }}>
+        <h2 className="font-black mb-10" style={{ fontSize: 96, color: TEXT, lineHeight: 1.0 }}>
           The best organizations don't<br />just hire experts.
           <br />
           <span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${GREEN}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
@@ -908,7 +909,7 @@ function Slide14Closing() {
           </span>
         </h2>
 
-        <p style={{ fontSize: 34, color: "hsl(215 10% 50%)", maxWidth: 1100, lineHeight: 1.6, marginBottom: 56 }}>
+        <p style={{ fontSize: 34, color: MUTED, maxWidth: 1100, lineHeight: 1.6, marginBottom: 56 }}>
           LIZA is the platform that makes institutional intelligence
           a compounding asset, not a human-dependent liability.
         </p>
@@ -916,8 +917,8 @@ function Slide14Closing() {
         <div className="flex gap-10">
           <div className="flex flex-col items-center gap-3 px-14 py-8 rounded-2xl"
             style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${GREEN}))` }}>
-            <Briefcase size={36} style={{ color: BG }} />
-            <span className="font-bold" style={{ fontSize: 28, color: BG }}>Schedule a Founder Call</span>
+            <Briefcase size={36} style={{ color: "white" }} />
+            <span className="font-bold" style={{ fontSize: 28, color: "white" }}>Schedule a Founder Call</span>
           </div>
           <div className="flex flex-col items-center gap-3 px-14 py-8 rounded-2xl border"
             style={{ borderColor: `hsl(${ACCENT} / 0.35)`, background: `hsl(${ACCENT} / 0.06)` }}>
@@ -926,7 +927,7 @@ function Slide14Closing() {
           </div>
         </div>
 
-        <p className="mt-14" style={{ fontSize: 26, color: "hsl(215 10% 30%)" }}>
+        <p className="mt-14" style={{ fontSize: 26, color: SUBTLE }}>
           lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential · Not for distribution
         </p>
       </div>
@@ -997,7 +998,7 @@ export default function InvestorDeck() {
           if (cs.includes('background-clip') || cs.includes('BackgroundClip') || cs.includes('text-fill-color') || cs.includes('TextFillColor')) {
             origStyles.push(cs);
             affected.push(el);
-            el.style.cssText = `color: hsl(180, 80%, 60%); font: inherit;`;
+            el.style.cssText = `color: hsl(${ACCENT}); font: inherit;`;
           }
         });
         const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
@@ -1063,52 +1064,48 @@ export default function InvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999]" style={{ background: BG }}
         onClick={() => { if (!isPortrait) showMobileControls(); }}>
-        {/* Rotate hint overlay */}
         {isPortrait && (
           <div className="absolute inset-0 z-[10000] flex flex-col items-center justify-center gap-4 px-8"
-            style={{ background: "hsl(224 22% 3% / 0.92)", backdropFilter: "blur(8px)" }}>
+            style={{ background: "hsl(0 0% 100% / 0.92)", backdropFilter: "blur(8px)" }}>
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+              style={{ background: `hsl(${ACCENT} / 0.1)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={`hsl(${ACCENT})`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="4" y="2" width="16" height="20" rx="2" />
                 <path d="M12 18h.01" />
               </svg>
             </div>
-            <p className="text-center font-semibold" style={{ fontSize: 18, color: "hsl(210 18% 92%)" }}>
+            <p className="text-center font-semibold" style={{ fontSize: 18, color: TEXT }}>
               Rotate your device to landscape
             </p>
-            <p className="text-center" style={{ fontSize: 14, color: "hsl(215 10% 50%)" }}>
+            <p className="text-center" style={{ fontSize: 14, color: MUTED }}>
               for the best viewing experience
             </p>
           </div>
         )}
 
-        {/* Full-bleed slide */}
         <ScaledSlide>{slide.component}</ScaledSlide>
 
-        {/* Minimal floating controls — auto-hide */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full transition-opacity duration-300"
           style={{
-            background: "hsl(224 22% 4% / 0.85)", border: "1px solid hsl(222 14% 15%)", backdropFilter: "blur(8px)",
+            background: "hsl(0 0% 100% / 0.9)", border: `1px solid ${CHROME_BORDER}`, backdropFilter: "blur(8px)",
             opacity: mobileControlsVisible ? 1 : 0, pointerEvents: mobileControlsVisible ? "auto" : "none",
           }}
           onClick={(e) => e.stopPropagation()}>
           <button onClick={prev} disabled={current === 0} className="p-1.5 rounded-lg disabled:opacity-20">
-            <ChevronLeft size={18} style={{ color: "hsl(210 18% 92%)" }} />
+            <ChevronLeft size={18} style={{ color: TEXT }} />
           </button>
-          <span className="font-mono text-xs px-1" style={{ color: "hsl(215 10% 50%)" }}>
+          <span className="font-mono text-xs px-1" style={{ color: MUTED }}>
             {current + 1}/{SLIDES.length}
           </span>
           <button onClick={next} disabled={current === SLIDES.length - 1} className="p-1.5 rounded-lg disabled:opacity-20">
-            <ChevronRight size={18} style={{ color: "hsl(210 18% 92%)" }} />
+            <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
-          <div className="w-px h-4" style={{ background: "hsl(215 10% 30%)" }} />
+          <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
           <button onClick={handleExportPdf} disabled={exporting} className="p-1.5 rounded-lg disabled:opacity-50">
-            {exporting ? <Loader2 size={16} className="animate-spin" style={{ color: "hsl(215 10% 50%)" }} /> : <Download size={16} style={{ color: "hsl(215 10% 50%)" }} />}
+            {exporting ? <Loader2 size={16} className="animate-spin" style={{ color: MUTED }} /> : <Download size={16} style={{ color: MUTED }} />}
           </button>
         </div>
 
-        {/* Export container */}
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
           {SLIDES.map(s => (
             <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
@@ -1123,20 +1120,20 @@ export default function InvestorDeck() {
   // ─── Desktop: full chrome ───────────────────────────────────────────────────
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 bg-black z-[9999]" style={{ cursor: showNav ? "default" : "none" }}>
+      <div className="fixed inset-0 bg-white z-[9999]" style={{ cursor: showNav ? "default" : "none" }}>
         <ScaledSlide>{slide.component}</ScaledSlide>
         {showNav && (
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-3 rounded-full"
-            style={{ background: "hsl(222 20% 4% / 0.9)", border: "1px solid hsl(222 14% 18%)" }}>
-            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg hover:bg-white/10 disabled:opacity-30">
-              <ChevronLeft size={20} style={{ color: "hsl(210 18% 92%)" }} />
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-3 rounded-full shadow-lg"
+            style={{ background: "hsl(0 0% 100% / 0.95)", border: `1px solid ${CHROME_BORDER}` }}>
+            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg hover:bg-black/5 disabled:opacity-30">
+              <ChevronLeft size={20} style={{ color: TEXT }} />
             </button>
-            <span className="text-sm font-mono px-2" style={{ color: "hsl(215 10% 50%)" }}>{current + 1} / {SLIDES.length}</span>
-            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg hover:bg-white/10 disabled:opacity-30">
-              <ChevronRight size={20} style={{ color: "hsl(210 18% 92%)" }} />
+            <span className="text-sm font-mono px-2" style={{ color: MUTED }}>{current + 1} / {SLIDES.length}</span>
+            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg hover:bg-black/5 disabled:opacity-30">
+              <ChevronRight size={20} style={{ color: TEXT }} />
             </button>
-            <button onClick={() => { document.exitFullscreen?.(); setIsFullscreen(false); }} className="p-2 rounded-lg hover:bg-white/10 ml-2">
-              <X size={20} style={{ color: "hsl(215 10% 50%)" }} />
+            <button onClick={() => { document.exitFullscreen?.(); setIsFullscreen(false); }} className="p-2 rounded-lg hover:bg-black/5 ml-2">
+              <X size={20} style={{ color: MUTED }} />
             </button>
           </div>
         )}
@@ -1145,19 +1142,19 @@ export default function InvestorDeck() {
   }
 
   return (
-    <div className="flex flex-col h-screen" style={{ background: BG }}>
+    <div className="flex flex-col h-screen" style={{ background: CARD_ALT }}>
       {/* Toolbar */}
       <div className="flex items-center justify-between px-5 py-3 border-b shrink-0"
-        style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
+        style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GOLD})` }} />
-          <span className="text-sm font-semibold" style={{ color: "hsl(210 18% 92%)" }}>LIZA OS — Investor Deck</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — Investor Deck</span>
           <span className="text-xs px-2 py-0.5 rounded"
-            style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
+            style={{ background: `hsl(${GOLD} / 0.1)`, color: `hsl(${GOLD})` }}>
             Series Seed · {SLIDES.length} slides
           </span>
           <span className="text-xs px-2 py-0.5 rounded ml-1"
-            style={{ background: "hsl(0 72% 63% / 0.1)", color: "hsl(0 72% 63%)" }}>
+            style={{ background: "hsl(0 72% 50% / 0.08)", color: "hsl(0 72% 50%)" }}>
             Confidential
           </span>
         </div>
@@ -1178,7 +1175,7 @@ export default function InvestorDeck() {
       <div className="flex flex-1 overflow-hidden">
         {/* Thumbnail sidebar */}
         <div className="w-44 flex flex-col gap-2 p-3 overflow-y-auto border-r shrink-0"
-          style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
+          style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
           {SLIDES.map((s, i) => (
             <button key={s.id} onClick={() => goTo(i)}
               className={cn("w-full rounded-lg overflow-hidden border-2 transition-all text-left shrink-0 flex flex-col",
@@ -1187,7 +1184,7 @@ export default function InvestorDeck() {
               <div className="w-full" style={{ aspectRatio: "16/9", pointerEvents: "none" }}>
                 <ScaledSlide>{s.component}</ScaledSlide>
               </div>
-              <p className="text-[10px] px-1.5 py-1" style={{ color: "hsl(215 10% 40%)" }}>
+              <p className="text-[10px] px-1.5 py-1" style={{ color: SUBTLE }}>
                 {String(i + 1).padStart(2, "0")} {s.title}
               </p>
             </button>
@@ -1207,7 +1204,7 @@ export default function InvestorDeck() {
                     <div className="w-full" style={{ aspectRatio: "16/9" }}>
                       <ScaledSlide>{s.component}</ScaledSlide>
                     </div>
-                    <p className="text-xs px-2 pb-2" style={{ color: "hsl(215 10% 50%)" }}>
+                    <p className="text-xs px-2 pb-2" style={{ color: MUTED }}>
                       <span className="font-mono">{String(i + 1).padStart(2, "0")}</span> — {s.title}
                     </p>
                   </button>
@@ -1216,8 +1213,8 @@ export default function InvestorDeck() {
             </div>
           ) : (
             <div className="flex-1 overflow-hidden p-6">
-              <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl border"
-                style={{ borderColor: "hsl(222 14% 13%)" }}>
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border"
+                style={{ borderColor: CHROME_BORDER }}>
                 <ScaledSlide>{slide.component}</ScaledSlide>
               </div>
             </div>
@@ -1226,14 +1223,14 @@ export default function InvestorDeck() {
           {/* Bottom nav */}
           {!showGrid && (
             <div className="flex items-center justify-between px-8 py-3 border-t shrink-0"
-              style={{ borderColor: "hsl(222 14% 10%)", background: "hsl(222 22% 3%)" }}>
+              style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
               <div className="flex gap-2">
                 {SLIDES.map((_, i) => (
                   <button key={i} onClick={() => goTo(i)}
                     className="h-1.5 rounded-full transition-all"
                     style={{
                       width: i === current ? 32 : 8,
-                      background: i === current ? `hsl(${GOLD})` : "hsl(222 14% 18%)",
+                      background: i === current ? `hsl(${GOLD})` : CHROME_BORDER,
                     }} />
                 ))}
               </div>
@@ -1241,14 +1238,14 @@ export default function InvestorDeck() {
                 <Button size="sm" variant="outline" onClick={prev} disabled={current === 0}>
                   <ChevronLeft size={16} />
                 </Button>
-                <span className="text-xs font-mono" style={{ color: "hsl(215 10% 45%)" }}>
+                <span className="text-xs font-mono" style={{ color: MUTED }}>
                   {current + 1} / {SLIDES.length}
                 </span>
                 <Button size="sm" variant="outline" onClick={next} disabled={current === SLIDES.length - 1}>
                   <ChevronRight size={16} />
                 </Button>
               </div>
-              <p className="text-xs" style={{ color: "hsl(215 10% 30%)" }}>← → navigate &nbsp; G grid &nbsp; F present</p>
+              <p className="text-xs" style={{ color: SUBTLE }}>← → navigate &nbsp; G grid &nbsp; F present</p>
             </div>
           )}
         </div>
