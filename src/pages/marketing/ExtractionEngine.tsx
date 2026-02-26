@@ -1,18 +1,23 @@
 import { useState, useCallback } from "react";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { ExperienceStory } from "@/components/marketing/ExperienceStory";
-import { SAMPLE_CONTENT } from "@/data/sampleContent";
+import { SAMPLE_DOCUMENTS, type SampleDocument } from "@/data/sampleContent";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Sparkles, Upload, FileText, Loader2, AlertCircle } from "lucide-react";
+import {
+  Sparkles, Upload, FileText, Loader2, AlertCircle, Building2, Rocket, User,
+  ChevronDown, ChevronRight, ArrowLeft,
+} from "lucide-react";
 import type { ExtractionResult } from "@/lib/knowledge-schema";
 import type { ExperiencePreview } from "@/lib/experience-schema";
 
-type Stage = "choose" | "extracting" | "simulating" | "results";
+type Stage = "choose" | "preview-sample" | "extracting" | "simulating" | "results";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+const ICON_MAP = { building: Building2, rocket: Rocket, user: User } as const;
 
 const EXTRACT_PHASES = [
   "Analyzing document structure…",
@@ -32,6 +37,8 @@ const SIMULATE_PHASES = [
 export default function ExtractionEngine() {
   const [stage, setStage] = useState<Stage>("choose");
   const [mode, setMode] = useState<"sample" | "upload" | null>(null);
+  const [selectedSample, setSelectedSample] = useState<SampleDocument | null>(null);
+  const [sampleExpanded, setSampleExpanded] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -45,34 +52,25 @@ export default function ExtractionEngine() {
   const runSimulation = useCallback(async (result: ExtractionResult) => {
     setStage("simulating");
     setPhaseIndex(0);
-
     const interval = setInterval(() => {
       setPhaseIndex((prev) => (prev < SIMULATE_PHASES.length - 1 ? prev + 1 : prev));
     }, 3000);
-
     try {
       const response = await fetch(`${SUPABASE_URL}/functions/v1/simulate-experience`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${SUPABASE_KEY}` },
         body: JSON.stringify({ extraction_result: result }),
       });
-
       clearInterval(interval);
-
       if (!response.ok) {
         const errData = await response.json().catch(() => ({}));
         throw new Error(errData.error || `Simulation failed (${response.status})`);
       }
-
       const data = await response.json();
       setExperiencePreview(data);
       setStage("results");
     } catch (e) {
       clearInterval(interval);
-      // Fall back to showing extraction results only
       console.error("Simulation failed, showing extraction only:", e);
       setExperiencePreview(null);
       setStage("results");
@@ -83,38 +81,25 @@ export default function ExtractionEngine() {
     setStage("extracting");
     setPhaseIndex(0);
     setError(null);
-
     const interval = setInterval(() => {
       setPhaseIndex((prev) => (prev < EXTRACT_PHASES.length - 1 ? prev + 1 : prev));
     }, 4000);
-
     try {
       const response = await fetch(`${SUPABASE_URL}/functions/v1/public-extract`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${SUPABASE_KEY}` },
         body: JSON.stringify({
-          content,
-          content_type: contentType,
-          email: userEmail || undefined,
-          name: name || undefined,
-          company: company || undefined,
+          content, content_type: contentType,
+          email: userEmail || undefined, name: name || undefined, company: company || undefined,
         }),
       });
-
       clearInterval(interval);
-
       if (!response.ok) {
         const errData = await response.json().catch(() => ({}));
         throw new Error(errData.error || `Extraction failed (${response.status})`);
       }
-
       const data = await response.json();
       setExtractionResult(data);
-
-      // Proceed to phase 2: simulate experience
       await runSimulation(data);
     } catch (e) {
       clearInterval(interval);
@@ -123,8 +108,14 @@ export default function ExtractionEngine() {
     }
   }, [name, company, runSimulation]);
 
-  const handleSample = () => {
-    runExtraction(SAMPLE_CONTENT, "text");
+  const handleSampleSelect = (doc: SampleDocument) => {
+    setSelectedSample(doc);
+    setSampleExpanded(false);
+    setStage("preview-sample");
+  };
+
+  const handleSampleRun = () => {
+    if (selectedSample) runExtraction(selectedSample.content, "text");
   };
 
   const handleUploadSubmit = async () => {
@@ -145,28 +136,21 @@ export default function ExtractionEngine() {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file && file.type === "application/pdf" && file.size <= 5 * 1024 * 1024) {
-      setPdfFile(file);
-      setPasteContent("");
+      setPdfFile(file); setPasteContent("");
     }
   };
 
   const handlePdfSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type === "application/pdf" && file.size <= 5 * 1024 * 1024) {
-      setPdfFile(file);
-      setPasteContent("");
+      setPdfFile(file); setPasteContent("");
     }
   };
 
   const reset = () => {
-    setStage("choose");
-    setMode(null);
-    setExtractionResult(null);
-    setExperiencePreview(null);
-    setError(null);
-    setPasteContent("");
-    setPdfFile(null);
-    setPhaseIndex(0);
+    setStage("choose"); setMode(null); setSelectedSample(null);
+    setExtractionResult(null); setExperiencePreview(null); setError(null);
+    setPasteContent(""); setPdfFile(null); setPhaseIndex(0);
   };
 
   const isProcessing = stage === "extracting" || stage === "simulating";
@@ -186,7 +170,7 @@ export default function ExtractionEngine() {
             See your knowledge, <span className="brand-gradient-text">in action</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Paste a document or try our sample. LIZA will extract your knowledge, generate executable protocols, simulate a team workbook, and show projected learnings — the full AI operating model experience.
+            Choose a sample document or upload your own. LIZA will extract your knowledge, generate executable protocols, and show you the full AI operating model experience.
           </p>
         </div>
 
@@ -201,25 +185,108 @@ export default function ExtractionEngine() {
 
         {/* ── Stage: Choose ──────────────────────────────────────────── */}
         {stage === "choose" && !mode && (
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            <button onClick={handleSample}
-              className="group rounded-2xl border p-8 text-left hover:border-primary/50 transition-all border-border bg-card">
-              <FileText className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">Try with Sample Content</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                Run the full experience on our "Enterprise Client Onboarding Methodology" — no email needed.
-              </p>
-              <span className="text-xs font-semibold text-primary group-hover:underline">Run extraction →</span>
-            </button>
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Choose a sample document</h3>
+            <div className="grid gap-4 mb-8">
+              {SAMPLE_DOCUMENTS.map((doc) => {
+                const Icon = ICON_MAP[doc.icon];
+                return (
+                  <button key={doc.id} onClick={() => handleSampleSelect(doc)}
+                    className="group rounded-2xl border p-6 text-left hover:border-primary/50 transition-all border-border bg-card">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                        style={{ background: "hsl(var(--primary) / 0.1)" }}>
+                        <Icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-semibold text-foreground">{doc.title}</h4>
+                          <span className="text-[10px] font-mono text-muted-foreground px-2 py-0.5 rounded bg-muted">{doc.domain}</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{doc.subtitle}</p>
+                        <p className="text-xs text-muted-foreground mt-1">~{doc.wordCount} words · No email required</p>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-2" />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-px flex-1 bg-border" />
+              <span className="text-xs text-muted-foreground">or</span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+
             <button onClick={() => setMode("upload")}
-              className="group rounded-2xl border p-8 text-left hover:border-primary/50 transition-all border-border bg-card">
-              <Upload className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">Upload Your Own</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                Paste text or upload a PDF (up to 5MB). Email required to unlock.
-              </p>
-              <span className="text-xs font-semibold text-primary group-hover:underline">Get started →</span>
+              className="w-full group rounded-2xl border p-6 text-left hover:border-primary/50 transition-all border-border bg-card">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: "hsl(var(--primary) / 0.1)" }}>
+                  <Upload className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-foreground">Upload Your Own Document</h4>
+                  <p className="text-sm text-muted-foreground">Paste text or upload a PDF (up to 5MB). Email required.</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+              </div>
             </button>
+          </div>
+        )}
+
+        {/* ── Stage: Preview Sample ──────────────────────────────────── */}
+        {stage === "preview-sample" && selectedSample && (
+          <div className="max-w-3xl mx-auto">
+            <button onClick={() => { setStage("choose"); setSelectedSample(null); }}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors">
+              <ArrowLeft className="w-4 h-4" /> Back to document selection
+            </button>
+
+            <div className="rounded-2xl border overflow-hidden border-border bg-card">
+              <div className="px-6 py-5 border-b border-border">
+                <div className="flex items-center gap-3 mb-2">
+                  {(() => { const Icon = ICON_MAP[selectedSample.icon]; return <Icon className="w-5 h-5 text-primary" />; })()}
+                  <h3 className="text-lg font-semibold text-foreground">{selectedSample.title}</h3>
+                  <span className="text-[10px] font-mono text-muted-foreground px-2 py-0.5 rounded bg-muted">{selectedSample.domain}</span>
+                </div>
+                <p className="text-sm text-muted-foreground">{selectedSample.subtitle}</p>
+              </div>
+
+              {/* Expandable document preview */}
+              <div className="px-6 py-4">
+                <button onClick={() => setSampleExpanded(!sampleExpanded)}
+                  className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors mb-3">
+                  {sampleExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                  {sampleExpanded ? "Hide document content" : "Read the full document"}
+                </button>
+
+                {sampleExpanded && (
+                  <div className="rounded-lg border p-5 mb-4 max-h-[500px] overflow-y-auto border-border bg-muted/30">
+                    <div className="prose prose-sm max-w-none text-muted-foreground prose-headings:text-foreground prose-strong:text-foreground">
+                      {selectedSample.content.split("\n").map((line, i) => {
+                        if (line.startsWith("### ")) return <h4 key={i} className="text-sm font-semibold text-foreground mt-4 mb-1">{line.replace("### ", "")}</h4>;
+                        if (line.startsWith("## ")) return <h3 key={i} className="text-base font-semibold text-foreground mt-5 mb-2">{line.replace("## ", "")}</h3>;
+                        if (line.startsWith("# ")) return <h2 key={i} className="text-lg font-bold text-foreground mt-6 mb-2">{line.replace("# ", "")}</h2>;
+                        if (line.startsWith("---")) return <hr key={i} className="my-4 border-border" />;
+                        if (line.trim() === "") return <br key={i} />;
+                        return <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-1">{line}</p>;
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="px-6 py-4 border-t border-border flex items-center gap-3">
+                <button onClick={handleSampleRun}
+                  className="px-6 py-3 rounded-xl text-sm font-semibold brand-gradient-btn"
+                  style={{ boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)" }}>
+                  Extract & Simulate →
+                </button>
+                <span className="text-xs text-muted-foreground">~30 seconds · No email required</span>
+              </div>
+            </div>
           </div>
         )}
 
@@ -282,7 +349,7 @@ export default function ExtractionEngine() {
           </div>
         )}
 
-        {/* ── Stage: Processing (both extracting and simulating) ──── */}
+        {/* ── Stage: Processing ──────────────────────────────────────── */}
         {isProcessing && (
           <div className="max-w-lg mx-auto text-center py-20">
             <Loader2 className="w-12 h-12 mx-auto mb-6 text-primary animate-spin" />
@@ -318,7 +385,6 @@ export default function ExtractionEngine() {
         {stage === "results" && extractionResult && !experiencePreview && (
           <div className="text-center py-8">
             <p className="text-sm text-muted-foreground mb-4">Experience preview generation failed. Showing extraction results.</p>
-            {/* Import the old view as fallback */}
             <ExperienceStory
               extractionResult={extractionResult}
               experiencePreview={{
