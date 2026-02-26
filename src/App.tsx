@@ -21,10 +21,8 @@ import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
 import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
-import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
 import UseCasesPage from "./pages/marketing/UseCases";
 import ProductPage from "./pages/marketing/Product";
-import EnterpriseDeck from "./pages/EnterpriseDeck";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
@@ -59,8 +57,8 @@ const App = () => (
 
             {/* Marketing — product-led homepage */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/codify" element={<ProfessionalServicesPage />} />
-            <Route path="/scale" element={<EnterpriseDeck />} />
+            <Route path="/codify" element={<Navigate to="/" replace />} />
+            <Route path="/scale" element={<Navigate to="/" replace />} />
             <Route path="/product" element={<Navigate to="/" replace />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />

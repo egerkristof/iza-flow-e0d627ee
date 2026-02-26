@@ -164,7 +164,7 @@ export default function UseCasesPage() {
               boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
             }}
           >
-            Book a Protocol Assessment <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
       </section>
@@ -364,8 +364,10 @@ export default function UseCasesPage() {
               <span style={{ color: "hsl(var(--primary))" }}>Within months, they're running the full OS.</span>
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/for-professional-services"
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
                 style={{
                   background: "var(--gradient-brand-btn)",
@@ -373,14 +375,14 @@ export default function UseCasesPage() {
                   boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
                 }}
               >
-                Fix One Process: The Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
               <Link
-                to="/enterprise"
+                to="/"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border"
                 style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
               >
-                Fix The Company: The OS →
+                See the Platform →
               </Link>
             </div>
           </div>
