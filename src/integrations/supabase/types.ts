@@ -608,6 +608,39 @@ export type Database = {
           },
         ]
       }
+      extraction_trials: {
+        Row: {
+          company: string | null
+          content_preview: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          result_summary: Json | null
+          source_type: string
+        }
+        Insert: {
+          company?: string | null
+          content_preview?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          result_summary?: Json | null
+          source_type?: string
+        }
+        Update: {
+          company?: string | null
+          content_preview?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          result_summary?: Json | null
+          source_type?: string
+        }
+        Relationships: []
+      }
       knowledge_source_versions: {
         Row: {
           change_note: string | null

@@ -16,6 +16,7 @@ import AdminPromptsPage from "./pages/AdminPrompts";
 import ResearchTemplatesPage from "./pages/ResearchTemplates";
 import ResourceEditorPage from "./pages/ResourceEditor";
 import NotFound from "./pages/NotFound";
+import AdminTrials from "./pages/AdminTrials";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
@@ -25,6 +26,7 @@ import UseCasesPage from "./pages/marketing/UseCases";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import ExtractionEngine from "./pages/marketing/ExtractionEngine";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +64,7 @@ const App = () => (
             <Route path="/product" element={<Navigate to="/" replace />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
+            <Route path="/extract" element={<ExtractionEngine />} />
 
             {/* Legacy redirects */}
             <Route path="/liza" element={<Navigate to="/" replace />} />
@@ -86,6 +89,7 @@ const App = () => (
             <Route path="/my-knowledge" element={<ProtectedRoute><MyKnowledgePage /></ProtectedRoute>} />
             <Route path="/admin/prompts" element={<ProtectedRoute blockedRoles={["operator"]}><AdminPromptsPage /></ProtectedRoute>} />
             <Route path="/research-templates" element={<ProtectedRoute blockedRoles={["operator"]}><ResearchTemplatesPage /></ProtectedRoute>} />
+            <Route path="/admin/trials" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminTrials /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
