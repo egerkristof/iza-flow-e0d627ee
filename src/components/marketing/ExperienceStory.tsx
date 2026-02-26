@@ -300,16 +300,9 @@ function TabDocumentMap({ result, onNext }: {
     <div>
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-foreground mb-2">What's inside your document</h2>
-        <p className="text-muted-foreground mb-3">
+        <p className="text-muted-foreground mb-4">
           LIZA read your document and identified the structure, processes, and rules within it. Expand any section to see the details.
         </p>
-        <div className="flex items-start gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10 mb-4">
-          <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-          <p className="text-xs text-muted-foreground">
-            <span className="font-semibold text-primary">How LIZA helped: </span>
-            LIZA automatically parsed your document, identified domain boundaries, classified each section by type (process, rule, insight), and flagged gaps where knowledge is missing.
-          </p>
-        </div>
 
         {/* Human-readable summary */}
         <div className="flex items-center gap-2 flex-wrap mb-5">
@@ -828,16 +821,9 @@ function TabLearn({ learnings, onGoToMap }: { learnings: ProjectedLearning[]; on
     <div>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">What Improves Over Time</h2>
-        <p className="text-muted-foreground mb-3">
+        <p className="text-muted-foreground">
           Every time your team runs a playbook, LIZA captures what worked and what didn't. Your playbooks get smarter automatically.
         </p>
-        <div className="flex items-start gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10">
-          <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-          <p className="text-xs text-muted-foreground">
-            <span className="font-semibold text-primary">How LIZA helps: </span>
-            LIZA compares each execution against the playbook, detects drift, surfaces friction patterns across your team, and automatically suggests refinements to your processes.
-          </p>
-        </div>
       </div>
 
       {/* Clean cycle — no academic labels */}
