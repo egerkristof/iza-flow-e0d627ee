@@ -27,6 +27,7 @@ import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import ExtractionEngine from "./pages/marketing/ExtractionEngine";
+import ExperienceTestPage from "./pages/marketing/ExperienceTestPage";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const App = () => (
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/extract" element={<ExtractionEngine />} />
+            <Route path="/extract/test" element={<ExperienceTestPage />} />
 
             {/* Legacy redirects */}
             <Route path="/liza" element={<Navigate to="/" replace />} />
