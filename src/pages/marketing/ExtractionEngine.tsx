@@ -164,13 +164,13 @@ export default function ExtractionEngine() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6 border"
             style={{ borderColor: "hsl(var(--primary) / 0.3)", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.08)" }}>
-            <Sparkles className="w-3.5 h-3.5" /> Extraction Engine
+            <Sparkles className="w-3.5 h-3.5" /> Live Preview
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
-            See your knowledge, <span className="brand-gradient-text">in action</span>
+            See your expertise, <span className="brand-gradient-text">in action</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose a sample document or upload your own. LIZA will extract your knowledge, generate executable protocols, and show you the full AI operating model experience.
+            Upload a document. Watch LIZA turn it into playbooks, identify knowledge gaps, and show you what execution looks like.
           </p>
         </div>
 
