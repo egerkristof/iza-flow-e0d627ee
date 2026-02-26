@@ -1,4 +1,4 @@
-import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope, Home } from "lucide-react";
+import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope, Home, FlaskConical } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/lib/auth";
@@ -26,6 +26,7 @@ const navItems = [
   { title: "Oversee", url: "/oversight", icon: BarChart3, hideForRoles: ["operator"] },
   { title: "Learn", url: "/my-knowledge", icon: User, hideForRoles: [] as string[] },
   { title: "Configure", url: "/admin/prompts", icon: FileCode2, hideForRoles: ["operator", "manager"] },
+  { title: "Trials", url: "/admin/trials", icon: FlaskConical, hideForRoles: ["operator", "manager"] },
 ];
 
 /** LIZA wordmark — matching reference image style */

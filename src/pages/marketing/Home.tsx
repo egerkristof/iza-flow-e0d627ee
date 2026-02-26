@@ -51,8 +51,8 @@ function Hero() {
           LIZA extracts senior expertise and turns it into executable protocols your entire organisation runs on.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button
-            onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
+          <Link
+            to="/extract"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -61,7 +61,7 @@ function Hero() {
             }}
           >
             Try the Extraction Engine <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
           <a
             href={CAL_URL}
             target="_blank"

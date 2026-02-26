@@ -204,6 +204,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
           <p className="text-xs text-muted-foreground">© 2025 LIZA OS. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a href="mailto:kristof.eger@lizaos.ai" className="text-xs text-muted-foreground hover:text-foreground transition-colors">kristof.eger@lizaos.ai</a>
+            <Link to="/auth" className="text-xs text-muted-foreground/40 hover:text-muted-foreground transition-colors">Team Login</Link>
             <p className="text-xs brand-gradient-text font-semibold">Turn judgment into infrastructure.</p>
           </div>
         </div>
