@@ -153,6 +153,11 @@ export default function ExtractionEngine() {
     setPasteContent(""); setPdfFile(null); setPhaseIndex(0);
   };
 
+  const [activeDomain, setActiveDomain] = useState<string>("All");
+
+  const DOMAIN_FILTERS = ["All", ...Array.from(new Set(SAMPLE_DOCUMENTS.map((d) => d.domain)))];
+  const filteredSamples = activeDomain === "All" ? SAMPLE_DOCUMENTS : SAMPLE_DOCUMENTS.filter((d) => d.domain === activeDomain);
+
   const isProcessing = stage === "extracting" || stage === "simulating";
   const phases = stage === "simulating" ? SIMULATE_PHASES : EXTRACT_PHASES;
   const processingTitle = stage === "simulating" ? "Building your playbooks…" : "Analysing your document…";
@@ -187,8 +192,20 @@ export default function ExtractionEngine() {
         {stage === "choose" && !mode && (
           <div className="max-w-3xl mx-auto">
             <h3 className="text-sm font-semibold text-foreground mb-4">Choose a sample document</h3>
+            <div className="flex items-center gap-2 mb-5 flex-wrap">
+              {DOMAIN_FILTERS.map((domain) => (
+                <button key={domain} onClick={() => setActiveDomain(domain)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                    activeDomain === domain
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                  }`}>
+                  {domain}
+                </button>
+              ))}
+            </div>
             <div className="grid gap-4 mb-8">
-              {SAMPLE_DOCUMENTS.map((doc) => {
+              {filteredSamples.map((doc) => {
                 const Icon = ICON_MAP[doc.icon];
                 return (
                   <button key={doc.id} onClick={() => handleSampleSelect(doc)}
