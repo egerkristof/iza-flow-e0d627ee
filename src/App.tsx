@@ -19,11 +19,12 @@ import NotFound from "./pages/NotFound";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
-import EnterpriseDeck from "./pages/EnterpriseDeck";
+import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import ProfessionalServicesPage from "./pages/marketing/ProfessionalServices";
 import UseCasesPage from "./pages/marketing/UseCases";
 import ProductPage from "./pages/marketing/Product";
+import EnterpriseDeck from "./pages/EnterpriseDeck";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
@@ -55,20 +56,29 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
-            <Route path="/" element={<ProfessionalServicesPage />} />
-            <Route path="/liza" element={<Navigate to="/" replace />} />
-            <Route path="/for-professional-services" element={<Navigate to="/" replace />} />
-            <Route path="/platform" element={<Navigate to="/product" replace />} />
+
+            {/* Marketing — product-led homepage */}
+            <Route path="/" element={<HomePage />} />
+            <Route path="/codify" element={<ProfessionalServicesPage />} />
+            <Route path="/scale" element={<EnterpriseDeck />} />
             <Route path="/product" element={<ProductPage />} />
-            <Route path="/advisory" element={<Navigate to="/for-professional-services" replace />} />
-            <Route path="/manifesto" element={<ManifestoPage />} />
-            <Route path="/for-professional-services" element={<ProfessionalServicesPage />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
+            <Route path="/manifesto" element={<ManifestoPage />} />
+
+            {/* Legacy redirects */}
+            <Route path="/liza" element={<Navigate to="/" replace />} />
+            <Route path="/for-professional-services" element={<Navigate to="/codify" replace />} />
+            <Route path="/platform" element={<Navigate to="/product" replace />} />
+            <Route path="/advisory" element={<Navigate to="/codify" replace />} />
+            <Route path="/enterprise" element={<Navigate to="/scale" replace />} />
+            <Route path="/consulting" element={<Navigate to="/sales" replace />} />
+
+            {/* Decks */}
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/sales" element={<ConsultingDeck />} />
-            <Route path="/consulting" element={<Navigate to="/sales" replace />} />
-            <Route path="/enterprise" element={<EnterpriseDeck />} />
+
+            {/* App */}
             <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/workbooks" element={<ProtectedRoute><WorkbooksPage /></ProtectedRoute>} />
             <Route path="/workbooks/:id" element={<ProtectedRoute><WorkbookDetailPage /></ProtectedRoute>} />

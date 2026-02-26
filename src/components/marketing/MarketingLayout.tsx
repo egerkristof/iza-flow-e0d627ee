@@ -3,13 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-const NAV_LEFT = [
-  { label: "Scale with AI", href: "/enterprise" },
+const NAV_ITEMS = [
   { label: "Product", href: "/product" },
-];
-
-const NAV_RIGHT = [
   { label: "Use Cases", href: "/use-cases" },
+  { label: "Codify Expertise", href: "/codify" },
+  { label: "Scale with AI", href: "/scale" },
 ];
 
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -57,8 +55,8 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {[...NAV_LEFT, ...NAV_RIGHT].map((n) => {
-              const isActive = location.pathname === n.href || (n.href !== "/liza" && location.pathname.startsWith(n.href));
+            {NAV_ITEMS.map((n) => {
+              const isActive = location.pathname === n.href;
               return (
                 <Link
                   key={n.href}
@@ -101,7 +99,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-                Book a Protocol Assessment
+                Book an Assessment Call
             </a>
           </div>
 
@@ -132,7 +130,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
           >
             <div className="px-6 py-4 flex flex-col gap-2">
-              {[...NAV_LEFT, ...NAV_RIGHT].map((n) => (
+              {NAV_ITEMS.map((n) => (
                 <Link
                   key={n.href}
                   to={n.href}
@@ -152,7 +150,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                   color: "hsl(var(--primary-foreground))",
                 }}
               >
-                Book a Protocol Assessment
+                Book an Assessment Call
               </a>
             </div>
           </div>
@@ -184,25 +182,22 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Product</p>
               <div className="flex flex-col gap-2">
-                {[...NAV_LEFT, ...NAV_RIGHT].map((n) => (
-                  <Link key={n.href} to={n.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    {n.label}
-                  </Link>
-                ))}
+                <Link to="/product" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Product</Link>
+                <Link to="/use-cases" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Use Cases</Link>
               </div>
             </div>
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Start</p>
+              <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Get Started</p>
               <div className="flex flex-col gap-2">
                 <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Book a Call</a>
-                <Link to="/for-professional-services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Codify Senior Knowledge</Link>
+                <Link to="/codify" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Codify Expertise</Link>
+                <Link to="/scale" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Scale with AI</Link>
               </div>
             </div>
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Company</p>
               <div className="flex flex-col gap-2">
                 <Link to="/manifesto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Manifesto</Link>
-                <Link to="/ai-champions" className="text-sm text-muted-foreground hover:text-foreground transition-colors">For AI Leaders</Link>
               </div>
             </div>
           </div>
