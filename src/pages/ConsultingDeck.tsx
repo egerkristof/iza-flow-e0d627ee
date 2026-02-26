@@ -42,26 +42,26 @@ function ScaledSlide({ children }: { children: React.ReactNode }) {
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 
-const BG   = "hsl(220 18% 4%)";
-const BG2  = "hsl(220 14% 7%)";
-const C    = "210 18% 92%";
-const MUT  = "215 10% 48%";
-const BLUE = "200 90% 52%";
-const TEAL = "155 72% 46%";
-const GOLD = "45 95% 55%";
-const RED  = "0 70% 58%";
+const BG   = "hsl(0 0% 100%)";
+const BG2  = "hsl(220 15% 97%)";
+const C    = "222 20% 10%";
+const MUT  = "215 15% 42%";
+const BLUE = "200 90% 42%";
+const TEAL = "155 72% 38%";
+const GOLD = "38 92% 42%";
+const RED  = "0 72% 50%";
 
 function Grid() {
   return (
-    <div className="absolute inset-0 opacity-[0.025]" style={{
-      backgroundImage: `linear-gradient(hsl(${BLUE}) 1px, transparent 1px), linear-gradient(90deg, hsl(${BLUE}) 1px, transparent 1px)`,
+    <div className="absolute inset-0 opacity-[0.06]" style={{
+      backgroundImage: `linear-gradient(hsl(215 15% 75%) 1px, transparent 1px), linear-gradient(90deg, hsl(215 15% 75%) 1px, transparent 1px)`,
       backgroundSize: "80px 80px"
     }} />
   );
 }
 
 function Bar() {
-  return <div className="absolute bottom-0 left-0 right-0 h-[3px]"
+  return <div className="absolute bottom-0 left-0 right-0 h-1"
     style={{ background: `linear-gradient(90deg, hsl(${BLUE}), hsl(${TEAL}))` }} />;
 }
 
@@ -860,12 +860,12 @@ export default function ConsultingDeck() {
   // ─── Mobile: clean present mode ─────────────────────────────────────────────
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-[9999]" style={{ background: "hsl(220 18% 3%)" }}
+      <div className="fixed inset-0 z-[9999]" style={{ background: "hsl(0 0% 100%)" }}
         onClick={() => { if (!isPortrait) showMobileControls(); }}>
         {/* Rotate hint overlay */}
         {isPortrait && (
           <div className="absolute inset-0 z-[10000] flex flex-col items-center justify-center gap-4 px-8"
-            style={{ background: "hsl(220 18% 3% / 0.92)", backdropFilter: "blur(8px)" }}>
+            style={{ background: "hsl(0 0% 100% / 0.92)", backdropFilter: "blur(8px)" }}>
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
               style={{ background: `hsl(${BLUE} / 0.15)`, border: `1px solid hsl(${BLUE} / 0.3)` }}>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={`hsl(${BLUE})`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -888,7 +888,7 @@ export default function ConsultingDeck() {
         {/* Minimal floating controls — auto-hide */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full transition-opacity duration-300"
           style={{
-            background: "hsl(220 18% 4% / 0.85)", border: "1px solid hsl(220 14% 15%)", backdropFilter: "blur(8px)",
+            background: "hsl(0 0% 100% / 0.9)", border: "1px solid hsl(220 12% 90%)", backdropFilter: "blur(8px)",
             opacity: mobileControlsVisible ? 1 : 0, pointerEvents: mobileControlsVisible ? "auto" : "none",
           }}
           onClick={(e) => e.stopPropagation()}>
@@ -921,13 +921,13 @@ export default function ConsultingDeck() {
 
   // ─── Desktop: full chrome ───────────────────────────────────────────────────
   return (
-    <div className="flex flex-col h-screen" style={{ background: "hsl(220 18% 3%)" }}>
+    <div className="flex flex-col h-screen" style={{ background: "hsl(220 15% 97%)" }}>
       {/* Toolbar */}
       <div className="flex items-center justify-between px-6 py-3 border-b flex-shrink-0"
-        style={{ borderColor: "hsl(220 14% 12%)", background: "hsl(220 18% 4%)" }}>
+        style={{ borderColor: "hsl(220 12% 90%)", background: "hsl(220 15% 97%)" }}>
         <div className="flex items-center gap-4">
           <div className="w-7 h-7 rounded flex items-center justify-center font-black text-sm"
-            style={{ background: `hsl(${BLUE})`, color: "hsl(220 18% 4%)" }}>L</div>
+            style={{ background: `hsl(${BLUE})`, color: "hsl(0 0% 100%)" }}>L</div>
           <span className="font-semibold" style={{ fontSize: 14, color: `hsl(${C})` }}>LIZA OS — Sales Deck</span>
           <span style={{ fontSize: 12, color: `hsl(${MUT})` }}>·</span>
           <span style={{ fontSize: 13, color: `hsl(${MUT})` }}>{SLIDES[current].label}</span>
@@ -935,17 +935,17 @@ export default function ConsultingDeck() {
         <div className="flex items-center gap-3">
           <button onClick={() => setGrid(v => !v)}
             className={cn("flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
-              grid ? "text-white" : "text-gray-400 hover:text-white")}
-            style={{ background: grid ? `hsl(${BLUE} / 0.15)` : "transparent" }}>
+              grid ? "text-foreground" : "text-muted-foreground hover:text-foreground")}
+            style={{ background: grid ? `hsl(${BLUE} / 0.1)` : "transparent" }}>
             <Grid3x3 size={15} /> Grid
           </button>
           <button onClick={handleExportPdf} disabled={exporting}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors disabled:opacity-50">
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50">
             {exporting ? <Loader2 size={15} className="animate-spin" /> : <Download size={15} />}
             {exporting ? "Exporting..." : "PDF"}
           </button>
           <button onClick={() => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {}); else document.exitFullscreen().catch(() => {}); }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             <Maximize2 size={15} /> {fs ? "Exit" : "Present"}
           </button>
           <span className="font-mono text-sm" style={{ color: `hsl(${MUT})` }}>
@@ -958,12 +958,12 @@ export default function ConsultingDeck() {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <div className="w-[180px] flex-shrink-0 overflow-y-auto py-4 px-3 border-r space-y-2"
-          style={{ borderColor: "hsl(220 14% 10%)", background: "hsl(220 18% 3%)" }}>
+          style={{ borderColor: "hsl(220 12% 90%)", background: "hsl(220 15% 97%)" }}>
           {SLIDES.map((s, i) => (
             <button key={s.id} onClick={() => { setCurrent(i); setGrid(false); }}
               className="w-full rounded-lg overflow-hidden border transition-all"
               style={{
-                borderColor: i === current ? `hsl(${BLUE} / 0.6)` : "hsl(220 14% 12%)",
+                borderColor: i === current ? `hsl(${BLUE} / 0.6)` : "hsl(220 12% 90%)",
                 background: i === current ? `hsl(${BLUE} / 0.06)` : "transparent",
               }}>
               <div className="w-full aspect-video">
@@ -985,15 +985,15 @@ export default function ConsultingDeck() {
         <div className="flex-1 flex flex-col overflow-hidden">
           {grid ? (
             <div className="flex-1 overflow-y-auto p-8 grid grid-cols-3 gap-6"
-              style={{ background: "hsl(220 18% 3%)" }}>
+              style={{ background: "hsl(220 15% 97%)" }}>
               {SLIDES.map((s, i) => (
                 <button key={s.id} onClick={() => { setCurrent(i); setGrid(false); }}
                   className="rounded-xl overflow-hidden border transition-all"
-                  style={{ borderColor: i === current ? `hsl(${BLUE} / 0.6)` : "hsl(220 14% 14%)" }}>
+                  style={{ borderColor: i === current ? `hsl(${BLUE} / 0.6)` : "hsl(220 12% 90%)" }}>
                   <div className="w-full aspect-video">
                     <ScaledSlide><s.component /></ScaledSlide>
                   </div>
-                  <div className="px-4 py-2 flex items-center gap-3" style={{ background: "hsl(220 18% 5%)" }}>
+                  <div className="px-4 py-2 flex items-center gap-3" style={{ background: "hsl(220 15% 95%)" }}>
                     <span className="font-mono font-bold" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>{String(i + 1).padStart(2, "0")}</span>
                     <span style={{ fontSize: 13, color: `hsl(${MUT})` }}>{s.label}</span>
                   </div>
@@ -1007,11 +1007,11 @@ export default function ConsultingDeck() {
               </div>
               {/* Nav */}
               <div className="flex items-center justify-between px-8 py-4 border-t flex-shrink-0"
-                style={{ borderColor: "hsl(220 14% 10%)" }}>
+                style={{ borderColor: "hsl(220 12% 90%)" }}>
                 <button onClick={prev}
                   disabled={current === 0}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
-                  style={{ color: `hsl(${C})`, background: "hsl(220 14% 10%)", fontSize: 14 }}>
+                  style={{ color: `hsl(${C})`, background: "hsl(220 15% 93%)", fontSize: 14 }}>
                   <ChevronLeft size={18} /> Previous
                 </button>
 
@@ -1029,7 +1029,7 @@ export default function ConsultingDeck() {
                 <button onClick={next}
                   disabled={current === SLIDES.length - 1}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
-                  style={{ color: `hsl(${C})`, background: "hsl(220 14% 10%)", fontSize: 14 }}>
+                  style={{ color: `hsl(${C})`, background: "hsl(220 15% 93%)", fontSize: 14 }}>
                   Next <ChevronRight size={18} />
                 </button>
               </div>
