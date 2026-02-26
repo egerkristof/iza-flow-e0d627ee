@@ -300,9 +300,16 @@ function TabDocumentMap({ result, onNext }: {
     <div>
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-foreground mb-2">What's inside your document</h2>
-        <p className="text-muted-foreground mb-4">
+        <p className="text-muted-foreground mb-3">
           LIZA read your document and identified the structure, processes, and rules within it. Expand any section to see the details.
         </p>
+        <div className="flex items-start gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10 mb-4">
+          <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+          <p className="text-xs text-muted-foreground">
+            <span className="font-semibold text-primary">How LIZA helped: </span>
+            LIZA automatically parsed your document, identified domain boundaries, classified each section by type (process, rule, insight), and flagged gaps where knowledge is missing.
+          </p>
+        </div>
 
         {/* Human-readable summary */}
         <div className="flex items-center gap-2 flex-wrap mb-5">
@@ -393,15 +400,17 @@ function PlaybookCard({ protocol, coachingQuestions, defaultOpen }: {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="text-sm font-medium text-foreground">{step.title}</p>
-                    {step.type !== "action" && (
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full"
-                        style={{
-                          background: step.type === "gate" ? "hsl(38 92% 50% / 0.1)" : "hsl(var(--primary) / 0.1)",
-                          color: step.type === "gate" ? "hsl(38 92% 50%)" : "hsl(var(--primary))",
-                        }}>
-                        {step.type === "gate" ? "Compliance gate. Must pass before continuing." : "AI-assisted. LIZA drafts this for your team."}
-                      </span>
-                    )}
+                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full"
+                      style={{
+                        background: step.type === "gate" ? "hsl(38 92% 50% / 0.1)" : step.type === "ai_assist" ? "hsl(var(--primary) / 0.1)" : "hsl(var(--muted))",
+                        color: step.type === "gate" ? "hsl(38 92% 50%)" : step.type === "ai_assist" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                      }}>
+                      {step.type === "gate"
+                        ? "Compliance gate · LIZA checks criteria before the team can proceed"
+                        : step.type === "ai_assist"
+                        ? "AI-assisted · LIZA drafts this for your team to review"
+                        : "Team action · LIZA tracks progress and captures learnings"}
+                    </span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-0.5">{step.description}</p>
                 </div>
@@ -457,9 +466,16 @@ function TabPlaybooks({ protocols, coachingQuestions, unmatchedQuestions, onNext
     <div>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">Your Playbooks</h2>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground mb-3">
           These are step-by-step workflows LIZA built from your document. Each one can be run by your team with AI support.
         </p>
+        <div className="flex items-start gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10">
+          <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+          <p className="text-xs text-muted-foreground">
+            <span className="font-semibold text-primary">How LIZA helped: </span>
+            LIZA transformed your processes into executable playbooks with defined steps, compliance gates, and identified where AI can draft outputs for your team to review.
+          </p>
+        </div>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -691,6 +707,15 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
                     {protocol.compliance_gates.map((g, i) => <li key={i}>• {g}</li>)}
                   </ul>
                 )}
+                <div className="flex items-start gap-2 p-2.5 rounded-lg bg-primary/5 border border-primary/10 mt-3">
+                  <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-[10px] font-semibold text-primary mb-0.5">How LIZA helps</p>
+                    <p className="text-[11px] text-muted-foreground">
+                      LIZA automatically evaluates the gate criteria against the work completed so far, flagging what passes and what still needs attention before the team can proceed.
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -700,9 +725,18 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
                   <User className="w-3.5 h-3.5 text-foreground" />
                   <span className="text-xs font-semibold text-muted-foreground">Team action</span>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  {assignedMember.name} completes this step following the playbook. LIZA tracks progress and captures any learnings along the way.
+                <p className="text-xs text-muted-foreground mb-3">
+                  {assignedMember.name} completes this step following the playbook guidelines.
                 </p>
+                <div className="flex items-start gap-2 p-2.5 rounded-lg bg-primary/5 border border-primary/10">
+                  <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-[10px] font-semibold text-primary mb-0.5">How LIZA helps</p>
+                    <p className="text-[11px] text-muted-foreground">
+                      LIZA monitors this step in real-time — tracking progress, flagging when output drifts from the playbook, and capturing learnings that feed back into your knowledge base.
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -794,9 +828,16 @@ function TabLearn({ learnings, onGoToMap }: { learnings: ProjectedLearning[]; on
     <div>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">What Improves Over Time</h2>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground mb-3">
           Every time your team runs a playbook, LIZA captures what worked and what didn't. Your playbooks get smarter automatically.
         </p>
+        <div className="flex items-start gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10">
+          <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+          <p className="text-xs text-muted-foreground">
+            <span className="font-semibold text-primary">How LIZA helps: </span>
+            LIZA compares each execution against the playbook, detects drift, surfaces friction patterns across your team, and automatically suggests refinements to your processes.
+          </p>
+        </div>
       </div>
 
       {/* Clean cycle — no academic labels */}
