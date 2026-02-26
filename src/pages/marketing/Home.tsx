@@ -77,17 +77,67 @@ function Hero() {
   );
 }
 
-// ── WHAT YOU'RE DOING NOW vs LIZA ────────────────────────────────────────────
-function Comparison() {
+// ── THE PROBLEM — Pain cards ─────────────────────────────────────────────────
+function Problem() {
   return (
     <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <SectionTag label="The Problem" />
           <h2 className="text-4xl font-black mb-4">
-            How organisations try to scale expertise today.
+            Your expertise doesn't scale.
             <br />
-            <GradientText>None of it works.</GradientText>
+            <GradientText>AI makes it worse.</GradientText>
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            {
+              icon: <BookOpen className="w-5 h-5" />,
+              title: "Knowledge walks out",
+              desc: "Your best people carry methodology in their heads. Every resignation is a knowledge loss event.",
+            },
+            {
+              icon: <Target className="w-5 h-5" />,
+              title: "Execution is inconsistent",
+              desc: "Same brief, 14 different outputs. Quality depends on who supervises. No shared standard.",
+            },
+            {
+              icon: <BarChart3 className="w-5 h-5" />,
+              title: "AI accelerates the mess",
+              desc: "Generic AI gives everyone content generation — with zero organisational context. Faster at producing the wrong thing.",
+            },
+          ].map((c, i) => (
+            <div
+              key={i}
+              className="rounded-2xl border p-7"
+              style={{ background: "hsl(var(--muted) / 0.3)", borderColor: "hsl(var(--border))" }}
+            >
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-4"
+                style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}>
+                {c.icon}
+              </div>
+              <h3 className="text-lg font-bold mb-2">{c.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── WHY THIS WORKS — Comparison ──────────────────────────────────────────────
+function WhyThisWorks() {
+  return (
+    <section className="py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <SectionTag label="Why Existing Approaches Fail" icon={<Shield className="w-3 h-3" />} />
+          <h2 className="text-4xl font-black mb-4">
+            You've tried to fix this before.
+            <br />
+            <GradientText>Here's why it didn't stick.</GradientText>
           </h2>
         </div>
 
@@ -558,9 +608,10 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <Hero />
-      <Comparison />
+      <Problem />
       <ProductInAction />
       <Pipeline />
+      <WhyThisWorks />
       <ExecutionCycle />
       <Outcomes />
       <GetStarted />
