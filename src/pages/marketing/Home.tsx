@@ -51,10 +51,8 @@ function Hero() {
           LIZA extracts senior expertise and turns it into executable protocols your entire organisation runs on.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -62,15 +60,17 @@ function Hero() {
               boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
             }}
           >
-            Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <button
-            onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
-            className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground"
+            Try the Extraction Engine <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <a
+            href={CAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
             style={{ borderColor: "hsl(var(--border))" }}
           >
-            See how it works ↓
-          </button>
+            Book a Discovery Call
+          </a>
         </div>
       </div>
     </section>
@@ -695,12 +695,8 @@ export default function HomePage() {
       <Hero />
       <Problem />
       <ProductInAction />
-      <Pipeline />
-      <WhyThisWorks />
-      <ExecutionCycle />
-      <Outcomes />
       <GetStarted />
-      <Features />
+      <Outcomes />
       <FinalCTA />
     </MarketingLayout>
   );
