@@ -126,7 +126,7 @@ function TabNav({ active, onChange, availableTabs, visitedTabs }: {
   return (
     <>
       <div ref={sentinelRef} className="h-0" />
-      <div className={`sticky top-0 z-30 flex justify-center py-3 transition-all duration-300 ${
+      <div className={`sticky top-16 z-40 flex justify-center py-3 transition-all duration-300 ${
         isSticky
           ? "bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm"
           : ""
