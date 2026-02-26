@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Sparkles, Upload, FileText, Loader2, AlertCircle, Building2, Rocket, User,
+  Sparkles, Upload, FileText, Loader2, AlertCircle, TrendingUp, Settings, Landmark, Users, HeartHandshake,
   ChevronDown, ChevronRight, ArrowLeft,
 } from "lucide-react";
 import type { ExtractionResult } from "@/lib/knowledge-schema";
@@ -17,7 +17,13 @@ type Stage = "choose" | "preview-sample" | "extracting" | "simulating" | "result
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-const ICON_MAP = { building: Building2, rocket: Rocket, user: User } as const;
+const ICON_MAP = {
+  "trending-up": TrendingUp,
+  settings: Settings,
+  landmark: Landmark,
+  users: Users,
+  "heart-handshake": HeartHandshake,
+} as const;
 
 const EXTRACT_PHASES = [
   "Reading your document…",
@@ -191,7 +197,35 @@ export default function ExtractionEngine() {
         {/* ── Stage: Choose ──────────────────────────────────────────── */}
         {stage === "choose" && !mode && (
           <div className="max-w-3xl mx-auto">
-            <h3 className="text-sm font-semibold text-foreground mb-4">Choose a sample document</h3>
+            {/* Upload Your Own — Hero Banner */}
+            <button onClick={() => setMode("upload")}
+              className="w-full group rounded-2xl border-2 border-dashed p-8 text-center hover:border-primary/60 transition-all border-primary/30 mb-10"
+              style={{ background: "hsl(var(--primary) / 0.03)" }}>
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                  style={{ background: "hsl(var(--primary) / 0.1)" }}>
+                  <Upload className="w-7 h-7 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-foreground mb-1">Try it on your own process</h3>
+                  <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                    Upload your team's actual document and see exactly how LIZA would structure, standardise, and operationalise it.
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-primary border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all mt-1">
+                  Upload a document <ChevronRight className="w-4 h-4" />
+                </span>
+                <p className="text-[10px] text-muted-foreground mt-1">Paste text or upload a PDF · Up to 5 MB · Email required</p>
+              </div>
+            </button>
+
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-px flex-1 bg-border" />
+              <span className="text-xs text-muted-foreground font-medium">or explore with a sample</span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+
+            {/* Domain filter chips */}
             <div className="flex items-center gap-2 mb-5 flex-wrap">
               {DOMAIN_FILTERS.map((domain) => (
                 <button key={domain} onClick={() => setActiveDomain(domain)}
@@ -204,12 +238,14 @@ export default function ExtractionEngine() {
                 </button>
               ))}
             </div>
-            <div className="grid gap-4 mb-8">
+
+            {/* Sample document cards */}
+            <div className="grid gap-3">
               {filteredSamples.map((doc) => {
                 const Icon = ICON_MAP[doc.icon];
                 return (
                   <button key={doc.id} onClick={() => handleSampleSelect(doc)}
-                    className="group rounded-2xl border p-6 text-left hover:border-primary/50 transition-all border-border bg-card">
+                    className="group rounded-2xl border p-5 text-left hover:border-primary/50 transition-all border-border bg-card">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                         style={{ background: "hsl(var(--primary) / 0.1)" }}>
@@ -217,39 +253,18 @@ export default function ExtractionEngine() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h4 className="font-semibold text-foreground">{doc.title}</h4>
+                          <h4 className="font-semibold text-foreground text-sm">{doc.title}</h4>
                           <span className="text-[10px] font-mono text-muted-foreground px-2 py-0.5 rounded bg-muted">{doc.domain}</span>
                         </div>
                         <p className="text-sm text-muted-foreground">{doc.subtitle}</p>
                         <p className="text-xs text-muted-foreground mt-1">~{doc.wordCount} words · No email required</p>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-2" />
+                      <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-2" />
                     </div>
                   </button>
                 );
               })}
             </div>
-
-            <div className="flex items-center gap-4 mb-6">
-              <div className="h-px flex-1 bg-border" />
-              <span className="text-xs text-muted-foreground">or</span>
-              <div className="h-px flex-1 bg-border" />
-            </div>
-
-            <button onClick={() => setMode("upload")}
-              className="w-full group rounded-2xl border p-6 text-left hover:border-primary/50 transition-all border-border bg-card">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: "hsl(var(--primary) / 0.1)" }}>
-                  <Upload className="w-5 h-5 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-foreground">Upload Your Own Document</h4>
-                  <p className="text-sm text-muted-foreground">Paste text or upload a PDF (up to 5MB). Email required.</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
-              </div>
-            </button>
           </div>
         )}
 
