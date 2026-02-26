@@ -6,8 +6,7 @@ import { useTheme } from "next-themes";
 const NAV_ITEMS = [
   { label: "LIZA OS", href: "/" },
   { label: "Use Cases", href: "/use-cases" },
-  { label: "Codify Expertise", href: "/codify" },
-  { label: "Scale with AI", href: "/scale" },
+  { label: "Manifesto", href: "/manifesto" },
 ];
 
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -99,7 +98,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-                Book an Assessment Call
+                Book a Discovery Call
             </a>
           </div>
 
@@ -150,7 +149,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                   color: "hsl(var(--primary-foreground))",
                 }}
               >
-                Book an Assessment Call
+                Book a Discovery Call
               </a>
             </div>
           </div>
@@ -189,14 +188,14 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Get Started</p>
               <div className="flex flex-col gap-2">
                 <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Book a Call</a>
-                <Link to="/codify" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Codify Expertise</Link>
-                <Link to="/scale" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Scale with AI</Link>
+                <Link to="/use-cases" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Use Cases</Link>
               </div>
             </div>
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Company</p>
               <div className="flex flex-col gap-2">
                 <Link to="/manifesto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Manifesto</Link>
+                <a href="mailto:kristof.eger@lizaos.ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
               </div>
             </div>
           </div>

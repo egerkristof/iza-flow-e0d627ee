@@ -62,7 +62,7 @@ function Hero() {
               boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
             }}
           >
-            Book an Assessment Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
           <button
             onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
@@ -447,13 +447,15 @@ function GetStarted() {
                   <p className="text-sm font-semibold">Partners & Practice Leads</p>
                 </div>
               </div>
-              <Link
-                to="/codify"
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border transition-all hover:opacity-80"
                 style={{ borderColor: "hsl(var(--primary) / 0.4)", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.08)" }}
               >
-                Learn more about the Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
           </div>
 
@@ -497,20 +499,22 @@ function GetStarted() {
                   <p className="text-sm font-semibold">COOs & Heads of Function</p>
                 </div>
               </div>
-              <Link
-                to="/scale"
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border transition-all hover:opacity-80"
                 style={{ borderColor: `hsl(${GRN} / 0.4)`, color: `hsl(${GRN})`, background: `hsl(${GRN} / 0.08)` }}
               >
-                Learn more about the Programme <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
           </div>
         </div>
 
         <div className="text-center">
           <p className="text-sm text-muted-foreground mb-4">
-            Not sure which fits? <span className="font-semibold text-foreground">Book an assessment call</span> — we'll help you figure out the right path.
+            Not sure which fits? <span className="font-semibold text-foreground">Book a discovery call</span> — we'll scope the right path together.
           </p>
           <a
             href={CAL_URL}
@@ -523,7 +527,7 @@ function GetStarted() {
               boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
             }}
           >
-            Book an Assessment Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
       </div>
@@ -594,7 +598,7 @@ function FinalCTA() {
                 color: "hsl(var(--primary-foreground))",
                 boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
               }}>
-              Book an Assessment Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
         </div>
