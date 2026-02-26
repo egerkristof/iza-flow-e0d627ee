@@ -199,6 +199,8 @@ function WhyThisWorks() {
 
 // ── PRODUCT IN ACTION — Narrative Screenshot Flow ────────────────────────────
 function ProductInAction() {
+  const [lightbox, setLightbox] = useState<{ src: string; tag: string } | null>(null);
+
   const narrative = [
     {
       src: "/images/product-extract-blueprint.png",
@@ -245,68 +247,87 @@ function ProductInAction() {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <SectionTag label="The Product" icon={<Zap className="w-3 h-3" />} />
-          <h2 className="text-4xl font-black mb-4">
-            Your knowledge in.
-            <br />
-            <GradientText>Your operating system out.</GradientText>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From raw expertise to governed execution — told in six screens.
-          </p>
-        </div>
+    <>
+      <section id="how-it-works" className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <SectionTag label="The Product" icon={<Zap className="w-3 h-3" />} />
+            <h2 className="text-4xl font-black mb-4">
+              Your knowledge in.
+              <br />
+              <GradientText>Your operating system out.</GradientText>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              From raw expertise to governed execution — told in six screens.
+            </p>
+          </div>
 
-        <div className="flex flex-col gap-20">
-          {narrative.map((s, i) => {
-            const isEven = i % 2 === 0;
-            const accentVal = s.accent.includes("--") ? `hsl(${s.accent})` : `hsl(${s.accent})`;
-            return (
-              <div
-                key={i}
-                className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-8 md:gap-12`}
-              >
-                {/* Screenshot */}
-                <div className="flex-1 min-w-0">
-                  <div
-                    className="rounded-2xl border overflow-hidden shadow-2xl"
-                    style={{
-                      borderColor: `${accentVal.replace(")", " / 0.25)")}`,
-                      boxShadow: `0 8px 40px -12px ${accentVal.replace(")", " / 0.15)")}`,
-                    }}
-                  >
-                    <img
-                      src={s.src}
-                      alt={`LIZA OS — ${s.tag}`}
-                      className="w-full h-auto block"
-                      loading="lazy"
-                    />
+          <div className="flex flex-col gap-20">
+            {narrative.map((s, i) => {
+              const isEven = i % 2 === 0;
+              const accentVal = s.accent.includes("--") ? `hsl(${s.accent})` : `hsl(${s.accent})`;
+              return (
+                <div
+                  key={i}
+                  className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-8 md:gap-12`}
+                >
+                  {/* Screenshot */}
+                  <div className="flex-1 min-w-0">
+                    <div
+                      className="rounded-2xl border overflow-hidden shadow-2xl cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
+                      style={{
+                        borderColor: `${accentVal.replace(")", " / 0.25)")}`,
+                        boxShadow: `0 8px 40px -12px ${accentVal.replace(")", " / 0.15)")}`,
+                      }}
+                      onClick={() => setLightbox({ src: s.src, tag: s.tag })}
+                    >
+                      <img
+                        src={s.src}
+                        alt={`LIZA OS — ${s.tag}`}
+                        className="w-full h-auto block"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Copy */}
+                  <div className="flex-shrink-0 md:w-[320px] text-center md:text-left">
+                    <span
+                      className="inline-block text-[11px] font-black tracking-[0.2em] uppercase mb-3 px-3 py-1 rounded-full border"
+                      style={{
+                        color: accentVal,
+                        borderColor: `${accentVal.replace(")", " / 0.3)")}`,
+                        background: `${accentVal.replace(")", " / 0.08)")}`,
+                      }}
+                    >
+                      {s.tag}
+                    </span>
+                    <h3 className="text-xl font-black mb-3 leading-tight">{s.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                   </div>
                 </div>
-
-                {/* Copy */}
-                <div className="flex-shrink-0 md:w-[320px] text-center md:text-left">
-                  <span
-                    className="inline-block text-[11px] font-black tracking-[0.2em] uppercase mb-3 px-3 py-1 rounded-full border"
-                    style={{
-                      color: accentVal,
-                      borderColor: `${accentVal.replace(")", " / 0.3)")}`,
-                      background: `${accentVal.replace(")", " / 0.08)")}`,
-                    }}
-                  >
-                    {s.tag}
-                  </span>
-                  <h3 className="text-xl font-black mb-3 leading-tight">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 cursor-pointer animate-fade-in"
+          style={{ background: "hsla(0 0% 0% / 0.85)", backdropFilter: "blur(8px)" }}
+          onClick={() => setLightbox(null)}
+        >
+          <img
+            src={lightbox.src}
+            alt={`LIZA OS — ${lightbox.tag}`}
+            className="max-w-full max-h-[90vh] rounded-xl shadow-2xl animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+    </>
   );
 }
 
