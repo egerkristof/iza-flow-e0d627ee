@@ -4,6 +4,7 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 const NAV_ITEMS = [
+  { label: "LIZA OS", href: "/" },
   { label: "Use Cases", href: "/use-cases" },
   { label: "Codify Expertise", href: "/codify" },
   { label: "Scale with AI", href: "/scale" },
