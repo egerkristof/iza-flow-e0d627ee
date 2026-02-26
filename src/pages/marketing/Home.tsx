@@ -197,19 +197,57 @@ function WhyThisWorks() {
   );
 }
 
-// ── PRODUCT IN ACTION — Screenshots ──────────────────────────────────────────
+// ── PRODUCT IN ACTION — Narrative Screenshot Flow ────────────────────────────
 function ProductInAction() {
-  const screens = [
-    { src: "/images/product-domains.png", label: "Design", desc: "Structure expertise into domain playbooks" },
-    { src: "/images/product-playbooks.png", label: "Build", desc: "Codify protocols with executable steps" },
-    { src: "/images/product-oversight.png", label: "Oversee", desc: "Track execution and detect drift" },
-    { src: "/images/product-workbook.png", label: "Execute", desc: "Teams run protocols in AI workbooks" },
+  const narrative = [
+    {
+      src: "/images/product-extract-blueprint.png",
+      tag: "Extract",
+      title: "Upload a document. Get a structured blueprint.",
+      desc: "Drop in a process document, policy, or playbook PDF. LIZA detects bundles, playbooks, procedures, and merges duplicates — ready for review before a single line is written.",
+      accent: "200 90% 52%",
+    },
+    {
+      src: "/images/product-design-domains.png",
+      tag: "Organise",
+      title: "Your entire organisation's knowledge. One map.",
+      desc: "Extracted expertise lands in domains — Sales, Operations, Finance, Legal. Each domain holds bundles of playbooks that define how your organisation actually works.",
+      accent: "155 72% 46%",
+    },
+    {
+      src: "/images/product-design-playbook.png",
+      tag: "Design",
+      title: "Every playbook. Every step. Every gate.",
+      desc: "Drill into any playbook to see its procedures, compliance gates, coaching notes, and output requirements. This is your methodology — codified and version-controlled.",
+      accent: "38 92% 50%",
+    },
+    {
+      src: "/images/product-execute-launchpad.png",
+      tag: "Deploy",
+      title: "Teams don't guess. They launch.",
+      desc: "Operators open a workbook and see every playbook available to them as an action card. No blank page. No prompt engineering. Just: pick a playbook, start a session.",
+      accent: "var(--primary)",
+    },
+    {
+      src: "/images/product-execute-protocol.png",
+      tag: "Execute",
+      title: "Guided execution. Step by step.",
+      desc: "Each protocol session walks the operator through procedures in sequence. The AI generates drafts using your organisation's context — not generic output.",
+      accent: "200 90% 52%",
+    },
+    {
+      src: "/images/product-learn-debrief.png",
+      tag: "Learn",
+      title: "The system watches. Then it thinks.",
+      desc: "After execution, LIZA synthesises patterns across all sessions — surfacing drift, compliance gaps, and deep work prompts that challenge your assumptions.",
+      accent: "270 60% 65%",
+    },
   ];
 
   return (
     <section id="how-it-works" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14">
+        <div className="text-center mb-16">
           <SectionTag label="The Product" icon={<Zap className="w-3 h-3" />} />
           <h2 className="text-4xl font-black mb-4">
             Your knowledge in.
@@ -217,33 +255,55 @@ function ProductInAction() {
             <GradientText>Your operating system out.</GradientText>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From raw expertise to governed execution in four moves.
+            From raw expertise to governed execution — told in six screens.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {screens.map((s, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border overflow-hidden"
-              style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
-            >
-              <div className="aspect-[16/10] overflow-hidden bg-muted">
-                <img
-                  src={s.src}
-                  alt={`LIZA OS — ${s.label}`}
-                  className="w-full h-full object-cover object-top"
-                  loading="lazy"
-                />
+        <div className="flex flex-col gap-20">
+          {narrative.map((s, i) => {
+            const isEven = i % 2 === 0;
+            const accentVal = s.accent.includes("--") ? `hsl(${s.accent})` : `hsl(${s.accent})`;
+            return (
+              <div
+                key={i}
+                className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-8 md:gap-12`}
+              >
+                {/* Screenshot */}
+                <div className="flex-1 min-w-0">
+                  <div
+                    className="rounded-2xl border overflow-hidden shadow-2xl"
+                    style={{
+                      borderColor: `${accentVal.replace(")", " / 0.25)")}`,
+                      boxShadow: `0 8px 40px -12px ${accentVal.replace(")", " / 0.15)")}`,
+                    }}
+                  >
+                    <img
+                      src={s.src}
+                      alt={`LIZA OS — ${s.tag}`}
+                      className="w-full h-auto block"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Copy */}
+                <div className="flex-shrink-0 md:w-[320px] text-center md:text-left">
+                  <span
+                    className="inline-block text-[11px] font-black tracking-[0.2em] uppercase mb-3 px-3 py-1 rounded-full border"
+                    style={{
+                      color: accentVal,
+                      borderColor: `${accentVal.replace(")", " / 0.3)")}`,
+                      background: `${accentVal.replace(")", " / 0.08)")}`,
+                    }}
+                  >
+                    {s.tag}
+                  </span>
+                  <h3 className="text-xl font-black mb-3 leading-tight">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
               </div>
-              <div className="p-5">
-                <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "hsl(var(--primary))" }}>
-                  {s.label}
-                </p>
-                <p className="text-sm text-muted-foreground">{s.desc}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
