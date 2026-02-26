@@ -4,7 +4,6 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 const NAV_ITEMS = [
-  { label: "Product", href: "/product" },
   { label: "Use Cases", href: "/use-cases" },
   { label: "Codify Expertise", href: "/codify" },
   { label: "Scale with AI", href: "/scale" },
@@ -182,7 +181,6 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Product</p>
               <div className="flex flex-col gap-2">
-                <Link to="/product" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Product</Link>
                 <Link to="/use-cases" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Use Cases</Link>
               </div>
             </div>
