@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Package, FileText, ArrowRight, ChevronDown, ChevronRight,
-  Layers, Users, BookOpen, Sparkles,
+  Layers, BookOpen, Sparkles,
   Shield, Play, CheckCircle2, Brain, ArrowLeft,
-  MessageCircleQuestion, RefreshCw, AlertCircle, Link2,
-  User,
+  MessageCircleQuestion, RefreshCw, Link2,
+  User, Users,
 } from "lucide-react";
 import {
   CATEGORY_COLORS, CATEGORY_LABELS,
@@ -36,27 +36,47 @@ const CATEGORY_ICONS: Record<string, string> = {
   PRINCIPLE: "🧭", RESEARCH: "🔬", PREFERENCE: "🎯",
 };
 
+// Human-readable category labels for the stats summary
+const HUMAN_CATEGORY_LABELS: Record<string, string> = {
+  PLAYBOOK: "process", PROCEDURE: "step", DIRECTIVE: "rule",
+  KNOWLEDGE: "insight", PRINCIPLE: "principle", RESEARCH: "research item",
+  PREFERENCE: "preference",
+};
+
 const TAB_KEYS = ["map", "playbooks", "execution", "learning"] as const;
 type TabKey = typeof TAB_KEYS[number];
 
-const TAB_META: Record<TabKey, { label: string; icon: React.ElementType; narrative: string }> = {
-  map: { label: "What LIZA Found", icon: Layers, narrative: "Your document, decoded" },
-  playbooks: { label: "Your Playbooks", icon: BookOpen, narrative: "Workflows your team can run" },
-  execution: { label: "Your Team in Action", icon: Play, narrative: "What execution looks like" },
-  learning: { label: "What Gets Better", icon: RefreshCw, narrative: "Knowledge that evolves" },
+const TAB_META: Record<TabKey, { label: string; icon: React.ElementType; step: number }> = {
+  map: { label: "What's Inside", icon: Layers, step: 1 },
+  playbooks: { label: "Your Playbooks", icon: BookOpen, step: 2 },
+  execution: { label: "In Action", icon: Play, step: 3 },
+  learning: { label: "What Improves", icon: RefreshCw, step: 4 },
 };
 
-// ── Team Persona Strip ───────────────────────────────────────────────────────
+const AVATAR_COLORS = [
+  "hsl(200 70% 50%)", "hsl(240 70% 60%)", "hsl(320 70% 55%)",
+  "hsl(150 60% 45%)", "hsl(30 80% 55%)",
+];
+
+// ── Next Step Button ─────────────────────────────────────────────────────────
+
+function NextStepButton({ label, onClick }: { label: string; onClick: () => void }) {
+  return (
+    <div className="mt-8 pt-6 border-t border-border flex justify-end">
+      <button onClick={onClick}
+        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary/10 text-primary hover:bg-primary/15 transition-colors">
+        {label} <ArrowRight className="w-4 h-4" />
+      </button>
+    </div>
+  );
+}
+
+// ── Team Persona Strip (only used in Act 3) ──────────────────────────────────
 
 function TeamPersonaStrip({ members, compact }: {
   members: ExperiencePreview["workbook_preview"]["team_members"];
   compact?: boolean;
 }) {
-  const AVATAR_COLORS = [
-    "hsl(200 70% 50%)", "hsl(240 70% 60%)", "hsl(320 70% 55%)",
-    "hsl(150 60% 45%)", "hsl(30 80% 55%)",
-  ];
-
   if (compact) {
     return (
       <div className="flex items-center gap-1.5">
@@ -101,7 +121,7 @@ function TeamPersonaStrip({ members, compact }: {
   );
 }
 
-// ── Sticky Tab Navigation with progress ──────────────────────────────────────
+// ── Sticky Tab Navigation — numbered steps ───────────────────────────────────
 
 function TabNav({ active, onChange, availableTabs, visitedTabs }: {
   active: TabKey;
@@ -132,23 +152,25 @@ function TabNav({ active, onChange, availableTabs, visitedTabs }: {
           : ""
       }`}>
         <div className="inline-flex items-center gap-1 px-3 py-2 rounded-full border bg-card/80 backdrop-blur-md border-border shadow-lg">
-          {availableTabs.map((key, idx) => {
+          {availableTabs.map((key) => {
             const meta = TAB_META[key];
             const Icon = meta.icon;
             const isActive = key === active;
             const isVisited = visitedTabs.has(key) && !isActive;
             return (
               <button key={key} onClick={() => onChange(key)}
-                className={`relative flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium transition-all ${
+                className={`relative flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-full text-xs font-medium transition-all ${
                   isActive
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : isVisited
                     ? "text-foreground/70 hover:text-foreground hover:bg-accent/50"
                     : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
                 }`}>
-                <Icon className="w-3.5 h-3.5" />
+                <span className={`flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-bold ${
+                  isActive ? "bg-primary-foreground/20" : isVisited ? "bg-primary/15 text-primary" : "bg-muted"
+                }`}>{meta.step}</span>
+                <Icon className="w-3.5 h-3.5 hidden sm:block" />
                 <span className="hidden sm:inline">{meta.label}</span>
-                <span className="sm:hidden">{(idx + 1)}</span>
                 {isVisited && (
                   <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary/60" />
                 )}
@@ -161,24 +183,28 @@ function TabNav({ active, onChange, availableTabs, visitedTabs }: {
   );
 }
 
-// ── Act 1: Document Map — with transformation narrative ──────────────────────
+// ── Act 1: What's Inside — clean, jargon-free ────────────────────────────────
 
 function BundleTreeItem({ item }: { item: ExtractedContextItem }) {
   const color = CATEGORY_BAR_COLORS[item.category] || "hsl(var(--muted-foreground))";
   const icon = CATEGORY_ICONS[item.category] || "📄";
   const label = CATEGORY_LABELS[item.category as ContextCategory] || item.category;
+  const truncatedContent = item.content.length > 120 ? item.content.slice(0, 120) + "…" : item.content;
 
   return (
     <TooltipProvider delayDuration={200}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md hover:bg-accent/40 transition-colors cursor-default group">
-            <span className="text-xs">{icon}</span>
-            <span className="text-sm text-foreground truncate flex-1">{item.title}</span>
-            <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full opacity-70 group-hover:opacity-100 transition-opacity"
-              style={{ background: `${color}15`, color }}>
-              {label}
-            </span>
+          <div className="flex flex-col gap-0.5 px-3 py-2 rounded-md hover:bg-accent/40 transition-colors cursor-default group">
+            <div className="flex items-center gap-2.5">
+              <span className="text-xs">{icon}</span>
+              <span className="text-sm text-foreground truncate flex-1">{item.title}</span>
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full opacity-70 group-hover:opacity-100 transition-opacity"
+                style={{ background: `${color}15`, color }}>
+                {label}
+              </span>
+            </div>
+            <p className="text-[11px] text-muted-foreground leading-relaxed pl-6 line-clamp-2">{truncatedContent}</p>
           </div>
         </TooltipTrigger>
         <TooltipContent side="right" className="max-w-xs">
@@ -226,7 +252,7 @@ function BundleTreeNode({ bundle, defaultOpen }: { bundle: ExtractedBundle; defa
             ))}
           {bundle.coverage_gaps && bundle.coverage_gaps.length > 0 && (
             <div className="mt-2 px-3 py-2 rounded-md bg-amber-500/5 border border-amber-500/20">
-              <p className="text-[10px] font-semibold text-amber-500 mb-1">Coverage Gaps</p>
+              <p className="text-[10px] font-semibold text-amber-500 mb-1">Gaps detected</p>
               {bundle.coverage_gaps.map((g, i) => (
                 <p key={i} className="text-[10px] text-muted-foreground">• {g}</p>
               ))}
@@ -238,54 +264,58 @@ function BundleTreeNode({ bundle, defaultOpen }: { bundle: ExtractedBundle; defa
   );
 }
 
-function TabDocumentMap({ result, teamMembers }: {
+function TabDocumentMap({ result, onNext }: {
   result: ExtractionResult;
-  teamMembers: ExperiencePreview["workbook_preview"]["team_members"];
+  onNext: () => void;
 }) {
   const bundles = result.bundles ?? [];
   const standaloneItems = result.context_items ?? [];
-  const totalItems = bundles.reduce((sum, b) => sum + b.items.length, 0) + standaloneItems.length;
-  const categories = new Set<string>();
-  bundles.forEach(b => b.items.forEach(it => categories.add(it.category)));
+
+  // Build human-readable summary
+  const categoryCounts: Record<string, number> = {};
+  bundles.forEach(b => b.items.forEach(it => {
+    categoryCounts[it.category] = (categoryCounts[it.category] ?? 0) + 1;
+  }));
+  standaloneItems.forEach(it => {
+    const cat = (it as ExtractedContextItem).category;
+    if (cat) categoryCounts[cat] = (categoryCounts[cat] ?? 0) + 1;
+  });
+
+  const totalGaps = bundles.reduce((sum, b) => sum + (b.coverage_gaps?.length ?? 0), 0);
+
+  // Build summary chips: "3 processes · 5 rules · 2 gaps"
+  const summaryParts: string[] = [];
+  const playbooks = categoryCounts["PLAYBOOK"] ?? 0;
+  const procedures = categoryCounts["PROCEDURE"] ?? 0;
+  const directives = categoryCounts["DIRECTIVE"] ?? 0;
+  const knowledge = (categoryCounts["KNOWLEDGE"] ?? 0) + (categoryCounts["PRINCIPLE"] ?? 0) + (categoryCounts["RESEARCH"] ?? 0) + (categoryCounts["PREFERENCE"] ?? 0);
+
+  if (playbooks > 0) summaryParts.push(`${playbooks} process${playbooks > 1 ? "es" : ""}`);
+  if (procedures > 0) summaryParts.push(`${procedures} step${procedures > 1 ? "s" : ""}`);
+  if (directives > 0) summaryParts.push(`${directives} rule${directives > 1 ? "s" : ""}`);
+  if (knowledge > 0) summaryParts.push(`${knowledge} insight${knowledge > 1 ? "s" : ""}`);
+  if (totalGaps > 0) summaryParts.push(`${totalGaps} gap${totalGaps > 1 ? "s" : ""} detected`);
 
   return (
     <div>
-      {/* Hero transformation moment */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-foreground mb-2">What LIZA Found</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">What's inside your document</h2>
         <p className="text-muted-foreground mb-4">
-          Your document has been transformed into structured, actionable intelligence. Here's what emerged.
+          LIZA read your document and identified the structure, processes, and rules within it. Expand any section to see the details.
         </p>
 
-        {/* Stats bar — the "transformation" feel */}
-        <div className="grid grid-cols-3 gap-3 mb-5">
-          <div className="rounded-xl border border-border bg-card p-4 text-center">
-            <p className="text-2xl font-bold text-primary">{totalItems}</p>
-            <p className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">Knowledge Items</p>
-          </div>
-          <div className="rounded-xl border border-border bg-card p-4 text-center">
-            <p className="text-2xl font-bold text-primary">{bundles.length}</p>
-            <p className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">Bundles</p>
-          </div>
-          <div className="rounded-xl border border-border bg-card p-4 text-center">
-            <p className="text-2xl font-bold text-primary">{categories.size}</p>
-            <p className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">Knowledge Types</p>
-          </div>
+        {/* Human-readable summary */}
+        <div className="flex items-center gap-2 flex-wrap mb-5">
+          {summaryParts.map((part, i) => (
+            <span key={i} className="px-3 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-foreground">
+              {part}
+            </span>
+          ))}
         </div>
-
-        {/* Team intro — Forming stage */}
-        <TeamPersonaStrip members={teamMembers} />
-        <p className="text-[11px] text-muted-foreground mt-2 italic">
-          These are the people who'll turn this knowledge into action. Each bundle below maps to their responsibilities.
-        </p>
       </div>
 
       {result.analysis_notes && (
         <div className="rounded-xl border p-5 mb-6" style={{ borderColor: "hsl(var(--primary) / 0.2)", background: "hsl(var(--primary) / 0.05)" }}>
-          <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-xs font-semibold text-primary">LIZA's Analysis</span>
-          </div>
           <p className="text-sm text-muted-foreground leading-relaxed">{result.analysis_notes}</p>
         </div>
       )}
@@ -298,7 +328,7 @@ function TabDocumentMap({ result, teamMembers }: {
 
       {standaloneItems.length > 0 && (
         <div className="mt-6">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-3">Standalone Items</h3>
+          <h3 className="text-sm font-semibold text-muted-foreground mb-3">Additional Items</h3>
           <div className="rounded-xl border border-border bg-card p-3">
             {standaloneItems.map((item, i) => (
               <BundleTreeItem key={i} item={item as ExtractedContextItem} />
@@ -306,21 +336,17 @@ function TabDocumentMap({ result, teamMembers }: {
           </div>
         </div>
       )}
+
+      <NextStepButton label="Next: See the playbooks LIZA built" onClick={onNext} />
     </div>
   );
 }
 
-// ── Act 2: Playbooks — with role assignments & dramatic coaching gaps ─────────
+// ── Act 2: Your Playbooks — no fabricated team, amber gaps ───────────────────
 
-const AVATAR_COLORS = [
-  "hsl(200 70% 50%)", "hsl(240 70% 60%)", "hsl(320 70% 55%)",
-  "hsl(150 60% 45%)", "hsl(30 80% 55%)",
-];
-
-function PlaybookCard({ protocol, coachingQuestions, teamMembers, defaultOpen }: {
+function PlaybookCard({ protocol, coachingQuestions, defaultOpen }: {
   protocol: ProtocolPreview;
   coachingQuestions: CoachingQuestion[];
-  teamMembers: ExperiencePreview["workbook_preview"]["team_members"];
   defaultOpen?: boolean;
 }) {
   const [expanded, setExpanded] = useState(defaultOpen ?? false);
@@ -328,9 +354,6 @@ function PlaybookCard({ protocol, coachingQuestions, teamMembers, defaultOpen }:
     q.targets.toLowerCase().includes(protocol.title.toLowerCase()) ||
     q.targets.toLowerCase().includes(protocol.source_playbook.toLowerCase())
   );
-
-  // Assign team members to steps round-robin style for the preview
-  const assignMember = (stepIndex: number) => teamMembers[stepIndex % teamMembers.length];
 
   return (
     <div className="rounded-xl border overflow-hidden border-border bg-card">
@@ -343,8 +366,8 @@ function PlaybookCard({ protocol, coachingQuestions, teamMembers, defaultOpen }:
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {relatedQuestions.length > 0 && (
-            <span className="flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-destructive/10 text-destructive">
-              <AlertCircle className="w-3 h-3" />{relatedQuestions.length} gap{relatedQuestions.length > 1 ? "s" : ""}
+            <span className="flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600">
+              <MessageCircleQuestion className="w-3 h-3" />{relatedQuestions.length} to answer
             </span>
           )}
           <span className="text-xs font-mono text-muted-foreground">{protocol.steps.length} steps</span>
@@ -354,73 +377,61 @@ function PlaybookCard({ protocol, coachingQuestions, teamMembers, defaultOpen }:
       {expanded && (
         <div className="px-5 pb-5 border-t border-border pt-4">
           <p className="text-xs text-muted-foreground mb-4">
-            {protocol.estimated_duration ? `Est. ${protocol.estimated_duration} · ` : ""}{protocol.steps.length} steps · {protocol.compliance_gates.length} compliance gates
+            {protocol.estimated_duration ? `Est. ${protocol.estimated_duration} · ` : ""}{protocol.steps.length} steps · {protocol.compliance_gates.length} compliance gate{protocol.compliance_gates.length !== 1 ? "s" : ""}
           </p>
 
           <div className="flex flex-col gap-2 mb-4">
-            {protocol.steps.map((step, idx) => {
-              const member = assignMember(idx);
-              const memberColor = AVATAR_COLORS[idx % AVATAR_COLORS.length];
-              return (
-                <div key={step.order} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold shrink-0"
-                    style={{
-                      background: step.type === "gate" ? "hsl(38 92% 50% / 0.15)" : step.type === "ai_assist" ? "hsl(var(--primary) / 0.15)" : "hsl(var(--muted))",
-                      color: step.type === "gate" ? "hsl(38 92% 50%)" : step.type === "ai_assist" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
-                    }}>
-                    {step.type === "gate" ? <Shield className="w-3 h-3" /> : step.type === "ai_assist" ? <Sparkles className="w-3 h-3" /> : step.order}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-medium text-foreground">{step.title}</p>
-                      {step.type !== "action" && (
-                        <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded"
-                          style={{
-                            background: step.type === "gate" ? "hsl(38 92% 50% / 0.1)" : "hsl(var(--primary) / 0.1)",
-                            color: step.type === "gate" ? "hsl(38 92% 50%)" : "hsl(var(--primary))",
-                          }}>
-                          {step.type === "gate" ? "Compliance Gate" : "AI-Assisted"}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-0.5">{step.description}</p>
-                    {/* Role assignment */}
-                    <div className="flex items-center gap-1.5 mt-2">
-                      <div className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold"
-                        style={{ background: `${memberColor}20`, color: memberColor }}>
-                        {member.name.split(" ").map(w => w[0]).join("")}
-                      </div>
-                      <span className="text-[10px] text-muted-foreground">{member.name} · {member.role}</span>
-                    </div>
+            {protocol.steps.map((step) => (
+              <div key={step.order} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                <span className="flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold shrink-0"
+                  style={{
+                    background: step.type === "gate" ? "hsl(38 92% 50% / 0.15)" : step.type === "ai_assist" ? "hsl(var(--primary) / 0.15)" : "hsl(var(--muted))",
+                    color: step.type === "gate" ? "hsl(38 92% 50%)" : step.type === "ai_assist" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                  }}>
+                  {step.type === "gate" ? <Shield className="w-3 h-3" /> : step.type === "ai_assist" ? <Sparkles className="w-3 h-3" /> : step.order}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-sm font-medium text-foreground">{step.title}</p>
+                    {step.type !== "action" && (
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full"
+                        style={{
+                          background: step.type === "gate" ? "hsl(38 92% 50% / 0.1)" : "hsl(var(--primary) / 0.1)",
+                          color: step.type === "gate" ? "hsl(38 92% 50%)" : "hsl(var(--primary))",
+                        }}>
+                        {step.type === "gate" ? "Compliance gate. Must pass before continuing." : "AI-assisted. LIZA drafts this for your team."}
+                      </span>
+                    )}
                   </div>
+                  <p className="text-xs text-muted-foreground mt-0.5">{step.description}</p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
           {protocol.compliance_gates.length > 0 && (
             <div className="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5 mb-4">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-amber-500 mb-1">Compliance Gates</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-amber-500 mb-1">Compliance gates</p>
               <ul className="text-xs text-muted-foreground space-y-1">
                 {protocol.compliance_gates.map((g, i) => <li key={i}>• {g}</li>)}
               </ul>
             </div>
           )}
 
-          {/* Coaching questions as dramatic tension */}
+          {/* Coaching questions — amber, opportunity framing */}
           {relatedQuestions.length > 0 && (
-            <div className="p-4 rounded-lg border border-destructive/20 bg-destructive/5">
+            <div className="p-4 rounded-lg border border-amber-500/20 bg-amber-500/5">
               <div className="flex items-center gap-2 mb-3">
-                <AlertCircle className="w-4 h-4 text-destructive" />
-                <span className="text-xs font-semibold text-destructive">LIZA couldn't find this in your document</span>
+                <MessageCircleQuestion className="w-4 h-4 text-amber-600" />
+                <span className="text-xs font-semibold text-amber-600">Questions worth answering</span>
               </div>
               <p className="text-[11px] text-muted-foreground mb-3">
-                These knowledge gaps will need your team's input before this playbook can run at full effectiveness.
+                Answering these would make this playbook stronger. LIZA couldn't find the answers in your document.
               </p>
               <div className="flex flex-col gap-3">
                 {relatedQuestions.map((q, i) => (
                   <div key={i} className="flex items-start gap-2 p-3 rounded-lg bg-background/60">
-                    <MessageCircleQuestion className="w-3.5 h-3.5 text-destructive shrink-0 mt-0.5" />
+                    <span className="text-xs font-bold text-amber-600 mt-0.5">{i + 1}</span>
                     <div>
                       <p className="text-xs font-medium text-foreground">{q.question}</p>
                       <p className="text-[10px] text-muted-foreground mt-0.5">{q.context}</p>
@@ -436,41 +447,40 @@ function PlaybookCard({ protocol, coachingQuestions, teamMembers, defaultOpen }:
   );
 }
 
-function TabPlaybooks({ protocols, coachingQuestions, unmatchedQuestions, teamMembers }: {
+function TabPlaybooks({ protocols, coachingQuestions, unmatchedQuestions, onNext }: {
   protocols: ProtocolPreview[];
   coachingQuestions: CoachingQuestion[];
   unmatchedQuestions: CoachingQuestion[];
-  teamMembers: ExperiencePreview["workbook_preview"]["team_members"];
+  onNext: () => void;
 }) {
   return (
     <div>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">Your Playbooks</h2>
-        <p className="text-muted-foreground mb-4">
-          Each playbook is a structured workflow with assigned roles, AI assistance, and compliance gates. Knowledge gaps are flagged where your team will need to fill in the blanks.
+        <p className="text-muted-foreground">
+          These are step-by-step workflows LIZA built from your document. Each one can be run by your team with AI support.
         </p>
-        <TeamPersonaStrip members={teamMembers} compact />
       </div>
 
       <div className="flex flex-col gap-3">
         {protocols.map((p, i) => (
-          <PlaybookCard key={i} protocol={p} coachingQuestions={coachingQuestions} teamMembers={teamMembers} defaultOpen={i === 0} />
+          <PlaybookCard key={i} protocol={p} coachingQuestions={coachingQuestions} defaultOpen={i === 0} />
         ))}
       </div>
 
       {unmatchedQuestions.length > 0 && (
-        <div className="mt-6 rounded-xl border p-5 border-destructive/20 bg-destructive/5">
+        <div className="mt-6 rounded-xl border p-5 border-amber-500/20 bg-amber-500/5">
           <div className="flex items-center gap-2 mb-3">
-            <AlertCircle className="w-4 h-4 text-destructive" />
-            <h3 className="text-sm font-semibold text-destructive">Additional Knowledge Gaps</h3>
+            <MessageCircleQuestion className="w-4 h-4 text-amber-600" />
+            <h3 className="text-sm font-semibold text-amber-600">More questions worth answering</h3>
           </div>
           <p className="text-xs text-muted-foreground mb-3">
-            These questions would help LIZA build additional playbooks from your expertise.
+            These would help LIZA build additional playbooks from your expertise.
           </p>
           <div className="flex flex-col gap-3">
             {unmatchedQuestions.map((q, i) => (
               <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-background/60">
-                <MessageCircleQuestion className="w-3.5 h-3.5 text-destructive shrink-0 mt-0.5" />
+                <span className="text-xs font-bold text-amber-600 mt-0.5">{i + 1}</span>
                 <div>
                   <p className="text-sm font-medium text-foreground">{q.question}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{q.context}</p>
@@ -480,11 +490,13 @@ function TabPlaybooks({ protocols, coachingQuestions, unmatchedQuestions, teamMe
           </div>
         </div>
       )}
+
+      <NextStepButton label="Next: See what execution looks like" onClick={onNext} />
     </div>
   );
 }
 
-// ── Act 3: Execution — Horizontal timeline with avatars & accumulation ───────
+// ── Act 3: In Action — team personas appear here ─────────────────────────────
 
 function ExecutionDrillDown({ protocol, preview, onBack }: {
   protocol: ProtocolPreview;
@@ -521,10 +533,12 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
   const assignedMember = teamMembers[activeStepIndex % teamMembers.length];
   const memberColor = AVATAR_COLORS[activeStepIndex % AVATAR_COLORS.length];
 
-  // Build context accumulation text
+  // Context accumulation — narrative style
   const previousSteps = protocol.steps.slice(0, activeStepIndex);
   const accumulationText = previousSteps.length > 0
-    ? `Building on ${previousSteps.map(s => `"${s.title}"`).join(", ")} from the previous step${previousSteps.length > 1 ? "s" : ""}.`
+    ? previousSteps.length === 1
+      ? `With "${previousSteps[0].title}" complete, LIZA uses those findings here.`
+      : `Building on the outputs from ${previousSteps.map(s => `"${s.title}"`).join(" and ")}.`
     : null;
 
   return (
@@ -534,7 +548,7 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
         <div className="flex items-center gap-3 mb-3">
           <button onClick={onBack}
             className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 font-medium transition-colors">
-            <ArrowLeft className="w-3.5 h-3.5" /> All playbooks
+            <ArrowLeft className="w-3.5 h-3.5" /> Choose a playbook
           </button>
         </div>
         <div className="flex items-center gap-3">
@@ -549,7 +563,7 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
         </div>
       </div>
 
-      {/* Horizontal timeline — relay race visual */}
+      {/* Horizontal timeline */}
       <div className="px-6 py-4 border-b border-border overflow-x-auto">
         <div className="flex items-center gap-1 min-w-max">
           {protocol.steps.map((step, i) => {
@@ -560,27 +574,24 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
             return (
               <div key={step.order} className="flex items-center gap-1">
                 <button onClick={() => handleStepClick(i)}
-                  className={`relative flex flex-col items-center gap-1.5 px-3 py-2 rounded-lg transition-all min-w-[80px] ${
+                  className={`relative flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-lg transition-all min-w-[90px] ${
                     isCurrent
                       ? "bg-primary/10 border border-primary/30 shadow-sm"
                       : isPast
                       ? "opacity-70 hover:opacity-90"
                       : "opacity-40 hover:opacity-60"
                   }`}>
-                  {/* Avatar */}
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold border-2 ${
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold border-2 ${
                     isCurrent ? "border-primary" : isPast ? "border-emerald-500/50" : "border-border"
                   }`}
                     style={{ background: `${mColor}20`, color: mColor }}>
-                    {isPast ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> : member.name.split(" ").map(w => w[0]).join("")}
+                    {isPast ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : member.name.split(" ").map(w => w[0]).join("")}
                   </div>
-                  {/* Step title */}
-                  <span className={`text-[10px] text-center leading-tight ${isCurrent ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
+                  <span className={`text-[11px] text-center leading-tight ${isCurrent ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
                     {step.title}
                   </span>
-                  {/* Step type badge */}
                   {step.type !== "action" && (
-                    <span className="text-[8px] font-mono uppercase px-1 py-0.5 rounded"
+                    <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full"
                       style={{
                         background: step.type === "gate" ? "hsl(38 92% 50% / 0.1)" : "hsl(var(--primary) / 0.1)",
                         color: step.type === "gate" ? "hsl(38 92% 50%)" : "hsl(var(--primary))",
@@ -603,7 +614,7 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
       <div className="p-6">
         {activeStep && (
           <div>
-            {/* Who & what */}
+            {/* Who is doing this */}
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold"
                 style={{ background: `${memberColor}20`, color: memberColor }}>
@@ -612,12 +623,12 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
               <div>
                 <p className="text-sm font-medium text-foreground">{assignedMember.name} <span className="text-muted-foreground font-normal">· {assignedMember.role}</span></p>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded"
+                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full"
                     style={{
                       background: activeStep.type === "gate" ? "hsl(38 92% 50% / 0.1)" : activeStep.type === "ai_assist" ? "hsl(var(--primary) / 0.1)" : "hsl(var(--muted))",
                       color: activeStep.type === "gate" ? "hsl(38 92% 50%)" : activeStep.type === "ai_assist" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
                     }}>
-                    {activeStep.type === "gate" ? "Compliance Gate" : activeStep.type === "ai_assist" ? "AI-Assisted" : "Action"}
+                    {activeStep.type === "gate" ? "Compliance gate" : activeStep.type === "ai_assist" ? "AI-assisted step" : "Team action"}
                   </span>
                   <span className="text-[10px] text-muted-foreground">Step {activeStep.order} of {protocol.steps.length}</span>
                 </div>
@@ -626,11 +637,10 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
 
             <h4 className="text-lg font-semibold text-foreground mb-2">{activeStep.title}</h4>
 
-            {/* Accumulation context */}
             {accumulationText && (
               <div className="flex items-start gap-2 mb-3 px-3 py-2 rounded-lg bg-muted/40 border border-border/50">
                 <Link2 className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                <p className="text-[11px] text-muted-foreground italic">{accumulationText}</p>
+                <p className="text-[11px] text-muted-foreground">{accumulationText}</p>
               </div>
             )}
 
@@ -643,31 +653,38 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
               </div>
             )}
 
-            {/* AI draft */}
+            {/* AI draft — only show full draft for the matching step */}
             {activeStep.type === "ai_assist" && preview.current_session.ai_draft_output && (
               <div className="rounded-lg border p-4 border-border bg-muted/30">
                 <div className="flex items-center gap-2 mb-3">
                   <Sparkles className="w-3.5 h-3.5 text-primary" />
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">What LIZA generates</span>
+                  <span className="text-xs font-semibold text-primary">What LIZA generates</span>
                 </div>
-                <p className="text-xs text-muted-foreground mb-3">
-                  Using {accumulationText ? "the outputs from previous steps and " : ""}the context from your document, LIZA drafts this for {assignedMember.name} to review and refine:
-                </p>
-                <div className="text-sm text-muted-foreground leading-relaxed prose prose-sm max-w-none border-t border-border pt-3 mt-2">
-                  <ReactMarkdown>{preview.current_session.ai_draft_output}</ReactMarkdown>
-                </div>
+                {activeStep.title.toLowerCase().includes(preview.current_session.current_step.toLowerCase()) ? (
+                  <>
+                    <p className="text-xs text-muted-foreground mb-3">
+                      {accumulationText ? `Using the outputs from previous steps and ` : "Using "}the context from your document, LIZA drafts this for {assignedMember.name} to review:
+                    </p>
+                    <div className="text-sm text-muted-foreground leading-relaxed prose prose-sm max-w-none border-t border-border pt-3 mt-2">
+                      <ReactMarkdown>{preview.current_session.ai_draft_output}</ReactMarkdown>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    LIZA generates a contextualised {activeStep.output_type || "draft"} for this step, using your document's content{accumulationText ? " and the outputs from previous steps" : ""}. {assignedMember.name} reviews and refines before moving on.
+                  </p>
+                )}
               </div>
             )}
 
-            {/* Gate */}
             {activeStep.type === "gate" && (
               <div className="rounded-lg border p-4 border-amber-500/20 bg-amber-500/5">
                 <div className="flex items-center gap-2 mb-2">
                   <Shield className="w-3.5 h-3.5 text-amber-500" />
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-500">Compliance Check</span>
+                  <span className="text-xs font-semibold text-amber-500">Compliance check</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {assignedMember.name}'s team cannot advance until these gate criteria are met, ensuring compliance with your organisation's standards:
+                  The team cannot advance until these criteria are met:
                 </p>
                 {protocol.compliance_gates.length > 0 && (
                   <ul className="mt-2 text-xs text-muted-foreground space-y-1">
@@ -677,15 +694,14 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
               </div>
             )}
 
-            {/* Action */}
             {activeStep.type === "action" && (
               <div className="rounded-lg border p-4 border-border bg-muted/30">
                 <div className="flex items-center gap-2 mb-2">
                   <User className="w-3.5 h-3.5 text-foreground" />
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Team Action</span>
+                  <span className="text-xs font-semibold text-muted-foreground">Team action</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {assignedMember.name} completes this step following the structured guidance from your playbook. LIZA tracks progress and captures any learnings or exceptions along the way.
+                  {assignedMember.name} completes this step following the playbook. LIZA tracks progress and captures any learnings along the way.
                 </p>
               </div>
             )}
@@ -703,15 +719,19 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
   );
 }
 
-function TabExecution({ protocols, preview }: {
+function TabExecution({ protocols, preview, onNext }: {
   protocols: ProtocolPreview[];
   preview: ExperiencePreview["workbook_preview"];
+  onNext: () => void;
 }) {
   const [selectedProtocol, setSelectedProtocol] = useState<ProtocolPreview | null>(null);
 
   if (selectedProtocol) {
     return (
-      <ExecutionDrillDown protocol={selectedProtocol} preview={preview} onBack={() => setSelectedProtocol(null)} />
+      <div>
+        <ExecutionDrillDown protocol={selectedProtocol} preview={preview} onBack={() => setSelectedProtocol(null)} />
+        <NextStepButton label="Next: See what improves over time" onClick={onNext} />
+      </div>
     );
   }
 
@@ -720,9 +740,15 @@ function TabExecution({ protocols, preview }: {
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">Your Team in Action</h2>
         <p className="text-muted-foreground mb-4">
-          Click on any playbook to see how your team executes it step-by-step — with AI assistance, role assignments, and compliance tracking.
+          Here's what it looks like when your team runs these playbooks. Click any playbook to walk through a live simulation.
         </p>
-        <TeamPersonaStrip members={preview.team_members} />
+        <div className="flex items-start gap-2 p-3 rounded-lg bg-muted/40 border border-border/50 mb-4">
+          <Users className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+          <p className="text-xs text-muted-foreground">
+            <span className="font-medium text-foreground">Example team: </span>
+            {preview.team_members.map(m => `${m.name} (${m.role})`).join(", ")}. In production, these would be your actual team members.
+          </p>
+        </div>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
@@ -743,16 +769,18 @@ function TabExecution({ protocols, preview }: {
             <div className="flex items-center gap-3 mt-3 pt-3 border-t border-border">
               <span className="text-[10px] text-muted-foreground">{p.steps.length} steps</span>
               <span className="text-[10px] text-muted-foreground">{p.steps.filter(s => s.type === "ai_assist").length} AI-assisted</span>
-              <span className="text-[10px] text-muted-foreground">{p.compliance_gates.length} gates</span>
+              <span className="text-[10px] text-muted-foreground">{p.compliance_gates.length} gate{p.compliance_gates.length !== 1 ? "s" : ""}</span>
             </div>
           </button>
         ))}
       </div>
+
+      <NextStepButton label="Next: See what improves over time" onClick={onNext} />
     </div>
   );
 }
 
-// ── Act 4: Learning Loop — connects back to Document Map ─────────────────────
+// ── Act 4: What Improves — no SECI jargon ────────────────────────────────────
 
 const LEARNING_COLORS: Record<string, { bg: string; text: string }> = {
   efficiency: { bg: "hsl(200 90% 52% / 0.1)", text: "hsl(200 90% 52%)" },
@@ -765,42 +793,40 @@ function TabLearn({ learnings, onGoToMap }: { learnings: ProjectedLearning[]; on
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-foreground mb-2">What Gets Better</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">What Improves Over Time</h2>
         <p className="text-muted-foreground">
-          Every execution generates insights. LIZA refines your playbooks automatically — closing the loop from action back to knowledge.
+          Every time your team runs a playbook, LIZA captures what worked and what didn't. Your playbooks get smarter automatically.
         </p>
       </div>
 
-      {/* SECI spiral visualization */}
+      {/* Clean cycle — no academic labels */}
       <div className="rounded-xl border p-6 mb-8 border-border bg-card">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-4 text-center">The Knowledge Spiral</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-4 text-center">The improvement loop</p>
         <div className="flex items-center justify-center gap-2 flex-wrap mb-4">
           {[
-            { label: "Execute Playbook", sub: "Internalization", icon: Play },
-            { label: "Capture Learnings", sub: "Socialization", icon: Users },
-            { label: "Refine Knowledge", sub: "Externalization", icon: Brain },
-            { label: "Improve Next Run", sub: "Combination", icon: Sparkles },
+            { label: "Run a playbook", icon: Play },
+            { label: "Capture learnings", icon: Users },
+            { label: "Refine knowledge", icon: Brain },
+            { label: "Better next time", icon: Sparkles },
           ].map((step, i) => (
             <div key={step.label} className="flex items-center gap-2">
-              <div className="flex flex-col items-center gap-1 px-4 py-3 rounded-lg min-w-[110px]"
+              <div className="flex flex-col items-center gap-1 px-4 py-3 rounded-lg min-w-[100px]"
                 style={{
                   background: "hsl(var(--primary) / 0.06)",
                   border: "1px solid hsl(var(--primary) / 0.15)",
                 }}>
                 <step.icon className="w-4 h-4 text-primary" />
                 <span className="text-xs font-semibold text-foreground text-center">{step.label}</span>
-                <span className="text-[9px] text-primary/70">{step.sub}</span>
               </div>
               {i < 3 && <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0" />}
             </div>
           ))}
         </div>
-        {/* Return arrow — connects back */}
         <div className="flex justify-center">
           <button onClick={onGoToMap}
             className="flex items-center gap-2 text-xs text-primary hover:text-primary/80 transition-colors font-medium px-3 py-1.5 rounded-lg border border-primary/20 hover:bg-primary/5">
             <RefreshCw className="w-3 h-3" />
-            This feeds back into your Document Map
+            This feeds back into your document
           </button>
         </div>
       </div>
@@ -820,7 +846,7 @@ function TabLearn({ learnings, onGoToMap }: { learnings: ProjectedLearning[]; on
               <div className="flex items-start gap-2 p-2.5 rounded-lg bg-muted/50">
                 <ArrowRight className="w-3 h-3 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-0.5">Auto-refinement</p>
+                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-0.5">LIZA will update your playbook to</p>
                   <p className="text-[11px] text-foreground">{l.refinement_action}</p>
                 </div>
               </div>
@@ -838,9 +864,9 @@ function CTASection({ onReset }: { onReset: () => void }) {
   return (
     <div className="rounded-2xl border p-8 text-center mt-8"
       style={{ borderColor: "hsl(var(--primary) / 0.3)", background: "hsl(var(--primary) / 0.05)" }}>
-      <h3 className="text-xl font-bold text-foreground mb-2">Ready to operationalise your expertise?</h3>
+      <h3 className="text-xl font-bold text-foreground mb-2">Ready to put this into practice?</h3>
       <p className="text-sm text-muted-foreground mb-6 max-w-lg mx-auto">
-        You've seen the preview. The full LIZA OS turns this into a living system — with AI-assisted playbooks, compliance tracking, and continuous learning.
+        The full LIZA OS runs these playbooks with your team, tracks compliance, and gets smarter with every execution.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
         <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
@@ -889,18 +915,24 @@ export function ExperienceStory({ extractionResult, experiencePreview, onReset }
     setVisitedTabs(prev => new Set([...prev, tab]));
   };
 
-  const teamMembers = experiencePreview.workbook_preview.team_members;
+  const goToNextTab = () => {
+    const currentIndex = availableTabs.indexOf(activeTab);
+    if (currentIndex < availableTabs.length - 1) {
+      handleTabChange(availableTabs[currentIndex + 1]);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
       <TabNav active={activeTab} onChange={handleTabChange} availableTabs={availableTabs} visitedTabs={visitedTabs} />
 
-      {activeTab === "map" && <TabDocumentMap result={extractionResult} teamMembers={teamMembers} />}
+      {activeTab === "map" && <TabDocumentMap result={extractionResult} onNext={goToNextTab} />}
       {activeTab === "playbooks" && (
-        <TabPlaybooks protocols={experiencePreview.protocols} coachingQuestions={allQuestions} unmatchedQuestions={unmatchedQuestions} teamMembers={teamMembers} />
+        <TabPlaybooks protocols={experiencePreview.protocols} coachingQuestions={allQuestions} unmatchedQuestions={unmatchedQuestions} onNext={goToNextTab} />
       )}
       {activeTab === "execution" && (
-        <TabExecution protocols={experiencePreview.protocols} preview={experiencePreview.workbook_preview} />
+        <TabExecution protocols={experiencePreview.protocols} preview={experiencePreview.workbook_preview} onNext={goToNextTab} />
       )}
       {activeTab === "learning" && (
         <TabLearn learnings={experiencePreview.projected_learnings} onGoToMap={() => handleTabChange("map")} />
