@@ -20,18 +20,18 @@ const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 const ICON_MAP = { building: Building2, rocket: Rocket, user: User } as const;
 
 const EXTRACT_PHASES = [
-  "Analyzing document structure…",
-  "Extracting knowledge elements…",
-  "Categorizing items…",
-  "Organizing into bundles…",
-  "Running quality checks…",
+  "Reading your document…",
+  "Understanding the structure…",
+  "Identifying processes and rules…",
+  "Organising what we found…",
+  "Almost ready…",
 ];
 
 const SIMULATE_PHASES = [
-  "Generating executable protocols…",
-  "Formulating coaching questions…",
-  "Building workbook preview…",
-  "Projecting operational learnings…",
+  "Building your playbooks…",
+  "Finding knowledge gaps…",
+  "Creating a team simulation…",
+  "Projecting what improves over time…",
 ];
 
 export default function ExtractionEngine() {
@@ -155,7 +155,7 @@ export default function ExtractionEngine() {
 
   const isProcessing = stage === "extracting" || stage === "simulating";
   const phases = stage === "simulating" ? SIMULATE_PHASES : EXTRACT_PHASES;
-  const processingTitle = stage === "simulating" ? "Building your experience preview…" : "Extracting Knowledge…";
+  const processingTitle = stage === "simulating" ? "Building your playbooks…" : "Analysing your document…";
 
   return (
     <MarketingLayout>
@@ -170,7 +170,7 @@ export default function ExtractionEngine() {
             See your expertise, <span className="brand-gradient-text">in action</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Upload a document. Watch LIZA turn it into playbooks, identify knowledge gaps, and show you what execution looks like.
+            Paste a document your team uses. See what's missing, what could be standardised, and what AI can do with it.
           </p>
         </div>
 
@@ -282,7 +282,7 @@ export default function ExtractionEngine() {
                 <button onClick={handleSampleRun}
                   className="px-6 py-3 rounded-xl text-sm font-semibold brand-gradient-btn"
                   style={{ boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)" }}>
-                  Extract & Simulate →
+                  Analyse this document →
                 </button>
                 <span className="text-xs text-muted-foreground">~30 seconds · No email required</span>
               </div>
