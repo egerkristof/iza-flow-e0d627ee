@@ -1,24 +1,32 @@
 import { useState, useCallback } from "react";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import { ExtractionResultsView } from "@/components/marketing/ExtractionResultsView";
+import { ExperienceStory } from "@/components/marketing/ExperienceStory";
 import { SAMPLE_CONTENT } from "@/data/sampleContent";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sparkles, Upload, FileText, Loader2, AlertCircle } from "lucide-react";
 import type { ExtractionResult } from "@/lib/knowledge-schema";
+import type { ExperiencePreview } from "@/lib/experience-schema";
 
-type Stage = "choose" | "processing" | "results";
+type Stage = "choose" | "extracting" | "simulating" | "results";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-const PHASES = [
+const EXTRACT_PHASES = [
   "Analyzing document structure…",
   "Extracting knowledge elements…",
   "Categorizing items…",
   "Organizing into bundles…",
   "Running quality checks…",
+];
+
+const SIMULATE_PHASES = [
+  "Generating executable protocols…",
+  "Formulating coaching questions…",
+  "Building workbook preview…",
+  "Projecting operational learnings…",
 ];
 
 export default function ExtractionEngine() {
@@ -30,17 +38,54 @@ export default function ExtractionEngine() {
   const [pasteContent, setPasteContent] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [phaseIndex, setPhaseIndex] = useState(0);
-  const [result, setResult] = useState<ExtractionResult | null>(null);
+  const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
+  const [experiencePreview, setExperiencePreview] = useState<ExperiencePreview | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const runSimulation = useCallback(async (result: ExtractionResult) => {
+    setStage("simulating");
+    setPhaseIndex(0);
+
+    const interval = setInterval(() => {
+      setPhaseIndex((prev) => (prev < SIMULATE_PHASES.length - 1 ? prev + 1 : prev));
+    }, 3000);
+
+    try {
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/simulate-experience`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        },
+        body: JSON.stringify({ extraction_result: result }),
+      });
+
+      clearInterval(interval);
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Simulation failed (${response.status})`);
+      }
+
+      const data = await response.json();
+      setExperiencePreview(data);
+      setStage("results");
+    } catch (e) {
+      clearInterval(interval);
+      // Fall back to showing extraction results only
+      console.error("Simulation failed, showing extraction only:", e);
+      setExperiencePreview(null);
+      setStage("results");
+    }
+  }, []);
+
   const runExtraction = useCallback(async (content: string, contentType: string, userEmail?: string) => {
-    setStage("processing");
+    setStage("extracting");
     setPhaseIndex(0);
     setError(null);
 
-    // Animate phases
     const interval = setInterval(() => {
-      setPhaseIndex((prev) => (prev < PHASES.length - 1 ? prev + 1 : prev));
+      setPhaseIndex((prev) => (prev < EXTRACT_PHASES.length - 1 ? prev + 1 : prev));
     }, 4000);
 
     try {
@@ -67,14 +112,16 @@ export default function ExtractionEngine() {
       }
 
       const data = await response.json();
-      setResult(data);
-      setStage("results");
+      setExtractionResult(data);
+
+      // Proceed to phase 2: simulate experience
+      await runSimulation(data);
     } catch (e) {
       clearInterval(interval);
       setError(e instanceof Error ? e.message : "An unexpected error occurred");
       setStage("choose");
     }
-  }, [name, company]);
+  }, [name, company, runSimulation]);
 
   const handleSample = () => {
     runExtraction(SAMPLE_CONTENT, "text");
@@ -82,7 +129,6 @@ export default function ExtractionEngine() {
 
   const handleUploadSubmit = async () => {
     if (!email.trim()) return;
-
     if (pdfFile) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -115,79 +161,73 @@ export default function ExtractionEngine() {
   const reset = () => {
     setStage("choose");
     setMode(null);
-    setResult(null);
+    setExtractionResult(null);
+    setExperiencePreview(null);
     setError(null);
     setPasteContent("");
     setPdfFile(null);
     setPhaseIndex(0);
   };
 
+  const isProcessing = stage === "extracting" || stage === "simulating";
+  const phases = stage === "simulating" ? SIMULATE_PHASES : EXTRACT_PHASES;
+  const processingTitle = stage === "simulating" ? "Building your experience preview…" : "Extracting Knowledge…";
+
   return (
     <MarketingLayout>
       <div className="max-w-5xl mx-auto px-6 py-20">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6 border" style={{ borderColor: "hsl(var(--primary) / 0.3)", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.08)" }}>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6 border"
+            style={{ borderColor: "hsl(var(--primary) / 0.3)", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.08)" }}>
             <Sparkles className="w-3.5 h-3.5" /> Extraction Engine
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
-            See your knowledge, <span className="brand-gradient-text">structured</span>
+            See your knowledge, <span className="brand-gradient-text">in action</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Paste a document or try our sample content. LIZA's AI will extract playbooks, procedures, directives, and knowledge — ready for protocol execution.
+            Paste a document or try our sample. LIZA will extract your knowledge, generate executable protocols, simulate a team workbook, and show projected learnings — the full AI operating model experience.
           </p>
         </div>
 
         {/* Error Banner */}
         {error && (
-          <div className="mb-8 p-4 rounded-xl border flex items-center gap-3" style={{ borderColor: "hsl(var(--destructive) / 0.3)", background: "hsl(var(--destructive) / 0.05)" }}>
+          <div className="mb-8 p-4 rounded-xl border flex items-center gap-3"
+            style={{ borderColor: "hsl(var(--destructive) / 0.3)", background: "hsl(var(--destructive) / 0.05)" }}>
             <AlertCircle className="w-5 h-5 text-destructive shrink-0" />
             <p className="text-sm text-destructive">{error}</p>
           </div>
         )}
 
-        {/* ── Stage: Choose ────────────────────────────────────────────────── */}
+        {/* ── Stage: Choose ──────────────────────────────────────────── */}
         {stage === "choose" && !mode && (
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            <button
-              onClick={handleSample}
-              className="group rounded-2xl border p-8 text-left hover:border-primary/50 transition-all"
-              style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
-            >
+            <button onClick={handleSample}
+              className="group rounded-2xl border p-8 text-left hover:border-primary/50 transition-all border-border bg-card">
               <FileText className="w-8 h-8 text-primary mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">Try with Sample Content</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Run extraction on our "Enterprise Client Onboarding Methodology" — no email needed.
+                Run the full experience on our "Enterprise Client Onboarding Methodology" — no email needed.
               </p>
-              <span className="text-xs font-semibold text-primary group-hover:underline">
-                Run extraction →
-              </span>
+              <span className="text-xs font-semibold text-primary group-hover:underline">Run extraction →</span>
             </button>
-
-            <button
-              onClick={() => setMode("upload")}
-              className="group rounded-2xl border p-8 text-left hover:border-primary/50 transition-all"
-              style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
-            >
+            <button onClick={() => setMode("upload")}
+              className="group rounded-2xl border p-8 text-left hover:border-primary/50 transition-all border-border bg-card">
               <Upload className="w-8 h-8 text-primary mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">Upload Your Own</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 Paste text or upload a PDF (up to 5MB). Email required to unlock.
               </p>
-              <span className="text-xs font-semibold text-primary group-hover:underline">
-                Get started →
-              </span>
+              <span className="text-xs font-semibold text-primary group-hover:underline">Get started →</span>
             </button>
           </div>
         )}
 
-        {/* ── Upload Mode Form ─────────────────────────────────────────────── */}
+        {/* ── Upload Mode Form ───────────────────────────────────────── */}
         {stage === "choose" && mode === "upload" && (
           <div className="max-w-2xl mx-auto">
-            <div className="rounded-2xl border p-8" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}>
+            <div className="rounded-2xl border p-8 border-border bg-card">
               <h3 className="text-lg font-semibold text-foreground mb-6">Upload Your Content</h3>
-
-              {/* Email + Info */}
               <div className="grid sm:grid-cols-3 gap-4 mb-6">
                 <div>
                   <Label htmlFor="email" className="text-xs text-muted-foreground">Email *</Label>
@@ -202,75 +242,38 @@ export default function ExtractionEngine() {
                   <Input id="company" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Optional" className="mt-1" />
                 </div>
               </div>
-
-              {/* Content Input */}
               {!pdfFile ? (
                 <>
-                  <Textarea
-                    value={pasteContent}
-                    onChange={(e) => setPasteContent(e.target.value)}
-                    placeholder="Paste your document content here…"
-                    className="min-h-[200px] mb-4"
-                  />
+                  <Textarea value={pasteContent} onChange={(e) => setPasteContent(e.target.value)}
+                    placeholder="Paste your document content here…" className="min-h-[200px] mb-4" />
                   <div className="flex items-center gap-3 mb-6">
                     <span className="text-xs text-muted-foreground">or</span>
-                    <div
-                      onDragOver={(e) => e.preventDefault()}
-                      onDrop={handlePdfDrop}
-                      className="flex-1 border-2 border-dashed rounded-xl p-4 text-center cursor-pointer hover:border-primary/50 transition-colors"
-                      style={{ borderColor: "hsl(var(--border))" }}
-                      onClick={() => document.getElementById("pdf-input")?.click()}
-                    >
+                    <div onDragOver={(e) => e.preventDefault()} onDrop={handlePdfDrop}
+                      className="flex-1 border-2 border-dashed rounded-xl p-4 text-center cursor-pointer hover:border-primary/50 transition-colors border-border"
+                      onClick={() => document.getElementById("pdf-input")?.click()}>
                       <Upload className="w-5 h-5 mx-auto mb-1 text-muted-foreground" />
-                      <p className="text-xs text-muted-foreground">
-                        Drop a PDF here or click to upload (max 5MB)
-                      </p>
-                      <input
-                        id="pdf-input"
-                        type="file"
-                        accept=".pdf"
-                        className="hidden"
-                        onChange={handlePdfSelect}
-                      />
+                      <p className="text-xs text-muted-foreground">Drop a PDF here or click to upload (max 5MB)</p>
+                      <input id="pdf-input" type="file" accept=".pdf" className="hidden" onChange={handlePdfSelect} />
                     </div>
                   </div>
                 </>
               ) : (
-                <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ background: "hsl(var(--muted))" }}>
+                <div className="flex items-center gap-3 p-4 rounded-xl mb-6 bg-muted">
                   <FileText className="w-5 h-5 text-primary" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">{pdfFile.name}</p>
                     <p className="text-xs text-muted-foreground">{(pdfFile.size / 1024).toFixed(0)} KB</p>
                   </div>
-                  <button
-                    onClick={() => setPdfFile(null)}
-                    className="text-xs text-muted-foreground hover:text-foreground"
-                  >
-                    Remove
-                  </button>
+                  <button onClick={() => setPdfFile(null)} className="text-xs text-muted-foreground hover:text-foreground">Remove</button>
                 </div>
               )}
-
-              {/* Actions */}
               <div className="flex items-center gap-3">
-                <button
-                  onClick={handleUploadSubmit}
-                  disabled={!email.trim() || (!pasteContent.trim() && !pdfFile)}
-                  className="px-6 py-3 rounded-xl text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{
-                    background: "var(--gradient-brand-btn)",
-                    color: "hsl(var(--primary-foreground))",
-                    boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
-                  }}
-                >
+                <button onClick={handleUploadSubmit} disabled={!email.trim() || (!pasteContent.trim() && !pdfFile)}
+                  className="px-6 py-3 rounded-xl text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed brand-gradient-btn"
+                  style={{ boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)" }}>
                   Run Extraction
                 </button>
-                <button
-                  onClick={() => setMode(null)}
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  ← Back
-                </button>
+                <button onClick={() => setMode(null)} className="text-sm text-muted-foreground hover:text-foreground">← Back</button>
               </div>
               <p className="text-[10px] text-muted-foreground mt-3">
                 Max 20,000 characters for text · Max 5MB for PDF · 3 extractions per email per day
@@ -279,37 +282,54 @@ export default function ExtractionEngine() {
           </div>
         )}
 
-        {/* ── Stage: Processing ────────────────────────────────────────────── */}
-        {stage === "processing" && (
+        {/* ── Stage: Processing (both extracting and simulating) ──── */}
+        {isProcessing && (
           <div className="max-w-lg mx-auto text-center py-20">
             <Loader2 className="w-12 h-12 mx-auto mb-6 text-primary animate-spin" />
-            <h3 className="text-xl font-semibold text-foreground mb-4">Extracting Knowledge…</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-4">{processingTitle}</h3>
             <div className="flex flex-col gap-2">
-              {PHASES.map((phase, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3 text-sm transition-all duration-500"
+              {phases.map((phase, i) => (
+                <div key={i} className="flex items-center gap-3 text-sm transition-all duration-500"
                   style={{
                     opacity: i <= phaseIndex ? 1 : 0.3,
                     color: i === phaseIndex ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
-                  }}
-                >
-                  <span className="w-5 text-center">
-                    {i < phaseIndex ? "✓" : i === phaseIndex ? "●" : "○"}
-                  </span>
+                  }}>
+                  <span className="w-5 text-center">{i < phaseIndex ? "✓" : i === phaseIndex ? "●" : "○"}</span>
                   {phase}
                 </div>
               ))}
             </div>
             <p className="text-xs text-muted-foreground mt-8">
-              This typically takes 15–30 seconds…
+              {stage === "extracting" ? "Extraction takes 15–30 seconds…" : "Generating your experience preview (~10 seconds)…"}
             </p>
           </div>
         )}
 
-        {/* ── Stage: Results ───────────────────────────────────────────────── */}
-        {stage === "results" && result && (
-          <ExtractionResultsView result={result} onReset={reset} />
+        {/* ── Stage: Results ─────────────────────────────────────────── */}
+        {stage === "results" && extractionResult && experiencePreview && (
+          <ExperienceStory
+            extractionResult={extractionResult}
+            experiencePreview={experiencePreview}
+            onReset={reset}
+          />
+        )}
+
+        {/* Fallback: show old results if simulation failed */}
+        {stage === "results" && extractionResult && !experiencePreview && (
+          <div className="text-center py-8">
+            <p className="text-sm text-muted-foreground mb-4">Experience preview generation failed. Showing extraction results.</p>
+            {/* Import the old view as fallback */}
+            <ExperienceStory
+              extractionResult={extractionResult}
+              experiencePreview={{
+                protocols: [],
+                coaching_questions: [],
+                workbook_preview: { title: "", team_members: [], active_protocols: [], current_session: { executor_name: "", protocol_title: "", current_step: "", step_number: 0, total_steps: 0, ai_draft_output: "" } },
+                projected_learnings: [],
+              }}
+              onReset={reset}
+            />
+          </div>
         )}
       </div>
     </MarketingLayout>
