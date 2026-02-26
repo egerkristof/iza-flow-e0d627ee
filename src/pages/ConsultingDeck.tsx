@@ -129,37 +129,37 @@ function Slide02Problem() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
+      <div className="relative z-10 flex flex-col justify-center h-full px-28">
         <Tag label="The Problem" color={RED} />
-        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
+        <h2 className="font-bold mb-12" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
           Professional firms scale headcount.
           <br />
           <span style={{ color: `hsl(${RED})` }}>Not capability.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-7 flex-1">
+        <div className="grid grid-cols-3 gap-7">
           {[
             {
-              icon: <Users size={44} />, color: RED,
+              icon: <Users size={48} />, color: RED,
               title: "Knowledge walks out",
               body: "Your best people carry methodology in their heads. Every resignation is a knowledge loss event."
             },
             {
-              icon: <Target size={44} />, color: GOLD,
+              icon: <Target size={48} />, color: GOLD,
               title: "Execution is inconsistent",
               body: "Same brief, 14 different outputs. Quality depends on who supervises. No shared standard."
             },
             {
-              icon: <BarChart3 size={44} />, color: RED,
+              icon: <BarChart3 size={48} />, color: RED,
               title: "AI accelerates the problem",
               body: "Generic AI gives everyone content generation — with zero organisational context. Faster at producing the wrong thing."
             },
           ].map(({ icon, color, title, body }) => (
-            <div key={title} className="flex flex-col gap-4 rounded-2xl border p-8"
+            <div key={title} className="flex flex-col gap-5 rounded-2xl border p-10"
               style={{ background: `hsl(${color} / 0.05)`, borderColor: `hsl(${color} / 0.2)` }}>
               <div style={{ color: `hsl(${color})` }}>{icon}</div>
-              <p className="font-bold" style={{ fontSize: 30, color: `hsl(${C})` }}>{title}</p>
-              <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{body}</p>
+              <p className="font-bold" style={{ fontSize: 34, color: `hsl(${C})` }}>{title}</p>
+              <p style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.55 }}>{body}</p>
             </div>
           ))}
         </div>
