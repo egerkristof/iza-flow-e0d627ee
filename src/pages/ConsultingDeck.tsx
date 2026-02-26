@@ -885,6 +885,30 @@ export default function ConsultingDeck() {
         {/* Full-bleed slide */}
         <ScaledSlide><Slide /></ScaledSlide>
 
+        {/* Landscape tap-zone arrows */}
+        {!isPortrait && (
+          <>
+            <button
+              onClick={(e) => { e.stopPropagation(); prev(); showMobileControls(); }}
+              disabled={current === 0}
+              className="absolute left-0 top-0 h-full w-[15%] z-[10001] flex items-center justify-start pl-4 disabled:opacity-0 transition-opacity"
+              style={{ background: "linear-gradient(90deg, hsl(0 0% 0% / 0.06), transparent)" }}
+              aria-label="Previous slide"
+            >
+              <ChevronLeft size={32} style={{ color: `hsl(${MUT} / 0.5)` }} />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); next(); showMobileControls(); }}
+              disabled={current === SLIDES.length - 1}
+              className="absolute right-0 top-0 h-full w-[15%] z-[10001] flex items-center justify-end pr-4 disabled:opacity-0 transition-opacity"
+              style={{ background: "linear-gradient(270deg, hsl(0 0% 0% / 0.06), transparent)" }}
+              aria-label="Next slide"
+            >
+              <ChevronRight size={32} style={{ color: `hsl(${MUT} / 0.5)` }} />
+            </button>
+          </>
+        )}
+
         {/* Minimal floating controls — auto-hide */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full transition-opacity duration-300"
           style={{
