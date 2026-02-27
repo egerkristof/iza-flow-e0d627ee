@@ -280,7 +280,7 @@ export default function ManifestoPage() {
           <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
           <h3 className="text-2xl font-black mb-4">Ready to close your Judgment Gap?</h3>
           <p className="text-sm mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Book a Protocol Assessment. Or explore the platform.
+            Book a discovery call. Or explore LIZA OS.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -294,7 +294,7 @@ export default function ManifestoPage() {
                 boxShadow: "0 0 24px -4px hsl(200 90% 52% / 0.4)",
               }}
             >
-              Book a Protocol Assessment <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
             <Link
               to="/platform"
