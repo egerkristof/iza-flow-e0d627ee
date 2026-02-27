@@ -197,67 +197,104 @@ export default function ExtractionEngine() {
 
         {/* ── Stage: Choose ──────────────────────────────────────────── */}
         {stage === "choose" && !mode && (
-          <div className="max-w-3xl mx-auto">
-            {/* Domain filter chips */}
-            <div className="flex items-center gap-2 mb-5 flex-wrap">
-              {DOMAIN_FILTERS.map((domain) => (
-                <button key={domain} onClick={() => setActiveDomain(domain)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
-                    activeDomain === domain
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
-                  }`}>
-                  {domain}
-                </button>
-              ))}
+          <div className="max-w-4xl mx-auto">
+            {/* ── Split hero: two equal entry paths ── */}
+            <div className="grid md:grid-cols-2 gap-4 mb-10">
+              {/* Option A: See it work on a sample */}
+              <button
+                onClick={() => {
+                  const el = document.getElementById("sample-list");
+                  el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+                className="group rounded-2xl border p-6 text-left transition-all border-border bg-card hover:border-primary/40 hover:shadow-md"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: "hsl(var(--primary) / 0.08)" }}>
+                    <FileText className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-base font-bold text-foreground mb-1">See it work on a sample</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Pick a realistic business document and watch LIZA extract playbooks, identify gaps, and build protocols — in 30 seconds.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold text-primary">
+                      Browse samples below <ChevronDown className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </div>
+              </button>
+
+              {/* Option B: Upload your own */}
+              <button
+                onClick={() => setMode("upload")}
+                className="group rounded-2xl border p-6 text-left transition-all hover:shadow-md"
+                style={{
+                  borderColor: "hsl(var(--primary) / 0.25)",
+                  background: "hsl(var(--primary) / 0.04)",
+                }}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: "hsl(var(--primary) / 0.12)" }}>
+                    <Upload className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-base font-bold text-foreground mb-1">See how your expertise scales</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Upload your team's actual SOP, methodology, or process guide and see exactly what LIZA can do with it.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold text-primary group-hover:underline">
+                      Upload a document <ChevronRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </div>
+              </button>
             </div>
 
-            {/* Sample document cards */}
-            <div className="grid gap-3">
-              {filteredSamples.map((doc) => {
-                const Icon = ICON_MAP[doc.icon];
-                return (
-                  <button key={doc.id} onClick={() => handleSampleSelect(doc)}
-                    className="group rounded-2xl border p-5 text-left hover:border-primary/50 transition-all border-border bg-card">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ background: "hsl(var(--primary) / 0.1)" }}>
-                        <Icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h4 className="font-semibold text-foreground text-sm">{doc.title}</h4>
-                          <span className="text-[10px] font-mono text-muted-foreground px-2 py-0.5 rounded bg-muted">{doc.domain}</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{doc.subtitle}</p>
-                        <p className="text-xs text-muted-foreground mt-1">~{doc.wordCount} words · No email required</p>
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-2" />
-                    </div>
+            {/* ── Sample browser ── */}
+            <div id="sample-list">
+              {/* Domain filter chips */}
+              <div className="flex items-center gap-2 mb-5 flex-wrap">
+                {DOMAIN_FILTERS.map((domain) => (
+                  <button key={domain} onClick={() => setActiveDomain(domain)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                      activeDomain === domain
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                    }`}>
+                    {domain}
                   </button>
-                );
-              })}
-            </div>
+                ))}
+              </div>
 
-            {/* Upload your own — compact CTA at bottom */}
-            <div className="mt-8 flex items-center gap-4">
-              <div className="h-px flex-1 bg-border" />
-              <span className="text-xs text-muted-foreground font-medium">or</span>
-              <div className="h-px flex-1 bg-border" />
+              {/* Sample document cards */}
+              <div className="grid gap-3">
+                {filteredSamples.map((doc) => {
+                  const Icon = ICON_MAP[doc.icon];
+                  return (
+                    <button key={doc.id} onClick={() => handleSampleSelect(doc)}
+                      className="group rounded-2xl border p-5 text-left hover:border-primary/50 transition-all border-border bg-card">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                          style={{ background: "hsl(var(--primary) / 0.1)" }}>
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h4 className="font-semibold text-foreground text-sm">{doc.title}</h4>
+                            <span className="text-[10px] font-mono text-muted-foreground px-2 py-0.5 rounded bg-muted">{doc.domain}</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground">{doc.subtitle}</p>
+                          <p className="text-xs text-muted-foreground mt-1">~{doc.wordCount} words · No email required</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-2" />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <button onClick={() => setMode("upload")}
-              className="w-full mt-4 group rounded-xl border border-dashed p-4 flex items-center gap-4 hover:border-primary/50 transition-all border-border"
-              style={{ background: "hsl(var(--primary) / 0.02)" }}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: "hsl(var(--primary) / 0.08)" }}>
-                <Upload className="w-5 h-5 text-primary" />
-              </div>
-              <div className="flex-1 text-left">
-                <h4 className="text-sm font-semibold text-foreground">Try it on your own process</h4>
-                <p className="text-xs text-muted-foreground">Paste text or upload a PDF · Up to 5 MB · Email required</p>
-              </div>
-              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
-            </button>
           </div>
         )}
 
