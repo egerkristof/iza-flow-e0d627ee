@@ -114,7 +114,7 @@ export default function ManifestoPage() {
       `}</style>
 
       {/* Hero */}
-      <section className="relative py-32 md:py-40 px-6 text-center overflow-hidden">
+      <section className="relative pt-32 md:pt-40 pb-16 md:pb-20 px-6 text-center overflow-hidden">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] pointer-events-none"
           style={{ background: "radial-gradient(ellipse, hsl(200 90% 52% / 0.06) 0%, transparent 65%)" }}
