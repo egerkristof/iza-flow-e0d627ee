@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import {
-  ArrowRight, ClipboardCheck, MessageSquare, TrendingUp, GitBranch,
-  X, ArrowDownRight, Shield, Clock, Zap,
-} from "lucide-react";
+import { ArrowRight, ArrowDownRight, X } from "lucide-react";
+import { USE_CASES, FLOW_CONNECTOR_TEXTS, FLYWHEEL_ITEMS } from "@/data/useCasesData";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
@@ -21,8 +19,6 @@ function SectionTag({ children }: { children: React.ReactNode }) {
     </p>
   );
 }
-
-// ── Connector between use cases ───────────────────────────────────────────────
 
 function FlowConnector({ text }: { text: string }) {
   return (
@@ -43,70 +39,6 @@ function FlowConnector({ text }: { text: string }) {
     </div>
   );
 }
-
-// ── Use case data ─────────────────────────────────────────────────────────────
-
-const USE_CASES = [
-  {
-    icon: <TrendingUp className="w-7 h-7" />,
-    tag: "01 · The Sales Protocol Engine",
-    col: "38 92% 50%",
-    headline: "Onboard sales reps in 8 weeks, not 6–9 months.",
-    subheading: "Scale your senior seller's judgment across your entire go-to-market team.",
-    competitors: ["Gong", "Chorus", "Highspot", "Seismic", "Salesforce Playbooks"],
-    competitorNote: "They capture what happened. They don't transfer the judgment that wins deals.",
-    body: [
-      "Complex B2B sales are expertise-driven. Your best sellers pattern-match, read signals, and apply judgment that takes years to develop. That's tacit knowledge — and it typically takes 6–9 months before a new hire delivers meaningful pipeline.",
-      "LIZA encodes that judgment into executable protocols. Every team member runs on that intelligence from week one. The insights feed back into your knowledge base, sharpening everything from positioning to hiring.",
-    ],
-    carries: "Sales patterns reveal what your market actually values. That insight shapes your playbooks, your onboarding, and eventually your product.",
-    stats: [
-      { value: "8 wks", label: "To full productivity (vs 6–9 months)" },
-      { value: "Senior", label: "Skill level from day one" },
-      { value: "100%", label: "Team consistency, every deal" },
-    ],
-  },
-  {
-    icon: <MessageSquare className="w-7 h-7" />,
-    tag: "02 · The Decision Extractor",
-    col: "155 72% 46%",
-    headline: "Extract decisions. Route them where they matter.",
-    subheading: "Your meetings are already building your knowledge base. You just can't see it yet.",
-    competitors: ["Otter.ai", "Fireflies", "Fathom", "Notion AI", "Grain"],
-    competitorNote: "They give you transcripts and summaries. They don't understand what it means or route it anywhere actionable.",
-    body: [
-      "Every week, dozens of meetings packed with decisions, rationale, and strategic signal — and most of it evaporates. Transcript tools give you a wall of text. Summaries give you three bullets. Neither builds anything.",
-      "LIZA extracts structured intelligence: what was decided and why, what principles emerged, what needs encoding. Start with last Monday's meetings — within a week, you have the foundations of your knowledge base.",
-    ],
-    carries: "Meetings surface tacit knowledge. That knowledge gets encoded. Encoded knowledge powers your sales team, your delegated work, and your operational audits.",
-    stats: [
-      { value: "Week 1", label: "Knowledge base starts immediately" },
-      { value: "0", label: "Hours lost reading summaries" },
-      { value: "100%", label: "Decisions captured with context" },
-    ],
-  },
-  {
-    icon: <GitBranch className="w-7 h-7" />,
-    tag: "03 · The Smart Brief",
-    col: "270 60% 65%",
-    headline: "Don't delegate tasks. Generate briefs.",
-    subheading: "The infrastructure for working through others at the highest standard.",
-    competitors: ["Asana", "Monday.com", "ClickUp", "Linear", "Jira"],
-    competitorNote: "They track what needs doing. They don't transfer why, in what sequence, or with what judgment.",
-    body: [
-      "Delegation breaks not because people are incapable, but because context doesn't transfer. They execute the letter, not the intent.",
-      "LIZA packages your intent, standards, and judgment into every delegated task. The recipient gets full context — fewer check-ins, fewer clarification spirals, results that match your standard.",
-    ],
-    carries: null,
-    stats: [
-      { value: "0", label: "Check-ins needed" },
-      { value: "100%", label: "Intent transferred with every brief" },
-      { value: "∞", label: "Scalable across your organisation" },
-    ],
-  },
-];
-
-// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function UseCasesPage() {
   return (
@@ -132,7 +64,7 @@ export default function UseCasesPage() {
             <GradientText>builds the next one.</GradientText>
           </h1>
           <p className="text-lg mb-10 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Start with one. Within months, you're running all four — because each one compounds the last.
+            Start with one. Within months, you're running all seven, because each one compounds the last.
           </p>
           <a
             href={CAL_URL}
@@ -150,13 +82,7 @@ export default function UseCasesPage() {
         </div>
       </section>
 
-      {/* ── Ready to Deploy (hidden for now) ──
-      <section className="pb-20 px-6">
-        ...audit execution engine section...
-      </section>
-      ── */}
-
-      {/* ── Divider ───────────────────────────────────────────────────────────── */}
+      {/* Divider */}
       <div className="max-w-6xl mx-auto px-6 pb-10">
         <div className="flex items-center gap-4">
           <div className="h-px flex-1" style={{ background: "hsl(var(--border))" }} />
@@ -169,7 +95,7 @@ export default function UseCasesPage() {
         </div>
       </div>
 
-      {/* Use Cases — narrative flow */}
+      {/* Use Cases */}
       <div className="pb-32 px-6">
         <div className="max-w-6xl mx-auto flex flex-col">
           {USE_CASES.map((uc, i) => (
@@ -181,14 +107,10 @@ export default function UseCasesPage() {
                   borderColor: `hsl(${uc.col} / 0.2)`,
                 }}
               >
-                {/* Top accent */}
                 <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${uc.col})` }} />
-
                 <div className="p-10 md:p-14">
                   <div className="flex flex-col lg:flex-row gap-12">
-                    {/* Left: narrative */}
                     <div className="flex-1">
-                      {/* Tag + icon */}
                       <div className="flex items-center gap-3 mb-6">
                         <div
                           className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -207,13 +129,9 @@ export default function UseCasesPage() {
                       <h2 className="text-3xl md:text-4xl font-black mb-2 leading-tight">{uc.headline}</h2>
                       <p className="text-base font-semibold mb-8" style={{ color: `hsl(${uc.col})` }}>{uc.subheading}</p>
 
-                      {/* Competitive context */}
                       <div
                         className="rounded-xl p-5 mb-8 border"
-                        style={{
-                          background: "hsl(var(--background) / 0.5)",
-                          borderColor: "hsl(var(--border))",
-                        }}
+                        style={{ background: "hsl(var(--background) / 0.5)", borderColor: "hsl(var(--border))" }}
                       >
                         <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "hsl(var(--muted-foreground))" }}>
                           What you're probably already using
@@ -239,7 +157,6 @@ export default function UseCasesPage() {
                         </p>
                       </div>
 
-                      {/* Body */}
                       <div className="flex flex-col gap-4">
                         {uc.body.map((para, j) => (
                           <p key={j} className="text-sm md:text-base leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
@@ -248,7 +165,6 @@ export default function UseCasesPage() {
                         ))}
                       </div>
 
-                      {/* Carries forward */}
                       {uc.carries && (
                         <div
                           className="mt-8 rounded-xl p-5 border-l-2 flex items-start gap-3"
@@ -265,7 +181,6 @@ export default function UseCasesPage() {
                       )}
                     </div>
 
-                    {/* Right: stats */}
                     <div className="lg:w-64 flex flex-col gap-4">
                       {uc.stats.map((s, j) => (
                         <div
@@ -289,19 +204,15 @@ export default function UseCasesPage() {
                 </div>
               </section>
 
-              {/* Flow connector between use cases */}
               {i < USE_CASES.length - 1 && (
-                <FlowConnector text={
-                  i === 0 ? "Sales patterns surface → knowledge encodes from every interaction" :
-                  "Knowledge compounds → work gets delegated with intent"
-                } />
+                <FlowConnector text={FLOW_CONNECTOR_TEXTS[i]} />
               )}
             </div>
           ))}
         </div>
       </div>
 
-      {/* The flywheel — closing narrative */}
+      {/* The Bigger Picture */}
       <section className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
@@ -355,35 +266,81 @@ export default function UseCasesPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center">
-            <p className="text-base font-semibold mb-8">
-              Most organisations start with one use case.
-              <br />
-              <span style={{ color: "hsl(var(--primary))" }}>Within months, they're running the full OS.</span>
+      {/* Seven-Step Flywheel */}
+      <section className="py-24 px-6" style={{ background: "hsl(var(--background))" }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <SectionTag>The flywheel</SectionTag>
+            <h2 className="text-4xl font-black mb-4">
+              Seven compounding results.
+            </h2>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+              Each use case feeds the next. Start anywhere. The system compounds.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {FLYWHEEL_ITEMS.map((item, i) => (
+              <div
+                key={i}
+                className="relative rounded-2xl p-5 border overflow-hidden group"
                 style={{
-                  background: "var(--gradient-brand-btn)",
-                  color: "hsl(var(--primary-foreground))",
-                  boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
+                  background: `hsl(${item.col} / 0.04)`,
+                  borderColor: `hsl(${item.col} / 0.2)`,
                 }}
               >
-                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border"
-                style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
-              >
-                See the Platform →
-              </Link>
-            </div>
+                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${item.col})` }} />
+                <p className="text-2xl font-black mb-1" style={{ color: `hsl(${item.col})` }}>{item.num}</p>
+                <p className="text-sm font-bold mb-2">{item.title}</p>
+                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{item.oneLiner}</p>
+                {i < FLYWHEEL_ITEMS.length - 1 ? (
+                  <ArrowRight className="absolute bottom-3 right-3 w-4 h-4 opacity-30" style={{ color: `hsl(${item.col})` }} />
+                ) : (
+                  <div
+                    className="absolute bottom-3 right-3 text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full"
+                    style={{ background: `hsl(${item.col} / 0.15)`, color: `hsl(${item.col})` }}
+                  >
+                    ↻ Back to 01
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-base font-semibold mb-8">
+            Most organisations start with one use case.
+            <br />
+            <span style={{ color: "hsl(var(--primary))" }}>Within months, they're running the full OS.</span>
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
+              style={{
+                background: "var(--gradient-brand-btn)",
+                color: "hsl(var(--primary-foreground))",
+                boxShadow: "0 0 32px -4px hsl(200 90% 52% / 0.4)",
+              }}
+            >
+              Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border"
+              style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
+            >
+              See the Platform →
+            </Link>
           </div>
         </div>
       </section>
