@@ -67,27 +67,8 @@ const USE_CASES = [
     ],
   },
   {
-    icon: <ClipboardCheck className="w-7 h-7" />,
-    tag: "02 · Audit Automation",
-    col: "200 90% 52%",
-    headline: "Make audits 23× faster.",
-    subheading: "If we can handle compliance audits, we can handle your marketing briefs.",
-    competitors: ["Workiva", "AuditBoard", "TeamMate+", "Excel"],
-    competitorNote: "They manage the audit process. They can't encode the expertise driving it.",
-    body: [
-      "Auditing is expertise-dense and detail-critical. Current tools manage the process but don't capture the knowledge behind it.",
-      "LIZA encodes every criterion, compliance gate, and domain heuristic into executable protocols. Audits run 23× faster with 72% higher accuracy — and every execution feeds new findings back into your knowledge base.",
-    ],
-    carries: "Audits surface issues. Those issues become tasks, structured, contextualised, and delegated with full intent.",
-    stats: [
-      { value: "23×", label: "Faster audit execution" },
-      { value: "72%", label: "Accuracy improvement" },
-      { value: "80%", label: "Groundwork eliminated" },
-    ],
-  },
-  {
     icon: <MessageSquare className="w-7 h-7" />,
-    tag: "03 · The Decision Extractor",
+    tag: "02 · The Decision Extractor",
     col: "155 72% 46%",
     headline: "Extract decisions. Route them where they matter.",
     subheading: "Your meetings are already building your knowledge base. You just can't see it yet.",
@@ -97,7 +78,7 @@ const USE_CASES = [
       "Every week, dozens of meetings packed with decisions, rationale, and strategic signal — and most of it evaporates. Transcript tools give you a wall of text. Summaries give you three bullets. Neither builds anything.",
       "LIZA extracts structured intelligence: what was decided and why, what principles emerged, what needs encoding. Start with last Monday's meetings — within a week, you have the foundations of your knowledge base.",
     ],
-    carries: "Meetings surface tacit knowledge. That knowledge gets encoded. Encoded knowledge powers your sales team, your auditors, your delegated work.",
+    carries: "Meetings surface tacit knowledge. That knowledge gets encoded. Encoded knowledge powers your sales team, your delegated work, and your operational audits.",
     stats: [
       { value: "Week 1", label: "Knowledge base starts immediately" },
       { value: "0", label: "Hours lost reading summaries" },
@@ -106,7 +87,7 @@ const USE_CASES = [
   },
   {
     icon: <GitBranch className="w-7 h-7" />,
-    tag: "04 · The Smart Brief",
+    tag: "03 · The Smart Brief",
     col: "270 60% 65%",
     headline: "Don't delegate tasks. Generate briefs.",
     subheading: "The infrastructure for working through others at the highest standard.",
@@ -375,8 +356,7 @@ export default function UseCasesPage() {
               {/* Flow connector between use cases */}
               {i < USE_CASES.length - 1 && (
                 <FlowConnector text={
-                  i === 0 ? "Playbooks run → audits execute with encoded judgment" :
-                  i === 1 ? "Issues surface → knowledge encodes from every meeting" :
+                  i === 0 ? "Sales patterns surface → knowledge encodes from every interaction" :
                   "Knowledge compounds → work gets delegated with intent"
                 } />
               )}
