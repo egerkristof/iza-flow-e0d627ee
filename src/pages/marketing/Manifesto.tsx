@@ -88,7 +88,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          The explicit layer — the knowledge that was written down, documented, and formalised — is now a commodity. It lives in public models trained on the entire internet. If your value proposition is the document you produce, you are already in a race you cannot win.
+          The explicit layer, the knowledge that was written down, documented, and formalised, is now a commodity. It lives in public models trained on the entire internet. If your value proposition is the document you produce, you are already in a race you cannot win.
         </P>
 
         <Pull>
@@ -99,7 +99,7 @@ export default function ManifestoPage() {
         <H2>We Know More Than We Can Say</H2>
 
         <P>
-          There is a deeper layer. It is the knowledge that was never written down — because it was never possible to write it down. The pattern recognition of the senior partner who has seen two hundred deals and knows which ones won't survive the first difficult conversation. The contextual judgment of the strategist who can feel when a brief is really asking for something else entirely.
+          There is a deeper layer. It is the knowledge that was never written down, because it was never possible to write it down. The pattern recognition of the senior partner who has seen two hundred deals and knows which ones won't survive the first difficult conversation. The contextual judgment of the strategist who can feel when a brief is really asking for something else entirely.
         </P>
 
         <P>
@@ -114,17 +114,17 @@ export default function ManifestoPage() {
           <Attribution
             name="Michael Polanyi"
             year="1966"
-            insight='"We can know more than we can tell." Tacit knowledge is not a gap in documentation — it is the foundation of all expertise.'
+            insight='"We can know more than we can tell." Tacit knowledge is not a gap in documentation. It is the foundation of all expertise.'
           />
           <Attribution
             name="Hubert Dreyfus"
-            year="1972–2001"
+            year="1972-2001"
             insight="True expertise is embodied skill that resists formalisation. AI divorced from human context hits a ceiling that no amount of data can breach."
           />
           <Attribution
             name="Ben Shneiderman"
             year="2022"
-            insight="Human-centered AI must amplify human capability, not replace it. The goal is not automation — it is augmentation."
+            insight="Human-centered AI must amplify human capability, not replace it. The goal is not automation. It is augmentation."
           />
         </div>
 
@@ -136,7 +136,7 @@ export default function ManifestoPage() {
         <H2>What Judgment Actually Is</H2>
 
         <P>
-          Judgment is what happens in the gap between stimulus and response. It requires both good thinking and good character. It is our way of deciding, in the moment, considering all circumstantial factors, what is right — and what is the right next thing to do.
+          Judgment is what happens in the gap between stimulus and response. It requires both good thinking and good character. It is our way of deciding, in the moment, considering all circumstantial factors, what is right, and what is the right next thing to do.
         </P>
 
         <P>
@@ -144,7 +144,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          For judgment to have any meaning, it requires two components. First, <strong style={{ color: "hsl(var(--foreground))" }}>experimentation</strong> — the willingness to take risks and run scenarios, to treat the path forward as sequential but never linear. Second, a <strong style={{ color: "hsl(var(--foreground))" }}>theory of truth</strong> — a North Star that gives those experiments direction and meaning. Without the North Star, experiments are random. Without experiments, the North Star is just a wish.
+          For judgment to have any meaning, it requires two components. First, <strong style={{ color: "hsl(var(--foreground))" }}>experimentation</strong>: the willingness to take risks and run scenarios, to treat the path forward as sequential but never linear. Second, a <strong style={{ color: "hsl(var(--foreground))" }}>theory of truth</strong>: a North Star that gives those experiments direction and meaning. Without the North Star, experiments are random. Without experiments, the North Star is just a wish.
         </P>
 
         <Pull>
@@ -155,7 +155,7 @@ export default function ManifestoPage() {
         <H2>The Paradox of Teams</H2>
 
         <P>
-          Here is where tacit knowledge becomes truly powerful — and truly difficult. Real knowledge creation is not a solo act. It happens in the friction between people who share a fierce, almost non-negotiable belief about the future, but who think differently about how to get there.
+          Here is where tacit knowledge becomes truly powerful, and truly difficult. Real knowledge creation is not a solo act. It happens in the friction between people who share a fierce, almost non-negotiable belief about the future, but who think differently about how to get there.
         </P>
 
         <P>
@@ -163,7 +163,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          <strong style={{ color: "hsl(var(--foreground))" }}>Unified vision.</strong> A shared conviction about where the future should go. Values that are black and white. A North Star the team would almost die for. This is exclusionary by design — it filters for alignment.
+          <strong style={{ color: "hsl(var(--foreground))" }}>Unified vision.</strong> A shared conviction about where the future should go. Values that are black and white. A North Star the team would almost die for. This is exclusionary by design. It filters for alignment.
         </P>
 
         <P>
@@ -171,14 +171,14 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          Knowledge creation happens in the friction zone between these poles. Not in documents. Not in databases. In relationships — where people rub ideas off each other, externalise what they couldn't previously articulate, and internalise new capabilities from each other.
+          Knowledge creation happens in the friction zone between these poles. Not in documents. Not in databases. In relationships, where people rub ideas off each other, externalise what they couldn't previously articulate, and internalise new capabilities from each other.
         </P>
 
         {/* Knowledge Creation Paradox Diagram */}
         <KnowledgeParadoxDiagram />
 
         <P>
-          The organisational theorist Ikujiro Nonaka described exactly this dynamic. His SECI model — Socialisation, Externalisation, Combination, Internalisation — is not academic theory. It is the description of what great teams already do. They share tacit knowledge through working together. They externalise it into shared language. They combine it into new forms. They internalise new capabilities. The loop compounds.
+          The organisational theorist Ikujiro Nonaka described exactly this dynamic. His SECI model (Socialisation, Externalisation, Combination, Internalisation) is not academic theory. It is the description of what great teams already do. They share tacit knowledge through working together. They externalise it into shared language. They combine it into new forms. They internalise new capabilities. The loop compounds.
         </P>
 
         {/* SECI Flywheel Diagram */}
@@ -188,7 +188,7 @@ export default function ManifestoPage() {
         <H2>The Business Problem</H2>
 
         <P>
-          In most organisations, there is barely enough time to hear what people <em>are</em> saying — let alone take the time to discover what they haven't been able to articulate.
+          In most organisations, there is barely enough time to hear what people <em>are</em> saying, let alone take the time to discover what they haven't been able to articulate.
         </P>
 
         <P>
@@ -200,7 +200,7 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          And here is the danger of the AI age: used brainlessly, AI automates the things that were said hastily — the surface layer. It makes the explicit faster. It leaves the tacit untouched. Worse, it creates the illusion that the knowledge problem has been solved, when in fact the most valuable layer has been ignored entirely.
+          And here is the danger of the AI age: used brainlessly, AI automates the things that were said hastily, the surface layer. It makes the explicit faster. It leaves the tacit untouched. Worse, it creates the illusion that the knowledge problem has been solved, when in fact the most valuable layer has been ignored entirely.
         </P>
 
         <Pull>
@@ -211,19 +211,19 @@ export default function ManifestoPage() {
         <H2>The Opportunity</H2>
 
         <P>
-          AI used <em>well</em> — with governance, with structure, with a deep understanding of how teams actually create knowledge — is the first technology in history that can make it economical to express what was previously too expensive to articulate.
+          AI used <em>well</em>, with governance, with structure, with a deep understanding of how teams actually create knowledge, is the first technology in history that can make it economical to express what was previously too expensive to articulate.
         </P>
 
         <P>
-          For the first time, we have a technology that understands human language and can therefore help people surface what they know but haven't said. It can make it practical for a team to access more of its own knowledge — to combine it in new ways, to compound it across engagements, to transfer it without losing the nuance.
+          For the first time, we have a technology that understands human language and can therefore help people surface what they know but haven't said. It can make it practical for a team to access more of its own knowledge, to combine it in new ways, to compound it across engagements, to transfer it without losing the nuance.
         </P>
 
         <P>
-          This is not about freeing people from work. People will work just as hard — perhaps harder — because they will be able to bring forth more of themselves. This is about freeing people <em>into</em> more meaningful work: the creative freedom to give more of themselves, in service of their vision and their values.
+          This is not about freeing people from work. People will work just as hard, perhaps harder, because they will be able to bring forth more of themselves. This is about freeing people <em>into</em> more meaningful work: the creative freedom to give more of themselves, in service of their vision and their values.
         </P>
 
         <Pull>
-          "The goal is not less work. It's deeper work — at a scale that was never before possible."
+          "The goal is not less work. It's deeper work, at a scale that was never before possible."
         </Pull>
 
         {/* --- 7. What We Built --- */}
@@ -234,11 +234,11 @@ export default function ManifestoPage() {
         </P>
 
         <P>
-          Protocols, not documents. Structured heuristics, decision gates, and contextual cues that run inside an AI execution environment — carrying your senior judgment into every interaction, every deliverable, every engagement.
+          Protocols, not documents. Structured heuristics, decision gates, and contextual cues that run inside an AI execution environment, carrying your senior judgment into every interaction, every deliverable, every engagement.
         </P>
 
         <P>
-          A system designed not just to preserve what your team knows, but to create the conditions for new knowledge to emerge — through the SECI flywheel, through structured team execution, through governance loops that ensure alignment without killing autonomy.
+          A system designed not just to preserve what your team knows, but to create the conditions for new knowledge to emerge. Through the SECI flywheel, through structured team execution, through governance loops that ensure alignment without killing autonomy.
         </P>
 
         <P>
@@ -249,11 +249,11 @@ export default function ManifestoPage() {
         <H2>What We Believe</H2>
 
         <P>
-          We believe only humans can innovate. The optimistic belief that we can shape the future — that we can create things that serve our purpose rather than merely optimise the status quo — is the foundation of all scientific discovery and all meaningful work.
+          We believe only humans can innovate. The optimistic belief that we can shape the future, that we can create things that serve our purpose rather than merely optimise the status quo, is the foundation of all scientific discovery and all meaningful work.
         </P>
 
         <P>
-          We believe judgment can be captured, structured, and made executable — without losing the nuance that makes it valuable.
+          We believe judgment can be captured, structured, and made executable, without losing the nuance that makes it valuable.
         </P>
 
         <P>
