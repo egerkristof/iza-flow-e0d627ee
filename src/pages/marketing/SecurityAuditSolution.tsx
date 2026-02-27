@@ -38,7 +38,8 @@ const NOT_LIST = [
   "Not a GRC suite",
   "Not a vendor-side questionnaire tool",
   "Not replacing senior auditors",
-  "Not replacing your existing automation",
+  "Not replacing your existing tools or automation",
+  "Not limited to one audit type",
 ];
 
 const REPLACES = ["Question Search", "Document Lookup", "Answer Drafting", "Formatting & Assembly"];
@@ -66,7 +67,7 @@ const STEPS_TO_START = [
 
 /* ── Page ────────────────────────────────────────────────────────────────────── */
 
-export default function SecurityAuditSolution() {
+export default function AuditExecutionSolution() {
   const accentCol = "200 90% 52%";
 
   return (
@@ -89,9 +90,12 @@ export default function SecurityAuditSolution() {
             <GradientText>to 1.5 hours.</GradientText>
           </h1>
           <p className="text-lg mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            An AI-powered execution engine for cybersecurity audit firms. Proven on real audits with ~800 questions each.
+            An AI-powered execution engine for compliance, security, and operational audits. Any question-and-evidence audit format — from ISO 27001 to SOC 2 to internal controls.
           </p>
-          <p className="text-sm font-medium mb-10" style={{ color: `hsl(${accentCol})` }}>
+          <p className="text-sm font-medium mb-2" style={{ color: `hsl(${accentCol})` }}>
+            Proven on real cybersecurity audits with ~800 questions each.
+          </p>
+          <p className="text-sm font-medium mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
             Senior auditors keep judgment. AI handles the repetition.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -123,7 +127,7 @@ export default function SecurityAuditSolution() {
       <section className="py-16 px-6" style={{ background: "hsl(var(--card))" }}>
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { value: "18 days", label: "Subcontractor baseline", sub: "per audit" },
+            { value: "18 days", label: "Subcontractor baseline", sub: "per audit (cybersecurity)" },
             { value: "1.5 hrs", label: "AI-assisted first pass", sub: "generation time" },
             { value: "84%", label: "First-pass accuracy", sub: "vs 76% manual" },
             { value: "~800", label: "Questions per audit", sub: "proven at scale" },
@@ -142,10 +146,10 @@ export default function SecurityAuditSolution() {
         <div className="max-w-4xl mx-auto">
           <SectionTag>The current reality</SectionTag>
           <h2 className="text-3xl md:text-4xl font-black mb-4">
-            Cybersecurity audits are still <GradientText>executed manually.</GradientText>
+            Most audits are still <GradientText>executed manually.</GradientText>
           </h2>
           <p className="text-base mb-10 max-w-2xl" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Often by subcontractors. Each audit follows the same punishing loop — repeated hundreds or thousands of times.
+            Whether it's cybersecurity, compliance, or operational audits — each one follows the same punishing loop, repeated hundreds or thousands of times.
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
             {PAIN_STEPS.map((step, i) => (
