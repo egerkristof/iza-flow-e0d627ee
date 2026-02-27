@@ -68,7 +68,7 @@ const App = () => (
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/extract" element={<ExtractionEngine />} />
             <Route path="/extract/test" element={<ExperienceTestPage />} />
-            <Route path="/solutions/security-audit" element={<AuditExecutionSolution />} />
+            <Route path="/solutions/audit" element={<AuditExecutionSolution />} />
 
             {/* Legacy redirects */}
             <Route path="/liza" element={<Navigate to="/" replace />} />
