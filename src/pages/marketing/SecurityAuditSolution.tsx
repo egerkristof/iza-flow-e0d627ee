@@ -297,11 +297,11 @@ export default function AuditExecutionSolution() {
           <h2 className="text-3xl md:text-4xl font-black mb-4">
             One senior can supervise <GradientText>multiple audits in parallel.</GradientText>
           </h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10 max-w-3xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4 mt-10 max-w-3xl mx-auto">
             {WHY_IT_MATTERS.map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 rounded-xl border p-4 text-left"
+                className="flex items-center gap-3 rounded-xl border p-4 text-left w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.75rem)]"
                 style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}
               >
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
