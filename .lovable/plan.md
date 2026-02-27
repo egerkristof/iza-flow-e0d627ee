@@ -1,148 +1,44 @@
 
 
-# Extraction Engine — Public Mini-App
+# Enrich Audit Solution Page with Advisory Revenue Narrative
 
-## Overview
-Build a public-facing "Extraction Engine" at `/extract` that lets visitors experience LIZA's **full-quality** knowledge extraction. Two modes: try with curated sample content (no login) or paste/upload your own content (email required). A lightweight CRM table tracks all trial leads. Admin access uses the existing auth system with your user manually added via Lovable Cloud.
+## The Strategic Insight
 
----
+The biggest revenue driver for audit firms is **advisory/consulting** (40-50%+ of revenue), not statutory audit itself. Audits are often low-margin "door openers" to high-margin advisory engagements. The narrative should position the audit engine not just as a speed tool, but as the entry point to a knowledge flywheel that directly feeds advisory pipeline.
 
-## 1. Database: `extraction_trials` CRM Table
+## Changes to `src/pages/marketing/SecurityAuditSolution.tsx`
 
-Create a new table to track every public extraction attempt:
+### New Section 1: "Beyond the Audit" -- The Revenue Flywheel
+Placed after "Why It Matters," before "Deployment Model." A horizontal 4-step flow showing:
 
-- `id` (uuid, PK)
-- `email` (text, nullable — null for sample-mode trials)
-- `name` (text, nullable)
-- `company` (text, nullable)
-- `source_type` (text: 'sample' | 'paste' | 'pdf')
-- `content_preview` (text — first 200 chars)
-- `result_summary` (jsonb — bundles count, items count, category breakdown)
-- `created_at` (timestamptz)
+1. **Execute** -- Complete audits 10x faster (the engine)
+2. **Capture** -- Every audit surfaces control gaps, client patterns, recurring weaknesses. This intelligence is currently lost in spreadsheets.
+3. **Advise** -- Findings become data-driven advisory proposals. "We found 14 control gaps across your last 3 audits -- here's a remediation programme." Your advisory pipeline becomes evidence-based, not relationship-dependent.
+4. **Compound** -- Past audits inform future ones. New auditors inherit institutional memory. Cross-client patterns surface emerging risks.
 
-RLS policies:
-- **Anon INSERT**: anyone can create a trial record (public feature)
-- **Authenticated SELECT**: only logged-in users (you) can view trials
+Framing headline: **"Your audits are already generating advisory revenue. You just can't see it yet."**
 
----
+Subtext: "Every audit produces structured intelligence about client risk posture, operational gaps, and control maturity. Today, that insight lives in your auditors' heads and disappears when they move to the next engagement."
 
-## 2. New Edge Function: `public-extract`
+### New Section 2: "Knowledge That Pays" -- Audit-to-Advisory Bridge
+A focused two-column section:
+- **Left column** -- "What auditors learn but never capture": Client-specific risk patterns, recurring control failures, evidence quality signals, industry-specific gap clusters
+- **Right column** -- "What this becomes with LIZA": Data-driven remediation proposals, proactive risk briefings, cross-client benchmarking insights, advisory engagement blueprints
 
-A new backend function that wraps the **full extraction logic** (same SYSTEM_PROMPT, same tool definition, same AI model) but without requiring authentication.
+### New Section 3: "What Becomes Possible" -- Vision
+A subtler, aspirational section (dashed borders to signal forward-looking):
+- **Predictive Scoping**: System suggests which controls will likely fail based on client profile and historical data
+- **Automated Remediation Tracking**: Audit findings auto-generate follow-up tasks with full context
+- **Cross-Client Intelligence**: Anonymised patterns across your client base surface emerging risks
+- **New Auditor Acceleration**: Junior staff execute at near-senior quality from day one, backed by institutional knowledge
 
-Key differences from `extract-knowledge`:
-- `verify_jwt = false` in config.toml — no auth required
-- Accepts raw text content OR base64 PDF directly in the request body (no document storage lookup)
-- **PDF support**: client sends the file as base64; function passes it to Gemini multimodal just like the existing PDF path
-- **Size limits**: 20,000 characters for text, 5MB for PDF uploads (prevents abuse)
-- **Rate limit**: max 3 extractions per email per 24h (checked via DB query against `extraction_trials`)
-- Uses `google/gemini-2.5-flash` for speed (same as "guided" depth in the main app)
-- Logs every attempt to `extraction_trials` table
-- Full quality — same SYSTEM_PROMPT, same TOOL_DEFINITION, same structural analysis
+## Minor Update to `src/pages/marketing/UseCases.tsx`
 
----
-
-## 3. New Page: `/extract` (ExtractionEngine.tsx)
-
-A marketing-quality page wrapped in `MarketingLayout` with three states:
-
-### State 1: Choose Your Path
-Two cards side by side:
-- **"Try with Sample Content"** — no email needed, uses a pre-loaded ~1,500 word "Enterprise Client Onboarding Methodology" embedded in the component
-- **"Upload Your Own"** — shows email form, then a text area (paste) or PDF upload (drag-and-drop, max 5MB)
-
-### State 2: Processing
-Animated extraction progress with phase indicators (Analyzing structure... Extracting knowledge... Organizing bundles...). Matches the marketing aesthetic with gradient accents.
-
-### State 3: Results
-A read-only, high-fidelity visualization:
-- **Summary stats**: X bundles, Y items, category distribution bar
-- **Bundle cards**: expandable, showing items grouped by category with color-coded badges (reusing `CATEGORY_COLORS` and `PROTOCOL_ROLE_META` from the existing schema)
-- **Analysis notes** from the AI
-- **Bottom CTA**: "Want to deploy these protocols?" with Book a Discovery Call button
-- **"Try again"** button to restart
-
-### PDF Upload Handling
-- Client-side: accept `.pdf` files up to 5MB via drag-and-drop or file picker
-- Convert to base64 in-browser, send to `public-extract` edge function
-- The edge function passes the PDF to Gemini multimodal (same path as existing extraction)
-
----
-
-## 4. Results Display Component (ExtractionResultsView.tsx)
-
-A new component in `src/components/marketing/` — simplified, read-only version of the ImportCopilotDialog's bundle display:
-- Bundle cards with item counts, readiness badges, content completeness indicators
-- Expandable items within each bundle, color-coded by category
-- Protocol role labels (Protocol Driver, Execution Step, Compliance Gate, Context)
-- Lightbox-style detail view for individual items
-- Mobile-responsive
-- No import/save/edit functionality (that is the full platform)
-
----
-
-## 5. Admin CRM View
-
-Add a new route `/admin/trials` (behind existing auth, architect role only):
-- Simple table showing: email, name, company, source type, result summary, timestamp
-- Sortable by date
-- Accessible from the existing admin sidebar navigation
-- No public signup — your user is already created in the system. You manage additional users via Lovable Cloud backend directly.
-
----
-
-## 6. Navigation & CTA Updates
-
-- **Homepage Hero CTA**: "Try the Extraction Engine" links to `/extract` (already partially done)
-- **Marketing footer**: add small "Team Login" text link pointing to `/auth`
-- **App.tsx**: add `/extract` public route and `/admin/trials` protected route
-
----
-
-## 7. Sample Content
-
-Embed a curated ~1,500 word sample document in the codebase:
-
-**"Enterprise Client Onboarding Methodology"** — designed to showcase extraction quality:
-- 4 phases (Discovery, Scoping, Onboarding, Handoff)
-- Clear PLAYBOOKs, PROCEDUREs with action verbs, DIRECTIVEs with "must/never" language
-- KNOWLEDGE items with specific data points
-- This will produce an impressive ~30-50 item extraction across 4-5 bundles
-
----
-
-## Implementation Sequence
-
-1. Create `extraction_trials` table with RLS policies (migration)
-2. Create `public-extract` edge function (reuses core extraction logic)
-3. Build `ExtractionResultsView.tsx` component
-4. Build `ExtractionEngine.tsx` page with sample content
-5. Add admin trials view
-6. Update routing (App.tsx), footer (MarketingLayout.tsx), hero CTA
-7. Test end-to-end with sample content and a test PDF
-
----
+Update the audit card description (line ~196) to hint at the broader value chain: add a brief line about how the engine captures intelligence that feeds advisory pipeline.
 
 ## Technical Details
-
-### File Changes
-
-| File | Action |
-|------|--------|
-| `supabase/functions/public-extract/index.ts` | **New** — public extraction endpoint |
-| `supabase/config.toml` | Add `verify_jwt = false` for `public-extract` |
-| `src/pages/marketing/ExtractionEngine.tsx` | **New** — main page |
-| `src/components/marketing/ExtractionResultsView.tsx` | **New** — results display |
-| `src/data/sampleContent.ts` | **New** — embedded sample document |
-| `src/pages/AdminTrials.tsx` | **New** — CRM admin view |
-| `src/App.tsx` | Add routes |
-| `src/components/marketing/MarketingLayout.tsx` | Add footer login link |
-| `src/components/AppSidebar.tsx` | Add trials link for architects |
-| Database migration | Create `extraction_trials` table |
-
-### Security
-- Public extract function has no JWT validation but enforces size limits and rate limits
-- CRM data only visible to authenticated users
-- Admin trials view restricted to architect role
-- PDF files are never stored — processed in-memory and discarded
+- New icons added to imports: `BookOpen`, `Lightbulb`, `RefreshCw`, `DollarSign`, `Brain`, `LineChart`
+- All new sections reuse existing `SectionTag`, `GradientText`, and card patterns
+- Vision section uses dashed borders and lower-opacity accents to differentiate from live features
+- No new components or dependencies needed
 
