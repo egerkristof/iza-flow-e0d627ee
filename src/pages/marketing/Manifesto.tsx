@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { ArrowRight } from "lucide-react";
-import { KnowledgeParadoxDiagram, SECIFlywheelDiagram } from "@/components/marketing/ManifestoDiagrams";
+import { JudgmentGapDiagram, KnowledgeParadoxDiagram, SECIFlywheelDiagram } from "@/components/marketing/ManifestoDiagrams";
 import { ScrollReveal } from "@/components/marketing/ScrollReveal";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
@@ -196,8 +196,17 @@ export default function ManifestoPage() {
         <SectionTitle>What Judgment Actually Is</SectionTitle>
 
         <Para dropcap>
-          Judgment is what happens in the gap between stimulus and response. It requires both good thinking and good character. It is our way of deciding, in the moment, considering all circumstantial factors, what is right, and what is the right next thing to do.
+          Judgment is what happens in the gap between stimulus and response. Something happens to you: a client pushes back on your proposal, a competitor launches a product that undercuts yours, a team member resigns on the eve of a critical deadline. That is the stimulus. What you do next is the response. But between those two moments, there is a space. And everything that matters happens there.
         </Para>
+
+        <Para>
+          In that gap live four uniquely human capacities: <strong style={{ color: "hsl(var(--foreground))" }}>creativity</strong>, the ability to imagine options that don't yet exist; <strong style={{ color: "hsl(var(--foreground))" }}>conscience</strong>, the moral sense of what is right; <strong style={{ color: "hsl(var(--foreground))" }}>self-awareness</strong>, the understanding of your own biases and blind spots; and <strong style={{ color: "hsl(var(--foreground))" }}>willpower</strong>, the resolve to act on what you know rather than what is easy. The wider you can hold this gap open, the better your judgment becomes.
+        </Para>
+
+        {/* Judgment Gap Diagram */}
+        <ScrollReveal>
+          <JudgmentGapDiagram />
+        </ScrollReveal>
 
         <Para>
           Judgment cannot be reduced to optimisation. Optimisation, in its traditional sense, aims at more efficient use of existing information. Judgment aims at something fundamentally different: it creates new futures. It presupposes that we do not yet know everything we need to know, and therefore must proactively research, experiment, and discover.
