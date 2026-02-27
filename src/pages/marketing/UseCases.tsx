@@ -201,7 +201,7 @@ export default function UseCasesPage() {
                     className="inline-flex items-center gap-1.5 text-xs font-black tracking-widest uppercase px-3 py-1.5 rounded-full"
                     style={{ background: "hsl(var(--success) / 0.12)", color: "hsl(var(--success))" }}
                   >
-                    <Shield className="w-3.5 h-3.5" /> Security Audit Engine
+                    <Shield className="w-3.5 h-3.5" /> Audit Execution Engine
                   </span>
                   <span
                     className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded-full"
@@ -212,7 +212,7 @@ export default function UseCasesPage() {
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black mb-2">Reduce 18 days of audit work to 1.5 hours.</h3>
                 <p className="text-sm mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  A focused AI execution engine for cybersecurity audit firms. Proven on real audits with ~800 questions, 84% first-pass accuracy.
+                  An AI execution engine for compliance, security, and operational audits. Proven on real cybersecurity audits with ~800 questions and 84% first-pass accuracy.
                 </p>
                 <p className="text-sm font-semibold group-hover:underline" style={{ color: "hsl(var(--primary))" }}>
                   See full solution details <ArrowRight className="inline w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

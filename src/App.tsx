@@ -28,7 +28,7 @@ import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import ExtractionEngine from "./pages/marketing/ExtractionEngine";
 import ExperienceTestPage from "./pages/marketing/ExperienceTestPage";
-import SecurityAuditSolution from "./pages/marketing/SecurityAuditSolution";
+import AuditExecutionSolution from "./pages/marketing/SecurityAuditSolution";
 
 const queryClient = new QueryClient();
 
@@ -68,7 +68,7 @@ const App = () => (
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/extract" element={<ExtractionEngine />} />
             <Route path="/extract/test" element={<ExperienceTestPage />} />
-            <Route path="/solutions/security-audit" element={<SecurityAuditSolution />} />
+            <Route path="/solutions/security-audit" element={<AuditExecutionSolution />} />
 
             {/* Legacy redirects */}
             <Route path="/liza" element={<Navigate to="/" replace />} />
