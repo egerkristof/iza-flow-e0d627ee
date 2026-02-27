@@ -4,6 +4,7 @@ import {
   ArrowRight, Shield, Clock, Target, CheckCircle2, FileSpreadsheet,
   Search, PenLine, LayoutTemplate, Users, TrendingUp, Zap,
   XCircle, ArrowDownRight, BookOpen, Lightbulb, RefreshCw, DollarSign, Brain, LineChart,
+  AlertTriangle, MessageSquare,
 } from "lucide-react";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
@@ -35,6 +36,7 @@ const PAIN_STEPS = [
 ];
 
 const NOT_LIST = [
+  "Not a ChatGPT wrapper — purpose-built audit architecture",
   "Not a GRC suite",
   "Not a vendor-side questionnaire tool",
   "Not replacing senior auditors",
@@ -90,13 +92,13 @@ export default function AuditExecutionSolution() {
             <GradientText>to 1.5 hours.</GradientText>
           </h1>
           <p className="text-lg mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            An AI-powered execution engine for compliance, security, and operational audits. Any question-and-evidence audit format — from ISO 27001 to SOC 2 to internal controls.
+            Not another ChatGPT wrapper. A purpose-built execution engine for compliance, security, and operational audits — with evidence traceability, structured output, and quality validation built in.
           </p>
           <p className="text-sm font-medium mb-2" style={{ color: `hsl(${accentCol})` }}>
             Proven on real cybersecurity audits with ~800 questions each.
           </p>
           <p className="text-sm font-medium mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Senior auditors keep judgment. AI handles the repetition.
+            Senior auditors keep judgment. AI handles the repetition — reliably.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -129,7 +131,7 @@ export default function AuditExecutionSolution() {
           {[
             { value: "18 days", label: "Subcontractor baseline", sub: "per audit (cybersecurity)" },
             { value: "1.5 hrs", label: "AI-assisted first pass", sub: "generation time" },
-            { value: "84%", label: "First-pass accuracy", sub: "vs 76% manual" },
+            { value: "84%", label: "First-pass accuracy", sub: "vs ~40% with generic AI" },
             { value: "~800", label: "Questions per audit", sub: "proven at scale" },
           ].map((s, i) => (
             <div key={i} className="text-center">
@@ -146,12 +148,13 @@ export default function AuditExecutionSolution() {
         <div className="max-w-4xl mx-auto">
           <SectionTag>The current reality</SectionTag>
           <h2 className="text-3xl md:text-4xl font-black mb-4">
-            Most audits are still <GradientText>executed manually.</GradientText>
+            AI hasn't solved audits. <GradientText>It's just shifted the bottleneck.</GradientText>
           </h2>
-          <p className="text-base mb-10 max-w-2xl" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Whether it's cybersecurity, compliance, or operational audits — each one follows the same punishing loop, repeated hundreds or thousands of times.
+          <p className="text-base mb-6 max-w-2xl" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Yes, teams are experimenting with ChatGPT and Copilot. But generic AI creates new problems: hallucinated evidence, no traceability, inconsistent formatting, and zero institutional memory. The "AI-assisted" workflow still looks like this:
           </p>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             {PAIN_STEPS.map((step, i) => (
               <div
                 key={i}
@@ -167,9 +170,35 @@ export default function AuditExecutionSolution() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-sm italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Like searching for a needle in a haystack — every single time.
-          </p>
+
+          {/* Generic AI limitations callout */}
+          <div
+            className="rounded-2xl border p-6 max-w-2xl"
+            style={{ borderColor: "hsl(var(--warning, 45 93% 47%) / 0.3)", background: "hsl(var(--warning, 45 93% 47%) / 0.05)" }}
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="w-4 h-4" style={{ color: "hsl(45 93% 47%)" }} />
+              <p className="text-xs font-black tracking-widest uppercase" style={{ color: "hsl(45 93% 47%)" }}>
+                The ChatGPT experiment
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { icon: <MessageSquare className="w-4 h-4" />, text: "Copy-paste questions one at a time" },
+                { icon: <AlertTriangle className="w-4 h-4" />, text: "Hallucinated or unverifiable evidence" },
+                { icon: <Search className="w-4 h-4" />, text: "No traceability back to source documents" },
+                { icon: <RefreshCw className="w-4 h-4" />, text: "Every session starts from zero — nothing compounds" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2 text-xs" style={{ color: "hsl(var(--muted-foreground))" }}>
+                  <span className="flex-shrink-0 mt-0.5" style={{ color: "hsl(45 93% 47%)" }}>{item.icon}</span>
+                  <span>{item.text}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs mt-3 italic" style={{ color: "hsl(var(--muted-foreground))" }}>
+              Faster than fully manual, but still unscalable — and introduces new risk.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -178,10 +207,10 @@ export default function AuditExecutionSolution() {
         <div className="max-w-4xl mx-auto">
           <SectionTag>What we built</SectionTag>
           <h2 className="text-3xl md:text-4xl font-black mb-4">
-            A focused AI execution engine <GradientText>for audit firms.</GradientText>
+            Not generic AI. <GradientText>Purpose-built for audit execution.</GradientText>
           </h2>
           <p className="text-base mb-10 max-w-2xl" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Feed it your audit question set and client evidence. Get back structured, traceable answers ready for senior review.
+            Feed it your audit question set and client evidence. Get back structured, traceable, verifiable answers — not ChatGPT guesses — ready for senior review.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
