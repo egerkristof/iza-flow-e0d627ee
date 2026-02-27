@@ -167,7 +167,7 @@ export default function UseCasesPage() {
           </div>
 
           <Link
-            to="/solutions/security-audit"
+            to="/solutions/audit"
             className="group relative block rounded-2xl border-2 overflow-hidden transition-all hover:shadow-lg"
             style={{
               borderColor: "hsl(var(--success) / 0.3)",
