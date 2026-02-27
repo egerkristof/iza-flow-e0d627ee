@@ -193,7 +193,7 @@ export default function UseCasesPage() {
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black mb-2">Reduce 18 days of audit work to 1.5 hours.</h3>
                 <p className="text-sm mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  An AI execution engine for compliance, security, and operational audits. Proven on real cybersecurity audits with ~800 questions and 84% first-pass accuracy.
+                  An AI execution engine for compliance, security, and operational audits. Proven on real cybersecurity audits with ~800 questions and 84% first-pass accuracy. Every audit captures structured intelligence that feeds your advisory pipeline.
                 </p>
 
                 {/* Competitive context */}

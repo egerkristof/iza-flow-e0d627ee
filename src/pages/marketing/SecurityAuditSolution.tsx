@@ -3,7 +3,7 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import {
   ArrowRight, Shield, Clock, Target, CheckCircle2, FileSpreadsheet,
   Search, PenLine, LayoutTemplate, Users, TrendingUp, Zap,
-  XCircle, ArrowDownRight,
+  XCircle, ArrowDownRight, BookOpen, Lightbulb, RefreshCw, DollarSign, Brain, LineChart,
 } from "lucide-react";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
@@ -281,6 +281,133 @@ export default function AuditExecutionSolution() {
                   {item.icon}
                 </div>
                 <p className="text-sm font-medium">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Beyond the Audit — Revenue Flywheel ──────────────────────────────── */}
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <SectionTag>Beyond the audit</SectionTag>
+          <h2 className="text-3xl md:text-4xl font-black mb-4">
+            Your audits are already generating advisory revenue.
+            <br />
+            <GradientText>You just can't see it yet.</GradientText>
+          </h2>
+          <p className="text-base mb-12 max-w-2xl" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Every audit produces structured intelligence about client risk posture, operational gaps, and control maturity. Today, that insight lives in your auditors' heads and disappears when they move to the next engagement.
+          </p>
+
+          <div className="grid md:grid-cols-4 gap-4">
+            {[
+              { icon: <Zap className="w-5 h-5" />, step: "01", title: "Execute", desc: "Complete audits 10× faster. The engine handles the mechanical layer — question search, evidence matching, answer drafting." },
+              { icon: <Brain className="w-5 h-5" />, step: "02", title: "Capture", desc: "Every audit surfaces control gaps, client patterns, recurring weaknesses. This intelligence is currently lost in spreadsheets." },
+              { icon: <DollarSign className="w-5 h-5" />, step: "03", title: "Advise", desc: "Findings become data-driven advisory proposals. \"We found 14 control gaps across your last 3 audits — here's a remediation programme.\"" },
+              { icon: <RefreshCw className="w-5 h-5" />, step: "04", title: "Compound", desc: "Past audits inform future ones. New auditors inherit institutional memory. Cross-client patterns surface emerging risks." },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border p-6 relative"
+                style={{ borderColor: `hsl(${accentCol} / 0.15)`, background: `hsl(${accentCol} / 0.03)` }}
+              >
+                <p className="text-[10px] font-black tracking-widest uppercase mb-3" style={{ color: `hsl(${accentCol} / 0.5)` }}>{item.step}</p>
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-3"
+                  style={{ background: `hsl(${accentCol} / 0.12)`, color: `hsl(${accentCol})` }}
+                >
+                  {item.icon}
+                </div>
+                <p className="text-sm font-bold mb-2">{item.title}</p>
+                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-sm font-semibold text-center" style={{ color: "hsl(var(--muted-foreground))" }}>
+            Your advisory pipeline becomes evidence-based, not relationship-dependent.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Knowledge That Pays — Audit-to-Advisory Bridge ────────────────────── */}
+      <section className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
+        <div className="max-w-4xl mx-auto">
+          <SectionTag>Knowledge that pays</SectionTag>
+          <h2 className="text-3xl md:text-4xl font-black mb-10">
+            From lost insight to <GradientText>advisory revenue.</GradientText>
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Left — what's lost */}
+            <div className="rounded-2xl border p-7" style={{ borderColor: "hsl(var(--destructive) / 0.2)", background: "hsl(var(--destructive) / 0.03)" }}>
+              <p className="text-xs font-black tracking-widest uppercase mb-5" style={{ color: "hsl(var(--destructive))" }}>
+                What auditors learn but never capture
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Client-specific risk patterns",
+                  "Recurring control failures across engagements",
+                  "Evidence quality signals",
+                  "Industry-specific gap clusters",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <XCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--destructive))" }} />
+                    <span style={{ color: "hsl(var(--muted-foreground))" }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Right — what it becomes */}
+            <div className="rounded-2xl border p-7" style={{ borderColor: `hsl(${accentCol} / 0.2)`, background: `hsl(${accentCol} / 0.03)` }}>
+              <p className="text-xs font-black tracking-widest uppercase mb-5" style={{ color: `hsl(${accentCol})` }}>
+                What this becomes with LIZA
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Data-driven remediation proposals",
+                  "Proactive risk briefings for clients",
+                  "Cross-client benchmarking insights",
+                  "Advisory engagement blueprints",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: `hsl(${accentCol})` }} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── What Becomes Possible — Vision ────────────────────────────────────── */}
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <SectionTag>What becomes possible</SectionTag>
+          <h2 className="text-3xl md:text-4xl font-black mb-4">
+            The audit firm of <GradientText>tomorrow.</GradientText>
+          </h2>
+          <p className="text-base mb-12 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
+            As engagement data compounds, entirely new capabilities emerge.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto text-left">
+            {[
+              { icon: <LineChart className="w-5 h-5" />, title: "Predictive Scoping", desc: "The system suggests which controls are likely to fail based on client profile and historical patterns." },
+              { icon: <BookOpen className="w-5 h-5" />, title: "Automated Remediation Tracking", desc: "Audit findings auto-generate follow-up tasks with full context — assigned, tracked, and closed." },
+              { icon: <Lightbulb className="w-5 h-5" />, title: "Cross-Client Intelligence", desc: "Anonymised patterns across your client base surface emerging risks before they become findings." },
+              { icon: <Users className="w-5 h-5" />, title: "New Auditor Acceleration", desc: "Junior staff execute at near-senior quality from day one, backed by institutional knowledge." },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="rounded-2xl p-6 text-left"
+                style={{ border: "1.5px dashed hsl(var(--border))", background: "hsl(var(--card) / 0.5)" }}
+              >
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-3"
+                  style={{ background: `hsl(${accentCol} / 0.08)`, color: `hsl(${accentCol} / 0.7)` }}
+                >
+                  {item.icon}
+                </div>
+                <p className="text-sm font-bold mb-1">{item.title}</p>
+                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{item.desc}</p>
               </div>
             ))}
           </div>
