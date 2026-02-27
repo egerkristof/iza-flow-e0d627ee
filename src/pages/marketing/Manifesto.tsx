@@ -147,6 +147,10 @@ export default function ManifestoPage() {
           For judgment to have any meaning, it requires two components. First, <strong style={{ color: "hsl(var(--foreground))" }}>experimentation</strong>: the willingness to take risks and run scenarios, to treat the path forward as sequential but never linear. Second, a <strong style={{ color: "hsl(var(--foreground))" }}>theory of truth</strong>: a North Star that gives those experiments direction and meaning. Without the North Star, experiments are random. Without experiments, the North Star is just a wish.
         </P>
 
+        <P>
+          In practical terms, the North Star is what organisations have always struggled to define well: genuine goals and meaningful KPIs. Not vanity metrics. Not quarterly targets disconnected from purpose. The real commitments that tell a team where it is going and why. In an age where AI accelerates execution to unprecedented speed, getting this right matters more than ever. Without a true North Star, teams drift faster. And this is the deeper reason most AI adoption stays shallow. Without clear goals worth fighting for, people default to using AI for surface-level daily task fulfilment rather than the harder, more valuable work of building scenarios, running experiments, and synthesising new insight. The North Star is what turns AI from a productivity shortcut into a navigation instrument.
+        </P>
+
         <Pull>
           "Judgment doesn't aim for perfection. It aims for the North Star, through continuous experiments."
         </Pull>
