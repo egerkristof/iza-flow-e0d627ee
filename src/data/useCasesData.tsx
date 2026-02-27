@@ -113,7 +113,7 @@ export const USE_CASES: UseCase[] = [
     stats: [
       { value: "100%", label: "Delivery consistency across the team" },
       { value: "Encoded", label: "Scoping and methodology judgment" },
-      { value: "Compounding", label: "Every engagement makes the next better" },
+      { value: "1+1=3", label: "Every engagement makes the next better" },
     ],
   },
   {
