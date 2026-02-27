@@ -208,13 +208,8 @@ export default function ManifestoPage() {
           <JudgmentGapDiagram />
         </ScrollReveal>
 
-        <SectionDivider />
-
-        {/* --- 3b. The North Star --- */}
-        <SectionTitle>The North Star</SectionTitle>
-
-        <Para dropcap>
-          Judgment cannot be reduced to optimisation. Optimisation aims at more efficient use of existing information. Judgment aims at something fundamentally different: it navigates toward futures that do not yet exist. It presupposes that we do not yet know everything we need to know, and therefore must proactively research, experiment, and discover.
+        <Para>
+          But having the gap is not enough. The question is: what guides you while you are standing in it? Judgment cannot be reduced to optimisation. Optimisation aims at more efficient use of existing information. Judgment aims at something fundamentally different: it navigates toward futures that do not yet exist. It presupposes that we do not yet know everything we need to know, and therefore must proactively research, experiment, and discover.
         </Para>
 
         <Para>
