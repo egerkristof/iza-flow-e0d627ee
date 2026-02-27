@@ -107,7 +107,7 @@ export function JudgmentGapDiagram() {
       </div>
 
       <p className="text-center text-xs mt-4 italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-        The wider you can hold this gap open, the better your judgment becomes.
+        Between these two moments lives your capacity to choose — and that choice is judgment.
       </p>
     </div>
   );
@@ -173,10 +173,10 @@ export function KnowledgeParadoxDiagram() {
 
 export function SECIFlywheelDiagram() {
   const quadrants = [
-    { label: "Socialisation", sub: "Tacit → Tacit", desc: "Sharing through experience" },
-    { label: "Externalisation", sub: "Tacit → Explicit", desc: "Articulating the unspoken" },
-    { label: "Combination", sub: "Explicit → Explicit", desc: "Creating new forms" },
-    { label: "Internalisation", sub: "Explicit → Tacit", desc: "Learning by doing" },
+    { label: "1 · Socialisation", sub: "Tacit → Tacit", desc: "Sharing through experience" },
+    { label: "2 · Externalisation", sub: "Tacit → Explicit", desc: "Articulating the unspoken" },
+    { label: "4 · Internalisation", sub: "Explicit → Tacit", desc: "Learning by doing" },
+    { label: "3 · Combination", sub: "Explicit → Explicit", desc: "Creating new forms" },
   ];
 
   return (
@@ -185,7 +185,7 @@ export function SECIFlywheelDiagram() {
         {quadrants.map((q, i) => (
           <div
             key={q.label}
-            className="p-4 text-center"
+            className="p-4 text-center relative"
             style={{ background: i % 2 === 0 ? "hsl(var(--primary) / 0.04)" : "hsl(var(--primary) / 0.08)" }}
           >
             <p className="text-xs font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(var(--primary))" }}>
@@ -202,7 +202,7 @@ export function SECIFlywheelDiagram() {
       </div>
       {/* Flywheel arrow hint */}
       <p className="text-center text-xs mt-3 font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>
-        ↻ The loop compounds with every cycle
+        1 → 2 → 3 → 4 → 1 … The loop compounds with every cycle
       </p>
     </div>
   );
