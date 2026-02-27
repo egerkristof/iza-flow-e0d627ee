@@ -221,9 +221,16 @@ export default function UseCasesPage() {
                   </p>
                 </div>
 
-                <p className="text-sm font-semibold group-hover:underline" style={{ color: "hsl(var(--primary))" }}>
-                  See full solution details <ArrowRight className="inline w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </p>
+                <span
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold mt-1 group-hover:shadow-md transition-all"
+                  style={{
+                    background: "var(--gradient-brand-btn)",
+                    color: "hsl(var(--primary-foreground))",
+                    boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.3)",
+                  }}
+                >
+                  See Full Solution Details <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
               </div>
               <div className="flex flex-row md:flex-col gap-3 md:w-48">
                 {[
