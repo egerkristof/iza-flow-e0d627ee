@@ -130,7 +130,7 @@ export default function ManifestoPage() {
             <GradientText>The Judgment Gap</GradientText>
           </h1>
           <p className="text-lg md:text-xl" style={{ color: "hsl(var(--muted-foreground))" }}>
-            On the nature of human expertise, and why it deserves infrastructure.
+            Why your best thinking can't scale — and what to do about it.
           </p>
         </ScrollReveal>
       </section>
@@ -196,7 +196,7 @@ export default function ManifestoPage() {
         <SectionTitle>What Judgment Actually Is</SectionTitle>
 
         <Para dropcap>
-          Judgment is what happens in the gap between stimulus and response (Viktor Frankl). Something happens to you: a client pushes back on your proposal, a competitor launches a product that undercuts yours, a team member resigns on the eve of a critical deadline. That is the stimulus. What you do next is the response. But between those two moments, there is a space. And everything that matters happens there.
+          Judgment is what happens in the gap between stimulus and response (a concept often attributed to Viktor Frankl). Something happens to you: a client pushes back on your proposal, a competitor launches a product that undercuts yours, a team member resigns on the eve of a critical deadline. That is the stimulus. What you do next is the response. But between those two moments, there is a space. And everything that matters happens there.
         </Para>
 
         <Para>
@@ -208,8 +208,13 @@ export default function ManifestoPage() {
           <JudgmentGapDiagram />
         </ScrollReveal>
 
-        <Para>
-          Judgment cannot be reduced to optimisation. Optimisation, in its traditional sense, aims at more efficient use of existing information. Judgment aims at something fundamentally different: it creates new futures. It presupposes that we do not yet know everything we need to know, and therefore must proactively research, experiment, and discover.
+        <SectionDivider />
+
+        {/* --- 3b. The North Star --- */}
+        <SectionTitle>The North Star</SectionTitle>
+
+        <Para dropcap>
+          Judgment cannot be reduced to optimisation. Optimisation aims at more efficient use of existing information. Judgment aims at something fundamentally different: it navigates toward futures that do not yet exist. It presupposes that we do not yet know everything we need to know, and therefore must proactively research, experiment, and discover.
         </Para>
 
         <Para>
@@ -319,7 +324,7 @@ export default function ManifestoPage() {
         </Para>
 
         <Para>
-          Protocols, not documents. Structured heuristics, decision gates, and contextual cues that run inside an AI execution environment, carrying your senior judgment into every interaction, every deliverable, every engagement.
+          Protocols, not documents. Structured heuristics, decision gates, and contextual cues that run inside an AI execution environment, carrying your senior judgment into every interaction, every deliverable, every engagement. For example: instead of a 40-page audit methodology gathering dust in a shared drive, LIZA encodes it as a step-by-step protocol, each step injected with the right context, the right decision criteria, and the right escalation triggers, so that a junior auditor executes with the judgment of a senior partner.
         </Para>
 
         <Para>
@@ -340,11 +345,7 @@ export default function ManifestoPage() {
         </Para>
 
         <Para>
-          We believe judgment can be captured, structured, and made executable, without losing the nuance that makes it valuable.
-        </Para>
-
-        <Para>
-          We believe the most valuable organisations of the next decade will not be the ones with the best AI tools. They will be the ones that figured out how to encode their expertise before the window closed.
+          We believe the most valuable organisations of the next decade will not be the ones with the best AI tools. They will be the ones that figured out how to encode their expertise before the window closed. Not by writing it down, which was always insufficient, but by creating the structured conditions where tacit knowledge is continuously surfaced, tested, and compounded through the people who hold it.
         </Para>
 
         <Para>
