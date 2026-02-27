@@ -196,7 +196,7 @@ export default function ManifestoPage() {
         <SectionTitle>What Judgment Actually Is</SectionTitle>
 
         <Para dropcap>
-          Judgment is what happens in the gap between stimulus and response. Something happens to you: a client pushes back on your proposal, a competitor launches a product that undercuts yours, a team member resigns on the eve of a critical deadline. That is the stimulus. What you do next is the response. But between those two moments, there is a space. And everything that matters happens there.
+          Judgment is what happens in the gap between stimulus and response (Viktor Frankl). Something happens to you: a client pushes back on your proposal, a competitor launches a product that undercuts yours, a team member resigns on the eve of a critical deadline. That is the stimulus. What you do next is the response. But between those two moments, there is a space. And everything that matters happens there.
         </Para>
 
         <Para>
