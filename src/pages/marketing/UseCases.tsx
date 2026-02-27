@@ -192,9 +192,35 @@ export default function UseCasesPage() {
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black mb-2">Reduce 18 days of audit work to 1.5 hours.</h3>
-                <p className="text-sm mb-4" style={{ color: "hsl(var(--muted-foreground))" }}>
+                <p className="text-sm mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
                   An AI execution engine for compliance, security, and operational audits. Proven on real cybersecurity audits with ~800 questions and 84% first-pass accuracy.
                 </p>
+
+                {/* Competitive context */}
+                <div
+                  className="rounded-xl p-4 mb-5 border"
+                  style={{ background: "hsl(var(--background) / 0.5)", borderColor: "hsl(var(--border))" }}
+                >
+                  <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "hsl(var(--muted-foreground))" }}>
+                    What you're probably already using
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {["Workiva", "AuditBoard", "TeamMate+", "Excel"].map((c) => (
+                      <span
+                        key={c}
+                        className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border"
+                        style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--muted-foreground))", background: "hsl(var(--muted) / 0.5)" }}
+                      >
+                        <X className="w-3 h-3 opacity-50" />
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
+                    They manage the audit process. They can't encode the expertise driving it — or eliminate the mechanical groundwork.
+                  </p>
+                </div>
+
                 <p className="text-sm font-semibold group-hover:underline" style={{ color: "hsl(var(--primary))" }}>
                   See full solution details <ArrowRight className="inline w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </p>
