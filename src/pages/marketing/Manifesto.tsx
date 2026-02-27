@@ -130,7 +130,7 @@ export default function ManifestoPage() {
             <GradientText>The Judgment Gap</GradientText>
           </h1>
           <p className="text-lg md:text-xl" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Why your best thinking can't scale — and what to do about it.
+            Why your best thinking can't scale, and what to do about it.
           </p>
         </ScrollReveal>
       </section>
