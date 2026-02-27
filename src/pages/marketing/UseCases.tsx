@@ -246,7 +246,7 @@ export default function UseCasesPage() {
           <span className="text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full border"
             style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
           >
-            Coming soon
+            Deployed · Being productised
           </span>
           <div className="h-px flex-1" style={{ background: "hsl(var(--border))" }} />
         </div>
