@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { ArrowRight } from "lucide-react";
+import { KnowledgeParadoxDiagram, SECIFlywheelDiagram } from "@/components/marketing/ManifestoDiagrams";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
@@ -31,6 +32,28 @@ function P({ children }: { children: React.ReactNode }) {
   );
 }
 
+function Attribution({ name, year, insight }: { name: string; year: string; insight: string }) {
+  return (
+    <div className="flex gap-3 py-3">
+      <div
+        className="w-1 rounded-full flex-shrink-0"
+        style={{ background: "hsl(var(--primary) / 0.3)" }}
+      />
+      <div>
+        <span className="font-semibold text-sm" style={{ color: "hsl(var(--foreground))" }}>
+          {name}
+        </span>
+        <span className="text-xs ml-1.5" style={{ color: "hsl(var(--muted-foreground))" }}>
+          ({year})
+        </span>
+        <p className="text-sm mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
+          {insight}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function ManifestoPage() {
   return (
     <MarketingLayout>
@@ -51,126 +74,194 @@ export default function ManifestoPage() {
             <GradientText>The Judgment Gap</GradientText>
           </h1>
           <p className="text-lg" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Why the knowledge economy needs a new kind of infrastructure.
+            On the nature of human expertise, and why it deserves infrastructure.
           </p>
         </div>
       </section>
 
       {/* Body */}
       <article className="max-w-2xl mx-auto px-6 pb-32">
+
+        {/* --- 1. The Compression --- */}
         <P>
-          We are living through the fastest compression of expertise value in history. The tools that took decades to build, the frameworks, the methodologies, the strategy decks, are now generated in seconds by anyone with a subscription to ChatGPT.
+          We are living through the fastest compression of expertise value in history. The frameworks, the methodologies, the strategy decks that took decades to build are now generated in seconds by anyone with a subscription to ChatGPT.
         </P>
 
         <P>
-          If your value proposition is the document you produce, you're already in a race you can't win.
+          The explicit layer — the knowledge that was written down, documented, and formalised — is now a commodity. It lives in public models trained on the entire internet. If your value proposition is the document you produce, you are already in a race you cannot win.
         </P>
 
         <Pull>
           "Most AI tools make you faster at the wrong things."
         </Pull>
 
-        <H2>What AI Already Has</H2>
+        {/* --- 2. We Know More Than We Can Say --- */}
+        <H2>We Know More Than We Can Say</H2>
 
         <P>
-          Every knowledge worker in your space is loading the same things into their AI: their SOPs, their frameworks, their playbooks. The explicit layer, the knowledge that was written down, documented, and formalised, is now a commodity. It lives in public models trained on the entire internet.
+          There is a deeper layer. It is the knowledge that was never written down — because it was never possible to write it down. The pattern recognition of the senior partner who has seen two hundred deals and knows which ones won't survive the first difficult conversation. The contextual judgment of the strategist who can feel when a brief is really asking for something else entirely.
         </P>
 
         <P>
-          This is what we call the Explicit Layer. It's valuable. It's organisable. It's also exactly what your competitors have too.
-        </P>
-
-        <H2>What AI Can't Copy</H2>
-
-        <P>
-          There is a second layer. It's the knowledge that was never written down.
+          This is tacit knowledge: the things we know but cannot articulate. It is not a deficiency to be fixed. It is the very source of human value.
         </P>
 
         <P>
-          The pattern recognition of a senior partner who's seen 200 deals and knows which ones don't survive the first difficult conversation. The contextual judgment of the strategist who can feel when a client's brief is really asking for something else entirely. The heuristics of the practitioner who knows the three signals that always appear before a project goes off the rails.
+          For over half a century, thinkers across disciplines have converged on the same insight:
+        </P>
+
+        <div className="my-8 space-y-1">
+          <Attribution
+            name="Michael Polanyi"
+            year="1966"
+            insight='"We can know more than we can tell." Tacit knowledge is not a gap in documentation — it is the foundation of all expertise.'
+          />
+          <Attribution
+            name="Hubert Dreyfus"
+            year="1972–2001"
+            insight="True expertise is embodied skill that resists formalisation. AI divorced from human context hits a ceiling that no amount of data can breach."
+          />
+          <Attribution
+            name="Ben Shneiderman"
+            year="2022"
+            insight="Human-centered AI must amplify human capability, not replace it. The goal is not automation — it is augmentation."
+          />
+        </div>
+
+        <P>
+          The question was never whether tacit knowledge matters. The question was whether we could build infrastructure worthy of it.
+        </P>
+
+        {/* --- 3. What Judgment Actually Is --- */}
+        <H2>What Judgment Actually Is</H2>
+
+        <P>
+          Judgment is what happens in the gap between stimulus and response. It requires both good thinking and good character. It is our way of deciding, in the moment, considering all circumstantial factors, what is right — and what is the right next thing to do.
         </P>
 
         <P>
-          This is what we call the Tacit Layer. It's the reason clients pay senior rates. It's the reason firms can't be easily replicated. It's your moat.
+          Judgment cannot be reduced to optimisation. Optimisation, in its traditional sense, aims at more efficient use of existing information. Judgment aims at something fundamentally different: it creates new futures. It presupposes that we do not yet know everything we need to know, and therefore must proactively research, experiment, and discover.
+        </P>
+
+        <P>
+          For judgment to have any meaning, it requires two components. First, <strong style={{ color: "hsl(var(--foreground))" }}>experimentation</strong> — the willingness to take risks and run scenarios, to treat the path forward as sequential but never linear. Second, a <strong style={{ color: "hsl(var(--foreground))" }}>theory of truth</strong> — a North Star that gives those experiments direction and meaning. Without the North Star, experiments are random. Without experiments, the North Star is just a wish.
+        </P>
+
+        <Pull>
+          "Judgment doesn't aim for perfection. It aims for the North Star, through continuous experiments."
+        </Pull>
+
+        {/* --- 4. The Paradox of Teams --- */}
+        <H2>The Paradox of Teams</H2>
+
+        <P>
+          Here is where tacit knowledge becomes truly powerful — and truly difficult. Real knowledge creation is not a solo act. It happens in the friction between people who share a fierce, almost non-negotiable belief about the future, but who think differently about how to get there.
+        </P>
+
+        <P>
+          Two things must coexist:
+        </P>
+
+        <P>
+          <strong style={{ color: "hsl(var(--foreground))" }}>Unified vision.</strong> A shared conviction about where the future should go. Values that are black and white. A North Star the team would almost die for. This is exclusionary by design — it filters for alignment.
+        </P>
+
+        <P>
+          <strong style={{ color: "hsl(var(--foreground))" }}>Diverse paths.</strong> The route to that future is never straight. It requires scenarios, sounding boards, and people who bring genuinely different perspectives. The more diverse the paths, the richer the experimentation.
+        </P>
+
+        <P>
+          Knowledge creation happens in the friction zone between these poles. Not in documents. Not in databases. In relationships — where people rub ideas off each other, externalise what they couldn't previously articulate, and internalise new capabilities from each other.
+        </P>
+
+        {/* Knowledge Creation Paradox Diagram */}
+        <KnowledgeParadoxDiagram />
+
+        <P>
+          The organisational theorist Ikujiro Nonaka described exactly this dynamic. His SECI model — Socialisation, Externalisation, Combination, Internalisation — is not academic theory. It is the description of what great teams already do. They share tacit knowledge through working together. They externalise it into shared language. They combine it into new forms. They internalise new capabilities. The loop compounds.
+        </P>
+
+        {/* SECI Flywheel Diagram */}
+        <SECIFlywheelDiagram />
+
+        {/* --- 5. The Business Problem --- */}
+        <H2>The Business Problem</H2>
+
+        <P>
+          In most organisations, there is barely enough time to hear what people <em>are</em> saying — let alone take the time to discover what they haven't been able to articulate.
+        </P>
+
+        <P>
+          When a senior practitioner leaves, the documentation captures the what. It never captures the why. The junior inherits the framework. They do not inherit the judgment. Decades of compounded insight evaporate.
+        </P>
+
+        <P>
+          Most firms know this. They have tried wikis, knowledge bases, better documentation. These tools organise information. They do not transfer judgment.
+        </P>
+
+        <P>
+          And here is the danger of the AI age: used brainlessly, AI automates the things that were said hastily — the surface layer. It makes the explicit faster. It leaves the tacit untouched. Worse, it creates the illusion that the knowledge problem has been solved, when in fact the most valuable layer has been ignored entirely.
         </P>
 
         <Pull>
           "The tacit layer is your only defensible asset. And it was never designed to be captured."
         </Pull>
 
-        <H2>The Institutional Memory Crisis</H2>
+        {/* --- 6. The Opportunity --- */}
+        <H2>The Opportunity</H2>
 
         <P>
-          Here's what makes this urgent: the tacit layer walks out the door.
+          AI used <em>well</em> — with governance, with structure, with a deep understanding of how teams actually create knowledge — is the first technology in history that can make it economical to express what was previously too expensive to articulate.
         </P>
 
         <P>
-          Every time a senior practitioner leaves, retires, moves on, or burns out, decades of compounded judgment evaporates. The documentation they leave behind captures the what. It never captures the why. The junior who inherits their desk gets the framework. They don't get the wisdom.
+          For the first time, we have a technology that understands human language and can therefore help people surface what they know but haven't said. It can make it practical for a team to access more of its own knowledge — to combine it in new ways, to compound it across engagements, to transfer it without losing the nuance.
         </P>
 
         <P>
-          Most firms have experienced this. They know it's a problem. They've tried to solve it with knowledge bases, wikis, better documentation. These tools organise information. They don't transfer judgment.
-        </P>
-
-        <H2>The New Infrastructure</H2>
-
-        <P>
-          We built LIZA OS because we believe the knowledge economy needs a different kind of infrastructure, one designed not for storing information, but for making expertise executable.
-        </P>
-
-        <P>
-          The distinction matters. Information answers "what." Executable expertise answers "what to do next, given these specific conditions, knowing what we know."
-        </P>
-
-        <P>
-          That's a protocol, not a document. It's a structured set of heuristics, decision gates, and contextual cues that run inside an AI execution environment, carrying your senior judgment into every interaction, every deliverable, every client engagement.
+          This is not about freeing people from work. People will work just as hard — perhaps harder — because they will be able to bring forth more of themselves. This is about freeing people <em>into</em> more meaningful work: the creative freedom to give more of themselves, in service of their vision and their values.
         </P>
 
         <Pull>
-          "Judgment isn't lost when people leave. It's lost because we never built the infrastructure to capture it."
+          "The goal is not less work. It's deeper work — at a scale that was never before possible."
         </Pull>
 
-        <H2>The SECI Flywheel</H2>
+        {/* --- 7. What We Built --- */}
+        <H2>What We Built</H2>
 
         <P>
-          The Japanese organisational theorist Ikujiro Nonaka described four modes of knowledge creation: Socialisation, Externalisation, Combination, and Internalisation (the SECI model). The insight was simple: organisations that learn don't just store knowledge. They convert it.
+          LIZA OS is the infrastructure for this vision. It is built on a simple premise: expertise should be executable, not stored.
         </P>
 
         <P>
-          Tacit knowledge becomes explicit. Explicit knowledge gets combined into new forms. New forms get internalised and create new tacit knowledge. The loop compounds.
+          Protocols, not documents. Structured heuristics, decision gates, and contextual cues that run inside an AI execution environment — carrying your senior judgment into every interaction, every deliverable, every engagement.
         </P>
 
         <P>
-          LIZA OS is built on this principle. Every execution is a learning event. Every learning event feeds the encoding layer. The system gets smarter every time your team uses it. The institutional memory doesn't just persist. It grows.
+          A system designed not just to preserve what your team knows, but to create the conditions for new knowledge to emerge — through the SECI flywheel, through structured team execution, through governance loops that ensure alignment without killing autonomy.
         </P>
 
+        <P>
+          Every execution is a learning event. Every learning event feeds the encoding layer. The institutional memory doesn't just persist. It grows.
+        </P>
+
+        {/* --- 8. What We Believe --- */}
         <H2>What We Believe</H2>
 
         <P>
-          We believe the most valuable firms of the next decade won't be the ones with the best AI tools. They'll be the ones that figured out how to encode their expertise before the window closed.
+          We believe only humans can innovate. The optimistic belief that we can shape the future — that we can create things that serve our purpose rather than merely optimise the status quo — is the foundation of all scientific discovery and all meaningful work.
         </P>
 
         <P>
-          We believe judgment can be captured, structured, and made executable, without losing the nuance that makes it valuable.
+          We believe judgment can be captured, structured, and made executable — without losing the nuance that makes it valuable.
         </P>
 
         <P>
-          We believe the tacit layer is not a bug in knowledge management. It's the feature. It's the moat. And it deserves infrastructure worthy of its value.
-        </P>
-
-        <Pull>
-          "Turn judgment into infrastructure. That's the mandate."
-        </Pull>
-
-        {/* Values closing */}
-        <H2>What We Are Building Toward</H2>
-
-        <P>
-          We are here to build, not just react. While others respond to the market, we are architecting where it goes next: toward a future where the collective whole is exponentially greater than the sum of its parts.
+          We believe the most valuable organisations of the next decade will not be the ones with the best AI tools. They will be the ones that figured out how to encode their expertise before the window closed.
         </P>
 
         <P>
-          We believe that human dignity sits at the core of every AI-driven decision. The best-run organisations of the next decade won't just execute faster. They will create the conditions where their people do their best work. That is what we mean by infrastructure.
+          We believe human dignity sits at the core of every AI-driven decision. The best-run organisations won't just execute faster. They will create the conditions where their people do their best work.
         </P>
 
         <Pull>
