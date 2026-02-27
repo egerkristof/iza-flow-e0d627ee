@@ -1,96 +1,62 @@
 
 
-# Enriched Manifesto: "The Judgment Gap"
+## Expand Use Cases Page to 7 Detailed Use Cases + Flywheel
 
-## Overview
+### Overview
+Replace the current 3 use cases with 7 detailed ones, keeping all existing structural elements. The "Bigger Picture" section stays as-is (4-step knowledge spiral). A new "Seven Compounding Results" flywheel section is added after it, showing the concrete use-case chain.
 
-A significant rewrite of the Manifesto page that deepens the intellectual foundation while keeping it accessible and commercially relevant. The current manifesto is good but surface-level -- the new version weaves in the philosophical roots you described, creating a narrative that moves from "why judgment matters" through "what judgment actually is" to "why LIZA exists."
+### The 7 Use Cases (each with same card structure: icon, tag, headline, subheading, competitor box, body, carries-forward callout, stats sidebar)
 
-## New Narrative Structure
+1. **The Onboarding Accelerator** -- Broadened from sales-only to all roles. "Onboard anyone in weeks, not months."
+2. **Sales Playbooks** -- "Your best seller's instincts, running on every deal."
+3. **Account Management Playbooks** -- "Protect revenue before the data tells you it's at risk."
+4. **Marketing Playbooks** -- "Stop guessing which message lands. Encode what works."
+5. **Professional Services Delivery Playbooks** -- "Deliver every engagement like your best consultant ran it."
+6. **The Meeting Intelligence Engine** -- Cross-meeting drift detection, follow-up tracking, team oversight. "Every meeting builds your organisation's memory."
+7. **The Smart Brief** -- Existing, renumbered. "Don't delegate tasks. Generate briefs."
 
-The manifesto will follow this arc:
+### Flow Connectors Between Each Pair
+1. "Onboarding surfaces expertise -> Playbooks encode it"
+2. "Sales patterns reveal market value -> AM protects and expands it"
+3. "Account signals shape positioning -> Marketing encodes what works"
+4. "Marketing insights feed delivery -> Services runs on encoded methodology"
+5. "Delivery generates new knowledge -> Meetings capture and connect it"
+6. "Meeting intelligence surfaces decisions -> Smart Briefs delegate them"
 
-### 1. Hero (kept, minor subtitle refinement)
-Title stays: "The Judgment Gap." Subtitle shifts to signal depth: *"On the nature of human expertise, and why it deserves infrastructure."*
+### Page Structure (top to bottom)
+1. **Hero** -- Updated subtitle: "Start with one. Within months, you're running all seven, because each one compounds the last."
+2. **Divider** -- "Deployed - Being productised"
+3. **7 Use Case Cards** with flow connectors between them
+4. **The Bigger Picture** -- Stays exactly as-is (4-step knowledge spiral grid: Tacit to Explicit, Explicit to Infrastructure, Infrastructure to Execution, Execution to New Knowledge)
+5. **NEW: The Seven-Step Flywheel** -- A new section after The Bigger Picture showing the 7 use cases as a connected chain/loop, visualising how each feeds the next and the last feeds back into the first. Compact numbered cards in a visual flow with arrows, reinforcing the compounding message.
+6. **CTA buttons** -- Book a Discovery Call + See the Platform
 
-### 2. Opening -- The Compression (lightly revised)
-Keep the current opening about expertise compression and ChatGPT commoditising the explicit layer. Tighten it.
+### New Flywheel Section Design
+- Section heading: "Seven compounding results"
+- Subheading: "Each use case feeds the next. Start anywhere. The system compounds."
+- 7 compact cards in a flowing layout (could be a horizontal scroll on mobile, grid on desktop), each with: number, short title, one-line description, arrow to next
+- The 7th card connects back to the 1st (circular), reinforcing the flywheel concept
+- Uses each use case's unique HSL colour for visual consistency
 
-### 3. "We Know More Than We Can Say" (new section)
-Introduces Polanyi's core insight as the intellectual anchor. The idea that tacit knowledge -- the things we know but cannot articulate -- is not a deficiency to be fixed but the very source of human value. Brief, attributed references to:
-- **Michael Polanyi** -- "We can know more than we can tell" (1966)
-- **Hubert Dreyfus** -- expertise as embodied skill that resists formalisation; the limits of AI when divorced from human context
-- **Ben Shneiderman** -- human-centered AI that amplifies rather than replaces
+### Technical Details
 
-Framing: These thinkers, across decades, converged on the same insight: the most valuable human knowledge lives below the surface of language. The question was never whether tacit knowledge matters. The question was whether we could build infrastructure worthy of it.
+**File modified**: `src/pages/marketing/UseCases.tsx` only
 
-### 4. "What Judgment Actually Is" (new section)
-Draws directly from your notes. Judgment is not optimisation:
-- Optimisation makes better use of existing information. Judgment creates new futures.
-- Judgment lives in the gap between stimulus and response. It requires both good thinking and good character.
-- Judgment presupposes two things: *experimentation* (willingness to take risks and run scenarios) and a *theory of truth* (a North Star that gives those experiments meaning).
-- A pull-quote: *"Judgment doesn't aim for perfection. It aims for the North Star, through continuous experiments."*
+- Replace `USE_CASES` array with 7 entries, each containing: icon, tag, col (unique HSL), headline, subheading, competitors, competitorNote, body (array of paragraphs), carries (string or null for last), stats (array of 3)
+- Add Lucide icon imports: `Users`, `ShieldCheck`, `Megaphone`, `Briefcase`, `Radio`
+- Update flow connector logic from index-based ternary to array lookup
+- Update hero text from "all four" to "all seven"
+- Keep "The Bigger Picture" section unchanged
+- Add new flywheel section between "The Bigger Picture" and the CTA buttons
+- Update flywheel heading from "Four compounding results" to "Seven compounding results"
+- No em dashes anywhere (commas or periods only)
 
-### 5. "The Paradox of Teams" (new section)
-The opposing poles insight. Real tacit knowledge exchange requires:
-- **Unified vision** -- A shared, almost fierce belief about the future. Values that are non-negotiable.
-- **Diverse paths** -- The route to that future is not linear. It requires scenarios, sounding boards, and people who think differently.
-
-This is where real knowledge creation happens: in the friction between shared conviction and diverse perspective. Not in documents. Not in databases. In relationships.
-
-This section introduces the SECI model (Nonaka) naturally -- not as academic theory but as the description of what great teams already do: they socialise tacit knowledge, externalise it into shared language, combine it into new forms, and internalise new capabilities. The loop compounds.
-
-### 6. "The Business Problem" (revised from current "Institutional Memory Crisis")
-Tightened and connected to the new framing:
-- In most organisations, there is barely enough time to hear what people *are* saying, let alone discover what they *haven't been able to articulate*.
-- When a senior practitioner leaves, the documentation captures the what. It never captures the why. The junior gets the framework. They don't get the judgment.
-- AI used brainlessly automates the things that were said hastily -- the surface layer. It makes the explicit faster. It leaves the tacit untouched.
-
-### 7. "The Opportunity" (new section, replaces "The New Infrastructure")
-AI used *well* -- with governance, with structure, with an understanding of how teams actually create knowledge -- is the first technology that can make it economical to express what was previously too expensive to articulate.
-
-Key reframe: This is not about freeing people from work. It's about freeing people *into* more meaningful work. People will work just as hard, perhaps harder, because they'll be able to bring more of themselves to bear. The creative freedom to give more, in service of their vision.
-
-### 8. "What We Built" (revised, connects to product)
-LIZA OS as the infrastructure for this vision. Protocols, not documents. Executable expertise, not stored information. A system that doesn't just preserve knowledge but creates the conditions for new knowledge to emerge -- through the SECI flywheel, through team execution, through governance loops.
-
-### 9. "What We Believe" (revised, sharper)
-Condensed belief statements that land with conviction. Ends with the mandate.
-
-### 10. CTA (kept as-is)
-
-## Visual Elements
-
-A simple diagram will be added between sections 5 and 6 -- a visual of the "Knowledge Creation Paradox":
-
-```text
-+---------------------------+
-|     UNIFIED VISION        |
-|   (Values, North Star)    |
-+-----------+---------------+
-            |
-     [FRICTION ZONE]
-     Where tacit knowledge
-     is created & exchanged
-            |
-+-----------+---------------+
-|     DIVERSE PATHS         |
-| (Scenarios, Experiments,  |
-|  Sounding Boards)         |
-+---------------------------+
-```
-
-This will be rendered as a styled HTML/CSS element (no image needed), using the existing brand styling with gradient accents.
-
-A second small diagram for the SECI flywheel (4-quadrant cycle) will also be rendered in CSS, keeping it clean and on-brand.
-
-## Technical Details
-
-### File changed
-- `src/pages/marketing/Manifesto.tsx` -- full content rewrite within the existing component structure, reusing the same `H2`, `P`, `Pull`, `GradientText` helper components already defined in the file.
-
-### No new dependencies or components
-- Diagrams rendered as styled divs with existing Tailwind + inline HSL patterns
-- No images required (but if you have a preferred visual, I can integrate it)
-- No routing changes
+### Colour assignments (HSL)
+1. Onboarding: `200 90% 52%` (blue)
+2. Sales: `38 92% 50%` (amber)
+3. Account Management: `155 72% 46%` (green)
+4. Marketing: `330 70% 55%` (pink)
+5. Professional Services: `270 60% 65%` (purple)
+6. Meeting Intelligence: `180 65% 45%` (teal)
+7. Smart Brief: `15 80% 55%` (orange-red)
 
