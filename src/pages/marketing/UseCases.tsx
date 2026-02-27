@@ -150,108 +150,11 @@ export default function UseCasesPage() {
         </div>
       </section>
 
-      {/* ── Ready to Deploy ─────────────────────────────────────────────── */}
+      {/* ── Ready to Deploy (hidden for now) ──
       <section className="pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-8">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: "hsl(var(--success) / 0.12)", color: "hsl(var(--success))" }}
-            >
-              <Zap className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-xl font-black">Ready to Deploy</h2>
-              <p className="text-xs" style={{ color: "hsl(var(--muted-foreground))" }}>Proven solutions you can run this month</p>
-            </div>
-          </div>
-
-          <Link
-            to="/solutions/audit"
-            className="group relative block rounded-2xl border-2 overflow-hidden transition-all hover:shadow-lg"
-            style={{
-              borderColor: "hsl(var(--success) / 0.3)",
-              background: "hsl(var(--success) / 0.03)",
-            }}
-          >
-            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "linear-gradient(90deg, hsl(var(--success)), hsl(var(--primary)))" }} />
-            <div className="p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-4">
-                  <span
-                    className="inline-flex items-center gap-1.5 text-xs font-black tracking-widest uppercase px-3 py-1.5 rounded-full"
-                    style={{ background: "hsl(var(--success) / 0.12)", color: "hsl(var(--success))" }}
-                  >
-                    <Shield className="w-3.5 h-3.5" /> Audit Execution Engine
-                  </span>
-                  <span
-                    className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded-full"
-                    style={{ background: "hsl(var(--success) / 0.15)", color: "hsl(var(--success))" }}
-                  >
-                    Live
-                  </span>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-black mb-2">Reduce 18 days of audit work to 1.5 hours.</h3>
-                <p className="text-sm mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  An AI execution engine for compliance, security, and operational audits. Proven on real cybersecurity audits with ~800 questions and 84% first-pass accuracy. Every audit captures structured intelligence that feeds your advisory pipeline.
-                </p>
-
-                {/* Competitive context */}
-                <div
-                  className="rounded-xl p-4 mb-5 border"
-                  style={{ background: "hsl(var(--background) / 0.5)", borderColor: "hsl(var(--border))" }}
-                >
-                  <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "hsl(var(--muted-foreground))" }}>
-                    What you're probably already using
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {["Workiva", "AuditBoard", "TeamMate+", "Excel"].map((c) => (
-                      <span
-                        key={c}
-                        className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border"
-                        style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--muted-foreground))", background: "hsl(var(--muted) / 0.5)" }}
-                      >
-                        <X className="w-3 h-3 opacity-50" />
-                        {c}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-                    They manage the audit process. They can't encode the expertise driving it — or eliminate the mechanical groundwork.
-                  </p>
-                </div>
-
-                <span
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold mt-1 group-hover:shadow-md transition-all"
-                  style={{
-                    background: "var(--gradient-brand-btn)",
-                    color: "hsl(var(--primary-foreground))",
-                    boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.3)",
-                  }}
-                >
-                  See Full Solution Details <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-              <div className="flex flex-row md:flex-col gap-3 md:w-48">
-                {[
-                  { icon: <Clock className="w-4 h-4" />, value: "18 days → 1.5 hrs", label: "Time reduction" },
-                  { icon: <Shield className="w-4 h-4" />, value: "84%", label: "First-pass accuracy" },
-                  { icon: <Zap className="w-4 h-4" />, value: "0", label: "Platform migrations" },
-                ].map((s, i) => (
-                  <div
-                    key={i}
-                    className="rounded-xl border p-3 text-center flex-1"
-                    style={{ borderColor: "hsl(var(--success) / 0.2)", background: "hsl(var(--success) / 0.06)" }}
-                  >
-                    <p className="text-lg font-black" style={{ color: "hsl(var(--success))" }}>{s.value}</p>
-                    <p className="text-[10px] font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>{s.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Link>
-        </div>
+        ...audit execution engine section...
       </section>
+      ── */}
 
       {/* ── Divider ───────────────────────────────────────────────────────────── */}
       <div className="max-w-6xl mx-auto px-6 pb-10">
