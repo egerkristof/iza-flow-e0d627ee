@@ -159,9 +159,10 @@ export default function ExtractionEngine() {
     setPasteContent(""); setPdfFile(null); setPhaseIndex(0);
   };
 
-  const [activeDomain, setActiveDomain] = useState<string>("All");
+  const [activeDomain, setActiveDomain] = useState<string>("Sales");
 
-  const DOMAIN_FILTERS = ["All", ...Array.from(new Set(SAMPLE_DOCUMENTS.map((d) => d.domain)))];
+  const domainNames = Array.from(new Set(SAMPLE_DOCUMENTS.map((d) => d.domain)));
+  const DOMAIN_FILTERS = [...domainNames, "All"];
   const filteredSamples = activeDomain === "All" ? SAMPLE_DOCUMENTS : SAMPLE_DOCUMENTS.filter((d) => d.domain === activeDomain);
 
   const isProcessing = stage === "extracting" || stage === "simulating";
@@ -197,34 +198,6 @@ export default function ExtractionEngine() {
         {/* ── Stage: Choose ──────────────────────────────────────────── */}
         {stage === "choose" && !mode && (
           <div className="max-w-3xl mx-auto">
-            {/* Upload Your Own — Hero Banner */}
-            <button onClick={() => setMode("upload")}
-              className="w-full group rounded-2xl border-2 border-dashed p-8 text-center hover:border-primary/60 transition-all border-primary/30 mb-10"
-              style={{ background: "hsl(var(--primary) / 0.03)" }}>
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                  style={{ background: "hsl(var(--primary) / 0.1)" }}>
-                  <Upload className="w-7 h-7 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-foreground mb-1">Try it on your own process</h3>
-                  <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                    Upload your team's actual document and see exactly how LIZA would structure, standardise, and operationalise it.
-                  </p>
-                </div>
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-primary border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all mt-1">
-                  Upload a document <ChevronRight className="w-4 h-4" />
-                </span>
-                <p className="text-[10px] text-muted-foreground mt-1">Paste text or upload a PDF · Up to 5 MB · Email required</p>
-              </div>
-            </button>
-
-            <div className="flex items-center gap-4 mb-8">
-              <div className="h-px flex-1 bg-border" />
-              <span className="text-xs text-muted-foreground font-medium">or explore with a sample</span>
-              <div className="h-px flex-1 bg-border" />
-            </div>
-
             {/* Domain filter chips */}
             <div className="flex items-center gap-2 mb-5 flex-wrap">
               {DOMAIN_FILTERS.map((domain) => (
@@ -265,6 +238,26 @@ export default function ExtractionEngine() {
                 );
               })}
             </div>
+
+            {/* Upload your own — compact CTA at bottom */}
+            <div className="mt-8 flex items-center gap-4">
+              <div className="h-px flex-1 bg-border" />
+              <span className="text-xs text-muted-foreground font-medium">or</span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+            <button onClick={() => setMode("upload")}
+              className="w-full mt-4 group rounded-xl border border-dashed p-4 flex items-center gap-4 hover:border-primary/50 transition-all border-border"
+              style={{ background: "hsl(var(--primary) / 0.02)" }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: "hsl(var(--primary) / 0.08)" }}>
+                <Upload className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1 text-left">
+                <h4 className="text-sm font-semibold text-foreground">Try it on your own process</h4>
+                <p className="text-xs text-muted-foreground">Paste text or upload a PDF · Up to 5 MB · Email required</p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+            </button>
           </div>
         )}
 
