@@ -897,7 +897,7 @@ function CTASection({ onReset }: { onReset: () => void }) {
         You just saw what structured extraction looks like. The Protocol Sprint takes one critical process from your best person and builds it into a live system your whole team executes on.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <Link to="/sprint"
+        <Link to="/sprint" target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold brand-gradient-btn"
           style={{ boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)" }}>
           See the Protocol Sprint <ArrowRight className="w-4 h-4" />
