@@ -63,13 +63,11 @@ function Hero() {
             Try the Extraction Engine <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#how-it-works"
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
             style={{ borderColor: "hsl(var(--border))" }}
           >
-            Book a Discovery Call
+            See How It Works ↓
           </a>
         </div>
       </div>
@@ -392,26 +390,17 @@ function GetStarted() {
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Link
-                    to="/sprint"
-                    className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
-                    style={{
-                      background: "var(--gradient-brand-btn)",
-                      color: "hsl(var(--primary-foreground))",
-                      boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.4)",
-                    }}
-                  >
-                    See the Protocol Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <a
-                    href="#how-it-works"
-                    className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
-                    style={{ borderColor: "hsl(var(--border))" }}
-                  >
-                    See How It Works ↓
-                  </a>
-                </div>
+                <Link
+                  to="/sprint"
+                  className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
+                  style={{
+                    background: "var(--gradient-brand-btn)",
+                    color: "hsl(var(--primary-foreground))",
+                    boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.4)",
+                  }}
+                >
+                  See the Protocol Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
               <div className="flex flex-col gap-3">
                 <div className="rounded-lg border px-5 py-3" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
