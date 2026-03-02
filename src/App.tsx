@@ -69,7 +69,7 @@ const App = () => (
             <Route path="/extract/test" element={<ExperienceTestPage />} />
             <Route path="/solutions/audit" element={<AuditExecutionSolution />} />
             <Route path="/sprint" element={<SprintPage />} />
-            <Route path="/pricing" element={<PricingPage />} />
+            {/* Pricing hidden from public view */}
 
             {/* Legacy redirects — all flatten to single hops */}
             <Route path="/codify" element={<Navigate to="/" replace />} />
