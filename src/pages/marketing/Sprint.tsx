@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import {
-  ArrowRight, CheckCircle2, FileText, Mic, Cpu, Zap,
-  Clock, Users, Package, Brain, ChevronRight,
+  ArrowRight, CheckCircle2, Brain, Layers, TrendingUp,
+  BookOpen, Lock, Zap, Shield, Mic, Cpu, FileText, ClipboardCheck,
+  XCircle, Quote,
 } from "lucide-react";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
@@ -12,180 +13,184 @@ function GradientText({ children }: { children: React.ReactNode }) {
   return <span className="brand-gradient-text">{children}</span>;
 }
 
+function SectionTag({ label, icon }: { label: string; icon?: React.ReactNode }) {
+  return (
+    <p
+      className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border mb-6"
+      style={{ color: "hsl(var(--primary))", borderColor: "hsl(var(--primary) / 0.25)", background: "hsl(var(--primary) / 0.06)" }}
+    >
+      {icon}{label}
+    </p>
+  );
+}
+
 // ── HERO ──────────────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section className="relative py-28 px-6 overflow-hidden">
+    <section className="relative py-32 px-6 overflow-hidden">
       <div
-        className="absolute top-0 right-0 w-[600px] h-[600px] pointer-events-none"
-        style={{ background: `radial-gradient(circle, hsl(var(--primary) / 0.06) 0%, transparent 65%)`, transform: "translate(20%, -20%)" }}
+        className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
+        style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06) 0%, transparent 65%)", transform: "translate(20%, -20%)" }}
       />
-      <div className="max-w-4xl mx-auto relative z-10">
-        <p
-          className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border mb-6"
-          style={{ color: "hsl(var(--primary))", borderColor: "hsl(var(--primary) / 0.25)", background: "hsl(var(--primary) / 0.06)" }}
-        >
-          <Zap className="w-3 h-3" /> 5-Day Engagement
-        </p>
-        <h1 className="text-4xl md:text-5xl font-black mb-5 leading-[1.1]">
-          The Protocol Sprint.
-          <br />
-          <GradientText>€5,000. One week. Done.</GradientText>
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mb-8 leading-relaxed">
-          We take one critical process from your best person's head and turn it into an executable protocol your entire team can run. Fixed scope, fixed price, no surprises.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
-            style={{
-              background: "var(--gradient-brand-btn)",
-              color: "hsl(var(--primary-foreground))",
-              boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
-            }}
-          >
-            Book a Sprint Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <Link
-            to="/extract"
-            className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
-            style={{ borderColor: "hsl(var(--border))" }}
-          >
-            Try the Extraction Engine first
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── WHAT YOU GET ─────────────────────────────────────────────────────────────
-function Deliverables() {
-  const items = [
-    {
-      icon: <FileText className="w-5 h-5" />,
-      title: "Your Master Protocol",
-      desc: "A structured, versioned document containing every playbook, procedure, gate, and principle extracted from your expert's methodology.",
-    },
-    {
-      icon: <Cpu className="w-5 h-5" />,
-      title: "Live in LIZA OS",
-      desc: "Your protocol deployed as an executable system. Team members launch playbooks, follow guided steps, and the AI generates drafts using your context.",
-    },
-    {
-      icon: <Brain className="w-5 h-5" />,
-      title: "Knowledge Gap Report",
-      desc: "A structured list of questions your documentation doesn't answer. The implicit expertise that needs to be made explicit.",
-    },
-    {
-      icon: <Users className="w-5 h-5" />,
-      title: "Team-Ready from Day 6",
-      desc: "Your team opens LIZA OS and sees action cards, not a blank page. They pick a playbook and execute. No training required.",
-    },
-  ];
-
-  return (
-    <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-black mb-3">
-            What you walk away with.
-          </h2>
-          <p className="text-muted-foreground">Everything you need to go from "it's in my head" to "anyone can run it."</p>
-        </div>
-        <div className="grid md:grid-cols-2 gap-5">
-          {items.map((item, i) => (
-            <div key={i} className="rounded-2xl border p-7" style={{ borderColor: "hsl(var(--border))" }}>
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.018]"
+        style={{
+          backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <SectionTag label="The Protocol Sprint" icon={<Zap className="w-3 h-3" />} />
+            <h1 className="text-5xl font-black mb-6 leading-[1.08]">
+              Turn senior judgment
+              <br />
+              into infrastructure
+              <br />
+              <GradientText>in 5 days.</GradientText>
+            </h1>
+            <p className="text-lg leading-relaxed mb-5 text-muted-foreground">
+              Walk in with knowledge trapped in heads. Walk out with executable protocols your entire team runs on.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
+                style={{
+                  background: "var(--gradient-brand-btn)",
+                  color: "hsl(var(--primary-foreground))",
+                  boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
+                }}
               >
-                {item.icon}
-              </div>
-              <h3 className="text-base font-bold mb-2">{item.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                Book a Sprint Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <Link
+                to="/extract"
+                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
+                style={{ borderColor: "hsl(var(--border))" }}
+              >
+                Try the Extraction Engine
+              </Link>
             </div>
-          ))}
+          </div>
+
+          {/* Journey A → B card */}
+          <div
+            className="relative rounded-2xl border overflow-hidden"
+            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+          >
+            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+            <div className="p-8">
+              <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--primary))" }}>
+                Where you start vs. where you end up
+              </p>
+              <div className="flex flex-col gap-3">
+                {[
+                  { from: "Senior judgment trapped in individuals", to: "Expertise codified and executable" },
+                  { from: "Quality depends on who's in the room", to: "Every team member runs your best methodology" },
+                  { from: "Knowledge walks out the door when people leave", to: "Institutional knowledge that compounds" },
+                  { from: "AI produces generic output without context", to: "AI runs on your organisation's standards" },
+                ].map((row, i) => (
+                  <div key={i} className="grid grid-cols-[1fr_auto_1fr] gap-2 items-center">
+                    <div
+                      className="rounded-lg p-3 text-xs leading-snug text-muted-foreground"
+                      style={{ background: "hsl(var(--muted) / 0.5)", borderLeft: "2px solid hsl(var(--muted-foreground) / 0.3)" }}
+                    >
+                      {row.from}
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" style={{ color: `hsl(${GRN})` }} />
+                    <div
+                      className="rounded-lg p-3 text-xs leading-snug font-medium"
+                      style={{ background: `hsl(${GRN} / 0.08)`, color: `hsl(${GRN})`, borderLeft: `2px solid hsl(${GRN} / 0.5)` }}
+                    >
+                      {row.to}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div
+                className="mt-6 rounded-lg px-4 py-3 flex items-center gap-3"
+                style={{ background: `hsl(${GRN} / 0.08)`, borderLeft: `3px solid hsl(${GRN})` }}
+              >
+                <Zap className="w-4 h-4 shrink-0" style={{ color: `hsl(${GRN})` }} />
+                <p className="text-xs font-semibold" style={{ color: `hsl(${GRN})` }}>
+                  5 days. €5,000. Delivered inside LIZA OS. Yours to keep.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// ── THE 5 DAYS ───────────────────────────────────────────────────────────────
-function Timeline() {
-  const days = [
-    {
-      day: "Day 1",
-      title: "Document Intake",
-      desc: "Send us your process docs, SOPs, playbooks, templates. Whatever your expert uses. We run the extraction engine.",
-      icon: <FileText className="w-5 h-5" />,
-    },
-    {
-      day: "Day 2",
-      title: "Expert Interview",
-      desc: "90-minute structured interview with your senior person. We surface the judgment layer that never makes it into documents.",
-      icon: <Mic className="w-5 h-5" />,
-    },
-    {
-      day: "Day 3",
-      title: "Codification",
-      desc: "We structure everything into playbooks, procedures, compliance gates, and principles. Your methodology becomes versioned infrastructure.",
-      icon: <Cpu className="w-5 h-5" />,
-    },
-    {
-      day: "Day 4",
-      title: "Review & Refine",
-      desc: "Walk-through with your expert. We validate the protocol matches their judgment. Adjustments are made in real-time.",
-      icon: <Users className="w-5 h-5" />,
-    },
-    {
-      day: "Day 5",
-      title: "Deploy & Handoff",
-      desc: "Protocol goes live in LIZA OS. Your team gets access. We show them how to launch their first session.",
-      icon: <Package className="w-5 h-5" />,
-    },
-  ];
-
+// ── SOUND FAMILIAR? (Pain section) ────────────────────────────────────────────
+function SoundFamiliar() {
   return (
     <section className="py-20 px-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl font-black mb-3">
-            Five days. <GradientText>Start to finish.</GradientText>
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <SectionTag label="Sound familiar?" />
+          <h2 className="text-4xl font-black mb-4">
+            The problem isn't your expertise.
+            <br />
+            <GradientText>It's that it doesn't scale.</GradientText>
           </h2>
-          <p className="text-muted-foreground">No multi-month discovery. No 200-page report. A working system.</p>
+          <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
+            Every growing organisation hits this ceiling.
+          </p>
         </div>
-        <div className="flex flex-col gap-0">
-          {days.map((d, i) => (
-            <div key={i} className="flex gap-5">
-              {/* Timeline rail */}
-              <div className="flex flex-col items-center">
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border-2"
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            {
+              icon: <BookOpen className="w-5 h-5" />,
+              tag: "Layer 1: Commoditised",
+              title: "Frameworks and templates",
+              desc: "The structured deliverables your team built over years. ChatGPT produces them in seconds. This is no longer your competitive advantage.",
+              desired: false,
+            },
+            {
+              icon: <Lock className="w-5 h-5" />,
+              tag: "Layer 2: Bottlenecked",
+              title: "Senior expert judgment",
+              desc: "Pattern recognition built over decades. It lives inside two or three people and can't scale. Every hire depends on their availability.",
+              desired: false,
+            },
+            {
+              icon: <TrendingUp className="w-5 h-5" />,
+              tag: "Layer 3: The Opportunity",
+              title: "Codified expertise",
+              desc: "Your unique value, turned into executable protocols. This protects your edge and lets anyone on your team execute at the standard of your best person.",
+              desired: true,
+            },
+          ].map((c, i) => (
+            <div
+              key={i}
+              className="relative rounded-2xl border overflow-hidden p-7"
+              style={{
+                background: c.desired ? `hsl(${GRN} / 0.06)` : "hsl(var(--muted) / 0.3)",
+                borderColor: c.desired ? `hsl(${GRN} / 0.35)` : "hsl(var(--border))",
+                boxShadow: c.desired ? `0 0 28px -8px hsl(${GRN} / 0.2)` : "none",
+              }}
+            >
+              {c.desired && <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${GRN})` }} />}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center"
                   style={{
-                    borderColor: "hsl(var(--primary) / 0.4)",
-                    background: "hsl(var(--primary) / 0.08)",
-                    color: "hsl(var(--primary))",
-                  }}
-                >
-                  {d.icon}
+                    background: c.desired ? `hsl(${GRN} / 0.12)` : "hsl(var(--muted))",
+                    color: c.desired ? `hsl(${GRN})` : "hsl(var(--muted-foreground))",
+                  }}>
+                  {c.icon}
                 </div>
-                {i < days.length - 1 && (
-                  <div className="w-[2px] flex-1 min-h-[24px]" style={{ background: "hsl(var(--primary) / 0.15)" }} />
-                )}
+                <span className="text-xs font-bold tracking-widest uppercase"
+                  style={{ color: c.desired ? `hsl(${GRN})` : "hsl(var(--muted-foreground))" }}>{c.tag}</span>
               </div>
-              {/* Content */}
-              <div className="pb-8">
-                <span className="text-xs font-black tracking-widest uppercase" style={{ color: "hsl(var(--primary))" }}>
-                  {d.day}
-                </span>
-                <h3 className="text-lg font-bold mt-1 mb-1">{d.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">{d.desc}</p>
-              </div>
+              <h3 className="text-lg font-bold mb-2">{c.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
             </div>
           ))}
         </div>
@@ -194,57 +199,161 @@ function Timeline() {
   );
 }
 
-// ── PRICING ──────────────────────────────────────────────────────────────────
-function Pricing() {
+// ── VALIDATION BRIDGE ─────────────────────────────────────────────────────────
+function ValidationBridge() {
+  return (
+    <section className="py-12 px-6">
+      <div className="max-w-3xl mx-auto">
+        <div className="rounded-2xl border px-8 py-7 relative overflow-hidden"
+          style={{ background: "hsl(var(--primary) / 0.04)", borderColor: "hsl(var(--primary) / 0.2)" }}>
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+          <p className="text-base leading-relaxed text-muted-foreground italic">
+            "AI transformation fails when companies automate broken processes. We start by codifying the judgment layer, the part that was never written down.{" "}
+            <span className="text-foreground font-semibold not-italic">That's the foundation everything else scales on.</span>"
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── PROCESS VISUALIZATION ─────────────────────────────────────────────────────
+function ProcessVisualization() {
+  const steps = [
+    { icon: <FileText className="w-6 h-6" />, label: "Your Existing\nKnowledge", sub: "Docs, protocols, transcripts, interviews" },
+    { icon: <Cpu className="w-6 h-6" />, label: "LIZA Context\nEngine", sub: "Semantic analysis and structuring" },
+    { icon: <FileText className="w-6 h-6" />, label: "Master\nProtocol", sub: "PDF + live digital executable system" },
+  ];
+
   return (
     <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <SectionTag label="How It Works" icon={<Zap className="w-3 h-3" />} />
+          <h2 className="text-4xl font-black mb-4">
+            We input your knowledge.
+            <br />
+            <GradientText>LIZA outputs your operating system.</GradientText>
+          </h2>
+        </div>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
+          {steps.map((s, i) => (
+            <div key={i} className="flex items-center gap-4">
+              <div className="flex flex-col items-center text-center w-48">
+                <div
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 border-2"
+                  style={{
+                    background: i === 1 ? "hsl(var(--primary) / 0.1)" : i === 2 ? `hsl(${GRN} / 0.08)` : "hsl(var(--muted) / 0.5)",
+                    borderColor: i === 1 ? "hsl(var(--primary) / 0.3)" : i === 2 ? `hsl(${GRN} / 0.3)` : "hsl(var(--border))",
+                    color: i === 1 ? "hsl(var(--primary))" : i === 2 ? `hsl(${GRN})` : "hsl(var(--muted-foreground))",
+                    boxShadow: i === 1 ? "0 0 24px -6px hsl(var(--primary) / 0.3)" : "none",
+                  }}
+                >
+                  {s.icon}
+                </div>
+                <p className="font-bold text-sm whitespace-pre-line leading-tight mb-1">{s.label}</p>
+                <p className="text-xs text-muted-foreground">{s.sub}</p>
+              </div>
+              {i < steps.length - 1 && (
+                <ArrowRight className="w-6 h-6 shrink-0 hidden md:block" style={{ color: "hsl(var(--primary) / 0.4)" }} />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── PRODUCT BOX ───────────────────────────────────────────────────────────────
+function ProductBox() {
+  return (
+    <section className="py-24 px-6">
       <div className="max-w-3xl mx-auto">
         <div
-          className="relative rounded-2xl border overflow-hidden p-10"
-          style={{ borderColor: "hsl(var(--primary) / 0.3)", background: "hsl(var(--primary) / 0.03)" }}
+          className="relative rounded-3xl border-2 overflow-hidden"
+          style={{ borderColor: "hsl(var(--primary) / 0.3)", background: "hsl(var(--card))" }}
         >
           <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "var(--gradient-brand)" }} />
+          <div
+            className="absolute top-0 right-0 w-[400px] h-[300px] pointer-events-none"
+            style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06), transparent 65%)", transform: "translate(30%, -20%)" }}
+          />
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-            <div>
-              <h3 className="text-2xl font-black mb-2">Protocol Sprint</h3>
-              <p className="text-sm text-muted-foreground mb-4 max-w-sm">
-                One process. One expert. One week. Everything included.
+          <div className="relative z-10 p-10 md:p-14">
+            <div className="flex items-center gap-3 mb-2">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
+              >
+                <ClipboardCheck className="w-5 h-5" />
+              </div>
+              <p className="text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(var(--primary))" }}>
+                The Product
               </p>
-              <div className="flex flex-wrap gap-4">
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-black mb-3">
+              The Protocol Sprint
+            </h2>
+            <p className="text-muted-foreground text-base mb-10 max-w-lg">
+              A fixed-scope engagement that turns senior expert judgment into a governed, executable digital protocol.
+            </p>
+
+            {/* Deliverables */}
+            <div className="mb-10">
+              <p className="text-xs font-bold tracking-widest uppercase mb-4 text-muted-foreground">Deliverables</p>
+              <div className="grid gap-3">
                 {[
-                  { icon: <Clock className="w-3.5 h-3.5" />, label: "5 working days" },
-                  { icon: <Mic className="w-3.5 h-3.5" />, label: "90-min expert interview" },
-                  { icon: <Package className="w-3.5 h-3.5" />, label: "Deployed in LIZA OS" },
-                ].map((f, i) => (
-                  <div key={i} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    {f.icon} {f.label}
+                  "Document intake: your existing process docs, protocols, and transcripts",
+                  "90-minute structured interview with your senior practitioner",
+                  "LIZA semantic analysis and automated codification",
+                  "The Master Protocol: delivered as PDF and live digital system in LIZA OS",
+                  "Knowledge gap report: what's implicit that needs to be made explicit",
+                  "Team onboarding session: your people running it from day one",
+                ].map((d, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
+                    <p className="text-sm">{d}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="text-center md:text-right shrink-0">
-              <p className="text-4xl font-black" style={{ color: "hsl(var(--primary))" }}>€5,000</p>
-              <p className="text-xs text-muted-foreground mt-1">Fixed price, no surprises</p>
-            </div>
-          </div>
 
-          <div className="mt-8 pt-6 border-t" style={{ borderColor: "hsl(var(--border))" }}>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {[
-                "Extraction engine analysis of all documents",
-                "90-minute structured expert interview",
-                "Full Master Protocol (PDF + digital)",
-                "Live deployment in LIZA OS",
-                "Knowledge gap report",
-                "Team onboarding session",
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
-                  <p className="text-sm text-muted-foreground">{item}</p>
-                </div>
-              ))}
+            {/* Timeline + Price row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+              <div
+                className="rounded-xl border p-5"
+                style={{ background: "hsl(var(--primary) / 0.04)", borderColor: "hsl(var(--primary) / 0.15)" }}
+              >
+                <p className="text-xs font-bold tracking-widest uppercase mb-1 text-muted-foreground">Timeline</p>
+                <p className="text-2xl font-black" style={{ color: "hsl(var(--primary))" }}>5 Days</p>
+                <p className="text-xs text-muted-foreground mt-1">From kickoff to delivered protocol</p>
+              </div>
+              <div
+                className="rounded-xl border p-5"
+                style={{ background: `hsl(${GRN} / 0.04)`, borderColor: `hsl(${GRN} / 0.15)` }}
+              >
+                <p className="text-xs font-bold tracking-widest uppercase mb-1 text-muted-foreground">Investment</p>
+                <p className="text-2xl font-black" style={{ color: `hsl(${GRN})` }}>€5,000</p>
+                <p className="text-xs text-muted-foreground mt-1">Fixed scope, no surprises</p>
+              </div>
             </div>
+
+            {/* CTA */}
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
+              style={{
+                background: "var(--gradient-brand-btn)",
+                color: "hsl(var(--primary-foreground))",
+                boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
+              }}
+            >
+              Book a Sprint Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
           </div>
         </div>
       </div>
@@ -252,30 +361,185 @@ function Pricing() {
   );
 }
 
-// ── WHO IT'S FOR ─────────────────────────────────────────────────────────────
-function WhoItsFor() {
-  const personas = [
-    { title: "Practice Leads & Partners", desc: "You've built the methodology. Now make it run without you in the room." },
-    { title: "Sales Leaders", desc: "Your top seller's instinct shouldn't retire when they do." },
-    { title: "Heads of Operations", desc: "Consistency across 50 people shouldn't depend on 3 seniors." },
-    { title: "Founders scaling past 20", desc: "The way you do things is your competitive advantage. Encode it before it dilutes." },
-  ];
-
+// ── DIFFERENTIATOR ────────────────────────────────────────────────────────────
+function Differentiator() {
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-black mb-3">
-            Built for people who <GradientText>know what good looks like.</GradientText>
+    <section className="py-20 px-6 border-t border-b border-border">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-14">
+          <SectionTag label="How we're different" icon={<Shield className="w-3 h-3" />} />
+          <h2 className="text-4xl font-black mb-4">
+            A living system, <GradientText>built in 5 days.</GradientText>
           </h2>
+          <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
+            Extraction, codification, and governance happen{" "}
+            <span className="font-semibold text-foreground">inside LIZA OS</span>. You leave with a system that runs, not a slide deck.
+          </p>
         </div>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {personas.map((p, i) => (
-            <div key={i} className="rounded-xl border p-6" style={{ borderColor: "hsl(var(--border))" }}>
-              <h3 className="font-bold text-sm mb-1">{p.title}</h3>
-              <p className="text-sm text-muted-foreground">{p.desc}</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            {
+              label: "Traditional consulting", cross: true,
+              items: ["Discovery workshops and interviews", "Insights captured in meeting notes", "Delivered as a PDF report", "Sits on a shelf after handoff"],
+              outcome: "A document you own",
+              icon: <BookOpen className="w-5 h-5" />,
+            },
+            {
+              label: "AI tool rollout", cross: true,
+              items: ["Licences bought, training run", "Each person prompts their own way", "No shared standard or governance", "Knowledge stays in individual heads"],
+              outcome: "Access without alignment",
+              icon: <Brain className="w-5 h-5" />,
+            },
+            {
+              label: "The Protocol Sprint", cross: false,
+              items: ["Experts define knowledge inside LIZA OS", "Tacit judgment becomes executable playbooks", "Protocols run live, enforced at point of use", "Every session feeds back into the system"],
+              outcome: "A living operating system",
+              icon: <Zap className="w-5 h-5" />,
+            },
+          ].map((col, i) => (
+            <div
+              key={i}
+              className="rounded-2xl border overflow-hidden flex flex-col"
+              style={{
+                background: col.cross ? "hsl(var(--muted) / 0.3)" : `hsl(${GRN} / 0.07)`,
+                borderColor: col.cross ? "hsl(var(--border))" : `hsl(${GRN} / 0.4)`,
+                boxShadow: col.cross ? "none" : `0 0 28px -8px hsl(${GRN} / 0.2)`,
+              }}
+            >
+              <div className="h-[3px]" style={{ background: col.cross ? "hsl(var(--muted-foreground) / 0.2)" : `hsl(${GRN})` }} />
+              <div className="p-7 flex-1 flex flex-col">
+                <div className="flex items-center gap-2 mb-5">
+                  <div style={{ color: col.cross ? "hsl(var(--muted-foreground))" : `hsl(${GRN})` }}>{col.icon}</div>
+                  <p className="font-bold text-sm" style={{ color: col.cross ? "hsl(var(--muted-foreground))" : `hsl(${GRN})` }}>{col.label}</p>
+                </div>
+                <ul className="flex flex-col gap-2.5 flex-1 mb-6">
+                  {col.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                      {col.cross
+                        ? <XCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />
+                        : <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
+                      }
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div
+                  className="rounded-lg px-4 py-3 border"
+                  style={{
+                    background: col.cross ? "hsl(var(--muted) / 0.5)" : `hsl(${GRN} / 0.12)`,
+                    borderColor: col.cross ? "hsl(var(--border))" : `hsl(${GRN} / 0.4)`,
+                  }}
+                >
+                  <p className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: col.cross ? "hsl(var(--muted-foreground))" : `hsl(${GRN})` }}>Result</p>
+                  <p className="font-semibold text-sm" style={{ color: col.cross ? "hsl(var(--muted-foreground))" : "hsl(var(--foreground))" }}>{col.outcome}</p>
+                </div>
+              </div>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── SOCIAL PROOF ──────────────────────────────────────────────────────────────
+function SocialProof() {
+  return (
+    <section className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-14">
+          <SectionTag label="Client Outcomes" />
+          <h2 className="text-4xl font-black mb-4">
+            What happens when you
+            <br />
+            <GradientText>codify the judgment layer.</GradientText>
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              firm: "Strategy consultancy, 12 practitioners",
+              quote: "We had two founding partners whose judgment was the firm. After the sprint, those decision patterns were standardised inside every junior engagement.",
+              metrics: [{ v: "2×", l: "senior leverage within 60 days" }, { v: "40%", l: "reduction in senior time per engagement" }],
+            },
+            {
+              firm: "Industrial engineering group, 200 employees",
+              quote: "Our master engineers are retiring faster than we can train replacements. The sprint captured 30 years of diagnostic judgment and turned it into a protocol our field teams run daily.",
+              metrics: [{ v: "70%", l: "faster onboarding for new engineers" }, { v: "100%", l: "of critical domain knowledge retained" }],
+            },
+            {
+              firm: "Boutique M&A advisory, 8 practitioners",
+              quote: "Our most experienced partner was planning to retire. We ran the sprint to capture her deal intuition. Now that judgment is embedded in how we qualify every new mandate.",
+              metrics: [{ v: "35%", l: "faster deal qualification cycle" }, { v: "100%", l: "of tacit IP retained after retirement" }],
+            },
+          ].map((cs, i) => (
+            <div key={i} className="relative rounded-2xl p-8 border overflow-hidden" style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}>
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+              <p className="text-xs font-bold tracking-widest uppercase mb-6 text-muted-foreground">{cs.firm}</p>
+              <Quote className="w-6 h-6 mb-3" style={{ color: "hsl(var(--primary) / 0.4)" }} />
+              <p className="text-sm leading-relaxed mb-6 font-medium">"{cs.quote}"</p>
+              <div className="grid grid-cols-2 gap-4">
+                {cs.metrics.map((m, j) => (
+                  <div key={j}>
+                    <p className="text-2xl font-black brand-gradient-text">{m.v}</p>
+                    <p className="text-xs mt-1 text-muted-foreground">{m.l}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── WHO IT'S FOR ──────────────────────────────────────────────────────────────
+function WhoItsFor() {
+  return (
+    <section className="py-24 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <SectionTag label="Who It's For" />
+            <h2 className="text-4xl font-black mb-6">
+              Built for leaders who
+              <br />
+              <GradientText>scale through expertise.</GradientText>
+            </h2>
+            <p className="text-base leading-relaxed mb-8 text-muted-foreground">
+              You've already seen what happens when your best person isn't available. You know AI changes the game. Now you need infrastructure to act on it.
+            </p>
+            <div className="flex flex-col gap-4">
+              {[
+                "Sales leaders whose top performer's instinct should be running on every deal",
+                "Operations directors scaling specialist teams without adding headcount",
+                "Practice leads with retiring experts whose knowledge must be retained",
+                "Founders scaling past 20 people, where 'the way we do things' is diluting fast",
+              ].map((w, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <TrendingUp className="w-4 h-4 flex-shrink-0 mt-1" style={{ color: "hsl(var(--primary))" }} />
+                  <p className="text-sm leading-relaxed text-muted-foreground">{w}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative rounded-2xl p-10 border overflow-hidden" style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}>
+            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+            <p className="text-xs font-bold tracking-widest uppercase mb-6 text-muted-foreground">Typical Outcomes</p>
+            {[
+              { metric: "35%", label: "avg productivity gain in execution teams within 60 days" },
+              { metric: "2×", label: "senior leverage: same team, double the output capacity" },
+              { metric: "5 days", label: "from kickoff to a fully governed knowledge protocol" },
+            ].map((o, i) => (
+              <div key={i} className="mb-8">
+                <p className="text-5xl font-black brand-gradient-text mb-1">{o.metric}</p>
+                <p className="text-sm text-muted-foreground">{o.label}</p>
+                {i < 2 && <div className="mt-6 h-px bg-border" />}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -288,17 +552,18 @@ function WhatsNext() {
     <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
+          <SectionTag label="After the Sprint" />
           <h2 className="text-3xl font-black mb-3">
-            After the Sprint. <GradientText>The system compounds.</GradientText>
+            The system <GradientText>compounds from here.</GradientText>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            The Sprint gives you one protocol. But every execution generates learning that feeds back into the system.
+            The Sprint gives you one protocol. Every execution generates learning that feeds back in.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
           {[
             { step: "Week 1", title: "Sprint delivers", desc: "Your first protocol is live. Team starts executing." },
-            { step: "Week 2–4", title: "System learns", desc: "Execution data surfaces drift, patterns, and gaps. Your protocol improves." },
+            { step: "Week 2-4", title: "System learns", desc: "Execution data surfaces drift, patterns, and gaps. Your protocol improves." },
             { step: "Month 2+", title: "Expand", desc: "Add more processes. Each one is faster because the system already knows your organisation." },
           ].map((s, i) => (
             <div key={i} className="rounded-2xl border p-7" style={{ borderColor: "hsl(var(--primary) / 0.2)", background: "hsl(var(--primary) / 0.03)" }}>
@@ -324,14 +589,14 @@ function FinalCTA() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              One process. One week.
+              Your expertise is already there.
               <br />
-              <GradientText>Your team runs it forever.</GradientText>
+              <GradientText>Let's turn it into infrastructure.</GradientText>
             </h2>
             <p className="text-base mb-8 text-muted-foreground">
               30-minute call. We'll confirm the Sprint is right for your use case and schedule it.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
                 style={{
@@ -341,11 +606,9 @@ function FinalCTA() {
                 }}>
                 Book a Sprint Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
-              <Link
-                to="/extract"
+              <Link to="/extract"
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
-                style={{ borderColor: "hsl(var(--border))" }}
-              >
+                style={{ borderColor: "hsl(var(--border))" }}>
                 Try the Extraction Engine
               </Link>
             </div>
@@ -361,9 +624,12 @@ export default function SprintPage() {
   return (
     <MarketingLayout>
       <Hero />
-      <Deliverables />
-      <Timeline />
-      <Pricing />
+      <SoundFamiliar />
+      <ValidationBridge />
+      <ProcessVisualization />
+      <ProductBox />
+      <Differentiator />
+      <SocialProof />
       <WhoItsFor />
       <WhatsNext />
       <FinalCTA />

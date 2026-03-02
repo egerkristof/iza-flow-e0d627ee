@@ -528,15 +528,13 @@ function GetStarted() {
                   <p className="text-sm font-semibold">Partners & Practice Leads</p>
                 </div>
               </div>
-              <a
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/sprint"
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border transition-all hover:opacity-80"
                 style={{ borderColor: "hsl(var(--primary) / 0.4)", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.08)" }}
               >
-                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+                See the Protocol Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
 
