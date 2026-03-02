@@ -339,7 +339,7 @@ export default function UseCasesPage() {
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium border"
               style={{ color: "hsl(var(--muted-foreground))", borderColor: "hsl(var(--border))" }}
             >
-              See the Platform →
+              See LIZA OS →
             </Link>
           </div>
         </div>
