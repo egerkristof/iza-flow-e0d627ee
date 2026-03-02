@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import {
   Package, FileText, ArrowRight, ChevronDown, ChevronRight,
   Layers, BookOpen, Sparkles,
@@ -891,16 +892,16 @@ function CTASection({ onReset }: { onReset: () => void }) {
   return (
     <div className="rounded-2xl border p-8 text-center mt-8"
       style={{ borderColor: "hsl(var(--primary) / 0.3)", background: "hsl(var(--primary) / 0.05)" }}>
-      <h3 className="text-xl font-bold text-foreground mb-2">Ready to put this into practice?</h3>
+      <h3 className="text-xl font-bold text-foreground mb-2">Ready to do this for real?</h3>
       <p className="text-sm text-muted-foreground mb-6 max-w-lg mx-auto">
-        The full LIZA OS runs these playbooks with your team, tracks compliance, and gets smarter with every execution.
+        The Protocol Sprint takes one process from your best person's head and turns it into a system your whole team runs. Five days. €5,000. Done.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
+        <Link to="/sprint"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold brand-gradient-btn"
           style={{ boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)" }}>
-          Book a Discovery Call <ArrowRight className="w-4 h-4" />
-        </a>
+          See the Protocol Sprint <ArrowRight className="w-4 h-4" />
+        </Link>
         <button onClick={onReset}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium border text-muted-foreground hover:text-foreground transition-colors border-border">
           Try Another Document
