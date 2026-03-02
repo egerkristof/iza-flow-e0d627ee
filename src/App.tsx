@@ -30,6 +30,7 @@ import ExtractionEngine from "./pages/marketing/ExtractionEngine";
 import ExperienceTestPage from "./pages/marketing/ExperienceTestPage";
 import AuditExecutionSolution from "./pages/marketing/SecurityAuditSolution";
 import SprintPage from "./pages/marketing/Sprint";
+import PricingPage from "./pages/marketing/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="/extract/test" element={<ExperienceTestPage />} />
             <Route path="/solutions/audit" element={<AuditExecutionSolution />} />
             <Route path="/sprint" element={<SprintPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
 
             {/* Legacy redirects — all flatten to single hops */}
             <Route path="/codify" element={<Navigate to="/" replace />} />
