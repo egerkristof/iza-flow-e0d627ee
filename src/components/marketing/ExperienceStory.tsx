@@ -892,9 +892,9 @@ function CTASection({ onReset }: { onReset: () => void }) {
   return (
     <div className="rounded-2xl border p-8 text-center mt-8"
       style={{ borderColor: "hsl(var(--primary) / 0.3)", background: "hsl(var(--primary) / 0.05)" }}>
-      <h3 className="text-xl font-bold text-foreground mb-2">Ready to do this for real?</h3>
+      <h3 className="text-xl font-bold text-foreground mb-2">Now imagine your team running on this</h3>
       <p className="text-sm text-muted-foreground mb-6 max-w-lg mx-auto">
-        The Protocol Sprint takes one process from your best person's head and turns it into a system your whole team runs. Five days. €5,000. Done.
+        You just saw what structured extraction looks like. The Protocol Sprint takes one critical process from your best person and builds it into a live system your whole team executes on.
       </p>
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
         <Link to="/sprint"
