@@ -265,11 +265,12 @@ export function ExtractionResultsView({ result, onReset }: ExtractionResultsView
         }}
       >
         <h3 className="text-xl font-bold text-foreground mb-2">
-          Want to deploy these protocols?
+          Now imagine your team running on this
         </h3>
         <p className="text-sm text-muted-foreground mb-6 max-w-lg mx-auto">
-          LIZA OS turns these extracted bundles into executable protocols your team runs on —
-          with AI-assisted execution, compliance gates, and continuous learning loops.
+          You just saw how fast expertise turns into structure. The Protocol Sprint takes one
+          critical process and builds it into a live system — with guided execution, compliance
+          gates, and a team that's aligned from day one.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
