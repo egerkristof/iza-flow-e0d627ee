@@ -62,6 +62,13 @@ const App = () => (
 
             {/* Marketing — product-led homepage */}
             <Route path="/" element={<HomePage />} />
+            <Route path="/use-cases" element={<UseCasesPage />} />
+            <Route path="/manifesto" element={<ManifestoPage />} />
+            <Route path="/extract" element={<ExtractionEngine />} />
+            <Route path="/extract/test" element={<ExperienceTestPage />} />
+            <Route path="/solutions/audit" element={<AuditExecutionSolution />} />
+            <Route path="/sprint" element={<SprintPage />} />
+
             {/* Legacy redirects — all flatten to single hops */}
             <Route path="/codify" element={<Navigate to="/" replace />} />
             <Route path="/scale" element={<Navigate to="/" replace />} />
