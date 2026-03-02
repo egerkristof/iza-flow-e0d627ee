@@ -472,143 +472,83 @@ function Outcomes() {
   );
 }
 
-// ── TWO WAYS TO GET STARTED ──────────────────────────────────────────────────
+// ── GET STARTED ──────────────────────────────────────────────────────────────
 function GetStarted() {
   return (
     <section className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <div className="text-center mb-14">
           <SectionTag label="Get Started" />
           <h2 className="text-4xl font-black mb-4">
-            Two ways to <GradientText>onboard your organisation.</GradientText>
+            Start with <GradientText>one process.</GradientText>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            We help you get LIZA running with your knowledge. Pick the scope that fits.
+            The Protocol Sprint turns one senior expert's judgment into an executable protocol your team runs on. Five days, fixed scope.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
-          {/* Codify */}
-          <div className="relative rounded-2xl border overflow-hidden flex flex-col"
-            style={{ background: `hsl(var(--primary) / 0.04)`, borderColor: `hsl(var(--primary) / 0.3)` }}>
-            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "hsl(var(--primary))" }} />
-            <div className="p-8 flex-1 flex flex-col">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
-                  <Brain className="w-5 h-5" />
-                </div>
-                <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(var(--primary))" }}>
-                  Codify Your Expertise
-                </span>
+        <div className="relative rounded-2xl border overflow-hidden"
+          style={{ background: "hsl(var(--primary) / 0.04)", borderColor: "hsl(var(--primary) / 0.3)" }}>
+          <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "var(--gradient-brand)" }} />
+          <div className="p-8 md:p-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
+                <Brain className="w-5 h-5" />
               </div>
-              <h3 className="text-2xl font-black mb-2">The Knowledge Extraction Sprint</h3>
-              <p className="text-sm text-muted-foreground mb-5">
-                Turn one senior expert's judgment into an executable digital protocol in 5 days. Fixed scope, no surprises.
-              </p>
-              <div className="flex flex-col gap-2 mb-6 flex-1">
-                {[
-                  "Document intake + 90-min structured interview",
-                  "Semantic analysis & codification via LIZA OS",
-                  "Master Protocol: PDF + live digital system",
-                ].map((d, i) => (
-                  <div key={i} className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
-                    <p className="text-sm text-muted-foreground">{d}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="rounded-lg border px-4 py-2" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
-                  <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Timeline</p>
-                  <p className="text-lg font-black" style={{ color: "hsl(var(--primary))" }}>1 Week</p>
-                </div>
-                <div className="rounded-lg border px-4 py-2" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
-                  <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Best for</p>
-                  <p className="text-sm font-semibold">Partners & Practice Leads</p>
-                </div>
-              </div>
-              <Link
-                to="/sprint"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border transition-all hover:opacity-80"
-                style={{ borderColor: "hsl(var(--primary) / 0.4)", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.08)" }}
-              >
-                See the Protocol Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(var(--primary))" }}>
+                The Protocol Sprint
+              </span>
             </div>
-          </div>
 
-          {/* Scale */}
-          <div className="relative rounded-2xl border overflow-hidden flex flex-col"
-            style={{ background: `hsl(${GRN} / 0.04)`, borderColor: `hsl(${GRN} / 0.3)` }}>
-            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${GRN})` }} />
-            <div className="p-8 flex-1 flex flex-col">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: `hsl(${GRN} / 0.1)`, color: `hsl(${GRN})` }}>
-                  <Layers className="w-5 h-5" />
+            <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center">
+              <div>
+                <div className="flex flex-col gap-2 mb-6">
+                  {[
+                    "Document intake + 90-min structured interview",
+                    "Semantic analysis and codification via LIZA OS",
+                    "Master Protocol: PDF + live digital system",
+                    "Knowledge gap report + team onboarding",
+                  ].map((d, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
+                      <p className="text-sm text-muted-foreground">{d}</p>
+                    </div>
+                  ))}
                 </div>
-                <span className="text-xs font-bold tracking-widest uppercase" style={{ color: `hsl(${GRN})` }}>
-                  Scale Your AI Motion
-                </span>
+                <Link
+                  to="/sprint"
+                  className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
+                  style={{
+                    background: "var(--gradient-brand-btn)",
+                    color: "hsl(var(--primary-foreground))",
+                    boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
+                  }}
+                >
+                  See the Protocol Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
-              <h3 className="text-2xl font-black mb-2">The AI Operating Model Programme</h3>
-              <p className="text-sm text-muted-foreground mb-5">
-                Build the governed AI operating model across your whole team. Shared standards, visible governance, compounding knowledge.
-              </p>
-              <div className="flex flex-col gap-2 mb-6 flex-1">
-                {[
-                  "Surface → Structure → Embed across your function",
-                  "Business teams own their protocols inside LIZA OS",
-                  "Full governance framework your execs can explain",
-                ].map((d, i) => (
-                  <div key={i} className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
-                    <p className="text-sm text-muted-foreground">{d}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="rounded-lg border px-4 py-2" style={{ borderColor: `hsl(${GRN} / 0.15)` }}>
+              <div className="flex flex-col gap-3">
+                <div className="rounded-lg border px-5 py-3" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
                   <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Timeline</p>
-                  <p className="text-lg font-black" style={{ color: `hsl(${GRN})` }}>8 Weeks</p>
+                  <p className="text-xl font-black" style={{ color: "hsl(var(--primary))" }}>5 Days</p>
                 </div>
-                <div className="rounded-lg border px-4 py-2" style={{ borderColor: `hsl(${GRN} / 0.15)` }}>
+                <div className="rounded-lg border px-5 py-3" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
                   <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Best for</p>
-                  <p className="text-sm font-semibold">COOs & Heads of Function</p>
+                  <p className="text-sm font-semibold">Any team with senior expertise to scale</p>
                 </div>
               </div>
-              <a
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border transition-all hover:opacity-80"
-                style={{ borderColor: `hsl(${GRN} / 0.4)`, color: `hsl(${GRN})`, background: `hsl(${GRN} / 0.08)` }}
-              >
-                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
             </div>
           </div>
         </div>
 
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground mb-4">
-            Not sure which fits? <span className="font-semibold text-foreground">Book a discovery call</span> — we'll scope the right path together.
-          </p>
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
-            style={{
-              background: "var(--gradient-brand-btn)",
-              color: "hsl(var(--primary-foreground))",
-              boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
-            }}
-          >
-            Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        <p className="text-center text-sm text-muted-foreground mt-8">
+          Need to scale across your whole organisation?{" "}
+          <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
+            className="font-semibold hover:underline transition-colors" style={{ color: "hsl(var(--primary))" }}>
+            Ask about the AI Operating Model Programme →
           </a>
-        </div>
+        </p>
       </div>
     </section>
   );
