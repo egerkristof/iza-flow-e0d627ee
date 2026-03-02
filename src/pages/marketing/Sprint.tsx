@@ -39,21 +39,19 @@ function Hero() {
           backgroundSize: "60px 60px",
         }}
       />
-      <div className="max-w-5xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div>
+      <div className="max-w-5xl mx-auto relative z-10 text-center">
             <SectionTag label="The Protocol Sprint" icon={<Zap className="w-3 h-3" />} />
-            <h1 className="text-5xl font-black mb-6 leading-[1.08]">
+            <h1 className="text-5xl md:text-6xl font-black mb-6 leading-[1.08]">
               Turn senior judgment
               <br />
               into infrastructure
               <br />
               <GradientText>in 5 days.</GradientText>
             </h1>
-            <p className="text-lg leading-relaxed mb-5 text-muted-foreground">
+            <p className="text-lg leading-relaxed mb-8 text-muted-foreground max-w-2xl mx-auto">
               Walk in with knowledge trapped in heads. Walk out with executable protocols your entire team runs on.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={CAL_URL}
                 target="_blank"
@@ -75,51 +73,57 @@ function Hero() {
                 Try the Extraction Engine
               </Link>
             </div>
-          </div>
+      </div>
+    </section>
+  );
+}
 
-          {/* Journey A → B card */}
-          <div
-            className="relative rounded-2xl border overflow-hidden"
-            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-          >
-            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
-            <div className="p-8">
-              <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--primary))" }}>
-                Where you start vs. where you end up
-              </p>
-              <div className="flex flex-col gap-3">
-                {[
-                  { from: "Senior judgment trapped in individuals", to: "Expertise codified and executable" },
-                  { from: "Quality depends on who's in the room", to: "Every team member runs your best methodology" },
-                  { from: "Knowledge walks out the door when people leave", to: "Institutional knowledge that compounds" },
-                  { from: "AI produces generic output without context", to: "AI runs on your organisation's standards" },
-                ].map((row, i) => (
-                  <div key={i} className="grid grid-cols-[1fr_auto_1fr] gap-2 items-center">
-                    <div
-                      className="rounded-lg p-3 text-xs leading-snug text-muted-foreground"
-                      style={{ background: "hsl(var(--muted) / 0.5)", borderLeft: "2px solid hsl(var(--muted-foreground) / 0.3)" }}
-                    >
-                      {row.from}
-                    </div>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0" style={{ color: `hsl(${GRN})` }} />
-                    <div
-                      className="rounded-lg p-3 text-xs leading-snug font-medium"
-                      style={{ background: `hsl(${GRN} / 0.08)`, color: `hsl(${GRN})`, borderLeft: `2px solid hsl(${GRN} / 0.5)` }}
-                    >
-                      {row.to}
-                    </div>
+// ── TRANSFORMATION ───────────────────────────────────────────────────────────
+function Transformation() {
+  return (
+    <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-3xl mx-auto">
+        <div
+          className="relative rounded-2xl border overflow-hidden"
+          style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
+          <div className="p-8">
+            <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: "hsl(var(--primary))" }}>
+              Where you start vs. where you end up
+            </p>
+            <div className="flex flex-col gap-3">
+              {[
+                { from: "Senior judgment trapped in individuals", to: "Expertise codified and executable" },
+                { from: "Quality depends on who's in the room", to: "Every team member runs your best methodology" },
+                { from: "Knowledge walks out the door when people leave", to: "Institutional knowledge that compounds" },
+                { from: "AI produces generic output without context", to: "AI runs on your organisation's standards" },
+              ].map((row, i) => (
+                <div key={i} className="grid grid-cols-[1fr_auto_1fr] gap-2 items-center">
+                  <div
+                    className="rounded-lg p-3 text-xs leading-snug text-muted-foreground"
+                    style={{ background: "hsl(var(--muted) / 0.5)", borderLeft: "2px solid hsl(var(--muted-foreground) / 0.3)" }}
+                  >
+                    {row.from}
                   </div>
-                ))}
-              </div>
-              <div
-                className="mt-6 rounded-lg px-4 py-3 flex items-center gap-3"
-                style={{ background: `hsl(${GRN} / 0.08)`, borderLeft: `3px solid hsl(${GRN})` }}
-              >
-                <Zap className="w-4 h-4 shrink-0" style={{ color: `hsl(${GRN})` }} />
-                <p className="text-xs font-semibold" style={{ color: `hsl(${GRN})` }}>
-                  5 days. €5,000. Delivered inside LIZA OS. Yours to keep.
-                </p>
-              </div>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0" style={{ color: `hsl(${GRN})` }} />
+                  <div
+                    className="rounded-lg p-3 text-xs leading-snug font-medium"
+                    style={{ background: `hsl(${GRN} / 0.08)`, color: `hsl(${GRN})`, borderLeft: `2px solid hsl(${GRN} / 0.5)` }}
+                  >
+                    {row.to}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div
+              className="mt-6 rounded-lg px-4 py-3 flex items-center gap-3"
+              style={{ background: `hsl(${GRN} / 0.08)`, borderLeft: `3px solid hsl(${GRN})` }}
+            >
+              <Zap className="w-4 h-4 shrink-0" style={{ color: `hsl(${GRN})` }} />
+              <p className="text-xs font-semibold" style={{ color: `hsl(${GRN})` }}>
+                5 days. Delivered inside LIZA OS. Yours to keep.
+              </p>
             </div>
           </div>
         </div>
@@ -624,6 +628,7 @@ export default function SprintPage() {
   return (
     <MarketingLayout>
       <Hero />
+      <Transformation />
       <SoundFamiliar />
       <ValidationBridge />
       <ProcessVisualization />
