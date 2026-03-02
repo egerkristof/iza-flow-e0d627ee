@@ -29,6 +29,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import ExtractionEngine from "./pages/marketing/ExtractionEngine";
 import ExperienceTestPage from "./pages/marketing/ExperienceTestPage";
 import AuditExecutionSolution from "./pages/marketing/SecurityAuditSolution";
+import SprintPage from "./pages/marketing/Sprint";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +70,7 @@ const App = () => (
             <Route path="/extract" element={<ExtractionEngine />} />
             <Route path="/extract/test" element={<ExperienceTestPage />} />
             <Route path="/solutions/audit" element={<AuditExecutionSolution />} />
+            <Route path="/sprint" element={<SprintPage />} />
 
             {/* Legacy redirects */}
             <Route path="/liza" element={<Navigate to="/" replace />} />
