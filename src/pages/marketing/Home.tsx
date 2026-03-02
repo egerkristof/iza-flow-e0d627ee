@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import {
   ArrowRight, CheckCircle2, Brain, Layers, Zap, Shield, Lock,
-  FileText, Mic, Cpu, BookOpen, TrendingUp, Target, BarChart3,
+  BookOpen, TrendingUp, Target, BarChart3,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 const GRN = "155 72% 46%";
@@ -127,76 +127,6 @@ function Problem() {
   );
 }
 
-// ── WHY THIS WORKS — Comparison ──────────────────────────────────────────────
-function WhyThisWorks() {
-  return (
-    <section className="py-20 px-6">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <SectionTag label="Why Existing Approaches Fail" icon={<Shield className="w-3 h-3" />} />
-          <h2 className="text-4xl font-black mb-4">
-            You've tried to fix this before.
-            <br />
-            <GradientText>Here's why it didn't stick.</GradientText>
-          </h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-5">
-          {[
-            {
-              label: "Traditional consulting", cross: true,
-              items: [
-                "Months of workshops and interviews",
-                "Delivered as a PDF on a shelf",
-                "Stale the day it's written",
-              ],
-            },
-            {
-              label: "AI tool rollout", cross: true,
-              items: [
-                "Everyone prompts their own way",
-                "No shared methodology or standard",
-                "Knowledge stays in people's heads",
-              ],
-            },
-            {
-              label: "LIZA OS", cross: false,
-              items: [
-                "Expertise extracted into executable protocols",
-                "Enforced at the point of work, not a shelf",
-                "Every session feeds learning back into the system",
-              ],
-            },
-          ].map((col, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border overflow-hidden p-7"
-              style={{
-                background: col.cross ? "hsl(var(--muted) / 0.3)" : `hsl(${GRN} / 0.07)`,
-                borderColor: col.cross ? "hsl(var(--border))" : `hsl(${GRN} / 0.4)`,
-                boxShadow: col.cross ? "none" : `0 0 28px -8px hsl(${GRN} / 0.2)`,
-              }}
-            >
-              <p className="font-bold text-sm mb-4" style={{ color: col.cross ? "hsl(var(--muted-foreground))" : `hsl(${GRN})` }}>{col.label}</p>
-              <ul className="flex flex-col gap-2.5">
-                {col.items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                    {col.cross
-                      ? <Lock className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />
-                      : <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
-                    }
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── PRODUCT IN ACTION — Narrative Screenshot Flow ────────────────────────────
 function ProductInAction() {
   const [lightbox, setLightbox] = useState<{ src: string; tag: string } | null>(null);
@@ -271,7 +201,6 @@ function ProductInAction() {
                   key={i}
                   className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-8 md:gap-12`}
                 >
-                  {/* Screenshot */}
                   <div className="flex-1 min-w-0">
                     <div
                       className="rounded-2xl border overflow-hidden shadow-2xl cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
@@ -289,8 +218,6 @@ function ProductInAction() {
                       />
                     </div>
                   </div>
-
-                  {/* Copy */}
                   <div className="flex-shrink-0 md:w-[320px] text-center md:text-left">
                     <span
                       className="inline-block text-[11px] font-black tracking-[0.2em] uppercase mb-3 px-3 py-1 rounded-full border"
@@ -312,7 +239,6 @@ function ProductInAction() {
         </div>
       </section>
 
-      {/* Lightbox */}
       {lightbox && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 cursor-pointer animate-fade-in"
@@ -331,57 +257,7 @@ function ProductInAction() {
   );
 }
 
-// ── HOW IT WORKS — Pipeline ──────────────────────────────────────────────────
-function Pipeline() {
-  const steps = [
-    { icon: <Mic className="w-6 h-6" />, label: "INPUT", title: "Your Existing Knowledge", desc: "Process documents, protocols, transcripts, and structured senior interviews.", col: "200 90% 52%" },
-    { icon: <Cpu className="w-6 h-6" />, label: "PROCESS", title: "LIZA Context Engine", desc: "Analyses, categorises, and structures expertise into Playbooks, Procedures, Directives, Principles, and Knowledge items.", col: "155 72% 46%" },
-    { icon: <FileText className="w-6 h-6" />, label: "OUTPUT", title: "Your Master Protocol", desc: "A structured, versioned, executable protocol. Ready to deploy into AI workbooks or run as automated workflows.", col: "38 92% 50%" },
-  ];
 
-  return (
-    <section className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-14">
-          <SectionTag label="The Engine" icon={<Cpu className="w-3 h-3" />} />
-          <h2 className="text-4xl font-black mb-4">
-            Messy knowledge in.
-            <br />
-            <GradientText>Executable protocol out.</GradientText>
-          </h2>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
-          {steps.map((s, i) => (
-            <div key={i} className="flex items-center gap-4">
-              <div className="flex flex-col items-center text-center w-52">
-                <div
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 border-2"
-                  style={{
-                    background: `hsl(${s.col} / 0.1)`,
-                    borderColor: `hsl(${s.col} / 0.3)`,
-                    color: `hsl(${s.col})`,
-                    boxShadow: i === 1 ? `0 0 24px -6px hsl(${s.col} / 0.3)` : "none",
-                  }}
-                >
-                  {s.icon}
-                </div>
-                <span className="text-[10px] font-black tracking-widest uppercase mb-1" style={{ color: `hsl(${s.col})` }}>{s.label}</span>
-                <p className="font-bold text-sm leading-tight mb-1">{s.title}</p>
-                <p className="text-xs text-muted-foreground">{s.desc}</p>
-              </div>
-              {i < steps.length - 1 && (
-                <ArrowRight className="w-6 h-6 shrink-0 hidden md:block" style={{ color: `hsl(var(--primary) / 0.4)` }} />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── EXECUTE → LEARN → ENCODE cycle ──────────────────────────────────────────
 function ExecutionCycle() {
   return (
     <section className="py-20 px-6">
