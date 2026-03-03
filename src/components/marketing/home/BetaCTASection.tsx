@@ -17,7 +17,7 @@ export function BetaCTASection() {
               <GradientText>Team intelligence is what wins.</GradientText>
             </h2>
             <p className="text-base mb-6 text-muted-foreground">
-              Private Beta. 1 month free. For teams of 5-30 where consistency matters.
+              Private Beta. 1 month free. For teams of 5–30 where consistency matters.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link

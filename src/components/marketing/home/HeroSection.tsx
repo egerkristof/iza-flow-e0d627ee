@@ -11,16 +11,18 @@ export function HeroSection() {
       />
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">Team AI for consulting &amp; professional services</p>
+        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
+          For consulting &amp; professional services teams
+        </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          Your team's AI.
+          Execute together.
           <br />
-          <GradientText>One shared brain.</GradientText>
+          <GradientText>Learn together.</GradientText>
         </h1>
 
         <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          LIZA loads your methodology, your client knowledge, and your team's judgment into every AI session — so anyone can execute like your best people.
+          The infrastructure that turns your team's collective knowledge into live context — so everyone executes with your best judgment, not just their own.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -39,7 +41,7 @@ export function HeroSection() {
             onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            See why ↓
+            See how ↓
           </button>
         </div>
       </div>
