@@ -87,10 +87,8 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 )}
               </button>
             )}
-            <a
-              href="https://calendar.app.google/3v8jevUcsgRQnLyL9"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/beta"
               className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -98,8 +96,8 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-                Book a Discovery Call
-            </a>
+              Join the Beta
+            </Link>
           </div>
 
           {/* Mobile toggle */}
@@ -139,18 +137,16 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                   {n.label}
                 </Link>
               ))}
-              <a
-                href="https://calendar.app.google/3v8jevUcsgRQnLyL9"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/beta"
                 className="mt-2 px-5 py-3 rounded-lg text-sm font-semibold text-center"
                 style={{
                   background: "var(--gradient-brand-btn)",
                   color: "hsl(var(--primary-foreground))",
                 }}
               >
-                Book a Discovery Call
-              </a>
+                Join the Beta
+              </Link>
             </div>
           </div>
         )}
@@ -173,7 +169,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <span className="font-bold text-lg tracking-tight">LIZA OS</span>
             </div>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              The knowledge-activated execution engine for the knowledge economy.
+              Your team's AI is brilliant. LIZA makes it a team.
             </p>
           </div>
 
@@ -189,6 +185,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Get Started</p>
               <div className="flex flex-col gap-2">
+                <Link to="/beta" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Join the Beta</Link>
                 <Link to="/sprint" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Book a Sprint</Link>
                 <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Discovery Call</a>
               </div>
@@ -207,7 +204,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-4">
             <a href="mailto:kristof.eger@lizaos.ai" className="text-xs text-muted-foreground hover:text-foreground transition-colors">kristof.eger@lizaos.ai</a>
             <Link to="/auth" className="text-xs text-muted-foreground/40 hover:text-muted-foreground transition-colors">Team Login</Link>
-            <p className="text-xs brand-gradient-text font-semibold">Turn judgment into infrastructure.</p>
+            <p className="text-xs brand-gradient-text font-semibold">Individual AI. Team intelligence.</p>
           </div>
         </div>
       </footer>
