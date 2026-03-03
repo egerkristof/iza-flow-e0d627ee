@@ -7,25 +7,25 @@ const CASES = [
   {
     icon: <Target className="w-5 h-5" />,
     title: "Delegate your thinking, not just your tasks",
-    desc: "Generate briefs that carry your intent, judgment, and standards. People execute correctly because they have the full context. Zero check-ins needed.",
+    desc: "The loop captures your judgment. When you brief someone, they receive your intent, your standards, and the context that matters — not a task description. Zero check-ins needed.",
     col: "var(--primary)",
   },
   {
     icon: <Users className="w-5 h-5" />,
     title: "Onboard in weeks, not months",
-    desc: "New hires run on senior-level judgment from week one. The playbook carries the expertise, the context engine loads it, the system coaches through execution.",
+    desc: "Because the loop has been running, new hires inherit months of accumulated team intelligence. The playbook isn't a PDF — it's live context loaded into their first session.",
     col: "var(--warning)",
   },
   {
     icon: <ShieldCheck className="w-5 h-5" />,
     title: "Every rep sells like your best",
-    desc: "Deal qualification, objection handling, pricing judgment. Encoded and live for every rep. Not in a PDF — in the conversation, in the moment.",
+    desc: "Every objection response, pricing judgment, and deal qualification pattern that the loop has captured is available — in the conversation, in the moment. Not after the deal is lost.",
     col: "var(--success)",
   },
   {
     icon: <Briefcase className="w-5 h-5" />,
     title: "Protect revenue before dashboards turn red",
-    desc: "Risk signals, renewal timing, expansion cues. Available to every AM in real-time, cross-referenced with what worked last quarter.",
+    desc: "Risk signals and expansion cues the loop detected across previous engagements are cross-referenced in real-time. Every account manager works with institutional memory, not just their own.",
     col: "270 60% 65%",
   },
 ];
@@ -35,10 +35,13 @@ export function DelegateSection() {
     <section className="py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <SectionTag label="In practice" />
+          <SectionTag label="Because the loop runs" />
           <h2 className="text-4xl font-black mb-4">
             Your team executes at your level. <GradientText>Without you in the room.</GradientText>
           </h2>
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto">
+            Each of these outcomes is a direct result of the Collaborate → Learn → Execute loop compounding over time.
+          </p>
         </div>
         <div className="grid md:grid-cols-2 gap-5">
           {CASES.map((c, i) => {

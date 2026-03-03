@@ -5,31 +5,31 @@ const LEVELS = [
   {
     level: 1,
     state: "Solo AI, nothing shared",
-    cost: "Every person reinvents every workflow. Knowledge walks out the door.",
+    cost: "Everyone reinvents every workflow. Your best consultant leaves — 14 months of client-specific judgment, pricing intuition, and relationship context walks out with them.",
     active: false,
   },
   {
     level: 2,
     state: "Shared prompts, personal context",
-    cost: "Same prompt, different outputs across the team. No consistency.",
+    cost: "Same prompt, different outputs. You asked two people to draft the same proposal and got two completely different approaches. The client noticed.",
     active: false,
   },
   {
     level: 3,
     state: "Shared docs, static knowledge",
-    cost: "6 months to ramp a new hire. Documentation is stale on day two.",
+    cost: "6 months to ramp a new hire. Your Notion wiki was outdated the week it was written. Nobody reads the playbook because it doesn't match how work actually happens.",
     active: false,
   },
   {
     level: 4,
     state: "Live, shared, executable context",
-    cost: "Consistency without micromanagement. Your methodology is in the room.",
+    cost: "Consistency without micromanagement. New hires handle complex deals the way your veterans would — because your methodology is loaded into every session, live.",
     active: true,
   },
   {
     level: 5,
     state: "Context powers every decision",
-    cost: "Your organisation's intelligence runs itself. People execute at senior level from day one.",
+    cost: "Your organisation's intelligence compounds automatically. Protocols execute your methodology. People focus on judgment, not process.",
     active: false,
   },
 ];
@@ -44,7 +44,7 @@ export function MaturityLadder() {
             How live is your context <GradientText>when you work?</GradientText>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Most teams are stuck at Level 1-3. Individual AI is powerful. But without shared, live context, every project is still a fresh start.
+            Most teams plateau at Level 2-3. AI is powerful individually. But without shared, live context, every new project — and every new hire — starts from scratch.
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export function MaturityLadder() {
           {LEVELS.map((l) => (
             <div
               key={l.level}
-              className="relative rounded-xl border p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-6 overflow-hidden transition-all"
+              className="relative rounded-xl border p-5 flex flex-col md:flex-row md:items-start gap-3 md:gap-6 overflow-hidden transition-all"
               style={{
                 borderColor: l.active ? "hsl(var(--primary) / 0.4)" : "hsl(var(--border))",
                 background: l.active ? "hsl(var(--primary) / 0.06)" : "transparent",
@@ -79,7 +79,7 @@ export function MaturityLadder() {
               </div>
               <div className="flex-1">
                 <p className={`text-sm font-bold ${l.active ? "text-foreground" : "text-muted-foreground"}`}>{l.state}</p>
-                <p className={`text-sm mt-0.5 ${l.active ? "text-foreground/80" : "text-muted-foreground/70"}`}>{l.cost}</p>
+                <p className={`text-sm mt-1 leading-relaxed ${l.active ? "text-foreground/80" : "text-muted-foreground/70"}`}>{l.cost}</p>
               </div>
             </div>
           ))}

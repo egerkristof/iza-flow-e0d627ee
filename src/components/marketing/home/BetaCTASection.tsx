@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import { GradientText, CAL_URL } from "./shared";
 
 export function BetaCTASection() {
@@ -31,13 +31,17 @@ export function BetaCTASection() {
               >
                 Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
+              <Link
+                to="/extract"
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
                 style={{ borderColor: "hsl(var(--border))" }}
               >
-                Book a Discovery Call
-              </a>
+                <Play className="w-4 h-4" /> Try the Extraction Engine
+              </Link>
             </div>
+            <p className="text-xs text-muted-foreground mt-4">
+              Or <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">book a discovery call</a> if you'd rather talk first.
+            </p>
           </div>
         </div>
       </div>
