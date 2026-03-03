@@ -20,8 +20,8 @@ export function HeroSection() {
           <GradientText>One shared brain.</GradientText>
         </h1>
 
-        <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
-          LIZA turns scattered AI usage into shared, structured team intelligence that gets smarter every session.
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+          Every team member works with AI — but none of it connects. LIZA turns scattered individual AI usage into shared, structured team intelligence that gets smarter with every session.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -37,10 +37,10 @@ export function HeroSection() {
             Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <button
-            onClick={() => document.getElementById("liza-loop")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            See how it works ↓
+            See why this matters ↓
           </button>
         </div>
       </div>
