@@ -2,6 +2,7 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
 import { AIFragmentationSection } from "@/components/marketing/home/AIFragmentationSection";
 import { LizaLoopSection } from "@/components/marketing/home/LizaLoopSection";
+import { TransformationSection } from "@/components/marketing/home/TransformationSection";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
 
 export default function HomePage() {
@@ -10,6 +11,7 @@ export default function HomePage() {
       <HeroSection />
       <AIFragmentationSection />
       <LizaLoopSection />
+      <TransformationSection />
       <BetaCTASection />
     </MarketingLayout>
   );

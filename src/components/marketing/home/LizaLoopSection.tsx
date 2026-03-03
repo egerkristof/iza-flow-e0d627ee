@@ -10,21 +10,24 @@ const STEPS = [
     key: "collaborate",
     icon: <MessageSquare className="w-4 h-4" />,
     tag: "Collaborate",
-    caption: "Work together in a shared AI environment. The system brings the right context to every conversation.",
+    before: "You repeat yourself in every meeting",
+    after: "The system brings full context automatically",
     img: loopCollaborate,
   },
   {
     key: "learn",
     icon: <Brain className="w-4 h-4" />,
     tag: "Learn",
-    caption: "Every session captures what matters — tagged, linked, and added to your knowledge graph automatically.",
+    before: "Knowledge trapped in one person's head",
+    after: "Every session feeds the shared graph",
     img: loopLearn,
   },
   {
     key: "execute",
     icon: <Play className="w-4 h-4" />,
     tag: "Execute",
-    caption: "New team members start with your full context. They execute like veterans from day one.",
+    before: "New hires take months to ramp up",
+    after: "Day-one execution with full organizational memory",
     img: loopExecute,
   },
 ];
@@ -41,9 +44,6 @@ export function LizaLoopSection() {
             <h2 className="text-3xl md:text-4xl font-black mb-3">
               Work together. <GradientText>The system gets smarter.</GradientText>
             </h2>
-            <p className="text-base text-muted-foreground max-w-lg mx-auto">
-              Every session feeds the loop. Every loop makes the next one faster.
-            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -58,8 +58,8 @@ export function LizaLoopSection() {
                   <img src={s.img} alt={`LIZA — ${s.tag}`} className="w-full h-auto block" loading="lazy" />
                 </div>
 
-                {/* Caption */}
-                <div className="flex items-center gap-2 mb-2">
+                {/* Step label */}
+                <div className="flex items-center gap-2 mb-3">
                   <div
                     className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
                     style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
@@ -68,7 +68,16 @@ export function LizaLoopSection() {
                   </div>
                   <span className="text-xs font-black tracking-[0.15em] uppercase text-primary">{s.tag}</span>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.caption}</p>
+
+                {/* Before → After */}
+                <div className="space-y-1.5">
+                  <p className="text-sm leading-relaxed">
+                    <span className="text-muted-foreground line-through decoration-1">{s.before}</span>
+                  </p>
+                  <p className="text-sm font-semibold leading-relaxed" style={{ color: "hsl(var(--success))" }}>
+                    → {s.after}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
