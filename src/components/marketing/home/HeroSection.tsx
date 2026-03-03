@@ -1,42 +1,27 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Zap } from "lucide-react";
-import { SectionTag, GradientText } from "./shared";
+import { ArrowRight } from "lucide-react";
+import { GradientText } from "./shared";
 
 export function HeroSection() {
   return (
-    <section className="relative py-28 md:py-36 px-6 overflow-hidden">
+    <section className="relative py-28 md:py-40 px-6 overflow-hidden">
       {/* Background glow */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
         style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06) 0%, transparent 65%)", transform: "translate(20%, -20%)" }}
       />
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.018]"
-        style={{
-          backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
 
-      <div className="max-w-5xl mx-auto relative z-10 text-center">
-        <SectionTag label="Execution infrastructure" icon={<Zap className="w-3 h-3" />} />
+      <div className="max-w-4xl mx-auto relative z-10 text-center">
+        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-6">Team AI infrastructure</p>
 
-        <h1 className="text-5xl md:text-6xl font-black mb-6 leading-[1.08]">
-          Everyone has AI.
+        <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.05]">
+          Your team's AI.
           <br />
-          <GradientText>Nobody has context.</GradientText>
+          <GradientText>One shared brain.</GradientText>
         </h1>
 
-        <p className="text-lg leading-relaxed mb-4 text-muted-foreground max-w-2xl mx-auto">
-          Your team uses ChatGPT, Claude, Gemini, and Copilot. Each person has built their own memory, their own projects, their own prompts. None of it talks to each other.
-        </p>
-
-        <p className="text-base mb-8 text-muted-foreground max-w-xl mx-auto italic border-l-2 pl-4 text-left mx-auto" style={{ borderColor: "hsl(var(--primary) / 0.4)" }}>
-          "I asked Marcus and Sarah to handle the same objection. Marcus used his ChatGPT memory. Sarah used her Claude project. The client got two completely different answers. Same company. Same playbook. Two realities."
-        </p>
-
-        <p className="text-base font-semibold text-foreground mb-8 max-w-xl mx-auto">
-          LIZA turns individual AI into <GradientText>team intelligence</GradientText> — live context that's shared, structured, and executable.
+        <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
+          LIZA turns scattered AI usage into shared, structured team intelligence that gets smarter every session.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
