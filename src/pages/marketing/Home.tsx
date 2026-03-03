@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import {
   ArrowRight, CheckCircle2, Brain, Layers, Zap, Shield, Lock,
-  BookOpen, TrendingUp, Target, BarChart3,
+  BookOpen, TrendingUp, Target, BarChart3, Users, MessageSquare,
+  Sparkles, GitBranch, AlertTriangle, XCircle,
 } from "lucide-react";
-
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 const GRN = "155 72% 46%";
@@ -41,18 +41,18 @@ function Hero() {
         }}
       />
       <div className="max-w-5xl mx-auto relative z-10 text-center">
-        <SectionTag label="The Knowledge Operating System" icon={<Zap className="w-3 h-3" />} />
+        <SectionTag label="AI Workspace for Teams" icon={<Zap className="w-3 h-3" />} />
         <h1 className="text-5xl md:text-6xl font-black mb-6 leading-[1.08]">
-          Your best people
+          Your team's AI
           <br />
-          <GradientText>can't be everywhere.</GradientText>
+          <GradientText>isn't a team.</GradientText>
         </h1>
         <p className="text-lg leading-relaxed mb-8 text-muted-foreground max-w-2xl mx-auto">
-          LIZA extracts senior expertise and turns it into executable protocols your entire organisation runs on.
+          ChatGPT, Claude, Gemini, Copilot. Everyone's brilliant individually. Nobody shares context, methodology, or lessons learned.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
-            to="/extract"
+            to="/beta"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -60,50 +60,75 @@ function Hero() {
               boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
             }}
           >
-            Try the Extraction Engine <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <a
-            href="#how-it-works"
+          <button
+            onClick={() => document.getElementById("fragmentation")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
             style={{ borderColor: "hsl(var(--border))" }}
           >
-            See How It Works ↓
-          </a>
+            See the problem ↓
+          </button>
         </div>
       </div>
     </section>
   );
 }
 
-// ── THE PROBLEM — Pain cards ─────────────────────────────────────────────────
-function Problem() {
+// ── AI FRAGMENTATION PROBLEM ─────────────────────────────────────────────────
+const AI_TOOLS = [
+  { name: "ChatGPT", col: "171 76% 46%", icon: "🤖" },
+  { name: "Claude", col: "24 80% 55%", icon: "🧠" },
+  { name: "Gemini", col: "217 80% 55%", icon: "✨" },
+  { name: "Copilot", col: "200 90% 52%", icon: "💡" },
+  { name: "Perplexity", col: "270 60% 65%", icon: "🔍" },
+];
+
+function FragmentationProblem() {
   return (
-    <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+    <section id="fragmentation" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <SectionTag label="The Problem" />
           <h2 className="text-4xl font-black mb-4">
-            Your expertise doesn't scale.
+            5 people. 5 tools.
             <br />
-            <GradientText>AI makes it worse.</GradientText>
+            <GradientText>25 knowledge silos.</GradientText>
           </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Every AI tool now has "memory" or "projects." But each one is a personal knowledge cocoon that can't be shared, governed, or composed.
+          </p>
         </div>
+
+        {/* Visual: Tool bubbles */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {AI_TOOLS.map((t) => (
+            <div key={t.name} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border"
+              style={{ borderColor: `hsl(${t.col} / 0.3)`, background: `hsl(${t.col} / 0.06)` }}>
+              <span className="text-lg">{t.icon}</span>
+              <span className="text-sm font-semibold">{t.name}</span>
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-destructive/10 text-destructive">siloed</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Pain cards */}
         <div className="grid md:grid-cols-3 gap-5">
           {[
             {
-              icon: <BookOpen className="w-5 h-5" />,
-              title: "Knowledge walks out",
-              desc: "Your best people carry methodology in their heads. Every resignation is a knowledge loss event.",
+              icon: <Users className="w-5 h-5" />,
+              title: "Context doesn't transfer",
+              desc: "Your best consultant built an amazing Claude Project. Nobody else on the team can access, learn from, or build on it.",
             },
             {
-              icon: <Target className="w-5 h-5" />,
-              title: "Execution is inconsistent",
-              desc: "Same brief, 14 different outputs. Quality depends on who supervises. No shared standard.",
+              icon: <AlertTriangle className="w-5 h-5" />,
+              title: "Same brief, different answers",
+              desc: "Two people run the same client brief through their personal AI setups. They get contradictory outputs. Neither knows why.",
             },
             {
-              icon: <BarChart3 className="w-5 h-5" />,
-              title: "AI accelerates the mess",
-              desc: "Generic AI gives everyone content generation — with zero organisational context. Faster at producing the wrong thing.",
+              icon: <XCircle className="w-5 h-5" />,
+              title: "Knowledge walks out the door",
+              desc: "When someone leaves, their Custom GPTs, Claude Projects, and prompt libraries leave with them. The team starts over.",
             },
           ].map((c, i) => (
             <div
@@ -125,6 +150,159 @@ function Problem() {
   );
 }
 
+// ── WHAT'S MISSING — SECI Gap (visual, not academic) ─────────────────────────
+function WhatsMissing() {
+  const quadrants = [
+    {
+      phase: "Learn together",
+      sub: "Socialisation",
+      status: "missing",
+      icon: <Users className="w-5 h-5" />,
+      desc: "See how experts think. Learn by working alongside, not by reading docs.",
+      col: "38 92% 50%",
+    },
+    {
+      phase: "Capture knowledge",
+      sub: "Externalisation",
+      status: "partial",
+      icon: <BookOpen className="w-5 h-5" />,
+      desc: "Custom GPTs capture some knowledge. But in locked, personal, non-composable formats.",
+      col: "200 90% 52%",
+    },
+    {
+      phase: "Systematise across the org",
+      sub: "Combination",
+      status: "missing",
+      icon: <GitBranch className="w-5 h-5" />,
+      desc: "No way to version, govern, or compose knowledge across team members or projects.",
+      col: "270 60% 65%",
+    },
+    {
+      phase: "Execute and improve",
+      sub: "Internalisation",
+      status: "partial",
+      icon: <Target className="w-5 h-5" />,
+      desc: "You learn by chatting, but no guided execution, compliance checks, or after-action reviews.",
+      col: GRN,
+    },
+  ];
+
+  return (
+    <section className="py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <SectionTag label="What's Missing" icon={<Brain className="w-3 h-3" />} />
+          <h2 className="text-4xl font-black mb-4">
+            AI tools complete 20% of the
+            <br />
+            <GradientText>knowledge spiral.</GradientText>
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Real team intelligence requires four phases. Today's AI tools cover fragments of one.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-5">
+          {quadrants.map((q) => (
+            <div key={q.phase} className="rounded-2xl border p-7 relative overflow-hidden"
+              style={{ borderColor: `hsl(${q.col} / 0.25)`, background: `hsl(${q.col} / 0.03)` }}>
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${q.col})` }} />
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: `hsl(${q.col} / 0.12)`, color: `hsl(${q.col})` }}>
+                  {q.icon}
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-base font-bold">{q.phase}</h3>
+                    <span className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full ${
+                      q.status === "missing"
+                        ? "bg-destructive/10 text-destructive"
+                        : "bg-amber-500/10 text-amber-600"
+                    }`}>
+                      {q.status === "missing" ? "Not covered" : "Partial"}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{q.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <p className="text-sm text-muted-foreground">
+            LIZA completes all four phases. <span className="font-semibold text-foreground">That's the difference between individual AI and team intelligence.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── MATURITY LADDER (Revised language) ───────────────────────────────────────
+const MATURITY_STEPS = [
+  { n: 1, label: "Experimenting", sub: "Everyone uses their own AI tool", desired: false, tag: "most teams start here", tagPulse: true },
+  { n: 2, label: "Sharing", sub: "Teams share prompts and templates", desired: false, tag: null, tagPulse: false },
+  { n: 3, label: "Embedded", sub: "AI is integrated but knowledge is siloed per person", desired: false, tag: "where most get stuck", tagPulse: false },
+  { n: 4, label: "Connected", sub: "Knowledge is shared, governed, and composable", desired: true, tag: "← LIZA takes you here", tagPulse: false },
+  { n: 5, label: "Intelligent", sub: "AI executes your methodology, not just your prompts", desired: true, tag: "North Star", tagPulse: false },
+];
+
+function MaturityLadder() {
+  return (
+    <section id="maturity" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <SectionTag label="Where Does Your Team Sit?" />
+          <h2 className="text-4xl font-black mb-4">
+            Five levels of <GradientText>team AI maturity.</GradientText>
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Most teams are at Level 1-3. The gap to Level 4 isn't about better tools. It's about shared knowledge infrastructure.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          {MATURITY_STEPS.map((step) => {
+            const col = step.desired ? GRN : "var(--muted-foreground)";
+            const colHsl = step.desired ? `hsl(${GRN})` : "hsl(var(--muted-foreground))";
+            return (
+              <div key={step.n} className="flex items-stretch rounded-xl border overflow-hidden"
+                style={{
+                  marginLeft: `${(step.n - 1) * 4}%`,
+                  background: step.desired ? `hsl(${GRN} / 0.06)` : "hsl(var(--muted) / 0.4)",
+                  borderColor: step.desired ? `hsl(${GRN} / 0.35)` : "hsl(var(--border))",
+                  boxShadow: step.desired ? `0 0 20px -8px hsl(${GRN} / 0.2)` : "none",
+                }}>
+                <div className="w-1 shrink-0" style={{ background: colHsl, opacity: step.desired ? 1 : 0.25 }} />
+                <div className="shrink-0 w-12 flex items-center justify-center border-r py-3"
+                  style={{ borderColor: step.desired ? `hsl(${GRN} / 0.15)` : "hsl(var(--border))" }}>
+                  <span className="font-black text-xl" style={{ color: colHsl }}>{step.n}</span>
+                </div>
+                <div className="flex-1 flex items-center px-4 py-3 gap-3 min-w-0 flex-wrap">
+                  <span className="font-bold text-sm">{step.label}</span>
+                  <span className="text-xs text-muted-foreground hidden sm:inline">·</span>
+                  <span className="text-xs text-muted-foreground">{step.sub}</span>
+                  {step.tag && (
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ml-auto ${
+                      step.desired
+                        ? "bg-emerald-500/10 text-emerald-600"
+                        : step.tagPulse
+                          ? "bg-amber-500/10 text-amber-600 animate-pulse"
+                          : "bg-muted text-muted-foreground"
+                    }`}>
+                      {step.tag}
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── PRODUCT IN ACTION — Narrative Screenshot Flow ────────────────────────────
 function ProductInAction() {
   const [lightbox, setLightbox] = useState<{ src: string; tag: string } | null>(null);
@@ -134,42 +312,42 @@ function ProductInAction() {
       src: "/images/product-extract-blueprint.png",
       tag: "Extract",
       title: "Upload a document. Get a structured blueprint.",
-      desc: "Drop in a process document, policy, or playbook PDF. LIZA detects bundles, playbooks, procedures, and merges duplicates — ready for review before a single line is written.",
+      desc: "Drop in a process document, policy, or playbook PDF. LIZA detects bundles, playbooks, procedures, and merges duplicates.",
       accent: "200 90% 52%",
     },
     {
       src: "/images/product-design-domains.png",
       tag: "Organise",
       title: "Your entire organisation's knowledge. One map.",
-      desc: "Extracted expertise lands in domains — Sales, Operations, Finance, Legal. Each domain holds bundles of playbooks that define how your organisation actually works.",
+      desc: "Extracted expertise lands in domains. Each domain holds bundles of playbooks that define how your organisation actually works.",
       accent: "155 72% 46%",
     },
     {
       src: "/images/product-design-playbook.png",
       tag: "Design",
       title: "Every playbook. Every step. Every gate.",
-      desc: "Drill into any playbook to see its procedures, compliance gates, coaching notes, and output requirements. This is your methodology — codified and version-controlled.",
+      desc: "Drill into any playbook to see its procedures, compliance gates, coaching notes, and output requirements. Version-controlled.",
       accent: "38 92% 50%",
     },
     {
       src: "/images/product-execute-launchpad.png",
       tag: "Deploy",
       title: "Teams don't guess. They launch.",
-      desc: "Operators open a workbook and see every playbook available to them as an action card. No blank page. No prompt engineering. Just: pick a playbook, start a session.",
+      desc: "Operators see every playbook as an action card. No blank page. No prompt engineering. Pick a playbook, start a session.",
       accent: "var(--primary)",
     },
     {
       src: "/images/product-execute-protocol.png",
       tag: "Execute",
       title: "Guided execution. Step by step.",
-      desc: "Each protocol session walks the operator through procedures in sequence. The AI generates drafts using your organisation's context — not generic output.",
+      desc: "Each protocol walks the operator through procedures in sequence. AI generates drafts using your organisation's context.",
       accent: "200 90% 52%",
     },
     {
       src: "/images/product-learn-debrief.png",
       tag: "Learn",
       title: "The system watches. Then it thinks.",
-      desc: "After execution, LIZA synthesises patterns across all sessions — surfacing drift, compliance gaps, and deep work prompts that challenge your assumptions.",
+      desc: "After execution, LIZA synthesises patterns across sessions, surfacing drift, compliance gaps, and improvement prompts.",
       accent: "270 60% 65%",
     },
   ];
@@ -181,12 +359,12 @@ function ProductInAction() {
           <div className="text-center mb-16">
             <SectionTag label="The Product" icon={<Zap className="w-3 h-3" />} />
             <h2 className="text-4xl font-black mb-4">
-              Your knowledge in.
+              From individual AI brilliance
               <br />
-              <GradientText>Your operating system out.</GradientText>
+              <GradientText>to collective intelligence.</GradientText>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              From raw expertise to governed execution — told in six screens.
+              LIZA connects your team's AI into a shared, governed knowledge layer. Six capabilities, one system.
             </p>
           </div>
 
@@ -255,57 +433,6 @@ function ProductInAction() {
   );
 }
 
-
-function ExecutionCycle() {
-  return (
-    <section className="py-20 px-6">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <SectionTag label="The Flywheel" />
-          <h2 className="text-4xl font-black mb-4">
-            Execute. Learn. <GradientText>Encode.</GradientText>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Your organisation gets smarter with every project — automatically.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: <Target className="w-6 h-6" />,
-              step: "01",
-              title: "Execute",
-              desc: "Protocol-driven workflows replace blank-page guessing. Every team member runs your best methodology.",
-            },
-            {
-              icon: <Brain className="w-6 h-6" />,
-              step: "02",
-              title: "Learn",
-              desc: "After every session, the system captures decisions and deviations. Structured reviews synthesise patterns.",
-            },
-            {
-              icon: <Zap className="w-6 h-6" />,
-              step: "03",
-              title: "Encode",
-              desc: "Approved learnings flow back into the knowledge graph. The organisation compounds with each project.",
-            },
-          ].map(({ icon, step, title, desc }) => (
-            <div key={title} className="rounded-2xl border p-7 flex flex-col gap-4"
-              style={{ background: `hsl(var(--primary) / 0.04)`, borderColor: `hsl(var(--primary) / 0.2)` }}>
-              <div className="flex items-center gap-3">
-                <span className="font-black text-3xl" style={{ color: `hsl(var(--primary) / 0.2)`, lineHeight: 1 }}>{step}</span>
-                <div style={{ color: `hsl(var(--primary))` }}>{icon}</div>
-              </div>
-              <p className="font-bold text-lg">{title}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── OUTCOMES ──────────────────────────────────────────────────────────────────
 function Outcomes() {
   return (
@@ -346,121 +473,8 @@ function Outcomes() {
   );
 }
 
-// ── GET STARTED ──────────────────────────────────────────────────────────────
-function GetStarted() {
-  return (
-    <section className="py-24 px-6">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-14">
-          <SectionTag label="Get Started" />
-          <h2 className="text-4xl font-black mb-4">
-            Start with <GradientText>one process.</GradientText>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            The Protocol Sprint turns one senior expert's judgment into an executable protocol your team runs on. Five days, fixed scope.
-          </p>
-        </div>
-
-        <div className="relative rounded-2xl border overflow-hidden"
-          style={{ background: "hsl(var(--primary) / 0.04)", borderColor: "hsl(var(--primary) / 0.3)" }}>
-          <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "var(--gradient-brand)" }} />
-          <div className="p-8 md:p-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
-                <Brain className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(var(--primary))" }}>
-                The Protocol Sprint
-              </span>
-            </div>
-
-            <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center">
-              <div>
-                <div className="flex flex-col gap-2 mb-6">
-                  {[
-                    "Document intake + 90-min structured interview",
-                    "Semantic analysis and codification via LIZA OS",
-                    "Master Protocol: PDF + live digital system",
-                    "Knowledge gap report + team onboarding",
-                  ].map((d, i) => (
-                    <div key={i} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
-                      <p className="text-sm text-muted-foreground">{d}</p>
-                    </div>
-                  ))}
-                </div>
-                <Link
-                  to="/sprint"
-                  className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
-                  style={{
-                    background: "var(--gradient-brand-btn)",
-                    color: "hsl(var(--primary-foreground))",
-                    boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.4)",
-                  }}
-                >
-                  See the Protocol Sprint <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-              <div className="flex flex-col gap-3">
-                <div className="rounded-lg border px-5 py-3" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
-                  <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Timeline</p>
-                  <p className="text-xl font-black" style={{ color: "hsl(var(--primary))" }}>5 Days</p>
-                </div>
-                <div className="rounded-lg border px-5 py-3" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
-                  <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Best for</p>
-                  <p className="text-sm font-semibold">Any team with senior expertise to scale</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
-// ── PLATFORM FEATURES ────────────────────────────────────────────────────────
-function Features() {
-  return (
-    <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <SectionTag label="Platform Capabilities" />
-          <h2 className="text-4xl font-black">
-            Everything you need to
-            <br />
-            <GradientText>institutionalise judgment.</GradientText>
-          </h2>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {[
-            { icon: <Brain className="w-5 h-5" />, title: "Knowledge Extraction", desc: "Surfaces the tacit layer from process docs, transcripts, and interviews." },
-            { icon: <Layers className="w-5 h-5" />, title: "Context Bundles", desc: "Playbooks, Procedures, Directives, and Principles — versioned and governed." },
-            { icon: <Zap className="w-5 h-5" />, title: "Protocol Execution", desc: "Deploy bundles as executable protocols inside AI workbooks." },
-            { icon: <TrendingUp className="w-5 h-5" />, title: "Institutional Memory", desc: "Every execution captures learning back into the system." },
-            { icon: <Lock className="w-5 h-5" />, title: "Governance", desc: "Role-based access, mandate enforcement, and audit trails." },
-            { icon: <Shield className="w-5 h-5" />, title: "Oversight", desc: "Track what your team executes and where drift happens." },
-          ].map((f, i) => (
-            <div key={i} className="rounded-2xl p-7 border"
-              style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
-                {f.icon}
-              </div>
-              <h3 className="text-base font-bold mb-2">{f.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── FINAL CTA ────────────────────────────────────────────────────────────────
-function FinalCTA() {
+// ── BETA CTA ─────────────────────────────────────────────────────────────────
+function BetaCTA() {
   return (
     <section className="py-24 px-6">
       <div className="max-w-3xl mx-auto text-center">
@@ -470,22 +484,30 @@ function FinalCTA() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Your team's knowledge is already there.
+              Your team's AI is brilliant.
               <br />
-              <GradientText>Let's build with it.</GradientText>
+              <GradientText>Make it a team.</GradientText>
             </h2>
-            <p className="text-base mb-8 text-muted-foreground">
-              30 minutes. We'll scope the right engagement for your team's size and complexity.
+            <p className="text-base mb-4 text-muted-foreground">
+              Private Beta. 1 month free. For teams of 5-30 where consistency matters.
             </p>
-            <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
-              style={{
-                background: "var(--gradient-brand-btn)",
-                color: "hsl(var(--primary-foreground))",
-                boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
-              }}>
-              Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/beta"
+                className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
+                style={{
+                  background: "var(--gradient-brand-btn)",
+                  color: "hsl(var(--primary-foreground))",
+                  boxShadow: `0 0 32px -4px hsl(var(--primary) / 0.4)`,
+                }}>
+                Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
+                style={{ borderColor: "hsl(var(--border))" }}>
+                Book a Discovery Call
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -498,11 +520,12 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <Hero />
-      <Problem />
+      <FragmentationProblem />
+      <WhatsMissing />
+      <MaturityLadder />
       <ProductInAction />
-      <GetStarted />
       <Outcomes />
-      <FinalCTA />
+      <BetaCTA />
     </MarketingLayout>
   );
 }
