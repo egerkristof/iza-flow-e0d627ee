@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import {
-  ArrowRight, Zap, Brain, Users, TrendingUp, ShieldCheck, Briefcase,
-  AlertTriangle, XCircle, Layers,
+  ArrowRight, Zap, FileText, Play, Users, Brain,
+  TrendingUp, ShieldCheck, Briefcase, MessageSquare,
+  Sparkles, Target, Layers,
 } from "lucide-react";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
@@ -40,14 +41,14 @@ function Hero() {
         }}
       />
       <div className="max-w-5xl mx-auto relative z-10 text-center">
-        <SectionTag label="Context infrastructure for AI teams" icon={<Zap className="w-3 h-3" />} />
+        <SectionTag label="Execution infrastructure" icon={<Zap className="w-3 h-3" />} />
         <h1 className="text-5xl md:text-6xl font-black mb-6 leading-[1.08]">
-          Everyone has AI.
+          Your expertise is documented.
           <br />
-          <GradientText>Nobody has context.</GradientText>
+          <GradientText>It's not operational.</GradientText>
         </h1>
         <p className="text-lg leading-relaxed mb-8 text-muted-foreground max-w-2xl mx-auto">
-          Your AI tools are only as good as the context behind them. LIZA is the live context layer that makes your team's AI actually work together.
+          Confluence pages, SOPs, playbooks on paper. But every project is still a fresh start. LIZA turns what your organisation knows into what it actually does.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
@@ -62,7 +63,7 @@ function Hero() {
             Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <button
-            onClick={() => document.getElementById("problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            onClick={() => document.getElementById("semantic-debt")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
             style={{ borderColor: "hsl(var(--border))" }}
           >
@@ -74,66 +75,62 @@ function Hero() {
   );
 }
 
-// ── THE PROBLEM — AI tools have memory now, but it's all siloed ─────────────
-const AI_TOOLS = [
-  { name: "ChatGPT", col: "171 76% 46%", icon: "🤖", feature: "Memory" },
-  { name: "Claude", col: "24 80% 55%", icon: "🧠", feature: "Projects" },
-  { name: "Gemini", col: "217 80% 55%", icon: "✨", feature: "Gems" },
-  { name: "Copilot", col: "200 90% 52%", icon: "💡", feature: "Notebooks" },
-  { name: "Perplexity", col: "270 60% 65%", icon: "🔍", feature: "Spaces" },
-];
-
-function TheProblem() {
+// ── SEMANTIC DEBT ────────────────────────────────────────────────────────────
+function SemanticDebt() {
   return (
-    <section id="problem" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+    <section id="semantic-debt" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <SectionTag label="The real problem" />
+          <SectionTag label="The gap" />
           <h2 className="text-4xl font-black mb-4">
-            Every AI tool now has "memory."
-            <br />
-            <GradientText>None of them share it.</GradientText>
+            Semantic debt. <GradientText>The real bottleneck.</GradientText>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            ChatGPT has Memory. Claude has Projects. Gemini has Gems. Each one creates a personal knowledge silo that nobody else on your team can access.
+            The gap between what your organisation knows and what it actually does. It compounds silently, then shows up as inconsistency, rework, and dependency on key people.
           </p>
         </div>
 
-        {/* Tool bubbles with their "memory" feature */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {AI_TOOLS.map((t) => (
-            <div key={t.name} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border"
-              style={{ borderColor: `hsl(${t.col} / 0.3)`, background: `hsl(${t.col} / 0.06)` }}>
-              <span className="text-lg">{t.icon}</span>
-              <span className="text-sm font-semibold">{t.name}</span>
-              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full"
-                style={{ background: `hsl(${t.col} / 0.15)`, color: `hsl(${t.col})` }}>
-                {t.feature}
-              </span>
-              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-destructive/10 text-destructive">siloed</span>
+        {/* Visual: Documented ←→ Operational gap */}
+        <div className="flex flex-col md:flex-row items-stretch gap-4 mb-12 max-w-3xl mx-auto">
+          <div className="flex-1 rounded-2xl border p-7 text-center"
+            style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--muted) / 0.3)" }}>
+            <FileText className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
+            <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-1">Documented</p>
+            <p className="text-lg font-black">What you know</p>
+            <p className="text-xs text-muted-foreground mt-2">Confluence, SOPs, PDFs, wikis, tribal knowledge</p>
+          </div>
+          <div className="flex items-center justify-center px-4">
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-16 h-[2px] bg-destructive/40" />
+              <span className="text-[10px] font-black tracking-widest uppercase text-destructive">Gap</span>
+              <div className="w-16 h-[2px] bg-destructive/40" />
             </div>
-          ))}
+          </div>
+          <div className="flex-1 rounded-2xl border p-7 text-center"
+            style={{ borderColor: `hsl(${GRN} / 0.35)`, background: `hsl(${GRN} / 0.06)` }}>
+            <Play className="w-8 h-8 mx-auto mb-3" style={{ color: `hsl(${GRN})` }} />
+            <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: `hsl(${GRN})` }}>Operational</p>
+            <p className="text-lg font-black">What you do</p>
+            <p className="text-xs text-muted-foreground mt-2">How projects actually run, decisions get made, work gets done</p>
+          </div>
         </div>
 
-        {/* Pain cards */}
+        {/* Symptoms */}
         <div className="grid md:grid-cols-3 gap-5">
           {[
             {
-              icon: <Users className="w-5 h-5" />,
-              title: "Context doesn't transfer",
-              desc: "Your best consultant built an amazing Claude Project. Nobody else on the team can access, learn from, or build on it.",
-              col: "200 90% 52%",
-            },
-            {
-              icon: <AlertTriangle className="w-5 h-5" />,
-              title: "Same brief, different answers",
-              desc: "Two people run the same client brief through their personal AI setups. They get contradictory outputs. Neither knows why.",
+              title: "Every project is a fresh start",
+              desc: "Despite best-in-class processes on paper, teams reinvent the wheel because the knowledge isn't wired into how they work.",
               col: "38 92% 50%",
             },
             {
-              icon: <XCircle className="w-5 h-5" />,
-              title: "Knowledge walks out the door",
-              desc: "When someone leaves, their Custom GPTs, Claude Projects, and prompt libraries leave with them. The team starts over.",
+              title: "Results depend on who runs it",
+              desc: "Your best people carry the methodology in their heads. Everyone else follows the document, misses the judgment.",
+              col: "200 90% 52%",
+            },
+            {
+              title: "AI made this worse, not better",
+              desc: "Now everyone has their own ChatGPT memory, Claude project, Copilot setup. More tools, same gap. More silos, less consistency.",
               col: "270 60% 65%",
             },
           ].map((c, i) => (
@@ -143,10 +140,6 @@ function TheProblem() {
               style={{ background: `hsl(${c.col} / 0.03)`, borderColor: `hsl(${c.col} / 0.2)` }}
             >
               <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${c.col})` }} />
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: `hsl(${c.col} / 0.12)`, color: `hsl(${c.col})` }}>
-                {c.icon}
-              </div>
               <h3 className="text-lg font-bold mb-2">{c.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
             </div>
@@ -157,28 +150,28 @@ function TheProblem() {
   );
 }
 
-// ── THE MISSING LAYER — Context infrastructure ──────────────────────────────
-function MissingLayer() {
+// ── WHAT LIZA IS — The bridge ───────────────────────────────────────────────
+function WhatLizaIs() {
   return (
     <section className="py-16 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="rounded-2xl border p-8 md:p-12 relative overflow-hidden"
-          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}>
-          <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
+          style={{ borderColor: `hsl(${GRN} / 0.3)`, background: `hsl(${GRN} / 0.03)` }}>
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${GRN})` }} />
           <div className="flex flex-col md:flex-row items-start gap-8">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
+              style={{ background: `hsl(${GRN} / 0.12)`, color: `hsl(${GRN})` }}>
               <Layers className="w-6 h-6" />
             </div>
             <div>
               <h3 className="text-2xl font-black mb-3">
-                The problem isn't AI. <GradientText>It's the layer underneath.</GradientText>
+                LIZA turns static documents into <GradientText>executable knowledge.</GradientText>
               </h3>
               <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                AI tools got smarter. But the context they run on is still scattered across docs, Slack threads, wikis, and people's heads. Every tool builds its own tiny memory. None of it connects.
+                Not another project management tool. Not another wiki. LIZA is execution infrastructure. It takes your existing processes, playbooks, and expertise, and makes them operational.
               </p>
               <p className="text-sm font-semibold">
-                LIZA is the shared context infrastructure that sits underneath all of them. Structure your team's expertise once. Every tool, every person, every decision runs on the same live context.
+                The bridge between knowing what to do and actually doing it.
               </p>
             </div>
           </div>
@@ -188,64 +181,63 @@ function MissingLayer() {
   );
 }
 
-// ── CONTEXT MATURITY LADDER ─────────────────────────────────────────────────
-const MATURITY_STEPS = [
-  { n: 1, label: "Personal", sub: "Everyone uses their own AI tool with their own context", desired: false, tag: "most teams start here", tagPulse: true },
-  { n: 2, label: "Sharing", sub: "Teams share prompts and templates, but not the context behind them", desired: false, tag: null, tagPulse: false },
-  { n: 3, label: "Embedded", sub: "AI is integrated, but each person's context is siloed", desired: false, tag: "where AI efforts plateau", tagPulse: false },
-  { n: 4, label: "Connected", sub: "Live, shared context powers every AI interaction", desired: true, tag: "← LIZA takes you here", tagPulse: false },
-  { n: 5, label: "Composable", sub: "Context is your operating system. AI executes your methodology.", desired: true, tag: "North Star", tagPulse: false },
+// ── CAPABILITIES (bottom-up) ────────────────────────────────────────────────
+const CAPABILITIES = [
+  {
+    icon: <MessageSquare className="w-5 h-5" />,
+    title: "Co-prompt with your team",
+    desc: "Group chats with shared context. Not just messaging. AI-assisted collaboration where the system understands what everyone is working on.",
+    col: "200 90% 52%",
+  },
+  {
+    icon: <Brain className="w-5 h-5" />,
+    title: "LIZA learns from every interaction",
+    desc: "Your best practices, prohibitions, standards, purpose. The system absorbs them. Next time you work, it's faster and more accurate.",
+    col: "38 92% 50%",
+  },
+  {
+    icon: <Users className="w-5 h-5" />,
+    title: "Others learn from you. You learn from others.",
+    desc: "Context isn't locked in one person's AI tool. What the best consultant knows becomes available to the whole team, structured and live.",
+    col: GRN,
+  },
+  {
+    icon: <Target className="w-5 h-5" />,
+    title: "Delegate your thinking, not just your tasks",
+    desc: "Generate briefs that carry your intent, judgment, and standards. People execute correctly because they have the full context.",
+    col: "270 60% 65%",
+  },
 ];
 
-function MaturityLadder() {
+function Capabilities() {
   return (
-    <section id="maturity" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
-      <div className="max-w-4xl mx-auto">
+    <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <SectionTag label="Where does your team sit?" />
+          <SectionTag label="How it works" icon={<Sparkles className="w-3 h-3" />} />
           <h2 className="text-4xl font-black mb-4">
-            Five levels of <GradientText>AI context maturity.</GradientText>
+            Work together. <GradientText>Get sharper together.</GradientText>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Most teams plateau at Level 3. Better prompts won't fix it. The missing layer is shared, live context.
+            Every interaction makes the system more accurate. Your organisation gets faster because the binding infrastructure is AI plus live context.
           </p>
         </div>
-
-        <div className="flex flex-col gap-2">
-          {MATURITY_STEPS.map((step) => {
-            const colHsl = step.desired ? `hsl(${GRN})` : "hsl(var(--muted-foreground))";
-            return (
-              <div key={step.n} className="flex items-stretch rounded-xl border overflow-hidden"
-                style={{
-                  marginLeft: `${(step.n - 1) * 4}%`,
-                  background: step.desired ? `hsl(${GRN} / 0.06)` : "hsl(var(--muted) / 0.4)",
-                  borderColor: step.desired ? `hsl(${GRN} / 0.35)` : "hsl(var(--border))",
-                  boxShadow: step.desired ? `0 0 20px -8px hsl(${GRN} / 0.2)` : "none",
-                }}>
-                <div className="w-1 shrink-0" style={{ background: colHsl, opacity: step.desired ? 1 : 0.25 }} />
-                <div className="shrink-0 w-12 flex items-center justify-center border-r py-3"
-                  style={{ borderColor: step.desired ? `hsl(${GRN} / 0.15)` : "hsl(var(--border))" }}>
-                  <span className="font-black text-xl" style={{ color: colHsl }}>{step.n}</span>
-                </div>
-                <div className="flex-1 flex items-center px-4 py-3 gap-3 min-w-0 flex-wrap">
-                  <span className="font-bold text-sm">{step.label}</span>
-                  <span className="text-xs text-muted-foreground hidden sm:inline">·</span>
-                  <span className="text-xs text-muted-foreground">{step.sub}</span>
-                  {step.tag && (
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ml-auto ${
-                      step.desired
-                        ? "bg-emerald-500/10 text-emerald-600"
-                        : step.tagPulse
-                          ? "bg-amber-500/10 text-amber-600 animate-pulse"
-                          : "bg-muted text-muted-foreground"
-                    }`}>
-                      {step.tag}
-                    </span>
-                  )}
-                </div>
+        <div className="grid md:grid-cols-2 gap-5">
+          {CAPABILITIES.map((cap, i) => (
+            <div
+              key={i}
+              className="relative rounded-2xl p-7 border overflow-hidden"
+              style={{ background: `hsl(${cap.col} / 0.03)`, borderColor: `hsl(${cap.col} / 0.2)` }}
+            >
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${cap.col})` }} />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${cap.col} / 0.12)`, color: `hsl(${cap.col})` }}>
+                {cap.icon}
               </div>
-            );
-          })}
+              <h3 className="text-lg font-bold mb-2">{cap.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{cap.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -260,43 +252,43 @@ function ProductInAction() {
     {
       src: "/images/product-extract-blueprint.png",
       tag: "Extract",
-      title: "Upload a document. Get structured context.",
-      desc: "Drop in a process document, policy, or playbook. LIZA detects structure, resolves duplicates, and creates live context your AI can actually use.",
+      title: "Upload a process. Get a live playbook.",
+      desc: "Drop in your Confluence page, SOP, or PDF. LIZA detects structure, resolves duplicates, and creates executable knowledge.",
       accent: "200 90% 52%",
     },
     {
       src: "/images/product-design-domains.png",
       tag: "Organise",
-      title: "Your entire organisation's context. One map.",
-      desc: "Extracted knowledge lands in domains. Each domain holds the playbooks that define how your organisation actually works.",
+      title: "Your entire methodology. One map.",
+      desc: "Every domain, every playbook, every procedure. Structured, versioned, and connected.",
       accent: GRN,
     },
     {
       src: "/images/product-design-playbook.png",
       tag: "Design",
-      title: "Every playbook. Every step. Every gate.",
-      desc: "Drill into any playbook to see procedures, compliance gates, coaching notes, and output requirements. Version-controlled.",
+      title: "Every step. Every gate. Every standard.",
+      desc: "Drill into any playbook to see procedures, compliance gates, coaching notes, and output requirements.",
       accent: "38 92% 50%",
     },
     {
       src: "/images/product-execute-launchpad.png",
       tag: "Deploy",
-      title: "Teams launch with full context.",
-      desc: "Operators see every playbook as an action card. No blank page. Pick a playbook, start a session with the context already loaded.",
+      title: "Teams don't guess. They launch.",
+      desc: "Operators see every playbook as an action card. No blank page. Pick a playbook, start a session with all context loaded.",
       accent: "var(--primary)",
     },
     {
       src: "/images/product-execute-protocol.png",
       tag: "Execute",
-      title: "Guided execution. Context at every step.",
+      title: "Guided execution. Step by step.",
       desc: "Each protocol walks the operator through procedures in sequence. AI generates drafts using your organisation's live context.",
       accent: "200 90% 52%",
     },
     {
       src: "/images/product-learn-debrief.png",
       tag: "Learn",
-      title: "The system watches. Context gets sharper.",
-      desc: "After execution, LIZA synthesises patterns across sessions, surfacing drift, compliance gaps, and improvement prompts.",
+      title: "The system watches. Then it thinks.",
+      desc: "After execution, LIZA synthesises patterns across sessions, surfacing drift, compliance gaps, and improvements.",
       accent: "270 60% 65%",
     },
   ];
@@ -308,12 +300,12 @@ function ProductInAction() {
           <div className="text-center mb-16">
             <SectionTag label="The Product" icon={<Zap className="w-3 h-3" />} />
             <h2 className="text-4xl font-black mb-4">
-              The context layer
+              From process on paper
               <br />
-              <GradientText>your AI tools are missing.</GradientText>
+              <GradientText>to live playbooks.</GradientText>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              LIZA structures your team's expertise into live context that powers every decision and every tool.
+              Six capabilities. One system. Static expertise becomes executable knowledge.
             </p>
           </div>
 
@@ -335,12 +327,7 @@ function ProductInAction() {
                       }}
                       onClick={() => setLightbox({ src: s.src, tag: s.tag })}
                     >
-                      <img
-                        src={s.src}
-                        alt={`LIZA OS — ${s.tag}`}
-                        className="w-full h-auto block"
-                        loading="lazy"
-                      />
+                      <img src={s.src} alt={`LIZA OS — ${s.tag}`} className="w-full h-auto block" loading="lazy" />
                     </div>
                   </div>
                   <div className="flex-shrink-0 md:w-[320px] text-center md:text-left">
@@ -382,31 +369,28 @@ function ProductInAction() {
   );
 }
 
-// ── USE CASES (compact, "with full context") ─────────────────────────────────
-const USE_CASE_CARDS = [
-  { icon: <Users className="w-5 h-5" />, title: "Onboarding with full context", desc: "New hires run on senior-level judgment from week one. Not because they read a wiki.", col: "200 90% 52%" },
-  { icon: <TrendingUp className="w-5 h-5" />, title: "Sales calls with full context", desc: "Every rep has the same deal intelligence, objection logic, and positioning. Live.", col: "38 92% 50%" },
-  { icon: <ShieldCheck className="w-5 h-5" />, title: "Account management with full context", desc: "Risk signals, renewal timing, expansion cues. Available to every AM, not just the best one.", col: GRN },
-  { icon: <Briefcase className="w-5 h-5" />, title: "Delegation with full context", desc: "Generate briefs that carry your intent, standards, and judgment. Zero check-ins needed.", col: "270 60% 65%" },
-];
-
+// ── USE CASES ────────────────────────────────────────────────────────────────
 function UseCases() {
+  const cases = [
+    { icon: <Users className="w-5 h-5" />, title: "Onboard in weeks, not months", desc: "New hires run on senior-level judgment from week one. The playbook carries the expertise.", col: "200 90% 52%" },
+    { icon: <TrendingUp className="w-5 h-5" />, title: "Every rep sells like your best", desc: "Deal qualification, objection handling, pricing judgment. Encoded and live for every rep.", col: "38 92% 50%" },
+    { icon: <ShieldCheck className="w-5 h-5" />, title: "Protect revenue before dashboards turn red", desc: "Risk signals, renewal timing, expansion cues. Available to every AM, not just the best one.", col: GRN },
+    { icon: <Briefcase className="w-5 h-5" />, title: "Delegate your thinking", desc: "Generate briefs that carry your intent, standards, and judgment. Zero check-ins needed.", col: "270 60% 65%" },
+  ];
+
   return (
     <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <SectionTag label="Already running" />
           <h2 className="text-4xl font-black mb-4">
-            What "full context" <GradientText>looks like in practice.</GradientText>
+            Executable knowledge <GradientText>in practice.</GradientText>
           </h2>
         </div>
         <div className="grid md:grid-cols-2 gap-5">
-          {USE_CASE_CARDS.map((uc, i) => (
-            <div
-              key={i}
-              className="relative rounded-2xl p-7 border overflow-hidden"
-              style={{ background: `hsl(${uc.col} / 0.03)`, borderColor: `hsl(${uc.col} / 0.2)` }}
-            >
+          {cases.map((uc, i) => (
+            <div key={i} className="relative rounded-2xl p-7 border overflow-hidden"
+              style={{ background: `hsl(${uc.col} / 0.03)`, borderColor: `hsl(${uc.col} / 0.2)` }}>
               <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${uc.col})` }} />
               <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
                 style={{ background: `hsl(${uc.col} / 0.12)`, color: `hsl(${uc.col})` }}>
@@ -438,9 +422,9 @@ function BetaCTA() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Your team has AI.
+              Stop documenting expertise.
               <br />
-              <GradientText>Give them context.</GradientText>
+              <GradientText>Start executing it.</GradientText>
             </h2>
             <p className="text-base mb-4 text-muted-foreground">
               Private Beta. 1 month free. For teams of 5-30 where consistency matters.
@@ -474,9 +458,9 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <Hero />
-      <TheProblem />
-      <MissingLayer />
-      <MaturityLadder />
+      <SemanticDebt />
+      <WhatLizaIs />
+      <Capabilities />
       <ProductInAction />
       <UseCases />
       <BetaCTA />
