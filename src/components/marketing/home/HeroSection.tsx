@@ -11,16 +11,16 @@ export function HeroSection() {
       />
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-6">Knowledge infrastructure for teams</p>
+        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-6">For teams where consistency matters</p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.05]">
-          Do the right thing.
+          Stop being the only one
           <br />
-          <GradientText>At the right moment.</GradientText>
+          <GradientText>who knows how things work.</GradientText>
         </h1>
 
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-          Teams have always needed practical wisdom to execute well. Now, for the first time, AI can help — if it's built on knowledge infrastructure, not just data.
+          Your team uses AI. But every person trains their own, in their own silo, with none of your methodology built in. LIZA connects it all — so anyone on your team can execute like your best people do.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">

@@ -10,30 +10,30 @@ const STEPS = [
     key: "collaborate",
     icon: <MessageSquare className="w-4 h-4" />,
     tag: "Collaborate",
-    headline: "Work together — AI included.",
-    line: "Co-work with colleagues, co-prompt with AI. One shared workspace, full context, every time.",
-    before: "You repeat yourself in every meeting, every handoff",
-    after: "The system brings full context — automatically",
+    headline: "One workspace. Your whole team. AI included.",
+    line: "Stop copying context between tools. Work with colleagues and AI in the same session — with your full methodology already loaded.",
+    before: "You repeat context in every meeting and handoff",
+    after: "Everyone starts with the full picture — automatically",
     img: loopCollaborate,
   },
   {
     key: "learn",
     icon: <Brain className="w-4 h-4" />,
     tag: "Learn",
-    headline: "It learns how you think.",
-    line: "Every session captures not just what you do — but how. Judgment, patterns, preferences. Your knowledge lives inside the system like code lives in software.",
-    before: "Knowledge trapped in one person's head, lost when they leave",
-    after: "Every session feeds the shared knowledge — permanently",
+    headline: "Every session makes the system smarter.",
+    line: "LIZA captures how your team actually works — the judgment calls, the client patterns, the unwritten rules. Not as static docs, but as living, executable knowledge.",
+    before: "Senior leaves → years of client knowledge gone overnight",
+    after: "Expertise stays in the system and compounds over time",
     img: loopLearn,
   },
   {
     key: "execute",
     icon: <Play className="w-4 h-4" />,
     tag: "Execute",
-    headline: "Execute with full live context.",
-    line: "Best practices, team preferences, project history, connected tools — assembled for you. Anyone can execute at the level of your best people, from day one.",
-    before: "New hires take months to ramp, seniors stay bottlenecked",
-    after: "Day-one execution with full organisational memory",
+    headline: "New hire, day one, senior-level output.",
+    line: "Your methodology, your client history, your quality standards — assembled and injected into every work session. Connected to your CRM, your email, your project tools.",
+    before: "6–9 months to ramp, seniors still the bottleneck",
+    after: "Anyone executes at your standard from week one",
     img: loopExecute,
   },
 ];
@@ -46,13 +46,13 @@ export function LizaLoopSection() {
       <section id="liza-loop" className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <SectionTag label="How LIZA works" icon={<Layers className="w-3 h-3" />} />
+            <SectionTag label="How it works" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              Knowledge infrastructure.{" "}
-              <GradientText>Not just another AI tool.</GradientText>
+              Your team's knowledge,{" "}
+              <GradientText>live in every session.</GradientText>
             </h2>
             <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-              LIZA builds up from what your team actually knows — tacit and explicit — and turns it into executable, living intelligence.
+              Three things happen when you work in LIZA. Together, they turn scattered expertise into shared, compounding team intelligence.
             </p>
           </div>
 
@@ -62,7 +62,6 @@ export function LizaLoopSection() {
                 key={s.key}
                 className={`flex flex-col ${i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} gap-6 items-center`}
               >
-                {/* Screenshot */}
                 <div
                   className="md:w-1/2 rounded-xl border overflow-hidden shadow-lg cursor-pointer transition-transform duration-200 hover:scale-[1.01]"
                   style={{ borderColor: "hsl(var(--border))" }}
@@ -71,7 +70,6 @@ export function LizaLoopSection() {
                   <img src={s.img} alt={`LIZA — ${s.tag}`} className="w-full h-auto block" loading="lazy" />
                 </div>
 
-                {/* Content */}
                 <div className="md:w-1/2">
                   <div className="flex items-center gap-2 mb-2">
                     <div
