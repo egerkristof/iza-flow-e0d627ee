@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageSquare, Brain, Layers, Play, ArrowRight } from "lucide-react";
+import { MessageSquare, Brain, Play, ArrowRight, Layers } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 import loopCollaborate from "@/assets/loop-collaborate.png";
 import loopLearn from "@/assets/loop-learn.png";
@@ -10,9 +10,9 @@ const STEPS = [
     key: "collaborate",
     icon: <MessageSquare className="w-5 h-5" />,
     tag: "Collaborate",
-    title: "Two people co-prompt. The AI is in the room.",
-    desc: "Sarah and Marcus run a discovery debrief together. LIZA detects objection patterns, cross-references your playbooks, and flags learnings — live, in the conversation.",
-    outcome: "Everyone works with the same intelligence, not their own memory.",
+    title: "Sarah handles the objection exactly the way you would.",
+    desc: "Sarah and Marcus run a discovery debrief together — in the same shared AI environment. Sarah brings up the sovereignty objection. LIZA surfaces your proven response from last quarter's Meridian deal, the pricing precedent, and the 6-week procurement timeline. Sarah doesn't guess. She executes with your judgment.",
+    outcome: "Your methodology is in the room. Even when you're not.",
     img: loopCollaborate,
     col: "var(--primary)",
   },
@@ -20,9 +20,9 @@ const STEPS = [
     key: "learn",
     icon: <Brain className="w-5 h-5" />,
     tag: "Learn",
-    title: "The system extracts what matters. Automatically.",
-    desc: "From that single conversation, LIZA crystallises 4 knowledge items: a best practice, a timing guideline, a buying signal, and a cross-reference — tagged, categorised, and linked to your playbooks.",
-    outcome: "Knowledge doesn't live in someone's head. It's live infrastructure.",
+    title: "The system captures what no one would have documented.",
+    desc: "From that single conversation, LIZA crystallises what Marcus said about CTO engagement being a high-intent signal, the timing pattern Sarah spotted, and the objection response that actually landed. Four knowledge items — tagged, categorised, linked to your playbooks. Not because someone wrote a wiki article, but because the system was listening.",
+    outcome: "Your best thinking doesn't walk out the door. It becomes infrastructure.",
     img: loopLearn,
     col: "var(--warning)",
   },
@@ -30,9 +30,9 @@ const STEPS = [
     key: "execute",
     icon: <Play className="w-5 h-5" />,
     tag: "Execute",
-    title: "Next session. Everything is already loaded.",
-    desc: "James starts a new pursuit with a similar prospect. LIZA pre-loads the sovereignty objection response, the Meridian case study, and the 6-week procurement timeline. He works at senior-level judgment from minute one.",
-    outcome: "Your methodology runs itself. New hires execute like veterans.",
+    title: "James starts a new deal. Everything is already loaded.",
+    desc: "James is two months in. He picks up a similar enterprise pursuit. Before he types a word, LIZA has pre-loaded the sovereignty objection response, the Meridian case study, and the procurement timeline pattern. He handles his first complex deal the way a 10-year veteran would — because the system gave him your context, not just a template.",
+    outcome: "New hires execute like veterans. From day one.",
     img: loopExecute,
     col: "var(--success)",
   },

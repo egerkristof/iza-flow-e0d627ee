@@ -2,13 +2,6 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Zap } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
-const AI_TOOLS = [
-  { name: "ChatGPT", feature: "Memory" },
-  { name: "Claude", feature: "Projects" },
-  { name: "Gemini", feature: "Gems" },
-  { name: "Copilot", feature: "Notebooks" },
-];
-
 export function HeroSection() {
   return (
     <section className="relative py-28 md:py-36 px-6 overflow-hidden">
@@ -28,20 +21,18 @@ export function HeroSection() {
       <div className="max-w-5xl mx-auto relative z-10 text-center">
         <SectionTag label="Execution infrastructure" icon={<Zap className="w-3 h-3" />} />
 
-        <h1 className="text-5xl md:text-6xl font-black mb-4 leading-[1.08]">
+        <h1 className="text-5xl md:text-6xl font-black mb-6 leading-[1.08]">
           Everyone has AI.
           <br />
           <GradientText>Nobody has context.</GradientText>
         </h1>
 
-        <p className="text-lg leading-relaxed mb-6 text-muted-foreground max-w-2xl mx-auto">
-          Your team uses {AI_TOOLS.map((t, i) => (
-            <span key={t.name}>
-              {i > 0 && (i === AI_TOOLS.length - 1 ? ", and " : ", ")}
-              <span className="font-semibold text-foreground">{t.name}</span>
-              <span className="text-muted-foreground"> {t.feature}</span>
-            </span>
-          ))}. Each person works in their own silo. Knowledge stays personal. Results depend on who runs it.
+        <p className="text-lg leading-relaxed mb-4 text-muted-foreground max-w-2xl mx-auto">
+          Your team uses ChatGPT, Claude, Gemini, and Copilot. Each person has built their own memory, their own projects, their own prompts. None of it talks to each other.
+        </p>
+
+        <p className="text-base mb-8 text-muted-foreground max-w-xl mx-auto italic border-l-2 pl-4 text-left mx-auto" style={{ borderColor: "hsl(var(--primary) / 0.4)" }}>
+          "I asked Marcus and Sarah to handle the same objection. Marcus used his ChatGPT memory. Sarah used her Claude project. The client got two completely different answers. Same company. Same playbook. Two realities."
         </p>
 
         <p className="text-base font-semibold text-foreground mb-8 max-w-xl mx-auto">
