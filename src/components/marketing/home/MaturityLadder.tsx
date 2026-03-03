@@ -2,11 +2,11 @@ import { SectionTag, GradientText } from "./shared";
 import { TrendingUp } from "lucide-react";
 
 const LEVELS = [
-  { level: 1, label: "Solo AI", desc: "Everyone trains their own ChatGPT", emoji: "🔴" },
-  { level: 2, label: "Shared prompts", desc: "Same prompt, different outputs", emoji: "🟠" },
-  { level: 3, label: "Static docs", desc: "Wiki feeds AI — already outdated", emoji: "🟡" },
-  { level: 4, label: "Live context", desc: "Team knowledge in every session", emoji: "🟢", active: true },
-  { level: 5, label: "Self-running", desc: "Methodology executes itself", emoji: "🔵" },
+  { level: 1, label: "Solo AI", desc: "Everyone uses their own ChatGPT. No shared anything.", emoji: "🔴" },
+  { level: 2, label: "Shared prompts", desc: "Same prompt, different outputs. No consistency.", emoji: "🟠" },
+  { level: 3, label: "Static docs", desc: "Wiki feeds AI — already stale, never complete.", emoji: "🟡" },
+  { level: 4, label: "Live context", desc: "Team knowledge in every session. Always current.", emoji: "🟢", active: true },
+  { level: 5, label: "Self-executing", desc: "Methodology runs itself. You steer, not carry.", emoji: "🔵" },
 ];
 
 export function MaturityLadder() {
@@ -19,11 +19,13 @@ export function MaturityLadder() {
             Most teams plateau at Level 2–3.{" "}
             <GradientText>LIZA gets you to 4.</GradientText>
           </h2>
+          <p className="text-sm text-muted-foreground max-w-md mx-auto">
+            Individual AI is powerful. But without shared infrastructure, your team's knowledge stays trapped in separate sessions.
+          </p>
         </div>
 
         {/* Horizontal ladder */}
         <div className="relative">
-          {/* Progress bar behind */}
           <div className="hidden md:block absolute top-6 left-[10%] right-[10%] h-1 rounded-full" style={{ background: "hsl(var(--muted))" }}>
             <div className="h-full rounded-full" style={{ width: "75%", background: "var(--gradient-brand)" }} />
           </div>

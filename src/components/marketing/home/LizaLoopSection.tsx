@@ -8,29 +8,29 @@ import loopExecute from "@/assets/loop-execute.png";
 const STEPS = [
   {
     key: "collaborate",
-    tag: "Collaborate",
+    tag: "Execute together",
     headline: "One workspace. Your whole team. AI included.",
     line: "Stop copying context between tools. Work with colleagues and AI in the same session — with your full methodology already loaded.",
-    before: "You repeat context in every meeting and handoff",
+    before: "Everyone repeats context in every meeting and handoff",
     after: "Everyone starts with the full picture — automatically",
     img: loopCollaborate,
   },
   {
     key: "learn",
-    tag: "Learn",
-    headline: "Every session makes the system smarter.",
-    line: "LIZA captures how your team actually works — the judgment calls, the client patterns, the unwritten rules — as living, executable knowledge.",
-    before: "Senior leaves → years of client knowledge gone",
-    after: "Expertise stays in the system and compounds",
+    tag: "Learn together",
+    headline: "Every session makes the team smarter.",
+    line: "LIZA captures what your team actually learns — the judgment calls, the client patterns, the unwritten rules — and feeds it back into the next session.",
+    before: "Senior leaves → years of knowledge gone",
+    after: "Expertise stays and compounds across the team",
     img: loopLearn,
   },
   {
     key: "execute",
-    tag: "Execute",
-    headline: "New hire, day one, senior-level output.",
-    line: "Your methodology, your client history, your quality standards — assembled and injected into every work session. Connected to your CRM, email, and project tools.",
-    before: "6–9 months to ramp, seniors still the bottleneck",
-    after: "Anyone executes at your standard from week one",
+    tag: "Scale together",
+    headline: "Your best practices, built in.",
+    line: "Your methodology, client history, and quality standards — assembled and injected into every work session. Anyone executes at your standard.",
+    before: "6–9 months to ramp, seniors always the bottleneck",
+    after: "New hire, day one, senior-level output",
     img: loopExecute,
   },
 ];
@@ -52,9 +52,11 @@ export function LizaLoopSection() {
           <div className="text-center mb-14">
             <SectionTag label="How it works" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              Your team's knowledge,{" "}
-              <GradientText>live in every session.</GradientText>
+              The collaborative execution loop.
             </h2>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto">
+              Execute, learn, and improve — as a team, not as individuals using separate tools.
+            </p>
           </div>
 
           <div className="space-y-12">

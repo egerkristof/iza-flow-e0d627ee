@@ -1,85 +1,85 @@
 import { SectionTag } from "./shared";
-import { AlertTriangle, TrendingUp, Users, Briefcase, Megaphone, ShieldCheck } from "lucide-react";
+import { AlertTriangle, User, Users, Zap } from "lucide-react";
 
 export function AIFragmentationSection() {
   return (
     <section id="the-problem" className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
-          <SectionTag label="The problem" icon={<AlertTriangle className="w-3 h-3" />} />
+          <SectionTag label="The real problem" icon={<AlertTriangle className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black leading-tight mb-4">
-            Your best people's expertise
+            You know how to do great work.
             <br />
-            is trapped in their heads.
+            You just can't do it <em>together</em>.
           </h2>
           <p className="text-base text-muted-foreground max-w-xl mx-auto">
-            And no tool — not your wiki, not your AI, not your SOPs — has ever captured the judgment that actually makes them good.
+            The hardest part of scaling a team was never the work itself — it's sharing the judgment behind it.
           </p>
         </div>
 
-        {/* The big insight — prominent */}
+        {/* Three escalating layers */}
+        <div className="grid md:grid-cols-3 gap-4 mb-10">
+          <ProblemCard
+            number="1"
+            icon={<AlertTriangle className="w-4 h-4" />}
+            headline="The age-old problem"
+            body="How do you share what you know — the instinct, the timing, the edge cases — with people who weren't in the room?"
+            accent="var(--destructive)"
+          />
+          <ProblemCard
+            number="2"
+            icon={<User className="w-4 h-4" />}
+            headline="AI solved it individually"
+            body="LLMs let you execute brilliantly on your own. They learn your style, hold some memory, reason with you in real time."
+            accent="hsl(38 92% 50%)"
+          />
+          <ProblemCard
+            number="3"
+            icon={<Users className="w-4 h-4" />}
+            headline="But not as a team"
+            body="The moment you need shared context, shared learning, shared best practices — every AI tool breaks down. There's no team layer."
+            accent="hsl(var(--primary))"
+          />
+        </div>
+
+        {/* The core insight — big and unmissable */}
         <div
-          className="rounded-2xl border-2 px-8 py-8 text-center mb-10"
-          style={{ borderColor: "hsl(var(--primary) / 0.3)", background: "hsl(var(--primary) / 0.04)" }}
+          className="rounded-2xl border-2 px-8 py-10 text-center"
+          style={{ borderColor: "hsl(var(--primary) / 0.35)", background: "hsl(var(--primary) / 0.04)" }}
         >
-          <p className="text-xl md:text-2xl font-black mb-2">
-            Nobody built the missing layer.
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Zap className="w-5 h-5 text-primary" />
+            <span className="text-xs font-black tracking-[0.2em] uppercase text-primary">The missing infrastructure</span>
+          </div>
+          <p className="text-2xl md:text-3xl font-black mb-3 leading-snug">
+            How do you execute, learn, and build
+            <br className="hidden md:block" />
+            best practices — together?
           </p>
           <p className="text-base text-muted-foreground max-w-lg mx-auto">
-            Your team's actual knowledge — how they think, how they decide, how they handle edge cases — <strong className="text-foreground">live in every AI session, updated after every engagement.</strong>
+            Not a better chatbot. Not another wiki. An infrastructure where your team's knowledge lives, evolves, and shows up in every work session — automatically.
           </p>
-        </div>
-
-        {/* How this shows up in specific teams */}
-        <p className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground text-center mb-4">
-          How this shows up in your team
-        </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <TeamPainCard
-            icon={<TrendingUp className="w-4 h-4" />}
-            col="38 92% 50%"
-            team="Sales"
-            pain="Your top seller wins deals on instinct. Everyone else follows a script that doesn't work."
-          />
-          <TeamPainCard
-            icon={<Users className="w-4 h-4" />}
-            col="200 90% 52%"
-            team="Onboarding"
-            pain="New hires take 6–9 months because your methodology isn't in any system — it's in people."
-          />
-          <TeamPainCard
-            icon={<Briefcase className="w-4 h-4" />}
-            col="262 80% 55%"
-            team="Delivery"
-            pain="Quality depends on who's assigned. Junior consultants can't access senior judgment."
-          />
-          <TeamPainCard
-            icon={<Megaphone className="w-4 h-4" />}
-            col="340 75% 55%"
-            team="Account Mgmt"
-            pain="Client history lives in one person's head. When they move on, you start the relationship over."
-          />
         </div>
       </div>
     </section>
   );
 }
 
-function TeamPainCard({ icon, col, team, pain }: {
-  icon: React.ReactNode; col: string; team: string; pain: string;
+function ProblemCard({ number, icon, headline, body, accent }: {
+  number: string; icon: React.ReactNode; headline: string; body: string; accent: string;
 }) {
   return (
-    <div className="rounded-xl border p-4" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
-      <div className="flex items-center gap-2 mb-2">
+    <div className="rounded-xl border p-5 relative" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
+      <div className="flex items-center gap-2 mb-3">
         <div
-          className="w-7 h-7 rounded-lg flex items-center justify-center"
-          style={{ background: `hsl(${col} / 0.12)`, color: `hsl(${col})` }}
+          className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black"
+          style={{ background: `${accent}20`, color: accent }}
         >
-          {icon}
+          {number}
         </div>
-        <span className="text-xs font-black tracking-[0.1em] uppercase" style={{ color: `hsl(${col})` }}>{team}</span>
+        <span className="text-xs font-black tracking-[0.1em] uppercase" style={{ color: accent }}>{headline}</span>
       </div>
-      <p className="text-sm text-muted-foreground leading-relaxed">{pain}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
     </div>
   );
 }
