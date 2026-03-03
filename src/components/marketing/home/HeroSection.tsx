@@ -5,23 +5,22 @@ import { GradientText } from "./shared";
 export function HeroSection() {
   return (
     <section className="relative py-28 md:py-40 px-6 overflow-hidden">
-      {/* Background glow */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
         style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06) 0%, transparent 65%)", transform: "translate(20%, -20%)" }}
       />
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-6">Team AI infrastructure</p>
+        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-6">Knowledge infrastructure for teams</p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.05]">
-          Your team's AI.
+          Do the right thing.
           <br />
-          <GradientText>One shared brain.</GradientText>
+          <GradientText>At the right moment.</GradientText>
         </h1>
 
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-          Every team member works with AI — but none of it connects. LIZA turns scattered individual AI usage into shared, structured team intelligence that gets smarter with every session.
+          Teams have always needed practical wisdom to execute well. Now, for the first time, AI can help — if it's built on knowledge infrastructure, not just data.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
