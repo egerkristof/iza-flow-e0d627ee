@@ -4,32 +4,32 @@ import { TrendingUp } from "lucide-react";
 const LEVELS = [
   {
     level: 1,
-    state: "Solo AI, nothing shared",
-    pain: "Everyone reinvents every workflow. Your best consultant leaves — 14 months of judgment walks out with them.",
+    state: "Everyone uses AI solo",
+    pain: "Every person reinvents every workflow. No shared knowledge, no consistency across client work.",
     active: false,
   },
   {
     level: 2,
-    state: "Shared prompts, personal context",
-    pain: "Same prompt, different outputs. Two people draft the same proposal — two completely different approaches. The client noticed.",
+    state: "Shared prompts, but personal context",
+    pain: "You share prompt templates, but everyone's AI has different context. Same question, different answers.",
     active: false,
   },
   {
     level: 3,
-    state: "Shared docs, static knowledge",
-    pain: "6 months to ramp a new hire. Your wiki was outdated the week it was written. Nobody reads the playbook because it doesn't match how work actually happens.",
+    state: "Docs and wikis feed the AI",
+    pain: "You connected your Notion or knowledge base. But it was outdated the week it was written. AI gives plausible-sounding answers based on stale information.",
     active: false,
   },
   {
     level: 4,
-    state: "Live, shared, executable context",
-    pain: "New hires handle complex work the way your veterans would — because your methodology is loaded into every session, live.",
+    state: "Live context, shared across the team",
+    pain: "Your methodology, your client knowledge, your team's actual judgment — live in every AI session. New hire on day one works like a 2-year veteran.",
     active: true,
   },
   {
     level: 5,
-    state: "Knowledge compounds automatically",
-    pain: "Every session feeds the system. Protocols execute your methodology. People focus on judgment, not process.",
+    state: "Your methodology runs itself",
+    pain: "Protocols encode your best people's decision-making. The system gets smarter with every engagement. You focus on exceptions, not process.",
     active: false,
   },
 ];
@@ -39,13 +39,13 @@ export function MaturityLadder() {
     <section className="py-20 px-6">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
-          <SectionTag label="Where are you?" icon={<TrendingUp className="w-3 h-3" />} />
+          <SectionTag label="Where does your team sit?" icon={<TrendingUp className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            Most teams plateau at Level 2–3.{" "}
-            <GradientText>LIZA takes you to 4.</GradientText>
+            Most teams are stuck at Level 2–3.{" "}
+            <GradientText>LIZA gets you to 4.</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            AI is powerful individually. Without shared, live knowledge infrastructure, every new project — and every new hire — starts from scratch.
+            Your AI is only as good as the context it works with. Here's where the gap is — and where it closes.
           </p>
         </div>
 
