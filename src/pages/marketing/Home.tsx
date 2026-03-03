@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import {
-  ArrowRight, Zap, Clock, Search, UserX, Brain,
-  Users, TrendingUp, ShieldCheck, Briefcase,
+  ArrowRight, Zap, Brain, Users, TrendingUp, ShieldCheck, Briefcase,
+  AlertTriangle, XCircle, Layers,
 } from "lucide-react";
 
 const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
@@ -40,14 +40,14 @@ function Hero() {
         }}
       />
       <div className="max-w-5xl mx-auto relative z-10 text-center">
-        <SectionTag label="The contextual workspace" icon={<Zap className="w-3 h-3" />} />
+        <SectionTag label="Context infrastructure for AI teams" icon={<Zap className="w-3 h-3" />} />
         <h1 className="text-5xl md:text-6xl font-black mb-6 leading-[1.08]">
-          Stop reconstructing context.
+          Everyone has AI.
           <br />
-          <GradientText>Start working in it.</GradientText>
+          <GradientText>Nobody has context.</GradientText>
         </h1>
         <p className="text-lg leading-relaxed mb-8 text-muted-foreground max-w-2xl mx-auto">
-          Your team wastes hours piecing together what they need to know. LIZA keeps it live.
+          Your AI tools are only as good as the context behind them. LIZA is the live context layer that makes your team's AI actually work together.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
@@ -66,7 +66,7 @@ function Hero() {
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
             style={{ borderColor: "hsl(var(--border))" }}
           >
-            See where your team sits ↓
+            See the problem ↓
           </button>
         </div>
       </div>
@@ -74,26 +74,13 @@ function Hero() {
   );
 }
 
-// ── THE PROBLEM (felt) ───────────────────────────────────────────────────────
-const PAIN_CARDS = [
-  {
-    icon: <Clock className="w-5 h-5" />,
-    title: "30 minutes before every meeting",
-    desc: "Digging through Slack threads, docs, and old emails just to reconstruct what happened since last time.",
-    col: "38 92% 50%",
-  },
-  {
-    icon: <Search className="w-5 h-5" />,
-    title: "3 threads + 2 docs = one answer",
-    desc: "The information exists somewhere. Finding it, connecting it, and trusting it is the actual work.",
-    col: "200 90% 52%",
-  },
-  {
-    icon: <UserX className="w-5 h-5" />,
-    title: "New hires take 6 months",
-    desc: "Not because they're slow. Because context lives in people's heads, not in the systems they use.",
-    col: "270 60% 65%",
-  },
+// ── THE PROBLEM — AI tools have memory now, but it's all siloed ─────────────
+const AI_TOOLS = [
+  { name: "ChatGPT", col: "171 76% 46%", icon: "🤖", feature: "Memory" },
+  { name: "Claude", col: "24 80% 55%", icon: "🧠", feature: "Projects" },
+  { name: "Gemini", col: "217 80% 55%", icon: "✨", feature: "Gems" },
+  { name: "Copilot", col: "200 90% 52%", icon: "💡", feature: "Notebooks" },
+  { name: "Perplexity", col: "270 60% 65%", icon: "🔍", feature: "Spaces" },
 ];
 
 function TheProblem() {
@@ -101,27 +88,63 @@ function TheProblem() {
     <section id="problem" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <SectionTag label="The hidden cost" />
+          <SectionTag label="The real problem" />
           <h2 className="text-4xl font-black mb-4">
-            The hidden cost of <GradientText>scattered context.</GradientText>
+            Every AI tool now has "memory."
+            <br />
+            <GradientText>None of them share it.</GradientText>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Your team isn't missing information. They're missing the connections between it.
+            ChatGPT has Memory. Claude has Projects. Gemini has Gems. Each one creates a personal knowledge silo that nobody else on your team can access.
           </p>
         </div>
 
+        {/* Tool bubbles with their "memory" feature */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {AI_TOOLS.map((t) => (
+            <div key={t.name} className="flex items-center gap-2 px-4 py-2.5 rounded-xl border"
+              style={{ borderColor: `hsl(${t.col} / 0.3)`, background: `hsl(${t.col} / 0.06)` }}>
+              <span className="text-lg">{t.icon}</span>
+              <span className="text-sm font-semibold">{t.name}</span>
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full"
+                style={{ background: `hsl(${t.col} / 0.15)`, color: `hsl(${t.col})` }}>
+                {t.feature}
+              </span>
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-destructive/10 text-destructive">siloed</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Pain cards */}
         <div className="grid md:grid-cols-3 gap-5">
-          {PAIN_CARDS.map((c, i) => (
+          {[
+            {
+              icon: <Users className="w-5 h-5" />,
+              title: "Context doesn't transfer",
+              desc: "Your best consultant built an amazing Claude Project. Nobody else on the team can access, learn from, or build on it.",
+              col: "200 90% 52%",
+            },
+            {
+              icon: <AlertTriangle className="w-5 h-5" />,
+              title: "Same brief, different answers",
+              desc: "Two people run the same client brief through their personal AI setups. They get contradictory outputs. Neither knows why.",
+              col: "38 92% 50%",
+            },
+            {
+              icon: <XCircle className="w-5 h-5" />,
+              title: "Knowledge walks out the door",
+              desc: "When someone leaves, their Custom GPTs, Claude Projects, and prompt libraries leave with them. The team starts over.",
+              col: "270 60% 65%",
+            },
+          ].map((c, i) => (
             <div
               key={i}
               className="relative rounded-2xl border p-7 overflow-hidden"
               style={{ background: `hsl(${c.col} / 0.03)`, borderColor: `hsl(${c.col} / 0.2)` }}
             >
               <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `hsl(${c.col})` }} />
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: `hsl(${c.col} / 0.12)`, color: `hsl(${c.col})` }}
-              >
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${c.col} / 0.12)`, color: `hsl(${c.col})` }}>
                 {c.icon}
               </div>
               <h3 className="text-lg font-bold mb-2">{c.title}</h3>
@@ -134,26 +157,57 @@ function TheProblem() {
   );
 }
 
+// ── THE MISSING LAYER — Context infrastructure ──────────────────────────────
+function MissingLayer() {
+  return (
+    <section className="py-16 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="rounded-2xl border p-8 md:p-12 relative overflow-hidden"
+          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}>
+          <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
+          <div className="flex flex-col md:flex-row items-start gap-8">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+              style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
+              <Layers className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black mb-3">
+                The problem isn't AI. <GradientText>It's the layer underneath.</GradientText>
+              </h3>
+              <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                AI tools got smarter. But the context they run on is still scattered across docs, Slack threads, wikis, and people's heads. Every tool builds its own tiny memory. None of it connects.
+              </p>
+              <p className="text-sm font-semibold">
+                LIZA is the shared context infrastructure that sits underneath all of them. Structure your team's expertise once. Every tool, every person, every decision runs on the same live context.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── CONTEXT MATURITY LADDER ─────────────────────────────────────────────────
 const MATURITY_STEPS = [
-  { n: 1, label: "Tribal", sub: "Context lives in people's heads", desired: false, tag: "most teams start here", tagPulse: true },
-  { n: 2, label: "Scattered", sub: "Documented but spread across Slack, docs, wikis", desired: false, tag: null, tagPulse: false },
-  { n: 3, label: "Centralised", sub: "Knowledge base exists but it's static and stale", desired: false, tag: "where most get stuck", tagPulse: false },
-  { n: 4, label: "Live", sub: "Context is structured, current, and flows into work", desired: true, tag: "← LIZA takes you here", tagPulse: false },
-  { n: 5, label: "Composable", sub: "Context powers every decision, every tool, every person", desired: true, tag: "North Star", tagPulse: false },
+  { n: 1, label: "Personal", sub: "Everyone uses their own AI tool with their own context", desired: false, tag: "most teams start here", tagPulse: true },
+  { n: 2, label: "Sharing", sub: "Teams share prompts and templates, but not the context behind them", desired: false, tag: null, tagPulse: false },
+  { n: 3, label: "Embedded", sub: "AI is integrated, but each person's context is siloed", desired: false, tag: "where AI efforts plateau", tagPulse: false },
+  { n: 4, label: "Connected", sub: "Live, shared context powers every AI interaction", desired: true, tag: "← LIZA takes you here", tagPulse: false },
+  { n: 5, label: "Composable", sub: "Context is your operating system. AI executes your methodology.", desired: true, tag: "North Star", tagPulse: false },
 ];
 
 function MaturityLadder() {
   return (
-    <section id="maturity" className="py-20 px-6">
+    <section id="maturity" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <SectionTag label="Where does your team sit?" />
           <h2 className="text-4xl font-black mb-4">
-            Five levels of <GradientText>contextual maturity.</GradientText>
+            Five levels of <GradientText>AI context maturity.</GradientText>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Most teams are at Level 1-3. The gap isn't more docs or better search. It's live, structured context.
+            Most teams plateau at Level 3. Better prompts won't fix it. The missing layer is shared, live context.
           </p>
         </div>
 
@@ -198,37 +252,6 @@ function MaturityLadder() {
   );
 }
 
-// ── AI BRIDGE (short, not the lead) ─────────────────────────────────────────
-function AIBridge() {
-  return (
-    <section className="py-16 px-6" style={{ background: "hsl(var(--card))" }}>
-      <div className="max-w-4xl mx-auto">
-        <div className="rounded-2xl border p-8 md:p-12 relative overflow-hidden"
-          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
-          <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
-          <div className="flex flex-col md:flex-row items-start gap-8">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
-              <Brain className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-black mb-3">
-                This is also why your AI tools <GradientText>underperform.</GradientText>
-              </h3>
-              <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                ChatGPT, Claude, Copilot. Everyone has "memory" and "projects" now. But each one is a personal silo. AI without live, shared context is just faster guessing.
-              </p>
-              <p className="text-sm font-semibold">
-                Fix the context layer, and your AI efforts compound instead of scatter.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── PRODUCT IN ACTION ────────────────────────────────────────────────────────
 function ProductInAction() {
   const [lightbox, setLightbox] = useState<{ src: string; tag: string } | null>(null);
@@ -238,7 +261,7 @@ function ProductInAction() {
       src: "/images/product-extract-blueprint.png",
       tag: "Extract",
       title: "Upload a document. Get structured context.",
-      desc: "Drop in a process document, policy, or playbook. LIZA detects structure, resolves duplicates, and creates live context.",
+      desc: "Drop in a process document, policy, or playbook. LIZA detects structure, resolves duplicates, and creates live context your AI can actually use.",
       accent: "200 90% 52%",
     },
     {
@@ -258,7 +281,7 @@ function ProductInAction() {
     {
       src: "/images/product-execute-launchpad.png",
       tag: "Deploy",
-      title: "Teams don't guess. They launch with full context.",
+      title: "Teams launch with full context.",
       desc: "Operators see every playbook as an action card. No blank page. Pick a playbook, start a session with the context already loaded.",
       accent: "var(--primary)",
     },
@@ -285,12 +308,12 @@ function ProductInAction() {
           <div className="text-center mb-16">
             <SectionTag label="The Product" icon={<Zap className="w-3 h-3" />} />
             <h2 className="text-4xl font-black mb-4">
-              From scattered knowledge
+              The context layer
               <br />
-              <GradientText>to live context.</GradientText>
+              <GradientText>your AI tools are missing.</GradientText>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              LIZA structures your team's expertise into a live context layer that powers every decision.
+              LIZA structures your team's expertise into live context that powers every decision and every tool.
             </p>
           </div>
 
@@ -359,7 +382,7 @@ function ProductInAction() {
   );
 }
 
-// ── USE CASES (compact, reframed) ────────────────────────────────────────────
+// ── USE CASES (compact, "with full context") ─────────────────────────────────
 const USE_CASE_CARDS = [
   { icon: <Users className="w-5 h-5" />, title: "Onboarding with full context", desc: "New hires run on senior-level judgment from week one. Not because they read a wiki.", col: "200 90% 52%" },
   { icon: <TrendingUp className="w-5 h-5" />, title: "Sales calls with full context", desc: "Every rep has the same deal intelligence, objection logic, and positioning. Live.", col: "38 92% 50%" },
@@ -415,9 +438,9 @@ function BetaCTA() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Your team has the knowledge.
+              Your team has AI.
               <br />
-              <GradientText>Give them the context.</GradientText>
+              <GradientText>Give them context.</GradientText>
             </h2>
             <p className="text-base mb-4 text-muted-foreground">
               Private Beta. 1 month free. For teams of 5-30 where consistency matters.
@@ -452,8 +475,8 @@ export default function HomePage() {
     <MarketingLayout>
       <Hero />
       <TheProblem />
+      <MissingLayer />
       <MaturityLadder />
-      <AIBridge />
       <ProductInAction />
       <UseCases />
       <BetaCTA />
