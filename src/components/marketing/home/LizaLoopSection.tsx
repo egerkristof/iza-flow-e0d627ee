@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageSquare, Brain, Play, Layers } from "lucide-react";
+import { Layers, TrendingUp, Users, Briefcase, Megaphone } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 import loopCollaborate from "@/assets/loop-collaborate.png";
 import loopLearn from "@/assets/loop-learn.png";
@@ -8,7 +8,6 @@ import loopExecute from "@/assets/loop-execute.png";
 const STEPS = [
   {
     key: "collaborate",
-    icon: <MessageSquare className="w-4 h-4" />,
     tag: "Collaborate",
     headline: "One workspace. Your whole team. AI included.",
     line: "Stop copying context between tools. Work with colleagues and AI in the same session — with your full methodology already loaded.",
@@ -18,24 +17,29 @@ const STEPS = [
   },
   {
     key: "learn",
-    icon: <Brain className="w-4 h-4" />,
     tag: "Learn",
     headline: "Every session makes the system smarter.",
-    line: "LIZA captures how your team actually works — the judgment calls, the client patterns, the unwritten rules. Not as static docs, but as living, executable knowledge.",
-    before: "Senior leaves → years of client knowledge gone overnight",
-    after: "Expertise stays in the system and compounds over time",
+    line: "LIZA captures how your team actually works — the judgment calls, the client patterns, the unwritten rules — as living, executable knowledge.",
+    before: "Senior leaves → years of client knowledge gone",
+    after: "Expertise stays in the system and compounds",
     img: loopLearn,
   },
   {
     key: "execute",
-    icon: <Play className="w-4 h-4" />,
     tag: "Execute",
     headline: "New hire, day one, senior-level output.",
-    line: "Your methodology, your client history, your quality standards — assembled and injected into every work session. Connected to your CRM, your email, your project tools.",
+    line: "Your methodology, your client history, your quality standards — assembled and injected into every work session. Connected to your CRM, email, and project tools.",
     before: "6–9 months to ramp, seniors still the bottleneck",
     after: "Anyone executes at your standard from week one",
     img: loopExecute,
   },
+];
+
+const TEAM_USES = [
+  { icon: <TrendingUp className="w-4 h-4" />, col: "38 92% 50%", team: "Sales", use: "Every rep runs your best seller's playbook — with live deal context, not a static script." },
+  { icon: <Users className="w-4 h-4" />, col: "200 90% 52%", team: "Onboarding", use: "New hires get your senior team's judgment built into every task — not just a training checklist." },
+  { icon: <Briefcase className="w-4 h-4" />, col: "262 80% 55%", team: "Delivery", use: "Junior consultants deliver at senior quality because your methodology is loaded, live, into every session." },
+  { icon: <Megaphone className="w-4 h-4" />, col: "340 75% 55%", team: "Account Mgmt", use: "Full client history, relationship context, and team preferences — available to anyone, not just the original AM." },
 ];
 
 export function LizaLoopSection() {
@@ -51,9 +55,6 @@ export function LizaLoopSection() {
               Your team's knowledge,{" "}
               <GradientText>live in every session.</GradientText>
             </h2>
-            <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-              Three things happen when you work in LIZA. Together, they turn scattered expertise into shared, compounding team intelligence.
-            </p>
           </div>
 
           <div className="space-y-12">
@@ -94,6 +95,29 @@ export function LizaLoopSection() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* How teams use LIZA */}
+          <div className="mt-16">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground text-center mb-4">
+              How teams use LIZA
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {TEAM_USES.map((t) => (
+                <div key={t.team} className="rounded-xl border p-4" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div
+                      className="w-7 h-7 rounded-lg flex items-center justify-center"
+                      style={{ background: `hsl(${t.col} / 0.12)`, color: `hsl(${t.col})` }}
+                    >
+                      {t.icon}
+                    </div>
+                    <span className="text-xs font-black tracking-[0.1em] uppercase" style={{ color: `hsl(${t.col})` }}>{t.team}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{t.use}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
