@@ -25,13 +25,15 @@ export function GuideSection() {
         <div className="text-center mb-10">
           <SectionTag label="We've lived this" icon={<Compass className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            200+ engagements. 4 continents. Same problem everywhere.
+            15 years in digital transformation. One recurring truth.
           </h2>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            We've spent years building methodology for teams where quality is the product.
-            We've watched brilliant teams lose their edge — not because of bad people,
-            but because there was no system to make the team smarter together.
-            So we built one.
+            Across 200+ engagements on 4 continents, we've seen the same pattern:
+            even the most advanced digital businesses live or die by the cumulative knowledge of their people.
+            Not their data sets. Not their tech stack. Their people — and their ability to manage what those people know, together.
+            <br /><br />
+            We built LIZA because no tool existed to solve this. Every platform either helped individuals go faster
+            or helped managers track output. Nothing connected execution, learning, and governance into one system.
           </p>
         </div>
 

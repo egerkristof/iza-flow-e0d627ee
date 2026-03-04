@@ -16,15 +16,15 @@ export function HeroSection() {
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          See how your team
+          Manage how your team
           <br />
-          <GradientText>actually works.</GradientText>
+          <GradientText>actually executes.</GradientText>
         </h1>
 
         <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          Your team needs to execute, learn, and evolve — together.
-          You need the bird's-eye view to make sure that happens.
-          That infrastructure has never existed. Until now.
+          Your team should execute from the best available knowledge, learn from every engagement,
+          and evolve together. In the age of AI, keeping those reins together has never been harder —
+          or more important.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -40,10 +40,10 @@ export function HeroSection() {
             Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <button
-            onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            onClick={() => document.getElementById("maturity-ladder")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            See the problem ↓
+            Where is your team? ↓
           </button>
         </div>
       </div>

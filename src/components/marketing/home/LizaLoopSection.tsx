@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layers, TrendingUp, Users, Briefcase, ArrowRight } from "lucide-react";
+import { Layers, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SectionTag } from "./shared";
 import loopCollaborate from "@/assets/loop-collaborate.png";
@@ -7,38 +7,32 @@ import loopLearn from "@/assets/loop-learn.png";
 
 const STEPS = [
   {
-    key: "collaborate",
+    key: "execute",
     tag: "Execute together",
-    headline: "Your team's playbook — live in every session.",
-    line: "Everyone works from the same accumulated judgment. Not copied between tools — assembled and injected automatically.",
-    before: "Everyone brings their own context to every session",
-    after: "Everyone starts with the team's full knowledge — automatically",
+    headline: "Every session starts with the team's full knowledge.",
+    line: "Your accumulated judgment — standards, edge cases, client patterns — is assembled and injected into every AI session automatically. Nobody starts from scratch. The weakest performer benefits from the strongest insight.",
+    before: "Everyone brings their own context, their own prompts",
+    after: "Everyone executes from the team's best, up-to-date standard",
     img: loopCollaborate,
   },
   {
     key: "learn",
     tag: "Learn together",
-    headline: "Every session makes the playbook sharper.",
-    line: "Edge cases, client patterns, better approaches — they feed back into the shared knowledge. The team gets smarter with every engagement.",
-    before: "Lessons learned stay in one person's head",
-    after: "Every insight upgrades the whole team's playbook",
+    headline: "Every engagement makes the playbook sharper.",
+    line: "When someone finds a better approach, handles an edge case, or gets a surprising result — it feeds back into the shared knowledge. Not as a meeting recap. As a living, structured upgrade to how the whole team operates.",
+    before: "Lessons stay in one person's head or chat history",
+    after: "Every insight upgrades the entire team's playbook",
     img: loopLearn,
   },
   {
     key: "manage",
     tag: "Manage together",
-    headline: "Design, curate, and govern the playbook.",
-    line: "The person who owns your methodology — your practice lead, your quality head — sees what's working and what's drifting. They shape the living system everyone runs on.",
-    before: "Methodology frozen in a doc nobody updates",
-    after: "A living system — designed, curated, continuously improved",
+    headline: "You see what's working and shape what's next.",
+    line: "As the person responsible for output, you finally have the bird's-eye view. See execution patterns, spot drift, curate the methodology. Your team's living standard evolves under your governance — not by accident.",
+    before: "You find out when something goes wrong — not before",
+    after: "You see, shape, and govern how your team operates",
     img: "/images/product-oversight.png",
   },
-];
-
-const TEAM_USES = [
-  { icon: <TrendingUp className="w-4 h-4" />, col: "38 92% 50%", team: "Sales", use: "Every rep runs your top seller's playbook — updated with every deal, not frozen in a training deck." },
-  { icon: <Users className="w-4 h-4" />, col: "200 90% 52%", team: "Onboarding", use: "New hires get accumulated team judgment in every task — not a static checklist from last quarter." },
-  { icon: <Briefcase className="w-4 h-4" />, col: "262 80% 55%", team: "Delivery", use: "Junior consultants deliver at senior quality because the playbook is live in the session, not buried in a wiki." },
 ];
 
 export function LizaLoopSection() {
@@ -54,7 +48,7 @@ export function LizaLoopSection() {
               Execute. Learn. Manage.
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              A continuous loop where your team's know-how compounds instead of scattering.
+              A continuous loop where your team's knowledge compounds — and you hold the reins.
             </p>
           </div>
 
@@ -96,29 +90,6 @@ export function LizaLoopSection() {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* How teams use LIZA */}
-          <div className="mt-16">
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground text-center mb-4">
-              How teams use LIZA
-            </p>
-            <div className="grid sm:grid-cols-3 gap-3">
-              {TEAM_USES.map((t) => (
-                <div key={t.team} className="rounded-xl border p-4" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div
-                      className="w-7 h-7 rounded-lg flex items-center justify-center"
-                      style={{ background: `hsl(${t.col} / 0.12)`, color: `hsl(${t.col})` }}
-                    >
-                      {t.icon}
-                    </div>
-                    <span className="text-xs font-black tracking-[0.1em] uppercase" style={{ color: `hsl(${t.col})` }}>{t.team}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{t.use}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Mid-page CTA */}
