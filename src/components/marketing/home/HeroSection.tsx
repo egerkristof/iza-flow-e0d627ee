@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield } from "lucide-react";
+import { CAL_URL } from "./shared";
 
 export function HeroSection() {
   return (
@@ -45,6 +46,10 @@ export function HeroSection() {
             See why this happens ↓
           </button>
         </div>
+
+        <p className="text-xs text-muted-foreground mt-5">
+          Or <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">book a discovery call</a> to talk first.
+        </p>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
-import { SectionTag, GradientText } from "./shared";
-import { Compass, Quote } from "lucide-react";
+import { SectionTag } from "./shared";
+import { Compass } from "lucide-react";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
 
@@ -35,7 +35,7 @@ export function GuideSection() {
             We managed execution the hard way. Then AI made it harder.
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            200+ engagements taught us that execution quality depends on shared, living standards. AI tools amplified the urgency. So we built the missing infrastructure.
+            200+ engagements taught us that execution quality depends on shared, living standards. AI amplified the urgency. So we built the missing infrastructure.
           </p>
         </div>
 
@@ -50,7 +50,7 @@ export function GuideSection() {
         </div>
 
         {/* Team */}
-        <div className="flex flex-wrap justify-center gap-4 mb-10">
+        <div className="flex flex-wrap justify-center gap-4">
           {TEAM.map((m) => (
             <a
               key={m.name}
@@ -75,29 +75,6 @@ export function GuideSection() {
               </svg>
             </a>
           ))}
-        </div>
-
-        {/* Embedded testimonial */}
-        <div
-          className="rounded-xl border p-6 max-w-2xl mx-auto"
-          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}
-        >
-          <Quote className="w-6 h-6 mb-3" style={{ color: "hsl(var(--primary) / 0.3)" }} />
-          <blockquote className="text-base md:text-lg font-medium italic leading-relaxed mb-4">
-            "Managing execution quality was already hard. Then everyone got AI tools and it became impossible to keep the team on the same page. This is the infrastructure we were missing."
-          </blockquote>
-          <div className="flex items-center gap-3">
-            <div
-              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
-              style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
-            >
-              SP
-            </div>
-            <div>
-              <p className="text-sm font-semibold">VP of Product Management</p>
-              <p className="text-xs text-muted-foreground">Enterprise Software · 15+ years in Product</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
