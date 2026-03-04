@@ -9,11 +9,6 @@ const NAV_ITEMS = [
   { label: "Manifesto", href: "/manifesto" },
 ];
 
-const HOMEPAGE_ANCHORS = [
-  { label: "Problem", anchor: "the-problem" },
-  { label: "How it works", anchor: "liza-loop" },
-  { label: "Getting started", anchor: "getting-started" },
-];
 
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
@@ -76,21 +71,6 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               );
             })}
-            {location.pathname === "/" && scrolled && (
-              <>
-                <div className="w-px h-4 mx-1" style={{ background: "hsl(var(--border))" }} />
-                {HOMEPAGE_ANCHORS.map((a) => (
-                  <button
-                    key={a.anchor}
-                    onClick={() => document.getElementById(a.anchor)?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                    className="px-3 py-1.5 rounded-md text-xs font-medium transition-colors"
-                    style={{ color: "hsl(var(--muted-foreground))" }}
-                  >
-                    {a.label}
-                  </button>
-                ))}
-              </>
-            )}
           </nav>
 
           {/* CTA + Theme toggle */}
