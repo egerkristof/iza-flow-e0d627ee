@@ -92,30 +92,30 @@ export function ProblemSection() {
 
         {/* Staircase */}
         <div className="relative">
-          {/* Markers */}
-          <div className="absolute z-20 flex flex-col items-center"
-            style={{ left: "calc(30% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-16px" }}>
+          {/* "Most teams" marker — centered between L2 and L3 (i.e. at 40% = midpoint of 20%–60% range) */}
+          <div className="absolute z-20 flex flex-col items-center pointer-events-none"
+            style={{ left: "40%", transform: "translateX(-50%)", top: "-16px" }}>
             <div className="flex flex-col items-center">
-              <span className="text-[10px] md:text-xs font-black whitespace-nowrap px-3 py-1 rounded-full"
+              <span className="text-[9px] md:text-xs font-black px-2 md:px-3 py-1 rounded-full text-center leading-tight"
                 style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
-                Most teams are here — trying to adopt AI
+                <span className="hidden sm:inline">Most teams are here — trying to adopt AI</span>
+                <span className="sm:hidden">Most teams are here</span>
               </span>
-              {/* Single stem that forks into two */}
-              <div className="w-0.5 h-4" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
-              <svg width="80" height="28" viewBox="0 0 80 28" fill="none" className="block">
-                <path d="M40 0 L40 8 Q40 14 34 16 L12 24" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
-                <path d="M40 0 L40 8 Q40 14 46 16 L68 24" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
-                {/* Arrow tips */}
-                <polygon points="8,22 12,28 16,22" fill="hsl(var(--destructive) / 0.6)" />
-                <polygon points="64,22 68,28 72,22" fill="hsl(var(--destructive) / 0.6)" />
+              <div className="w-0.5 h-3 md:h-4" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
+              <svg width="100" height="32" viewBox="0 0 100 32" fill="none" className="block">
+                <path d="M50 0 L50 10 Q50 16 42 19 L20 28" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
+                <path d="M50 0 L50 10 Q50 16 58 19 L80 28" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
+                <polygon points="16,26 20,32 24,26" fill="hsl(var(--destructive) / 0.6)" />
+                <polygon points="76,26 80,32 84,26" fill="hsl(var(--destructive) / 0.6)" />
               </svg>
             </div>
           </div>
 
-          <div className="absolute z-20 flex flex-col items-center"
-            style={{ left: "calc(60% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
+          {/* "Day 1 with LIZA" marker — centered on L4 (60%–80%, midpoint = 70%) */}
+          <div className="absolute z-20 flex flex-col items-center pointer-events-none"
+            style={{ left: "70%", transform: "translateX(-50%)", top: "-12px" }}>
             <div className="flex flex-col items-center">
-              <span className="text-[10px] md:text-xs font-black whitespace-nowrap px-3 py-1 rounded-full"
+              <span className="text-[9px] md:text-xs font-black whitespace-nowrap px-2 md:px-3 py-1 rounded-full"
                 style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.2)" }}>
                 Day 1 with LIZA
               </span>
@@ -124,7 +124,7 @@ export function ProblemSection() {
             </div>
           </div>
 
-          <div className="flex items-end gap-1.5 md:gap-2 pt-14 mb-1" style={{ height: "420px" }}>
+          <div className="flex items-end gap-1.5 md:gap-2 pt-16 md:pt-14 mb-1" style={{ height: "420px" }}>
             {LEVELS.map((l) => {
               const isTarget = l.level >= 4;
               const isActive = activeLevel === l.level;
