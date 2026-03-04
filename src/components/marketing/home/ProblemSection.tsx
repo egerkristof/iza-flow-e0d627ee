@@ -94,14 +94,20 @@ export function ProblemSection() {
         <div className="relative">
           {/* Markers */}
           <div className="absolute z-20 flex flex-col items-center"
-            style={{ left: "calc(40% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
+            style={{ left: "calc(30% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
             <div className="flex flex-col items-center">
               <span className="text-[10px] md:text-xs font-black whitespace-nowrap px-3 py-1 rounded-full"
-                style={{ color: "hsl(var(--warning))", background: "hsl(var(--warning) / 0.1)", border: "1px solid hsl(var(--warning) / 0.2)" }}>
-                Teams using AI land here
+                style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
+                Most teams are here
               </span>
-              <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--warning) / 0.4)" }} />
-              <ArrowDown className="w-5 h-5 -mt-1" style={{ color: "hsl(var(--warning))" }} />
+              <div className="flex items-end gap-0">
+                <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
+              </div>
+              <div className="flex items-center gap-1">
+                <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--destructive))" }} />
+                <span className="text-[9px] font-medium text-muted-foreground hidden md:inline">L2 → L3</span>
+                <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--warning))" }} />
+              </div>
             </div>
           </div>
 
