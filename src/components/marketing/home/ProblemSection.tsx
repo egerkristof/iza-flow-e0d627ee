@@ -95,13 +95,13 @@ export function ProblemSection() {
             </svg>
           </div>
           {/* Managed zone */}
-          <div className="flex-[2] flex flex-col items-center rounded-lg py-3 px-2"
+          <div className="flex-[2] flex flex-col items-center justify-center text-center rounded-lg py-3 px-2"
             style={{ background: "hsl(var(--primary) / 0.06)", border: "1px dashed hsl(var(--primary) / 0.25)" }}>
             <span className="text-[9px] md:text-xs font-black whitespace-nowrap px-2 md:px-3 py-1 rounded-full mb-1"
               style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.2)" }}>
               Day 1 with LIZA
             </span>
-            <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase text-primary">
+            <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase text-primary text-center">
               Managed execution
             </span>
             <ArrowDown className="w-4 h-4 mt-1 text-primary opacity-50" />
@@ -110,7 +110,7 @@ export function ProblemSection() {
 
         {/* Staircase */}
         <div className="relative">
-          <div className="flex items-end gap-1.5 md:gap-2 mb-1" style={{ height: "380px" }}>
+          <div className="flex items-end gap-1 md:gap-2 mb-1" style={{ height: "380px" }}>
             {LEVELS.map((l) => {
               const isTarget = l.level >= 4;
               const isActive = activeLevel === l.level;
@@ -141,12 +141,12 @@ export function ProblemSection() {
                     borderBottom: "none",
                   }}
                 >
-                  <div className="absolute inset-0 flex flex-col items-center justify-start pt-3 md:pt-4 px-1.5 md:px-3">
-                    <div className="text-base md:text-lg font-black mb-0.5"
+                  <div className="absolute inset-0 flex flex-col items-center justify-start pt-3 md:pt-4 px-1 md:px-3 overflow-hidden">
+                    <div className="text-sm md:text-lg font-black mb-0.5"
                       style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground))" : accentColor }}>
                       L{l.level}
                     </div>
-                    <div className="text-[10px] md:text-xs font-bold leading-tight text-center mb-1"
+                    <div className="text-[9px] md:text-xs font-bold leading-tight text-center mb-1"
                       style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.95)" : "hsl(var(--foreground) / 0.85)" }}>
                       {l.title}
                     </div>
@@ -182,7 +182,7 @@ export function ProblemSection() {
         </div>
 
         {/* Summary strip */}
-        <div className="mt-6 grid grid-cols-5 gap-1.5">
+        <div className="mt-6 grid grid-cols-5 gap-1">
           {SUMMARY.map((s) => (
             <button
               key={s.level}
