@@ -157,7 +157,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
       <main className="pt-16">{children}</main>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-32">
+      <footer className="border-t border-border">
         <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-start justify-between gap-12">
           <div className="max-w-xs">
             <div className="flex items-center gap-3 mb-4">

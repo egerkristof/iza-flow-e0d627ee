@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layers, ArrowRight, Shield, Users, Brain } from "lucide-react";
-import { Link } from "react-router-dom";
+import { CAL_URL } from "./shared";
 import { SectionTag } from "./shared";
 
 const STEPS = [
@@ -98,8 +98,10 @@ export function LizaLoopSection() {
             <p className="text-sm text-muted-foreground mb-4">
               One system. Living playbooks, team-wide enforcement, continuous learning.
             </p>
-            <Link
-              to="/beta"
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -107,8 +109,8 @@ export function LizaLoopSection() {
                 boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.3)",
               }}
             >
-              Join the Private Beta <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+              Book a Discovery Call <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </a>
           </div>
         </div>
       </section>
