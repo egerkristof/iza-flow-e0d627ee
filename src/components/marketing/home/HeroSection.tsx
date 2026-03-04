@@ -13,17 +13,17 @@ export function HeroSection() {
       <div className="max-w-4xl mx-auto relative z-10 text-center">
         <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
           <Shield className="w-3 h-3" />
-          For leaders managing AI-powered teams
+          For leaders who need to manage how their team executes
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          Your team moves faster.
+          Manage how your team
           <br />
-          <GradientText>Your standards can't keep up.</GradientText>
+          <GradientText>actually executes.</GradientText>
         </h1>
 
         <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          AI made your team faster — but every person runs their own way. Your best practices update too slowly. Your instruction sets live in silos. LIZA keeps it all together.
+          Your team's execution quality depends on shared standards — but those standards live in people's heads, outdated docs, or scattered AI setups. LIZA lets you define, enforce, and continuously update how your team works. Together.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
@@ -42,7 +42,7 @@ export function HeroSection() {
             onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            See the execution gap ↓
+            Where is your team? ↓
           </button>
         </div>
 

@@ -2,8 +2,8 @@ import { SectionTag, GradientText } from "./shared";
 import { X, Minus, Check, GitCompare } from "lucide-react";
 
 const ROWS = [
-  { feature: "Instruction sets enforced in every AI session", wiki: false, prompts: "partial", agents: false, liza: true },
-  { feature: "Standards update as fast as execution", wiki: false, prompts: false, agents: false, liza: true },
+  { feature: "Define & enforce execution standards", wiki: "partial", prompts: "partial", agents: false, liza: true },
+  { feature: "Standards update continuously from real work", wiki: false, prompts: false, agents: false, liza: true },
   { feature: "Execution quality consistent across team", wiki: false, prompts: "partial", agents: false, liza: true },
   { feature: "Knowledge persists across sessions & tools", wiki: "partial", prompts: false, agents: "partial", liza: true },
   { feature: "Insights transfer between team members", wiki: "partial", prompts: false, agents: false, liza: true },
@@ -25,11 +25,11 @@ export function CategoryComparison() {
         <div className="text-center mb-10">
           <SectionTag label="Why not just…" icon={<GitCompare className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            You've tried memories, projects & custom GPTs.{" "}
-            <GradientText>Here's what's still missing.</GradientText>
+            Wikis store. Prompts copy. AI tools execute individually.{" "}
+            <GradientText>None of them manage execution.</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Individual AI tools make individuals fast. None of them manage how your team executes — or keep your instruction sets current.
+            Managing execution means defining standards, enforcing them consistently, and updating them from real work. No existing tool does all three.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export function CategoryComparison() {
 
         {/* Punchline */}
         <p className="text-center text-xs text-muted-foreground mt-5 max-w-lg mx-auto">
-          The problem isn't AI adoption — your team already uses it. The problem is that your instruction sets can't keep up with how fast they're executing.
+          AI tools are powerful executors — but they don't manage execution. That's the gap LIZA fills.
         </p>
       </div>
     </section>
