@@ -179,22 +179,14 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Product</p>
               <div className="flex flex-col gap-2">
                 <Link to="/use-cases" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Use Cases</Link>
-                <Link to="/sprint" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Protocol Sprint</Link>
-                <Link to="/extract" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Extraction Engine</Link>
+                <Link to="/manifesto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Manifesto</Link>
               </div>
             </div>
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Get Started</p>
               <div className="flex flex-col gap-2">
                 <Link to="/beta" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Join the Beta</Link>
-                <Link to="/sprint" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Book a Sprint</Link>
                 <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Discovery Call</a>
-              </div>
-            </div>
-            <div>
-              <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Company</p>
-              <div className="flex flex-col gap-2">
-                <Link to="/manifesto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Manifesto</Link>
                 <a href="mailto:kristof.eger@lizaos.ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
               </div>
             </div>

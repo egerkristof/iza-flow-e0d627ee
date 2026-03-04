@@ -26,11 +26,6 @@ import UseCasesPage from "./pages/marketing/UseCases";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import ExtractionEngine from "./pages/marketing/ExtractionEngine";
-import ExperienceTestPage from "./pages/marketing/ExperienceTestPage";
-import AuditExecutionSolution from "./pages/marketing/SecurityAuditSolution";
-import SprintPage from "./pages/marketing/Sprint";
-import PricingPage from "./pages/marketing/Pricing";
 import BetaPage from "./pages/marketing/Beta";
 
 const queryClient = new QueryClient();
@@ -66,12 +61,13 @@ const App = () => (
             <Route path="/" element={<HomePage />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
-            <Route path="/extract" element={<ExtractionEngine />} />
-            <Route path="/extract/test" element={<ExperienceTestPage />} />
-            <Route path="/solutions/audit" element={<AuditExecutionSolution />} />
-            <Route path="/sprint" element={<SprintPage />} />
             <Route path="/beta" element={<BetaPage />} />
-            {/* Pricing hidden from public view */}
+
+            {/* Retired pages — redirect to home */}
+            <Route path="/extract" element={<Navigate to="/" replace />} />
+            <Route path="/extract/test" element={<Navigate to="/" replace />} />
+            <Route path="/solutions/audit" element={<Navigate to="/" replace />} />
+            <Route path="/sprint" element={<Navigate to="/" replace />} />
 
             {/* Legacy redirects — all flatten to single hops */}
             <Route path="/codify" element={<Navigate to="/" replace />} />
