@@ -8,10 +8,10 @@ const STEPS = [
     key: "define",
     tag: "Define & enforce",
     icon: <Shield className="w-4 h-4" />,
-    headline: "Build instruction sets that actually get followed.",
-    line: "Your best practices need to evolve as fast as your team's AI usage. LIZA turns scattered prompts and tribal knowledge into living instruction sets — enforced in every session, updated continuously. Not a static doc. A working standard.",
+    headline: "Build playbooks that actually get followed.",
+    line: "Your best practices need to evolve as fast as your team's AI usage. LIZA turns scattered prompts and tribal knowledge into living playbooks — enforced in every session, updated continuously. Not a static doc. A working standard.",
     before: "Best practices update quarterly. AI workflows change weekly.",
-    after: "Instruction sets evolve with every engagement — always current, always enforced",
+    after: "Living playbooks evolve with every engagement — always current, always enforced",
     img: "/images/product-define-enforce.png",
   },
   {
@@ -21,17 +21,17 @@ const STEPS = [
     headline: "From individual AI speed to team-level intelligence.",
     line: "Your team is fast. Each person has their own ChatGPT setup, their own Claude projects. But breakthroughs stay in individual silos. LIZA connects the dots — so one person's insight becomes the whole team's advantage, in the next session.",
     before: "Everyone's fast individually — but insights stay in personal chat histories",
-    after: "Every team member executes with the team's latest, best instruction set",
+    after: "Every team member executes with the team's latest, best playbook",
     img: "/images/product-execute-session.png",
   },
   {
     key: "learn",
     tag: "Learn together",
     icon: <Brain className="w-4 h-4" />,
-    headline: "Your instruction sets get sharper with every engagement.",
-    line: "AI lets your team work more granularly and across more touchpoints than ever. That means more learning opportunities — but only if you capture them. LIZA turns execution into structured feedback that upgrades your shared standards automatically.",
+    headline: "Your playbooks get sharper with every engagement.",
+    line: "AI lets your team work more granularly and across more touchpoints than ever. That means more learning opportunities — but only if you capture them. LIZA turns execution into structured feedback that upgrades your shared playbooks automatically.",
     before: "Great insights discovered in Tuesday's session are forgotten by Thursday",
-    after: "Every engagement feeds back into living instruction sets — the team compounds",
+    after: "Every engagement feeds back into living playbooks — the team compounds",
     img: "/images/product-learn-extraction.png",
   },
 ];
@@ -49,7 +49,7 @@ export function LizaLoopSection() {
               Define. Execute. Learn.
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Your team already uses AI to execute faster. LIZA makes sure that speed builds something — living instruction sets that the whole team benefits from.
+              Your team already uses AI to execute faster. LIZA makes sure that speed builds something — living playbooks that the whole team benefits from.
             </p>
           </div>
 
@@ -96,7 +96,7 @@ export function LizaLoopSection() {
           {/* Mid-page CTA */}
           <div className="mt-14 text-center">
             <p className="text-sm text-muted-foreground mb-4">
-              One system. Living instruction sets, team-wide enforcement, continuous learning.
+              One system. Living playbooks, team-wide enforcement, continuous learning.
             </p>
             <Link
               to="/beta"
