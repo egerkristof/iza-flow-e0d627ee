@@ -16,15 +16,15 @@ export function HeroSection() {
         </p>
 
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.08]">
-          AI without team governance
+          Same team. Same AI tools.
           <br />
-          <span className="text-muted-foreground">only scales chaos.</span>
+          <span className="text-muted-foreground">Wildly different results.</span>
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12">
-          LIZA OS lets you define, enforce, and scale
+          56% of companies get nothing from AI. They all skipped the same step. LIZA OS lets you
           <span className="relative inline font-semibold text-foreground">
-            {" "}how your team executes with AI.
+            {" "}define, scale, and improve how your whole team executes with AI.
             <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
           </span>
         </p>
