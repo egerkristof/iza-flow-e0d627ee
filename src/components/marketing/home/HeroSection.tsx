@@ -1,31 +1,30 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield } from "lucide-react";
-import { GradientText } from "./shared";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center px-6 overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
       <div
         className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
         style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06) 0%, transparent 65%)", transform: "translate(20%, -20%)" }}
       />
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-6">
+        <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-8">
           <Shield className="w-3 h-3" />
           For leaders who own execution quality
         </p>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-[1.05]">
-          From individual AI speed
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.08]">
+          Without governance, AI scales chaos.
           <br />
-          <GradientText>to scaled team execution.</GradientText>
+          <span className="text-muted-foreground">Not your team.</span>
         </h1>
 
-        <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10">
-          The platform to define, enforce, and continuously update how your team works
+        <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12">
+          LIZA OS lets you define, enforce, and continuously improve
           <span className="relative inline font-semibold text-foreground">
-            {" "}with AI.
+            {" "}how your team executes with AI.
             <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
           </span>
         </p>
@@ -46,7 +45,7 @@ export function HeroSection() {
             onClick={() => document.getElementById("three-reasons")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            Why current tools fail ↓
+            See the three gaps ↓
           </button>
         </div>
       </div>
