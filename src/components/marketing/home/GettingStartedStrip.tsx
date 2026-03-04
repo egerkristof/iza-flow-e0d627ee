@@ -1,24 +1,24 @@
-import { Upload, Wand2, Play } from "lucide-react";
+import { Play, Sparkles, Users } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
 const STEPS = [
   {
     num: "1",
-    icon: <Upload className="w-5 h-5" />,
-    title: "Upload your knowledge",
-    desc: "Drop in your existing docs, templates, and best practices. LIZA extracts the structure automatically.",
+    icon: <Play className="w-5 h-5" />,
+    title: "Start working",
+    desc: "Begin with a blank session or upload existing docs. LIZA extracts structure automatically — or you define rules as you go.",
   },
   {
     num: "2",
-    icon: <Wand2 className="w-5 h-5" />,
-    title: "Review & enforce",
-    desc: "Approve extracted standards and set enforcement levels. Your playbook is live in minutes, not months.",
+    icon: <Sparkles className="w-5 h-5" />,
+    title: "Define your rules",
+    desc: "As you work, capture what matters — best practices, edge cases, quality criteria. Set enforcement levels so nothing slips.",
   },
   {
     num: "3",
-    icon: <Play className="w-5 h-5" />,
-    title: "Execute as a team",
-    desc: "Your team starts working with governed AI sessions. Every engagement makes your standards sharper.",
+    icon: <Users className="w-5 h-5" />,
+    title: "Your team compounds",
+    desc: "Every session makes your standards sharper. New hires execute at team level from week one. The whole team gets smarter together.",
   },
 ];
 
