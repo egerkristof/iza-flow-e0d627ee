@@ -32,10 +32,10 @@ export function GuideSection() {
         <div className="text-center mb-10">
           <SectionTag label="We've lived this" icon={<Compass className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            We gave our team AI. Then we lost control.
+            We managed execution the hard way. Then AI made it harder.
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Everyone got faster. Nobody was on the same page. Our instruction sets couldn't keep up. So we built the missing layer.
+            200+ engagements taught us that execution quality depends on shared, living standards. AI tools amplified the urgency. So we built the missing infrastructure.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export function GuideSection() {
         >
           <Quote className="w-6 h-6 mb-3" style={{ color: "hsl(var(--primary) / 0.3)" }} />
           <blockquote className="text-base md:text-lg font-medium italic leading-relaxed mb-4">
-            "We had AI everywhere — ChatGPT, Claude, custom GPTs. Everyone was fast. But our methodology was fragmenting. This is the layer that ties AI speed to team-level standards."
+            "Managing execution quality was already hard. Then everyone got AI tools and it became impossible to keep the team on the same page. This is the infrastructure we were missing."
           </blockquote>
           <div className="flex items-center gap-3">
             <div
