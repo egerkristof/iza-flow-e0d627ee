@@ -16,8 +16,11 @@ export function BetaCTASection() {
               <br />
               <GradientText>better than a wiki.</GradientText>
             </h2>
-            <p className="text-base mb-6 text-muted-foreground">
-              Private Beta. 1 month free. For teams of 5–30 where consistency matters.
+            <p className="text-base mb-2 text-muted-foreground">
+              Private Beta · 1 month free · Limited to 10 teams per cohort.
+            </p>
+            <p className="text-xs text-muted-foreground/60 mb-6">
+              For teams of 5–30 where consistency drives revenue.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link

@@ -20,7 +20,7 @@ export function MaturityLadder() {
             <GradientText>LIZA gets you to 4.</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            The gap isn't AI adoption — it's the infrastructure to make AI work as a team.
+            Sound familiar? Here's where most teams get stuck — and what it takes to break through.
           </p>
         </div>
 

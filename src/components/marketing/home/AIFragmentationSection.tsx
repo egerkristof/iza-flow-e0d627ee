@@ -1,5 +1,11 @@
 import { SectionTag } from "./shared";
-import { AlertTriangle, User, Users, Zap } from "lucide-react";
+import { AlertTriangle, Zap } from "lucide-react";
+
+const SCENARIOS = [
+  "Your senior consultant is on vacation — the junior delivers something the client pushes back on.",
+  "You onboard someone new and spend 3 weeks just getting them to 'how we do things here.'",
+  "A key person leaves and you realize half your methodology walked out with them.",
+];
 
 export function AIFragmentationSection() {
   return (
@@ -13,12 +19,12 @@ export function AIFragmentationSection() {
             <em>standardize what works, and scale it.</em>
           </h2>
           <p className="text-base text-muted-foreground max-w-xl mx-auto">
-            The challenge has never been the work itself — it's capturing the judgment, the timing, the edge cases, and making them available to everyone. While keeping it all flexible enough to evolve.
+            The challenge has never been the work itself — it's capturing the judgment, the timing, the edge cases, and making them available to everyone.
           </p>
         </div>
 
         {/* Three escalating layers */}
-        <div className="grid md:grid-cols-3 gap-4 mb-10">
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
           <ProblemCard
             number="1"
             headline="Always been hard"
@@ -27,19 +33,37 @@ export function AIFragmentationSection() {
           />
           <ProblemCard
             number="2"
-            headline="AI solved it for one"
-            body="LLMs gave individuals a superpower: personal memory, real-time reasoning, instant execution. One person with AI can operate at a new level."
+            headline="AI made it feel solvable"
+            body="LLMs gave individuals a superpower: personal context, real-time reasoning, instant execution. For a moment it felt like the answer."
             accent="hsl(38 92% 50%)"
           />
           <ProblemCard
             number="3"
-            headline="Not for the team"
-            body="But each person's AI is a silo. No shared standards. No shared learning. No way to evolve best practices together. The team problem accelerates."
+            headline="But not for the team"
+            body="Each person's AI is a silo. No shared standards. No shared learning. The same gap — now accelerating. Wikis, Trainual, Gong reviews — none of them close it."
             accent="hsl(var(--primary))"
           />
         </div>
 
-        {/* The core insight — big and unmissable */}
+        {/* Struggling moments — "Does this sound familiar?" */}
+        <div className="mb-10">
+          <p className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground text-center mb-3">
+            Sound familiar?
+          </p>
+          <div className="grid md:grid-cols-3 gap-3">
+            {SCENARIOS.map((s, i) => (
+              <div
+                key={i}
+                className="rounded-lg border px-4 py-3 text-sm text-muted-foreground italic leading-relaxed"
+                style={{ borderColor: "hsl(var(--destructive) / 0.15)", background: "hsl(var(--destructive) / 0.03)" }}
+              >
+                "{s}"
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* The core insight */}
         <div
           className="rounded-2xl border-2 px-8 py-10 text-center"
           style={{ borderColor: "hsl(var(--primary) / 0.35)", background: "hsl(var(--primary) / 0.04)" }}
@@ -49,12 +73,12 @@ export function AIFragmentationSection() {
             <span className="text-xs font-black tracking-[0.2em] uppercase text-primary">What's missing</span>
           </div>
           <p className="text-2xl md:text-3xl font-black mb-3 leading-snug">
-            An infrastructure where best practices
+            A system where your best practices
             <br className="hidden md:block" />
-            live as evolving code — not static docs.
+            stay current and run in every session.
           </p>
           <p className="text-base text-muted-foreground max-w-lg mx-auto">
-            LLMs run on instruction sets. Your team's knowledge can be encoded the same way — co-built, co-executed, and continuously evolved. That's the layer nobody has built. Until now.
+            Not a wiki. Not a training deck. A live layer that captures what your best people know, keeps it evolving, and makes it available to everyone — at the moment of execution.
           </p>
         </div>
       </div>
