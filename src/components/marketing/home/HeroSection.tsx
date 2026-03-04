@@ -22,8 +22,8 @@ export function HeroSection() {
           <GradientText>actually executes.</GradientText>
         </h1>
 
-        <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          Your team's execution quality depends on shared standards — but those standards live in people's heads, outdated docs, or scattered AI setups. LIZA lets you define, enforce, and continuously update how your team works. Together.
+        <p className="text-base text-muted-foreground max-w-sm mx-auto mb-8">
+          Define, enforce, and continuously update how your team works. Together.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
