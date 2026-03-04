@@ -16,9 +16,9 @@ export function HeroSection() {
         </p>
 
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.08]">
-          Without governance, AI scales chaos.
+          AI without team governance
           <br />
-          <span className="text-muted-foreground">Not your team.</span>
+          <span className="text-muted-foreground">only scales chaos.</span>
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12">
