@@ -40,18 +40,26 @@ export default function BetaPage() {
 
     setSubmitting(true);
     try {
+      const roleDescription = [
+        name && `Name: ${name}`,
+        company && `Company: ${company}`,
+        `Team size: ${teamSize}`,
+        aiTools.length > 0 && `AI tools: ${aiTools.join(", ")}`,
+        frustration && `Frustration: ${frustration}`,
+      ].filter(Boolean).join(" | ");
+
       const { error } = await supabase.from("beta_signups").insert({
         email,
-        role_description: [
-          name && `Name: ${name}`,
-          company && `Company: ${company}`,
-          `Team size: ${teamSize}`,
-          aiTools.length > 0 && `AI tools: ${aiTools.join(", ")}`,
-          frustration && `Frustration: ${frustration}`,
-        ].filter(Boolean).join(" | "),
+        role_description: roleDescription,
       });
 
       if (error) throw error;
+
+      // Send notification email to founders
+      supabase.functions.invoke("notify-signup", {
+        body: { email, role_description: roleDescription },
+      }).catch((err) => console.error("Notification error:", err));
+
       setSubmitted(true);
     } catch (err) {
       toast({
@@ -74,18 +82,18 @@ export default function BetaPage() {
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <h1 className="text-4xl font-black mb-4">You're in.</h1>
-            <p className="text-lg text-muted-foreground mb-6">
-              We'll reach out within 48 hours to set up your workspace. Your first month is free.
+            <p className="text-lg text-muted-foreground mb-8">
+              We'll reach out within 48 hours to set up your onboarding session.
             </p>
-            <div className="rounded-xl border p-6 text-left space-y-3" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}>
-              <p className="text-sm font-semibold">What happens next:</p>
+            <div className="rounded-xl border p-6 text-left space-y-4" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}>
+              <p className="text-sm font-semibold">Here's what we'll do together:</p>
               {[
-                "We review your team profile and AI tool stack",
-                "You get a guided onboarding call (30 min)",
-                "Your workspace is pre-configured with your first use case",
-                "After 1 month: €2,000/mo if you continue",
+                "A guided onboarding call where we walk you through LIZA OS (30 min)",
+                "We help you configure your workspace for your first real use case",
+                "Your team's existing methodology gets imported as living playbooks",
+                "We explain the trial, answer questions, and get you running",
               ].map((step, i) => (
-                <div key={i} className="flex items-start gap-2">
+                <div key={i} className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: `hsl(${GRN})` }} />
                   <p className="text-sm text-muted-foreground">{step}</p>
                 </div>
