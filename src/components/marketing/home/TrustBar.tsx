@@ -12,7 +12,7 @@ export function TrustBar() {
     <section className="py-10 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <p className="text-center text-[11px] font-black tracking-[0.25em] uppercase text-muted-foreground mb-6">
-          Built for leaders whose team output is their reputation
+          For teams already using ChatGPT, Claude & Gemini — and hitting the ceiling
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           {PERSONAS.map((p) => (

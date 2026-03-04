@@ -13,17 +13,17 @@ export function HeroSection() {
       <div className="max-w-4xl mx-auto relative z-10 text-center">
         <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
           <Shield className="w-3 h-3" />
-          For leaders whose team output is their reputation
+          Your team already uses AI. This is what's missing.
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          Enforce how your team
+          Your AI remembers nothing.
           <br />
-          <GradientText>actually executes.</GradientText>
+          <GradientText>Your team deserves better.</GradientText>
         </h1>
 
-        <p className="text-base text-muted-foreground max-w-sm mx-auto mb-8">
-          Your standards, enforced in every AI session. Always current. Always followed.
+        <p className="text-base text-muted-foreground max-w-md mx-auto mb-8">
+          Custom GPTs forget. Claude Projects don't scale. Your team's best thinking stays trapped in individual chat histories. LIZA makes it compound.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
@@ -42,7 +42,7 @@ export function HeroSection() {
             onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            Where is your team? ↓
+            See the execution gap ↓
           </button>
         </div>
 
