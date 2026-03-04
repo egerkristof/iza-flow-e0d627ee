@@ -17,8 +17,6 @@ export default function HomePage() {
       <HeroSection />
       <TrustBar />
       <SectionDivider />
-      <AIFragmentationSection />
-      <SectionDivider />
       <ProblemSection />
       <SectionDivider />
       <LizaLoopSection />
