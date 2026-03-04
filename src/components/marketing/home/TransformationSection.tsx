@@ -4,19 +4,23 @@ import { ArrowRight, X, Check } from "lucide-react";
 const ROWS = [
   {
     before: "Quality depends on who's doing the work",
-    after: "Quality is built into every session — regardless of who runs it",
+    after: "Everyone executes from the team's best, up-to-date knowledge — automatically",
   },
   {
-    before: "Lessons from last quarter never reach this quarter's team",
-    after: "Every engagement feeds back into the shared playbook automatically",
+    before: "Lessons stay in one person's head or a recap nobody reads",
+    after: "Every engagement feeds back into the living playbook for the whole team",
   },
   {
     before: "You only find out something drifted when a client complains",
-    after: "You see execution patterns, learning signals, and drift in real time",
+    after: "You see execution patterns, learning signals, and drift as they happen",
   },
   {
-    before: "Your methodology is frozen in a doc nobody reads",
-    after: "Your methodology is alive — shaped by real work, governed by you",
+    before: "AI usage is invisible — everyone has their own prompts and shortcuts",
+    after: "AI usage is governed, shared, and continuously improving across the team",
+  },
+  {
+    before: "Onboarding takes 9 months before someone stops needing a senior on every call",
+    after: "New hires execute at team standard from day one — the playbook is live in every session",
   },
 ];
 
@@ -27,8 +31,8 @@ export function TransformationSection() {
         <div className="text-center mb-10">
           <SectionTag label="What changes" icon={<ArrowRight className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            From flying blind to{" "}
-            <GradientText>full visibility.</GradientText>
+            From scattered individuals to{" "}
+            <GradientText>compounding team.</GradientText>
           </h2>
         </div>
 

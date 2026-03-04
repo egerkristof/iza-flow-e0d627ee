@@ -1,121 +1,157 @@
 import { SectionTag, GradientText } from "./shared";
-import { AlertTriangle, Zap, Eye, Brain, Shield } from "lucide-react";
+import { Layers, AlertTriangle } from "lucide-react";
 
-const PROBLEM_LAYERS = [
+const LEVELS = [
   {
-    icon: <Eye className="w-5 h-5" />,
-    layer: "External problem",
-    label: "Inconsistent output",
-    description:
-      "Two people on your team give the same client different answers. A junior delivers something a senior would never have approved. Quality depends entirely on who's doing the work — and whether someone senior happens to be looking.",
+    level: 1,
+    title: "It lives in their heads",
+    withoutAI: "Quality depends entirely on who does the work. A senior's absence means visible quality drops. Knowledge is locked in individual experience.",
+    withAI: "Everyone prompts their own way. Same question, different answers. There's no shared standard — just personal shortcuts.",
+    color: "var(--destructive)",
   },
   {
-    icon: <Brain className="w-5 h-5" />,
-    layer: "Internal problem",
-    label: "You're flying blind",
-    description:
-      "You have no real visibility into how your team executes. What's working? What's drifting? Which lessons from last quarter actually reached this quarter's team? You feel it when something goes wrong — but you can't see it coming.",
+    level: 2,
+    title: "Static playbooks exist",
+    withoutAI: "Someone wrote the methodology doc. It was good — 18 months ago. Nobody follows it because it doesn't match today's reality.",
+    withAI: "The team uses AI, but each person builds their own prompts and templates. The 'official' process and the real process have diverged completely.",
+    color: "var(--destructive)",
   },
   {
-    icon: <Shield className="w-5 h-5" />,
-    layer: "Philosophical problem",
-    label: "The team should compound",
-    description:
-      "Every engagement should make the whole team smarter — not just the person who ran it. The junior who found a workaround, the senior who spotted a pattern, the new hire who asked the right question. That learning should flow to everyone. It doesn't.",
+    level: 3,
+    title: "Pockets of sharing",
+    withoutAI: "Post-project reviews happen sometimes. Best practices get shared in meetings. Some knowledge transfers, but it's inconsistent and slow.",
+    withAI: "A few people share useful prompts in Slack. But there's no structure, no curation, no way to know what's current. Tribal knowledge, just faster.",
+    color: "hsl(38 92% 50%)",
   },
-];
-
-const SCENARIOS = [
-  "Two consultants give the same client contradictory recommendations. Neither knows the other spoke to them.",
-  "A senior leaves. Within a month you realise half your methodology was in their head, not in any system.",
-  "You onboard someone new. It takes 9 months before they stop needing a senior on every call.",
+  {
+    level: 4,
+    title: "Live, shared context",
+    withoutAI: "The team operates from a living knowledge base that's updated after every engagement. Onboarding takes weeks, not months.",
+    withAI: "AI sessions start pre-loaded with the team's accumulated judgment. Every person executes from the same up-to-date standard — automatically.",
+    color: "hsl(var(--primary))",
+  },
+  {
+    level: 5,
+    title: "Governed, compounding intelligence",
+    withoutAI: "Methodology evolves continuously. Leadership sees what's working and shapes the standard. The whole team gets smarter with every engagement.",
+    withAI: "AI usage is visible, governed, and improving. The weakest performer benefits from the strongest insight. Knowledge compounds across the entire team.",
+    color: "hsl(var(--primary))",
+  },
 ];
 
 export function ProblemSection() {
   return (
-    <section id="the-problem" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+    <section id="maturity-ladder" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <SectionTag label="The age-old problem" icon={<AlertTriangle className="w-3 h-3" />} />
+          <SectionTag label="The maturity ladder" icon={<Layers className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            Managing a team that should execute and learn{" "}
-            <GradientText>together.</GradientText>
+            Where is your team on the{" "}
+            <GradientText>knowledge maturity scale?</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            This problem has always existed. You need your team aligned, learning from each other, and continuously improving. But you've never had the infrastructure to see it or govern it.
+            Every team sits somewhere on this ladder. AI didn't create the problem — it amplified wherever you already were. Most teams are stuck at Level 2 or 3.
           </p>
         </div>
 
-        {/* Three problem layers */}
-        <div className="grid md:grid-cols-3 gap-4 mb-10">
-          {PROBLEM_LAYERS.map((p) => (
-            <div
-              key={p.label}
-              className="rounded-xl border p-5 space-y-3"
-              style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
-                >
-                  {p.icon}
-                </div>
-                <span className="text-xs font-black tracking-[0.15em] uppercase text-primary">{p.label}</span>
-              </div>
-              <p className="text-sm text-foreground/80 leading-relaxed">{p.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* AI twist */}
-        <div
-          className="rounded-xl border-2 px-6 py-5 mb-10"
-          style={{ borderColor: "hsl(var(--destructive) / 0.25)", background: "hsl(var(--destructive) / 0.04)" }}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <Zap className="w-4 h-4" style={{ color: "hsl(var(--destructive))" }} />
-            <span className="text-xs font-black tracking-[0.2em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
-              Then AI made it worse
-            </span>
-          </div>
-          <p className="text-sm text-foreground/80 leading-relaxed">
-            AI gave every individual superpowers — but it shattered the "together" part.
-            Now everyone has their own prompts, their own shortcuts, their own version of "how we do it."
-            The team is faster, but more fragmented than ever.
-            Execute, learn, manage — all happening, but only at the individual level.
-            As the person responsible for output, you've lost even more visibility.
-          </p>
-        </div>
-
-        {/* Sound familiar? */}
-        <div className="mb-10">
-          <p className="text-sm font-black tracking-[0.15em] uppercase text-center mb-4" style={{ color: "hsl(var(--destructive))" }}>
-            Sound familiar?
-          </p>
-          <div className="grid md:grid-cols-3 gap-3">
-            {SCENARIOS.map((s, i) => (
+        {/* Maturity levels */}
+        <div className="space-y-3 mb-12">
+          {LEVELS.map((l) => {
+            const isTarget = l.level >= 4;
+            return (
               <div
-                key={i}
-                className="rounded-xl border px-5 py-4 text-sm text-foreground/80 leading-relaxed"
-                style={{ borderColor: "hsl(var(--destructive) / 0.2)", background: "hsl(var(--destructive) / 0.04)" }}
+                key={l.level}
+                className="rounded-xl border p-5 transition-all"
+                style={{
+                  borderColor: isTarget ? "hsl(var(--primary) / 0.3)" : "hsl(var(--border))",
+                  background: isTarget ? "hsl(var(--primary) / 0.04)" : "hsl(var(--background))",
+                }}
               >
-                "{s}"
+                <div className="flex flex-col md:flex-row md:items-start gap-4">
+                  {/* Level badge */}
+                  <div className="flex items-center gap-3 md:w-56 shrink-0">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black shrink-0"
+                      style={{
+                        background: isTarget ? "var(--gradient-brand-btn)" : `${l.color} / 0.12)`.startsWith("hsl") ? `${l.color.replace(")", " / 0.12)")}` : `hsl(${l.color} / 0.12)`,
+                        color: isTarget ? "hsl(var(--primary-foreground))" : l.color.startsWith("hsl") ? l.color : `hsl(${l.color})`,
+                        ...(isTarget ? {} : { background: `hsl(var(--destructive) / 0.1)`, color: l.level === 3 ? "hsl(38 92% 50%)" : "hsl(var(--destructive))" }),
+                      }}
+                    >
+                      L{l.level}
+                    </div>
+                    <span className="text-sm font-bold">{l.title}</span>
+                  </div>
+
+                  {/* Two columns: without AI / with AI */}
+                  <div className="grid md:grid-cols-2 gap-3 flex-1">
+                    <div>
+                      <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">Without AI</p>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{l.withoutAI}</p>
+                    </div>
+                    <div
+                      className="rounded-lg px-3 py-2.5"
+                      style={{
+                        background: isTarget ? "hsl(var(--primary) / 0.06)" : "hsl(var(--destructive) / 0.04)",
+                        border: `1px solid ${isTarget ? "hsl(var(--primary) / 0.15)" : "hsl(var(--destructive) / 0.12)"}`,
+                      }}
+                    >
+                      <p className="text-[10px] font-bold tracking-[0.15em] uppercase mb-1"
+                        style={{ color: isTarget ? "hsl(var(--primary))" : "hsl(var(--destructive))" }}
+                      >
+                        {isTarget ? "With AI + LIZA" : "With AI (unmanaged)"}
+                      </p>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{l.withAI}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            ))}
+            );
+          })}
+        </div>
+
+        {/* Where most teams sit */}
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div
+            className="flex-1 rounded-xl border-2 px-6 py-5 text-center"
+            style={{ borderColor: "hsl(var(--destructive) / 0.25)", background: "hsl(var(--destructive) / 0.04)" }}
+          >
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <AlertTriangle className="w-4 h-4" style={{ color: "hsl(var(--destructive))" }} />
+              <span className="text-xs font-black tracking-[0.15em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
+                Most teams today
+              </span>
+            </div>
+            <p className="text-sm text-foreground/80">
+              Stuck at Level 2–3. Fast individuals, fragmented team. Knowledge scattered across personal AI accounts, outdated docs, and tribal memory.
+            </p>
+          </div>
+          <div
+            className="flex-1 rounded-xl border-2 px-6 py-5 text-center"
+            style={{ borderColor: "hsl(var(--primary) / 0.35)", background: "hsl(var(--primary) / 0.04)" }}
+          >
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Layers className="w-4 h-4 text-primary" />
+              <span className="text-xs font-black tracking-[0.15em] uppercase text-primary">
+                Where LIZA takes you
+              </span>
+            </div>
+            <p className="text-sm text-foreground/80">
+              Level 4–5. Live shared context, governed methodology, compounding team intelligence. Every engagement makes the whole team smarter.
+            </p>
           </div>
         </div>
 
-        {/* What's missing */}
+        {/* Infrastructure callout */}
         <div
           className="rounded-2xl border-2 px-8 py-8 text-center"
           style={{ borderColor: "hsl(var(--primary) / 0.35)", background: "hsl(var(--primary) / 0.04)" }}
         >
           <p className="text-xl md:text-2xl font-black leading-snug">
-            You need infrastructure that lets your team execute, learn, and manage
+            To get there, you need infrastructure that makes your team
             <br className="hidden md:block" />
-            as one — with you at the helm.
+            execute, learn, and evolve as one — with you at the helm.
           </p>
         </div>
       </div>
