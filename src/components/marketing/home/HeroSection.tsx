@@ -52,8 +52,8 @@ export function HeroSection() {
           style={{ borderColor: "hsl(var(--border))", boxShadow: "0 20px 60px -15px hsl(var(--primary) / 0.15)" }}
         >
           <img
-            src="/images/product-oversight.png"
-            alt="LIZA OS — Oversight dashboard showing team execution governance"
+            src="/images/product-define-enforce.png"
+            alt="LIZA OS — Define & enforce standards across your team's AI sessions"
             className="w-full h-auto block"
             loading="eager"
           />
