@@ -13,7 +13,7 @@ export function HeroSection() {
       <div className="max-w-4xl mx-auto relative z-10 text-center">
         <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
           <Shield className="w-3 h-3" />
-          For leaders who need to manage how their team executes
+          For leaders managing AI-driven teams
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
