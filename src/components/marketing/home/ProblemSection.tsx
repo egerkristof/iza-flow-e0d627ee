@@ -7,36 +7,41 @@ const LEVELS = [
     level: 1,
     title: "In their heads",
     short: "Quality depends on who's available",
-    detail: "A senior's absence means visible quality drops. Everyone prompts their own way — same question, different answers. No shared standard exists.",
+    detail: "Knowledge lives in individual experience. AI amplifies the gap — everyone prompts differently, same question yields different answers. No shared standard exists.",
     symptom: "\"It's fine when Sarah runs it\"",
+    aiAngle: "AI multiplies individual habits — good and bad",
   },
   {
     level: 2,
     title: "Static playbooks",
     short: "The docs are 18 months old",
-    detail: "The methodology doc was good once. Nobody follows it because it doesn't match today's reality. Each person builds their own prompts. Official process ≠ real process.",
+    detail: "The methodology doc was good once. Nobody follows it. Each person builds their own prompts and templates. The official process and the real AI-assisted process have fully diverged.",
     symptom: "\"We have a wiki somewhere…\"",
+    aiAngle: "AI bypasses outdated docs entirely",
   },
   {
     level: 3,
     title: "Pockets of sharing",
     short: "Some transfer, inconsistently",
-    detail: "Post-project reviews happen sometimes. A few people share prompts in Slack. No curation, no way to know what's current or proven.",
+    detail: "A few people share prompts in Slack. Post-project reviews happen sometimes. But there's no curation — no way to know what's current, proven, or approved.",
     symptom: "\"Check #random for that prompt\"",
+    aiAngle: "Prompt libraries grow, but without governance",
   },
   {
     level: 4,
     title: "Live shared context",
     short: "One living knowledge base",
-    detail: "AI sessions start pre-loaded with accumulated judgment. Everyone executes from the same standard. Onboarding takes weeks, not months.",
-    symptom: "\"The system already knew\"",
+    detail: "Every AI session starts pre-loaded with your team's accumulated judgment — best practices, edge cases, quality criteria. New hires execute at team standard from day one.",
+    symptom: "\"The AI already knew our approach\"",
+    aiAngle: "AI enforces team standards automatically",
   },
   {
     level: 5,
     title: "Governed intelligence",
     short: "The team compounds weekly",
-    detail: "AI usage is visible and governed. The weakest performer benefits from the strongest insight. Methodology evolves with every engagement.",
+    detail: "AI usage is visible, governed, and continuously improving. Every engagement feeds back into shared knowledge. The weakest performer benefits from the strongest insight.",
     symptom: "\"We're better this quarter than last\"",
+    aiAngle: "AI compounds your methodology over time",
   },
 ];
 
@@ -147,15 +152,16 @@ export function ProblemSection() {
                       </div>
                     )}
 
-                    {/* Symptom quote - visible on taller steps */}
+                    {/* AI angle - visible on taller steps */}
                     {l.level >= 3 && (
                       <div
-                        className="mt-auto mb-3 text-[8px] md:text-[9px] italic text-center hidden md:block px-1"
+                        className="mt-auto mb-3 text-[8px] md:text-[9px] font-medium text-center hidden md:block px-1 rounded-md py-1"
                         style={{
-                          color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.7)" : "hsl(var(--foreground) / 0.45)",
+                          color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.85)" : accentColor,
+                          background: isTarget && isActive ? "hsl(0 0% 100% / 0.15)" : `${accentColor}11`,
                         }}
                       >
-                        {l.symptom}
+                        🤖 {l.aiAngle}
                       </div>
                     )}
                   </div>
@@ -230,9 +236,14 @@ export function ProblemSection() {
                     </div>
                     <p className="text-xs text-muted-foreground mb-2">{l.short}</p>
                     <p className="text-sm text-foreground/80 leading-relaxed">{l.detail}</p>
-                    <p className="text-xs italic mt-2" style={{ color: "hsl(var(--foreground) / 0.5)" }}>
-                      You'll hear: {l.symptom}
-                    </p>
+                    <div className="flex items-center gap-4 mt-2">
+                      <p className="text-xs italic" style={{ color: "hsl(var(--foreground) / 0.5)" }}>
+                        You'll hear: {l.symptom}
+                      </p>
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full" style={{ background: `${accentColor}15`, color: accentColor }}>
+                        🤖 {l.aiAngle}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <button
@@ -246,37 +257,6 @@ export function ProblemSection() {
           );
         })()}
 
-        {/* Bottom summary cards */}
-        <div className="flex flex-col md:flex-row gap-4 mt-6">
-          <div
-            className="flex-1 rounded-xl border-2 px-6 py-5 text-center"
-            style={{ borderColor: "hsl(var(--destructive) / 0.25)", background: "hsl(var(--destructive) / 0.04)" }}
-          >
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4" style={{ color: "hsl(var(--destructive))" }} />
-              <span className="text-xs font-black tracking-[0.15em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
-                Where you probably are
-              </span>
-            </div>
-            <p className="text-sm text-foreground/80">
-              Level 2–3. Your best people are fast. Your team is fragmented. Knowledge lives in personal AI accounts.
-            </p>
-          </div>
-          <div
-            className="flex-1 rounded-xl border-2 px-6 py-5 text-center"
-            style={{ borderColor: "hsl(var(--primary) / 0.35)", background: "hsl(var(--primary) / 0.04)" }}
-          >
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Layers className="w-4 h-4 text-primary" />
-              <span className="text-xs font-black tracking-[0.15em] uppercase text-primary">
-                Where LIZA takes you
-              </span>
-            </div>
-            <p className="text-sm text-foreground/80">
-              Level 4–5. Live shared context. Governed methodology. Every engagement makes the whole team smarter.
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );
