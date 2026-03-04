@@ -20,9 +20,9 @@ const TEAM = [
 
 const METRICS = [
   { value: "200+", label: "Consulting engagements" },
-  { value: "4", label: "Continents" },
+  { value: "8", label: "Countries" },
   { value: "15+", label: "Years combined methodology" },
-  { value: "10", label: "Teams per Beta cohort" },
+  { value: "15+", label: "Teams in Beta" },
 ];
 
 export function GuideSection() {
