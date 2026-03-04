@@ -74,57 +74,43 @@ export function ProblemSection() {
           </p>
         </div>
 
-        {/* Zone labels */}
-        <div className="flex mb-3">
-          <div className="flex-[3] flex items-center justify-center gap-2 rounded-lg py-2 mr-1"
+        {/* Zone labels with integrated markers */}
+        <div className="flex gap-1 mb-2">
+          {/* Unmanaged zone */}
+          <div className="flex-[3] flex flex-col items-center rounded-lg py-3 px-2"
             style={{ background: "hsl(var(--destructive) / 0.06)", border: "1px dashed hsl(var(--destructive) / 0.2)" }}>
+            <span className="text-[9px] md:text-xs font-black px-2 md:px-3 py-1 rounded-full text-center leading-tight mb-1"
+              style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
+              <span className="hidden sm:inline">Most teams are here, trying to adopt AI</span>
+              <span className="sm:hidden">Most teams</span>
+            </span>
             <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
               Unmanaged execution
             </span>
+            <svg width="80" height="20" viewBox="0 0 80 20" fill="none" className="block mt-1">
+              <path d="M40 0 L40 5 Q40 10 32 13 L14 18" stroke="hsl(var(--destructive) / 0.4)" strokeWidth="1.5" fill="none" />
+              <path d="M40 0 L40 5 Q40 10 48 13 L66 18" stroke="hsl(var(--destructive) / 0.4)" strokeWidth="1.5" fill="none" />
+              <polygon points="11,16 14,20 17,16" fill="hsl(var(--destructive) / 0.5)" />
+              <polygon points="63,16 66,20 69,16" fill="hsl(var(--destructive) / 0.5)" />
+            </svg>
           </div>
-          <div className="flex-[2] flex items-center justify-center gap-2 rounded-lg py-2 ml-1"
+          {/* Managed zone */}
+          <div className="flex-[2] flex flex-col items-center rounded-lg py-3 px-2"
             style={{ background: "hsl(var(--primary) / 0.06)", border: "1px dashed hsl(var(--primary) / 0.25)" }}>
+            <span className="text-[9px] md:text-xs font-black whitespace-nowrap px-2 md:px-3 py-1 rounded-full mb-1"
+              style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.2)" }}>
+              Day 1 with LIZA
+            </span>
             <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase text-primary">
               Managed execution
             </span>
+            <ArrowDown className="w-4 h-4 mt-1 text-primary opacity-50" />
           </div>
         </div>
 
         {/* Staircase */}
         <div className="relative">
-          {/* "Most teams" marker - centered between L2 and L3 */}
-          <div className="absolute z-20 flex flex-col items-center pointer-events-none"
-            style={{ left: "30%", transform: "translateX(-50%)", top: "-58px" }}>
-            <div className="flex flex-col items-center">
-              <span className="text-[9px] md:text-xs font-black px-2 md:px-3 py-1 rounded-full text-center leading-tight"
-                style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
-                <span className="hidden sm:inline">Most teams are here, trying to adopt AI</span>
-                <span className="sm:hidden">Most teams</span>
-              </span>
-              <div className="w-0.5 h-2 md:h-3" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
-              <svg width="120" height="28" viewBox="0 0 120 28" fill="none" className="block">
-                <path d="M60 0 L60 8 Q60 14 50 17 L20 25" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
-                <path d="M60 0 L60 8 Q60 14 70 17 L100 25" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
-                <polygon points="16,23 20,28 24,23" fill="hsl(var(--destructive) / 0.6)" />
-                <polygon points="96,23 100,28 104,23" fill="hsl(var(--destructive) / 0.6)" />
-              </svg>
-            </div>
-          </div>
-
-          {/* "Day 1 with LIZA" marker - centered on L4 */}
-          <div className="absolute z-20 flex flex-col items-center pointer-events-none"
-            style={{ left: "70%", transform: "translateX(-50%)", top: "-58px" }}>
-            <div className="flex flex-col items-center">
-              <span className="text-[9px] md:text-xs font-black whitespace-nowrap px-2 md:px-3 py-1 rounded-full"
-                style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.2)" }}>
-                Day 1 with LIZA
-              </span>
-              <div className="w-0.5 h-4 md:h-6" style={{ background: "hsl(var(--primary) / 0.4)" }} />
-              <ArrowDown className="w-4 h-4 -mt-0.5 text-primary" />
-            </div>
-          </div>
-
-          <div className="flex items-end gap-1.5 md:gap-2 pt-20 mb-1" style={{ height: "440px" }}>
+          <div className="flex items-end gap-1.5 md:gap-2 mb-1" style={{ height: "380px" }}>
             {LEVELS.map((l) => {
               const isTarget = l.level >= 4;
               const isActive = activeLevel === l.level;
