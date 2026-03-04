@@ -11,7 +11,7 @@ const STEPS = [
     headline: "Build playbooks that actually get followed.",
     line: "Your best practices need to evolve as fast as your team's AI usage. LIZA turns scattered prompts and tribal knowledge into living playbooks: enforced in every session, updated continuously. Not a static doc. A working standard.",
     before: "Best practices update quarterly. AI workflows change weekly.",
-    after: "Living playbooks evolve with every engagement. Always current, always enforced",
+    after: "Living playbooks evolve with every engagement. Always current, always enforced.",
     img: "/images/product-define-enforce.png",
   },
   {
