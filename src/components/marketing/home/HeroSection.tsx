@@ -25,7 +25,7 @@ export function HeroSection() {
         <p className="text-base text-muted-foreground max-w-md mx-auto mb-8">
           Define, enforce, and continuously update how your team works —{" "}
           <span className="relative inline-block font-semibold text-foreground">
-            with or without AI.
+            with and without AI.
             <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
           </span>
         </p>
