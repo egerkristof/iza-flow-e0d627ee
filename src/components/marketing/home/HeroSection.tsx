@@ -5,33 +5,36 @@ import { GradientText } from "./shared";
 const COMPARE_PILLARS = [
   {
     icon: <ShieldCheck className="w-5 h-5" />,
-    label: "Enforce your best standards",
-    description: "Your proven playbooks, applied automatically—in every session, by every team member.",
+    label: "Your best practices live in someone's head",
+    description: "Standards exist in docs nobody opens mid-task. Every person improvises their own version.",
     wiki: false,
     wikiNote: "Static pages nobody reads mid-task",
     ai: false,
     aiNote: "No awareness of your standards",
     liza: true,
+    lizaNote: "Enforced live, every session",
   },
   {
     icon: <Brain className="w-5 h-5" />,
-    label: "Your team learns together",
-    description: "Insights from every engagement flow back and improve how everyone works next time.",
+    label: "Every session starts from zero",
+    description: "What one person learns never reaches the rest. Your team repeats mistakes instead of compounding wins.",
     wiki: false,
     wikiNote: "Updates are manual and rare",
     ai: false,
-    aiNote: "Each session starts from zero",
+    aiNote: "No memory across users",
     liza: true,
+    lizaNote: "Team-wide learning loops",
   },
   {
     icon: <BookOpen className="w-5 h-5" />,
-    label: "Quality stays consistent",
-    description: "Junior or senior, Monday or Friday—same standard, every time.",
+    label: "Quality depends on who's doing the work",
+    description: "Your best performer delivers—everyone else wings it. No system ensures consistency across the team.",
     wiki: "partial",
     wikiNote: "Depends on who reads what",
     ai: false,
     aiNote: "Varies by user's prompt skill",
     liza: true,
+    lizaNote: "Same standard, every time",
   },
 ];
 
@@ -78,17 +81,17 @@ export function HeroSection() {
       <div className="max-w-5xl mx-auto relative z-10 text-center">
         <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
           <Shield className="w-3 h-3" />
-          For leaders managing AI-driven teams
+          For leaders who own execution quality
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
           From individual AI speed
           <br />
-          <GradientText>to team intelligence.</GradientText>
+          <GradientText>to scaled team execution.</GradientText>
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-3">
-          Define, enforce, and continuously update how your team works—
+          The platform to define, enforce, and continuously update how your team works—
           <span className="relative inline font-semibold text-foreground">
             with and without AI.
             <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
@@ -119,10 +122,10 @@ export function HeroSection() {
         {/* Three-pillar comparison — large, felt */}
         <div className="max-w-4xl mx-auto mb-14">
           <h2 className="text-lg md:text-xl font-black mb-2 text-foreground">
-            Three things AI needs to work at team scale.
+            Three reasons your current tools can't scale your team.
           </h2>
           <p className="text-sm text-muted-foreground mb-8 max-w-lg mx-auto">
-            None of your current solutions—Confluence, Notion, ChatGPT, Claude—provide them.
+            Wikis store knowledge. AI tools execute in silos. Neither makes your whole team better.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -165,6 +168,7 @@ export function HeroSection() {
                   >
                     <span className="text-xs font-bold leading-tight" style={{ color: "hsl(var(--primary))" }}>
                       LIZA
+                      {p.lizaNote && <span className="block text-[10px] font-normal" style={{ color: "hsl(var(--primary) / 0.7)" }}>{p.lizaNote}</span>}
                     </span>
                     <StatusBadge value={p.liza} />
                   </div>
