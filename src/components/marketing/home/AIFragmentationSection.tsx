@@ -6,14 +6,14 @@ export function AIFragmentationSection() {
     <section id="the-problem" className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
-          <SectionTag label="The real problem" icon={<AlertTriangle className="w-3 h-3" />} />
+          <SectionTag label="The age-old demand" icon={<AlertTriangle className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black leading-tight mb-4">
-            You know how to do great work.
+            Every team wants the same thing:
             <br />
-            You just can't do it <em>together</em>.
+            <em>standardize what works, and scale it.</em>
           </h2>
           <p className="text-base text-muted-foreground max-w-xl mx-auto">
-            The hardest part of scaling a team was never the work itself — it's sharing the judgment behind it.
+            The challenge has never been the work itself — it's capturing the judgment, the timing, the edge cases, and making them available to everyone. While keeping it all flexible enough to evolve.
           </p>
         </div>
 
@@ -21,23 +21,20 @@ export function AIFragmentationSection() {
         <div className="grid md:grid-cols-3 gap-4 mb-10">
           <ProblemCard
             number="1"
-            icon={<AlertTriangle className="w-4 h-4" />}
-            headline="The age-old problem"
-            body="How do you share what you know — the instinct, the timing, the edge cases — with people who weren't in the room?"
+            headline="Always been hard"
+            body="Best practices live in people's heads. You can write SOPs, run trainings, shadow seniors — but the real know-how doesn't transfer. It never has."
             accent="var(--destructive)"
           />
           <ProblemCard
             number="2"
-            icon={<User className="w-4 h-4" />}
-            headline="AI solved it individually"
-            body="LLMs let you execute brilliantly on your own. They learn your style, hold some memory, reason with you in real time."
+            headline="AI solved it for one"
+            body="LLMs gave individuals a superpower: personal memory, real-time reasoning, instant execution. One person with AI can operate at a new level."
             accent="hsl(38 92% 50%)"
           />
           <ProblemCard
             number="3"
-            icon={<Users className="w-4 h-4" />}
-            headline="But not as a team"
-            body="The moment you need shared context, shared learning, shared best practices — every AI tool breaks down. There's no team layer."
+            headline="Not for the team"
+            body="But each person's AI is a silo. No shared standards. No shared learning. No way to evolve best practices together. The team problem accelerates."
             accent="hsl(var(--primary))"
           />
         </div>
@@ -49,15 +46,15 @@ export function AIFragmentationSection() {
         >
           <div className="flex items-center justify-center gap-2 mb-3">
             <Zap className="w-5 h-5 text-primary" />
-            <span className="text-xs font-black tracking-[0.2em] uppercase text-primary">The missing infrastructure</span>
+            <span className="text-xs font-black tracking-[0.2em] uppercase text-primary">What's missing</span>
           </div>
           <p className="text-2xl md:text-3xl font-black mb-3 leading-snug">
-            How do you execute, learn, and build
+            An infrastructure where best practices
             <br className="hidden md:block" />
-            best practices — together?
+            live as evolving code — not static docs.
           </p>
           <p className="text-base text-muted-foreground max-w-lg mx-auto">
-            Not a better chatbot. Not another wiki. An infrastructure where your team's knowledge lives, evolves, and shows up in every work session — automatically.
+            LLMs run on instruction sets. Your team's knowledge can be encoded the same way — co-built, co-executed, and continuously evolved. That's the layer nobody has built. Until now.
           </p>
         </div>
       </div>
@@ -65,8 +62,8 @@ export function AIFragmentationSection() {
   );
 }
 
-function ProblemCard({ number, icon, headline, body, accent }: {
-  number: string; icon: React.ReactNode; headline: string; body: string; accent: string;
+function ProblemCard({ number, headline, body, accent }: {
+  number: string; headline: string; body: string; accent: string;
 }) {
   return (
     <div className="rounded-xl border p-5 relative" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>

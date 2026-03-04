@@ -2,11 +2,11 @@ import { SectionTag, GradientText } from "./shared";
 import { TrendingUp } from "lucide-react";
 
 const LEVELS = [
-  { level: 1, label: "Solo AI", desc: "Everyone uses their own ChatGPT. No shared anything.", emoji: "🔴" },
-  { level: 2, label: "Shared prompts", desc: "Same prompt, different outputs. No consistency.", emoji: "🟠" },
-  { level: 3, label: "Static docs", desc: "Wiki feeds AI — already stale, never complete.", emoji: "🟡" },
-  { level: 4, label: "Live context", desc: "Team knowledge in every session. Always current.", emoji: "🟢", active: true },
-  { level: 5, label: "Self-executing", desc: "Methodology runs itself. You steer, not carry.", emoji: "🔵" },
+  { level: 1, label: "Solo AI", desc: "Everyone uses their own AI. No shared standards.", emoji: "🔴" },
+  { level: 2, label: "Shared prompts", desc: "Same templates, different outputs. Inconsistent.", emoji: "🟠" },
+  { level: 3, label: "Static docs", desc: "Knowledge base feeds AI. Already stale on day two.", emoji: "🟡" },
+  { level: 4, label: "Live context", desc: "Best practices — evolving, executable, in every session.", emoji: "🟢", active: true },
+  { level: 5, label: "Self-evolving", desc: "Team learns → standards update → everyone levels up.", emoji: "🔵" },
 ];
 
 export function MaturityLadder() {
@@ -14,13 +14,13 @@ export function MaturityLadder() {
     <section className="py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
-          <SectionTag label="Where is your team?" icon={<TrendingUp className="w-3 h-3" />} />
+          <SectionTag label="Where does your team sit?" icon={<TrendingUp className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
             Most teams plateau at Level 2–3.{" "}
             <GradientText>LIZA gets you to 4.</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Individual AI is powerful. But without shared infrastructure, your team's knowledge stays trapped in separate sessions.
+            The gap isn't AI adoption — it's the infrastructure to make AI work as a team.
           </p>
         </div>
 

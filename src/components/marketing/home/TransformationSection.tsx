@@ -2,12 +2,12 @@ import { SectionTag, GradientText } from "./shared";
 import { ArrowRight, X, Check } from "lucide-react";
 
 const ROWS = [
-  { before: "Everyone executes with their own context", after: "Everyone executes with the team's full context" },
-  { before: "What you learn stays in your head", after: "What you learn feeds back to the whole team" },
-  { before: "Best practices exist on paper, not in practice", after: "Best practices are built into every session" },
-  { before: "New hires shadow seniors for months", after: "New hires deliver at your standard from week one" },
-  { before: "When someone leaves, you start over", after: "Knowledge compounds — it never leaves" },
-  { before: "5 AI tools, none know how your team works", after: "One system, your team's full knowledge, every session" },
+  { before: "Best practices live in people's heads", after: "Best practices live in executable, evolving context" },
+  { before: "Standards are static docs nobody reads", after: "Standards are live in every work session" },
+  { before: "Every person's AI is a private silo", after: "One shared intelligence the whole team runs on" },
+  { before: "New hires shadow seniors for months", after: "New hires execute at your standard from week one" },
+  { before: "When someone leaves, you rebuild from scratch", after: "Knowledge compounds — it never walks out the door" },
+  { before: "Standardize or stay flexible — pick one", after: "Standards that evolve as your team learns" },
 ];
 
 export function TransformationSection() {
@@ -17,8 +17,8 @@ export function TransformationSection() {
         <div className="text-center mb-10">
           <SectionTag label="The shift" icon={<ArrowRight className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            From individual AI to{" "}
-            <GradientText>collaborative intelligence.</GradientText>
+            From scattered expertise to{" "}
+            <GradientText>scalable standards.</GradientText>
           </h2>
         </div>
 

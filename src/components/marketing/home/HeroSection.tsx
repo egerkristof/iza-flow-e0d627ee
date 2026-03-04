@@ -16,13 +16,13 @@ export function HeroSection() {
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          Execute together.
+          Scale what your
           <br />
-          <GradientText>Learn together.</GradientText>
+          <GradientText>best people know.</GradientText>
         </h1>
 
         <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          The infrastructure that turns your team's collective knowledge into live context — so everyone executes with your best judgment, not just their own.
+          Your best practices — standardized, evolving, and live in every work session. Not as static docs, but as executable context your whole team runs on.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
