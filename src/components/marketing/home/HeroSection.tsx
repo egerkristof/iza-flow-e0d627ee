@@ -22,9 +22,9 @@ export function HeroSection() {
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12">
-          LIZA OS lets you define, enforce, and continuously improve
+          LIZA OS lets you scale your team's AI execution
           <span className="relative inline font-semibold text-foreground">
-            {" "}how your team executes with AI.
+            {" "}by defining, enforcing, and continuously improving how work gets done.
             <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
           </span>
         </p>
