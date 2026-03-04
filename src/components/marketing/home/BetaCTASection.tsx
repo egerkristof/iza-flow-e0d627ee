@@ -58,8 +58,10 @@ export function BetaCTASection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                to="/beta"
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
                 style={{
                   background: "var(--gradient-brand-btn)",
@@ -67,12 +69,15 @@ export function BetaCTASection() {
                   boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
                 }}
               >
-                Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <Link
+                to="/beta"
+                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Join the Beta <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <p className="text-xs text-muted-foreground mt-4">
-              Or <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">book a discovery call</a> if you'd rather talk first.
-            </p>
           </div>
         </div>
       </div>
