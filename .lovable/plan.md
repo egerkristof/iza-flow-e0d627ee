@@ -1,164 +1,141 @@
-# LIZA GTM Rebuild — Build Plan
 
-**Status:** Approved for build  
-**Date:** 2026-03-03  
-**Core narrative:** "Your team's AI isn't a team."
 
----
+# Expert Council Review — LIZA Homepage
 
-## Phase 1 — Homepage Repositioning (Priority: NOW)
+## The Panel
 
-### 1.1 Hero Section
-- **Headline:** "Your team's AI isn't a team."
-- **Sub:** Tool-agnostic — acknowledge ChatGPT, Claude, Gemini, Copilot. Name the fragmentation problem.
-- **Primary CTA:** "Join the Private Beta" → `/beta`
-- **Secondary CTA:** "See where your team sits ↓" → scroll to maturity section
-
-### 1.2 AI Fragmentation Problem Section
-- Visual: 5 people × 5 AI tools = 25 knowledge silos
-- Before/After: Individual AI brilliance → collective intelligence
-- Non-adversarial tone — celebrate the tools, name the gap
-
-### 1.3 SECI Gap Visualization (Compact)
-- 4-quadrant showing what tools do (Externalisation partial) vs what's missing (Socialisation, Combination, Internalisation)
-- Keep it visual, not academic — no jargon on the page itself
-
-### 1.4 Maturity Ladder (Revised Language)
-- L1: "Everyone uses their own AI tool"
-- L2: "Teams share prompts and templates"
-- L3: "AI is embedded but knowledge is siloed per person"
-- L4: "Knowledge is shared, governed, and composable" ← LIZA takes you here
-- L5: "AI executes your methodology — not just your prompts"
-
-### 1.5 Social Proof / Use Cases
-- Reframe existing use cases around Level 1-2 pain
-- Keep 7-step flywheel but lead with "AI fragmentation" language
-
-### 1.6 Footer CTA
-- "Join the Private Beta" — reinforcement
+- **April Dunford** — Positioning & Category Design
+- **Steve Krug** — Usability ("Don't Make Me Think")
+- **Bob Moesta** — Jobs-to-Be-Done / Demand-Side
+- **Emily Kramer** — B2B GTM & Messaging
+- **Maya Chen** — Knowledge Management Theory
 
 ---
 
-## Phase 2 — Private Beta Signup (`/beta`)
+## Section-by-Section Audit
 
-### 2.1 Signup Page
-- Fields: Name, Email, Company, Team size (dropdown: 2-5, 5-15, 15-30, 30+)
-- Multi-select: "Which AI tools does your team use?" (ChatGPT, Claude, Gemini, Copilot, Perplexity, Other)
-- Optional: "What's your biggest AI frustration?" (free text)
-- Store in `beta_signups` table (extend existing or new)
+### 1. Hero Section
 
-### 2.2 Post-Signup
-- Confirmation page with expectation setting: "1 month free trial, then EUR 2,000/mo"
-- Link to Notion-style onboarding guide (or in-app guided flow)
-- Email notification via existing `notify-signup` edge function
+**April Dunford (Positioning):**
+The tagline "Scale what your best people know" is strong — it names the outcome. But "executable context your whole team runs on" is insider language. A first-time visitor doesn't know what "executable context" means. The sub-copy should show, not label. Example: "Turn your best consultant's instincts into something every team member runs on — automatically."
 
-### 2.3 Onboarding Simplification
-- Remove taxonomy tree from first-run experience
-- Replace with guided flow: "Create workspace, invite teammate, try a shared chat"
-- Pre-loaded sample workspace with example content
+**Steve Krug (Usability):**
+Three-second test: WHO is this for? ✅ (consulting & professional services). WHAT do I get? Partially — "scale what your best people know" is clear. HOW? ❌ — "executable context" is abstract. The secondary CTA "See how ↓" is vague. Needs a verb that promises value: "See the problem ↓" or "Where does your team sit? ↓"
 
----
+**Bob Moesta (JTBD):**
+The "hiring moment" — when does someone fire their current solution and hire LIZA? This hero doesn't trigger that moment. It should poke the wound: the moment you realize your senior person left and the junior can't deliver. Consider leading with the struggling moment, not the aspirational outcome. The tagline could be the *resolution*, not the *hook*.
 
-## Phase 3 — Lead Gen Experience
+**Emily Kramer (GTM):**
+"For consulting & professional services teams" is good ICP targeting but feels like a label. Consider making it part of the narrative: "If your team's quality depends on who's doing the work — this is for you."
 
-### Option A (Recommended, smallest build): AI Fragmentation Calculator
-- Single page component on homepage or `/assess`
-- Input: team size + number of AI tools used
-- Output: "You have X knowledge silos. Estimated consistency cost: EUR Y/year"
-- Gate: "Get your full report" → email capture
-- Ties to maturity model (shows which level they are at)
-
-### Option B (Medium): Click-Through Demo
-- 3 interactive screens showing: Solo AI → Shared workspace → Knowledge compound
-- Screenshots or guided walkthrough, no live product needed
-- CTA at end → beta signup
-
-### Option C (Keep existing, reframe): Extraction Engine
-- Simplify to 1-path flow (upload OR sample, not both)
-- Simple results shown immediately
-- Detailed results gated behind email
-- Reframe: "See how LIZA converts one person's AI knowledge into team infrastructure"
+**Verdict:** Hero tagline is solid. Sub-copy needs to be less abstract. Consider swapping the order: lead with the pain, resolve with the tagline.
 
 ---
 
-## Phase 4 — Content & Funnel Pages
+### 2. Problem Section ("The Age-Old Demand")
 
-### 4.1 Use Cases Page
-- Reframe intros around "AI fragmentation" pain per vertical
-- Keep the 7-step flywheel structure
-- Add "Which AI tools they use today" context per use case
+**Bob Moesta:**
+The three escalating cards are the right structure. But "Always been hard" as a headline is passive — it doesn't make me feel anything. These should be written as *struggling moments*, not analytical observations. Card 1 should make me think "yes, that's exactly my Tuesday." Card 2 should make me think "yes, I thought AI would fix this." Card 3 should make me think "yes, and it's actually worse now."
 
-### 4.2 Extraction Engine Page
-- Simplify UI to single-path
-- Position as "advanced" / thought-leadership, not primary CTA
-- Move down in navigation hierarchy
+**Maya Chen (Knowledge Mgmt):**
+Card 1 body text is accurate but reads like a textbook. "You can write SOPs, run trainings, shadow seniors" — this is listing solutions. Instead, describe the *experience*: "Your best consultant handles it instinctively. Everyone else follows a checklist that misses the point."
 
-### 4.3 Sprint Page
-- Stays as-is (already conversion-optimized)
-- Update copy to reference "AI operating model" instead of "knowledge OS"
+**Steve Krug:**
+The "Sound familiar?" scenarios are excellent — they're the most concrete, relatable content on the page. They should be MORE prominent, not tucked below in small italic text. These are the page's best demand-signal triggers.
 
-### 4.4 Manifesto Page
-- Stays as-is (thought leadership asset)
-- Consider adding SECI/Cynefin visual to strengthen academic credibility
+**Emily Kramer:**
+The "What's Missing" callout box is doing too much work. It's carrying the entire product positioning in one block. The phrase "A system where your best practices stay current and run in every session" is the strongest line on the page but it's buried. This should be bigger, bolder, and earlier.
+
+**Verdict:** The "Sound familiar?" scenarios should move UP — potentially even above the three cards. The three cards need emotional rewriting. The "What's Missing" callout is strong but buried.
 
 ---
 
-## Phase 5 — Navigation & Information Architecture
+### 3. Maturity Ladder
 
-### 5.1 Top Nav (Revised)
-- LIZA OS (Home)
-- Use Cases
-- Manifesto
-- **Join Beta** (CTA button, highlighted)
+**April Dunford:**
+"Where does your team sit?" is interactive and engaging. But "Most teams plateau at Level 2–3. LIZA gets you to 4." — why would I want Level 4? The level labels are abstract (Solo AI, Shared prompts, Static docs, Live context). These need to describe *what it feels like* at each level, not the technical architecture. E.g., Level 1: "Everyone's winging it with their own AI."
 
-### 5.2 Marketing Layout Footer
-- Remove Pricing link (already done)
-- Add Beta signup link
-- Keep Sprint, Extraction Engine as secondary links
+**Steve Krug:**
+The horizontal layout on desktop is good for a ladder metaphor. But on mobile it collapses into a 2-column grid which loses the left-to-right progression entirely. Needs a vertical stack on mobile that preserves the "climbing" feeling.
 
----
+**Bob Moesta:**
+The ladder is diagnostic — good for engagement. But it doesn't tell me what to DO about it. After the ladder, there should be an immediate "If you're at Level 2, here's what Level 4 looks like in practice" bridge. Currently it just flows into "How it works" which is a jarring topic shift.
 
-## What Stays Untouched
-- All app internals (workbooks, context management, oversight)
-- All edge functions and backend
-- Database schema (except possible beta_signups extension)
-- Decks (pitch, investor, sales)
+**Emily Kramer:**
+Co-founder's instinct to move this up may be right. After the hero, a diagnostic ("Where does your team sit?") can be a strong scroll-hook — people want to self-identify. But only if the levels are instantly self-evident without needing the problem context first. Currently, the level descriptions are too abstract for that. If you rewrite them as recognizable behaviors, this COULD work right after the hero.
+
+**Verdict:** The ladder concept is strong. Descriptions need to be behavioral, not architectural. Mobile layout needs attention. The question of position (before or after problem section) depends on whether the level descriptions can stand alone — currently they can't.
 
 ---
 
-## Technical Notes
-- Homepage changes: modify `src/pages/marketing/Home.tsx`
-- Beta page: new `src/pages/marketing/Beta.tsx` + route in `App.tsx`
-- Calculator: new component in `src/components/marketing/`
-- Maturity data: already exists in `EnterpriseDeck.tsx`, extract to shared data file
-- Beta signups: extend existing `beta_signups` table with `ai_tools` and `team_size` columns
+### 4. LIZA Loop (Execute / Learn / Manage)
+
+**Steve Krug:**
+This section is the longest on the page and does THREE things: the loop explanation, the team use cases grid, AND a mid-page CTA. That's too much. The loop itself is clear — three steps, alternating image layout, before/after cards. But the text descriptions are still too long. "Everyone works from the same live context — your methodology, your standards, your accumulated judgment. Not copied between tools. Assembled and injected automatically." — that's 3 sentences where 1 would do.
+
+**Bob Moesta:**
+"Execute together" — what does this actually mean in practice? The before/after cards are the best part: "Everyone brings their own context" → "Everyone starts with the team's full knowledge." That's the story. The paragraph above it dilutes it.
+
+**April Dunford:**
+The "How teams use LIZA" grid below is excellent for specificity — Sales, Onboarding, Delivery, Account Mgmt. But these four cards are doing the job that the main loop descriptions should be doing. Consider: could the team-specific examples BE the primary content, with the abstract loop as the framing?
+
+**Maya Chen:**
+"Manage together" is correctly positioned as the third step — the curation/design loop. But the description "Your methodology leads see what's working, what's drifting" introduces a new persona (methodology lead) without setup. Who is this person?
+
+**Verdict:** Loop structure is right. Descriptions need halving. Before/after cards are the strongest element — make them primary. Team use case grid is strong — consider promoting it higher or integrating it into the loop steps.
 
 ---
 
-## Success Metrics
-- Beta signup conversion rate from homepage
-- Number of qualified signups (team size 5-30, 2+ AI tools)
-- Time to first workspace creation after signup
-- Upgrade rate from free month to paid (EUR 2,000/mo)
+### 5. Transformation Grid
+
+**Steve Krug:**
+Four rows, two columns, clean layout. But this repeats what the before/after cards in the loop section already said. "Best practices live in people's heads → Best practices live in executable, evolving context" — we've read this idea three times by now. Either this section goes, or it needs to say something NEW.
+
+**Emily Kramer:**
+If this stays, it needs to be the "objection killer" — addressing the skeptical voice. "Standardize or stay flexible — pick one" → "Standards that evolve as your team learns" is the strongest row because it addresses a real objection. The others are restating benefits.
+
+**Verdict:** Either cut this section or refocus it on objections/skepticism rather than restating benefits.
 
 ---
 
-## Previous Plan: Use Cases Page (Reference)
+### 6. CTA Section
 
-### The 7 Use Cases
-1. **The Onboarding Accelerator** — Onboard anyone in weeks, not months.
-2. **Sales Playbooks** — Your best seller's instincts, running on every deal.
-3. **Account Management Playbooks** — Protect revenue before the data tells you it's at risk.
-4. **Marketing Playbooks** — Stop guessing which message lands. Encode what works.
-5. **Professional Services Delivery Playbooks** — Deliver every engagement like your best consultant ran it.
-6. **The Meeting Intelligence Engine** — Every meeting builds your organisation's memory.
-7. **The Smart Brief** — Don't delegate tasks. Generate briefs.
+**Emily Kramer:**
+"Your best practices deserve better than a wiki" — good line. "Private Beta · 1 month free · Limited to 10 teams per cohort" — solid urgency. "For teams of 5–30 where consistency drives revenue" — excellent qualifier. "Try the Extraction Engine" as secondary CTA is confusing — what is an Extraction Engine and why would I want it here? It breaks the narrative. Either explain it in one line or remove it.
 
-### Colour Assignments (HSL)
-1. Onboarding: `200 90% 52%`
-2. Sales: `38 92% 50%`
-3. Account Management: `155 72% 46%`
-4. Marketing: `330 70% 55%`
-5. Professional Services: `270 60% 65%`
-6. Meeting Intelligence: `180 65% 45%`
-7. Smart Brief: `15 80% 55%`
+**Steve Krug:**
+The "book a discovery call" link at the bottom is the right fallback for high-intent but cautious buyers. Good.
+
+**Verdict:** Primary CTA is strong. Remove or reframe the Extraction Engine secondary CTA — it introduces a concept that hasn't been set up.
+
+---
+
+## Cross-Cutting Issues
+
+### A. Repetition
+The page says "best practices" approximately 12 times. "Evolving" appears 7 times. "Standards" 6 times. This creates a drone effect — the reader stops registering the words. Vary the language.
+
+### B. Specificity Gap
+Despite the "Sound familiar?" scenarios and team use cases, the page is still 70% abstract and 30% concrete. The ratio should be inverted. Show a specific example: "Here's how a 12-person consulting firm uses LIZA for client delivery" — walk through one real flow.
+
+### C. Missing Social Proof
+Zero testimonials, zero logos, zero metrics. Even for a beta product, there should be something: "Built by a team that ran X engagements" or "Based on Y methodology." The page asks for a lot of trust with no proof.
+
+### D. The "Manage Together" Screenshot
+Using `product-oversight.png` for the Manage step is the right idea — but the reader needs to understand what they're looking at. If the screenshot is dense, it needs annotation or a simplified illustration.
+
+---
+
+## Recommended Changes (Priority Order)
+
+1. **Promote "Sound familiar?" scenarios** — make them larger, more prominent, potentially the FIRST thing after the hero
+2. **Rewrite maturity ladder levels** as recognizable behaviors, not architecture labels
+3. **Halve the Loop descriptions** — let before/after cards carry the weight
+4. **Cut or refocus the Transformation Grid** — it's repeating what the Loop already said
+5. **Remove "Extraction Engine" from CTA** — breaks narrative coherence
+6. **Add one concrete example** — a mini case study or "day in the life" walkthrough
+7. **Vary vocabulary** — reduce "best practices," "evolving," "standards" repetition
+8. **Add minimal social proof** — even founder credibility or methodology lineage
+9. **Fix mobile maturity ladder** — preserve vertical climbing progression
+10. **Tighten hero sub-copy** — replace "executable context" with plain language
+
