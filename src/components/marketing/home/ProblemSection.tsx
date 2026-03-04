@@ -94,20 +94,21 @@ export function ProblemSection() {
         <div className="relative">
           {/* Markers */}
           <div className="absolute z-20 flex flex-col items-center"
-            style={{ left: "calc(30% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
+            style={{ left: "calc(30% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-16px" }}>
             <div className="flex flex-col items-center">
               <span className="text-[10px] md:text-xs font-black whitespace-nowrap px-3 py-1 rounded-full"
                 style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
-                Most teams are here
+                Most teams are here — trying to adopt AI
               </span>
-              <div className="flex items-end gap-0">
-                <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
-              </div>
-              <div className="flex items-center gap-1">
-                <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--destructive))" }} />
-                <span className="text-[9px] font-medium text-muted-foreground hidden md:inline">L2 → L3</span>
-                <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--warning))" }} />
-              </div>
+              {/* Single stem that forks into two */}
+              <div className="w-0.5 h-4" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
+              <svg width="80" height="28" viewBox="0 0 80 28" fill="none" className="block">
+                <path d="M40 0 L40 8 Q40 14 34 16 L12 24" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
+                <path d="M40 0 L40 8 Q40 14 46 16 L68 24" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
+                {/* Arrow tips */}
+                <polygon points="8,22 12,28 16,22" fill="hsl(var(--destructive) / 0.6)" />
+                <polygon points="64,22 68,28 72,22" fill="hsl(var(--destructive) / 0.6)" />
+              </svg>
             </div>
           </div>
 
