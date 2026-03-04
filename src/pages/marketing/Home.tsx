@@ -3,7 +3,6 @@ import { HeroSection } from "@/components/marketing/home/HeroSection";
 import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
 import { TrustBar } from "@/components/marketing/home/TrustBar";
 import { AIFragmentationSection } from "@/components/marketing/home/AIFragmentationSection";
-import { ProblemSection } from "@/components/marketing/home/ProblemSection";
 import { LizaLoopSection } from "@/components/marketing/home/LizaLoopSection";
 import { CategoryComparison } from "@/components/marketing/home/CategoryComparison";
 import { FAQSection } from "@/components/marketing/home/FAQSection";
@@ -18,7 +17,6 @@ export default function HomePage() {
       <HeroSection />
       <TrustBar />
       <ThreeReasonsSection />
-      <ProblemSection />
       <SectionDivider />
       <LizaLoopSection />
       <SectionDivider />

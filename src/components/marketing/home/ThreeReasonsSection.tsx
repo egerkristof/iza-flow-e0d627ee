@@ -127,14 +127,14 @@ export function ThreeReasonsSection() {
     >
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
-        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">Why it stays broken</p>
+        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The root cause</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
-          Three things your AI stack
+          Three reasons your team gets
           <br />
-          <span className="text-muted-foreground">can't do for your team.</span>
+          <span className="text-muted-foreground">wildly different results.</span>
         </h2>
         <p className="text-base text-muted-foreground max-w-lg mb-20">
-          The real value of AI shows up at team scale. These are the structural gaps that keep it individual.
+          It's not the tools. It's the three structural gaps no AI product was built to close.
         </p>
 
         {/* Alternating bands */}
