@@ -22,7 +22,7 @@ const STEPS = [
     line: "Your team is fast. Each person has their own ChatGPT setup, their own Claude projects. But breakthroughs stay in individual silos. LIZA connects the dots: one person's insight becomes the whole team's advantage in the next session.",
     before: "Everyone's fast individually, but insights stay in personal chat histories",
     after: "Every team member executes with the team's latest, best playbook",
-    img: "/images/product-execute-session.png",
+    img: "/images/product-execute-protocol.png",
   },
   {
     key: "learn",
