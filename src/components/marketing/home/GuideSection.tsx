@@ -32,10 +32,10 @@ export function GuideSection() {
         <div className="text-center mb-10">
           <SectionTag label="We've lived this" icon={<Compass className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            Built by practitioners who hit the same ceiling.
+            We gave our team AI. Then we lost control.
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            We gave our teams AI tools. They got faster individually — and more fragmented as a team. So we built the missing layer.
+            Everyone got faster. Nobody was on the same page. Our instruction sets couldn't keep up. So we built the missing layer.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export function GuideSection() {
         >
           <Quote className="w-6 h-6 mb-3" style={{ color: "hsl(var(--primary) / 0.3)" }} />
           <blockquote className="text-base md:text-lg font-medium italic leading-relaxed mb-4">
-            "We had Claude, GPT, and Notion. Everyone was fast — individually. But our team output was getting less consistent, not more. This is the layer that was missing."
+            "We had AI everywhere — ChatGPT, Claude, custom GPTs. Everyone was fast. But our methodology was fragmenting. This is the layer that ties AI speed to team-level standards."
           </blockquote>
           <div className="flex items-center gap-3">
             <div

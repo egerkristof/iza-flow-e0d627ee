@@ -9,32 +9,32 @@ import {
 
 const FAQS = [
   {
-    q: "I already use Claude Projects and Custom GPTs. Why do I need this?",
-    a: "Those tools give you personal memory within a single conversation or project. But your colleague's breakthroughs stay in their threads. LIZA creates a shared, governed layer across your whole team — so everyone executes with the latest, best thinking, not just their own.",
+    q: "My team already uses ChatGPT and Claude daily. What does LIZA add?",
+    a: "Those tools make individuals fast. LIZA makes the team consistent. It connects everyone's AI usage through shared, living instruction sets — so your best practices update as fast as your team learns, and every session runs the latest standard.",
   },
   {
-    q: "ChatGPT now has memory. Doesn't that solve the same problem?",
-    a: "ChatGPT memory is personal, fragile, and invisible to leadership. It learns one person's habits — including the bad ones. LIZA enforces team-approved standards, captures structured learnings, and gives leaders visibility into execution quality across the team.",
+    q: "We've built custom GPTs and prompt templates. How is this different?",
+    a: "Custom GPTs and prompt templates are static — someone builds them, others copy them, they gradually go stale. LIZA's instruction sets are living: they're enforced automatically in every session and evolve from real execution. Your methodology stays current because it's connected to how your team actually works.",
   },
   {
-    q: "We built a prompt library in Notion. How is this different?",
-    a: "Prompt libraries are static — someone has to remember to use them, and they don't evolve. LIZA automatically injects the right context into every AI session and learns from real execution. Your methodology stays current because it's connected to how your team actually works.",
+    q: "Our best practices change fast with AI. Can LIZA keep up?",
+    a: "That's exactly the problem LIZA solves. When someone discovers a better approach mid-engagement, it feeds back into the shared instruction set immediately. No quarterly review needed. Your standards evolve at the speed of execution.",
   },
   {
-    q: "What AI models does LIZA work with?",
-    a: "LIZA is model-agnostic. It works with GPT-4, Claude, Gemini, and others. The value isn't in the model — it's in the context layer that ensures your team's judgment runs in every session, regardless of which model someone prefers.",
+    q: "Does LIZA replace our existing AI tools?",
+    a: "No. LIZA is the layer above your AI tools. It works with GPT-4, Claude, Gemini, and others. Think of it as the management layer: it ensures your team's judgment, standards, and edge cases are injected into every AI session, regardless of which model someone prefers.",
+  },
+  {
+    q: "How does leadership get visibility without micromanaging?",
+    a: "LIZA gives leaders a bird's-eye view of execution quality, instruction set health, and team learning velocity — without sitting in every session. You see what's working, what's drifting, and where your standards need updating.",
   },
   {
     q: "How long until my team is actually using it?",
-    a: "Most teams are operational within a day. If you have existing methodology docs, the extraction engine structures them automatically. If you're starting fresh, your first working session begins building your knowledge base. No 6-week onboarding.",
+    a: "Most teams are operational within a day. Upload existing methodology docs and LIZA extracts structured instruction sets automatically. Or start fresh — your first working session begins building your knowledge base. No 6-week onboarding.",
   },
   {
     q: "Is my team's knowledge secure?",
-    a: "Yes. Your context stays in your organisation's environment. We don't train on your data, and your proprietary methodology never leaves your control — unlike general-purpose AI tools that may use your conversations for training.",
-  },
-  {
-    q: "What's the Beta pricing?",
-    a: "The Private Beta is free for the first month. After that, pricing scales with team size. We're limiting each cohort to 10 teams to ensure hands-on support.",
+    a: "Yes. Your instruction sets stay in your organisation's environment. We don't train on your data, and your proprietary methodology never leaves your control — unlike general-purpose AI tools.",
   },
 ];
 

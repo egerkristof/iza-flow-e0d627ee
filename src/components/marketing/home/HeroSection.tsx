@@ -13,17 +13,17 @@ export function HeroSection() {
       <div className="max-w-4xl mx-auto relative z-10 text-center">
         <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
           <Shield className="w-3 h-3" />
-          Your team already uses AI. This is what's missing.
+          For leaders managing AI-powered teams
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          Your AI remembers nothing.
+          Your team moves faster.
           <br />
-          <GradientText>Your team deserves better.</GradientText>
+          <GradientText>Your standards can't keep up.</GradientText>
         </h1>
 
-        <p className="text-base text-muted-foreground max-w-md mx-auto mb-8">
-          Custom GPTs forget. Claude Projects don't scale. Your team's best thinking stays trapped in individual chat histories. LIZA makes it compound.
+        <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
+          AI made your team faster — but every person runs their own way. Your best practices update too slowly. Your instruction sets live in silos. LIZA keeps it all together.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">

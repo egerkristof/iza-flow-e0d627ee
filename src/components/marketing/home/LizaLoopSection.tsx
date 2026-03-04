@@ -8,30 +8,30 @@ const STEPS = [
     key: "define",
     tag: "Define & enforce",
     icon: <Shield className="w-4 h-4" />,
-    headline: "Your standards, live in every session.",
-    line: "Custom GPTs and Claude Projects give you per-conversation memory. LIZA gives you team-wide enforcement — playbooks, edge cases, and quality gates that run automatically, not just when someone remembers to paste them.",
-    before: "Everyone pastes their own system prompts and hopes for the best",
-    after: "Team standards enforced automatically — no copy-paste, no drift",
+    headline: "Build instruction sets that actually get followed.",
+    line: "Your best practices need to evolve as fast as your team's AI usage. LIZA turns scattered prompts and tribal knowledge into living instruction sets — enforced in every session, updated continuously. Not a static doc. A working standard.",
+    before: "Best practices update quarterly. AI workflows change weekly.",
+    after: "Instruction sets evolve with every engagement — always current, always enforced",
     img: "/images/product-define-enforce.png",
   },
   {
     key: "execute",
     tag: "Execute together",
     icon: <Users className="w-4 h-4" />,
-    headline: "From individual chat histories to shared intelligence.",
-    line: "Right now, your team's best insights live in private chat threads. One person discovers a better approach — nobody else benefits. LIZA captures what works and makes it available to the whole team, live.",
-    before: "Breakthroughs stay in one person's ChatGPT history",
-    after: "Every insight becomes available to every team member, instantly",
+    headline: "From individual AI speed to team-level intelligence.",
+    line: "Your team is fast. Each person has their own ChatGPT setup, their own Claude projects. But breakthroughs stay in individual silos. LIZA connects the dots — so one person's insight becomes the whole team's advantage, in the next session.",
+    before: "Everyone's fast individually — but insights stay in personal chat histories",
+    after: "Every team member executes with the team's latest, best instruction set",
     img: "/images/product-execute-session.png",
   },
   {
     key: "learn",
     tag: "Learn together",
     icon: <Brain className="w-4 h-4" />,
-    headline: "AI memories forget. Team knowledge compounds.",
-    line: "ChatGPT memories are personal and fragile. Claude Projects reset. Your team's accumulated judgment shouldn't depend on which tool someone used last Tuesday. LIZA turns execution into structured learning that upgrades everyone.",
-    before: "AI 'memories' are personal, fragile, and reset between tools",
-    after: "Structured learning from every engagement — owned by the team, not the tool",
+    headline: "Your instruction sets get sharper with every engagement.",
+    line: "AI lets your team work more granularly and across more touchpoints than ever. That means more learning opportunities — but only if you capture them. LIZA turns execution into structured feedback that upgrades your shared standards automatically.",
+    before: "Great insights discovered in Tuesday's session are forgotten by Thursday",
+    after: "Every engagement feeds back into living instruction sets — the team compounds",
     img: "/images/product-learn-extraction.png",
   },
 ];
@@ -49,7 +49,7 @@ export function LizaLoopSection() {
               Define. Execute. Learn.
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              You've given your team AI tools. Now give them the system that makes those tools work <em>as a team</em>.
+              Your team already uses AI to execute faster. LIZA makes sure that speed builds something — living instruction sets that the whole team benefits from.
             </p>
           </div>
 
@@ -96,7 +96,7 @@ export function LizaLoopSection() {
           {/* Mid-page CTA */}
           <div className="mt-14 text-center">
             <p className="text-sm text-muted-foreground mb-4">
-              One system. Standards enforced, knowledge compounding, leadership in control.
+              One system. Living instruction sets, team-wide enforcement, continuous learning.
             </p>
             <Link
               to="/beta"
