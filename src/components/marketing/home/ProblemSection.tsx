@@ -66,11 +66,11 @@ export function ProblemSection() {
         <div className="text-center mb-14">
           <SectionTag label="The diagnostic" icon={<Layers className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            How well does your team{" "}
-            <GradientText>manage execution?</GradientText>
+            Why the results are{" "}
+            <GradientText>so different</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            Execution quality was always hard to manage. AI didn't fix it. It amplified whatever level you were already at.
+            AI doesn't create inconsistency. It amplifies whatever level your team was already at. Find yours.
           </p>
         </div>
 
