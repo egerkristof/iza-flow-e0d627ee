@@ -4,29 +4,29 @@ import { ArrowRight, X, Check } from "lucide-react";
 const ROWS = [
   {
     before: "Quality depends on who's doing the work",
-    after: "Everyone executes from the team's best, up-to-date knowledge — automatically",
+    after: "Standards enforced in every session — automatically",
   },
   {
-    before: "Lessons stay in one person's head or a recap nobody reads",
-    after: "Every engagement feeds back into the living playbook for the whole team",
+    before: "Best practices rot in docs nobody reads",
+    after: "Living playbook, always current, always followed",
   },
   {
-    before: "You only find out something drifted when a client complains",
-    after: "You see execution patterns, learning signals, and drift as they happen",
+    before: "You find out something drifted when a client complains",
+    after: "You see execution patterns and drift as they happen",
   },
   {
-    before: "AI usage is invisible — everyone has their own prompts and shortcuts",
-    after: "AI usage is governed, shared, and continuously improving across the team",
+    before: "AI usage is invisible — everyone has their own prompts",
+    after: "AI usage is governed, shared, and continuously improving",
   },
   {
-    before: "Onboarding takes 9 months before someone stops needing a senior on every call",
-    after: "New hires execute at team standard from day one — the playbook is live in every session",
+    before: "Onboarding takes 9 months before someone stops needing a senior",
+    after: "New hires execute at team standard from week one",
   },
 ];
 
 export function TransformationSection() {
   return (
-    <section className="py-20 px-6">
+    <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
           <SectionTag label="What changes" icon={<ArrowRight className="w-3 h-3" />} />
@@ -50,7 +50,7 @@ export function TransformationSection() {
             <div key={i} className="contents">
               <div
                 className="rounded-lg border px-4 py-2.5 flex items-start gap-3"
-                style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+                style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}
               >
                 <X className="w-3.5 h-3.5 mt-0.5 shrink-0" style={{ color: "hsl(var(--destructive) / 0.5)" }} />
                 <p className="text-sm text-muted-foreground">{r.before}</p>
