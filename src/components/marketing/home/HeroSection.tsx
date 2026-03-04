@@ -95,9 +95,6 @@ export function HeroSection() {
           </span>
         </p>
 
-        <p className="text-sm text-muted-foreground/80 max-w-md mx-auto mb-10">
-          So every person on your team delivers like your best person—consistently.
-        </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
           <Link
@@ -177,18 +174,6 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Product glimpse */}
-        <div
-          className="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border"
-          style={{ borderColor: "hsl(var(--border))", boxShadow: "0 20px 60px -15px hsl(var(--primary) / 0.15)" }}
-        >
-          <img
-            src="/images/product-mission-control.png"
-            alt="LIZA OS - Mission Control dashboard with playbooks, active sessions, and insights"
-            className="w-full h-auto block"
-            loading="eager"
-          />
-        </div>
       </div>
     </section>
   );
