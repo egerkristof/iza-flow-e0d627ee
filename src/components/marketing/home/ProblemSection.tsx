@@ -5,46 +5,54 @@ import { Layers, ChevronDown, ChevronUp, ArrowDown } from "lucide-react";
 const LEVELS = [
   {
     level: 1,
-    title: "In their heads",
-    short: "Knowledge lives in people's heads",
-    ai: "Everyone prompts their own way — same question, different answers",
-    detail: "A senior's absence means visible quality drops. There's no shared standard. AI just amplifies individual habits — good and bad.",
-    symptom: "\"It's fine when Sarah runs it\"",
+    title: "Individual habits",
+    short: "Everyone executes their own way",
+    ai: "AI amplifies individual habits — good and bad — with zero guardrails",
+    detail: "When your best person is out, quality visibly drops. There's no shared execution standard. AI just makes the inconsistency faster.",
+    symptom: "\"It depends who runs it\"",
   },
   {
     level: 2,
     title: "Static playbooks",
-    short: "Knowledge written down — 18 months ago",
-    ai: "AI bypasses the docs entirely. Everyone builds their own prompts.",
-    detail: "The methodology doc was good once. Nobody follows it. The official process and the real AI-assisted process have fully diverged.",
+    short: "Standards exist — but execution ignores them",
+    ai: "AI bypasses the docs. Everyone builds their own prompts and workflows.",
+    detail: "The methodology doc was solid 18 months ago. Nobody follows it. The real execution process and the documented one have fully diverged.",
     symptom: "\"We have a wiki somewhere…\"",
     marker: "most",
   },
   {
     level: 3,
     title: "Pockets of sharing",
-    short: "Some knowledge transfers, inconsistently",
-    ai: "Prompt libraries grow in Slack — no curation, no governance",
-    detail: "A few people share prompts. Post-project reviews happen sometimes. No way to know what's current, proven, or approved.",
+    short: "Some standards transfer, inconsistently",
+    ai: "Prompt libraries grow in Slack — no curation, no enforcement",
+    detail: "A few people share what works. Post-project reviews happen sometimes. But nothing connects back to how the team actually executes.",
     symptom: "\"Check #random for that prompt\"",
   },
   {
     level: 4,
-    title: "Live shared context",
-    short: "One living knowledge base for the team",
-    ai: "AI enforces team standards in every session, automatically",
-    detail: "Every AI session starts pre-loaded with your team's accumulated judgment. New hires execute at team standard from day one.",
+    title: "Enforced execution",
+    short: "Team standards run in every AI session",
+    ai: "AI enforces your methodology live — every session, every person",
+    detail: "Every AI session starts pre-loaded with your team's accumulated judgment. New hires execute at team standard from day one. No drift.",
     symptom: "\"The AI already knew our approach\"",
     marker: "liza",
   },
   {
     level: 5,
-    title: "Governed intelligence",
-    short: "The team compounds with every engagement",
-    ai: "AI usage is visible, governed, and continuously improving",
-    detail: "Every engagement feeds back into shared knowledge. The weakest performer benefits from the strongest insight. Methodology evolves automatically.",
-    symptom: "\"We're better this quarter than last\"",
+    title: "Compounding intelligence",
+    short: "Every engagement makes the team smarter",
+    ai: "Execution feeds back into standards — methodology evolves automatically",
+    detail: "Every engagement feeds insights back into shared playbooks. The weakest performer benefits from the strongest insight. Your team compounds.",
+    symptom: "\"We're measurably better this quarter\"",
   },
+];
+
+const SUMMARY = [
+  { level: "L1", label: "Individual habits", color: "destructive" },
+  { level: "L2", label: "Static docs", color: "destructive" },
+  { level: "L3", label: "Fragmented sharing", color: "warning" },
+  { level: "L4", label: "Enforced standards", color: "primary" },
+  { level: "L5", label: "Compounding team", color: "primary" },
 ];
 
 export function ProblemSection() {
@@ -58,10 +66,10 @@ export function ProblemSection() {
           <SectionTag label="The diagnostic" icon={<Layers className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
             Where is your team on the{" "}
-            <GradientText>knowledge maturity scale?</GradientText>
+            <GradientText>execution maturity scale?</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            AI didn't create the problem. It amplified wherever you already were.
+            AI didn't create the problem. It exposed how your team actually executes — and where standards break down.
           </p>
         </div>
 
@@ -70,7 +78,7 @@ export function ProblemSection() {
           <div className="flex-[3] flex items-center justify-center gap-2 rounded-lg py-2 mr-1"
             style={{ background: "hsl(var(--destructive) / 0.06)", border: "1px dashed hsl(var(--destructive) / 0.2)" }}>
             <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
-              Fragmented
+              Inconsistent execution
             </span>
           </div>
           <div className="flex-[2] flex items-center justify-center gap-2 rounded-lg py-2 ml-1"
@@ -83,7 +91,7 @@ export function ProblemSection() {
 
         {/* Staircase with markers */}
         <div className="relative">
-          {/* Top-down arrow markers - prominent */}
+          {/* Top-down arrow markers */}
           <div className="absolute z-20 flex flex-col items-center"
             style={{ left: "calc(20% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
             <div className="flex flex-col items-center">
@@ -141,27 +149,20 @@ export function ProblemSection() {
                   }}
                 >
                   <div className="absolute inset-0 flex flex-col items-center justify-start pt-3 md:pt-4 px-1.5 md:px-3">
-                    {/* Level */}
                     <div className="text-base md:text-lg font-black mb-0.5"
                       style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground))" : accentColor }}>
                       L{l.level}
                     </div>
-
-                    {/* Title */}
                     <div className="text-[10px] md:text-xs font-bold leading-tight text-center mb-1"
                       style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.95)" : "hsl(var(--foreground) / 0.85)" }}>
                       {l.title}
                     </div>
-
-                    {/* Short - visible on L2+ */}
                     {l.level >= 2 && (
                       <div className="text-[8px] md:text-[10px] leading-snug text-center hidden sm:block px-1 mb-1.5"
                         style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.8)" : "hsl(var(--muted-foreground))" }}>
                         {l.short}
                       </div>
                     )}
-
-                    {/* AI impact line - visible on L3+ */}
                     {l.level >= 3 && (
                       <div className="mt-auto mb-3 text-[8px] md:text-[9px] font-medium text-center hidden md:block px-1.5 py-1 rounded-md"
                         style={{
@@ -172,8 +173,6 @@ export function ProblemSection() {
                       </div>
                     )}
                   </div>
-
-                  {/* Active bar */}
                   <div className="absolute bottom-0 left-0 right-0 h-1 transition-opacity duration-200"
                     style={{ background: accentColor, opacity: isActive ? 1 : 0 }} />
                 </button>
@@ -184,9 +183,35 @@ export function ProblemSection() {
           {/* Base */}
           <div className="h-1 rounded-full" style={{ background: "hsl(var(--border))" }} />
           <div className="flex justify-between mt-2 px-1">
-            <span className="text-[10px] text-muted-foreground font-medium">← Knowledge scattered</span>
-            <span className="text-[10px] font-semibold text-primary">Knowledge compounding →</span>
+            <span className="text-[10px] text-muted-foreground font-medium">← Inconsistent execution</span>
+            <span className="text-[10px] font-semibold text-primary">Compounding execution →</span>
           </div>
+        </div>
+
+        {/* Summary strip — first-view clarity */}
+        <div className="mt-6 grid grid-cols-5 gap-1.5">
+          {SUMMARY.map((s) => (
+            <button
+              key={s.level}
+              onClick={() => setActiveLevel(activeLevel === parseInt(s.level[1]) ? null : parseInt(s.level[1]))}
+              className="flex flex-col items-center gap-1 py-2.5 px-1 rounded-lg transition-all text-center cursor-pointer"
+              style={{
+                background: activeLevel === parseInt(s.level[1])
+                  ? `hsl(var(--${s.color}) / 0.12)`
+                  : `hsl(var(--${s.color}) / 0.04)`,
+                border: `1px solid ${activeLevel === parseInt(s.level[1])
+                  ? `hsl(var(--${s.color}) / 0.3)`
+                  : `hsl(var(--${s.color}) / 0.1)`}`,
+              }}
+            >
+              <span className="text-[10px] font-black" style={{ color: `hsl(var(--${s.color}))` }}>
+                {s.level}
+              </span>
+              <span className="text-[9px] md:text-[10px] leading-tight text-muted-foreground font-medium">
+                {s.label}
+              </span>
+            </button>
+          ))}
         </div>
 
         {/* Tap hint */}
