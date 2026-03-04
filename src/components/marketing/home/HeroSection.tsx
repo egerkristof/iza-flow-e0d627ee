@@ -91,9 +91,9 @@ export function HeroSection() {
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-3">
-          The platform to define, enforce, and continuously update how your team works—
+          The platform to define, enforce, and continuously update how your team works
           <span className="relative inline font-semibold text-foreground">
-            with and without AI.
+            {" "}with AI.
             <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
           </span>
         </p>
