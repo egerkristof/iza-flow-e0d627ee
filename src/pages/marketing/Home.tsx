@@ -16,8 +16,8 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
-      <ThreeReasonsSection />
       <TrustBar />
+      <ThreeReasonsSection />
       <ProblemSection />
       <SectionDivider />
       <LizaLoopSection />

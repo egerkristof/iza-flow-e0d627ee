@@ -9,10 +9,13 @@ const PERSONAS = [
 
 export function TrustBar() {
   return (
-    <section className="py-10 px-6" style={{ background: "hsl(var(--card))" }}>
-      <div className="max-w-4xl mx-auto">
-        <p className="text-center text-[11px] font-black tracking-[0.25em] uppercase text-muted-foreground mb-6">
-          For leaders who own execution quality, now navigating the AI era
+    <section className="py-14 px-6" style={{ background: "hsl(var(--card))" }}>
+      <div className="max-w-3xl mx-auto text-center">
+        <h2 className="text-xl md:text-2xl font-black text-foreground mb-2 leading-tight">
+          Your team already uses AI.
+        </h2>
+        <p className="text-base text-muted-foreground mb-8 max-w-lg mx-auto">
+          But you can't scale it reliably, because every person does their own thing. That's the gap.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           {PERSONAS.map((p) => (

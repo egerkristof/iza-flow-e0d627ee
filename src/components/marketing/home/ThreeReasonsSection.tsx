@@ -127,14 +127,14 @@ export function ThreeReasonsSection() {
     >
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
-        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The problem</p>
+        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">Why it stays broken</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
-          Three gaps your current tools
+          Three things your AI stack
           <br />
-          <span className="text-muted-foreground">will never close.</span>
+          <span className="text-muted-foreground">can't do for your team.</span>
         </h2>
         <p className="text-base text-muted-foreground max-w-lg mb-20">
-          No wiki, no prompt library, and no AI chatbot can solve these.
+          The real value of AI shows up at team scale. These are the structural gaps that keep it individual.
         </p>
 
         {/* Alternating bands */}
