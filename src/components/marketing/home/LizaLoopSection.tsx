@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Layers, ArrowRight, Shield, Users, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SectionTag } from "./shared";
-import loopCollaborate from "@/assets/loop-collaborate.png";
-import loopLearn from "@/assets/loop-learn.png";
 
 const STEPS = [
   {
@@ -24,7 +22,7 @@ const STEPS = [
     line: "Your team works in live, collaborative sessions — grounded in your latest standards. Every conversation naturally enriches what your team knows, so your weakest performer operates from your strongest insight.",
     before: "Everyone brings their own context, their own prompts",
     after: "Best practices compound from real work, automatically",
-    img: loopCollaborate,
+    img: "/images/product-execute-session.png",
   },
   {
     key: "learn",
@@ -34,7 +32,7 @@ const STEPS = [
     line: "When someone finds a better approach or handles an edge case, it feeds back into shared knowledge. Not as a meeting recap — as a structured upgrade to how your whole team operates.",
     before: "Lessons stay in one person's head or chat history",
     after: "Every insight upgrades the entire team's standards",
-    img: loopLearn,
+    img: "/images/product-learn-extraction.png",
   },
 ];
 
