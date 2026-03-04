@@ -83,31 +83,33 @@ export function ProblemSection() {
 
         {/* Staircase with markers */}
         <div className="relative">
-          {/* Top-down arrow markers */}
-          <div className="absolute -top-1 z-20 flex flex-col items-center"
-            style={{ left: "calc(20% + (20% - 4px) / 2)", transform: "translateX(-50%)" }}>
+          {/* Top-down arrow markers - prominent */}
+          <div className="absolute z-20 flex flex-col items-center"
+            style={{ left: "calc(20% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
             <div className="flex flex-col items-center">
-              <span className="text-[9px] md:text-[10px] font-bold whitespace-nowrap px-2 py-0.5 rounded-full mb-0.5"
-                style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)" }}>
-                Most teams
+              <span className="text-[10px] md:text-xs font-black whitespace-nowrap px-3 py-1 rounded-full"
+                style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
+                Most teams are here
               </span>
-              <ArrowDown className="w-3.5 h-3.5" style={{ color: "hsl(var(--destructive))" }} />
+              <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
+              <ArrowDown className="w-5 h-5 -mt-1" style={{ color: "hsl(var(--destructive))" }} />
             </div>
           </div>
 
-          <div className="absolute -top-1 z-20 flex flex-col items-center"
-            style={{ left: "calc(60% + (20% - 4px) / 2)", transform: "translateX(-50%)" }}>
+          <div className="absolute z-20 flex flex-col items-center"
+            style={{ left: "calc(60% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
             <div className="flex flex-col items-center">
-              <span className="text-[9px] md:text-[10px] font-bold whitespace-nowrap px-2 py-0.5 rounded-full mb-0.5"
-                style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)" }}>
+              <span className="text-[10px] md:text-xs font-black whitespace-nowrap px-3 py-1 rounded-full"
+                style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.2)" }}>
                 Day 1 with LIZA
               </span>
-              <ArrowDown className="w-3.5 h-3.5 text-primary" />
+              <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--primary) / 0.4)" }} />
+              <ArrowDown className="w-5 h-5 -mt-1 text-primary" />
             </div>
           </div>
 
           {/* Staircase */}
-          <div className="flex items-end gap-1.5 md:gap-2 pt-8 mb-1" style={{ height: "380px" }}>
+          <div className="flex items-end gap-1.5 md:gap-2 pt-14 mb-1" style={{ height: "420px" }}>
             {LEVELS.map((l) => {
               const isTarget = l.level >= 4;
               const isActive = activeLevel === l.level;
