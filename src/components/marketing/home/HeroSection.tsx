@@ -22,8 +22,12 @@ export function HeroSection() {
           <GradientText>actually executes.</GradientText>
         </h1>
 
-        <p className="text-base text-muted-foreground max-w-sm mx-auto mb-8">
-          Define, enforce, and continuously update how your team works. Together.
+        <p className="text-base text-muted-foreground max-w-md mx-auto mb-8">
+          Define, enforce, and continuously update how your team works —{" "}
+          <span className="relative inline-block font-semibold text-foreground">
+            with or without AI.
+            <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
+          </span>
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
