@@ -10,7 +10,7 @@ import {
 const FAQS = [
   {
     q: "My team already uses ChatGPT and Claude daily. What does LIZA add?",
-    a: "Those tools make individuals fast. LIZA makes the team consistent. It connects everyone's AI usage through shared, living playbooks so your best practices update as fast as your team learns, and every session runs the latest standard.",
+    a: "Those tools make individuals fast. LIZA makes the team consistent. It connects everyone's AI usage through shared, living playbooks, so your best practices update as fast as your team learns and every session runs the latest standard.",
   },
   {
     q: "We've built custom GPTs and prompt templates. How is this different?",
@@ -18,7 +18,7 @@ const FAQS = [
   },
   {
     q: "Our best practices change fast with AI. Can LIZA keep up?",
-    a: "That's exactly the problem LIZA solves. When someone discovers a better approach mid-engagement, it feeds back into the shared instruction set immediately. No quarterly review needed. Your standards evolve at the speed of execution.",
+    a: "That's exactly the problem LIZA solves. When someone discovers a better approach mid-engagement, it feeds back into the shared playbook immediately. No quarterly review needed. Your standards evolve at the speed of execution.",
   },
   {
     q: "Does LIZA replace our existing AI tools?",
@@ -34,7 +34,7 @@ const FAQS = [
   },
   {
     q: "Is my team's knowledge secure?",
-    a: "Yes. Your playbooks stay in your organisation's environment. We don't train on your data, and your proprietary methodology never leaves your control, unlike general-purpose AI tools.",
+    a: "Yes. Your playbooks stay in your organisation's environment. We don't train on your data, and your proprietary methodology never leaves your control.",
   },
 ];
 

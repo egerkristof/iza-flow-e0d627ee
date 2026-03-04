@@ -31,7 +31,7 @@ const LEVELS = [
   },
   {
     level: 4,
-    title: "Living instruction sets",
+    title: "Living playbooks",
     short: "Shared standards, always current, always enforced",
     ai: "AI sessions run the team's latest, best playbook automatically",
     detail: "Your execution standards are defined, shared, and enforced in every session, human or AI-assisted. When someone discovers a better approach, it updates the shared playbook. Every team member works with the latest version. No copy-pasting. No drift.",
@@ -52,7 +52,7 @@ const SUMMARY = [
   { level: "L1", label: "Individual habits", color: "destructive" },
   { level: "L2", label: "Outdated standards", color: "destructive" },
   { level: "L3", label: "AI silos", color: "warning" },
-  { level: "L4", label: "Living instruction sets", color: "primary" },
+  { level: "L4", label: "Living playbooks", color: "primary" },
   { level: "L5", label: "Compounding team", color: "primary" },
 ];
 
@@ -92,39 +92,39 @@ export function ProblemSection() {
 
         {/* Staircase */}
         <div className="relative">
-          {/* "Most teams" marker — centered between L2 and L3 (i.e. at 40% = midpoint of 20%–60% range) */}
+          {/* "Most teams" marker - centered between L2 and L3 */}
           <div className="absolute z-20 flex flex-col items-center pointer-events-none"
-            style={{ left: "40%", transform: "translateX(-50%)", top: "-16px" }}>
+            style={{ left: "30%", transform: "translateX(-50%)", top: "-58px" }}>
             <div className="flex flex-col items-center">
               <span className="text-[9px] md:text-xs font-black px-2 md:px-3 py-1 rounded-full text-center leading-tight"
                 style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
                 <span className="hidden sm:inline">Most teams are here, trying to adopt AI</span>
-                <span className="sm:hidden">Most teams are here</span>
+                <span className="sm:hidden">Most teams</span>
               </span>
-              <div className="w-0.5 h-3 md:h-4" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
-              <svg width="100" height="32" viewBox="0 0 100 32" fill="none" className="block">
-                <path d="M50 0 L50 10 Q50 16 42 19 L20 28" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
-                <path d="M50 0 L50 10 Q50 16 58 19 L80 28" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
-                <polygon points="16,26 20,32 24,26" fill="hsl(var(--destructive) / 0.6)" />
-                <polygon points="76,26 80,32 84,26" fill="hsl(var(--destructive) / 0.6)" />
+              <div className="w-0.5 h-2 md:h-3" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
+              <svg width="120" height="28" viewBox="0 0 120 28" fill="none" className="block">
+                <path d="M60 0 L60 8 Q60 14 50 17 L20 25" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
+                <path d="M60 0 L60 8 Q60 14 70 17 L100 25" stroke="hsl(var(--destructive) / 0.5)" strokeWidth="1.5" fill="none" />
+                <polygon points="16,23 20,28 24,23" fill="hsl(var(--destructive) / 0.6)" />
+                <polygon points="96,23 100,28 104,23" fill="hsl(var(--destructive) / 0.6)" />
               </svg>
             </div>
           </div>
 
-          {/* "Day 1 with LIZA" marker — centered on L4 (60%–80%, midpoint = 70%) */}
+          {/* "Day 1 with LIZA" marker - centered on L4 */}
           <div className="absolute z-20 flex flex-col items-center pointer-events-none"
-            style={{ left: "70%", transform: "translateX(-50%)", top: "-12px" }}>
+            style={{ left: "70%", transform: "translateX(-50%)", top: "-58px" }}>
             <div className="flex flex-col items-center">
               <span className="text-[9px] md:text-xs font-black whitespace-nowrap px-2 md:px-3 py-1 rounded-full"
                 style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.2)" }}>
                 Day 1 with LIZA
               </span>
-              <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--primary) / 0.4)" }} />
-              <ArrowDown className="w-5 h-5 -mt-1 text-primary" />
+              <div className="w-0.5 h-4 md:h-6" style={{ background: "hsl(var(--primary) / 0.4)" }} />
+              <ArrowDown className="w-4 h-4 -mt-0.5 text-primary" />
             </div>
           </div>
 
-          <div className="flex items-end gap-1.5 md:gap-2 pt-16 md:pt-14 mb-1" style={{ height: "420px" }}>
+          <div className="flex items-end gap-1.5 md:gap-2 pt-20 mb-1" style={{ height: "440px" }}>
             {LEVELS.map((l) => {
               const isTarget = l.level >= 4;
               const isActive = activeLevel === l.level;

@@ -43,7 +43,7 @@ export function AIFragmentationSection() {
           <ProblemCard
             number="1"
             headline="The judgment gap"
-            body="Your best consultant handles it instinctively. Everyone else follows a checklist that misses the point. The real know-how has never transferred. Not through SOPs, not through shadowing."
+            body="Your best consultant handles it instinctively. Everyone else follows a checklist that misses the point. The real know-how never transferred. Not through SOPs, not through shadowing."
             accent="var(--destructive)"
           />
           <ProblemCard
