@@ -17,14 +17,14 @@ export function HeroSection() {
         </p>
 
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.08]">
-          Same team. Same AI tools.
+          Define, scale, and improve
           <br />
-          <span className="text-muted-foreground">Wildly different results.</span>
+          <span className="text-muted-foreground">how your team executes with AI.</span>
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12">
-          LIZA OS lets you define, scale, and improve how your{" "}
-          <span className="font-semibold text-foreground">team executes with AI.</span>
+          Your team already uses AI. But everyone does it differently, and{" "}
+          <span className="font-semibold text-foreground">nothing compounds.</span>
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
