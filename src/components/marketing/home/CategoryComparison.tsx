@@ -25,12 +25,9 @@ export function CategoryComparison() {
         <div className="text-center mb-10">
           <SectionTag label="Why not just…" icon={<GitCompare className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            Wikis store. Prompts copy. AI tools execute individually.{" "}
-            <GradientText>None of them manage execution.</GradientText>
+            You already have tools.{" "}
+            <GradientText>None of them close the gap.</GradientText>
           </h2>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Managing execution means defining standards, enforcing them consistently, and updating them from real work. No existing tool does all three.
-          </p>
         </div>
 
         <div
@@ -90,7 +87,7 @@ export function CategoryComparison() {
 
         {/* Punchline */}
         <p className="text-center text-xs text-muted-foreground mt-5 max-w-lg mx-auto">
-          AI tools are powerful executors, but they don't manage execution. That's the gap LIZA fills.
+          Wikis store knowledge. Prompt libraries copy text. AI tools execute individually. Only LIZA manages how your team executes together.
         </p>
       </div>
     </section>

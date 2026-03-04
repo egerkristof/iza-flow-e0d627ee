@@ -46,10 +46,10 @@ export function LizaLoopSection() {
           <div className="text-center mb-14">
             <SectionTag label="How it works" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              Define. Execute. Learn.
+              From wildly different to consistently excellent.
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Your team already uses AI to execute faster. LIZA makes sure that speed builds something: living playbooks that the whole team benefits from.
+              Three steps. One loop. Your team's best thinking becomes the default for everyone.
             </p>
           </div>
 
