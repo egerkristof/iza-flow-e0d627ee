@@ -12,7 +12,7 @@ export function HeroSection() {
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
         <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
-          For consulting &amp; professional services teams
+          If your team's quality depends on who's doing the work
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
@@ -22,7 +22,7 @@ export function HeroSection() {
         </h1>
 
         <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          Your best practices — standardized, evolving, and live in every work session. Not as static docs, but as executable context your whole team runs on.
+          Turn your best consultant's instincts into something every team member runs on — automatically. Not as static docs, but as a living system that keeps getting smarter.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -41,7 +41,7 @@ export function HeroSection() {
             onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            See how ↓
+            See the problem ↓
           </button>
         </div>
       </div>
