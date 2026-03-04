@@ -53,7 +53,7 @@ export function ProblemSection() {
   };
 
   return (
-    <section id="maturity-ladder" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
+    <section id="the-problem" className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
