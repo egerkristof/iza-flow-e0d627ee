@@ -4,7 +4,7 @@ import { GradientText } from "./shared";
 
 export function HeroSection() {
   return (
-    <section className="relative py-24 md:py-36 px-6 overflow-hidden">
+    <section className="relative py-24 md:py-32 px-6 overflow-hidden">
       <div
         className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
         style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06) 0%, transparent 65%)", transform: "translate(20%, -20%)" }}
@@ -22,11 +22,11 @@ export function HeroSection() {
           <GradientText>actually executes.</GradientText>
         </h1>
 
-        <p className="text-base text-muted-foreground max-w-md mx-auto mb-8">
-          Best practices that stay current, get followed, and improve with every engagement — even as AI accelerates everything.
+        <p className="text-base text-muted-foreground max-w-sm mx-auto mb-8">
+          Your standards, enforced in every AI session. Always current. Always followed.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
           <Link
             to="/beta"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
@@ -44,6 +44,19 @@ export function HeroSection() {
           >
             Where is your team? ↓
           </button>
+        </div>
+
+        {/* Product glimpse */}
+        <div
+          className="max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl border"
+          style={{ borderColor: "hsl(var(--border))", boxShadow: "0 20px 60px -15px hsl(var(--primary) / 0.15)" }}
+        >
+          <img
+            src="/images/product-oversight.png"
+            alt="LIZA OS — Oversight dashboard showing team execution governance"
+            className="w-full h-auto block"
+            loading="eager"
+          />
         </div>
       </div>
     </section>

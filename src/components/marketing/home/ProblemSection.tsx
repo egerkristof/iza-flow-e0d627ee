@@ -23,7 +23,7 @@ const LEVELS = [
     level: 3,
     title: "Pockets of sharing",
     short: "Some knowledge transfers, but inconsistently",
-    withoutAI: "Post-project reviews happen sometimes. Best practices get shared in meetings — slowly.",
+    withoutAI: "Post-project reviews happen sometimes. Best practices get shared in meetings, slowly.",
     withAI: "A few people share prompts in Slack. No curation, no way to know what's current.",
     color: "warning" as const,
   },
@@ -63,11 +63,11 @@ export function ProblemSection() {
             <GradientText>knowledge maturity scale?</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            AI didn't create the problem — it amplified wherever you already were. Most teams are stuck at Level 2 or 3.
+            AI didn't create the problem. It amplified wherever you already were.
           </p>
         </div>
 
-        {/* Horizontal progress bar — quick diagnostic */}
+        {/* Horizontal progress bar */}
         <div className="mb-10">
           <div className="flex items-stretch gap-1 mb-2">
             {LEVELS.map((l) => {
@@ -93,7 +93,6 @@ export function ProblemSection() {
                         ? "hsl(var(--warning) / 0.5)"
                         : "hsl(var(--destructive) / 0.5)"
                       : "transparent",
-                    // ring color handled via className
                   }}
                 >
                   <div
@@ -124,7 +123,6 @@ export function ProblemSection() {
                 opacity: expandedLevel && expandedLevel >= 4 ? 1 : 0.5,
               }}
             />
-            {/* Marker for "most teams" */}
             <div
               className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2"
               style={{
@@ -136,10 +134,7 @@ export function ProblemSection() {
           </div>
           <div className="flex justify-between mt-1.5">
             <span className="text-[10px] text-muted-foreground">Fragmented</span>
-            <span
-              className="text-[10px] font-semibold"
-              style={{ color: "hsl(var(--destructive))" }}
-            >
+            <span className="text-[10px] font-semibold" style={{ color: "hsl(var(--destructive))" }}>
               ← Most teams
             </span>
             <span className="text-[10px] font-semibold text-primary">Compounding →</span>
@@ -221,15 +216,15 @@ export function ProblemSection() {
           </div>
         )}
 
-        {/* Tap-to-explore hint */}
+        {/* Tap-to-explore hint — animated */}
         {expandedLevel === null && (
-          <p className="text-center text-xs text-muted-foreground mb-6 flex items-center justify-center gap-1 animate-fade-in">
-            <ChevronDown className="w-3 h-3" /> Tap a level to explore
+          <p className="text-center text-xs text-muted-foreground mb-6 flex items-center justify-center gap-1 animate-bounce">
+            <ChevronDown className="w-3.5 h-3.5" /> Tap a level to explore
           </p>
         )}
 
         {/* Where most teams sit */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-4">
           <div
             className="flex-1 rounded-xl border-2 px-6 py-5 text-center"
             style={{ borderColor: "hsl(var(--destructive) / 0.25)", background: "hsl(var(--destructive) / 0.04)" }}
@@ -258,18 +253,6 @@ export function ProblemSection() {
               Level 4–5. Live shared context, governed methodology, compounding team intelligence.
             </p>
           </div>
-        </div>
-
-        {/* Infrastructure callout */}
-        <div
-          className="rounded-2xl border-2 px-8 py-8 text-center"
-          style={{ borderColor: "hsl(var(--primary) / 0.35)", background: "hsl(var(--primary) / 0.04)" }}
-        >
-          <p className="text-xl md:text-2xl font-black leading-snug">
-            To get there, you need infrastructure that makes your team
-            <br className="hidden md:block" />
-            execute, learn, and evolve as one — with you at the helm.
-          </p>
         </div>
       </div>
     </section>

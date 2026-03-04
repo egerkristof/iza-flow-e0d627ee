@@ -5,15 +5,21 @@ import { LizaLoopSection } from "@/components/marketing/home/LizaLoopSection";
 import { TransformationSection } from "@/components/marketing/home/TransformationSection";
 import { GuideSection } from "@/components/marketing/home/GuideSection";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
+import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 
 export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
+      <SectionDivider />
       <ProblemSection />
+      <SectionDivider />
       <LizaLoopSection />
+      <SectionDivider />
       <TransformationSection />
+      <SectionDivider />
       <GuideSection />
+      <SectionDivider />
       <BetaCTASection />
     </MarketingLayout>
   );

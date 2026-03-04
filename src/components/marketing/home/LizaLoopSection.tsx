@@ -11,7 +11,7 @@ const STEPS = [
     tag: "Define & enforce",
     icon: <Shield className="w-4 h-4" />,
     headline: "Set the standard. Make sure it's followed.",
-    line: "Define your team's best practices, edge cases, and quality criteria in one living system. LIZA enforces them in every AI session — automatically. No more hoping people read the wiki.",
+    line: "Define your team's best practices, edge cases, and quality criteria in one living system. LIZA enforces them in every AI session, automatically.",
     before: "Best practices live in docs nobody reads",
     after: "Standards are enforced in every session, automatically",
     img: "/images/product-oversight.png",
@@ -21,7 +21,7 @@ const STEPS = [
     tag: "Execute together",
     icon: <Users className="w-4 h-4" />,
     headline: "Everyone starts from the team's best knowledge.",
-    line: "Your accumulated judgment — standards, edge cases, client patterns — is assembled and injected into every AI session. The weakest performer benefits from the strongest insight.",
+    line: "Your accumulated judgment is assembled and injected into every AI session. The weakest performer benefits from the strongest insight.",
     before: "Everyone brings their own context, their own prompts",
     after: "Everyone executes from the team's best, up-to-date standard",
     img: loopCollaborate,
@@ -31,7 +31,7 @@ const STEPS = [
     tag: "Learn together",
     icon: <Brain className="w-4 h-4" />,
     headline: "Every engagement makes the playbook sharper.",
-    line: "When someone finds a better approach or handles an edge case — it feeds back into shared knowledge. Not as a meeting recap. As a structured upgrade to how the whole team operates.",
+    line: "When someone finds a better approach or handles an edge case, it feeds back into shared knowledge. Not as a meeting recap. As a structured upgrade.",
     before: "Lessons stay in one person's head or chat history",
     after: "Every insight upgrades the entire team's playbook",
     img: loopLearn,
@@ -51,7 +51,7 @@ export function LizaLoopSection() {
               Define. Execute. Learn.
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              A continuous loop where your team's knowledge compounds — and you hold the reins.
+              A continuous loop where your team's knowledge compounds, and you hold the reins.
             </p>
           </div>
 
@@ -95,8 +95,11 @@ export function LizaLoopSection() {
             ))}
           </div>
 
-          {/* Mid-page CTA */}
+          {/* Mid-page CTA with value recap */}
           <div className="mt-14 text-center">
+            <p className="text-sm text-muted-foreground mb-4">
+              One system. Standards enforced, knowledge compounding, leadership in control.
+            </p>
             <Link
               to="/beta"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
