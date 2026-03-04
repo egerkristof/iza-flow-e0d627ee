@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { GradientText, CAL_URL } from "./shared";
 
 export function BetaCTASection() {
@@ -12,15 +12,18 @@ export function BetaCTASection() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Your best practices deserve
+              Your team's know-how deserves
               <br />
               <GradientText>better than a wiki.</GradientText>
             </h2>
             <p className="text-base mb-2 text-muted-foreground">
               Private Beta · 1 month free · Limited to 10 teams per cohort.
             </p>
-            <p className="text-xs text-muted-foreground/60 mb-6">
+            <p className="text-xs text-muted-foreground/60 mb-2">
               For teams of 5–30 where consistency drives revenue.
+            </p>
+            <p className="text-xs text-muted-foreground/50 mb-6">
+              Built by a team that has run 200+ consulting engagements across 4 continents.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
@@ -33,13 +36,6 @@ export function BetaCTASection() {
                 }}
               >
                 Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                to="/extract"
-                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border text-muted-foreground hover:text-foreground transition-colors"
-                style={{ borderColor: "hsl(var(--border))" }}
-              >
-                <Play className="w-4 h-4" /> Try the Extraction Engine
               </Link>
             </div>
             <p className="text-xs text-muted-foreground mt-4">
