@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layers, ArrowRight } from "lucide-react";
+import { Layers, ArrowRight, Shield, Users, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SectionTag } from "./shared";
 import loopCollaborate from "@/assets/loop-collaborate.png";
@@ -7,10 +7,21 @@ import loopLearn from "@/assets/loop-learn.png";
 
 const STEPS = [
   {
+    key: "define",
+    tag: "Define & enforce",
+    icon: <Shield className="w-4 h-4" />,
+    headline: "Set the standard. Make sure it's followed.",
+    line: "Define your team's best practices, edge cases, and quality criteria in one living system. LIZA enforces them in every AI session — automatically. No more hoping people read the wiki.",
+    before: "Best practices live in docs nobody reads",
+    after: "Standards are enforced in every session, automatically",
+    img: "/images/product-oversight.png",
+  },
+  {
     key: "execute",
     tag: "Execute together",
-    headline: "Every session starts with the team's full knowledge.",
-    line: "Your accumulated judgment — standards, edge cases, client patterns — is assembled and injected into every AI session automatically. Nobody starts from scratch. The weakest performer benefits from the strongest insight.",
+    icon: <Users className="w-4 h-4" />,
+    headline: "Everyone starts from the team's best knowledge.",
+    line: "Your accumulated judgment — standards, edge cases, client patterns — is assembled and injected into every AI session. The weakest performer benefits from the strongest insight.",
     before: "Everyone brings their own context, their own prompts",
     after: "Everyone executes from the team's best, up-to-date standard",
     img: loopCollaborate,
@@ -18,20 +29,12 @@ const STEPS = [
   {
     key: "learn",
     tag: "Learn together",
+    icon: <Brain className="w-4 h-4" />,
     headline: "Every engagement makes the playbook sharper.",
-    line: "When someone finds a better approach, handles an edge case, or gets a surprising result — it feeds back into the shared knowledge. Not as a meeting recap. As a living, structured upgrade to how the whole team operates.",
+    line: "When someone finds a better approach or handles an edge case — it feeds back into shared knowledge. Not as a meeting recap. As a structured upgrade to how the whole team operates.",
     before: "Lessons stay in one person's head or chat history",
     after: "Every insight upgrades the entire team's playbook",
     img: loopLearn,
-  },
-  {
-    key: "manage",
-    tag: "Manage together",
-    headline: "You see what's working and shape what's next.",
-    line: "As the person responsible for output, you finally have the bird's-eye view. See execution patterns, spot drift, curate the methodology. Your team's living standard evolves under your governance — not by accident.",
-    before: "You find out when something goes wrong — not before",
-    after: "You see, shape, and govern how your team operates",
-    img: "/images/product-oversight.png",
   },
 ];
 
@@ -40,36 +43,36 @@ export function LizaLoopSection() {
 
   return (
     <>
-      <section id="liza-loop" className="py-24 px-6" style={{ background: "hsl(var(--card))" }}>
+      <section id="liza-loop" className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <SectionTag label="How it works" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              Execute. Learn. Manage.
+              Define. Execute. Learn.
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
               A continuous loop where your team's knowledge compounds — and you hold the reins.
             </p>
           </div>
 
-          <div className="space-y-12">
+          <div className="space-y-16">
             {STEPS.map((s, i) => (
               <div
                 key={s.key}
-                className={`flex flex-col ${i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} gap-6 items-center`}
+                className={`flex flex-col ${i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} gap-8 items-center`}
               >
                 <div
-                  className="md:w-1/2 rounded-xl border overflow-hidden shadow-lg cursor-pointer transition-transform duration-200 hover:scale-[1.01]"
+                  className="md:w-[55%] rounded-xl border overflow-hidden shadow-lg cursor-pointer transition-transform duration-200 hover:scale-[1.01]"
                   style={{ borderColor: "hsl(var(--border))" }}
                   onClick={() => setLightbox(s.img)}
                 >
                   <img src={s.img} alt={`LIZA — ${s.tag}`} className="w-full h-auto block" loading="lazy" />
                 </div>
 
-                <div className="md:w-1/2">
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="md:w-[45%]">
+                  <div className="flex items-center gap-2 mb-3">
                     <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black"
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black"
                       style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
                     >
                       {i + 1}
@@ -77,12 +80,12 @@ export function LizaLoopSection() {
                     <span className="text-xs font-black tracking-[0.15em] uppercase text-primary">{s.tag}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold mb-1">{s.headline}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">{s.line}</p>
+                  <h3 className="text-xl font-bold mb-2">{s.headline}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{s.line}</p>
 
                   <div
                     className="rounded-lg border px-4 py-2.5 space-y-0.5"
-                    style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}
+                    style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
                   >
                     <p className="text-xs text-muted-foreground line-through decoration-1">{s.before}</p>
                     <p className="text-xs font-semibold" style={{ color: "hsl(var(--success))" }}>→ {s.after}</p>
@@ -93,7 +96,7 @@ export function LizaLoopSection() {
           </div>
 
           {/* Mid-page CTA */}
-          <div className="mt-12 text-center">
+          <div className="mt-14 text-center">
             <Link
               to="/beta"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"

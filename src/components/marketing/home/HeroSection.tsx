@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import { GradientText } from "./shared";
 
 export function HeroSection() {
@@ -11,20 +11,19 @@ export function HeroSection() {
       />
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
-          For the person responsible for team output
+        <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
+          <Shield className="w-3 h-3" />
+          For leaders whose team output is their reputation
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          Manage how your team
+          Enforce how your team
           <br />
           <GradientText>actually executes.</GradientText>
         </h1>
 
-        <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          Your team should execute from the best available knowledge, learn from every engagement,
-          and evolve together. In the age of AI, keeping those reins together has never been harder —
-          or more important.
+        <p className="text-base text-muted-foreground max-w-md mx-auto mb-8">
+          Best practices that stay current, get followed, and improve with every engagement — even as AI accelerates everything.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
