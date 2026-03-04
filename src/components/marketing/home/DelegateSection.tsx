@@ -7,19 +7,19 @@ const CASES = [
   {
     icon: <Target className="w-5 h-5" />,
     title: "Delegate your thinking, not just your tasks",
-    desc: "The loop captures your judgment. When you brief someone, they receive your intent, your standards, and the context that matters — not a task description. Zero check-ins needed.",
+    desc: "The loop captures your judgment. When you brief someone, they receive your intent, your standards, and the context that matters. Not a task description. Zero check-ins needed.",
     col: "var(--primary)",
   },
   {
     icon: <Users className="w-5 h-5" />,
     title: "Onboard in weeks, not months",
-    desc: "Because the loop has been running, new hires inherit months of accumulated team intelligence. The playbook isn't a PDF — it's live context loaded into their first session.",
+    desc: "Because the loop has been running, new hires inherit months of accumulated team intelligence. The playbook isn't a PDF. It's live context loaded into their first session.",
     col: "var(--warning)",
   },
   {
     icon: <ShieldCheck className="w-5 h-5" />,
     title: "Every rep sells like your best",
-    desc: "Every objection response, pricing judgment, and deal qualification pattern that the loop has captured is available — in the conversation, in the moment. Not after the deal is lost.",
+    desc: "Every objection response, pricing judgment, and deal qualification pattern that the loop has captured is available in the conversation, in the moment. Not after the deal is lost.",
     col: "var(--success)",
   },
   {

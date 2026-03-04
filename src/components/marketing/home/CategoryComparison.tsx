@@ -90,7 +90,7 @@ export function CategoryComparison() {
 
         {/* Punchline */}
         <p className="text-center text-xs text-muted-foreground mt-5 max-w-lg mx-auto">
-          AI tools are powerful executors — but they don't manage execution. That's the gap LIZA fills.
+          AI tools are powerful executors, but they don't manage execution. That's the gap LIZA fills.
         </p>
       </div>
     </section>

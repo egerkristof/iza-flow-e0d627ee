@@ -5,7 +5,7 @@ const CARDS = [
   {
     icon: <BookOpen className="w-5 h-5" />,
     title: "Our Manifesto",
-    desc: "The philosophy behind LIZA — why judgment can't be automated, only amplified.",
+    desc: "The philosophy behind LIZA: why judgment can't be automated, only amplified.",
     to: "/manifesto",
   },
   {

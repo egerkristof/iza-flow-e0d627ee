@@ -4,7 +4,7 @@ import { ArrowRight, X, Check } from "lucide-react";
 const ROWS = [
   {
     before: "Quality depends on who's doing the work",
-    after: "Standards enforced in every session — automatically",
+    after: "Standards enforced in every session, automatically",
   },
   {
     before: "Best practices rot in docs nobody reads",
@@ -15,7 +15,7 @@ const ROWS = [
     after: "You see execution patterns and drift as they happen",
   },
   {
-    before: "AI usage is invisible — everyone has their own prompts",
+    before: "AI usage is invisible. Everyone has their own prompts",
     after: "AI usage is governed, shared, and continuously improving",
   },
   {

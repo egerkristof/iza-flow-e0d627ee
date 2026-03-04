@@ -2,7 +2,7 @@ import { SectionTag } from "./shared";
 import { AlertTriangle, Zap } from "lucide-react";
 
 const SCENARIOS = [
-  "Your senior consultant is on vacation — the junior delivers something the client pushes back on immediately.",
+  "Your senior consultant is on vacation. The junior delivers something the client pushes back on immediately.",
   "You onboard someone new and spend 3 weeks just getting them to 'how we do things here.'",
   "A key person leaves and you realize half your methodology walked out with them.",
 ];
@@ -43,19 +43,19 @@ export function AIFragmentationSection() {
           <ProblemCard
             number="1"
             headline="The judgment gap"
-            body="Your best consultant handles it instinctively. Everyone else follows a checklist that misses the point. The real know-how has never transferred — not through SOPs, not through shadowing."
+            body="Your best consultant handles it instinctively. Everyone else follows a checklist that misses the point. The real know-how has never transferred. Not through SOPs, not through shadowing."
             accent="var(--destructive)"
           />
           <ProblemCard
             number="2"
-            headline="AI solved it — for one person"
+            headline="AI solved it. For one person"
             body="LLMs gave individuals a superpower: personal context, real-time reasoning, instant output. It felt like the answer. Then you looked at the team."
             accent="hsl(38 92% 50%)"
           />
           <ProblemCard
             number="3"
             headline="Now it's getting worse"
-            body="Everyone has their own AI, their own shortcuts, their own version of 'how we do things.' The gap isn't closing — it's multiplying. Faster."
+            body="Everyone has their own AI, their own shortcuts, their own version of 'how we do things.' The gap isn't closing. It's multiplying. Faster."
             accent="hsl(var(--primary))"
           />
         </div>
@@ -75,7 +75,7 @@ export function AIFragmentationSection() {
             stays current and runs in every session.
           </p>
           <p className="text-base text-muted-foreground max-w-lg mx-auto">
-            Not a wiki. Not a training deck. A living layer that captures what your best people do, keeps it sharp, and gives it to everyone — right when they need it.
+            Not a wiki. Not a training deck. A living layer that captures what your best people do, keeps it sharp, and gives it to everyone, right when they need it.
           </p>
         </div>
       </div>

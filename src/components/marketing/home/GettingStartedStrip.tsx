@@ -6,13 +6,13 @@ const STEPS = [
     num: "1",
     icon: <Play className="w-5 h-5" />,
     title: "Start working",
-    desc: "Begin with a blank session or upload existing docs. LIZA extracts structure automatically — or you define rules as you go.",
+    desc: "Begin with a blank session or upload existing docs. LIZA extracts structure automatically, or you define rules as you go.",
   },
   {
     num: "2",
     icon: <Sparkles className="w-5 h-5" />,
     title: "Define your rules",
-    desc: "As you work, capture what matters — best practices, edge cases, quality criteria. Set enforcement levels so nothing slips.",
+    desc: "As you work, capture what matters: best practices, edge cases, quality criteria. Set enforcement levels so nothing slips.",
   },
   {
     num: "3",
