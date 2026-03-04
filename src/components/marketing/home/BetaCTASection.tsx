@@ -12,9 +12,9 @@ export function BetaCTASection() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Individual AI is powerful.
+              Your best practices deserve
               <br />
-              <GradientText>Team intelligence is what wins.</GradientText>
+              <GradientText>better than a wiki.</GradientText>
             </h2>
             <p className="text-base mb-6 text-muted-foreground">
               Private Beta. 1 month free. For teams of 5–30 where consistency matters.
