@@ -2,10 +2,22 @@ import { SectionTag, GradientText } from "./shared";
 import { ArrowRight, X, Check } from "lucide-react";
 
 const ROWS = [
-  { before: "\"We can't standardize — every client is different.\"", after: "Standards that flex per context, not rigid templates" },
-  { before: "\"If we standardize, we'll lose what makes our people great.\"", after: "Your people's judgment IS the standard — captured and shared" },
-  { before: "\"We tried a knowledge base. Nobody maintained it.\"", after: "The system learns from real work — no extra maintenance needed" },
-  { before: "\"AI will replace the need for senior judgment.\"", after: "AI amplifies senior judgment — it doesn't substitute it" },
+  {
+    before: "Quality depends on who's doing the work",
+    after: "Quality is built into every session — regardless of who runs it",
+  },
+  {
+    before: "Lessons from last quarter never reach this quarter's team",
+    after: "Every engagement feeds back into the shared playbook automatically",
+  },
+  {
+    before: "You only find out something drifted when a client complains",
+    after: "You see execution patterns, learning signals, and drift in real time",
+  },
+  {
+    before: "Your methodology is frozen in a doc nobody reads",
+    after: "Your methodology is alive — shaped by real work, governed by you",
+  },
 ];
 
 export function TransformationSection() {
@@ -13,21 +25,21 @@ export function TransformationSection() {
     <section className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
-          <SectionTag label="But what about…" icon={<ArrowRight className="w-3 h-3" />} />
+          <SectionTag label="What changes" icon={<ArrowRight className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            Every objection we've heard —{" "}
-            <GradientText>answered.</GradientText>
+            From flying blind to{" "}
+            <GradientText>full visibility.</GradientText>
           </h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-2">
           <div className="hidden md:flex items-center gap-2 px-4 py-2">
             <X className="w-3.5 h-3.5" style={{ color: "hsl(var(--destructive))" }} />
-            <span className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground">The objection</span>
+            <span className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground">Without LIZA</span>
           </div>
           <div className="hidden md:flex items-center gap-2 px-4 py-2">
             <Check className="w-3.5 h-3.5" style={{ color: "hsl(var(--success))" }} />
-            <span className="text-xs font-bold tracking-[0.15em] uppercase" style={{ color: "hsl(var(--success))" }}>The reality</span>
+            <span className="text-xs font-bold tracking-[0.15em] uppercase" style={{ color: "hsl(var(--success))" }}>With LIZA</span>
           </div>
 
           {ROWS.map((r, i) => (

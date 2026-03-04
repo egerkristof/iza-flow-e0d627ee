@@ -12,17 +12,19 @@ export function HeroSection() {
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
         <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-5">
-          Your team executes, learns, and evolves. But not together.
+          For the person responsible for team output
         </p>
 
         <h1 className="text-5xl md:text-7xl font-black mb-5 leading-[1.05]">
-          Scale your team's
+          See how your team
           <br />
-          <GradientText>best judgment.</GradientText>
+          <GradientText>actually works.</GradientText>
         </h1>
 
         <p className="text-base text-muted-foreground max-w-lg mx-auto mb-8">
-          The infrastructure that makes your team execute, learn, and manage quality together. Not as individuals with their own AI. As one team, getting smarter every week.
+          Your team needs to execute, learn, and evolve — together.
+          You need the bird's-eye view to make sure that happens.
+          That infrastructure has never existed. Until now.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -41,7 +43,7 @@ export function HeroSection() {
             onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            What's the problem? ↓
+            See the problem ↓
           </button>
         </div>
       </div>
