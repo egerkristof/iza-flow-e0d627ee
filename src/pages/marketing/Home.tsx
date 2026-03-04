@@ -1,5 +1,6 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
+import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
 import { TrustBar } from "@/components/marketing/home/TrustBar";
 import { AIFragmentationSection } from "@/components/marketing/home/AIFragmentationSection";
 import { ProblemSection } from "@/components/marketing/home/ProblemSection";
@@ -15,8 +16,8 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
+      <ThreeReasonsSection />
       <TrustBar />
-      <SectionDivider />
       <ProblemSection />
       <SectionDivider />
       <LizaLoopSection />
