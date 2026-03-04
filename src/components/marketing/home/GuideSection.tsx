@@ -1,4 +1,4 @@
-import { SectionTag } from "./shared";
+import { SectionTag, GradientText } from "./shared";
 import { Compass, Quote } from "lucide-react";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
@@ -32,10 +32,10 @@ export function GuideSection() {
         <div className="text-center mb-10">
           <SectionTag label="We've lived this" icon={<Compass className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            Built by practitioners, not theorists.
+            Built by practitioners who hit the same ceiling.
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            We built LIZA because no tool connected execution, learning, and governance into one system.
+            We gave our teams AI tools. They got faster individually — and more fragmented as a team. So we built the missing layer.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export function GuideSection() {
         >
           <Quote className="w-6 h-6 mb-3" style={{ color: "hsl(var(--primary) / 0.3)" }} />
           <blockquote className="text-base md:text-lg font-medium italic leading-relaxed mb-4">
-            "This is the tool I use instead of Perplexity — because it actually builds knowledge at the team level."
+            "We had Claude, GPT, and Notion. Everyone was fast — individually. But our team output was getting less consistent, not more. This is the layer that was missing."
           </blockquote>
           <div className="flex items-center gap-3">
             <div

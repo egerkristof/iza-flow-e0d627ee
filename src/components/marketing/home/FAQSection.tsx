@@ -9,24 +9,28 @@ import {
 
 const FAQS = [
   {
-    q: "Do I need to upload all my documents before getting started?",
-    a: "No. You can start blank and define rules as you work. Or upload existing methodology docs — LIZA extracts structured knowledge from them. Most teams start with one playbook and expand from there.",
+    q: "I already use Claude Projects and Custom GPTs. Why do I need this?",
+    a: "Those tools give you personal memory within a single conversation or project. But your colleague's breakthroughs stay in their threads. LIZA creates a shared, governed layer across your whole team — so everyone executes with the latest, best thinking, not just their own.",
   },
   {
-    q: "How is this different from giving my team a shared ChatGPT account?",
-    a: "ChatGPT doesn't know your standards. LIZA injects your team's best practices, edge cases, and quality criteria into every AI session automatically. The difference: consistency at scale vs. individual improvisation.",
+    q: "ChatGPT now has memory. Doesn't that solve the same problem?",
+    a: "ChatGPT memory is personal, fragile, and invisible to leadership. It learns one person's habits — including the bad ones. LIZA enforces team-approved standards, captures structured learnings, and gives leaders visibility into execution quality across the team.",
+  },
+  {
+    q: "We built a prompt library in Notion. How is this different?",
+    a: "Prompt libraries are static — someone has to remember to use them, and they don't evolve. LIZA automatically injects the right context into every AI session and learns from real execution. Your methodology stays current because it's connected to how your team actually works.",
   },
   {
     q: "What AI models does LIZA work with?",
-    a: "LIZA is model-agnostic. It works with GPT-4, Claude, Gemini, and others. The value isn't in the model — it's in the context layer that ensures your team's judgment runs in every session.",
+    a: "LIZA is model-agnostic. It works with GPT-4, Claude, Gemini, and others. The value isn't in the model — it's in the context layer that ensures your team's judgment runs in every session, regardless of which model someone prefers.",
   },
   {
-    q: "How long does onboarding take?",
-    a: "Most teams are operational within a day. If you have existing methodology docs, the extraction engine structures them automatically. If you're starting fresh, your first working session begins building your knowledge base.",
+    q: "How long until my team is actually using it?",
+    a: "Most teams are operational within a day. If you have existing methodology docs, the extraction engine structures them automatically. If you're starting fresh, your first working session begins building your knowledge base. No 6-week onboarding.",
   },
   {
     q: "Is my team's knowledge secure?",
-    a: "Yes. Your context stays in your organisation's environment. We don't train on your data, and your proprietary methodology never leaves your control.",
+    a: "Yes. Your context stays in your organisation's environment. We don't train on your data, and your proprietary methodology never leaves your control — unlike general-purpose AI tools that may use your conversations for training.",
   },
   {
     q: "What's the Beta pricing?",

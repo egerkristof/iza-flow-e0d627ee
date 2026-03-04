@@ -8,30 +8,30 @@ const STEPS = [
     key: "define",
     tag: "Define & enforce",
     icon: <Shield className="w-4 h-4" />,
-    headline: "Set the standard. Make sure it's followed.",
-    line: "Define your team's best practices, edge cases, and quality criteria in one living system. LIZA enforces them in every AI session, automatically.",
-    before: "Best practices live in docs nobody reads",
-    after: "Standards are enforced in every session, automatically",
+    headline: "Your standards, live in every session.",
+    line: "Custom GPTs and Claude Projects give you per-conversation memory. LIZA gives you team-wide enforcement — playbooks, edge cases, and quality gates that run automatically, not just when someone remembers to paste them.",
+    before: "Everyone pastes their own system prompts and hopes for the best",
+    after: "Team standards enforced automatically — no copy-paste, no drift",
     img: "/images/product-define-enforce.png",
   },
   {
     key: "execute",
     tag: "Execute together",
     icon: <Users className="w-4 h-4" />,
-    headline: "Where best practices build themselves.",
-    line: "Your team works in live, collaborative sessions — grounded in your latest standards. Every conversation naturally enriches what your team knows, so your weakest performer operates from your strongest insight.",
-    before: "Everyone brings their own context, their own prompts",
-    after: "Best practices compound from real work, automatically",
+    headline: "From individual chat histories to shared intelligence.",
+    line: "Right now, your team's best insights live in private chat threads. One person discovers a better approach — nobody else benefits. LIZA captures what works and makes it available to the whole team, live.",
+    before: "Breakthroughs stay in one person's ChatGPT history",
+    after: "Every insight becomes available to every team member, instantly",
     img: "/images/product-execute-session.png",
   },
   {
     key: "learn",
     tag: "Learn together",
     icon: <Brain className="w-4 h-4" />,
-    headline: "Every engagement makes your standards sharper.",
-    line: "When someone finds a better approach or handles an edge case, it feeds back into shared knowledge. Not as a meeting recap — as a structured upgrade to how your whole team operates.",
-    before: "Lessons stay in one person's head or chat history",
-    after: "Every insight upgrades the entire team's standards",
+    headline: "AI memories forget. Team knowledge compounds.",
+    line: "ChatGPT memories are personal and fragile. Claude Projects reset. Your team's accumulated judgment shouldn't depend on which tool someone used last Tuesday. LIZA turns execution into structured learning that upgrades everyone.",
+    before: "AI 'memories' are personal, fragile, and reset between tools",
+    after: "Structured learning from every engagement — owned by the team, not the tool",
     img: "/images/product-learn-extraction.png",
   },
 ];
@@ -48,8 +48,8 @@ export function LizaLoopSection() {
             <h2 className="text-3xl md:text-4xl font-black mb-3">
               Define. Execute. Learn.
             </h2>
-            <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              A continuous loop where your team's knowledge compounds, and you hold the reins.
+            <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+              You've given your team AI tools. Now give them the system that makes those tools work <em>as a team</em>.
             </p>
           </div>
 
@@ -93,7 +93,7 @@ export function LizaLoopSection() {
             ))}
           </div>
 
-          {/* Mid-page CTA with value recap */}
+          {/* Mid-page CTA */}
           <div className="mt-14 text-center">
             <p className="text-sm text-muted-foreground mb-4">
               One system. Standards enforced, knowledge compounding, leadership in control.
