@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ArrowRight, Shield } from "lucide-react";
 import { CAL_URL } from "./shared";
 
@@ -28,8 +27,10 @@ export function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            to="/beta"
+          <a
+            href={CAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -37,8 +38,8 @@ export function HeroSection() {
               boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
             }}
           >
-            Join the Private Beta <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+            Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
           <button
             onClick={() => document.getElementById("three-reasons")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
@@ -46,10 +47,6 @@ export function HeroSection() {
             See why this happens ↓
           </button>
         </div>
-
-        <p className="text-xs text-muted-foreground mt-5">
-          Or <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">book a discovery call</a> to talk first.
-        </p>
       </div>
     </section>
   );
