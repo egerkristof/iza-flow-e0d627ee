@@ -1,19 +1,58 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Check, X, Minus } from "lucide-react";
+import { ArrowRight, Shield, Check, X, BookOpen, Brain, ShieldCheck } from "lucide-react";
 import { GradientText } from "./shared";
 
-const COMPARE_ROWS = [
-  { feature: "Standards enforced live in every session", wiki: false, ai: false, liza: true },
-  { feature: "Team learns from every engagement", wiki: false, ai: false, liza: true },
-  { feature: "Quality consistent across the whole team", wiki: "partial", ai: false, liza: true },
+const COMPARE_PILLARS = [
+  {
+    icon: <ShieldCheck className="w-4 h-4" />,
+    label: "Enforce your best standards",
+    description: "Every session runs on your proven playbooks",
+    wiki: false,
+    ai: false,
+    liza: true,
+  },
+  {
+    icon: <Brain className="w-4 h-4" />,
+    label: "Your team learns together",
+    description: "Insights from every engagement flow back to everyone",
+    wiki: false,
+    ai: false,
+    liza: true,
+  },
+  {
+    icon: <BookOpen className="w-4 h-4" />,
+    label: "Quality stays consistent",
+    description: "Junior or senior—same standard, every time",
+    wiki: "partial",
+    ai: false,
+    liza: true,
+  },
 ];
 
-function MiniCell({ value }: { value: boolean | string }) {
+function StatusBadge({ value }: { value: boolean | string }) {
   if (value === true)
-    return <Check className="w-3.5 h-3.5" style={{ color: "hsl(var(--success))" }} />;
+    return (
+      <span
+        className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+        style={{ background: "hsl(var(--success) / 0.12)", color: "hsl(var(--success))" }}
+      >
+        <Check className="w-3 h-3" /> Yes
+      </span>
+    );
   if (value === "partial")
-    return <Minus className="w-3.5 h-3.5 text-muted-foreground" />;
-  return <X className="w-3.5 h-3.5" style={{ color: "hsl(var(--destructive) / 0.4)" }} />;
+    return (
+      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+        Partial
+      </span>
+    );
+  return (
+    <span
+      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+      style={{ background: "hsl(var(--destructive) / 0.08)", color: "hsl(var(--destructive) / 0.5)" }}
+    >
+      <X className="w-3 h-3" /> No
+    </span>
+  );
 }
 
 export function HeroSection() {
@@ -36,15 +75,19 @@ export function HeroSection() {
           <GradientText>to team intelligence.</GradientText>
         </h1>
 
-        <p className="text-base text-muted-foreground max-w-lg mx-auto mb-4">
-          Your team's best judgment, applied in every AI session—automatically.
+        <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-3">
+          Define, enforce, and continuously update how your team works—
+          <span className="relative inline font-semibold text-foreground">
+            with and without AI.
+            <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
+          </span>
         </p>
 
-        <p className="text-xs text-muted-foreground/70 max-w-sm mx-auto mb-8 tracking-wide">
-          Define, enforce, and continuously update how your team works—with and without AI.
+        <p className="text-sm text-muted-foreground/80 max-w-md mx-auto mb-9">
+          So your best people's judgment isn't trapped in their heads—it's working in every session, for everyone.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
           <Link
             to="/beta"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
@@ -64,66 +107,46 @@ export function HeroSection() {
           </button>
         </div>
 
-        {/* Compressed comparison strip */}
-        <div
-          className="max-w-xl mx-auto rounded-xl border overflow-hidden mb-10"
-          style={{ borderColor: "hsl(var(--border))" }}
-        >
-          {/* Header */}
-          <div
-            className="grid grid-cols-4 text-[10px] md:text-xs font-bold tracking-wide uppercase"
-            style={{ background: "hsl(var(--card))" }}
-          >
-            <div className="px-3 py-2.5 text-muted-foreground" />
-            <div className="px-2 py-2.5 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-              Wikis
-            </div>
-            <div className="px-2 py-2.5 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-              AI Tools
-            </div>
-            <div
-              className="px-2 py-2.5 text-center font-black border-l"
-              style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.06)" }}
-            >
-              LIZA
-            </div>
-          </div>
+        {/* Three-pillar comparison */}
+        <div className="max-w-3xl mx-auto">
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-4">
+            Three things AI needs to work at team scale
+          </p>
 
-          {/* Rows */}
-          {COMPARE_ROWS.map((r, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-4 border-t text-[11px] md:text-sm"
-              style={{ borderColor: "hsl(var(--border))" }}
-            >
-              <div className="px-3 py-2.5 text-foreground/80 text-left">{r.feature}</div>
-              <div className="px-2 py-2.5 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-                <MiniCell value={r.wiki} />
-              </div>
-              <div className="px-2 py-2.5 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-                <MiniCell value={r.ai} />
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {COMPARE_PILLARS.map((p, i) => (
               <div
-                className="px-2 py-2.5 flex items-center justify-center border-l"
-                style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--primary) / 0.03)" }}
+                key={i}
+                className="rounded-xl border p-4 text-left"
+                style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
               >
-                <MiniCell value={r.liza} />
+                <div className="flex items-center gap-2 mb-2 text-foreground">
+                  {p.icon}
+                  <span className="text-sm font-bold">{p.label}</span>
+                </div>
+                <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+                  {p.description}
+                </p>
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-muted-foreground uppercase tracking-wide">Wikis & Docs</span>
+                    <StatusBadge value={p.wiki} />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-muted-foreground uppercase tracking-wide">AI Tools</span>
+                    <StatusBadge value={p.ai} />
+                  </div>
+                  <div
+                    className="flex items-center justify-between rounded-md px-1.5 py-0.5 -mx-1.5"
+                    style={{ background: "hsl(var(--primary) / 0.05)" }}
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: "hsl(var(--primary))" }}>LIZA</span>
+                    <StatusBadge value={p.liza} />
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Product glimpse */}
-        <div
-          className="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border"
-          style={{ borderColor: "hsl(var(--border))", boxShadow: "0 20px 60px -15px hsl(var(--primary) / 0.15)" }}
-        >
-          <img
-            src="/images/product-mission-control.png"
-            alt="LIZA OS - Mission Control dashboard with playbooks, active sessions, and insights"
-            className="w-full h-auto block"
-            loading="eager"
-          />
+            ))}
+          </div>
         </div>
       </div>
     </section>
