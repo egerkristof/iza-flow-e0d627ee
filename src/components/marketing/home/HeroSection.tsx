@@ -22,7 +22,7 @@ export function HeroSection() {
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-12">
-          56% of companies get nothing from AI. They all skipped the same step. LIZA OS lets you
+          LIZA OS lets you
           <span className="relative inline font-semibold text-foreground">
             {" "}define, scale, and improve how your whole team executes with AI.
             <span className="absolute bottom-0 left-0 w-full h-[2px] rounded-full" style={{ background: "var(--gradient-brand-btn)" }} />
