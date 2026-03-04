@@ -41,7 +41,7 @@ export function HeroSection() {
             onClick={() => document.getElementById("the-problem")?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            See the problem ↓
+            Where does your team sit? ↓
           </button>
         </div>
       </div>
