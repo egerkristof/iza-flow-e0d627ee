@@ -7,51 +7,51 @@ const LEVELS = [
     level: 1,
     title: "Individual habits",
     short: "Everyone executes their own way",
-    ai: "AI amplifies individual habits — good and bad — with zero guardrails",
-    detail: "When your best person is out, quality visibly drops. There's no shared execution standard. AI just makes the inconsistency faster.",
+    ai: "AI amplifies individual habits — faster output, zero shared standard",
+    detail: "Your team is productive, but every person has built their own prompts, their own shortcuts, their own way of working with AI. Quality depends entirely on who's running it.",
     symptom: "\"It depends who runs it\"",
   },
   {
     level: 2,
     title: "Static playbooks",
-    short: "Standards exist — but execution ignores them",
-    ai: "AI bypasses the docs. Everyone builds their own prompts and workflows.",
-    detail: "The methodology doc was solid 18 months ago. Nobody follows it. The real execution process and the documented one have fully diverged.",
-    symptom: "\"We have a wiki somewhere…\"",
+    short: "Standards exist — execution has moved past them",
+    ai: "Your methodology doc is 18 months old. AI workflows have made it obsolete.",
+    detail: "You wrote down best practices once. But AI changed how your team actually works — faster iterations, more granular tasks, distributed execution. The documented process and the real process have fully diverged.",
+    symptom: "\"We have a wiki, but nobody checks it anymore\"",
     marker: "most",
   },
   {
     level: 3,
-    title: "Pockets of sharing",
-    short: "Some standards transfer, inconsistently",
-    ai: "Prompt libraries grow in Slack — no curation, no enforcement",
-    detail: "A few people share what works. Post-project reviews happen sometimes. But nothing connects back to how the team actually executes.",
-    symptom: "\"Check #random for that prompt\"",
+    title: "Distributed AI silos",
+    short: "Everyone's fast — but disconnected",
+    ai: "Custom GPTs, Claude Projects, personal prompt collections — none of them talk to each other",
+    detail: "Your team has embraced AI. They're faster than ever. But each person has built their own setup. Insights stay in individual chat histories. When someone finds a better approach, it doesn't reach the team. Your instruction sets are scattered across tools.",
+    symptom: "\"Everyone has their own ChatGPT setup\"",
   },
   {
     level: 4,
-    title: "Enforced execution",
-    short: "Team standards run in every AI session",
-    ai: "AI enforces your methodology live — every session, every person",
-    detail: "Every AI session starts pre-loaded with your team's accumulated judgment. New hires execute at team standard from day one. No drift.",
-    symptom: "\"The AI already knew our approach\"",
+    title: "Living instruction sets",
+    short: "One shared, always-current standard for the whole team",
+    ai: "AI sessions start pre-loaded with the team's latest, best instruction set — automatically",
+    detail: "Your best practices update as fast as your team learns. When someone discovers a better edge case or a sharper framework, it feeds into the shared instruction set. Every AI session runs the latest version. No more copy-pasting. No more drift.",
+    symptom: "\"The AI already knew our latest approach\"",
     marker: "liza",
   },
   {
     level: 5,
     title: "Compounding intelligence",
-    short: "Every engagement makes the team smarter",
-    ai: "Execution feeds back into standards — methodology evolves automatically",
-    detail: "Every engagement feeds insights back into shared playbooks. The weakest performer benefits from the strongest insight. Your team compounds.",
-    symptom: "\"We're measurably better this quarter\"",
+    short: "Every engagement makes the instruction set sharper",
+    ai: "Execution feeds back into standards automatically — your methodology evolves continuously",
+    detail: "Your team's instruction sets get smarter with every engagement. The weakest performer benefits from the strongest insight. Leadership has visibility into what's working and what's drifting. The whole system compounds.",
+    symptom: "\"We're measurably better this quarter than last\"",
   },
 ];
 
 const SUMMARY = [
   { level: "L1", label: "Individual habits", color: "destructive" },
-  { level: "L2", label: "Static docs", color: "destructive" },
-  { level: "L3", label: "Fragmented sharing", color: "warning" },
-  { level: "L4", label: "Enforced standards", color: "primary" },
+  { level: "L2", label: "Outdated standards", color: "destructive" },
+  { level: "L3", label: "AI silos", color: "warning" },
+  { level: "L4", label: "Living instruction sets", color: "primary" },
   { level: "L5", label: "Compounding team", color: "primary" },
 ];
 
@@ -65,11 +65,11 @@ export function ProblemSection() {
         <div className="text-center mb-14">
           <SectionTag label="The diagnostic" icon={<Layers className="w-3 h-3" />} />
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            Where is your team on the{" "}
-            <GradientText>execution maturity scale?</GradientText>
+            AI made your team faster.{" "}
+            <GradientText>Can your standards keep up?</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            AI didn't create the problem. It exposed how your team actually executes — and where standards break down.
+            The faster your team executes with AI, the faster your best practices fall behind — unless they evolve at the same speed.
           </p>
         </div>
 
@@ -78,7 +78,7 @@ export function ProblemSection() {
           <div className="flex-[3] flex items-center justify-center gap-2 rounded-lg py-2 mr-1"
             style={{ background: "hsl(var(--destructive) / 0.06)", border: "1px dashed hsl(var(--destructive) / 0.2)" }}>
             <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
-              Inconsistent execution
+              Standards falling behind
             </span>
           </div>
           <div className="flex-[2] flex items-center justify-center gap-2 rounded-lg py-2 ml-1"
@@ -91,16 +91,15 @@ export function ProblemSection() {
 
         {/* Staircase with markers */}
         <div className="relative">
-          {/* Top-down arrow markers */}
           <div className="absolute z-20 flex flex-col items-center"
-            style={{ left: "calc(20% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
+            style={{ left: "calc(40% + (20% - 4px) / 2)", transform: "translateX(-50%)", top: "-12px" }}>
             <div className="flex flex-col items-center">
               <span className="text-[10px] md:text-xs font-black whitespace-nowrap px-3 py-1 rounded-full"
-                style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)", border: "1px solid hsl(var(--destructive) / 0.2)" }}>
-                Most teams are here
+                style={{ color: "hsl(var(--warning))", background: "hsl(var(--warning) / 0.1)", border: "1px solid hsl(var(--warning) / 0.2)" }}>
+                Most AI-using teams are here
               </span>
-              <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--destructive) / 0.4)" }} />
-              <ArrowDown className="w-5 h-5 -mt-1" style={{ color: "hsl(var(--destructive))" }} />
+              <div className="w-0.5 h-6 md:h-10" style={{ background: "hsl(var(--warning) / 0.4)" }} />
+              <ArrowDown className="w-5 h-5 -mt-1" style={{ color: "hsl(var(--warning))" }} />
             </div>
           </div>
 
@@ -183,12 +182,12 @@ export function ProblemSection() {
           {/* Base */}
           <div className="h-1 rounded-full" style={{ background: "hsl(var(--border))" }} />
           <div className="flex justify-between mt-2 px-1">
-            <span className="text-[10px] text-muted-foreground font-medium">← Inconsistent execution</span>
-            <span className="text-[10px] font-semibold text-primary">Compounding execution →</span>
+            <span className="text-[10px] text-muted-foreground font-medium">← Standards update slowly</span>
+            <span className="text-[10px] font-semibold text-primary">Standards evolve with execution →</span>
           </div>
         </div>
 
-        {/* Summary strip — first-view clarity */}
+        {/* Summary strip */}
         <div className="mt-6 grid grid-cols-5 gap-1.5">
           {SUMMARY.map((s) => (
             <button
@@ -251,7 +250,7 @@ export function ProblemSection() {
                       <span className="text-base font-bold">{l.title}</span>
                       <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full"
                         style={{ background: `${accentColor}15`, color: accentColor }}>
-                        {isTarget ? "Target" : l.level === 3 ? "Transitional" : "At risk"}
+                        {isTarget ? "Target" : l.level === 3 ? "The AI ceiling" : "At risk"}
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground mb-2">{l.short}</p>

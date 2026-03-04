@@ -2,12 +2,12 @@ import { SectionTag, GradientText } from "./shared";
 import { X, Minus, Check, GitCompare } from "lucide-react";
 
 const ROWS = [
-  { feature: "Standards enforced live during execution", wiki: false, prompts: false, agents: false, liza: true },
+  { feature: "Instruction sets enforced in every AI session", wiki: false, prompts: "partial", agents: false, liza: true },
+  { feature: "Standards update as fast as execution", wiki: false, prompts: false, agents: false, liza: true },
   { feature: "Execution quality consistent across team", wiki: false, prompts: "partial", agents: false, liza: true },
-  { feature: "Knowledge persists across sessions", wiki: "partial", prompts: false, agents: "partial", liza: true },
-  { feature: "Learning transfers between team members", wiki: "partial", prompts: false, agents: false, liza: true },
-  { feature: "Leadership visibility into how work runs", wiki: false, prompts: false, agents: false, liza: true },
-  { feature: "Methodology evolves from every engagement", wiki: false, prompts: false, agents: false, liza: true },
+  { feature: "Knowledge persists across sessions & tools", wiki: "partial", prompts: false, agents: "partial", liza: true },
+  { feature: "Insights transfer between team members", wiki: "partial", prompts: false, agents: false, liza: true },
+  { feature: "Leadership visibility into execution quality", wiki: false, prompts: false, agents: false, liza: true },
 ];
 
 function CellIcon({ value }: { value: boolean | string }) {
@@ -29,7 +29,7 @@ export function CategoryComparison() {
             <GradientText>Here's what's still missing.</GradientText>
           </h2>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Individual AI tools give you personal productivity. None of them give you team-level execution intelligence.
+            Individual AI tools make individuals fast. None of them manage how your team executes — or keep your instruction sets current.
           </p>
         </div>
 
@@ -89,8 +89,8 @@ export function CategoryComparison() {
         </div>
 
         {/* Punchline */}
-        <p className="text-center text-xs text-muted-foreground mt-5 max-w-md mx-auto">
-          ChatGPT memories are personal. Claude Projects are siloed. Custom GPTs don't learn. LIZA connects the dots <em>across your whole team</em>.
+        <p className="text-center text-xs text-muted-foreground mt-5 max-w-lg mx-auto">
+          The problem isn't AI adoption — your team already uses it. The problem is that your instruction sets can't keep up with how fast they're executing.
         </p>
       </div>
     </section>

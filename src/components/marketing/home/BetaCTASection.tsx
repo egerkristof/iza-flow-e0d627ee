@@ -12,15 +12,15 @@ export function BetaCTASection() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Your team's AI usage deserves
+              Your team is already fast.
               <br />
-              <GradientText>more than individual chat histories.</GradientText>
+              <GradientText>Make them compound.</GradientText>
             </h2>
             <p className="text-base mb-2 text-muted-foreground">
               Private Beta · 1 month free · Limited to 10 teams per cohort.
             </p>
             <p className="text-xs text-muted-foreground/60 mb-2">
-              For teams of 5–30 already using AI — ready to make it compound.
+              For teams of 5–30 where AI speed needs to become team-level intelligence.
             </p>
             <p className="text-xs text-muted-foreground/50 mb-6">
               Built by a team that has run 200+ consulting engagements across 4 continents.
