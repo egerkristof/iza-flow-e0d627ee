@@ -1,47 +1,49 @@
 import { useState } from "react";
 import { SectionTag, GradientText } from "./shared";
-import { Layers, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
+import { Layers, ChevronDown, ChevronUp, ArrowDown } from "lucide-react";
 
 const LEVELS = [
   {
     level: 1,
     title: "In their heads",
-    short: "Quality depends on who's available",
-    detail: "Knowledge lives in individual experience. AI amplifies the gap — everyone prompts differently, same question yields different answers. No shared standard exists.",
+    short: "Knowledge lives in people's heads",
+    ai: "Everyone prompts their own way — same question, different answers",
+    detail: "A senior's absence means visible quality drops. There's no shared standard. AI just amplifies individual habits — good and bad.",
     symptom: "\"It's fine when Sarah runs it\"",
-    aiAngle: "AI multiplies individual habits — good and bad",
   },
   {
     level: 2,
     title: "Static playbooks",
-    short: "The docs are 18 months old",
-    detail: "The methodology doc was good once. Nobody follows it. Each person builds their own prompts and templates. The official process and the real AI-assisted process have fully diverged.",
+    short: "Knowledge written down — 18 months ago",
+    ai: "AI bypasses the docs entirely. Everyone builds their own prompts.",
+    detail: "The methodology doc was good once. Nobody follows it. The official process and the real AI-assisted process have fully diverged.",
     symptom: "\"We have a wiki somewhere…\"",
-    aiAngle: "AI bypasses outdated docs entirely",
+    marker: "most",
   },
   {
     level: 3,
     title: "Pockets of sharing",
-    short: "Some transfer, inconsistently",
-    detail: "A few people share prompts in Slack. Post-project reviews happen sometimes. But there's no curation — no way to know what's current, proven, or approved.",
+    short: "Some knowledge transfers, inconsistently",
+    ai: "Prompt libraries grow in Slack — no curation, no governance",
+    detail: "A few people share prompts. Post-project reviews happen sometimes. No way to know what's current, proven, or approved.",
     symptom: "\"Check #random for that prompt\"",
-    aiAngle: "Prompt libraries grow, but without governance",
   },
   {
     level: 4,
     title: "Live shared context",
-    short: "One living knowledge base",
-    detail: "Every AI session starts pre-loaded with your team's accumulated judgment — best practices, edge cases, quality criteria. New hires execute at team standard from day one.",
+    short: "One living knowledge base for the team",
+    ai: "AI enforces team standards in every session, automatically",
+    detail: "Every AI session starts pre-loaded with your team's accumulated judgment. New hires execute at team standard from day one.",
     symptom: "\"The AI already knew our approach\"",
-    aiAngle: "AI enforces team standards automatically",
+    marker: "liza",
   },
   {
     level: 5,
     title: "Governed intelligence",
-    short: "The team compounds weekly",
-    detail: "AI usage is visible, governed, and continuously improving. Every engagement feeds back into shared knowledge. The weakest performer benefits from the strongest insight.",
+    short: "The team compounds with every engagement",
+    ai: "AI usage is visible, governed, and continuously improving",
+    detail: "Every engagement feeds back into shared knowledge. The weakest performer benefits from the strongest insight. Methodology evolves automatically.",
     symptom: "\"We're better this quarter than last\"",
-    aiAngle: "AI compounds your methodology over time",
   },
 ];
 
@@ -63,44 +65,54 @@ export function ProblemSection() {
           </p>
         </div>
 
-        {/* Staircase infographic */}
-        <div className="relative mb-6">
-          {/* Zone labels - large, prominent */}
-          <div className="flex mb-4">
-            <div className="flex-[3] flex items-center justify-center gap-2 rounded-lg py-2 mr-1"
-              style={{ background: "hsl(var(--destructive) / 0.06)", border: "1px dashed hsl(var(--destructive) / 0.2)" }}>
-              <AlertTriangle className="w-3.5 h-3.5" style={{ color: "hsl(var(--destructive))" }} />
-              <span className="text-xs font-black tracking-[0.12em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
-                Most teams today
+        {/* Zone labels */}
+        <div className="flex mb-3">
+          <div className="flex-[3] flex items-center justify-center gap-2 rounded-lg py-2 mr-1"
+            style={{ background: "hsl(var(--destructive) / 0.06)", border: "1px dashed hsl(var(--destructive) / 0.2)" }}>
+            <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase" style={{ color: "hsl(var(--destructive))" }}>
+              Fragmented
+            </span>
+          </div>
+          <div className="flex-[2] flex items-center justify-center gap-2 rounded-lg py-2 ml-1"
+            style={{ background: "hsl(var(--primary) / 0.06)", border: "1px dashed hsl(var(--primary) / 0.25)" }}>
+            <span className="text-[10px] md:text-xs font-black tracking-[0.1em] uppercase text-primary">
+              LIZA zone
+            </span>
+          </div>
+        </div>
+
+        {/* Staircase with markers */}
+        <div className="relative">
+          {/* Top-down arrow markers */}
+          <div className="absolute -top-1 z-20 flex flex-col items-center"
+            style={{ left: "calc(20% + (20% - 4px) / 2)", transform: "translateX(-50%)" }}>
+            <div className="flex flex-col items-center">
+              <span className="text-[9px] md:text-[10px] font-bold whitespace-nowrap px-2 py-0.5 rounded-full mb-0.5"
+                style={{ color: "hsl(var(--destructive))", background: "hsl(var(--destructive) / 0.1)" }}>
+                Most teams
               </span>
-            </div>
-            <div className="flex-[2] flex items-center justify-center gap-2 rounded-lg py-2 ml-1"
-              style={{ background: "hsl(var(--primary) / 0.06)", border: "1px dashed hsl(var(--primary) / 0.25)" }}>
-              <Layers className="w-3.5 h-3.5 text-primary" />
-              <span className="text-xs font-black tracking-[0.12em] uppercase text-primary">
-                LIZA zone
-              </span>
+              <ArrowDown className="w-3.5 h-3.5" style={{ color: "hsl(var(--destructive))" }} />
             </div>
           </div>
 
-          {/* Staircase steps */}
-          <div className="flex items-end gap-2" style={{ height: "340px" }}>
+          <div className="absolute -top-1 z-20 flex flex-col items-center"
+            style={{ left: "calc(60% + (20% - 4px) / 2)", transform: "translateX(-50%)" }}>
+            <div className="flex flex-col items-center">
+              <span className="text-[9px] md:text-[10px] font-bold whitespace-nowrap px-2 py-0.5 rounded-full mb-0.5"
+                style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)" }}>
+                Day 1 with LIZA
+              </span>
+              <ArrowDown className="w-3.5 h-3.5 text-primary" />
+            </div>
+          </div>
+
+          {/* Staircase */}
+          <div className="flex items-end gap-1.5 md:gap-2 pt-8 mb-1" style={{ height: "380px" }}>
             {LEVELS.map((l) => {
               const isTarget = l.level >= 4;
               const isActive = activeLevel === l.level;
-              // Heights: 28%, 42%, 58%, 78%, 100%
-              const heights = [28, 42, 58, 78, 100];
+              const heights = [24, 40, 58, 78, 100];
               const h = heights[l.level - 1];
-
-              const bgColor = isTarget
-                ? isActive ? "var(--gradient-brand-btn)" : "hsl(var(--primary) / 0.08)"
-                : l.level === 3
-                  ? isActive ? "hsl(var(--warning) / 0.18)" : "hsl(var(--warning) / 0.06)"
-                  : isActive ? "hsl(var(--destructive) / 0.14)" : "hsl(var(--destructive) / 0.05)";
-
-              const borderColor = isActive
-                ? isTarget ? "hsl(var(--primary))" : l.level === 3 ? "hsl(var(--warning) / 0.5)" : "hsl(var(--destructive) / 0.4)"
-                : isTarget ? "hsl(var(--primary) / 0.2)" : l.level === 3 ? "hsl(var(--warning) / 0.15)" : "hsl(var(--destructive) / 0.12)";
 
               const accentColor = isTarget
                 ? "hsl(var(--primary))"
@@ -113,88 +125,76 @@ export function ProblemSection() {
                   className="flex-1 rounded-t-xl transition-all duration-300 cursor-pointer relative overflow-hidden group"
                   style={{
                     height: `${h}%`,
-                    background: bgColor,
-                    border: `2px solid ${borderColor}`,
+                    background: isTarget
+                      ? isActive ? "var(--gradient-brand-btn)" : "hsl(var(--primary) / 0.08)"
+                      : l.level === 3
+                        ? isActive ? "hsl(var(--warning) / 0.18)" : "hsl(var(--warning) / 0.06)"
+                        : isActive ? "hsl(var(--destructive) / 0.14)" : "hsl(var(--destructive) / 0.05)",
+                    border: `2px solid ${
+                      isActive
+                        ? isTarget ? "hsl(var(--primary))" : l.level === 3 ? "hsl(var(--warning) / 0.5)" : "hsl(var(--destructive) / 0.4)"
+                        : isTarget ? "hsl(var(--primary) / 0.2)" : l.level === 3 ? "hsl(var(--warning) / 0.15)" : "hsl(var(--destructive) / 0.12)"
+                    }`,
                     borderBottom: "none",
                   }}
                 >
-                  {/* Content inside the bar */}
                   <div className="absolute inset-0 flex flex-col items-center justify-start pt-3 md:pt-4 px-1.5 md:px-3">
-                    {/* Level badge */}
-                    <div
-                      className="text-base md:text-lg font-black mb-1"
-                      style={{
-                        color: isTarget && isActive ? "hsl(var(--primary-foreground))" : accentColor,
-                      }}
-                    >
+                    {/* Level */}
+                    <div className="text-base md:text-lg font-black mb-0.5"
+                      style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground))" : accentColor }}>
                       L{l.level}
                     </div>
 
                     {/* Title */}
-                    <div
-                      className="text-[10px] md:text-xs font-bold leading-tight text-center mb-1.5"
-                      style={{
-                        color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.95)" : "hsl(var(--foreground) / 0.85)",
-                      }}
-                    >
+                    <div className="text-[10px] md:text-xs font-bold leading-tight text-center mb-1"
+                      style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.95)" : "hsl(var(--foreground) / 0.85)" }}>
                       {l.title}
                     </div>
 
-                    {/* Short description - visible on larger steps */}
+                    {/* Short - visible on L2+ */}
                     {l.level >= 2 && (
-                      <div
-                        className="text-[8px] md:text-[10px] leading-snug text-center hidden sm:block px-1"
-                        style={{
-                          color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.8)" : "hsl(var(--muted-foreground))",
-                        }}
-                      >
+                      <div className="text-[8px] md:text-[10px] leading-snug text-center hidden sm:block px-1 mb-1.5"
+                        style={{ color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.8)" : "hsl(var(--muted-foreground))" }}>
                         {l.short}
                       </div>
                     )}
 
-                    {/* AI angle - visible on taller steps */}
+                    {/* AI impact line - visible on L3+ */}
                     {l.level >= 3 && (
-                      <div
-                        className="mt-auto mb-3 text-[8px] md:text-[9px] font-medium text-center hidden md:block px-1 rounded-md py-1"
+                      <div className="mt-auto mb-3 text-[8px] md:text-[9px] font-medium text-center hidden md:block px-1.5 py-1 rounded-md"
                         style={{
                           color: isTarget && isActive ? "hsl(var(--primary-foreground) / 0.85)" : accentColor,
                           background: isTarget && isActive ? "hsl(0 0% 100% / 0.15)" : `${accentColor}11`,
-                        }}
-                      >
-                        🤖 {l.aiAngle}
+                        }}>
+                        🤖 {l.ai}
                       </div>
                     )}
                   </div>
 
-                  {/* Hover / active indicator */}
-                  <div
-                    className="absolute bottom-0 left-0 right-0 h-1 transition-opacity duration-200"
-                    style={{
-                      background: accentColor,
-                      opacity: isActive ? 1 : 0,
-                    }}
-                  />
+                  {/* Active bar */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 transition-opacity duration-200"
+                    style={{ background: accentColor, opacity: isActive ? 1 : 0 }} />
                 </button>
               );
             })}
           </div>
 
-          {/* Base line */}
+          {/* Base */}
           <div className="h-1 rounded-full" style={{ background: "hsl(var(--border))" }} />
           <div className="flex justify-between mt-2 px-1">
-            <span className="text-[10px] text-muted-foreground font-medium">← Fragmented</span>
-            <span className="text-[10px] font-semibold text-primary">Compounding →</span>
+            <span className="text-[10px] text-muted-foreground font-medium">← Knowledge scattered</span>
+            <span className="text-[10px] font-semibold text-primary">Knowledge compounding →</span>
           </div>
         </div>
 
         {/* Tap hint */}
         {activeLevel === null && (
-          <p className="text-center text-xs text-muted-foreground mt-2 mb-4 flex items-center justify-center gap-1 animate-bounce">
+          <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1 animate-bounce">
             <ChevronDown className="w-3.5 h-3.5" /> Tap a level to learn more
           </p>
         )}
 
-        {/* Expanded detail card */}
+        {/* Detail card */}
         {activeLevel !== null && (() => {
           const l = LEVELS[activeLevel - 1];
           const isTarget = l.level >= 4;
@@ -204,7 +204,7 @@ export function ProblemSection() {
 
           return (
             <div
-              className="rounded-xl border-2 p-5 mt-4 mb-4 animate-fade-in"
+              className="rounded-xl border-2 p-5 mt-4 animate-fade-in"
               style={{
                 borderColor: isTarget ? "hsl(var(--primary) / 0.3)" : l.level === 3 ? "hsl(var(--warning) / 0.3)" : "hsl(var(--destructive) / 0.3)",
                 background: isTarget ? "hsl(var(--primary) / 0.04)" : "hsl(var(--background))",
@@ -212,51 +212,42 @@ export function ProblemSection() {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-3 flex-1">
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-black shrink-0"
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-black shrink-0"
                     style={{
-                      background: isTarget ? "var(--gradient-brand-btn)" : `hsl(var(--${l.level === 3 ? "warning" : l.level >= 4 ? "primary" : "destructive"}) / 0.12)`,
+                      background: isTarget ? "var(--gradient-brand-btn)" : `${accentColor}1a`,
                       color: isTarget ? "hsl(var(--primary-foreground))" : accentColor,
-                    }}
-                  >
+                    }}>
                     L{l.level}
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <span className="text-base font-bold">{l.title}</span>
-                      <span
-                        className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full"
-                        style={{
-                          background: isTarget ? "hsl(var(--primary) / 0.1)" : `hsl(var(--${l.level === 3 ? "warning" : "destructive"}) / 0.1)`,
-                          color: accentColor,
-                        }}
-                      >
+                      <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full"
+                        style={{ background: `${accentColor}15`, color: accentColor }}>
                         {isTarget ? "Target" : l.level === 3 ? "Transitional" : "At risk"}
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground mb-2">{l.short}</p>
                     <p className="text-sm text-foreground/80 leading-relaxed">{l.detail}</p>
-                    <div className="flex items-center gap-4 mt-2">
-                      <p className="text-xs italic" style={{ color: "hsl(var(--foreground) / 0.5)" }}>
-                        You'll hear: {l.symptom}
-                      </p>
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full" style={{ background: `${accentColor}15`, color: accentColor }}>
-                        🤖 {l.aiAngle}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-3">
+                      <span className="text-xs italic" style={{ color: "hsl(var(--foreground) / 0.5)" }}>
+                        {l.symptom}
+                      </span>
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full"
+                        style={{ background: `${accentColor}12`, color: accentColor }}>
+                        🤖 {l.ai}
                       </span>
                     </div>
                   </div>
                 </div>
-                <button
-                  onClick={() => setActiveLevel(null)}
-                  className="p-1.5 rounded-lg hover:bg-accent transition-colors shrink-0"
-                >
+                <button onClick={() => setActiveLevel(null)}
+                  className="p-1.5 rounded-lg hover:bg-accent transition-colors shrink-0">
                   <ChevronUp className="w-4 h-4 text-muted-foreground" />
                 </button>
               </div>
             </div>
           );
         })()}
-
       </div>
     </section>
   );
