@@ -52,12 +52,12 @@ export function HeroSection() {
 
         {/* Product glimpse */}
         <div
-          className="max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl border"
+          className="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border"
           style={{ borderColor: "hsl(var(--border))", boxShadow: "0 20px 60px -15px hsl(var(--primary) / 0.15)" }}
         >
           <img
-            src="/images/product-execute-protocol.png"
-            alt="LIZA OS - Protocol execution with pre-loaded team context"
+            src="/images/product-mission-control.png"
+            alt="LIZA OS - Mission Control dashboard with playbooks, active sessions, and insights"
             className="w-full h-auto block"
             loading="eager"
           />
