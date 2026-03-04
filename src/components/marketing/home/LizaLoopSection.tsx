@@ -9,9 +9,9 @@ const STEPS = [
     tag: "Define & enforce",
     icon: <Shield className="w-4 h-4" />,
     headline: "Build playbooks that actually get followed.",
-    line: "Your best practices need to evolve as fast as your team's AI usage. LIZA turns scattered prompts and tribal knowledge into living playbooks — enforced in every session, updated continuously. Not a static doc. A working standard.",
+    line: "Your best practices need to evolve as fast as your team's AI usage. LIZA turns scattered prompts and tribal knowledge into living playbooks, enforced in every session, updated continuously. Not a static doc. A working standard.",
     before: "Best practices update quarterly. AI workflows change weekly.",
-    after: "Living playbooks evolve with every engagement — always current, always enforced",
+    after: "Living playbooks evolve with every engagement. Always current, always enforced",
     img: "/images/product-define-enforce.png",
   },
   {
@@ -19,8 +19,8 @@ const STEPS = [
     tag: "Execute together",
     icon: <Users className="w-4 h-4" />,
     headline: "From individual AI speed to team-level intelligence.",
-    line: "Your team is fast. Each person has their own ChatGPT setup, their own Claude projects. But breakthroughs stay in individual silos. LIZA connects the dots — so one person's insight becomes the whole team's advantage, in the next session.",
-    before: "Everyone's fast individually — but insights stay in personal chat histories",
+    line: "Your team is fast. Each person has their own ChatGPT setup, their own Claude projects. But breakthroughs stay in individual silos. LIZA connects the dots so one person's insight becomes the whole team's advantage, in the next session.",
+    before: "Everyone's fast individually, but insights stay in personal chat histories",
     after: "Every team member executes with the team's latest, best playbook",
     img: "/images/product-execute-session.png",
   },
@@ -29,9 +29,9 @@ const STEPS = [
     tag: "Learn together",
     icon: <Brain className="w-4 h-4" />,
     headline: "Your playbooks get sharper with every engagement.",
-    line: "AI lets your team work more granularly and across more touchpoints than ever. That means more learning opportunities — but only if you capture them. LIZA turns execution into structured feedback that upgrades your shared playbooks automatically.",
+    line: "AI lets your team work more granularly and across more touchpoints than ever. That means more learning opportunities, but only if you capture them. LIZA turns execution into structured feedback that upgrades your shared playbooks automatically.",
     before: "Great insights discovered in Tuesday's session are forgotten by Thursday",
-    after: "Every engagement feeds back into living playbooks — the team compounds",
+    after: "Every engagement feeds back into living playbooks. The team compounds",
     img: "/images/product-learn-extraction.png",
   },
 ];
@@ -49,7 +49,7 @@ export function LizaLoopSection() {
               Define. Execute. Learn.
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Your team already uses AI to execute faster. LIZA makes sure that speed builds something — living playbooks that the whole team benefits from.
+              Your team already uses AI to execute faster. LIZA makes sure that speed builds something: living playbooks that the whole team benefits from.
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export function LizaLoopSection() {
                   style={{ borderColor: "hsl(var(--border))" }}
                   onClick={() => setLightbox(s.img)}
                 >
-                  <img src={s.img} alt={`LIZA — ${s.tag}`} className="w-full h-auto block" loading="lazy" />
+                  <img src={s.img} alt={`LIZA - ${s.tag}`} className="w-full h-auto block" loading="lazy" />
                 </div>
 
                 <div className="md:w-[45%]">
