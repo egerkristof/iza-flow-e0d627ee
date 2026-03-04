@@ -2,12 +2,10 @@ import { SectionTag, GradientText } from "./shared";
 import { ArrowRight, X, Check } from "lucide-react";
 
 const ROWS = [
-  { before: "Best practices live in people's heads", after: "Best practices live in executable, evolving context" },
-  { before: "Standards are static docs nobody reads", after: "Standards are live in every work session" },
-  { before: "Every person's AI is a private silo", after: "One shared intelligence the whole team runs on" },
-  { before: "New hires shadow seniors for months", after: "New hires execute at your standard from week one" },
   { before: "When someone leaves, you rebuild from scratch", after: "Knowledge compounds — it never walks out the door" },
   { before: "Standardize or stay flexible — pick one", after: "Standards that evolve as your team learns" },
+  { before: "Best practices live in people's heads", after: "Best practices live in executable, evolving context" },
+  { before: "New hires shadow seniors for months", after: "New hires execute at your standard from week one" },
 ];
 
 export function TransformationSection() {

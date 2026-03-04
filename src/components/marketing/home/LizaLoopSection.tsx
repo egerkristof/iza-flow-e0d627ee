@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { Layers, TrendingUp, Users, Briefcase, Megaphone } from "lucide-react";
+import { Layers, TrendingUp, Users, Briefcase, Megaphone, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SectionTag } from "./shared";
 import loopCollaborate from "@/assets/loop-collaborate.png";
 import loopLearn from "@/assets/loop-learn.png";
-import loopExecute from "@/assets/loop-execute.png";
 
 const STEPS = [
   {
     key: "collaborate",
     tag: "Execute together",
-    headline: "One workspace. Your whole team. AI included.",
-    line: "Everyone works from the same live context — your methodology, your standards, your accumulated judgment. No more copying context between tools or meetings.",
+    headline: "One workspace. Your best practices built into every session.",
+    line: "Everyone works from the same live context — your methodology, your standards, your accumulated judgment. Not copied between tools. Assembled and injected automatically.",
     before: "Everyone brings their own context to every session",
     after: "Everyone starts with the team's full knowledge — automatically",
     img: loopCollaborate,
@@ -25,13 +25,13 @@ const STEPS = [
     img: loopLearn,
   },
   {
-    key: "execute",
-    tag: "Scale together",
-    headline: "Your best practices, built into every session.",
-    line: "Your methodology and quality standards aren't on a shelf — they're assembled and injected into every work session. Anyone can execute at your standard, from day one.",
-    before: "6–9 months to ramp, seniors always the bottleneck",
-    after: "New hire, day one, senior-level output",
-    img: loopExecute,
+    key: "manage",
+    tag: "Manage together",
+    headline: "Design, curate, and evolve the playbook.",
+    line: "Your methodology leads see what's working, what's drifting, and what to evolve — then update the living standards everyone runs on. Not admin work. Design work.",
+    before: "Best practices frozen in a doc nobody updates",
+    after: "A living system — designed, curated, continuously improved",
+    img: "/images/product-oversight.png",
   },
 ];
 
@@ -52,7 +52,7 @@ export function LizaLoopSection() {
           <div className="text-center mb-14">
             <SectionTag label="How it works" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              Co-build. Co-execute. Co-evolve.
+              Execute. Learn. Evolve.
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
               Best practices that standardize without becoming rigid — because the team keeps improving them.
@@ -120,6 +120,21 @@ export function LizaLoopSection() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Mid-page CTA */}
+          <div className="mt-12 text-center">
+            <Link
+              to="/beta"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
+              style={{
+                background: "var(--gradient-brand-btn)",
+                color: "hsl(var(--primary-foreground))",
+                boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.3)",
+              }}
+            >
+              Join the Private Beta <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
