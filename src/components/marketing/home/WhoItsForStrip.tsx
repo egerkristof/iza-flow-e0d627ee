@@ -13,10 +13,13 @@ export function WhoItsForStrip() {
     <section className="py-12 px-6">
       <div className="max-w-3xl mx-auto text-center">
         <p
-          className="text-[11px] font-black tracking-[0.25em] uppercase mb-6"
+          className="text-[11px] font-black tracking-[0.25em] uppercase mb-3"
           style={{ color: "hsl(var(--primary))" }}
         >
-          Built for teams that run on process
+          For teams that hit the ceiling
+        </p>
+        <p className="text-sm text-muted-foreground mb-8 max-w-md mx-auto">
+          Your people already use AI. The problem is they each use it differently. These teams felt it first.
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
