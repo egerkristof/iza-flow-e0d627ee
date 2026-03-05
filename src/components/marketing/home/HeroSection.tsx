@@ -40,7 +40,7 @@ function ConceptDiagram() {
 
 export function HeroSection() {
   return (
-    <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 px-6 overflow-hidden">
+    <section className="relative pt-14 pb-20 md:pt-20 md:pb-28 px-6 overflow-hidden">
       {/* Ambient glow */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
