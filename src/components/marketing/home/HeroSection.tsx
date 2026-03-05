@@ -15,22 +15,22 @@ function ConceptDiagram() {
   ];
 
   return (
-    <div className="flex items-center justify-center gap-2 sm:gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
       {steps.map((step, i) => (
-        <div key={i} className="flex items-center gap-2 sm:gap-4">
+        <div key={i} className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
           <div
-            className="flex flex-col items-center gap-1.5 px-4 py-3 sm:px-6 sm:py-4 rounded-xl border"
+            className="flex flex-col items-center gap-1.5 px-6 py-4 rounded-xl border w-full sm:w-auto"
             style={{
               borderColor: "hsl(var(--border))",
               background: "hsl(var(--card))",
             }}
           >
             <span style={{ color: "hsl(var(--primary))" }}>{step.icon}</span>
-            <span className="text-xs sm:text-sm font-semibold text-foreground whitespace-nowrap">{step.label}</span>
-            <span className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">{step.sub}</span>
+            <span className="text-sm font-semibold text-foreground">{step.label}</span>
+            <span className="text-xs text-muted-foreground">{step.sub}</span>
           </div>
           {i < steps.length - 1 && (
-            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground shrink-0" />
+            <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0 rotate-90 sm:rotate-0" />
           )}
         </div>
       ))}
