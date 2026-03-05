@@ -1,4 +1,4 @@
-import { ArrowRight, FileText, Shield, Users } from "lucide-react";
+import { ArrowRight, FileText, Users, RotateCcw } from "lucide-react";
 import { CAL_URL } from "./shared";
 
 const PROOF_POINTS = [
@@ -9,28 +9,28 @@ const PROOF_POINTS = [
 
 function ConceptDiagram() {
   const steps = [
-    { icon: <FileText className="w-4 h-4" />, label: "Your best practices", sub: "Captured once, adapted continuously" },
-    { icon: <Shield className="w-4 h-4" />, label: "LIZA enforces", sub: "Every AI session" },
-    { icon: <Users className="w-4 h-4" />, label: "Team compounds", sub: "Same quality, every time" },
+    { icon: <FileText className="w-4 h-4" />, label: "Capture your playbooks", sub: "From docs, chats & tribal knowledge" },
+    { icon: <Users className="w-4 h-4" />, label: "Run AI sessions together", sub: "Same living standards, every time" },
+    { icon: <RotateCcw className="w-4 h-4" />, label: "Harvest what works", sub: "Learnings feed back automatically" },
   ];
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+    <div className="flex flex-row items-center justify-center gap-3 sm:gap-4">
       {steps.map((step, i) => (
-        <div key={i} className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+        <div key={i} className="flex flex-row items-center gap-3 sm:gap-4">
           <div
-            className="flex flex-col items-center gap-1.5 px-6 py-4 rounded-xl border w-full sm:w-auto"
+            className="flex flex-col items-center gap-1.5 px-3 sm:px-6 py-3 sm:py-4 rounded-xl border"
             style={{
               borderColor: "hsl(var(--border))",
               background: "hsl(var(--card))",
             }}
           >
             <span style={{ color: "hsl(var(--primary))" }}>{step.icon}</span>
-            <span className="text-sm font-semibold text-foreground">{step.label}</span>
-            <span className="text-xs text-muted-foreground">{step.sub}</span>
+            <span className="text-[11px] sm:text-sm font-semibold text-foreground text-center leading-tight">{step.label}</span>
+            <span className="text-[10px] sm:text-xs text-muted-foreground text-center leading-tight">{step.sub}</span>
           </div>
           {i < steps.length - 1 && (
-            <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0 rotate-90 sm:rotate-0" />
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground shrink-0" />
           )}
         </div>
       ))}
@@ -52,14 +52,6 @@ export function HeroSection() {
       />
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
-        {/* Eyebrow — struggle trigger */}
-        <p
-          className="text-[11px] font-black tracking-[0.25em] uppercase mb-8"
-          style={{ color: "hsl(var(--primary))" }}
-        >
-          For leaders who own execution quality
-        </p>
-
         {/* Headline — pain + solution */}
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-3 leading-[1.1] tracking-tight">
           Your team gets wildly different
@@ -70,8 +62,6 @@ export function HeroSection() {
         <p className="text-sm font-semibold tracking-wide uppercase text-muted-foreground mb-6">
           LIZA OS is the management layer for AI-powered teams.
         </p>
-
-
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
