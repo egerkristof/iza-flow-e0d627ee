@@ -9,7 +9,7 @@ const STEPS = [
     tag: "Define & enforce",
     icon: <Shield className="w-4 h-4" />,
     headline: "Build playbooks that actually get followed.",
-    line: "Your best practices need to evolve as fast as your team's AI usage. LIZA turns scattered prompts and tribal knowledge into living playbooks: enforced in every session, updated continuously. Not a static doc. A working standard.",
+    line: "LIZA turns scattered prompts and tribal knowledge into living playbooks: enforced in every session, updated continuously.",
     before: "Best practices update quarterly. AI workflows change weekly.",
     after: "Living playbooks evolve with every engagement. Always current, always enforced.",
     img: "/images/product-define-enforce.png",
@@ -19,7 +19,7 @@ const STEPS = [
     tag: "Execute together",
     icon: <Users className="w-4 h-4" />,
     headline: "From individual AI speed to team-level intelligence.",
-    line: "Your team is fast. Each person has their own ChatGPT setup, their own Claude projects. But breakthroughs stay in individual silos. LIZA connects the dots: one person's insight becomes the whole team's advantage in the next session.",
+    line: "Everyone prompts alone. Breakthroughs stay in individual silos. LIZA connects the dots: one person's insight becomes the whole team's advantage in the next session.",
     before: "Everyone's fast individually, but insights stay in personal chat histories",
     after: "Every team member executes with the team's latest, best playbook",
     img: "/images/product-execute-protocol.png",
@@ -29,7 +29,7 @@ const STEPS = [
     tag: "Learn together",
     icon: <Brain className="w-4 h-4" />,
     headline: "Your playbooks get sharper with every engagement.",
-    line: "AI lets your team work more granularly and across more touchpoints than ever. That means more learning opportunities, but only if you capture them. LIZA turns execution into structured feedback that upgrades your shared playbooks automatically.",
+    line: "More AI touchpoints means more learning opportunities, but only if you capture them. LIZA turns execution into structured feedback that upgrades your shared playbooks automatically.",
     before: "Great insights discovered in Tuesday's session are forgotten by Thursday",
     after: "Every engagement feeds back into living playbooks. The team compounds",
     img: "/images/product-learn-extraction.png",
@@ -46,7 +46,7 @@ export function LizaLoopSection() {
           <div className="text-center mb-14">
             <SectionTag label="How it works" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              From wildly different to consistently excellent.
+              The loop that makes it stick.
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
               Three steps. One loop. Your team's best thinking becomes the default for everyone.
