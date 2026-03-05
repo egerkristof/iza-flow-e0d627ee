@@ -129,12 +129,12 @@ export function ThreeReasonsSection() {
         {/* Section header */}
         <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The root cause</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
-          Three reasons your team gets
+          Three structural gaps
           <br />
-          <span className="text-muted-foreground">wildly different results.</span>
+          <span className="text-muted-foreground">no AI tool was built to close.</span>
         </h2>
         <p className="text-base text-muted-foreground max-w-lg mb-20">
-          It's not the tools. It's the three structural gaps no AI product was built to close.
+          It's not the people. It's not the AI. It's the missing infrastructure between them.
         </p>
 
         {/* Alternating bands */}

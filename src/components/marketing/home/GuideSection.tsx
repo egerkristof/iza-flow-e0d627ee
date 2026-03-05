@@ -18,13 +18,6 @@ const TEAM = [
   },
 ];
 
-const METRICS = [
-  { value: "200+", label: "Consulting engagements" },
-  { value: "8", label: "Countries" },
-  { value: "15+", label: "Years combined methodology" },
-  { value: "15+", label: "Teams in Beta" },
-];
-
 export function GuideSection() {
   return (
     <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
@@ -35,18 +28,8 @@ export function GuideSection() {
             We managed execution the hard way. Then AI made it harder.
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            200+ engagements taught us that execution quality depends on shared, living standards. AI amplified the urgency. So we built the missing infrastructure.
+            200+ engagements across 8 countries taught us that execution quality depends on shared, living standards. AI amplified the urgency. So we built the missing infrastructure.
           </p>
-        </div>
-
-        {/* Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-          {METRICS.map((m) => (
-            <div key={m.label} className="text-center">
-              <div className="text-2xl md:text-3xl font-black brand-gradient-text mb-1">{m.value}</div>
-              <div className="text-xs text-muted-foreground font-medium">{m.label}</div>
-            </div>
-          ))}
         </div>
 
         {/* Team */}

@@ -33,6 +33,10 @@ const FAQS = [
     a: "Most teams are operational within a day. Upload existing docs, LIZA extracts structured playbooks automatically. No 6-week onboarding.",
   },
   {
+    q: "What does it cost?",
+    a: "We're in private beta. The first month is free for every team. After that, pricing scales with team size. Book a discovery call and we'll walk you through it.",
+  },
+  {
     q: "Is my team's knowledge secure?",
     a: "Yes. Your playbooks stay in your organisation's environment. We don't train on your data.",
   },
