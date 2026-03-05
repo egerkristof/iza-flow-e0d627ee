@@ -71,12 +71,7 @@ export function HeroSection() {
           LIZA OS is the management layer for AI-powered teams.
         </p>
 
-        {/* Subhead — single clear promise */}
-        <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto mb-10">
-          Capture your team's best thinking. Every AI session enforces it, and every session makes it sharper.
-          {" "}
-          <span className="font-semibold text-foreground">Standards that compound, not decay.</span>
-        </p>
+
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
