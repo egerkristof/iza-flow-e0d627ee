@@ -1,7 +1,7 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
 import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
-import { TrustBar } from "@/components/marketing/home/TrustBar";
+
 import { LizaLoopSection } from "@/components/marketing/home/LizaLoopSection";
 import { CategoryComparison } from "@/components/marketing/home/CategoryComparison";
 import { FAQSection } from "@/components/marketing/home/FAQSection";
@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
-      <TrustBar />
+      
       <ThreeReasonsSection />
       <SectionDivider />
       <LizaLoopSection />
