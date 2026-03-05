@@ -7,11 +7,13 @@ import { CategoryComparison } from "@/components/marketing/home/CategoryComparis
 import { FAQSection } from "@/components/marketing/home/FAQSection";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
 import { SectionDivider } from "@/components/marketing/home/SectionDivider";
+import { WhoItsForStrip } from "@/components/marketing/home/WhoItsForStrip";
 
 export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
+      <WhoItsForStrip />
       <ThreeReasonsSection />
       <SectionDivider />
       <LizaLoopSection />
