@@ -9,7 +9,7 @@ const PROOF_POINTS = [
 
 function ConceptDiagram() {
   const steps = [
-    { icon: <FileText className="w-4 h-4" />, label: "Your best practices", sub: "Captured once" },
+    { icon: <FileText className="w-4 h-4" />, label: "Your best practices", sub: "Captured once, adapted continuously" },
     { icon: <Shield className="w-4 h-4" />, label: "LIZA enforces", sub: "Every AI session" },
     { icon: <Users className="w-4 h-4" />, label: "Team compounds", sub: "Same quality, every time" },
   ];
