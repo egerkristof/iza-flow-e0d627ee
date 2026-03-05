@@ -57,13 +57,14 @@ export function HeroSection() {
           className="text-[11px] font-black tracking-[0.25em] uppercase mb-8"
           style={{ color: "hsl(var(--primary))" }}
         >
-          Same tools. Same team. Wildly different results.
+          For leaders who own execution quality
         </p>
 
-        {/* Headline — 2 clean lines */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 leading-[1.1] tracking-tight">
-          The management layer{" "}
-          <span className="text-muted-foreground">your AI is missing.</span>
+        {/* Headline — pain + solution */}
+        <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.1] tracking-tight">
+          Your team gets wildly different results.
+          <br />
+          <span className="text-muted-foreground">LIZA fixes that.</span>
         </h1>
 
         {/* Subhead — single clear promise */}
