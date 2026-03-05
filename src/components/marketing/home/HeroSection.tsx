@@ -9,9 +9,9 @@ const PROOF_POINTS = [
 
 function ConceptDiagram() {
   const steps = [
-    { icon: <FileText className="w-4 h-4" />, label: "Your standards", sub: "Playbooks & rules" },
+    { icon: <FileText className="w-4 h-4" />, label: "Your best practices", sub: "Captured once" },
     { icon: <Shield className="w-4 h-4" />, label: "LIZA enforces", sub: "Every AI session" },
-    { icon: <Users className="w-4 h-4" />, label: "Team compounds", sub: "Consistent output" },
+    { icon: <Users className="w-4 h-4" />, label: "Team compounds", sub: "Same quality, every time" },
   ];
 
   return (
@@ -61,14 +61,14 @@ export function HeroSection() {
         </p>
 
         {/* Headline — pain + solution */}
-        <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black mb-3 leading-[1.1] tracking-tight">
+        <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-3 leading-[1.1] tracking-tight">
           Your team gets wildly different
           <br />
           <span className="text-muted-foreground">results from AI.</span>
         </h1>
 
         <p className="text-sm font-semibold tracking-wide uppercase text-muted-foreground mb-6">
-          LIZA OS is the management layer that fixes that.
+          LIZA OS is the management layer for AI-powered teams.
         </p>
 
         {/* Subhead — single clear promise */}
