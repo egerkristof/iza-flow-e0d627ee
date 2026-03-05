@@ -61,11 +61,15 @@ export function HeroSection() {
         </p>
 
         {/* Headline — pain + solution */}
-        <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.1] tracking-tight">
-          Your team gets wildly different results.
+        <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black mb-3 leading-[1.1] tracking-tight">
+          Your team gets wildly different
           <br />
-          <span className="text-muted-foreground">LIZA fixes that.</span>
+          <span className="text-muted-foreground">results from AI.</span>
         </h1>
+
+        <p className="text-sm font-semibold tracking-wide uppercase text-muted-foreground mb-6">
+          LIZA OS is the management layer that fixes that.
+        </p>
 
         {/* Subhead — single clear promise */}
         <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto mb-10">
