@@ -57,7 +57,7 @@ export function HeroSection() {
           className="text-[11px] font-black tracking-[0.25em] uppercase mb-8"
           style={{ color: "hsl(var(--primary))" }}
         >
-          Your team uses AI. Nothing compounds.
+          Same tools. Same team. Wildly different results.
         </p>
 
         {/* Headline — 2 clean lines */}
