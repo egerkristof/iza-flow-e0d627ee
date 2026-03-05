@@ -16,7 +16,7 @@ export function WhoItsForStrip() {
           className="text-[11px] font-black tracking-[0.25em] uppercase mb-3"
           style={{ color: "hsl(var(--primary))" }}
         >
-          For teams that hit the ceiling
+          For teams that hit the AI ceiling
         </p>
         <p className="text-sm text-muted-foreground mb-8 max-w-md mx-auto">
           Your people already use AI. The problem is they each use it differently. These teams felt it first.
