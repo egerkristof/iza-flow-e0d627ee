@@ -1,15 +1,46 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FileText, Shield, Users } from "lucide-react";
 import { CAL_URL } from "./shared";
 
 const PROOF_POINTS = [
-  "15 years combined methodology",
+  "15 years of methodology refinement",
   "200+ consulting engagements",
   "8 countries",
 ];
 
+function ConceptDiagram() {
+  const steps = [
+    { icon: <FileText className="w-4 h-4" />, label: "Your standards", sub: "Playbooks & rules" },
+    { icon: <Shield className="w-4 h-4" />, label: "LIZA enforces", sub: "Every AI session" },
+    { icon: <Users className="w-4 h-4" />, label: "Team compounds", sub: "Consistent output" },
+  ];
+
+  return (
+    <div className="flex items-center justify-center gap-2 sm:gap-4">
+      {steps.map((step, i) => (
+        <div key={i} className="flex items-center gap-2 sm:gap-4">
+          <div
+            className="flex flex-col items-center gap-1.5 px-4 py-3 sm:px-6 sm:py-4 rounded-xl border"
+            style={{
+              borderColor: "hsl(var(--border))",
+              background: "hsl(var(--card))",
+            }}
+          >
+            <span style={{ color: "hsl(var(--primary))" }}>{step.icon}</span>
+            <span className="text-xs sm:text-sm font-semibold text-foreground whitespace-nowrap">{step.label}</span>
+            <span className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">{step.sub}</span>
+          </div>
+          {i < steps.length - 1 && (
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground shrink-0" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function HeroSection() {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center px-6 overflow-hidden">
+    <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 px-6 overflow-hidden">
       {/* Ambient glow */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
@@ -21,7 +52,7 @@ export function HeroSection() {
       />
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
-        {/* Eyebrow — struggle trigger, not role label */}
+        {/* Eyebrow — struggle trigger */}
         <p
           className="text-[11px] font-black tracking-[0.25em] uppercase mb-8"
           style={{ color: "hsl(var(--primary))" }}
@@ -29,27 +60,21 @@ export function HeroSection() {
           Your team uses AI. Nothing compounds.
         </p>
 
-        {/* Headline — 2 visual lines + category anchor */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-[1.1] tracking-tight">
-          The management layer
-          <br />
-          <span className="text-muted-foreground">your AI stack is missing.</span>
+        {/* Headline — 2 clean lines */}
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 leading-[1.1] tracking-tight">
+          The management layer{" "}
+          <span className="text-muted-foreground">your AI is missing.</span>
         </h1>
 
-        {/* Category anchor */}
-        <p className="text-sm font-semibold tracking-wide uppercase text-muted-foreground mb-6">
-          LIZA OS is the AI execution layer for teams.
-        </p>
-
-        {/* Subhead — the A→B transformation */}
+        {/* Subhead — single clear promise */}
         <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto mb-10">
           Define your team's standards once. Every AI session enforces them.
-          <br className="hidden md:block" />
+          {" "}
           <span className="font-semibold text-foreground">Your best thinking scales to everyone.</span>
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
           <a
             href={CAL_URL}
             target="_blank"
@@ -77,7 +102,7 @@ export function HeroSection() {
         </div>
 
         {/* Inline trust proof */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-14">
           {PROOF_POINTS.map((point, i) => (
             <span key={i} className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               {i > 0 && (
@@ -90,6 +115,9 @@ export function HeroSection() {
             </span>
           ))}
         </div>
+
+        {/* Conceptual product diagram */}
+        <ConceptDiagram />
       </div>
     </section>
   );
