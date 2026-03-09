@@ -54,16 +54,16 @@ export function HeroSection() {
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         {/* Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
-          AI doesn't hallucinate.
+          Same AI. Same prompts.
           <br />
-          <span className="text-muted-foreground">You never defined what good looks like.</span>
-          <br />
-          <span className="text-primary">Now you can.</span>
+          <span className="text-muted-foreground">Wildly different results.</span>
         </h1>
 
         {/* Category line */}
         <p className="text-base md:text-lg font-semibold mb-6">
-          LIZA OS: Turn your team's best thinking into <span className="text-primary">everyone's default.</span>
+          AI doesn't hallucinate — it just has no standard to follow.
+          <br />
+          <span className="text-primary">Turn your team's best thinking into everyone's default.</span>
         </p>
 
         {/* CTAs */}
