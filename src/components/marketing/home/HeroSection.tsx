@@ -56,14 +56,12 @@ export function HeroSection() {
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
           AI doesn't hallucinate.
           <br />
-          <span className="text-muted-foreground">You never defined what good looks like.</span>
-          <br />
-          <span className="text-primary">Now you can.</span>
+          <span className="text-muted-foreground">You just never defined the truth.</span>
         </h1>
 
         {/* Category line */}
         <p className="text-base md:text-lg font-semibold mb-6">
-          LIZA OS: Turn your team's best thinking into <span className="text-primary">everyone's default.</span>
+          LIZA OS: Write down what <span className="text-primary">"good" means</span> — and make every AI session follow it.
         </p>
 
         {/* CTAs */}
