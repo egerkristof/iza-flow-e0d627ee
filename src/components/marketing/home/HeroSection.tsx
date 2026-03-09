@@ -54,16 +54,16 @@ export function HeroSection() {
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         {/* Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
-          Your team gets wildly different
+          AI doesn't hallucinate.
           <br />
-          <span className="text-muted-foreground">results from AI.</span>
+          <span className="text-muted-foreground">You never defined what good looks like.</span>
           <br />
-          <span className="text-primary">Fix that.</span>
+          <span className="text-primary">Now you can.</span>
         </h1>
 
         {/* Category line */}
         <p className="text-base md:text-lg font-semibold mb-6">
-          LIZA OS: The <span className="text-primary">management layer</span> for AI-powered teams.
+          LIZA OS: Turn your team's best thinking into <span className="text-primary">everyone's default.</span>
         </p>
 
         {/* CTAs */}
