@@ -59,11 +59,14 @@ export function HeroSection() {
           <span className="text-muted-foreground">Wildly different results.</span>
         </h1>
 
-        {/* Category line */}
-        <p className="text-base md:text-lg font-semibold mb-6">
+        {/* Provocation */}
+        <p className="text-sm md:text-base font-bold tracking-wide uppercase mb-4" style={{ color: "hsl(var(--primary))" }}>
           AI doesn't hallucinate — it just has no standard to follow.
-          <br />
-          <span className="text-primary">Turn your team's best thinking into everyone's default.</span>
+        </p>
+
+        {/* Category line */}
+        <p className="text-base md:text-lg font-semibold mb-6 text-muted-foreground">
+          LIZA OS: Turn your team's best thinking into <span className="text-primary">everyone's default.</span>
         </p>
 
         {/* CTAs */}
