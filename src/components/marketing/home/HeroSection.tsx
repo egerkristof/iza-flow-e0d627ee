@@ -57,6 +57,8 @@ export function HeroSection() {
           Your team gets wildly different
           <br />
           <span className="text-muted-foreground">results from AI.</span>
+          <br />
+          <span className="text-primary">Fix that.</span>
         </h1>
 
         <p className="text-sm font-semibold tracking-wide uppercase text-muted-foreground mb-6">
