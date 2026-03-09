@@ -54,19 +54,16 @@ export function HeroSection() {
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         {/* Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
-          Same AI. Same prompts.
+          Your team gets wildly different
           <br />
-          <span className="text-muted-foreground">Wildly different results.</span>
+          results from AI.
+          <br />
+          <span className="text-primary">Fix that.</span>
         </h1>
-
-        {/* Provocation */}
-        <p className="text-sm md:text-base font-bold tracking-wide uppercase mb-4" style={{ color: "hsl(var(--primary))" }}>
-          AI doesn't hallucinate — it just has no standard to follow.
-        </p>
 
         {/* Category line */}
         <p className="text-base md:text-lg font-semibold mb-6 text-muted-foreground">
-          LIZA OS: Turn your team's best thinking into <span className="text-primary">everyone's default.</span>
+          LIZA OS: The management layer for <span className="text-primary">AI-powered teams.</span>
         </p>
 
         {/* CTAs */}
