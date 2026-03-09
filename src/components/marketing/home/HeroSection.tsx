@@ -52,8 +52,13 @@ export function HeroSection() {
       />
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
-        {/* Headline — pain + solution */}
-        <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-3 leading-[1.1] tracking-tight">
+        {/* Brand badge */}
+        <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-5 border border-primary/30 text-primary bg-primary/5">
+          LIZA OS
+        </span>
+
+        {/* Headline */}
+        <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
           Your team gets wildly different
           <br />
           <span className="text-muted-foreground">results from AI.</span>
@@ -61,8 +66,9 @@ export function HeroSection() {
           <span className="text-primary">Fix that.</span>
         </h1>
 
-        <p className="text-sm font-semibold tracking-wide uppercase text-muted-foreground mb-6">
-          LIZA OS is the management layer for AI-powered teams.
+        {/* Category line */}
+        <p className="text-base md:text-lg font-semibold mb-6">
+          The <span className="text-primary">management layer</span> for AI-powered teams.
         </p>
 
         {/* CTAs */}
