@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.simulate-experience]
 verify_jwt = false
+
+[functions.send-diagnostic-report]
+verify_jwt = false
