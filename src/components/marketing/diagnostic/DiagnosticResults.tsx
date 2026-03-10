@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,6 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [loading, setLoading] = useState(false);
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
 
-  // Short mobile-friendly labels for radar
   const SHORT_LABELS: Record<string, string> = {
     "Do your standards shape behaviour?": "Standards",
     "Can anyone deliver your best work?": "Consistency",
@@ -27,12 +26,6 @@ export function DiagnosticResults({ result, answers }: Props) {
     "Can your team see how each other thinks?": "Visibility",
     "How fast do improvements spread?": "Learning Speed",
   };
-
-  const radarData = result.dimensions.map((d) => ({
-    subject: SHORT_LABELS[d.label] || d.label.split(" ").slice(0, 2).join(" "),
-    score: d.score,
-    fullMark: 100,
-  }));
 
   const scoreColor =
     result.overall <= 30
@@ -105,28 +98,24 @@ export function DiagnosticResults({ result, answers }: Props) {
         </p>
       </div>
 
-      {/* Radar chart */}
+      {/* Dimension bars overview */}
       <Card className="border-border">
-        <CardContent className="p-4 md:p-6">
-          <ResponsiveContainer width="100%" height={320}>
-            <RadarChart data={radarData}>
-              <PolarGrid stroke="hsl(var(--border))" />
-              <PolarAngleAxis
-                dataKey="subject"
-                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: 500 }}
-                className="text-[10px] md:text-xs"
-              />
-              <PolarRadiusAxis angle={90} domain={[0, 100]} tick={false} axisLine={false} />
-              <Radar
-                name="Score"
-                dataKey="score"
-                stroke="hsl(var(--primary))"
-                fill="hsl(var(--primary))"
-                fillOpacity={0.2}
-                strokeWidth={2}
-              />
-            </RadarChart>
-          </ResponsiveContainer>
+        <CardContent className="p-4 md:p-6 space-y-3">
+          {result.dimensions.map((d) => {
+            const label = SHORT_LABELS[d.label] || d.label.split(" ").slice(0, 2).join(" ");
+            return (
+              <div key={d.dimension} className="flex items-center gap-3">
+                <span className="text-xs font-medium text-muted-foreground w-24 shrink-0 text-right">{label}</span>
+                <div className="flex-1 h-3 rounded-full bg-secondary overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-700"
+                    style={{ width: `${d.score}%`, background: "var(--gradient-brand-btn)" }}
+                  />
+                </div>
+                <span className="text-xs font-bold tabular-nums w-8 text-foreground">{d.score}</span>
+              </div>
+            );
+          })}
         </CardContent>
       </Card>
 
