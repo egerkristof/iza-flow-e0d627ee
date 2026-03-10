@@ -19,7 +19,6 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [loading, setLoading] = useState(false);
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
 
-  // Short mobile-friendly labels for radar
   const SHORT_LABELS: Record<string, string> = {
     "Do your standards shape behaviour?": "Standards",
     "Can anyone deliver your best work?": "Consistency",
@@ -27,12 +26,6 @@ export function DiagnosticResults({ result, answers }: Props) {
     "Can your team see how each other thinks?": "Visibility",
     "How fast do improvements spread?": "Learning Speed",
   };
-
-  const radarData = result.dimensions.map((d) => ({
-    subject: SHORT_LABELS[d.label] || d.label.split(" ").slice(0, 2).join(" "),
-    score: d.score,
-    fullMark: 100,
-  }));
 
   const scoreColor =
     result.overall <= 30
