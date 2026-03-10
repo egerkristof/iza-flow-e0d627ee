@@ -36,7 +36,7 @@ export default function DiagnosticPage() {
     setPhase("results");
     // Store anonymous result
     try {
-      await supabase.from("diagnostic_results").insert({
+      await (supabase as any).from("diagnostic_results").insert({
         answers,
         scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
         archetype: r.archetype.label,

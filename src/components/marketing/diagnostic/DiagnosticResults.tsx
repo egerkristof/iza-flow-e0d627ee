@@ -37,7 +37,7 @@ export function DiagnosticResults({ result, answers }: Props) {
     if (!email.trim()) return;
     setLoading(true);
     try {
-      await supabase.from("diagnostic_results").insert({
+      await (supabase as any).from("diagnostic_results").insert({
         email: email.trim(),
         answers,
         scores: Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])),
