@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { DiagnosticQuestion } from "@/components/marketing/diagnostic/DiagnosticQuestion";
 import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticResults";
@@ -16,15 +16,16 @@ export default function DiagnosticPage() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
+  const finishingRef = useRef(false);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
+    if (finishingRef.current) return;
+    finishingRef.current = true;
     setPhase("calculating");
-    // Brief delay for the calculating animation
     await new Promise((res) => setTimeout(res, 2200));
     const r = calculateResults(finalAnswers);
     setResult(r);
     setPhase("results");
-    // Store anonymous result
     try {
       await (supabase as any).from("diagnostic_results").insert({
         answers: finalAnswers,
@@ -39,6 +40,8 @@ export default function DiagnosticPage() {
 
   const handleSelect = useCallback(
     (questionId: string, score: number) => {
+      if (finishingRef.current) return;
+
       const updatedAnswers = { ...answers, [questionId]: score };
       setAnswers(updatedAnswers);
 
@@ -46,39 +49,39 @@ export default function DiagnosticPage() {
       const allNowAnswered = QUESTIONS.every((q) => updatedAnswers[q.id] != null);
 
       if (isLastQuestion && allNowAnswered) {
-        // Auto-finish after brief selection feedback
         setTimeout(() => finishDiagnostic(updatedAnswers), 500);
       } else if (!isLastQuestion) {
-        // Auto-advance to next question
-        setTimeout(() => setCurrentQ((q) => q + 1), 400);
+        setTimeout(() => {
+          setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1));
+        }, 400);
       }
     },
     [currentQ, answers, finishDiagnostic]
   );
 
   const progress = phase === "questions" ? ((currentQ + 1) / QUESTIONS.length) * 100 : 0;
-  const currentAnswered = answers[QUESTIONS[currentQ]?.id] != null;
+  const safeQ = Math.min(currentQ, QUESTIONS.length - 1);
+  const currentQuestion = QUESTIONS[safeQ];
+  const currentAnswered = currentQuestion ? answers[currentQuestion.id] != null : false;
 
   return (
     <MarketingLayout>
       <div className="min-h-[80vh] flex flex-col">
-        {/* Progress bar during questions */}
         {phase === "questions" && (
           <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border px-6 py-3">
             <div className="max-w-2xl mx-auto flex items-center gap-4">
               <span className="text-xs font-mono text-muted-foreground whitespace-nowrap">
-                {currentQ + 1}/{QUESTIONS.length}
+                {safeQ + 1}/{QUESTIONS.length}
               </span>
               <Progress value={progress} className="h-2 flex-1" />
               <span className="text-xs text-muted-foreground whitespace-nowrap">
-                ~{Math.ceil((QUESTIONS.length - currentQ) * 8 / 60)} min left
+                ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
               </span>
             </div>
           </div>
         )}
 
         <div className="flex-1 flex items-center justify-center px-6 py-16">
-          {/* INTRO */}
           {phase === "intro" && (
             <div className="max-w-2xl text-center space-y-8 animate-in fade-in duration-500">
               <div
@@ -102,7 +105,6 @@ export default function DiagnosticPage() {
                 10 scenario-based questions. No signup. See exactly where your team's AI execution compounds — and where it resets every week.
               </p>
 
-              {/* What you'll learn */}
               <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
                 <div className="flex items-start gap-3">
                   <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
@@ -138,30 +140,29 @@ export default function DiagnosticPage() {
             </div>
           )}
 
-          {/* QUESTIONS */}
-          {phase === "questions" && (
+          {phase === "questions" && currentQuestion && (
             <div className="w-full space-y-8">
               <DiagnosticQuestion
-                key={QUESTIONS[currentQ].id}
-                question={QUESTIONS[currentQ]}
-                selectedScore={answers[QUESTIONS[currentQ].id]}
+                key={currentQuestion.id}
+                question={currentQuestion}
+                selectedScore={answers[currentQuestion.id]}
                 onSelect={handleSelect}
               />
               <div className="max-w-2xl mx-auto flex items-center justify-between">
                 <Button
                   variant="ghost"
                   size="sm"
-                  disabled={currentQ === 0}
-                  onClick={() => setCurrentQ((q) => q - 1)}
+                  disabled={safeQ === 0}
+                  onClick={() => setCurrentQ((q) => Math.max(q - 1, 0))}
                 >
                   <ArrowLeft className="w-4 h-4" /> Back
                 </Button>
-                {currentQ < QUESTIONS.length - 1 && (
+                {safeQ < QUESTIONS.length - 1 && (
                   <Button
                     variant="outline"
                     size="sm"
                     disabled={!currentAnswered}
-                    onClick={() => setCurrentQ((q) => q + 1)}
+                    onClick={() => setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1))}
                   >
                     Next <ArrowRight className="w-4 h-4" />
                   </Button>
@@ -170,7 +171,6 @@ export default function DiagnosticPage() {
             </div>
           )}
 
-          {/* CALCULATING */}
           {phase === "calculating" && (
             <div className="text-center space-y-6 animate-in fade-in duration-300">
               <div className="relative mx-auto w-20 h-20">
@@ -185,7 +185,6 @@ export default function DiagnosticPage() {
             </div>
           )}
 
-          {/* RESULTS */}
           {phase === "results" && result && (
             <DiagnosticResults result={result} answers={answers} />
           )}
