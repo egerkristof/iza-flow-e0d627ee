@@ -19,8 +19,17 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [loading, setLoading] = useState(false);
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
 
+  // Short mobile-friendly labels for radar
+  const SHORT_LABELS: Record<string, string> = {
+    "Do your standards shape behaviour?": "Standards",
+    "Can anyone deliver your best work?": "Consistency",
+    "Does your firm get smarter over time?": "Compounding",
+    "Can your team see how each other thinks?": "Visibility",
+    "How fast do improvements spread?": "Learning Speed",
+  };
+
   const radarData = result.dimensions.map((d) => ({
-    subject: d.label.length > 28 ? d.label.split(" ").slice(0, 4).join(" ") + "…" : d.label,
+    subject: SHORT_LABELS[d.label] || d.label.split(" ").slice(0, 2).join(" "),
     score: d.score,
     fullMark: 100,
   }));
@@ -84,7 +93,8 @@ export function DiagnosticResults({ result, answers }: Props) {
               <PolarGrid stroke="hsl(var(--border))" />
               <PolarAngleAxis
                 dataKey="subject"
-                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: 500 }}
+                className="text-[10px] md:text-xs"
               />
               <PolarRadiusAxis angle={90} domain={[0, 100]} tick={false} axisLine={false} />
               <Radar
@@ -210,7 +220,7 @@ export function DiagnosticResults({ result, answers }: Props) {
               Your team is leaving compound value on the table
             </p>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              We'll walk through your results and show you the one structural change that would have the highest impact — in 20 minutes.
+              We'll walk through your results and show you how teams like yours close these gaps with LIZA OS — in 20 minutes.
             </p>
           </>
         ) : (
@@ -219,15 +229,22 @@ export function DiagnosticResults({ result, answers }: Props) {
               You're ahead of most firms — let's close the remaining gaps
             </p>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              We'll show you where your system has the most room to compound — and what it would take to get there.
+              We'll show you where your system has the most room to compound — and how LIZA OS accelerates what you've already built.
             </p>
           </>
         )}
-        <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-          <Button variant="brand" size="lg" className="text-base mt-2">
-            Book a 20-Min Review <ArrowRight className="w-4 h-4" />
-          </Button>
-        </a>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
+            <Button variant="brand" size="lg" className="text-base">
+              Book a 20-Min Results Review <ArrowRight className="w-4 h-4" />
+            </Button>
+          </a>
+          <a href="/platform">
+            <Button variant="outline" size="lg" className="text-base">
+              Explore the Platform
+            </Button>
+          </a>
+        </div>
       </div>
     </div>
   );
