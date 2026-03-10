@@ -1,50 +1,80 @@
 
 
-# Plan: Merge Maturity Ladder + Problem Section, Move After Hero
+# Plan: AI Execution Diagnostic Tool
 
-## Core Insight
-The user wants the maturity ladder to work as a standalone scroll-hook right after the hero, but the current ladder is too AI-centric. The real demand (standardizing/scaling know-how) predates AI. The problem section is also too long. Solution: **merge the ladder and problem section into one compact section** that tells the full story.
+## What We're Building
+A standalone marketing page at `/diagnostic` — an interactive, no-signup-required questionnaire (10-12 questions, ~90 seconds) that produces an **AI Execution Score** with breakdowns across 5 dimensions. Results page includes personalized insights and a CTA to book a discovery call.
 
-## Architecture Change (Home.tsx)
+## Architecture
+
+```text
+/diagnostic
+  ┌─────────────────────────────┐
+  │  Intro screen (hook + CTA)  │
+  ├─────────────────────────────┤
+  │  Question stepper (10-12 Q) │  ← one question at a time, progress bar
+  ├─────────────────────────────┤
+  │  Optional: name + email     │  ← gate before results (light capture)
+  ├─────────────────────────────┤
+  │  Results dashboard          │  ← score + 5 dimension breakdown
+  │  • Radar/bar chart          │
+  │  • Personalized insights    │
+  │  • "Book a call" CTA        │
+  └─────────────────────────────┘
 ```
-Hero
-→ NEW merged section (MaturityLadder with problem context baked in)
-→ LizaLoopSection
-→ TransformationSection
-→ BetaCTASection
-```
-Remove `AIFragmentationSection` as a separate component — fold its best elements (the "Sound familiar?" scenarios and the "What's missing" callout) into the new MaturityLadder.
 
-## Maturity Ladder Rewrite
+## Five Scoring Dimensions
+1. **Playbook Enforcement** — Are standards defined and used in AI sessions?
+2. **Consistency** — Do team members get similar outputs for the same task?
+3. **Knowledge Compounding** — Do learnings feed back into future work?
+4. **Team Coordination** — Is AI usage shared or siloed?
+5. **Learning Velocity** — How fast does the team improve its approach?
 
-**New level descriptions — behavioral, pre-AI problems first, AI nuance second:**
+## Questions (10-12, multiple choice)
+Each question maps to one dimension. Answers scored 1-4. Examples:
+- "Where do your team's best prompts/playbooks live?" (Personal notes / Shared doc nobody reads / Enforced in tools / Continuously updated) → Playbook Enforcement
+- "When someone finds a better way to do something with AI, what happens?" (Nothing / They share it once / It gets documented / It updates the team's default process) → Knowledge Compounding
+- "If your best AI user is out sick, what happens to output quality?" (Drops significantly / Drops somewhat / No change / Others already use their methods) → Consistency
 
-| Level | Label | Description |
-|-------|-------|-------------|
-| L1 | "It lives in their heads" | Your best people just *know*. When they're unavailable, quality drops. There's nothing written down that actually helps. |
-| L2 | "We wrote it down once" | There are SOPs, playbooks, maybe a wiki. They were accurate when someone wrote them. Nobody updates them. Nobody reads them. |
-| L3 | "Everyone has their own AI now" | Individuals are fast — but everyone prompts differently, uses different shortcuts, gets different results. The team is more fragmented than before. |
-| L4 | "One living playbook for the whole team" | The team's accumulated judgment runs in every session. New hires perform like veterans. Always current. *(LIZA)* |
-| L5 | "The system gets smarter every week" | Every engagement improves the playbook. Methodology leads see what's working and evolve it. The team compounds. |
+## Scoring Logic
+- Pure client-side calculation — no edge function needed for scoring
+- Each answer maps to 1-4 points per dimension
+- Overall score = weighted average normalized to 0-100
+- Dimension scores also 0-100
 
-Key change: L1-L2 are **pre-AI pain** (recognizable to anyone). L3 is the **AI twist** (makes it worse). L4-L5 are the resolution.
+## Archetype Labels (based on overall score)
+- **0-30**: "AI Soloists" — *Your team is fast individually but dumb collectively.*
+- **31-55**: "Scattered Effort" — *AI is used, but knowledge resets every week.*
+- **56-75**: "Emerging System" — *You have pieces, but no compounding loop.*
+- **76-100**: "AI Team" — *Your team's best thinking is everyone's default.*
 
-## Section Structure
+## Lead Capture
+- After questions, before results: optional name + email field
+- Store in existing `beta_signups` table with `role_description` = "diagnostic" + score summary
+- No signup required to see results (reduce friction), but email unlocks "Get detailed PDF report" or similar nudge
 
-1. **Header**: "Where does your team sit?" (punchy, diagnostic)
-2. **Subtitle**: Short bridge — "Every team hits the same wall. Most just hit it faster now."
-3. **Horizontal ladder** (desktop) / **vertical climb** (mobile) — same visual treatment as now
-4. **Below the ladder**: The 3 "Sound familiar?" scenario cards (promoted from the old problem section) — these ground the ladder in real moments
-5. **"What's missing" callout** — the single strongest line, compact: "A system where your team's know-how stays current and runs in every session."
+## Database
+- New table `diagnostic_results` to store: email (nullable), answers JSON, scores JSON, archetype, created_at
+- No RLS needed — public inserts, no reads from client
 
-## Files Changed
+## Files to Create/Modify
 
-1. **`MaturityLadder.tsx`** — Rewrite LEVELS data, add "Sound familiar?" scenarios and "What's missing" callout below the ladder
-2. **`Home.tsx`** — Remove `AIFragmentationSection` import, place `MaturityLadder` directly after `HeroSection`
-3. **`HeroSection.tsx`** — Update the "See the problem ↓" button to scroll to the ladder's `id`
+| File | Action |
+|------|--------|
+| `src/pages/marketing/Diagnostic.tsx` | **Create** — main page with stepper, scoring, results |
+| `src/components/marketing/diagnostic/DiagnosticQuestion.tsx` | **Create** — single question card component |
+| `src/components/marketing/diagnostic/DiagnosticResults.tsx` | **Create** — results dashboard with score, radar chart, insights, CTA |
+| `src/lib/diagnostic-scoring.ts` | **Create** — questions data, scoring logic, archetype mapping |
+| `src/App.tsx` | **Modify** — add `/diagnostic` route |
+| `supabase/migrations/` | **Create** — `diagnostic_results` table |
 
-## What We're Cutting
-- `AIFragmentationSection` as a standalone section (its best content moves into the ladder)
-- The three "escalating cards" (Judgment gap / AI solved it / Now it's worse) — their story is now told by the ladder levels themselves
-- Redundant copy that made the problem section feel long
+## Visual Style
+- Matches existing marketing pages (MarketingLayout, same card/border styling)
+- One question per screen with smooth transitions
+- Progress bar at top
+- Results use recharts radar chart for the 5 dimensions
+- Same CTA styling as hero (gradient brand button → CAL_URL)
+
+## No Edge Function Needed
+Scoring is deterministic math — all client-side. We only need the database for lead capture.
 
