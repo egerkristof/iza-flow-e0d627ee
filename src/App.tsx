@@ -27,6 +27,7 @@ import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import BetaPage from "./pages/marketing/Beta";
+import DiagnosticPage from "./pages/marketing/Diagnostic";
 
 const queryClient = new QueryClient();
 
