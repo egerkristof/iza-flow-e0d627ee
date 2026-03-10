@@ -8,6 +8,7 @@ export type Dimension =
 export interface DiagnosticQuestion {
   id: string;
   question: string;
+  context: string; // struggling-moment scene-setting
   dimension: Dimension;
   options: { label: string; score: number }[];
 }
@@ -17,15 +18,24 @@ export interface DimensionResult {
   label: string;
   score: number; // 0-100
   insight: string;
+  implication: string; // business cost translation
 }
 
 export interface DiagnosticResult {
   overall: number; // 0-100
-  archetype: { label: string; tagline: string };
+  archetype: { label: string; tagline: string; action: string };
   dimensions: DimensionResult[];
 }
 
 export const DIMENSION_LABELS: Record<Dimension, string> = {
+  standard_internalization: "Standard Internalization",
+  output_consistency: "Output Consistency",
+  knowledge_compounding: "Knowledge Compounding",
+  collective_visibility: "Collective Visibility",
+  learning_velocity: "Learning Velocity",
+};
+
+export const DIMENSION_SHORT: Record<Dimension, string> = {
   standard_internalization: "Do your standards shape behaviour?",
   output_consistency: "Can anyone deliver your best work?",
   knowledge_compounding: "Does your firm get smarter over time?",
@@ -37,8 +47,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   // Standard Internalization (Explicit → Tacit) — 2 questions
   {
     id: "si1",
+    context:
+      "Picture this: a team member sits down to work on a client deliverable with AI. They open a new chat window.",
     question:
-      "When a team member starts an AI session for a client deliverable, how much of your firm's accumulated thinking do they bring with them?",
+      "How much of your firm's accumulated thinking do they bring into that session?",
     dimension: "standard_internalization",
     options: [
       { label: "They start from scratch — maybe dig through old chat histories", score: 1 },
@@ -49,8 +61,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   },
   {
     id: "si2",
+    context:
+      "Your firm has a defined way of doing a key task — a methodology you've refined over years.",
     question:
-      "Your firm has a defined way of doing a key task. When someone uses AI to do that task, what actually happens?",
+      "When someone uses AI to execute that task, what actually happens?",
     dimension: "standard_internalization",
     options: [
       { label: "The defined approach and the AI session are completely disconnected", score: 1 },
@@ -62,8 +76,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   // Output Consistency — 2 questions
   {
     id: "oc1",
+    context:
+      "Two people on your team receive the same client brief. Both use AI to produce the deliverable.",
     question:
-      "If two people on your team tackle the same client brief with AI today, how similar would the outputs be?",
+      "How similar would the outputs be?",
     dimension: "output_consistency",
     options: [
       { label: "Completely different — you'd think they worked at different firms", score: 1 },
@@ -74,8 +90,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   },
   {
     id: "oc2",
+    context:
+      "Your strongest AI user is on holiday for two weeks. Client work continues without them.",
     question:
-      "If your strongest AI user is on holiday for two weeks, what happens to the quality of AI-assisted work?",
+      "What happens to the quality of AI-assisted work?",
     dimension: "output_consistency",
     options: [
       { label: "Quality drops noticeably — they're the one who 'gets it'", score: 1 },
@@ -87,8 +105,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   // Knowledge Compounding (Socialization + Combination) — 2 questions
   {
     id: "kc1",
+    context:
+      "Last month, someone on your team discovered a significantly better way to handle a recurring task with AI.",
     question:
-      "Last month, someone on your team discovered a significantly better way to handle a task with AI. What happened next?",
+      "What happened next?",
     dimension: "knowledge_compounding",
     options: [
       { label: "Nothing — it stayed with them. Others don't know about it", score: 1 },
@@ -99,8 +119,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   },
   {
     id: "kc2",
+    context:
+      "Think about how your team used AI six months ago versus today.",
     question:
-      "Think about how your team used AI six months ago versus today. Has the collective capability genuinely improved?",
+      "Has the collective capability genuinely improved?",
     dimension: "knowledge_compounding",
     options: [
       { label: "Honestly, we're doing roughly the same things the same way", score: 1 },
@@ -112,8 +134,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   // Collective Visibility (Socialization — Tacit → Tacit) — 2 questions
   {
     id: "cv1",
+    context:
+      "A junior team member wants to learn how a senior colleague navigates ambiguity during an AI session.",
     question:
-      "Can a junior team member see how a senior colleague navigates ambiguity during an AI session?",
+      "Is that visible to them?",
     dimension: "collective_visibility",
     options: [
       { label: "No — everyone works in their own private chats. It's a black box", score: 1 },
@@ -124,8 +148,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   },
   {
     id: "cv2",
+    context:
+      "You're deciding who should use AI for which parts of a project.",
     question:
-      "When your team coordinates on who uses AI for what, how does that actually work?",
+      "How does that coordination actually work?",
     dimension: "collective_visibility",
     options: [
       { label: "We don't — everyone decides independently what to use AI for", score: 1 },
@@ -137,8 +163,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   // Learning Velocity (Internalization feedback loop) — 2 questions
   {
     id: "lv1",
+    context:
+      "A major project just wrapped. The team used AI extensively throughout.",
     question:
-      "After a major project wraps up, does your team review how AI was used and what could be improved?",
+      "Does your team review how AI was used and what could be improved?",
     dimension: "learning_velocity",
     options: [
       { label: "Never — the project ends and we move on to the next one", score: 1 },
@@ -149,8 +177,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   },
   {
     id: "lv2",
+    context:
+      "A new AI technique emerges that's directly relevant to your team's work.",
     question:
-      "When a new AI technique or tool emerges that's relevant to your work, how quickly does it reach the team?",
+      "How quickly does it reach everyone?",
     dimension: "learning_velocity",
     options: [
       { label: "Slowly — most people stick with what they already know", score: 1 },
@@ -161,33 +191,45 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   },
 ];
 
-const ARCHETYPES: { max: number; label: string; tagline: string }[] = [
+const ARCHETYPES: { max: number; label: string; tagline: string; action: string }[] = [
   {
     max: 30,
-    label: "Unconnected Exploration",
-    tagline: "Your people are exploring — but the explorations never connect. Every AI session starts from zero.",
+    label: "Flying Solo",
+    tagline:
+      "Your people are exploring AI — but the explorations never connect. Every session starts from zero, and the firm doesn't learn from its own experience.",
+    action:
+      "Start with one team ritual: a 15-minute weekly show-and-tell where someone demos their best AI technique. Visibility precedes structure.",
   },
   {
     max: 55,
     label: "Scattered Effort",
-    tagline: "AI is being used, but knowledge resets every week. Individual skill isn't becoming team capability.",
+    tagline:
+      "AI is being used, but knowledge resets every week. Individual skill isn't becoming team capability — your firm is paying for the same learning curve repeatedly.",
+    action:
+      "Pick your single highest-value task and create one shared approach for it. Don't try to systematize everything — prove the model on one workflow first.",
   },
   {
     max: 75,
     label: "Emerging System",
-    tagline: "You have real pieces in place. What's missing is the loop that turns individual learning into collective improvement.",
+    tagline:
+      "You have real pieces in place. What's missing is the feedback loop that turns individual learning into collective improvement — the 'last mile' of compounding.",
+    action:
+      "Introduce structured after-action reviews. You're already capturing knowledge; now close the loop so it feeds back into your standards automatically.",
   },
   {
     max: 100,
-    label: "Adaptive AI Team",
-    tagline: "Your team's best thinking is everyone's starting point — and it evolves with every project.",
+    label: "Compound AI Team",
+    tagline:
+      "Your team's best thinking is everyone's starting point — and it evolves with every project. You're in the top tier of AI execution maturity.",
+    action:
+      "Focus on cross-domain transfer. Your system works within teams — now extend it across practice areas and client verticals.",
   },
 ];
 
 const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: string }> = {
   standard_internalization: {
     low: "Your firm's best thinking and AI sessions exist in separate worlds. Standards aren't shaping how people actually work with AI.",
-    mid: "Standards exist, but they're optional. Some people reference them, most improvise. The gap between 'how we should work' and 'how we actually work' is wide.",
+    mid: "Standards exist, but they're optional. Some people reference them, most improvise. The gap between 'how we should work' and 'how we actually work' is still wide.",
     high: "Your defined approaches actively shape AI sessions. The team doesn't just know the standard — they've internalized it as their starting point.",
   },
   output_consistency: {
@@ -212,6 +254,34 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
   },
 };
 
+const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high: string }> = {
+  standard_internalization: {
+    low: "This means your senior people are spending time supervising and correcting work that should already meet the standard. Research suggests firms without embedded standards spend 30-40% more time on internal review cycles.",
+    mid: "You have the foundation, but inconsistent adoption means quality still depends on who's working. Every time someone skips the standard, you're funding re-learning.",
+    high: "Your standards are doing the heavy lifting. New hires ramp faster, and senior oversight shifts from correction to genuine strategic review.",
+  },
+  output_consistency: {
+    low: "Inconsistent deliverables are eroding client trust and increasing senior review time. When quality depends on the individual, you can't scale without proportionally scaling your best people.",
+    mid: "You're close, but key-person dependency means your capacity is capped by your strongest operators. If they leave, so does your quality ceiling.",
+    high: "Consistency is your competitive moat. Clients get the firm's quality, not an individual's — which means you can grow without diluting what makes you good.",
+  },
+  knowledge_compounding: {
+    low: "Your team is paying the same learning tax on every project. Without compounding, a 20-person firm operates like 20 individuals — each one solving problems the firm has already solved.",
+    mid: "You're capturing some value, but the leakage is significant. Every piece of tribal knowledge that stays informal is one resignation away from disappearing entirely.",
+    high: "You're in rare territory. Each project genuinely makes the next one better — this is the compounding effect that separates high-growth firms from the rest.",
+  },
+  collective_visibility: {
+    low: "Your junior people have no apprenticeship path through AI. In traditional work, they'd shadow seniors — with AI, they're left guessing. This extends ramp-up time by months.",
+    mid: "Sharing happens, but it's effortful. The insights that would accelerate the whole team are locked behind someone choosing to present. Most don't.",
+    high: "You've solved one of the hardest problems in AI adoption: making thinking visible. This is how institutional expertise actually transfers in the AI age.",
+  },
+  learning_velocity: {
+    low: "Your competitors who learn faster will compound their advantage every quarter. After 12 months, the gap between a learning team and a static one isn't incremental — it's exponential.",
+    mid: "You're improving, but unevenly. The risk is that your fastest learners outgrow your slowest, creating internal capability gaps that affect client work.",
+    high: "Speed of adaptation is your edge. In a landscape where AI capabilities change monthly, the team that integrates improvements fastest wins — and that's you.",
+  },
+};
+
 export function calculateResults(answers: Record<string, number>): DiagnosticResult {
   const dimensionScores: Record<Dimension, number[]> = {
     standard_internalization: [],
@@ -233,8 +303,15 @@ export function calculateResults(answers: Record<string, number>): DiagnosticRes
     const avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
     const normalized = Math.round(((avg - 1) / 3) * 100);
     const insights = DIMENSION_INSIGHTS[dim];
-    const insight = normalized <= 33 ? insights.low : normalized <= 66 ? insights.mid : insights.high;
-    return { dimension: dim, label: DIMENSION_LABELS[dim], score: normalized, insight };
+    const implications = DIMENSION_IMPLICATIONS[dim];
+    const tier = normalized <= 33 ? "low" : normalized <= 66 ? "mid" : "high";
+    return {
+      dimension: dim,
+      label: DIMENSION_SHORT[dim],
+      score: normalized,
+      insight: insights[tier],
+      implication: implications[tier],
+    };
   });
 
   const overall = Math.round(dimensions.reduce((s, d) => s + d.score, 0) / dimensions.length);

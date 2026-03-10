@@ -6,7 +6,7 @@ import { QUESTIONS, calculateResults } from "@/lib/diagnostic-scoring";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, ArrowLeft, Zap } from "lucide-react";
+import { ArrowRight, ArrowLeft, Zap, Eye, TrendingUp, Target } from "lucide-react";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
 type Phase = "intro" | "questions" | "results";
@@ -91,8 +91,31 @@ export default function DiagnosticPage() {
                 <span className="text-muted-foreground">who happen to use AI?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                10 questions. No signup. See exactly where your team's AI execution compounds — and where it resets every week.
+                10 scenario-based questions. No signup. See exactly where your team's AI execution compounds — and where it resets every week.
               </p>
+
+              {/* What you'll learn */}
+              <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
+                <div className="flex items-start gap-3">
+                  <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    <span className="text-foreground font-medium">Where knowledge disappears</span> between projects and people
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <TrendingUp className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    <span className="text-foreground font-medium">Whether your team compounds</span> or resets with every session
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Target className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    <span className="text-foreground font-medium">Your #1 structural bottleneck</span> and what to fix first
+                  </p>
+                </div>
+              </div>
+
               <Button
                 variant="brand"
                 size="lg"
