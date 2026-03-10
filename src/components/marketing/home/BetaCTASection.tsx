@@ -12,19 +12,17 @@ export function BetaCTASection() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Make your team's best thinking
+              Your team uses AI every day.
               <br />
-              <GradientText>the default for everyone.</GradientText>
+              <GradientText>Do they use it the same way twice?</GradientText>
             </h2>
             <p className="text-base mb-8 text-muted-foreground">
-              Private Beta · 1 month free · Limited spots per cohort.
+              Find out in 90 seconds. No signup required.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/diagnostic"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
                 style={{
                   background: "var(--gradient-brand-btn)",
@@ -32,14 +30,16 @@ export function BetaCTASection() {
                   boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
                 }}
               >
-                Book a Discovery Call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <Link
-                to="/beta"
+                Take the 90s Diagnostic <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
               >
-                Join the Beta <ArrowRight className="w-4 h-4" />
-              </Link>
+                Book a Discovery Call <ArrowRight className="w-4 h-4" />
+              </a>
             </div>
           </div>
         </div>
