@@ -6,10 +6,10 @@ import { QUESTIONS, calculateResults } from "@/lib/diagnostic-scoring";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, ArrowLeft, Zap, Eye, TrendingUp, Target } from "lucide-react";
+import { ArrowRight, ArrowLeft, Zap, Eye, TrendingUp, Target, Loader2 } from "lucide-react";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
-type Phase = "intro" | "questions" | "results";
+type Phase = "intro" | "questions" | "calculating" | "results";
 
 export default function DiagnosticPage() {
   const [phase, setPhase] = useState<Phase>("intro");
@@ -17,27 +17,17 @@ export default function DiagnosticPage() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
 
-  const handleSelect = useCallback(
-    (questionId: string, score: number) => {
-      setAnswers((prev) => ({ ...prev, [questionId]: score }));
-      // Auto-advance after brief delay
-      setTimeout(() => {
-        if (currentQ < QUESTIONS.length - 1) {
-          setCurrentQ((q) => q + 1);
-        }
-      }, 400);
-    },
-    [currentQ]
-  );
-
-  const handleFinish = useCallback(async () => {
-    const r = calculateResults(answers);
+  const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
+    setPhase("calculating");
+    // Brief delay for the calculating animation
+    await new Promise((res) => setTimeout(res, 2200));
+    const r = calculateResults(finalAnswers);
     setResult(r);
     setPhase("results");
     // Store anonymous result
     try {
       await (supabase as any).from("diagnostic_results").insert({
-        answers,
+        answers: finalAnswers,
         scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
         archetype: r.archetype.label,
         overall_score: r.overall,
@@ -45,10 +35,28 @@ export default function DiagnosticPage() {
     } catch {
       // fail silently
     }
-  }, [answers]);
+  }, []);
+
+  const handleSelect = useCallback(
+    (questionId: string, score: number) => {
+      const updatedAnswers = { ...answers, [questionId]: score };
+      setAnswers(updatedAnswers);
+
+      const isLastQuestion = currentQ === QUESTIONS.length - 1;
+      const allNowAnswered = QUESTIONS.every((q) => updatedAnswers[q.id] != null);
+
+      if (isLastQuestion && allNowAnswered) {
+        // Auto-finish after brief selection feedback
+        setTimeout(() => finishDiagnostic(updatedAnswers), 500);
+      } else if (!isLastQuestion) {
+        // Auto-advance to next question
+        setTimeout(() => setCurrentQ((q) => q + 1), 400);
+      }
+    },
+    [currentQ, answers, finishDiagnostic]
+  );
 
   const progress = phase === "questions" ? ((currentQ + 1) / QUESTIONS.length) * 100 : 0;
-  const allAnswered = QUESTIONS.every((q) => answers[q.id] != null);
   const currentAnswered = answers[QUESTIONS[currentQ]?.id] != null;
 
   return (
@@ -148,7 +156,7 @@ export default function DiagnosticPage() {
                 >
                   <ArrowLeft className="w-4 h-4" /> Back
                 </Button>
-                {currentQ < QUESTIONS.length - 1 ? (
+                {currentQ < QUESTIONS.length - 1 && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -157,16 +165,22 @@ export default function DiagnosticPage() {
                   >
                     Next <ArrowRight className="w-4 h-4" />
                   </Button>
-                ) : (
-                  <Button
-                    variant="brand"
-                    size="sm"
-                    disabled={!allAnswered}
-                    onClick={handleFinish}
-                  >
-                    See My Results <ArrowRight className="w-4 h-4" />
-                  </Button>
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* CALCULATING */}
+          {phase === "calculating" && (
+            <div className="text-center space-y-6 animate-in fade-in duration-300">
+              <div className="relative mx-auto w-20 h-20">
+                <div className="absolute inset-0 rounded-full border-4 border-primary/20" />
+                <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+                <Loader2 className="absolute inset-0 m-auto w-8 h-8 text-primary animate-pulse" />
+              </div>
+              <div className="space-y-2">
+                <p className="text-lg font-bold text-foreground">Analysing your responses…</p>
+                <p className="text-sm text-muted-foreground">Mapping your team across 5 dimensions</p>
               </div>
             </div>
           )}
