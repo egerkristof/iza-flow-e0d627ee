@@ -84,7 +84,7 @@ export default function DiagnosticPage() {
         <div className="flex-1 flex items-center justify-center px-6 py-16">
           {phase === "intro" && (
             <div className="max-w-2xl text-center space-y-8 animate-in fade-in duration-500">
-              <div
+            <div
                 className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border mb-2"
                 style={{
                   color: "hsl(var(--primary))",
@@ -96,32 +96,32 @@ export default function DiagnosticPage() {
                 90-Second Diagnostic
               </div>
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                Is your team an{" "}
-                <span className="brand-gradient-text">AI team</span>
-                {" "}— or just people{" "}
-                <span className="text-muted-foreground">who happen to use AI?</span>
+                Your team is using AI.
+                <br />
+                <span className="text-muted-foreground">But are they using it</span>{" "}
+                <span className="brand-gradient-text">the same way twice?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                10 scenario-based questions. No signup. See exactly where your team's AI execution compounds — and where it resets every week.
+                10 scenarios. 90 seconds. See exactly where your AI execution compounds — and where it resets every Monday.
               </p>
 
               <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
                 <div className="flex items-start gap-3">
                   <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Where knowledge disappears</span> between projects and people
+                    <span className="text-foreground font-medium">Where knowledge leaks</span> between projects, people, and tools
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Whether your team compounds</span> or resets with every session
+                    <span className="text-foreground font-medium">Whether your best thinking scales</span> or stays trapped in one person's head
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <Target className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Your #1 structural bottleneck</span> and what to fix first
+                    <span className="text-foreground font-medium">The #1 structural gap</span> costing you consistency right now
                   </p>
                 </div>
               </div>
@@ -132,10 +132,10 @@ export default function DiagnosticPage() {
                 className="text-base"
                 onClick={() => setPhase("questions")}
               >
-                Start the Diagnostic <ArrowRight className="w-4 h-4" />
+                Find Out Now <ArrowRight className="w-4 h-4" />
               </Button>
               <p className="text-xs text-muted-foreground">
-                Free · No account required · Results in 90 seconds
+                Free · No signup · Your AI Execution Score in 90 seconds
               </p>
             </div>
           )}

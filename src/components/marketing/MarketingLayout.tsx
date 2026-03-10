@@ -89,7 +89,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               </button>
             )}
             <Link
-              to="/beta"
+              to="/diagnostic"
               className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -97,7 +97,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              Join the Beta
+              Take the Diagnostic
             </Link>
           </div>
 
@@ -139,14 +139,14 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
               <Link
-                to="/beta"
+                to="/diagnostic"
                 className="mt-2 px-5 py-3 rounded-lg text-sm font-semibold text-center"
                 style={{
                   background: "var(--gradient-brand-btn)",
                   color: "hsl(var(--primary-foreground))",
                 }}
               >
-                Join the Beta
+                Take the Diagnostic
               </Link>
             </div>
           </div>
@@ -185,7 +185,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Get Started</p>
               <div className="flex flex-col gap-2">
-                <Link to="/beta" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Join the Beta</Link>
+                <Link to="/diagnostic" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Take the Diagnostic</Link>
                 <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Discovery Call</a>
                 <a href="mailto:kristof.eger@lizaos.ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
               </div>
