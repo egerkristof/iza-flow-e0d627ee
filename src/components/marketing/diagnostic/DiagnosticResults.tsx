@@ -93,7 +93,8 @@ export function DiagnosticResults({ result, answers }: Props) {
               <PolarGrid stroke="hsl(var(--border))" />
               <PolarAngleAxis
                 dataKey="subject"
-                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11, fontWeight: 500 }}
+                className="text-[10px] md:text-xs"
               />
               <PolarRadiusAxis angle={90} domain={[0, 100]} tick={false} axisLine={false} />
               <Radar
