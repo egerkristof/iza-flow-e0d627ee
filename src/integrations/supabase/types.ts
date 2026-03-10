@@ -446,6 +446,36 @@ export type Database = {
           },
         ]
       }
+      diagnostic_results: {
+        Row: {
+          answers: Json
+          archetype: string
+          created_at: string
+          email: string | null
+          id: string
+          overall_score: number
+          scores: Json
+        }
+        Insert: {
+          answers?: Json
+          archetype: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          overall_score: number
+          scores?: Json
+        }
+        Update: {
+          answers?: Json
+          archetype?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          overall_score?: number
+          scores?: Json
+        }
+        Relationships: []
+      }
       document_sync_logs: {
         Row: {
           bundle_id: string

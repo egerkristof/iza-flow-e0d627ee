@@ -27,6 +27,7 @@ import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import BetaPage from "./pages/marketing/Beta";
+import DiagnosticPage from "./pages/marketing/Diagnostic";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
+            <Route path="/diagnostic" element={<DiagnosticPage />} />
 
             {/* Retired pages — redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
