@@ -25,7 +25,7 @@ export default function DiagnosticPage() {
         if (currentQ < QUESTIONS.length - 1) {
           setCurrentQ((q) => q + 1);
         }
-      }, 300);
+      }, 400);
     },
     [currentQ]
   );
@@ -87,11 +87,11 @@ export default function DiagnosticPage() {
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
                 Is your team an{" "}
                 <span className="brand-gradient-text">AI team</span>
-                {" "}or just{" "}
-                <span className="text-muted-foreground">AI soloists</span>?
+                {" "}— or just people{" "}
+                <span className="text-muted-foreground">who happen to use AI?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                10 questions. No signup. Get your AI Execution Score and see exactly where your team's AI usage breaks down.
+                10 questions. No signup. See exactly where your team's AI execution compounds — and where it resets every week.
               </p>
               <Button
                 variant="brand"

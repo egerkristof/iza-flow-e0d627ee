@@ -1,8 +1,8 @@
 export type Dimension =
-  | "playbook_enforcement"
-  | "consistency"
+  | "standard_internalization"
+  | "output_consistency"
   | "knowledge_compounding"
-  | "team_coordination"
+  | "collective_visibility"
   | "learning_velocity";
 
 export interface DiagnosticQuestion {
@@ -26,172 +26,198 @@ export interface DiagnosticResult {
 }
 
 export const DIMENSION_LABELS: Record<Dimension, string> = {
-  playbook_enforcement: "Playbook Enforcement",
-  consistency: "Consistency",
-  knowledge_compounding: "Knowledge Compounding",
-  team_coordination: "Team Coordination",
-  learning_velocity: "Learning Velocity",
+  standard_internalization: "Do your standards shape behaviour?",
+  output_consistency: "Can anyone deliver your best work?",
+  knowledge_compounding: "Does your firm get smarter over time?",
+  collective_visibility: "Can your team see how each other thinks?",
+  learning_velocity: "How fast do improvements spread?",
 };
 
 export const QUESTIONS: DiagnosticQuestion[] = [
-  // Playbook Enforcement (2 questions)
+  // Standard Internalization (Explicit → Tacit) — 2 questions
   {
-    id: "pe1",
-    question: "Where do your team's best prompts and playbooks live?",
-    dimension: "playbook_enforcement",
+    id: "si1",
+    question:
+      "When a team member starts an AI session for a client deliverable, how much of your firm's accumulated thinking do they bring with them?",
+    dimension: "standard_internalization",
     options: [
-      { label: "In people's heads or personal notes", score: 1 },
-      { label: "A shared doc that nobody reads", score: 2 },
-      { label: "A structured system people actually reference", score: 3 },
-      { label: "Enforced inside our AI tools automatically", score: 4 },
+      { label: "They start from scratch — maybe dig through old chat histories", score: 1 },
+      { label: "They have personal shortcuts, but nothing from the wider team", score: 2 },
+      { label: "There's a shared reference they can pull from, though it's optional", score: 3 },
+      { label: "The team's evolving standards inform every session, adapted to context", score: 4 },
     ],
   },
   {
-    id: "pe2",
-    question: "When a team member starts an AI session, how much structure do they get?",
-    dimension: "playbook_enforcement",
+    id: "si2",
+    question:
+      "Your firm has a defined way of doing a key task. When someone uses AI to do that task, what actually happens?",
+    dimension: "standard_internalization",
     options: [
-      { label: "None — they figure it out themselves", score: 1 },
-      { label: "Some tips exist but usage is optional", score: 2 },
-      { label: "Clear playbooks are available and encouraged", score: 3 },
-      { label: "Playbooks are loaded into the session automatically", score: 4 },
+      { label: "The defined approach and the AI session are completely disconnected", score: 1 },
+      { label: "People know the approach exists but rarely reference it while prompting", score: 2 },
+      { label: "Some people paste relevant sections into their prompts manually", score: 3 },
+      { label: "The approach is woven into how AI sessions are set up — it's the starting point", score: 4 },
     ],
   },
-  // Consistency (2 questions)
+  // Output Consistency — 2 questions
   {
-    id: "co1",
-    question: "If two team members do the same task with AI, how similar are the results?",
-    dimension: "consistency",
+    id: "oc1",
+    question:
+      "If two people on your team tackle the same client brief with AI today, how similar would the outputs be?",
+    dimension: "output_consistency",
     options: [
-      { label: "Wildly different every time", score: 1 },
-      { label: "Somewhat similar but inconsistent", score: 2 },
-      { label: "Mostly consistent with minor variations", score: 3 },
-      { label: "Very consistent — we have standards", score: 4 },
+      { label: "Completely different — you'd think they worked at different firms", score: 1 },
+      { label: "Similar in tone, but the depth and structure would vary significantly", score: 2 },
+      { label: "Recognisably aligned, with some individual variation in approach", score: 3 },
+      { label: "Consistently high quality — the firm's thinking comes through regardless of who does it", score: 4 },
     ],
   },
   {
-    id: "co2",
-    question: "If your best AI user is out sick, what happens to output quality?",
-    dimension: "consistency",
+    id: "oc2",
+    question:
+      "If your strongest AI user is on holiday for two weeks, what happens to the quality of AI-assisted work?",
+    dimension: "output_consistency",
     options: [
-      { label: "Quality drops significantly", score: 1 },
-      { label: "Noticeable drop in some areas", score: 2 },
-      { label: "Barely affected — others know the approach", score: 3 },
-      { label: "No change — their methods are everyone's default", score: 4 },
+      { label: "Quality drops noticeably — they're the one who 'gets it'", score: 1 },
+      { label: "Some things slip, others are fine — depends on the task", score: 2 },
+      { label: "Barely affected — others have picked up similar approaches", score: 3 },
+      { label: "No change — their methods have become the team's default", score: 4 },
     ],
   },
-  // Knowledge Compounding (2 questions)
+  // Knowledge Compounding (Socialization + Combination) — 2 questions
   {
     id: "kc1",
-    question: "When someone finds a better way to do something with AI, what happens?",
+    question:
+      "Last month, someone on your team discovered a significantly better way to handle a task with AI. What happened next?",
     dimension: "knowledge_compounding",
     options: [
-      { label: "Nothing — it stays with them", score: 1 },
-      { label: "They might mention it in a meeting", score: 2 },
-      { label: "It gets documented somewhere", score: 3 },
-      { label: "It updates the team's default process", score: 4 },
+      { label: "Nothing — it stayed with them. Others don't know about it", score: 1 },
+      { label: "They mentioned it in passing, maybe in a meeting or Slack message", score: 2 },
+      { label: "It got written down somewhere, though it's unclear if anyone adopted it", score: 3 },
+      { label: "It was reviewed, validated, and folded into the team's standard approach", score: 4 },
     ],
   },
   {
     id: "kc2",
-    question: "Does your team's AI knowledge compound over time or reset?",
+    question:
+      "Think about how your team used AI six months ago versus today. Has the collective capability genuinely improved?",
     dimension: "knowledge_compounding",
     options: [
-      { label: "Resets every week — we start from scratch", score: 1 },
-      { label: "Some things stick, most don't", score: 2 },
-      { label: "We capture learnings but rarely revisit them", score: 3 },
-      { label: "Every project makes the next one better", score: 4 },
+      { label: "Honestly, we're doing roughly the same things the same way", score: 1 },
+      { label: "Individual people have improved, but the team baseline hasn't moved much", score: 2 },
+      { label: "We've gotten better in some areas, though it's been uneven", score: 3 },
+      { label: "Clearly better — each project builds on what we learned from the last one", score: 4 },
     ],
   },
-  // Team Coordination (2 questions)
+  // Collective Visibility (Socialization — Tacit → Tacit) — 2 questions
   {
-    id: "tc1",
-    question: "Can team members see each other's AI sessions or outputs?",
-    dimension: "team_coordination",
+    id: "cv1",
+    question:
+      "Can a junior team member see how a senior colleague navigates ambiguity during an AI session?",
+    dimension: "collective_visibility",
     options: [
-      { label: "No — everyone works in private chats", score: 1 },
-      { label: "Sometimes, if they share manually", score: 2 },
-      { label: "We have shared workspaces for AI work", score: 3 },
-      { label: "All AI work is visible and coordinated", score: 4 },
+      { label: "No — everyone works in their own private chats. It's a black box", score: 1 },
+      { label: "Only if someone explicitly screen-shares or walks them through it", score: 2 },
+      { label: "We have some shared spaces, but people rarely look at each other's sessions", score: 3 },
+      { label: "Yes — AI work is visible and people actively learn from each other's approaches", score: 4 },
     ],
   },
   {
-    id: "tc2",
-    question: "How does your team coordinate who uses AI for what?",
-    dimension: "team_coordination",
+    id: "cv2",
+    question:
+      "When your team coordinates on who uses AI for what, how does that actually work?",
+    dimension: "collective_visibility",
     options: [
-      { label: "We don't — everyone does their own thing", score: 1 },
-      { label: "Informally — people roughly know", score: 2 },
-      { label: "We have defined roles and areas", score: 3 },
-      { label: "AI tasks are assigned and tracked systematically", score: 4 },
+      { label: "We don't — everyone decides independently what to use AI for", score: 1 },
+      { label: "Informally — people roughly know who's doing what, but there's no system", score: 2 },
+      { label: "We have some structure — certain tasks or roles are designated for AI use", score: 3 },
+      { label: "AI tasks are intentionally distributed, tracked, and reviewed as a team", score: 4 },
     ],
   },
-  // Learning Velocity (2 questions)
+  // Learning Velocity (Internalization feedback loop) — 2 questions
   {
     id: "lv1",
-    question: "After a project, do you review how AI was used and what worked?",
+    question:
+      "After a major project wraps up, does your team review how AI was used and what could be improved?",
     dimension: "learning_velocity",
     options: [
-      { label: "Never", score: 1 },
-      { label: "Occasionally, informally", score: 2 },
-      { label: "Usually — we do informal debriefs", score: 3 },
-      { label: "Always — structured reviews feed back into playbooks", score: 4 },
+      { label: "Never — the project ends and we move on to the next one", score: 1 },
+      { label: "Occasionally someone reflects on it, but there's no consistent practice", score: 2 },
+      { label: "We usually debrief, though insights don't always lead to concrete changes", score: 3 },
+      { label: "Always — structured reviews produce specific updates to our approach", score: 4 },
     ],
   },
   {
     id: "lv2",
-    question: "How quickly does your team adopt new AI techniques or tools?",
+    question:
+      "When a new AI technique or tool emerges that's relevant to your work, how quickly does it reach the team?",
     dimension: "learning_velocity",
     options: [
-      { label: "Very slowly — stuck in old habits", score: 1 },
-      { label: "A few early adopters, rest lag behind", score: 2 },
-      { label: "Most people try new things within weeks", score: 3 },
-      { label: "New techniques spread across the team within days", score: 4 },
+      { label: "Slowly — most people stick with what they already know", score: 1 },
+      { label: "One or two early adopters try it; the rest hear about it weeks later", score: 2 },
+      { label: "It usually gets discussed within a week; some people adopt it", score: 3 },
+      { label: "Within days — someone evaluates it, and if it's better, the team adapts", score: 4 },
     ],
   },
 ];
 
 const ARCHETYPES: { max: number; label: string; tagline: string }[] = [
-  { max: 30, label: "AI Soloists", tagline: "Your team is fast individually but dumb collectively." },
-  { max: 55, label: "Scattered Effort", tagline: "AI is used, but knowledge resets every week." },
-  { max: 75, label: "Emerging System", tagline: "You have pieces, but no compounding loop." },
-  { max: 100, label: "AI Team", tagline: "Your team's best thinking is everyone's default." },
+  {
+    max: 30,
+    label: "Unconnected Exploration",
+    tagline: "Your people are exploring — but the explorations never connect. Every AI session starts from zero.",
+  },
+  {
+    max: 55,
+    label: "Scattered Effort",
+    tagline: "AI is being used, but knowledge resets every week. Individual skill isn't becoming team capability.",
+  },
+  {
+    max: 75,
+    label: "Emerging System",
+    tagline: "You have real pieces in place. What's missing is the loop that turns individual learning into collective improvement.",
+  },
+  {
+    max: 100,
+    label: "Adaptive AI Team",
+    tagline: "Your team's best thinking is everyone's starting point — and it evolves with every project.",
+  },
 ];
 
 const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: string }> = {
-  playbook_enforcement: {
-    low: "Your best prompts are invisible to the rest of the company. Every AI session is improvisation.",
-    mid: "You have some structure, but it's not enforced. Standards exist on paper, not in practice.",
-    high: "Your playbooks are actively enforced. AI sessions start from a shared standard.",
+  standard_internalization: {
+    low: "Your firm's best thinking and AI sessions exist in separate worlds. Standards aren't shaping how people actually work with AI.",
+    mid: "Standards exist, but they're optional. Some people reference them, most improvise. The gap between 'how we should work' and 'how we actually work' is wide.",
+    high: "Your defined approaches actively shape AI sessions. The team doesn't just know the standard — they've internalized it as their starting point.",
   },
-  consistency: {
-    low: "Same task, same team, wildly different results. AI amplifies individual variation.",
-    mid: "Results are somewhat consistent, but quality depends heavily on who's prompting.",
-    high: "Your team produces consistent outputs regardless of who's doing the work.",
+  output_consistency: {
+    low: "Same brief, same team, wildly different results. Quality depends entirely on which individual picks up the task.",
+    mid: "Outputs are recognisably from the same firm, but depth and rigour vary depending on who's prompting. Key-person dependency is high.",
+    high: "Your team produces consistently strong work regardless of who does it. The firm's quality standard travels with the process, not the person.",
   },
   knowledge_compounding: {
-    low: "Your AI knowledge resets every week. Best practices die in personal chat histories.",
-    mid: "Some knowledge sticks, but your team isn't systematically building on past work.",
-    high: "Every project makes the next one better. Learnings flow back into your system.",
+    low: "Discoveries stay with the person who made them. Your AI knowledge resets every week — best practices die in personal chat histories.",
+    mid: "Some knowledge sticks, but your team isn't systematically building on past work. Sharing is informal and inconsistent.",
+    high: "Every project makes the next one better. New insights are validated and woven into the team's evolving approach.",
   },
-  team_coordination: {
-    low: "Everyone prompts alone. AI usage is a black box across the team.",
-    mid: "Some visibility exists, but coordination is mostly informal and inconsistent.",
-    high: "AI work is visible, coordinated, and builds on shared context.",
+  collective_visibility: {
+    low: "AI usage is a black box across the team. No one can see how colleagues navigate complexity — especially juniors learning from seniors.",
+    mid: "Some visibility exists through ad-hoc sharing, but there's no systematic way for the team to learn from each other's AI work.",
+    high: "AI work is visible and intentionally shared. Team members actively learn from each other's approaches and the firm coordinates AI usage strategically.",
   },
   learning_velocity: {
-    low: "Your team isn't learning from AI usage. The same mistakes repeat across projects.",
-    mid: "Learning happens but slowly. New techniques take weeks to spread.",
-    high: "Your team adapts fast. New techniques spread across the team within days.",
+    low: "Your team isn't learning from its own AI usage. The same mistakes and missed opportunities repeat across projects.",
+    mid: "Learning happens, but slowly and unevenly. Post-project reviews are inconsistent, and new techniques take weeks to spread.",
+    high: "Your team adapts fast. Structured reviews feed improvements back into practice, and new techniques spread across the team within days.",
   },
 };
 
 export function calculateResults(answers: Record<string, number>): DiagnosticResult {
   const dimensionScores: Record<Dimension, number[]> = {
-    playbook_enforcement: [],
-    consistency: [],
+    standard_internalization: [],
+    output_consistency: [],
     knowledge_compounding: [],
-    team_coordination: [],
+    collective_visibility: [],
     learning_velocity: [],
   };
 
