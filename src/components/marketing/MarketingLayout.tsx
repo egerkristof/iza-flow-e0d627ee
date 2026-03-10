@@ -89,7 +89,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               </button>
             )}
             <Link
-              to="/beta"
+              to="/diagnostic"
               className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -97,7 +97,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              Join the Beta
+              Take the Diagnostic
             </Link>
           </div>
 
