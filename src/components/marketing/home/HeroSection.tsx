@@ -68,10 +68,8 @@ export function HeroSection() {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/diagnostic"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -79,19 +77,17 @@ export function HeroSection() {
               boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
             }}
           >
-            Book a Discovery Call
+            Take the 90s Diagnostic
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <button
-            onClick={() =>
-              document
-                .getElementById("three-reasons")
-                ?.scrollIntoView({ behavior: "smooth", block: "start" })
-            }
+          </Link>
+          <a
+            href={CAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            See how it works ↓
-          </button>
+            Book a Discovery Call <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
 
         {/* Inline trust proof */}
