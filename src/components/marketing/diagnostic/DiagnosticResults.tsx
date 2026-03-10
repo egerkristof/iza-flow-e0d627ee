@@ -50,6 +50,7 @@ export function DiagnosticResults({ result, answers }: Props) {
     if (!email.trim()) return;
     setLoading(true);
     try {
+      // Store result with email
       await (supabase as any).from("diagnostic_results").insert({
         email: email.trim(),
         answers,
@@ -57,9 +58,28 @@ export function DiagnosticResults({ result, answers }: Props) {
         archetype: result.archetype.label,
         overall_score: result.overall,
       });
+
+      // Trigger AI-generated action plan email
+      const reportUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-diagnostic-report`;
+      await fetch(reportUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          overall: result.overall,
+          archetype: result.archetype,
+          dimensions: result.dimensions,
+        }),
+      });
+
       setSubmitted(true);
-    } catch {
-      // fail silently
+    } catch (err) {
+      console.error("Email submit error:", err);
+      // Still mark as submitted so user isn't stuck
+      setSubmitted(true);
     }
     setLoading(false);
   }
