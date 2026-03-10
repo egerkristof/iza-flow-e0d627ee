@@ -19,7 +19,7 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [loading, setLoading] = useState(false);
 
   const radarData = result.dimensions.map((d) => ({
-    subject: d.label.replace(" ", "\n"),
+    subject: d.label.length > 30 ? d.label.split(" ").slice(0, 4).join(" ") + "…" : d.label,
     score: d.score,
     fullMark: 100,
   }));
@@ -67,20 +67,20 @@ export function DiagnosticResults({ result, answers }: Props) {
         <p className="text-lg md:text-xl font-semibold text-foreground">
           {result.archetype.label}
         </p>
-        <p className="text-sm md:text-base text-muted-foreground max-w-md mx-auto italic">
-          "{result.archetype.tagline}"
+        <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
+          {result.archetype.tagline}
         </p>
       </div>
 
       {/* Radar chart */}
       <Card className="border-border">
         <CardContent className="p-4 md:p-6">
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={320}>
             <RadarChart data={radarData}>
               <PolarGrid stroke="hsl(var(--border))" />
               <PolarAngleAxis
                 dataKey="subject"
-                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
               />
               <PolarRadiusAxis angle={90} domain={[0, 100]} tick={false} axisLine={false} />
               <Radar
@@ -98,7 +98,7 @@ export function DiagnosticResults({ result, answers }: Props) {
 
       {/* Dimension breakdown */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-foreground">Breakdown</h3>
+        <h3 className="text-lg font-semibold text-foreground">Where you stand</h3>
         {result.dimensions.map((d) => (
           <Card key={d.dimension} className="border-border">
             <CardContent className="p-4 space-y-2">
@@ -138,7 +138,7 @@ export function DiagnosticResults({ result, answers }: Props) {
         <Card className="border-primary/20 bg-primary/4">
           <CardContent className="p-6 space-y-4">
             <p className="text-sm font-semibold text-foreground">
-              Get your full report + actionable recommendations
+              Get your full report with specific recommendations for your score profile
             </p>
             <div className="flex gap-2">
               <Input
@@ -153,7 +153,7 @@ export function DiagnosticResults({ result, answers }: Props) {
                 Send
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground">No spam. We'll send insights relevant to your score.</p>
+            <p className="text-xs text-muted-foreground">No spam. Insights tailored to your archetype.</p>
           </CardContent>
         </Card>
       ) : (
@@ -167,14 +167,17 @@ export function DiagnosticResults({ result, answers }: Props) {
       {/* CTA */}
       <div className="text-center space-y-4 pb-8">
         <p className="text-base md:text-lg font-semibold text-foreground">
-          Want to fix this? Let's walk through your results.
+          Want to walk through your results with us?
+        </p>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto">
+          We'll show you exactly where your team's AI execution breaks down — and what to fix first.
         </p>
         <a
           href={CAL_URL}
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Button variant="brand" size="lg" className="text-base">
+          <Button variant="brand" size="lg" className="text-base mt-2">
             Book a Discovery Call <ArrowRight className="w-4 h-4" />
           </Button>
         </a>
