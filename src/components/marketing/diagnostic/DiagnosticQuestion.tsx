@@ -36,19 +36,6 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
           style={{ background: "hsl(var(--primary) / 0.12)" }}
         />
 
-        {/* Dimension pill */}
-        <div
-          className="relative inline-flex items-center gap-2.5 text-xs font-bold tracking-[0.15em] uppercase mb-5 px-4 py-2 rounded-full border shadow-sm"
-          style={{
-            color: "hsl(var(--primary))",
-            borderColor: "hsl(var(--primary) / 0.3)",
-            background: "hsl(var(--primary) / 0.1)",
-            boxShadow: "0 0 16px -4px hsl(var(--primary) / 0.2)",
-          }}
-        >
-          {DIMENSION_ICONS[question.dimension]}
-          {DIMENSION_SHORT[question.dimension]}
-        </div>
 
         {/* Scene-setting text — large and prominent */}
         <p className="relative text-base md:text-lg text-foreground font-medium leading-relaxed tracking-tight">
