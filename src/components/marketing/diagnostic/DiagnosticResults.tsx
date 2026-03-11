@@ -380,7 +380,7 @@ export function DiagnosticResults({ result, answers }: Props) {
         })}
       </div>
 
-      {/* === Email capture — after breakdown === */}
+      {/* === Email capture, after breakdown === */}
       <EmailCapture
         email={email}
         setEmail={setEmail}
