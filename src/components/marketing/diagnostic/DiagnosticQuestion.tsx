@@ -5,11 +5,11 @@ import { BookOpen, Eye, Layers, Users, Zap, ChevronDown } from "lucide-react";
 import type { Dimension } from "@/lib/diagnostic-scoring";
 
 const DIMENSION_ICONS: Record<Dimension, React.ReactNode> = {
-  standard_internalization: <BookOpen className="w-4 h-4" />,
-  output_consistency: <Layers className="w-4 h-4" />,
-  knowledge_compounding: <Zap className="w-4 h-4" />,
-  collective_visibility: <Eye className="w-4 h-4" />,
-  learning_velocity: <Users className="w-4 h-4" />,
+  standard_internalization: <BookOpen className="w-5 h-5" />,
+  output_consistency: <Layers className="w-5 h-5" />,
+  knowledge_compounding: <Zap className="w-5 h-5" />,
+  collective_visibility: <Eye className="w-5 h-5" />,
+  learning_velocity: <Users className="w-5 h-5" />,
 };
 
 const SCORE_LABELS = ["A", "B", "C", "D"];
@@ -23,27 +23,53 @@ interface Props {
 export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props) {
   return (
     <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-right-4 duration-300 space-y-0">
-      {/* === ZONE 1: Scene-setting context card === */}
-      <div className="rounded-t-2xl border border-border bg-card px-5 py-5 md:px-7 md:py-6">
+      {/* === ZONE 1: Scene-setting context — hero treatment === */}
+      <div
+        className="rounded-t-2xl border border-border px-6 py-7 md:px-8 md:py-9 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, hsl(var(--primary) / 0.08) 0%, hsl(var(--card)) 60%, hsl(var(--primary) / 0.04) 100%)",
+        }}
+      >
+        {/* Decorative glow orb */}
+        <div
+          className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none"
+          style={{ background: "hsl(var(--primary) / 0.12)" }}
+        />
+
         {/* Dimension pill */}
-        <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.15em] uppercase text-primary mb-4 px-3 py-1.5 rounded-full bg-primary/8 border border-primary/20">
+        <div
+          className="relative inline-flex items-center gap-2.5 text-xs font-bold tracking-[0.15em] uppercase mb-5 px-4 py-2 rounded-full border shadow-sm"
+          style={{
+            color: "hsl(var(--primary))",
+            borderColor: "hsl(var(--primary) / 0.3)",
+            background: "hsl(var(--primary) / 0.1)",
+            boxShadow: "0 0 16px -4px hsl(var(--primary) / 0.2)",
+          }}
+        >
           {DIMENSION_ICONS[question.dimension]}
           {DIMENSION_SHORT[question.dimension]}
         </div>
 
-        <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed">
+        {/* Scene-setting text — large and prominent */}
+        <p className="relative text-base md:text-lg text-foreground font-medium leading-relaxed tracking-tight">
           {question.context}
         </p>
       </div>
 
-      {/* === Visual connector: chevron arrow === */}
-      <div className="flex justify-center -my-1.5 relative z-10">
-        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-md">
+      {/* === Visual connector === */}
+      <div className="flex justify-center -my-2 relative z-10">
+        <div
+          className="w-9 h-9 rounded-full flex items-center justify-center shadow-lg"
+          style={{
+            background: "var(--gradient-brand-btn)",
+            boxShadow: "0 4px 20px -4px hsl(var(--primary) / 0.4)",
+          }}
+        >
           <ChevronDown className="w-4 h-4 text-primary-foreground" />
         </div>
       </div>
 
-      {/* === ZONE 2: Question + answers card === */}
+      {/* === ZONE 2: Question + answers === */}
       <div className="rounded-b-2xl border border-primary/20 bg-background px-5 py-5 md:px-7 md:py-6 shadow-[0_4px_24px_-4px_hsl(var(--primary)/0.08)]">
         <h2 className="text-lg md:text-xl font-bold text-foreground mb-6 leading-snug tracking-tight">
           {question.question}
