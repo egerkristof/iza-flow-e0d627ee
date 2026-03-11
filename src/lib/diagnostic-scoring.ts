@@ -261,7 +261,7 @@ const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high
     high: "Your standards are doing the heavy lifting. New hires ramp faster, and senior oversight shifts from correction to genuine strategic review.",
   },
   output_consistency: {
-    low: "Inconsistent deliverables are eroding client trust and increasing senior review time. When quality depends on the individual, you can't scale without proportionally scaling your best people.",
+    low: "Inconsistent deliverables are eroding trust and increasing senior review time. When quality depends on the individual, you can't scale without proportionally scaling your best people.",
     mid: "You're close, but key-person dependency means your capacity is capped by your strongest operators. If they leave, so does your quality ceiling.",
     high: "Consistency is your competitive moat. Clients get the firm's quality, not an individual's — which means you can grow without diluting what makes you good.",
   },
