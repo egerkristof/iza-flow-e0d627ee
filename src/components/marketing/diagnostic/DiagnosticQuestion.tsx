@@ -28,16 +28,16 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
       >
         {/* Scene-setting context */}
         <div
-          className="px-6 py-6 md:px-8 md:py-7 relative"
+          className="px-4 py-3 md:px-8 md:py-7 relative"
           style={{
             background: "linear-gradient(135deg, hsl(var(--primary) / 0.08) 0%, hsl(var(--card)) 60%, hsl(var(--primary) / 0.04) 100%)",
           }}
         >
           <div
-            className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none"
+            className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none hidden md:block"
             style={{ background: "hsl(var(--primary) / 0.12)" }}
           />
-          <p className="relative text-xl md:text-2xl text-foreground font-bold leading-relaxed tracking-tight">
+          <p className="relative text-base md:text-2xl text-foreground font-bold leading-snug md:leading-relaxed tracking-tight">
             {question.context}
           </p>
         </div>
@@ -46,12 +46,12 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
         <div className="border-t border-border" />
 
         {/* Question + answers */}
-        <div className="bg-background px-5 py-5 md:px-7 md:py-6">
-          <h2 className="text-base md:text-lg font-medium text-foreground mb-6 leading-snug tracking-tight">
+        <div className="bg-background px-4 py-3 md:px-7 md:py-6">
+          <h2 className="text-sm md:text-lg font-medium text-foreground mb-3 md:mb-6 leading-snug tracking-tight">
             {question.question}
           </h2>
 
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-1.5 md:gap-2.5">
           {question.options.map((opt, idx) => {
             const isSelected = selectedScore === opt.score;
             return (
@@ -59,7 +59,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
                 key={opt.score}
                 onClick={() => onSelect(question.id, opt.score)}
                 className={cn(
-                  "w-full text-left flex items-start gap-3.5 px-4 py-3 rounded-xl border-2 transition-all duration-200",
+                  "w-full text-left flex items-start gap-3 px-3 py-2 md:px-4 md:py-3 rounded-xl border-2 transition-all duration-200",
                   isSelected
                     ? "border-primary bg-primary/8 shadow-[0_0_20px_-6px_hsl(var(--primary)/0.25)]"
                     : "border-border bg-card hover:border-primary/40 hover:bg-primary/4"
@@ -67,7 +67,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
               >
                 <span
                   className={cn(
-                    "shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold transition-colors duration-200",
+                    "shrink-0 w-6 h-6 md:w-7 md:h-7 rounded-lg flex items-center justify-center text-[11px] md:text-xs font-bold transition-colors duration-200",
                     isSelected
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted text-muted-foreground"
@@ -76,7 +76,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
                   {SCORE_LABELS[idx]}
                 </span>
                 <span className={cn(
-                  "text-sm md:text-[15px] leading-relaxed pt-0.5",
+                  "text-xs md:text-[15px] leading-snug md:leading-relaxed pt-0.5",
                   isSelected ? "text-foreground font-medium" : "text-muted-foreground"
                 )}>
                   {opt.label}
