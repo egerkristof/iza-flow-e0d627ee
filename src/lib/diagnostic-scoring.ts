@@ -278,7 +278,7 @@ const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high
   learning_velocity: {
     low: "Your competitors who learn faster will compound their advantage every quarter. After 12 months, the gap between a learning team and a static one isn't incremental. It's exponential.",
     mid: "You're improving, but unevenly. The risk is that your fastest learners outgrow your slowest, creating internal capability gaps that affect client work.",
-    high: "Speed of adaptation is your edge. In a landscape where AI capabilities change monthly, the team that integrates improvements fastest wins — and that's you.",
+    high: "Speed of adaptation is your edge. In a landscape where AI capabilities change monthly, the team that integrates improvements fastest wins. And that's you.",
   },
 };
 
