@@ -383,6 +383,8 @@ export function DiagnosticResults({ result, answers }: Props) {
         onSubmit={handleEmailSubmit}
         weakestLabel={weakestLabel}
         weakestScore={weakest.score}
+        secondWeakestLabel={secondWeakestLabel}
+        secondWeakestScore={secondWeakest.score}
         variant="primary"
       />
 
