@@ -283,17 +283,6 @@ export function DiagnosticResults({ result, answers }: Props) {
         </CardContent>
       </Card>
 
-      {/* === PRIMARY Email capture — top position, prominent === */}
-      <EmailCapture
-        email={email}
-        setEmail={setEmail}
-        loading={loading}
-        submitted={submitted}
-        onSubmit={handleEmailSubmit}
-        weakestLabel={weakestLabel}
-        weakestScore={weakest.score}
-        variant="primary"
-      />
 
       {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
