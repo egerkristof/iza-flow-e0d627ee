@@ -17,6 +17,7 @@ import ResearchTemplatesPage from "./pages/ResearchTemplates";
 import ResourceEditorPage from "./pages/ResourceEditor";
 import NotFound from "./pages/NotFound";
 import AdminTrials from "./pages/AdminTrials";
+import AdminPage from "./pages/Admin";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
