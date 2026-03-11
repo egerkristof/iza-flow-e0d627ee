@@ -257,7 +257,7 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
 const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high: string }> = {
   standard_internalization: {
     low: "This means your senior people are spending time supervising and correcting work that should already meet the standard. Teams without embedded standards spend 30–40% more time on internal review cycles.",
-    mid: "You have the foundation, but inconsistent adoption means quality still depends on who's working. Every time someone skips the standard, you're funding re-learning.",
+    mid: "You have the foundation, but inconsistent adoption means quality still depends on who's working. Every time someone skips the standard, you're re-learning.",
     high: "Your standards are doing the heavy lifting. New hires ramp faster, and senior oversight shifts from correction to genuine strategic review.",
   },
   output_consistency: {
