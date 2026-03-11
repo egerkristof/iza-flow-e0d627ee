@@ -160,7 +160,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "AI tasks are intentionally distributed, tracked, and reviewed as a team", score: 4 },
     ],
   },
-  // Learning Velocity (Internalization feedback loop) — 2 questions
+  // Learning Velocity (Internalization feedback loop), 2 questions
   {
     id: "lv1",
     context:
