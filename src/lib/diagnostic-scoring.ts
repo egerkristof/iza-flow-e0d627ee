@@ -44,7 +44,7 @@ export const DIMENSION_SHORT: Record<Dimension, string> = {
 };
 
 export const QUESTIONS: DiagnosticQuestion[] = [
-  // Standard Internalization (Explicit → Tacit) — 2 questions
+  // Standard Internalization (Explicit → Tacit), 2 questions
   {
     id: "si1",
     context:
@@ -53,7 +53,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       "How much of your team's accumulated thinking do they bring into that session?",
     dimension: "standard_internalization",
     options: [
-      { label: "They start from scratch — maybe dig through old chat histories", score: 1 },
+      { label: "They start from scratch. Maybe dig through old chat histories", score: 1 },
       { label: "They have personal shortcuts, but nothing from the wider team", score: 2 },
       { label: "There's a shared reference they can pull from, though it's optional", score: 3 },
       { label: "The team's evolving standards inform every session, adapted to context", score: 4 },
