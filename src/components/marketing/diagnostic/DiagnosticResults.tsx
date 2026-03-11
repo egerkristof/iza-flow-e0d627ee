@@ -169,7 +169,15 @@ export function DiagnosticResults({ result, answers }: Props) {
       </Card>
 
       {/* Email capture */}
-      {!submitted ? (
+      {loading ? (
+        <Card className="border-primary/20 bg-primary/4">
+          <CardContent className="p-6 text-center space-y-3">
+            <Loader2 className="w-6 h-6 text-primary animate-spin mx-auto" />
+            <p className="text-sm font-semibold text-foreground">Sending your results…</p>
+            <p className="text-xs text-muted-foreground">This may take a few seconds while we generate your personalised action plan.</p>
+          </CardContent>
+        </Card>
+      ) : !submitted ? (
         <Card className="border-primary/20 bg-primary/4">
           <CardContent className="p-6 space-y-4">
             <p className="text-sm font-semibold text-foreground">
@@ -192,15 +200,16 @@ export function DiagnosticResults({ result, answers }: Props) {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
-              We'll send your results and may follow up to discuss them. Read our{" "}
+              💡 Check your spam/junk folder if you don't see it within a minute. We'll send your results and may follow up to discuss them. Read our{" "}
               <Link to="/privacy" className="underline hover:text-foreground transition-colors">Privacy Policy</Link>.
             </p>
           </CardContent>
         </Card>
       ) : (
         <Card className="border-primary/20 bg-primary/4">
-          <CardContent className="p-6 text-center">
+          <CardContent className="p-6 text-center space-y-2">
             <p className="text-sm font-semibold text-foreground">✓ Your action plan is on its way.</p>
+            <p className="text-xs text-muted-foreground">Check your spam or junk folder if it doesn't arrive within a couple of minutes.</p>
           </CardContent>
         </Card>
       )}
