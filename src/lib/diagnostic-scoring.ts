@@ -204,9 +204,9 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
     max: 55,
     label: "Scattered Effort",
     tagline:
-      "AI is being used, but knowledge resets every week. Individual skill isn't becoming team capability — your team is paying for the same learning curve repeatedly.",
+       "AI is being used, but knowledge resets every week. Individual skill isn't becoming team capability. Your team is paying for the same learning curve repeatedly.",
     action:
-      "Pick your single highest-value task and create one shared approach for it. Don't try to systematize everything — prove the model on one workflow first.",
+       "Pick your single highest-value task and create one shared approach for it. Don't try to systematize everything. Prove the model on one workflow first.",
   },
   {
     max: 75,
