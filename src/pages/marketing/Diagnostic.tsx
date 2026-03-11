@@ -80,15 +80,17 @@ export default function DiagnosticPage() {
     <MarketingLayout>
       <div className="min-h-[80vh] flex flex-col">
         {phase === "questions" && (
-          <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border px-6 py-3">
-            <div className="max-w-2xl mx-auto flex items-center gap-4">
-              <span className="text-xs font-mono text-muted-foreground whitespace-nowrap">
-                {safeQ + 1}/{QUESTIONS.length}
-              </span>
-              <Progress value={progress} className="h-2 flex-1" />
-              <span className="text-xs text-muted-foreground whitespace-nowrap">
-                ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
-              </span>
+          <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-4 shadow-sm">
+            <div className="max-w-2xl mx-auto space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold tracking-wide text-foreground">
+                  Question {safeQ + 1} of {QUESTIONS.length}
+                </span>
+                <span className="text-xs font-medium text-muted-foreground">
+                  ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
+                </span>
+              </div>
+              <Progress value={progress} className="h-2" />
             </div>
           </div>
         )}
