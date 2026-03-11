@@ -186,7 +186,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "Slowly. Most people stick with what they already know", score: 1 },
       { label: "One or two early adopters try it; the rest hear about it weeks later", score: 2 },
       { label: "It usually gets discussed within a week; some people adopt it", score: 3 },
-      { label: "Within days — someone evaluates it, and if it's better, the team adapts", score: 4 },
+      { label: "Within days. Someone evaluates it, and if it's better, the team adapts", score: 4 },
     ],
   },
 ];
