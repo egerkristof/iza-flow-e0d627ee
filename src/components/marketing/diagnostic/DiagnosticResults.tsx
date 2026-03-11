@@ -16,26 +16,31 @@ interface Props {
 const BENCHMARK_AVG = 38;
 const BENCHMARK_HIGH = 72;
 
-const COST_TRANSLATIONS: Record<string, { low: string; mid: string }> = {
+const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
     low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5–10 hours per week spent re-explaining context that already exists in your firm's methodology docs, past projects, and senior people's heads.",
     mid: "Some standards reach AI sessions, but inconsistently. You're likely seeing 2–3 hours per person per week lost to partial re-prompting — and the output quality gap between your best and newest people keeps widening.",
+    high: "Your standards are actively shaping AI sessions — that's rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
   },
   output_consistency: {
     low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3–5 hours per deliverable, plus a client trust problem: they can tell when your A-team isn't in the room.",
     mid: "Outputs are recognisable but uneven. Senior review time is likely 30–40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the firm's approach.",
+    high: "Clients get your firm's quality standard regardless of who delivers — that's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
   },
   knowledge_compounding: {
     low: "Your firm pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building organisational capability.",
     mid: "Knowledge spreads, but it takes 4–6 weeks for a good technique to reach the whole team, if it ever does. Meanwhile, 2–3 people are solving problems someone else already cracked last month.",
+    high: "Each project genuinely makes the next one better. This compounding effect is what separates high-growth firms from the rest — you're building institutional intelligence, not just individual skill.",
   },
   collective_visibility: {
     low: "You have zero visibility into how your team uses AI day-to-day. You can't answer: who's struggling, who found a breakthrough, or whether AI is actually improving output quality. You're managing a black box.",
     mid: "You have anecdotal visibility — hallway conversations, occasional Slack shares. But you couldn't produce a report on AI usage patterns, effectiveness, or ROI for your leadership team if asked today.",
+    high: "Your team can see how colleagues navigate complexity with AI — especially juniors learning from seniors. This is how institutional expertise actually transfers in the AI age. Well done.",
   },
   learning_velocity: {
     low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability — that's a negative ROI trajectory.",
     mid: "Some learning happens, but it takes a quarter to change how the team works. At current velocity, you'll need 18+ months to reach the maturity that structured firms achieve in 3–4 months.",
+    high: "New techniques reach your whole team within days. In a landscape where AI capabilities change monthly, this speed of adaptation is a genuine strategic advantage.",
   },
 };
 
