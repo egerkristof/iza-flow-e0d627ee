@@ -154,7 +154,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       "How does that coordination actually work?",
     dimension: "collective_visibility",
     options: [
-      { label: "We don't — everyone decides independently what to use AI for", score: 1 },
+      { label: "We don't. Everyone decides independently what to use AI for", score: 1 },
       { label: "Informally — people roughly know who's doing what, but there's no system", score: 2 },
       { label: "We have some structure — certain tasks or roles are designated for AI use", score: 3 },
       { label: "AI tasks are intentionally distributed, tracked, and reviewed as a team", score: 4 },
