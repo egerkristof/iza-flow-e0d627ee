@@ -240,7 +240,7 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
   knowledge_compounding: {
     low: "Discoveries stay with the person who made them. Your AI knowledge resets every week — best practices die in personal chat histories.",
     mid: "Some knowledge sticks, but your team isn't systematically building on past work. Sharing is informal and inconsistent.",
-    high: "Every project makes the next one better. New insights are validated and woven into the team's evolving approach.",
+    high: "Every project makes the next one better. New insights are validated and woven into your team's evolving approach.",
   },
   collective_visibility: {
     low: "AI usage is a black box across the team. No one can see how colleagues navigate complexity — especially juniors learning from seniors.",
