@@ -155,19 +155,20 @@ function EmailCapture({
             </p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Input
             type="email"
             placeholder="your@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={variant === "primary" ? "flex-1 h-11" : "flex-1"}
+            className={variant === "primary" ? "flex-1 h-12 text-base" : "flex-1 h-11"}
           />
           <Button
             onClick={onSubmit}
             disabled={loading || !email.trim()}
             variant={variant === "primary" ? "brand" : "default"}
             size={variant === "primary" ? "lg" : "default"}
+            className="w-full sm:w-auto"
           >
             <Mail className="w-4 h-4" />
             {variant === "primary" ? "Send My Action Plan" : "Send Results"}
