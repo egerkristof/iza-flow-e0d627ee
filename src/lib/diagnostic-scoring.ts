@@ -243,7 +243,7 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
     high: "Every project makes the next one better. New insights are validated and woven into your team's evolving approach.",
   },
   collective_visibility: {
-    low: "AI usage is a black box across the team. No one can see how colleagues navigate complexity — especially juniors learning from seniors.",
+    low: "AI usage is a black box across the team. No one can see how colleagues navigate complexity, especially juniors learning from seniors.",
     mid: "Some visibility exists through ad-hoc sharing, but there's no systematic way for the team to learn from each other's AI work.",
     high: "AI work is visible and intentionally shared. Team members actively learn from each other's approaches and coordinate AI usage strategically.",
   },
