@@ -60,6 +60,8 @@ function EmailCapture({
   onSubmit,
   weakestLabel,
   weakestScore,
+  secondWeakestLabel,
+  secondWeakestScore,
   variant = "primary",
 }: {
   email: string;
