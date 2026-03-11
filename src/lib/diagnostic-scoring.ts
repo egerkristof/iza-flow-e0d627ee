@@ -230,7 +230,7 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
   standard_internalization: {
     low: "Your team's best thinking and AI sessions exist in separate worlds. Standards aren't shaping how people actually work with AI.",
     mid: "Standards exist, but they're optional. Some people reference them, most improvise. The gap between 'how we should work' and 'how we actually work' is still wide.",
-    high: "Your defined approaches actively shape AI sessions. The team doesn't just know the standard — they've internalized it as their starting point.",
+    high: "Your defined approaches actively shape AI sessions. The team doesn't just know the standard: they've internalized it as their starting point.",
   },
   output_consistency: {
     low: "Same brief, same team, wildly different results. Quality depends entirely on which individual picks up the task.",
