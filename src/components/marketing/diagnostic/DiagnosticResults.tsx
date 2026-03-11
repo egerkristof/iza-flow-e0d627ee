@@ -366,7 +366,7 @@ export function DiagnosticResults({ result, answers }: Props) {
                   className={`flex items-center gap-1 text-xs font-semibold transition-colors pt-1 ${isPositive ? "text-emerald-600 hover:text-emerald-500" : "text-primary hover:text-primary/80"}`}
                 >
                   {isPositive ? null : <TrendingDown className="w-3.5 h-3.5" />}
-                  {isExpanded ? "Hide" : isPositive ? "What this means for your firm" : "What this costs your firm"}
+                  {isExpanded ? "Hide" : isPositive ? "What this means for your team" : "What this costs your team"}
                   {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 </button>
                 {isExpanded && (
