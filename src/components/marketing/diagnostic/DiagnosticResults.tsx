@@ -270,7 +270,7 @@ export function DiagnosticResults({ result, answers }: Props) {
             {/* Benchmark context */}
             <div className="flex items-center justify-center gap-6 pt-2">
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">Average firm</p>
+                <p className="text-xs text-muted-foreground">Average team</p>
                 <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
                 <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">based on early diagnostic responses</p>
               </div>
