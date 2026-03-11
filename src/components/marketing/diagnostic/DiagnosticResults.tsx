@@ -30,7 +30,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   knowledge_compounding: {
     low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building collective capability.",
     mid: "Knowledge spreads, but it takes 4–6 weeks for a good technique to reach the whole team, if it ever does. Meanwhile, 2–3 people are solving problems someone else already cracked last month.",
-    high: "Each project genuinely makes the next one better. This compounding effect is what separates high-growth teams from the rest — you're building collective intelligence, not just individual skill.",
+    high: "Each project genuinely makes the next one better. This compounding effect is what separates high-growth teams from the rest. You're building collective intelligence, not just individual skill.",
   },
   collective_visibility: {
     low: "You have zero visibility into how your team uses AI day-to-day. You can't answer: who's struggling, who found a breakthrough, or whether AI is actually improving output quality. You're managing a black box.",
