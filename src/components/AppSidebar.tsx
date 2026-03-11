@@ -1,4 +1,4 @@
-import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope, Home, FlaskConical, ShieldCheck } from "lucide-react";
+import { BookOpen, Target, BarChart3, User, LogOut, ChevronDown, FileCode2, Microscope, Home, FlaskConical } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/lib/auth";
