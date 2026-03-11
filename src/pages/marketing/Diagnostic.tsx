@@ -114,30 +114,9 @@ export default function DiagnosticPage() {
                 <br />
                 <span className="brand-gradient-text">Do they have a shared way of using them?</span>
               </h1>
-              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                You've made the investment. Now the management question: is every team member using AI with the same standards, the same judgment, the same quality bar—or is each session a solo experiment?
+              <p className="text-base md:text-lg text-muted-foreground max-w-md mx-auto">
+                Score your team's AI execution across 5 management dimensions in 90 seconds.
               </p>
-
-              <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
-                <div className="flex items-start gap-3">
-                  <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Is your AI investment compounding</span> or resetting every Monday?
-                  </p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <TrendingUp className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Can your team deliver your best work</span> with AI, without you in the room?
-                  </p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Target className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Where exactly is the gap</span> between what your firm knows and what AI sessions use?
-                  </p>
-                </div>
-              </div>
 
               <Button
                 variant="brand"
@@ -148,7 +127,7 @@ export default function DiagnosticPage() {
                 Get Your Score <ArrowRight className="w-4 h-4" />
               </Button>
               <p className="text-xs text-muted-foreground">
-                90 seconds · No signup · Score across 5 management dimensions
+                No signup required
               </p>
             </div>
           )}
