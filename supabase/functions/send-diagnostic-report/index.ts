@@ -49,24 +49,25 @@ serve(async (req) => {
     const secondWeakest = sorted[1];
 
     // Generate personalized action plan via AI
-    const prompt = `You are an expert advisor on AI execution maturity for professional services firms (consulting, IT services, 50-200 employees).
+    const prompt = `You are an expert advisor on AI execution maturity for operational leaders at mid-market firms (50-1000 employees, sweet spot 50-250).
 
-A firm just completed a diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
+A firm just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
 
 Their weakest dimension is "${weakest.label}" (${weakest.score}/100): ${weakest.insight}
-Business implication: ${weakest.implication}
-
 Their second weakest is "${secondWeakest.label}" (${secondWeakest.score}/100): ${secondWeakest.insight}
 
-Write a personalized 3-step action plan for this firm. Requirements:
+For context: the average firm scores 38/100. Firms with defined AI standards score 72+.
+
+Write a personalized 3-step action plan framed as "What firms who score 70+ do differently." This is aspirational, not remedial. Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
 2. For each step, include:
-   - A clear action title (5-8 words)
-   - What to do manually (2-3 sentences — the "do it yourself" approach)
-   - How a platform like LIZA OS automates this (1-2 sentences — frame as "With the right tooling...")
-3. Steps should progress logically: quick win → structural change → habit formation
+   - A clear action title (5-8 words, framed as what high-performers do)
+   - What to do manually (2-3 sentences — the "start here" approach)
+   - How a platform like LIZA OS makes this structural (1-2 sentences — frame as "With the right infrastructure...")
+3. Steps should progress: visibility → codification → compounding
 4. Use second person ("you", "your team")
 5. Be specific to their archetype and weakest dimensions — not generic advice
+6. Use their language: "playbook", "what good looks like", "our way of doing things" — not "governance", "knowledge management"
 
 Return ONLY valid JSON in this exact format:
 {
@@ -74,7 +75,7 @@ Return ONLY valid JSON in this exact format:
     {
       "title": "Step title here",
       "manual_how": "What they'd do manually...",
-      "platform_how": "How tooling accelerates this..."
+      "platform_how": "How infrastructure makes this structural..."
     }
   ]
 }`;
