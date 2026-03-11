@@ -169,7 +169,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       "Does your team review how AI was used and what could be improved?",
     dimension: "learning_velocity",
     options: [
-      { label: "Never — the project ends and we move on to the next one", score: 1 },
+      { label: "Never. The project ends and we move on to the next one", score: 1 },
       { label: "Occasionally someone reflects on it, but there's no consistent practice", score: 2 },
       { label: "We usually debrief, though insights don't always lead to concrete changes", score: 3 },
       { label: "Always — structured reviews produce specific updates to our approach", score: 4 },
