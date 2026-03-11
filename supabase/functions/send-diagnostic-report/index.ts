@@ -65,7 +65,7 @@ Write a personalized 3-step action plan framed as "What firms who score 70+ do d
 2. For each step, include:
    - A clear action title (5-8 words, framed as what high-performers do)
    - What to do manually (2-3 sentences — the "start here" approach)
-   - How a platform like LIZA OS makes this structural (1-2 sentences — frame as "With the right infrastructure...")
+   - How LIZA OS makes this structural and automatic (1-2 sentences — always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
 3. Steps should progress: visibility → codification → compounding
 4. Use second person ("you", "your team")
 5. Be specific to their archetype and weakest dimensions — not generic advice
@@ -121,17 +121,17 @@ Return ONLY valid JSON in this exact format:
           {
             title: `Address your ${weakest.label} gap`,
             manual_how: `Start by auditing how your team currently handles ${weakest.label.toLowerCase()}. Identify one recurring task where the gap is most visible and document the current approach vs. the ideal.`,
-            platform_how: "With the right tooling, this audit is automated — the system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
+            platform_how: "With the right infrastructure, like LIZA OS, this audit is automated — the system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
           },
           {
             title: "Create one shared reference point",
             manual_how: "Pick your highest-value workflow and write down the team's best approach. Share it in a doc everyone can access and reference before AI sessions.",
-            platform_how: "With the right tooling, these references are embedded directly into every AI session — no manual lookup needed.",
+            platform_how: "With the right infrastructure, like LIZA OS, these references are embedded directly into every AI session — no manual lookup needed.",
           },
           {
             title: "Establish a weekly feedback loop",
             manual_how: "Block 15 minutes each week for the team to share what worked and what didn't with AI. Capture the best insights and update your shared reference.",
-            platform_how: "With the right tooling, session reviews are structured and insights automatically feed back into the team's evolving standards.",
+            platform_how: "With the right infrastructure, like LIZA OS, session reviews are structured and insights automatically feed back into the team's evolving standards.",
           },
         ],
       };
@@ -212,6 +212,7 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your firm</p>
       <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours made their AI investment compound.</p>
       <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a 20-Minute Review →</a>
+      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">Explore LIZA OS →</a></p>
     </div>
 
     <!-- Footer -->

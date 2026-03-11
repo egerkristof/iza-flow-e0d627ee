@@ -17,6 +17,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const isDiagnostic = location.pathname === "/diagnostic";
 
   useEffect(() => setMounted(true), []);
 
@@ -90,7 +91,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               </button>
             )}
             <Link
-              to="/diagnostic"
+              to={isDiagnostic ? "/" : "/diagnostic"}
               className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -98,7 +99,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              Take the Diagnostic
+              {isDiagnostic ? "Explore LIZA OS" : "Take the Diagnostic"}
             </Link>
           </div>
 
@@ -140,14 +141,14 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
               <Link
-                to="/diagnostic"
+                to={isDiagnostic ? "/" : "/diagnostic"}
                 className="mt-2 px-5 py-3 rounded-lg text-sm font-semibold text-center"
                 style={{
                   background: "var(--gradient-brand-btn)",
                   color: "hsl(var(--primary-foreground))",
                 }}
               >
-                Take the Diagnostic
+                {isDiagnostic ? "Explore LIZA OS" : "Take the Diagnostic"}
               </Link>
             </div>
           </div>
