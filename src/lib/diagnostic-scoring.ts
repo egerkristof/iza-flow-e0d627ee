@@ -73,7 +73,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "The approach is woven into how AI sessions are set up — it's the starting point", score: 4 },
     ],
   },
-  // Output Consistency — 2 questions
+  // Output Consistency, 2 questions
   {
     id: "oc1",
     context:
