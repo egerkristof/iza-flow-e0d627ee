@@ -45,7 +45,7 @@ serve(async (req) => {
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
     if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY not configured");
 
-    // Sort dimensions by score ascending — weakest first
+    // Sort dimensions by score ascending, weakest first
     const sorted = [...dimensions].sort((a, b) => a.score - b.score);
     const weakest = sorted[0];
     const secondWeakest = sorted[1];
@@ -53,23 +53,24 @@ serve(async (req) => {
     // Generate personalized action plan via AI
     const prompt = `You are an expert advisor on AI execution maturity for operational leaders at mid-market firms (50-1000 employees, sweet spot 50-250).
 
-A firm just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
+A team just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
 
 Their weakest dimension is "${weakest.label}" (${weakest.score}/100): ${weakest.insight}
 Their second weakest is "${secondWeakest.label}" (${secondWeakest.score}/100): ${secondWeakest.insight}
 
-For context: the average firm scores 38/100. Firms with defined AI standards score 72+.
+For context: the average team scores 38/100. Teams with defined AI standards score 72+.
 
-Write a personalized 3-step action plan framed as "What firms who score 70+ do differently." This is aspirational, not remedial. Requirements:
+Write a personalized 3-step action plan framed as "What teams who score 70+ do differently." This is aspirational, not remedial. Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
 2. For each step, include:
    - A clear action title (5-8 words, framed as what high-performers do)
-   - What to do manually (2-3 sentences — the "start here" approach)
-   - How LIZA OS makes this structural and automatic (1-2 sentences — always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
+   - What to do manually (2-3 sentences, the "start here" approach)
+   - How LIZA OS makes this structural and automatic (1-2 sentences, always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
 3. Steps should progress: visibility → codification → compounding
 4. Use second person ("you", "your team")
-5. Be specific to their archetype and weakest dimensions — not generic advice
-6. Use their language: "playbook", "what good looks like", "our way of doing things" — not "governance", "knowledge management"
+5. Be specific to their archetype and weakest dimensions, not generic advice
+6. Use their language: "playbook", "what good looks like", "our way of doing things". Not "governance", "knowledge management"
+7. IMPORTANT: Do not use em-dashes anywhere. Use periods, commas, or colons instead.
 
 Return ONLY valid JSON in this exact format:
 {
@@ -121,12 +122,12 @@ Return ONLY valid JSON in this exact format:
           {
             title: `Address your ${weakest.label} gap`,
             manual_how: `Start by auditing how your team currently handles ${weakest.label.toLowerCase()}. Identify one recurring task where the gap is most visible and document the current approach vs. the ideal.`,
-            platform_how: "With the right infrastructure, like LIZA OS, this audit is automated — the system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
+            platform_how: "With the right infrastructure, like LIZA OS, this audit is automated. The system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
           },
           {
             title: "Create one shared reference point",
             manual_how: "Pick your highest-value workflow and write down the team's best approach. Share it in a doc everyone can access and reference before AI sessions.",
-            platform_how: "With the right infrastructure, like LIZA OS, these references are embedded directly into every AI session — no manual lookup needed.",
+            platform_how: "With the right infrastructure, like LIZA OS, these references are embedded directly into every AI session. No manual lookup needed.",
           },
           {
             title: "Establish a weekly feedback loop",
@@ -186,9 +187,9 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
     </div>
 
-    <!-- Results framing — what firms are actually achieving -->
+    <!-- Results framing: what teams are actually achieving -->
     <div style="margin-bottom:28px;padding:20px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">
-      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">What firms scoring 70+ are seeing</p>
+      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">What teams scoring 70+ are seeing</p>
       <table style="width:100%;border-collapse:collapse;">
         <tr>
           <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ Senior review time</td>
@@ -213,11 +214,11 @@ Return ONLY valid JSON in this exact format:
     <!-- Benchmark context -->
     <div style="text-align:center;margin-bottom:28px;">
       <div style="display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
-        <span style="font-size:12px;color:#64748b;">Average firm: <strong>38</strong></span>
+        <span style="font-size:12px;color:#64748b;">Average team: <strong>38</strong></span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">Structured firms: <strong>72+</strong></span>
+        <span style="font-size:12px;color:#64748b;">Structured teams: <strong>72+</strong></span>
       </div>
     </div>
 
@@ -237,14 +238,14 @@ Return ONLY valid JSON in this exact format:
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${secondWeakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${secondWeakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${secondWeakest.label}: ${secondWeakest.score}/100</span>
         <span style="font-size:12px;color:#94a3b8;">← driving this plan</span>
       </div>
-      <p style="margin:0 0 16px;font-size:14px;color:#475569;line-height:1.6;">These two areas are where your firm is losing the most value from its AI investment. Here's what firms who closed these gaps did first.</p>
+      <p style="margin:0 0 16px;font-size:14px;color:#475569;line-height:1.6;">These two areas are where your team is losing the most value from its AI investment. Here's what teams who closed these gaps did first.</p>
       ${stepsHtml}
     </div>
 
     <!-- CTA -->
     <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:24px;">
-      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your firm</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours made their AI investment compound.</p>
+      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your team</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how teams like yours made their AI investment compound.</p>
       <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
       <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">Explore LIZA OS →</a></p>
     </div>
@@ -269,7 +270,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email.trim()],
-        subject: `Your AI Execution Score: ${overall}/100 — here's what's leaking`,
+        subject: `Your AI Execution Score: ${overall}/100`,
         html,
       }),
     });
@@ -290,7 +291,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: ["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"],
-        subject: `Diagnostic lead: ${email} — ${overall}/100 (${archetype.label})`,
+        subject: `Diagnostic lead: ${email} (${overall}/100, ${archetype.label})`,
         html: `<p><strong>${email}</strong> completed the diagnostic.</p><p>Score: ${overall}/100 · ${archetype.label}</p><p>Weakest: ${weakest.label} (${weakest.score}/100)</p>`,
       }),
     }).catch((e) => console.error("Founder notify failed:", e));
