@@ -16,25 +16,32 @@ export default function DiagnosticPage() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
+  const answersRef = useRef<Record<string, number>>({});
   const finishingRef = useRef(false);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
     finishingRef.current = true;
     setPhase("calculating");
-    await new Promise((res) => setTimeout(res, 2200));
-    const r = calculateResults(finalAnswers);
-    setResult(r);
-    setPhase("results");
     try {
-      await (supabase as any).from("diagnostic_results").insert({
-        answers: finalAnswers,
-        scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
-        archetype: r.archetype.label,
-        overall_score: r.overall,
-      });
+      await new Promise((res) => setTimeout(res, 2200));
+      const r = calculateResults(finalAnswers);
+      setResult(r);
+      setPhase("results");
+      try {
+        await (supabase as any).from("diagnostic_results").insert({
+          answers: finalAnswers,
+          scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
+          archetype: r.archetype.label,
+          overall_score: r.overall,
+        });
+      } catch {
+        // fail silently
+      }
     } catch {
-      // fail silently
+      // If calculation fails, reset so user can retry
+      finishingRef.current = false;
+      setPhase("questions");
     }
   }, []);
 
@@ -42,21 +49,26 @@ export default function DiagnosticPage() {
     (questionId: string, score: number) => {
       if (finishingRef.current) return;
 
-      const updatedAnswers = { ...answers, [questionId]: score };
+      const updatedAnswers = { ...answersRef.current, [questionId]: score };
+      answersRef.current = updatedAnswers;
       setAnswers(updatedAnswers);
 
-      const isLastQuestion = currentQ === QUESTIONS.length - 1;
-      const allNowAnswered = QUESTIONS.every((q) => updatedAnswers[q.id] != null);
+      setCurrentQ((prevQ) => {
+        const isLastQuestion = prevQ === QUESTIONS.length - 1;
+        const allNowAnswered = QUESTIONS.every((q) => updatedAnswers[q.id] != null);
 
-      if (isLastQuestion && allNowAnswered) {
-        setTimeout(() => finishDiagnostic(updatedAnswers), 500);
-      } else if (!isLastQuestion) {
-        setTimeout(() => {
-          setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1));
-        }, 400);
-      }
+        if (isLastQuestion && allNowAnswered) {
+          setTimeout(() => finishDiagnostic(updatedAnswers), 500);
+          return prevQ;
+        } else if (!isLastQuestion) {
+          setTimeout(() => {
+            setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1));
+          }, 400);
+        }
+        return prevQ;
+      });
     },
-    [currentQ, answers, finishDiagnostic]
+    [finishDiagnostic]
   );
 
   const progress = phase === "questions" ? ((currentQ + 1) / QUESTIONS.length) * 100 : 0;
