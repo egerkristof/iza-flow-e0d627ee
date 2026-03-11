@@ -97,9 +97,9 @@ export const QUESTIONS: DiagnosticQuestion[] = [
     dimension: "output_consistency",
     options: [
       { label: "Quality drops noticeably. They're the one who 'gets it'", score: 1 },
-      { label: "Some things slip, others are fine — depends on the task", score: 2 },
-      { label: "Barely affected — others have picked up similar approaches", score: 3 },
-      { label: "No change — their methods have become the team's default", score: 4 },
+      { label: "Some things slip, others are fine. Depends on the task", score: 2 },
+      { label: "Barely affected. Others have picked up similar approaches", score: 3 },
+      { label: "No change. Their methods have become the team's default", score: 4 },
     ],
   },
   // Knowledge Compounding (Socialization + Combination), 2 questions
