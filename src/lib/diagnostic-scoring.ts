@@ -38,7 +38,7 @@ export const DIMENSION_LABELS: Record<Dimension, string> = {
 export const DIMENSION_SHORT: Record<Dimension, string> = {
   standard_internalization: "Do your standards shape behaviour?",
   output_consistency: "Can anyone deliver your best work?",
-  knowledge_compounding: "Does your firm get smarter over time?",
+  knowledge_compounding: "Does your team get smarter over time?",
   collective_visibility: "Can your team see how each other thinks?",
   learning_velocity: "How fast do improvements spread?",
 };
@@ -50,7 +50,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
     context:
       "Picture this: a team member sits down to work on a client deliverable with AI. They open a new chat window.",
     question:
-      "How much of your firm's accumulated thinking do they bring into that session?",
+      "How much of your team's accumulated thinking do they bring into that session?",
     dimension: "standard_internalization",
     options: [
       { label: "They start from scratch — maybe dig through old chat histories", score: 1 },
@@ -62,7 +62,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   {
     id: "si2",
     context:
-      "Your firm has a defined way of doing a key task — a methodology you've refined over years.",
+      "Your team has a defined way of doing a key task — a methodology you've refined over years.",
     question:
       "When someone uses AI to execute that task, what actually happens?",
     dimension: "standard_internalization",
@@ -82,10 +82,10 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       "How similar would the outputs be?",
     dimension: "output_consistency",
     options: [
-      { label: "Completely different — you'd think they worked at different firms", score: 1 },
+      { label: "Completely different — you'd think they were on different teams", score: 1 },
       { label: "Similar in tone, but the depth and structure would vary significantly", score: 2 },
       { label: "Recognisably aligned, with some individual variation in approach", score: 3 },
-      { label: "Consistently high quality — the firm's thinking comes through regardless of who does it", score: 4 },
+      { label: "Consistently high quality — the team's thinking comes through regardless of who does it", score: 4 },
     ],
   },
   {
@@ -196,7 +196,7 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
     max: 30,
     label: "Flying Solo",
     tagline:
-      "Your people are exploring AI — but the explorations never connect. Every session starts from zero, and the firm doesn't learn from its own experience.",
+      "Your people are exploring AI — but the explorations never connect. Every session starts from zero, and the team doesn't learn from its own experience.",
     action:
       "Start with one team ritual: a 15-minute weekly show-and-tell where someone demos their best AI technique. Visibility precedes structure.",
   },
@@ -204,7 +204,7 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
     max: 55,
     label: "Scattered Effort",
     tagline:
-      "AI is being used, but knowledge resets every week. Individual skill isn't becoming team capability — your firm is paying for the same learning curve repeatedly.",
+      "AI is being used, but knowledge resets every week. Individual skill isn't becoming team capability — your team is paying for the same learning curve repeatedly.",
     action:
       "Pick your single highest-value task and create one shared approach for it. Don't try to systematize everything — prove the model on one workflow first.",
   },
@@ -228,24 +228,24 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
 
 const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: string }> = {
   standard_internalization: {
-    low: "Your firm's best thinking and AI sessions exist in separate worlds. Standards aren't shaping how people actually work with AI.",
+    low: "Your team's best thinking and AI sessions exist in separate worlds. Standards aren't shaping how people actually work with AI.",
     mid: "Standards exist, but they're optional. Some people reference them, most improvise. The gap between 'how we should work' and 'how we actually work' is still wide.",
     high: "Your defined approaches actively shape AI sessions. The team doesn't just know the standard — they've internalized it as their starting point.",
   },
   output_consistency: {
     low: "Same brief, same team, wildly different results. Quality depends entirely on which individual picks up the task.",
-    mid: "Outputs are recognisably from the same firm, but depth and rigour vary depending on who's prompting. Key-person dependency is high.",
-    high: "Your team produces consistently strong work regardless of who does it. The firm's quality standard travels with the process, not the person.",
+    mid: "Outputs are recognisably from the same team, but depth and rigour vary depending on who's prompting. Key-person dependency is high.",
+    high: "Your team produces consistently strong work regardless of who does it. The team's quality standard travels with the process, not the person.",
   },
   knowledge_compounding: {
     low: "Discoveries stay with the person who made them. Your AI knowledge resets every week — best practices die in personal chat histories.",
     mid: "Some knowledge sticks, but your team isn't systematically building on past work. Sharing is informal and inconsistent.",
-    high: "Every project makes the next one better. New insights are validated and woven into the team's evolving approach.",
+    high: "Every project makes the next one better. New insights are validated and woven into your team's evolving approach.",
   },
   collective_visibility: {
     low: "AI usage is a black box across the team. No one can see how colleagues navigate complexity — especially juniors learning from seniors.",
     mid: "Some visibility exists through ad-hoc sharing, but there's no systematic way for the team to learn from each other's AI work.",
-    high: "AI work is visible and intentionally shared. Team members actively learn from each other's approaches and the firm coordinates AI usage strategically.",
+    high: "AI work is visible and intentionally shared. Team members actively learn from each other's approaches and coordinate AI usage strategically.",
   },
   learning_velocity: {
     low: "Your team isn't learning from its own AI usage. The same mistakes and missed opportunities repeat across projects.",
@@ -256,19 +256,19 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
 
 const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high: string }> = {
   standard_internalization: {
-    low: "This means your senior people are spending time supervising and correcting work that should already meet the standard. Research suggests firms without embedded standards spend 30-40% more time on internal review cycles.",
+    low: "This means your senior people are spending time supervising and correcting work that should already meet the standard. Research suggests teams without embedded standards spend 30-40% more time on internal review cycles.",
     mid: "You have the foundation, but inconsistent adoption means quality still depends on who's working. Every time someone skips the standard, you're funding re-learning.",
     high: "Your standards are doing the heavy lifting. New hires ramp faster, and senior oversight shifts from correction to genuine strategic review.",
   },
   output_consistency: {
-    low: "Inconsistent deliverables are eroding client trust and increasing senior review time. When quality depends on the individual, you can't scale without proportionally scaling your best people.",
+    low: "Inconsistent deliverables are eroding trust and increasing senior review time. When quality depends on the individual, you can't scale without proportionally scaling your best people.",
     mid: "You're close, but key-person dependency means your capacity is capped by your strongest operators. If they leave, so does your quality ceiling.",
-    high: "Consistency is your competitive moat. Clients get the firm's quality, not an individual's — which means you can grow without diluting what makes you good.",
+    high: "Consistency is your competitive moat. Clients get the team's quality, not an individual's — which means you can grow without diluting what makes you good.",
   },
   knowledge_compounding: {
-    low: "Your team is paying the same learning tax on every project. Without compounding, a 20-person firm operates like 20 individuals — each one solving problems the firm has already solved.",
+    low: "Your team is paying the same learning tax on every project. Without compounding, a 20-person team operates like 20 individuals — each one solving problems the team has already solved.",
     mid: "You're capturing some value, but the leakage is significant. Every piece of tribal knowledge that stays informal is one resignation away from disappearing entirely.",
-    high: "You're in rare territory. Each project genuinely makes the next one better — this is the compounding effect that separates high-growth firms from the rest.",
+    high: "You're in rare territory. Each project genuinely makes the next one better — this is the compounding effect that separates high-growth teams from the rest.",
   },
   collective_visibility: {
     low: "Your junior people have no apprenticeship path through AI. In traditional work, they'd shadow seniors — with AI, they're left guessing. This extends ramp-up time by months.",

@@ -18,19 +18,19 @@ const BENCHMARK_HIGH = 72;
 
 const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
-    low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5–10 hours per week spent re-explaining context that already exists in your firm's methodology docs, past projects, and senior people's heads.",
+    low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5–10 hours per week spent re-explaining context that already exists in your team's methodology docs, past projects, and senior people's heads.",
     mid: "Some standards reach AI sessions, but inconsistently. You're likely seeing 2–3 hours per person per week lost to partial re-prompting — and the output quality gap between your best and newest people keeps widening.",
     high: "Your standards are actively shaping AI sessions — that's rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
   },
   output_consistency: {
     low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3–5 hours per deliverable, plus a client trust problem: they can tell when your A-team isn't in the room.",
-    mid: "Outputs are recognisable but uneven. Senior review time is likely 30–40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the firm's approach.",
-    high: "Clients get your firm's quality standard regardless of who delivers — that's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
+    mid: "Outputs are recognisable but uneven. Senior review time is likely 30–40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the team's approach.",
+    high: "Clients get your team's quality standard regardless of who delivers — that's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
   },
   knowledge_compounding: {
-    low: "Your firm pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building organisational capability.",
+    low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building collective capability.",
     mid: "Knowledge spreads, but it takes 4–6 weeks for a good technique to reach the whole team, if it ever does. Meanwhile, 2–3 people are solving problems someone else already cracked last month.",
-    high: "Each project genuinely makes the next one better. This compounding effect is what separates high-growth firms from the rest — you're building institutional intelligence, not just individual skill.",
+    high: "Each project genuinely makes the next one better. This compounding effect is what separates high-growth teams from the rest — you're building collective intelligence, not just individual skill.",
   },
   collective_visibility: {
     low: "You have zero visibility into how your team uses AI day-to-day. You can't answer: who's struggling, who found a breakthrough, or whether AI is actually improving output quality. You're managing a black box.",
@@ -39,7 +39,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
   learning_velocity: {
     low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability — that's a negative ROI trajectory.",
-    mid: "Some learning happens, but it takes a quarter to change how the team works. At current velocity, you'll need 18+ months to reach the maturity that structured firms achieve in 3–4 months.",
+    mid: "Some learning happens, but it takes a quarter to change how the team works. At current velocity, you'll need 18+ months to reach the maturity that structured teams achieve in 3–4 months.",
     high: "New techniques reach your whole team within days. In a landscape where AI capabilities change monthly, this speed of adaptation is a genuine strategic advantage.",
   },
 };
@@ -151,7 +151,7 @@ function EmailCapture({
                 : "Want the action plan in your inbox?"}
             </p>
             <p className={variant === "primary" ? "text-sm text-muted-foreground leading-relaxed" : "text-xs text-muted-foreground"}>
-              Based on your two weakest areas, we'll send a concrete plan showing what firms like yours changed to close these gaps and reach 70+.
+              Based on your two weakest areas, we'll send a concrete plan showing what teams like yours changed to close these gaps and reach 70+.
             </p>
           </div>
         </div>
@@ -270,7 +270,7 @@ export function DiagnosticResults({ result, answers }: Props) {
             {/* Benchmark context */}
             <div className="flex items-center justify-center gap-6 pt-2">
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">Average firm</p>
+                <p className="text-xs text-muted-foreground">Average team</p>
                 <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
                 <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">based on early diagnostic responses</p>
               </div>
@@ -283,9 +283,9 @@ export function DiagnosticResults({ result, answers }: Props) {
               </div>
               <div className="w-px h-10 bg-border" />
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">Structured firms</p>
+                <p className="text-xs text-muted-foreground">Structured teams</p>
                 <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
-                <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">firms with codified AI standards</p>
+                <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">teams with codified AI standards</p>
               </div>
             </div>
           </div>
@@ -366,7 +366,7 @@ export function DiagnosticResults({ result, answers }: Props) {
                   className={`flex items-center gap-1 text-xs font-semibold transition-colors pt-1 ${isPositive ? "text-emerald-600 hover:text-emerald-500" : "text-primary hover:text-primary/80"}`}
                 >
                   {isPositive ? null : <TrendingDown className="w-3.5 h-3.5" />}
-                  {isExpanded ? "Hide" : isPositive ? "What this means for your firm" : "What this costs your firm"}
+                  {isExpanded ? "Hide" : isPositive ? "What this means for your team" : "What this costs your team"}
                   {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 </button>
                 {isExpanded && (
@@ -397,10 +397,10 @@ export function DiagnosticResults({ result, answers }: Props) {
       {/* CTA */}
       <div className="text-center space-y-4 pb-8">
         <p className="text-base md:text-lg font-semibold text-foreground">
-          See what 70+ looks like for your firm
+          See what 70+ looks like for your team
         </p>
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
-          We'll walk through your results and show you how firms like yours made their AI investment compound.
+          We'll walk through your results and show you how teams like yours made their AI investment compound.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
