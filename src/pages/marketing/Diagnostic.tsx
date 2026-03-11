@@ -112,10 +112,10 @@ export default function DiagnosticPage() {
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
                 Your team has AI tools.
                 <br />
-                <span className="brand-gradient-text">Do they have your firm's playbook?</span>
+                <span className="brand-gradient-text">Do they have a shared way of using them?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                Most firms invested in AI this year. Few can tell if it's working at the team level. This 90-second diagnostic gives you a score across 5 dimensions and names what's leaking.
+                You've made the investment. Now the management question: is every team member using AI with the same standards, the same judgment, the same quality bar—or is each session a solo experiment?
               </p>
 
               <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
@@ -148,7 +148,7 @@ export default function DiagnosticPage() {
                 Get Your Score <ArrowRight className="w-4 h-4" />
               </Button>
               <p className="text-xs text-muted-foreground">
-                Free · No signup · Your score in 90 seconds
+                90 seconds · No signup · Score across 5 management dimensions
               </p>
             </div>
           )}
