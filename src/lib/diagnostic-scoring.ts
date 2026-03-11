@@ -102,7 +102,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "No change — their methods have become the team's default", score: 4 },
     ],
   },
-  // Knowledge Compounding (Socialization + Combination) — 2 questions
+  // Knowledge Compounding (Socialization + Combination), 2 questions
   {
     id: "kc1",
     context:
