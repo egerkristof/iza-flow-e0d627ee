@@ -16,26 +16,31 @@ interface Props {
 const BENCHMARK_AVG = 38;
 const BENCHMARK_HIGH = 72;
 
-const COST_TRANSLATIONS: Record<string, { low: string; mid: string }> = {
+const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
     low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5–10 hours per week spent re-explaining context that already exists in your firm's methodology docs, past projects, and senior people's heads.",
     mid: "Some standards reach AI sessions, but inconsistently. You're likely seeing 2–3 hours per person per week lost to partial re-prompting — and the output quality gap between your best and newest people keeps widening.",
+    high: "Your standards are actively shaping AI sessions — that's rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
   },
   output_consistency: {
     low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3–5 hours per deliverable, plus a client trust problem: they can tell when your A-team isn't in the room.",
     mid: "Outputs are recognisable but uneven. Senior review time is likely 30–40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the firm's approach.",
+    high: "Clients get your firm's quality standard regardless of who delivers — that's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
   },
   knowledge_compounding: {
     low: "Your firm pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building organisational capability.",
     mid: "Knowledge spreads, but it takes 4–6 weeks for a good technique to reach the whole team, if it ever does. Meanwhile, 2–3 people are solving problems someone else already cracked last month.",
+    high: "Each project genuinely makes the next one better. This compounding effect is what separates high-growth firms from the rest — you're building institutional intelligence, not just individual skill.",
   },
   collective_visibility: {
     low: "You have zero visibility into how your team uses AI day-to-day. You can't answer: who's struggling, who found a breakthrough, or whether AI is actually improving output quality. You're managing a black box.",
     mid: "You have anecdotal visibility — hallway conversations, occasional Slack shares. But you couldn't produce a report on AI usage patterns, effectiveness, or ROI for your leadership team if asked today.",
+    high: "Your team can see how colleagues navigate complexity with AI — especially juniors learning from seniors. This is how institutional expertise actually transfers in the AI age. Well done.",
   },
   learning_velocity: {
     low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability — that's a negative ROI trajectory.",
     mid: "Some learning happens, but it takes a quarter to change how the team works. At current velocity, you'll need 18+ months to reach the maturity that structured firms achieve in 3–4 months.",
+    high: "New techniques reach your whole team within days. In a landscape where AI capabilities change monthly, this speed of adaptation is a genuine strategic advantage.",
   },
 };
 
@@ -46,11 +51,11 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
 
   const SHORT_LABELS: Record<string, string> = {
-    "Do your standards shape behaviour?": "Standards",
-    "Can anyone deliver your best work?": "Consistency",
-    "Does your firm get smarter over time?": "Compounding",
-    "Can your team see how each other thinks?": "Visibility",
-    "How fast do improvements spread?": "Learning Speed",
+    standard_internalization: "Standards → Behaviour",
+    output_consistency: "Output Consistency",
+    knowledge_compounding: "Knowledge Compounding",
+    collective_visibility: "Team Visibility",
+    learning_velocity: "Learning Velocity",
   };
 
   const scoreColor =
@@ -124,18 +129,20 @@ export function DiagnosticResults({ result, answers }: Props) {
           <div className="text-center">
             <p className="text-xs text-muted-foreground">Average firm</p>
             <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
+            <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">based on early diagnostic responses</p>
           </div>
-          <div className="w-px h-8 bg-border" />
+          <div className="w-px h-10 bg-border" />
           <div className="text-center">
             <p className="text-xs text-muted-foreground">You</p>
             <p className="text-sm font-black" style={{ color: scoreColor }}>
               {result.overall}
             </p>
           </div>
-          <div className="w-px h-8 bg-border" />
+          <div className="w-px h-10 bg-border" />
           <div className="text-center">
-            <p className="text-xs text-muted-foreground">Firms with defined standards</p>
+            <p className="text-xs text-muted-foreground">Structured firms</p>
             <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
+            <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">firms with codified AI standards</p>
           </div>
         </div>
       </div>
@@ -144,7 +151,7 @@ export function DiagnosticResults({ result, answers }: Props) {
       <Card className="border-border">
         <CardContent className="p-4 md:p-6 space-y-3">
           {result.dimensions.map((d) => {
-            const label = SHORT_LABELS[d.label] || d.label.split(" ").slice(0, 2).join(" ");
+            const label = SHORT_LABELS[d.dimension] || d.label;
             return (
               <div key={d.dimension} className="flex items-center gap-3">
                 <span className="text-xs font-medium text-muted-foreground w-24 shrink-0 text-right">{label}</span>
@@ -166,10 +173,10 @@ export function DiagnosticResults({ result, answers }: Props) {
         <Card className="border-primary/20 bg-primary/4">
           <CardContent className="p-6 space-y-4">
             <p className="text-sm font-semibold text-foreground">
-              Get your personalised action plan
+              Get your personalised breakdown
             </p>
             <p className="text-xs text-muted-foreground">
-              We'll email your results and a 3-step plan based on your weakest dimension ({weakest.label} at {weakest.score}/100). If you'd like, we can also follow up to discuss them.
+              We'll email your full results across all five dimensions — Standards, Consistency, Compounding, Visibility, and Velocity — along with a tailored action plan starting from your weakest area ({SHORT_LABELS[weakest.dimension] || weakest.label} at {weakest.score}/100).
             </p>
             <div className="flex gap-2">
               <Input
@@ -200,13 +207,19 @@ export function DiagnosticResults({ result, answers }: Props) {
 
       {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-foreground">Why your AI investment isn't compounding yet</h3>
+        <h3 className="text-lg font-semibold text-foreground">
+          {result.overall >= 67
+            ? "Where your AI execution is paying off"
+            : result.overall >= 40
+              ? "Where your AI investment is leaking value"
+              : "Why your AI investment isn't compounding yet"}
+        </h3>
         {result.dimensions.map((d) => {
           const isExpanded = expandedDim === d.dimension;
           const costs = COST_TRANSLATIONS[d.dimension];
-          const costText = costs
-            ? d.score <= 50 ? costs.low : costs.mid
-            : d.implication;
+          const tier = d.score <= 33 ? "low" : d.score <= 66 ? "mid" : "high";
+          const costText = costs ? costs[tier] : d.implication;
+          const isPositive = d.score > 66;
 
           return (
             <Card key={d.dimension} className="border-border">
@@ -240,10 +253,10 @@ export function DiagnosticResults({ result, answers }: Props) {
 
                 <button
                   onClick={() => setExpandedDim(isExpanded ? null : d.dimension)}
-                  className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary/80 transition-colors pt-1"
+                  className={`flex items-center gap-1 text-xs font-semibold transition-colors pt-1 ${isPositive ? "text-emerald-600 hover:text-emerald-500" : "text-primary hover:text-primary/80"}`}
                 >
-                  <TrendingDown className="w-3.5 h-3.5" />
-                  {isExpanded ? "Hide" : "What this costs your firm"}
+                  {isPositive ? null : <TrendingDown className="w-3.5 h-3.5" />}
+                  {isExpanded ? "Hide" : isPositive ? "What this means for your firm" : "What this costs your firm"}
                   {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 </button>
                 {isExpanded && (
