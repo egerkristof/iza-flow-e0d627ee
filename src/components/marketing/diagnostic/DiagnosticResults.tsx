@@ -397,10 +397,10 @@ export function DiagnosticResults({ result, answers }: Props) {
       {/* CTA */}
       <div className="text-center space-y-4 pb-8">
         <p className="text-base md:text-lg font-semibold text-foreground">
-          See what 70+ looks like for your firm
+          See what 70+ looks like for your team
         </p>
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
-          We'll walk through your results and show you how firms like yours made their AI investment compound.
+          We'll walk through your results and show you how teams like yours made their AI investment compound.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
