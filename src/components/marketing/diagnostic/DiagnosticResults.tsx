@@ -20,7 +20,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   standard_internalization: {
     low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5–10 hours per week spent re-explaining context that already exists in your team's methodology docs, past projects, and senior people's heads.",
     mid: "Some standards reach AI sessions, but inconsistently. You're likely seeing 2–3 hours per person per week lost to partial re-prompting, and the output quality gap between your best and newest people keeps widening.",
-    high: "Your standards are actively shaping AI sessions — that's rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
+    high: "Your standards are actively shaping AI sessions. That's rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
   },
   output_consistency: {
     low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3–5 hours per deliverable, plus a client trust problem: they can tell when your A-team isn't in the room.",
