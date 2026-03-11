@@ -85,6 +85,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
             );
           })}
         </div>
+        </div>
       </div>
     </div>
   );

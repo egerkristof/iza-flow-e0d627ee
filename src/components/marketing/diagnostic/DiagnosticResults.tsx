@@ -349,7 +349,7 @@ export function DiagnosticResults({ result, answers }: Props) {
         })}
       </div>
 
-      {/* === SECONDARY Email capture — repeated below breakdown === */}
+      {/* === Email capture — after breakdown === */}
       <EmailCapture
         email={email}
         setEmail={setEmail}
@@ -358,7 +358,7 @@ export function DiagnosticResults({ result, answers }: Props) {
         onSubmit={handleEmailSubmit}
         weakestLabel={weakestLabel}
         weakestScore={weakest.score}
-        variant="secondary"
+        variant="primary"
       />
 
       {/* CTA */}
