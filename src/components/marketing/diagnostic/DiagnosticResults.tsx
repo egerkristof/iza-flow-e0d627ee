@@ -51,7 +51,7 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
 
   const SHORT_LABELS: Record<string, string> = {
-    standard_internalization: "Standards → Behaviour",
+    standard_internalization: "Standards Adoption",
     output_consistency: "Output Consistency",
     knowledge_compounding: "Knowledge Compounding",
     collective_visibility: "Team Visibility",
