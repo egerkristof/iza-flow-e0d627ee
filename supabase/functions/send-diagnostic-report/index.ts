@@ -214,11 +214,11 @@ Return ONLY valid JSON in this exact format:
     <!-- Benchmark context -->
     <div style="text-align:center;margin-bottom:28px;">
       <div style="display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
-        <span style="font-size:12px;color:#64748b;">Average firm: <strong>38</strong></span>
+        <span style="font-size:12px;color:#64748b;">Average team: <strong>38</strong></span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">Structured firms: <strong>72+</strong></span>
+        <span style="font-size:12px;color:#64748b;">Structured teams: <strong>72+</strong></span>
       </div>
     </div>
 
