@@ -50,7 +50,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
     context:
       "Picture this: a team member sits down to work on a client deliverable with AI. They open a new chat window.",
     question:
-      "How much of your firm's accumulated thinking do they bring into that session?",
+      "How much of your team's accumulated thinking do they bring into that session?",
     dimension: "standard_internalization",
     options: [
       { label: "They start from scratch — maybe dig through old chat histories", score: 1 },
