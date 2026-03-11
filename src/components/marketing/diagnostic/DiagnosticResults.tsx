@@ -51,7 +51,7 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
 
   const SHORT_LABELS: Record<string, string> = {
-    standard_internalization: "Standards → Behaviour",
+    standard_internalization: "Standards Adoption",
     output_consistency: "Output Consistency",
     knowledge_compounding: "Knowledge Compounding",
     collective_visibility: "Team Visibility",
@@ -173,10 +173,10 @@ export function DiagnosticResults({ result, answers }: Props) {
         <Card className="border-primary/20 bg-primary/4">
           <CardContent className="p-6 space-y-4">
             <p className="text-sm font-semibold text-foreground">
-              Get your personalised breakdown
+              Get your personalised action plan
             </p>
             <p className="text-xs text-muted-foreground">
-              We'll email your full results across all five dimensions — Standards, Consistency, Compounding, Visibility, and Velocity — along with a tailored action plan starting from your weakest area ({SHORT_LABELS[weakest.dimension] || weakest.label} at {weakest.score}/100).
+              We'll email your results and a 3-step plan based on your weakest dimension ({SHORT_LABELS[weakest.dimension] || weakest.label} at {weakest.score}/100). If you'd like, we can also follow up to discuss them.
             </p>
             <div className="flex gap-2">
               <Input
