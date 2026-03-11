@@ -5,12 +5,38 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { CAL_URL } from "@/components/marketing/home/shared";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
-import { ArrowRight, Mail, TrendingDown, Lightbulb, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp } from "lucide-react";
 
 interface Props {
   result: DiagnosticResult;
   answers: Record<string, number>;
 }
+
+const BENCHMARK_AVG = 38;
+const BENCHMARK_HIGH = 72;
+
+const COST_TRANSLATIONS: Record<string, { low: string; mid: string }> = {
+  standard_internalization: {
+    low: "Your team reinvents the approach every AI session. That's hours of redundant thinking each week, and the output depends on who happens to do the work.",
+    mid: "Some standards reach AI sessions, but inconsistently. You're getting partial value from years of accumulated expertise.",
+  },
+  output_consistency: {
+    low: "Quality depends on who does the work. That's a scalability ceiling: you can't grow the team without growing the variance.",
+    mid: "Outputs are recognisable but uneven. Clients notice the difference between your A-team and everyone else.",
+  },
+  knowledge_compounding: {
+    low: "Improvements stay with individuals. Your firm is paying for the same learning curve repeatedly, project after project.",
+    mid: "Knowledge spreads, but slowly and unevenly. Good techniques take weeks to reach the whole team, if they ever do.",
+  },
+  collective_visibility: {
+    low: "Everyone works in private AI sessions. You have no idea what's working, what's not, or who needs help.",
+    mid: "Some visibility exists, but it's informal. You'd struggle to answer: 'How is the team actually using AI today?'",
+  },
+  learning_velocity: {
+    low: "Projects end and lessons vanish. Six months of AI usage hasn't meaningfully changed how the team operates.",
+    mid: "Some learning happens, but it doesn't consistently feed back into how the team works. Progress is anecdotal, not structural.",
+  },
+};
 
 export function DiagnosticResults({ result, answers }: Props) {
   const [email, setEmail] = useState("");
@@ -35,14 +61,12 @@ export function DiagnosticResults({ result, answers }: Props) {
           ? "hsl(200 90% 40%)"
           : "hsl(155 72% 36%)";
 
-  // Find weakest dimension for targeted CTA
   const weakest = [...result.dimensions].sort((a, b) => a.score - b.score)[0];
 
   async function handleEmailSubmit() {
     if (!email.trim()) return;
     setLoading(true);
     try {
-      // Store result with email
       await (supabase as any).from("diagnostic_results").insert({
         email: email.trim(),
         answers,
@@ -51,7 +75,6 @@ export function DiagnosticResults({ result, answers }: Props) {
         overall_score: result.overall,
       });
 
-      // Trigger AI-generated action plan email
       const reportUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-diagnostic-report`;
       await fetch(reportUrl, {
         method: "POST",
@@ -70,7 +93,6 @@ export function DiagnosticResults({ result, answers }: Props) {
       setSubmitted(true);
     } catch (err) {
       console.error("Email submit error:", err);
-      // Still mark as submitted so user isn't stuck
       setSubmitted(true);
     }
     setLoading(false);
@@ -95,6 +117,32 @@ export function DiagnosticResults({ result, answers }: Props) {
         <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
           {result.archetype.tagline}
         </p>
+
+        {/* Benchmark context */}
+        <div className="flex items-center justify-center gap-6 pt-2">
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">Average firm</p>
+            <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
+          </div>
+          <div
+            className="w-px h-8"
+            style={{ background: "hsl(var(--border))" }}
+          />
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">You</p>
+            <p className="text-sm font-black" style={{ color: scoreColor }}>
+              {result.overall}
+            </p>
+          </div>
+          <div
+            className="w-px h-8"
+            style={{ background: "hsl(var(--border))" }}
+          />
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">Firms with defined standards</p>
+            <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
+          </div>
+        </div>
       </div>
 
       {/* Dimension bars overview */}
@@ -118,24 +166,50 @@ export function DiagnosticResults({ result, answers }: Props) {
         </CardContent>
       </Card>
 
-      {/* What to do first — archetype action */}
-      <Card className="border-primary/20 bg-primary/4">
-        <CardContent className="p-5 md:p-6">
-          <div className="flex items-start gap-3">
-            <Lightbulb className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-            <div>
-              <p className="text-sm font-bold text-foreground mb-1">Your #1 next move</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">{result.archetype.action}</p>
+      {/* Email capture — moved UP, gated action plan */}
+      {!submitted ? (
+        <Card className="border-primary/20 bg-primary/4">
+          <CardContent className="p-6 space-y-4">
+            <p className="text-sm font-semibold text-foreground">
+              See what firms who score 70+ do differently
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Get a personalised 3-step action plan based on your weakest dimension ({weakest.label} at {weakest.score}/100). Concrete steps you can start this week.
+            </p>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1"
+              />
+              <Button onClick={handleEmailSubmit} disabled={loading || !email.trim()}>
+                <Mail className="w-4 h-4" />
+                Send
+              </Button>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+            <p className="text-xs text-muted-foreground">No spam. One email with your custom action plan.</p>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="border-primary/20 bg-primary/4">
+          <CardContent className="p-6 text-center">
+            <p className="text-sm font-semibold text-foreground">✓ Your action plan is on its way.</p>
+          </CardContent>
+        </Card>
+      )}
 
-      {/* Dimension breakdown with implications */}
+      {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-foreground">Where you stand</h3>
+        <h3 className="text-lg font-semibold text-foreground">Why your AI investment isn't compounding yet</h3>
         {result.dimensions.map((d) => {
           const isExpanded = expandedDim === d.dimension;
+          const costs = COST_TRANSLATIONS[d.dimension];
+          const costText = costs
+            ? d.score <= 50 ? costs.low : costs.mid
+            : d.implication;
+
           return (
             <Card key={d.dimension} className="border-border">
               <CardContent className="p-4 space-y-2">
@@ -166,18 +240,17 @@ export function DiagnosticResults({ result, answers }: Props) {
                 </div>
                 <p className="text-sm text-muted-foreground">{d.insight}</p>
 
-                {/* Expand to see business implication */}
                 <button
                   onClick={() => setExpandedDim(isExpanded ? null : d.dimension)}
                   className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary/80 transition-colors pt-1"
                 >
                   <TrendingDown className="w-3.5 h-3.5" />
-                  {isExpanded ? "Hide" : "What this means for your firm"}
+                  {isExpanded ? "Hide" : "What this costs your firm"}
                   {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 </button>
                 {isExpanded && (
                   <p className="text-sm text-foreground/80 bg-muted/50 rounded-lg p-3 mt-1 animate-in fade-in slide-in-from-top-2 duration-200 leading-relaxed">
-                    {d.implication}
+                    {costText}
                   </p>
                 )}
               </CardContent>
@@ -186,65 +259,31 @@ export function DiagnosticResults({ result, answers }: Props) {
         })}
       </div>
 
-      {/* Email capture — gated action plan */}
-      {!submitted ? (
-        <Card className="border-primary/20 bg-primary/4">
-          <CardContent className="p-6 space-y-4">
-            <p className="text-sm font-semibold text-foreground">
-              Get a prioritized 3-step action plan tailored to your "{result.archetype.label}" profile
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Based on your weakest dimension ({weakest.label} at {weakest.score}/100), we'll send specific recommendations you can act on this week.
-            </p>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
-              />
-              <Button onClick={handleEmailSubmit} disabled={loading || !email.trim()}>
-                <Mail className="w-4 h-4" />
-                Send
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground">No spam. One email with your custom action plan.</p>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card className="border-primary/20 bg-primary/4">
-          <CardContent className="p-6 text-center">
-            <p className="text-sm font-semibold text-foreground">✓ Your action plan is on its way.</p>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* CTA — conditional based on score */}
+      {/* CTA */}
       <div className="text-center space-y-4 pb-8">
         {result.overall <= 55 ? (
           <>
             <p className="text-base md:text-lg font-semibold text-foreground">
-              Your team is leaving compound value on the table
+              Your AI investment could be compounding. It isn't yet.
             </p>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              We'll walk through your results and show you how teams like yours close these gaps with LIZA OS — in 20 minutes.
+              We'll walk through your results and show you what a score of 70+ looks like for a firm like yours.
             </p>
           </>
         ) : (
           <>
             <p className="text-base md:text-lg font-semibold text-foreground">
-              You're ahead of most firms — let's close the remaining gaps
+              You're ahead of most firms. Let's close the remaining gaps.
             </p>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              We'll show you where your system has the most room to compound — and how LIZA OS accelerates what you've already built.
+              We'll show you where your system has the most room to compound and how LIZA OS accelerates what you've already built.
             </p>
           </>
         )}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
             <Button variant="brand" size="lg" className="text-base">
-              Book a 20-Min Results Review <ArrowRight className="w-4 h-4" />
+              See What 70+ Looks Like <ArrowRight className="w-4 h-4" />
             </Button>
           </a>
           <a href="/platform">

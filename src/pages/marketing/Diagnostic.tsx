@@ -108,31 +108,31 @@ export default function DiagnosticPage() {
                 AI Execution Score
               </div>
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                How much of your firm's judgment
+                Your team has AI tools.
                 <br />
-                <span className="brand-gradient-text">actually reaches an AI session?</span>
+                <span className="brand-gradient-text">Do they have your firm's playbook?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                10 real scenarios. 90 seconds. A score across 5 dimensions of team intelligence that names what you already suspect.
+                Most firms invested in AI this year. Few can tell if it's working at the team level. This 90-second diagnostic gives you a score across 5 dimensions and names what's leaking.
               </p>
 
               <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
                 <div className="flex items-start gap-3">
                   <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Can someone else deliver your best work</span> using AI, without you in the room?
+                    <span className="text-foreground font-medium">Is your AI investment compounding</span> or resetting every Monday?
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">When someone finds a better technique,</span> does the whole team adopt it, or just them?
+                    <span className="text-foreground font-medium">Can your team deliver your best work</span> with AI, without you in the room?
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <Target className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">When your top performer is away,</span> does quality drop?
+                    <span className="text-foreground font-medium">Where exactly is the gap</span> between what your firm knows and what AI sessions use?
                   </p>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function DiagnosticPage() {
                 Get Your Score <ArrowRight className="w-4 h-4" />
               </Button>
               <p className="text-xs text-muted-foreground">
-                Free · No signup · Results in 90 seconds
+                Free · No signup · Your score in 90 seconds
               </p>
             </div>
           )}
