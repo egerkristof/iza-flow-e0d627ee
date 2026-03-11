@@ -212,7 +212,7 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
     max: 75,
     label: "Emerging System",
     tagline:
-      "You have real pieces in place. What's missing is the feedback loop that turns individual learning into collective improvement — the 'last mile' of compounding.",
+      "You have real pieces in place. What's missing is the feedback loop that turns individual learning into collective improvement: the 'last mile' of compounding.",
     action:
       "Introduce structured after-action reviews. You're already capturing knowledge; now close the loop so it feeds back into your standards automatically.",
   },
