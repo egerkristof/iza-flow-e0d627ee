@@ -85,7 +85,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "Completely different. You'd think they were on different teams", score: 1 },
       { label: "Similar in tone, but the depth and structure would vary significantly", score: 2 },
       { label: "Recognisably aligned, with some individual variation in approach", score: 3 },
-      { label: "Consistently high quality — the team's thinking comes through regardless of who does it", score: 4 },
+      { label: "Consistently high quality. The team's thinking comes through regardless of who does it", score: 4 },
     ],
   },
   {
