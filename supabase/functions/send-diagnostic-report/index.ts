@@ -45,7 +45,7 @@ serve(async (req) => {
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
     if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY not configured");
 
-    // Sort dimensions by score ascending — weakest first
+    // Sort dimensions by score ascending, weakest first
     const sorted = [...dimensions].sort((a, b) => a.score - b.score);
     const weakest = sorted[0];
     const secondWeakest = sorted[1];
