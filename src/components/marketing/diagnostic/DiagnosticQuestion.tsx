@@ -47,7 +47,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
 
         {/* Question + answers */}
         <div className="bg-background px-5 py-5 md:px-7 md:py-6">
-          <h2 className="text-lg md:text-xl font-bold text-foreground mb-6 leading-snug tracking-tight">
+          <h2 className="text-lg md:text-xl font-medium text-foreground mb-6 leading-snug tracking-tight">
             {question.question}
           </h2>
 
