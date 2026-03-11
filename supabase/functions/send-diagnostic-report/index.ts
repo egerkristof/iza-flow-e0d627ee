@@ -53,23 +53,24 @@ serve(async (req) => {
     // Generate personalized action plan via AI
     const prompt = `You are an expert advisor on AI execution maturity for operational leaders at mid-market firms (50-1000 employees, sweet spot 50-250).
 
-A firm just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
+A team just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
 
 Their weakest dimension is "${weakest.label}" (${weakest.score}/100): ${weakest.insight}
 Their second weakest is "${secondWeakest.label}" (${secondWeakest.score}/100): ${secondWeakest.insight}
 
-For context: the average firm scores 38/100. Firms with defined AI standards score 72+.
+For context: the average team scores 38/100. Teams with defined AI standards score 72+.
 
-Write a personalized 3-step action plan framed as "What firms who score 70+ do differently." This is aspirational, not remedial. Requirements:
+Write a personalized 3-step action plan framed as "What teams who score 70+ do differently." This is aspirational, not remedial. Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
 2. For each step, include:
    - A clear action title (5-8 words, framed as what high-performers do)
-   - What to do manually (2-3 sentences — the "start here" approach)
-   - How LIZA OS makes this structural and automatic (1-2 sentences — always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
+   - What to do manually (2-3 sentences, the "start here" approach)
+   - How LIZA OS makes this structural and automatic (1-2 sentences, always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
 3. Steps should progress: visibility → codification → compounding
 4. Use second person ("you", "your team")
-5. Be specific to their archetype and weakest dimensions — not generic advice
-6. Use their language: "playbook", "what good looks like", "our way of doing things" — not "governance", "knowledge management"
+5. Be specific to their archetype and weakest dimensions, not generic advice
+6. Use their language: "playbook", "what good looks like", "our way of doing things". Not "governance", "knowledge management"
+7. IMPORTANT: Do not use em-dashes anywhere. Use periods, commas, or colons instead.
 
 Return ONLY valid JSON in this exact format:
 {
