@@ -129,18 +129,20 @@ export function DiagnosticResults({ result, answers }: Props) {
           <div className="text-center">
             <p className="text-xs text-muted-foreground">Average firm</p>
             <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
+            <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">based on early diagnostic responses</p>
           </div>
-          <div className="w-px h-8 bg-border" />
+          <div className="w-px h-10 bg-border" />
           <div className="text-center">
             <p className="text-xs text-muted-foreground">You</p>
             <p className="text-sm font-black" style={{ color: scoreColor }}>
               {result.overall}
             </p>
           </div>
-          <div className="w-px h-8 bg-border" />
+          <div className="w-px h-10 bg-border" />
           <div className="text-center">
-            <p className="text-xs text-muted-foreground">Firms with defined standards</p>
+            <p className="text-xs text-muted-foreground">Structured firms</p>
             <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
+            <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">firms with codified AI standards</p>
           </div>
         </div>
       </div>
