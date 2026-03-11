@@ -96,7 +96,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       "What happens to the quality of AI-assisted work?",
     dimension: "output_consistency",
     options: [
-      { label: "Quality drops noticeably — they're the one who 'gets it'", score: 1 },
+      { label: "Quality drops noticeably. They're the one who 'gets it'", score: 1 },
       { label: "Some things slip, others are fine — depends on the task", score: 2 },
       { label: "Barely affected — others have picked up similar approaches", score: 3 },
       { label: "No change — their methods have become the team's default", score: 4 },
