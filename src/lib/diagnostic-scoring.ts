@@ -234,8 +234,8 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
   },
   output_consistency: {
     low: "Same brief, same team, wildly different results. Quality depends entirely on which individual picks up the task.",
-    mid: "Outputs are recognisably from the same firm, but depth and rigour vary depending on who's prompting. Key-person dependency is high.",
-    high: "Your team produces consistently strong work regardless of who does it. The firm's quality standard travels with the process, not the person.",
+    mid: "Outputs are recognisably from the same team, but depth and rigour vary depending on who's prompting. Key-person dependency is high.",
+    high: "Your team produces consistently strong work regardless of who does it. The team's quality standard travels with the process, not the person.",
   },
   knowledge_compounding: {
     low: "Discoveries stay with the person who made them. Your AI knowledge resets every week — best practices die in personal chat histories.",
