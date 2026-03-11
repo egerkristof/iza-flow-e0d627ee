@@ -99,12 +99,12 @@ export default function DiagnosticPage() {
           {phase === "intro" && (
             <div className="max-w-2xl text-center space-y-8 animate-in fade-in duration-500">
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                You're paying for 10 AI seats.
+                Why does your team's AI work
                 <br />
-                <span className="brand-gradient-text">You're getting 10 different teams.</span>
+                <span className="brand-gradient-text">still need so much fixing?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                Everyone prompts differently. Nobody shares what works. Your best people's thinking never reaches the rest. Score how much this is actually costing you.
+                Hallucinations. Inconsistent quality. The same mistakes repeated across people. It's not the AI — it's that your team has no shared standard for using it.
               </p>
 
               <Button
