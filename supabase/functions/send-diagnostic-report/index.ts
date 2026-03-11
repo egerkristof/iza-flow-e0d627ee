@@ -178,32 +178,60 @@ Return ONLY valid JSON in this exact format:
 <body style="margin:0;padding:0;background:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
   <div style="max-width:600px;margin:0 auto;padding:32px 24px;">
     
-    <!-- Header -->
-    <div style="text-align:center;margin-bottom:32px;">
+    <!-- Header with score -->
+    <div style="text-align:center;margin-bottom:28px;">
       <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Your AI Execution Score</p>
       <p style="margin:0;font-size:56px;font-weight:900;color:${scoreColor};line-height:1;">${overall}</p>
       <p style="margin:8px 0 0;font-size:18px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
-      <div style="margin:16px auto 0;display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+    </div>
+
+    <!-- Results framing — what firms are actually achieving -->
+    <div style="margin-bottom:28px;padding:20px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">
+      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">What firms scoring 70+ are seeing</p>
+      <table style="width:100%;border-collapse:collapse;">
+        <tr>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ Senior review time</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Down 40–60%</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">📋 Output consistency</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Within 10% variance</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">🚀 New hire ramp time</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Cut by half</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">🔄 Re-prompting waste</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Near zero</td>
+        </tr>
+      </table>
+      <p style="margin:12px 0 0;font-size:12px;color:#4ade80;">These are firms who codified their standards and made them available to every AI session.</p>
+    </div>
+
+    <!-- Benchmark context -->
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
         <span style="font-size:12px;color:#64748b;">Average firm: <strong>38</strong></span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">With defined standards: <strong>72+</strong></span>
+        <span style="font-size:12px;color:#64748b;">Structured firms: <strong>72+</strong></span>
       </div>
     </div>
 
     <!-- Dimension scores -->
-    <div style="margin-bottom:32px;">
-      <p style="margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Your Scores</p>
+    <div style="margin-bottom:28px;">
+      <p style="margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Your Breakdown</p>
       <table style="width:100%;border-collapse:collapse;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">
         ${dimensionRows}
       </table>
     </div>
 
     <!-- Action Plan -->
-    <div style="margin-bottom:32px;">
-      <p style="margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">What firms who score 70+ do differently</p>
+    <div style="margin-bottom:28px;">
+      <p style="margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Your 3-Step Action Plan</p>
       ${stepsHtml}
     </div>
 
@@ -211,7 +239,7 @@ Return ONLY valid JSON in this exact format:
     <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:24px;">
       <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your firm</p>
       <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours made their AI investment compound.</p>
-      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a 20-Minute Review →</a>
+      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
       <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">Explore LIZA OS →</a></p>
     </div>
 
