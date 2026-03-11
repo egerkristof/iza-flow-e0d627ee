@@ -51,11 +51,11 @@ export function DiagnosticResults({ result, answers }: Props) {
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
 
   const SHORT_LABELS: Record<string, string> = {
-    "Do your standards shape behaviour?": "Standards",
-    "Can anyone deliver your best work?": "Consistency",
-    "Does your firm get smarter over time?": "Compounding",
-    "Can your team see how each other thinks?": "Visibility",
-    "How fast do improvements spread?": "Learning Speed",
+    standard_internalization: "Standards → Behaviour",
+    output_consistency: "Output Consistency",
+    knowledge_compounding: "Knowledge Compounding",
+    collective_visibility: "Team Visibility",
+    learning_velocity: "Learning Velocity",
   };
 
   const scoreColor =
