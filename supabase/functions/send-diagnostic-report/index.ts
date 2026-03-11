@@ -187,9 +187,9 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
     </div>
 
-    <!-- Results framing — what firms are actually achieving -->
+    <!-- Results framing: what teams are actually achieving -->
     <div style="margin-bottom:28px;padding:20px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">
-      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">What firms scoring 70+ are seeing</p>
+      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">What teams scoring 70+ are seeing</p>
       <table style="width:100%;border-collapse:collapse;">
         <tr>
           <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ Senior review time</td>
