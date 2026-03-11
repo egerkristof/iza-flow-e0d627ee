@@ -151,7 +151,7 @@ function EmailCapture({
                 : "Want the action plan in your inbox?"}
             </p>
             <p className={variant === "primary" ? "text-sm text-muted-foreground leading-relaxed" : "text-xs text-muted-foreground"}>
-              Based on your two weakest areas, we'll send a concrete plan showing what firms like yours changed to close these gaps and reach 70+.
+              Based on your two weakest areas, we'll send a concrete plan showing what teams like yours changed to close these gaps and reach 70+.
             </p>
           </div>
         </div>
