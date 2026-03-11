@@ -27,7 +27,6 @@ const navItems = [
   { title: "Learn", url: "/my-knowledge", icon: User, hideForRoles: [] as string[] },
   { title: "Configure", url: "/admin/prompts", icon: FileCode2, hideForRoles: ["operator", "manager"] },
   { title: "Trials", url: "/admin/trials", icon: FlaskConical, hideForRoles: ["operator", "manager"] },
-  { title: "Admin", url: "/admin/manage", icon: ShieldCheck, hideForRoles: ["operator", "manager"] },
 ];
 
 /** LIZA wordmark — matching reference image style */

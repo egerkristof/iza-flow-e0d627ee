@@ -70,6 +70,9 @@ const App = () => (
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
+            {/* Standalone admin panel */}
+            <Route path="/admin/manage" element={<AdminPage />} />
+
             {/* Retired pages — redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
             <Route path="/extract/test" element={<Navigate to="/" replace />} />
