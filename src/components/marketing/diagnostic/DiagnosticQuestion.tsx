@@ -23,44 +23,33 @@ interface Props {
 export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props) {
   return (
     <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-right-4 duration-300 space-y-0">
-      {/* === ZONE 1: Scene-setting context — hero treatment === */}
       <div
-        className="rounded-t-2xl border border-border px-6 py-7 md:px-8 md:py-9 relative overflow-hidden"
-        style={{
-          background: "linear-gradient(135deg, hsl(var(--primary) / 0.08) 0%, hsl(var(--card)) 60%, hsl(var(--primary) / 0.04) 100%)",
-        }}
+        className="rounded-2xl border border-primary/20 overflow-hidden shadow-[0_4px_24px_-4px_hsl(var(--primary)/0.08)]"
       >
-        {/* Decorative glow orb */}
+        {/* Scene-setting context */}
         <div
-          className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none"
-          style={{ background: "hsl(var(--primary) / 0.12)" }}
-        />
-
-
-        {/* Scene-setting text — large and prominent */}
-        <p className="relative text-base md:text-lg text-foreground font-medium leading-relaxed tracking-tight">
-          {question.context}
-        </p>
-      </div>
-
-      {/* === Visual connector === */}
-      <div className="flex justify-center -my-2 relative z-10">
-        <div
-          className="w-9 h-9 rounded-full flex items-center justify-center shadow-lg"
+          className="px-6 py-6 md:px-8 md:py-7 relative"
           style={{
-            background: "var(--gradient-brand-btn)",
-            boxShadow: "0 4px 20px -4px hsl(var(--primary) / 0.4)",
+            background: "linear-gradient(135deg, hsl(var(--primary) / 0.08) 0%, hsl(var(--card)) 60%, hsl(var(--primary) / 0.04) 100%)",
           }}
         >
-          <ChevronDown className="w-4 h-4 text-primary-foreground" />
+          <div
+            className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none"
+            style={{ background: "hsl(var(--primary) / 0.12)" }}
+          />
+          <p className="relative text-base md:text-lg text-foreground font-medium leading-relaxed tracking-tight">
+            {question.context}
+          </p>
         </div>
-      </div>
 
-      {/* === ZONE 2: Question + answers === */}
-      <div className="rounded-b-2xl border border-primary/20 bg-background px-5 py-5 md:px-7 md:py-6 shadow-[0_4px_24px_-4px_hsl(var(--primary)/0.08)]">
-        <h2 className="text-lg md:text-xl font-bold text-foreground mb-6 leading-snug tracking-tight">
-          {question.question}
-        </h2>
+        {/* Divider */}
+        <div className="border-t border-border" />
+
+        {/* Question + answers */}
+        <div className="bg-background px-5 py-5 md:px-7 md:py-6">
+          <h2 className="text-lg md:text-xl font-bold text-foreground mb-6 leading-snug tracking-tight">
+            {question.question}
+          </h2>
 
         <div className="flex flex-col gap-2.5">
           {question.options.map((opt, idx) => {
