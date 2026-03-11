@@ -271,7 +271,7 @@ const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high
     high: "You're in rare territory. Each project genuinely makes the next one better — this is the compounding effect that separates high-growth teams from the rest.",
   },
   collective_visibility: {
-    low: "Your junior people have no apprenticeship path through AI. In traditional work, they'd shadow seniors — with AI, they're left guessing. This extends ramp-up time by months.",
+    low: "Your junior people have no apprenticeship path through AI. In traditional work, they'd shadow seniors. With AI, they're left guessing. This extends ramp-up time by months.",
     mid: "Sharing happens, but it's effortful. The insights that would accelerate the whole team are locked behind someone choosing to present. Most don't.",
     high: "You've solved one of the hardest problems in AI adoption: making thinking visible. This is how institutional expertise actually transfers in the AI age.",
   },
