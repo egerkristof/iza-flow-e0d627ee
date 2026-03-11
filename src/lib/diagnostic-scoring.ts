@@ -70,7 +70,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "The defined approach and the AI session are completely disconnected", score: 1 },
       { label: "People know the approach exists but rarely reference it while prompting", score: 2 },
       { label: "Some people paste relevant sections into their prompts manually", score: 3 },
-      { label: "The approach is woven into how AI sessions are set up — it's the starting point", score: 4 },
+      { label: "The approach is woven into how AI sessions are set up. It's the starting point", score: 4 },
     ],
   },
   // Output Consistency, 2 questions
