@@ -49,24 +49,25 @@ serve(async (req) => {
     const secondWeakest = sorted[1];
 
     // Generate personalized action plan via AI
-    const prompt = `You are an expert advisor on AI execution maturity for professional services firms (consulting, IT services, 50-200 employees).
+    const prompt = `You are an expert advisor on AI execution maturity for operational leaders at mid-market firms (50-1000 employees, sweet spot 50-250).
 
-A firm just completed a diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
+A firm just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
 
 Their weakest dimension is "${weakest.label}" (${weakest.score}/100): ${weakest.insight}
-Business implication: ${weakest.implication}
-
 Their second weakest is "${secondWeakest.label}" (${secondWeakest.score}/100): ${secondWeakest.insight}
 
-Write a personalized 3-step action plan for this firm. Requirements:
+For context: the average firm scores 38/100. Firms with defined AI standards score 72+.
+
+Write a personalized 3-step action plan framed as "What firms who score 70+ do differently." This is aspirational, not remedial. Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
 2. For each step, include:
-   - A clear action title (5-8 words)
-   - What to do manually (2-3 sentences — the "do it yourself" approach)
-   - How a platform like LIZA OS automates this (1-2 sentences — frame as "With the right tooling...")
-3. Steps should progress logically: quick win → structural change → habit formation
+   - A clear action title (5-8 words, framed as what high-performers do)
+   - What to do manually (2-3 sentences — the "start here" approach)
+   - How a platform like LIZA OS makes this structural (1-2 sentences — frame as "With the right infrastructure...")
+3. Steps should progress: visibility → codification → compounding
 4. Use second person ("you", "your team")
 5. Be specific to their archetype and weakest dimensions — not generic advice
+6. Use their language: "playbook", "what good looks like", "our way of doing things" — not "governance", "knowledge management"
 
 Return ONLY valid JSON in this exact format:
 {
@@ -74,7 +75,7 @@ Return ONLY valid JSON in this exact format:
     {
       "title": "Step title here",
       "manual_how": "What they'd do manually...",
-      "platform_how": "How tooling accelerates this..."
+      "platform_how": "How infrastructure makes this structural..."
     }
   ]
 }`;
@@ -161,10 +162,10 @@ Return ONLY valid JSON in this exact format:
         <div style="margin-bottom:20px;padding:16px;background:#f8fafc;border-radius:8px;border-left:3px solid #0284c7;">
           <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#1a1a2e;">Step ${i + 1}: ${s.title}</p>
           <p style="margin:0 0 10px;font-size:13px;color:#475569;line-height:1.6;">
-            <strong style="color:#1a1a2e;">Do it yourself:</strong> ${s.manual_how}
+            <strong style="color:#1a1a2e;">Start here:</strong> ${s.manual_how}
           </p>
           <p style="margin:0;font-size:13px;color:#0284c7;line-height:1.6;">
-            💡 ${s.platform_how}
+            🏗️ ${s.platform_how}
           </p>
         </div>`
       )
@@ -178,10 +179,17 @@ Return ONLY valid JSON in this exact format:
     
     <!-- Header -->
     <div style="text-align:center;margin-bottom:32px;">
-      <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Your AI Execution Diagnostic</p>
+      <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Your AI Execution Score</p>
       <p style="margin:0;font-size:56px;font-weight:900;color:${scoreColor};line-height:1;">${overall}</p>
       <p style="margin:8px 0 0;font-size:18px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
+      <div style="margin:16px auto 0;display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+        <span style="font-size:12px;color:#64748b;">Average firm: <strong>38</strong></span>
+        <span style="margin:0 8px;color:#e2e8f0;">|</span>
+        <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
+        <span style="margin:0 8px;color:#e2e8f0;">|</span>
+        <span style="font-size:12px;color:#64748b;">With defined standards: <strong>72+</strong></span>
+      </div>
     </div>
 
     <!-- Dimension scores -->
@@ -194,20 +202,20 @@ Return ONLY valid JSON in this exact format:
 
     <!-- Action Plan -->
     <div style="margin-bottom:32px;">
-      <p style="margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Your Personalised 3-Step Action Plan</p>
+      <p style="margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">What firms who score 70+ do differently</p>
       ${stepsHtml}
     </div>
 
     <!-- CTA -->
     <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:24px;">
-      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">Want to walk through this with us?</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll review your results and show you how teams close these gaps with LIZA OS — in 20 minutes.</p>
-      <a href="https://cal.com/lizaos/discovery" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a 20-Min Review →</a>
+      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your firm</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours make their AI investment compound.</p>
+      <a href="https://cal.com/lizaos/discovery" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
     </div>
 
     <!-- Footer -->
     <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">
-      <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · Organisational Intelligence for AI Teams</p>
+      <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · The management layer for AI-powered teams</p>
       <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because you completed the AI Execution Diagnostic.</p>
     </div>
   </div>
@@ -224,7 +232,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email.trim()],
-        subject: `Your AI Execution Score: ${overall}/100 — ${archetype.label}`,
+        subject: `Your AI Execution Score: ${overall}/100 — here's what's leaking`,
         html,
       }),
     });
