@@ -266,7 +266,7 @@ const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high
     high: "Consistency is your competitive moat. Clients get the team's quality, not an individual's — which means you can grow without diluting what makes you good.",
   },
   knowledge_compounding: {
-    low: "Your team is paying the same learning tax on every project. Without compounding, a 20-person team operates like 20 individuals — each one solving problems the team has already solved.",
+    low: "Your team is paying the same learning tax on every project. Without compounding, a 20-person team operates like 20 individuals, each one solving problems the team has already solved.",
     mid: "You're capturing some value, but the leakage is significant. Every piece of tribal knowledge that stays informal is one resignation away from disappearing entirely.",
     high: "You're in rare territory. Each project genuinely makes the next one better — this is the compounding effect that separates high-growth teams from the rest.",
   },
