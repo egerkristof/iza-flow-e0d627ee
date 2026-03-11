@@ -151,7 +151,7 @@ export function DiagnosticResults({ result, answers }: Props) {
       <Card className="border-border">
         <CardContent className="p-4 md:p-6 space-y-3">
           {result.dimensions.map((d) => {
-            const label = SHORT_LABELS[d.label] || d.label.split(" ").slice(0, 2).join(" ");
+            const label = SHORT_LABELS[d.dimension] || d.label;
             return (
               <div key={d.dimension} className="flex items-center gap-3">
                 <span className="text-xs font-medium text-muted-foreground w-24 shrink-0 text-right">{label}</span>
