@@ -82,7 +82,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       "How similar would the outputs be?",
     dimension: "output_consistency",
     options: [
-      { label: "Completely different — you'd think they worked at different firms", score: 1 },
+      { label: "Completely different — you'd think they were on different teams", score: 1 },
       { label: "Similar in tone, but the depth and structure would vary significantly", score: 2 },
       { label: "Recognisably aligned, with some individual variation in approach", score: 3 },
       { label: "Consistently high quality — the firm's thinking comes through regardless of who does it", score: 4 },
