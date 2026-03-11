@@ -98,24 +98,13 @@ export default function DiagnosticPage() {
         <div className="flex-1 flex items-center justify-center px-6 py-16">
           {phase === "intro" && (
             <div className="max-w-2xl text-center space-y-8 animate-in fade-in duration-500">
-            <div
-                className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border mb-2"
-                style={{
-                  color: "hsl(var(--primary))",
-                  borderColor: "hsl(var(--primary) / 0.25)",
-                  background: "hsl(var(--primary) / 0.06)",
-                }}
-              >
-                <Zap className="w-3.5 h-3.5" />
-                AI Execution Score
-              </div>
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                Your team has AI tools.
+                You're paying for 10 AI seats.
                 <br />
-                <span className="brand-gradient-text">Do they have a shared way of using them?</span>
+                <span className="brand-gradient-text">You're getting 10 different teams.</span>
               </h1>
-              <p className="text-base md:text-lg text-muted-foreground max-w-md mx-auto">
-                Score your team's AI execution across 5 management dimensions in 90 seconds.
+              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                Everyone prompts differently. Nobody shares what works. Your best people's thinking never reaches the rest. Score how much this is actually costing you.
               </p>
 
               <Button
@@ -124,10 +113,10 @@ export default function DiagnosticPage() {
                 className="text-base"
                 onClick={() => setPhase("questions")}
               >
-                Get Your Score <ArrowRight className="w-4 h-4" />
+                Score Your Team <ArrowRight className="w-4 h-4" />
               </Button>
               <p className="text-xs text-muted-foreground">
-                No signup required
+                90 seconds. No signup. Just the truth.
               </p>
             </div>
           )}
