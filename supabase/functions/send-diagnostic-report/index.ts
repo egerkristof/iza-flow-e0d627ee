@@ -291,7 +291,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: ["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"],
-        subject: `Diagnostic lead: ${email} — ${overall}/100 (${archetype.label})`,
+        subject: `Diagnostic lead: ${email} (${overall}/100, ${archetype.label})`,
         html: `<p><strong>${email}</strong> completed the diagnostic.</p><p>Score: ${overall}/100 · ${archetype.label}</p><p>Weakest: ${weakest.label} (${weakest.score}/100)</p>`,
       }),
     }).catch((e) => console.error("Founder notify failed:", e));
