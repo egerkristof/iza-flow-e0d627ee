@@ -104,7 +104,7 @@ export default function DiagnosticPage() {
                 <span className="brand-gradient-text">still need so much fixing?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                Hallucinations. Inconsistent quality. The same mistakes repeated across people. It's not the AI — it's that your team has no shared standard for using it.
+                Hallucinations. Inconsistent quality. The same mistakes repeated across people. It's not the AI. It's that your team has no shared standard for using it.
               </p>
 
               <Button

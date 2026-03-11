@@ -38,7 +38,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
     high: "Your team can see how colleagues navigate complexity with AI, especially juniors learning from seniors. This is how institutional expertise actually transfers in the AI age. Well done.",
   },
   learning_velocity: {
-    low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability — that's a negative ROI trajectory.",
+    low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability. That's a negative ROI trajectory.",
     mid: "Some learning happens, but it takes a quarter to change how the team works. At current velocity, you'll need 18+ months to reach the maturity that structured teams achieve in 3–4 months.",
     high: "New techniques reach your whole team within days. In a landscape where AI capabilities change monthly, this speed of adaptation is a genuine strategic advantage.",
   },
