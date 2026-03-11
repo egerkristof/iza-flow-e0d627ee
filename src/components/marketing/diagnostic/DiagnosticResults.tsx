@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CAL_URL } from "@/components/marketing/home/shared";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Props {
   result: DiagnosticResult;
@@ -17,24 +18,24 @@ const BENCHMARK_HIGH = 72;
 
 const COST_TRANSLATIONS: Record<string, { low: string; mid: string }> = {
   standard_internalization: {
-    low: "Your team reinvents the approach every AI session. That's hours of redundant thinking each week, and the output depends on who happens to do the work.",
-    mid: "Some standards reach AI sessions, but inconsistently. You're getting partial value from years of accumulated expertise.",
+    low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5–10 hours per week spent re-explaining context that already exists in your firm's methodology docs, past projects, and senior people's heads.",
+    mid: "Some standards reach AI sessions, but inconsistently. You're likely seeing 2–3 hours per person per week lost to partial re-prompting — and the output quality gap between your best and newest people keeps widening.",
   },
   output_consistency: {
-    low: "Quality depends on who does the work. That's a scalability ceiling: you can't grow the team without growing the variance.",
-    mid: "Outputs are recognisable but uneven. Clients notice the difference between your A-team and everyone else.",
+    low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3–5 hours per deliverable, plus a client trust problem: they can tell when your A-team isn't in the room.",
+    mid: "Outputs are recognisable but uneven. Senior review time is likely 30–40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the firm's approach.",
   },
   knowledge_compounding: {
-    low: "Improvements stay with individuals. Your firm is paying for the same learning curve repeatedly, project after project.",
-    mid: "Knowledge spreads, but slowly and unevenly. Good techniques take weeks to reach the whole team, if they ever do.",
+    low: "Your firm pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building organisational capability.",
+    mid: "Knowledge spreads, but it takes 4–6 weeks for a good technique to reach the whole team, if it ever does. Meanwhile, 2–3 people are solving problems someone else already cracked last month.",
   },
   collective_visibility: {
-    low: "Everyone works in private AI sessions. You have no idea what's working, what's not, or who needs help.",
-    mid: "Some visibility exists, but it's informal. You'd struggle to answer: 'How is the team actually using AI today?'",
+    low: "You have zero visibility into how your team uses AI day-to-day. You can't answer: who's struggling, who found a breakthrough, or whether AI is actually improving output quality. You're managing a black box.",
+    mid: "You have anecdotal visibility — hallway conversations, occasional Slack shares. But you couldn't produce a report on AI usage patterns, effectiveness, or ROI for your leadership team if asked today.",
   },
   learning_velocity: {
-    low: "Projects end and lessons vanish. Six months of AI usage hasn't meaningfully changed how the team operates.",
-    mid: "Some learning happens, but it doesn't consistently feed back into how the team works. Progress is anecdotal, not structural.",
+    low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability — that's a negative ROI trajectory.",
+    mid: "Some learning happens, but it takes a quarter to change how the team works. At current velocity, you'll need 18+ months to reach the maturity that structured firms achieve in 3–4 months.",
   },
 };
 
@@ -124,20 +125,14 @@ export function DiagnosticResults({ result, answers }: Props) {
             <p className="text-xs text-muted-foreground">Average firm</p>
             <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
           </div>
-          <div
-            className="w-px h-8"
-            style={{ background: "hsl(var(--border))" }}
-          />
+          <div className="w-px h-8 bg-border" />
           <div className="text-center">
             <p className="text-xs text-muted-foreground">You</p>
             <p className="text-sm font-black" style={{ color: scoreColor }}>
               {result.overall}
             </p>
           </div>
-          <div
-            className="w-px h-8"
-            style={{ background: "hsl(var(--border))" }}
-          />
+          <div className="w-px h-8 bg-border" />
           <div className="text-center">
             <p className="text-xs text-muted-foreground">Firms with defined standards</p>
             <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
@@ -166,15 +161,15 @@ export function DiagnosticResults({ result, answers }: Props) {
         </CardContent>
       </Card>
 
-      {/* Email capture — moved UP, gated action plan */}
+      {/* Email capture */}
       {!submitted ? (
         <Card className="border-primary/20 bg-primary/4">
           <CardContent className="p-6 space-y-4">
             <p className="text-sm font-semibold text-foreground">
-              See what firms who score 70+ do differently
+              Get your personalised action plan
             </p>
             <p className="text-xs text-muted-foreground">
-              Get a personalised 3-step action plan based on your weakest dimension ({weakest.label} at {weakest.score}/100). Concrete steps you can start this week.
+              We'll email your results and a 3-step plan based on your weakest dimension ({weakest.label} at {weakest.score}/100). If you'd like, we can also follow up to discuss them.
             </p>
             <div className="flex gap-2">
               <Input
@@ -186,10 +181,13 @@ export function DiagnosticResults({ result, answers }: Props) {
               />
               <Button onClick={handleEmailSubmit} disabled={loading || !email.trim()}>
                 <Mail className="w-4 h-4" />
-                Send
+                Send My Results
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground">No spam. One email with your custom action plan.</p>
+            <p className="text-xs text-muted-foreground">
+              We'll send your results and may follow up to discuss them. Read our{" "}
+              <Link to="/privacy" className="underline hover:text-foreground transition-colors">Privacy Policy</Link>.
+            </p>
           </CardContent>
         </Card>
       ) : (
@@ -261,36 +259,23 @@ export function DiagnosticResults({ result, answers }: Props) {
 
       {/* CTA */}
       <div className="text-center space-y-4 pb-8">
-        {result.overall <= 55 ? (
-          <>
-            <p className="text-base md:text-lg font-semibold text-foreground">
-              Your AI investment could be compounding. It isn't yet.
-            </p>
-            <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              We'll walk through your results and show you what a score of 70+ looks like for a firm like yours.
-            </p>
-          </>
-        ) : (
-          <>
-            <p className="text-base md:text-lg font-semibold text-foreground">
-              You're ahead of most firms. Let's close the remaining gaps.
-            </p>
-            <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              We'll show you where your system has the most room to compound and how LIZA OS accelerates what you've already built.
-            </p>
-          </>
-        )}
+        <p className="text-base md:text-lg font-semibold text-foreground">
+          See what 70+ looks like for your firm
+        </p>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto">
+          We'll walk through your results and show you how firms like yours made their AI investment compound.
+        </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
             <Button variant="brand" size="lg" className="text-base">
-              See What 70+ Looks Like <ArrowRight className="w-4 h-4" />
+              Book a 30-Min Walkthrough <ArrowRight className="w-4 h-4" />
             </Button>
           </a>
-          <a href="/platform">
+          <Link to="/">
             <Button variant="outline" size="lg" className="text-base">
               Explore the Platform
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -6,6 +6,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
+
 interface DimensionScore {
   dimension: string;
   label: string;
@@ -114,7 +116,6 @@ Return ONLY valid JSON in this exact format:
       actionPlan = JSON.parse(rawContent);
     } catch {
       console.error("Failed to parse AI response:", rawContent);
-      // Fallback plan
       actionPlan = {
         steps: [
           {
@@ -209,14 +210,15 @@ Return ONLY valid JSON in this exact format:
     <!-- CTA -->
     <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:24px;">
       <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your firm</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours make their AI investment compound.</p>
-      <a href="https://cal.com/lizaos/discovery" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours made their AI investment compound.</p>
+      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a 20-Minute Review →</a>
     </div>
 
     <!-- Footer -->
     <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">
       <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · The management layer for AI-powered teams</p>
-      <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because you completed the AI Execution Diagnostic.</p>
+      <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because you completed the AI Execution Diagnostic and provided your email to receive results.</p>
+      <p style="margin:8px 0 0;font-size:11px;color:#cbd5e1;"><a href="https://iza-flow.lovable.app/privacy" style="color:#94a3b8;">Privacy Policy</a> · <a href="mailto:kristof.eger@lizaos.ai" style="color:#94a3b8;">Unsubscribe</a></p>
     </div>
   </div>
 </body>
