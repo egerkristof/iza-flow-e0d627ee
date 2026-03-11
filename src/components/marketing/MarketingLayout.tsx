@@ -141,14 +141,14 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
               <Link
-                to="/diagnostic"
+                to={isDiagnostic ? "/" : "/diagnostic"}
                 className="mt-2 px-5 py-3 rounded-lg text-sm font-semibold text-center"
                 style={{
                   background: "var(--gradient-brand-btn)",
                   color: "hsl(var(--primary-foreground))",
                 }}
               >
-                Take the Diagnostic
+                {isDiagnostic ? "Explore LIZA OS" : "Take the Diagnostic"}
               </Link>
             </div>
           </div>

@@ -212,6 +212,7 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your firm</p>
       <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours made their AI investment compound.</p>
       <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a 20-Minute Review →</a>
+      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">Explore LIZA OS →</a></p>
     </div>
 
     <!-- Footer -->
