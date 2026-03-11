@@ -69,6 +69,8 @@ function EmailCapture({
   onSubmit: () => void;
   weakestLabel: string;
   weakestScore: number;
+  secondWeakestLabel: string;
+  secondWeakestScore: number;
   variant?: "primary" | "secondary";
 }) {
   if (loading) {
