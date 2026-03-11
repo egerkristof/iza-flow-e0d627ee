@@ -28,6 +28,8 @@ import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import BetaPage from "./pages/marketing/Beta";
 import DiagnosticPage from "./pages/marketing/Diagnostic";
+import PrivacyPage from "./pages/marketing/Privacy";
+import TermsPage from "./pages/marketing/Terms";
 
 const queryClient = new QueryClient();
 
