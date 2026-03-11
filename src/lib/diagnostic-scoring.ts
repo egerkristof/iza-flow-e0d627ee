@@ -143,7 +143,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "No. Everyone works in their own private chats. It's a black box", score: 1 },
       { label: "Only if someone explicitly screen-shares or walks them through it", score: 2 },
       { label: "We have some shared spaces, but people rarely look at each other's sessions", score: 3 },
-      { label: "Yes — AI work is visible and people actively learn from each other's approaches", score: 4 },
+      { label: "Yes. AI work is visible and people actively learn from each other's approaches", score: 4 },
     ],
   },
   {
