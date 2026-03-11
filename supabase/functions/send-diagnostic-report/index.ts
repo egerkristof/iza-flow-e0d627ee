@@ -270,7 +270,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email.trim()],
-        subject: `Your AI Execution Score: ${overall}/100 — here's what's leaking`,
+        subject: `Your AI Execution Score: ${overall}/100`,
         html,
       }),
     });
