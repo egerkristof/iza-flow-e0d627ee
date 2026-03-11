@@ -105,35 +105,34 @@ export default function DiagnosticPage() {
                 }}
               >
                 <Zap className="w-3.5 h-3.5" />
-                90-Second Diagnostic
+                AI Execution Score
               </div>
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                Your team's best AI work
+                How much of your firm's judgment
                 <br />
-                <span className="text-muted-foreground">lives in one person's head.</span>{" "}
-                <span className="brand-gradient-text">That doesn't scale.</span>
+                <span className="brand-gradient-text">actually reaches an AI session?</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                10 scenarios. 90 seconds. See where your team's expertise compounds and where it vanishes between sessions.
+                10 real scenarios. 90 seconds. A score across 5 dimensions of team intelligence that names what you already suspect.
               </p>
 
               <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
                 <div className="flex items-start gap-3">
                   <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Whether your standards actually reach AI sessions</span> or stay in documents nobody opens
+                    <span className="text-foreground font-medium">Can someone else deliver your best work</span> using AI, without you in the room?
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">How well your knowledge compounds</span> across projects, people, and tools
+                    <span className="text-foreground font-medium">When someone finds a better technique,</span> does the whole team adopt it, or just them?
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <Target className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">The #1 gap</span> between your best performer and the rest of the team
+                    <span className="text-foreground font-medium">When your top performer is away,</span> does quality drop?
                   </p>
                 </div>
               </div>
@@ -144,10 +143,10 @@ export default function DiagnosticPage() {
                 className="text-base"
                 onClick={() => setPhase("questions")}
               >
-                Find Out Now <ArrowRight className="w-4 h-4" />
+                Get Your Score <ArrowRight className="w-4 h-4" />
               </Button>
               <p className="text-xs text-muted-foreground">
-                Free · No signup · Your AI Execution Score in 90 seconds
+                Free · No signup · Results in 90 seconds
               </p>
             </div>
           )}
