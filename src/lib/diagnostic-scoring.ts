@@ -128,7 +128,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "Honestly, we're doing roughly the same things the same way", score: 1 },
       { label: "Individual people have improved, but the team baseline hasn't moved much", score: 2 },
       { label: "We've gotten better in some areas, though it's been uneven", score: 3 },
-      { label: "Clearly better — each project builds on what we learned from the last one", score: 4 },
+      { label: "Clearly better. Each project builds on what we learned from the last one", score: 4 },
     ],
   },
   // Collective Visibility (Socialization, Tacit → Tacit), 2 questions
