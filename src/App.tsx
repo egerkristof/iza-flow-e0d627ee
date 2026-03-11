@@ -70,6 +70,9 @@ const App = () => (
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
+            {/* Standalone admin panel */}
+            <Route path="/admin/manage" element={<AdminPage />} />
+
             {/* Retired pages — redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
             <Route path="/extract/test" element={<Navigate to="/" replace />} />
@@ -103,7 +106,7 @@ const App = () => (
             <Route path="/admin/prompts" element={<ProtectedRoute blockedRoles={["operator"]}><AdminPromptsPage /></ProtectedRoute>} />
             <Route path="/research-templates" element={<ProtectedRoute blockedRoles={["operator"]}><ResearchTemplatesPage /></ProtectedRoute>} />
             <Route path="/admin/trials" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminTrials /></ProtectedRoute>} />
-            <Route path="/admin/manage" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminPage /></ProtectedRoute>} />
+            <Route path="*" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
