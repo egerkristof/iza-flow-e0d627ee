@@ -217,9 +217,9 @@ export function DiagnosticResults({ result, answers }: Props) {
         {result.dimensions.map((d) => {
           const isExpanded = expandedDim === d.dimension;
           const costs = COST_TRANSLATIONS[d.dimension];
-          const costText = costs
-            ? d.score <= 50 ? costs.low : costs.mid
-            : d.implication;
+          const tier = d.score <= 33 ? "low" : d.score <= 66 ? "mid" : "high";
+          const costText = costs ? costs[tier] : d.implication;
+          const isPositive = d.score > 66;
 
           return (
             <Card key={d.dimension} className="border-border">
