@@ -207,7 +207,13 @@ export function DiagnosticResults({ result, answers }: Props) {
 
       {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-foreground">Why your AI investment isn't compounding yet</h3>
+        <h3 className="text-lg font-semibold text-foreground">
+          {result.overall >= 67
+            ? "Where your AI execution is paying off"
+            : result.overall >= 40
+              ? "Where your AI investment is leaking value"
+              : "Why your AI investment isn't compounding yet"}
+        </h3>
         {result.dimensions.map((d) => {
           const isExpanded = expandedDim === d.dimension;
           const costs = COST_TRANSLATIONS[d.dimension];
