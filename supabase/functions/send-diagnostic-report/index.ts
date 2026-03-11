@@ -120,19 +120,19 @@ Return ONLY valid JSON in this exact format:
         steps: [
           {
             title: `Address your ${weakest.label} gap`,
-            manual_how: `Start by auditing how your team currently handles ${weakest.label.toLowerCase()}. Identify one recurring task where the gap is most visible and document the current approach vs. the ideal.`,
-            platform_how: "With the right tooling, this audit is automated — the system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
-          },
-          {
-            title: "Create one shared reference point",
-            manual_how: "Pick your highest-value workflow and write down the team's best approach. Share it in a doc everyone can access and reference before AI sessions.",
-            platform_how: "With the right tooling, these references are embedded directly into every AI session — no manual lookup needed.",
-          },
-          {
-            title: "Establish a weekly feedback loop",
-            manual_how: "Block 15 minutes each week for the team to share what worked and what didn't with AI. Capture the best insights and update your shared reference.",
-            platform_how: "With the right tooling, session reviews are structured and insights automatically feed back into the team's evolving standards.",
-          },
+123:             manual_how: `Start by auditing how your team currently handles ${weakest.label.toLowerCase()}. Identify one recurring task where the gap is most visible and document the current approach vs. the ideal.`,
+124:             platform_how: "With the right infrastructure, like LIZA OS, this audit is automated — the system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
+125:           },
+126:           {
+127:             title: "Create one shared reference point",
+128:             manual_how: "Pick your highest-value workflow and write down the team's best approach. Share it in a doc everyone can access and reference before AI sessions.",
+129:             platform_how: "With the right infrastructure, like LIZA OS, these references are embedded directly into every AI session — no manual lookup needed.",
+130:           },
+131:           {
+132:             title: "Establish a weekly feedback loop",
+133:             manual_how: "Block 15 minutes each week for the team to share what worked and what didn't with AI. Capture the best insights and update your shared reference.",
+134:             platform_how: "With the right infrastructure, like LIZA OS, session reviews are structured and insights automatically feed back into the team's evolving standards.",
+135:           },
         ],
       };
     }
