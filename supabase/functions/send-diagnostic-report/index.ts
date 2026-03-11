@@ -122,7 +122,7 @@ Return ONLY valid JSON in this exact format:
           {
             title: `Address your ${weakest.label} gap`,
             manual_how: `Start by auditing how your team currently handles ${weakest.label.toLowerCase()}. Identify one recurring task where the gap is most visible and document the current approach vs. the ideal.`,
-            platform_how: "With the right infrastructure, like LIZA OS, this audit is automated — the system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
+            platform_how: "With the right infrastructure, like LIZA OS, this audit is automated. The system surfaces gaps and suggests improvements based on your team's actual usage patterns.",
           },
           {
             title: "Create one shared reference point",
