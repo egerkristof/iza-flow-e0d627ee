@@ -37,7 +37,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
             className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none"
             style={{ background: "hsl(var(--primary) / 0.12)" }}
           />
-          <p className="relative text-lg md:text-xl text-foreground font-bold leading-relaxed tracking-tight">
+          <p className="relative text-xl md:text-2xl text-foreground font-bold leading-relaxed tracking-tight">
             {question.context}
           </p>
         </div>
