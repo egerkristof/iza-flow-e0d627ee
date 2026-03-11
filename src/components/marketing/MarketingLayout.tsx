@@ -193,12 +193,13 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 py-6 border-t border-border flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">© 2026 LIZA OS. All rights reserved.</p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="text-xs text-muted-foreground hover:text-foreground transition-colors">Terms of Use</Link>
             <a href="mailto:kristof.eger@lizaos.ai" className="text-xs text-muted-foreground hover:text-foreground transition-colors">kristof.eger@lizaos.ai</a>
             <Link to="/auth" className="text-xs text-muted-foreground/40 hover:text-muted-foreground transition-colors">Team Login</Link>
-            <p className="text-xs brand-gradient-text font-semibold">Individual AI. Team intelligence.</p>
           </div>
         </div>
       </footer>

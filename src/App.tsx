@@ -66,6 +66,8 @@ const App = () => (
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
             <Route path="/diagnostic" element={<DiagnosticPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
 
             {/* Retired pages — redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
