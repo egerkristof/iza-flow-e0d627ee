@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { CAL_URL } from "@/components/marketing/home/shared";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
-import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Props {
