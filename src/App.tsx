@@ -17,6 +17,7 @@ import ResearchTemplatesPage from "./pages/ResearchTemplates";
 import ResourceEditorPage from "./pages/ResourceEditor";
 import NotFound from "./pages/NotFound";
 import AdminTrials from "./pages/AdminTrials";
+import AdminPage from "./pages/Admin";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
@@ -102,6 +103,7 @@ const App = () => (
             <Route path="/admin/prompts" element={<ProtectedRoute blockedRoles={["operator"]}><AdminPromptsPage /></ProtectedRoute>} />
             <Route path="/research-templates" element={<ProtectedRoute blockedRoles={["operator"]}><ResearchTemplatesPage /></ProtectedRoute>} />
             <Route path="/admin/trials" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminTrials /></ProtectedRoute>} />
+            <Route path="/admin/manage" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
