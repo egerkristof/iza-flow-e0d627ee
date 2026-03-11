@@ -196,7 +196,7 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
     max: 30,
     label: "Flying Solo",
     tagline:
-      "Your people are exploring AI — but the explorations never connect. Every session starts from zero, and the team doesn't learn from its own experience.",
+      "Your people are exploring AI, but the explorations never connect. Every session starts from zero, and the team doesn't learn from its own experience.",
     action:
       "Start with one team ritual: a 15-minute weekly show-and-tell where someone demos their best AI technique. Visibility precedes structure.",
   },
