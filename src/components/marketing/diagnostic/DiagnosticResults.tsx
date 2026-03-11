@@ -283,17 +283,6 @@ export function DiagnosticResults({ result, answers }: Props) {
         </CardContent>
       </Card>
 
-      {/* === PRIMARY Email capture — top position, prominent === */}
-      <EmailCapture
-        email={email}
-        setEmail={setEmail}
-        loading={loading}
-        submitted={submitted}
-        onSubmit={handleEmailSubmit}
-        weakestLabel={weakestLabel}
-        weakestScore={weakest.score}
-        variant="primary"
-      />
 
       {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
@@ -360,7 +349,7 @@ export function DiagnosticResults({ result, answers }: Props) {
         })}
       </div>
 
-      {/* === SECONDARY Email capture — repeated below breakdown === */}
+      {/* === Email capture — after breakdown === */}
       <EmailCapture
         email={email}
         setEmail={setEmail}
@@ -369,7 +358,7 @@ export function DiagnosticResults({ result, answers }: Props) {
         onSubmit={handleEmailSubmit}
         weakestLabel={weakestLabel}
         weakestScore={weakest.score}
-        variant="secondary"
+        variant="primary"
       />
 
       {/* CTA */}
