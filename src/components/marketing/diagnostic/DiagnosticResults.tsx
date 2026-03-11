@@ -195,8 +195,11 @@ export function DiagnosticResults({ result, answers }: Props) {
           ? "hsl(200 90% 40%)"
           : "hsl(155 72% 36%)";
 
-  const weakest = [...result.dimensions].sort((a, b) => a.score - b.score)[0];
+  const sorted = [...result.dimensions].sort((a, b) => a.score - b.score);
+  const weakest = sorted[0];
+  const secondWeakest = sorted[1];
   const weakestLabel = SHORT_LABELS[weakest.dimension] || weakest.label;
+  const secondWeakestLabel = SHORT_LABELS[secondWeakest.dimension] || secondWeakest.label;
 
   async function handleEmailSubmit() {
     if (!email.trim()) return;
