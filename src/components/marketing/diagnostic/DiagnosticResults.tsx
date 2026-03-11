@@ -34,7 +34,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
   collective_visibility: {
     low: "You have zero visibility into how your team uses AI day-to-day. You can't answer: who's struggling, who found a breakthrough, or whether AI is actually improving output quality. You're managing a black box.",
-    mid: "You have anecdotal visibility — hallway conversations, occasional Slack shares. But you couldn't produce a report on AI usage patterns, effectiveness, or ROI for your leadership team if asked today.",
+    mid: "You have anecdotal visibility through hallway conversations and occasional Slack shares. But you couldn't produce a report on AI usage patterns, effectiveness, or ROI for your leadership team if asked today.",
     high: "Your team can see how colleagues navigate complexity with AI, especially juniors learning from seniors. This is how institutional expertise actually transfers in the AI age. Well done.",
   },
   learning_velocity: {
