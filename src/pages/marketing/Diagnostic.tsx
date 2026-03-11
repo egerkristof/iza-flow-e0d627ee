@@ -16,25 +16,32 @@ export default function DiagnosticPage() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
+  const answersRef = useRef<Record<string, number>>({});
   const finishingRef = useRef(false);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
     finishingRef.current = true;
     setPhase("calculating");
-    await new Promise((res) => setTimeout(res, 2200));
-    const r = calculateResults(finalAnswers);
-    setResult(r);
-    setPhase("results");
     try {
-      await (supabase as any).from("diagnostic_results").insert({
-        answers: finalAnswers,
-        scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
-        archetype: r.archetype.label,
-        overall_score: r.overall,
-      });
+      await new Promise((res) => setTimeout(res, 2200));
+      const r = calculateResults(finalAnswers);
+      setResult(r);
+      setPhase("results");
+      try {
+        await (supabase as any).from("diagnostic_results").insert({
+          answers: finalAnswers,
+          scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
+          archetype: r.archetype.label,
+          overall_score: r.overall,
+        });
+      } catch {
+        // fail silently
+      }
     } catch {
-      // fail silently
+      // If calculation fails, reset so user can retry
+      finishingRef.current = false;
+      setPhase("questions");
     }
   }, []);
 
@@ -42,21 +49,26 @@ export default function DiagnosticPage() {
     (questionId: string, score: number) => {
       if (finishingRef.current) return;
 
-      const updatedAnswers = { ...answers, [questionId]: score };
+      const updatedAnswers = { ...answersRef.current, [questionId]: score };
+      answersRef.current = updatedAnswers;
       setAnswers(updatedAnswers);
 
-      const isLastQuestion = currentQ === QUESTIONS.length - 1;
-      const allNowAnswered = QUESTIONS.every((q) => updatedAnswers[q.id] != null);
+      setCurrentQ((prevQ) => {
+        const isLastQuestion = prevQ === QUESTIONS.length - 1;
+        const allNowAnswered = QUESTIONS.every((q) => updatedAnswers[q.id] != null);
 
-      if (isLastQuestion && allNowAnswered) {
-        setTimeout(() => finishDiagnostic(updatedAnswers), 500);
-      } else if (!isLastQuestion) {
-        setTimeout(() => {
-          setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1));
-        }, 400);
-      }
+        if (isLastQuestion && allNowAnswered) {
+          setTimeout(() => finishDiagnostic(updatedAnswers), 500);
+          return prevQ;
+        } else if (!isLastQuestion) {
+          setTimeout(() => {
+            setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1));
+          }, 400);
+        }
+        return prevQ;
+      });
     },
-    [currentQ, answers, finishDiagnostic]
+    [finishDiagnostic]
   );
 
   const progress = phase === "questions" ? ((currentQ + 1) / QUESTIONS.length) * 100 : 0;
@@ -96,32 +108,32 @@ export default function DiagnosticPage() {
                 90-Second Diagnostic
               </div>
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                Your team is using AI.
+                Your team's best AI work
                 <br />
-                <span className="text-muted-foreground">But are they using it</span>{" "}
-                <span className="brand-gradient-text">the same way twice?</span>
+                <span className="text-muted-foreground">lives in one person's head.</span>{" "}
+                <span className="brand-gradient-text">That doesn't scale.</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                10 scenarios. 90 seconds. See exactly where your AI execution compounds — and where it resets every Monday.
+                10 scenarios. 90 seconds. See where your team's expertise compounds and where it vanishes between sessions.
               </p>
 
               <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
                 <div className="flex items-start gap-3">
                   <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Where knowledge leaks</span> between projects, people, and tools
+                    <span className="text-foreground font-medium">Whether your standards actually reach AI sessions</span> or stay in documents nobody opens
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Whether your best thinking scales</span> or stays trapped in one person's head
+                    <span className="text-foreground font-medium">How well your knowledge compounds</span> across projects, people, and tools
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <Target className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">The #1 structural gap</span> costing you consistency right now
+                    <span className="text-foreground font-medium">The #1 gap</span> between your best performer and the rest of the team
                   </p>
                 </div>
               </div>

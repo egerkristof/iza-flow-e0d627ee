@@ -12,12 +12,12 @@ export function BetaCTASection() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Your team uses AI every day.
+              Your best people can't be in every AI session.
               <br />
-              <GradientText>Do they use it the same way twice?</GradientText>
+              <GradientText>Their playbooks can.</GradientText>
             </h2>
             <p className="text-base mb-8 text-muted-foreground">
-              Find out in 90 seconds. No signup required.
+              See how well your team's expertise scales. 90 seconds, no signup.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
