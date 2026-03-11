@@ -222,7 +222,7 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
     tagline:
       "Your team's best thinking is everyone's starting point, and it evolves with every project. You're in the top tier of AI execution maturity.",
     action:
-      "Focus on cross-domain transfer. Your system works within teams — now extend it across practice areas and client verticals.",
+      "Focus on cross-domain transfer. Your system works within teams. Now extend it across practice areas and client verticals.",
   },
 ];
 
