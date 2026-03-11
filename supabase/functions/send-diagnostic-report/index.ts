@@ -162,10 +162,10 @@ Return ONLY valid JSON in this exact format:
         <div style="margin-bottom:20px;padding:16px;background:#f8fafc;border-radius:8px;border-left:3px solid #0284c7;">
           <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#1a1a2e;">Step ${i + 1}: ${s.title}</p>
           <p style="margin:0 0 10px;font-size:13px;color:#475569;line-height:1.6;">
-            <strong style="color:#1a1a2e;">Do it yourself:</strong> ${s.manual_how}
+            <strong style="color:#1a1a2e;">Start here:</strong> ${s.manual_how}
           </p>
           <p style="margin:0;font-size:13px;color:#0284c7;line-height:1.6;">
-            💡 ${s.platform_how}
+            🏗️ ${s.platform_how}
           </p>
         </div>`
       )
@@ -179,10 +179,17 @@ Return ONLY valid JSON in this exact format:
     
     <!-- Header -->
     <div style="text-align:center;margin-bottom:32px;">
-      <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Your AI Execution Diagnostic</p>
+      <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Your AI Execution Score</p>
       <p style="margin:0;font-size:56px;font-weight:900;color:${scoreColor};line-height:1;">${overall}</p>
       <p style="margin:8px 0 0;font-size:18px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
+      <div style="margin:16px auto 0;display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+        <span style="font-size:12px;color:#64748b;">Average firm: <strong>38</strong></span>
+        <span style="margin:0 8px;color:#e2e8f0;">|</span>
+        <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
+        <span style="margin:0 8px;color:#e2e8f0;">|</span>
+        <span style="font-size:12px;color:#64748b;">With defined standards: <strong>72+</strong></span>
+      </div>
     </div>
 
     <!-- Dimension scores -->
@@ -195,20 +202,20 @@ Return ONLY valid JSON in this exact format:
 
     <!-- Action Plan -->
     <div style="margin-bottom:32px;">
-      <p style="margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Your Personalised 3-Step Action Plan</p>
+      <p style="margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">What firms who score 70+ do differently</p>
       ${stepsHtml}
     </div>
 
     <!-- CTA -->
     <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:24px;">
-      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">Want to walk through this with us?</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll review your results and show you how teams close these gaps with LIZA OS — in 20 minutes.</p>
-      <a href="https://cal.com/lizaos/discovery" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a 20-Min Review →</a>
+      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 70+ looks like for your firm</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how firms like yours make their AI investment compound.</p>
+      <a href="https://cal.com/lizaos/discovery" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
     </div>
 
     <!-- Footer -->
     <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">
-      <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · Organisational Intelligence for AI Teams</p>
+      <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · The management layer for AI-powered teams</p>
       <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because you completed the AI Execution Diagnostic.</p>
     </div>
   </div>
