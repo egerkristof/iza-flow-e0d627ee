@@ -17,6 +17,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const isDiagnostic = location.pathname === "/diagnostic";
 
   useEffect(() => setMounted(true), []);
 
