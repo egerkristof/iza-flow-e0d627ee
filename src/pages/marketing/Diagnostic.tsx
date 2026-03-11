@@ -108,32 +108,32 @@ export default function DiagnosticPage() {
                 90-Second Diagnostic
               </div>
               <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                Your team is using AI.
+                Your team's best AI work
                 <br />
-                <span className="text-muted-foreground">But are they using it</span>{" "}
-                <span className="brand-gradient-text">the same way twice?</span>
+                <span className="text-muted-foreground">lives in one person's head.</span>{" "}
+                <span className="brand-gradient-text">That doesn't scale.</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto">
-                10 scenarios. 90 seconds. See exactly where your AI execution compounds — and where it resets every Monday.
+                10 scenarios. 90 seconds. See where your team's expertise compounds and where it vanishes between sessions.
               </p>
 
               <div className="flex flex-col gap-3 max-w-sm mx-auto text-left">
                 <div className="flex items-start gap-3">
                   <Eye className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Where knowledge leaks</span> between projects, people, and tools
+                    <span className="text-foreground font-medium">Whether your standards actually reach AI sessions</span> or stay in documents nobody opens
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">Whether your best thinking scales</span> or stays trapped in one person's head
+                    <span className="text-foreground font-medium">How well your knowledge compounds</span> across projects, people, and tools
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <Target className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="text-foreground font-medium">The #1 structural gap</span> costing you consistency right now
+                    <span className="text-foreground font-medium">The #1 gap</span> between your best performer and the rest of the team
                   </p>
                 </div>
               </div>
