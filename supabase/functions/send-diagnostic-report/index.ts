@@ -127,7 +127,7 @@ Return ONLY valid JSON in this exact format:
           {
             title: "Create one shared reference point",
             manual_how: "Pick your highest-value workflow and write down the team's best approach. Share it in a doc everyone can access and reference before AI sessions.",
-            platform_how: "With the right infrastructure, like LIZA OS, these references are embedded directly into every AI session — no manual lookup needed.",
+            platform_how: "With the right infrastructure, like LIZA OS, these references are embedded directly into every AI session. No manual lookup needed.",
           },
           {
             title: "Establish a weekly feedback loop",
