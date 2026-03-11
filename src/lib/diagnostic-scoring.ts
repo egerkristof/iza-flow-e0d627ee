@@ -131,7 +131,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       { label: "Clearly better — each project builds on what we learned from the last one", score: 4 },
     ],
   },
-  // Collective Visibility (Socialization — Tacit → Tacit) — 2 questions
+  // Collective Visibility (Socialization, Tacit → Tacit), 2 questions
   {
     id: "cv1",
     context:
