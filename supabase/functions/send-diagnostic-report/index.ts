@@ -238,7 +238,7 @@ Return ONLY valid JSON in this exact format:
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${secondWeakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${secondWeakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${secondWeakest.label}: ${secondWeakest.score}/100</span>
         <span style="font-size:12px;color:#94a3b8;">← driving this plan</span>
       </div>
-      <p style="margin:0 0 16px;font-size:14px;color:#475569;line-height:1.6;">These two areas are where your firm is losing the most value from its AI investment. Here's what firms who closed these gaps did first.</p>
+      <p style="margin:0 0 16px;font-size:14px;color:#475569;line-height:1.6;">These two areas are where your team is losing the most value from its AI investment. Here's what teams who closed these gaps did first.</p>
       ${stepsHtml}
     </div>
 
