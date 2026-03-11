@@ -245,7 +245,7 @@ const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: st
   collective_visibility: {
     low: "AI usage is a black box across the team. No one can see how colleagues navigate complexity — especially juniors learning from seniors.",
     mid: "Some visibility exists through ad-hoc sharing, but there's no systematic way for the team to learn from each other's AI work.",
-    high: "AI work is visible and intentionally shared. Team members actively learn from each other's approaches and the firm coordinates AI usage strategically.",
+    high: "AI work is visible and intentionally shared. Team members actively learn from each other's approaches and coordinate AI usage strategically.",
   },
   learning_velocity: {
     low: "Your team isn't learning from its own AI usage. The same mistakes and missed opportunities repeat across projects.",
