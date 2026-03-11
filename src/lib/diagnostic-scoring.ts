@@ -111,7 +111,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
       "What happened next?",
     dimension: "knowledge_compounding",
     options: [
-      { label: "Nothing — it stayed with them. Others don't know about it", score: 1 },
+      { label: "Nothing. It stayed with them. Others don't know about it", score: 1 },
       { label: "They mentioned it in passing, maybe in a meeting or Slack message", score: 2 },
       { label: "It got written down somewhere, though it's unclear if anyone adopted it", score: 3 },
       { label: "It was reviewed, validated, and folded into the team's standard approach", score: 4 },
