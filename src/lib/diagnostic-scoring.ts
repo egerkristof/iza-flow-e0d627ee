@@ -228,7 +228,7 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
 
 const DIMENSION_INSIGHTS: Record<Dimension, { low: string; mid: string; high: string }> = {
   standard_internalization: {
-    low: "Your firm's best thinking and AI sessions exist in separate worlds. Standards aren't shaping how people actually work with AI.",
+    low: "Your team's best thinking and AI sessions exist in separate worlds. Standards aren't shaping how people actually work with AI.",
     mid: "Standards exist, but they're optional. Some people reference them, most improvise. The gap between 'how we should work' and 'how we actually work' is still wide.",
     high: "Your defined approaches actively shape AI sessions. The team doesn't just know the standard — they've internalized it as their starting point.",
   },
