@@ -60,6 +60,8 @@ function EmailCapture({
   onSubmit,
   weakestLabel,
   weakestScore,
+  secondWeakestLabel,
+  secondWeakestScore,
   variant = "primary",
 }: {
   email: string;
@@ -69,6 +71,8 @@ function EmailCapture({
   onSubmit: () => void;
   weakestLabel: string;
   weakestScore: number;
+  secondWeakestLabel: string;
+  secondWeakestScore: number;
   variant?: "primary" | "secondary";
 }) {
   if (loading) {
@@ -107,7 +111,30 @@ function EmailCapture({
           : undefined
       }
     >
-      <CardContent className={variant === "primary" ? "p-6 md:p-8 space-y-4" : "p-5 md:p-6 space-y-3"}>
+      <CardContent className={variant === "primary" ? "p-6 md:p-8 space-y-5" : "p-5 md:p-6 space-y-3"}>
+        {/* Context: why this plan exists */}
+        {variant === "primary" && (
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
+              style={{
+                background: weakestScore <= 33 ? "hsl(0 72% 51% / 0.1)" : "hsl(38 92% 50% / 0.1)",
+                color: weakestScore <= 33 ? "hsl(0 72% 51%)" : "hsl(38 92% 50%)",
+              }}
+            >
+              {weakestLabel}: {weakestScore}/100
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
+              style={{
+                background: secondWeakestScore <= 33 ? "hsl(0 72% 51% / 0.1)" : "hsl(38 92% 50% / 0.1)",
+                color: secondWeakestScore <= 33 ? "hsl(0 72% 51%)" : "hsl(38 92% 50%)",
+              }}
+            >
+              {secondWeakestLabel}: {secondWeakestScore}/100
+            </span>
+            <span className="text-xs text-muted-foreground">← driving your action plan</span>
+          </div>
+        )}
+
         <div className="flex items-start gap-3">
           {variant === "primary" && (
             <div
@@ -118,13 +145,13 @@ function EmailCapture({
             </div>
           )}
           <div className="space-y-1">
-            <p className={variant === "primary" ? "text-lg font-bold text-foreground" : "text-sm font-semibold text-foreground"}>
+            <p className={variant === "primary" ? "text-xl font-bold text-foreground" : "text-sm font-semibold text-foreground"}>
               {variant === "primary"
-                ? "Get your personalised 3-step action plan"
+                ? "Get your 3-step action plan"
                 : "Want the action plan in your inbox?"}
             </p>
-            <p className={variant === "primary" ? "text-sm text-muted-foreground" : "text-xs text-muted-foreground"}>
-              We'll send a concrete plan targeting your weakest area — <span className="font-semibold text-foreground">{weakestLabel}</span> (scored {weakestScore}/100) — showing exactly what firms like yours changed to get results.
+            <p className={variant === "primary" ? "text-sm text-muted-foreground leading-relaxed" : "text-xs text-muted-foreground"}>
+              Based on your two weakest areas, we'll send a concrete plan showing what firms like yours changed to close these gaps and reach 70+.
             </p>
           </div>
         </div>
@@ -170,8 +197,11 @@ export function DiagnosticResults({ result, answers }: Props) {
           ? "hsl(200 90% 40%)"
           : "hsl(155 72% 36%)";
 
-  const weakest = [...result.dimensions].sort((a, b) => a.score - b.score)[0];
+  const sorted = [...result.dimensions].sort((a, b) => a.score - b.score);
+  const weakest = sorted[0];
+  const secondWeakest = sorted[1];
   const weakestLabel = SHORT_LABELS[weakest.dimension] || weakest.label;
+  const secondWeakestLabel = SHORT_LABELS[secondWeakest.dimension] || secondWeakest.label;
 
   async function handleEmailSubmit() {
     if (!email.trim()) return;
@@ -358,6 +388,8 @@ export function DiagnosticResults({ result, answers }: Props) {
         onSubmit={handleEmailSubmit}
         weakestLabel={weakestLabel}
         weakestScore={weakest.score}
+        secondWeakestLabel={secondWeakestLabel}
+        secondWeakestScore={secondWeakest.score}
         variant="primary"
       />
 
