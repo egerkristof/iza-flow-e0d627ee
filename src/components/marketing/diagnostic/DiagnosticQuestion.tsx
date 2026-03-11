@@ -37,7 +37,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
             className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl pointer-events-none"
             style={{ background: "hsl(var(--primary) / 0.12)" }}
           />
-          <p className="relative text-lg md:text-xl text-foreground font-bold leading-relaxed tracking-tight">
+          <p className="relative text-xl md:text-2xl text-foreground font-bold leading-relaxed tracking-tight">
             {question.context}
           </p>
         </div>
@@ -47,7 +47,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
 
         {/* Question + answers */}
         <div className="bg-background px-5 py-5 md:px-7 md:py-6">
-          <h2 className="text-lg md:text-xl font-medium text-foreground mb-6 leading-snug tracking-tight">
+          <h2 className="text-base md:text-lg font-medium text-foreground mb-6 leading-snug tracking-tight">
             {question.question}
           </h2>
 
