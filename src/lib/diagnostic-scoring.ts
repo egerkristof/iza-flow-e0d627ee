@@ -156,7 +156,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
     options: [
       { label: "We don't. Everyone decides independently what to use AI for", score: 1 },
       { label: "Informally. People roughly know who's doing what, but there's no system", score: 2 },
-      { label: "We have some structure — certain tasks or roles are designated for AI use", score: 3 },
+      { label: "We have some structure. Certain tasks or roles are designated for AI use", score: 3 },
       { label: "AI tasks are intentionally distributed, tracked, and reviewed as a team", score: 4 },
     ],
   },
