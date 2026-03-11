@@ -38,7 +38,7 @@ export const DIMENSION_LABELS: Record<Dimension, string> = {
 export const DIMENSION_SHORT: Record<Dimension, string> = {
   standard_internalization: "Do your standards shape behaviour?",
   output_consistency: "Can anyone deliver your best work?",
-  knowledge_compounding: "Does your firm get smarter over time?",
+  knowledge_compounding: "Does your team get smarter over time?",
   collective_visibility: "Can your team see how each other thinks?",
   learning_velocity: "How fast do improvements spread?",
 };
