@@ -28,7 +28,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
     high: "Clients get your team's quality standard regardless of who delivers — that's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
   },
   knowledge_compounding: {
-    low: "Your firm pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building organisational capability.",
+    low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size — you're funding individual experiments, not building collective capability.",
     mid: "Knowledge spreads, but it takes 4–6 weeks for a good technique to reach the whole team, if it ever does. Meanwhile, 2–3 people are solving problems someone else already cracked last month.",
     high: "Each project genuinely makes the next one better. This compounding effect is what separates high-growth firms from the rest — you're building institutional intelligence, not just individual skill.",
   },
