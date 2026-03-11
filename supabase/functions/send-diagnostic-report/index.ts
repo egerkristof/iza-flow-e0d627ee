@@ -65,7 +65,7 @@ Write a personalized 3-step action plan framed as "What firms who score 70+ do d
 2. For each step, include:
    - A clear action title (5-8 words, framed as what high-performers do)
    - What to do manually (2-3 sentences — the "start here" approach)
-   - How a platform like LIZA OS makes this structural (1-2 sentences — frame as "With the right infrastructure...")
+   - How LIZA OS makes this structural and automatic (1-2 sentences — always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
 3. Steps should progress: visibility → codification → compounding
 4. Use second person ("you", "your team")
 5. Be specific to their archetype and weakest dimensions — not generic advice
