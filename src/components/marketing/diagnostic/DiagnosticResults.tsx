@@ -184,7 +184,7 @@ function EmailCapture({
   );
 }
 
-export function DiagnosticResults({ result, answers }: Props) {
+export function DiagnosticResults({ result, answers, existingRecordId }: Props) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
