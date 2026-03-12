@@ -262,6 +262,7 @@ Return ONLY valid JSON in this exact format:
         <span style="font-size:12px;color:#64748b;">Structured teams: <strong>55+</strong></span>
       </div>
       <p style="margin:8px 0 0;font-size:10px;color:#94a3b8;max-width:460px;margin-left:auto;margin-right:auto;">Benchmarked against ServiceNow's 2025 Enterprise AI Maturity Index (4,500 C-level execs, 16 countries). Fewer than 1% of organisations score above 50.</p>
+      <p style="margin:6px 0 0;font-size:10px;color:#cbd5e1;max-width:460px;margin-left:auto;margin-right:auto;">Scoring: 10 scenario-based questions across 5 dimensions, each scored 1-4 on observable team behaviours. Dimension scores normalised to 0-100. Overall = unweighted mean of all dimensions.</p>
     </div>
 
     <!-- Dimension scores -->
