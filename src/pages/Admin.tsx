@@ -232,7 +232,7 @@ export default function AdminPage() {
                   <CardDescription>They will receive an email with a magic link to set up their account.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-end gap-3 flex-wrap">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
                     <div className="space-y-1.5 flex-1 min-w-[200px]">
                       <Label htmlFor="invite-email">Email</Label>
                       <Input id="invite-email" type="email" placeholder="colleague@company.com" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} />
