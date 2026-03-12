@@ -87,6 +87,13 @@ export default function DiagnosticPage() {
         if (isLastQuestion && allNowAnswered) {
           setTimeout(() => finishDiagnostic(updatedAnswers), 500);
           return prevQ;
+        } else if (isLastQuestion && !allNowAnswered) {
+          // User answered Q10 but skipped earlier questions — jump to first unanswered
+          const firstUnanswered = QUESTIONS.findIndex((q) => updatedAnswers[q.id] == null);
+          if (firstUnanswered >= 0) {
+            setTimeout(() => setCurrentQ(firstUnanswered), 400);
+          }
+          return prevQ;
         } else if (!isLastQuestion) {
           setTimeout(() => {
             setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1));
