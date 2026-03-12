@@ -230,28 +230,28 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
     </div>
 
-    <!-- Results framing: what teams are actually achieving -->
+    <!-- Results framing: what teams are actually achieving (reframed as questions) -->
     <div style="margin-bottom:28px;padding:20px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">
-      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">What teams scoring 55+ report</p>
+      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">How do teams scoring 55+ compare?</p>
       <table style="width:100%;border-collapse:collapse;">
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ Senior review time</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Down 40–60%</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ How much time do seniors spend reviewing AI output?</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">40–60% less</td>
         </tr>
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">📋 Output consistency</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Within 10% variance</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">📋 If two people get the same brief, how similar are results?</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Within 10%</td>
         </tr>
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">🚀 New hire ramp time</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Cut by half</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">🚀 How long before new hires deliver at team standard?</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Half the time</td>
         </tr>
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">🔄 Re-prompting waste</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">🔄 How often does the team re-prompt for the same task?</td>
           <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Near zero</td>
         </tr>
       </table>
-      <p style="margin:12px 0 0;font-size:12px;color:#4ade80;">These are firms who codified their standards and made them available to every AI session.</p>
+      <p style="margin:12px 0 0;font-size:12px;color:#4ade80;">These are teams who codified their standards and made them available to every AI session.</p>
     </div>
 
     <!-- Benchmark context -->
@@ -261,7 +261,7 @@ Return ONLY valid JSON in this exact format:
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">Structured teams: <strong>55+</strong></span>
+        <span style="font-size:12px;color:#64748b;">Codified teams: <strong>55+</strong></span>
       </div>
       <p style="margin:8px 0 0;font-size:10px;color:#94a3b8;max-width:460px;margin-left:auto;margin-right:auto;">Benchmarked against ServiceNow's 2025 Enterprise AI Maturity Index (4,500 C-level execs, 16 countries). Fewer than 1% of organisations score above 50.</p>
       <p style="margin:6px 0 0;font-size:10px;color:#cbd5e1;max-width:460px;margin-left:auto;margin-right:auto;">Scoring: 10 scenario-based questions across 5 dimensions, each scored 1-4 on observable team behaviours. Dimension scores normalised to 0-100. Overall = unweighted mean of all dimensions.</p>
