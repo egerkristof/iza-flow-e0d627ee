@@ -233,7 +233,7 @@ export default function AdminPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
-                    <div className="space-y-1.5 flex-1 min-w-[200px]">
+                    <div className="space-y-1.5 flex-1 min-w-0">
                       <Label htmlFor="invite-email">Email</Label>
                       <Input id="invite-email" type="email" placeholder="colleague@company.com" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} />
                     </div>
