@@ -81,15 +81,16 @@ For context: the industry average AI execution maturity score is 35/100, based o
 
 Write a personalized 3-step action plan framed as "What teams who score 55+ do differently." This is aspirational, not remedial. Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
-2. For each step, include:
+2. IMPORTANT: Step 1 must be something ONE person can do alone, today, in under 30 minutes. This lowers activation energy and creates immediate momentum.
+3. For each step, include:
    - A clear action title (5-8 words, framed as what high-performers do)
    - What to do manually (2-3 sentences, the "start here" approach)
    - How LIZA OS makes this structural and automatic (1-2 sentences, always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
-3. Steps should progress: visibility → codification → compounding
-4. Use second person ("you", "your team")
-5. Be specific to their archetype and weakest dimensions, not generic advice
-6. Use their language: "playbook", "what good looks like", "our way of doing things". Not "governance", "knowledge management"
-7. IMPORTANT: Do not use em-dashes anywhere. Use periods, commas, or colons instead.
+4. Steps should progress: individual action → codification → compounding
+5. Use second person ("you", "your team")
+6. Be specific to their archetype and weakest dimensions, not generic advice
+7. Use their language: "playbook", "what good looks like", "our way of doing things". Not "governance", "knowledge management"
+8. IMPORTANT: Do not use em-dashes anywhere. Use periods, commas, or colons instead.
 
 Return ONLY valid JSON in this exact format:
 {
