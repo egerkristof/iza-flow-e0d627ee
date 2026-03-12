@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -21,6 +22,7 @@ interface RequestBody {
   overall: number;
   archetype: { label: string; tagline: string; action: string };
   dimensions: DimensionScore[];
+  diagnostic_result_id?: string;
 }
 
 serve(async (req) => {
@@ -29,7 +31,7 @@ serve(async (req) => {
   }
 
   try {
-    const { email, overall, archetype, dimensions } =
+    const { email, overall, archetype, dimensions, diagnostic_result_id } =
       (await req.json()) as RequestBody;
 
     if (!email?.trim()) {
@@ -136,6 +138,22 @@ Return ONLY valid JSON in this exact format:
           },
         ],
       };
+    }
+
+    // Store action plan in diagnostic_results if we have the ID
+    if (diagnostic_result_id) {
+      try {
+        const supabaseAdmin = createClient(
+          Deno.env.get("SUPABASE_URL") ?? "",
+          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+        );
+        await supabaseAdmin
+          .from("diagnostic_results")
+          .update({ email_action_plan: actionPlan })
+          .eq("id", diagnostic_result_id);
+      } catch (e) {
+        console.error("Failed to store action plan:", e);
+      }
     }
 
     // Build the email HTML

@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText } from "lucide-react";
+import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown } from "lucide-react";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 
@@ -29,6 +29,7 @@ interface DiagnosticResult {
   scores: Record<string, number>;
   answers: Record<string, number>;
   created_at: string;
+  email_action_plan: { steps: { title: string; manual_how: string; platform_how: string }[] } | null;
 }
 
 interface UserRole {
@@ -347,6 +348,65 @@ export default function AdminPage() {
                                           <MailX className="h-4 w-4" />
                                           <span>No email provided. No report sent.</span>
                                         </div>
+                                      )}
+                                    </div>
+
+                                    {/* ── Results Page Recommendations ── */}
+                                    <div>
+                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
+                                        <Eye className="h-3.5 w-3.5" />
+                                        What They Saw (Results Page)
+                                      </h4>
+                                      {(() => {
+                                        const computed = calculateResults(r.answers);
+                                        return (
+                                          <div className="space-y-3">
+                                            <div className="rounded-lg border border-border bg-background p-3">
+                                              <p className="text-xs text-muted-foreground mb-1">Archetype</p>
+                                              <p className="text-sm font-semibold text-foreground">{computed.archetype.label}</p>
+                                              <p className="text-xs text-muted-foreground mt-1">{computed.archetype.tagline}</p>
+                                              <p className="text-xs text-primary mt-2 font-medium">Recommended action: {computed.archetype.action}</p>
+                                            </div>
+                                            {computed.dimensions.map((d) => (
+                                              <div key={d.dimension} className="rounded-lg border border-border bg-background p-3 space-y-1">
+                                                <div className="flex items-center justify-between">
+                                                  <p className="text-xs font-semibold text-foreground">{d.label}</p>
+                                                  <span className="text-xs font-bold tabular-nums" style={{
+                                                    color: d.score <= 33 ? "hsl(0 72% 51%)" : d.score <= 66 ? "hsl(38 92% 50%)" : "hsl(155 72% 36%)"
+                                                  }}>{d.score}/100</span>
+                                                </div>
+                                                <p className="text-xs text-muted-foreground">{d.insight}</p>
+                                                <div className="flex items-start gap-1.5 pt-1">
+                                                  <TrendingDown className="h-3 w-3 shrink-0 mt-0.5 text-muted-foreground" />
+                                                  <p className="text-[11px] text-foreground/70">{d.implication}</p>
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        );
+                                      })()}
+                                    </div>
+
+                                    {/* ── Email Action Plan ── */}
+                                    <div>
+                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
+                                        <Lightbulb className="h-3.5 w-3.5" />
+                                        Email Action Plan (AI-Generated)
+                                      </h4>
+                                      {r.email_action_plan?.steps ? (
+                                        <div className="space-y-3">
+                                          {r.email_action_plan.steps.map((step, i) => (
+                                            <div key={i} className="rounded-lg border border-border bg-background p-3 space-y-1.5 border-l-2 border-l-primary">
+                                              <p className="text-xs font-bold text-foreground">Step {i + 1}: {step.title}</p>
+                                              <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">Start here:</span> {step.manual_how}</p>
+                                              <p className="text-xs text-primary/80">🏗️ {step.platform_how}</p>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      ) : r.email ? (
+                                        <p className="text-xs text-muted-foreground italic">Action plan was sent but not stored (submitted before tracking was added).</p>
+                                      ) : (
+                                        <p className="text-xs text-muted-foreground italic">No email submitted. No action plan generated.</p>
                                       )}
                                     </div>
 

@@ -208,13 +208,15 @@ export function DiagnosticResults({ result, answers }: Props) {
     if (!email.trim()) return;
     setLoading(true);
     try {
-      await (supabase as any).from("diagnostic_results").insert({
+      const insertResult = await (supabase as any).from("diagnostic_results").insert({
         email: email.trim(),
         answers,
         scores: Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])),
         archetype: result.archetype.label,
         overall_score: result.overall,
-      });
+      }).select("id").single();
+
+      const diagnosticResultId = insertResult?.data?.id;
 
       const reportUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-diagnostic-report`;
       await fetch(reportUrl, {
@@ -228,6 +230,7 @@ export function DiagnosticResults({ result, answers }: Props) {
           overall: result.overall,
           archetype: result.archetype,
           dimensions: result.dimensions,
+          diagnostic_result_id: diagnosticResultId || null,
         }),
       });
 
