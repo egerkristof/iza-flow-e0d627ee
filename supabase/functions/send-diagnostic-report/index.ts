@@ -299,7 +299,51 @@ Return ONLY valid JSON in this exact format:
       throw new Error(`Resend error: ${emailResp.status}`);
     }
 
-    // Also notify founders
+    // Also notify founders with full results
+    const founderDimRows = sorted
+      .map(
+        (d) =>
+          `<tr><td style="padding:6px 10px;font-size:13px;color:#1a1a2e;border-bottom:1px solid #eee;">${d.label}</td><td style="padding:6px 10px;font-size:13px;font-weight:700;text-align:right;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};border-bottom:1px solid #eee;">${d.score}/100</td><td style="padding:6px 10px;font-size:12px;color:#64748b;border-bottom:1px solid #eee;">${d.insight}</td></tr>`
+      )
+      .join("");
+
+    const founderStepsHtml = actionPlan.steps
+      .map(
+        (s, i) =>
+          `<div style="margin-bottom:12px;padding:12px;background:#f0f9ff;border-radius:6px;border-left:3px solid #0284c7;">
+            <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#1a1a2e;">Step ${i + 1}: ${s.title}</p>
+            <p style="margin:0 0 6px;font-size:12px;color:#475569;"><strong>Manual:</strong> ${s.manual_how}</p>
+            <p style="margin:0;font-size:12px;color:#0284c7;">🏗️ ${s.platform_how}</p>
+          </div>`
+      )
+      .join("");
+
+    const founderHtml = `
+      <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:640px;margin:0 auto;">
+        <h2 style="margin:0 0 4px;font-size:18px;color:#1a1a2e;">Diagnostic Lead: ${email}</h2>
+        <p style="margin:0 0 16px;font-size:13px;color:#64748b;">Submitted ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC</p>
+
+        <div style="text-align:center;padding:16px;background:#f8fafc;border-radius:8px;margin-bottom:16px;">
+          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Overall Score</p>
+          <p style="margin:4px 0;font-size:48px;font-weight:900;color:${scoreColor};">${overall}</p>
+          <p style="margin:0;font-size:15px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
+          <p style="margin:6px 0 0;font-size:13px;color:#64748b;">${archetype.tagline}</p>
+        </div>
+
+        <h3 style="margin:20px 0 8px;font-size:14px;color:#1a1a2e;">Dimension Breakdown</h3>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
+          <tr style="background:#f1f5f9;"><th style="padding:6px 10px;text-align:left;font-size:12px;color:#64748b;">Dimension</th><th style="padding:6px 10px;text-align:right;font-size:12px;color:#64748b;">Score</th><th style="padding:6px 10px;text-align:left;font-size:12px;color:#64748b;">Insight</th></tr>
+          ${founderDimRows}
+        </table>
+
+        <h3 style="margin:20px 0 8px;font-size:14px;color:#1a1a2e;">AI-Generated Action Plan (sent to lead)</h3>
+        ${founderStepsHtml}
+
+        <div style="margin-top:20px;padding:12px;background:#fef3c7;border-radius:6px;">
+          <p style="margin:0;font-size:13px;color:#92400e;"><strong>Next step:</strong> Review in <a href="https://iza-flow.lovable.app/admin/manage" style="color:#0284c7;">Admin Panel → Diagnostics</a> for full Q&A detail.</p>
+        </div>
+      </div>`;
+
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -310,7 +354,7 @@ Return ONLY valid JSON in this exact format:
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: ["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"],
         subject: `Diagnostic lead: ${email} (${overall}/100, ${archetype.label})`,
-        html: `<p><strong>${email}</strong> completed the diagnostic.</p><p>Score: ${overall}/100 · ${archetype.label}</p><p>Weakest: ${weakest.label} (${weakest.score}/100)</p>`,
+        html: founderHtml,
       }),
     }).catch((e) => console.error("Founder notify failed:", e));
 
