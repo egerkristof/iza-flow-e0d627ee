@@ -113,12 +113,25 @@ export default function AdminPage() {
   const getRolesForUser = (userId: string) =>
     userRoles.filter((r) => r.user_id === userId).map((r) => r.role);
 
-  const dimensionLabels: Record<string, string> = {
-    standards: "Standards Adoption",
-    capture: "Knowledge Capture",
-    reuse: "Knowledge Reuse",
-    delegation: "Delegation Readiness",
-    learning: "Learning Loops",
+  const SHORT_LABELS: Record<string, string> = {
+    standard_internalization: "Standards",
+    output_consistency: "Consistency",
+    knowledge_compounding: "Knowledge",
+    collective_visibility: "Visibility",
+    learning_velocity: "Learning",
+  };
+
+  const getAnswerLabel = (questionId: string, score: number): string => {
+    const q = QUESTIONS.find((q) => q.id === questionId);
+    if (!q) return `Score: ${score}`;
+    const opt = q.options.find((o) => o.score === score);
+    return opt?.label || `Score: ${score}`;
+  };
+
+  const getQuestionText = (questionId: string): { question: string; context: string; dimension: string } | null => {
+    const q = QUESTIONS.find((q) => q.id === questionId);
+    if (!q) return null;
+    return { question: q.question, context: q.context, dimension: DIMENSION_LABELS[q.dimension] };
   };
 
   const handleSignOut = async () => {
