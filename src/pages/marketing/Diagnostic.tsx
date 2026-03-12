@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { DiagnosticQuestion } from "@/components/marketing/diagnostic/DiagnosticQuestion";
 import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticResults";
