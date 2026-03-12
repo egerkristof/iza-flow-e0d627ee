@@ -216,13 +216,14 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += 14;
 
     // Meta line
+    const displayName = fullyAnonymized ? "Anonymous Organisation" : org.domain;
     setFont(9, "normal", [140, 140, 140]);
-    doc.text(`Prepared for: ${org.domain}`, margin, y);
+    doc.text(`Prepared for: ${displayName}`, margin, y);
     y += 4;
-    doc.text(`${org.count} team member assessments${showParticipants ? "" : " (anonymised)"}  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
+    doc.text(`${org.count} team member assessments (anonymised)  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
     y += 4;
 
-    if (showParticipants) {
+    if (!fullyAnonymized && showParticipants) {
       const participantEmails = org.results
         .map(r => r.email)
         .filter(Boolean)
@@ -235,7 +236,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       }
     } else {
       setFont(8, "italic", [140, 140, 140]);
-      doc.text("Individual participant names have been withheld. Results are presented in aggregate only.", margin, y);
+      doc.text(fullyAnonymized
+        ? "All identifying information has been removed. This report may be shared publicly."
+        : "Individual participant names have been withheld. Results are presented in aggregate only.",
+        margin, y);
       y += 4;
     }
     y += 4;
