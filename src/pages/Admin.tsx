@@ -237,7 +237,7 @@ export default function AdminPage() {
                       <Label htmlFor="invite-email">Email</Label>
                       <Input id="invite-email" type="email" placeholder="colleague@company.com" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} />
                     </div>
-                    <div className="space-y-1.5 w-40">
+                    <div className="space-y-1.5 w-full sm:w-40">
                       <Label>Role</Label>
                       <Select value={inviteRole} onValueChange={setInviteRole}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
