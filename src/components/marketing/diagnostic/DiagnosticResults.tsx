@@ -447,25 +447,53 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
         variant="primary"
       />
 
-      {/* CTA */}
-      <div className="text-center space-y-4 pb-8">
-        <p className="text-base md:text-lg font-semibold text-foreground">
-          See what 55+ looks like for your team
-        </p>
-        <p className="text-sm text-muted-foreground max-w-md mx-auto">
-          We'll walk through your results and show you how teams like yours made their AI investment compound.
-        </p>
-        <div className="flex flex-col items-center gap-3 pt-2">
-          <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-            <Button variant="brand" size="lg" className="text-base">
-              Book a Discovery Call <ArrowRight className="w-4 h-4" />
-            </Button>
-          </a>
-          <Link to="/" className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors">
-            Explore the Platform →
-          </Link>
-        </div>
-      </div>
+      {/* === You vs 55+ contrast + CTA === */}
+      <Card className="border-border overflow-hidden">
+        <CardContent className="p-0">
+          <div className="px-5 pt-5 pb-3">
+            <p className="text-sm font-bold text-foreground mb-3">Your team today vs. codified teams (55+)</p>
+          </div>
+          <table className="w-full text-xs border-collapse">
+            <thead>
+              <tr className="border-t border-b border-border bg-muted/40">
+                <th className="text-left py-2 px-4 font-semibold text-muted-foreground"></th>
+                <th className="text-center py-2 px-4 font-semibold" style={{ color: scoreColor }}>You ({result.overall})</th>
+                <th className="text-center py-2 px-4 font-semibold text-primary">55+ teams</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { label: "AI session prep", you: "Re-explain from scratch", them: "Standards loaded automatically" },
+                { label: "Output quality", you: "Depends who does it", them: "Consistent regardless of person" },
+                { label: "New technique found", you: "Stays with one person", them: "Reaches whole team in days" },
+                { label: "Senior review time", you: "Catching basic errors", them: "Focused on strategy" },
+                { label: "AI ROI visibility", you: "Can't measure it", them: "Tracked and reported" },
+              ].map((row, i) => (
+                <tr key={i} className="border-b border-border last:border-0">
+                  <td className="py-2 px-4 font-medium text-muted-foreground">{row.label}</td>
+                  <td className="py-2 px-4 text-center text-destructive/80">{row.you}</td>
+                  <td className="py-2 px-4 text-center text-primary font-medium">{row.them}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="text-center px-5 py-5 space-y-3">
+            <p className="text-sm text-muted-foreground">
+              We'll walk through your results and show you how to close these gaps.
+            </p>
+            <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
+              <Button variant="brand" size="lg" className="text-base">
+                Book a Discovery Call <ArrowRight className="w-4 h-4" />
+              </Button>
+            </a>
+            <div>
+              <Link to="/" className="text-xs text-primary hover:text-primary/80 underline underline-offset-4 transition-colors">
+                Explore the Platform →
+              </Link>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
