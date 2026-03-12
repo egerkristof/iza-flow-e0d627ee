@@ -550,7 +550,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(10, "bold", [20, 80, 160]);
     doc.text("Book a 30-minute walkthrough:", margin, y);
     setFont(10, "normal", [20, 100, 180]);
-    doc.text("hello@lizaos.ai  |  lizaos.ai", margin, y + 6);
+    doc.text("kristof.eger@lizaos.ai  |  lizaos.ai", margin, y + 6);
     y += 14;
 
     // Footer
