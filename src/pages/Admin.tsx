@@ -321,7 +321,8 @@ export default function AdminPage() {
                   ) : results.length === 0 ? (
                     <p className="text-sm text-muted-foreground">No submissions yet.</p>
                   ) : (
-                    <Table>
+                    <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                    <Table className="min-w-[500px]">
                       <TableHeader>
                         <TableRow>
                           <TableHead>Date</TableHead>
