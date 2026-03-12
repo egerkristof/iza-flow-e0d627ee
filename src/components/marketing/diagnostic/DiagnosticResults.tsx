@@ -453,16 +453,14 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
           We'll walk through your results and show you how teams like yours made their AI investment compound.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <div className="flex flex-col items-center gap-3 pt-2">
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
             <Button variant="brand" size="lg" className="text-base">
-              Book a 30-Min Walkthrough <ArrowRight className="w-4 h-4" />
+              Book a Discovery Call <ArrowRight className="w-4 h-4" />
             </Button>
           </a>
-          <Link to="/">
-            <Button variant="outline" size="lg" className="text-base">
-              Explore the Platform
-            </Button>
+          <Link to="/" className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors">
+            Explore the Platform →
           </Link>
         </div>
       </div>
