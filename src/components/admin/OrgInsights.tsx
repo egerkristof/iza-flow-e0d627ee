@@ -219,8 +219,26 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(9, "normal", [140, 140, 140]);
     doc.text(`Prepared for: ${org.domain}`, margin, y);
     y += 4;
-    doc.text(`${org.count} anonymous team member assessments  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
-    y += 10;
+    doc.text(`${org.count} team member assessments${showParticipants ? "" : " (anonymised)"}  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
+    y += 4;
+
+    if (showParticipants) {
+      const participantEmails = org.results
+        .map(r => r.email)
+        .filter(Boolean)
+        .sort() as string[];
+      if (participantEmails.length > 0) {
+        setFont(8, "normal", [100, 100, 100]);
+        doc.text("Participants: " + participantEmails.join(", "), margin, y, { maxWidth: contentWidth });
+        const partLines = doc.splitTextToSize("Participants: " + participantEmails.join(", "), contentWidth);
+        y += partLines.length * 3.5;
+      }
+    } else {
+      setFont(8, "italic", [140, 140, 140]);
+      doc.text("Individual participant names have been withheld. Results are presented in aggregate only.", margin, y);
+      y += 4;
+    }
+    y += 4;
 
     drawDivider();
 
