@@ -199,16 +199,24 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     const dimEntries = Object.entries(org.avgDimensions);
     for (const [key, score] of dimEntries) {
-      checkNewPage(18);
+      checkNewPage(28);
       const label = DIMENSION_LABELS[key as Dimension] || SHORT_LABELS[key] || key;
+      const desc = DIMENSION_DESCRIPTIONS[key as Dimension] || "";
       const barWidth = (score / 100) * (contentWidth - 80);
 
       addText("", 10, "bold", [50, 50, 50]);
       doc.text(label, margin, y);
       addText("", 10, "bold", scoreColor);
       doc.text(`${score}`, pageWidth - margin - 10, y, { align: "right" });
+      y += 5;
 
-      y += 4;
+      if (desc) {
+        addText("", 8, "italic", [120, 120, 120]);
+        const descLines = doc.splitTextToSize(desc, contentWidth - 20);
+        doc.text(descLines, margin, y);
+        y += descLines.length * 4 + 2;
+      }
+
       doc.setFillColor(230, 230, 230);
       doc.roundedRect(margin, y, contentWidth - 20, 4, 2, 2, "F");
       const dimColor: [number, number, number] = score <= 33 ? [220, 38, 38] : score <= 66 ? [217, 119, 6] : [22, 163, 74];
