@@ -306,26 +306,83 @@ export default function AdminPage() {
                             </TableRow>
                             {expandedId === r.id && (
                               <TableRow key={`${r.id}-detail`}>
-                                <TableCell colSpan={5} className="bg-muted/30 p-4">
-                                  <div className="space-y-3">
-                                    <h4 className="text-sm font-semibold text-foreground">Dimension Scores</h4>
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                      {Object.entries(r.scores as Record<string, number>).map(([key, val]) => (
-                                        <div key={key} className="rounded-md border border-border bg-background p-3">
-                                          <p className="text-xs text-muted-foreground">{dimensionLabels[key] || key}</p>
-                                          <p className="text-lg font-bold text-foreground">{val}<span className="text-xs text-muted-foreground">/100</span></p>
+                                <TableCell colSpan={5} className="bg-muted/30 p-0">
+                                  <div className="p-5 space-y-6">
+
+                                    {/* ── Results Preview ── */}
+                                    <div>
+                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3">Results Preview</h4>
+                                      <div className="flex items-start gap-6 flex-wrap">
+                                        <div className="text-center">
+                                          <p className="text-4xl font-black tabular-nums" style={{
+                                            color: r.overall_score <= 30 ? "hsl(0 72% 51%)" : r.overall_score <= 55 ? "hsl(38 92% 50%)" : r.overall_score <= 75 ? "hsl(200 90% 40%)" : "hsl(155 72% 36%)"
+                                          }}>{r.overall_score}</p>
+                                          <p className="text-xs text-muted-foreground mt-1">Overall Score</p>
                                         </div>
-                                      ))}
-                                    </div>
-                                    <h4 className="text-sm font-semibold text-foreground pt-2">Raw Answers</h4>
-                                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                                      {Object.entries(r.answers as Record<string, number>).map(([qKey, aVal]) => (
-                                        <div key={qKey} className="text-xs">
-                                          <span className="text-muted-foreground">Q{qKey}: </span>
-                                          <span className="font-medium">{aVal}</span>
+                                        <div className="flex-1 min-w-[200px] space-y-1.5">
+                                          {Object.entries(r.scores as Record<string, number>).map(([key, val]) => (
+                                            <div key={key} className="flex items-center gap-2">
+                                              <span className="text-[11px] text-muted-foreground w-20 shrink-0 text-right">{SHORT_LABELS[key] || key}</span>
+                                              <div className="flex-1 h-2 rounded-full bg-secondary overflow-hidden">
+                                                <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${val}%` }} />
+                                              </div>
+                                              <span className="text-[11px] font-bold tabular-nums w-6">{val}</span>
+                                            </div>
+                                          ))}
                                         </div>
-                                      ))}
+                                      </div>
                                     </div>
+
+                                    {/* ── Email Status ── */}
+                                    <div>
+                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">Email Report</h4>
+                                      {r.email ? (
+                                        <div className="flex items-center gap-2 text-sm">
+                                          <Mail className="h-4 w-4 text-primary" />
+                                          <span className="text-foreground">Sent to <span className="font-medium">{r.email}</span></span>
+                                          <Badge variant="secondary" className="text-[10px]">Delivered</Badge>
+                                        </div>
+                                      ) : (
+                                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                          <MailX className="h-4 w-4" />
+                                          <span>No email provided. No report sent.</span>
+                                        </div>
+                                      )}
+                                    </div>
+
+                                    {/* ── Exact Questions & Answers ── */}
+                                    <div>
+                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
+                                        <MessageSquareText className="h-3.5 w-3.5" />
+                                        Questions & Answers
+                                      </h4>
+                                      <div className="space-y-4">
+                                        {Object.entries(r.answers as Record<string, number>).map(([qId, score]) => {
+                                          const meta = getQuestionText(qId);
+                                          if (!meta) return null;
+                                          return (
+                                            <div key={qId} className="rounded-lg border border-border bg-background p-3 space-y-1.5">
+                                              <div className="flex items-center gap-2">
+                                                <Badge variant="outline" className="text-[10px] shrink-0">{meta.dimension}</Badge>
+                                                <span className="text-[10px] text-muted-foreground uppercase font-medium">{qId}</span>
+                                              </div>
+                                              <p className="text-xs text-muted-foreground italic">{meta.context}</p>
+                                              <p className="text-sm font-medium text-foreground">{meta.question}</p>
+                                              <div className="flex items-start gap-2 pt-1">
+                                                <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+                                                  style={{
+                                                    background: score <= 1 ? "hsl(0 72% 51% / 0.12)" : score <= 2 ? "hsl(38 92% 50% / 0.12)" : score <= 3 ? "hsl(200 90% 40% / 0.12)" : "hsl(155 72% 36% / 0.12)",
+                                                    color: score <= 1 ? "hsl(0 72% 51%)" : score <= 2 ? "hsl(38 92% 50%)" : score <= 3 ? "hsl(200 90% 40%)" : "hsl(155 72% 36%)",
+                                                  }}
+                                                >{score}</span>
+                                                <p className="text-sm text-foreground/80">{getAnswerLabel(qId, score)}</p>
+                                              </div>
+                                            </div>
+                                          );
+                                        })}
+                                      </div>
+                                    </div>
+
                                   </div>
                                 </TableCell>
                               </TableRow>
