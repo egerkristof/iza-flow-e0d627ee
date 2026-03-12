@@ -188,14 +188,12 @@ Return ONLY valid JSON in this exact format:
       .map(
         (d) => {
           const label = FRIENDLY_LABELS[d.dimension] || d.label;
-          const desc = FRIENDLY_DESCRIPTIONS[d.dimension] || "";
           return `
         <tr>
           <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
             <span style="font-size:14px;color:#1a1a2e;font-weight:600;">${label}</span>
-            ${desc ? `<br/><span style="font-size:11px;color:#94a3b8;font-style:italic;">${desc}</span>` : ""}
           </td>
-          <td style="padding:8px 12px;font-size:14px;font-weight:600;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};text-align:right;border-bottom:1px solid #f0f0f0;vertical-align:top;">${d.score}/100</td>
+          <td style="padding:8px 12px;font-size:14px;font-weight:600;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};text-align:right;border-bottom:1px solid #f0f0f0;">${d.score}/100</td>
         </tr>`;
         }
       )
