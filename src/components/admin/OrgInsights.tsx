@@ -52,6 +52,7 @@ const FREE_EMAIL_DOMAINS = new Set([
 export default function OrgInsights({ results }: { results: DiagnosticResult[] }) {
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
   const [includeFreeMail, setIncludeFreeMail] = useState(false);
+  const [includeNames, setIncludeNames] = useState(false);
 
   const orgs = useMemo(() => {
     // Group by email domain, only include results with emails
