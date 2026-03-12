@@ -25,6 +25,22 @@ interface RequestBody {
   diagnostic_result_id?: string;
 }
 
+const FRIENDLY_LABELS: Record<string, string> = {
+  standard_internalization: "Standards Adoption",
+  output_consistency: "Delivery Consistency",
+  knowledge_compounding: "Knowledge Sharing",
+  collective_visibility: "Team Visibility",
+  learning_velocity: "Improvement Speed",
+};
+
+const FRIENDLY_DESCRIPTIONS: Record<string, string> = {
+  standard_internalization: "Whether your team's defined way of working actually reaches AI sessions, or gets ignored when people open a new chat.",
+  output_consistency: "Whether two people given the same brief produce comparable quality, or results depend entirely on who picks up the task.",
+  knowledge_compounding: "Whether discoveries and better approaches spread across the team, or stay locked in the individual who found them.",
+  collective_visibility: "Whether people can see how their colleagues work with AI and learn from it, or everyone operates in a black box.",
+  learning_velocity: "How quickly your team adopts better approaches after a project ends or a new technique emerges.",
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
