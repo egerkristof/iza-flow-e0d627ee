@@ -380,7 +380,7 @@ export default function AdminPage() {
                   <h1 className="text-xl font-bold text-foreground">Diagnostic Results</h1>
                   <p className="text-sm text-muted-foreground">Review submissions from the AI Execution Diagnostic.</p>
                 </div>
-                <Button variant="outline" size="sm" onClick={loadData} disabled={loadingData} className="gap-1.5">
+                <Button variant="outline" size="sm" onClick={() => void loadData()} disabled={loadingData} className="gap-1.5">
                   <RefreshCw className={`h-3.5 w-3.5 ${loadingData ? "animate-spin" : ""}`} />
                   Refresh
                 </Button>
