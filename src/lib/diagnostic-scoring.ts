@@ -28,11 +28,11 @@ export interface DiagnosticResult {
 }
 
 export const DIMENSION_LABELS: Record<Dimension, string> = {
-  standard_internalization: "Standard Internalization",
-  output_consistency: "Output Consistency",
-  knowledge_compounding: "Knowledge Compounding",
-  collective_visibility: "Collective Visibility",
-  learning_velocity: "Learning Velocity",
+  standard_internalization: "Standards Adoption",
+  output_consistency: "Delivery Consistency",
+  knowledge_compounding: "Knowledge Sharing",
+  collective_visibility: "Team Visibility",
+  learning_velocity: "Improvement Speed",
 };
 
 export const DIMENSION_SHORT: Record<Dimension, string> = {
@@ -41,6 +41,19 @@ export const DIMENSION_SHORT: Record<Dimension, string> = {
   knowledge_compounding: "Does your team get smarter over time?",
   collective_visibility: "Can your team see how each other thinks?",
   learning_velocity: "How fast do improvements spread?",
+};
+
+export const DIMENSION_DESCRIPTIONS: Record<Dimension, string> = {
+  standard_internalization:
+    "Whether your team's defined way of working actually reaches AI sessions, or gets ignored when people open a new chat.",
+  output_consistency:
+    "Whether two people given the same brief produce comparable quality, or results depend entirely on who picks up the task.",
+  knowledge_compounding:
+    "Whether discoveries and better approaches spread across the team, or stay locked in the individual who found them.",
+  collective_visibility:
+    "Whether people can see how their colleagues work with AI and learn from it, or everyone operates in a black box.",
+  learning_velocity:
+    "How quickly your team adopts better approaches after a project ends or a new technique emerges.",
 };
 
 export const QUESTIONS: DiagnosticQuestion[] = [

@@ -45,13 +45,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
 };
 
-const SHORT_LABELS: Record<string, string> = {
-  standard_internalization: "Standards Adoption",
-  output_consistency: "Output Consistency",
-  knowledge_compounding: "Knowledge Compounding",
-  collective_visibility: "Team Visibility",
-  learning_velocity: "Learning Velocity",
-};
+import { DIMENSION_LABELS, DIMENSION_DESCRIPTIONS } from "@/lib/diagnostic-scoring";
 
 function EmailCapture({
   email,
