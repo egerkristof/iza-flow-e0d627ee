@@ -76,7 +76,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (isArchitect) loadData();
-  }, [isArchitect]);
+  }, [isArchitect, activeView]);
 
   const loadData = async () => {
     setLoadingData(true);
