@@ -499,14 +499,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // ── What 70+ Teams See (ROI frame) ──
     checkNewPage(50);
     y += 4;
-    drawSectionHeader("What Teams Scoring 70+ Report");
+    drawSectionHeader("What Teams Scoring 70+ See in Their AI Usage");
 
     const roiItems = [
-      ["Senior review time", "Down 40-60%"],
-      ["Output consistency", "Within 10% variance across team"],
-      ["New hire ramp time", "Cut by half"],
-      ["Re-prompting and context waste", "Near zero"],
-      ["Knowledge retention after departures", "90%+ preserved"],
+      ["Time spent re-prompting / re-explaining context", "Near zero"],
+      ["AI output quality variance across team", "Within 10%"],
+      ["Senior review time on AI-assisted work", "Down 40-60%"],
+      ["Time for new hires to match team AI quality", "Cut by half"],
+      ["Prompt patterns and techniques retained after turnover", "90%+ preserved"],
+      ["Time to adopt a new AI tool or technique team-wide", "Under 1 week"],
     ];
 
     doc.setFillColor(240, 253, 244);
