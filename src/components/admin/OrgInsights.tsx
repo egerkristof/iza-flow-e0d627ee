@@ -264,9 +264,9 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     doc.text("BENCHMARK COMPARISON", benchX, dashY + 2);
 
     const benchmarks = [
-      { label: "Average team", value: 38, color: [140, 140, 140] as [number, number, number] },
+      { label: "Industry average", value: 35, color: [140, 140, 140] as [number, number, number] },
       { label: "Your organisation", value: org.avgScore, color: overallColor },
-      { label: "Structured teams", value: 72, color: [22, 163, 74] as [number, number, number] },
+      { label: "Structured teams", value: 55, color: [22, 163, 74] as [number, number, number] },
     ];
 
     benchmarks.forEach((b, i) => {
@@ -282,9 +282,9 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // Benchmark methodology explanation
     setFont(7.5, "italic", [130, 130, 130]);
     const benchNote = doc.splitTextToSize(
-      "Scoring methodology: Each dimension is scored 0-100 based on team responses across 10 scenario-based questions. " +
-      "\"Average team\" (38) reflects the median score across all organisations assessed to date. Most teams rely on individual AI habits with no shared approach. " +
-      "\"Structured teams\" (72+) are organisations that have codified their methodology, made it available to every AI session, and run feedback loops. " +
+      "Scoring methodology: Each dimension is scored 0-100 based on team responses across 10 scenario-based questions mapping AI execution behaviours to five maturity dimensions. " +
+      "\"Industry average\" (35) is calibrated against ServiceNow's 2025 Enterprise AI Maturity Index, which surveyed 4,500 C-level executives across 16 countries and found the global average dropped from 44 to 35 year-over-year, with fewer than 1% of organisations scoring above 50. " +
+      "\"Structured teams\" (55+) represent organisations that have codified their methodology into repeatable AI workflows, run feedback loops, and maintain cross-team visibility. " +
       "The overall score is the weighted average of five dimensions measuring how effectively your team's collective knowledge reaches AI-assisted work.",
       contentWidth
     );
@@ -527,10 +527,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       y += blockHeight + 6;
     }
 
-    // ── What 70+ Teams See (ROI frame) ──
+    // ── What 55+ Teams See (ROI frame) ──
     checkNewPage(50);
     y += 4;
-    drawSectionHeader("What Teams Scoring 70+ See in Their AI Usage");
+    drawSectionHeader("What Teams Scoring 55+ Report");
 
     const roiItems = [
       ["Time spent re-prompting / re-explaining context", "Near zero"],

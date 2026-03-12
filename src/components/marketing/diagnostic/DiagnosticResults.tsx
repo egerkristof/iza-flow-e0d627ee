@@ -14,8 +14,8 @@ interface Props {
   existingRecordId?: string | null;
 }
 
-const BENCHMARK_AVG = 38;
-const BENCHMARK_HIGH = 72;
+const BENCHMARK_AVG = 35;
+const BENCHMARK_HIGH = 55;
 
 const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
@@ -146,7 +146,7 @@ function EmailCapture({
                 : "Want the action plan in your inbox?"}
             </p>
             <p className={variant === "primary" ? "text-sm text-muted-foreground leading-relaxed" : "text-xs text-muted-foreground"}>
-              Based on your two weakest areas, we'll send a concrete plan showing what teams like yours changed to close these gaps and reach 70+.
+              Based on your two weakest areas, we'll send a concrete plan showing what teams like yours changed to close these gaps and reach 55+.
             </p>
           </div>
         </div>
@@ -277,9 +277,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
             {/* Benchmark context */}
             <div className="flex items-center justify-center gap-6 pt-2">
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">Average team</p>
+                <p className="text-xs text-muted-foreground">Industry average</p>
                 <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
-                <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">based on early diagnostic responses</p>
+                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">ServiceNow AI Maturity Index 2025 (4,500 execs)</p>
               </div>
               <div className="w-px h-10 bg-border" />
               <div className="text-center">
@@ -292,7 +292,7 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
               <div className="text-center">
                 <p className="text-xs text-muted-foreground">Structured teams</p>
                 <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
-                <p className="text-[10px] text-muted-foreground/60 max-w-[100px]">teams with codified AI standards</p>
+                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">{"<"}1% of orgs reach this level</p>
               </div>
             </div>
           </div>
@@ -409,7 +409,7 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
       {/* CTA */}
       <div className="text-center space-y-4 pb-8">
         <p className="text-base md:text-lg font-semibold text-foreground">
-          See what 70+ looks like for your team
+          See what 55+ looks like for your team
         </p>
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
           We'll walk through your results and show you how teams like yours made their AI investment compound.
