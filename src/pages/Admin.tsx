@@ -38,7 +38,7 @@ interface UserRole {
   role: string;
 }
 
-type AdminView = "members" | "diagnostics";
+type AdminView = "members" | "diagnostics" | "org-insights";
 
 export default function AdminPage() {
   const { user, loading, signOut } = useAuth();
