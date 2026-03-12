@@ -218,7 +218,7 @@ function EmailCapture({
         </div>
         <p className="text-xs text-muted-foreground">
           💡 Check your spam/junk folder if you don't see it within a minute. We may follow up to discuss your results. Read our{" "}
-          <Link to="/privacy" className="underline hover:text-foreground transition-colors">Privacy Policy</Link>.
+          <a href="/privacy" className="underline hover:text-foreground transition-colors">Privacy Policy</a>.
         </p>
       </CardContent>
     </Card>
