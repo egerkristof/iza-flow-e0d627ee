@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText } from "lucide-react";
+import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown } from "lucide-react";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 
