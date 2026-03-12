@@ -410,8 +410,8 @@ export default function AdminPage() {
                       </TableHeader>
                       <TableBody>
                         {results.map((r) => (
-                          <>
-                            <TableRow key={r.id} className="cursor-pointer" onClick={() => setExpandedId(expandedId === r.id ? null : r.id)}>
+                          <Fragment key={r.id}>
+                            <TableRow className="cursor-pointer" onClick={() => setExpandedId(expandedId === r.id ? null : r.id)}>
                               <TableCell className="text-sm">{format(new Date(r.created_at), "MMM d, yyyy HH:mm")}</TableCell>
                               <TableCell className="text-sm">{r.email || <span className="text-muted-foreground italic">anonymous</span>}</TableCell>
                               <TableCell><Badge variant="outline" className="text-xs">{r.archetype}</Badge></TableCell>
@@ -421,7 +421,7 @@ export default function AdminPage() {
                               </TableCell>
                             </TableRow>
                             {expandedId === r.id && (
-                              <TableRow key={`${r.id}-detail`}>
+                              <TableRow>
                                 <TableCell colSpan={5} className="bg-muted/30 p-0">
                                   <div className="p-5 space-y-6">
 
