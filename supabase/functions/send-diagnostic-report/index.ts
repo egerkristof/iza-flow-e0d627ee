@@ -23,6 +23,7 @@ interface RequestBody {
   archetype: { label: string; tagline: string; action: string };
   dimensions: DimensionScore[];
   diagnostic_result_id?: string;
+  results_base_url?: string;
 }
 
 const FRIENDLY_LABELS: Record<string, string> = {
