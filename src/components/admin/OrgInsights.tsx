@@ -259,6 +259,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     });
 
     y = dashY + 32;
+
+    // Benchmark methodology explanation
+    setFont(7.5, "italic", [130, 130, 130]);
+    const benchNote = doc.splitTextToSize(
+      "Scoring methodology: Each dimension is scored 0-100 based on team responses across 10 scenario-based questions. " +
+      "\"Average team\" (38) reflects the median score across all organisations assessed to date. Most teams rely on individual AI habits with no shared approach. " +
+      "\"Structured teams\" (72+) are organisations that have codified their methodology, made it available to every AI session, and run feedback loops. " +
+      "The overall score is the weighted average of five dimensions measuring how effectively your team's collective knowledge reaches AI-assisted work.",
+      contentWidth
+    );
+    doc.text(benchNote, margin, y);
+    y += benchNote.length * 3.2 + 4;
     drawDivider();
 
     // ── Dimension Scorecard (compact visual) ──
@@ -538,7 +550,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(10, "bold", [20, 80, 160]);
     doc.text("Book a 30-minute walkthrough:", margin, y);
     setFont(10, "normal", [20, 100, 180]);
-    doc.text("hello@lizaos.ai  |  lizaos.ai", margin, y + 6);
+    doc.text("kristof.eger@lizaos.ai  |  lizaos.ai", margin, y + 6);
     y += 14;
 
     // Footer
