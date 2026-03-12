@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2 } from "lucide-react";
+import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2, RefreshCw } from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
@@ -76,7 +76,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (isArchitect) loadData();
-  }, [isArchitect]);
+  }, [isArchitect, activeView]);
 
   const loadData = async () => {
     setLoadingData(true);
@@ -305,9 +305,15 @@ export default function AdminPage() {
 
           {activeView === "diagnostics" && (
             <>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Diagnostic Results</h1>
-                <p className="text-sm text-muted-foreground">Review submissions from the AI Execution Diagnostic.</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-xl font-bold text-foreground">Diagnostic Results</h1>
+                  <p className="text-sm text-muted-foreground">Review submissions from the AI Execution Diagnostic.</p>
+                </div>
+                <Button variant="outline" size="sm" onClick={loadData} disabled={loadingData} className="gap-1.5">
+                  <RefreshCw className={`h-3.5 w-3.5 ${loadingData ? "animate-spin" : ""}`} />
+                  Refresh
+                </Button>
               </div>
 
               <Card>
