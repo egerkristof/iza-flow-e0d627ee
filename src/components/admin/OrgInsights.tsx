@@ -586,13 +586,20 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions — anonymous aggregate reports for decision makers.</p>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Button
           variant={includeFreeMail ? "secondary" : "outline"}
           size="sm"
           onClick={() => setIncludeFreeMail(!includeFreeMail)}
         >
           {includeFreeMail ? "Hiding free email domains" : "Include free email domains (gmail, etc.)"}
+        </Button>
+        <Button
+          variant={includeNames ? "default" : "outline"}
+          size="sm"
+          onClick={() => setIncludeNames(!includeNames)}
+        >
+          {includeNames ? "📋 PDF includes participant names" : "🔒 PDF is anonymised"}
         </Button>
       </div>
 
