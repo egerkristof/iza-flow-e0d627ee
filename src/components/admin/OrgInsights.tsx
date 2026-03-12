@@ -363,7 +363,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // Brand header
     setFont(9, "normal", [140, 140, 140]);
     doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
-    doc.text(`${org.domain}`, pageWidth - margin, y, { align: "right" });
+    doc.text(fullyAnonymized ? "" : `${org.domain}`, pageWidth - margin, y, { align: "right" });
     y += 10;
 
     drawSectionHeader("Dimension Analysis");
