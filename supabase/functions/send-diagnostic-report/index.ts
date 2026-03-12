@@ -140,6 +140,22 @@ Return ONLY valid JSON in this exact format:
       };
     }
 
+    // Store action plan in diagnostic_results if we have the ID
+    if (diagnostic_result_id) {
+      try {
+        const supabaseAdmin = createClient(
+          Deno.env.get("SUPABASE_URL") ?? "",
+          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+        );
+        await supabaseAdmin
+          .from("diagnostic_results")
+          .update({ email_action_plan: actionPlan })
+          .eq("id", diagnostic_result_id);
+      } catch (e) {
+        console.error("Failed to store action plan:", e);
+      }
+    }
+
     // Build the email HTML
     const scoreColor =
       overall <= 30
