@@ -86,9 +86,10 @@ function EmailCapture({
   if (submitted) {
     return (
       <Card className="border-primary/30 bg-primary/5">
-        <CardContent className="p-6 md:p-8 text-center space-y-2">
+        <CardContent className="p-6 md:p-8 text-center space-y-3">
           <p className="text-base font-semibold text-foreground">✓ Your action plan is on its way.</p>
-          <p className="text-sm text-muted-foreground">Check your spam or junk folder if it doesn't arrive within a couple of minutes.</p>
+          <p className="text-xs text-muted-foreground">Check your spam or junk folder if it doesn't arrive within a couple of minutes.</p>
+          <SharePrompt variant="inline" />
         </CardContent>
       </Card>
     );
