@@ -31,7 +31,7 @@ serve(async (req) => {
   }
 
   try {
-    const { email, overall, archetype, dimensions } =
+    const { email, overall, archetype, dimensions, diagnostic_result_id } =
       (await req.json()) as RequestBody;
 
     if (!email?.trim()) {
