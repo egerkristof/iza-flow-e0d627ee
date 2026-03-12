@@ -570,7 +570,7 @@ export default function AdminPage() {
                   )}
                 </CardContent>
               </Card>
-            </>
+                          </Fragment>
           )}
         </div>
       </main>
