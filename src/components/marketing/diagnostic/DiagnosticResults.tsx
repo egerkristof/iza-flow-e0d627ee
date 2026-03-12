@@ -209,15 +209,24 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
     if (!email.trim()) return;
     setLoading(true);
     try {
-      const insertResult = await (supabase as any).from("diagnostic_results").insert({
-        email: email.trim(),
-        answers,
-        scores: Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])),
-        archetype: result.archetype.label,
-        overall_score: result.overall,
-      }).select("id").single();
+      let diagnosticResultId = existingRecordId || null;
 
-      const diagnosticResultId = insertResult?.data?.id;
+      if (diagnosticResultId) {
+        // Update existing record with email
+        await (supabase as any).from("diagnostic_results")
+          .update({ email: email.trim() })
+          .eq("id", diagnosticResultId);
+      } else {
+        // Fallback: insert new record if no existing ID
+        const insertResult = await (supabase as any).from("diagnostic_results").insert({
+          email: email.trim(),
+          answers,
+          scores: Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])),
+          archetype: result.archetype.label,
+          overall_score: result.overall,
+        }).select("id").single();
+        diagnosticResultId = insertResult?.data?.id;
+      }
 
       const reportUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-diagnostic-report`;
       await fetch(reportUrl, {
