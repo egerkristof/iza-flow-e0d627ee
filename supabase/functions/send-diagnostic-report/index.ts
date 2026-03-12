@@ -22,6 +22,7 @@ interface RequestBody {
   overall: number;
   archetype: { label: string; tagline: string; action: string };
   dimensions: DimensionScore[];
+  diagnostic_result_id?: string;
 }
 
 serve(async (req) => {
