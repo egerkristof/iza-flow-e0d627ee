@@ -112,7 +112,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     return orgList.sort((a, b) => b.count - a.count);
   }, [results, includeFreeMail]);
 
-  const generatePDF = (org: OrgData, showParticipants: boolean) => {
+  const generatePDF = (org: OrgData, showParticipants: boolean, fullyAnonymized: boolean = false) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
