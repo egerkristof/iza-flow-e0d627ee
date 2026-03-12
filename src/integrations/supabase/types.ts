@@ -452,6 +452,7 @@ export type Database = {
           archetype: string
           created_at: string
           email: string | null
+          email_action_plan: Json | null
           id: string
           overall_score: number
           scores: Json
@@ -461,6 +462,7 @@ export type Database = {
           archetype: string
           created_at?: string
           email?: string | null
+          email_action_plan?: Json | null
           id?: string
           overall_score: number
           scores?: Json
@@ -470,6 +472,7 @@ export type Database = {
           archetype?: string
           created_at?: string
           email?: string | null
+          email_action_plan?: Json | null
           id?: string
           overall_score?: number
           scores?: Json
