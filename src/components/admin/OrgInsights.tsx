@@ -602,10 +602,11 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions — anonymous aggregate reports for decision makers.</p>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
         <Button
           variant={includeFreeMail ? "secondary" : "outline"}
           size="sm"
+          className="w-full sm:w-auto text-xs"
           onClick={() => setIncludeFreeMail(!includeFreeMail)}
         >
           {includeFreeMail ? "Hiding free email domains" : "Include free email domains (gmail, etc.)"}
@@ -613,6 +614,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         <Button
           variant={includeNames ? "default" : "outline"}
           size="sm"
+          className="w-full sm:w-auto text-xs"
           onClick={() => setIncludeNames(!includeNames)}
         >
           {includeNames ? "📋 PDF includes participant names" : "🔒 PDF is anonymised"}
