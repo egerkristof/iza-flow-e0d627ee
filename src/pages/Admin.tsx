@@ -149,6 +149,7 @@ export default function AdminPage() {
   const sidebarItems: { key: AdminView; label: string; icon: React.ReactNode }[] = [
     { key: "members", label: "Members", icon: <Users className="h-4 w-4" /> },
     { key: "diagnostics", label: "Diagnostics", icon: <ClipboardList className="h-4 w-4" /> },
+    { key: "org-insights", label: "Org Insights", icon: <Building2 className="h-4 w-4" /> },
   ];
 
   return (
