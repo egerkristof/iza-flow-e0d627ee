@@ -216,6 +216,10 @@ Return ONLY valid JSON in this exact format:
       )
       .join("");
 
+    const resultsUrl = diagnostic_result_id
+      ? `${results_base_url || 'https://iza-flow.lovable.app'}/diagnostic?result=${diagnostic_result_id}`
+      : null;
+
     const html = `
 <!DOCTYPE html>
 <html>
@@ -223,88 +227,67 @@ Return ONLY valid JSON in this exact format:
   <div style="max-width:600px;margin:0 auto;padding:32px 24px;">
     
     <!-- Header with score -->
-    <div style="text-align:center;margin-bottom:28px;">
+    <div style="text-align:center;margin-bottom:20px;">
       <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Your AI Execution Score</p>
       <p style="margin:0;font-size:56px;font-weight:900;color:${scoreColor};line-height:1;">${overall}</p>
       <p style="margin:8px 0 0;font-size:18px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
-      <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
+      <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;">${archetype.tagline}</p>
+      ${resultsUrl ? `<p style="margin:12px 0 0;"><a href="${resultsUrl}" style="font-size:13px;color:#0284c7;font-weight:600;text-decoration:underline;">Bookmark your results: View your full breakdown →</a></p>` : ""}
     </div>
 
-    <!-- Results framing: what teams are actually achieving (reframed as questions) -->
-    <div style="margin-bottom:28px;padding:20px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">
-      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">How do teams scoring 55+ compare?</p>
-      <table style="width:100%;border-collapse:collapse;">
-        <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ How much time do seniors spend reviewing AI output?</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">40–60% less</td>
-        </tr>
-        <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">📋 If two people get the same brief, how similar are results?</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Within 10%</td>
-        </tr>
-        <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">🚀 How long before new hires deliver at team standard?</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Half the time</td>
-        </tr>
-        <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">🔄 How often does the team re-prompt for the same task?</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Near zero</td>
-        </tr>
-      </table>
-      <p style="margin:12px 0 0;font-size:12px;color:#4ade80;">These are teams who codified their standards and made them available to every AI session.</p>
-    </div>
-
-    <!-- Benchmark context -->
-    <div style="text-align:center;margin-bottom:28px;">
+    <!-- Benchmark context (compact) -->
+    <div style="text-align:center;margin-bottom:24px;">
       <div style="display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
-        <span style="font-size:12px;color:#64748b;">Industry average: <strong>35</strong></span>
+        <span style="font-size:12px;color:#64748b;">Industry avg: <strong>35</strong></span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:#64748b;">Codified teams: <strong>55+</strong></span>
       </div>
-      <p style="margin:8px 0 0;font-size:10px;color:#94a3b8;max-width:460px;margin-left:auto;margin-right:auto;">Benchmarked against ServiceNow's 2025 Enterprise AI Maturity Index (4,500 C-level execs, 16 countries). Fewer than 1% of organisations score above 50.</p>
-      <p style="margin:6px 0 0;font-size:10px;color:#cbd5e1;max-width:460px;margin-left:auto;margin-right:auto;">Scoring: 10 scenario-based questions across 5 dimensions, each scored 1-4 on observable team behaviours. Dimension scores normalised to 0-100. Overall = unweighted mean of all dimensions.</p>
     </div>
 
     <!-- Dimension scores -->
-    <div style="margin-bottom:28px;">
-      <p style="margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Your Breakdown</p>
+    <div style="margin-bottom:24px;">
+      <p style="margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Your Breakdown</p>
       <table style="width:100%;border-collapse:collapse;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">
         ${dimensionRows}
       </table>
     </div>
 
-    <!-- CTA — placed ABOVE action plan for visibility -->
-    <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:28px;">
-      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 55+ looks like for your team</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how teams like yours made their AI investment compound.</p>
-      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
-      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">How LIZA OS works →</a></p>
-    </div>
-
-    <!-- Action Plan with context -->
-    <div style="margin-bottom:28px;">
+    <!-- Action Plan -->
+    <div style="margin-bottom:24px;">
       <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#1a1a2e;">Your 3-Step Action Plan</p>
-      <div style="margin-bottom:16px;">
+      <div style="margin-bottom:12px;">
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${weakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${weakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[weakest.dimension] || weakest.label}: ${weakest.score}/100</span>
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${secondWeakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${secondWeakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[secondWeakest.dimension] || secondWeakest.label}: ${secondWeakest.score}/100</span>
         <span style="font-size:12px;color:#94a3b8;">← driving this plan</span>
       </div>
-      <p style="margin:0 0 16px;font-size:14px;color:#475569;line-height:1.6;">These two areas are where your team is losing the most value from its AI investment. Here's what teams who closed these gaps did first.</p>
-      ${stepsHtml}
+      ${actionPlan.steps
+        .map(
+          (s, i) => `
+        <div style="margin-bottom:16px;padding:14px;background:#f8fafc;border-radius:8px;border-left:3px solid #0284c7;">
+          <p style="margin:0 0 6px;font-size:14px;font-weight:700;color:#1a1a2e;">Step ${i + 1}: ${s.title}${i === 0 ? ' <span style="font-size:11px;font-weight:600;color:#0284c7;">(you can do this one alone, today)</span>' : ''}</p>
+          <p style="margin:0 0 8px;font-size:13px;color:#475569;line-height:1.5;">
+            <strong style="color:#1a1a2e;">Start here:</strong> ${s.manual_how}
+          </p>
+          <p style="margin:0;font-size:13px;color:#0284c7;line-height:1.5;">
+            🏗️ ${s.platform_how}
+          </p>
+        </div>`
+        )
+        .join("")}
     </div>
 
-    <!-- Re-engagement: link back to results -->
-    ${diagnostic_result_id ? `
-    <div style="text-align:center;margin-bottom:24px;">
-      <a href="${results_base_url || 'https://iza-flow.lovable.app'}/diagnostic?result=${diagnostic_result_id}" style="font-size:13px;color:#0284c7;text-decoration:underline;">View your full results online →</a>
-    </div>` : ""}
+    <!-- CTA (P.S. style) -->
+    <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
+      <p style="margin:0 0 12px;font-size:14px;color:#475569;">Want to see what 55+ looks like for your team?</p>
+      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
+    </div>
 
     <!-- Footer -->
     <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">
       <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · The management layer for AI-powered teams</p>
-      <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because you completed the AI Execution Diagnostic and provided your email to receive results.</p>
+      <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because you completed the AI Execution Diagnostic.</p>
       <p style="margin:8px 0 0;font-size:11px;color:#cbd5e1;"><a href="https://iza-flow.lovable.app/privacy" style="color:#94a3b8;">Privacy Policy</a> · <a href="mailto:kristof.eger@lizaos.ai" style="color:#94a3b8;">Unsubscribe</a></p>
     </div>
   </div>
