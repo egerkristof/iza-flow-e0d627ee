@@ -153,9 +153,39 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-background">
-      {/* ── Sidebar ── */}
-      <aside className="w-56 shrink-0 border-r border-border bg-muted/30 flex flex-col">
+    <div className="flex flex-col md:flex-row min-h-screen bg-background">
+      {/* ── Mobile Header + Tab Bar ── */}
+      <div className="md:hidden flex flex-col border-b border-border bg-muted/30">
+        <div className="flex h-14 items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5 text-primary" />
+            <span className="text-base font-bold tracking-tight brand-gradient-text">Admin</span>
+          </div>
+          <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground" onClick={handleSignOut}>
+            <LogOut className="h-4 w-4" />
+            <span className="text-xs">Sign out</span>
+          </Button>
+        </div>
+        <nav className="flex border-t border-border">
+          {sidebarItems.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => setActiveView(item.key)}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors border-b-2 ${
+                activeView === item.key
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {item.icon}
+              {item.label}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      {/* ── Desktop Sidebar ── */}
+      <aside className="hidden md:flex w-56 shrink-0 border-r border-border bg-muted/30 flex-col">
         <div className="flex h-14 items-center border-b border-border px-4 gap-2">
           <ShieldCheck className="h-5 w-5 text-primary" />
           <span className="text-base font-bold tracking-tight brand-gradient-text">Admin</span>
@@ -187,8 +217,8 @@ export default function AdminPage() {
       </aside>
 
       {/* ── Main Content ── */}
-      <main className="flex-1 overflow-auto p-6">
-        <div className="max-w-4xl mx-auto space-y-6">
+      <main className="flex-1 overflow-auto p-4 md:p-6">
+        <div className="max-w-4xl mx-auto space-y-4 md:space-y-6">
           {activeView === "members" && (
             <>
               <div>
