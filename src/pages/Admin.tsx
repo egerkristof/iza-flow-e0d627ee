@@ -562,7 +562,7 @@ export default function AdminPage() {
                                 </TableCell>
                               </TableRow>
                             )}
-                          </>
+                          </Fragment>
                         ))}
                       </TableBody>
                     </Table>
@@ -570,7 +570,6 @@ export default function AdminPage() {
                   )}
                 </CardContent>
               </Card>
-                          </Fragment>
           )}
         </div>
       </main>
