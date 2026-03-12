@@ -236,6 +236,7 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
           archetype: result.archetype,
           dimensions: result.dimensions,
           diagnostic_result_id: diagnosticResultId || null,
+          results_base_url: window.location.origin,
         }),
       });
 
