@@ -276,9 +276,26 @@ Return ONLY valid JSON in this exact format:
         .join("")}
     </div>
 
-    <!-- CTA (P.S. style) -->
+    <!-- You vs 55+ contrast + CTA -->
+    <div style="margin-bottom:24px;">
+      <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#1a1a2e;">Your team today vs. codified teams (55+)</p>
+      <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;font-size:12px;">
+        <tr style="background:#f8fafc;">
+          <td style="padding:6px 10px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0;"></td>
+          <td style="padding:6px 10px;font-weight:700;color:${scoreColor};text-align:center;border-bottom:1px solid #e2e8f0;">You (${overall})</td>
+          <td style="padding:6px 10px;font-weight:700;color:#0284c7;text-align:center;border-bottom:1px solid #e2e8f0;">55+ teams</td>
+        </tr>
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">AI session prep</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Re-explain from scratch</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Standards loaded automatically</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Output quality</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Depends who does it</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Consistent regardless</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">New technique found</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Stays with one person</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Reaches whole team in days</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Senior review</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Catching basic errors</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Focused on strategy</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;">AI ROI</td><td style="padding:6px 10px;text-align:center;color:#dc2626;">Can't measure it</td><td style="padding:6px 10px;text-align:center;color:#0284c7;">Tracked and reported</td></tr>
+      </table>
+    </div>
+
+    <!-- CTA -->
     <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
-      <p style="margin:0 0 12px;font-size:14px;color:#475569;">Want to see what 55+ looks like for your team?</p>
+      <p style="margin:0 0 12px;font-size:14px;color:#475569;">We'll walk through your results and show you how to close these gaps.</p>
       <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
       <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">How LIZA OS works →</a></p>
     </div>
