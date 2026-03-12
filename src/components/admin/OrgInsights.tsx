@@ -395,11 +395,17 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
       // Business impact
       if (cost) {
-        setFont(8.5, "bold", tier === "high" ? [22, 163, 74] : tier === "low" ? [180, 40, 40] : [160, 100, 10]);
-        doc.text(tier === "high" ? "Strength:" : "Business impact:", margin + 2, y);
+        const impactLabel = tier === "high" ? "Strength:" : "Business impact:";
+        const labelColor: [number, number, number] = tier === "high" ? [22, 163, 74] : tier === "low" ? [180, 40, 40] : [160, 100, 10];
+        const labelWidth = tier === "high" ? 24 : 32;
+
+        setFont(8.5, "bold", labelColor);
+        doc.text(impactLabel, margin + 2, y);
+
         setFont(8.5, "normal", [60, 60, 60]);
-        doc.text(cost, margin + (tier === "high" ? 24 : 32), y);
-        y += 5;
+        const costLines = doc.splitTextToSize(cost, contentWidth - labelWidth - 6);
+        doc.text(costLines, margin + 2 + labelWidth, y);
+        y += costLines.length * 3.8 + 2;
       }
 
       // Per-dimension score spread
