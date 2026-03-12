@@ -25,6 +25,22 @@ interface RequestBody {
   diagnostic_result_id?: string;
 }
 
+const FRIENDLY_LABELS: Record<string, string> = {
+  standard_internalization: "Standards Adoption",
+  output_consistency: "Delivery Consistency",
+  knowledge_compounding: "Knowledge Sharing",
+  collective_visibility: "Team Visibility",
+  learning_velocity: "Improvement Speed",
+};
+
+const FRIENDLY_DESCRIPTIONS: Record<string, string> = {
+  standard_internalization: "Whether your team's defined way of working actually reaches AI sessions, or gets ignored when people open a new chat.",
+  output_consistency: "Whether two people given the same brief produce comparable quality, or results depend entirely on who picks up the task.",
+  knowledge_compounding: "Whether discoveries and better approaches spread across the team, or stay locked in the individual who found them.",
+  collective_visibility: "Whether people can see how their colleagues work with AI and learn from it, or everyone operates in a black box.",
+  learning_velocity: "How quickly your team adopts better approaches after a project ends or a new technique emerges.",
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -168,11 +184,18 @@ Return ONLY valid JSON in this exact format:
 
     const dimensionRows = dimensions
       .map(
-        (d) => `
+        (d) => {
+          const label = FRIENDLY_LABELS[d.dimension] || d.label;
+          const desc = FRIENDLY_DESCRIPTIONS[d.dimension] || "";
+          return `
         <tr>
-          <td style="padding:8px 12px;font-size:14px;color:#1a1a2e;border-bottom:1px solid #f0f0f0;">${d.label}</td>
-          <td style="padding:8px 12px;font-size:14px;font-weight:600;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};text-align:right;border-bottom:1px solid #f0f0f0;">${d.score}/100</td>
-        </tr>`
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
+            <span style="font-size:14px;color:#1a1a2e;font-weight:600;">${label}</span>
+            ${desc ? `<br/><span style="font-size:11px;color:#94a3b8;font-style:italic;">${desc}</span>` : ""}
+          </td>
+          <td style="padding:8px 12px;font-size:14px;font-weight:600;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};text-align:right;border-bottom:1px solid #f0f0f0;vertical-align:top;">${d.score}/100</td>
+        </tr>`;
+        }
       )
       .join("");
 
@@ -252,8 +275,8 @@ Return ONLY valid JSON in this exact format:
     <div style="margin-bottom:28px;">
       <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#1a1a2e;">Your 3-Step Action Plan</p>
       <div style="margin-bottom:16px;">
-        <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${weakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${weakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${weakest.label}: ${weakest.score}/100</span>
-        <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${secondWeakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${secondWeakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${secondWeakest.label}: ${secondWeakest.score}/100</span>
+        <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${weakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${weakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[weakest.dimension] || weakest.label}: ${weakest.score}/100</span>
+        <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${secondWeakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${secondWeakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[secondWeakest.dimension] || secondWeakest.label}: ${secondWeakest.score}/100</span>
         <span style="font-size:12px;color:#94a3b8;">← driving this plan</span>
       </div>
       <p style="margin:0 0 16px;font-size:14px;color:#475569;line-height:1.6;">These two areas are where your team is losing the most value from its AI investment. Here's what teams who closed these gaps did first.</p>
@@ -302,8 +325,10 @@ Return ONLY valid JSON in this exact format:
     // Also notify founders with full results
     const founderDimRows = sorted
       .map(
-        (d) =>
-          `<tr><td style="padding:6px 10px;font-size:13px;color:#1a1a2e;border-bottom:1px solid #eee;">${d.label}</td><td style="padding:6px 10px;font-size:13px;font-weight:700;text-align:right;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};border-bottom:1px solid #eee;">${d.score}/100</td><td style="padding:6px 10px;font-size:12px;color:#64748b;border-bottom:1px solid #eee;">${d.insight}</td></tr>`
+        (d) => {
+          const label = FRIENDLY_LABELS[d.dimension] || d.label;
+          return `<tr><td style="padding:6px 10px;font-size:13px;color:#1a1a2e;border-bottom:1px solid #eee;">${label}</td><td style="padding:6px 10px;font-size:13px;font-weight:700;text-align:right;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};border-bottom:1px solid #eee;">${d.score}/100</td><td style="padding:6px 10px;font-size:12px;color:#64748b;border-bottom:1px solid #eee;">${d.insight}</td></tr>`;
+        }
       )
       .join("");
 

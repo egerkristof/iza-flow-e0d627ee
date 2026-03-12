@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Building2, Download, ChevronDown, ChevronUp, Users, TrendingDown, BarChart3 } from "lucide-react";
-import { calculateResults, DIMENSION_LABELS, type Dimension } from "@/lib/diagnostic-scoring";
+import { calculateResults, DIMENSION_LABELS, DIMENSION_DESCRIPTIONS, type Dimension } from "@/lib/diagnostic-scoring";
 import jsPDF from "jspdf";
 
 interface DiagnosticResult {
@@ -29,11 +29,11 @@ interface OrgData {
 }
 
 const SHORT_LABELS: Record<string, string> = {
-  standard_internalization: "Standards",
-  output_consistency: "Consistency",
-  knowledge_compounding: "Knowledge",
-  collective_visibility: "Visibility",
-  learning_velocity: "Learning",
+  standard_internalization: "Standards Adoption",
+  output_consistency: "Delivery Consistency",
+  knowledge_compounding: "Knowledge Sharing",
+  collective_visibility: "Team Visibility",
+  learning_velocity: "Improvement Speed",
 };
 
 function getDomain(email: string): string {
@@ -199,16 +199,24 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     const dimEntries = Object.entries(org.avgDimensions);
     for (const [key, score] of dimEntries) {
-      checkNewPage(18);
+      checkNewPage(28);
       const label = DIMENSION_LABELS[key as Dimension] || SHORT_LABELS[key] || key;
+      const desc = DIMENSION_DESCRIPTIONS[key as Dimension] || "";
       const barWidth = (score / 100) * (contentWidth - 80);
 
       addText("", 10, "bold", [50, 50, 50]);
       doc.text(label, margin, y);
       addText("", 10, "bold", scoreColor);
       doc.text(`${score}`, pageWidth - margin - 10, y, { align: "right" });
+      y += 5;
 
-      y += 4;
+      if (desc) {
+        addText("", 8, "italic", [120, 120, 120]);
+        const descLines = doc.splitTextToSize(desc, contentWidth - 20);
+        doc.text(descLines, margin, y);
+        y += descLines.length * 4 + 2;
+      }
+
       doc.setFillColor(230, 230, 230);
       doc.roundedRect(margin, y, contentWidth - 20, 4, 2, 2, "F");
       const dimColor: [number, number, number] = score <= 33 ? [220, 38, 38] : score <= 66 ? [217, 119, 6] : [22, 163, 74];

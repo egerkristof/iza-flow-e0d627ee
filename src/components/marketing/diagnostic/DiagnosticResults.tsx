@@ -45,13 +45,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
 };
 
-const SHORT_LABELS: Record<string, string> = {
-  standard_internalization: "Standards Adoption",
-  output_consistency: "Output Consistency",
-  knowledge_compounding: "Knowledge Compounding",
-  collective_visibility: "Team Visibility",
-  learning_velocity: "Learning Velocity",
-};
+import { DIMENSION_LABELS, DIMENSION_DESCRIPTIONS } from "@/lib/diagnostic-scoring";
 
 function EmailCapture({
   email,
@@ -202,8 +196,8 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
   const sorted = [...result.dimensions].sort((a, b) => a.score - b.score);
   const weakest = sorted[0];
   const secondWeakest = sorted[1];
-  const weakestLabel = SHORT_LABELS[weakest.dimension] || weakest.label;
-  const secondWeakestLabel = SHORT_LABELS[secondWeakest.dimension] || secondWeakest.label;
+  const weakestLabel = DIMENSION_LABELS[weakest.dimension as keyof typeof DIMENSION_LABELS] || weakest.label;
+  const secondWeakestLabel = DIMENSION_LABELS[secondWeakest.dimension as keyof typeof DIMENSION_LABELS] || secondWeakest.label;
 
   async function handleEmailSubmit() {
     if (!email.trim()) return;
@@ -309,7 +303,7 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
           {/* Dimension bars */}
           <div className="px-4 md:px-6 py-5 space-y-3">
             {result.dimensions.map((d) => {
-              const label = SHORT_LABELS[d.dimension] || d.label;
+              const label = DIMENSION_LABELS[d.dimension as keyof typeof DIMENSION_LABELS] || d.label;
               return (
                 <div key={d.dimension} className="flex items-center gap-3">
                   <span className="text-xs font-medium text-muted-foreground w-24 shrink-0 text-right">{label}</span>
@@ -348,7 +342,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
             <Card key={d.dimension} className="border-border">
               <CardContent className="p-4 space-y-2">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-foreground">{d.label}</p>
+                  <p className="text-sm font-semibold text-foreground">
+                    {DIMENSION_LABELS[d.dimension as keyof typeof DIMENSION_LABELS] || d.label}
+                  </p>
                   <span
                     className="text-sm font-bold tabular-nums"
                     style={{
@@ -363,6 +359,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
                     {d.score}/100
                   </span>
                 </div>
+                <p className="text-xs text-muted-foreground/70 italic">
+                  {DIMENSION_DESCRIPTIONS[d.dimension as keyof typeof DIMENSION_DESCRIPTIONS] || ""}
+                </p>
                 <div className="w-full h-2 rounded-full bg-secondary overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-700"
