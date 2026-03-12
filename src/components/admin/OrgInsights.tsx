@@ -640,15 +640,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                 <div key={org.domain} className="rounded-lg border border-border overflow-hidden">
                   {/* Org Header Row */}
                   <div
-                    className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/30 transition-colors"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 cursor-pointer hover:bg-muted/30 transition-colors"
                     onClick={() => setExpandedOrg(expandedOrg === org.domain ? null : org.domain)}
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                         <Building2 className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-foreground">{org.domain}</p>
+                        <p className="text-sm font-semibold text-foreground break-all">{org.domain}</p>
                         <div className="flex items-center gap-2 mt-0.5">
                           <Users className="h-3 w-3 text-muted-foreground" />
                           <span className="text-xs text-muted-foreground">{org.count} people</span>
@@ -656,8 +656,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
+                    <div className="flex items-center gap-3 flex-wrap pl-13 sm:pl-0">
+                      <div className="text-left sm:text-right">
                         <p className="text-2xl font-black tabular-nums" style={{
                           color: org.avgScore <= 30 ? "hsl(0 72% 51%)" : org.avgScore <= 55 ? "hsl(38 92% 50%)" : org.avgScore <= 75 ? "hsl(200 90% 40%)" : "hsl(155 72% 36%)"
                         }}>{org.avgScore}</p>
