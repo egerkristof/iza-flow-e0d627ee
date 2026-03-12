@@ -162,32 +162,32 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       return height;
     };
 
-    // ── Dimension cost estimates (per team of 10) ──
+    // ── AI-specific dimension cost estimates (per team of 10) ──
     const COST_PER_DIM: Record<string, { low: string; mid: string; high: string }> = {
       standard_internalization: {
-        low: "~5-10 hrs/week lost re-explaining context",
-        mid: "~2-4 hrs/week in partial re-prompting",
-        high: "Near-zero context waste",
+        low: "Every AI chat starts from zero. People re-explain methodology, tone, and constraints each session. ~5-10 hrs/week wasted on context that already exists.",
+        mid: "Some people paste standards into prompts, most don't. AI outputs vary because the starting context varies. ~2-4 hrs/week lost to partial re-prompting.",
+        high: "Your team's standards are the starting point for every AI session. Prompts build on shared context, not individual memory.",
       },
       output_consistency: {
-        low: "3-5 hr rework cycles per deliverable",
-        mid: "~30-40% excess senior review time",
-        high: "Consistent quality, minimal rework",
+        low: "Two people prompting the same brief get wildly different outputs. AI amplifies individual habits, not team standards. 3-5 hr rework cycles per deliverable.",
+        mid: "AI outputs are recognisable but uneven. Quality depends on who writes the prompt, not what the team knows. ~30-40% excess review time.",
+        high: "AI produces consistent results regardless of who prompts. The team's quality standard travels with the prompt setup, not the person.",
       },
       knowledge_compounding: {
-        low: "Same learning curve repeated every project",
-        mid: "4-6 week lag before techniques spread",
-        high: "Each project builds on the last",
+        low: "When someone finds a better prompt, workflow, or AI technique, it stays in their chat history. The team re-solves problems someone already cracked.",
+        mid: "Techniques spread informally (Slack, meetings) but take 4-6 weeks to reach the team. No system to capture what works.",
+        high: "Better AI techniques are validated and folded into shared approaches. Each project's AI usage improves the next.",
       },
       collective_visibility: {
-        low: "No visibility into AI effectiveness or ROI",
-        mid: "Only anecdotal insight into team AI usage",
-        high: "Full visibility, structured cross-learning",
+        low: "Nobody can see how colleagues use AI. No way to know who's struggling, who found a breakthrough, or whether AI is improving output quality.",
+        mid: "Occasional demos or Slack shares, but no systematic view. You can't report on AI usage patterns or ROI if asked today.",
+        high: "AI work is visible across the team. Juniors learn from seniors' prompting patterns. Usage is coordinated, not accidental.",
       },
       learning_velocity: {
-        low: "Months to adopt better approaches",
-        mid: "Quarter+ to change team practices",
-        high: "Days to integrate improvements",
+        low: "After 6+ months of AI tool spend, the team's prompting approach hasn't changed. Same mistakes, same workarounds, every project.",
+        mid: "Learning happens but takes a full quarter to change how the team prompts. New AI capabilities go unused for weeks.",
+        high: "New AI techniques reach the whole team within days. Prompt patterns, tool updates, and workflow improvements spread fast.",
       },
     };
 
