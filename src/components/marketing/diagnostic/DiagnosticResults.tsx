@@ -495,6 +495,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
           </div>
         </CardContent>
       </Card>
+
+      {/* Share prompt */}
+      <SharePrompt variant="card" />
     </div>
   );
 }
