@@ -291,9 +291,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
               </div>
               <div className="w-px h-10 bg-border" />
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">Structured teams</p>
+               <p className="text-xs text-muted-foreground">Codified teams</p>
                 <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
-                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">{"<"}1% of orgs reach this level</p>
+                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">Teams with shared AI standards</p>
               </div>
             </div>
 
