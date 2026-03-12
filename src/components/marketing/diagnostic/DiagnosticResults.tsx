@@ -14,8 +14,8 @@ interface Props {
   existingRecordId?: string | null;
 }
 
-const BENCHMARK_AVG = 38;
-const BENCHMARK_HIGH = 72;
+const BENCHMARK_AVG = 35;
+const BENCHMARK_HIGH = 55;
 
 const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
