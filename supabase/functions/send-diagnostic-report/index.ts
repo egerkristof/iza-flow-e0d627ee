@@ -255,12 +255,13 @@ Return ONLY valid JSON in this exact format:
     <!-- Benchmark context -->
     <div style="text-align:center;margin-bottom:28px;">
       <div style="display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
-        <span style="font-size:12px;color:#64748b;">Average team: <strong>38</strong></span>
+        <span style="font-size:12px;color:#64748b;">Industry average: <strong>35</strong></span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">Structured teams: <strong>72+</strong></span>
+        <span style="font-size:12px;color:#64748b;">Structured teams: <strong>55+</strong></span>
       </div>
+      <p style="margin:8px 0 0;font-size:10px;color:#94a3b8;max-width:460px;margin-left:auto;margin-right:auto;">Benchmarked against ServiceNow's 2025 Enterprise AI Maturity Index (4,500 C-level execs, 16 countries). Fewer than 1% of organisations score above 50.</p>
     </div>
 
     <!-- Dimension scores -->
