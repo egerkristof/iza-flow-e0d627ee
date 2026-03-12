@@ -196,8 +196,8 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
   const sorted = [...result.dimensions].sort((a, b) => a.score - b.score);
   const weakest = sorted[0];
   const secondWeakest = sorted[1];
-  const weakestLabel = SHORT_LABELS[weakest.dimension] || weakest.label;
-  const secondWeakestLabel = SHORT_LABELS[secondWeakest.dimension] || secondWeakest.label;
+  const weakestLabel = DIMENSION_LABELS[weakest.dimension as keyof typeof DIMENSION_LABELS] || weakest.label;
+  const secondWeakestLabel = DIMENSION_LABELS[secondWeakest.dimension as keyof typeof DIMENSION_LABELS] || secondWeakest.label;
 
   async function handleEmailSubmit() {
     if (!email.trim()) return;
