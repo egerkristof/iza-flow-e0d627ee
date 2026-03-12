@@ -267,6 +267,10 @@ export default function AdminPage() {
             </>
           )}
 
+          {activeView === "org-insights" && (
+            <OrgInsights results={results} />
+          )}
+
           {activeView === "diagnostics" && (
             <>
               <div>
