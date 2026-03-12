@@ -339,6 +339,28 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
       </Card>
 
 
+      {/* === Pattern Alert: wide dimension spread === */}
+      {(() => {
+        const scores = result.dimensions.map((d) => d.score);
+        const spread = Math.max(...scores) - Math.min(...scores);
+        if (spread <= 30) return null;
+        const strongest = [...result.dimensions].sort((a, b) => b.score - a.score)[0];
+        const strongLabel = DIMENSION_LABELS[strongest.dimension as keyof typeof DIMENSION_LABELS] || strongest.label;
+        return (
+          <Card className="border-amber-500/30 bg-amber-500/5">
+            <CardContent className="p-4 md:p-5 flex items-start gap-3">
+              <span className="text-lg mt-0.5">⚡</span>
+              <div className="space-y-1">
+                <p className="text-sm font-bold text-foreground">Pattern Alert: {spread}-point spread detected</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Your strongest area ({strongLabel}: {strongest.score}) and weakest ({weakestLabel}: {weakest.score}) are far apart. This often signals pockets of excellence that haven't been systematised. The gap isn't a failure; it's untapped leverage.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })()}
+
       {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">
