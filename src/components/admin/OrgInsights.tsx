@@ -112,7 +112,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     return orgList.sort((a, b) => b.count - a.count);
   }, [results, includeFreeMail]);
 
-  const generatePDF = (org: OrgData, showParticipants: boolean) => {
+  const generatePDF = (org: OrgData, showParticipants: boolean, fullyAnonymized: boolean = false) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -216,13 +216,14 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += 14;
 
     // Meta line
+    const displayName = fullyAnonymized ? "Anonymous Organisation" : org.domain;
     setFont(9, "normal", [140, 140, 140]);
-    doc.text(`Prepared for: ${org.domain}`, margin, y);
+    doc.text(`Prepared for: ${displayName}`, margin, y);
     y += 4;
-    doc.text(`${org.count} team member assessments${showParticipants ? "" : " (anonymised)"}  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
+    doc.text(`${org.count} team member assessments (anonymised)  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
     y += 4;
 
-    if (showParticipants) {
+    if (!fullyAnonymized && showParticipants) {
       const participantEmails = org.results
         .map(r => r.email)
         .filter(Boolean)
@@ -235,7 +236,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       }
     } else {
       setFont(8, "italic", [140, 140, 140]);
-      doc.text("Individual participant names have been withheld. Results are presented in aggregate only.", margin, y);
+      doc.text(fullyAnonymized
+        ? "All identifying information has been removed. This report may be shared publicly."
+        : "Individual participant names have been withheld. Results are presented in aggregate only.",
+        margin, y);
       y += 4;
     }
     y += 4;
@@ -359,7 +363,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // Brand header
     setFont(9, "normal", [140, 140, 140]);
     doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
-    doc.text(`${org.domain}`, pageWidth - margin, y, { align: "right" });
+    doc.text(fullyAnonymized ? "" : `${org.domain}`, pageWidth - margin, y, { align: "right" });
     y += 10;
 
     drawSectionHeader("Dimension Analysis");
@@ -460,7 +464,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     setFont(9, "normal", [140, 140, 140]);
     doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
-    doc.text(`${org.domain}`, pageWidth - margin, y, { align: "right" });
+    doc.text(fullyAnonymized ? "" : `${org.domain}`, pageWidth - margin, y, { align: "right" });
     y += 10;
 
     drawSectionHeader("Recommendations");
@@ -580,9 +584,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     // Footer
     setFont(8, "normal", [160, 160, 160]);
-    doc.text("Confidential. Prepared by LIZA OS. Data is anonymous and aggregated.", margin, pageHeight - 10);
+    doc.text(fullyAnonymized
+      ? "Prepared by LIZA OS. All identifying information removed for public distribution."
+      : "Confidential. Prepared by LIZA OS. Data is anonymous and aggregated.",
+      margin, pageHeight - 10);
 
-    doc.save(`AI-Execution-Audit_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`);
+    const fileName = fullyAnonymized
+      ? `AI-Execution-Audit_Anonymous_${new Date().toISOString().slice(0, 10)}.pdf`
+      : `AI-Execution-Audit_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`;
+    doc.save(fileName);
   };
 
   return (
@@ -660,6 +670,17 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                       >
                         <Download className="h-3.5 w-3.5" />
                         PDF
+                      </Button>
+
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="gap-1.5 text-muted-foreground"
+                        onClick={(e) => { e.stopPropagation(); generatePDF(org, false, true); }}
+                        title="Download fully anonymised report for public sharing"
+                      >
+                        <Download className="h-3.5 w-3.5" />
+                        Public
                       </Button>
 
                       {expandedOrg === org.domain
