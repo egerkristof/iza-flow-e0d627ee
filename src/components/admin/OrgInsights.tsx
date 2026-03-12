@@ -52,6 +52,7 @@ const FREE_EMAIL_DOMAINS = new Set([
 export default function OrgInsights({ results }: { results: DiagnosticResult[] }) {
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
   const [includeFreeMail, setIncludeFreeMail] = useState(false);
+  const [includeNames, setIncludeNames] = useState(false);
 
   const orgs = useMemo(() => {
     // Group by email domain, only include results with emails
@@ -111,7 +112,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     return orgList.sort((a, b) => b.count - a.count);
   }, [results, includeFreeMail]);
 
-  const generatePDF = (org: OrgData) => {
+  const generatePDF = (org: OrgData, showParticipants: boolean) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -218,8 +219,26 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(9, "normal", [140, 140, 140]);
     doc.text(`Prepared for: ${org.domain}`, margin, y);
     y += 4;
-    doc.text(`${org.count} anonymous team member assessments  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
-    y += 10;
+    doc.text(`${org.count} team member assessments${showParticipants ? "" : " (anonymised)"}  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
+    y += 4;
+
+    if (showParticipants) {
+      const participantEmails = org.results
+        .map(r => r.email)
+        .filter(Boolean)
+        .sort() as string[];
+      if (participantEmails.length > 0) {
+        setFont(8, "normal", [100, 100, 100]);
+        doc.text("Participants: " + participantEmails.join(", "), margin, y, { maxWidth: contentWidth });
+        const partLines = doc.splitTextToSize("Participants: " + participantEmails.join(", "), contentWidth);
+        y += partLines.length * 3.5;
+      }
+    } else {
+      setFont(8, "italic", [140, 140, 140]);
+      doc.text("Individual participant names have been withheld. Results are presented in aggregate only.", margin, y);
+      y += 4;
+    }
+    y += 4;
 
     drawDivider();
 
@@ -567,13 +586,20 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions — anonymous aggregate reports for decision makers.</p>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Button
           variant={includeFreeMail ? "secondary" : "outline"}
           size="sm"
           onClick={() => setIncludeFreeMail(!includeFreeMail)}
         >
           {includeFreeMail ? "Hiding free email domains" : "Include free email domains (gmail, etc.)"}
+        </Button>
+        <Button
+          variant={includeNames ? "default" : "outline"}
+          size="sm"
+          onClick={() => setIncludeNames(!includeNames)}
+        >
+          {includeNames ? "📋 PDF includes participant names" : "🔒 PDF is anonymised"}
         </Button>
       </div>
 
@@ -624,7 +650,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         variant="outline"
                         size="sm"
                         className="gap-1.5"
-                        onClick={(e) => { e.stopPropagation(); generatePDF(org); }}
+                        onClick={(e) => { e.stopPropagation(); generatePDF(org, includeNames); }}
                       >
                         <Download className="h-3.5 w-3.5" />
                         PDF
