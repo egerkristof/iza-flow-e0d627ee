@@ -248,7 +248,7 @@ export default function AdminPage() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <Button onClick={handleInvite} disabled={inviting || !inviteEmail.trim()} className="gap-2">
+                    <Button onClick={handleInvite} disabled={inviting || !inviteEmail.trim()} className="gap-2 w-full sm:w-auto">
                       <Send className="h-4 w-4" />
                       {inviting ? "Sending…" : "Send Invite"}
                     </Button>
