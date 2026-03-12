@@ -275,6 +275,14 @@ Return ONLY valid JSON in this exact format:
       </table>
     </div>
 
+    <!-- CTA — placed ABOVE action plan for visibility -->
+    <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:28px;">
+      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 55+ looks like for your team</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how teams like yours made their AI investment compound.</p>
+      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
+      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">How LIZA OS works →</a></p>
+    </div>
+
     <!-- Action Plan with context -->
     <div style="margin-bottom:28px;">
       <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#1a1a2e;">Your 3-Step Action Plan</p>
@@ -287,13 +295,11 @@ Return ONLY valid JSON in this exact format:
       ${stepsHtml}
     </div>
 
-    <!-- CTA -->
-    <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:24px;">
-      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 55+ looks like for your team</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how teams like yours made their AI investment compound.</p>
-      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
-      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">Explore LIZA OS →</a></p>
-    </div>
+    <!-- Re-engagement: link back to results -->
+    ${diagnostic_result_id ? `
+    <div style="text-align:center;margin-bottom:24px;">
+      <a href="${results_base_url || 'https://iza-flow.lovable.app'}/diagnostic?result=${diagnostic_result_id}" style="font-size:13px;color:#0284c7;text-decoration:underline;">View your full results online →</a>
+    </div>` : ""}
 
     <!-- Footer -->
     <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">
