@@ -29,11 +29,11 @@ interface OrgData {
 }
 
 const SHORT_LABELS: Record<string, string> = {
-  standard_internalization: "Standards",
-  output_consistency: "Consistency",
-  knowledge_compounding: "Knowledge",
-  collective_visibility: "Visibility",
-  learning_velocity: "Learning",
+  standard_internalization: "Standards Adoption",
+  output_consistency: "Delivery Consistency",
+  knowledge_compounding: "Knowledge Sharing",
+  collective_visibility: "Team Visibility",
+  learning_velocity: "Improvement Speed",
 };
 
 function getDomain(email: string): string {

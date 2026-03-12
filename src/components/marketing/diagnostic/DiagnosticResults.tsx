@@ -342,7 +342,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
             <Card key={d.dimension} className="border-border">
               <CardContent className="p-4 space-y-2">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-foreground">{d.label}</p>
+                  <p className="text-sm font-semibold text-foreground">
+                    {DIMENSION_LABELS[d.dimension as keyof typeof DIMENSION_LABELS] || d.label}
+                  </p>
                   <span
                     className="text-sm font-bold tabular-nums"
                     style={{
@@ -357,6 +359,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
                     {d.score}/100
                   </span>
                 </div>
+                <p className="text-xs text-muted-foreground/70 italic">
+                  {DIMENSION_DESCRIPTIONS[d.dimension as keyof typeof DIMENSION_DESCRIPTIONS] || ""}
+                </p>
                 <div className="w-full h-2 rounded-full bg-secondary overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-700"
