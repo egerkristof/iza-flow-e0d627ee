@@ -76,9 +76,9 @@ A team just completed an AI Execution Diagnostic and scored ${overall}/100 overa
 Their weakest dimension is "${weakest.label}" (${weakest.score}/100): ${weakest.insight}
 Their second weakest is "${secondWeakest.label}" (${secondWeakest.score}/100): ${secondWeakest.insight}
 
-For context: the average team scores 38/100. Teams with defined AI standards score 72+.
+For context: the industry average AI execution maturity score is 35/100, based on ServiceNow's 2025 Enterprise AI Maturity Index (4,500 executives surveyed). Fewer than 1% of organisations score above 50. Teams with defined, codified AI standards score 55+.
 
-Write a personalized 3-step action plan framed as "What teams who score 70+ do differently." This is aspirational, not remedial. Requirements:
+Write a personalized 3-step action plan framed as "What teams who score 55+ do differently." This is aspirational, not remedial. Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
 2. For each step, include:
    - A clear action title (5-8 words, framed as what high-performers do)
