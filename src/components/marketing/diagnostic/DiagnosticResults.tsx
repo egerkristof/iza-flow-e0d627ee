@@ -525,18 +525,13 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
           </table>
           <div className="text-center px-5 py-5 space-y-3">
             <p className="text-sm text-muted-foreground">
-              We'll walk through your results and show you how to close these gaps.
+              20 min · We'll unpack your score and show you what teams scoring 55+ do differently.
             </p>
             <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
               <Button variant="brand" size="lg" className="text-base">
-                Book a Discovery Call <ArrowRight className="w-4 h-4" />
+                Book your Diagnostic Debrief <ArrowRight className="w-4 h-4" />
               </Button>
             </a>
-            <div>
-              <Link to="/" className="text-xs text-primary hover:text-primary/80 underline underline-offset-4 transition-colors">
-                Explore the Platform →
-              </Link>
-            </div>
           </div>
         </CardContent>
       </Card>

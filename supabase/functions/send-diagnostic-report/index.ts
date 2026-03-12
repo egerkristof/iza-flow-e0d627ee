@@ -295,9 +295,8 @@ Return ONLY valid JSON in this exact format:
 
     <!-- CTA -->
     <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
-      <p style="margin:0 0 12px;font-size:14px;color:#475569;">We'll walk through your results and show you how to close these gaps.</p>
-      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
-      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">How LIZA OS works →</a></p>
+      <p style="margin:0 0 12px;font-size:14px;color:#475569;">20 min · We'll unpack your score and show you what teams scoring 55+ do differently.</p>
+      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book your Diagnostic Debrief →</a>
     </div>
 
     <!-- Footer -->
