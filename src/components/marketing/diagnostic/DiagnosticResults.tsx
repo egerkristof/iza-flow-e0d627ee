@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 interface Props {
   result: DiagnosticResult;
   answers: Record<string, number>;
+  existingRecordId?: string | null;
 }
 
 const BENCHMARK_AVG = 38;
