@@ -114,220 +114,436 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
   const generatePDF = (org: OrgData) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 20;
     const contentWidth = pageWidth - margin * 2;
     let y = margin;
 
-    const addText = (text: string, size: number, style: string = "normal", color: [number, number, number] = [30, 30, 30]) => {
+    // ── Helpers ──
+    const setFont = (size: number, style: string = "normal", color: [number, number, number] = [30, 30, 30]) => {
       doc.setFontSize(size);
       doc.setFont("helvetica", style);
       doc.setTextColor(...color);
     };
 
     const checkNewPage = (needed: number) => {
-      if (y + needed > doc.internal.pageSize.getHeight() - margin) {
+      if (y + needed > pageHeight - margin) {
         doc.addPage();
         y = margin;
+        return true;
       }
+      return false;
     };
 
-    // ── Header ──
-    addText("", 22, "bold", [20, 100, 180]);
-    doc.text("AI Execution Readiness", margin, y);
-    y += 8;
-    addText("", 22, "bold", [20, 100, 180]);
-    doc.text("Organisational Insight Report", margin, y);
-    y += 12;
+    const drawDivider = () => {
+      doc.setDrawColor(220, 220, 220);
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 8;
+    };
 
-    addText("", 10, "normal", [120, 120, 120]);
+    const drawSectionHeader = (title: string) => {
+      checkNewPage(30);
+      // Light background band
+      doc.setFillColor(245, 247, 250);
+      doc.rect(margin - 4, y - 4, contentWidth + 8, 12, "F");
+      setFont(11, "bold", [20, 80, 160]);
+      doc.text(title.toUpperCase(), margin, y + 4);
+      y += 16;
+    };
+
+    const writeWrapped = (text: string, size: number, style: string, color: [number, number, number], maxWidth: number = contentWidth): number => {
+      setFont(size, style, color);
+      const lines = doc.splitTextToSize(text, maxWidth);
+      const lineHeight = size * 0.45;
+      checkNewPage(lines.length * lineHeight + 4);
+      doc.text(lines, margin, y);
+      const height = lines.length * lineHeight;
+      y += height + 3;
+      return height;
+    };
+
+    // ── Dimension cost estimates (per team of 10) ──
+    const COST_PER_DIM: Record<string, { low: string; mid: string; high: string }> = {
+      standard_internalization: {
+        low: "~5-10 hrs/week lost re-explaining context",
+        mid: "~2-4 hrs/week in partial re-prompting",
+        high: "Near-zero context waste",
+      },
+      output_consistency: {
+        low: "3-5 hr rework cycles per deliverable",
+        mid: "~30-40% excess senior review time",
+        high: "Consistent quality, minimal rework",
+      },
+      knowledge_compounding: {
+        low: "Same learning curve repeated every project",
+        mid: "4-6 week lag before techniques spread",
+        high: "Each project builds on the last",
+      },
+      collective_visibility: {
+        low: "No visibility into AI effectiveness or ROI",
+        mid: "Only anecdotal insight into team AI usage",
+        high: "Full visibility, structured cross-learning",
+      },
+      learning_velocity: {
+        low: "Months to adopt better approaches",
+        mid: "Quarter+ to change team practices",
+        high: "Days to integrate improvements",
+      },
+    };
+
+    const getScoreColor = (score: number): [number, number, number] =>
+      score <= 30 ? [220, 38, 38] : score <= 55 ? [217, 119, 6] : score <= 75 ? [37, 99, 235] : [22, 163, 74];
+
+    const getTier = (score: number): "low" | "mid" | "high" =>
+      score <= 33 ? "low" : score <= 66 ? "mid" : "high";
+
+    // ════════════════════════════════════════════
+    // PAGE 1: COVER + EXECUTIVE DASHBOARD
+    // ════════════════════════════════════════════
+
+    // Brand line
+    setFont(9, "normal", [140, 140, 140]);
+    doc.text("LIZA OS", pageWidth - margin, y, { align: "right" });
+    y += 6;
+
+    // Title block
+    setFont(24, "bold", [20, 80, 160]);
+    doc.text("AI Execution Maturity Audit", margin, y);
+    y += 10;
+    setFont(14, "normal", [80, 80, 80]);
+    doc.text("Your team has AI tools. Is that investment compounding?", margin, y);
+    y += 14;
+
+    // Meta line
+    setFont(9, "normal", [140, 140, 140]);
     doc.text(`Prepared for: ${org.domain}`, margin, y);
-    y += 5;
-    doc.text(`Based on ${org.count} anonymous team member assessments`, margin, y);
-    y += 5;
-    doc.text(`Generated: ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
-    y += 5;
-    doc.text("Powered by LIZA OS — lizaos.ai", margin, y);
-    y += 12;
-
-    // Divider
-    doc.setDrawColor(200, 200, 200);
-    doc.line(margin, y, pageWidth - margin, y);
+    y += 4;
+    doc.text(`${org.count} anonymous team member assessments  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
     y += 10;
 
-    // ── Executive Summary ──
-    addText("", 14, "bold", [30, 30, 30]);
-    doc.text("Executive Summary", margin, y);
-    y += 8;
+    drawDivider();
 
-    addText("", 10, "normal", [50, 50, 50]);
-    const summaryLines = doc.splitTextToSize(
-      `${org.count} members of your organisation independently completed the AI Execution Diagnostic. ` +
-      `This report aggregates their anonymous responses to surface organisational patterns — not individual performance. ` +
-      `The data reveals where your team's AI usage is creating value and where institutional knowledge is leaking.`,
-      contentWidth
-    );
-    doc.text(summaryLines, margin, y);
-    y += summaryLines.length * 5 + 6;
+    // ── Score Dashboard (visual, scannable) ──
+    const overallColor = getScoreColor(org.avgScore);
 
-    // ── Overall Score ──
-    addText("", 14, "bold", [30, 30, 30]);
-    doc.text("Overall Team Score", margin, y);
-    y += 8;
+    // Score + archetype in a visual block
+    const dashY = y;
+    setFont(48, "bold", overallColor);
+    doc.text(`${org.avgScore}`, margin + 2, dashY + 16);
+    setFont(14, "normal", [140, 140, 140]);
+    doc.text("/ 100", margin + 38, dashY + 16);
 
-    const scoreColor: [number, number, number] = org.avgScore <= 30 ? [220, 38, 38] : org.avgScore <= 55 ? [217, 119, 6] : org.avgScore <= 75 ? [37, 99, 235] : [22, 163, 74];
-    addText("", 36, "bold", scoreColor);
-    doc.text(`${org.avgScore}`, margin, y);
-    addText("", 12, "normal", [120, 120, 120]);
-    doc.text("/ 100", margin + 25, y);
-    y += 10;
+    // Dominant archetype
+    const dominantArchetype = Object.entries(org.archetypeDistribution)
+      .sort(([, a], [, b]) => b - a)[0];
+    setFont(12, "bold", [30, 30, 30]);
+    doc.text(dominantArchetype ? dominantArchetype[0] : "Mixed", margin + 2, dashY + 24);
 
-    // Archetype distribution
-    const archetypeLabel = Object.entries(org.archetypeDistribution)
-      .sort(([, a], [, b]) => b - a)
-      .map(([arch, count]) => `${arch} (${count})`)
-      .join(", ");
-    addText("", 10, "normal", [80, 80, 80]);
-    const archLines = doc.splitTextToSize(`Archetype distribution: ${archetypeLabel}`, contentWidth);
-    doc.text(archLines, margin, y);
-    y += archLines.length * 5 + 8;
+    // Benchmark comparison (right side)
+    const benchX = margin + 90;
+    setFont(9, "bold", [140, 140, 140]);
+    doc.text("BENCHMARK COMPARISON", benchX, dashY + 2);
 
-    // ── Dimension Breakdown ──
-    checkNewPage(80);
-    addText("", 14, "bold", [30, 30, 30]);
-    doc.text("Dimension Breakdown", margin, y);
-    y += 8;
+    const benchmarks = [
+      { label: "Average team", value: 38, color: [140, 140, 140] as [number, number, number] },
+      { label: "Your organisation", value: org.avgScore, color: overallColor },
+      { label: "Structured teams", value: 72, color: [22, 163, 74] as [number, number, number] },
+    ];
+
+    benchmarks.forEach((b, i) => {
+      const bY = dashY + 8 + i * 7;
+      setFont(9, "normal", [80, 80, 80]);
+      doc.text(b.label, benchX, bY);
+      setFont(9, "bold", b.color);
+      doc.text(`${b.value}`, benchX + 70, bY, { align: "right" });
+    });
+
+    y = dashY + 32;
+    drawDivider();
+
+    // ── Dimension Scorecard (compact visual) ──
+    drawSectionHeader("Dimension Scorecard");
 
     const dimEntries = Object.entries(org.avgDimensions);
     for (const [key, score] of dimEntries) {
-      checkNewPage(28);
+      checkNewPage(22);
       const label = DIMENSION_LABELS[key as Dimension] || SHORT_LABELS[key] || key;
       const desc = DIMENSION_DESCRIPTIONS[key as Dimension] || "";
-      const barWidth = (score / 100) * (contentWidth - 80);
+      const dimColor = getScoreColor(score);
+      const barMaxWidth = contentWidth - 50;
+      const barWidth = (score / 100) * barMaxWidth;
 
-      addText("", 10, "bold", [50, 50, 50]);
+      // Label + score on same line
+      setFont(10, "bold", [40, 40, 40]);
       doc.text(label, margin, y);
-      addText("", 10, "bold", scoreColor);
-      doc.text(`${score}`, pageWidth - margin - 10, y, { align: "right" });
-      y += 5;
+      setFont(10, "bold", dimColor);
+      doc.text(`${score}`, pageWidth - margin, y, { align: "right" });
+      y += 3;
 
+      // Description
       if (desc) {
-        addText("", 8, "italic", [120, 120, 120]);
-        const descLines = doc.splitTextToSize(desc, contentWidth - 20);
-        doc.text(descLines, margin, y);
-        y += descLines.length * 4 + 2;
+        setFont(7.5, "italic", [130, 130, 130]);
+        doc.text(doc.splitTextToSize(desc, contentWidth - 10)[0], margin, y + 1);
+        y += 4;
       }
 
-      doc.setFillColor(230, 230, 230);
-      doc.roundedRect(margin, y, contentWidth - 20, 4, 2, 2, "F");
-      const dimColor: [number, number, number] = score <= 33 ? [220, 38, 38] : score <= 66 ? [217, 119, 6] : [22, 163, 74];
+      // Progress bar
+      doc.setFillColor(235, 235, 235);
+      doc.roundedRect(margin, y, barMaxWidth, 3.5, 1.5, 1.5, "F");
       doc.setFillColor(...dimColor);
-      doc.roundedRect(margin, y, Math.max(barWidth, 4), 4, 2, 2, "F");
-      y += 12;
+      doc.roundedRect(margin, y, Math.max(barWidth, 3), 3.5, 1.5, 1.5, "F");
+      y += 9;
     }
 
-    // ── Key Findings ──
-    checkNewPage(60);
     y += 4;
-    addText("", 14, "bold", [30, 30, 30]);
-    doc.text("Key Findings", margin, y);
-    y += 8;
 
-    // Biggest gap
-    addText("", 10, "bold", [220, 38, 38]);
-    doc.text(`⚠ Biggest Gap: ${org.lowestDimension.label} (${org.lowestDimension.score}/100)`, margin, y);
-    y += 6;
-    addText("", 10, "normal", [80, 80, 80]);
-    const gapText = doc.splitTextToSize(
-      `This is where your team is losing the most institutional value. Multiple team members scored this as your weakest area, suggesting a systemic gap rather than an individual one.`,
-      contentWidth
-    );
-    doc.text(gapText, margin, y);
-    y += gapText.length * 5 + 6;
+    // ── Key Takeaway Box ──
+    checkNewPage(35);
+    doc.setFillColor(255, 251, 235);
+    doc.setDrawColor(251, 191, 36);
+    doc.roundedRect(margin, y, contentWidth, 28, 3, 3, "FD");
 
-    // Strongest area
-    addText("", 10, "bold", [22, 163, 74]);
-    doc.text(`✓ Strongest Area: ${org.highestDimension.label} (${org.highestDimension.score}/100)`, margin, y);
-    y += 6;
-    addText("", 10, "normal", [80, 80, 80]);
-    const strengthText = doc.splitTextToSize(
-      `Your team collectively rates this as your most developed capability. This can serve as a foundation to build upon when addressing weaker dimensions.`,
-      contentWidth
-    );
-    doc.text(strengthText, margin, y);
-    y += strengthText.length * 5 + 8;
+    setFont(10, "bold", [146, 64, 14]);
+    doc.text("KEY TAKEAWAY", margin + 6, y + 7);
+    setFont(9, "normal", [120, 80, 20]);
 
-    // ── Consistency Insight ──
-    checkNewPage(40);
-    addText("", 14, "bold", [30, 30, 30]);
-    doc.text("Team Alignment", margin, y);
-    y += 8;
+    const gapLabel = DIMENSION_LABELS[org.lowestDimension.key as Dimension] || org.lowestDimension.label;
+    const strengthLabel = DIMENSION_LABELS[org.highestDimension.key as Dimension] || org.highestDimension.label;
+    const gapCost = COST_PER_DIM[org.lowestDimension.key]?.[getTier(org.lowestDimension.score)] || "";
 
-    // Calculate score variance
-    const scores = org.results.map((r) => r.overall_score);
-    const scoreRange = Math.max(...scores) - Math.min(...scores);
-    const alignmentText = scoreRange > 40
-      ? `There is a ${scoreRange}-point spread between your highest and lowest scoring team members. This significant variance suggests fragmented AI adoption — some individuals are far ahead of the team norm. Closing this gap is your highest-leverage opportunity.`
-      : scoreRange > 20
-        ? `There is a ${scoreRange}-point spread across your team. Your team is somewhat aligned, but pockets of inconsistency exist. Targeted process sharing could reduce this variance quickly.`
-        : `Your team scores are tightly clustered (${scoreRange}-point spread). This alignment is positive — improvements can be made uniformly. Your team is ready for structured capability building.`;
+    const takeawayText = `Your biggest gap is ${gapLabel} (${org.lowestDimension.score}/100): ${gapCost}. ` +
+      `Your strongest area is ${strengthLabel} (${org.highestDimension.score}/100). ` +
+      `Closing the gap between these two is your highest-leverage move.`;
+    const takeawayLines = doc.splitTextToSize(takeawayText, contentWidth - 14);
+    doc.text(takeawayLines, margin + 6, y + 14);
+    y += 34;
 
-    addText("", 10, "normal", [50, 50, 50]);
-    const alignLines = doc.splitTextToSize(alignmentText, contentWidth);
-    doc.text(alignLines, margin, y);
-    y += alignLines.length * 5 + 10;
+    // ════════════════════════════════════════════
+    // PAGE 2: DETAILED ANALYSIS
+    // ════════════════════════════════════════════
+    doc.addPage();
+    y = margin;
 
-    // ── Recommendations ──
-    checkNewPage(60);
-    addText("", 14, "bold", [30, 30, 30]);
-    doc.text("Recommended Next Steps", margin, y);
-    y += 8;
-
-    const recommendations = [
-      {
-        title: "1. Address the Gap",
-        text: `Focus on "${org.lowestDimension.label}" first. This is where the organisation is bleeding the most execution value. A structured 4-week sprint targeting this dimension would have outsized impact.`,
-      },
-      {
-        title: "2. Build on Strength",
-        text: `Leverage your "${org.highestDimension.label}" capability as a template. Document what's working there and replicate the pattern across weaker areas.`,
-      },
-      {
-        title: "3. Make AI Work Visible",
-        text: `With ${org.count} team members already aware of their gaps, now is the moment to introduce shared protocols. Individual awareness without collective infrastructure leads to the same scattered effort.`,
-      },
-    ];
-
-    for (const rec of recommendations) {
-      checkNewPage(25);
-      addText("", 10, "bold", [20, 100, 180]);
-      doc.text(rec.title, margin, y);
-      y += 6;
-      addText("", 10, "normal", [50, 50, 50]);
-      const recLines = doc.splitTextToSize(rec.text, contentWidth);
-      doc.text(recLines, margin, y);
-      y += recLines.length * 5 + 6;
-    }
-
-    // ── Footer CTA ──
-    checkNewPage(30);
-    y += 6;
-    doc.setDrawColor(200, 200, 200);
-    doc.line(margin, y, pageWidth - margin, y);
+    // Brand header
+    setFont(9, "normal", [140, 140, 140]);
+    doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
+    doc.text(`${org.domain}`, pageWidth - margin, y, { align: "right" });
     y += 10;
 
-    addText("", 11, "bold", [20, 100, 180]);
-    doc.text("Ready to close the gap?", margin, y);
-    y += 7;
-    addText("", 10, "normal", [50, 50, 50]);
-    const ctaLines = doc.splitTextToSize(
-      "LIZA OS turns diagnostic insights into executable team infrastructure. " +
-      "Book a 30-minute walkthrough to see how your team's specific gaps map to concrete improvements. " +
-      "Contact: hello@lizaos.ai | lizaos.ai",
-      contentWidth
-    );
-    doc.text(ctaLines, margin, y);
+    drawSectionHeader("Dimension Analysis");
 
-    doc.save(`AI-Execution-Report_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`);
+    // Each dimension gets a detailed block
+    for (const [key, score] of dimEntries) {
+      checkNewPage(45);
+      const label = DIMENSION_LABELS[key as Dimension] || SHORT_LABELS[key] || key;
+      const desc = DIMENSION_DESCRIPTIONS[key as Dimension] || "";
+      const dimColor = getScoreColor(score);
+      const tier = getTier(score);
+      const cost = COST_PER_DIM[key]?.[tier] || "";
+
+      // Dimension header with colored left border
+      doc.setFillColor(248, 250, 252);
+      doc.roundedRect(margin, y - 2, contentWidth, 5, 1, 1, "F");
+      doc.setFillColor(...dimColor);
+      doc.rect(margin, y - 2, 3, 5, "F");
+
+      setFont(10, "bold", [30, 30, 30]);
+      doc.text(label, margin + 6, y + 1.5);
+      setFont(10, "bold", dimColor);
+      doc.text(`${score}/100`, pageWidth - margin, y + 1.5, { align: "right" });
+      y += 7;
+
+      // What it measures
+      if (desc) {
+        setFont(8, "italic", [100, 100, 100]);
+        const descLines = doc.splitTextToSize(`What this measures: ${desc}`, contentWidth - 4);
+        doc.text(descLines, margin + 2, y);
+        y += descLines.length * 3.5 + 2;
+      }
+
+      // Business impact
+      if (cost) {
+        setFont(8.5, "bold", tier === "high" ? [22, 163, 74] : tier === "low" ? [180, 40, 40] : [160, 100, 10]);
+        doc.text(tier === "high" ? "Strength:" : "Business impact:", margin + 2, y);
+        setFont(8.5, "normal", [60, 60, 60]);
+        doc.text(cost, margin + (tier === "high" ? 24 : 32), y);
+        y += 5;
+      }
+
+      // Per-dimension score spread
+      const dimScores = org.results
+        .map(r => (r.scores as Record<string, number>)[key])
+        .filter(s => s != null)
+        .sort((a, b) => a - b);
+      if (dimScores.length > 1) {
+        const dimRange = dimScores[dimScores.length - 1] - dimScores[0];
+        setFont(8, "normal", [100, 100, 100]);
+        doc.text(`Team spread: ${dimRange} points (${dimScores[0]} to ${dimScores[dimScores.length - 1]})`, margin + 2, y);
+        y += 5;
+      }
+
+      y += 4;
+    }
+
+    // ── Team Alignment Analysis ──
+    drawSectionHeader("Team Alignment");
+
+    const scores = org.results.map((r) => r.overall_score).sort((a, b) => a - b);
+    const scoreRange = scores[scores.length - 1] - scores[0];
+    const median = scores[Math.floor(scores.length / 2)];
+
+    // Stats row
+    setFont(9, "normal", [80, 80, 80]);
+    doc.text(`Respondents: ${org.count}   |   Median: ${median}   |   Range: ${scoreRange} points (${scores[0]} to ${scores[scores.length - 1]})`, margin, y);
+    y += 7;
+
+    const alignmentText = scoreRange > 40
+      ? `A ${scoreRange}-point spread indicates fragmented AI adoption. Some team members are significantly ahead of others. This variance means your team's collective output is limited by its least capable members' AI usage, not its best. Closing this alignment gap is your highest-leverage opportunity before investing in new tools or training.`
+      : scoreRange > 20
+        ? `A ${scoreRange}-point spread shows moderate alignment with some inconsistency. Targeted knowledge-sharing, where stronger members' approaches become the team default, would reduce this variance within weeks.`
+        : `A tight ${scoreRange}-point spread is encouraging. Your team is aligned in how they use AI, which means improvements can be rolled out uniformly. You're ready for structured capability building.`;
+
+    writeWrapped(alignmentText, 9, "normal", [50, 50, 50]);
+    y += 4;
+
+    // Archetype distribution
+    const archetypeEntries = Object.entries(org.archetypeDistribution).sort(([, a], [, b]) => b - a);
+    setFont(9, "bold", [80, 80, 80]);
+    doc.text("Archetype distribution:", margin, y);
+    setFont(9, "normal", [60, 60, 60]);
+    doc.text(archetypeEntries.map(([arch, count]) => `${arch} (${count})`).join("  |  "), margin + 42, y);
+    y += 10;
+
+    // ════════════════════════════════════════════
+    // PAGE 3: RECOMMENDATIONS + CTA
+    // ════════════════════════════════════════════
+    doc.addPage();
+    y = margin;
+
+    setFont(9, "normal", [140, 140, 140]);
+    doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
+    doc.text(`${org.domain}`, pageWidth - margin, y, { align: "right" });
+    y += 10;
+
+    drawSectionHeader("Recommendations");
+
+    // Adaptive recommendations based on archetype/score (Cynefin-informed)
+    const isLow = org.avgScore <= 35;
+    const isMid = org.avgScore > 35 && org.avgScore <= 65;
+
+    const recommendations = isLow
+      ? [
+          {
+            title: "1. Make one workflow repeatable",
+            text: `Your team is in exploration mode. Before optimising, pick your single highest-value, most-repeated task. Write down what "good" looks like for that task. Make it the starting point for every AI session on that workflow. Don't try to systematise everything at once.`,
+          },
+          {
+            title: "2. Create visibility before structure",
+            text: `Start a weekly 15-minute show-and-tell where one person demonstrates their best AI technique from the past week. The goal isn't to document everything. It's to make the invisible visible. People can't adopt what they can't see.`,
+          },
+          {
+            title: "3. Assign a \"standards owner\" for one domain",
+            text: `One person, one area of expertise, one written reference. This person's job is to keep a living document of "how we do X with AI." It should be updated after every project. Start with your weakest dimension: ${gapLabel}.`,
+          },
+        ]
+      : isMid
+        ? [
+            {
+              title: "1. Close the gap between knowing and doing",
+              text: `Your team has standards, but they're optional. The gap between "${strengthLabel}" (${org.highestDimension.score}) and "${gapLabel}" (${org.lowestDimension.score}) shows where knowledge exists but isn't reaching execution. Make your strongest dimension's patterns the template for fixing your weakest.`,
+            },
+            {
+              title: "2. Introduce structured after-action reviews",
+              text: `You're capturing knowledge but not closing the loop. After each significant project, run a 20-minute review: What AI approaches worked? What didn't? What should change in the team's shared reference? This is the mechanism that turns individual learning into collective improvement.`,
+            },
+            {
+              title: "3. Reduce key-person dependency",
+              text: `Your ${scoreRange > 20 ? "wide" : "moderate"} score spread suggests capability is concentrated in a few people. Pair your strongest AI users with others on real work (not training sessions). Apprenticeship through shared execution transfers tacit knowledge that documentation alone cannot.`,
+            },
+          ]
+        : [
+            {
+              title: "1. Extend your system across domains",
+              text: `Your team has real infrastructure for AI execution. The next step is cross-domain transfer: take the approaches that work in your strongest area and adapt them to adjacent practice areas or client verticals. The methodology is proven. Now scale it.`,
+            },
+            {
+              title: "2. Measure AI execution ROI",
+              text: `You're in a position to quantify what your AI maturity is worth. Track: time-to-first-draft, senior review hours, rework frequency, and new hire ramp time. These metrics justify continued investment and make the business case for extending your approach to other teams.`,
+            },
+            {
+              title: "3. Make your approach a competitive asset",
+              text: `Teams scoring ${org.avgScore}+ are rare. Your defined approach to AI execution is a differentiator in client conversations and talent acquisition. Document it as an institutional capability, not just internal process.`,
+            },
+          ];
+
+    for (const rec of recommendations) {
+      checkNewPage(30);
+
+      // Colored left-border block
+      doc.setFillColor(240, 249, 255);
+      const recText = doc.splitTextToSize(rec.text, contentWidth - 14);
+      const blockHeight = 8 + recText.length * 4 + 4;
+
+      doc.roundedRect(margin, y, contentWidth, blockHeight, 2, 2, "F");
+      doc.setFillColor(20, 100, 180);
+      doc.rect(margin, y, 3, blockHeight, "F");
+
+      setFont(10, "bold", [20, 80, 160]);
+      doc.text(rec.title, margin + 8, y + 6);
+      setFont(9, "normal", [50, 50, 50]);
+      doc.text(recText, margin + 8, y + 12);
+      y += blockHeight + 6;
+    }
+
+    // ── What 70+ Teams See (ROI frame) ──
+    checkNewPage(50);
+    y += 4;
+    drawSectionHeader("What Teams Scoring 70+ Report");
+
+    const roiItems = [
+      ["Senior review time", "Down 40-60%"],
+      ["Output consistency", "Within 10% variance across team"],
+      ["New hire ramp time", "Cut by half"],
+      ["Re-prompting and context waste", "Near zero"],
+      ["Knowledge retention after departures", "90%+ preserved"],
+    ];
+
+    doc.setFillColor(240, 253, 244);
+    doc.roundedRect(margin, y, contentWidth, roiItems.length * 7 + 6, 3, 3, "F");
+
+    roiItems.forEach(([label, value], i) => {
+      const ry = y + 5 + i * 7;
+      setFont(9, "normal", [22, 101, 52]);
+      doc.text(label, margin + 6, ry);
+      setFont(9, "bold", [22, 101, 52]);
+      doc.text(value, pageWidth - margin - 6, ry, { align: "right" });
+    });
+    y += roiItems.length * 7 + 14;
+
+    // ── CTA ──
+    checkNewPage(40);
+    drawDivider();
+
+    setFont(14, "bold", [20, 80, 160]);
+    doc.text("Ready to close the gap?", margin, y);
+    y += 8;
+    writeWrapped(
+      "This report surfaces patterns. LIZA OS turns those patterns into infrastructure: shared standards that reach every AI session, structured learning loops, and full visibility into how your team executes with AI.",
+      9.5, "normal", [50, 50, 50]
+    );
+    y += 2;
+
+    setFont(10, "bold", [20, 80, 160]);
+    doc.text("Book a 30-minute walkthrough:", margin, y);
+    setFont(10, "normal", [20, 100, 180]);
+    doc.text("hello@lizaos.ai  |  lizaos.ai", margin, y + 6);
+    y += 14;
+
+    // Footer
+    setFont(8, "normal", [160, 160, 160]);
+    doc.text("Confidential. Prepared by LIZA OS. Data is anonymous and aggregated.", margin, pageHeight - 10);
+
+    doc.save(`AI-Execution-Audit_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
 
   return (
