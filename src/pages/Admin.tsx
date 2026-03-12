@@ -74,22 +74,92 @@ export default function AdminPage() {
       });
   }, [user]);
 
+  const loadData = useCallback(async (silent = false) => {
+    if (!silent) setLoadingData(true);
+
+    try {
+      const [profilesRes, rolesRes, diagRes] = await Promise.all([
+        supabase.from("profiles").select("user_id, display_name, avatar_url, created_at").order("created_at", { ascending: false }),
+        supabase.from("user_roles").select("user_id, role"),
+        supabase.from("diagnostic_results").select("*").order("created_at", { ascending: false }),
+      ]);
+
+      if (profilesRes.error || rolesRes.error || diagRes.error) {
+        console.error("Admin loadData error", {
+          profiles: profilesRes.error,
+          roles: rolesRes.error,
+          diagnostics: diagRes.error,
+        });
+        if (!silent) {
+          toast({
+            variant: "destructive",
+            title: "Could not refresh submissions",
+            description: "Please try again in a few seconds.",
+          });
+        }
+        return;
+      }
+
+      if (profilesRes.data) setProfiles(profilesRes.data);
+      if (rolesRes.data) setUserRoles(rolesRes.data as UserRole[]);
+      if (diagRes.data) setResults(diagRes.data as DiagnosticResult[]);
+    } finally {
+      if (!silent) setLoadingData(false);
+    }
+  }, [toast]);
+
   useEffect(() => {
     if (isArchitect) loadData();
-  }, [isArchitect, activeView]);
+  }, [isArchitect, activeView, loadData]);
 
-  const loadData = async () => {
-    setLoadingData(true);
-    const [profilesRes, rolesRes, diagRes] = await Promise.all([
-      supabase.from("profiles").select("user_id, display_name, avatar_url, created_at").order("created_at", { ascending: false }),
-      supabase.from("user_roles").select("user_id, role"),
-      supabase.from("diagnostic_results").select("*").order("created_at", { ascending: false }),
-    ]);
-    if (profilesRes.data) setProfiles(profilesRes.data);
-    if (rolesRes.data) setUserRoles(rolesRes.data as UserRole[]);
-    if (diagRes.data) setResults(diagRes.data as DiagnosticResult[]);
-    setLoadingData(false);
-  };
+  useEffect(() => {
+    if (!isArchitect || activeView !== "diagnostics") return;
+
+    let isActive = true;
+    let pollInterval = 4000;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const poll = async () => {
+      if (!isActive) return;
+      await loadData(true);
+      pollInterval = Math.min(pollInterval * 1.3, 15000);
+      timeoutId = setTimeout(poll, pollInterval);
+    };
+
+    const channel = supabase
+      .channel("admin-diagnostic-results-live")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "diagnostic_results",
+        },
+        () => {
+          pollInterval = 4000;
+          void loadData(true);
+        }
+      )
+      .subscribe((status) => {
+        if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
+          pollInterval = 4000;
+        }
+      });
+
+    const onFocus = () => {
+      void loadData(true);
+    };
+
+    window.addEventListener("focus", onFocus);
+    timeoutId = setTimeout(poll, pollInterval);
+
+    return () => {
+      isActive = false;
+      if (timeoutId) clearTimeout(timeoutId);
+      window.removeEventListener("focus", onFocus);
+      supabase.removeChannel(channel);
+    };
+  }, [isArchitect, activeView, loadData]);
 
   const handleInvite = async () => {
     if (!inviteEmail.trim()) return;
