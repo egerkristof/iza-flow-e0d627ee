@@ -10,7 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown } from "lucide-react";
+import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2 } from "lucide-react";
+import OrgInsights from "@/components/admin/OrgInsights";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 
@@ -37,7 +38,7 @@ interface UserRole {
   role: string;
 }
 
-type AdminView = "members" | "diagnostics";
+type AdminView = "members" | "diagnostics" | "org-insights";
 
 export default function AdminPage() {
   const { user, loading, signOut } = useAuth();
@@ -148,6 +149,7 @@ export default function AdminPage() {
   const sidebarItems: { key: AdminView; label: string; icon: React.ReactNode }[] = [
     { key: "members", label: "Members", icon: <Users className="h-4 w-4" /> },
     { key: "diagnostics", label: "Diagnostics", icon: <ClipboardList className="h-4 w-4" /> },
+    { key: "org-insights", label: "Org Insights", icon: <Building2 className="h-4 w-4" /> },
   ];
 
   return (
@@ -263,6 +265,10 @@ export default function AdminPage() {
                 </CardContent>
               </Card>
             </>
+          )}
+
+          {activeView === "org-insights" && (
+            <OrgInsights results={results} />
           )}
 
           {activeView === "diagnostics" && (
