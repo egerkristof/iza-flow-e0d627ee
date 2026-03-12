@@ -303,7 +303,7 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
           {/* Dimension bars */}
           <div className="px-4 md:px-6 py-5 space-y-3">
             {result.dimensions.map((d) => {
-              const label = SHORT_LABELS[d.dimension] || d.label;
+              const label = DIMENSION_LABELS[d.dimension as keyof typeof DIMENSION_LABELS] || d.label;
               return (
                 <div key={d.dimension} className="flex items-center gap-3">
                   <span className="text-xs font-medium text-muted-foreground w-24 shrink-0 text-right">{label}</span>
