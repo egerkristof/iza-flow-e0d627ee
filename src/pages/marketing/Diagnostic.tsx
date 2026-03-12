@@ -169,7 +169,7 @@ export default function DiagnosticPage() {
           )}
 
           {phase === "results" && result && (
-            <DiagnosticResults result={result} answers={answers} />
+            <DiagnosticResults result={result} answers={answers} existingRecordId={diagnosticRecordId} />
           )}
         </div>
       </div>
