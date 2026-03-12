@@ -1,0 +1,1 @@
+DELETE FROM diagnostic_results WHERE id IN ('6c76f93d-6d83-40b9-ab17-18b8e2be886c', 'a3c719ba-8128-4592-8be4-a4fe795de568');
