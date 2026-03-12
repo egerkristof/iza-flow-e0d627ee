@@ -409,7 +409,7 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
       {/* CTA */}
       <div className="text-center space-y-4 pb-8">
         <p className="text-base md:text-lg font-semibold text-foreground">
-          See what 70+ looks like for your team
+          See what 55+ looks like for your team
         </p>
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
           We'll walk through your results and show you how teams like yours made their AI investment compound.

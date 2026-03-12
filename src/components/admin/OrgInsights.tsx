@@ -527,10 +527,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       y += blockHeight + 6;
     }
 
-    // ── What 70+ Teams See (ROI frame) ──
+    // ── What 55+ Teams See (ROI frame) ──
     checkNewPage(50);
     y += 4;
-    drawSectionHeader("What Teams Scoring 70+ See in Their AI Usage");
+    drawSectionHeader("What Teams Scoring 55+ Report");
 
     const roiItems = [
       ["Time spent re-prompting / re-explaining context", "Near zero"],
