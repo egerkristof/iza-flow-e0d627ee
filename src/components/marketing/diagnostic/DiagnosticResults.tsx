@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { CAL_URL } from "@/components/marketing/home/shared";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
-import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp, Loader2, Sparkles } from "lucide-react";
+import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp, Loader2, Sparkles, Info } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -295,6 +296,22 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
                 <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">{"<"}1% of orgs reach this level</p>
               </div>
             </div>
+
+            {/* Scoring methodology */}
+            <Collapsible>
+              <CollapsibleTrigger className="flex items-center gap-1.5 mx-auto text-[11px] text-muted-foreground/60 hover:text-muted-foreground transition-colors pt-1">
+                <Info className="h-3 w-3" />
+                How is this scored?
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-3">
+                <div className="text-[11px] text-muted-foreground/70 max-w-lg mx-auto space-y-1.5 text-left bg-muted/30 rounded-lg p-3">
+                  <p><strong className="text-muted-foreground">10 scenario-based questions</strong> across 5 dimensions, each scored 1–4 based on observable team behaviours (not aspirations).</p>
+                  <p><strong className="text-muted-foreground">Dimension scores</strong> are the normalised average of 2 questions per dimension, scaled to 0–100. Equal weighting across all dimensions.</p>
+                  <p><strong className="text-muted-foreground">Overall score</strong> = unweighted mean of all 5 dimension scores.</p>
+                  <p><strong className="text-muted-foreground">Benchmarks</strong> are calibrated against the ServiceNow 2025 Enterprise AI Maturity Index (4,500 C-level executives, 16 countries), which found the global average at 35/100, down from 44 YoY, with fewer than 1% of organisations scoring above 50.</p>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
 
           {/* Divider */}
