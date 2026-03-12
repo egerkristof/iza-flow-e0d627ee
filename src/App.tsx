@@ -43,9 +43,12 @@ function ProtectedRoute({ children, blockedRoles }: { children: React.ReactNode;
 }
 
 function AuthRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+  const { user, loading, roles } = useAuth();
   if (loading) return null;
-  if (user) return <Navigate to="/app" replace />;
+  if (user) {
+    const isArchitect = roles.includes("architect");
+    return <Navigate to={isArchitect ? "/admin/manage" : "/app"} replace />;
+  }
   return <>{children}</>;
 }
 
