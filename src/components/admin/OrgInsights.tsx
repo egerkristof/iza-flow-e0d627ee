@@ -584,9 +584,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     // Footer
     setFont(8, "normal", [160, 160, 160]);
-    doc.text("Confidential. Prepared by LIZA OS. Data is anonymous and aggregated.", margin, pageHeight - 10);
+    doc.text(fullyAnonymized
+      ? "Prepared by LIZA OS. All identifying information removed for public distribution."
+      : "Confidential. Prepared by LIZA OS. Data is anonymous and aggregated.",
+      margin, pageHeight - 10);
 
-    doc.save(`AI-Execution-Audit_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`);
+    const fileName = fullyAnonymized
+      ? `AI-Execution-Audit_Anonymous_${new Date().toISOString().slice(0, 10)}.pdf`
+      : `AI-Execution-Audit_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`;
+    doc.save(fileName);
   };
 
   return (
