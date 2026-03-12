@@ -45,15 +45,15 @@ export const DIMENSION_SHORT: Record<Dimension, string> = {
 
 export const DIMENSION_DESCRIPTIONS: Record<Dimension, string> = {
   standard_internalization:
-    "Whether your team's defined way of working actually reaches AI sessions, or gets ignored when people open a new chat.",
+    "When someone on your team opens an AI chat, does your team's methodology, quality bar, and accumulated thinking actually reach that session, or do they start from a blank prompt every time?",
   output_consistency:
-    "Whether two people given the same brief produce comparable quality, or results depend entirely on who picks up the task.",
+    "If two people use AI on the same brief, how similar are the results? This measures whether AI amplifies team standards or individual habits.",
   knowledge_compounding:
-    "Whether discoveries and better approaches spread across the team, or stay locked in the individual who found them.",
+    "When someone discovers a better prompt, workflow, or AI technique, does it stay in their chat history or does the whole team benefit?",
   collective_visibility:
-    "Whether people can see how their colleagues work with AI and learn from it, or everyone operates in a black box.",
+    "Can your team see how each other uses AI? Can juniors learn from seniors' prompting? Can you report on AI effectiveness if asked?",
   learning_velocity:
-    "How quickly your team adopts better approaches after a project ends or a new technique emerges.",
+    "When a new AI technique or tool update emerges, how quickly does your team evaluate it, adopt it, and update their shared approach?",
 };
 
 export const QUESTIONS: DiagnosticQuestion[] = [
