@@ -570,6 +570,7 @@ export default function AdminPage() {
                   )}
                 </CardContent>
               </Card>
+            </>
           )}
         </div>
       </main>
