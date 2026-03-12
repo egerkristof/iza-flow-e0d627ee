@@ -298,10 +298,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += 4;
 
     // ── Key Takeaway Box ──
-    checkNewPage(35);
+    checkNewPage(40);
     doc.setFillColor(255, 251, 235);
     doc.setDrawColor(251, 191, 36);
-    doc.roundedRect(margin, y, contentWidth, 28, 3, 3, "FD");
+    doc.roundedRect(margin, y, contentWidth, 34, 3, 3, "FD");
 
     setFont(10, "bold", [146, 64, 14]);
     doc.text("KEY TAKEAWAY", margin + 6, y + 7);
@@ -311,12 +311,13 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     const strengthLabel = DIMENSION_LABELS[org.highestDimension.key as Dimension] || org.highestDimension.label;
     const gapCost = COST_PER_DIM[org.lowestDimension.key]?.[getTier(org.lowestDimension.score)] || "";
 
-    const takeawayText = `Your biggest gap is ${gapLabel} (${org.lowestDimension.score}/100): ${gapCost}. ` +
-      `Your strongest area is ${strengthLabel} (${org.highestDimension.score}/100). ` +
-      `Closing the gap between these two is your highest-leverage move.`;
+    const takeawayText = `Your team's biggest AI execution gap is ${gapLabel} (${org.lowestDimension.score}/100). ` +
+      `In practice: ${gapCost} ` +
+      `Meanwhile, ${strengthLabel} (${org.highestDimension.score}/100) shows your team can build structured AI habits. ` +
+      `The question is whether you can replicate that discipline across other areas before the gap widens.`;
     const takeawayLines = doc.splitTextToSize(takeawayText, contentWidth - 14);
     doc.text(takeawayLines, margin + 6, y + 14);
-    y += 34;
+    y += 40;
 
     // ════════════════════════════════════════════
     // PAGE 2: DETAILED ANALYSIS
