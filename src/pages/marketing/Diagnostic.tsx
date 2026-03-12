@@ -16,6 +16,7 @@ export default function DiagnosticPage() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
+  const [diagnosticRecordId, setDiagnosticRecordId] = useState<string | null>(null);
   const answersRef = useRef<Record<string, number>>({});
   const finishingRef = useRef(false);
 
@@ -29,12 +30,13 @@ export default function DiagnosticPage() {
       setResult(r);
       setPhase("results");
       try {
-        await (supabase as any).from("diagnostic_results").insert({
+        const { data } = await (supabase as any).from("diagnostic_results").insert({
           answers: finalAnswers,
           scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
           archetype: r.archetype.label,
           overall_score: r.overall,
-        });
+        }).select("id").single();
+        if (data?.id) setDiagnosticRecordId(data.id);
       } catch {
         // fail silently
       }
@@ -167,7 +169,7 @@ export default function DiagnosticPage() {
           )}
 
           {phase === "results" && result && (
-            <DiagnosticResults result={result} answers={answers} />
+            <DiagnosticResults result={result} answers={answers} existingRecordId={diagnosticRecordId} />
           )}
         </div>
       </div>

@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 interface Props {
   result: DiagnosticResult;
   answers: Record<string, number>;
+  existingRecordId?: string | null;
 }
 
 const BENCHMARK_AVG = 38;
@@ -183,7 +184,7 @@ function EmailCapture({
   );
 }
 
-export function DiagnosticResults({ result, answers }: Props) {
+export function DiagnosticResults({ result, answers, existingRecordId }: Props) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -208,15 +209,24 @@ export function DiagnosticResults({ result, answers }: Props) {
     if (!email.trim()) return;
     setLoading(true);
     try {
-      const insertResult = await (supabase as any).from("diagnostic_results").insert({
-        email: email.trim(),
-        answers,
-        scores: Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])),
-        archetype: result.archetype.label,
-        overall_score: result.overall,
-      }).select("id").single();
+      let diagnosticResultId = existingRecordId || null;
 
-      const diagnosticResultId = insertResult?.data?.id;
+      if (diagnosticResultId) {
+        // Update existing record with email
+        await (supabase as any).from("diagnostic_results")
+          .update({ email: email.trim() })
+          .eq("id", diagnosticResultId);
+      } else {
+        // Fallback: insert new record if no existing ID
+        const insertResult = await (supabase as any).from("diagnostic_results").insert({
+          email: email.trim(),
+          answers,
+          scores: Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])),
+          archetype: result.archetype.label,
+          overall_score: result.overall,
+        }).select("id").single();
+        diagnosticResultId = insertResult?.data?.id;
+      }
 
       const reportUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-diagnostic-report`;
       await fetch(reportUrl, {
