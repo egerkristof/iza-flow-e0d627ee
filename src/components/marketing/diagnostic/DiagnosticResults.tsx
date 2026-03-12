@@ -183,7 +183,8 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [expandedDim, setExpandedDim] = useState<string | null>(null);
+  const sorted0 = [...result.dimensions].sort((a, b) => a.score - b.score);
+  const [expandedDim, setExpandedDim] = useState<string | null>(sorted0[0]?.dimension ?? null);
 
   const scoreColor =
     result.overall <= 30
