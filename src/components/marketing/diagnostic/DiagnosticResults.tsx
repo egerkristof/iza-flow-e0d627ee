@@ -236,6 +236,7 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
           archetype: result.archetype,
           dimensions: result.dimensions,
           diagnostic_result_id: diagnosticResultId || null,
+          results_base_url: window.location.origin,
         }),
       });
 
@@ -291,9 +292,9 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
               </div>
               <div className="w-px h-10 bg-border" />
               <div className="text-center">
-                <p className="text-xs text-muted-foreground">Structured teams</p>
+               <p className="text-xs text-muted-foreground">Codified teams</p>
                 <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
-                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">{"<"}1% of orgs reach this level</p>
+                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">Teams with shared AI standards</p>
               </div>
             </div>
 
@@ -338,6 +339,28 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
         </CardContent>
       </Card>
 
+
+      {/* === Pattern Alert: wide dimension spread === */}
+      {(() => {
+        const scores = result.dimensions.map((d) => d.score);
+        const spread = Math.max(...scores) - Math.min(...scores);
+        if (spread <= 30) return null;
+        const strongest = [...result.dimensions].sort((a, b) => b.score - a.score)[0];
+        const strongLabel = DIMENSION_LABELS[strongest.dimension as keyof typeof DIMENSION_LABELS] || strongest.label;
+        return (
+          <Card className="border-amber-500/30 bg-amber-500/5">
+            <CardContent className="p-4 md:p-5 flex items-start gap-3">
+              <span className="text-lg mt-0.5">⚡</span>
+              <div className="space-y-1">
+                <p className="text-sm font-bold text-foreground">Pattern Alert: {spread}-point spread detected</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Your strongest area ({strongLabel}: {strongest.score}) and weakest ({weakestLabel}: {weakest.score}) are far apart. This often signals pockets of excellence that haven't been systematised. The gap isn't a failure; it's untapped leverage.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })()}
 
       {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
@@ -431,16 +454,14 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
           We'll walk through your results and show you how teams like yours made their AI investment compound.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <div className="flex flex-col items-center gap-3 pt-2">
           <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
             <Button variant="brand" size="lg" className="text-base">
-              Book a 30-Min Walkthrough <ArrowRight className="w-4 h-4" />
+              Book a Discovery Call <ArrowRight className="w-4 h-4" />
             </Button>
           </a>
-          <Link to="/">
-            <Button variant="outline" size="lg" className="text-base">
-              Explore the Platform
-            </Button>
+          <Link to="/" className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors">
+            Explore the Platform →
           </Link>
         </div>
       </div>

@@ -23,6 +23,7 @@ interface RequestBody {
   archetype: { label: string; tagline: string; action: string };
   dimensions: DimensionScore[];
   diagnostic_result_id?: string;
+  results_base_url?: string;
 }
 
 const FRIENDLY_LABELS: Record<string, string> = {
@@ -47,7 +48,7 @@ serve(async (req) => {
   }
 
   try {
-    const { email, overall, archetype, dimensions, diagnostic_result_id } =
+    const { email, overall, archetype, dimensions, diagnostic_result_id, results_base_url } =
       (await req.json()) as RequestBody;
 
     if (!email?.trim()) {
@@ -80,15 +81,16 @@ For context: the industry average AI execution maturity score is 35/100, based o
 
 Write a personalized 3-step action plan framed as "What teams who score 55+ do differently." This is aspirational, not remedial. Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
-2. For each step, include:
+2. IMPORTANT: Step 1 must be something ONE person can do alone, today, in under 30 minutes. This lowers activation energy and creates immediate momentum.
+3. For each step, include:
    - A clear action title (5-8 words, framed as what high-performers do)
    - What to do manually (2-3 sentences, the "start here" approach)
    - How LIZA OS makes this structural and automatic (1-2 sentences, always start with "With the right infrastructure, like LIZA OS..." to name the platform explicitly)
-3. Steps should progress: visibility → codification → compounding
-4. Use second person ("you", "your team")
-5. Be specific to their archetype and weakest dimensions, not generic advice
-6. Use their language: "playbook", "what good looks like", "our way of doing things". Not "governance", "knowledge management"
-7. IMPORTANT: Do not use em-dashes anywhere. Use periods, commas, or colons instead.
+4. Steps should progress: individual action → codification → compounding
+5. Use second person ("you", "your team")
+6. Be specific to their archetype and weakest dimensions, not generic advice
+7. Use their language: "playbook", "what good looks like", "our way of doing things". Not "governance", "knowledge management"
+8. IMPORTANT: Do not use em-dashes anywhere. Use periods, commas, or colons instead.
 
 Return ONLY valid JSON in this exact format:
 {
@@ -228,28 +230,28 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;max-width:480px;margin-left:auto;margin-right:auto;">${archetype.tagline}</p>
     </div>
 
-    <!-- Results framing: what teams are actually achieving -->
+    <!-- Results framing: what teams are actually achieving (reframed as questions) -->
     <div style="margin-bottom:28px;padding:20px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">
-      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">What teams scoring 55+ report</p>
+      <p style="margin:0 0 12px;font-size:15px;font-weight:700;color:#166534;">How do teams scoring 55+ compare?</p>
       <table style="width:100%;border-collapse:collapse;">
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ Senior review time</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Down 40–60%</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">⏱️ How much time do seniors spend reviewing AI output?</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">40–60% less</td>
         </tr>
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">📋 Output consistency</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Within 10% variance</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">📋 If two people get the same brief, how similar are results?</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Within 10%</td>
         </tr>
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">🚀 New hire ramp time</td>
-          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Cut by half</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">🚀 How long before new hires deliver at team standard?</td>
+          <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Half the time</td>
         </tr>
         <tr>
-          <td style="padding:6px 0;font-size:13px;color:#166534;">🔄 Re-prompting waste</td>
+          <td style="padding:6px 0;font-size:13px;color:#166534;">🔄 How often does the team re-prompt for the same task?</td>
           <td style="padding:6px 0;font-size:13px;font-weight:700;color:#166534;text-align:right;">Near zero</td>
         </tr>
       </table>
-      <p style="margin:12px 0 0;font-size:12px;color:#4ade80;">These are firms who codified their standards and made them available to every AI session.</p>
+      <p style="margin:12px 0 0;font-size:12px;color:#4ade80;">These are teams who codified their standards and made them available to every AI session.</p>
     </div>
 
     <!-- Benchmark context -->
@@ -259,7 +261,7 @@ Return ONLY valid JSON in this exact format:
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">Structured teams: <strong>55+</strong></span>
+        <span style="font-size:12px;color:#64748b;">Codified teams: <strong>55+</strong></span>
       </div>
       <p style="margin:8px 0 0;font-size:10px;color:#94a3b8;max-width:460px;margin-left:auto;margin-right:auto;">Benchmarked against ServiceNow's 2025 Enterprise AI Maturity Index (4,500 C-level execs, 16 countries). Fewer than 1% of organisations score above 50.</p>
       <p style="margin:6px 0 0;font-size:10px;color:#cbd5e1;max-width:460px;margin-left:auto;margin-right:auto;">Scoring: 10 scenario-based questions across 5 dimensions, each scored 1-4 on observable team behaviours. Dimension scores normalised to 0-100. Overall = unweighted mean of all dimensions.</p>
@@ -271,6 +273,14 @@ Return ONLY valid JSON in this exact format:
       <table style="width:100%;border-collapse:collapse;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">
         ${dimensionRows}
       </table>
+    </div>
+
+    <!-- CTA — placed ABOVE action plan for visibility -->
+    <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:28px;">
+      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 55+ looks like for your team</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how teams like yours made their AI investment compound.</p>
+      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
+      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">How LIZA OS works →</a></p>
     </div>
 
     <!-- Action Plan with context -->
@@ -285,13 +295,11 @@ Return ONLY valid JSON in this exact format:
       ${stepsHtml}
     </div>
 
-    <!-- CTA -->
-    <div style="text-align:center;padding:24px;background:#f0f9ff;border-radius:12px;margin-bottom:24px;">
-      <p style="margin:0 0 8px;font-size:16px;font-weight:700;color:#1a1a2e;">See what 55+ looks like for your team</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;">We'll walk through your results and show you how teams like yours made their AI investment compound.</p>
-      <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book a Discovery Call →</a>
-      <p style="margin:12px 0 0;"><a href="https://lizaos.ai" style="font-size:13px;color:#0284c7;text-decoration:underline;">Explore LIZA OS →</a></p>
-    </div>
+    <!-- Re-engagement: link back to results -->
+    ${diagnostic_result_id ? `
+    <div style="text-align:center;margin-bottom:24px;">
+      <a href="${results_base_url || 'https://iza-flow.lovable.app'}/diagnostic?result=${diagnostic_result_id}" style="font-size:13px;color:#0284c7;text-decoration:underline;">View your full results online →</a>
+    </div>` : ""}
 
     <!-- Footer -->
     <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">

@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { DiagnosticQuestion } from "@/components/marketing/diagnostic/DiagnosticQuestion";
 import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticResults";
@@ -12,6 +13,7 @@ import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 type Phase = "intro" | "questions" | "calculating" | "results";
 
 export default function DiagnosticPage() {
+  const [searchParams] = useSearchParams();
   const [phase, setPhase] = useState<Phase>("intro");
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -19,6 +21,29 @@ export default function DiagnosticPage() {
   const [diagnosticRecordId, setDiagnosticRecordId] = useState<string | null>(null);
   const answersRef = useRef<Record<string, number>>({});
   const finishingRef = useRef(false);
+
+  // Handle ?result=<id> for re-engagement links from email
+  useEffect(() => {
+    const resultId = searchParams.get("result");
+    if (!resultId) return;
+    (async () => {
+      try {
+        const { data } = await (supabase as any)
+          .from("diagnostic_results")
+          .select("answers, scores, archetype, overall_score")
+          .eq("id", resultId)
+          .single();
+        if (!data) return;
+        const r = calculateResults(data.answers || {});
+        setResult(r);
+        setAnswers(data.answers || {});
+        setDiagnosticRecordId(resultId);
+        setPhase("results");
+      } catch {
+        // Invalid ID, just show intro
+      }
+    })();
+  }, [searchParams]);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
