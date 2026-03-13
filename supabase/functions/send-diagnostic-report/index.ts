@@ -513,7 +513,7 @@ Return ONLY valid JSON in this exact format:
     }).catch((e) => console.error("Founder notify failed:", e));
 
     return new Response(
-      JSON.stringify({ success: true }),
+      JSON.stringify({ success: true, diagnostic_result_id: resolvedDiagnosticRecordId }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
