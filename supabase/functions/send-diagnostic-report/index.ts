@@ -295,11 +295,11 @@ Return ONLY valid JSON in this exact format:
     }
 
     // ── Step 3: Persist action plan back to the record ──
-    if (diagnostic_result_id) {
+    if (resolvedDiagnosticRecordId) {
       await supabaseAdmin
         .from("diagnostic_results")
         .update({ email_action_plan: actionPlan })
-        .eq("id", diagnostic_result_id)
+        .eq("id", resolvedDiagnosticRecordId)
         .then(({ error }) => {
           if (error) console.error("Failed to store action plan:", error);
         });
