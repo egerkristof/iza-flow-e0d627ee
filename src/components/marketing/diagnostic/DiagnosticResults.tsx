@@ -267,7 +267,7 @@ function EmailCapture({
             />
             <Button
               onClick={onSubmit}
-              disabled={loading || !email.trim()}
+              disabled={loading || !email.trim() || !respondentRole.trim() || !teamSize}
               variant={variant === "primary" ? "brand" : "default"}
               size={variant === "primary" ? "lg" : "default"}
               className="w-full sm:w-auto"
