@@ -578,9 +578,11 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     for (const rec of recommendations) {
       // Calculate total block height
       const whatLines = doc.splitTextToSize(rec.what, contentWidth - 14);
-      const howLines = doc.splitTextToSize(`How: ${rec.how}`, contentWidth - 14);
+      const howLabel = "How: ";
+      const howFullText = howLabel + rec.how;
+      const howLines = doc.splitTextToSize(howFullText, contentWidth - 14);
       const lizaLines = doc.splitTextToSize(rec.liza, contentWidth - 14);
-      const blockHeight = 10 + whatLines.length * 3.8 + 4 + howLines.length * 3.8 + 4 + lizaLines.length * 3.8 + 6;
+      const blockHeight = 10 + whatLines.length * 3.8 + 5 + howLines.length * 3.8 + 5 + lizaLines.length * 3.8 + 6;
 
       checkNewPage(blockHeight + 8);
 
@@ -598,14 +600,23 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       // What
       setFont(9, "normal", [50, 50, 50]);
       doc.text(whatLines, margin + 8, innerY);
-      innerY += whatLines.length * 3.8 + 4;
+      innerY += whatLines.length * 3.8 + 5;
 
-      // How (bold label)
+      // How - render "How: " bold on first line, then continue normal
       setFont(9, "bold", [30, 30, 30]);
-      doc.text("How: ", margin + 8, innerY);
-      setFont(9, "normal", [50, 50, 50]);
-      doc.text(howLines, margin + 8, innerY);
-      innerY += howLines.length * 3.8 + 4;
+      const howLabelWidth = doc.getTextWidth(howLabel);
+      doc.text(howLabel, margin + 8, innerY);
+      // Render first line remainder after "How: "
+      if (howLines.length > 0) {
+        const firstLineRemainder = howLines[0].substring(howLabel.length);
+        setFont(9, "normal", [50, 50, 50]);
+        doc.text(firstLineRemainder, margin + 8 + howLabelWidth, innerY);
+        // Render remaining lines
+        if (howLines.length > 1) {
+          doc.text(howLines.slice(1), margin + 8, innerY + 3.8);
+        }
+      }
+      innerY += howLines.length * 3.8 + 5;
 
       // LIZA OS (italic)
       setFont(8.5, "italic", [20, 80, 160]);
