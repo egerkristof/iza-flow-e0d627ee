@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/integrations/supabase/client";
+
 import { CAL_URL } from "@/components/marketing/home/shared";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp, Loader2, Sparkles, Info, Copy, Check, Users } from "lucide-react";
