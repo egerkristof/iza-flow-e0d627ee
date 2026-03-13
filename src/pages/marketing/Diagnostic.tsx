@@ -232,6 +232,7 @@ export default function DiagnosticPage() {
               result={result}
               answers={answers}
               existingRecordId={recordIdRef.current}
+              sessionId={sessionId}
             />
           )}
         </div>
