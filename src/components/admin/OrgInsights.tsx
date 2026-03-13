@@ -576,49 +576,52 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
           ];
 
     for (const rec of recommendations) {
-      // Calculate total block height
-      const whatLines = doc.splitTextToSize(rec.what, contentWidth - 14);
-      const howLabel = "How: ";
-      const howFullText = howLabel + rec.how;
-      const howLines = doc.splitTextToSize(howFullText, contentWidth - 14);
-      const lizaLines = doc.splitTextToSize(rec.liza, contentWidth - 14);
-      const blockHeight = 10 + whatLines.length * 3.8 + 5 + howLines.length * 3.8 + 5 + lizaLines.length * 3.8 + 6;
+      const textWidth = contentWidth - 16;
+      const lineH = 3.8;
+
+      // Pre-measure all text sections
+      setFont(9, "normal", [50, 50, 50]);
+      const whatLines = doc.splitTextToSize(rec.what, textWidth);
+
+      setFont(9, "normal", [50, 50, 50]);
+      const howLines = doc.splitTextToSize(rec.how, textWidth);
+
+      setFont(8.5, "italic", [20, 80, 160]);
+      const lizaLines = doc.splitTextToSize(rec.liza, textWidth);
+
+      // Calculate block height: title(7) + gap(6) + what + gap(5) + "How:" label(4) + how + gap(5) + liza + padding(6)
+      const blockHeight = 7 + 6 + (whatLines.length * lineH) + 5 + 4 + (howLines.length * lineH) + 5 + (lizaLines.length * lineH) + 6;
 
       checkNewPage(blockHeight + 8);
 
-      // Colored left-border block
+      // Background + left border
       doc.setFillColor(240, 249, 255);
       doc.roundedRect(margin, y, contentWidth, blockHeight, 2, 2, "F");
       doc.setFillColor(20, 100, 180);
       doc.rect(margin, y, 3, blockHeight, "F");
 
+      let innerY = y + 7;
+
       // Title
       setFont(10, "bold", [20, 80, 160]);
-      doc.text(rec.title, margin + 8, y + 7);
-      let innerY = y + 13;
+      doc.text(rec.title, margin + 8, innerY);
+      innerY += 6;
 
-      // What
+      // What (problem statement)
       setFont(9, "normal", [50, 50, 50]);
       doc.text(whatLines, margin + 8, innerY);
-      innerY += whatLines.length * 3.8 + 5;
+      innerY += whatLines.length * lineH + 5;
 
-      // How - render "How: " bold on first line, then continue normal
+      // How label on its own, then body text below
       setFont(9, "bold", [30, 30, 30]);
-      const howLabelWidth = doc.getTextWidth(howLabel);
-      doc.text(howLabel, margin + 8, innerY);
-      // Render first line remainder after "How: "
-      if (howLines.length > 0) {
-        const firstLineRemainder = howLines[0].substring(howLabel.length);
-        setFont(9, "normal", [50, 50, 50]);
-        doc.text(firstLineRemainder, margin + 8 + howLabelWidth, innerY);
-        // Render remaining lines
-        if (howLines.length > 1) {
-          doc.text(howLines.slice(1), margin + 8, innerY + 3.8);
-        }
-      }
-      innerY += howLines.length * 3.8 + 5;
+      doc.text("How:", margin + 8, innerY);
+      innerY += 4;
 
-      // LIZA OS (italic)
+      setFont(9, "normal", [50, 50, 50]);
+      doc.text(howLines, margin + 8, innerY);
+      innerY += howLines.length * lineH + 5;
+
+      // LIZA OS line
       setFont(8.5, "italic", [20, 80, 160]);
       doc.text(lizaLines, margin + 8, innerY);
 
