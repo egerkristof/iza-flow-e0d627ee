@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -10,11 +10,18 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2, RefreshCw, ExternalLink } from "lucide-react";
+import {
+  Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck,
+  Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2,
+  RefreshCw, Zap, BarChart3, BookOpen, Layers, Loader2, Target, Crosshair,
+  TrendingUp,
+} from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
+import ReactMarkdown from "react-markdown";
 
+/* ── Types ── */
 interface Profile {
   user_id: string;
   display_name: string | null;
@@ -38,7 +45,59 @@ interface UserRole {
   role: string;
 }
 
-type AdminView = "members" | "diagnostics" | "org-insights";
+interface ResearchEntry {
+  id: string;
+  category: string;
+  result_content: string;
+  submission_count: number;
+  created_at: string;
+}
+
+type AdminView = "members" | "diagnostics" | "org-insights" | "insights-lab";
+type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
+
+/* ── Helpers ── */
+const FREE_DOMAINS = new Set([
+  "gmail.com","yahoo.com","hotmail.com","outlook.com","aol.com",
+  "icloud.com","mail.com","protonmail.com","zoho.com","live.com",
+]);
+
+function getConfidenceTier(n: number): { label: string; color: string; description: string } {
+  if (n < 10) return { label: "Early Signal", color: "bg-amber-500/20 text-amber-700 border-amber-300", description: `${n} submissions — directional only` };
+  if (n < 30) return { label: "Growing Dataset", color: "bg-blue-500/20 text-blue-700 border-blue-300", description: `${n} submissions — patterns emerging` };
+  return { label: "Benchmark-Ready", color: "bg-emerald-500/20 text-emerald-700 border-emerald-300", description: `${n} submissions — statistically meaningful` };
+}
+
+const CATEGORY_META: Record<ResearchCategory, { label: string; icon: React.ReactNode; description: string }> = {
+  icp_reality_check: {
+    label: "ICP Reality Check",
+    icon: <Crosshair className="h-4 w-4" />,
+    description: "What 50-150 person teams actually do with AI today — the messy truth",
+  },
+  contrarian_positioning: {
+    label: "Contrarian Takes",
+    icon: <Target className="h-4 w-4" />,
+    description: "Polarizing angles that challenge mainstream AI productivity narratives",
+  },
+  execution_stack_shifts: {
+    label: "Execution Stack Shifts",
+    icon: <Zap className="h-4 w-4" />,
+    description: "New tools, agent frameworks, workflow changes relevant to your data",
+  },
+  maturity_benchmarks: {
+    label: "Maturity Benchmarks",
+    icon: <BarChart3 className="h-4 w-4" />,
+    description: "Industry reports you can contrast with your proprietary findings",
+  },
+};
+
+const DIM_KEYS: Dimension[] = [
+  "standard_internalization",
+  "output_consistency",
+  "knowledge_compounding",
+  "collective_visibility",
+  "learning_velocity",
+];
 
 export default function AdminPage() {
   const { user, loading, signOut } = useAuth();
@@ -61,6 +120,12 @@ export default function AdminPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [loadingData, setLoadingData] = useState(true);
 
+  // Insights Lab state
+  const [pastResearch, setPastResearch] = useState<ResearchEntry[]>([]);
+  const [activeCategory, setActiveCategory] = useState<ResearchCategory>("icp_reality_check");
+  const [researching, setResearching] = useState(false);
+  const [liveResult, setLiveResult] = useState<string | null>(null);
+
   // Check if current user is architect
   useEffect(() => {
     if (!user) return;
@@ -78,10 +143,11 @@ export default function AdminPage() {
     if (!silent) setLoadingData(true);
 
     try {
-      const [profilesRes, rolesRes, diagRes] = await Promise.all([
+      const [profilesRes, rolesRes, diagRes, researchRes] = await Promise.all([
         supabase.from("profiles").select("user_id, display_name, avatar_url, created_at").order("created_at", { ascending: false }),
         supabase.from("user_roles").select("user_id, role"),
         supabase.from("diagnostic_results").select("*").order("created_at", { ascending: false }),
+        (supabase as any).from("insights_research").select("*").order("created_at", { ascending: false }).limit(20),
       ]);
 
       if (profilesRes.error || rolesRes.error || diagRes.error) {
@@ -103,6 +169,7 @@ export default function AdminPage() {
       if (profilesRes.data) setProfiles(profilesRes.data);
       if (rolesRes.data) setUserRoles(rolesRes.data as UserRole[]);
       if (diagRes.data) setResults(diagRes.data as DiagnosticResult[]);
+      if (researchRes.data) setPastResearch(researchRes.data as ResearchEntry[]);
     } finally {
       if (!silent) setLoadingData(false);
     }
@@ -110,7 +177,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (isArchitect) loadData();
-  }, [isArchitect, activeView, loadData]);
+  }, [isArchitect, loadData]);
 
   useEffect(() => {
     if (!isArchitect || activeView !== "diagnostics") return;
@@ -160,6 +227,94 @@ export default function AdminPage() {
       supabase.removeChannel(channel);
     };
   }, [isArchitect, activeView, loadData]);
+
+  /* ── Aggregate computation ── */
+  const aggregate = useMemo(() => {
+    if (!results.length) return null;
+
+    const overallAvg = Math.round(results.reduce((s, r) => s + r.overall_score, 0) / results.length);
+
+    const dimSums: Record<string, number[]> = {};
+    for (const r of results) {
+      for (const [key, val] of Object.entries(r.scores as Record<string, number>)) {
+        if (!dimSums[key]) dimSums[key] = [];
+        dimSums[key].push(val);
+      }
+    }
+    const dimensions: Record<string, number> = {};
+    let weakest = { key: "", score: 100 };
+    let strongest = { key: "", score: 0 };
+    for (const [key, vals] of Object.entries(dimSums)) {
+      const avg = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+      dimensions[key] = avg;
+      if (avg < weakest.score) weakest = { key, score: avg };
+      if (avg > strongest.score) strongest = { key, score: avg };
+    }
+
+    const orgDomains = new Set<string>();
+    for (const r of results) {
+      if (!r.email) continue;
+      const domain = r.email.split("@")[1]?.toLowerCase();
+      if (domain && !FREE_DOMAINS.has(domain)) orgDomains.add(domain);
+    }
+
+    const archCounts: Record<string, number> = {};
+    for (const r of results) archCounts[r.archetype] = (archCounts[r.archetype] || 0) + 1;
+    const topArchetype = Object.entries(archCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
+
+    const confidence = getConfidenceTier(results.length);
+
+    return {
+      totalSubmissions: results.length,
+      orgCount: orgDomains.size,
+      overallAvg,
+      dimensions,
+      weakestDimension: DIMENSION_LABELS[weakest.key as Dimension] || weakest.key,
+      strongestDimension: DIMENSION_LABELS[strongest.key as Dimension] || strongest.key,
+      topArchetype,
+      confidenceTier: confidence.label,
+      confidence,
+    };
+  }, [results]);
+
+  /* ── Research trigger ── */
+  const runResearch = async () => {
+    if (!aggregate) return;
+    setResearching(true);
+    setLiveResult(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("run-insights-research", {
+        body: {
+          category: activeCategory,
+          aggregate_data: {
+            totalSubmissions: aggregate.totalSubmissions,
+            orgCount: aggregate.orgCount,
+            overallAvg: aggregate.overallAvg,
+            dimensions: aggregate.dimensions,
+            weakestDimension: aggregate.weakestDimension,
+            strongestDimension: aggregate.strongestDimension,
+            topArchetype: aggregate.topArchetype,
+            confidenceTier: aggregate.confidenceTier,
+          },
+        },
+      });
+
+      if (error) throw error;
+      setLiveResult(data.content);
+      const { data: refreshed } = await (supabase as any)
+        .from("insights_research")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(20);
+      if (refreshed) setPastResearch(refreshed as ResearchEntry[]);
+    } catch (err: any) {
+      console.error("Research error:", err);
+      setLiveResult(`**Error:** ${err.message || "Research failed. Please try again."}`);
+    } finally {
+      setResearching(false);
+    }
+  };
 
   const handleInvite = async () => {
     if (!inviteEmail.trim()) return;
@@ -220,6 +375,7 @@ export default function AdminPage() {
     { key: "members", label: "Members", icon: <Users className="h-4 w-4" /> },
     { key: "diagnostics", label: "Diagnostics", icon: <ClipboardList className="h-4 w-4" /> },
     { key: "org-insights", label: "Org Insights", icon: <Building2 className="h-4 w-4" /> },
+    { key: "insights-lab", label: "Insights Lab", icon: <Lightbulb className="h-4 w-4" /> },
   ];
 
   return (
@@ -236,12 +392,12 @@ export default function AdminPage() {
             <span className="text-xs">Sign out</span>
           </Button>
         </div>
-        <nav className="flex border-t border-border">
+        <nav className="flex border-t border-border overflow-x-auto">
           {sidebarItems.map((item) => (
             <button
               key={item.key}
               onClick={() => setActiveView(item.key)}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors border-b-2 ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors border-b-2 whitespace-nowrap px-2 ${
                 activeView === item.key
                   ? "border-primary text-primary"
                   : "border-transparent text-muted-foreground hover:text-foreground"
@@ -251,13 +407,6 @@ export default function AdminPage() {
               {item.label}
             </button>
           ))}
-          <button
-            onClick={() => navigate("/admin/insights")}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors border-b-2 border-transparent text-muted-foreground hover:text-foreground"
-          >
-            <Lightbulb className="h-4 w-4" />
-            Lab
-          </button>
         </nav>
       </div>
 
@@ -283,14 +432,6 @@ export default function AdminPage() {
               {item.label}
             </button>
           ))}
-          <button
-            onClick={() => navigate("/admin/insights")}
-            className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors text-muted-foreground hover:bg-accent hover:text-foreground"
-          >
-            <Lightbulb className="h-4 w-4" />
-            Insights Lab
-            <ExternalLink className="h-3 w-3 ml-auto opacity-50" />
-          </button>
         </nav>
 
         <div className="border-t border-border p-3">
@@ -439,8 +580,7 @@ export default function AdminPage() {
                               <TableRow>
                                 <TableCell colSpan={5} className="bg-muted/30 p-0">
                                   <div className="p-5 space-y-6">
-
-                                    {/* ── Results Preview ── */}
+                                    {/* Results Preview */}
                                     <div>
                                       <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3">Results Preview</h4>
                                       <div className="flex items-start gap-6 flex-wrap">
@@ -464,7 +604,7 @@ export default function AdminPage() {
                                       </div>
                                     </div>
 
-                                    {/* ── Email Status ── */}
+                                    {/* Email Status */}
                                     <div>
                                       <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">Email Report</h4>
                                       {r.email ? (
@@ -481,7 +621,7 @@ export default function AdminPage() {
                                       )}
                                     </div>
 
-                                    {/* ── Results Page Recommendations ── */}
+                                    {/* Results Page Recommendations */}
                                     <div>
                                       <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
                                         <Eye className="h-3.5 w-3.5" />
@@ -517,7 +657,7 @@ export default function AdminPage() {
                                       })()}
                                     </div>
 
-                                    {/* ── Email Action Plan ── */}
+                                    {/* Email Action Plan */}
                                     <div>
                                       <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
                                         <Lightbulb className="h-3.5 w-3.5" />
@@ -540,7 +680,7 @@ export default function AdminPage() {
                                       )}
                                     </div>
 
-                                    {/* ── Exact Questions & Answers ── */}
+                                    {/* Exact Questions & Answers */}
                                     <div>
                                       <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
                                         <MessageSquareText className="h-3.5 w-3.5" />
@@ -587,8 +727,221 @@ export default function AdminPage() {
               </Card>
             </>
           )}
+
+          {/* ── Insights Lab Tab ── */}
+          {activeView === "insights-lab" && (
+            <>
+              {loadingData ? (
+                <div className="flex items-center justify-center py-20 text-muted-foreground gap-2">
+                  <Loader2 className="h-5 w-5 animate-spin" /> Loading data…
+                </div>
+              ) : !aggregate ? (
+                <Card>
+                  <CardContent className="py-12 text-center text-muted-foreground">
+                    No diagnostic submissions yet. Research angles will appear once data flows in.
+                  </CardContent>
+                </Card>
+              ) : (
+                <>
+                  {/* Aggregate Dashboard */}
+                  <div>
+                    <h1 className="text-xl font-bold text-foreground mb-1">Aggregate Intelligence</h1>
+                    <p className="text-sm text-muted-foreground">
+                      Proprietary data from {aggregate.totalSubmissions} submissions across {aggregate.orgCount} organizations
+                    </p>
+                  </div>
+
+                  {/* Confidence Tier */}
+                  <div className="flex items-center gap-3">
+                    <Badge variant="outline" className={`${aggregate.confidence.color} text-xs px-3 py-1 border`}>
+                      {aggregate.confidence.label}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">{aggregate.confidence.description}</span>
+                  </div>
+
+                  {/* Score Cards */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">Overall Average</p>
+                        <p className="text-3xl font-bold text-foreground">{aggregate.overallAvg}</p>
+                        <p className="text-xs text-muted-foreground mt-1">/100</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">Submissions</p>
+                        <p className="text-3xl font-bold text-foreground">{aggregate.totalSubmissions}</p>
+                        <p className="text-xs text-muted-foreground mt-1">total</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">Top Archetype</p>
+                        <p className="text-lg font-semibold text-foreground leading-tight">{aggregate.topArchetype}</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">Organizations</p>
+                        <p className="text-3xl font-bold text-foreground">{aggregate.orgCount}</p>
+                        <p className="text-xs text-muted-foreground mt-1">unique domains</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Dimension Bars */}
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base">Dimension Averages</CardTitle>
+                      <CardDescription>Cumulative scores across all submissions</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {DIM_KEYS.map((dim) => {
+                        const score = aggregate.dimensions[dim] ?? 0;
+                        const isWeakest = DIMENSION_LABELS[dim] === aggregate.weakestDimension;
+                        const isStrongest = DIMENSION_LABELS[dim] === aggregate.strongestDimension;
+                        return (
+                          <div key={dim} className="space-y-1">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className={`font-medium ${isWeakest ? "text-destructive" : isStrongest ? "text-primary" : "text-foreground"}`}>
+                                {DIMENSION_LABELS[dim]}
+                                {isWeakest && <TrendingUp className="inline h-3 w-3 ml-1 rotate-180" />}
+                                {isStrongest && <TrendingUp className="inline h-3 w-3 ml-1" />}
+                              </span>
+                              <span className="font-mono text-xs text-muted-foreground">{score}/100</span>
+                            </div>
+                            <div className="h-2 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className={`h-full rounded-full transition-all ${isWeakest ? "bg-destructive" : isStrongest ? "bg-primary" : "bg-primary/60"}`}
+                                style={{ width: `${score}%` }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </CardContent>
+                  </Card>
+
+                  {/* Research Angles Engine */}
+                  <div className="border-t border-border pt-6">
+                    <h2 className="text-lg font-bold text-foreground mb-1 flex items-center gap-2">
+                      <BookOpen className="h-5 w-5 text-primary" />
+                      Research &amp; Content Angles
+                    </h2>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Generate ICP-targeted, polarizing content angles from your proprietary data.
+                    </p>
+
+                    {/* Category Selector */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+                      {(Object.entries(CATEGORY_META) as [ResearchCategory, typeof CATEGORY_META[ResearchCategory]][]).map(
+                        ([key, meta]) => (
+                          <button
+                            key={key}
+                            onClick={() => { setActiveCategory(key); setLiveResult(null); }}
+                            className={`flex items-center gap-2.5 px-4 py-3 rounded-lg border text-sm font-medium transition-all text-left ${
+                              activeCategory === key
+                                ? "border-primary bg-primary/10 text-primary"
+                                : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                            }`}
+                          >
+                            {meta.icon}
+                            <div>
+                              <div>{meta.label}</div>
+                              <div className="text-xs font-normal opacity-70">{meta.description}</div>
+                            </div>
+                          </button>
+                        )
+                      )}
+                    </div>
+
+                    {/* Run Button */}
+                    <Button
+                      onClick={runResearch}
+                      disabled={researching}
+                      className="gap-2 mb-4"
+                    >
+                      {researching ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                      {researching ? "Researching…" : "Generate Research Angles"}
+                    </Button>
+
+                    {/* Live Result */}
+                    {liveResult && (
+                      <Card className="border-primary/20">
+                        <CardHeader className="pb-2">
+                          <div className="flex items-center justify-between">
+                            <CardTitle className="text-base flex items-center gap-2">
+                              <Lightbulb className="h-4 w-4 text-primary" />
+                              Fresh Research — {CATEGORY_META[activeCategory].label}
+                            </CardTitle>
+                            <Badge variant="outline" className={aggregate.confidence.color}>
+                              n={aggregate.totalSubmissions}
+                            </Badge>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="prose prose-sm max-w-none dark:prose-invert">
+                            <ReactMarkdown>{liveResult}</ReactMarkdown>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
+
+                  {/* Past Research */}
+                  {pastResearch.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                        <Layers className="h-4 w-4" />
+                        Research History
+                      </h3>
+                      <div className="space-y-3">
+                        {pastResearch.map((entry) => (
+                          <ResearchHistoryCard key={entry.id} entry={entry} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </>
+          )}
         </div>
       </main>
     </div>
+  );
+}
+
+/* ── History Card ── */
+function ResearchHistoryCard({ entry }: { entry: ResearchEntry }) {
+  const [expanded, setExpanded] = useState(false);
+  const meta = CATEGORY_META[entry.category as ResearchCategory] || CATEGORY_META.icp_reality_check;
+  const date = new Date(entry.created_at);
+  const dateStr = date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+  return (
+    <Card className="overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          {meta.icon}
+          <div>
+            <p className="text-sm font-medium text-foreground">{meta.label}</p>
+            <p className="text-xs text-muted-foreground">{dateStr} · n={entry.submission_count}</p>
+          </div>
+        </div>
+        {expanded ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+      </button>
+      {expanded && (
+        <CardContent className="pt-0 border-t border-border">
+          <div className="prose prose-sm max-w-none dark:prose-invert mt-3">
+            <ReactMarkdown>{entry.result_content}</ReactMarkdown>
+          </div>
+        </CardContent>
+      )}
+    </Card>
   );
 }
