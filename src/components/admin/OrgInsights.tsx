@@ -361,6 +361,9 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += 4;
 
     // ── Key Takeaway Box ──
+    const gapLabel = DIMENSION_LABELS[org.lowestDimension.key as Dimension] || org.lowestDimension.label;
+    const strengthLabel = DIMENSION_LABELS[org.highestDimension.key as Dimension] || org.highestDimension.label;
+    const gapCost = COST_PER_DIM[org.lowestDimension.key]?.[getTier(org.lowestDimension.score)] || "";
     const takeawayText = `Your team's biggest AI execution gap is ${gapLabel} (${org.lowestDimension.score}/100). ` +
       `In practice: ${gapCost} ` +
       `Meanwhile, ${strengthLabel} (${org.highestDimension.score}/100) shows your team can build structured AI habits. ` +
