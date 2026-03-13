@@ -187,7 +187,7 @@ export default function AdminPage() {
   }, [isArchitect, loadData]);
 
   useEffect(() => {
-    if (!isArchitect || activeView !== "diagnostics") return;
+    if (!isArchitect || (activeView !== "diagnostics" && activeView !== "content-insights")) return;
 
     let isActive = true;
     let pollInterval = 4000;
