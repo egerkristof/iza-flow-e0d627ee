@@ -490,16 +490,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += 10;
 
     // ════════════════════════════════════════════
-    // PAGE 3: RECOMMENDATIONS + CTA
+    // RECOMMENDATIONS (flows naturally)
     // ════════════════════════════════════════════
-    doc.addPage();
-    y = margin;
-
-    setFont(9, "normal", [140, 140, 140]);
-    doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
-    doc.text(fullyAnonymized ? "" : `${org.domain}`, pageWidth - margin, y, { align: "right" });
-    y += 10;
-
     drawSectionHeader("Recommendations");
 
     // Adaptive recommendations based on archetype/score (Cynefin-informed)
