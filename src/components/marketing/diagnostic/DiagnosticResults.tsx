@@ -25,9 +25,9 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
     high: "Your standards are actively shaping AI sessions. That's rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
   },
   output_consistency: {
-    low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3–5 hours per deliverable, plus a client trust problem: they can tell when your A-team isn't in the room.",
-    mid: "Outputs are recognisable but uneven. Senior review time is likely 30–40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the team's approach.",
-    high: "Clients get your team's quality standard regardless of who delivers. That's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
+    low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3 to 5 hours per deliverable, plus a trust problem: stakeholders can tell when quality depends on who did the work.",
+    mid: "Outputs are recognisable but uneven. Senior review time is likely 30 to 40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the team's approach.",
+    high: "Stakeholders get your team's quality standard regardless of who delivers. That's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
   },
   knowledge_compounding: {
     low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size: you're funding individual experiments, not building collective capability.",
