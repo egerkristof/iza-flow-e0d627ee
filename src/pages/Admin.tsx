@@ -64,10 +64,6 @@ type AdminView = "members" | "diagnostics" | "org-insights" | "content-insights"
 type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
 
 /* ── Helpers ── */
-const FREE_DOMAINS = new Set([
-  "gmail.com","yahoo.com","hotmail.com","outlook.com","aol.com",
-  "icloud.com","mail.com","protonmail.com","zoho.com","live.com",
-]);
 
 function getConfidenceTier(n: number): { label: string; color: string; description: string } {
   if (n < 10) return { label: "Early Signal", color: "bg-amber-500/20 text-amber-700 border-amber-300", description: `${n} submissions — directional only` };
