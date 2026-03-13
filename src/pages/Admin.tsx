@@ -39,6 +39,10 @@ interface DiagnosticResult {
   created_at: string;
   session_id: string | null;
   email_action_plan: { steps: { title: string; manual_how: string; platform_how: string }[] } | null;
+  respondent_role: string | null;
+  team_size: string | null;
+  company_name: string | null;
+  industry: string | null;
 }
 
 interface UserRole {
@@ -169,7 +173,7 @@ export default function AdminPage() {
 
       if (profilesRes.data) setProfiles(profilesRes.data);
       if (rolesRes.data) setUserRoles(rolesRes.data as UserRole[]);
-      if (diagRes.data) setResults(diagRes.data as DiagnosticResult[]);
+      if (diagRes.data) setResults(diagRes.data as unknown as DiagnosticResult[]);
       if (researchRes.data) setPastResearch(researchRes.data as ResearchEntry[]);
     } finally {
       if (!silent) setLoadingData(false);
@@ -557,11 +561,14 @@ export default function AdminPage() {
                     <p className="text-sm text-muted-foreground">No submissions yet.</p>
                   ) : (
                     <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-                    <Table className="min-w-[500px]">
+                    <Table className="min-w-[700px]">
                       <TableHeader>
                         <TableRow>
                           <TableHead>Date</TableHead>
                           <TableHead>Email</TableHead>
+                          <TableHead>Role</TableHead>
+                          <TableHead>Team</TableHead>
+                          <TableHead>Company</TableHead>
                           <TableHead>Archetype</TableHead>
                           <TableHead className="text-right">Score</TableHead>
                           <TableHead></TableHead>
@@ -573,6 +580,13 @@ export default function AdminPage() {
                             <TableRow className="cursor-pointer" onClick={() => setExpandedId(expandedId === r.id ? null : r.id)}>
                               <TableCell className="text-sm">{format(new Date(r.created_at), "MMM d, yyyy HH:mm")}</TableCell>
                               <TableCell className="text-sm">{r.email || <span className="text-muted-foreground italic">anonymous</span>}</TableCell>
+                              <TableCell className="text-sm text-muted-foreground">{r.respondent_role || "–"}</TableCell>
+                              <TableCell className="text-sm text-muted-foreground">{r.team_size || "–"}</TableCell>
+                              <TableCell className="text-sm">
+                                {r.company_name ? (
+                                  <span className="text-foreground">{r.company_name}{r.industry ? <span className="text-muted-foreground text-xs ml-1">({r.industry})</span> : ""}</span>
+                                ) : <span className="text-muted-foreground">–</span>}
+                              </TableCell>
                               <TableCell><Badge variant="outline" className="text-xs">{r.archetype}</Badge></TableCell>
                               <TableCell className="text-right font-mono font-semibold">{r.overall_score}</TableCell>
                               <TableCell className="w-8">
@@ -581,7 +595,7 @@ export default function AdminPage() {
                             </TableRow>
                             {expandedId === r.id && (
                               <TableRow>
-                                <TableCell colSpan={5} className="bg-muted/30 p-0">
+                                <TableCell colSpan={8} className="bg-muted/30 p-0">
                                   <div className="p-5 space-y-6">
                                     {/* Results Preview */}
                                     <div>

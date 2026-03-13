@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { CAL_URL } from "@/components/marketing/home/shared";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
@@ -124,6 +125,10 @@ function SharePrompt({ variant }: { variant: "inline" | "card" }) {
 function EmailCapture({
   email,
   setEmail,
+  respondentRole,
+  setRespondentRole,
+  teamSize,
+  setTeamSize,
   loading,
   submitted,
   onSubmit,
@@ -135,6 +140,10 @@ function EmailCapture({
 }: {
   email: string;
   setEmail: (v: string) => void;
+  respondentRole: string;
+  setRespondentRole: (v: string) => void;
+  teamSize: string;
+  setTeamSize: (v: string) => void;
   loading: boolean;
   submitted: boolean;
   onSubmit: () => void;
@@ -225,24 +234,46 @@ function EmailCapture({
             </p>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Input
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={variant === "primary" ? "flex-1 h-12 text-base" : "flex-1 h-11"}
-          />
-          <Button
-            onClick={onSubmit}
-            disabled={loading || !email.trim()}
-            variant={variant === "primary" ? "brand" : "default"}
-            size={variant === "primary" ? "lg" : "default"}
-            className="w-full sm:w-auto"
-          >
-            <Mail className="w-4 h-4" />
-            {variant === "primary" ? "Send My Action Plan" : "Send Results"}
-          </Button>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Input
+              type="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={variant === "primary" ? "flex-1 h-12 text-base" : "flex-1 h-11"}
+            />
+            <Button
+              onClick={onSubmit}
+              disabled={loading || !email.trim()}
+              variant={variant === "primary" ? "brand" : "default"}
+              size={variant === "primary" ? "lg" : "default"}
+              className="w-full sm:w-auto"
+            >
+              <Mail className="w-4 h-4" />
+              {variant === "primary" ? "Send My Action Plan" : "Send Results"}
+            </Button>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Input
+              type="text"
+              placeholder="Your role (e.g. CTO, VP Ops, Team Lead)"
+              value={respondentRole}
+              onChange={(e) => setRespondentRole(e.target.value.slice(0, 100))}
+              className={variant === "primary" ? "flex-1 h-10 text-sm" : "flex-1 h-9 text-sm"}
+            />
+            <Select value={teamSize} onValueChange={setTeamSize}>
+              <SelectTrigger className={variant === "primary" ? "sm:w-44 h-10 text-sm" : "sm:w-40 h-9 text-sm"}>
+                <SelectValue placeholder="Team size" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2-10">2–10 people</SelectItem>
+                <SelectItem value="11-50">11–50 people</SelectItem>
+                <SelectItem value="51-200">51–200 people</SelectItem>
+                <SelectItem value="200+">200+ people</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <p className="text-xs text-muted-foreground">
           💡 Check your spam/junk folder if you don't see it within a minute. We may follow up to discuss your results. Read our{" "}
@@ -255,6 +286,8 @@ function EmailCapture({
 
 export function DiagnosticResults({ result, answers, existingRecordId }: Props) {
   const [email, setEmail] = useState("");
+  const [respondentRole, setRespondentRole] = useState("");
+  const [teamSize, setTeamSize] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const sorted0 = [...result.dimensions].sort((a, b) => a.score - b.score);
@@ -289,6 +322,8 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
         },
         body: JSON.stringify({
           email: email.trim(),
+          respondent_role: respondentRole.trim() || null,
+          team_size: teamSize || null,
           overall: result.overall,
           archetype: result.archetype,
           dimensions: result.dimensions,
@@ -479,6 +514,10 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
       <EmailCapture
         email={email}
         setEmail={setEmail}
+        respondentRole={respondentRole}
+        setRespondentRole={setRespondentRole}
+        teamSize={teamSize}
+        setTeamSize={setTeamSize}
         loading={loading}
         submitted={submitted}
         onSubmit={handleEmailSubmit}

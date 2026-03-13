@@ -450,35 +450,47 @@ export type Database = {
         Row: {
           answers: Json
           archetype: string
+          company_name: string | null
           created_at: string
           email: string | null
           email_action_plan: Json | null
           id: string
+          industry: string | null
           overall_score: number
+          respondent_role: string | null
           scores: Json
           session_id: string | null
+          team_size: string | null
         }
         Insert: {
           answers?: Json
           archetype: string
+          company_name?: string | null
           created_at?: string
           email?: string | null
           email_action_plan?: Json | null
           id?: string
+          industry?: string | null
           overall_score: number
+          respondent_role?: string | null
           scores?: Json
           session_id?: string | null
+          team_size?: string | null
         }
         Update: {
           answers?: Json
           archetype?: string
+          company_name?: string | null
           created_at?: string
           email?: string | null
           email_action_plan?: Json | null
           id?: string
+          industry?: string | null
           overall_score?: number
+          respondent_role?: string | null
           scores?: Json
           session_id?: string | null
+          team_size?: string | null
         }
         Relationships: []
       }
