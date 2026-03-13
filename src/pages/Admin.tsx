@@ -37,6 +37,7 @@ interface DiagnosticResult {
   scores: Record<string, number>;
   answers: Record<string, number>;
   created_at: string;
+  session_id: string | null;
   email_action_plan: { steps: { title: string; manual_how: string; platform_how: string }[] } | null;
 }
 
