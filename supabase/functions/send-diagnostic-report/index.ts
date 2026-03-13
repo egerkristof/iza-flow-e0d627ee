@@ -434,7 +434,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: ["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"],
-        subject: `Diagnostic lead: ${email} (${overall}/100, ${archetype.label})`,
+        subject: `Diagnostic lead: ${email}${companyName ? ` @ ${companyName}` : ""} (${overall}/100, ${archetype.label})`,
         html: founderHtml,
       }),
     }).catch((e) => console.error("Founder notify failed:", e));
