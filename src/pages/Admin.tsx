@@ -15,8 +15,8 @@ import {
   Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2,
   RefreshCw, Zap, BarChart3, BookOpen, Layers, Loader2, Target, Crosshair,
   TrendingUp,
-} from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
+import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 import ReactMarkdown from "react-markdown";
