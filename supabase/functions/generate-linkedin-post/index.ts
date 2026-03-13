@@ -15,45 +15,33 @@ interface RequestBody {
 }
 
 const FORMAT_INSTRUCTIONS: Record<PostFormat, string> = {
-  data_drop: `Write a "Data Drop" LinkedIn post. Structure:
-- Hook line: a single surprising statistic from the data that makes people stop scrolling. Use a number. Make it visceral.
-- 2-3 lines unpacking what this means in plain business language
-- A "what this tells us" insight that reframes the stat as a leadership problem
-- A provocative closing question that invites comments
-- 3-5 relevant hashtags
+  data_drop: `Write a "Data Drop" post. Use a surprising statistic from the data as the pattern interrupt.
+- The stat must be specific, visceral, and stop the scroll
+- Unpack what the number actually reveals about a hidden structural problem
+- Name the pattern or mechanism if one emerges naturally
+- Close with a forward-facing implication, not "agree?"`,
 
-Tone: authoritative, data-backed, slightly provocative. Like an analyst who actually runs teams.`,
+  contrarian_take: `Write a "Contrarian Take" post. Challenge a widely-held belief with evidence.
+- Open with the conventional wisdom, then demolish it with data
+- Move from surface narrative to underlying structural truth
+- Name the gap between what people assume and what the data shows
+- Show the real-world consequence of following conventional wisdom
+- Close with a sharpened implication that opens thought`,
 
-  contrarian_take: `Write a "Contrarian Take" LinkedIn post. Structure:
-- Hook: Start with a widely-held belief about AI in business, then demolish it with data
-- The contrarian reframe: what the data actually shows vs. what people assume
-- Real-world consequence: what happens to teams who follow the conventional wisdom
-- Your position: what smart leaders do instead
-- Closing challenge or question
-- 3-5 relevant hashtags
-
-Tone: confident, slightly confrontational, evidence-based. Not arrogant, just unflinching.`,
-
-  playbook_snippet: `Write a "Playbook Snippet" LinkedIn post. Structure:
-- Hook: "Here's what teams scoring 55+ on AI execution maturity do differently:"
-- 3 specific, actionable practices drawn from the data patterns
-- Each practice gets 1-2 lines: what they do + why it matters
-- A bridge to "the gap between knowing this and doing it is infrastructure"
+  playbook_snippet: `Write a "Playbook Snippet" post. Reveal what high-scoring teams do differently.
+- Open with a pattern interrupt: a distinction between what most teams do vs. what mature teams do
+- 3 specific practices drawn from data patterns, each with why it matters structurally
+- Frame the gap as an infrastructure problem, not a knowledge problem
 - Soft mention of LIZA OS as "what we're building to close this gap"
-- 3-5 relevant hashtags
+- Close by widening the stakes`,
 
-Tone: generous, practical, sharing real knowledge. Like a mentor who's seen the data.`,
-
-  struggling_moment: `Write a "Struggling Moment" LinkedIn post. Structure:
-- Hook: Paint a vivid, specific "Monday morning" scenario that your ICP lives through
-- The scenario should be derived from low scores in a specific dimension
-- Describe the frustration in sensory detail (what they see, feel, hear)
+  struggling_moment: `Write a "Struggling Moment" post. Paint a vivid scenario from the data.
+- Open with a specific, sensory "Monday morning" scene your ICP lives through
+- The scenario must be derived from low scores in a specific dimension
+- Describe what they see, feel, hear. Make it visceral.
 - The pivot: "This is what a score of X/100 on [dimension] looks like in practice"
-- What the data says about how common this is
-- A brief "there's a better way" without being preachy
-- 3-5 relevant hashtags
-
-Tone: empathetic, visceral, story-driven. Like someone who's been in the room.`,
+- Show how common this is with data
+- Close with implication, not preachiness`,
 };
 
 serve(async (req) => {
