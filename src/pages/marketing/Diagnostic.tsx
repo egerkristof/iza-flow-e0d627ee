@@ -216,6 +216,13 @@ export default function DiagnosticPage() {
               </Button>
               <p className="text-xs text-muted-foreground">
                 No signup. 10 scenario questions. Immediate results.
+                {submissionCount != null && (
+                  <>
+                    {" · "}
+                    <span className="font-semibold text-foreground">{submissionCount}+ teams</span> assessed so far.
+                  </>
+                )}
+              </p>
               </p>
 
               {/* Framework preview — the 5 dimensions */}
