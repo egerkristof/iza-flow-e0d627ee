@@ -34,14 +34,6 @@ const FRIENDLY_LABELS: Record<string, string> = {
   learning_velocity: "Improvement Speed",
 };
 
-const FRIENDLY_DESCRIPTIONS: Record<string, string> = {
-  standard_internalization: "When someone opens an AI chat, does your team's methodology and quality bar actually reach that session, or do they start from a blank prompt every time?",
-  output_consistency: "If two people use AI on the same brief, how similar are the results? Does AI amplify team standards or individual habits?",
-  knowledge_compounding: "When someone discovers a better prompt or AI technique, does it stay in their chat history or does the whole team benefit?",
-  collective_visibility: "Can your team see how each other uses AI? Can juniors learn from seniors' prompting? Can you report on AI effectiveness if asked?",
-  learning_velocity: "When a new AI technique or tool update emerges, how quickly does your team evaluate, adopt, and update their shared approach?",
-};
-
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -64,12 +56,25 @@ serve(async (req) => {
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
     if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY not configured");
 
-    // Sort dimensions by score ascending, weakest first
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
+
+    // ── Step 1: Atomically attach email to the record (service role bypasses RLS) ──
+    if (diagnostic_result_id) {
+      const { error: updateErr } = await supabaseAdmin
+        .from("diagnostic_results")
+        .update({ email: email.trim() })
+        .eq("id", diagnostic_result_id);
+      if (updateErr) console.error("Email attach failed:", updateErr);
+    }
+
+    // ── Step 2: Generate AI action plan ──
     const sorted = [...dimensions].sort((a, b) => a.score - b.score);
     const weakest = sorted[0];
     const secondWeakest = sorted[1];
 
-    // Generate personalized action plan via AI
     const prompt = `You are an expert advisor on AI execution maturity for operational leaders at mid-market firms (50-1000 employees, sweet spot 50-250).
 
 A team just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
@@ -126,10 +131,7 @@ Return ONLY valid JSON in this exact format:
     }
 
     const aiData = await aiResp.json();
-    let rawContent =
-      aiData.choices?.[0]?.message?.content || "";
-
-    // Strip markdown code fences if present
+    let rawContent = aiData.choices?.[0]?.message?.content || "";
     rawContent = rawContent.replace(/```json\s*/g, "").replace(/```\s*/g, "").trim();
 
     let actionPlan: { steps: { title: string; manual_how: string; platform_how: string }[] };
@@ -158,31 +160,23 @@ Return ONLY valid JSON in this exact format:
       };
     }
 
-    // Store action plan in diagnostic_results if we have the ID
+    // ── Step 3: Persist action plan back to the record ──
     if (diagnostic_result_id) {
-      try {
-        const supabaseAdmin = createClient(
-          Deno.env.get("SUPABASE_URL") ?? "",
-          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-        );
-        await supabaseAdmin
-          .from("diagnostic_results")
-          .update({ email_action_plan: actionPlan })
-          .eq("id", diagnostic_result_id);
-      } catch (e) {
-        console.error("Failed to store action plan:", e);
-      }
+      await supabaseAdmin
+        .from("diagnostic_results")
+        .update({ email_action_plan: actionPlan })
+        .eq("id", diagnostic_result_id)
+        .then(({ error }) => {
+          if (error) console.error("Failed to store action plan:", error);
+        });
     }
 
-    // Build the email HTML
+    // ── Step 4: Build and send user email ──
     const scoreColor =
-      overall <= 30
-        ? "#dc2626"
-        : overall <= 55
-          ? "#f59e0b"
-          : overall <= 75
-            ? "#0284c7"
-            : "#16a34a";
+      overall <= 30 ? "#dc2626"
+        : overall <= 55 ? "#f59e0b"
+        : overall <= 75 ? "#0284c7"
+        : "#16a34a";
 
     const dimensionRows = dimensions
       .map(
@@ -196,21 +190,6 @@ Return ONLY valid JSON in this exact format:
           <td style="padding:8px 12px;font-size:14px;font-weight:600;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};text-align:right;border-bottom:1px solid #f0f0f0;">${d.score}/100</td>
         </tr>`;
         }
-      )
-      .join("");
-
-    const stepsHtml = actionPlan.steps
-      .map(
-        (s, i) => `
-        <div style="margin-bottom:20px;padding:16px;background:#f8fafc;border-radius:8px;border-left:3px solid #0284c7;">
-          <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#1a1a2e;">Step ${i + 1}: ${s.title}</p>
-          <p style="margin:0 0 10px;font-size:13px;color:#475569;line-height:1.6;">
-            <strong style="color:#1a1a2e;">Start here:</strong> ${s.manual_how}
-          </p>
-          <p style="margin:0;font-size:13px;color:#0284c7;line-height:1.6;">
-            🏗️ ${s.platform_how}
-          </p>
-        </div>`
       )
       .join("");
 
@@ -233,7 +212,7 @@ Return ONLY valid JSON in this exact format:
       ${resultsUrl ? `<p style="margin:12px 0 0;"><a href="${resultsUrl}" style="font-size:13px;color:#0284c7;font-weight:600;text-decoration:underline;">Bookmark your results: View your full breakdown →</a></p>` : ""}
     </div>
 
-    <!-- Benchmark context (compact) -->
+    <!-- Benchmark context -->
     <div style="text-align:center;margin-bottom:24px;">
       <div style="display:inline-block;padding:8px 16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
         <span style="font-size:12px;color:#64748b;">Industry avg: <strong>35</strong></span>
@@ -276,7 +255,7 @@ Return ONLY valid JSON in this exact format:
         .join("")}
     </div>
 
-    <!-- You vs 55+ contrast + CTA -->
+    <!-- You vs 55+ contrast -->
     <div style="margin-bottom:24px;">
       <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#1a1a2e;">Your team today vs. codified teams (55+)</p>
       <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;font-size:12px;">
@@ -309,7 +288,7 @@ Return ONLY valid JSON in this exact format:
 </body>
 </html>`;
 
-    // Send via Resend
+    // ── Step 5: Send user email ──
     const emailResp = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -330,14 +309,12 @@ Return ONLY valid JSON in this exact format:
       throw new Error(`Resend error: ${emailResp.status}`);
     }
 
-    // Also notify founders with full results
+    // ── Step 6: Notify founders (fire-and-forget) ──
     const founderDimRows = sorted
-      .map(
-        (d) => {
-          const label = FRIENDLY_LABELS[d.dimension] || d.label;
-          return `<tr><td style="padding:6px 10px;font-size:13px;color:#1a1a2e;border-bottom:1px solid #eee;">${label}</td><td style="padding:6px 10px;font-size:13px;font-weight:700;text-align:right;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};border-bottom:1px solid #eee;">${d.score}/100</td><td style="padding:6px 10px;font-size:12px;color:#64748b;border-bottom:1px solid #eee;">${d.insight}</td></tr>`;
-        }
-      )
+      .map((d) => {
+        const label = FRIENDLY_LABELS[d.dimension] || d.label;
+        return `<tr><td style="padding:6px 10px;font-size:13px;color:#1a1a2e;border-bottom:1px solid #eee;">${label}</td><td style="padding:6px 10px;font-size:13px;font-weight:700;text-align:right;color:${d.score <= 33 ? "#dc2626" : d.score <= 66 ? "#f59e0b" : "#16a34a"};border-bottom:1px solid #eee;">${d.score}/100</td><td style="padding:6px 10px;font-size:12px;color:#64748b;border-bottom:1px solid #eee;">${d.insight}</td></tr>`;
+      })
       .join("");
 
     const founderStepsHtml = actionPlan.steps
@@ -377,7 +354,7 @@ Return ONLY valid JSON in this exact format:
         </div>
       </div>`;
 
-    await fetch("https://api.resend.com/emails", {
+    fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${RESEND_API_KEY}`,
