@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
 import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
+import ConsultingReference from "@/components/admin/ConsultingReference";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 import ReactMarkdown from "react-markdown";
@@ -59,7 +60,7 @@ interface ResearchEntry {
   created_at: string;
 }
 
-type AdminView = "members" | "diagnostics" | "org-insights" | "insights-lab" | "content-engine";
+type AdminView = "members" | "diagnostics" | "org-insights" | "content-insights" | "consulting";
 type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
 
 /* ── Helpers ── */
@@ -186,7 +187,7 @@ export default function AdminPage() {
   }, [isArchitect, loadData]);
 
   useEffect(() => {
-    if (!isArchitect || activeView !== "diagnostics") return;
+    if (!isArchitect || (activeView !== "diagnostics" && activeView !== "content-insights")) return;
 
     let isActive = true;
     let pollInterval = 4000;
@@ -383,8 +384,8 @@ export default function AdminPage() {
     { key: "members", label: "Members", icon: <Users className="h-4 w-4" /> },
     { key: "diagnostics", label: "Diagnostics", icon: <ClipboardList className="h-4 w-4" /> },
     { key: "org-insights", label: "Org Insights", icon: <Building2 className="h-4 w-4" /> },
-    { key: "content-engine", label: "Content Engine", icon: <Pen className="h-4 w-4" /> },
-    { key: "insights-lab", label: "Insights Lab", icon: <Lightbulb className="h-4 w-4" /> },
+    { key: "content-insights", label: "Content & Insights", icon: <Pen className="h-4 w-4" /> },
+    { key: "consulting", label: "Consulting", icon: <BookOpen className="h-4 w-4" /> },
   ];
 
   return (
@@ -747,10 +748,7 @@ export default function AdminPage() {
             </>
           )}
 
-          {activeView === "content-engine" && <LinkedInContentEngine />}
-
-          {/* ── Insights Lab Tab ── */}
-          {activeView === "insights-lab" && (
+          {activeView === "content-insights" && (
             <>
               {loadingData ? (
                 <div className="flex items-center justify-center py-20 text-muted-foreground gap-2">
@@ -759,16 +757,16 @@ export default function AdminPage() {
               ) : !aggregate ? (
                 <Card>
                   <CardContent className="py-12 text-center text-muted-foreground">
-                    No diagnostic submissions yet. Research angles will appear once data flows in.
+                    No diagnostic submissions yet. Content tools will appear once data flows in.
                   </CardContent>
                 </Card>
               ) : (
                 <>
                   {/* Aggregate Dashboard */}
                   <div>
-                    <h1 className="text-xl font-bold text-foreground mb-1">Aggregate Intelligence</h1>
+                    <h1 className="text-xl font-bold text-foreground mb-1">Content &amp; Insights</h1>
                     <p className="text-sm text-muted-foreground">
-                      Proprietary data from {aggregate.totalSubmissions} submissions across {aggregate.orgCount} organizations
+                      Proprietary data from {aggregate.totalSubmissions} submissions across {aggregate.orgCount} organizations — use it to generate LinkedIn posts and research angles.
                     </p>
                   </div>
 
@@ -843,6 +841,11 @@ export default function AdminPage() {
                       })}
                     </CardContent>
                   </Card>
+
+                  {/* LinkedIn Content Engine */}
+                  <div className="border-t border-border pt-6">
+                    <LinkedInContentEngine />
+                  </div>
 
                   {/* Research Angles Engine */}
                   <div className="border-t border-border pt-6">
@@ -928,6 +931,8 @@ export default function AdminPage() {
               )}
             </>
           )}
+
+          {activeView === "consulting" && <ConsultingReference />}
         </div>
       </main>
     </div>
