@@ -63,11 +63,70 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    // ── Step 1: Atomically attach email to the record (service role bypasses RLS) ──
+    // ── Step 1: Enrich company/industry from email domain ──
+    const FREE_DOMAINS = new Set([
+      "gmail.com","yahoo.com","hotmail.com","outlook.com","aol.com",
+      "icloud.com","mail.com","protonmail.com","zoho.com","live.com",
+      "ymail.com","gmx.com","fastmail.com","tutanota.com","pm.me",
+      "hey.com","me.com","msn.com","googlemail.com",
+    ]);
+
+    const emailDomain = email.trim().split("@")[1]?.toLowerCase() || "";
+    const isPersonalEmail = FREE_DOMAINS.has(emailDomain);
+
+    let companyName: string | null = null;
+    let industry: string | null = null;
+
+    if (!isPersonalEmail && emailDomain && diagnostic_result_id) {
+      try {
+        const enrichPrompt = `Given the email domain "${emailDomain}", identify the company name and industry.
+Return ONLY valid JSON: {"company_name": "...", "industry": "..."}
+If you cannot determine, use null for that field. Industry should be a short label like "Technology", "Consulting", "Financial Services", "Healthcare", "Manufacturing", "Education", "Retail", "Energy", "Media", "Government", "Legal", "Real Estate", "Telecommunications", "Automotive", "Logistics", "Pharma", "Insurance", "Hospitality", "Non-profit", "Other".`;
+
+        const enrichResp = await fetch(
+          "https://ai.gateway.lovable.dev/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${LOVABLE_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "google/gemini-2.5-flash-lite",
+              messages: [{ role: "user", content: enrichPrompt }],
+              temperature: 0.1,
+            }),
+          }
+        );
+
+        if (enrichResp.ok) {
+          const enrichData = await enrichResp.json();
+          let raw = enrichData.choices?.[0]?.message?.content || "";
+          raw = raw.replace(/```json\s*/g, "").replace(/```\s*/g, "").trim();
+          try {
+            const parsed = JSON.parse(raw);
+            companyName = parsed.company_name || null;
+            industry = parsed.industry || null;
+          } catch {
+            console.error("Failed to parse enrichment:", raw);
+          }
+        }
+      } catch (e) {
+        console.error("Domain enrichment failed:", e);
+      }
+    }
+
+    // ── Step 1b: Atomically attach email + metadata to the record ──
     if (diagnostic_result_id) {
+      const updatePayload: Record<string, unknown> = { email: email.trim() };
+      if (respondent_role) updatePayload.respondent_role = respondent_role;
+      if (team_size) updatePayload.team_size = team_size;
+      if (companyName) updatePayload.company_name = companyName;
+      if (industry) updatePayload.industry = industry;
+
       const { error: updateErr } = await supabaseAdmin
         .from("diagnostic_results")
-        .update({ email: email.trim() })
+        .update(updatePayload)
         .eq("id", diagnostic_result_id);
       if (updateErr) console.error("Email attach failed:", updateErr);
     }
