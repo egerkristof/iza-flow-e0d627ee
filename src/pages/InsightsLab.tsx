@@ -93,7 +93,7 @@ export default function InsightsLab() {
     setLoadingData(true);
     const [diagRes, researchRes] = await Promise.all([
       supabase.from("diagnostic_results").select("*").order("created_at", { ascending: false }),
-      supabase.from("insights_research").select("*").order("created_at", { ascending: false }).limit(20),
+      (supabase as any).from("insights_research").select("*").order("created_at", { ascending: false }).limit(20),
     ]);
     if (diagRes.data) setResults(diagRes.data as DiagnosticResult[]);
     if (researchRes.data) setPastResearch(researchRes.data as ResearchEntry[]);
