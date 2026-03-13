@@ -322,6 +322,8 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
         },
         body: JSON.stringify({
           email: email.trim(),
+          respondent_role: respondentRole.trim() || null,
+          team_size: teamSize || null,
           overall: result.overall,
           archetype: result.archetype,
           dimensions: result.dimensions,
