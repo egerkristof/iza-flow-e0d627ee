@@ -476,9 +476,16 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
                   {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 </button>
                 {isExpanded && (
-                  <p className="text-sm text-foreground/80 bg-muted/50 rounded-lg p-3 mt-1 animate-in fade-in slide-in-from-top-2 duration-200 leading-relaxed">
-                    {costText}
-                  </p>
+                  <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <p className="text-sm text-foreground/80 bg-muted/50 rounded-lg p-3 leading-relaxed">
+                      {costText}
+                    </p>
+                    {STRATEGIC_CONSEQUENCES[d.dimension]?.[tier] && (
+                      <p className="text-sm font-medium text-foreground/90 bg-primary/5 border border-primary/10 rounded-lg p-3 leading-relaxed">
+                        {STRATEGIC_CONSEQUENCES[d.dimension][tier]}
+                      </p>
+                    )}
+                  </div>
                 )}
               </CardContent>
             </Card>
