@@ -223,7 +223,6 @@ export default function DiagnosticPage() {
                   </>
                 )}
               </p>
-              </p>
 
               {/* Framework preview — the 5 dimensions */}
               <div className="pt-4 space-y-3">
