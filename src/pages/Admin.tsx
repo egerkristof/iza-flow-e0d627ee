@@ -229,14 +229,16 @@ export default function AdminPage() {
     };
   }, [isArchitect, activeView, loadData]);
 
-  /* ── Aggregate computation ── */
+  /* ── Aggregate computation (excludes founder test submissions) ── */
+  const FOUNDER_EMAILS = new Set(["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"]);
   const aggregate = useMemo(() => {
-    if (!results.length) return null;
+    const filtered = results.filter((r) => !r.email || !FOUNDER_EMAILS.has(r.email.toLowerCase()));
+    if (!filtered.length) return null;
 
-    const overallAvg = Math.round(results.reduce((s, r) => s + r.overall_score, 0) / results.length);
+    const overallAvg = Math.round(filtered.reduce((s, r) => s + r.overall_score, 0) / filtered.length);
 
     const dimSums: Record<string, number[]> = {};
-    for (const r of results) {
+    for (const r of filtered) {
       for (const [key, val] of Object.entries(r.scores as Record<string, number>)) {
         if (!dimSums[key]) dimSums[key] = [];
         dimSums[key].push(val);
@@ -253,20 +255,20 @@ export default function AdminPage() {
     }
 
     const orgDomains = new Set<string>();
-    for (const r of results) {
+    for (const r of filtered) {
       if (!r.email) continue;
       const domain = r.email.split("@")[1]?.toLowerCase();
       if (domain && !FREE_DOMAINS.has(domain)) orgDomains.add(domain);
     }
 
     const archCounts: Record<string, number> = {};
-    for (const r of results) archCounts[r.archetype] = (archCounts[r.archetype] || 0) + 1;
+    for (const r of filtered) archCounts[r.archetype] = (archCounts[r.archetype] || 0) + 1;
     const topArchetype = Object.entries(archCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
 
-    const confidence = getConfidenceTier(results.length);
+    const confidence = getConfidenceTier(filtered.length);
 
     return {
-      totalSubmissions: results.length,
+      totalSubmissions: filtered.length,
       orgCount: orgDomains.size,
       overallAvg,
       dimensions,

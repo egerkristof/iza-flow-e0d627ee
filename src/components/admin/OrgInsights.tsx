@@ -49,6 +49,9 @@ const FREE_EMAIL_DOMAINS = new Set([
   "fastmail.com", "tutanota.com",
 ]);
 
+// Founder emails excluded from aggregate analysis
+const FOUNDER_EMAILS = new Set(["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"]);
+
 export default function OrgInsights({ results }: { results: DiagnosticResult[] }) {
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
   const [includeFreeMail, setIncludeFreeMail] = useState(false);
@@ -59,6 +62,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     const grouped: Record<string, DiagnosticResult[]> = {};
     for (const r of results) {
       if (!r.email) continue;
+      if (FOUNDER_EMAILS.has(r.email.toLowerCase())) continue;
       const domain = getDomain(r.email);
       if (!includeFreeMail && FREE_EMAIL_DOMAINS.has(domain)) continue;
       if (!grouped[domain]) grouped[domain] = [];
