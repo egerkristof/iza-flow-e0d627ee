@@ -48,29 +48,29 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
 
 const STRATEGIC_CONSEQUENCES: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
-    low: "Which means you can't scale delivery without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
+    low: "Which means you can't scale output without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
     mid: "Which means your growth is throttled by onboarding speed. New people take months to reach the quality bar your best people hit naturally.",
     high: "Which means you can take on more work without proportionally adding senior oversight. Your methodology is doing the quality control, not your calendar.",
   },
   output_consistency: {
-    low: "Which means your pricing model is quietly broken. You're charging for team-level delivery but providing individual-level variance. Clients notice, even if they don't say it yet.",
-    mid: "Which means your capacity ceiling is set by your strongest operators, not your team size. You can't grow revenue without growing your key-person dependency.",
-    high: "Which means your margin improves as you grow. Consistency lets you systematise delivery, reduce review overhead, and price on value rather than hours.",
+    low: "Which means your team's output quality is unpredictable. You're investing in AI tools but getting individual-level variance instead of team-level consistency. Stakeholders notice, even if they don't say it yet.",
+    mid: "Which means your capacity ceiling is set by your strongest operators, not your team size. You can't grow output without growing your key-person dependency.",
+    high: "Which means your output quality holds as you grow. Consistency lets you systematise execution, reduce review overhead, and focus senior time on strategy rather than correction.",
   },
   knowledge_compounding: {
-    low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially. After 12 months, that gap isn't incremental — it's a different league.",
+    low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially. After 12 months, that gap is not incremental. It's a different league.",
     mid: "Which means you're one resignation away from losing capabilities you can't rebuild. Tribal knowledge that isn't codified is organisational risk, not organisational memory.",
     high: "Which means your competitive advantage accelerates over time. Every project deposits knowledge that makes the next one faster, cheaper, or higher quality. That's a compounding asset on your balance sheet.",
   },
   collective_visibility: {
     low: "Which means your leadership decisions about AI investment are based on anecdote, not evidence. You're allocating budget to tools you can't measure and training you can't evaluate.",
-    mid: "Which means you're making workforce planning decisions blind. You don't know which roles AI is genuinely augmenting and which are just using it as a fancy search engine.",
+    mid: "Which means you're making workforce and resource planning decisions blind. You don't know which roles AI is genuinely augmenting and which are just using it as a fancy search engine.",
     high: "Which means you can make data-informed decisions about where AI creates value and where it doesn't. That's the difference between strategic AI adoption and expensive experimentation.",
   },
   learning_velocity: {
-    low: "Which means competitors who learn faster will compound their advantage every quarter. The gap between a learning team and a static one isn't linear after 12 months — it's exponential.",
-    mid: "Which means you're adopting AI capabilities 3–6 months behind the curve. In a market where tools and techniques shift quarterly, that delay translates directly to lost competitive positioning.",
-    high: "Which means you're not just keeping pace with AI evolution — you're turning it into a strategic advantage. Speed of adaptation is the meta-skill that makes every other capability more valuable.",
+    low: "Which means competitors who learn faster will compound their advantage every quarter. The gap between a learning team and a static one after 12 months is not linear. It's exponential.",
+    mid: "Which means you're adopting AI capabilities 3 to 6 months behind the curve. In a market where tools and techniques shift quarterly, that delay translates directly to lost competitive positioning.",
+    high: "Which means you're turning AI evolution speed into a strategic advantage, not just keeping pace. Speed of adaptation is the meta-skill that makes every other capability more valuable.",
   },
 };
 
