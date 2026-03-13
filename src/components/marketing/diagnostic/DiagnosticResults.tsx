@@ -514,6 +514,10 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
       <EmailCapture
         email={email}
         setEmail={setEmail}
+        respondentRole={respondentRole}
+        setRespondentRole={setRespondentRole}
+        teamSize={teamSize}
+        setTeamSize={setTeamSize}
         loading={loading}
         submitted={submitted}
         onSubmit={handleEmailSubmit}
