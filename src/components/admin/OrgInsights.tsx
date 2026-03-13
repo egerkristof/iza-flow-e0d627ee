@@ -440,7 +440,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         y += costLines.length * 3.8 + 2;
       }
 
-      // Per-dimension score spread
+      // Strategic consequence
+      const strategicText = STRATEGIC_PER_DIM[key]?.[tier];
+      if (strategicText) {
+        checkNewPage(12);
+        setFont(8.5, "bold", [20, 80, 160]);
+        doc.text("→", margin + 2, y);
+        setFont(8.5, "italic", [40, 60, 100]);
+        const stratLines = doc.splitTextToSize(strategicText, contentWidth - 10);
+        doc.text(stratLines, margin + 8, y);
+        y += stratLines.length * 3.8 + 2;
+      }
+
       const dimScores = org.results
         .map(r => (r.scores as Record<string, number>)[key])
         .filter(s => s != null)
