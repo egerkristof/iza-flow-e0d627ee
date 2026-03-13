@@ -881,7 +881,13 @@ export default function AdminPage() {
                     </CardContent>
                   </Card>
 
-                  {/* LinkedIn Content Engine */}
+                  {/* Segmentation Breakdown */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <SegmentCard title="By Role" segments={aggregate.roleSegments} />
+                    <SegmentCard title="By Team Size" segments={aggregate.teamSizeSegments} />
+                    <SegmentCard title="By Industry" segments={aggregate.industrySegments} />
+                  </div>
+
                   <div className="border-t border-border pt-6">
                     <LinkedInContentEngine />
                   </div>
