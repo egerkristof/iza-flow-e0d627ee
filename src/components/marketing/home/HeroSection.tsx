@@ -81,13 +81,13 @@ export function HeroSection() {
             Take the 90s Diagnostic
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Book a Discovery Call <ArrowRight className="w-4 h-4" />
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Book your Diagnostic Debrief <ArrowRight className="w-4 h-4" />
           </a>
         </div>
 

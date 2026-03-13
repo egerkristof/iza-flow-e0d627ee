@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Layers, ArrowRight, Shield, Users, Brain } from "lucide-react";
-import { CAL_URL } from "./shared";
-import { SectionTag } from "./shared";
+import { CAL_URL, SectionTag } from "./shared";
 
 const STEPS = [
   {
@@ -98,19 +98,27 @@ export function LizaLoopSection() {
             <p className="text-sm text-muted-foreground mb-4">
               One system. Living playbooks, team-wide enforcement, continuous learning.
             </p>
-            <a
-              href={CAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
-              style={{
-                background: "var(--gradient-brand-btn)",
-                color: "hsl(var(--primary-foreground))",
-                boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.3)",
-              }}
-            >
-              Book a Discovery Call <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/diagnostic"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
+                style={{
+                  background: "var(--gradient-brand-btn)",
+                  color: "hsl(var(--primary-foreground))",
+                  boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.3)",
+                }}
+              >
+                Take the 90s Diagnostic <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Book your Diagnostic Debrief <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
