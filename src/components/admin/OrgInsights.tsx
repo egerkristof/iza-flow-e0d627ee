@@ -194,14 +194,14 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     const STRATEGIC_PER_DIM: Record<string, { low: string; mid: string; high: string }> = {
       standard_internalization: {
-        low: "Which means you can't scale delivery without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
+        low: "Which means you can't scale output without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
         mid: "Which means your growth is throttled by onboarding speed. New people take months to reach the quality bar your best people hit naturally.",
         high: "Which means you can take on more work without proportionally adding senior oversight. Your methodology is doing the quality control, not your calendar.",
       },
       output_consistency: {
-        low: "Which means your pricing model is quietly broken. You're charging for team-level delivery but providing individual-level variance.",
+        low: "Which means your team's output quality is unpredictable. You're investing in AI tools but getting individual-level variance instead of team-level consistency.",
         mid: "Which means your capacity ceiling is set by your strongest operators, not your team size.",
-        high: "Which means your margin improves as you grow. Consistency lets you systematise delivery and price on value rather than hours.",
+        high: "Which means your output quality holds as you grow. Consistency lets you systematise execution and focus senior time on strategy rather than correction.",
       },
       knowledge_compounding: {
         low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially.",
@@ -210,12 +210,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       },
       collective_visibility: {
         low: "Which means your leadership decisions about AI investment are based on anecdote, not evidence.",
-        mid: "Which means you're making workforce planning decisions blind. You don't know which roles AI is genuinely augmenting.",
+        mid: "Which means you're making workforce and resource planning decisions blind. You don't know which roles AI is genuinely augmenting.",
         high: "Which means you can make data-informed decisions about where AI creates value and where it doesn't.",
       },
       learning_velocity: {
         low: "Which means competitors who learn faster will compound their advantage every quarter. After 12 months, that gap is exponential.",
-        mid: "Which means you're adopting AI capabilities 3-6 months behind the curve, translating directly to lost competitive positioning.",
+        mid: "Which means you're adopting AI capabilities 3 to 6 months behind the curve, translating directly to lost competitive positioning.",
         high: "Which means you're turning AI evolution speed into a strategic advantage, not just keeping pace.",
       },
     };
