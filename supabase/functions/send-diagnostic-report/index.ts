@@ -327,8 +327,8 @@ Return ONLY valid JSON in this exact format:
       )
       .join("");
 
-    const resultsUrl = diagnostic_result_id
-      ? `${results_base_url || 'https://iza-flow.lovable.app'}/diagnostic?result=${diagnostic_result_id}`
+    const resultsUrl = resolvedDiagnosticRecordId
+      ? `${results_base_url || 'https://iza-flow.lovable.app'}/diagnostic?result=${resolvedDiagnosticRecordId}`
       : null;
 
     const html = `
