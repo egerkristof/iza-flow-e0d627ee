@@ -55,15 +55,16 @@ export default function DiagnosticPage() {
       setResult(r);
       setPhase("results");
       try {
-        const { data } = await (supabase as any).from("diagnostic_results").insert({
+        const { data, error } = await (supabase as any).from("diagnostic_results").insert({
           answers: finalAnswers,
           scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
           archetype: r.archetype.label,
           overall_score: r.overall,
         }).select("id").single();
+        if (error) console.error("Diagnostic insert failed:", error);
         if (data?.id) setDiagnosticRecordId(data.id);
-      } catch {
-        // fail silently
+      } catch (err) {
+        console.error("Diagnostic insert exception:", err);
       }
     } catch {
       // If calculation fails, reset so user can retry
