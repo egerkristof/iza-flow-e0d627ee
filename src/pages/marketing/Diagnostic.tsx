@@ -21,6 +21,7 @@ export default function DiagnosticPage() {
   const [searchParams] = useSearchParams();
   const [phase, setPhase] = useState<Phase>("intro");
   const [currentQ, setCurrentQ] = useState(0);
+  const [submissionCount, setSubmissionCount] = useState<number | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
   const [diagnosticRecordId, setDiagnosticRecordId] = useState<string | null>(null);
