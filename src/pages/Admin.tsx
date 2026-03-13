@@ -14,9 +14,10 @@ import {
   Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck,
   Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2,
   RefreshCw, Zap, BarChart3, BookOpen, Layers, Loader2, Target, Crosshair,
-  TrendingUp,
+  TrendingUp, Pen,
 } from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
+import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 import ReactMarkdown from "react-markdown";
@@ -58,7 +59,7 @@ interface ResearchEntry {
   created_at: string;
 }
 
-type AdminView = "members" | "diagnostics" | "org-insights" | "insights-lab";
+type AdminView = "members" | "diagnostics" | "org-insights" | "insights-lab" | "content-engine";
 type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
 
 /* ── Helpers ── */
@@ -382,6 +383,7 @@ export default function AdminPage() {
     { key: "members", label: "Members", icon: <Users className="h-4 w-4" /> },
     { key: "diagnostics", label: "Diagnostics", icon: <ClipboardList className="h-4 w-4" /> },
     { key: "org-insights", label: "Org Insights", icon: <Building2 className="h-4 w-4" /> },
+    { key: "content-engine", label: "Content Engine", icon: <Pen className="h-4 w-4" /> },
     { key: "insights-lab", label: "Insights Lab", icon: <Lightbulb className="h-4 w-4" /> },
   ];
 
@@ -744,6 +746,8 @@ export default function AdminPage() {
               </Card>
             </>
           )}
+
+          {activeView === "content-engine" && <LinkedInContentEngine />}
 
           {/* ── Insights Lab Tab ── */}
           {activeView === "insights-lab" && (
