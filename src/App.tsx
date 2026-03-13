@@ -76,7 +76,7 @@ const App = () => (
 
             {/* Standalone admin panel */}
             <Route path="/admin/manage" element={<AdminPage />} />
-            <Route path="/admin/insights" element={<InsightsLab />} />
+            <Route path="/admin/insights" element={<Navigate to="/admin/manage" replace />} />
 
             {/* Retired pages — redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
