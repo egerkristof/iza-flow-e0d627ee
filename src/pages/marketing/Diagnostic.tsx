@@ -203,40 +203,6 @@ export default function DiagnosticPage() {
                   )}
                 </p>
               </div>
-
-              {/* 4. Evidence — compact value hint + dimensions */}
-              <div
-                className="max-w-sm mx-auto rounded-xl border px-4 py-3 space-y-2.5"
-                style={{ borderColor: "hsl(var(--primary) / 0.12)", background: "hsl(var(--primary) / 0.03)" }}
-              >
-                <p className="text-[11px] md:text-xs font-bold tracking-wide text-primary uppercase">
-                  You'll get scored across 5 dimensions
-                </p>
-                <div className="flex flex-wrap justify-center gap-1.5">
-                  {[
-                    "Standards",
-                    "Consistency",
-                    "Knowledge",
-                    "Visibility",
-                    "Improvement",
-                  ].map((dim) => (
-                    <span
-                      key={dim}
-                      className="px-2 py-1 rounded-md text-[10px] md:text-xs font-semibold border"
-                      style={{
-                        borderColor: "hsl(var(--border))",
-                        background: "hsl(var(--card))",
-                        color: "hsl(var(--foreground))",
-                      }}
-                    >
-                      {dim}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-[10px] md:text-[11px] text-muted-foreground/70">
-                  Plus cost analysis, maturity benchmark & option to book a free debrief.
-                </p>
-              </div>
             </div>
           )}
 
