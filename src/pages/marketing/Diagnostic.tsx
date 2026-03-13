@@ -30,6 +30,18 @@ export default function DiagnosticPage() {
   const recordIdRef = useRef<string | null>(null);
   const sessionId = useMemo(() => generateSessionId(), []);
 
+  // Fetch submission count for social proof
+  useEffect(() => {
+    (async () => {
+      try {
+        const { count } = await (supabase as any)
+          .from("diagnostic_results")
+          .select("id", { count: "exact", head: true });
+        if (count != null && count > 5) setSubmissionCount(count);
+      } catch {}
+    })();
+  }, []);
+
   // Handle ?result=<id> for re-engagement links from email
   useEffect(() => {
     const resultId = searchParams.get("result");
