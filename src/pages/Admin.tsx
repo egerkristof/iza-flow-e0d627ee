@@ -748,10 +748,7 @@ export default function AdminPage() {
             </>
           )}
 
-          {activeView === "content-engine" && <LinkedInContentEngine />}
-
-          {/* ── Insights Lab Tab ── */}
-          {activeView === "insights-lab" && (
+          {activeView === "content-insights" && (
             <>
               {loadingData ? (
                 <div className="flex items-center justify-center py-20 text-muted-foreground gap-2">
@@ -760,16 +757,16 @@ export default function AdminPage() {
               ) : !aggregate ? (
                 <Card>
                   <CardContent className="py-12 text-center text-muted-foreground">
-                    No diagnostic submissions yet. Research angles will appear once data flows in.
+                    No diagnostic submissions yet. Content tools will appear once data flows in.
                   </CardContent>
                 </Card>
               ) : (
                 <>
                   {/* Aggregate Dashboard */}
                   <div>
-                    <h1 className="text-xl font-bold text-foreground mb-1">Aggregate Intelligence</h1>
+                    <h1 className="text-xl font-bold text-foreground mb-1">Content &amp; Insights</h1>
                     <p className="text-sm text-muted-foreground">
-                      Proprietary data from {aggregate.totalSubmissions} submissions across {aggregate.orgCount} organizations
+                      Proprietary data from {aggregate.totalSubmissions} submissions across {aggregate.orgCount} organizations — use it to generate LinkedIn posts and research angles.
                     </p>
                   </div>
 
@@ -844,6 +841,11 @@ export default function AdminPage() {
                       })}
                     </CardContent>
                   </Card>
+
+                  {/* LinkedIn Content Engine */}
+                  <div className="border-t border-border pt-6">
+                    <LinkedInContentEngine />
+                  </div>
 
                   {/* Research Angles Engine */}
                   <div className="border-t border-border pt-6">
@@ -929,6 +931,8 @@ export default function AdminPage() {
               )}
             </>
           )}
+
+          {activeView === "consulting" && <ConsultingReference />}
         </div>
       </main>
     </div>
