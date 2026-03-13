@@ -39,6 +39,10 @@ interface DiagnosticResult {
   created_at: string;
   session_id: string | null;
   email_action_plan: { steps: { title: string; manual_how: string; platform_how: string }[] } | null;
+  respondent_role: string | null;
+  team_size: string | null;
+  company_name: string | null;
+  industry: string | null;
 }
 
 interface UserRole {
