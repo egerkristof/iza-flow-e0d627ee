@@ -638,7 +638,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     <>
       <div>
         <h1 className="text-xl font-bold text-foreground">Org Insights</h1>
-        <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions — anonymous aggregate reports for decision makers.</p>
+        <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions. Anonymous aggregate reports for decision makers.</p>
       </div>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
