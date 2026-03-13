@@ -34,7 +34,7 @@ const FAQS = [
   },
   {
     q: "What does it cost?",
-    a: "We're in private beta. The first month is free for every team. After that, pricing scales with team size. Book a discovery call and we'll walk you through it.",
+    a: "We're in private beta. The first month is free for every team. After that, pricing scales with team size. Book your Diagnostic Debrief and we'll walk you through it.",
   },
   {
     q: "Is my team's knowledge secure?",

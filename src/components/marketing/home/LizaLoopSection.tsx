@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Layers, ArrowRight, Shield, Users, Brain } from "lucide-react";
-import { CAL_URL } from "./shared";
-import { SectionTag } from "./shared";
+import { CAL_URL, SectionTag } from "./shared";
 
 const STEPS = [
   {
