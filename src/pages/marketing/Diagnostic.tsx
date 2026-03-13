@@ -178,10 +178,15 @@ export default function DiagnosticPage() {
                 <span className="brand-gradient-text">still need so much fixing?</span>
               </h1>
 
-              {/* 2. Subtext */}
-              <p className="text-sm md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                It's not the AI. It's that your team has no shared standard for using it.
-              </p>
+              {/* 2. Symptoms → Reframe */}
+              <div className="max-w-lg mx-auto space-y-1">
+                <p className="text-sm md:text-lg font-semibold text-foreground/80">
+                  Hallucinations. Inconsistent quality. The same mistakes on repeat.
+                </p>
+                <p className="text-sm md:text-base text-muted-foreground">
+                  It's not the AI — your team has no shared standard for using it.
+                </p>
+              </div>
 
               {/* 3. CTA — above the fold */}
               <div className="space-y-2">
