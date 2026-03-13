@@ -65,28 +65,28 @@ export default function DiagnosticPage() {
       // 2. Pre-emptive insert DURING calculating phase (before results render)
       //    Uses session_id unique constraint for dedup — safe to retry
       try {
-        const { data, error } = await (supabase as any).from("diagnostic_results")
-          .upsert(
-            {
-              session_id: sessionId,
-              answers: finalAnswers,
-              scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
-              archetype: r.archetype.label,
-              overall_score: r.overall,
-            },
-            { onConflict: "session_id" }
-          )
+        const payload = {
+          session_id: sessionId,
+          answers: finalAnswers,
+          scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
+          archetype: r.archetype.label,
+          overall_score: r.overall,
+        };
+
+        const { data, error } = await (supabase as any)
+          .from("diagnostic_results")
+          .insert(payload)
           .select("id")
           .single();
 
         if (error) {
-          console.error("Diagnostic upsert failed:", error);
+          console.error("Diagnostic insert failed:", error);
         } else if (data?.id) {
           setDiagnosticRecordId(data.id);
           recordIdRef.current = data.id;
         }
       } catch (err) {
-        console.error("Diagnostic upsert exception:", err);
+        console.error("Diagnostic insert exception:", err);
       }
 
       // 3. Brief animation delay, then show results
