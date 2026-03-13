@@ -21,6 +21,7 @@ export default function DiagnosticPage() {
   const [searchParams] = useSearchParams();
   const [phase, setPhase] = useState<Phase>("intro");
   const [currentQ, setCurrentQ] = useState(0);
+  const [submissionCount, setSubmissionCount] = useState<number | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
   const [diagnosticRecordId, setDiagnosticRecordId] = useState<string | null>(null);
@@ -28,6 +29,18 @@ export default function DiagnosticPage() {
   const finishingRef = useRef(false);
   const recordIdRef = useRef<string | null>(null);
   const sessionId = useMemo(() => generateSessionId(), []);
+
+  // Fetch submission count for social proof
+  useEffect(() => {
+    (async () => {
+      try {
+        const { count } = await (supabase as any)
+          .from("diagnostic_results")
+          .select("id", { count: "exact", head: true });
+        if (count != null && count > 5) setSubmissionCount(count);
+      } catch {}
+    })();
+  }, []);
 
   // Handle ?result=<id> for re-engagement links from email
   useEffect(() => {
@@ -178,7 +191,7 @@ export default function DiagnosticPage() {
                   {[
                     "Scores across 5 dimensions of AI execution maturity",
                     "Business cost analysis of your weakest areas",
-                    "How you compare to the industry benchmark",
+                    "Your position on the maturity scale, from Flying Solo to Compound AI Team",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold"
@@ -203,6 +216,12 @@ export default function DiagnosticPage() {
               </Button>
               <p className="text-xs text-muted-foreground">
                 No signup. 10 scenario questions. Immediate results.
+                {submissionCount != null && (
+                  <>
+                    {" · "}
+                    <span className="font-semibold text-foreground">{submissionCount}+ teams</span> assessed so far.
+                  </>
+                )}
               </p>
 
               {/* Framework preview — the 5 dimensions */}
