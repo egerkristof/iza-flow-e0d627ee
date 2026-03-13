@@ -58,7 +58,7 @@ interface ResearchEntry {
   created_at: string;
 }
 
-type AdminView = "members" | "diagnostics" | "org-insights" | "insights-lab";
+type AdminView = "members" | "diagnostics" | "org-insights" | "insights-lab" | "content-engine";
 type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
 
 /* ── Helpers ── */
