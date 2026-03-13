@@ -1016,3 +1016,43 @@ function ResearchHistoryCard({ entry }: { entry: ResearchEntry }) {
     </Card>
   );
 }
+
+/* ── Segment Card ── */
+function SegmentCard({ title, segments }: { title: string; segments: Record<string, { count: number; avg: number }> }) {
+  const entries = Object.entries(segments).sort((a, b) => b[1].count - a[1].count);
+  if (!entries.length) {
+    return (
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-xs text-muted-foreground">No data yet</p>
+        </CardContent>
+      </Card>
+    );
+  }
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        {entries.map(([label, { count, avg }]) => (
+          <div key={label} className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-foreground truncate">{label}</span>
+              <span className="text-muted-foreground text-xs shrink-0">n={count}</span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
+                <div className="h-full rounded-full bg-primary/60" style={{ width: `${avg}%` }} />
+              </div>
+              <span className="font-mono text-xs text-muted-foreground w-8 text-right">{avg}</span>
+            </div>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
