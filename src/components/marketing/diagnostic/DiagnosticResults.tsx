@@ -8,12 +8,14 @@ import { CAL_URL } from "@/components/marketing/home/shared";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp, Loader2, Sparkles, Info, Copy, Check, Users } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Props {
   result: DiagnosticResult;
   answers: Record<string, number>;
   existingRecordId?: string | null;
+  sessionId?: string | null;
 }
 
 const BENCHMARK_AVG = 35;
