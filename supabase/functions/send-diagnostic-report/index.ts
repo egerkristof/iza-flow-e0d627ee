@@ -119,19 +119,89 @@ If you cannot determine, use null for that field. Industry should be a short lab
       }
     }
 
-    // ── Step 1b: Atomically attach email + metadata to the record ──
-    if (diagnostic_result_id) {
-      const updatePayload: Record<string, unknown> = { email: email.trim() };
-      if (respondent_role) updatePayload.respondent_role = respondent_role;
-      if (team_size) updatePayload.team_size = team_size;
-      if (companyName) updatePayload.company_name = companyName;
-      if (industry) updatePayload.industry = industry;
+    // ── Step 1b: Persist lead data reliably (update existing, then fallback to session, then insert) ──
+    const normalizedScores =
+      scores && Object.keys(scores).length > 0
+        ? scores
+        : Object.fromEntries((dimensions || []).map((d) => [d.dimension, d.score]));
 
-      const { error: updateErr } = await supabaseAdmin
+    const normalizedAnswers = answers && Object.keys(answers).length > 0 ? answers : {};
+
+    const leadPayload: Record<string, unknown> = {
+      email: email.trim(),
+      respondent_role: respondent_role?.trim() || null,
+      team_size: team_size || null,
+      company_name: companyName,
+      industry,
+    };
+
+    let resolvedDiagnosticRecordId: string | null = diagnostic_result_id || null;
+
+    if (resolvedDiagnosticRecordId) {
+      const { data: updatedRow, error: updateErr } = await supabaseAdmin
         .from("diagnostic_results")
-        .update(updatePayload)
-        .eq("id", diagnostic_result_id);
-      if (updateErr) console.error("Email attach failed:", updateErr);
+        .update(leadPayload)
+        .eq("id", resolvedDiagnosticRecordId)
+        .select("id")
+        .maybeSingle();
+
+      if (updateErr) {
+        console.error("Email attach by id failed:", updateErr);
+      }
+
+      if (!updatedRow?.id) {
+        resolvedDiagnosticRecordId = null;
+      }
+    }
+
+    if (!resolvedDiagnosticRecordId && session_id) {
+      const { data: sessionRow, error: sessionLookupErr } = await supabaseAdmin
+        .from("diagnostic_results")
+        .select("id, email")
+        .eq("session_id", session_id)
+        .maybeSingle();
+
+      if (sessionLookupErr) {
+        console.error("Session lookup failed:", sessionLookupErr);
+      }
+
+      if (sessionRow?.id) {
+        resolvedDiagnosticRecordId = sessionRow.id;
+        if (!sessionRow.email) {
+          const { error: sessionUpdateErr } = await supabaseAdmin
+            .from("diagnostic_results")
+            .update(leadPayload)
+            .eq("id", sessionRow.id);
+
+          if (sessionUpdateErr) {
+            console.error("Email attach by session_id failed:", sessionUpdateErr);
+          }
+        }
+      }
+    }
+
+    if (!resolvedDiagnosticRecordId) {
+      const insertPayload = {
+        session_id: session_id || null,
+        answers: normalizedAnswers,
+        scores: normalizedScores,
+        archetype: archetype?.label || "Unknown",
+        overall_score: overall,
+        ...leadPayload,
+      };
+
+      const { data: insertedRow, error: insertErr } = await supabaseAdmin
+        .from("diagnostic_results")
+        .insert(insertPayload)
+        .select("id")
+        .single();
+
+      if (insertErr) {
+        console.error("Fallback insert failed:", insertErr);
+        throw new Error("Could not persist diagnostic submission");
+      }
+
+      resolvedDiagnosticRecordId = insertedRow.id;
     }
 
     // ── Step 2: Generate AI action plan ──
