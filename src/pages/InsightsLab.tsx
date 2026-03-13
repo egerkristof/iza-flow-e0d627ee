@@ -182,7 +182,7 @@ export default function InsightsLab() {
       if (error) throw error;
       setLiveResult(data.content);
       // Refresh past research
-      const { data: refreshed } = await supabase
+      const { data: refreshed } = await (supabase as any)
         .from("insights_research")
         .select("*")
         .order("created_at", { ascending: false })
