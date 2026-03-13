@@ -747,6 +747,8 @@ export default function AdminPage() {
             </>
           )}
 
+          {activeView === "content-engine" && <LinkedInContentEngine />}
+
           {/* ── Insights Lab Tab ── */}
           {activeView === "insights-lab" && (
             <>
