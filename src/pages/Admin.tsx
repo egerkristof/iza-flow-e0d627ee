@@ -229,9 +229,11 @@ export default function AdminPage() {
     };
   }, [isArchitect, activeView, loadData]);
 
-  /* ── Aggregate computation ── */
+  /* ── Aggregate computation (excludes founder test submissions) ── */
+  const FOUNDER_EMAILS = new Set(["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"]);
   const aggregate = useMemo(() => {
-    if (!results.length) return null;
+    const filtered = results.filter((r) => !r.email || !FOUNDER_EMAILS.has(r.email.toLowerCase()));
+    if (!filtered.length) return null;
 
     const overallAvg = Math.round(results.reduce((s, r) => s + r.overall_score, 0) / results.length);
 
