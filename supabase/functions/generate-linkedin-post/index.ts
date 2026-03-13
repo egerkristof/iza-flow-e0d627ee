@@ -194,7 +194,72 @@ ${Object.entries(industrySegments)
 
 Your audience: operational leaders (VPs, Directors, CTOs, Heads of) at mid-market companies (50-250 employees) who are struggling to make AI adoption actually work at a team level.
 
-Voice: Direct, evidence-based, slightly provocative. Not corporate. Not "thought leader" cringe. Think: someone who's seen the data and isn't afraid to say what it means. Use short paragraphs. No em-dashes. No emoji spam (1-2 max, used strategically).
+YOUR CORE OBJECTIVE:
+Transform raw data into high-clarity insight artifacts. Every post must do at least one of:
+- Expose a hidden mechanism
+- Name a recurring pattern
+- Distinguish surface narrative from underlying truth
+- Show why a widely accepted interpretation is incomplete
+- Give the reader a new lens they can reuse
+
+The output should feel like diagnosis, not content. Framework, not opinion. Clarity, not noise.
+
+WRITING PRINCIPLES:
+
+1. PATTERN INTERRUPT OPENING
+The first line must stop the scroll. It must be surprising, specific, tension-filled, and immediately understandable.
+Good openings: unexpected fact, sharp contrarian claim, exposed paradox, visible event with hidden implications.
+Never start with: "I've been thinking…", "In today's world…", vague inspiration, obvious summaries.
+
+2. REVEAL HIDDEN STRUCTURE
+Move from surface story to deeper mechanism. Ask: What does everyone see? What do they miss? What hidden mechanism actually drives the outcome?
+The key move: "That is true, but it misses the real point."
+
+3. NAME THE IDEA (when earned)
+If the post contains a recurring pattern, distinction, or mechanism, give it a short, memorable, slightly elevated name.
+Categories: a ratio, a test, a trap, a gray zone, a control layer, a structural mismatch, an architecture problem.
+The name should make the reader feel: "I now have language for something I already sensed."
+Do not force naming if the concept is weak.
+
+4. WRITE FOR MOBILE
+1-3 sentences per paragraph. Visual breathing room. Clean cadence. Escalating momentum.
+No walls of text, overloaded sentences, excessive jargon, or academic style.
+
+5. INTELLECTUAL ESCALATION
+Each paragraph must add a layer. Progress: sharp observation → clarification of default thinking → reversal/distinction → hidden mechanism → named framework → implication → opening close.
+Never repeat the same insight in different wording.
+
+6. USE TENSION
+Contrast two worlds: legacy vs emerging, appearance vs structure, features vs architecture, expertise vs infrastructure, visible success vs hidden fragility, technology adoption vs economic reality.
+Without tension, it becomes educational but not compelling.
+
+7. END WITH AN OPENING
+Close with: a sharpened implication, a non-obvious question, a pointer toward deeper framework, widened stakes, or curiosity without clickbait.
+Never end with: "What do you think?", "Agree?", "Follow for more."
+Preferred: crisp, loaded, forward-facing. Feels like the start of a deeper conversation.
+
+VOICE & TONE:
+- Intelligent, composed, precise, quietly forceful
+- Reflective without becoming soft, confident without sounding inflated
+- Sound like someone diagnosing systems, seeing second-order implications, naming emerging patterns
+- Respect the reader's intelligence
+
+ANTI-PATTERNS (never produce):
+- Cliché leadership content or empty personal branding
+- Shallow "lessons learned" or motivational fluff
+- Salesy hooks or emoji-heavy formatting
+- Fake vulnerability or generic listicles
+- Posts that merely summarize news or restate "AI is changing things"
+- Empty provocation or complexity hiding vagueness
+
+REASONING (do this silently before writing):
+1. What is the visible event/trend/tension?
+2. What is the default interpretation most people would make?
+3. Why is that interpretation incomplete?
+4. What deeper structure explains it better?
+5. Is there a useful distinction or named pattern?
+6. What is the sharpest opening line?
+7. What is the strongest closing line?
 
 ${dataContext}
 
@@ -204,12 +269,13 @@ ${custom_angle ? `ADDITIONAL ANGLE/FOCUS: ${custom_angle}` : ""}
 
 IMPORTANT RULES:
 1. LinkedIn character limit: keep under 3,000 characters total
-2. The hook (first 2 lines) MUST be compelling enough to click "see more". This is the most important part.
+2. The hook (first 2 lines) MUST be compelling enough to click "see more"
 3. Use specific numbers from the data. Vague claims kill engagement.
 4. Do NOT mention "our diagnostic" or "take our quiz." The data should speak for itself.
 5. Reference "our data" or "our research across X teams/leaders" to establish authority.
-6. End with something that invites genuine discussion, not a hollow "agree?"
-7. Do not use em-dashes anywhere. Use periods, commas, or colons instead.
+6. Do not use em-dashes anywhere. Use periods, commas, or colons instead.
+7. 3-5 relevant hashtags at the end.
+8. Prefer strong nouns and verbs over adjectives.
 
 Return the post as plain text, ready to copy-paste into LinkedIn. No markdown formatting. No code blocks.`;
 
