@@ -168,17 +168,70 @@ export default function DiagnosticPage() {
                 Hallucinations. Inconsistent quality. The same mistakes repeated across people. It's not the AI. It's that your team has no shared standard for using it.
               </p>
 
+              {/* Value preview — what they'll receive */}
+              <div
+                className="max-w-md mx-auto rounded-xl border px-5 py-4 text-left space-y-2.5"
+                style={{ borderColor: "hsl(var(--primary) / 0.15)", background: "hsl(var(--primary) / 0.04)" }}
+              >
+                <p className="text-xs font-bold tracking-wide text-primary uppercase">In 90 seconds you'll get:</p>
+                <ul className="space-y-1.5">
+                  {[
+                    "Scores across 5 dimensions of AI execution maturity",
+                    "Business cost analysis of your weakest areas",
+                    "Benchmark comparison against 55+ teams",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold"
+                        style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
+                      >{i + 1}</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[11px] text-muted-foreground/70 pt-0.5">
+                  + option to book a free Diagnostic Debrief with a strategist to unpack your results.
+                </p>
+              </div>
+
               <Button
                 variant="brand"
                 size="lg"
                 className="text-base"
                 onClick={() => setPhase("questions")}
               >
-                Score Your Team <ArrowRight className="w-4 h-4" />
+                See Where Your AI Execution Breaks Down <ArrowRight className="w-4 h-4" />
               </Button>
               <p className="text-xs text-muted-foreground">
-                90 seconds. No signup. Just the truth.
+                No signup. 10 scenario questions. Immediate results.
               </p>
+
+              {/* Framework preview — the 5 dimensions */}
+              <div className="pt-4 space-y-3">
+                <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-muted-foreground/60">
+                  You'll be assessed across
+                </p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {[
+                    "Standards Adoption",
+                    "Delivery Consistency",
+                    "Knowledge Sharing",
+                    "Team Visibility",
+                    "Improvement Speed",
+                  ].map((dim) => (
+                    <span
+                      key={dim}
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold border"
+                      style={{
+                        borderColor: "hsl(var(--border))",
+                        background: "hsl(var(--card))",
+                        color: "hsl(var(--foreground))",
+                      }}
+                    >
+                      {dim}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
