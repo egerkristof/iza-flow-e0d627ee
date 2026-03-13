@@ -389,10 +389,20 @@ Return ONLY valid JSON in this exact format:
       )
       .join("");
 
+    const enrichmentLine = companyName || industry || respondent_role || team_size
+      ? `<p style="margin:6px 0 16px;font-size:13px;color:#475569;">${[
+          respondent_role ? `Role: <strong>${respondent_role}</strong>` : null,
+          team_size ? `Team: <strong>${team_size}</strong>` : null,
+          companyName ? `Company: <strong>${companyName}</strong>` : null,
+          industry ? `Industry: <strong>${industry}</strong>` : null,
+        ].filter(Boolean).join(" · ")}</p>`
+      : "";
+
     const founderHtml = `
       <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:640px;margin:0 auto;">
         <h2 style="margin:0 0 4px;font-size:18px;color:#1a1a2e;">Diagnostic Lead: ${email}</h2>
-        <p style="margin:0 0 16px;font-size:13px;color:#64748b;">Submitted ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC</p>
+        <p style="margin:0 0 4px;font-size:13px;color:#64748b;">Submitted ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC</p>
+        ${enrichmentLine}
 
         <div style="text-align:center;padding:16px;background:#f8fafc;border-radius:8px;margin-bottom:16px;">
           <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;">Overall Score</p>
