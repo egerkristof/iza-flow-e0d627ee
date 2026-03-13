@@ -19,6 +19,8 @@ interface DimensionScore {
 
 interface RequestBody {
   email: string;
+  respondent_role?: string | null;
+  team_size?: string | null;
   overall: number;
   archetype: { label: string; tagline: string; action: string };
   dimensions: DimensionScore[];
