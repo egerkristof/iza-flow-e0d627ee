@@ -173,7 +173,7 @@ export default function AdminPage() {
 
       if (profilesRes.data) setProfiles(profilesRes.data);
       if (rolesRes.data) setUserRoles(rolesRes.data as UserRole[]);
-      if (diagRes.data) setResults(diagRes.data as DiagnosticResult[]);
+      if (diagRes.data) setResults(diagRes.data as unknown as DiagnosticResult[]);
       if (researchRes.data) setPastResearch(researchRes.data as ResearchEntry[]);
     } finally {
       if (!silent) setLoadingData(false);
