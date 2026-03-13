@@ -194,14 +194,14 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     const STRATEGIC_PER_DIM: Record<string, { low: string; mid: string; high: string }> = {
       standard_internalization: {
-        low: "Which means you can't scale delivery without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
+        low: "Which means you can't scale output without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
         mid: "Which means your growth is throttled by onboarding speed. New people take months to reach the quality bar your best people hit naturally.",
         high: "Which means you can take on more work without proportionally adding senior oversight. Your methodology is doing the quality control, not your calendar.",
       },
       output_consistency: {
-        low: "Which means your pricing model is quietly broken. You're charging for team-level delivery but providing individual-level variance.",
+        low: "Which means your team's output quality is unpredictable. You're investing in AI tools but getting individual-level variance instead of team-level consistency.",
         mid: "Which means your capacity ceiling is set by your strongest operators, not your team size.",
-        high: "Which means your margin improves as you grow. Consistency lets you systematise delivery and price on value rather than hours.",
+        high: "Which means your output quality holds as you grow. Consistency lets you systematise execution and focus senior time on strategy rather than correction.",
       },
       knowledge_compounding: {
         low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially.",
@@ -210,12 +210,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       },
       collective_visibility: {
         low: "Which means your leadership decisions about AI investment are based on anecdote, not evidence.",
-        mid: "Which means you're making workforce planning decisions blind. You don't know which roles AI is genuinely augmenting.",
+        mid: "Which means you're making workforce and resource planning decisions blind. You don't know which roles AI is genuinely augmenting.",
         high: "Which means you can make data-informed decisions about where AI creates value and where it doesn't.",
       },
       learning_velocity: {
         low: "Which means competitors who learn faster will compound their advantage every quarter. After 12 months, that gap is exponential.",
-        mid: "Which means you're adopting AI capabilities 3-6 months behind the curve, translating directly to lost competitive positioning.",
+        mid: "Which means you're adopting AI capabilities 3 to 6 months behind the curve, translating directly to lost competitive positioning.",
         high: "Which means you're turning AI evolution speed into a strategic advantage, not just keeping pace.",
       },
     };
@@ -516,44 +516,44 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       ? [
           {
             title: "1. Make one workflow repeatable",
-            text: `Your team is in exploration mode. Before optimising, pick your single highest-value, most-repeated task. Write down what "good" looks like for that task. Make it the starting point for every AI session on that workflow. Don't try to systematise everything at once.`,
+            text: `Your team is in exploration mode. Before optimising, pick your single highest-value, most-repeated task and write down what "good" looks like for it. Create a one-page reference covering the expected structure, quality criteria, and key steps. Then make it the default starting context for every AI session on that workflow. How: gather your two strongest operators for 60 minutes. Have them walk through their best recent output and extract the pattern. Capture it as a shared prompt template or context brief that anyone can load before starting. On LIZA OS, this becomes a Playbook that automatically injects into every AI session for that task type.`,
           },
           {
             title: "2. Create visibility before structure",
-            text: `Start a weekly 15-minute show-and-tell where one person demonstrates their best AI technique from the past week. The goal isn't to document everything. It's to make the invisible visible. People can't adopt what they can't see.`,
+            text: `Start a weekly 15-minute show-and-tell where one person demonstrates their best AI technique from the past week. The goal isn't to document everything. It's to make the invisible visible so people can adopt what works. How: rotate the presenter each week. After each demo, the team votes on whether the technique should become a shared default. Capture the decision in a running log. On LIZA OS, winning techniques are promoted directly into your team's context stack, so they automatically reach future sessions without manual copy-pasting.`,
           },
           {
-            title: "3. Assign a \"standards owner\" for one domain",
-            text: `One person, one area of expertise, one written reference. This person's job is to keep a living document of "how we do X with AI." It should be updated after every project. Start with your weakest dimension: ${gapLabel}.`,
+            title: "3. Assign a standards owner for one domain",
+            text: `One person, one area of expertise, one written reference document. This person's job is to maintain a living record of "how we do X with AI" and update it after every project. Start with your weakest dimension: ${gapLabel}. How: choose someone who's already good at this area, not necessarily the most senior person. Give them 30 minutes per week to review recent AI-assisted work and update the reference. On LIZA OS, this reference becomes a governed Context Bundle that version-controls your standards and pushes updates to every team member's AI sessions automatically.`,
           },
         ]
       : isMid
         ? [
             {
               title: "1. Close the gap between knowing and doing",
-              text: `Your team has standards, but they're optional. The gap between "${strengthLabel}" (${org.highestDimension.score}) and "${gapLabel}" (${org.lowestDimension.score}) shows where knowledge exists but isn't reaching execution. Make your strongest dimension's patterns the template for fixing your weakest.`,
+              text: `Your team has standards, but they're optional. The gap between "${strengthLabel}" (${org.highestDimension.score}) and "${gapLabel}" (${org.lowestDimension.score}) shows where knowledge exists but isn't reaching execution. How: take the specific patterns that make your strongest dimension work and replicate their structure for your weakest. If Standards Adoption is strong, use the same "always-loaded context" approach for Knowledge Sharing. Create a checklist of what must be present in every AI session for your weakest area. On LIZA OS, this is handled through Mandates that enforce minimum context requirements before a session can begin.`,
             },
             {
               title: "2. Introduce structured after-action reviews",
-              text: `You're capturing knowledge but not closing the loop. After each significant project, run a 20-minute review: What AI approaches worked? What didn't? What should change in the team's shared reference? This is the mechanism that turns individual learning into collective improvement.`,
+              text: `You're capturing knowledge but not closing the loop. After each significant project, run a 20-minute review with three questions: What AI approaches worked? What didn't? What specific change should we make to the team's shared reference? Assign someone to implement the change within 48 hours. How: schedule the review as a non-negotiable calendar event at project close. Use a simple template to capture answers and track whether changes were actually implemented. On LIZA OS, Session Debriefs capture these insights at each protocol execution and automatically surface them as proposed updates to your Playbooks.`,
             },
             {
               title: "3. Reduce key-person dependency",
-              text: `Your ${scoreRange > 20 ? "wide" : "moderate"} score spread suggests capability is concentrated in a few people. Pair your strongest AI users with others on real work (not training sessions). Apprenticeship through shared execution transfers tacit knowledge that documentation alone cannot.`,
+              text: `Your ${scoreRange > 20 ? "wide" : "moderate"} score spread suggests capability is concentrated in a few people. How: pair your strongest AI users with others on real work, not training sessions. Have them co-execute a task together, with the stronger person narrating their decisions. Record the reasoning, not just the output. Run two to three of these paired sessions per month. On LIZA OS, every team member's AI sessions draw from the same governed context stack, which means the strongest operator's patterns become the baseline for everyone without requiring 1-on-1 shadowing.`,
             },
           ]
         : [
             {
               title: "1. Extend your system across domains",
-              text: `Your team has real infrastructure for AI execution. The next step is cross-domain transfer: take the approaches that work in your strongest area and adapt them to adjacent practice areas or client verticals. The methodology is proven. Now scale it.`,
+              text: `Your team has real infrastructure for AI execution. The next step is cross-domain transfer. How: identify two adjacent areas where your structured approach doesn't yet apply. Assign a lead from your strongest domain to partner with someone from the new domain for a two-week pilot. They should adapt your existing templates, not create new ones from scratch. Measure whether output consistency improves within that pilot window. On LIZA OS, Playbooks and Context Bundles can be forked across domains, preserving the proven structure while allowing domain-specific customisation.`,
             },
             {
               title: "2. Measure AI execution ROI",
-              text: `You're in a position to quantify what your AI maturity is worth. Track: time-to-first-draft, senior review hours, rework frequency, and new hire ramp time. These metrics justify continued investment and make the business case for extending your approach to other teams.`,
+              text: `You're in a position to quantify what your AI maturity is worth. How: start tracking four metrics on your next three projects: time-to-first-draft, senior review hours, rework frequency, and new hire ramp time. Compare these against your pre-structured baseline. Build a simple dashboard or spreadsheet that tracks these monthly. These metrics justify continued investment and make the business case for extending your approach to other teams. On LIZA OS, execution analytics capture these signals automatically across protocol runs and surface them in your oversight dashboard.`,
             },
             {
               title: "3. Make your approach a competitive asset",
-              text: `Teams scoring ${org.avgScore}+ are rare. Your defined approach to AI execution is a differentiator in client conversations and talent acquisition. Document it as an institutional capability, not just internal process.`,
+              text: `Teams scoring ${org.avgScore}+ are rare. Your defined approach to AI execution is a differentiator in how your team operates and in how you attract talent. How: document your methodology as an institutional capability brief. Include what makes your approach different, the measurable outcomes it produces, and how new team members learn it. Use this in hiring conversations and leadership reviews. On LIZA OS, your entire methodology is codified as a living, version-controlled system that new hires onboard into from day one.`,
             },
           ];
 
@@ -638,7 +638,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     <>
       <div>
         <h1 className="text-xl font-bold text-foreground">Org Insights</h1>
-        <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions — anonymous aggregate reports for decision makers.</p>
+        <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions. Anonymous aggregate reports for decision makers.</p>
       </div>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">

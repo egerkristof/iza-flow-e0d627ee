@@ -20,14 +20,14 @@ const BENCHMARK_HIGH = 55;
 
 const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
-    low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5–10 hours per week spent re-explaining context that already exists in your team's methodology docs, past projects, and senior people's heads.",
-    mid: "Some standards reach AI sessions, but inconsistently. You're likely seeing 2–3 hours per person per week lost to partial re-prompting, and the output quality gap between your best and newest people keeps widening.",
+    low: "Every AI session starts from zero. Across a 10-person team, that's roughly 5 to 10 hours per week spent re-explaining context that already exists in your team's methodology docs, past projects, and senior people's heads.",
+    mid: "Some standards reach AI sessions, but inconsistently. You're likely seeing 2 to 3 hours per person per week lost to partial re-prompting, and the output quality gap between your best and newest people keeps widening.",
     high: "Your standards are actively shaping AI sessions. That's rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
   },
   output_consistency: {
-    low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3–5 hours per deliverable, plus a client trust problem: they can tell when your A-team isn't in the room.",
-    mid: "Outputs are recognisable but uneven. Senior review time is likely 30–40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the team's approach.",
-    high: "Clients get your team's quality standard regardless of who delivers. That's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
+    low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3 to 5 hours per deliverable, plus a trust problem: stakeholders can tell when quality depends on who did the work.",
+    mid: "Outputs are recognisable but uneven. Senior review time is likely 30 to 40% higher than it needs to be, because reviewers can't trust that AI-assisted work followed the team's approach.",
+    high: "Stakeholders get your team's quality standard regardless of who delivers. That's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
   },
   knowledge_compounding: {
     low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size: you're funding individual experiments, not building collective capability.",
@@ -48,29 +48,29 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
 
 const STRATEGIC_CONSEQUENCES: Record<string, { low: string; mid: string; high: string }> = {
   standard_internalization: {
-    low: "Which means you can't scale delivery without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
+    low: "Which means you can't scale output without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
     mid: "Which means your growth is throttled by onboarding speed. New people take months to reach the quality bar your best people hit naturally.",
     high: "Which means you can take on more work without proportionally adding senior oversight. Your methodology is doing the quality control, not your calendar.",
   },
   output_consistency: {
-    low: "Which means your pricing model is quietly broken. You're charging for team-level delivery but providing individual-level variance. Clients notice, even if they don't say it yet.",
-    mid: "Which means your capacity ceiling is set by your strongest operators, not your team size. You can't grow revenue without growing your key-person dependency.",
-    high: "Which means your margin improves as you grow. Consistency lets you systematise delivery, reduce review overhead, and price on value rather than hours.",
+    low: "Which means your team's output quality is unpredictable. You're investing in AI tools but getting individual-level variance instead of team-level consistency. Stakeholders notice, even if they don't say it yet.",
+    mid: "Which means your capacity ceiling is set by your strongest operators, not your team size. You can't grow output without growing your key-person dependency.",
+    high: "Which means your output quality holds as you grow. Consistency lets you systematise execution, reduce review overhead, and focus senior time on strategy rather than correction.",
   },
   knowledge_compounding: {
-    low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially. After 12 months, that gap isn't incremental — it's a different league.",
+    low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially. After 12 months, that gap is not incremental. It's a different league.",
     mid: "Which means you're one resignation away from losing capabilities you can't rebuild. Tribal knowledge that isn't codified is organisational risk, not organisational memory.",
     high: "Which means your competitive advantage accelerates over time. Every project deposits knowledge that makes the next one faster, cheaper, or higher quality. That's a compounding asset on your balance sheet.",
   },
   collective_visibility: {
     low: "Which means your leadership decisions about AI investment are based on anecdote, not evidence. You're allocating budget to tools you can't measure and training you can't evaluate.",
-    mid: "Which means you're making workforce planning decisions blind. You don't know which roles AI is genuinely augmenting and which are just using it as a fancy search engine.",
+    mid: "Which means you're making workforce and resource planning decisions blind. You don't know which roles AI is genuinely augmenting and which are just using it as a fancy search engine.",
     high: "Which means you can make data-informed decisions about where AI creates value and where it doesn't. That's the difference between strategic AI adoption and expensive experimentation.",
   },
   learning_velocity: {
-    low: "Which means competitors who learn faster will compound their advantage every quarter. The gap between a learning team and a static one isn't linear after 12 months — it's exponential.",
-    mid: "Which means you're adopting AI capabilities 3–6 months behind the curve. In a market where tools and techniques shift quarterly, that delay translates directly to lost competitive positioning.",
-    high: "Which means you're not just keeping pace with AI evolution — you're turning it into a strategic advantage. Speed of adaptation is the meta-skill that makes every other capability more valuable.",
+    low: "Which means competitors who learn faster will compound their advantage every quarter. The gap between a learning team and a static one after 12 months is not linear. It's exponential.",
+    mid: "Which means you're adopting AI capabilities 3 to 6 months behind the curve. In a market where tools and techniques shift quarterly, that delay translates directly to lost competitive positioning.",
+    high: "Which means you're turning AI evolution speed into a strategic advantage, not just keeping pace. Speed of adaptation is the meta-skill that makes every other capability more valuable.",
   },
 };
 
