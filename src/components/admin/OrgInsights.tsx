@@ -361,39 +361,36 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += 4;
 
     // ── Key Takeaway Box ──
-    checkNewPage(40);
-    doc.setFillColor(255, 251, 235);
-    doc.setDrawColor(251, 191, 36);
-    doc.roundedRect(margin, y, contentWidth, 34, 3, 3, "FD");
-
-    setFont(10, "bold", [146, 64, 14]);
-    doc.text("KEY TAKEAWAY", margin + 6, y + 7);
-    setFont(9, "normal", [120, 80, 20]);
-
     const gapLabel = DIMENSION_LABELS[org.lowestDimension.key as Dimension] || org.lowestDimension.label;
     const strengthLabel = DIMENSION_LABELS[org.highestDimension.key as Dimension] || org.highestDimension.label;
     const gapCost = COST_PER_DIM[org.lowestDimension.key]?.[getTier(org.lowestDimension.score)] || "";
-
     const takeawayText = `Your team's biggest AI execution gap is ${gapLabel} (${org.lowestDimension.score}/100). ` +
       `In practice: ${gapCost} ` +
       `Meanwhile, ${strengthLabel} (${org.highestDimension.score}/100) shows your team can build structured AI habits. ` +
       `The question is whether you can replicate that discipline across other areas before the gap widens.`;
+    setFont(9, "normal", [120, 80, 20]);
     const takeawayLines = doc.splitTextToSize(takeawayText, contentWidth - 14);
+    const takeawayBoxHeight = 16 + takeawayLines.length * 3.8;
+    checkNewPage(takeawayBoxHeight + 4);
+    doc.setFillColor(255, 251, 235);
+    doc.setDrawColor(251, 191, 36);
+    doc.roundedRect(margin, y, contentWidth, takeawayBoxHeight, 3, 3, "FD");
+    setFont(10, "bold", [146, 64, 14]);
+    doc.text("KEY TAKEAWAY", margin + 6, y + 7);
+    setFont(9, "normal", [120, 80, 20]);
     doc.text(takeawayLines, margin + 6, y + 14);
-    y += 40;
+    y += takeawayBoxHeight + 6;
+
+    // ── Brand header helper for continuation pages ──
+    const addBrandHeader = () => {
+      setFont(9, "normal", [140, 140, 140]);
+      doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, margin);
+      doc.text(fullyAnonymized ? "" : `${org.domain}`, pageWidth - margin, margin, { align: "right" });
+    };
 
     // ════════════════════════════════════════════
-    // PAGE 2: DETAILED ANALYSIS
+    // DIMENSION ANALYSIS (flows naturally)
     // ════════════════════════════════════════════
-    doc.addPage();
-    y = margin;
-
-    // Brand header
-    setFont(9, "normal", [140, 140, 140]);
-    doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
-    doc.text(fullyAnonymized ? "" : `${org.domain}`, pageWidth - margin, y, { align: "right" });
-    y += 10;
-
     drawSectionHeader("Dimension Analysis");
 
     // Each dimension gets a detailed block
@@ -496,16 +493,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += 10;
 
     // ════════════════════════════════════════════
-    // PAGE 3: RECOMMENDATIONS + CTA
+    // RECOMMENDATIONS (flows naturally)
     // ════════════════════════════════════════════
-    doc.addPage();
-    y = margin;
-
-    setFont(9, "normal", [140, 140, 140]);
-    doc.text("LIZA OS  |  AI Execution Maturity Audit", margin, y);
-    doc.text(fullyAnonymized ? "" : `${org.domain}`, pageWidth - margin, y, { align: "right" });
-    y += 10;
-
     drawSectionHeader("Recommendations");
 
     // Adaptive recommendations based on archetype/score (Cynefin-informed)
