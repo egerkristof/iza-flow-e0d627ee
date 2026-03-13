@@ -80,7 +80,7 @@ serve(async (req) => {
     let companyName: string | null = null;
     let industry: string | null = null;
 
-    if (!isPersonalEmail && emailDomain && diagnostic_result_id) {
+    if (!isPersonalEmail && emailDomain) {
       try {
         const enrichPrompt = `Given the email domain "${emailDomain}", identify the company name and industry.
 Return ONLY valid JSON: {"company_name": "...", "industry": "..."}
