@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { DiagnosticQuestion } from "@/components/marketing/diagnostic/DiagnosticQuestion";
@@ -12,6 +12,11 @@ import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
 type Phase = "intro" | "questions" | "calculating" | "results";
 
+/** Generate a stable session ID per page load to deduplicate submissions */
+function generateSessionId(): string {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 export default function DiagnosticPage() {
   const [searchParams] = useSearchParams();
   const [phase, setPhase] = useState<Phase>("intro");
@@ -21,6 +26,8 @@ export default function DiagnosticPage() {
   const [diagnosticRecordId, setDiagnosticRecordId] = useState<string | null>(null);
   const answersRef = useRef<Record<string, number>>({});
   const finishingRef = useRef(false);
+  const recordIdRef = useRef<string | null>(null);
+  const sessionId = useMemo(() => generateSessionId(), []);
 
   // Handle ?result=<id> for re-engagement links from email
   useEffect(() => {
@@ -38,6 +45,7 @@ export default function DiagnosticPage() {
         setResult(r);
         setAnswers(data.answers || {});
         setDiagnosticRecordId(resultId);
+        recordIdRef.current = resultId;
         setPhase("results");
       } catch {
         // Invalid ID, just show intro
@@ -49,29 +57,48 @@ export default function DiagnosticPage() {
     if (finishingRef.current) return;
     finishingRef.current = true;
     setPhase("calculating");
+
     try {
-      await new Promise((res) => setTimeout(res, 2200));
+      // 1. Calculate results immediately (client-side, no network)
       const r = calculateResults(finalAnswers);
+
+      // 2. Pre-emptive insert DURING calculating phase (before results render)
+      //    Uses session_id unique constraint for dedup — safe to retry
+      try {
+        const { data, error } = await (supabase as any).from("diagnostic_results")
+          .upsert(
+            {
+              session_id: sessionId,
+              answers: finalAnswers,
+              scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
+              archetype: r.archetype.label,
+              overall_score: r.overall,
+            },
+            { onConflict: "session_id" }
+          )
+          .select("id")
+          .single();
+
+        if (error) {
+          console.error("Diagnostic upsert failed:", error);
+        } else if (data?.id) {
+          setDiagnosticRecordId(data.id);
+          recordIdRef.current = data.id;
+        }
+      } catch (err) {
+        console.error("Diagnostic upsert exception:", err);
+      }
+
+      // 3. Brief animation delay, then show results
+      await new Promise((res) => setTimeout(res, 1800));
       setResult(r);
       setPhase("results");
-      try {
-        const { data, error } = await (supabase as any).from("diagnostic_results").insert({
-          answers: finalAnswers,
-          scores: Object.fromEntries(r.dimensions.map((d) => [d.dimension, d.score])),
-          archetype: r.archetype.label,
-          overall_score: r.overall,
-        }).select("id").single();
-        if (error) console.error("Diagnostic insert failed:", error);
-        if (data?.id) setDiagnosticRecordId(data.id);
-      } catch (err) {
-        console.error("Diagnostic insert exception:", err);
-      }
     } catch {
       // If calculation fails, reset so user can retry
       finishingRef.current = false;
       setPhase("questions");
     }
-  }, []);
+  }, [sessionId]);
 
   const handleSelect = useCallback(
     (questionId: string, score: number) => {
@@ -89,7 +116,6 @@ export default function DiagnosticPage() {
           setTimeout(() => finishDiagnostic(updatedAnswers), 500);
           return prevQ;
         } else if (isLastQuestion && !allNowAnswered) {
-          // User answered Q10 but skipped earlier questions — jump to first unanswered
           const firstUnanswered = QUESTIONS.findIndex((q) => updatedAnswers[q.id] == null);
           if (firstUnanswered >= 0) {
             setTimeout(() => setCurrentQ(firstUnanswered), 400);
@@ -202,7 +228,11 @@ export default function DiagnosticPage() {
           )}
 
           {phase === "results" && result && (
-            <DiagnosticResults result={result} answers={answers} existingRecordId={diagnosticRecordId} />
+            <DiagnosticResults
+              result={result}
+              answers={answers}
+              existingRecordId={recordIdRef.current}
+            />
           )}
         </div>
       </div>

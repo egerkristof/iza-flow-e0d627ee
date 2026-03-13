@@ -456,6 +456,7 @@ export type Database = {
           id: string
           overall_score: number
           scores: Json
+          session_id: string | null
         }
         Insert: {
           answers?: Json
@@ -466,6 +467,7 @@ export type Database = {
           id?: string
           overall_score: number
           scores?: Json
+          session_id?: string | null
         }
         Update: {
           answers?: Json
@@ -476,6 +478,7 @@ export type Database = {
           id?: string
           overall_score?: number
           scores?: Json
+          session_id?: string | null
         }
         Relationships: []
       }
