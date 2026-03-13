@@ -231,10 +231,28 @@ export default function AdminPage() {
     };
   }, [isArchitect, activeView, loadData]);
 
-  /* ── Aggregate computation (excludes founder test submissions) ── */
-  const FOUNDER_EMAILS = new Set(["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"]);
+  /* ── Aggregate computation ── */
+  const isFounder = (email: string | null) => {
+    if (!email) return false;
+    const lower = email.toLowerCase();
+    return lower.startsWith("kristof.eger@") || lower === "istvan.boscha@aliz.ai";
+  };
+
   const aggregate = useMemo(() => {
-    const filtered = results.filter((r) => !r.email || !FOUNDER_EMAILS.has(r.email.toLowerCase()));
+    // 1. Exclude founder test submissions
+    const nonFounder = results.filter((r) => !isFounder(r.email));
+
+    // 2. Deduplicate: keep latest submission per email (or per session_id for anonymous)
+    const seen = new Map<string, DiagnosticResult>();
+    for (const r of nonFounder) {
+      const key = r.email?.toLowerCase() || r.session_id || r.id;
+      const existing = seen.get(key);
+      if (!existing || new Date(r.created_at) > new Date(existing.created_at)) {
+        seen.set(key, r);
+      }
+    }
+    const filtered = Array.from(seen.values());
+
     if (!filtered.length) return null;
 
     const overallAvg = Math.round(filtered.reduce((s, r) => s + r.overall_score, 0) / filtered.length);
@@ -256,11 +274,12 @@ export default function AdminPage() {
       if (avg > strongest.score) strongest = { key, score: avg };
     }
 
+    // Org count: unique email domains (all domains count now)
     const orgDomains = new Set<string>();
     for (const r of filtered) {
       if (!r.email) continue;
       const domain = r.email.split("@")[1]?.toLowerCase();
-      if (domain && !FREE_DOMAINS.has(domain)) orgDomains.add(domain);
+      if (domain) orgDomains.add(domain);
     }
 
     const archCounts: Record<string, number> = {};
@@ -268,6 +287,27 @@ export default function AdminPage() {
     const topArchetype = Object.entries(archCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
 
     const confidence = getConfidenceTier(filtered.length);
+
+    // Segmentation helpers
+    const buildSegment = (extractor: (r: DiagnosticResult) => string | null | undefined) => {
+      const groups: Record<string, { scores: number[]; count: number }> = {};
+      for (const r of filtered) {
+        const val = extractor(r)?.trim();
+        if (!val) continue;
+        if (!groups[val]) groups[val] = { scores: [], count: 0 };
+        groups[val].scores.push(r.overall_score);
+        groups[val].count += 1;
+      }
+      const result: Record<string, { count: number; avg: number }> = {};
+      for (const [k, v] of Object.entries(groups)) {
+        result[k] = { count: v.count, avg: Math.round(v.scores.reduce((a, b) => a + b, 0) / v.scores.length) };
+      }
+      return result;
+    };
+
+    const roleSegments = buildSegment((r) => r.respondent_role);
+    const teamSizeSegments = buildSegment((r) => r.team_size);
+    const industrySegments = buildSegment((r) => r.industry);
 
     return {
       totalSubmissions: filtered.length,
@@ -279,6 +319,9 @@ export default function AdminPage() {
       topArchetype,
       confidenceTier: confidence.label,
       confidence,
+      roleSegments,
+      teamSizeSegments,
+      industrySegments,
     };
   }, [results]);
 
