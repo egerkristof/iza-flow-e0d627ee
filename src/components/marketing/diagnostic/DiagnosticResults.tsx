@@ -237,6 +237,26 @@ function EmailCapture({
         <div className="flex flex-col gap-2">
           <div className="flex flex-col sm:flex-row gap-2">
             <Input
+              type="text"
+              placeholder="Your role (e.g. CTO, VP Ops, Team Lead)"
+              value={respondentRole}
+              onChange={(e) => setRespondentRole(e.target.value.slice(0, 100))}
+              className={variant === "primary" ? "flex-1 h-10 text-sm" : "flex-1 h-9 text-sm"}
+            />
+            <Select value={teamSize} onValueChange={setTeamSize}>
+              <SelectTrigger className={variant === "primary" ? "sm:w-52 h-10 text-sm" : "sm:w-48 h-9 text-sm"}>
+                <SelectValue placeholder="Your team's size" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2-10">2–10 people</SelectItem>
+                <SelectItem value="11-50">11–50 people</SelectItem>
+                <SelectItem value="51-200">51–200 people</SelectItem>
+                <SelectItem value="200+">200+ people</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Input
               type="email"
               placeholder="your@email.com"
               value={email}
@@ -253,26 +273,6 @@ function EmailCapture({
               <Mail className="w-4 h-4" />
               {variant === "primary" ? "Send My Action Plan" : "Send Results"}
             </Button>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Input
-              type="text"
-              placeholder="Your role (e.g. CTO, VP Ops, Team Lead)"
-              value={respondentRole}
-              onChange={(e) => setRespondentRole(e.target.value.slice(0, 100))}
-              className={variant === "primary" ? "flex-1 h-10 text-sm" : "flex-1 h-9 text-sm"}
-            />
-            <Select value={teamSize} onValueChange={setTeamSize}>
-              <SelectTrigger className={variant === "primary" ? "sm:w-44 h-10 text-sm" : "sm:w-40 h-9 text-sm"}>
-                <SelectValue placeholder="Team size" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="2-10">2–10 people</SelectItem>
-                <SelectItem value="11-50">11–50 people</SelectItem>
-                <SelectItem value="51-200">51–200 people</SelectItem>
-                <SelectItem value="200+">200+ people</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </div>
         <p className="text-xs text-muted-foreground">
