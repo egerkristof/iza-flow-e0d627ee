@@ -286,7 +286,8 @@ function EmailCapture({
   );
 }
 
-export function DiagnosticResults({ result, answers, existingRecordId }: Props) {
+export function DiagnosticResults({ result, answers, existingRecordId, sessionId }: Props) {
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [respondentRole, setRespondentRole] = useState("");
   const [teamSize, setTeamSize] = useState("");
@@ -311,35 +312,41 @@ export function DiagnosticResults({ result, answers, existingRecordId }: Props) 
   const secondWeakestLabel = DIMENSION_LABELS[secondWeakest.dimension as keyof typeof DIMENSION_LABELS] || secondWeakest.label;
 
   async function handleEmailSubmit() {
-    if (!email.trim()) return;
+    if (!email.trim() || !respondentRole.trim() || !teamSize) return;
+
     setLoading(true);
     try {
-      // Single atomic call: edge function handles email update, AI generation, and notifications
-      const reportUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-diagnostic-report`;
-      await fetch(reportUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke("send-diagnostic-report", {
+        body: {
           email: email.trim(),
-          respondent_role: respondentRole.trim() || null,
-          team_size: teamSize || null,
+          respondent_role: respondentRole.trim(),
+          team_size: teamSize,
           overall: result.overall,
           archetype: result.archetype,
           dimensions: result.dimensions,
+          answers,
+          scores: Object.fromEntries(result.dimensions.map((d) => [d.dimension, d.score])),
+          session_id: sessionId || null,
           diagnostic_result_id: existingRecordId || null,
           results_base_url: window.location.origin,
-        }),
+        },
       });
 
+      if (error || data?.success !== true) {
+        throw new Error(data?.error || error?.message || "Failed to send your report.");
+      }
+
       setSubmitted(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Email submit error:", err);
-      setSubmitted(true);
+      toast({
+        variant: "destructive",
+        title: "Submission failed",
+        description: err?.message || "Please try again in a moment.",
+      });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
