@@ -383,6 +383,7 @@ export default function AdminPage() {
     { key: "members", label: "Members", icon: <Users className="h-4 w-4" /> },
     { key: "diagnostics", label: "Diagnostics", icon: <ClipboardList className="h-4 w-4" /> },
     { key: "org-insights", label: "Org Insights", icon: <Building2 className="h-4 w-4" /> },
+    { key: "content-engine", label: "Content Engine", icon: <Pen className="h-4 w-4" /> },
     { key: "insights-lab", label: "Insights Lab", icon: <Lightbulb className="h-4 w-4" /> },
   ];
 
