@@ -171,75 +171,58 @@ export default function DiagnosticPage() {
 
         <div className="flex-1 flex items-center justify-center px-6 py-16">
           {phase === "intro" && (
-            <div className="max-w-2xl text-center space-y-8 animate-in fade-in duration-500">
-              <h1 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                Why does your team's AI work
-                <br />
+            <div className="max-w-2xl text-center space-y-5 md:space-y-6 animate-in fade-in duration-500 px-1">
+              {/* 1. Headline */}
+              <h1 className="text-2xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
+                Why does your team's AI work{" "}
                 <span className="brand-gradient-text">still need so much fixing?</span>
               </h1>
-              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                Hallucinations. Inconsistent quality. The same mistakes repeated across people. It's not the AI. It's that your team has no shared standard for using it.
+
+              {/* 2. Subtext */}
+              <p className="text-sm md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                It's not the AI. It's that your team has no shared standard for using it.
               </p>
 
-              {/* Value preview — what they'll receive */}
-              <div
-                className="max-w-md mx-auto rounded-xl border px-5 py-4 text-left space-y-2.5"
-                style={{ borderColor: "hsl(var(--primary) / 0.15)", background: "hsl(var(--primary) / 0.04)" }}
-              >
-                <p className="text-xs font-bold tracking-wide text-primary uppercase">In 90 seconds you'll get:</p>
-                <ul className="space-y-1.5">
-                  {[
-                    "Scores across 5 dimensions of AI execution maturity",
-                    "Business cost analysis of your weakest areas",
-                    "Your position on the maturity scale, from Flying Solo to Compound AI Team",
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold"
-                        style={{ background: "var(--gradient-brand-btn)", color: "hsl(var(--primary-foreground))" }}
-                      >{i + 1}</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-[11px] text-muted-foreground/70 pt-0.5">
-                  + option to book a free Diagnostic Debrief with a strategist to unpack your results.
+              {/* 3. CTA — above the fold */}
+              <div className="space-y-2">
+                <Button
+                  variant="brand"
+                  size="lg"
+                  className="text-sm md:text-base w-full sm:w-auto"
+                  onClick={() => setPhase("questions")}
+                >
+                  Score Your AI Execution <ArrowRight className="w-4 h-4" />
+                </Button>
+                <p className="text-[11px] md:text-xs text-muted-foreground">
+                  No signup · 90 seconds · Immediate results
+                  {submissionCount != null && (
+                    <>
+                      {" · "}
+                      <span className="font-semibold text-foreground">{submissionCount}+ teams</span> assessed
+                    </>
+                  )}
                 </p>
               </div>
 
-              <Button
-                variant="brand"
-                size="lg"
-                className="text-base"
-                onClick={() => setPhase("questions")}
+              {/* 4. Evidence — compact value hint + dimensions */}
+              <div
+                className="max-w-sm mx-auto rounded-xl border px-4 py-3 space-y-2.5"
+                style={{ borderColor: "hsl(var(--primary) / 0.12)", background: "hsl(var(--primary) / 0.03)" }}
               >
-                See Where Your AI Execution Breaks Down <ArrowRight className="w-4 h-4" />
-              </Button>
-              <p className="text-xs text-muted-foreground">
-                No signup. 10 scenario questions. Immediate results.
-                {submissionCount != null && (
-                  <>
-                    {" · "}
-                    <span className="font-semibold text-foreground">{submissionCount}+ teams</span> assessed so far.
-                  </>
-                )}
-              </p>
-
-              {/* Framework preview — the 5 dimensions */}
-              <div className="pt-4 space-y-3">
-                <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-muted-foreground/60">
-                  You'll be assessed across
+                <p className="text-[11px] md:text-xs font-bold tracking-wide text-primary uppercase">
+                  You'll get scored across 5 dimensions
                 </p>
-                <div className="flex flex-wrap justify-center gap-2">
+                <div className="flex flex-wrap justify-center gap-1.5">
                   {[
-                    "Standards Adoption",
-                    "Delivery Consistency",
-                    "Knowledge Sharing",
-                    "Team Visibility",
-                    "Improvement Speed",
+                    "Standards",
+                    "Consistency",
+                    "Knowledge",
+                    "Visibility",
+                    "Improvement",
                   ].map((dim) => (
                     <span
                       key={dim}
-                      className="px-3 py-1.5 rounded-lg text-xs font-semibold border"
+                      className="px-2 py-1 rounded-md text-[10px] md:text-xs font-semibold border"
                       style={{
                         borderColor: "hsl(var(--border))",
                         background: "hsl(var(--card))",
@@ -250,6 +233,9 @@ export default function DiagnosticPage() {
                     </span>
                   ))}
                 </div>
+                <p className="text-[10px] md:text-[11px] text-muted-foreground/70">
+                  Plus cost analysis, maturity benchmark & option to book a free debrief.
+                </p>
               </div>
             </div>
           )}
