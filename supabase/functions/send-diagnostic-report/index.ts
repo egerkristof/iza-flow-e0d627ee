@@ -24,6 +24,9 @@ interface RequestBody {
   overall: number;
   archetype: { label: string; tagline: string; action: string };
   dimensions: DimensionScore[];
+  answers?: Record<string, number> | null;
+  scores?: Record<string, number> | null;
+  session_id?: string | null;
   diagnostic_result_id?: string;
   results_base_url?: string;
 }
