@@ -595,7 +595,7 @@ export default function AdminPage() {
                             </TableRow>
                             {expandedId === r.id && (
                               <TableRow>
-                                <TableCell colSpan={5} className="bg-muted/30 p-0">
+                                <TableCell colSpan={8} className="bg-muted/30 p-0">
                                   <div className="p-5 space-y-6">
                                     {/* Results Preview */}
                                     <div>
