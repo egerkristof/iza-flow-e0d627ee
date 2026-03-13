@@ -251,6 +251,13 @@ export default function AdminPage() {
               {item.label}
             </button>
           ))}
+          <button
+            onClick={() => navigate("/admin/insights")}
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors border-b-2 border-transparent text-muted-foreground hover:text-foreground"
+          >
+            <Lightbulb className="h-4 w-4" />
+            Lab
+          </button>
         </nav>
       </div>
 
