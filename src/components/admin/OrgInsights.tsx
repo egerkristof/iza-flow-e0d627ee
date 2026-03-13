@@ -192,6 +192,34 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       },
     };
 
+    const STRATEGIC_PER_DIM: Record<string, { low: string; mid: string; high: string }> = {
+      standard_internalization: {
+        low: "Which means you can't scale delivery without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
+        mid: "Which means your growth is throttled by onboarding speed. New people take months to reach the quality bar your best people hit naturally.",
+        high: "Which means you can take on more work without proportionally adding senior oversight. Your methodology is doing the quality control, not your calendar.",
+      },
+      output_consistency: {
+        low: "Which means your pricing model is quietly broken. You're charging for team-level delivery but providing individual-level variance.",
+        mid: "Which means your capacity ceiling is set by your strongest operators, not your team size.",
+        high: "Which means your margin improves as you grow. Consistency lets you systematise delivery and price on value rather than hours.",
+      },
+      knowledge_compounding: {
+        low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially.",
+        mid: "Which means you're one resignation away from losing capabilities you can't rebuild. Tribal knowledge that isn't codified is organisational risk.",
+        high: "Which means your competitive advantage accelerates over time. Every project deposits knowledge that makes the next one faster or higher quality.",
+      },
+      collective_visibility: {
+        low: "Which means your leadership decisions about AI investment are based on anecdote, not evidence.",
+        mid: "Which means you're making workforce planning decisions blind. You don't know which roles AI is genuinely augmenting.",
+        high: "Which means you can make data-informed decisions about where AI creates value and where it doesn't.",
+      },
+      learning_velocity: {
+        low: "Which means competitors who learn faster will compound their advantage every quarter. After 12 months, that gap is exponential.",
+        mid: "Which means you're adopting AI capabilities 3-6 months behind the curve, translating directly to lost competitive positioning.",
+        high: "Which means you're turning AI evolution speed into a strategic advantage, not just keeping pace.",
+      },
+    };
+
     const getScoreColor = (score: number): [number, number, number] =>
       score <= 30 ? [220, 38, 38] : score <= 55 ? [217, 119, 6] : score <= 75 ? [37, 99, 235] : [22, 163, 74];
 
@@ -412,7 +440,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         y += costLines.length * 3.8 + 2;
       }
 
-      // Per-dimension score spread
+      // Strategic consequence
+      const strategicText = STRATEGIC_PER_DIM[key]?.[tier];
+      if (strategicText) {
+        checkNewPage(12);
+        setFont(8.5, "bold", [20, 80, 160]);
+        doc.text("→", margin + 2, y);
+        setFont(8.5, "italic", [40, 60, 100]);
+        const stratLines = doc.splitTextToSize(strategicText, contentWidth - 10);
+        doc.text(stratLines, margin + 8, y);
+        y += stratLines.length * 3.8 + 2;
+      }
+
       const dimScores = org.results
         .map(r => (r.scores as Record<string, number>)[key])
         .filter(s => s != null)
