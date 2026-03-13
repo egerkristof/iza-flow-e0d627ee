@@ -674,6 +674,45 @@ export type Database = {
         }
         Relationships: []
       }
+      insights_research: {
+        Row: {
+          aggregate_snapshot: Json | null
+          category: string
+          citations: Json | null
+          created_at: string
+          dimension_focus: string | null
+          id: string
+          query: string
+          result_content: string
+          submission_count: number
+          triggered_by: string | null
+        }
+        Insert: {
+          aggregate_snapshot?: Json | null
+          category?: string
+          citations?: Json | null
+          created_at?: string
+          dimension_focus?: string | null
+          id?: string
+          query: string
+          result_content?: string
+          submission_count?: number
+          triggered_by?: string | null
+        }
+        Update: {
+          aggregate_snapshot?: Json | null
+          category?: string
+          citations?: Json | null
+          created_at?: string
+          dimension_focus?: string | null
+          id?: string
+          query?: string
+          result_content?: string
+          submission_count?: number
+          triggered_by?: string | null
+        }
+        Relationships: []
+      }
       knowledge_source_versions: {
         Row: {
           change_note: string | null

@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2, RefreshCw } from "lucide-react";
+import { Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck, Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2, RefreshCw, ExternalLink } from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
@@ -251,6 +251,13 @@ export default function AdminPage() {
               {item.label}
             </button>
           ))}
+          <button
+            onClick={() => navigate("/admin/insights")}
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors border-b-2 border-transparent text-muted-foreground hover:text-foreground"
+          >
+            <Lightbulb className="h-4 w-4" />
+            Lab
+          </button>
         </nav>
       </div>
 
@@ -276,6 +283,14 @@ export default function AdminPage() {
               {item.label}
             </button>
           ))}
+          <button
+            onClick={() => navigate("/admin/insights")}
+            className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors text-muted-foreground hover:bg-accent hover:text-foreground"
+          >
+            <Lightbulb className="h-4 w-4" />
+            Insights Lab
+            <ExternalLink className="h-3 w-3 ml-auto opacity-50" />
+          </button>
         </nav>
 
         <div className="border-t border-border p-3">

@@ -20,6 +20,7 @@ import AdminTrials from "./pages/AdminTrials";
 import AdminPage from "./pages/Admin";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
+import InsightsLab from "./pages/InsightsLab";
 import ConsultingDeck from "./pages/ConsultingDeck";
 import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
@@ -75,6 +76,7 @@ const App = () => (
 
             {/* Standalone admin panel */}
             <Route path="/admin/manage" element={<AdminPage />} />
+            <Route path="/admin/insights" element={<InsightsLab />} />
 
             {/* Retired pages — redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
