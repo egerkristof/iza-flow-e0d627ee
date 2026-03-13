@@ -275,7 +275,24 @@ export default function DiagnosticPage() {
               </div>
               <div className="space-y-2">
                 <p className="text-lg font-bold text-foreground">Analysing your responses…</p>
-                <p className="text-sm text-muted-foreground">Mapping your team across 5 dimensions</p>
+                <p className="text-sm text-muted-foreground">Scoring your team across 5 dimensions</p>
+              </div>
+              {/* Dimension names during calculation — builds anticipation */}
+              <div className="flex flex-wrap justify-center gap-2 pt-2">
+                {["Standards Adoption", "Delivery Consistency", "Knowledge Sharing", "Team Visibility", "Improvement Speed"].map((dim, i) => (
+                  <span
+                    key={dim}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium border animate-pulse"
+                    style={{
+                      borderColor: "hsl(var(--primary) / 0.2)",
+                      background: "hsl(var(--primary) / 0.06)",
+                      color: "hsl(var(--primary))",
+                      animationDelay: `${i * 200}ms`,
+                    }}
+                  >
+                    {dim}
+                  </span>
+                ))}
               </div>
             </div>
           )}
