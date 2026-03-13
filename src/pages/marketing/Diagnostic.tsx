@@ -184,7 +184,7 @@ export default function DiagnosticPage() {
                   Hallucinations. Inconsistent quality. The same mistakes on repeat.
                 </p>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  It's not the AI — your team has no shared standard for using it.
+                  It's not the AI. Your team has no shared standard for using it.
                 </p>
               </div>
 
