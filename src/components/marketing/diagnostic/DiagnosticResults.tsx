@@ -125,6 +125,10 @@ function SharePrompt({ variant }: { variant: "inline" | "card" }) {
 function EmailCapture({
   email,
   setEmail,
+  respondentRole,
+  setRespondentRole,
+  teamSize,
+  setTeamSize,
   loading,
   submitted,
   onSubmit,
@@ -136,6 +140,10 @@ function EmailCapture({
 }: {
   email: string;
   setEmail: (v: string) => void;
+  respondentRole: string;
+  setRespondentRole: (v: string) => void;
+  teamSize: string;
+  setTeamSize: (v: string) => void;
   loading: boolean;
   submitted: boolean;
   onSubmit: () => void;
