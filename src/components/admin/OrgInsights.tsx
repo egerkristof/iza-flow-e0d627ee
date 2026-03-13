@@ -62,6 +62,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     const grouped: Record<string, DiagnosticResult[]> = {};
     for (const r of results) {
       if (!r.email) continue;
+      if (FOUNDER_EMAILS.has(r.email.toLowerCase())) continue;
       const domain = getDomain(r.email);
       if (!includeFreeMail && FREE_EMAIL_DOMAINS.has(domain)) continue;
       if (!grouped[domain]) grouped[domain] = [];
