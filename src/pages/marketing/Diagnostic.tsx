@@ -178,7 +178,7 @@ export default function DiagnosticPage() {
                   {[
                     "Scores across 5 dimensions of AI execution maturity",
                     "Business cost analysis of your weakest areas",
-                    "Benchmark comparison against 55+ teams",
+                    "How you compare to the industry benchmark",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold"
