@@ -28,7 +28,7 @@ export function GuideSection() {
             We managed execution the hard way. Then AI made it harder.
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Years of managing complex engagements taught us that execution quality depends on shared, living standards. AI amplified the urgency. So we built the missing infrastructure.
+            200+ engagements across 8 countries taught us that execution quality depends on shared, living standards. AI amplified the urgency. So we built the missing infrastructure.
           </p>
         </div>
 

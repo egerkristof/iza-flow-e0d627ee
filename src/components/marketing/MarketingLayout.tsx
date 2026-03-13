@@ -188,7 +188,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Get Started</p>
               <div className="flex flex-col gap-2">
                 <Link to="/diagnostic" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Take the Diagnostic</Link>
-                <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Diagnostic Debrief</a>
+                <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Discovery Call</a>
                 <a href="mailto:kristof.eger@lizaos.ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
               </div>
             </div>
