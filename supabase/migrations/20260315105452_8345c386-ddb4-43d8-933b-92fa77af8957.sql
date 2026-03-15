@@ -1,0 +1,1 @@
+DELETE FROM diagnostic_results WHERE id = '57ad11e7-066a-428a-a8dc-1223e53a2f26';
