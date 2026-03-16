@@ -695,11 +695,19 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         setFont(8.5, "normal", [20, 70, 140]);
         doc.text(lizaLines, margin + 14, lizaBoxY + 10);
 
-        innerY = lizaBoxY + lizaBoxH + 6;
+        innerY = lizaBoxY + lizaBoxH + 4;
 
-        // ── How to measure progress ──
+        // Cascade effect
+        if (actions.cascade) {
+          setFont(8, "italic", [100, 80, 40]);
+          const cascadeLines = doc.splitTextToSize("Cascade effect: " + actions.cascade, textW);
+          doc.text(cascadeLines, margin + 14, innerY);
+          innerY += cascadeLines.length * 3.6 + 4;
+        }
+
+        // ── How you'll know it's working ──
         setFont(9, "bold", [80, 80, 80]);
-        doc.text("How to measure progress", margin + 14, innerY);
+        doc.text("How you'll know it's working", margin + 14, innerY);
         innerY += 7;
 
         // Lead indicators
