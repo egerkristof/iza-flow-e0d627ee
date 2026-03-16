@@ -149,13 +149,32 @@ export default function DiagnosticPage() {
   const safeQ = Math.min(currentQ, QUESTIONS.length - 1);
   const currentQuestion = QUESTIONS[safeQ];
   const currentAnswered = currentQuestion ? answers[currentQuestion.id] != null : false;
+  const hasAnsweredAny = Object.keys(answers).length > 0;
 
   return (
     <MarketingLayout>
       <div className="min-h-[80vh] flex flex-col">
         {phase === "questions" && (
-          <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-4 shadow-sm">
+          <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-3 shadow-sm">
             <div className="max-w-2xl mx-auto space-y-2">
+              {/* Compact intro banner — collapses after first answer */}
+              {!hasAnsweredAny && (
+                <div className="text-center pb-2 animate-in fade-in duration-500">
+                  <h1 className="text-base md:text-lg font-black tracking-tight text-foreground leading-tight">
+                    Why does your team's AI work{" "}
+                    <span className="brand-gradient-text">still need so much fixing?</span>
+                  </h1>
+                  <p className="text-[11px] md:text-xs text-muted-foreground mt-1">
+                    No signup · 90 seconds · Immediate results
+                    {submissionCount != null && (
+                      <>
+                        {" · "}
+                        <span className="font-semibold text-foreground">{submissionCount}+ teams</span> assessed
+                      </>
+                    )}
+                  </p>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold tracking-wide text-foreground">
                   Question {safeQ + 1} of {QUESTIONS.length}
@@ -170,47 +189,6 @@ export default function DiagnosticPage() {
         )}
 
         <div className="flex-1 flex items-center justify-center px-6 py-16">
-          {phase === "intro" && (
-            <div className="max-w-2xl text-center space-y-5 md:space-y-6 animate-in fade-in duration-500 px-1">
-              {/* 1. Headline */}
-              <h1 className="text-2xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
-                Why does your team's AI work{" "}
-                <span className="brand-gradient-text">still need so much fixing?</span>
-              </h1>
-
-              {/* 2. Symptoms → Reframe */}
-              <div className="max-w-lg mx-auto space-y-1">
-                <p className="text-sm md:text-lg font-semibold text-foreground/80">
-                  Hallucinations. Inconsistent quality. The same mistakes on repeat.
-                </p>
-                <p className="text-sm md:text-base text-muted-foreground">
-                  It's not the AI. Your team has no shared standard for using it.
-                </p>
-              </div>
-
-              {/* 3. CTA — above the fold */}
-              <div className="space-y-2">
-                <Button
-                  variant="brand"
-                  size="lg"
-                  className="text-sm md:text-base w-full sm:w-auto"
-                  onClick={() => setPhase("questions")}
-                >
-                  Score Your AI Execution <ArrowRight className="w-4 h-4" />
-                </Button>
-                <p className="text-[11px] md:text-xs text-muted-foreground">
-                  No signup · 90 seconds · Immediate results
-                  {submissionCount != null && (
-                    <>
-                      {" · "}
-                      <span className="font-semibold text-foreground">{submissionCount}+ teams</span> assessed
-                    </>
-                  )}
-                </p>
-              </div>
-            </div>
-          )}
-
           {phase === "questions" && currentQuestion && (
             <div className="w-full space-y-8">
               <DiagnosticQuestion
@@ -253,7 +231,6 @@ export default function DiagnosticPage() {
                 <p className="text-lg font-bold text-foreground">Analysing your responses…</p>
                 <p className="text-sm text-muted-foreground">Scoring your team across 5 dimensions</p>
               </div>
-              {/* Dimension names during calculation — builds anticipation */}
               <div className="flex flex-wrap justify-center gap-2 pt-2">
                 {["Standards Adoption", "Delivery Consistency", "Knowledge Sharing", "Team Visibility", "Improvement Speed"].map((dim, i) => (
                   <span
