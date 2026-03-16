@@ -811,11 +811,11 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       doc.setFillColor(20, 80, 160);
       doc.roundedRect(margin, y, contentWidth, lizaHeaderH, 3, 3, "F");
       setFont(13, "bold", [255, 255, 255]);
-      doc.text("LIZA OS — How We Make This Structural", margin + 10, y + 12);
+      doc.text("LIZA OS -- How We Make This Structural", margin + 10, y + 12);
       y += lizaHeaderH + 6;
 
       writeWrapped(
-        "The roadmap above gives you concrete actions — no tools required. " +
+        "The roadmap above gives you concrete actions -- no tools required. " +
         "But the hardest part isn't starting. It's sustaining change across projects, people, and priorities.",
         9, "normal", [50, 50, 50]
       );
@@ -859,7 +859,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         y += 8;
 
         setFont(8.5, "bold", [20, 80, 160]);
-        doc.text("→  LIZA OS handles this:", margin + 12, y);
+        doc.text("LIZA OS handles this:", margin + 12, y);
         y += 4.5;
 
         setFont(8.5, "normal", [40, 60, 100]);
@@ -877,7 +877,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       doc.roundedRect(margin, y, contentWidth, closingBoxH, 3, 3, "S");
       setFont(8.5, "italic", [20, 80, 160]);
       doc.text(
-        "What starts as a weekly discipline becomes a system property — one that survives turnover, scaling, and the next tool change.",
+        "What starts as a weekly discipline becomes a system property -- one that survives turnover, scaling, and the next tool change.",
         margin + 8, y + 8
       );
       setFont(8, "bold", [20, 80, 160]);
