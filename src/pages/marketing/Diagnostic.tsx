@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
-type Phase = "intro" | "questions" | "calculating" | "results";
+type Phase = "questions" | "calculating" | "results";
 
 /** Generate a stable session ID per page load to deduplicate submissions */
 function generateSessionId(): string {
