@@ -870,19 +870,21 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
       // Closing pitch
       y += 2;
-      const closingBoxH = 20;
+      const closingItalic = "What starts as a weekly discipline becomes a system property. One that survives turnover, scaling, and the next tool change.";
+      const closingBold = "This is what LIZA OS is built for.";
+      setFont(8.5, "italic", [20, 80, 160]);
+      const closingLines = doc.splitTextToSize(closingItalic, contentWidth - 16);
+      const closingBoxH = 10 + closingLines.length * 3.8 + 6 + 4;
+      checkNewPage(closingBoxH + 8);
       doc.setFillColor(240, 245, 255);
       doc.roundedRect(margin, y, contentWidth, closingBoxH, 3, 3, "F");
       doc.setDrawColor(20, 80, 160);
       doc.setLineWidth(0.4);
       doc.roundedRect(margin, y, contentWidth, closingBoxH, 3, 3, "S");
       setFont(8.5, "italic", [20, 80, 160]);
-      doc.text(
-        "What starts as a weekly discipline becomes a system property -- one that survives turnover, scaling, and the next tool change.",
-        margin + 8, y + 8
-      );
+      doc.text(closingLines, margin + 8, y + 8);
       setFont(8, "bold", [20, 80, 160]);
-      doc.text("This is what LIZA OS is built for.", margin + 8, y + 14);
+      doc.text(closingBold, margin + 8, y + 8 + closingLines.length * 3.8 + 3);
       y += closingBoxH + 4;
       y += 4;
     }
