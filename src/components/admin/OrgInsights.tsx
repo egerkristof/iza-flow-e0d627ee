@@ -668,12 +668,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     drawSectionHeader("What Teams Scoring 55+ Report");
 
     const roiItems = [
-      ["Time spent re-prompting / re-explaining context", "Near zero"],
       ["AI output quality variance across team", "Within 10%"],
-      ["Senior review time on AI-assisted work", "Down 40-60%"],
-      ["Time for new hires to match team AI quality", "Cut by half"],
-      ["Prompt patterns and techniques retained after turnover", "90%+ preserved"],
-      ["Time to adopt a new AI tool or technique team-wide", "Under 1 week"],
+      ["New hires executing at team standard", "From week one"],
+      ["Senior time redirected from correction to strategy", "40-60% freed"],
+      ["Knowledge and techniques retained after turnover", "90%+ preserved"],
+      ["Time from 'someone found a better way' to team-wide adoption", "Under 1 week"],
+      ["Team capability compounds project over project", "Measurably accelerating"],
     ];
 
     doc.setFillColor(240, 253, 244);
