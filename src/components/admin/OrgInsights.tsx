@@ -697,7 +697,6 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         const weekLines = doc.splitTextToSize(actions.thisWeek, textW);
         const monthLines = doc.splitTextToSize(actions.thisMonth, textW);
         setFont(8.5, "normal", [20, 80, 160]);
-        const lizaLines = doc.splitTextToSize(actions.liza, textW - 8);
         setFont(8, "italic", [100, 80, 40]);
         const cascadeLines = actions.cascade ? doc.splitTextToSize("Cascade effect: " + actions.cascade, textW) : [];
 
@@ -705,14 +704,13 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         const leadMetricLines = actions.leadMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
         const lagMetricLines = actions.lagMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
 
-        const lizaBoxH = 6 + (lizaLines.length * lineH) + 4;
         const cascadeH = cascadeLines.length > 0 ? cascadeLines.length * 3.6 + 4 : 0;
         const changeActivitiesH = 5 + changeActivityLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0) + 3;
         const leadMetricsH = leadMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
         const lagMetricsH = lagMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
         const metricsH = 7 + 5 + leadMetricsH + 3 + 5 + lagMetricsH;
 
-        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + cascadeH + changeActivitiesH + metricsH + 8;
+        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + cascadeH + changeActivitiesH + metricsH + 8;
 
         checkNewPage(blockH + 12);
 
@@ -748,21 +746,6 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         setFont(9, "normal", [50, 50, 50]);
         doc.text(monthLines, margin + 14, innerY);
         innerY += monthLines.length * lineH + 8;
-
-        // LIZA OS highlighted box
-        const lizaBoxY = innerY - 2;
-        doc.setFillColor(230, 244, 255);
-        doc.setDrawColor(37, 99, 235);
-        doc.roundedRect(margin + 10, lizaBoxY, contentWidth - 22, lizaBoxH, 2, 2, "FD");
-
-        // Small LIZA OS label
-        setFont(7.5, "bold", [37, 99, 235]);
-        doc.text("LIZA OS", margin + 14, lizaBoxY + 5);
-
-        setFont(8.5, "normal", [20, 70, 140]);
-        doc.text(lizaLines, margin + 14, lizaBoxY + 10);
-
-        innerY = lizaBoxY + lizaBoxH + 4;
 
         // Cascade effect
         if (actions.cascade) {
@@ -814,6 +797,66 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       });
 
       y += 6;
+
+      // ════════════════════════════════════════════
+      // HOW WE HELP TEAMS MAKE THIS STRUCTURAL
+      // ════════════════════════════════════════════
+      doc.addPage();
+      y = margin;
+      addBrandHeader();
+      y += 10;
+
+      drawSectionHeader("How we help teams make this structural");
+
+      writeWrapped(
+        "The roadmap above gives you concrete actions your team can start this week — no tools required. " +
+        "But the hardest part of improvement isn't starting. It's sustaining change across projects, people, and priorities. " +
+        "Teams working with us use LIZA OS to turn each manual improvement into a permanent structural advantage.",
+        9, "normal", [50, 50, 50]
+      );
+      y += 4;
+
+      // For each weak dimension, show the LIZA OS automation mapping
+      weakDimensions.forEach(([key, score], index) => {
+        const label = DIMENSION_LABELS[key as Dimension] || SHORT_LABELS[key] || key;
+        const dimColor = getScoreColor(score);
+        const tier = getTier(score);
+        const actions = DIMENSION_ACTIONS[key]?.[tier];
+        if (!actions) return;
+
+        const lizaText = actions.liza.replace(/^How this becomes automatic:\s*/i, "");
+        const lizaLines = doc.splitTextToSize(lizaText, contentWidth - 30);
+        const itemH = 12 + lizaLines.length * 3.8 + 6;
+
+        checkNewPage(itemH + 8);
+
+        // Dimension header with colored dot
+        doc.setFillColor(...dimColor);
+        doc.circle(margin + 3, y + 1.5, 2, "F");
+        setFont(10, "bold", [30, 30, 30]);
+        doc.text(label, margin + 8, y + 3);
+        setFont(9, "normal", dimColor);
+        doc.text(`${score}/100`, pageWidth - margin, y + 3, { align: "right" });
+        y += 8;
+
+        // What your manual effort buys → What LIZA OS makes permanent
+        setFont(8.5, "bold", [37, 99, 235]);
+        doc.text("What becomes automatic:", margin + 8, y);
+        y += 4.5;
+
+        setFont(8.5, "normal", [40, 60, 100]);
+        doc.text(lizaLines, margin + 8, y);
+        y += lizaLines.length * 3.8 + 6;
+      });
+
+      // Transition sentence
+      y += 2;
+      writeWrapped(
+        "Each of these capabilities maps directly to the manual actions in your roadmap. " +
+        "The difference: what starts as a weekly discipline becomes a system property that survives turnover, scaling, and the next tool change.",
+        8.5, "italic", [100, 100, 100]
+      );
+      y += 4;
     }
 
 
