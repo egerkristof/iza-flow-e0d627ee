@@ -554,8 +554,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Identify your top two operators whose AI outputs consistently meet the quality bar. Have them document their full prompt setup: what context they provide, what instructions they give the AI, what they check before finalising, and crucially, what mistakes they've learned to avoid. This isn't just about their prompts. It's about their decision-making process: how they navigate ambiguity, when they push back on AI output, and what 'good enough' looks like to them.",
             thisMonth: "Turn their approach into the team default. Pair each of them with two others on real client work (not training exercises). The stronger person co-executes with the other, narrating their decisions in real time. After three paired sessions per person, the prompting patterns should start becoming muscle memory. Measure: are the paired operators' solo outputs improving? If yes, extend to the next pair.",
             liza: "On LIZA OS, the strongest operator's approach becomes the baseline context stack that everyone inherits. Quality travels with the system, not the person. When your best people leave on holiday, the standard stays.",
-            leadMetrics: ["# of paired co-execution sessions completed this month", "# of operator approaches documented and shared"],
-            lagMetrics: ["Solo output quality of paired operators vs. their pre-pairing baseline", "% of deliverables meeting quality bar without senior intervention"],
+            leadMetrics: ["# of operator workflows documented, shared, and reused by others", "# of paired execution sessions completed on live work this month"],
+            lagMetrics: ["% of deliverables meeting quality bar without senior intervention", "Improvement in review scores after operators adopt the shared workflow"],
           },
         },
         knowledge_compounding: {
