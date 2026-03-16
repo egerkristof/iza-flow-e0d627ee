@@ -377,26 +377,46 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
               {result.archetype.tagline}
             </p>
 
-            {/* Benchmark context */}
-            <div className="flex items-center justify-center gap-6 pt-2">
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground">Industry average</p>
-                <p className="text-sm font-bold text-muted-foreground">{BENCHMARK_AVG}</p>
-                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">ServiceNow AI Maturity Index 2025 (4,500 execs)</p>
+            {/* Benchmark scale */}
+            <div className="pt-4 max-w-md mx-auto space-y-3">
+              {/* Visual scale bar */}
+              <div className="relative h-2.5 rounded-full bg-secondary overflow-visible">
+                {/* Filled gradient to user score */}
+                <div
+                  className="absolute inset-y-0 left-0 rounded-full"
+                  style={{ width: `${Math.min(result.overall, 100)}%`, background: "var(--gradient-brand-btn)" }}
+                />
+                {/* Benchmark markers */}
+                {[
+                  { value: BENCHMARK_AVG, label: "Avg" },
+                  { value: BENCHMARK_HIGH, label: "Top 10%" },
+                  { value: 75, label: "Top 1%" },
+                ].map((b) => (
+                  <div key={b.value} className="absolute top-full flex flex-col items-center" style={{ left: `${b.value}%`, transform: "translateX(-50%)" }}>
+                    <div className="w-px h-2 bg-border mt-0.5" />
+                    <span className="text-[9px] text-muted-foreground/60 mt-0.5 whitespace-nowrap">{b.label}</span>
+                    <span className="text-[10px] font-bold text-muted-foreground/70">{b.value}</span>
+                  </div>
+                ))}
+                {/* User marker */}
+                <div
+                  className="absolute -top-1 flex flex-col items-center"
+                  style={{ left: `${Math.min(result.overall, 100)}%`, transform: "translateX(-50%)" }}
+                >
+                  <div
+                    className="w-4 h-4 rounded-full border-2 border-background shadow-md"
+                    style={{ background: scoreColor }}
+                  />
+                </div>
               </div>
-              <div className="w-px h-10 bg-border" />
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground">You</p>
-                <p className="text-sm font-black" style={{ color: scoreColor }}>
-                  {result.overall}
-                </p>
+              {/* Scale labels row */}
+              <div className="flex justify-between items-start pt-5 text-[10px] text-muted-foreground/50">
+                <span>0</span>
+                <span>100</span>
               </div>
-              <div className="w-px h-10 bg-border" />
-              <div className="text-center">
-               <p className="text-xs text-muted-foreground">Codified teams</p>
-                <p className="text-sm font-bold text-primary">{BENCHMARK_HIGH}+</p>
-                <p className="text-[10px] text-muted-foreground/60 max-w-[120px]">Teams with shared AI standards</p>
-              </div>
+              <p className="text-[10px] text-muted-foreground/50 text-center">
+                Based on ServiceNow 2025 AI Maturity Index · 4,500 executives · 16 countries
+              </p>
             </div>
 
             {/* Scoring methodology */}
