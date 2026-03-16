@@ -525,17 +525,21 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       writeWrapped(introText, 9, "normal", [50, 50, 50]);
       y += 4;
 
-      const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string }; mid: { thisWeek: string; thisMonth: string; liza: string } }> = {
+      const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string; leadMetrics: string[]; lagMetrics: string[] }; mid: { thisWeek: string; thisMonth: string; liza: string; leadMetrics: string[]; lagMetrics: string[] } }> = {
         standard_internalization: {
           low: {
             thisWeek: "Pick your single most-repeated task type. Gather your two strongest operators for 60 minutes. Have them walk through their best recent output and reverse-engineer the pattern: what structure did they use, what quality criteria did they check, what context did they load before prompting? Write this as a one-page reference document. This isn't about perfection. It's about making the implicit explicit. The goal is a starting point that prevents the next person from beginning with a blank prompt.",
             thisMonth: "Make this reference the mandatory starting point for every AI session on that task type. Before anyone prompts, they confirm they've loaded the reference. After two weeks, compare outputs from sessions that used the reference versus those that didn't. The difference will be obvious. Then pick a second task type and repeat the process. You're building the habit of 'start from what we know' rather than 'start from scratch'.",
             liza: "On LIZA OS, this reference becomes a governed Playbook that auto-injects into every AI session for that task type. No manual loading, no forgetting, no drift. When someone improves the approach, the update reaches every future session automatically.",
+            leadMetrics: ["# of task types with a written reference document", "% of AI sessions where the reference was loaded before prompting"],
+            lagMetrics: ["Reduction in senior review/correction time per deliverable", "Output quality score (self or peer-assessed) for referenced vs. unreferenced sessions"],
           },
           mid: {
             thisWeek: "Audit your existing standards: how many people actually reference them during AI sessions? Ask five team members individually this week. You'll likely find that the gap between 'exists' and 'used' is your real problem. Most teams have documentation that people know about but rarely pull into their AI work. Identify which standards are being used, which are ignored, and why. The 'why' is critical: is it access, awareness, or perceived irrelevance?",
             thisMonth: "Make standards non-optional for your weakest workflow. Create a pre-session checklist: before any AI work on this task, confirm the standard is loaded. Review compliance weekly for the first month. Track not just whether people loaded it, but whether the outputs improved. After four weeks, you'll have hard evidence of the impact, which makes the case for extending to other workflows.",
             liza: "On LIZA OS, Mandates enforce minimum context requirements before a session can begin. The system won't let someone start a task without the relevant standards loaded. No checklists, no willpower, no 'I forgot'. Compliance becomes structural, not aspirational.",
+            leadMetrics: ["Weekly checklist compliance rate (% sessions with standard loaded)", "# of standards audited and updated this month"],
+            lagMetrics: ["% reduction in deliverables requiring senior rework", "Time-to-quality for new team members (weeks to first unassisted deliverable)"],
           },
         },
         output_consistency: {
@@ -543,11 +547,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Run a blind test: give the same brief to three people on your team. Don't tell them others are doing the same task. Compare outputs side by side. Document specifically where they diverge: is it structure, depth, quality criteria, analytical approach, or tone? Share the comparison with the team — not to judge, but to make the variance visible. Most teams are shocked by how different the outputs are. That shock is the catalyst for change.",
             thisMonth: "Create a 'quality reference output' for your most common deliverable type. This is the benchmark: the standard that represents your team's best work. After each AI-assisted deliverable, the author compares against this reference before delivery. Track how many deliverables meet the bar versus fall short. After a month, update the reference to incorporate any improvements. This creates a ratchet: quality can only go up.",
             liza: "On LIZA OS, Context Bundles ensure every team member's AI session starts with the same standards, examples, and quality criteria. Consistency becomes a design property of the system, not a function of individual discipline. When standards evolve, every session inherits the update.",
+            leadMetrics: ["# of deliverable types with a quality reference output", "% of deliverables self-checked against the reference before submission"],
+            lagMetrics: ["Variance in peer-review scores across team members (target: narrowing)", "Client revision requests per deliverable (trending down)"],
           },
           mid: {
             thisWeek: "Identify your top two operators whose AI outputs consistently meet the quality bar. Have them document their full prompt setup: what context they provide, what instructions they give the AI, what they check before finalising, and crucially, what mistakes they've learned to avoid. This isn't just about their prompts. It's about their decision-making process: how they navigate ambiguity, when they push back on AI output, and what 'good enough' looks like to them.",
             thisMonth: "Turn their approach into the team default. Pair each of them with two others on real client work (not training exercises). The stronger person co-executes with the other, narrating their decisions in real time. After three paired sessions per person, the prompting patterns should start becoming muscle memory. Measure: are the paired operators' solo outputs improving? If yes, extend to the next pair.",
             liza: "On LIZA OS, the strongest operator's approach becomes the baseline context stack that everyone inherits. Quality travels with the system, not the person. When your best people leave on holiday, the standard stays.",
+            leadMetrics: ["# of paired co-execution sessions completed this month", "# of operator approaches documented and shared"],
+            lagMetrics: ["Solo output quality of paired operators vs. their pre-pairing baseline", "% of deliverables meeting quality bar without senior intervention"],
           },
         },
         knowledge_compounding: {
@@ -555,11 +563,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Start a 'wins log': a shared document or Slack channel where anyone posts an AI technique that worked well. One sentence describing the technique, one example of the result. Lower the bar to near zero for sharing. The goal isn't documentation. It's making sharing a reflex rather than a chore. Appoint one person to post the first entry today. Publicly thank anyone who contributes this week.",
             thisMonth: "Every two weeks, review the wins log as a team in a 15-minute session. Vote on the top technique. The winner gets formally written into your shared reference document and becomes the default approach for that task type. This creates a virtuous cycle: people share because they see sharing leads to adoption, and adoption makes the team better. After three cycles, you'll have a living, evolving knowledge base that grows with every project.",
             liza: "On LIZA OS, Session Debriefs automatically capture what worked at the end of every execution session and surface winning techniques as proposed updates to your Playbooks. No manual logging needed. The knowledge loop closes itself.",
+            leadMetrics: ["# of wins log entries per week", "# of techniques formally promoted to the shared reference"],
+            lagMetrics: ["Instances of duplicate problem-solving across team (should decrease)", "Time spent on tasks that a colleague already solved (self-reported, trending down)"],
           },
           mid: {
             thisWeek: "Review your last three projects. For each, identify one AI technique or prompt pattern that worked well but never reached the wider team. Write each one down in two sentences: what it is and why it worked. You'll likely find 3-5 techniques that could have saved the team significant time if they'd been shared. This exercise makes the cost of not compounding viscerally real.",
             thisMonth: "Introduce a structured 20-minute after-action review at the close of every significant project. Three questions only: What AI approaches worked? What didn't? What one change should we make to the team's shared reference? Assign one person to implement the agreed change within 48 hours. The 48-hour deadline is critical: without it, insights evaporate. Track the changes made over a quarter. You'll see your shared reference evolving from a static document into living institutional memory.",
             liza: "On LIZA OS, after-action reviews are structured into the Protocol execution flow. Insights captured during Session Debriefs feed directly into your governed context stack, ensuring they automatically reach the next project. No manual transfer, no forgotten learnings.",
+            leadMetrics: ["# of after-action reviews completed per project", "# of reference document updates made within 48 hours of review"],
+            lagMetrics: ["Growth rate of shared reference document (new entries per quarter)", "% of project kick-offs that reference learnings from a prior project"],
           },
         },
         collective_visibility: {
@@ -567,11 +579,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Run a 15-minute show-and-tell: one person demonstrates their best AI technique from the past week. Screen-share the actual session. Show the prompt, the context they loaded, the decisions they made when the AI gave a subpar response. Rotate the presenter each week. The goal is to make the invisible visible. Most teams have no idea how their colleagues actually work with AI. This single ritual changes that.",
             thisMonth: "Create a shared space where AI work is visible. Even a simple shared folder of notable AI sessions is a start. The key requirement: juniors should be able to see how seniors navigate ambiguity, not just the polished final output. Consider pairing a junior with a senior for one task per week where the junior observes the full AI workflow. This is the apprenticeship model adapted for the AI age.",
             liza: "On LIZA OS, the team's AI work is visible through shared Workbooks. Every session, every decision, every context injection is observable. Seniors' thinking becomes a learning resource. Delegation includes full visibility into how tasks were executed, not just whether they were completed.",
+            leadMetrics: ["# of show-and-tell sessions held this month", "# of junior-senior paired observation sessions"],
+            lagMetrics: ["Junior team members' self-rated confidence in AI-assisted tasks (survey, quarterly)", "% of team who can describe a colleague's AI workflow (awareness check)"],
           },
           mid: {
             thisWeek: "Map your team's current AI usage: who uses AI for what tasks, how often, and with what level of sophistication? A simple survey or 1:1 conversations will reveal patterns you can't see today. You'll likely discover that some people are using AI for tasks others don't even know are possible, and vice versa. This map becomes your coordination baseline.",
             thisMonth: "Designate intentional AI coordination for your next project: who handles which AI-assisted tasks, with what context loaded, reviewed by whom. This isn't about control. It's about preventing duplication and ensuring the right context reaches the right sessions. Track whether intentional distribution improves output quality compared to ad-hoc assignment. After one project cycle, the evidence will speak for itself.",
             liza: "On LIZA OS, delegation and task assignment flow through structured Workbooks with full visibility into who's executing what, with which context, and what the outcomes were. Coordination becomes a feature of the system, not a management overhead.",
+            leadMetrics: ["Completion of team AI usage map (yes/no, then update frequency)", "# of projects with intentional AI task coordination"],
+            lagMetrics: ["Duplicate work instances per project (should trend toward zero)", "Output quality difference: coordinated vs. ad-hoc AI task assignment"],
           },
         },
         learning_velocity: {
@@ -579,11 +595,15 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Block 30 minutes this week for one person to evaluate a new AI technique relevant to your work. Their only deliverable: a two-sentence verdict shared with the team: 'try it' or 'skip it', with one sentence explaining why. This is deliberately minimal. The point isn't a comprehensive evaluation. It's establishing the rhythm of continuous scanning and rapid assessment.",
             thisMonth: "Make this a weekly rotation. Each week, one person evaluates one technique or tool update. If the verdict is 'try it', someone else tests it on real work the following week. If it works, it gets written into the team's shared reference. Build a rhythm of evaluate, test, adopt. After a month, you'll have tested four techniques and possibly adopted one or two. That's four more than most teams manage in a quarter.",
             liza: "On LIZA OS, new techniques can be tested as Playbook variants and compared against existing approaches through structured Protocol execution. You can run A/B tests on your own methodology: does the new approach produce better results than the current one? Data replaces opinion.",
+            leadMetrics: ["# of new techniques evaluated per month", "# of techniques tested on real work (not just reviewed)"],
+            lagMetrics: ["# of techniques adopted into the team's shared reference this quarter", "Average cycle time: spotted → team-wide adoption (target: under 3 weeks)"],
           },
           mid: {
             thisWeek: "Review your last quarter: identify one AI capability or technique your team should have adopted but didn't. Trace the root cause: was it awareness (nobody knew), priority (nobody had time), or mechanism (no way to integrate it into existing workflows)? The root cause determines the fix. Most teams assume the problem is awareness when it's actually mechanism.",
             thisMonth: "Shorten your adoption cycle with a formal process: when someone identifies a promising technique, set a one-week deadline for evaluation and a two-week deadline for team-wide rollout if validated. Assign an owner for each evaluation. Track cycle time from 'someone spotted this' to 'the whole team uses it'. Your goal: under three weeks. Currently, most mid-maturity teams take 6-8 weeks or never complete the cycle at all.",
             liza: "On LIZA OS, validated improvements are promoted directly into your context stack and automatically reach every future session. Adoption isn't a communication problem anymore. It's a one-click operation that propagates instantly across the entire team.",
+            leadMetrics: ["# of evaluations with assigned owner and deadline", "Adoption cycle time tracking in place (yes/no)"],
+            lagMetrics: ["Average adoption cycle time (weeks, trending down)", "# of missed adoptions per quarter (techniques identified but never rolled out)"],
           },
         },
       };
