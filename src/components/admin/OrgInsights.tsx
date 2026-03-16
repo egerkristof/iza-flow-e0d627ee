@@ -238,23 +238,24 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // Brand line
     setFont(9, "normal", [140, 140, 140]);
     doc.text("LIZA OS", pageWidth - margin, y, { align: "right" });
-    y += 6;
+    y += 8;
 
     // Title block
     setFont(24, "bold", [20, 80, 160]);
     doc.text("AI Execution Maturity Audit", margin, y);
-    y += 10;
-    setFont(14, "normal", [80, 80, 80]);
-    doc.text("Your team has AI tools. Is that investment compounding?", margin, y);
-    y += 14;
+    y += 12;
+    setFont(13, "normal", [80, 80, 80]);
+    const subtitleLines = doc.splitTextToSize("Your team has AI tools. Is that investment compounding?", contentWidth);
+    doc.text(subtitleLines, margin, y);
+    y += subtitleLines.length * 5.5 + 8;
 
-    // Meta line
+    // Meta info block — clean layout
     const displayName = fullyAnonymized ? "Anonymous Organisation" : org.domain;
-    setFont(9, "normal", [140, 140, 140]);
-    doc.text(`Prepared for: ${displayName}`, margin, y);
-    y += 4;
-    doc.text(`${org.count} team member assessments (anonymised)  |  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin, y);
-    y += 4;
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(margin, y - 2, contentWidth, 20, 2, 2, "F");
+    setFont(9, "normal", [100, 100, 100]);
+    doc.text(`Prepared for: ${displayName}`, margin + 4, y + 4);
+    doc.text(`${org.count} team member assessments (anonymised)  ·  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin + 4, y + 10);
 
     if (!fullyAnonymized && showParticipants) {
       const participantEmails = org.results
@@ -262,20 +263,23 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         .filter(Boolean)
         .sort() as string[];
       if (participantEmails.length > 0) {
-        setFont(8, "normal", [100, 100, 100]);
-        doc.text("Participants: " + participantEmails.join(", "), margin, y, { maxWidth: contentWidth });
-        const partLines = doc.splitTextToSize("Participants: " + participantEmails.join(", "), contentWidth);
-        y += partLines.length * 3.5;
+        setFont(8, "normal", [120, 120, 120]);
+        const partText = "Participants: " + participantEmails.join(", ");
+        const partLines = doc.splitTextToSize(partText, contentWidth - 8);
+        doc.text(partLines, margin + 4, y + 15);
+        y += 20 + partLines.length * 3.5;
+      } else {
+        y += 20;
       }
     } else {
       setFont(8, "italic", [140, 140, 140]);
       doc.text(fullyAnonymized
-        ? "All identifying information has been removed. This report may be shared publicly."
-        : "Individual participant names have been withheld. Results are presented in aggregate only.",
-        margin, y);
-      y += 4;
+        ? "All identifying information removed. This report may be shared publicly."
+        : "Individual names withheld. Results presented in aggregate only.",
+        margin + 4, y + 15);
+      y += 22;
     }
-    y += 4;
+    y += 6;
 
     drawDivider();
 
