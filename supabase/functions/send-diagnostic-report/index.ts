@@ -209,6 +209,14 @@ If you cannot determine, use null for that field. Industry should be a short lab
     const weakest = sorted[0];
     const secondWeakest = sorted[1];
 
+    // Determine tier-appropriate benchmark target
+    const isAbove55 = overall >= 55;
+    const targetBenchmark = isAbove55 ? 75 : 55;
+    const targetLabel = isAbove55 ? "top 1% teams (75+)" : "codified teams (55+)";
+    const aspirationFrame = isAbove55
+      ? `This team already scores above 55, placing them in structured territory. The next frontier is 75+, the top 1%, where AI execution becomes a genuine competitive moat. Frame the plan as "What separates top 1% teams (75+) from structured teams." Focus on compounding advantages, institutional memory, and systematic excellence rather than basics.`
+      : `Frame the plan as "What teams who score 55+ do differently." This is aspirational, not remedial.`;
+
     const prompt = `You are an expert advisor on AI execution maturity for operational leaders at mid-market firms (50-1000 employees, sweet spot 50-250).
 
 A team just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
@@ -216,9 +224,9 @@ A team just completed an AI Execution Diagnostic and scored ${overall}/100 overa
 Their weakest dimension is "${weakest.label}" (${weakest.score}/100): ${weakest.insight}
 Their second weakest is "${secondWeakest.label}" (${secondWeakest.score}/100): ${secondWeakest.insight}
 
-For context: the industry average AI execution maturity score is 35/100, based on ServiceNow's 2025 Enterprise AI Maturity Index (4,500 executives surveyed). Fewer than 1% of organisations score above 50. Teams with defined, codified AI standards score 55+.
+For context: the industry average AI execution maturity score is 35/100, based on ServiceNow's 2025 Enterprise AI Maturity Index (4,500 executives surveyed). Fewer than 1% of organisations score above 50. Teams with defined, codified AI standards score 55+. Top 1% teams score 75+, where AI execution becomes a compounding competitive advantage.
 
-Write a personalized 3-step action plan framed as "What teams who score 55+ do differently." This is aspirational, not remedial. Requirements:
+${aspirationFrame} Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
 2. IMPORTANT: Step 1 must be something ONE person can do alone, today, in under 30 minutes. This lowers activation energy and creates immediate momentum.
 3. For each step, include:
@@ -353,7 +361,7 @@ Return ONLY valid JSON in this exact format:
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">Codified teams: <strong>55+</strong></span>
+        <span style="font-size:12px;color:#64748b;">${isAbove55 ? 'Top 1% teams: <strong>75+</strong>' : 'Codified teams: <strong>55+</strong>'}</span>
       </div>
     </div>
 
@@ -432,26 +440,34 @@ Return ONLY valid JSON in this exact format:
       }).join("")}
     </div>
 
-    <!-- You vs 55+ contrast -->
+    <!-- You vs ${targetBenchmark}+ contrast -->
     <div style="margin-bottom:24px;">
-      <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#1a1a2e;">Your team today vs. codified teams (55+)</p>
+      <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#1a1a2e;">Your team today vs. ${isAbove55 ? 'top 1% teams (75+)' : 'codified teams (55+)'}</p>
       <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;font-size:12px;">
         <tr style="background:#f8fafc;">
           <td style="padding:6px 10px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0;"></td>
           <td style="padding:6px 10px;font-weight:700;color:${scoreColor};text-align:center;border-bottom:1px solid #e2e8f0;">You (${overall})</td>
-          <td style="padding:6px 10px;font-weight:700;color:#0284c7;text-align:center;border-bottom:1px solid #e2e8f0;">55+ teams</td>
+          <td style="padding:6px 10px;font-weight:700;color:#0284c7;text-align:center;border-bottom:1px solid #e2e8f0;">${targetBenchmark}+ teams</td>
         </tr>
+        ${isAbove55 ? `
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">AI standards</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Documented but unevenly applied</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Embedded in every session automatically</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Knowledge capture</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Happens when someone remembers</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Systematic, after every session</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Team learning</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Shared in meetings, adopted slowly</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Compounding: each project lifts the next</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Quality assurance</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Manual review catches gaps</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Built into the process, not bolted on</td></tr>
+        <tr><td style="padding:6px 10px;color:#64748b;">Competitive moat</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;">Improving steadily</td><td style="padding:6px 10px;text-align:center;color:#0284c7;">Widening gap every quarter</td></tr>
+        ` : `
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">AI session prep</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Re-explain from scratch</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Standards loaded automatically</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Output quality</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Depends who does it</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Consistent regardless</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">New technique found</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Stays with one person</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Reaches whole team in days</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Senior review</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Catching basic errors</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Focused on strategy</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;">AI ROI</td><td style="padding:6px 10px;text-align:center;color:#dc2626;">Can't measure it</td><td style="padding:6px 10px;text-align:center;color:#0284c7;">Tracked and reported</td></tr>
+        `}
       </table>
     </div>
 
     <!-- CTA -->
     <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
-      <p style="margin:0 0 12px;font-size:14px;color:#475569;">20 min · We'll unpack your score and show you what teams scoring 55+ do differently.</p>
+      <p style="margin:0 0 12px;font-size:14px;color:#475569;">20 min · We'll unpack your score and show you ${isAbove55 ? 'the path from structured (55+) to elite (75+)' : 'what teams scoring 55+ do differently'}.</p>
       <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book your Diagnostic Debrief →</a>
     </div>
 
