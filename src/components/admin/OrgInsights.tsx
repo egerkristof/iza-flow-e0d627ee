@@ -747,21 +747,6 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         doc.text(monthLines, margin + 14, innerY);
         innerY += monthLines.length * lineH + 8;
 
-        // LIZA OS highlighted box
-        const lizaBoxY = innerY - 2;
-        doc.setFillColor(230, 244, 255);
-        doc.setDrawColor(37, 99, 235);
-        doc.roundedRect(margin + 10, lizaBoxY, contentWidth - 22, lizaBoxH, 2, 2, "FD");
-
-        // Small LIZA OS label
-        setFont(7.5, "bold", [37, 99, 235]);
-        doc.text("LIZA OS", margin + 14, lizaBoxY + 5);
-
-        setFont(8.5, "normal", [20, 70, 140]);
-        doc.text(lizaLines, margin + 14, lizaBoxY + 10);
-
-        innerY = lizaBoxY + lizaBoxH + 4;
-
         // Cascade effect
         if (actions.cascade) {
           setFont(8, "italic", [100, 80, 40]);
