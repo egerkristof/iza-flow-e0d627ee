@@ -557,39 +557,57 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
         variant="primary"
       />
 
-      {/* === You vs 55+ contrast + CTA === */}
+      {/* === Where this leads: what top-performing teams report === */}
       <Card className="border-border overflow-hidden">
         <CardContent className="p-0">
-          <div className="px-5 pt-5 pb-3">
-            <p className="text-sm font-bold text-foreground mb-3">Your team today vs. codified teams (55+)</p>
+          <div className="px-5 pt-5 pb-4 space-y-1">
+            <p className="text-sm font-bold text-foreground">Where this leads: what top-performing teams report</p>
+            <p className="text-xs text-muted-foreground">Outcomes reported by teams scoring 55+ on this diagnostic</p>
           </div>
-          <table className="w-full text-xs border-collapse">
-            <thead>
-              <tr className="border-t border-b border-border bg-muted/40">
-                <th className="text-left py-2 px-4 font-semibold text-muted-foreground"></th>
-                <th className="text-center py-2 px-4 font-semibold" style={{ color: scoreColor }}>You ({result.overall})</th>
-                <th className="text-center py-2 px-4 font-semibold text-primary">55+ teams</th>
-              </tr>
-            </thead>
-            <tbody>
+
+          {/* Outcome rows — clean layout */}
+          <div className="mx-4 mb-4 rounded-xl overflow-hidden border border-primary/10" style={{ background: "hsl(var(--primary) / 0.03)" }}>
+            {[
+              { metric: "AI output quality variance across team", value: "Within 10%" },
+              { metric: "New hires executing at team standard", value: "From week one" },
+              { metric: "Senior time redirected from correction to strategy", value: "40–60% freed" },
+              { metric: "Knowledge and techniques retained after turnover", value: "90%+ preserved" },
+              { metric: "Time from 'someone found a better way' to team-wide adoption", value: "Under 1 week" },
+              { metric: "Team capability compounds project over project", value: "Measurably accelerating" },
+            ].map((row, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between px-4 py-2.5 text-sm border-b border-primary/5 last:border-0"
+              >
+                <span className="text-muted-foreground">{row.metric}</span>
+                <span className="font-bold text-primary shrink-0 ml-4">{row.value}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* 75+ elite tier callout */}
+          <div className="mx-4 mb-4 rounded-xl border border-primary/15 p-4 space-y-3" style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.06) 0%, hsl(var(--primary) / 0.02) 100%)" }}>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-primary/70">Top 1% · Scoring 75+</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {[
-                { label: "AI session prep", you: "Re-explain from scratch", them: "Standards loaded automatically" },
-                { label: "Output quality", you: "Depends who does it", them: "Consistent regardless of person" },
-                { label: "New technique found", you: "Stays with one person", them: "Reaches whole team in days" },
-                { label: "Senior review time", you: "Catching basic errors", them: "Focused on strategy" },
-                { label: "AI ROI visibility", you: "Can't measure it", them: "Tracked and reported" },
-              ].map((row, i) => (
-                <tr key={i} className="border-b border-border last:border-0">
-                  <td className="py-2 px-4 font-medium text-muted-foreground">{row.label}</td>
-                  <td className="py-2 px-4 text-center text-destructive/80">{row.you}</td>
-                  <td className="py-2 px-4 text-center text-primary font-medium">{row.them}</td>
-                </tr>
+                { metric: "AI as a genuine competitive moat", detail: "Output quality holds as they scale" },
+                { metric: "Compounding knowledge advantage", detail: "Each project deposits reusable capability" },
+                { metric: "Data-informed AI investment decisions", detail: "ROI tracked per workflow, not assumed" },
+                { metric: "Speed of adaptation", detail: "New AI techniques adopted team-wide in days" },
+              ].map((item, i) => (
+                <div key={i} className="rounded-lg bg-background/80 border border-border/50 p-3 space-y-0.5">
+                  <p className="text-xs font-semibold text-foreground">{item.metric}</p>
+                  <p className="text-[11px] text-muted-foreground">{item.detail}</p>
+                </div>
               ))}
-            </tbody>
-          </table>
-          <div className="text-center px-5 py-5 space-y-3">
+            </div>
+          </div>
+
+          <div className="text-center px-5 py-5 space-y-3 border-t border-border">
             <p className="text-sm text-muted-foreground">
-              20 min · We'll unpack your score and show you what teams scoring 55+ do differently.
+              20 min · We'll unpack your score and show you what changes get teams from {result.overall} to 55+.
             </p>
             <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
               <Button variant="brand" size="lg" className="text-base">
