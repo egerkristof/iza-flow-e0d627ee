@@ -168,31 +168,32 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     };
 
     // ── AI-specific dimension cost estimates (per team of 10) ──
+    // Layered: low = quantified waste, mid = bridge to capability ceiling, high = compounding outcome
     const COST_PER_DIM: Record<string, { low: string; mid: string; high: string }> = {
       standard_internalization: {
         low: "Every AI chat starts from zero. People re-explain methodology, tone, and constraints each session. ~5-10 hrs/week wasted on context that already exists.",
-        mid: "Some people paste standards into prompts, most don't. AI outputs vary because the starting context varies. ~2-4 hrs/week lost to partial re-prompting.",
-        high: "Your team's standards are the starting point for every AI session. Prompts build on shared context, not individual memory.",
+        mid: "The 2-4 hrs/week lost to partial re-prompting is the visible cost. The hidden cost: your best people's judgment isn't reaching the work. Output quality depends on who prompts, not what the team knows — and your strongest operators spend their creative energy supervising instead of leading.",
+        high: "Your team's standards are the starting point for every AI session. Standard work gets done faster and better, freeing your strongest people to apply their expertise to strategic and creative challenges rather than quality control.",
       },
       output_consistency: {
         low: "Two people prompting the same brief get wildly different outputs. AI amplifies individual habits, not team standards. 3-5 hr rework cycles per deliverable.",
-        mid: "AI outputs are recognisable but uneven. Quality depends on who writes the prompt, not what the team knows. ~30-40% excess review time.",
-        high: "AI produces consistent results regardless of who prompts. The team's quality standard travels with the prompt setup, not the person.",
+        mid: "The ~30-40% excess review time is a symptom, not the problem. The real issue: your team's quality ceiling is set by individual capability, not collective knowledge. Your best people's approaches aren't compounding into team-wide capability — they're trapped in individual workflows.",
+        high: "AI produces consistent results regardless of who prompts. Your team's quality standard travels with the system, not the person. This means your strongest operators can focus on pushing the quality frontier rather than maintaining the baseline.",
       },
       knowledge_compounding: {
         low: "When someone finds a better prompt, workflow, or AI technique, it stays in their chat history. The team re-solves problems someone already cracked.",
-        mid: "Techniques spread informally (Slack, meetings) but take 4-6 weeks to reach the team. No system to capture what works.",
-        high: "Better AI techniques are validated and folded into shared approaches. Each project's AI usage improves the next.",
+        mid: "Techniques spread informally but take 4-6 weeks to reach the team. The real cost isn't the delay — it's that each project starts from scratch instead of standing on the last one. Your team is improving linearly when it should be compounding. Every person who leaves takes learned capability with them.",
+        high: "Better AI techniques are validated and folded into shared approaches. Each project deposits knowledge that makes the next one smarter. Your team's collective capability compounds rather than resets — and survives turnover.",
       },
       collective_visibility: {
         low: "Nobody can see how colleagues use AI. No way to know who's struggling, who found a breakthrough, or whether AI is improving output quality.",
-        mid: "Occasional demos or Slack shares, but no systematic view. You can't report on AI usage patterns or ROI if asked today.",
-        high: "AI work is visible across the team. Juniors learn from seniors' prompting patterns. Usage is coordinated, not accidental.",
+        mid: "You have anecdotal visibility, but can't answer the question that matters: is your AI investment making the team more capable, or just faster at mediocre work? Without visibility, your strongest people's breakthroughs stay siloed, and juniors can't learn from how seniors navigate complexity.",
+        high: "AI work is visible across the team. Juniors learn from seniors' approaches in real time. Your team's collective intelligence is observable, shareable, and continuously improving.",
       },
       learning_velocity: {
         low: "After 6+ months of AI tool spend, the team's prompting approach hasn't changed. Same mistakes, same workarounds, every project.",
-        mid: "Learning happens but takes a full quarter to change how the team prompts. New AI capabilities go unused for weeks.",
-        high: "New AI techniques reach the whole team within days. Prompt patterns, tool updates, and workflow improvements spread fast.",
+        mid: "Learning happens but takes a full quarter to change how the team works. The real cost: while your team iterates slowly, competitors who learn faster are compounding their advantage every month. The gap isn't linear — it's exponential.",
+        high: "New AI techniques reach the whole team within days. Your team's capability evolves at the speed of the tools, not the speed of internal communication. Each improvement unlocks capacity for higher-order, creative work.",
       },
     };
 
@@ -667,12 +668,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     drawSectionHeader("What Teams Scoring 55+ Report");
 
     const roiItems = [
-      ["Time spent re-prompting / re-explaining context", "Near zero"],
       ["AI output quality variance across team", "Within 10%"],
-      ["Senior review time on AI-assisted work", "Down 40-60%"],
-      ["Time for new hires to match team AI quality", "Cut by half"],
-      ["Prompt patterns and techniques retained after turnover", "90%+ preserved"],
-      ["Time to adopt a new AI tool or technique team-wide", "Under 1 week"],
+      ["New hires executing at team standard", "From week one"],
+      ["Senior time redirected from correction to strategy", "40-60% freed"],
+      ["Knowledge and techniques retained after turnover", "90%+ preserved"],
+      ["Time from 'someone found a better way' to team-wide adoption", "Under 1 week"],
+      ["Team capability compounds project over project", "Measurably accelerating"],
     ];
 
     doc.setFillColor(240, 253, 244);
