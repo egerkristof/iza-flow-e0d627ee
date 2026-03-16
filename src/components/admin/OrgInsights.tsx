@@ -447,7 +447,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       if (strategicText) {
         checkNewPage(12);
         setFont(8.5, "bold", [20, 80, 160]);
-        doc.text("→", margin + 2, y);
+        doc.text(">", margin + 2, y);
         setFont(8.5, "italic", [40, 60, 100]);
         const stratLines = doc.splitTextToSize(strategicText, contentWidth - 10);
         doc.text(stratLines, margin + 8, y);
