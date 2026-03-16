@@ -209,6 +209,14 @@ If you cannot determine, use null for that field. Industry should be a short lab
     const weakest = sorted[0];
     const secondWeakest = sorted[1];
 
+    // Determine tier-appropriate benchmark target
+    const isAbove55 = overall >= 55;
+    const targetBenchmark = isAbove55 ? 75 : 55;
+    const targetLabel = isAbove55 ? "top 1% teams (75+)" : "codified teams (55+)";
+    const aspirationFrame = isAbove55
+      ? `This team already scores above 55, placing them in structured territory. The next frontier is 75+, the top 1%, where AI execution becomes a genuine competitive moat. Frame the plan as "What separates top 1% teams (75+) from structured teams." Focus on compounding advantages, institutional memory, and systematic excellence rather than basics.`
+      : `Frame the plan as "What teams who score 55+ do differently." This is aspirational, not remedial.`;
+
     const prompt = `You are an expert advisor on AI execution maturity for operational leaders at mid-market firms (50-1000 employees, sweet spot 50-250).
 
 A team just completed an AI Execution Diagnostic and scored ${overall}/100 overall. Their archetype is "${archetype.label}": ${archetype.tagline}
@@ -216,9 +224,9 @@ A team just completed an AI Execution Diagnostic and scored ${overall}/100 overa
 Their weakest dimension is "${weakest.label}" (${weakest.score}/100): ${weakest.insight}
 Their second weakest is "${secondWeakest.label}" (${secondWeakest.score}/100): ${secondWeakest.insight}
 
-For context: the industry average AI execution maturity score is 35/100, based on ServiceNow's 2025 Enterprise AI Maturity Index (4,500 executives surveyed). Fewer than 1% of organisations score above 50. Teams with defined, codified AI standards score 55+.
+For context: the industry average AI execution maturity score is 35/100, based on ServiceNow's 2025 Enterprise AI Maturity Index (4,500 executives surveyed). Fewer than 1% of organisations score above 50. Teams with defined, codified AI standards score 55+. Top 1% teams score 75+, where AI execution becomes a compounding competitive advantage.
 
-Write a personalized 3-step action plan framed as "What teams who score 55+ do differently." This is aspirational, not remedial. Requirements:
+${aspirationFrame} Requirements:
 1. Each step should be concrete and actionable within 1-2 weeks
 2. IMPORTANT: Step 1 must be something ONE person can do alone, today, in under 30 minutes. This lowers activation energy and creates immediate momentum.
 3. For each step, include:
