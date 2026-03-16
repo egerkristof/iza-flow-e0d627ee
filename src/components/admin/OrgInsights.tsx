@@ -560,14 +560,14 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         },
         knowledge_compounding: {
           low: {
-            thisWeek: "Start a 'wins log': a shared document or Slack channel where anyone posts an AI technique that worked well. One sentence describing the technique, one example of the result. Lower the bar to near zero for sharing. The goal isn't documentation. It's making sharing a reflex rather than a chore. Appoint one person to post the first entry today. Publicly thank anyone who contributes this week.",
-            thisMonth: "Every two weeks, review the wins log as a team in a 15-minute session. Vote on the top technique. The winner gets formally written into your shared reference document and becomes the default approach for that task type. This creates a virtuous cycle: people share because they see sharing leads to adoption, and adoption makes the team better. After three cycles, you'll have a living, evolving knowledge base that grows with every project.",
-            liza: "On LIZA OS, Session Debriefs automatically capture what worked at the end of every execution session and surface winning techniques as proposed updates to your Playbooks. No manual logging needed. The knowledge loop closes itself.",
-            leadMetrics: ["# of wins log entries per week", "# of techniques formally promoted to the shared reference"],
-            lagMetrics: ["Instances of duplicate problem-solving across team (should decrease)", "Time spent on tasks that a colleague already solved (self-reported, trending down)"],
+             thisWeek: "Start a 'wins log': a shared document or Slack channel where anyone posts something that worked well in an AI session. One sentence describing the approach, one example of the result. Lower the bar to near zero for sharing. The goal isn't documentation. It's making sharing a reflex rather than a chore. Appoint one person to post the first entry today. Publicly thank anyone who contributes this week.",
+            thisMonth: "Every two weeks, review the wins log as a team in a 15-minute session. Vote on the most impactful entry. The winner gets formally written into your shared reference document and becomes the default approach for that task type. This creates a virtuous cycle: people share because they see sharing leads to adoption, and adoption makes the team better. After three cycles, you'll have a living, evolving knowledge base that grows with every project.",
+            liza: "On LIZA OS, Session Debriefs automatically capture what worked at the end of every execution session and surface winning approaches as proposed updates to your Playbooks. No manual logging needed. The knowledge loop closes itself.",
+            leadMetrics: ["# of wins log entries per week", "# of learnings formally promoted to the shared reference"],
+            lagMetrics: ["Instances of duplicate problem-solving across team (should decrease)", "Time spent on problems a colleague already solved (self-reported, trending down)"],
           },
           mid: {
-            thisWeek: "Review your last three projects. For each, identify one AI technique or prompt pattern that worked well but never reached the wider team. Write each one down in two sentences: what it is and why it worked. You'll likely find 3-5 techniques that could have saved the team significant time if they'd been shared. This exercise makes the cost of not compounding viscerally real.",
+            thisWeek: "Review your last three projects. For each, identify one approach or prompt pattern that worked well but never reached the wider team. Write each one down in two sentences: what it is and why it worked. You'll likely find 3-5 learnings that could have saved the team significant time if they'd been shared. This exercise makes the cost of not compounding viscerally real.",
             thisMonth: "Introduce a structured 20-minute after-action review at the close of every significant project. Three questions only: What AI approaches worked? What didn't? What one change should we make to the team's shared reference? Assign one person to implement the agreed change within 48 hours. The 48-hour deadline is critical: without it, insights evaporate. Track the changes made over a quarter. You'll see your shared reference evolving from a static document into living institutional memory.",
             liza: "On LIZA OS, after-action reviews are structured into the Protocol execution flow. Insights captured during Session Debriefs feed directly into your governed context stack, ensuring they automatically reach the next project. No manual transfer, no forgotten learnings.",
             leadMetrics: ["# of after-action reviews completed per project", "# of reference document updates made within 48 hours of review"],
@@ -592,18 +592,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         },
         learning_velocity: {
           low: {
-            thisWeek: "Block 30 minutes this week for one person to evaluate a new AI technique relevant to your work. Their only deliverable: a two-sentence verdict shared with the team: 'try it' or 'skip it', with one sentence explaining why. This is deliberately minimal. The point isn't a comprehensive evaluation. It's establishing the rhythm of continuous scanning and rapid assessment.",
-            thisMonth: "Make this a weekly rotation. Each week, one person evaluates one technique or tool update. If the verdict is 'try it', someone else tests it on real work the following week. If it works, it gets written into the team's shared reference. Build a rhythm of evaluate, test, adopt. After a month, you'll have tested four techniques and possibly adopted one or two. That's four more than most teams manage in a quarter.",
-            liza: "On LIZA OS, new techniques can be tested as Playbook variants and compared against existing approaches through structured Protocol execution. You can run A/B tests on your own methodology: does the new approach produce better results than the current one? Data replaces opinion.",
-            leadMetrics: ["# of new techniques evaluated per month", "# of techniques tested on real work (not just reviewed)"],
-            lagMetrics: ["# of techniques adopted into the team's shared reference this quarter", "Average cycle time: spotted → team-wide adoption (target: under 3 weeks)"],
+            thisWeek: "Block 30 minutes this week for one person to review what the team learned from the last three projects. Their only deliverable: a two-sentence summary shared with the team — one thing that worked well with AI, and one mistake or workaround that others should know about. This is deliberately minimal. The point isn't a comprehensive review. It's establishing the habit of surfacing learnings rather than letting them disappear with the project.",
+            thisMonth: "Make this a weekly rotation. Each week, one person shares one practical learning: a better way to structure a prompt, a quality check that caught an error, a workflow shortcut, or a pitfall to avoid. If the learning is validated by a second person on real work, it gets written into the team's shared reference. Build a rhythm of surface, validate, adopt. After a month, you'll have captured four learnings and possibly adopted one or two. That's four more than most teams manage in a quarter.",
+            liza: "On LIZA OS, learnings from every session are captured through structured Debriefs and surfaced as proposed updates to your Playbooks. You can compare improved approaches against existing ones through Protocol execution. Data replaces opinion.",
+            leadMetrics: ["# of learnings surfaced and shared per week", "# of shared learnings validated on real work (not just discussed)"],
+            lagMetrics: ["# of validated improvements adopted into the team's shared reference this quarter", "Average cycle time: learning surfaced → team-wide adoption (target: under 3 weeks)"],
           },
           mid: {
-            thisWeek: "Review your last quarter: identify one AI capability or technique your team should have adopted but didn't. Trace the root cause: was it awareness (nobody knew), priority (nobody had time), or mechanism (no way to integrate it into existing workflows)? The root cause determines the fix. Most teams assume the problem is awareness when it's actually mechanism.",
-            thisMonth: "Shorten your adoption cycle with a formal process: when someone identifies a promising technique, set a one-week deadline for evaluation and a two-week deadline for team-wide rollout if validated. Assign an owner for each evaluation. Track cycle time from 'someone spotted this' to 'the whole team uses it'. Your goal: under three weeks. Currently, most mid-maturity teams take 6-8 weeks or never complete the cycle at all.",
+            thisWeek: "Review your last quarter: identify one workflow improvement or better approach your team discovered but never rolled out to everyone. Trace the root cause: was it awareness (nobody communicated it), priority (nobody had time to formalise it), or mechanism (no way to integrate it into existing workflows)? The root cause determines the fix. Most teams assume the problem is awareness when it's actually mechanism.",
+            thisMonth: "Shorten your adoption cycle with a formal process: when someone identifies a better approach, set a one-week deadline for validation and a two-week deadline for team-wide rollout if confirmed. Assign an owner for each validation. Track cycle time from 'someone discovered this' to 'the whole team benefits'. Your goal: under three weeks. Currently, most mid-maturity teams take 6-8 weeks or never complete the cycle at all.",
             liza: "On LIZA OS, validated improvements are promoted directly into your context stack and automatically reach every future session. Adoption isn't a communication problem anymore. It's a one-click operation that propagates instantly across the entire team.",
-            leadMetrics: ["# of evaluations with assigned owner and deadline", "Adoption cycle time tracking in place (yes/no)"],
-            lagMetrics: ["Average adoption cycle time (weeks, trending down)", "# of missed adoptions per quarter (techniques identified but never rolled out)"],
+            leadMetrics: ["# of improvement candidates with assigned owner and validation deadline", "Whether adoption cycle time is being tracked (yes/no)"],
+            lagMetrics: ["Average adoption cycle time in weeks (trending down)", "# of discovered improvements per quarter that were never rolled out (trending toward zero)"],
           },
         },
       };
@@ -627,8 +627,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         // LIZA box height
         const lizaBoxH = 6 + (lizaLines.length * lineH) + 4;
 
-        // Metrics section height
-        const metricsH = 8 + 5 + (actions.leadMetrics.length * metricLineH) + 6 + 5 + (actions.lagMetrics.length * metricLineH) + 4;
+        // Metrics section height (stacked vertically: lead then lag)
+        const leadMetricsH = 5 + (actions.leadMetrics.length * (metricLineH + 0.5));
+        const lagMetricsH = 5 + (actions.lagMetrics.length * (metricLineH + 0.5));
+        const metricsH = 8 + leadMetricsH + 4 + lagMetricsH + 4;
 
         const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + metricsH + 6;
 
@@ -684,34 +686,31 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
         // ── How to measure progress ──
         setFont(9, "bold", [80, 80, 80]);
-        doc.text("How to measure progress:", margin + 14, innerY);
-        innerY += 6;
+        doc.text("How to measure progress", margin + 14, innerY);
+        innerY += 7;
 
-        // Lead metrics column
-        const colW = (textW - 8) / 2;
-        const metricsStartY = innerY;
-
-        // Lead header
+        // Lead indicators
         setFont(8, "bold", [22, 163, 74]);
-        doc.text("▲ Lead indicators (are you doing it?)", margin + 14, innerY);
+        doc.text("▲  Lead indicators — are you doing it?", margin + 14, innerY);
         innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
         for (const metric of actions.leadMetrics) {
-          const mLines = doc.splitTextToSize(`• ${metric}`, colW);
-          doc.text(mLines, margin + 14, innerY);
-          innerY += mLines.length * metricLineH;
+          const mLines = doc.splitTextToSize(`•  ${metric}`, textW - 4);
+          doc.text(mLines, margin + 18, innerY);
+          innerY += mLines.length * metricLineH + 0.5;
         }
 
-        // Lag metrics column (right side, same start Y)
-        let lagY = metricsStartY;
+        innerY += 3;
+
+        // Lag indicators
         setFont(8, "bold", [37, 99, 235]);
-        doc.text("▼ Lag indicators (is it working?)", margin + 14 + colW + 6, lagY);
-        lagY += 5;
+        doc.text("▼  Lag indicators — is it working?", margin + 14, innerY);
+        innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
         for (const metric of actions.lagMetrics) {
-          const mLines = doc.splitTextToSize(`• ${metric}`, colW);
-          doc.text(mLines, margin + 14 + colW + 6, lagY);
-          lagY += mLines.length * metricLineH;
+          const mLines = doc.splitTextToSize(`•  ${metric}`, textW - 4);
+          doc.text(mLines, margin + 18, innerY);
+          innerY += mLines.length * metricLineH + 0.5;
         }
 
         y += blockH - 2;
