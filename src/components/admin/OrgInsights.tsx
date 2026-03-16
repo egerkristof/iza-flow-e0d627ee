@@ -806,15 +806,31 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       addBrandHeader();
       y += 10;
 
-      drawSectionHeader("How we help teams make this structural");
+      // LIZA OS branded header bar
+      const lizaHeaderH = 18;
+      doc.setFillColor(20, 80, 160);
+      doc.roundedRect(margin, y, contentWidth, lizaHeaderH, 3, 3, "F");
+      setFont(13, "bold", [255, 255, 255]);
+      doc.text("LIZA OS — How We Make This Structural", margin + 10, y + 12);
+      y += lizaHeaderH + 6;
 
       writeWrapped(
-        "The roadmap above gives you concrete actions your team can start this week — no tools required. " +
-        "But the hardest part of improvement isn't starting. It's sustaining change across projects, people, and priorities. " +
-        "Teams working with us use LIZA OS to turn each manual improvement into a permanent structural advantage.",
+        "The roadmap above gives you concrete actions — no tools required. " +
+        "But the hardest part isn't starting. It's sustaining change across projects, people, and priorities.",
         9, "normal", [50, 50, 50]
       );
-      y += 4;
+      y += 2;
+      writeWrapped(
+        "LIZA OS is the execution infrastructure that turns each manual improvement into a permanent team capability. " +
+        "It captures your best standards, enforces them in every AI session, and evolves them as your team learns.",
+        9, "bold", [20, 80, 160]
+      );
+      y += 6;
+
+      // Subtitle
+      setFont(10, "bold", [30, 30, 30]);
+      doc.text("What LIZA OS automates for your team:", margin, y);
+      y += 6;
 
       // For each weak dimension, show the LIZA OS automation mapping
       weakDimensions.forEach(([key, score], index) => {
@@ -830,32 +846,43 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
         checkNewPage(itemH + 8);
 
-        // Dimension header with colored dot
+        // Blue left accent bar + dimension header
+        doc.setFillColor(20, 80, 160);
+        doc.rect(margin, y - 2, 2.5, itemH - 2, "F");
+
         doc.setFillColor(...dimColor);
-        doc.circle(margin + 3, y + 1.5, 2, "F");
+        doc.circle(margin + 7, y + 1.5, 2, "F");
         setFont(10, "bold", [30, 30, 30]);
-        doc.text(label, margin + 8, y + 3);
+        doc.text(label, margin + 12, y + 3);
         setFont(9, "normal", dimColor);
         doc.text(`${score}/100`, pageWidth - margin, y + 3, { align: "right" });
         y += 8;
 
-        // What your manual effort buys → What LIZA OS makes permanent
-        setFont(8.5, "bold", [37, 99, 235]);
-        doc.text("What becomes automatic:", margin + 8, y);
+        setFont(8.5, "bold", [20, 80, 160]);
+        doc.text("→  LIZA OS handles this:", margin + 12, y);
         y += 4.5;
 
         setFont(8.5, "normal", [40, 60, 100]);
-        doc.text(lizaLines, margin + 8, y);
+        doc.text(lizaLines, margin + 12, y);
         y += lizaLines.length * 3.8 + 6;
       });
 
-      // Transition sentence
+      // Closing pitch
       y += 2;
-      writeWrapped(
-        "Each of these capabilities maps directly to the manual actions in your roadmap. " +
-        "The difference: what starts as a weekly discipline becomes a system property that survives turnover, scaling, and the next tool change.",
-        8.5, "italic", [100, 100, 100]
+      const closingBoxH = 20;
+      doc.setFillColor(240, 245, 255);
+      doc.roundedRect(margin, y, contentWidth, closingBoxH, 3, 3, "F");
+      doc.setDrawColor(20, 80, 160);
+      doc.setLineWidth(0.4);
+      doc.roundedRect(margin, y, contentWidth, closingBoxH, 3, 3, "S");
+      setFont(8.5, "italic", [20, 80, 160]);
+      doc.text(
+        "What starts as a weekly discipline becomes a system property — one that survives turnover, scaling, and the next tool change.",
+        margin + 8, y + 8
       );
+      setFont(8, "bold", [20, 80, 160]);
+      doc.text("This is what LIZA OS is built for.", margin + 8, y + 14);
+      y += closingBoxH + 4;
       y += 4;
     }
 
