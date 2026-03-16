@@ -627,9 +627,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         // LIZA box height
         const lizaBoxH = 6 + (lizaLines.length * lineH) + 4;
 
-        // Metrics section height (stacked vertically: lead then lag)
-        const leadMetricsH = 5 + (actions.leadMetrics.length * (metricLineH + 0.5));
-        const lagMetricsH = 5 + (actions.lagMetrics.length * (metricLineH + 0.5));
+        // Metrics section height (stacked vertically: lead then lag) — measure actual wrapped lines
+        const metricTextW = textW - 8;
+        let leadMetricsH = 5;
+        for (const m of actions.leadMetrics) {
+          const ml = doc.splitTextToSize(`- ${m}`, metricTextW);
+          leadMetricsH += ml.length * metricLineH + 0.5;
+        }
+        let lagMetricsH = 5;
+        for (const m of actions.lagMetrics) {
+          const ml = doc.splitTextToSize(`- ${m}`, metricTextW);
+          lagMetricsH += ml.length * metricLineH + 0.5;
+        }
         const metricsH = 8 + leadMetricsH + 4 + lagMetricsH + 4;
 
         const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + metricsH + 6;
