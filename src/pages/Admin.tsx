@@ -14,7 +14,7 @@ import {
   Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck,
   Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2,
   RefreshCw, Zap, BarChart3, BookOpen, Layers, Loader2, Target, Crosshair,
-  TrendingUp, Pen,
+  TrendingUp, Pen, Sparkles,
 } from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
 import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
