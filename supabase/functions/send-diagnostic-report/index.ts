@@ -361,7 +361,7 @@ Return ONLY valid JSON in this exact format:
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
         <span style="font-size:12px;color:${scoreColor};font-weight:700;">You: ${overall}</span>
         <span style="margin:0 8px;color:#e2e8f0;">|</span>
-        <span style="font-size:12px;color:#64748b;">Codified teams: <strong>55+</strong></span>
+        <span style="font-size:12px;color:#64748b;">${isAbove55 ? 'Top 1% teams: <strong>75+</strong>' : 'Codified teams: <strong>55+</strong>'}</span>
       </div>
     </div>
 
