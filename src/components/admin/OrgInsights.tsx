@@ -583,6 +583,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Make this reference the mandatory starting point for every AI session on that task type. Before anyone prompts, they confirm they've loaded the reference. After two weeks, compare outputs from sessions that used the reference versus those that didn't. The difference will be obvious. Then pick a second task type and repeat the process. You're building the habit of 'start from what we know' rather than 'start from scratch'.",
             liza: "How this becomes automatic: the reference becomes a governed Playbook that auto-injects into every AI session for that task type. No manual loading, no forgetting, no drift. When someone improves the approach, the update reaches every future session automatically.",
             cascade: "Improving this directly raises Delivery Consistency (same standards = same outputs) and accelerates Knowledge Sharing (codified knowledge is shareable knowledge).",
+            changeActivities: ["60-min 'Reverse Engineer Our Best Work' workshop with top 2 operators", "Weekly 5-min pre-session check: 'Did you load the reference?'"],
             leadMetrics: ["Sessions started from approved reference: target 80%+ within 4 weeks", "Priority workflows with a written standard: target 1 this week, 3 this month"],
             lagMetrics: ["Senior correction hours per deliverable: track weekly, target 40% reduction by week 8", "First-review pass rate on standardised workflows: target 70%+ within 6 weeks"],
           },
