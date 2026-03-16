@@ -794,22 +794,43 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += roiItems.length * 7 + 14;
 
     // ── CTA ──
-    checkNewPage(40);
+    checkNewPage(55);
     drawDivider();
 
     setFont(14, "bold", [20, 80, 160]);
-    doc.text("Ready to close the gap?", margin, y);
+    doc.text("Your Next Step", margin, y);
     y += 8;
     writeWrapped(
-      "This report surfaces patterns. LIZA OS turns those patterns into infrastructure: shared standards that reach every AI session, structured learning loops, and full visibility into how your team executes with AI.",
+      "This report surfaces patterns. The improvement roadmap gives you concrete actions to start this week. " +
+      "But the hardest part isn't knowing what to do — it's sustaining it across projects and people.",
       9.5, "normal", [50, 50, 50]
     );
     y += 2;
 
-    setFont(10, "bold", [20, 80, 160]);
-    doc.text("Book a 30-minute walkthrough:", margin, y);
-    setFont(10, "normal", [20, 100, 180]);
-    doc.text("kristof.eger@lizaos.ai  |  lizaos.ai", margin, y + 6);
+    // CTA box
+    const ctaBoxH = 32;
+    doc.setFillColor(240, 249, 255);
+    doc.setDrawColor(37, 99, 235);
+    doc.roundedRect(margin, y, contentWidth, ctaBoxH, 3, 3, "FD");
+
+    setFont(11, "bold", [20, 80, 160]);
+    doc.text("Book Your Diagnostic Debrief", margin + 8, y + 10);
+
+    setFont(9, "normal", [50, 50, 50]);
+    const ctaDesc = org.avgScore <= 55
+      ? "We'll walk through your scores, identify the highest-leverage gap to close first, and map out a 30-day plan."
+      : org.avgScore <= 75
+        ? "We'll walk through your scores, discuss how to systematise what's already working, and identify where to push next."
+        : "We'll discuss how to extend your structured approach across new domains and measure ROI.";
+    const ctaLines = doc.splitTextToSize(ctaDesc, contentWidth - 16);
+    doc.text(ctaLines, margin + 8, y + 16);
+
+    y += ctaBoxH + 4;
+
+    setFont(9, "normal", [20, 100, 180]);
+    doc.text("Schedule: calendar.app.google/3v8jevUcsgRQnLyL9", margin, y);
+    setFont(9, "normal", [100, 100, 100]);
+    doc.text("  |  kristof.eger@lizaos.ai  |  lizaos.ai", margin + 82, y);
     y += 14;
 
     // Footer
