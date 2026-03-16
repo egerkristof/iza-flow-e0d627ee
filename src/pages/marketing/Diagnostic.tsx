@@ -208,18 +208,21 @@ export default function DiagnosticPage() {
           </div>
         )}
 
-        {/* Frosted curtain overlay */}
+        {/* Frosted curtain overlay — covers bottom 70% initially, slides up on CTA click */}
         {showCurtain && (
           <div
-            className={`absolute inset-0 z-30 flex items-center justify-center transition-all duration-600 ease-out ${
+            className={`absolute inset-x-0 z-30 flex items-end justify-center pb-[12vh] md:pb-[16vh] transition-all ease-out ${
               curtainLifting
-                ? "opacity-0 -translate-y-8 pointer-events-none"
+                ? "opacity-0 -translate-y-full pointer-events-none"
                 : "opacity-100 translate-y-0"
             }`}
             style={{
-              backdropFilter: "blur(12px) saturate(1.2)",
-              WebkitBackdropFilter: "blur(12px) saturate(1.2)",
-              background: "hsl(var(--background) / 0.82)",
+              top: "15%",
+              bottom: 0,
+              backdropFilter: "blur(14px) saturate(1.3)",
+              WebkitBackdropFilter: "blur(14px) saturate(1.3)",
+              background: "linear-gradient(to top, hsl(var(--background) / 0.95) 40%, hsl(var(--background) / 0.85) 70%, hsl(var(--background) / 0.5) 100%)",
+              transitionDuration: "700ms",
             }}
           >
             <div className="max-w-2xl text-center space-y-5 md:space-y-6 px-6 animate-in fade-in duration-500">
