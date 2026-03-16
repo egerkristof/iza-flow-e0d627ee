@@ -331,22 +331,23 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     ];
 
     benchItems.forEach((b, i) => {
-      const bY = dashY + 7 + i * 9;
+      const bY = dashY + 8 + i * 10;
       setFont(8.5, "normal", [80, 80, 80]);
       doc.text(b.label, benchX, bY);
       setFont(10, "bold", b.color);
       doc.text(`${b.value}`, benchX + 75, bY, { align: "right" });
     });
 
-    // Brief benchmark context (right-aligned under the numbers)
+    // Brief benchmark context (below the last benchmark row)
+    const benchEndY = dashY + 8 + benchItems.length * 10 + 4;
     setFont(7.5, "italic", [150, 150, 150]);
     const benchContext = doc.splitTextToSize(
       "Based on 4,500 executives surveyed across 16 countries (ServiceNow 2025 AI Maturity Index). Global average dropped from 44 to 35 year-over-year.",
       75
     );
-    doc.text(benchContext, benchX, dashY + 35);
+    doc.text(benchContext, benchX, benchEndY);
 
-    y = dashY + 35 + benchContext.length * 3.2 + 2;
+    y = Math.max(dashY + 42, benchEndY + benchContext.length * 3.2 + 4);
 
     // Scoring methodology note
     setFont(7.5, "italic", [140, 140, 140]);
