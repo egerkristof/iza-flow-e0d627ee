@@ -5,7 +5,6 @@ import { DiagnosticQuestion } from "@/components/marketing/diagnostic/Diagnostic
 import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticResults";
 import { QUESTIONS, calculateResults } from "@/lib/diagnostic-scoring";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
@@ -30,7 +29,6 @@ export default function DiagnosticPage() {
   const recordIdRef = useRef<string | null>(null);
   const sessionId = useMemo(() => generateSessionId(), []);
 
-  // Fetch submission count for social proof
   useEffect(() => {
     (async () => {
       try {
@@ -42,7 +40,6 @@ export default function DiagnosticPage() {
     })();
   }, []);
 
-  // Handle ?result=<id> for re-engagement links from email
   useEffect(() => {
     const resultId = searchParams.get("result");
     if (!resultId) return;
@@ -66,7 +63,7 @@ export default function DiagnosticPage() {
 
   const handleLiftCurtain = useCallback(() => {
     setCurtainLifting(true);
-    setTimeout(() => setPhase("questions"), 600);
+    setTimeout(() => setPhase("questions"), 700);
   }, []);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
@@ -102,7 +99,7 @@ export default function DiagnosticPage() {
         console.error("Diagnostic insert exception:", err);
       }
 
-      await new Promise((res) => setTimeout(res, 1800));
+      await new Promise((res) => setTimeout(res, 2200));
       setResult(r);
       setPhase("results");
     } catch {
@@ -154,28 +151,49 @@ export default function DiagnosticPage() {
 
   return (
     <MarketingLayout>
-      <div className="min-h-[80vh] flex flex-col relative">
-        {/* Progress bar — only during active questions phase */}
+      <div className="min-h-[85vh] flex flex-col relative overflow-hidden">
+        {/* === Progress bar — refined floating bar === */}
         {phase === "questions" && (
-          <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-4 shadow-sm animate-in fade-in slide-in-from-top-2 duration-400">
-            <div className="max-w-2xl mx-auto space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wide text-foreground">
-                  Question {safeQ + 1} of {QUESTIONS.length}
-                </span>
-                <span className="text-xs font-medium text-muted-foreground">
-                  ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
-                </span>
+          <div className="sticky top-16 z-40 animate-in fade-in slide-in-from-top-2 duration-500">
+            <div className="bg-card/90 backdrop-blur-md border-b border-border/50 px-6 py-3">
+              <div className="max-w-2xl mx-auto">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-muted-foreground">
+                    Question {safeQ + 1} / {QUESTIONS.length}
+                  </span>
+                  <span className="text-[11px] font-medium text-muted-foreground/60">
+                    ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
+                  </span>
+                </div>
+                {/* Custom progress bar with brand gradient + glow */}
+                <div className="h-1.5 w-full rounded-full bg-border/50 overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-500 ease-out"
+                    style={{
+                      width: `${progress}%`,
+                      background: "var(--gradient-brand-btn)",
+                      boxShadow: "0 0 12px 2px hsl(var(--primary) / 0.3)",
+                    }}
+                  />
+                </div>
               </div>
-              <Progress value={progress} className="h-2" />
             </div>
           </div>
         )}
 
-        {/* Question layer — always rendered during intro (blurred behind curtain) and questions phase */}
+        {/* === Question layer — visible behind curtain during intro === */}
         {showQuestions && (
-          <div className="flex-1 flex items-center justify-center px-6 py-16">
-            <div className="w-full space-y-8">
+          <div
+            className="flex-1 flex items-center justify-center px-4 md:px-6 py-12 md:py-16 transition-all duration-500"
+            style={{
+              // Subtle scale-up when curtain lifts
+              transform: phase === "intro" ? "scale(0.96)" : "scale(1)",
+              opacity: phase === "intro" ? 0.4 : 1,
+              filter: phase === "intro" ? "blur(2px)" : "none",
+              transition: "transform 700ms ease-out, opacity 700ms ease-out, filter 700ms ease-out",
+            }}
+          >
+            <div className="w-full space-y-6 md:space-y-8">
               <DiagnosticQuestion
                 key={phase === "intro" ? firstQuestion.id : currentQuestion.id}
                 question={phase === "intro" ? firstQuestion : currentQuestion}
@@ -183,23 +201,25 @@ export default function DiagnosticPage() {
                 onSelect={handleSelect}
               />
               {phase === "questions" && (
-                <div className="max-w-2xl mx-auto flex items-center justify-between">
+                <div className="max-w-2xl mx-auto flex items-center justify-between animate-in fade-in duration-300">
                   <Button
                     variant="ghost"
                     size="sm"
+                    className="text-xs gap-1.5"
                     disabled={safeQ === 0}
                     onClick={() => setCurrentQ((q) => Math.max(q - 1, 0))}
                   >
-                    <ArrowLeft className="w-4 h-4" /> Back
+                    <ArrowLeft className="w-3.5 h-3.5" /> Back
                   </Button>
                   {safeQ < QUESTIONS.length - 1 && (
                     <Button
                       variant="outline"
                       size="sm"
+                      className="text-xs gap-1.5"
                       disabled={!currentAnswered}
                       onClick={() => setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1))}
                     >
-                      Next <ArrowRight className="w-4 h-4" />
+                      Next <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
                   )}
                 </div>
@@ -208,87 +228,148 @@ export default function DiagnosticPage() {
           </div>
         )}
 
-        {/* Frosted curtain overlay — covers bottom 70% initially, slides up on CTA click */}
+        {/* === Frosted curtain — full viewport, slides up to reveal Q1 === */}
         {showCurtain && (
           <div
-            className={`absolute inset-x-0 z-30 flex items-end justify-center pb-[12vh] md:pb-[16vh] transition-all ease-out ${
+            className={`absolute inset-0 z-30 flex flex-col items-center justify-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] ${
               curtainLifting
-                ? "opacity-0 -translate-y-full pointer-events-none"
+                ? "opacity-0 -translate-y-[110%] pointer-events-none"
                 : "opacity-100 translate-y-0"
             }`}
             style={{
-              top: "15%",
-              bottom: 0,
-              backdropFilter: "blur(14px) saturate(1.3)",
-              WebkitBackdropFilter: "blur(14px) saturate(1.3)",
-              background: "linear-gradient(to top, hsl(var(--background) / 0.95) 40%, hsl(var(--background) / 0.85) 70%, hsl(var(--background) / 0.5) 100%)",
-              transitionDuration: "700ms",
+              backdropFilter: "blur(20px) saturate(1.4)",
+              WebkitBackdropFilter: "blur(20px) saturate(1.4)",
+              background: "linear-gradient(180deg, hsl(var(--background) / 0.97) 0%, hsl(var(--background) / 0.92) 60%, hsl(var(--background) / 0.75) 100%)",
+              transitionDuration: "800ms",
             }}
           >
-            <div className="max-w-2xl text-center space-y-5 md:space-y-6 px-6 animate-in fade-in duration-500">
+            {/* Decorative glow orbs */}
+            <div
+              className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full blur-[100px] pointer-events-none opacity-30"
+              style={{ background: "radial-gradient(ellipse, hsl(var(--primary) / 0.15), transparent 70%)" }}
+            />
+            <div
+              className="absolute bottom-1/4 right-1/4 w-[300px] h-[200px] rounded-full blur-[80px] pointer-events-none opacity-20"
+              style={{ background: "radial-gradient(ellipse, hsl(var(--brand-green) / 0.12), transparent 70%)" }}
+            />
+
+            <div className="relative max-w-xl text-center space-y-6 md:space-y-8 px-6 animate-in fade-in duration-700">
+              {/* Category label */}
+              <div className="flex items-center justify-center gap-2">
+                <div className="h-px w-8 bg-primary/30" />
+                <span className="text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-primary/70">
+                  AI Execution Diagnostic
+                </span>
+                <div className="h-px w-8 bg-primary/30" />
+              </div>
+
               {/* Headline */}
-              <h1 className="text-2xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
+              <h1 className="text-3xl md:text-[3.2rem] font-black tracking-tight text-foreground leading-[1.08] md:leading-[1.06]">
                 Why does your team's AI work{" "}
                 <span className="brand-gradient-text">still need so much fixing?</span>
               </h1>
 
               {/* Symptoms → Reframe */}
-              <div className="max-w-lg mx-auto space-y-1">
-                <p className="text-sm md:text-lg font-semibold text-foreground/80">
+              <div className="max-w-md mx-auto space-y-2">
+                <p className="text-sm md:text-base font-semibold text-foreground/75 leading-relaxed">
                   Hallucinations. Inconsistent quality. The same mistakes on repeat.
                 </p>
-                <p className="text-sm md:text-base text-muted-foreground">
+                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                   It's not the AI. Your team has no shared standard for using it.
                 </p>
               </div>
 
               {/* CTA */}
-              <div className="space-y-2">
+              <div className="space-y-3 pt-2">
                 <Button
                   variant="brand"
                   size="lg"
-                  className="text-sm md:text-base w-full sm:w-auto"
+                  className="text-sm md:text-base px-8 md:px-10 h-12 md:h-13 w-full sm:w-auto shadow-[0_0_30px_-6px_hsl(200_90%_52%/0.4)] hover:shadow-[0_0_40px_-6px_hsl(200_90%_52%/0.6)]"
                   onClick={handleLiftCurtain}
                 >
                   Score Your AI Execution <ArrowRight className="w-4 h-4" />
                 </Button>
-                <p className="text-[11px] md:text-xs text-muted-foreground">
+                <p className="text-[10px] md:text-[11px] text-muted-foreground/60 tracking-wide">
                   No signup · 90 seconds · Immediate results
                   {submissionCount != null && (
                     <>
                       {" · "}
-                      <span className="font-semibold text-foreground">{submissionCount}+ teams</span> assessed
+                      <span className="font-semibold text-muted-foreground">{submissionCount}+ teams</span> assessed
                     </>
                   )}
                 </p>
+              </div>
+
+              {/* Peek hint — subtle indicator that content is behind */}
+              <div className="pt-4 flex flex-col items-center gap-1 animate-bounce" style={{ animationDuration: "2.5s" }}>
+                <div className="w-5 h-5 rounded-full border border-primary/20 flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* Calculating & Results phases */}
+        {/* === Calculating phase === */}
         {phase === "calculating" && (
           <div className="flex-1 flex items-center justify-center px-6 py-16">
-            <div className="text-center space-y-6 animate-in fade-in duration-300">
-              <div className="relative mx-auto w-20 h-20">
-                <div className="absolute inset-0 rounded-full border-4 border-primary/20" />
-                <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin" />
-                <Loader2 className="absolute inset-0 m-auto w-8 h-8 text-primary animate-pulse" />
+            <div className="text-center space-y-8 animate-in fade-in duration-500 max-w-md">
+              {/* Concentric ring spinner */}
+              <div className="relative mx-auto w-24 h-24">
+                <div
+                  className="absolute inset-0 rounded-full border-2 animate-spin"
+                  style={{
+                    borderColor: "hsl(var(--primary) / 0.1)",
+                    borderTopColor: "hsl(var(--primary) / 0.6)",
+                    animationDuration: "1.2s",
+                  }}
+                />
+                <div
+                  className="absolute inset-2 rounded-full border-2 animate-spin"
+                  style={{
+                    borderColor: "hsl(var(--brand-green) / 0.1)",
+                    borderTopColor: "hsl(var(--brand-green) / 0.5)",
+                    animationDuration: "1.8s",
+                    animationDirection: "reverse",
+                  }}
+                />
+                <div
+                  className="absolute inset-4 rounded-full border-2 animate-spin"
+                  style={{
+                    borderColor: "hsl(var(--primary) / 0.1)",
+                    borderTopColor: "hsl(var(--primary) / 0.4)",
+                    animationDuration: "2.4s",
+                  }}
+                />
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <div className="w-3 h-3 rounded-full bg-primary/60 animate-pulse" />
+                </div>
               </div>
+
               <div className="space-y-2">
-                <p className="text-lg font-bold text-foreground">Analysing your responses…</p>
-                <p className="text-sm text-muted-foreground">Scoring your team across 5 dimensions</p>
+                <p className="text-base md:text-lg font-bold text-foreground tracking-tight">
+                  Analysing your responses…
+                </p>
+                <p className="text-xs text-muted-foreground/70">
+                  Scoring across 5 dimensions of AI execution maturity
+                </p>
               </div>
-              <div className="flex flex-wrap justify-center gap-2 pt-2">
+
+              {/* Dimension pills — staggered reveal */}
+              <div className="flex flex-wrap justify-center gap-2">
                 {["Standards Adoption", "Delivery Consistency", "Knowledge Sharing", "Team Visibility", "Improvement Speed"].map((dim, i) => (
                   <span
                     key={dim}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium border animate-pulse"
+                    className="px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wide animate-in fade-in slide-in-from-bottom-2"
                     style={{
-                      borderColor: "hsl(var(--primary) / 0.2)",
-                      background: "hsl(var(--primary) / 0.06)",
-                      color: "hsl(var(--primary))",
-                      animationDelay: `${i * 200}ms`,
+                      border: "1px solid hsl(var(--primary) / 0.15)",
+                      background: "hsl(var(--primary) / 0.05)",
+                      color: "hsl(var(--primary) / 0.7)",
+                      animationDelay: `${i * 300}ms`,
+                      animationFillMode: "backwards",
+                      animationDuration: "500ms",
                     }}
                   >
                     {dim}
@@ -299,8 +380,9 @@ export default function DiagnosticPage() {
           </div>
         )}
 
+        {/* === Results === */}
         {phase === "results" && result && (
-          <div className="flex-1 flex items-center justify-center px-6 py-16">
+          <div className="flex-1 flex items-center justify-center px-4 md:px-6 py-12 md:py-16">
             <DiagnosticResults
               result={result}
               answers={answers}
