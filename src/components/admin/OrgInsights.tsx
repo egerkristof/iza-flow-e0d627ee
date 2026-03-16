@@ -538,8 +538,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Audit your existing standards: how many people actually reference them during AI sessions? Ask five team members individually this week. You'll likely find that the gap between 'exists' and 'used' is your real problem. Most teams have documentation that people know about but rarely pull into their AI work. Identify which standards are being used, which are ignored, and why. The 'why' is critical: is it access, awareness, or perceived irrelevance?",
             thisMonth: "Make standards non-optional for your weakest workflow. Create a pre-session checklist: before any AI work on this task, confirm the standard is loaded. Review compliance weekly for the first month. Track not just whether people loaded it, but whether the outputs improved. After four weeks, you'll have hard evidence of the impact, which makes the case for extending to other workflows.",
             liza: "On LIZA OS, Mandates enforce minimum context requirements before a session can begin. The system won't let someone start a task without the relevant standards loaded. No checklists, no willpower, no 'I forgot'. Compliance becomes structural, not aspirational.",
-            leadMetrics: ["Weekly checklist compliance rate (% sessions with standard loaded)", "# of standards audited and updated this month"],
-            lagMetrics: ["% reduction in deliverables requiring senior rework", "Time-to-quality for new team members (weeks to first unassisted deliverable)"],
+            leadMetrics: ["% of sessions that meet the required context check before prompting", "# of approved standards reviewed and refreshed this month"],
+            lagMetrics: ["% of deliverables completed without senior rework on governed workflows", "Weeks for a new team member to reach the team's approved baseline"],
           },
         },
         output_consistency: {
