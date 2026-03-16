@@ -107,7 +107,6 @@ export default function DiagnosticPage() {
       setResult(r);
       setPhase("results");
     } catch {
-      // If calculation fails, reset so user can retry
       finishingRef.current = false;
       setPhase("questions");
     }
