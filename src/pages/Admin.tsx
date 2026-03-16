@@ -980,6 +980,8 @@ export default function AdminPage() {
           )}
 
           {activeView === "consulting" && <ConsultingReference />}
+
+          {activeView === "client-prep" && <PersonalizedConsulting results={results} />}
         </div>
       </main>
     </div>
