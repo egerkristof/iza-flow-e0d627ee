@@ -685,43 +685,62 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += roiItems.length * 7 + 14;
 
     // ── CTA ──
-    checkNewPage(55);
-    drawDivider();
+    doc.addPage();
+    y = margin;
+    addBrandHeader();
+    y += 10;
 
-    setFont(14, "bold", [20, 80, 160]);
+    setFont(16, "bold", [20, 80, 160]);
     doc.text("Your Next Step", margin, y);
-    y += 8;
+    y += 10;
     writeWrapped(
-      "This report surfaces patterns. The improvement roadmap gives you concrete actions to start this week. " +
-      "But the hardest part isn't knowing what to do — it's sustaining it across projects and people.",
+      "This report surfaces where your team stands. The improvement roadmap gives you concrete actions to start this week. " +
+      "But the hardest part isn't knowing what to do. It's sustaining change across projects, people, and priorities.",
       9.5, "normal", [50, 50, 50]
     );
-    y += 2;
+    y += 6;
 
-    // CTA box
-    const ctaBoxH = 32;
-    doc.setFillColor(240, 249, 255);
-    doc.setDrawColor(37, 99, 235);
-    doc.roundedRect(margin, y, contentWidth, ctaBoxH, 3, 3, "FD");
-
-    setFont(11, "bold", [20, 80, 160]);
-    doc.text("Book Your Diagnostic Debrief", margin + 8, y + 10);
+    // CTA box — prominent, full-width
+    const ctaDesc = org.avgScore <= 55
+      ? "We'll walk through your team's scores in detail, identify the single highest-leverage gap to close first, discuss a concrete 30-day implementation plan, and show you exactly how teams at your maturity level use LIZA OS to make these improvements structural and automatic."
+      : org.avgScore <= 75
+        ? "We'll walk through your team's dimension profile, discuss how to systematise what's already working, identify where targeted investment will have the most impact, and show you how LIZA OS can turn your existing strengths into compounding advantages across the team."
+        : "We'll discuss how to extend your structured approach to new domains, help you build the case for ROI measurement, and show you how LIZA OS can scale your proven methodology across teams and verticals.";
 
     setFont(9, "normal", [50, 50, 50]);
-    const ctaDesc = org.avgScore <= 55
-      ? "We'll walk through your scores, identify the highest-leverage gap to close first, and map out a 30-day plan."
-      : org.avgScore <= 75
-        ? "We'll walk through your scores, discuss how to systematise what's already working, and identify where to push next."
-        : "We'll discuss how to extend your structured approach across new domains and measure ROI.";
-    const ctaLines = doc.splitTextToSize(ctaDesc, contentWidth - 16);
-    doc.text(ctaLines, margin + 8, y + 16);
+    const ctaDescLines = doc.splitTextToSize(ctaDesc, contentWidth - 24);
+    const ctaBoxH = 18 + (ctaDescLines.length * 3.8) + 30;
 
-    y += ctaBoxH + 4;
+    // Blue gradient-style box
+    doc.setFillColor(20, 80, 160);
+    doc.roundedRect(margin, y, contentWidth, ctaBoxH, 4, 4, "F");
 
-    setFont(9, "normal", [20, 100, 180]);
-    doc.text("Schedule: calendar.app.google/3v8jevUcsgRQnLyL9", margin, y);
+    // Title
+    setFont(14, "bold", [255, 255, 255]);
+    doc.text("Book Your Diagnostic Debrief", margin + 12, y + 14);
+
+    // Description
+    setFont(9, "normal", [210, 225, 255]);
+    doc.text(ctaDescLines, margin + 12, y + 22);
+
+    // What's included bullets
+    const bulletY = y + 22 + (ctaDescLines.length * 3.8) + 6;
+    setFont(8.5, "normal", [180, 210, 255]);
+    const bullets = [
+      "✓ Results walkthrough    ✓ Implementation guidance    ✓ LIZA OS demo    ✓ 30-day action plan"
+    ];
+    doc.text(bullets[0], margin + 12, bulletY);
+
+    y += ctaBoxH + 8;
+
+    // Schedule link
+    setFont(10, "bold", [20, 80, 160]);
+    doc.text("Schedule:", margin, y);
+    setFont(10, "normal", [20, 100, 180]);
+    doc.text("calendar.app.google/3v8jevUcsgRQnLyL9", margin + 22, y);
+    y += 6;
     setFont(9, "normal", [100, 100, 100]);
-    doc.text("  |  kristof.eger@lizaos.ai  |  lizaos.ai", margin + 82, y);
+    doc.text("kristof.eger@lizaos.ai  |  lizaos.ai", margin, y);
     y += 14;
 
     // Footer
