@@ -686,34 +686,31 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
         // ── How to measure progress ──
         setFont(9, "bold", [80, 80, 80]);
-        doc.text("How to measure progress:", margin + 14, innerY);
-        innerY += 6;
+        doc.text("How to measure progress", margin + 14, innerY);
+        innerY += 7;
 
-        // Lead metrics column
-        const colW = (textW - 8) / 2;
-        const metricsStartY = innerY;
-
-        // Lead header
+        // Lead indicators
         setFont(8, "bold", [22, 163, 74]);
-        doc.text("▲ Lead indicators (are you doing it?)", margin + 14, innerY);
+        doc.text("▲  Lead indicators — are you doing it?", margin + 14, innerY);
         innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
         for (const metric of actions.leadMetrics) {
-          const mLines = doc.splitTextToSize(`• ${metric}`, colW);
-          doc.text(mLines, margin + 14, innerY);
-          innerY += mLines.length * metricLineH;
+          const mLines = doc.splitTextToSize(`•  ${metric}`, textW - 4);
+          doc.text(mLines, margin + 18, innerY);
+          innerY += mLines.length * metricLineH + 0.5;
         }
 
-        // Lag metrics column (right side, same start Y)
-        let lagY = metricsStartY;
+        innerY += 3;
+
+        // Lag indicators
         setFont(8, "bold", [37, 99, 235]);
-        doc.text("▼ Lag indicators (is it working?)", margin + 14 + colW + 6, lagY);
-        lagY += 5;
+        doc.text("▼  Lag indicators — is it working?", margin + 14, innerY);
+        innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
         for (const metric of actions.lagMetrics) {
-          const mLines = doc.splitTextToSize(`• ${metric}`, colW);
-          doc.text(mLines, margin + 14 + colW + 6, lagY);
-          lagY += mLines.length * metricLineH;
+          const mLines = doc.splitTextToSize(`•  ${metric}`, textW - 4);
+          doc.text(mLines, margin + 18, innerY);
+          innerY += mLines.length * metricLineH + 0.5;
         }
 
         y += blockH - 2;
