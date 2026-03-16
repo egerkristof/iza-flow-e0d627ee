@@ -586,8 +586,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Map your team's current AI usage: who uses AI for what tasks, how often, and with what level of sophistication? A simple survey or 1:1 conversations will reveal patterns you can't see today. You'll likely discover that some people are using AI for tasks others don't even know are possible, and vice versa. This map becomes your coordination baseline.",
             thisMonth: "Designate intentional AI coordination for your next project: who handles which AI-assisted tasks, with what context loaded, reviewed by whom. This isn't about control. It's about preventing duplication and ensuring the right context reaches the right sessions. Track whether intentional distribution improves output quality compared to ad-hoc assignment. After one project cycle, the evidence will speak for itself.",
             liza: "On LIZA OS, delegation and task assignment flow through structured Workbooks with full visibility into who's executing what, with which context, and what the outcomes were. Coordination becomes a feature of the system, not a management overhead.",
-            leadMetrics: ["Completion of team AI usage map (yes/no, then update frequency)", "# of projects with intentional AI task coordination"],
-            lagMetrics: ["Duplicate work instances per project (should trend toward zero)", "Output quality difference: coordinated vs. ad-hoc AI task assignment"],
+            leadMetrics: ["% of active projects with clear AI task ownership and visible execution", "# of leadership reviews using shared AI work evidence instead of anecdote"],
+            lagMetrics: ["Reduction in duplicate AI work or hidden effort across a project", "Difference in output quality between coordinated and ad hoc AI execution"],
           },
         },
         learning_velocity: {
