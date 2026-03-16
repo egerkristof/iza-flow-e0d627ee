@@ -688,10 +688,13 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += roiItems.length * 7 + 14;
 
     // ── CTA ──
-    doc.addPage();
-    y = margin;
-    addBrandHeader();
-    y += 10;
+    // Only force new page if we're past the halfway point
+    if (y > pageHeight * 0.5) {
+      doc.addPage();
+      y = margin;
+      addBrandHeader();
+      y += 10;
+    }
 
     setFont(16, "bold", [20, 80, 160]);
     doc.text("Your Next Step", margin, y);
