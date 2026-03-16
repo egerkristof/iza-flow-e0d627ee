@@ -19,7 +19,7 @@ function generateSessionId(): string {
 
 export default function DiagnosticPage() {
   const [searchParams] = useSearchParams();
-  const [phase, setPhase] = useState<Phase>("intro");
+  const [phase, setPhase] = useState<Phase>("questions");
   const [currentQ, setCurrentQ] = useState(0);
   const [submissionCount, setSubmissionCount] = useState<number | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
