@@ -389,6 +389,49 @@ Return ONLY valid JSON in this exact format:
         .join("")}
     </div>
 
+    <!-- Lead/Lag metrics for weak dimensions -->
+    <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+      <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#1a1a2e;">How you'll know it's working</p>
+      <p style="margin:0 0 14px;font-size:12px;color:#64748b;">Track these signals as you implement. Lead indicators tell you the habits are forming. Lag indicators confirm results are following.</p>
+      ${[weakest, secondWeakest].map(d => {
+        const label = FRIENDLY_LABELS[d.dimension] || d.label;
+        const metrics: Record<string, { lead: string; lag: string }> = {
+          standard_internalization: {
+            lead: "% of AI sessions where your team's reference doc is loaded before prompting",
+            lag: "Reduction in senior review/correction time per deliverable",
+          },
+          output_consistency: {
+            lead: "% of deliverables self-checked against a quality reference before submission",
+            lag: "Variance in peer-review scores across team members (narrowing)",
+          },
+          knowledge_compounding: {
+            lead: "# of learnings formally promoted to the shared reference per month",
+            lag: "Time spent on problems a colleague already solved (trending down)",
+          },
+          collective_visibility: {
+            lead: "# of show-and-tell or paired observation sessions held per month",
+            lag: "Junior team members' confidence in AI-assisted tasks (quarterly survey)",
+          },
+          learning_velocity: {
+            lead: "# of shared learnings validated on real work (not just discussed)",
+            lag: "Average cycle time from learning surfaced to team-wide adoption",
+          },
+        };
+        const m = metrics[d.dimension];
+        if (!m) return "";
+        return `
+        <div style="margin-bottom:12px;${d === secondWeakest ? "" : "padding-bottom:12px;border-bottom:1px solid #e2e8f0;"}">
+          <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#1a1a2e;">${label} <span style="font-size:12px;font-weight:600;color:${d.score <= 33 ? "#dc2626" : "#f59e0b"};">(${d.score}/100)</span></p>
+          <p style="margin:0 0 4px;font-size:12px;color:#475569;">
+            <span style="color:#16a34a;font-weight:600;">▲ Lead:</span> ${m.lead}
+          </p>
+          <p style="margin:0;font-size:12px;color:#475569;">
+            <span style="color:#0284c7;font-weight:600;">▼ Lag:</span> ${m.lag}
+          </p>
+        </div>`;
+      }).join("")}
+    </div>
+
     <!-- You vs 55+ contrast -->
     <div style="margin-bottom:24px;">
       <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#1a1a2e;">Your team today vs. codified teams (55+)</p>
