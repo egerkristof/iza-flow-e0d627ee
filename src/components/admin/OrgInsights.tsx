@@ -504,10 +504,13 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       .sort(([, a], [, b]) => a - b); // weakest first
 
     if (weakDimensions.length > 0) {
-      doc.addPage();
-      y = margin;
-      addBrandHeader();
-      y += 10;
+      // Only start new page if we're more than 40% down the current one
+      if (y > pageHeight * 0.4) {
+        doc.addPage();
+        y = margin;
+        addBrandHeader();
+        y += 10;
+      }
 
       drawSectionHeader("Your Improvement Roadmap");
 
@@ -685,10 +688,13 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += roiItems.length * 7 + 14;
 
     // ── CTA ──
-    doc.addPage();
-    y = margin;
-    addBrandHeader();
-    y += 10;
+    // Only force new page if we're past the halfway point
+    if (y > pageHeight * 0.5) {
+      doc.addPage();
+      y = margin;
+      addBrandHeader();
+      y += 10;
+    }
 
     setFont(16, "bold", [20, 80, 160]);
     doc.text("Your Next Step", margin, y);
@@ -709,7 +715,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     setFont(9, "normal", [50, 50, 50]);
     const ctaDescLines = doc.splitTextToSize(ctaDesc, contentWidth - 24);
-    const ctaBoxH = 18 + (ctaDescLines.length * 3.8) + 30;
+    const bulletText = "✓ Results walkthrough   ✓ Implementation guidance   ✓ LIZA OS demo   ✓ 30-day action plan";
+    setFont(8.5, "normal", [180, 210, 255]);
+    const preBulletLines = doc.splitTextToSize(bulletText, contentWidth - 24);
+    const ctaBoxH = 18 + (ctaDescLines.length * 3.8) + 6 + (preBulletLines.length * 3.8) + 8;
+
+    checkNewPage(ctaBoxH + 20);
 
     // Blue gradient-style box
     doc.setFillColor(20, 80, 160);
@@ -723,13 +734,11 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(9, "normal", [210, 225, 255]);
     doc.text(ctaDescLines, margin + 12, y + 22);
 
-    // What's included bullets
+    // What's included bullets — constrained to box width
     const bulletY = y + 22 + (ctaDescLines.length * 3.8) + 6;
     setFont(8.5, "normal", [180, 210, 255]);
-    const bullets = [
-      "✓ Results walkthrough    ✓ Implementation guidance    ✓ LIZA OS demo    ✓ 30-day action plan"
-    ];
-    doc.text(bullets[0], margin + 12, bulletY);
+    const bulletLines = doc.splitTextToSize(bulletText, contentWidth - 24);
+    doc.text(bulletLines, margin + 12, bulletY);
 
     y += ctaBoxH + 8;
 
