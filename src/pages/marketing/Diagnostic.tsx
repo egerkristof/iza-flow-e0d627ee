@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
-type Phase = "curtain" | "questions" | "calculating" | "results";
+type Phase = "intro" | "questions" | "calculating" | "results";
 
 /** Generate a stable session ID per page load to deduplicate submissions */
 function generateSessionId(): string {
@@ -19,7 +19,7 @@ function generateSessionId(): string {
 
 export default function DiagnosticPage() {
   const [searchParams] = useSearchParams();
-  const [phase, setPhase] = useState<Phase>("curtain");
+  const [phase, setPhase] = useState<Phase>("intro");
   const [currentQ, setCurrentQ] = useState(0);
   const [submissionCount, setSubmissionCount] = useState<number | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -107,6 +107,7 @@ export default function DiagnosticPage() {
       setResult(r);
       setPhase("results");
     } catch {
+      // If calculation fails, reset so user can retry
       finishingRef.current = false;
       setPhase("questions");
     }
@@ -144,90 +145,40 @@ export default function DiagnosticPage() {
     [finishDiagnostic]
   );
 
-  const progress = (phase === "questions" || phase === "curtain") ? ((currentQ + 1) / QUESTIONS.length) * 100 : 0;
+  const progress = phase === "questions" ? ((currentQ + 1) / QUESTIONS.length) * 100 : 0;
   const safeQ = Math.min(currentQ, QUESTIONS.length - 1);
   const currentQuestion = QUESTIONS[safeQ];
   const currentAnswered = currentQuestion ? answers[currentQuestion.id] != null : false;
-  const [curtainLifting, setCurtainLifting] = useState(false);
-
-  const handleStartDiagnostic = useCallback(() => {
-    setCurtainLifting(true);
-    setTimeout(() => setPhase("questions"), 700);
-  }, []);
 
   return (
     <MarketingLayout>
-      <div className="min-h-[80vh] flex flex-col relative">
-        {/* Questions layer — always rendered behind curtain so it's visible through translucency */}
-        {(phase === "curtain" || phase === "questions") && (
-          <>
-            {phase === "questions" && (
-              <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-3 shadow-sm animate-in fade-in duration-500">
-                <div className="max-w-2xl mx-auto space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold tracking-wide text-foreground">
-                      Question {safeQ + 1} of {QUESTIONS.length}
-                    </span>
-                    <span className="text-xs font-medium text-muted-foreground">
-                      ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
-                    </span>
-                  </div>
-                  <Progress value={progress} className="h-2" />
-                </div>
+      <div className="min-h-[80vh] flex flex-col">
+        {phase === "questions" && (
+          <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-4 shadow-sm">
+            <div className="max-w-2xl mx-auto space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold tracking-wide text-foreground">
+                  Question {safeQ + 1} of {QUESTIONS.length}
+                </span>
+                <span className="text-xs font-medium text-muted-foreground">
+                  ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
+                </span>
               </div>
-            )}
-
-            <div className="flex-1 flex items-center justify-center px-6 py-16">
-              {currentQuestion && (
-                <div className="w-full space-y-8">
-                  <DiagnosticQuestion
-                    key={currentQuestion.id}
-                    question={currentQuestion}
-                    selectedScore={answers[currentQuestion.id]}
-                    onSelect={handleSelect}
-                  />
-                  <div className="max-w-2xl mx-auto flex items-center justify-between">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      disabled={safeQ === 0}
-                      onClick={() => setCurrentQ((q) => Math.max(q - 1, 0))}
-                    >
-                      <ArrowLeft className="w-4 h-4" /> Back
-                    </Button>
-                    {safeQ < QUESTIONS.length - 1 && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled={!currentAnswered}
-                        onClick={() => setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1))}
-                      >
-                        Next <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              )}
+              <Progress value={progress} className="h-2" />
             </div>
-          </>
+          </div>
         )}
 
-        {/* Curtain overlay — translucent, slides up to reveal Q1 */}
-        {(phase === "curtain" || curtainLifting) && (
-          <div
-            className="absolute inset-0 z-50 flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
-            style={{
-              transform: curtainLifting ? "translateY(-100%)" : "translateY(0)",
-              background: "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.97) 40%, hsl(var(--background) / 0.92) 100%)",
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            <div className="max-w-2xl text-center space-y-6 px-6 animate-in fade-in duration-500">
+        <div className="flex-1 flex items-center justify-center px-6 py-16">
+          {phase === "intro" && (
+            <div className="max-w-2xl text-center space-y-5 md:space-y-6 animate-in fade-in duration-500 px-1">
+              {/* 1. Headline */}
               <h1 className="text-2xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
                 Why does your team's AI work{" "}
                 <span className="brand-gradient-text">still need so much fixing?</span>
               </h1>
 
+              {/* 2. Symptoms → Reframe */}
               <div className="max-w-lg mx-auto space-y-1">
                 <p className="text-sm md:text-lg font-semibold text-foreground/80">
                   Hallucinations. Inconsistent quality. The same mistakes on repeat.
@@ -237,14 +188,15 @@ export default function DiagnosticPage() {
                 </p>
               </div>
 
+              {/* 3. CTA — above the fold */}
               <div className="space-y-2">
                 <Button
                   variant="brand"
                   size="lg"
                   className="text-sm md:text-base w-full sm:w-auto"
-                  onClick={handleStartDiagnostic}
+                  onClick={() => setPhase("questions")}
                 >
-                  Start Diagnostic <ArrowRight className="w-4 h-4" />
+                  Score Your AI Execution <ArrowRight className="w-4 h-4" />
                 </Button>
                 <p className="text-[11px] md:text-xs text-muted-foreground">
                   No signup · 90 seconds · Immediate results
@@ -257,12 +209,40 @@ export default function DiagnosticPage() {
                 </p>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Calculating phase */}
-        {phase === "calculating" && (
-          <div className="flex-1 flex items-center justify-center px-6 py-16">
+          {phase === "questions" && currentQuestion && (
+            <div className="w-full space-y-8">
+              <DiagnosticQuestion
+                key={currentQuestion.id}
+                question={currentQuestion}
+                selectedScore={answers[currentQuestion.id]}
+                onSelect={handleSelect}
+              />
+              <div className="max-w-2xl mx-auto flex items-center justify-between">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={safeQ === 0}
+                  onClick={() => setCurrentQ((q) => Math.max(q - 1, 0))}
+                >
+                  <ArrowLeft className="w-4 h-4" /> Back
+                </Button>
+                {safeQ < QUESTIONS.length - 1 && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={!currentAnswered}
+                    onClick={() => setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1))}
+                  >
+                    Next <ArrowRight className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+
+          {phase === "calculating" && (
             <div className="text-center space-y-6 animate-in fade-in duration-300">
               <div className="relative mx-auto w-20 h-20">
                 <div className="absolute inset-0 rounded-full border-4 border-primary/20" />
@@ -273,6 +253,7 @@ export default function DiagnosticPage() {
                 <p className="text-lg font-bold text-foreground">Analysing your responses…</p>
                 <p className="text-sm text-muted-foreground">Scoring your team across 5 dimensions</p>
               </div>
+              {/* Dimension names during calculation — builds anticipation */}
               <div className="flex flex-wrap justify-center gap-2 pt-2">
                 {["Standards Adoption", "Delivery Consistency", "Knowledge Sharing", "Team Visibility", "Improvement Speed"].map((dim, i) => (
                   <span
@@ -290,20 +271,17 @@ export default function DiagnosticPage() {
                 ))}
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Results phase */}
-        {phase === "results" && result && (
-          <div className="flex-1 flex items-center justify-center px-6 py-16">
+          {phase === "results" && result && (
             <DiagnosticResults
               result={result}
               answers={answers}
               existingRecordId={recordIdRef.current}
               sessionId={sessionId}
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </MarketingLayout>
   );
