@@ -840,8 +840,9 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         const actions = DIMENSION_ACTIONS[key]?.[tier];
         if (!actions) return;
 
-        const lizaText = actions.liza.replace(/^How this becomes automatic:\s*/i, "");
-        const lizaLines = doc.splitTextToSize(lizaText, contentWidth - 30);
+        let lizaText = actions.liza.replace(/^How this becomes automatic:\s*/i, "");
+        lizaText = lizaText.charAt(0).toUpperCase() + lizaText.slice(1);
+        const lizaLines = doc.splitTextToSize(lizaText, contentWidth - 16);
         const itemH = 12 + lizaLines.length * 3.8 + 6;
 
         checkNewPage(itemH + 8);
