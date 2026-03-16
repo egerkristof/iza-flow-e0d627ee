@@ -562,7 +562,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
       checkNewPage(roiItems.length * 7 + 18);
       setFont(10, "bold", [22, 101, 52]);
-      doc.text("Where this leads: what teams scoring 55+ report", margin, y);
+      doc.text("Where this leads: what top-performing teams report", margin, y);
+      y += 4;
+      setFont(8, "normal", [100, 100, 100]);
+      doc.text("Outcomes reported by teams scoring 55+ on this diagnostic", margin, y);
       y += 6;
 
       doc.setFillColor(240, 253, 244);
@@ -576,6 +579,32 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         doc.text(value, pageWidth - margin - 6, ry, { align: "right" });
       });
       y += roiItems.length * 7 + 12;
+
+      // ── Top 1% (75+) Elite Tier Block ──
+      const eliteItems = [
+        ["AI as a genuine competitive moat", "Output quality holds as they scale"],
+        ["Compounding knowledge advantage", "Each project deposits reusable capability"],
+        ["Data-informed AI investment decisions", "ROI tracked per workflow, not assumed"],
+        ["Speed of adaptation as strategic edge", "New AI techniques adopted team-wide in days"],
+      ];
+
+      checkNewPage(eliteItems.length * 7 + 20);
+      setFont(10, "bold", [20, 80, 160]);
+      doc.text("Top 1% · Scoring 75+", margin, y);
+      y += 6;
+
+      doc.setFillColor(239, 246, 255);
+      doc.setDrawColor(147, 197, 253);
+      doc.roundedRect(margin, y, contentWidth, eliteItems.length * 14 + 6, 3, 3, "FD");
+
+      eliteItems.forEach(([metric, detail], i) => {
+        const ry = y + 7 + i * 14;
+        setFont(9, "bold", [30, 64, 175]);
+        doc.text(metric, margin + 6, ry);
+        setFont(8.5, "normal", [80, 80, 80]);
+        doc.text(detail, margin + 6, ry + 5);
+      });
+      y += eliteItems.length * 14 + 12;
 
       const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string; cascade: string; changeActivities: string[]; leadMetrics: string[]; lagMetrics: string[] }; mid: { thisWeek: string; thisMonth: string; liza: string; cascade: string; changeActivities: string[]; leadMetrics: string[]; lagMetrics: string[] } }> = {
         standard_internalization: {
