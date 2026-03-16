@@ -504,10 +504,13 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       .sort(([, a], [, b]) => a - b); // weakest first
 
     if (weakDimensions.length > 0) {
-      doc.addPage();
-      y = margin;
-      addBrandHeader();
-      y += 10;
+      // Only start new page if we're more than 40% down the current one
+      if (y > pageHeight * 0.4) {
+        doc.addPage();
+        y = margin;
+        addBrandHeader();
+        y += 10;
+      }
 
       drawSectionHeader("Your Improvement Roadmap");
 
