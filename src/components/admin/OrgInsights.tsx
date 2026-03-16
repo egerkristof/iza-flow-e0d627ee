@@ -715,10 +715,9 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     setFont(9, "normal", [50, 50, 50]);
     const ctaDescLines = doc.splitTextToSize(ctaDesc, contentWidth - 24);
-    const bulletText = "✓ Results walkthrough   ✓ Implementation guidance   ✓ LIZA OS demo   ✓ 30-day action plan";
-    setFont(8.5, "normal", [180, 210, 255]);
-    const preBulletLines = doc.splitTextToSize(bulletText, contentWidth - 24);
-    const ctaBoxH = 18 + (ctaDescLines.length * 3.8) + 6 + (preBulletLines.length * 3.8) + 8;
+    const bulletItems = ["Results walkthrough", "Implementation guidance", "LIZA OS demo", "30-day action plan"];
+    const bulletLineCount = 4;
+    const ctaBoxH = 18 + (ctaDescLines.length * 3.8) + 6 + (bulletLineCount * 4.2) + 8;
 
     checkNewPage(ctaBoxH + 20);
 
