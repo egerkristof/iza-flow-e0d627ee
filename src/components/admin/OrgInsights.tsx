@@ -576,13 +576,14 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       });
       y += roiItems.length * 7 + 12;
 
-      const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string; cascade: string; leadMetrics: string[]; lagMetrics: string[] }; mid: { thisWeek: string; thisMonth: string; liza: string; cascade: string; leadMetrics: string[]; lagMetrics: string[] } }> = {
+      const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string; cascade: string; changeActivities: string[]; leadMetrics: string[]; lagMetrics: string[] }; mid: { thisWeek: string; thisMonth: string; liza: string; cascade: string; changeActivities: string[]; leadMetrics: string[]; lagMetrics: string[] } }> = {
         standard_internalization: {
           low: {
             thisWeek: "Pick your single most-repeated task type. Gather your two strongest operators for 60 minutes. Have them walk through their best recent output and reverse-engineer the pattern: what structure did they use, what quality criteria did they check, what context did they load before prompting? Write this as a one-page reference document. This isn't about perfection. It's about making the implicit explicit. The goal is a starting point that prevents the next person from beginning with a blank prompt.",
             thisMonth: "Make this reference the mandatory starting point for every AI session on that task type. Before anyone prompts, they confirm they've loaded the reference. After two weeks, compare outputs from sessions that used the reference versus those that didn't. The difference will be obvious. Then pick a second task type and repeat the process. You're building the habit of 'start from what we know' rather than 'start from scratch'.",
             liza: "How this becomes automatic: the reference becomes a governed Playbook that auto-injects into every AI session for that task type. No manual loading, no forgetting, no drift. When someone improves the approach, the update reaches every future session automatically.",
             cascade: "Improving this directly raises Delivery Consistency (same standards = same outputs) and accelerates Knowledge Sharing (codified knowledge is shareable knowledge).",
+            changeActivities: ["60-min 'Reverse Engineer Our Best Work' workshop with top 2 operators", "Weekly 5-min pre-session check: 'Did you load the reference?'"],
             leadMetrics: ["Sessions started from approved reference: target 80%+ within 4 weeks", "Priority workflows with a written standard: target 1 this week, 3 this month"],
             lagMetrics: ["Senior correction hours per deliverable: track weekly, target 40% reduction by week 8", "First-review pass rate on standardised workflows: target 70%+ within 6 weeks"],
           },
@@ -591,6 +592,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Make standards non-optional for your weakest workflow. Create a pre-session checklist: before any AI work on this task, confirm the standard is loaded. Review compliance weekly for the first month. Track not just whether people loaded it, but whether the outputs improved. After four weeks, you'll have hard evidence of the impact, which makes the case for extending to other workflows.",
             liza: "How this becomes automatic: Mandates enforce minimum context requirements before a session can begin. The system won't let someone start a task without the relevant standards loaded. No checklists, no willpower, no 'I forgot'. Compliance becomes structural, not aspirational.",
             cascade: "Higher standards adoption feeds directly into Delivery Consistency (mandatory context = uniform quality) and shortens Improvement Speed (a living standard is faster to update than a forgotten document).",
+            changeActivities: ["Standards usage audit: 1:1 interviews with 5 team members", "Monthly 'Standards Review' where the team updates and re-commits to active references"],
             leadMetrics: ["Pre-session context compliance rate: target 90%+ within 4 weeks", "Standards reviewed and refreshed this month: target all active standards quarterly"],
             lagMetrics: ["Deliverables completed without senior rework: target 60%+ within 6 weeks", "New hire time-to-quality-baseline: track in weeks, target 50% reduction within one quarter"],
           },
@@ -601,6 +603,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Create a 'quality reference output' for your most common deliverable type. This is the benchmark: the standard that represents your team's best work. After each AI-assisted deliverable, the author compares against this reference before delivery. Track how many deliverables meet the bar versus fall short. After a month, update the reference to incorporate any improvements. This creates a ratchet: quality can only go up.",
             liza: "How this becomes automatic: Context Bundles ensure every team member's AI session starts with the same standards, examples, and quality criteria. Consistency becomes a design property of the system, not a function of individual discipline. When standards evolve, every session inherits the update.",
             cascade: "Consistency improvements amplify Team Visibility (uniform outputs are easier to review and compare) and accelerate Knowledge Sharing (a shared quality bar makes best practices transferable).",
+            changeActivities: ["'Blind Test' workshop: same brief, 3 people, compare outputs live as a team", "Create and socialise a 'Quality Reference Output' for top deliverable type"],
             leadMetrics: ["Deliverables checked against quality reference before submission: target 100% within 4 weeks", "Core deliverable types with a current reference example: target top 3 this month"],
             lagMetrics: ["Output quality spread across team members (same brief): target <15% variance within 8 weeks", "Client/manager revision requests per deliverable: track weekly, target 30% reduction"],
           },
@@ -609,6 +612,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Turn their approach into the team default. Pair each of them with two others on real client work (not training exercises). The stronger person co-executes with the other, narrating their decisions in real time. After three paired sessions per person, the prompting patterns should start becoming muscle memory. Measure: are the paired operators' solo outputs improving? If yes, extend to the next pair.",
             liza: "How this becomes automatic: the strongest operator's approach becomes the baseline context stack that everyone inherits. Quality travels with the system, not the person. When your best people leave on holiday, the standard stays.",
             cascade: "Embedding top-operator workflows directly boosts Standards Adoption (their methods become the standard) and de-risks Knowledge Sharing (expertise is preserved in the system, not in people).",
+            changeActivities: ["Paired execution sessions: top operator co-works with 2 others on live client work", "'Decision Narration' practice: operator talks through their AI choices in real time"],
             leadMetrics: ["Operator workflows documented and reused by others: target 2+ this month", "Paired execution sessions completed on live work: target 6 this month (3 per lead)"],
             lagMetrics: ["Deliverables meeting quality bar without senior intervention: target 75%+ within 8 weeks", "Solo output quality after paired sessions: track improvement over 4-week rolling window"],
           },
@@ -619,6 +623,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Every two weeks, review the wins log as a team in a 15-minute session. Vote on the most impactful entry. The winner gets formally written into your shared reference document and becomes the default approach for that task type. This creates a virtuous cycle: people share because they see sharing leads to adoption, and adoption makes the team better. After three cycles, you'll have a living, evolving knowledge base that grows with every project.",
             liza: "How this becomes automatic: Session Debriefs capture what worked at the end of every execution session and surface winning approaches as proposed updates to your Playbooks. No manual logging needed. The knowledge loop closes itself.",
             cascade: "Knowledge sharing feeds directly into Improvement Speed (more shared learnings = faster team-wide adoption) and strengthens Standards Adoption (each learning enriches the team's governed reference).",
+            changeActivities: ["Launch a 'Wins Log' channel (Slack/Teams) with one appointed first poster", "Bi-weekly 15-min 'Best of the Wins Log' team vote and adoption session"],
             leadMetrics: ["Reusable learnings captured per week: target 2+ within 2 weeks", "Projects ending with at least one shared learning: target 100% within one month"],
             lagMetrics: ["Duplicate problem-solving across similar projects: track and target 50% reduction within one quarter", "New projects starting from a reused approach instead of blank: target 40%+ within 8 weeks"],
           },
@@ -627,6 +632,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Introduce a structured 20-minute after-action review at the close of every significant project. Three questions only: What AI approaches worked? What didn't? What one change should we make to the team's shared reference? Assign one person to implement the agreed change within 48 hours. The 48-hour deadline is critical: without it, insights evaporate. Track the changes made over a quarter. You'll see your shared reference evolving from a static document into living institutional memory.",
             liza: "How this becomes automatic: after-action reviews are structured into the Protocol execution flow. Insights captured during Session Debriefs feed directly into your governed context stack, ensuring they automatically reach the next project. No manual transfer, no forgotten learnings.",
             cascade: "Systematic reviews accelerate Improvement Speed (learnings reach the team faster) and raise Delivery Consistency (each project's best practices become the next project's starting point).",
+            changeActivities: ["20-min structured After-Action Review at every project close (3 questions only)", "48-hour 'Promote or Drop' deadline: one person owns integrating each agreed learning"],
             leadMetrics: ["Projects completing a formal after-action review: target 100% within 4 weeks", "Agreed learnings promoted into shared reference within 48 hours: target 80%+"],
             lagMetrics: ["Project kick-offs referencing a prior learning: target 60%+ within one quarter", "Reusable team knowledge actively used in delivery: track quarterly growth rate"],
           },
@@ -637,6 +643,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Create a shared space where AI work is visible. Even a simple shared folder of notable AI sessions is a start. The key requirement: juniors should be able to see how seniors navigate ambiguity, not just the polished final output. Consider pairing a junior with a senior for one task per week where the junior observes the full AI workflow. This is the apprenticeship model adapted for the AI age.",
             liza: "How this becomes automatic: the team's AI work is visible through shared Workbooks. Every session, every decision, every context injection is observable. Seniors' thinking becomes a learning resource. Delegation includes full visibility into how tasks were executed, not just whether they were completed.",
             cascade: "Visibility is the prerequisite for Knowledge Sharing (you can't share what you can't see) and accelerates Improvement Speed (visible patterns are faster to evaluate and adopt).",
+            changeActivities: ["Weekly 15-min 'Show and Tell': one person demos their best AI technique live", "Junior-Senior pairing: one shared AI task per week with full observation"],
             leadMetrics: ["AI work reviews, demos, or paired observations per month: target 4+ (weekly cadence)", "Active projects with visible AI work in a shared space: target 100% within 4 weeks"],
             lagMetrics: ["Leadership confidence in AI ROI (1-5 rating in monthly check-in): target 4+ within one quarter", "Junior time-to-competence on AI workflows: track in weeks, target 30% reduction"],
           },
@@ -645,6 +652,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Designate intentional AI coordination for your next project: who handles which AI-assisted tasks, with what context loaded, reviewed by whom. This isn't about control. It's about preventing duplication and ensuring the right context reaches the right sessions. Track whether intentional distribution improves output quality compared to ad-hoc assignment. After one project cycle, the evidence will speak for itself.",
             liza: "How this becomes automatic: delegation and task assignment flow through structured Workbooks with full visibility into who's executing what, with which context, and what the outcomes were. Coordination becomes a feature of the system, not a management overhead.",
             cascade: "Coordinated visibility strengthens Delivery Consistency (intentional task distribution reduces variance) and enables Knowledge Sharing (visible work is reviewable and reusable).",
+            changeActivities: ["AI Usage Mapping survey: who uses AI for what, how often, and how well", "Intentional AI task distribution for next project with assigned reviewers"],
             leadMetrics: ["Projects with clear AI task ownership and visible execution: target 100% within 4 weeks", "Leadership reviews using work evidence instead of anecdote: target monthly cadence"],
             lagMetrics: ["Duplicate or hidden AI effort per project: track and target elimination within 8 weeks", "Output quality gap between coordinated and ad-hoc execution: measure and target <10% variance"],
           },
@@ -655,6 +663,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Make this a weekly rotation. Each week, one person shares one practical learning: a better way to structure a prompt, a quality check that caught an error, a workflow shortcut, or a pitfall to avoid. If the learning is validated by a second person on real work, it gets written into the team's shared reference. Build a rhythm of surface, validate, adopt. After a month, you'll have captured four learnings and possibly adopted one or two. That's four more than most teams manage in a quarter.",
             liza: "How this becomes automatic: learnings from every session are captured through structured Debriefs and surfaced as proposed updates to your Playbooks. You can compare improved approaches against existing ones through Protocol execution. Data replaces opinion.",
             cascade: "Faster learning compounds every other dimension: adopted improvements raise Standards Adoption, reduce Delivery variance, enrich Knowledge Sharing, and create visible proof of progress for Team Visibility.",
+            changeActivities: ["Weekly 'One Learning' rotation: each person surfaces one AI discovery", "'Validate and Adopt' buddy system: second person tests the learning on real work"],
             leadMetrics: ["Workflow improvements captured per week: target 1+ starting this week", "Improvements validated by a second person within 7 days: target 50%+"],
             lagMetrics: ["Time from discovery to team-wide adoption: track in days, target <21 days within 8 weeks", "Active workflows on newest approved approach: target 60%+ within one quarter"],
           },
@@ -663,6 +672,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisMonth: "Shorten your adoption cycle with a formal process: when someone identifies a better approach, set a one-week deadline for validation and a two-week deadline for team-wide rollout if confirmed. Assign an owner for each validation. Track cycle time from 'someone discovered this' to 'the whole team benefits'. Your goal: under three weeks. Currently, most mid-maturity teams take 6-8 weeks or never complete the cycle at all.",
             liza: "How this becomes automatic: validated improvements are promoted directly into your context stack and automatically reach every future session. Adoption isn't a communication problem anymore. It's a one-click operation that propagates instantly across the entire team.",
             cascade: "Faster adoption cycles compound every other dimension: quicker standard updates, more consistent outputs, richer shared knowledge, and visible evidence of continuous improvement.",
+            changeActivities: ["Root Cause Audit: trace one un-adopted improvement to its blocker (awareness, priority, or mechanism)", "Adoption Sprint: assign owner, 7-day validation deadline, 14-day rollout deadline"],
             leadMetrics: ["Improvement candidates with an owner and deadline: target 100% within 2 weeks", "Approved improvements in team workflow within 14 days: target 80%+"],
             lagMetrics: ["Average adoption cycle (discovery to team-wide use): track in days, target <14 days", "Proven improvements still stuck in chat history: target zero within one quarter"],
           },
@@ -690,16 +700,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         setFont(8, "italic", [100, 80, 40]);
         const cascadeLines = actions.cascade ? doc.splitTextToSize("Cascade effect: " + actions.cascade, textW) : [];
 
+        const changeActivityLines = actions.changeActivities.map((a) => doc.splitTextToSize(`- ${a}`, metricsSectionWidth));
         const leadMetricLines = actions.leadMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
         const lagMetricLines = actions.lagMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
 
         const lizaBoxH = 6 + (lizaLines.length * lineH) + 4;
         const cascadeH = cascadeLines.length > 0 ? cascadeLines.length * 3.6 + 4 : 0;
+        const changeActivitiesH = 5 + changeActivityLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0) + 3;
         const leadMetricsH = leadMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
         const lagMetricsH = lagMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
         const metricsH = 7 + 5 + leadMetricsH + 3 + 5 + lagMetricsH;
 
-        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + cascadeH + metricsH + 8;
+        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + cascadeH + changeActivitiesH + metricsH + 8;
 
         checkNewPage(blockH + 12);
 
@@ -758,6 +770,17 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
           doc.text(cascadeLines, margin + 14, innerY);
           innerY += cascadeLines.length * 3.6 + 4;
         }
+
+        // ── Recommended team activities ──
+        setFont(9, "bold", [80, 80, 80]);
+        doc.text("Recommended team activities", margin + 14, innerY);
+        innerY += 5;
+        setFont(8, "normal", [50, 50, 50]);
+        for (const aLines of changeActivityLines) {
+          doc.text(aLines, margin + 18, innerY);
+          innerY += aLines.length * metricLineH + 0.5;
+        }
+        innerY += 3;
 
         // ── How you'll know it's working ──
         setFont(9, "bold", [80, 80, 80]);
