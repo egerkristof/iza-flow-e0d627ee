@@ -877,7 +877,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       doc.roundedRect(margin, y, contentWidth, closingBoxH, 3, 3, "S");
       setFont(8.5, "italic", [20, 80, 160]);
       doc.text(
-        "What starts as a weekly discipline becomes a system property — one that survives turnover, scaling, and the next tool change.",
+        "What starts as a weekly discipline becomes a system property -- one that survives turnover, scaling, and the next tool change.",
         margin + 8, y + 8
       );
       setFont(8, "bold", [20, 80, 160]);
