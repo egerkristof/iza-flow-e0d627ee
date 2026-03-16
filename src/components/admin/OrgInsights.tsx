@@ -621,6 +621,152 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       y += blockHeight + 6;
     }
 
+    // ════════════════════════════════════════════
+    // DIMENSION-SPECIFIC IMPROVEMENT ROADMAP
+    // ════════════════════════════════════════════
+    const weakDimensions = dimEntries
+      .filter(([, score]) => score < 67)
+      .sort(([, a], [, b]) => a - b); // weakest first
+
+    if (weakDimensions.length > 0) {
+      doc.addPage();
+      y = margin;
+      addBrandHeader();
+      y += 10;
+
+      drawSectionHeader("Your Improvement Roadmap");
+
+      writeWrapped(
+        `Based on your team's scores, ${weakDimensions.length === 1 ? "one dimension needs" : `${weakDimensions.length} dimensions need`} focused attention. ` +
+        `The actions below are sequenced by impact: start with #1 and build from there. Each step is designed to produce visible change within 2–4 weeks.`,
+        9, "normal", [50, 50, 50]
+      );
+      y += 4;
+
+      const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string }; mid: { thisWeek: string; thisMonth: string; liza: string } }> = {
+        standard_internalization: {
+          low: {
+            thisWeek: "Pick your single most-repeated task. Have your two strongest operators spend 60 minutes extracting the pattern: expected structure, quality criteria, key steps. Write it as a one-page reference.",
+            thisMonth: "Make this reference the mandatory starting point for every AI session on that task. Before anyone prompts, they load the reference. Review whether outputs improved after two weeks.",
+            liza: "On LIZA OS, this becomes a governed Playbook that auto-injects into every AI session for that task type — no manual loading, no forgetting.",
+          },
+          mid: {
+            thisWeek: "Audit your existing standards: how many people actually reference them during AI sessions? Ask five team members this week. The gap between 'exists' and 'used' is your real problem.",
+            thisMonth: "Make standards non-optional for your weakest workflow. Create a pre-session checklist: before any AI work on this task, confirm the standard is loaded. Track compliance for four weeks.",
+            liza: "On LIZA OS, Mandates enforce minimum context requirements before a session can begin — removing the need for checklists or willpower.",
+          },
+        },
+        output_consistency: {
+          low: {
+            thisWeek: "Run a blind test: give the same brief to three people. Compare outputs. Document specifically where they diverge — structure, depth, quality, or approach. Share the comparison with the team.",
+            thisMonth: "Create a 'quality reference output' for your most common deliverable type. This becomes the benchmark. After each AI-assisted deliverable, compare against the reference before delivery.",
+            liza: "On LIZA OS, Context Bundles ensure every team member's AI session starts with the same standards, examples, and quality criteria — consistency by design, not by discipline.",
+          },
+          mid: {
+            thisWeek: "Identify your top two operators whose AI outputs consistently meet the bar. Have them document their prompt setup: what context they provide, what instructions they give, what they check before finalising.",
+            thisMonth: "Turn their approach into the team default. Pair each of them with two others for real work (not training). The goal: their prompting patterns become muscle memory for the wider team.",
+            liza: "On LIZA OS, the strongest operator's approach becomes the baseline context stack that everyone inherits — quality travels with the system, not the person.",
+          },
+        },
+        knowledge_compounding: {
+          low: {
+            thisWeek: "Start a 'wins log': a shared document (or Slack channel) where anyone posts an AI technique that worked well. One sentence, one example. Lower the bar to near zero for sharing.",
+            thisMonth: "Every two weeks, review the wins log as a team. Vote on the top technique. The winner gets formally written into your shared reference and becomes the default approach.",
+            liza: "On LIZA OS, Session Debriefs automatically capture what worked and surface it as proposed updates to your Playbooks — no manual logging needed.",
+          },
+          mid: {
+            thisWeek: "Review your last three projects. For each, identify one AI technique or prompt pattern that worked well but never reached the wider team. Write each one down in two sentences.",
+            thisMonth: "Introduce a structured 20-minute after-action review at project close. Three questions: What AI approaches worked? What didn't? What one change should we make? Assign someone to implement the change within 48 hours.",
+            liza: "On LIZA OS, after-action reviews feed directly into your governed context stack, ensuring insights automatically reach the next project.",
+          },
+        },
+        collective_visibility: {
+          low: {
+            thisWeek: "Run a 15-minute show-and-tell: one person demonstrates their best AI technique from the past week. Rotate the presenter each week. The goal is to make the invisible visible.",
+            thisMonth: "Create a shared space where AI work is visible — even if it's just a shared folder of notable AI sessions. Juniors should be able to see how seniors navigate ambiguity, not just the final output.",
+            liza: "On LIZA OS, the team's AI work is visible through shared Workbooks, providing an apprenticeship path where juniors can see senior thinking in action.",
+          },
+          mid: {
+            thisWeek: "Map your team's current AI usage: who uses AI for what tasks, how often, and with what level of sophistication? A simple spreadsheet survey will reveal patterns you can't see today.",
+            thisMonth: "Designate AI coordination for your next project: who handles which AI-assisted tasks, with what context, reviewed by whom. Track whether intentional distribution improves output quality.",
+            liza: "On LIZA OS, delegation and task assignment flow through structured Workbooks with full visibility into who's executing what with which context.",
+          },
+        },
+        learning_velocity: {
+          low: {
+            thisWeek: "Block 30 minutes this week for one person to evaluate a new AI technique relevant to your work. Their only deliverable: a two-sentence verdict — 'try it' or 'skip it' — shared with the team.",
+            thisMonth: "Make this a weekly rotation. Each week, one person evaluates one technique. If the verdict is 'try it', someone else tests it on real work the following week. Build a rhythm of evaluate → test → adopt.",
+            liza: "On LIZA OS, new techniques can be tested as Playbook variants and compared against existing approaches through structured Protocol execution.",
+          },
+          mid: {
+            thisWeek: "Review your last quarter: identify one AI capability or technique your team should have adopted but didn't. Trace why — was it awareness, priority, or no mechanism to integrate it?",
+            thisMonth: "Shorten your adoption cycle: when someone identifies a promising technique, set a one-week deadline for evaluation and a two-week deadline for team-wide rollout if validated. Track cycle time.",
+            liza: "On LIZA OS, validated improvements are promoted directly into your context stack and automatically reach every future session — adoption is instantaneous.",
+          },
+        },
+      };
+
+      weakDimensions.forEach(([key, score], index) => {
+        const label = DIMENSION_LABELS[key as Dimension] || SHORT_LABELS[key] || key;
+        const dimColor = getScoreColor(score);
+        const tier = score <= 33 ? "low" : "mid";
+        const actions = DIMENSION_ACTIONS[key]?.[tier];
+        if (!actions) return;
+
+        const lineH = 3.8;
+        setFont(9, "normal", [50, 50, 50]);
+        const weekLines = doc.splitTextToSize(actions.thisWeek, contentWidth - 24);
+        const monthLines = doc.splitTextToSize(actions.thisMonth, contentWidth - 24);
+        setFont(8.5, "italic", [20, 80, 160]);
+        const lizaLines = doc.splitTextToSize(actions.liza, contentWidth - 24);
+
+        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 6 + 5 + (monthLines.length * lineH) + 6 + (lizaLines.length * lineH) + 8;
+
+        checkNewPage(blockH + 10);
+
+        // Priority number + dimension label
+        setFont(11, "bold", dimColor);
+        doc.text(`${index + 1}.`, margin, y + 3);
+        setFont(11, "bold", [30, 30, 30]);
+        doc.text(label, margin + 8, y + 3);
+        setFont(10, "normal", dimColor);
+        doc.text(`${score}/100`, pageWidth - margin, y + 3, { align: "right" });
+        y += 10;
+
+        // Background card
+        doc.setFillColor(248, 250, 255);
+        doc.roundedRect(margin + 4, y, contentWidth - 8, blockH - 10, 2, 2, "F");
+        doc.setFillColor(...dimColor);
+        doc.rect(margin + 4, y, 3, blockH - 10, "F");
+
+        let innerY = y + 6;
+
+        // This Week
+        setFont(9, "bold", [30, 30, 30]);
+        doc.text("This week:", margin + 12, innerY);
+        innerY += 5;
+        setFont(9, "normal", [50, 50, 50]);
+        doc.text(weekLines, margin + 12, innerY);
+        innerY += weekLines.length * lineH + 6;
+
+        // This Month
+        setFont(9, "bold", [30, 30, 30]);
+        doc.text("This month:", margin + 12, innerY);
+        innerY += 5;
+        setFont(9, "normal", [50, 50, 50]);
+        doc.text(monthLines, margin + 12, innerY);
+        innerY += monthLines.length * lineH + 6;
+
+        // LIZA OS
+        setFont(8.5, "italic", [20, 80, 160]);
+        doc.text(lizaLines, margin + 12, innerY);
+
+        y += blockH - 4;
+      });
+
+      y += 6;
+    }
+
     // ── What 55+ Teams See (ROI frame) ──
     checkNewPage(50);
     y += 4;
@@ -648,22 +794,43 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += roiItems.length * 7 + 14;
 
     // ── CTA ──
-    checkNewPage(40);
+    checkNewPage(55);
     drawDivider();
 
     setFont(14, "bold", [20, 80, 160]);
-    doc.text("Ready to close the gap?", margin, y);
+    doc.text("Your Next Step", margin, y);
     y += 8;
     writeWrapped(
-      "This report surfaces patterns. LIZA OS turns those patterns into infrastructure: shared standards that reach every AI session, structured learning loops, and full visibility into how your team executes with AI.",
+      "This report surfaces patterns. The improvement roadmap gives you concrete actions to start this week. " +
+      "But the hardest part isn't knowing what to do — it's sustaining it across projects and people.",
       9.5, "normal", [50, 50, 50]
     );
     y += 2;
 
-    setFont(10, "bold", [20, 80, 160]);
-    doc.text("Book a 30-minute walkthrough:", margin, y);
-    setFont(10, "normal", [20, 100, 180]);
-    doc.text("kristof.eger@lizaos.ai  |  lizaos.ai", margin, y + 6);
+    // CTA box
+    const ctaBoxH = 32;
+    doc.setFillColor(240, 249, 255);
+    doc.setDrawColor(37, 99, 235);
+    doc.roundedRect(margin, y, contentWidth, ctaBoxH, 3, 3, "FD");
+
+    setFont(11, "bold", [20, 80, 160]);
+    doc.text("Book Your Diagnostic Debrief", margin + 8, y + 10);
+
+    setFont(9, "normal", [50, 50, 50]);
+    const ctaDesc = org.avgScore <= 55
+      ? "We'll walk through your scores, identify the highest-leverage gap to close first, and map out a 30-day plan."
+      : org.avgScore <= 75
+        ? "We'll walk through your scores, discuss how to systematise what's already working, and identify where to push next."
+        : "We'll discuss how to extend your structured approach across new domains and measure ROI.";
+    const ctaLines = doc.splitTextToSize(ctaDesc, contentWidth - 16);
+    doc.text(ctaLines, margin + 8, y + 16);
+
+    y += ctaBoxH + 4;
+
+    setFont(9, "normal", [20, 100, 180]);
+    doc.text("Schedule: calendar.app.google/3v8jevUcsgRQnLyL9", margin, y);
+    setFont(9, "normal", [100, 100, 100]);
+    doc.text("  |  kristof.eger@lizaos.ai  |  lizaos.ai", margin + 82, y);
     y += 14;
 
     // Footer
