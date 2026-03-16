@@ -697,8 +697,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         doc.text("LEAD INDICATORS - are you doing it?", margin + 14, innerY);
         innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
-        for (const metric of actions.leadMetrics) {
-          const mLines = doc.splitTextToSize(`- ${metric}`, metricTextW);
+        for (const mLines of leadMetricLines) {
           doc.text(mLines, margin + 18, innerY);
           innerY += mLines.length * metricLineH + 0.5;
         }
@@ -710,8 +709,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         doc.text("LAG INDICATORS - is it working?", margin + 14, innerY);
         innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
-        for (const metric of actions.lagMetrics) {
-          const mLines = doc.splitTextToSize(`- ${metric}`, metricTextW);
+        for (const mLines of lagMetricLines) {
           doc.text(mLines, margin + 18, innerY);
           innerY += mLines.length * metricLineH + 0.5;
         }
