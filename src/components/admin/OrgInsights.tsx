@@ -768,31 +768,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       y += 6;
     }
 
-    // ── What 55+ Teams See (ROI frame) ──
-    checkNewPage(50);
-    y += 4;
-    drawSectionHeader("What Teams Scoring 55+ Report");
 
-    const roiItems = [
-      ["AI output quality variance across team", "Within 10%"],
-      ["New hires executing at team standard", "From week one"],
-      ["Senior time redirected from correction to strategy", "40-60% freed"],
-      ["Knowledge and techniques retained after turnover", "90%+ preserved"],
-      ["Time from 'someone found a better way' to team-wide adoption", "Under 1 week"],
-      ["Team capability compounds project over project", "Measurably accelerating"],
-    ];
-
-    doc.setFillColor(240, 253, 244);
-    doc.roundedRect(margin, y, contentWidth, roiItems.length * 7 + 6, 3, 3, "F");
-
-    roiItems.forEach(([label, value], i) => {
-      const ry = y + 5 + i * 7;
-      setFont(9, "normal", [22, 101, 52]);
-      doc.text(label, margin + 6, ry);
-      setFont(9, "bold", [22, 101, 52]);
-      doc.text(value, pageWidth - margin - 6, ry, { align: "right" });
-    });
-    y += roiItems.length * 7 + 14;
 
     // ── CTA ──
     // Only force new page if we're past the halfway point
