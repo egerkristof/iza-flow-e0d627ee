@@ -733,11 +733,13 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(9, "normal", [210, 225, 255]);
     doc.text(ctaDescLines, margin + 12, y + 22);
 
-    // What's included bullets — constrained to box width
-    const bulletY = y + 22 + (ctaDescLines.length * 3.8) + 6;
+    // What's included bullets — stacked vertically to prevent overflow
+    let bulletY = y + 22 + (ctaDescLines.length * 3.8) + 6;
     setFont(8.5, "normal", [180, 210, 255]);
-    const bulletLines = doc.splitTextToSize(bulletText, contentWidth - 24);
-    doc.text(bulletLines, margin + 12, bulletY);
+    for (const item of bulletItems) {
+      doc.text(`✓  ${item}`, margin + 12, bulletY);
+      bulletY += 4.2;
+    }
 
     y += ctaBoxH + 8;
 
