@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.send-diagnostic-report]
 verify_jwt = false
+
+[functions.generate-consulting-brief]
+verify_jwt = false
