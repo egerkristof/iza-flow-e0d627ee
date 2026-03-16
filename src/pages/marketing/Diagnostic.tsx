@@ -12,7 +12,6 @@ import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
 type Phase = "intro" | "questions" | "calculating" | "results";
 
-/** Generate a stable session ID per page load to deduplicate submissions */
 function generateSessionId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
@@ -25,6 +24,7 @@ export default function DiagnosticPage() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DiagnosticResult | null>(null);
   const [diagnosticRecordId, setDiagnosticRecordId] = useState<string | null>(null);
+  const [curtainLifting, setCurtainLifting] = useState(false);
   const answersRef = useRef<Record<string, number>>({});
   const finishingRef = useRef(false);
   const recordIdRef = useRef<string | null>(null);
@@ -60,11 +60,14 @@ export default function DiagnosticPage() {
         setDiagnosticRecordId(resultId);
         recordIdRef.current = resultId;
         setPhase("results");
-      } catch {
-        // Invalid ID, just show intro
-      }
+      } catch {}
     })();
   }, [searchParams]);
+
+  const handleLiftCurtain = useCallback(() => {
+    setCurtainLifting(true);
+    setTimeout(() => setPhase("questions"), 600);
+  }, []);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
@@ -72,11 +75,8 @@ export default function DiagnosticPage() {
     setPhase("calculating");
 
     try {
-      // 1. Calculate results immediately (client-side, no network)
       const r = calculateResults(finalAnswers);
 
-      // 2. Pre-emptive insert DURING calculating phase (before results render)
-      //    Uses session_id unique constraint for dedup — safe to retry
       try {
         const payload = {
           session_id: sessionId,
@@ -102,12 +102,10 @@ export default function DiagnosticPage() {
         console.error("Diagnostic insert exception:", err);
       }
 
-      // 3. Brief animation delay, then show results
       await new Promise((res) => setTimeout(res, 1800));
       setResult(r);
       setPhase("results");
     } catch {
-      // If calculation fails, reset so user can retry
       finishingRef.current = false;
       setPhase("questions");
     }
@@ -149,12 +147,17 @@ export default function DiagnosticPage() {
   const safeQ = Math.min(currentQ, QUESTIONS.length - 1);
   const currentQuestion = QUESTIONS[safeQ];
   const currentAnswered = currentQuestion ? answers[currentQuestion.id] != null : false;
+  const firstQuestion = QUESTIONS[0];
+
+  const showCurtain = phase === "intro";
+  const showQuestions = phase === "questions" || phase === "intro";
 
   return (
     <MarketingLayout>
-      <div className="min-h-[80vh] flex flex-col">
+      <div className="min-h-[80vh] flex flex-col relative">
+        {/* Progress bar — only during active questions phase */}
         {phase === "questions" && (
-          <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-4 shadow-sm">
+          <div className="sticky top-16 z-40 bg-card/95 backdrop-blur-sm border-b border-border px-6 py-4 shadow-sm animate-in fade-in slide-in-from-top-2 duration-400">
             <div className="max-w-2xl mx-auto space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold tracking-wide text-foreground">
@@ -169,16 +172,64 @@ export default function DiagnosticPage() {
           </div>
         )}
 
-        <div className="flex-1 flex items-center justify-center px-6 py-16">
-          {phase === "intro" && (
-            <div className="max-w-2xl text-center space-y-5 md:space-y-6 animate-in fade-in duration-500 px-1">
-              {/* 1. Headline */}
+        {/* Question layer — always rendered during intro (blurred behind curtain) and questions phase */}
+        {showQuestions && (
+          <div className="flex-1 flex items-center justify-center px-6 py-16">
+            <div className="w-full space-y-8">
+              <DiagnosticQuestion
+                key={phase === "intro" ? firstQuestion.id : currentQuestion.id}
+                question={phase === "intro" ? firstQuestion : currentQuestion}
+                selectedScore={phase === "intro" ? undefined : answers[currentQuestion.id]}
+                onSelect={handleSelect}
+              />
+              {phase === "questions" && (
+                <div className="max-w-2xl mx-auto flex items-center justify-between">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    disabled={safeQ === 0}
+                    onClick={() => setCurrentQ((q) => Math.max(q - 1, 0))}
+                  >
+                    <ArrowLeft className="w-4 h-4" /> Back
+                  </Button>
+                  {safeQ < QUESTIONS.length - 1 && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={!currentAnswered}
+                      onClick={() => setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1))}
+                    >
+                      Next <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Frosted curtain overlay */}
+        {showCurtain && (
+          <div
+            className={`absolute inset-0 z-30 flex items-center justify-center transition-all duration-600 ease-out ${
+              curtainLifting
+                ? "opacity-0 -translate-y-8 pointer-events-none"
+                : "opacity-100 translate-y-0"
+            }`}
+            style={{
+              backdropFilter: "blur(12px) saturate(1.2)",
+              WebkitBackdropFilter: "blur(12px) saturate(1.2)",
+              background: "hsl(var(--background) / 0.82)",
+            }}
+          >
+            <div className="max-w-2xl text-center space-y-5 md:space-y-6 px-6 animate-in fade-in duration-500">
+              {/* Headline */}
               <h1 className="text-2xl md:text-5xl font-black tracking-tight text-foreground leading-[1.1]">
                 Why does your team's AI work{" "}
                 <span className="brand-gradient-text">still need so much fixing?</span>
               </h1>
 
-              {/* 2. Symptoms → Reframe */}
+              {/* Symptoms → Reframe */}
               <div className="max-w-lg mx-auto space-y-1">
                 <p className="text-sm md:text-lg font-semibold text-foreground/80">
                   Hallucinations. Inconsistent quality. The same mistakes on repeat.
@@ -188,13 +239,13 @@ export default function DiagnosticPage() {
                 </p>
               </div>
 
-              {/* 3. CTA — above the fold */}
+              {/* CTA */}
               <div className="space-y-2">
                 <Button
                   variant="brand"
                   size="lg"
                   className="text-sm md:text-base w-full sm:w-auto"
-                  onClick={() => setPhase("questions")}
+                  onClick={handleLiftCurtain}
                 >
                   Score Your AI Execution <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -209,40 +260,12 @@ export default function DiagnosticPage() {
                 </p>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {phase === "questions" && currentQuestion && (
-            <div className="w-full space-y-8">
-              <DiagnosticQuestion
-                key={currentQuestion.id}
-                question={currentQuestion}
-                selectedScore={answers[currentQuestion.id]}
-                onSelect={handleSelect}
-              />
-              <div className="max-w-2xl mx-auto flex items-center justify-between">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={safeQ === 0}
-                  onClick={() => setCurrentQ((q) => Math.max(q - 1, 0))}
-                >
-                  <ArrowLeft className="w-4 h-4" /> Back
-                </Button>
-                {safeQ < QUESTIONS.length - 1 && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={!currentAnswered}
-                    onClick={() => setCurrentQ((q) => Math.min(q + 1, QUESTIONS.length - 1))}
-                  >
-                    Next <ArrowRight className="w-4 h-4" />
-                  </Button>
-                )}
-              </div>
-            </div>
-          )}
-
-          {phase === "calculating" && (
+        {/* Calculating & Results phases */}
+        {phase === "calculating" && (
+          <div className="flex-1 flex items-center justify-center px-6 py-16">
             <div className="text-center space-y-6 animate-in fade-in duration-300">
               <div className="relative mx-auto w-20 h-20">
                 <div className="absolute inset-0 rounded-full border-4 border-primary/20" />
@@ -253,7 +276,6 @@ export default function DiagnosticPage() {
                 <p className="text-lg font-bold text-foreground">Analysing your responses…</p>
                 <p className="text-sm text-muted-foreground">Scoring your team across 5 dimensions</p>
               </div>
-              {/* Dimension names during calculation — builds anticipation */}
               <div className="flex flex-wrap justify-center gap-2 pt-2">
                 {["Standards Adoption", "Delivery Consistency", "Knowledge Sharing", "Team Visibility", "Improvement Speed"].map((dim, i) => (
                   <span
@@ -271,17 +293,19 @@ export default function DiagnosticPage() {
                 ))}
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {phase === "results" && result && (
+        {phase === "results" && result && (
+          <div className="flex-1 flex items-center justify-center px-6 py-16">
             <DiagnosticResults
               result={result}
               answers={answers}
               existingRecordId={recordIdRef.current}
               sessionId={sessionId}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </MarketingLayout>
   );
