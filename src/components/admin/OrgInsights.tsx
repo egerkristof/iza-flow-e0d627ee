@@ -616,7 +616,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         if (!actions) return;
 
         const lineH = 3.8;
-        const textW = contentWidth - 28; // tighter inner margin to prevent overflow
+        const metricLineH = 3.6;
+        const textW = contentWidth - 28;
         setFont(9, "normal", [50, 50, 50]);
         const weekLines = doc.splitTextToSize(actions.thisWeek, textW);
         const monthLines = doc.splitTextToSize(actions.thisMonth, textW);
@@ -626,7 +627,10 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         // LIZA box height
         const lizaBoxH = 6 + (lizaLines.length * lineH) + 4;
 
-        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 6;
+        // Metrics section height
+        const metricsH = 8 + 5 + (actions.leadMetrics.length * metricLineH) + 6 + 5 + (actions.lagMetrics.length * metricLineH) + 4;
+
+        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + metricsH + 6;
 
         checkNewPage(blockH + 12);
 
@@ -675,6 +679,40 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
         setFont(8.5, "normal", [20, 70, 140]);
         doc.text(lizaLines, margin + 14, lizaBoxY + 10);
+
+        innerY = lizaBoxY + lizaBoxH + 6;
+
+        // ── How to measure progress ──
+        setFont(9, "bold", [80, 80, 80]);
+        doc.text("How to measure progress:", margin + 14, innerY);
+        innerY += 6;
+
+        // Lead metrics column
+        const colW = (textW - 8) / 2;
+        const metricsStartY = innerY;
+
+        // Lead header
+        setFont(8, "bold", [22, 163, 74]);
+        doc.text("▲ Lead indicators (are you doing it?)", margin + 14, innerY);
+        innerY += 5;
+        setFont(8, "normal", [50, 50, 50]);
+        for (const metric of actions.leadMetrics) {
+          const mLines = doc.splitTextToSize(`• ${metric}`, colW);
+          doc.text(mLines, margin + 14, innerY);
+          innerY += mLines.length * metricLineH;
+        }
+
+        // Lag metrics column (right side, same start Y)
+        let lagY = metricsStartY;
+        setFont(8, "bold", [37, 99, 235]);
+        doc.text("▼ Lag indicators (is it working?)", margin + 14 + colW + 6, lagY);
+        lagY += 5;
+        setFont(8, "normal", [50, 50, 50]);
+        for (const metric of actions.lagMetrics) {
+          const mLines = doc.splitTextToSize(`• ${metric}`, colW);
+          doc.text(mLines, margin + 14 + colW + 6, lagY);
+          lagY += mLines.length * metricLineH;
+        }
 
         y += blockH - 2;
       });
