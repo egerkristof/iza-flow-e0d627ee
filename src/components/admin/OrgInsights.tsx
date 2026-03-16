@@ -771,6 +771,17 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
           innerY += cascadeLines.length * 3.6 + 4;
         }
 
+        // ── Recommended team activities ──
+        setFont(9, "bold", [80, 80, 80]);
+        doc.text("Recommended team activities", margin + 14, innerY);
+        innerY += 5;
+        setFont(8, "normal", [50, 50, 50]);
+        for (const aLines of changeActivityLines) {
+          doc.text(aLines, margin + 18, innerY);
+          innerY += aLines.length * metricLineH + 0.5;
+        }
+        innerY += 3;
+
         // ── How you'll know it's working ──
         setFont(9, "bold", [80, 80, 80]);
         doc.text("How you'll know it's working", margin + 14, innerY);
