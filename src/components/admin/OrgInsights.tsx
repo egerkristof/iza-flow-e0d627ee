@@ -618,30 +618,24 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         const lineH = 3.8;
         const metricLineH = 3.6;
         const textW = contentWidth - 28;
+        const cardWidth = contentWidth - 8;
+        const cardInnerWidth = cardWidth - 24;
+        const metricsSectionWidth = cardInnerWidth - 4;
         setFont(9, "normal", [50, 50, 50]);
         const weekLines = doc.splitTextToSize(actions.thisWeek, textW);
         const monthLines = doc.splitTextToSize(actions.thisMonth, textW);
         setFont(8.5, "normal", [20, 80, 160]);
         const lizaLines = doc.splitTextToSize(actions.liza, textW - 8);
 
-        // LIZA box height
+        const leadMetricLines = actions.leadMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
+        const lagMetricLines = actions.lagMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
+
         const lizaBoxH = 6 + (lizaLines.length * lineH) + 4;
+        const leadMetricsH = leadMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
+        const lagMetricsH = lagMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
+        const metricsH = 7 + 5 + leadMetricsH + 3 + 5 + lagMetricsH;
 
-        // Metrics section height (stacked vertically: lead then lag) — measure actual wrapped lines
-        const metricTextW = textW - 8;
-        let leadMetricsH = 5;
-        for (const m of actions.leadMetrics) {
-          const ml = doc.splitTextToSize(`- ${m}`, metricTextW);
-          leadMetricsH += ml.length * metricLineH + 0.5;
-        }
-        let lagMetricsH = 5;
-        for (const m of actions.lagMetrics) {
-          const ml = doc.splitTextToSize(`- ${m}`, metricTextW);
-          lagMetricsH += ml.length * metricLineH + 0.5;
-        }
-        const metricsH = 8 + leadMetricsH + 4 + lagMetricsH + 4;
-
-        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + metricsH + 6;
+        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 6 + metricsH + 8;
 
         checkNewPage(blockH + 12);
 
