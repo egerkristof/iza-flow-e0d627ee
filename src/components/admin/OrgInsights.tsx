@@ -859,7 +859,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         y += 8;
 
         setFont(8.5, "bold", [20, 80, 160]);
-        doc.text("→  LIZA OS handles this:", margin + 12, y);
+        doc.text("LIZA OS handles this:", margin + 12, y);
         y += 4.5;
 
         setFont(8.5, "normal", [40, 60, 100]);
