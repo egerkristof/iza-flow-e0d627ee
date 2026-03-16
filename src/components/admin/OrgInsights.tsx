@@ -811,7 +811,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       doc.setFillColor(20, 80, 160);
       doc.roundedRect(margin, y, contentWidth, lizaHeaderH, 3, 3, "F");
       setFont(13, "bold", [255, 255, 255]);
-      doc.text("LIZA OS — How We Make This Structural", margin + 10, y + 12);
+      doc.text("LIZA OS -- How We Make This Structural", margin + 10, y + 12);
       y += lizaHeaderH + 6;
 
       writeWrapped(
