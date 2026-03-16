@@ -815,7 +815,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       y += lizaHeaderH + 6;
 
       writeWrapped(
-        "The roadmap above gives you concrete actions — no tools required. " +
+        "The roadmap above gives you concrete actions -- no tools required. " +
         "But the hardest part isn't starting. It's sustaining change across projects, people, and priorities.",
         9, "normal", [50, 50, 50]
       );
