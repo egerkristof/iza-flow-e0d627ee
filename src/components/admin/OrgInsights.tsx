@@ -282,51 +282,75 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // ── Score Dashboard (visual, scannable) ──
     const overallColor = getScoreColor(org.avgScore);
 
-    // Score + archetype in a visual block
+    // ── YOUR SCORE block (left side) ──
     const dashY = y;
-    setFont(48, "bold", overallColor);
-    doc.text(`${org.avgScore}`, margin + 2, dashY + 16);
-    setFont(14, "normal", [140, 140, 140]);
-    doc.text("/ 100", margin + 38, dashY + 16);
+    setFont(9, "bold", [140, 140, 140]);
+    doc.text("YOUR TEAM'S SCORE", margin + 2, dashY);
 
-    // Dominant archetype
+    setFont(48, "bold", overallColor);
+    doc.text(`${org.avgScore}`, margin + 2, dashY + 18);
+    setFont(14, "normal", [140, 140, 140]);
+    doc.text("/ 100", margin + 38, dashY + 18);
+
+    // Archetype with inline explanation
     const dominantArchetype = Object.entries(org.archetypeDistribution)
       .sort(([, a], [, b]) => b - a)[0];
+    const archetypeName = dominantArchetype ? dominantArchetype[0] : "Mixed";
+
+    const ARCHETYPE_ONELINER: Record<string, string> = {
+      "Flying Solo": "AI is used individually, but nothing connects. Every session starts from zero.",
+      "Scattered Effort": "AI is active but knowledge resets weekly. Individual skill isn't becoming team capability.",
+      "Emerging System": "Real pieces are in place. The missing link is the feedback loop that compounds learning.",
+      "Compound AI Team": "Your team's best thinking is everyone's starting point and evolves with every project.",
+    };
+
     setFont(12, "bold", [30, 30, 30]);
-    doc.text(dominantArchetype ? dominantArchetype[0] : "Mixed", margin + 2, dashY + 24);
+    doc.text(`"${archetypeName}"`, margin + 2, dashY + 26);
+    setFont(8.5, "normal", [100, 100, 100]);
+    const archDesc = ARCHETYPE_ONELINER[archetypeName] || "";
+    if (archDesc) {
+      const archDescLines = doc.splitTextToSize(archDesc, 80);
+      doc.text(archDescLines, margin + 2, dashY + 31);
+    }
 
-    // Benchmark comparison (right side)
-    const benchX = margin + 90;
+    // ── WHERE YOU SIT (right side — contextual benchmark) ──
+    const benchX = margin + 95;
     setFont(9, "bold", [140, 140, 140]);
-    doc.text("BENCHMARK COMPARISON", benchX, dashY + 2);
+    doc.text("WHERE YOU SIT", benchX, dashY);
 
-    const benchmarks = [
-      { label: "Industry average", value: 35, color: [140, 140, 140] as [number, number, number] },
-      { label: "Your organisation", value: org.avgScore, color: overallColor },
-      { label: "Structured teams", value: 55, color: [22, 163, 74] as [number, number, number] },
+    // Visual benchmark scale with labels
+    const benchItems = [
+      { label: "Industry average (most teams)", value: 35, color: [160, 160, 160] as [number, number, number] },
+      { label: "Your team", value: org.avgScore, color: overallColor },
+      { label: "Structured teams (top 10%)", value: 55, color: [22, 163, 74] as [number, number, number] },
     ];
 
-    benchmarks.forEach((b, i) => {
-      const bY = dashY + 8 + i * 7;
-      setFont(9, "normal", [80, 80, 80]);
+    benchItems.forEach((b, i) => {
+      const bY = dashY + 7 + i * 9;
+      setFont(8.5, "normal", [80, 80, 80]);
       doc.text(b.label, benchX, bY);
-      setFont(9, "bold", b.color);
-      doc.text(`${b.value}`, benchX + 70, bY, { align: "right" });
+      setFont(10, "bold", b.color);
+      doc.text(`${b.value}`, benchX + 75, bY, { align: "right" });
     });
 
-    y = dashY + 32;
+    // Brief benchmark context (right-aligned under the numbers)
+    setFont(7.5, "italic", [150, 150, 150]);
+    const benchContext = doc.splitTextToSize(
+      "Based on 4,500 executives surveyed across 16 countries (ServiceNow 2025 AI Maturity Index). Global average dropped from 44 to 35 year-over-year.",
+      75
+    );
+    doc.text(benchContext, benchX, dashY + 35);
 
-    // Benchmark methodology explanation
-    setFont(7.5, "italic", [130, 130, 130]);
-    const benchNote = doc.splitTextToSize(
-      "Scoring methodology: Each dimension is scored 0-100 based on team responses across 10 scenario-based questions mapping AI execution behaviours to five maturity dimensions. " +
-      "\"Industry average\" (35) is calibrated against ServiceNow's 2025 Enterprise AI Maturity Index, which surveyed 4,500 C-level executives across 16 countries and found the global average dropped from 44 to 35 year-over-year, with fewer than 1% of organisations scoring above 50. " +
-      "\"Structured teams\" (55+) represent organisations that have codified their methodology into repeatable AI workflows, run feedback loops, and maintain cross-team visibility. " +
-      "The overall score is the weighted average of five dimensions measuring how effectively your team's collective knowledge reaches AI-assisted work.",
+    y = dashY + 35 + benchContext.length * 3.2 + 2;
+
+    // Scoring methodology note
+    setFont(7.5, "italic", [140, 140, 140]);
+    const methNote = doc.splitTextToSize(
+      "How we scored this: 10 scenario-based questions across 5 dimensions of AI execution maturity. Each question describes a real team situation and asks how your team currently handles it. Scores are normalised to 0-100 per dimension, then averaged. This measures how effectively your team's collective knowledge reaches AI-assisted work -- not tool adoption, but whether your best thinking shapes every session.",
       contentWidth
     );
-    doc.text(benchNote, margin, y);
-    y += benchNote.length * 3.2 + 4;
+    doc.text(methNote, margin, y);
+    y += methNote.length * 3.2 + 4;
     drawDivider();
 
     // ── Dimension Scorecard (compact visual) ──
