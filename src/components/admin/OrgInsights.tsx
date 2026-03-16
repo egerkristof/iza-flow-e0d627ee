@@ -499,7 +499,6 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // ════════════════════════════════════════════
     // YOUR IMPROVEMENT ROADMAP (consolidated)
     // ════════════════════════════════════════════
-    // ════════════════════════════════════════════
     const weakDimensions = dimEntries
       .filter(([, score]) => score < 67)
       .sort(([, a], [, b]) => a - b); // weakest first
@@ -512,11 +511,14 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
       drawSectionHeader("Your Improvement Roadmap");
 
-      writeWrapped(
-        `Based on your team's scores, ${weakDimensions.length === 1 ? "one dimension needs" : `${weakDimensions.length} dimensions need`} focused attention. ` +
-        `The actions below are sequenced by impact: start with #1 and build from there. Each step is designed to produce visible change within 2–4 weeks.`,
-        9, "normal", [50, 50, 50]
-      );
+      // Score-aware intro framing
+      const introText = org.avgScore <= 35
+        ? `Your team is in the early stages of structured AI execution. The roadmap below focuses on the foundations: making one workflow repeatable, creating visibility, and building a feedback loop. Each dimension is prioritised by impact, with actions you can start this week.`
+        : org.avgScore <= 65
+          ? `Your team has real pieces in place, but knowledge isn't consistently reaching execution. The roadmap below targets the specific dimensions where the gap between "what your team knows" and "what reaches AI sessions" is widest. Start with #1 and build sequentially.`
+          : `Your team is ahead of most. The roadmap below focuses on the remaining dimensions where structured improvement would extend your advantage. These are refinements, not rebuilds.`;
+
+      writeWrapped(introText, 9, "normal", [50, 50, 50]);
       y += 4;
 
       const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string }; mid: { thisWeek: string; thisMonth: string; liza: string } }> = {
