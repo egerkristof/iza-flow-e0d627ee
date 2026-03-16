@@ -570,8 +570,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Review your last three projects. For each, identify one approach or prompt pattern that worked well but never reached the wider team. Write each one down in two sentences: what it is and why it worked. You'll likely find 3-5 learnings that could have saved the team significant time if they'd been shared. This exercise makes the cost of not compounding viscerally real.",
             thisMonth: "Introduce a structured 20-minute after-action review at the close of every significant project. Three questions only: What AI approaches worked? What didn't? What one change should we make to the team's shared reference? Assign one person to implement the agreed change within 48 hours. The 48-hour deadline is critical: without it, insights evaporate. Track the changes made over a quarter. You'll see your shared reference evolving from a static document into living institutional memory.",
             liza: "On LIZA OS, after-action reviews are structured into the Protocol execution flow. Insights captured during Session Debriefs feed directly into your governed context stack, ensuring they automatically reach the next project. No manual transfer, no forgotten learnings.",
-            leadMetrics: ["# of after-action reviews completed per project", "# of reference document updates made within 48 hours of review"],
-            lagMetrics: ["Growth rate of shared reference document (new entries per quarter)", "% of project kick-offs that reference learnings from a prior project"],
+            leadMetrics: ["% of projects completing a formal after-action review", "% of agreed learnings promoted into the shared reference within 48 hours"],
+            lagMetrics: ["% of project kick-offs that reference a prior project's learning", "Quarterly growth of reusable team knowledge that is actually used in delivery"],
           },
         },
         collective_visibility: {
