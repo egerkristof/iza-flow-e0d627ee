@@ -729,13 +729,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(9, "normal", [210, 225, 255]);
     doc.text(ctaDescLines, margin + 12, y + 22);
 
-    // What's included bullets
+    // What's included bullets — constrained to box width
     const bulletY = y + 22 + (ctaDescLines.length * 3.8) + 6;
     setFont(8.5, "normal", [180, 210, 255]);
-    const bullets = [
-      "✓ Results walkthrough    ✓ Implementation guidance    ✓ LIZA OS demo    ✓ 30-day action plan"
-    ];
-    doc.text(bullets[0], margin + 12, bulletY);
+    const bulletText = "✓ Results walkthrough   ✓ Implementation guidance   ✓ LIZA OS demo   ✓ 30-day action plan";
+    const bulletLines = doc.splitTextToSize(bulletText, contentWidth - 24);
+    doc.text(bulletLines, margin + 12, bulletY);
 
     y += ctaBoxH + 8;
 
