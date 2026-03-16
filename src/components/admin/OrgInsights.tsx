@@ -704,7 +704,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
         for (const metric of actions.leadMetrics) {
-          const mLines = doc.splitTextToSize(`- ${metric}`, textW - 4);
+          const mLines = doc.splitTextToSize(`- ${metric}`, metricTextW);
           doc.text(mLines, margin + 18, innerY);
           innerY += mLines.length * metricLineH + 0.5;
         }
