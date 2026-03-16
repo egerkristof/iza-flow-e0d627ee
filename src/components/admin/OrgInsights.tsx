@@ -691,11 +691,11 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
         // Lead indicators
         setFont(8, "bold", [22, 163, 74]);
-        doc.text("▲  Lead indicators — are you doing it?", margin + 14, innerY);
+        doc.text("LEAD INDICATORS - are you doing it?", margin + 14, innerY);
         innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
         for (const metric of actions.leadMetrics) {
-          const mLines = doc.splitTextToSize(`•  ${metric}`, textW - 4);
+          const mLines = doc.splitTextToSize(`- ${metric}`, textW - 4);
           doc.text(mLines, margin + 18, innerY);
           innerY += mLines.length * metricLineH + 0.5;
         }
@@ -704,11 +704,11 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
         // Lag indicators
         setFont(8, "bold", [37, 99, 235]);
-        doc.text("▼  Lag indicators — is it working?", margin + 14, innerY);
+        doc.text("LAG INDICATORS - is it working?", margin + 14, innerY);
         innerY += 5;
         setFont(8, "normal", [50, 50, 50]);
         for (const metric of actions.lagMetrics) {
-          const mLines = doc.splitTextToSize(`•  ${metric}`, textW - 4);
+          const mLines = doc.splitTextToSize(`- ${metric}`, textW - 4);
           doc.text(mLines, margin + 18, innerY);
           innerY += mLines.length * metricLineH + 0.5;
         }
