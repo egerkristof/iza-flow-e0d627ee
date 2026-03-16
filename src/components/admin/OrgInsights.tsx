@@ -700,16 +700,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         setFont(8, "italic", [100, 80, 40]);
         const cascadeLines = actions.cascade ? doc.splitTextToSize("Cascade effect: " + actions.cascade, textW) : [];
 
+        const changeActivityLines = actions.changeActivities.map((a) => doc.splitTextToSize(`- ${a}`, metricsSectionWidth));
         const leadMetricLines = actions.leadMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
         const lagMetricLines = actions.lagMetrics.map((metric) => doc.splitTextToSize(`- ${metric}`, metricsSectionWidth));
 
         const lizaBoxH = 6 + (lizaLines.length * lineH) + 4;
         const cascadeH = cascadeLines.length > 0 ? cascadeLines.length * 3.6 + 4 : 0;
+        const changeActivitiesH = 5 + changeActivityLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0) + 3;
         const leadMetricsH = leadMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
         const lagMetricsH = lagMetricLines.reduce((sum, lines) => sum + lines.length * metricLineH + 0.5, 0);
         const metricsH = 7 + 5 + leadMetricsH + 3 + 5 + lagMetricsH;
 
-        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + cascadeH + metricsH + 8;
+        const blockH = 10 + 6 + 5 + (weekLines.length * lineH) + 8 + 5 + (monthLines.length * lineH) + 8 + lizaBoxH + 4 + cascadeH + changeActivitiesH + metricsH + 8;
 
         checkNewPage(blockH + 12);
 
