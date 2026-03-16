@@ -322,7 +322,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     const benchItems = [
       { label: "Industry average (most teams)", value: 35, color: [160, 160, 160] as [number, number, number] },
       { label: "Your team", value: org.avgScore, color: overallColor },
-      { label: "Structured teams (top 10%)", value: 55, color: [22, 163, 74] as [number, number, number] },
+      { label: "Structured teams (top 10%)", value: 55, color: [37, 99, 235] as [number, number, number] },
+      { label: "Top-tier teams (top 1%)", value: 75, color: [22, 163, 74] as [number, number, number] },
     ];
 
     benchItems.forEach((b, i) => {
