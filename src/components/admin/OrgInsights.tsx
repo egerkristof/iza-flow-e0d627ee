@@ -576,7 +576,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       });
       y += roiItems.length * 7 + 12;
 
-      const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string; cascade: string; leadMetrics: string[]; lagMetrics: string[] }; mid: { thisWeek: string; thisMonth: string; liza: string; cascade: string; leadMetrics: string[]; lagMetrics: string[] } }> = {
+      const DIMENSION_ACTIONS: Record<string, { low: { thisWeek: string; thisMonth: string; liza: string; cascade: string; changeActivities: string[]; leadMetrics: string[]; lagMetrics: string[] }; mid: { thisWeek: string; thisMonth: string; liza: string; cascade: string; changeActivities: string[]; leadMetrics: string[]; lagMetrics: string[] } }> = {
         standard_internalization: {
           low: {
             thisWeek: "Pick your single most-repeated task type. Gather your two strongest operators for 60 minutes. Have them walk through their best recent output and reverse-engineer the pattern: what structure did they use, what quality criteria did they check, what context did they load before prompting? Write this as a one-page reference document. This isn't about perfection. It's about making the implicit explicit. The goal is a starting point that prevents the next person from beginning with a blank prompt.",
