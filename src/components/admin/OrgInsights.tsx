@@ -737,7 +737,6 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // What's included bullets — constrained to box width
     const bulletY = y + 22 + (ctaDescLines.length * 3.8) + 6;
     setFont(8.5, "normal", [180, 210, 255]);
-    const bulletText = "✓ Results walkthrough   ✓ Implementation guidance   ✓ LIZA OS demo   ✓ 30-day action plan";
     const bulletLines = doc.splitTextToSize(bulletText, contentWidth - 24);
     doc.text(bulletLines, margin + 12, bulletY);
 
