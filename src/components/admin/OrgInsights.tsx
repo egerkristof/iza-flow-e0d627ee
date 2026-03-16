@@ -602,8 +602,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
             thisWeek: "Review your last quarter: identify one workflow improvement or better approach your team discovered but never rolled out to everyone. Trace the root cause: was it awareness (nobody communicated it), priority (nobody had time to formalise it), or mechanism (no way to integrate it into existing workflows)? The root cause determines the fix. Most teams assume the problem is awareness when it's actually mechanism.",
             thisMonth: "Shorten your adoption cycle with a formal process: when someone identifies a better approach, set a one-week deadline for validation and a two-week deadline for team-wide rollout if confirmed. Assign an owner for each validation. Track cycle time from 'someone discovered this' to 'the whole team benefits'. Your goal: under three weeks. Currently, most mid-maturity teams take 6-8 weeks or never complete the cycle at all.",
             liza: "On LIZA OS, validated improvements are promoted directly into your context stack and automatically reach every future session. Adoption isn't a communication problem anymore. It's a one-click operation that propagates instantly across the entire team.",
-            leadMetrics: ["# of improvement candidates with assigned owner and validation deadline", "Whether adoption cycle time is being tracked (yes/no)"],
-            lagMetrics: ["Average adoption cycle time in weeks (trending down)", "# of discovered improvements per quarter that were never rolled out (trending toward zero)"],
+            leadMetrics: ["# of improvement candidates with an owner, validation date, and rollout date", "% of approved improvements pushed into the team's working method within 14 days"],
+            lagMetrics: ["Average adoption cycle time from discovery to team-wide use", "# of proven improvements still stuck in chat history instead of the team standard"],
           },
         },
       };
