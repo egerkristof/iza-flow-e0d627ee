@@ -889,7 +889,7 @@ export default function AdminPage() {
                   </Card>
 
                   {/* Segmentation Breakdown */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <SegmentCard title="By Role" segments={aggregate.roleSegments} />
                     <SegmentCard title="By Seniority" segments={aggregate.roleTierSegments} />
                     <SegmentCard title="By Team Size" segments={aggregate.teamSizeSegments} />
@@ -1051,7 +1051,7 @@ function SegmentCard({ title, segments }: { title: string; segments: Record<stri
         {entries.map(([label, { count, avg }]) => (
           <div key={label} className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="text-foreground truncate">{label}</span>
+              <span className="text-foreground truncate max-w-[180px]" title={label}>{label}</span>
               <span className="text-muted-foreground text-xs shrink-0">n={count}</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
