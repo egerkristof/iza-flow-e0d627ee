@@ -109,6 +109,24 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         if (avg > highest.score) highest = { key, label, score: avg };
       }
 
+      // Role tier spread
+      const tierGroups: Record<string, number[]> = {};
+      for (const r of items) {
+        const tier = r.role_tier || "Unknown";
+        if (!tierGroups[tier]) tierGroups[tier] = [];
+        tierGroups[tier].push(r.overall_score);
+      }
+      const roleTierSpread = Object.entries(tierGroups)
+        .map(([tier, scores]) => ({
+          tier,
+          avgScore: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
+          count: scores.length,
+        }))
+        .sort((a, b) => b.avgScore - a.avgScore);
+
+      const allScores = items.map(r => r.overall_score);
+      const scoreSpread = Math.max(...allScores) - Math.min(...allScores);
+
       orgList.push({
         domain,
         count: items.length,
@@ -118,6 +136,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         avgDimensions,
         lowestDimension: lowest,
         highestDimension: highest,
+        roleTierSpread,
+        scoreSpread,
       });
     }
 
