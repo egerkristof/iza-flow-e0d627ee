@@ -100,6 +100,7 @@ const App = () => (
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/sales" element={<ConsultingDeck />} />
+            <Route path="/linkedin-card" element={<LinkedInImageCard />} />
 
             {/* App */}
             <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
