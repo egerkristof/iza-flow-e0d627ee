@@ -1115,10 +1115,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         <Building2 className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-foreground break-all">{org.domain}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-semibold text-foreground break-all">{org.results[0]?.company_name || org.domain}</p>
+                          {org.results[0]?.industry_refined && (
+                            <Badge variant="secondary" className="text-[10px] h-4">{org.results[0].industry_refined}</Badge>
+                          )}
+                        </div>
                         <div className="flex items-center gap-2 mt-0.5">
                           <Users className="h-3 w-3 text-muted-foreground" />
                           <span className="text-xs text-muted-foreground">{org.count} people</span>
+                          {org.scoreSpread > 15 && (
+                            <span className="text-[10px] text-amber-600 font-medium">· {org.scoreSpread}pt spread</span>
+                          )}
                         </div>
                       </div>
                     </div>
