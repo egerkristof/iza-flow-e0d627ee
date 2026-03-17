@@ -1051,7 +1051,7 @@ function SegmentCard({ title, segments }: { title: string; segments: Record<stri
         {entries.map(([label, { count, avg }]) => (
           <div key={label} className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="text-foreground truncate">{label}</span>
+              <span className="text-foreground truncate max-w-[180px]" title={label}>{label}</span>
               <span className="text-muted-foreground text-xs shrink-0">n={count}</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
