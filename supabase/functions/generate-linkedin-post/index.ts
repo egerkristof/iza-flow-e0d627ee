@@ -116,7 +116,7 @@ serve(async (req) => {
       seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
     }
 
-    // Role segmentation
+    // Role segmentation (by specific role)
     const roleSegments: Record<string, { count: number; avgScore: number; scores: number[]; dimScores: Record<string, number[]> }> = {};
     for (const r of results) {
       const role = r.respondent_role?.toLowerCase()?.trim() || "unknown";
@@ -132,7 +132,19 @@ serve(async (req) => {
       seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
     }
 
-    // Industry segmentation
+    // Role TIER segmentation (C-Level, VP/Director, Manager, IC)
+    const roleTierSegments: Record<string, { count: number; avgScore: number; scores: number[] }> = {};
+    for (const r of results) {
+      const tier = (r as any).role_tier || "Unknown";
+      if (!roleTierSegments[tier]) roleTierSegments[tier] = { count: 0, avgScore: 0, scores: [] };
+      roleTierSegments[tier].count++;
+      roleTierSegments[tier].scores.push(r.overall_score);
+    }
+    for (const seg of Object.values(roleTierSegments)) {
+      seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
+    }
+
+    // Industry segmentation (broad)
     const industrySegments: Record<string, { count: number; avgScore: number; scores: number[] }> = {};
     for (const r of results) {
       const ind = r.industry || "unknown";
@@ -143,6 +155,37 @@ serve(async (req) => {
     for (const seg of Object.values(industrySegments)) {
       seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
     }
+
+    // Industry REFINED segmentation (Product/SaaS, IT Services, etc.)
+    const industryRefinedSegments: Record<string, { count: number; avgScore: number; scores: number[] }> = {};
+    for (const r of results) {
+      const ind = (r as any).industry_refined || "unknown";
+      if (!industryRefinedSegments[ind]) industryRefinedSegments[ind] = { count: 0, avgScore: 0, scores: [] };
+      industryRefinedSegments[ind].count++;
+      industryRefinedSegments[ind].scores.push(r.overall_score);
+    }
+    for (const seg of Object.values(industryRefinedSegments)) {
+      seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
+    }
+
+    // Intra-org spread (for orgs with 2+ respondents)
+    const orgGroups: Record<string, number[]> = {};
+    for (const r of results) {
+      if (!r.email) continue;
+      const domain = r.email.split("@")[1]?.toLowerCase();
+      if (!domain) continue;
+      if (!orgGroups[domain]) orgGroups[domain] = [];
+      orgGroups[domain].push(r.overall_score);
+    }
+    const orgSpreads = Object.entries(orgGroups)
+      .filter(([, scores]) => scores.length >= 2)
+      .map(([domain, scores]) => ({
+        domain,
+        count: scores.length,
+        spread: Math.max(...scores) - Math.min(...scores),
+        avg: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
+      }))
+      .sort((a, b) => b.spread - a.spread);
 
     const DIM_LABELS: Record<string, string> = {
       standard_internalization: "Standards Adoption",
