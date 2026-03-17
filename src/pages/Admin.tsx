@@ -325,6 +325,7 @@ export default function AdminPage() {
       confidenceTier: confidence.label,
       confidence,
       roleSegments,
+      roleTierSegments,
       teamSizeSegments,
       industrySegments,
     };
