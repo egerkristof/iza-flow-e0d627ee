@@ -214,7 +214,7 @@ ${Object.entries(archCounts).map(([k, v]) => `- ${k}: ${v} (${Math.round(v / res
 Team size segments:
 ${Object.entries(teamSizeSegments).filter(([k]) => k !== "unknown").map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`).join("\n") || "No team size data yet"}
 
-Role segments (top roles):
+Role segments (specific titles, top roles):
 ${Object.entries(roleSegments)
   .filter(([k]) => k !== "unknown")
   .sort((a, b) => b[1].count - a[1].count)
@@ -222,13 +222,34 @@ ${Object.entries(roleSegments)
   .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
   .join("\n") || "No role data yet"}
 
-Industry segments:
+SENIORITY TIER segments (aggregated by leadership level):
+${Object.entries(roleTierSegments)
+  .filter(([k]) => k !== "Unknown")
+  .sort((a, b) => b[1].avgScore - a[1].avgScore)
+  .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
+  .join("\n") || "No tier data yet"}
+
+Industry segments (broad):
 ${Object.entries(industrySegments)
   .filter(([k]) => k !== "unknown")
   .sort((a, b) => b[1].count - a[1].count)
   .slice(0, 8)
   .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
   .join("\n") || "No industry data yet"}
+
+Industry segments (refined sub-categories):
+${Object.entries(industryRefinedSegments)
+  .filter(([k]) => k !== "unknown")
+  .sort((a, b) => b[1].count - a[1].count)
+  .slice(0, 10)
+  .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
+  .join("\n") || "No refined industry data yet"}
+
+INTRA-ORGANISATION SPREAD (companies with 2+ respondents):
+${orgSpreads.length > 0
+  ? orgSpreads.map(o => `- ${o.domain}: ${o.count} respondents, avg=${o.avg}, spread=${o.spread} points`).join("\n")
+  : "Not enough multi-respondent orgs yet"}
+${orgSpreads.length > 0 ? `\nKey pattern: Within the same company, scores vary by up to ${Math.max(...orgSpreads.map(o => o.spread))} points. This suggests leaders and frontline operators experience AI maturity very differently.` : ""}
 `;
 
     const formatInstructions = FORMAT_INSTRUCTIONS[format] || FORMAT_INSTRUCTIONS.data_drop;
