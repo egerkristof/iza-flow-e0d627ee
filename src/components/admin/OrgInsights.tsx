@@ -15,6 +15,12 @@ interface DiagnosticResult {
   scores: Record<string, number>;
   answers: Record<string, number>;
   created_at: string;
+  respondent_role?: string | null;
+  role_tier?: string | null;
+  company_name?: string | null;
+  industry?: string | null;
+  industry_refined?: string | null;
+  team_size?: string | null;
 }
 
 interface OrgData {
@@ -26,6 +32,8 @@ interface OrgData {
   avgDimensions: Record<string, number>;
   lowestDimension: { key: string; label: string; score: number };
   highestDimension: { key: string; label: string; score: number };
+  roleTierSpread: { tier: string; avgScore: number; count: number }[];
+  scoreSpread: number;
 }
 
 const SHORT_LABELS: Record<string, string> = {

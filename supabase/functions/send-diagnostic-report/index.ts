@@ -79,12 +79,24 @@ serve(async (req) => {
 
     let companyName: string | null = null;
     let industry: string | null = null;
+    let industryRefined: string | null = null;
 
     if (!isPersonalEmail && emailDomain) {
       try {
-        const enrichPrompt = `Given the email domain "${emailDomain}", identify the company name and industry.
-Return ONLY valid JSON: {"company_name": "...", "industry": "..."}
-If you cannot determine, use null for that field. Industry should be a short label like "Technology", "Consulting", "Financial Services", "Healthcare", "Manufacturing", "Education", "Retail", "Energy", "Media", "Government", "Legal", "Real Estate", "Telecommunications", "Automotive", "Logistics", "Pharma", "Insurance", "Hospitality", "Non-profit", "Other".`;
+        const enrichPrompt = `Given the email domain "${emailDomain}", identify the company name and classify it into TWO industry levels.
+
+Return ONLY valid JSON: {"company_name": "...", "industry": "...", "industry_refined": "..."}
+
+"industry" should be a broad label: "Technology", "Consulting", "Financial Services", "Healthcare", "Manufacturing", "Education", "Retail", "Energy", "Media", "Government", "Legal", "Real Estate", "Telecommunications", "Automotive", "Logistics", "Pharma", "Insurance", "Hospitality", "Non-profit", "Other".
+
+"industry_refined" should be a MORE SPECIFIC sub-category that distinguishes between similar companies. Examples:
+- Instead of just "Technology": use "Product / SaaS", "IT Services / Outsourcing", "Digital Agency", "AI / ML", "Developer Tools", "Enterprise Software", "Hardware / IoT"
+- Instead of just "Consulting": use "Management Consulting", "IT Consulting", "Strategy Consulting", "HR Consulting"
+- Instead of just "Financial Services": use "Banking", "Insurance", "FinTech", "Wealth Management"
+
+Be specific. If a company builds and sells software products, they are "Product / SaaS", not just "Technology". If they do IT projects for clients, they are "IT Services / Outsourcing" or "IT Consulting".
+
+If you cannot determine, use null for that field.`;
 
         const enrichResp = await fetch(
           "https://ai.gateway.lovable.dev/v1/chat/completions",
@@ -110,12 +122,28 @@ If you cannot determine, use null for that field. Industry should be a short lab
             const parsed = JSON.parse(raw);
             companyName = parsed.company_name || null;
             industry = parsed.industry || null;
+            industryRefined = parsed.industry_refined || null;
           } catch {
             console.error("Failed to parse enrichment:", raw);
           }
         }
       } catch (e) {
         console.error("Domain enrichment failed:", e);
+      }
+    }
+
+    // ── Step 1a: Auto-derive role tier from respondent_role ──
+    let roleTier: string | null = null;
+    if (respondent_role) {
+      const r = respondent_role.toLowerCase();
+      if (/\b(ceo|cto|cro|cfo|coo|cio|cmo|chief|founder|co-founder|cofounder|owner|partner|managing director)\b/.test(r)) {
+        roleTier = "C-Level";
+      } else if (/\b(vp|vice president|director|head of|svp|evp)\b/.test(r)) {
+        roleTier = "VP / Director";
+      } else if (/\b(manager|team lead|lead|supervisor|principal)\b/.test(r)) {
+        roleTier = "Manager / Lead";
+      } else {
+        roleTier = "Individual Contributor";
       }
     }
 
@@ -133,6 +161,8 @@ If you cannot determine, use null for that field. Industry should be a short lab
       team_size: team_size || null,
       company_name: companyName,
       industry,
+      industry_refined: industryRefined,
+      role_tier: roleTier,
     };
 
     let resolvedDiagnosticRecordId: string | null = diagnostic_result_id || null;
