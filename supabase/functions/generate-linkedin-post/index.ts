@@ -65,7 +65,7 @@ serve(async (req) => {
 
     const { data: allResults, error: fetchErr } = await supabaseAdmin
       .from("diagnostic_results")
-      .select("overall_score, scores, archetype, respondent_role, team_size, company_name, industry, email");
+      .select("overall_score, scores, archetype, respondent_role, team_size, company_name, industry, industry_refined, role_tier, email");
 
     if (fetchErr) throw new Error(`Failed to fetch results: ${fetchErr.message}`);
 
@@ -116,7 +116,7 @@ serve(async (req) => {
       seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
     }
 
-    // Role segmentation
+    // Role segmentation (by specific role)
     const roleSegments: Record<string, { count: number; avgScore: number; scores: number[]; dimScores: Record<string, number[]> }> = {};
     for (const r of results) {
       const role = r.respondent_role?.toLowerCase()?.trim() || "unknown";
@@ -132,7 +132,19 @@ serve(async (req) => {
       seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
     }
 
-    // Industry segmentation
+    // Role TIER segmentation (C-Level, VP/Director, Manager, IC)
+    const roleTierSegments: Record<string, { count: number; avgScore: number; scores: number[] }> = {};
+    for (const r of results) {
+      const tier = (r as any).role_tier || "Unknown";
+      if (!roleTierSegments[tier]) roleTierSegments[tier] = { count: 0, avgScore: 0, scores: [] };
+      roleTierSegments[tier].count++;
+      roleTierSegments[tier].scores.push(r.overall_score);
+    }
+    for (const seg of Object.values(roleTierSegments)) {
+      seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
+    }
+
+    // Industry segmentation (broad)
     const industrySegments: Record<string, { count: number; avgScore: number; scores: number[] }> = {};
     for (const r of results) {
       const ind = r.industry || "unknown";
@@ -143,6 +155,37 @@ serve(async (req) => {
     for (const seg of Object.values(industrySegments)) {
       seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
     }
+
+    // Industry REFINED segmentation (Product/SaaS, IT Services, etc.)
+    const industryRefinedSegments: Record<string, { count: number; avgScore: number; scores: number[] }> = {};
+    for (const r of results) {
+      const ind = (r as any).industry_refined || "unknown";
+      if (!industryRefinedSegments[ind]) industryRefinedSegments[ind] = { count: 0, avgScore: 0, scores: [] };
+      industryRefinedSegments[ind].count++;
+      industryRefinedSegments[ind].scores.push(r.overall_score);
+    }
+    for (const seg of Object.values(industryRefinedSegments)) {
+      seg.avgScore = Math.round(seg.scores.reduce((a, b) => a + b, 0) / seg.scores.length);
+    }
+
+    // Intra-org spread (for orgs with 2+ respondents)
+    const orgGroups: Record<string, number[]> = {};
+    for (const r of results) {
+      if (!r.email) continue;
+      const domain = r.email.split("@")[1]?.toLowerCase();
+      if (!domain) continue;
+      if (!orgGroups[domain]) orgGroups[domain] = [];
+      orgGroups[domain].push(r.overall_score);
+    }
+    const orgSpreads = Object.entries(orgGroups)
+      .filter(([, scores]) => scores.length >= 2)
+      .map(([domain, scores]) => ({
+        domain,
+        count: scores.length,
+        spread: Math.max(...scores) - Math.min(...scores),
+        avg: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
+      }))
+      .sort((a, b) => b.spread - a.spread);
 
     const DIM_LABELS: Record<string, string> = {
       standard_internalization: "Standards Adoption",
@@ -171,7 +214,7 @@ ${Object.entries(archCounts).map(([k, v]) => `- ${k}: ${v} (${Math.round(v / res
 Team size segments:
 ${Object.entries(teamSizeSegments).filter(([k]) => k !== "unknown").map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`).join("\n") || "No team size data yet"}
 
-Role segments (top roles):
+Role segments (specific titles, top roles):
 ${Object.entries(roleSegments)
   .filter(([k]) => k !== "unknown")
   .sort((a, b) => b[1].count - a[1].count)
@@ -179,13 +222,34 @@ ${Object.entries(roleSegments)
   .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
   .join("\n") || "No role data yet"}
 
-Industry segments:
+SENIORITY TIER segments (aggregated by leadership level):
+${Object.entries(roleTierSegments)
+  .filter(([k]) => k !== "Unknown")
+  .sort((a, b) => b[1].avgScore - a[1].avgScore)
+  .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
+  .join("\n") || "No tier data yet"}
+
+Industry segments (broad):
 ${Object.entries(industrySegments)
   .filter(([k]) => k !== "unknown")
   .sort((a, b) => b[1].count - a[1].count)
   .slice(0, 8)
   .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
   .join("\n") || "No industry data yet"}
+
+Industry segments (refined sub-categories):
+${Object.entries(industryRefinedSegments)
+  .filter(([k]) => k !== "unknown")
+  .sort((a, b) => b[1].count - a[1].count)
+  .slice(0, 10)
+  .map(([k, v]) => `- ${k}: n=${v.count}, avg score=${v.avgScore}`)
+  .join("\n") || "No refined industry data yet"}
+
+INTRA-ORGANISATION SPREAD (companies with 2+ respondents):
+${orgSpreads.length > 0
+  ? orgSpreads.map(o => `- ${o.domain}: ${o.count} respondents, avg=${o.avg}, spread=${o.spread} points`).join("\n")
+  : "Not enough multi-respondent orgs yet"}
+${orgSpreads.length > 0 ? `\nKey pattern: Within the same company, scores vary by up to ${Math.max(...orgSpreads.map(o => o.spread))} points. This suggests leaders and frontline operators experience AI maturity very differently.` : ""}
 `;
 
     const formatInstructions = FORMAT_INSTRUCTIONS[format] || FORMAT_INSTRUCTIONS.data_drop;
@@ -341,6 +405,19 @@ Return the post as plain text, ready to copy-paste into LinkedIn. No markdown fo
               .slice(0, 5)
               .map(([k, v]) => [k, { count: v.count, avg: v.avgScore }])
           ),
+          roleTierSegments: Object.fromEntries(
+            Object.entries(roleTierSegments)
+              .filter(([k]) => k !== "Unknown")
+              .map(([k, v]) => [k, { count: v.count, avg: v.avgScore }])
+          ),
+          industryRefinedSegments: Object.fromEntries(
+            Object.entries(industryRefinedSegments)
+              .filter(([k]) => k !== "unknown")
+              .sort((a, b) => b[1].count - a[1].count)
+              .slice(0, 8)
+              .map(([k, v]) => [k, { count: v.count, avg: v.avgScore }])
+          ),
+          orgSpreads: orgSpreads.slice(0, 5).map(o => ({ domain: o.domain, count: o.count, spread: o.spread, avg: o.avg })),
         },
         char_count: cleanPost.length,
       }),

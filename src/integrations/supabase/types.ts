@@ -456,8 +456,10 @@ export type Database = {
           email_action_plan: Json | null
           id: string
           industry: string | null
+          industry_refined: string | null
           overall_score: number
           respondent_role: string | null
+          role_tier: string | null
           scores: Json
           session_id: string | null
           team_size: string | null
@@ -471,8 +473,10 @@ export type Database = {
           email_action_plan?: Json | null
           id?: string
           industry?: string | null
+          industry_refined?: string | null
           overall_score: number
           respondent_role?: string | null
+          role_tier?: string | null
           scores?: Json
           session_id?: string | null
           team_size?: string | null
@@ -486,8 +490,10 @@ export type Database = {
           email_action_plan?: Json | null
           id?: string
           industry?: string | null
+          industry_refined?: string | null
           overall_score?: number
           respondent_role?: string | null
+          role_tier?: string | null
           scores?: Json
           session_id?: string | null
           team_size?: string | null

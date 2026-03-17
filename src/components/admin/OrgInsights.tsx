@@ -15,6 +15,12 @@ interface DiagnosticResult {
   scores: Record<string, number>;
   answers: Record<string, number>;
   created_at: string;
+  respondent_role?: string | null;
+  role_tier?: string | null;
+  company_name?: string | null;
+  industry?: string | null;
+  industry_refined?: string | null;
+  team_size?: string | null;
 }
 
 interface OrgData {
@@ -26,6 +32,8 @@ interface OrgData {
   avgDimensions: Record<string, number>;
   lowestDimension: { key: string; label: string; score: number };
   highestDimension: { key: string; label: string; score: number };
+  roleTierSpread: { tier: string; avgScore: number; count: number }[];
+  scoreSpread: number;
 }
 
 const SHORT_LABELS: Record<string, string> = {
@@ -101,6 +109,24 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         if (avg > highest.score) highest = { key, label, score: avg };
       }
 
+      // Role tier spread
+      const tierGroups: Record<string, number[]> = {};
+      for (const r of items) {
+        const tier = r.role_tier || "Unknown";
+        if (!tierGroups[tier]) tierGroups[tier] = [];
+        tierGroups[tier].push(r.overall_score);
+      }
+      const roleTierSpread = Object.entries(tierGroups)
+        .map(([tier, scores]) => ({
+          tier,
+          avgScore: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
+          count: scores.length,
+        }))
+        .sort((a, b) => b.avgScore - a.avgScore);
+
+      const allScores = items.map(r => r.overall_score);
+      const scoreSpread = Math.max(...allScores) - Math.min(...allScores);
+
       orgList.push({
         domain,
         count: items.length,
@@ -110,6 +136,8 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         avgDimensions,
         lowestDimension: lowest,
         highestDimension: highest,
+        roleTierSpread,
+        scoreSpread,
       });
     }
 
@@ -526,6 +554,36 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(9, "normal", [60, 60, 60]);
     doc.text(archetypeEntries.map(([arch, count]) => `${arch} (${count})`).join("  |  "), margin + 42, y);
     y += 10;
+
+    // Seniority-level score spread
+    if (org.roleTierSpread.length > 1) {
+      checkNewPage(org.roleTierSpread.length * 7 + 16);
+      setFont(9, "bold", [80, 80, 80]);
+      doc.text("Score by seniority level:", margin, y);
+      y += 6;
+
+      for (const { tier, avgScore: tAvg, count: tCount } of org.roleTierSpread) {
+        const tColor = getScoreColor(tAvg);
+        setFont(8.5, "normal", [60, 60, 60]);
+        doc.text(`${tier} (${tCount})`, margin + 4, y);
+        setFont(9, "bold", tColor);
+        doc.text(`${tAvg}`, margin + 60, y);
+        y += 5.5;
+      }
+
+      const maxTier = org.roleTierSpread[0];
+      const minTier = org.roleTierSpread[org.roleTierSpread.length - 1];
+      const tierGap = maxTier.avgScore - minTier.avgScore;
+      if (tierGap > 10) {
+        y += 2;
+        setFont(8.5, "italic", [180, 100, 10]);
+        const gapText = `${tierGap}-point perception gap: ${maxTier.tier} (${maxTier.avgScore}) vs ${minTier.tier} (${minTier.avgScore}). Leaders often overestimate team AI maturity because their own experience is stronger.`;
+        const gapLines = doc.splitTextToSize(gapText, contentWidth - 8);
+        doc.text(gapLines, margin + 4, y);
+        y += gapLines.length * 3.8 + 2;
+      }
+      y += 4;
+    }
 
     // ════════════════════════════════════════════
     // YOUR IMPROVEMENT ROADMAP (consolidated)
@@ -1057,10 +1115,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         <Building2 className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-foreground break-all">{org.domain}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-semibold text-foreground break-all">{org.results[0]?.company_name || org.domain}</p>
+                          {org.results[0]?.industry_refined && (
+                            <Badge variant="secondary" className="text-[10px] h-4">{org.results[0].industry_refined}</Badge>
+                          )}
+                        </div>
                         <div className="flex items-center gap-2 mt-0.5">
                           <Users className="h-3 w-3 text-muted-foreground" />
                           <span className="text-xs text-muted-foreground">{org.count} people</span>
+                          {org.scoreSpread > 15 && (
+                            <span className="text-[10px] text-amber-600 font-medium">· {org.scoreSpread}pt spread</span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1145,6 +1211,33 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                           <p className="text-xs text-muted-foreground mt-0.5">Score: {org.highestDimension.score}/100</p>
                         </div>
                       </div>
+
+                      {/* Role tier spread */}
+                      {org.roleTierSpread.length > 1 && (
+                        <div>
+                          <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">Score by Seniority Level</h4>
+                          <div className="space-y-1.5">
+                            {org.roleTierSpread.map(({ tier, avgScore, count }) => (
+                              <div key={tier} className="flex items-center gap-2">
+                                <span className="text-[11px] text-muted-foreground w-28 shrink-0 text-right">{tier}</span>
+                                <div className="flex-1 h-2.5 rounded-full bg-secondary overflow-hidden">
+                                  <div className="h-full rounded-full transition-all" style={{
+                                    width: `${avgScore}%`,
+                                    backgroundColor: avgScore <= 33 ? "hsl(0 72% 51%)" : avgScore <= 66 ? "hsl(38 92% 50%)" : "hsl(155 72% 36%)"
+                                  }} />
+                                </div>
+                                <span className="text-[11px] font-bold tabular-nums w-8">{avgScore}</span>
+                                <span className="text-[10px] text-muted-foreground">({count})</span>
+                              </div>
+                            ))}
+                          </div>
+                          {org.scoreSpread > 15 && (
+                            <p className="text-[11px] text-amber-600 mt-2 italic">
+                              ⚠ {org.scoreSpread}-point spread: perception gap between seniority levels
+                            </p>
+                          )}
+                        </div>
+                      )}
 
                       {/* Archetype distribution */}
                       <div>
