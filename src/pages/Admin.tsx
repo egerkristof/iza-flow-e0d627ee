@@ -633,7 +633,7 @@ export default function AdminPage() {
                               <TableCell className="text-sm text-muted-foreground">{r.team_size || "–"}</TableCell>
                               <TableCell className="text-sm">
                                 {r.company_name ? (
-                                  <span className="text-foreground">{r.company_name}{r.industry ? <span className="text-muted-foreground text-xs ml-1">({r.industry})</span> : ""}</span>
+                                  <span className="text-foreground">{r.company_name}{(r.industry_refined || r.industry) ? <span className="text-muted-foreground text-xs ml-1">({r.industry_refined || r.industry})</span> : ""}</span>
                                 ) : <span className="text-muted-foreground">–</span>}
                               </TableCell>
                               <TableCell><Badge variant="outline" className="text-xs">{r.archetype}</Badge></TableCell>
