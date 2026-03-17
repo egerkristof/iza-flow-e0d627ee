@@ -43,9 +43,11 @@ interface DiagnosticResult {
   session_id: string | null;
   email_action_plan: { steps: { title: string; manual_how: string; platform_how: string }[] } | null;
   respondent_role: string | null;
+  role_tier: string | null;
   team_size: string | null;
   company_name: string | null;
   industry: string | null;
+  industry_refined: string | null;
 }
 
 interface UserRole {
@@ -308,8 +310,9 @@ export default function AdminPage() {
     };
 
     const roleSegments = buildSegment((r) => r.respondent_role);
+    const roleTierSegments = buildSegment((r) => r.role_tier);
     const teamSizeSegments = buildSegment((r) => r.team_size);
-    const industrySegments = buildSegment((r) => r.industry);
+    const industrySegments = buildSegment((r) => r.industry_refined || r.industry);
 
     return {
       totalSubmissions: filtered.length,
@@ -322,6 +325,7 @@ export default function AdminPage() {
       confidenceTier: confidence.label,
       confidence,
       roleSegments,
+      roleTierSegments,
       teamSizeSegments,
       industrySegments,
     };
@@ -629,7 +633,7 @@ export default function AdminPage() {
                               <TableCell className="text-sm text-muted-foreground">{r.team_size || "–"}</TableCell>
                               <TableCell className="text-sm">
                                 {r.company_name ? (
-                                  <span className="text-foreground">{r.company_name}{r.industry ? <span className="text-muted-foreground text-xs ml-1">({r.industry})</span> : ""}</span>
+                                  <span className="text-foreground">{r.company_name}{(r.industry_refined || r.industry) ? <span className="text-muted-foreground text-xs ml-1">({r.industry_refined || r.industry})</span> : ""}</span>
                                 ) : <span className="text-muted-foreground">–</span>}
                               </TableCell>
                               <TableCell><Badge variant="outline" className="text-xs">{r.archetype}</Badge></TableCell>
@@ -885,8 +889,9 @@ export default function AdminPage() {
                   </Card>
 
                   {/* Segmentation Breakdown */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <SegmentCard title="By Role" segments={aggregate.roleSegments} />
+                    <SegmentCard title="By Seniority" segments={aggregate.roleTierSegments} />
                     <SegmentCard title="By Team Size" segments={aggregate.teamSizeSegments} />
                     <SegmentCard title="By Industry" segments={aggregate.industrySegments} />
                   </div>
