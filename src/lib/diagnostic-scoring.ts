@@ -61,7 +61,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   {
     id: "si1",
     context:
-      "Picture this: a team member sits down to work on a client deliverable with AI. They open a new chat window.",
+      "Picture this: a team member sits down to work on an important deliverable with AI. They open a new chat window.",
     question:
       "How much of your team's accumulated thinking do they bring into that session?",
     dimension: "standard_internalization",
