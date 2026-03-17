@@ -276,7 +276,7 @@ const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high
   output_consistency: {
     low: "Inconsistent deliverables are eroding trust and increasing senior review time. When quality depends on the individual, you can't scale without proportionally scaling your best people.",
     mid: "You're close, but key-person dependency means your capacity is capped by your strongest operators. If they leave, so does your quality ceiling.",
-    high: "Consistency is your competitive moat. Clients get the team's quality, not an individual's, which means you can grow without diluting what makes you good.",
+    high: "Consistency is your competitive moat. Stakeholders get the team's quality, not an individual's, which means you can grow without diluting what makes you good.",
   },
   knowledge_compounding: {
     low: "Your team is paying the same learning tax on every project. Without compounding, a 20-person team operates like 20 individuals, each one solving problems the team has already solved.",
