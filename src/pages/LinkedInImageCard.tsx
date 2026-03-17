@@ -80,18 +80,18 @@ function DataCard() {
         {/* Header row */}
         <div className="flex-none flex items-start justify-between">
           <div>
-            <p
-              className="text-[13px] font-semibold tracking-[0.15em] uppercase mb-3"
-              style={{ color: "hsl(200 90% 40%)" }}
-            >
-              The 5 dimensions of AI execution readiness
-            </p>
             <h2
-              className="text-[30px] font-bold leading-[1.2] tracking-tight"
+              className="text-[26px] font-bold leading-[1.2] tracking-tight"
               style={{ color: "hsl(222 47% 11%)" }}
             >
-              Where teams are actually failing
+              We measure 5 dimensions of AI execution readiness.
             </h2>
+            <p
+              className="text-[18px] font-medium mt-2"
+              style={{ color: "hsl(215 14% 45%)" }}
+            >
+              Here's where the 60 teams we measured are failing.
+            </p>
           </div>
 
           {/* Overall score */}
