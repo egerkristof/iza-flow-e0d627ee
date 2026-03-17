@@ -22,17 +22,15 @@ function HookCard() {
       }}
     >
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-20 text-center">
-        {/* Tag */}
         <p
-          className="text-[15px] font-semibold tracking-[0.15em] uppercase mb-8"
-          style={{ color: "hsl(200 90% 40%)" }}
+          className="text-[28px] font-bold leading-[1.3] tracking-tight mb-6"
+          style={{ color: "hsl(222 47% 11%)" }}
         >
           We asked 60 teams why AI execution fails.
         </p>
 
-        {/* Main headline */}
         <h1
-          className="text-[56px] font-bold leading-[1.12] tracking-tight max-w-[850px]"
+          className="text-[64px] font-bold leading-[1.1] tracking-tight max-w-[950px]"
           style={{ color: "hsl(222 47% 11%)" }}
         >
           The problem isn't the AI.
@@ -47,31 +45,6 @@ function HookCard() {
             It's the missing standards.
           </span>
         </h1>
-
-        {/* Score teaser */}
-        <div className="flex items-center gap-3 mt-10">
-          <div
-            className="text-[48px] font-bold leading-none"
-            style={{ color: "hsl(222 47% 11%)" }}
-          >
-            {OVERALL}
-          </div>
-          <div className="text-left">
-            <div className="text-[16px] font-medium" style={{ color: "hsl(215 14% 45%)" }}>
-              out of 100
-            </div>
-            <div className="text-[13px] font-medium" style={{ color: "hsl(215 14% 55%)" }}>
-              average score across all teams
-            </div>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="mt-10 flex items-center gap-2">
-          <span className="text-[14px] font-medium" style={{ color: "hsl(215 14% 50%)" }}>
-            Swipe for the breakdown →
-          </span>
-        </div>
       </div>
 
       {/* Bottom bar */}
@@ -107,18 +80,18 @@ function DataCard() {
         {/* Header row */}
         <div className="flex-none flex items-start justify-between">
           <div>
-            <p
-              className="text-[13px] font-semibold tracking-[0.15em] uppercase mb-3"
-              style={{ color: "hsl(200 90% 40%)" }}
-            >
-              The 5 dimensions of AI execution readiness
-            </p>
             <h2
-              className="text-[30px] font-bold leading-[1.2] tracking-tight"
+              className="text-[26px] font-bold leading-[1.2] tracking-tight"
               style={{ color: "hsl(222 47% 11%)" }}
             >
-              Where teams are actually failing
+              We measure 5 dimensions of AI execution readiness.
             </h2>
+            <p
+              className="text-[18px] font-medium mt-2"
+              style={{ color: "hsl(215 14% 45%)" }}
+            >
+              Here's where the 60 teams we measured are failing.
+            </p>
           </div>
 
           {/* Overall score */}
