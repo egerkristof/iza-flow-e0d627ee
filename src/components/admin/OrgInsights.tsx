@@ -1174,6 +1174,33 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         </div>
                       </div>
 
+                      {/* Role tier spread */}
+                      {org.roleTierSpread.length > 1 && (
+                        <div>
+                          <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">Score by Seniority Level</h4>
+                          <div className="space-y-1.5">
+                            {org.roleTierSpread.map(({ tier, avgScore, count }) => (
+                              <div key={tier} className="flex items-center gap-2">
+                                <span className="text-[11px] text-muted-foreground w-28 shrink-0 text-right">{tier}</span>
+                                <div className="flex-1 h-2.5 rounded-full bg-secondary overflow-hidden">
+                                  <div className="h-full rounded-full transition-all" style={{
+                                    width: `${avgScore}%`,
+                                    backgroundColor: avgScore <= 33 ? "hsl(0 72% 51%)" : avgScore <= 66 ? "hsl(38 92% 50%)" : "hsl(155 72% 36%)"
+                                  }} />
+                                </div>
+                                <span className="text-[11px] font-bold tabular-nums w-8">{avgScore}</span>
+                                <span className="text-[10px] text-muted-foreground">({count})</span>
+                              </div>
+                            ))}
+                          </div>
+                          {org.scoreSpread > 15 && (
+                            <p className="text-[11px] text-amber-600 mt-2 italic">
+                              ⚠ {org.scoreSpread}-point spread: perception gap between seniority levels
+                            </p>
+                          )}
+                        </div>
+                      )}
+
                       {/* Archetype distribution */}
                       <div>
                         <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">Archetype Distribution</h4>
