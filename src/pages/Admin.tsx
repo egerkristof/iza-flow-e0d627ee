@@ -310,8 +310,9 @@ export default function AdminPage() {
     };
 
     const roleSegments = buildSegment((r) => r.respondent_role);
+    const roleTierSegments = buildSegment((r) => r.role_tier);
     const teamSizeSegments = buildSegment((r) => r.team_size);
-    const industrySegments = buildSegment((r) => r.industry);
+    const industrySegments = buildSegment((r) => r.industry_refined || r.industry);
 
     return {
       totalSubmissions: filtered.length,
