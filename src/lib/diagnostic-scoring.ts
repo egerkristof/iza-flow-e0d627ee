@@ -61,7 +61,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   {
     id: "si1",
     context:
-      "Picture this: a team member sits down to work on a client deliverable with AI. They open a new chat window.",
+      "Picture this: a team member sits down to work on an important deliverable with AI. They open a new chat window.",
     question:
       "How much of your team's accumulated thinking do they bring into that session?",
     dimension: "standard_internalization",
@@ -90,7 +90,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   {
     id: "oc1",
     context:
-      "Two people on your team receive the same client brief. Both use AI to produce the deliverable.",
+      "Two people on your team receive the same brief. Both use AI to produce the deliverable.",
     question:
       "How similar would the outputs be?",
     dimension: "output_consistency",
@@ -104,7 +104,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   {
     id: "oc2",
     context:
-      "Your strongest AI user is on holiday for two weeks. Client work continues without them.",
+      "Your strongest AI user is on holiday for two weeks. The work continues without them.",
     question:
       "What happens to the quality of AI-assisted work?",
     dimension: "output_consistency",
@@ -235,7 +235,7 @@ const ARCHETYPES: { max: number; label: string; tagline: string; action: string 
     tagline:
       "Your team's best thinking is everyone's starting point, and it evolves with every project. You're in the top tier of AI execution maturity.",
     action:
-      "Focus on cross-domain transfer. Your system works within teams. Now extend it across practice areas and client verticals.",
+      "Focus on cross-domain transfer. Your system works within teams. Now extend it across practice areas and verticals.",
   },
 ];
 
@@ -276,7 +276,7 @@ const DIMENSION_IMPLICATIONS: Record<Dimension, { low: string; mid: string; high
   output_consistency: {
     low: "Inconsistent deliverables are eroding trust and increasing senior review time. When quality depends on the individual, you can't scale without proportionally scaling your best people.",
     mid: "You're close, but key-person dependency means your capacity is capped by your strongest operators. If they leave, so does your quality ceiling.",
-    high: "Consistency is your competitive moat. Clients get the team's quality, not an individual's, which means you can grow without diluting what makes you good.",
+    high: "Consistency is your competitive moat. Stakeholders get the team's quality, not an individual's, which means you can grow without diluting what makes you good.",
   },
   knowledge_compounding: {
     low: "Your team is paying the same learning tax on every project. Without compounding, a 20-person team operates like 20 individuals, each one solving problems the team has already solved.",
