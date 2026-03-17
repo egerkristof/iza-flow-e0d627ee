@@ -405,6 +405,19 @@ Return the post as plain text, ready to copy-paste into LinkedIn. No markdown fo
               .slice(0, 5)
               .map(([k, v]) => [k, { count: v.count, avg: v.avgScore }])
           ),
+          roleTierSegments: Object.fromEntries(
+            Object.entries(roleTierSegments)
+              .filter(([k]) => k !== "Unknown")
+              .map(([k, v]) => [k, { count: v.count, avg: v.avgScore }])
+          ),
+          industryRefinedSegments: Object.fromEntries(
+            Object.entries(industryRefinedSegments)
+              .filter(([k]) => k !== "unknown")
+              .sort((a, b) => b[1].count - a[1].count)
+              .slice(0, 8)
+              .map(([k, v]) => [k, { count: v.count, avg: v.avgScore }])
+          ),
+          orgSpreads: orgSpreads.slice(0, 5).map(o => ({ domain: o.domain, count: o.count, spread: o.spread, avg: o.avg })),
         },
         char_count: cleanPost.length,
       }),
