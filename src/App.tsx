@@ -22,6 +22,7 @@ import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 
 import ConsultingDeck from "./pages/ConsultingDeck";
+import LinkedInImageCard from "./pages/LinkedInImageCard";
 import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import UseCasesPage from "./pages/marketing/UseCases";
