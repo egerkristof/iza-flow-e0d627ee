@@ -889,7 +889,7 @@ export default function AdminPage() {
                   </Card>
 
                   {/* Segmentation Breakdown */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <SegmentCard title="By Role" segments={aggregate.roleSegments} />
                     <SegmentCard title="By Seniority" segments={aggregate.roleTierSegments} />
                     <SegmentCard title="By Team Size" segments={aggregate.teamSizeSegments} />
