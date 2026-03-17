@@ -183,11 +183,12 @@ export default function AdminPage() {
     if (isArchitect) loadData();
   }, [isArchitect, loadData]);
 
+  // Always-on realtime + polling for diagnostic results (regardless of active tab)
   useEffect(() => {
-    if (!isArchitect || (activeView !== "diagnostics" && activeView !== "content-insights")) return;
+    if (!isArchitect) return;
 
     let isActive = true;
-    let pollInterval = 4000;
+    let pollInterval = 5000;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const poll = async () => {
@@ -207,13 +208,13 @@ export default function AdminPage() {
           table: "diagnostic_results",
         },
         () => {
-          pollInterval = 4000;
+          pollInterval = 5000;
           void loadData(true);
         }
       )
       .subscribe((status) => {
         if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
-          pollInterval = 4000;
+          pollInterval = 5000;
         }
       });
 
@@ -230,7 +231,7 @@ export default function AdminPage() {
       window.removeEventListener("focus", onFocus);
       supabase.removeChannel(channel);
     };
-  }, [isArchitect, activeView, loadData]);
+  }, [isArchitect, loadData]);
 
   /* ── Aggregate computation ── */
   const isFounder = (email: string | null) => {
