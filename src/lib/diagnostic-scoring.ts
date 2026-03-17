@@ -104,7 +104,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   {
     id: "oc2",
     context:
-      "Your strongest AI user is on holiday for two weeks. Client work continues without them.",
+      "Your strongest AI user is on holiday for two weeks. The work continues without them.",
     question:
       "What happens to the quality of AI-assisted work?",
     dimension: "output_consistency",
