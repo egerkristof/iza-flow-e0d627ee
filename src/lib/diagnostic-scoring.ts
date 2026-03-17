@@ -90,7 +90,7 @@ export const QUESTIONS: DiagnosticQuestion[] = [
   {
     id: "oc1",
     context:
-      "Two people on your team receive the same client brief. Both use AI to produce the deliverable.",
+      "Two people on your team receive the same brief. Both use AI to produce the deliverable.",
     question:
       "How similar would the outputs be?",
     dimension: "output_consistency",
