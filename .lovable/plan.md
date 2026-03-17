@@ -1,34 +1,50 @@
 
 
-## LinkedIn Data Card — Self-Contained Visual
+# Plan: Merge Maturity Ladder + Problem Section, Move After Hero
 
-The card must work as a standalone artifact. Someone scrolling LinkedIn sees the image and the first line of text. They should immediately understand: "Teams are failing at AI not because of tools, but because they have no standards."
+## Core Insight
+The user wants the maturity ladder to work as a standalone scroll-hook right after the hero, but the current ladder is too AI-centric. The real demand (standardizing/scaling know-how) predates AI. The problem section is also too long. Solution: **merge the ladder and problem section into one compact section** that tells the full story.
 
-### Card Layout (1200×627px, dark background)
+## Architecture Change (Home.tsx)
+```
+Hero
+→ NEW merged section (MaturityLadder with problem context baked in)
+→ LizaLoopSection
+→ TransformationSection
+→ BetaCTASection
+```
+Remove `AIFragmentationSection` as a separate component — fold its best elements (the "Sound familiar?" scenarios and the "What's missing" callout) into the new MaturityLadder.
 
-**Top third — The Hook (largest text)**
-"AI Doesn't Hallucinate. It Has No Truth."
+## Maturity Ladder Rewrite
 
-**Middle — The Evidence**
-Five horizontal bars showing the five dimensions, each labeled with name and score. The bars use the brand cyan gradient, visually showing how short they fall against 100. A large "39/100" callout sits to the left or overlaid, making the overall failure unmissable.
+**New level descriptions — behavioral, pre-AI problems first, AI nuance second:**
 
-Key detail: the dimension names themselves tell the story. "Standard Internalization: 35.6" instantly communicates what's broken without explanation.
+| Level | Label | Description |
+|-------|-------|-------------|
+| L1 | "It lives in their heads" | Your best people just *know*. When they're unavailable, quality drops. There's nothing written down that actually helps. |
+| L2 | "We wrote it down once" | There are SOPs, playbooks, maybe a wiki. They were accurate when someone wrote them. Nobody updates them. Nobody reads them. |
+| L3 | "Everyone has their own AI now" | Individuals are fast — but everyone prompts differently, uses different shortcuts, gets different results. The team is more fragmented than before. |
+| L4 | "One living playbook for the whole team" | The team's accumulated judgment runs in every session. New hires perform like veterans. Always current. *(LIZA)* |
+| L5 | "The system gets smarter every week" | Every engagement improves the playbook. Methodology leads see what's working and evolve it. The team compounds. |
 
-**Bottom strip — The CTA + Authority**
-Left: "Based on 60 team assessments" (establishes credibility)
-Right: "Get your score → lizaos.ai/diagnostic" (action)
-Corner: LIZA OS wordmark, small
+Key change: L1-L2 are **pre-AI pain** (recognizable to anyone). L3 is the **AI twist** (makes it worse). L4-L5 are the resolution.
 
-### Why this works at a glance
-- The headline is a provocation that reframes the AI debate
-- The bars are visually "short" against a 100-scale, communicating failure without reading numbers
-- The CTA gives a next step
-- No paragraph text needed. Every element is a label or a number.
+## Section Structure
 
-### Implementation
-1. Create `src/pages/LinkedInImageCard.tsx` — standalone page at `/linkedin-card`, renders a fixed 1200×627 div with dark bg, brand fonts, gradient bars, and the layout above
-2. Add route in `App.tsx` (public, no auth)
-3. All styling via Tailwind — dark card, cyan gradient bars, white/gray typography hierarchy
+1. **Header**: "Where does your team sit?" (punchy, diagnostic)
+2. **Subtitle**: Short bridge — "Every team hits the same wall. Most just hit it faster now."
+3. **Horizontal ladder** (desktop) / **vertical climb** (mobile) — same visual treatment as now
+4. **Below the ladder**: The 3 "Sound familiar?" scenario cards (promoted from the old problem section) — these ground the ladder in real moments
+5. **"What's missing" callout** — the single strongest line, compact: "A system where your team's know-how stays current and runs in every session."
 
-User visits `/linkedin-card`, screenshots at 2x for retina clarity, posts to LinkedIn.
+## Files Changed
+
+1. **`MaturityLadder.tsx`** — Rewrite LEVELS data, add "Sound familiar?" scenarios and "What's missing" callout below the ladder
+2. **`Home.tsx`** — Remove `AIFragmentationSection` import, place `MaturityLadder` directly after `HeroSection`
+3. **`HeroSection.tsx`** — Update the "See the problem ↓" button to scroll to the ladder's `id`
+
+## What We're Cutting
+- `AIFragmentationSection` as a standalone section (its best content moves into the ladder)
+- The three "escalating cards" (Judgment gap / AI solved it / Now it's worse) — their story is now told by the ladder levels themselves
+- Redundant copy that made the problem section feel long
 

@@ -22,6 +22,7 @@ import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
 
 import ConsultingDeck from "./pages/ConsultingDeck";
+import LinkedInImageCard from "./pages/LinkedInImageCard";
 import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import UseCasesPage from "./pages/marketing/UseCases";
@@ -99,6 +100,7 @@ const App = () => (
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
             <Route path="/sales" element={<ConsultingDeck />} />
+            <Route path="/linkedin-card" element={<LinkedInImageCard />} />
 
             {/* App */}
             <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
