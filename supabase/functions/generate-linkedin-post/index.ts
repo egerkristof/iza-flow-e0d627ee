@@ -65,7 +65,7 @@ serve(async (req) => {
 
     const { data: allResults, error: fetchErr } = await supabaseAdmin
       .from("diagnostic_results")
-      .select("overall_score, scores, archetype, respondent_role, team_size, company_name, industry, email");
+      .select("overall_score, scores, archetype, respondent_role, team_size, company_name, industry, industry_refined, role_tier, email");
 
     if (fetchErr) throw new Error(`Failed to fetch results: ${fetchErr.message}`);
 
