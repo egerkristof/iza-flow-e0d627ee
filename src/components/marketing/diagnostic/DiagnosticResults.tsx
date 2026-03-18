@@ -348,8 +348,21 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
   const weakestLabel = DIMENSION_LABELS[weakest.dimension as keyof typeof DIMENSION_LABELS] || weakest.label;
   const secondWeakestLabel = DIMENSION_LABELS[secondWeakest.dimension as keyof typeof DIMENSION_LABELS] || secondWeakest.label;
 
+  // Domain matching validation for team leader email
+  const userDomain = email.trim().split("@")[1]?.toLowerCase() || "";
+  const leaderDomain = teamLeaderEmail.trim().split("@")[1]?.toLowerCase() || "";
+  const domainMismatch = addToTeam && teamLeaderEmail.trim() && userDomain && leaderDomain && userDomain !== leaderDomain;
+
   async function handleEmailSubmit() {
     if (!email.trim() || !respondentRole.trim() || !teamSize) return;
+    if (domainMismatch) {
+      toast({
+        variant: "destructive",
+        title: "Domain mismatch",
+        description: "Your team leader's email must be from the same company domain as yours.",
+      });
+      return;
+    }
 
     setLoading(true);
     try {
