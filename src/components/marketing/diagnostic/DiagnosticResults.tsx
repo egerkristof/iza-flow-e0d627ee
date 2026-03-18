@@ -164,6 +164,10 @@ function EmailCapture({
   secondWeakestScore: number;
   variant?: "primary" | "secondary";
 }) {
+  const userDomain = email.trim().split("@")[1]?.toLowerCase() || "";
+  const leaderDomain = teamLeaderEmail.trim().split("@")[1]?.toLowerCase() || "";
+  const domainMismatch = addToTeam && teamLeaderEmail.trim() && userDomain && leaderDomain && userDomain !== leaderDomain;
+
   if (loading) {
     return (
       <Card className="border-primary/30 bg-primary/5">
