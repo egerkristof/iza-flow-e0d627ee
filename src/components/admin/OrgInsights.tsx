@@ -65,6 +65,26 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
   const [includeFreeMail, setIncludeFreeMail] = useState(false);
   const [includeNames, setIncludeNames] = useState(false);
+  const [teamLeaderFilter, setTeamLeaderFilter] = useState<string | null>(null);
+
+  // Collect unique team leader emails for the filter dropdown
+  const teamLeaderEmails = useMemo(() => {
+    const leaders = new Set<string>();
+    for (const r of results) {
+      const tle = (r as any).team_leader_email;
+      if (tle) leaders.add(tle.toLowerCase());
+    }
+    return Array.from(leaders).sort();
+  }, [results]);
+
+  // When a team leader filter is active, only show results citing that leader
+  const filteredResults = useMemo(() => {
+    if (!teamLeaderFilter) return results;
+    return results.filter((r) => {
+      const tle = (r as any).team_leader_email;
+      return tle && tle.toLowerCase() === teamLeaderFilter;
+    });
+  }, [results, teamLeaderFilter]);
 
   const orgs = useMemo(() => {
     // Group by email domain, only include results with emails
