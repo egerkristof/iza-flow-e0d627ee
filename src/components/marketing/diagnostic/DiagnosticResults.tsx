@@ -285,6 +285,32 @@ function EmailCapture({
               {variant === "primary" ? "Send My Action Plan" : "Send Results"}
             </Button>
           </div>
+
+          {/* Optional team report opt-in */}
+          <div className="space-y-2 pt-1">
+            <div className="flex items-start gap-2">
+              <Checkbox
+                id="add-to-team"
+                checked={addToTeam}
+                onCheckedChange={(checked) => setAddToTeam(checked === true)}
+                className="mt-0.5"
+              />
+              <label htmlFor="add-to-team" className="text-xs text-muted-foreground leading-relaxed cursor-pointer select-none">
+                Add my results to a <span className="font-semibold text-foreground">team report</span> — your team leader will receive a consolidated view when 2+ members complete this.
+              </label>
+            </div>
+            {addToTeam && (
+              <div className="animate-in fade-in slide-in-from-top-1 duration-200 pl-6">
+                <Input
+                  type="email"
+                  placeholder="Your team leader's work email"
+                  value={teamLeaderEmail}
+                  onChange={(e) => setTeamLeaderEmail(e.target.value)}
+                  className="h-9 text-sm"
+                />
+              </div>
+            )}
+          </div>
         </div>
         <p className="text-xs text-muted-foreground">
           💡 Check your spam/junk folder if you don't see it within a minute. We may follow up to discuss your results. Read our{" "}
