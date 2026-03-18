@@ -164,6 +164,10 @@ function EmailCapture({
   secondWeakestScore: number;
   variant?: "primary" | "secondary";
 }) {
+  const userDomain = email.trim().split("@")[1]?.toLowerCase() || "";
+  const leaderDomain = teamLeaderEmail.trim().split("@")[1]?.toLowerCase() || "";
+  const domainMismatch = addToTeam && teamLeaderEmail.trim() && userDomain && leaderDomain && userDomain !== leaderDomain;
+
   if (loading) {
     return (
       <Card className="border-primary/30 bg-primary/5">
@@ -300,14 +304,19 @@ function EmailCapture({
               </label>
             </div>
             {addToTeam && (
-              <div className="animate-in fade-in slide-in-from-top-1 duration-200 pl-6">
+              <div className="animate-in fade-in slide-in-from-top-1 duration-200 pl-6 space-y-1">
                 <Input
                   type="email"
                   placeholder="Your team leader's work email"
                   value={teamLeaderEmail}
                   onChange={(e) => setTeamLeaderEmail(e.target.value)}
-                  className="h-9 text-sm"
+                  className={`h-9 text-sm ${domainMismatch ? "border-destructive" : ""}`}
                 />
+                {domainMismatch && (
+                  <p className="text-[11px] text-destructive">
+                    Must match your email domain (@{userDomain})
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -348,8 +357,21 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
   const weakestLabel = DIMENSION_LABELS[weakest.dimension as keyof typeof DIMENSION_LABELS] || weakest.label;
   const secondWeakestLabel = DIMENSION_LABELS[secondWeakest.dimension as keyof typeof DIMENSION_LABELS] || secondWeakest.label;
 
+  // Domain matching validation for team leader email
+  const userDomain = email.trim().split("@")[1]?.toLowerCase() || "";
+  const leaderDomain = teamLeaderEmail.trim().split("@")[1]?.toLowerCase() || "";
+  const domainMismatch = addToTeam && teamLeaderEmail.trim() && userDomain && leaderDomain && userDomain !== leaderDomain;
+
   async function handleEmailSubmit() {
     if (!email.trim() || !respondentRole.trim() || !teamSize) return;
+    if (domainMismatch) {
+      toast({
+        variant: "destructive",
+        title: "Domain mismatch",
+        description: "Your team leader's email must be from the same company domain as yours.",
+      });
+      return;
+    }
 
     setLoading(true);
     try {

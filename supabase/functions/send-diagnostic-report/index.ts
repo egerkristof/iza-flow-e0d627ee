@@ -605,59 +605,76 @@ Return ONLY valid JSON in this exact format:
       }),
     }).catch((e) => console.error("Founder notify failed:", e));
 
-    // ── Step 7: Team leader notification (fire-and-forget) ──
+    // ── Step 7: Team leader notification — every submission (fire-and-forget) ──
     if (normalizedTeamLeaderEmail) {
       try {
-        // Count how many submissions cite this team leader
+        // Count total team submissions for this leader
         const { count: teamCount } = await supabaseAdmin
           .from("diagnostic_results")
           .select("id", { count: "exact", head: true })
           .eq("team_leader_email", normalizedTeamLeaderEmail)
           .not("email", "is", null);
 
-        // Notify team leader when threshold of 2 is reached
-        if (teamCount != null && teamCount >= 2) {
-          // Check if we already notified for this exact count to avoid spamming
-          // We notify at 2, 5, 10, 20 (milestone counts)
-          const milestones = [2, 5, 10, 20, 50];
-          const shouldNotify = milestones.includes(teamCount);
+        const safeTeamCount = teamCount ?? 1;
+        const submitterEmail = email.trim();
 
-          if (shouldNotify) {
-            const teamLeaderHtml = `
-              <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:600px;margin:0 auto;padding:32px 24px;">
-                <div style="text-align:center;margin-bottom:24px;">
-                  <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Team AI Execution Report</p>
-                  <p style="margin:0;font-size:28px;font-weight:900;color:#1a1a2e;">${teamCount} team members assessed</p>
-                  <p style="margin:12px 0 0;font-size:14px;color:#64748b;line-height:1.5;">${teamCount} people from your team have completed the AI Execution Diagnostic and nominated you to receive the consolidated team report.</p>
-                </div>
+        const teamLeaderHtml = `
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:600px;margin:0 auto;padding:32px 24px;">
+            <div style="text-align:center;margin-bottom:24px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Team AI Execution Update</p>
+              <p style="margin:0;font-size:22px;font-weight:900;color:#1a1a2e;">New team member assessed</p>
+              <p style="margin:12px 0 0;font-size:14px;color:#64748b;line-height:1.5;">
+                <strong style="color:#1a1a2e;">${submitterEmail}</strong> just completed the AI Execution Diagnostic and added their results to your team report.
+              </p>
+            </div>
 
-                <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
-                  <p style="margin:0 0 12px;font-size:14px;color:#475569;">See how your team scores across 5 dimensions of AI execution maturity and where the biggest opportunities are.</p>
-                  <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book your Team Debrief (20 min) →</a>
-                </div>
+            <div style="padding:16px;background:#f8fafc;border-radius:8px;margin-bottom:20px;border:1px solid #e2e8f0;">
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr>
+                  <td style="padding:4px 0;color:#64748b;">Submitter</td>
+                  <td style="padding:4px 0;font-weight:700;color:#1a1a2e;text-align:right;">${submitterEmail}</td>
+                </tr>
+                <tr>
+                  <td style="padding:4px 0;color:#64748b;">Their score</td>
+                  <td style="padding:4px 0;font-weight:700;text-align:right;color:${scoreColor};">${overall}/100</td>
+                </tr>
+                ${respondent_role ? `<tr><td style="padding:4px 0;color:#64748b;">Role</td><td style="padding:4px 0;font-weight:600;text-align:right;color:#1a1a2e;">${respondent_role}</td></tr>` : ""}
+                <tr>
+                  <td style="padding:4px 0;color:#64748b;">Total team submissions</td>
+                  <td style="padding:4px 0;font-weight:700;text-align:right;color:#0284c7;">${safeTeamCount}</td>
+                </tr>
+              </table>
+            </div>
 
-                <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">
-                  <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · The management layer for AI-powered teams</p>
-                  <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because your team members nominated you as their team leader.</p>
-                  <p style="margin:8px 0 0;font-size:11px;color:#cbd5e1;"><a href="https://iza-flow.lovable.app/privacy" style="color:#94a3b8;">Privacy Policy</a> · <a href="mailto:kristof.eger@lizaos.ai" style="color:#94a3b8;">Unsubscribe</a></p>
-                </div>
-              </div>`;
+            ${safeTeamCount >= 3 ? `
+            <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
+              <p style="margin:0 0 12px;font-size:14px;color:#475569;">With ${safeTeamCount} submissions, your team report is becoming meaningful. Book a call to see your consolidated team insights.</p>
+              <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book your Team Debrief (20 min) →</a>
+            </div>` : `
+            <div style="padding:16px;background:#fffbeb;border-radius:8px;margin-bottom:24px;border:1px solid #fde68a;">
+              <p style="margin:0;font-size:13px;color:#92400e;">You have <strong>${safeTeamCount}</strong> submission${safeTeamCount > 1 ? "s" : ""} so far. Once 3+ team members complete the diagnostic, you'll unlock your full team report.</p>
+            </div>`}
 
-            fetch("https://api.resend.com/emails", {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${RESEND_API_KEY}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                from: "LIZA OS <invite@invite.lizaos.ai>",
-                to: [normalizedTeamLeaderEmail],
-                subject: `${teamCount} of your team members assessed their AI execution`,
-                html: teamLeaderHtml,
-              }),
-            }).catch((e) => console.error("Team leader notify failed:", e));
-          }
-        }
+            <div style="text-align:center;padding-top:16px;border-top:1px solid #e2e8f0;">
+              <p style="margin:0;font-size:12px;color:#94a3b8;">LIZA OS · The management layer for AI-powered teams</p>
+              <p style="margin:4px 0 0;font-size:11px;color:#cbd5e1;">You received this because ${submitterEmail} nominated you as their team leader.</p>
+              <p style="margin:8px 0 0;font-size:11px;color:#cbd5e1;"><a href="https://iza-flow.lovable.app/privacy" style="color:#94a3b8;">Privacy Policy</a> · <a href="mailto:kristof.eger@lizaos.ai" style="color:#94a3b8;">Unsubscribe</a></p>
+            </div>
+          </div>`;
+
+        fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "LIZA OS <invite@invite.lizaos.ai>",
+            to: [normalizedTeamLeaderEmail],
+            subject: `Team update: ${submitterEmail} completed the AI Execution Diagnostic (${safeTeamCount} total)`,
+            html: teamLeaderHtml,
+          }),
+        }).catch((e) => console.error("Team leader notify failed:", e));
       } catch (e) {
         console.error("Team leader check failed:", e);
       }
