@@ -358,6 +358,7 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
           email: email.trim(),
           respondent_role: respondentRole.trim(),
           team_size: teamSize,
+          team_leader_email: addToTeam && teamLeaderEmail.trim() ? teamLeaderEmail.trim() : null,
           overall: result.overall,
           archetype: result.archetype,
           dimensions: result.dimensions,
