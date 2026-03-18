@@ -36,7 +36,7 @@ const PAIN_STEPS = [
 ];
 
 const NOT_LIST = [
-  "Not a ChatGPT wrapper. Purpose-built audit architecture",
+  "Purpose-built audit architecture, not a generic AI tool",
   "Not a GRC suite",
   "Not a vendor-side questionnaire tool",
   "Not replacing senior auditors",
