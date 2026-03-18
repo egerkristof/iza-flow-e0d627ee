@@ -156,10 +156,13 @@ If you cannot determine, use null for that field.`;
 
     const normalizedAnswers = answers && Object.keys(answers).length > 0 ? answers : {};
 
+    const normalizedTeamLeaderEmail = team_leader_email?.trim().toLowerCase() || null;
+
     const leadPayload: Record<string, unknown> = {
       email: email.trim(),
       respondent_role: respondent_role?.trim() || null,
       team_size: team_size || null,
+      team_leader_email: normalizedTeamLeaderEmail,
       company_name: companyName,
       industry,
       industry_refined: industryRefined,
