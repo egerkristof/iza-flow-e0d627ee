@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Building2, Download, ChevronDown, ChevronUp, Users, TrendingDown, BarChart3 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { calculateResults, DIMENSION_LABELS, DIMENSION_DESCRIPTIONS, type Dimension } from "@/lib/diagnostic-scoring";
 import jsPDF from "jspdf";
 
