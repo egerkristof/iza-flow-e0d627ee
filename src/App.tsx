@@ -82,7 +82,7 @@ const App = () => (
             {/* Retired pages — redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
             <Route path="/extract/test" element={<Navigate to="/" replace />} />
-            <Route path="/solutions/audit" element={<Navigate to="/" replace />} />
+            <Route path="/solutions/audit" element={<SecurityAuditPage />} />
             <Route path="/sprint" element={<Navigate to="/" replace />} />
 
             {/* Legacy redirects — all flatten to single hops */}
