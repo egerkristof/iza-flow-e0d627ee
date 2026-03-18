@@ -132,6 +132,10 @@ function EmailCapture({
   setRespondentRole,
   teamSize,
   setTeamSize,
+  teamLeaderEmail,
+  setTeamLeaderEmail,
+  addToTeam,
+  setAddToTeam,
   loading,
   submitted,
   onSubmit,
@@ -147,6 +151,10 @@ function EmailCapture({
   setRespondentRole: (v: string) => void;
   teamSize: string;
   setTeamSize: (v: string) => void;
+  teamLeaderEmail: string;
+  setTeamLeaderEmail: (v: string) => void;
+  addToTeam: boolean;
+  setAddToTeam: (v: boolean) => void;
   loading: boolean;
   submitted: boolean;
   onSubmit: () => void;
