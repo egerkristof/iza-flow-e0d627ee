@@ -143,7 +143,7 @@ export default function AuditExecutionSolution() {
       <section className="py-16 px-6" style={{ background: "hsl(var(--card))" }}>
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { value: "18 days", label: "Subcontractor baseline", sub: "per audit (cybersecurity)" },
+            { value: "18 days", label: "Subcontractor baseline", sub: "per audit" },
             { value: "1.5 hrs", label: "AI-assisted first pass", sub: "generation time" },
             { value: "84%", label: "First-pass accuracy", sub: "vs ~40% with generic AI" },
             { value: "~800", label: "Questions per audit", sub: "proven at scale" },
