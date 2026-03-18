@@ -1090,7 +1090,20 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions. Anonymous aggregate reports for decision makers.</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 flex-wrap">
+        {teamLeaderEmails.length > 0 && (
+          <Select value={teamLeaderFilter || "__all__"} onValueChange={(v) => setTeamLeaderFilter(v === "__all__" ? null : v)}>
+            <SelectTrigger className="w-full sm:w-64 h-9 text-xs">
+              <SelectValue placeholder="Filter by team leader" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="__all__">All submissions (no team filter)</SelectItem>
+              {teamLeaderEmails.map((le) => (
+                <SelectItem key={le} value={le}>Team: {le}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
         <Button
           variant={includeFreeMail ? "secondary" : "outline"}
           size="sm"
@@ -1107,6 +1120,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         >
           {includeNames ? "📋 PDF includes participant names" : "🔒 PDF is anonymised"}
         </Button>
+        {teamLeaderFilter && (
+          <Badge variant="secondary" className="text-xs gap-1">
+            Filtered: {teamLeaderFilter}
+            <button onClick={() => setTeamLeaderFilter(null)} className="ml-1 hover:text-foreground">×</button>
+          </Badge>
+        )}
       </div>
 
       <Card>
