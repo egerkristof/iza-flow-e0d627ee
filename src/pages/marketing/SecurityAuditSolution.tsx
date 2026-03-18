@@ -210,7 +210,7 @@ export default function AuditExecutionSolution() {
             Not generic AI. <GradientText>Purpose-built for audit execution.</GradientText>
           </h2>
           <p className="text-base mb-10 max-w-2xl" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Feed it your audit question set and client evidence. Get back structured, traceable, verifiable answers — not ChatGPT guesses — ready for senior review.
+            Feed it your audit question set and client evidence. Get back structured, traceable, verifiable answers, not ChatGPT guesses, ready for senior review.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
