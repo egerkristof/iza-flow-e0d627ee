@@ -462,6 +462,7 @@ export type Database = {
           role_tier: string | null
           scores: Json
           session_id: string | null
+          team_leader_email: string | null
           team_size: string | null
         }
         Insert: {
@@ -479,6 +480,7 @@ export type Database = {
           role_tier?: string | null
           scores?: Json
           session_id?: string | null
+          team_leader_email?: string | null
           team_size?: string | null
         }
         Update: {
@@ -496,6 +498,7 @@ export type Database = {
           role_tier?: string | null
           scores?: Json
           session_id?: string | null
+          team_leader_email?: string | null
           team_size?: string | null
         }
         Relationships: []
