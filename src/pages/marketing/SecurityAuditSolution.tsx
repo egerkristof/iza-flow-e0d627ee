@@ -36,7 +36,7 @@ const PAIN_STEPS = [
 ];
 
 const NOT_LIST = [
-  "Not a ChatGPT wrapper — purpose-built audit architecture",
+  "Not a ChatGPT wrapper. Purpose-built audit architecture",
   "Not a GRC suite",
   "Not a vendor-side questionnaire tool",
   "Not replacing senior auditors",
@@ -92,13 +92,13 @@ export default function AuditExecutionSolution() {
             <GradientText>to 1.5 hours.</GradientText>
           </h1>
           <p className="text-lg mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Not another ChatGPT wrapper. A purpose-built execution engine for compliance, security, and operational audits — with evidence traceability, structured output, and quality validation built in.
+            Not another ChatGPT wrapper. A purpose-built execution engine for compliance, security, and operational audits. Evidence traceability, structured output, and quality validation built in.
           </p>
           <p className="text-sm font-medium mb-2" style={{ color: `hsl(${accentCol})` }}>
             Proven on real cybersecurity audits with ~800 questions each.
           </p>
           <p className="text-sm font-medium mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Senior auditors keep judgment. AI handles the repetition — reliably.
+            Senior auditors keep judgment. AI handles the repetition, reliably.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -187,7 +187,7 @@ export default function AuditExecutionSolution() {
                 { icon: <MessageSquare className="w-4 h-4" />, text: "Copy-paste questions one at a time" },
                 { icon: <AlertTriangle className="w-4 h-4" />, text: "Hallucinated or unverifiable evidence" },
                 { icon: <Search className="w-4 h-4" />, text: "No traceability back to source documents" },
-                { icon: <RefreshCw className="w-4 h-4" />, text: "Every session starts from zero — nothing compounds" },
+                { icon: <RefreshCw className="w-4 h-4" />, text: "Every session starts from zero. Nothing compounds" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2 text-xs" style={{ color: "hsl(var(--muted-foreground))" }}>
                   <span className="flex-shrink-0 mt-0.5" style={{ color: "hsl(45 93% 47%)" }}>{item.icon}</span>
@@ -196,7 +196,7 @@ export default function AuditExecutionSolution() {
               ))}
             </div>
             <p className="text-xs mt-3 italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Faster than fully manual, but still unscalable — and introduces new risk.
+              Faster than fully manual, but still unscalable. Introduces new risk.
             </p>
           </div>
         </div>
@@ -210,7 +210,7 @@ export default function AuditExecutionSolution() {
             Not generic AI. <GradientText>Purpose-built for audit execution.</GradientText>
           </h2>
           <p className="text-base mb-10 max-w-2xl" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Feed it your audit question set and client evidence. Get back structured, traceable, verifiable answers — not ChatGPT guesses — ready for senior review.
+            Feed it your audit question set and client evidence. Get back structured, traceable, verifiable answers, not ChatGPT guesses, ready for senior review.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -331,9 +331,9 @@ export default function AuditExecutionSolution() {
 
           <div className="grid md:grid-cols-4 gap-4">
             {[
-              { icon: <Zap className="w-5 h-5" />, step: "01", title: "Execute", desc: "Complete audits 10× faster. The engine handles the mechanical layer — question search, evidence matching, answer drafting." },
+              { icon: <Zap className="w-5 h-5" />, step: "01", title: "Execute", desc: "Complete audits 10× faster. The engine handles the mechanical layer: question search, evidence matching, answer drafting." },
               { icon: <Brain className="w-5 h-5" />, step: "02", title: "Capture", desc: "Every audit surfaces control gaps, client patterns, recurring weaknesses. This intelligence is currently lost in spreadsheets." },
-              { icon: <DollarSign className="w-5 h-5" />, step: "03", title: "Advise", desc: "Findings become data-driven advisory proposals. \"We found 14 control gaps across your last 3 audits — here's a remediation programme.\"" },
+              { icon: <DollarSign className="w-5 h-5" />, step: "03", title: "Advise", desc: "Findings become data-driven advisory proposals. \"We found 14 control gaps across your last 3 audits. Here's a remediation programme.\"" },
               { icon: <RefreshCw className="w-5 h-5" />, step: "04", title: "Compound", desc: "Past audits inform future ones. New auditors inherit institutional memory. Cross-client patterns surface emerging risks." },
             ].map((item, i) => (
               <div
@@ -421,7 +421,7 @@ export default function AuditExecutionSolution() {
           <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto text-left">
             {[
               { icon: <LineChart className="w-5 h-5" />, title: "Predictive Scoping", desc: "The system suggests which controls are likely to fail based on client profile and historical patterns." },
-              { icon: <BookOpen className="w-5 h-5" />, title: "Automated Remediation Tracking", desc: "Audit findings auto-generate follow-up tasks with full context — assigned, tracked, and closed." },
+              { icon: <BookOpen className="w-5 h-5" />, title: "Automated Remediation Tracking", desc: "Audit findings auto-generate follow-up tasks with full context. Assigned, tracked, and closed." },
               { icon: <Lightbulb className="w-5 h-5" />, title: "Cross-Client Intelligence", desc: "Anonymised patterns across your client base surface emerging risks before they become findings." },
               { icon: <Users className="w-5 h-5" />, title: "New Auditor Acceleration", desc: "Junior staff execute at near-senior quality from day one, backed by institutional knowledge." },
             ].map((item, i) => (
