@@ -163,7 +163,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     }
 
     return orgList.sort((a, b) => b.count - a.count);
-  }, [results, includeFreeMail]);
+  }, [filteredResults, includeFreeMail]);
 
   const generatePDF = (org: OrgData, showParticipants: boolean, fullyAnonymized: boolean = false) => {
     const doc = new jsPDF();
