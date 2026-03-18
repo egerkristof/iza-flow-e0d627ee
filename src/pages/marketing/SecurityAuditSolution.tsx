@@ -36,7 +36,7 @@ const PAIN_STEPS = [
 ];
 
 const NOT_LIST = [
-  "Not a ChatGPT wrapper. Purpose-built audit architecture",
+  "Purpose-built audit architecture, not a generic AI tool",
   "Not a GRC suite",
   "Not a vendor-side questionnaire tool",
   "Not replacing senior auditors",
@@ -92,7 +92,7 @@ export default function AuditExecutionSolution() {
             <GradientText>to 1.5 hours.</GradientText>
           </h1>
           <p className="text-lg mb-4 max-w-2xl mx-auto" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Not another ChatGPT wrapper. A purpose-built execution engine for compliance, security, and operational audits. Evidence traceability, structured output, and quality validation built in.
+            A purpose-built execution engine for compliance, security, and operational audits. Evidence traceability, structured output, and quality validation built in.
           </p>
           <p className="text-sm font-medium mb-2" style={{ color: `hsl(${accentCol})` }}>
             Proven on real cybersecurity audits with ~800 questions each.
