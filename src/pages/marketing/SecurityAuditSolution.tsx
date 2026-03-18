@@ -331,7 +331,7 @@ export default function AuditExecutionSolution() {
 
           <div className="grid md:grid-cols-4 gap-4">
             {[
-              { icon: <Zap className="w-5 h-5" />, step: "01", title: "Execute", desc: "Complete audits 10× faster. The engine handles the mechanical layer — question search, evidence matching, answer drafting." },
+              { icon: <Zap className="w-5 h-5" />, step: "01", title: "Execute", desc: "Complete audits 10× faster. The engine handles the mechanical layer: question search, evidence matching, answer drafting." },
               { icon: <Brain className="w-5 h-5" />, step: "02", title: "Capture", desc: "Every audit surfaces control gaps, client patterns, recurring weaknesses. This intelligence is currently lost in spreadsheets." },
               { icon: <DollarSign className="w-5 h-5" />, step: "03", title: "Advise", desc: "Findings become data-driven advisory proposals. \"We found 14 control gaps across your last 3 audits — here's a remediation programme.\"" },
               { icon: <RefreshCw className="w-5 h-5" />, step: "04", title: "Compound", desc: "Past audits inform future ones. New auditors inherit institutional memory. Cross-client patterns surface emerging risks." },
