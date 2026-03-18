@@ -421,7 +421,7 @@ export default function AuditExecutionSolution() {
           <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto text-left">
             {[
               { icon: <LineChart className="w-5 h-5" />, title: "Predictive Scoping", desc: "The system suggests which controls are likely to fail based on client profile and historical patterns." },
-              { icon: <BookOpen className="w-5 h-5" />, title: "Automated Remediation Tracking", desc: "Audit findings auto-generate follow-up tasks with full context — assigned, tracked, and closed." },
+              { icon: <BookOpen className="w-5 h-5" />, title: "Automated Remediation Tracking", desc: "Audit findings auto-generate follow-up tasks with full context. Assigned, tracked, and closed." },
               { icon: <Lightbulb className="w-5 h-5" />, title: "Cross-Client Intelligence", desc: "Anonymised patterns across your client base surface emerging risks before they become findings." },
               { icon: <Users className="w-5 h-5" />, title: "New Auditor Acceleration", desc: "Junior staff execute at near-senior quality from day one, backed by institutional knowledge." },
             ].map((item, i) => (
