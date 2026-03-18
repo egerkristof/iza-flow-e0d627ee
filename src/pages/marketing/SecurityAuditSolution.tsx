@@ -196,7 +196,7 @@ export default function AuditExecutionSolution() {
               ))}
             </div>
             <p className="text-xs mt-3 italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Faster than fully manual, but still unscalable — and introduces new risk.
+              Faster than fully manual, but still unscalable. Introduces new risk.
             </p>
           </div>
         </div>
