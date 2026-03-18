@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Building2, Download, ChevronDown, ChevronUp, Users, TrendingDown, BarChart3 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { calculateResults, DIMENSION_LABELS, DIMENSION_DESCRIPTIONS, type Dimension } from "@/lib/diagnostic-scoring";
 import jsPDF from "jspdf";
 
@@ -21,6 +22,7 @@ interface DiagnosticResult {
   industry?: string | null;
   industry_refined?: string | null;
   team_size?: string | null;
+  team_leader_email?: string | null;
 }
 
 interface OrgData {
@@ -64,11 +66,31 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
   const [includeFreeMail, setIncludeFreeMail] = useState(false);
   const [includeNames, setIncludeNames] = useState(false);
+  const [teamLeaderFilter, setTeamLeaderFilter] = useState<string | null>(null);
+
+  // Collect unique team leader emails for the filter dropdown
+  const teamLeaderEmails = useMemo(() => {
+    const leaders = new Set<string>();
+    for (const r of results) {
+      const tle = r.team_leader_email;
+      if (tle) leaders.add(tle.toLowerCase());
+    }
+    return Array.from(leaders).sort();
+  }, [results]);
+
+  // When a team leader filter is active, only show results citing that leader
+  const filteredResults = useMemo(() => {
+    if (!teamLeaderFilter) return results;
+    return results.filter((r) => {
+      const tle = r.team_leader_email;
+      return tle && tle.toLowerCase() === teamLeaderFilter;
+    });
+  }, [results, teamLeaderFilter]);
 
   const orgs = useMemo(() => {
     // Group by email domain, only include results with emails
     const grouped: Record<string, DiagnosticResult[]> = {};
-    for (const r of results) {
+    for (const r of filteredResults) {
       if (!r.email) continue;
       if (FOUNDER_EMAILS.has(r.email.toLowerCase())) continue;
       const domain = getDomain(r.email);
@@ -142,7 +164,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     }
 
     return orgList.sort((a, b) => b.count - a.count);
-  }, [results, includeFreeMail]);
+  }, [filteredResults, includeFreeMail]);
 
   const generatePDF = (org: OrgData, showParticipants: boolean, fullyAnonymized: boolean = false) => {
     const doc = new jsPDF();
@@ -1069,7 +1091,20 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         <p className="text-sm text-muted-foreground">Organisations with 2+ diagnostic submissions. Anonymous aggregate reports for decision makers.</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 flex-wrap">
+        {teamLeaderEmails.length > 0 && (
+          <Select value={teamLeaderFilter || "__all__"} onValueChange={(v) => setTeamLeaderFilter(v === "__all__" ? null : v)}>
+            <SelectTrigger className="w-full sm:w-64 h-9 text-xs">
+              <SelectValue placeholder="Filter by team leader" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="__all__">All submissions (no team filter)</SelectItem>
+              {teamLeaderEmails.map((le) => (
+                <SelectItem key={le} value={le}>Team: {le}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
         <Button
           variant={includeFreeMail ? "secondary" : "outline"}
           size="sm"
@@ -1086,6 +1121,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         >
           {includeNames ? "📋 PDF includes participant names" : "🔒 PDF is anonymised"}
         </Button>
+        {teamLeaderFilter && (
+          <Badge variant="secondary" className="text-xs gap-1">
+            Filtered: {teamLeaderFilter}
+            <button onClick={() => setTeamLeaderFilter(null)} className="ml-1 hover:text-foreground">×</button>
+          </Badge>
+        )}
       </div>
 
       <Card>

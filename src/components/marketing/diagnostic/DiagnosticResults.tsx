@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { CAL_URL } from "@/components/marketing/home/shared";
@@ -131,6 +132,10 @@ function EmailCapture({
   setRespondentRole,
   teamSize,
   setTeamSize,
+  teamLeaderEmail,
+  setTeamLeaderEmail,
+  addToTeam,
+  setAddToTeam,
   loading,
   submitted,
   onSubmit,
@@ -146,6 +151,10 @@ function EmailCapture({
   setRespondentRole: (v: string) => void;
   teamSize: string;
   setTeamSize: (v: string) => void;
+  teamLeaderEmail: string;
+  setTeamLeaderEmail: (v: string) => void;
+  addToTeam: boolean;
+  setAddToTeam: (v: boolean) => void;
   loading: boolean;
   submitted: boolean;
   onSubmit: () => void;
@@ -276,6 +285,32 @@ function EmailCapture({
               {variant === "primary" ? "Send My Action Plan" : "Send Results"}
             </Button>
           </div>
+
+          {/* Optional team report opt-in */}
+          <div className="space-y-2 pt-1">
+            <div className="flex items-start gap-2">
+              <Checkbox
+                id="add-to-team"
+                checked={addToTeam}
+                onCheckedChange={(checked) => setAddToTeam(checked === true)}
+                className="mt-0.5"
+              />
+              <label htmlFor="add-to-team" className="text-xs text-muted-foreground leading-relaxed cursor-pointer select-none">
+                Add my results to a <span className="font-semibold text-foreground">team report</span> — your team leader will receive a consolidated view when 2+ members complete this.
+              </label>
+            </div>
+            {addToTeam && (
+              <div className="animate-in fade-in slide-in-from-top-1 duration-200 pl-6">
+                <Input
+                  type="email"
+                  placeholder="Your team leader's work email"
+                  value={teamLeaderEmail}
+                  onChange={(e) => setTeamLeaderEmail(e.target.value)}
+                  className="h-9 text-sm"
+                />
+              </div>
+            )}
+          </div>
         </div>
         <p className="text-xs text-muted-foreground">
           💡 Check your spam/junk folder if you don't see it within a minute. We may follow up to discuss your results. Read our{" "}
@@ -291,6 +326,8 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
   const [email, setEmail] = useState("");
   const [respondentRole, setRespondentRole] = useState("");
   const [teamSize, setTeamSize] = useState("");
+  const [teamLeaderEmail, setTeamLeaderEmail] = useState("");
+  const [addToTeam, setAddToTeam] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const sorted0 = [...result.dimensions].sort((a, b) => a.score - b.score);
@@ -321,6 +358,7 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
           email: email.trim(),
           respondent_role: respondentRole.trim(),
           team_size: teamSize,
+          team_leader_email: addToTeam && teamLeaderEmail.trim() ? teamLeaderEmail.trim() : null,
           overall: result.overall,
           archetype: result.archetype,
           dimensions: result.dimensions,
@@ -547,6 +585,10 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
         setRespondentRole={setRespondentRole}
         teamSize={teamSize}
         setTeamSize={setTeamSize}
+        teamLeaderEmail={teamLeaderEmail}
+        setTeamLeaderEmail={setTeamLeaderEmail}
+        addToTeam={addToTeam}
+        setAddToTeam={setAddToTeam}
         loading={loading}
         submitted={submitted}
         onSubmit={handleEmailSubmit}

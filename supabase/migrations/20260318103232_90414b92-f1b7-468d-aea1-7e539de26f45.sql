@@ -1,0 +1,1 @@
+ALTER TABLE public.diagnostic_results ADD COLUMN team_leader_email text DEFAULT NULL;
