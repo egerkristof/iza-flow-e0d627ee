@@ -300,14 +300,19 @@ function EmailCapture({
               </label>
             </div>
             {addToTeam && (
-              <div className="animate-in fade-in slide-in-from-top-1 duration-200 pl-6">
+              <div className="animate-in fade-in slide-in-from-top-1 duration-200 pl-6 space-y-1">
                 <Input
                   type="email"
                   placeholder="Your team leader's work email"
                   value={teamLeaderEmail}
                   onChange={(e) => setTeamLeaderEmail(e.target.value)}
-                  className="h-9 text-sm"
+                  className={`h-9 text-sm ${domainMismatch ? "border-destructive" : ""}`}
                 />
+                {domainMismatch && (
+                  <p className="text-[11px] text-destructive">
+                    Must match your email domain (@{userDomain})
+                  </p>
+                )}
               </div>
             )}
           </div>
