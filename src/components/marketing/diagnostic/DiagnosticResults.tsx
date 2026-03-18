@@ -585,6 +585,10 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
         setRespondentRole={setRespondentRole}
         teamSize={teamSize}
         setTeamSize={setTeamSize}
+        teamLeaderEmail={teamLeaderEmail}
+        setTeamLeaderEmail={setTeamLeaderEmail}
+        addToTeam={addToTeam}
+        setAddToTeam={setAddToTeam}
         loading={loading}
         submitted={submitted}
         onSubmit={handleEmailSubmit}
