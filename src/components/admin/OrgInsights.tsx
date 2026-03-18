@@ -82,7 +82,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
   const filteredResults = useMemo(() => {
     if (!teamLeaderFilter) return results;
     return results.filter((r) => {
-      const tle = (r as any).team_leader_email;
+      const tle = r.team_leader_email;
       return tle && tle.toLowerCase() === teamLeaderFilter;
     });
   }, [results, teamLeaderFilter]);
