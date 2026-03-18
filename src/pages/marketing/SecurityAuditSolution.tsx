@@ -98,7 +98,7 @@ export default function AuditExecutionSolution() {
             Proven on real cybersecurity audits with ~800 questions each.
           </p>
           <p className="text-sm font-medium mb-10" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Senior auditors keep judgment. AI handles the repetition — reliably.
+            Senior auditors keep judgment. AI handles the repetition, reliably.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
