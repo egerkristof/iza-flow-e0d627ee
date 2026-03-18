@@ -326,6 +326,8 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
   const [email, setEmail] = useState("");
   const [respondentRole, setRespondentRole] = useState("");
   const [teamSize, setTeamSize] = useState("");
+  const [teamLeaderEmail, setTeamLeaderEmail] = useState("");
+  const [addToTeam, setAddToTeam] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const sorted0 = [...result.dimensions].sort((a, b) => a.score - b.score);
