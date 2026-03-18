@@ -72,7 +72,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
   const teamLeaderEmails = useMemo(() => {
     const leaders = new Set<string>();
     for (const r of results) {
-      const tle = (r as any).team_leader_email;
+      const tle = r.team_leader_email;
       if (tle) leaders.add(tle.toLowerCase());
     }
     return Array.from(leaders).sort();
