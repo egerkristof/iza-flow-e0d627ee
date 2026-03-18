@@ -187,7 +187,7 @@ export default function AuditExecutionSolution() {
                 { icon: <MessageSquare className="w-4 h-4" />, text: "Copy-paste questions one at a time" },
                 { icon: <AlertTriangle className="w-4 h-4" />, text: "Hallucinated or unverifiable evidence" },
                 { icon: <Search className="w-4 h-4" />, text: "No traceability back to source documents" },
-                { icon: <RefreshCw className="w-4 h-4" />, text: "Every session starts from zero — nothing compounds" },
+                { icon: <RefreshCw className="w-4 h-4" />, text: "Every session starts from zero. Nothing compounds" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2 text-xs" style={{ color: "hsl(var(--muted-foreground))" }}>
                   <span className="flex-shrink-0 mt-0.5" style={{ color: "hsl(45 93% 47%)" }}>{item.icon}</span>
