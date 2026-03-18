@@ -20,6 +20,7 @@ import AdminTrials from "./pages/AdminTrials";
 import AdminPage from "./pages/Admin";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
+import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 
 import ConsultingDeck from "./pages/ConsultingDeck";
 import LinkedInImageCard from "./pages/LinkedInImageCard";
