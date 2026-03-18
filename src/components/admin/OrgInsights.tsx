@@ -89,7 +89,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
   const orgs = useMemo(() => {
     // Group by email domain, only include results with emails
     const grouped: Record<string, DiagnosticResult[]> = {};
-    for (const r of results) {
+    for (const r of filteredResults) {
       if (!r.email) continue;
       if (FOUNDER_EMAILS.has(r.email.toLowerCase())) continue;
       const domain = getDomain(r.email);
