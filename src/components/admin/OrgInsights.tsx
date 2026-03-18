@@ -21,6 +21,7 @@ interface DiagnosticResult {
   industry?: string | null;
   industry_refined?: string | null;
   team_size?: string | null;
+  team_leader_email?: string | null;
 }
 
 interface OrgData {
