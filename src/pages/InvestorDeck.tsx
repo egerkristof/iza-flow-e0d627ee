@@ -839,7 +839,7 @@ function Slide12Team() {
   ];
   const advisors = [
     { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Sylwester Pawluk", role: "VP Product Management, GRAPHISOFT (Nemetschek Group)", bio: "Customer-advisor. Led the full-day enterprise demo. 15+ years product strategy across GE Healthcare & GRAPHISOFT." },
+    { name: "Enterprise Advisor", role: "VP Product Management, Global AEC Software Company (€6B Group)", bio: "Customer-advisor. Led the full-day enterprise demo. 15+ years product strategy across global enterprise software." },
   ];
 
   return (
