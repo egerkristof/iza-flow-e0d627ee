@@ -336,10 +336,9 @@ function Slide05Solution() {
 
         <div className="flex items-center justify-center gap-3 px-10 py-5 rounded-xl border"
           style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
-          <Brain size={28} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
+          <TrendingUp size={28} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
           <p style={{ fontSize: 24, color: `hsl(${MUT})` }}>
-            Grounded in the <strong style={{ color: `hsl(${C})` }}>SECI model</strong> (Nonaka & Takeuchi) — the proven mechanism behind every learning organization.
-            LIZA operationalizes it at software speed.
+            Every project makes the next one better. <strong style={{ color: `hsl(${C})` }}>Your organisation compounds intelligence</strong> instead of losing it to turnover, silos, and tribal knowledge.
           </p>
         </div>
       </div>
