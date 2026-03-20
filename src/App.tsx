@@ -101,6 +101,7 @@ const App = () => (
             {/* Decks */}
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
+            <Route path="/investor-seed" element={<SeedInvestorDeck />} />
             <Route path="/sales" element={<ConsultingDeck />} />
             <Route path="/linkedin-card" element={<LinkedInImageCard />} />
 
