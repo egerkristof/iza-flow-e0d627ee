@@ -141,8 +141,8 @@ function Slide02Problem() {
           {[
             {
               icon: <Users size={48} />, color: RED,
-              title: "Knowledge walks out",
-              body: "Your best people carry methodology in their heads. Every resignation is a knowledge loss event."
+              title: "Knowledge walks out the door",
+              body: "Your best people carry methodology in their heads. Every resignation erases years of accumulated judgment."
             },
             {
               icon: <Target size={48} />, color: GOLD,
