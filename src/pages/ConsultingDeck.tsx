@@ -113,9 +113,9 @@ function Slide01Cover() {
         </p>
 
         <div className="mt-16 flex items-center gap-8">
-          <Chip color={BLUE}>Self-Service Platform</Chip>
-          <Chip color={TEAL}>Codify Expertise</Chip>
-          <Chip color={GOLD}>Scale AI Across Teams</Chip>
+          <Chip color={BLUE}>Standards Engineering</Chip>
+          <Chip color={TEAL}>Codify Senior Judgment</Chip>
+          <Chip color={GOLD}>Scale What Makes You Different</Chip>
         </div>
       </div>
       <Bar />
@@ -141,8 +141,8 @@ function Slide02Problem() {
           {[
             {
               icon: <Users size={48} />, color: RED,
-              title: "Knowledge walks out",
-              body: "Your best people carry methodology in their heads. Every resignation is a knowledge loss event."
+              title: "Knowledge walks out the door",
+              body: "Your best people carry methodology in their heads. Every resignation erases years of accumulated judgment."
             },
             {
               icon: <Target size={48} />, color: GOLD,
@@ -272,8 +272,9 @@ function Slide04Tried() {
 
         <div className="mt-5 p-4 rounded-2xl border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.3)` }}>
           <p style={{ fontSize: 21, color: `hsl(${C})`, lineHeight: 1.5 }}>
-            <strong style={{ color: `hsl(${BLUE})` }}>The systemic issue:</strong>{" "}
-            All these approaches catch the fringes of what makes you different, not the core.
+            <strong style={{ color: `hsl(${BLUE})` }}>The missing layer:</strong>{" "}
+            None of these capture <em>how</em> your best people think — the judgment calls, the pattern recognition, the "taste" that clients actually pay for.
+            That's the layer that needs engineering.
           </p>
         </div>
       </div>
@@ -335,10 +336,9 @@ function Slide05Solution() {
 
         <div className="flex items-center justify-center gap-3 px-10 py-5 rounded-xl border"
           style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
-          <Brain size={28} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
+          <TrendingUp size={28} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
           <p style={{ fontSize: 24, color: `hsl(${MUT})` }}>
-            Grounded in the <strong style={{ color: `hsl(${C})` }}>SECI model</strong> (Nonaka & Takeuchi) — the proven mechanism behind every learning organization.
-            LIZA operationalizes it at software speed.
+            Every project makes the next one better. <strong style={{ color: `hsl(${C})` }}>Your organisation compounds intelligence</strong> instead of losing it to turnover, silos, and tribal knowledge.
           </p>
         </div>
       </div>
@@ -566,9 +566,9 @@ function Slide09Stakes() {
       <div className="relative z-10 flex h-full items-center px-[140px] gap-16 w-full">
         {/* Center label */}
         <div className="flex flex-col items-center gap-3 flex-shrink-0 w-[180px]">
-          <Tag label="12–18 months" />
+          <Tag label="The Fork" />
           <Clock style={{ width: 56, height: 56, color: `hsl(${BLUE})` }} />
-          <p className="text-center font-bold" style={{ fontSize: 22, color: `hsl(${BLUE})` }}>The window</p>
+          <p className="text-center font-bold" style={{ fontSize: 22, color: `hsl(${BLUE})` }}>Every month compounds</p>
         </div>
 
         {/* If you wait */}
@@ -709,19 +709,18 @@ function Slide11CTA() {
         </div>
 
         <h2 className="font-black mb-6" style={{ fontSize: 96, color: `hsl(${C})`, lineHeight: 1.0 }}>
-          The best organisations
-          <br />don't just hire experts.
+          Stop scaling headcount.
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${BLUE}), hsl(${TEAL}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>They build systems that think.</span>
+          }}>Start scaling judgment.</span>
         </h2>
 
         <p className="mb-12" style={{ fontSize: 32, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-          Start codifying your senior expertise today.
+          Your best people's expertise, codified and running across every team.
           <br />
-          Self-service. No implementation project. Results in weeks.
+          Start in days, not months. See results in weeks.
         </p>
 
         <div className="flex items-center justify-center gap-8 mb-14">
@@ -799,9 +798,16 @@ export default function ConsultingDeck() {
       const container = exportRef.current;
       if (!container) return;
       const slideEls = Array.from(container.children) as HTMLElement[];
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+      const A4_W = 297, A4_H = 210, MARGIN = 8;
+      const contentW = A4_W - MARGIN * 2, contentH = A4_H - MARGIN * 2;
+      const slideAspect = 1920 / 1080;
+      let fitW = contentW, fitH = contentW / slideAspect;
+      if (fitH > contentH) { fitH = contentH; fitW = contentH * slideAspect; }
+      const offsetX = MARGIN + (contentW - fitW) / 2;
+      const offsetY = MARGIN + (contentH - fitH) / 2;
       for (let i = 0; i < slideEls.length; i++) {
-        if (i > 0) pdf.addPage([1920, 1080], 'landscape');
+        if (i > 0) pdf.addPage('a4', 'landscape');
         const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
         const origStyles: string[] = [];
         const affected: HTMLElement[] = [];
@@ -815,7 +821,7 @@ export default function ConsultingDeck() {
         });
         const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
         affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 1920, 1080);
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, fitW, fitH);
       }
       pdf.save('LIZA-OS-Sales-Deck.pdf');
     } finally {
