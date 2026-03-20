@@ -563,7 +563,7 @@ function Slide08Traction() {
         <div className="grid grid-cols-4 gap-7 mb-10">
           {[
             { stat: "Live Product", sub: "Functional platform with AI edge functions, role-based modes, protocol execution, and knowledge graph.", color: ACCENT },
-            { stat: "Enterprise Pilot", sub: "Full-day demo with Graphisoft (Nemetschek Group). VP-level engagement across 4 departments.", color: GREEN },
+            { stat: "Enterprise Pilot", sub: "Full-day demo with a global AEC software company (€6B group). VP-level engagement across 4 departments.", color: GREEN },
             { stat: "Multi-Vertical", sub: "Validated across exec search, architecture, sales operations, marketing, and professional services.", color: ACCENT },
             { stat: "AACE v3.1", sub: "Proprietary AI context specification. Intent-locking, hierarchical knowledge injection, drift detection. The IP moat.", color: GREEN },
           ].map(({ stat, sub, color }) => (
