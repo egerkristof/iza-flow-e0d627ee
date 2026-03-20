@@ -718,9 +718,9 @@ function Slide11CTA() {
         </h2>
 
         <p className="mb-12" style={{ fontSize: 32, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-          Start codifying your senior expertise today.
+          Your best people's expertise, codified and running across every team.
           <br />
-          Self-service. No implementation project. Results in weeks.
+          Start in days, not months. See results in weeks.
         </p>
 
         <div className="flex items-center justify-center gap-8 mb-14">
