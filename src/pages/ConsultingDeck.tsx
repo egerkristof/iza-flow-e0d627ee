@@ -113,9 +113,9 @@ function Slide01Cover() {
         </p>
 
         <div className="mt-16 flex items-center gap-8">
-          <Chip color={BLUE}>Self-Service Platform</Chip>
-          <Chip color={TEAL}>Codify Expertise</Chip>
-          <Chip color={GOLD}>Scale AI Across Teams</Chip>
+          <Chip color={BLUE}>Standards Engineering</Chip>
+          <Chip color={TEAL}>Codify Senior Judgment</Chip>
+          <Chip color={GOLD}>Scale What Makes You Different</Chip>
         </div>
       </div>
       <Bar />
