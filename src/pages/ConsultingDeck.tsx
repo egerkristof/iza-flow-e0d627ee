@@ -798,9 +798,16 @@ export default function ConsultingDeck() {
       const container = exportRef.current;
       if (!container) return;
       const slideEls = Array.from(container.children) as HTMLElement[];
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+      const A4_W = 297, A4_H = 210, MARGIN = 8;
+      const contentW = A4_W - MARGIN * 2, contentH = A4_H - MARGIN * 2;
+      const slideAspect = 1920 / 1080;
+      let fitW = contentW, fitH = contentW / slideAspect;
+      if (fitH > contentH) { fitH = contentH; fitW = contentH * slideAspect; }
+      const offsetX = MARGIN + (contentW - fitW) / 2;
+      const offsetY = MARGIN + (contentH - fitH) / 2;
       for (let i = 0; i < slideEls.length; i++) {
-        if (i > 0) pdf.addPage([1920, 1080], 'landscape');
+        if (i > 0) pdf.addPage('a4', 'landscape');
         const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
         const origStyles: string[] = [];
         const affected: HTMLElement[] = [];
@@ -814,7 +821,7 @@ export default function ConsultingDeck() {
         });
         const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
         affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 1920, 1080);
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, fitW, fitH);
       }
       pdf.save('LIZA-OS-Sales-Deck.pdf');
     } finally {
