@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile-presentation";
+import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   TrendingUp, Users, Brain, Zap, Target, BarChart3,
