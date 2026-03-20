@@ -638,7 +638,7 @@ function Slide09CategoryMap() {
               {/* Ring labels */}
               <text x="310" y="30" textAnchor="middle" fill={`hsl(${RED})`} fontSize="20" fontWeight="700">AI Tools</text>
               <text x="310" y="50" textAnchor="middle" fill={MUTED} fontSize="14">They generate outputs</text>
-              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Document Platforms</text>
+              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Document / RAG Platforms</text>
               <text x="310" y="146" textAnchor="middle" fill={MUTED} fontSize="13">They store information</text>
 
               {/* AI Tool names - between outer and middle rings */}
