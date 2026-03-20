@@ -616,42 +616,43 @@ function Slide09CategoryMap() {
 
         {/* Concentric rings visualization */}
         <div className="flex-1 flex items-center justify-center">
-          <div className="relative">
-            {/* Outer ring - AI Tools */}
-            <div className="rounded-full flex items-center justify-center"
-              style={{ width: 700, height: 700, background: `hsl(${RED} / 0.04)`, border: `2px solid hsl(${RED} / 0.15)` }}>
+          <div className="relative" style={{ width: 620, height: 620 }}>
+            <svg width="620" height="620" viewBox="0 0 620 620">
+              {/* Outer ring - AI Tools */}
+              <circle cx="310" cy="310" r="300" fill={`hsl(${RED} / 0.04)`} stroke={`hsl(${RED} / 0.18)`} strokeWidth="2" />
               {/* Middle ring - Knowledge Platforms */}
-              <div className="rounded-full flex items-center justify-center"
-                style={{ width: 470, height: 470, background: `hsl(${GOLD} / 0.06)`, border: `2px solid hsl(${GOLD} / 0.2)` }}>
-                {/* Center - LIZA */}
-                <div className="rounded-full flex flex-col items-center justify-center"
-                  style={{ width: 240, height: 240, background: `linear-gradient(135deg, hsl(${ACCENT} / 0.12), hsl(${GREEN} / 0.12))`, border: `3px solid hsl(${ACCENT} / 0.4)` }}>
-                  <p className="font-black" style={{ fontSize: 32, color: `hsl(${ACCENT})` }}>LIZA OS</p>
-                  <p className="text-center px-6" style={{ fontSize: 15, color: MUTED, lineHeight: 1.3 }}>Management<br />Layer</p>
-                </div>
-              </div>
-            </div>
+              <circle cx="310" cy="310" r="200" fill={`hsl(${GOLD} / 0.06)`} stroke={`hsl(${GOLD} / 0.22)`} strokeWidth="2" />
+              {/* Center - LIZA OS */}
+              <circle cx="310" cy="310" r="105" fill="url(#lizaGrad)" stroke={`hsl(${ACCENT} / 0.4)`} strokeWidth="3" />
+              <defs>
+                <radialGradient id="lizaGrad">
+                  <stop offset="0%" stopColor={`hsl(${ACCENT} / 0.14)`} />
+                  <stop offset="100%" stopColor={`hsl(${GREEN} / 0.1)`} />
+                </radialGradient>
+              </defs>
+              {/* Center text */}
+              <text x="310" y="300" textAnchor="middle" fill={`hsl(${ACCENT})`} fontSize="32" fontWeight="900">LIZA OS</text>
+              <text x="310" y="326" textAnchor="middle" fill={MUTED} fontSize="15">Management</text>
+              <text x="310" y="344" textAnchor="middle" fill={MUTED} fontSize="15">Layer</text>
 
-            {/* Labels */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center">
-              <p className="font-bold" style={{ fontSize: 22, color: `hsl(${RED})` }}>AI Tools</p>
-              <p style={{ fontSize: 16, color: MUTED }}>They generate outputs</p>
-            </div>
-            <div className="absolute top-[130px] left-1/2 -translate-x-1/2 text-center">
-              <p className="font-bold" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>Knowledge Platforms</p>
-              <p style={{ fontSize: 15, color: MUTED }}>They store information</p>
-            </div>
+              {/* Ring labels */}
+              <text x="310" y="30" textAnchor="middle" fill={`hsl(${RED})`} fontSize="20" fontWeight="700">AI Tools</text>
+              <text x="310" y="50" textAnchor="middle" fill={MUTED} fontSize="14">They generate outputs</text>
+              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Knowledge Platforms</text>
+              <text x="310" y="146" textAnchor="middle" fill={MUTED} fontSize="13">They store information</text>
 
-            {/* Tool labels around the rings */}
-            <p className="absolute font-semibold" style={{ fontSize: 18, color: `hsl(${RED} / 0.6)`, top: 60, left: -10 }}>ChatGPT</p>
-            <p className="absolute font-semibold" style={{ fontSize: 18, color: `hsl(${RED} / 0.6)`, top: 60, right: -20 }}>Copilot</p>
-            <p className="absolute font-semibold" style={{ fontSize: 18, color: `hsl(${RED} / 0.6)`, bottom: 60, left: 20 }}>Gemini</p>
-            <p className="absolute font-semibold" style={{ fontSize: 18, color: `hsl(${RED} / 0.6)`, bottom: 60, right: 10 }}>Claude</p>
+              {/* AI Tool names - positioned on outer ring */}
+              <text x="60" y="105" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">ChatGPT</text>
+              <text x="490" y="105" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Copilot</text>
+              <text x="60" y="535" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Gemini</text>
+              <text x="500" y="535" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Claude</text>
 
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${GOLD} / 0.7)`, top: 170, left: 50 }}>Notion</p>
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${GOLD} / 0.7)`, top: 170, right: 40 }}>Confluence</p>
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${GOLD} / 0.7)`, bottom: 170, left: 80 }}>Guru</p>
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${GOLD} / 0.7)`, bottom: 170, right: 80 }}>Glean</p>
+              {/* Knowledge Platform names - positioned on middle ring */}
+              <text x="120" y="240" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Notion</text>
+              <text x="430" y="240" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Confluence</text>
+              <text x="135" y="400" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Guru</text>
+              <text x="455" y="400" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Glean</text>
+            </svg>
           </div>
 
           {/* Right side explanation */}

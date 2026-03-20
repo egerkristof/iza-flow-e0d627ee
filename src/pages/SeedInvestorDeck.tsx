@@ -151,7 +151,52 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — Problem ──────────────────────────────────────────────────────
+// ─── Slide 02 — The End of SaaS Thesis ───────────────────────────────────────
+
+function Slide02Thesis() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
+      <DarkGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
+        <DarkTag label="The Investment Thesis" color={GOLD} />
+        <h2 className="font-black mb-14" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
+          Every AI startup is building<br />
+          <span style={{ color: `hsl(${GOLD})` }}>the same thing.</span>
+        </h2>
+
+        <div className="grid grid-cols-3 gap-8 mb-10">
+          {[
+            { icon: "💬", label: "Chats", desc: "Every tool has a conversation interface with an LLM." },
+            { icon: "🤖", label: "Agents", desc: "Every tool lets you build autonomous workflows." },
+            { icon: "📄", label: "Context", desc: "Every tool offers RAG, memory, and document grounding." },
+          ].map(({ icon, label, desc }) => (
+            <div key={label} className="rounded-2xl border p-8 text-center"
+              style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
+              <p style={{ fontSize: 56 }}>{icon}</p>
+              <p className="font-bold mt-4 mb-2" style={{ fontSize: 32, color: DARK_TEXT }}>{label}</p>
+              <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.5 }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border p-10 flex-1 flex flex-col justify-center"
+          style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
+          <p className="font-black mb-4" style={{ fontSize: 40, color: DARK_TEXT }}>
+            These features are commoditizing in real-time.
+          </p>
+          <p style={{ fontSize: 28, color: DARK_MUTED, lineHeight: 1.6 }}>
+            The defensible layer isn't the tool. It's the <strong style={{ color: `hsl(${GOLD})` }}>organizational knowledge</strong> that makes the tool work consistently.
+            LIZA is the infrastructure that captures, governs, and operationalizes that knowledge.
+            We're not building a better SaaS product. We're building the <strong style={{ color: `hsl(${GOLD})` }}>management layer underneath all of them.</strong>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── Slide 03 — Problem ──────────────────────────────────────────────────────
 
 function Slide02Problem() {
   return (
@@ -424,35 +469,34 @@ function Slide06Category() {
         </h2>
 
         <div className="flex-1 flex items-center justify-center">
-          <div className="relative">
-            <div className="rounded-full flex items-center justify-center"
-              style={{ width: 650, height: 650, background: `hsl(${RED} / 0.04)`, border: `2px solid hsl(${RED} / 0.15)` }}>
-              <div className="rounded-full flex items-center justify-center"
-                style={{ width: 430, height: 430, background: `hsl(${GOLD} / 0.06)`, border: `2px solid hsl(${GOLD} / 0.2)` }}>
-                <div className="rounded-full flex flex-col items-center justify-center"
-                  style={{ width: 220, height: 220, background: `linear-gradient(135deg, hsl(${ACCENT} / 0.12), hsl(${GREEN} / 0.12))`, border: `3px solid hsl(${ACCENT} / 0.4)` }}>
-                  <p className="font-black" style={{ fontSize: 30, color: `hsl(${ACCENT})` }}>LIZA OS</p>
-                  <p className="text-center px-5" style={{ fontSize: 14, color: MUTED, lineHeight: 1.3 }}>Management<br />Layer</p>
-                </div>
-              </div>
-            </div>
+          <div className="relative" style={{ width: 580, height: 580 }}>
+            <svg width="580" height="580" viewBox="0 0 580 580">
+              <circle cx="290" cy="290" r="280" fill={`hsl(${RED} / 0.04)`} stroke={`hsl(${RED} / 0.18)`} strokeWidth="2" />
+              <circle cx="290" cy="290" r="185" fill={`hsl(${GOLD} / 0.06)`} stroke={`hsl(${GOLD} / 0.22)`} strokeWidth="2" />
+              <circle cx="290" cy="290" r="95" fill="url(#lizaGradSeed)" stroke={`hsl(${ACCENT} / 0.4)`} strokeWidth="3" />
+              <defs>
+                <radialGradient id="lizaGradSeed">
+                  <stop offset="0%" stopColor={`hsl(${ACCENT} / 0.14)`} />
+                  <stop offset="100%" stopColor={`hsl(${GREEN} / 0.1)`} />
+                </radialGradient>
+              </defs>
+              <text x="290" y="282" textAnchor="middle" fill={`hsl(${ACCENT})`} fontSize="28" fontWeight="900">LIZA OS</text>
+              <text x="290" y="306" textAnchor="middle" fill={MUTED} fontSize="13">Management</text>
+              <text x="290" y="322" textAnchor="middle" fill={MUTED} fontSize="13">Layer</text>
 
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 text-center">
-              <p className="font-bold" style={{ fontSize: 20, color: `hsl(${RED})` }}>AI Tools</p>
-            </div>
-            <div className="absolute top-[120px] left-1/2 -translate-x-1/2 text-center">
-              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>Knowledge Platforms</p>
-            </div>
+              <text x="290" y="28" textAnchor="middle" fill={`hsl(${RED})`} fontSize="18" fontWeight="700">AI Tools</text>
+              <text x="290" y="122" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="16" fontWeight="700">Knowledge Platforms</text>
 
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${RED} / 0.6)`, top: 55, left: -5 }}>ChatGPT</p>
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${RED} / 0.6)`, top: 55, right: -15 }}>Copilot</p>
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${RED} / 0.6)`, bottom: 55, left: 15 }}>Gemini</p>
-            <p className="absolute font-semibold" style={{ fontSize: 17, color: `hsl(${RED} / 0.6)`, bottom: 55, right: 5 }}>Claude</p>
+              <text x="50" y="100" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">ChatGPT</text>
+              <text x="460" y="100" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Copilot</text>
+              <text x="50" y="500" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Gemini</text>
+              <text x="468" y="500" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Claude</text>
 
-            <p className="absolute font-semibold" style={{ fontSize: 16, color: `hsl(${GOLD} / 0.7)`, top: 155, left: 45 }}>Notion</p>
-            <p className="absolute font-semibold" style={{ fontSize: 16, color: `hsl(${GOLD} / 0.7)`, top: 155, right: 35 }}>Confluence</p>
-            <p className="absolute font-semibold" style={{ fontSize: 16, color: `hsl(${GOLD} / 0.7)`, bottom: 155, left: 70 }}>Guru</p>
-            <p className="absolute font-semibold" style={{ fontSize: 16, color: `hsl(${GOLD} / 0.7)`, bottom: 155, right: 70 }}>Glean</p>
+              <text x="110" y="222" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Notion</text>
+              <text x="400" y="222" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Confluence</text>
+              <text x="120" y="375" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Guru</text>
+              <text x="420" y="375" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Glean</text>
+            </svg>
           </div>
 
           <div className="flex flex-col gap-6 ml-14 max-w-[520px]">
@@ -767,6 +811,7 @@ function Slide10TheAsk() {
 
 const SLIDES = [
   { id: "cover", title: "Cover", component: <Slide01Cover /> },
+  { id: "thesis", title: "End of SaaS", component: <Slide02Thesis /> },
   { id: "problem", title: "Problem", component: <Slide02Problem /> },
   { id: "solution", title: "Solution", component: <Slide03Solution /> },
   { id: "validation", title: "Early Validation", component: <Slide04Validation /> },
