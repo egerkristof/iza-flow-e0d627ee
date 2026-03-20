@@ -790,7 +790,7 @@ export default function SeedInvestorDeck() {
 
   const isMobile = useIsMobileViewport();
   const isPortrait = useIsPortrait();
-  const swipeRef = useRef<HTMLDivElement>(null);
+  
 
   const next = useCallback(() => setCurrent(c => Math.min(c + 1, SLIDES.length - 1)), []);
   const prev = useCallback(() => setCurrent(c => Math.max(c - 1, 0)), []);
