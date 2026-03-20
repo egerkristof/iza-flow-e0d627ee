@@ -850,9 +850,24 @@ export default function SeedInvestorDeck() {
       await new Promise(r => setTimeout(r, 500));
       const slideEls = exportRef.current?.querySelectorAll<HTMLElement>(":scope > div");
       if (!slideEls?.length) return;
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1920, 1080] });
+      // A4 landscape in mm: 297 × 210
+      const A4_W = 297;
+      const A4_H = 210;
+      const MARGIN = 8;
+      const contentW = A4_W - MARGIN * 2;
+      const contentH = A4_H - MARGIN * 2;
+      // Scale 16:9 slide to fit A4 landscape with margins
+      const slideAspect = 1920 / 1080;
+      const fitW = contentW;
+      const fitH = fitW / slideAspect;
+      const finalW = fitH > contentH ? contentH * slideAspect : fitW;
+      const finalH = fitH > contentH ? contentH : fitH;
+      const offsetX = MARGIN + (contentW - finalW) / 2;
+      const offsetY = MARGIN + (contentH - finalH) / 2;
+
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
       for (let i = 0; i < slideEls.length; i++) {
-        if (i > 0) pdf.addPage([1920, 1080], 'landscape');
+        if (i > 0) pdf.addPage('a4', 'landscape');
         const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
         const origStyles: string[] = [];
         const affected: HTMLElement[] = [];
@@ -866,7 +881,7 @@ export default function SeedInvestorDeck() {
         });
         const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
         affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 1920, 1080);
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, finalW, finalH);
       }
       pdf.save('LIZA-OS-Pre-Seed-Deck.pdf');
     } finally {
