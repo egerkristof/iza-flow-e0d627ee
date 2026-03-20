@@ -272,8 +272,9 @@ function Slide04Tried() {
 
         <div className="mt-5 p-4 rounded-2xl border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.3)` }}>
           <p style={{ fontSize: 21, color: `hsl(${C})`, lineHeight: 1.5 }}>
-            <strong style={{ color: `hsl(${BLUE})` }}>The systemic issue:</strong>{" "}
-            All these approaches catch the fringes of what makes you different, not the core.
+            <strong style={{ color: `hsl(${BLUE})` }}>The missing layer:</strong>{" "}
+            None of these capture <em>how</em> your best people think — the judgment calls, the pattern recognition, the "taste" that clients actually pay for.
+            That's the layer that needs engineering.
           </p>
         </div>
       </div>
