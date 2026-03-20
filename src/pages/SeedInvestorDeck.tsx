@@ -485,17 +485,17 @@ function Slide06Category() {
               <text x="290" y="322" textAnchor="middle" fill={MUTED} fontSize="13">Layer</text>
 
               <text x="290" y="28" textAnchor="middle" fill={`hsl(${RED})`} fontSize="18" fontWeight="700">AI Tools</text>
-              <text x="290" y="122" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="16" fontWeight="700">Knowledge Platforms</text>
+              <text x="290" y="122" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="16" fontWeight="700">Document Platforms</text>
 
-              <text x="50" y="100" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">ChatGPT</text>
-              <text x="460" y="100" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Copilot</text>
-              <text x="50" y="500" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Gemini</text>
-              <text x="468" y="500" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Claude</text>
+              <text x="65" y="150" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">ChatGPT</text>
+              <text x="440" y="150" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Copilot</text>
+              <text x="65" y="455" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Gemini</text>
+              <text x="445" y="455" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Claude</text>
 
-              <text x="110" y="222" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Notion</text>
-              <text x="400" y="222" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Confluence</text>
-              <text x="120" y="375" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Guru</text>
-              <text x="420" y="375" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Glean</text>
+              <text x="155" y="250" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Notion</text>
+              <text x="375" y="250" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Confluence</text>
+              <text x="160" y="348" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Guru</text>
+              <text x="400" y="348" fill={`hsl(${GOLD} / 0.7)`} fontSize="16" fontWeight="600">Glean</text>
             </svg>
           </div>
 
