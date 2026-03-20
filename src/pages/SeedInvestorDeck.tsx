@@ -485,7 +485,7 @@ function Slide06Category() {
               <text x="290" y="322" textAnchor="middle" fill={MUTED} fontSize="13">Layer</text>
 
               <text x="290" y="28" textAnchor="middle" fill={`hsl(${RED})`} fontSize="18" fontWeight="700">AI Tools</text>
-              <text x="290" y="122" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="16" fontWeight="700">Document Platforms</text>
+              <text x="290" y="122" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="16" fontWeight="700">Document / RAG Platforms</text>
 
               <text x="65" y="150" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">ChatGPT</text>
               <text x="440" y="150" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Copilot</text>
