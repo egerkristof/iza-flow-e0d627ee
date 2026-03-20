@@ -99,23 +99,25 @@ function Slide01Cover() {
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${BLUE})`, lineHeight: "52px" }}>LIZA OS</span>
         </div>
 
-        <h1 className="font-black mb-10" style={{ fontSize: 108, lineHeight: 1.0, color: `hsl(${C})` }}>
-          Your Best People
+        <h1 className="font-black mb-10" style={{ fontSize: 104, lineHeight: 1.0, color: `hsl(${C})` }}>
+          Your Team Gets Wildly
+          <br />
+          Different Results
           <br />
           <span style={{ background: `linear-gradient(135deg, hsl(${BLUE}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Can't Be Everywhere.
+            From AI.
           </span>
         </h1>
 
         <p style={{ fontSize: 36, color: `hsl(${MUT})`, maxWidth: 1200, lineHeight: 1.55 }}>
-          LIZA extracts senior expertise and turns it into executable protocols
-          <br />your entire organisation can run on. <strong style={{ color: `hsl(${C})` }}>Consistently.</strong>
+          The management layer for AI-native teams.
+          <br />Define standards. Enforce execution. <strong style={{ color: `hsl(${C})` }}>Compound intelligence.</strong>
         </p>
 
         <div className="mt-16 flex items-center gap-8">
-          <Chip color={BLUE}>Standards Engineering</Chip>
-          <Chip color={TEAL}>Codify Senior Judgment</Chip>
-          <Chip color={GOLD}>Scale What Makes You Different</Chip>
+          <Chip color={BLUE}>Define & Enforce</Chip>
+          <Chip color={TEAL}>Execute Together</Chip>
+          <Chip color={GOLD}>Learn & Compound</Chip>
         </div>
       </div>
       <Bar />
@@ -123,36 +125,36 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — The Problem ───────────────────────────────────────────────────
+// ─── Slide 02 — The Standards Gap ─────────────────────────────────────────────
 
 function Slide02Problem() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
       <div className="relative z-10 flex flex-col justify-center h-full px-28">
-        <Tag label="The Problem" color={RED} />
+        <Tag label="The Standards Gap" color={RED} />
         <h2 className="font-bold mb-12" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          Professional firms scale headcount.
+          AI doesn't create inconsistency.
           <br />
-          <span style={{ color: `hsl(${RED})` }}>Not capability.</span>
+          <span style={{ color: `hsl(${RED})` }}>It amplifies it.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-7">
           {[
             {
               icon: <Users size={48} />, color: RED,
-              title: "Knowledge walks out the door",
-              body: "Your best people carry methodology in their heads. Every resignation erases years of accumulated judgment."
+              title: "Everyone has their own setup",
+              body: "Custom GPTs, Claude Projects, personal prompts. Your team's AI usage is a collection of disconnected silos."
             },
             {
               icon: <Target size={48} />, color: GOLD,
-              title: "Execution is inconsistent",
-              body: "Same brief, 14 different outputs. Quality depends on who supervises. No shared standard."
+              title: "Same brief, 14 outputs",
+              body: "Quality depends on who runs it. No shared standard reaches the actual AI session. Each person improvises \"best practice.\""
             },
             {
               icon: <BarChart3 size={48} />, color: RED,
-              title: "AI accelerates the problem",
-              body: "Generic AI gives everyone content generation — with zero organisational context. Faster at producing the wrong thing."
+              title: "Nothing compounds",
+              body: "Breakthroughs stay in individual chat histories. Tuesday's insight is forgotten by Thursday. Your system never gets smarter."
             },
           ].map(({ icon, color, title, body }) => (
             <div key={title} className="flex flex-col gap-5 rounded-2xl border p-10"
@@ -169,64 +171,64 @@ function Slide02Problem() {
   );
 }
 
-// ─── Slide 03 — Root Cause ────────────────────────────────────────────────────
+// ─── Slide 03 — Maturity Model ────────────────────────────────────────────────
 
 function Slide03RootCause() {
+  const levels = [
+    { n: "L1", label: "Individual habits", desc: "Execution depends on who runs it. AI scales personal habits, making inconsistency faster.", color: RED },
+    { n: "L2", label: "Static playbooks", desc: "Standards exist but execution has moved past them. Nobody checks the wiki anymore.", color: RED },
+    { n: "L3", label: "Distributed AI silos", desc: "Everyone uses AI, but disconnected. Custom GPTs, personal setups. None connected to team standards.", color: GOLD },
+    { n: "L4", label: "Living playbooks", desc: "Shared standards enforced in every session, updated continuously. The system knows your latest approach.", color: TEAL },
+    { n: "L5", label: "Compounding intelligence", desc: "Every engagement makes the team sharper. The weakest performer benefits from the strongest insight.", color: BLUE },
+  ];
+
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <Grid />
 
-      <div className="absolute w-[700px] h-[700px] rounded-full opacity-[0.07]"
-        style={{ background: `radial-gradient(circle, hsl(${BLUE}), transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
-
       {/* Left */}
-      <div className="flex flex-col justify-center pl-[140px] pr-[80px] w-[900px] relative z-10">
-        <Tag label="The Root Cause" />
-        <h2 className="font-black leading-tight mb-10" style={{ fontSize: 76, color: `hsl(${C})` }}>
-          Everything you've documented is already commoditised.
+      <div className="flex flex-col justify-center pl-[120px] pr-[60px] w-[750px] relative z-10">
+        <Tag label="The Maturity Model" />
+        <h2 className="font-black leading-tight mb-8" style={{ fontSize: 72, color: `hsl(${C})` }}>
+          Where is your team
           <br />
-          <span style={{ color: `hsl(${BLUE})` }}>The tacit layer is untouched.</span>
+          <span style={{ color: `hsl(${BLUE})` }}>on this ladder?</span>
         </h2>
-        <p style={{ fontSize: 27, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
-          Your documents, SOPs, and frameworks are explicit knowledge.
-          AI can approximate them today.
-          <br /><br />
-          What clients <em style={{ color: `hsl(${C})` }}>actually</em> pay for is the tacit layer:
-          the judgment, pattern recognition, and decision logic your seniors carry in their heads. Never written down.
+        <p style={{ fontSize: 26, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
+          Most teams are stuck at Level 2 or 3.
+          AI tools made them faster individually,
+          but the gap between best and worst output
+          keeps widening.
         </p>
+
+        <div className="mt-8 flex gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${RED})` }} />
+            <span style={{ fontSize: 18, color: `hsl(${MUT})` }}>Unmanaged</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${GOLD})` }} />
+            <span style={{ fontSize: 18, color: `hsl(${MUT})` }}>Most teams today</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${BLUE})` }} />
+            <span style={{ fontSize: 18, color: `hsl(${MUT})` }}>With LIZA OS</span>
+          </div>
+        </div>
       </div>
 
-      {/* Right — two layers */}
-      <div className="flex flex-col justify-center flex-1 pr-[120px] gap-6 relative z-10">
-        <div className="rounded-2xl p-10 border" style={{ background: BG2, borderColor: `hsl(${MUT} / 0.2)`, opacity: 0.7 }}>
-          <div className="flex items-center gap-4 mb-5">
-            <BookOpen style={{ width: 36, height: 36, color: `hsl(${MUT})` }} />
-            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 19, color: `hsl(${MUT})` }}>Explicit Layer — What AI Already Has</span>
+      {/* Right — levels */}
+      <div className="flex flex-col justify-center flex-1 pr-[100px] gap-3 relative z-10">
+        {levels.map((l) => (
+          <div key={l.n} className="flex items-start gap-5 p-5 rounded-xl border"
+            style={{ background: `hsl(${l.color} / 0.05)`, borderColor: `hsl(${l.color} / 0.25)` }}>
+            <span className="font-black shrink-0 mt-0.5" style={{ fontSize: 28, color: `hsl(${l.color})`, lineHeight: 1 }}>{l.n}</span>
+            <div className="flex-1">
+              <p className="font-bold mb-1" style={{ fontSize: 26, color: `hsl(${C})` }}>{l.label}</p>
+              <p style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{l.desc}</p>
+            </div>
           </div>
-          <p style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-            Documents · Frameworks · Templates · SOPs · Playbooks
-            <br />
-            <span style={{ fontSize: 20 }}>Replicable. Commoditised. What your competitors load too.</span>
-          </p>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="flex-1 h-[1px]" style={{ background: `hsl(${BLUE} / 0.3)` }} />
-          <span className="font-bold" style={{ fontSize: 20, color: `hsl(${BLUE})` }}>What LIZA surfaces</span>
-          <div className="flex-1 h-[1px]" style={{ background: `hsl(${BLUE} / 0.3)` }} />
-        </div>
-
-        <div className="rounded-2xl p-10 border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.5)` }}>
-          <div className="flex items-center gap-4 mb-5">
-            <Brain style={{ width: 36, height: 36, color: `hsl(${BLUE})` }} />
-            <span className="font-bold tracking-widest uppercase" style={{ fontSize: 19, color: `hsl(${BLUE})` }}>Tacit Layer — What Lives in Expert Heads</span>
-          </div>
-          <p style={{ fontSize: 24, color: `hsl(${C})`, lineHeight: 1.5 }}>
-            Judgment calls · Adaptive heuristics · Pattern recognition · Decision logic
-            <br />
-            <span style={{ fontSize: 20, color: `hsl(${BLUE})` }}>This is what clients pay for. And what no competitor can replicate.</span>
-          </p>
-        </div>
+        ))}
       </div>
 
       <Bar />
@@ -234,48 +236,67 @@ function Slide03RootCause() {
   );
 }
 
-// ─── Slide 04 — What Hasn't Worked ───────────────────────────────────────────
+// ─── Slide 04 — Three Gaps ────────────────────────────────────────────────────
 
 function Slide04Tried() {
-  const tried = [
-    { label: "AI workshops & prompt training", why: "Skills without infrastructure. Knowledge evaporates." },
-    { label: "Workflow automation", why: "You accelerated what AI will do for free." },
-    { label: "AI agents & assistants", why: "They run on public data, not your judgment." },
-    { label: "Documentation & playbooks", why: "Static docs capture 'what' but not 'why.'" },
-    { label: "Knowledge bases & wikis", why: "Searchable info, not executable judgment." },
+  const gaps = [
+    {
+      n: "01", title: "No way to define and enforce how AI work gets done",
+      current: "Playbooks live in wikis and shared drives. They never reach the actual AI session.",
+      tools: "Notion, Confluence, prompt libraries",
+      liza: "Living playbooks enforced in every session",
+    },
+    {
+      n: "02", title: "No way to execute as a team inside AI",
+      current: "Everyone prompts alone. Insights stay in individual chats. Your team operates as soloists.",
+      tools: "ChatGPT, Claude, Slack channels",
+      liza: "Team-wide context injected in every session",
+    },
+    {
+      n: "03", title: "No way to learn and compound across engagements",
+      current: "Every session starts from scratch. Nothing compounds. Your system never gets smarter.",
+      tools: "Retrospective tools, AI memory features",
+      liza: "Continuous learning loops across the team",
+    },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
 
-      <div className="relative z-10 flex flex-col justify-center h-full px-[140px]">
-        <Tag label="What You've Probably Tried" />
-        <h2 className="font-black mb-2" style={{ fontSize: 62, color: `hsl(${C})` }}>
-          And why it hasn't worked.
+      <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
+        <Tag label="The Three Gaps" />
+        <h2 className="font-black mb-3" style={{ fontSize: 62, color: `hsl(${C})` }}>
+          What's missing between your team and AI.
         </h2>
-        <p className="mb-6" style={{ fontSize: 24, color: `hsl(${MUT})` }}>
-          Every approach focuses on your frameworks and processes. That's exactly what AI commoditises.
+        <p className="mb-8" style={{ fontSize: 24, color: `hsl(${MUT})` }}>
+          Every tool solves a piece. None solve the system.
         </p>
 
-        <div className="space-y-2.5">
-          {tried.map((t, i) => (
-            <div key={i} className="flex items-center gap-5 px-6 py-3.5 rounded-xl border"
-              style={{ background: BG2, borderColor: `hsl(${RED} / 0.12)` }}>
-              <AlertTriangle style={{ width: 22, height: 22, flexShrink: 0, color: `hsl(${RED} / 0.6)` }} />
-              <p className="font-bold flex-shrink-0 w-[380px]" style={{ fontSize: 21, color: `hsl(${C})` }}>{t.label}</p>
-              <div className="w-[1px] h-5" style={{ background: `hsl(${RED} / 0.15)` }} />
-              <p style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.4 }}>→ {t.why}</p>
+        <div className="space-y-5">
+          {gaps.map((g) => (
+            <div key={g.n} className="flex gap-6 p-7 rounded-2xl border"
+              style={{ background: BG2, borderColor: `hsl(${BLUE} / 0.15)` }}>
+              <span className="font-black shrink-0 mt-1" style={{ fontSize: 40, color: `hsl(${BLUE} / 0.2)`, lineHeight: 1 }}>{g.n}</span>
+              <div className="flex-1">
+                <p className="font-bold mb-2" style={{ fontSize: 26, color: `hsl(${C})` }}>{g.title}</p>
+                <p className="mb-3" style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{g.current}</p>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg border"
+                    style={{ borderColor: `hsl(${RED} / 0.15)`, background: `hsl(${RED} / 0.05)` }}>
+                    <X style={{ width: 16, height: 16, color: `hsl(${RED} / 0.6)` }} />
+                    <span style={{ fontSize: 17, color: `hsl(${MUT})` }}>{g.tools}</span>
+                  </div>
+                  <ArrowRight style={{ width: 20, height: 20, color: `hsl(${MUT} / 0.4)` }} />
+                  <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg border"
+                    style={{ borderColor: `hsl(${BLUE} / 0.3)`, background: `hsl(${BLUE} / 0.07)` }}>
+                    <CheckCircle2 style={{ width: 16, height: 16, color: `hsl(${BLUE})` }} />
+                    <span className="font-semibold" style={{ fontSize: 17, color: `hsl(${BLUE})` }}>{g.liza}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
-        </div>
-
-        <div className="mt-5 p-4 rounded-2xl border" style={{ background: `hsl(${BLUE} / 0.06)`, borderColor: `hsl(${BLUE} / 0.3)` }}>
-          <p style={{ fontSize: 21, color: `hsl(${C})`, lineHeight: 1.5 }}>
-            <strong style={{ color: `hsl(${BLUE})` }}>The missing layer:</strong>{" "}
-            None of these capture <em>how</em> your best people think — the judgment calls, the pattern recognition, the "taste" that clients actually pay for.
-            That's the layer that needs engineering.
-          </p>
         </div>
       </div>
 
@@ -284,7 +305,7 @@ function Slide04Tried() {
   );
 }
 
-// ─── Slide 05 — The Solution ─────────────────────────────────────────────────
+// ─── Slide 05 — The LIZA Loop ────────────────────────────────────────────────
 
 function Slide05Solution() {
   return (
@@ -295,31 +316,31 @@ function Slide05Solution() {
 
       <div className="relative z-10 px-28 w-full">
         <div className="text-center mb-14">
-          <Tag label="The Solution" />
-          <h2 className="font-black" style={{ fontSize: 92, color: `hsl(${C})`, lineHeight: 1.05 }}>
-            LIZA OS
+          <Tag label="The LIZA Loop" />
+          <h2 className="font-black" style={{ fontSize: 82, color: `hsl(${C})`, lineHeight: 1.05 }}>
+            The loop that makes it stick.
           </h2>
           <p className="mt-4" style={{ fontSize: 34, color: `hsl(${MUT})` }}>
-            The platform that turns senior expertise into a scalable operating system.
+            Three steps. One loop. Your team's best thinking becomes the default for everyone.
           </p>
         </div>
 
         <div className="flex gap-8 justify-center mb-8">
           {[
             {
-              icon: <Target size={40} />, color: BLUE, step: "01",
-              title: "Execute",
-              desc: "Protocol-driven workflows replace blank-page guessing. Every team member runs your best methodology.",
+              icon: <Shield size={40} />, color: BLUE, step: "01",
+              title: "Define & Enforce",
+              desc: "Turn scattered prompts and tribal knowledge into living playbooks. Enforced in every session, updated continuously.",
             },
             {
-              icon: <Brain size={40} />, color: TEAL, step: "02",
-              title: "Learn",
-              desc: "After every session, the system captures decisions and deviations. Structured reviews synthesise patterns.",
+              icon: <Users size={40} />, color: TEAL, step: "02",
+              title: "Execute Together",
+              desc: "One person's insight becomes the whole team's advantage. Context injected in every session, not copy-pasted.",
             },
             {
-              icon: <Zap size={40} />, color: BLUE, step: "03",
-              title: "Encode",
-              desc: "Approved learnings flow back into the knowledge graph. The organisation compounds with each project.",
+              icon: <Brain size={40} />, color: BLUE, step: "03",
+              title: "Learn & Compound",
+              desc: "Every engagement feeds back into living playbooks. The team compounds. Tuesday's insight is Wednesday's default.",
             },
           ].map(({ icon, color, step, title, desc }) => (
             <div key={title} className="flex-1 rounded-2xl border p-7 flex flex-col gap-4"
@@ -338,7 +359,7 @@ function Slide05Solution() {
           style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
           <TrendingUp size={28} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
           <p style={{ fontSize: 24, color: `hsl(${MUT})` }}>
-            Every project makes the next one better. <strong style={{ color: `hsl(${C})` }}>Your organisation compounds intelligence</strong> instead of losing it to turnover, silos, and tribal knowledge.
+            Whether your team uses AI tools or not, <strong style={{ color: `hsl(${C})` }}>the loop works</strong>. AI just accelerates the compounding.
           </p>
         </div>
       </div>
@@ -361,14 +382,14 @@ function Slide06HowItWorks() {
       <div className="flex flex-col justify-center pl-[140px] pr-[80px] w-[820px] relative z-10">
         <Tag label="How It Works" />
         <h2 className="font-black leading-tight mb-8" style={{ fontSize: 74, color: `hsl(${C})` }}>
-          Three operating modes.
+          Three modes.
           <br />
           <span style={{ color: `hsl(${BLUE})` }}>One platform.</span>
         </h2>
         <p style={{ fontSize: 26, color: `hsl(${MUT})`, lineHeight: 1.65 }}>
-          LIZA adapts to each role in your organisation.
-          Seniors define the standard. Teams execute it.
-          Leaders track alignment. All in the same system.
+          LIZA adapts to each role.
+          Leaders define standards. Teams execute with them.
+          The system tracks alignment. All in one place.
         </p>
       </div>
 
@@ -377,20 +398,20 @@ function Slide06HowItWorks() {
         {[
           {
             icon: <Target size={32} />, label: "The Launchpad",
-            sub: "For frontline teams",
-            desc: "Protocol-mapped action cards replace blank-page guessing. AI adapts to each step. Every team member runs your best methodology.",
+            sub: "For team members",
+            desc: "Protocol-mapped action cards replace blank-page prompting. AI adapts to each step. Every session runs the team's latest, best playbook.",
             col: BLUE,
           },
           {
             icon: <Brain size={32} />, label: "The Process Studio",
-            sub: "For senior experts",
-            desc: "Smart document ingestion, drag-and-drop playbook creation, after-action synthesis. Your experts define the standard, the platform scales it.",
+            sub: "For team leads & experts",
+            desc: "Drag-and-drop playbook creation from documents, chats, and tribal knowledge. Define standards that actually reach the AI session.",
             col: TEAL,
           },
           {
             icon: <BarChart3 size={32} />, label: "The Command Center",
             sub: "For leaders",
-            desc: "Drift detection, execution analytics, outcome tracking. See who's on-standard and where judgment is deviating — without micromanaging.",
+            desc: "Drift detection, execution analytics, outcome tracking. See who's on-standard and where judgment is deviating. Without micromanaging.",
             col: GOLD,
           },
         ].map((s, i) => (
@@ -409,8 +430,8 @@ function Slide06HowItWorks() {
 
         <div className="p-5 rounded-xl border mt-2" style={{ background: `hsl(${BLUE} / 0.05)`, borderColor: `hsl(${BLUE} / 0.2)` }}>
           <p style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-            <strong style={{ color: `hsl(${C})` }}>Self-service from day one.</strong>{" "}
-            Your senior experts build playbooks directly in the platform. No consultants required. No implementation project. Start in hours.
+            <strong style={{ color: `hsl(${C})` }}>Start in days, not months.</strong>{" "}
+            Your team leads build playbooks directly in the platform. No consultants required. No implementation project.
           </p>
         </div>
       </div>
@@ -420,7 +441,7 @@ function Slide06HowItWorks() {
   );
 }
 
-// ─── Slide 07 — Two Paths ────────────────────────────────────────────────────
+// ─── Slide 07 — Two Entry Points ─────────────────────────────────────────────
 
 function Slide07TwoPaths() {
   return (
@@ -433,7 +454,7 @@ function Slide07TwoPaths() {
           Choose your entry point.
         </h2>
         <p className="mb-8" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
-          Both paths lead to the same outcome: your organisation running on standardised senior judgment.
+          Both paths lead to the same outcome: your team executing on shared, living standards.
         </p>
 
         <div className="grid grid-cols-2 gap-8">
@@ -443,18 +464,18 @@ function Slide07TwoPaths() {
             <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: `hsl(${BLUE})` }} />
             <Chip color={BLUE}>Path 1</Chip>
             <h3 className="font-black mt-4 mb-2" style={{ fontSize: 42, color: `hsl(${C})` }}>
-              Codify Your Expertise
+              Take the Diagnostic
             </h3>
             <p className="mb-5" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-              Start with your core methodology. Surface what makes your senior people exceptional.
-              Turn it into executable protocols your entire team can run.
+              90 seconds. Find out where your team sits on the maturity ladder.
+              Get a personalised report with your Standards Gap score.
             </p>
             <div className="space-y-3 flex-1">
               {[
-                "Identify your unique tacit knowledge",
-                "Build executable playbooks in the platform",
-                "Deploy across teams in weeks, not months",
-                "Every new project compounds your knowledge base",
+                "Identify your team's current maturity level",
+                "See which gaps are costing you the most",
+                "Get a prioritised improvement roadmap",
+                "Share results with leadership",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <CheckCircle2 size={20} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
@@ -464,7 +485,7 @@ function Slide07TwoPaths() {
             </div>
             <div className="mt-5 px-5 py-3 rounded-xl" style={{ background: `hsl(${BLUE} / 0.1)` }}>
               <p className="font-semibold" style={{ fontSize: 19, color: `hsl(${BLUE})` }}>
-                Best for: Firms with strong methodology that needs to scale beyond the founders
+                Best for: Teams that want to understand before they commit
               </p>
             </div>
           </div>
@@ -475,18 +496,18 @@ function Slide07TwoPaths() {
             <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: `hsl(${TEAL})` }} />
             <Chip color={TEAL}>Path 2</Chip>
             <h3 className="font-black mt-4 mb-2" style={{ fontSize: 42, color: `hsl(${C})` }}>
-              Scale Your AI Motion
+              Book a Discovery Call
             </h3>
             <p className="mb-5" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-              Already using AI tools across teams? LIZA gives them organisational context.
-              Stop teams producing the wrong thing faster.
+              30-minute session with our team. Map your team's AI landscape
+              and identify the highest-impact playbook to build first.
             </p>
             <div className="space-y-3 flex-1">
               {[
-                "Inject your standards into every AI interaction",
-                "Protocol-driven workflows replace prompt guessing",
-                "Drift detection catches when teams go off-standard",
-                "After-action synthesis captures what's working",
+                "Map your team's current AI workflows",
+                "Identify the standards your team needs most",
+                "Build your first living playbook together",
+                "Deploy across your team in days",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <CheckCircle2 size={20} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
@@ -496,7 +517,7 @@ function Slide07TwoPaths() {
             </div>
             <div className="mt-5 px-5 py-3 rounded-xl" style={{ background: `hsl(${TEAL} / 0.1)` }}>
               <p className="font-semibold" style={{ fontSize: 19, color: `hsl(${TEAL})` }}>
-                Best for: Organisations already deploying AI that need governance and consistency
+                Best for: Teams ready to start building standards immediately
               </p>
             </div>
           </div>
@@ -512,12 +533,12 @@ function Slide07TwoPaths() {
 
 function Slide08Capabilities() {
   const features = [
-    { label: "Action Grid", desc: "Protocol-mapped action cards replace blank chat. One click activates the right methodology.", color: BLUE, icon: <Target size={28} /> },
+    { label: "Living Playbooks", desc: "Define execution standards that evolve with every engagement. Not static docs. Living, enforced, always current.", color: BLUE, icon: <BookOpen size={28} /> },
     { label: "Intent Lock", desc: "Full AI alignment to the current protocol step. Context injection, not prompt engineering.", color: TEAL, icon: <Lock size={28} /> },
-    { label: "Knowledge Bundles", desc: "Structured context inheritance. Org → Domain → Team → Workbook. Everyone gets the right context.", color: BLUE, icon: <Layers size={28} /> },
-    { label: "Smart Ingestion", desc: "Drag-and-drop documents. AI extracts candidate playbooks for one-click approval.", color: TEAL, icon: <Zap size={28} /> },
+    { label: "Knowledge Bundles", desc: "Structured context inheritance. Org → Domain → Team → Session. Everyone gets the right context.", color: BLUE, icon: <Layers size={28} /> },
+    { label: "Smart Ingestion", desc: "Drag-and-drop documents. AI extracts candidate playbooks for one-click approval. Tribal knowledge captured.", color: TEAL, icon: <Zap size={28} /> },
     { label: "Drift Detection", desc: "Real-time deviation scoring against locked playbooks. Catch inconsistency before it ships.", color: BLUE, icon: <Shield size={28} /> },
-    { label: "After-Action Synthesis", desc: "AI-powered session review captures what worked, what didn't, and feeds the knowledge graph.", color: TEAL, icon: <Brain size={28} /> },
+    { label: "Learning Loops", desc: "After-action synthesis captures what worked, what didn't, and feeds back into the team's playbooks.", color: TEAL, icon: <Brain size={28} /> },
   ];
 
   return (
@@ -526,8 +547,8 @@ function Slide08Capabilities() {
       <div className="relative z-10 flex flex-col h-full px-[120px] pt-14 pb-10">
         <Tag label="Product Capabilities" />
         <h2 className="font-bold mb-8" style={{ fontSize: 64, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          Built for how professionals
-          <span style={{ color: `hsl(${BLUE})` }}> actually work.</span>
+          Built for how teams
+          <span style={{ color: `hsl(${BLUE})` }}> actually work with AI.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
@@ -547,7 +568,7 @@ function Slide08Capabilities() {
           style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
           <Award size={24} style={{ color: `hsl(${BLUE})`, flexShrink: 0 }} />
           <p style={{ fontSize: 20, color: `hsl(${MUT})` }}>
-            Powered by <strong style={{ color: `hsl(${C})` }}>AACE v3.1</strong> — proprietary AI context architecture with intent-locking, knowledge injection, and drift detection.
+            Powered by <strong style={{ color: `hsl(${C})` }}>AACE v3.1</strong>. Proprietary AI context architecture with intent-locking, knowledge injection, and drift detection.
           </p>
         </div>
       </div>
@@ -556,7 +577,7 @@ function Slide08Capabilities() {
   );
 }
 
-// ─── Slide 09 — The Stakes ───────────────────────────────────────────────────
+// ─── Slide 09 — The Fork ─────────────────────────────────────────────────────
 
 function Slide09Stakes() {
   return (
@@ -571,16 +592,16 @@ function Slide09Stakes() {
           <p className="text-center font-bold" style={{ fontSize: 22, color: `hsl(${BLUE})` }}>Every month compounds</p>
         </div>
 
-        {/* If you wait */}
+        {/* Without */}
         <div className="flex-1 rounded-2xl p-10 border relative overflow-hidden" style={{ background: BG2, borderColor: `hsl(${RED} / 0.2)` }}>
           <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style={{ background: `hsl(${RED})` }} />
-          <p className="font-bold tracking-widest uppercase mb-5" style={{ fontSize: 18, color: `hsl(${RED})` }}>Without a system</p>
-          <h3 className="font-bold mb-7" style={{ fontSize: 38, color: `hsl(${C})` }}>Knowledge Entropy</h3>
+          <p className="font-bold tracking-widest uppercase mb-5" style={{ fontSize: 18, color: `hsl(${RED})` }}>Without standards</p>
+          <h3 className="font-bold mb-7" style={{ fontSize: 38, color: `hsl(${C})` }}>Widening Gap</h3>
           {[
-            "Senior expertise stays trapped in individual heads",
-            "AI tools produce outputs with no organisational context",
-            "Quality depends on who's in the room",
-            "Every departure is a capability loss event",
+            "AI silos multiply. Each person drifts further from the team",
+            "Best practices decay. Nobody knows which version is current",
+            "Quality depends on who's in the room, not the system",
+            "Every new tool adds speed without adding consistency",
           ].map((l, i) => (
             <div key={i} className="flex items-start gap-4 mb-3.5">
               <X style={{ width: 22, height: 22, flexShrink: 0, marginTop: 3, color: `hsl(${RED})` }} />
@@ -597,10 +618,10 @@ function Slide09Stakes() {
           <p className="font-bold tracking-widest uppercase mb-5" style={{ fontSize: 18, color: `hsl(${BLUE})` }}>With LIZA OS</p>
           <h3 className="font-bold mb-7" style={{ fontSize: 38, color: `hsl(${C})` }}>Compounding Intelligence</h3>
           {[
-            "Senior expertise becomes a reusable organisational asset",
-            "Every AI interaction carries your methodology context",
-            "Consistent quality regardless of who executes",
-            "The organisation gets smarter with every project",
+            "Every team member executes with the latest, best playbook",
+            "Standards evolve continuously with every engagement",
+            "Consistent quality regardless of who runs the session",
+            "The team measurably improves quarter over quarter",
           ].map((l, i) => (
             <div key={i} className="flex items-start gap-4 mb-3.5">
               <CheckCircle2 style={{ width: 22, height: 22, flexShrink: 0, marginTop: 3, color: `hsl(${BLUE})` }} />
@@ -630,13 +651,12 @@ function Slide10Who() {
         <div className="flex flex-col justify-center pl-[120px] pr-[60px] w-[700px]">
           <Tag label="Who Built This" />
           <h2 className="font-black leading-tight mb-6" style={{ fontSize: 62, color: `hsl(${C})` }}>
-            Built by Experts,
+            Built by practitioners.
             <br />Guided by
-            <span style={{ color: `hsl(${TEAL})` }}> Industry Leaders.</span>
+            <span style={{ color: `hsl(${TEAL})` }}> industry leaders.</span>
           </h2>
           <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 560 }}>
-            Firms full of senior expertise, no way to scale it.
-            Knowledge trapped in heads. Handoffs broken. We built the fix.
+            15 years building data and AI solutions. 200+ consulting engagements across 8 countries. We lived the Standards Gap before we built the fix.
           </p>
         </div>
 
@@ -709,25 +729,25 @@ function Slide11CTA() {
         </div>
 
         <h2 className="font-black mb-6" style={{ fontSize: 96, color: `hsl(${C})`, lineHeight: 1.0 }}>
-          Stop scaling headcount.
+          Your team's AI results
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${BLUE}), hsl(${TEAL}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>Start scaling judgment.</span>
+          }}>should be consistent.</span>
         </h2>
 
         <p className="mb-12" style={{ fontSize: 32, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-          Your best people's expertise, codified and running across every team.
+          Find out where your team stands. Fix the Standards Gap.
           <br />
           Start in days, not months. See results in weeks.
         </p>
 
         <div className="flex items-center justify-center gap-8 mb-14">
           {[
-            { n: "01", label: "30-min discovery call", sub: "Map your expertise landscape" },
-            { n: "02", label: "Self-service onboarding", sub: "Build your first playbook" },
-            { n: "03", label: "Deploy across teams", sub: "Standardise and scale" },
+            { n: "01", label: "Take the 90s diagnostic", sub: "See your Standards Gap score" },
+            { n: "02", label: "Review your report", sub: "Personalised improvement roadmap" },
+            { n: "03", label: "Build your first playbook", sub: "Deploy across your team" },
           ].map((s, i) => (
             <div key={i} className="flex items-center gap-6">
               <div className="flex flex-col items-center gap-2 px-8 py-6 rounded-2xl border"
@@ -760,16 +780,16 @@ function Slide11CTA() {
 
 const SLIDES = [
   { id: 1, label: "Cover", component: Slide01Cover },
-  { id: 2, label: "The Problem", component: Slide02Problem },
-  { id: 3, label: "Root Cause", component: Slide03RootCause },
-  { id: 4, label: "What Hasn't Worked", component: Slide04Tried },
-  { id: 5, label: "The Solution", component: Slide05Solution },
+  { id: 2, label: "The Standards Gap", component: Slide02Problem },
+  { id: 3, label: "Maturity Model", component: Slide03RootCause },
+  { id: 4, label: "Three Gaps", component: Slide04Tried },
+  { id: 5, label: "The LIZA Loop", component: Slide05Solution },
   { id: 6, label: "How It Works", component: Slide06HowItWorks },
   { id: 7, label: "Two Paths", component: Slide07TwoPaths },
   { id: 8, label: "Capabilities", component: Slide08Capabilities },
-  { id: 9, label: "The Stakes", component: Slide09Stakes },
+  { id: 9, label: "The Fork", component: Slide09Stakes },
   { id: 10, label: "Who Built This", component: Slide10Who },
-  { id: 11, label: "Get Started", component: Slide11CTA },
+  { id: 11, label: "Next Steps", component: Slide11CTA },
 ];
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
