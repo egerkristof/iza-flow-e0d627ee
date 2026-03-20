@@ -64,7 +64,7 @@ export function HeroSection() {
 
         {/* Category line */}
         <p className="text-base md:text-lg font-semibold mb-6 text-muted-foreground">
-          LIZA OS: The management layer for <span className="text-primary">AI-powered teams.</span>
+          LIZA OS: The management layer for <span className="text-primary">AI-native teams.</span>
         </p>
 
         {/* CTAs */}
