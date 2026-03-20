@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
-  TrendingUp, Users, Brain, Zap, Target,
+  Users, Brain, Zap, Target,
   Shield, CheckCircle2, Globe, Layers, Award,
-  Download, Loader2, Building2, Workflow, Eye, Lightbulb, BookOpen,
-  ChevronLeft, ChevronRight, Maximize2, X, Grid3x3, Loader2 as Loader2Icon
+  Download, Loader2, Workflow, Eye, Lightbulb, BookOpen,
+  ChevronLeft, ChevronRight, Maximize2, X, Grid3x3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
