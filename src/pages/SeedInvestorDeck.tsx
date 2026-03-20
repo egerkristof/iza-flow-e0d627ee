@@ -485,7 +485,7 @@ function Slide06Category() {
               <text x="290" y="322" textAnchor="middle" fill={MUTED} fontSize="13">Layer</text>
 
               <text x="290" y="28" textAnchor="middle" fill={`hsl(${RED})`} fontSize="18" fontWeight="700">AI Tools</text>
-              <text x="290" y="122" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="16" fontWeight="700">Document Platforms</text>
+              <text x="290" y="122" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="16" fontWeight="700">Document / RAG Platforms</text>
 
               <text x="65" y="150" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">ChatGPT</text>
               <text x="440" y="150" fill={`hsl(${RED} / 0.6)`} fontSize="17" fontWeight="600">Copilot</text>
@@ -502,7 +502,7 @@ function Slide06Category() {
           <div className="flex flex-col gap-6 ml-14 max-w-[520px]">
             {[
               { ring: "AI Tools", desc: "Generate text, code, images. No organizational context. No governance.", color: RED },
-              { ring: "Document Platforms", desc: "Store documents and search them. Static. Don't drive execution.", color: GOLD },
+              { ring: "Document / RAG Platforms", desc: "Store documents and search them. Static. Don't drive execution.", color: GOLD },
               { ring: "LIZA OS", desc: "Makes organizational knowledge executable. Governs AI usage. Learns from every interaction. Compounds over time.", color: ACCENT },
             ].map(({ ring, desc, color }) => (
               <div key={ring} className="flex gap-4">

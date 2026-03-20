@@ -638,7 +638,7 @@ function Slide09CategoryMap() {
               {/* Ring labels */}
               <text x="310" y="30" textAnchor="middle" fill={`hsl(${RED})`} fontSize="20" fontWeight="700">AI Tools</text>
               <text x="310" y="50" textAnchor="middle" fill={MUTED} fontSize="14">They generate outputs</text>
-              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Document Platforms</text>
+              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Document / RAG Platforms</text>
               <text x="310" y="146" textAnchor="middle" fill={MUTED} fontSize="13">They store information</text>
 
               {/* AI Tool names - between outer and middle rings */}
@@ -659,7 +659,7 @@ function Slide09CategoryMap() {
           <div className="flex flex-col gap-6 ml-16 max-w-[500px]">
             {[
               { ring: "AI Tools", desc: "Generate text, code, images. No organizational context. No consistency. No governance.", color: RED },
-              { ring: "Document Platforms", desc: "Store documents and search them. Static. Don't drive execution. Don't learn from usage.", color: GOLD },
+              { ring: "Document / RAG Platforms", desc: "Store documents and search them. Static. Don't drive execution. Don't learn from usage.", color: GOLD },
               { ring: "LIZA OS", desc: "The management layer. Makes organizational knowledge executable. Governs AI usage. Learns from every interaction. Compounds over time.", color: ACCENT },
             ].map(({ ring, desc, color }) => (
               <div key={ring} className="flex gap-4">
