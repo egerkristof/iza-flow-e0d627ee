@@ -796,8 +796,6 @@ export default function SeedInvestorDeck() {
   const prev = useCallback(() => setCurrent(c => Math.max(c - 1, 0)), []);
   const goTo = useCallback((i: number) => { setCurrent(i); setShowGrid(false); }, []);
 
-  useSwipe(swipeRef, { onLeft: next, onRight: prev });
-
   const handleExportPdf = async () => {
     setExporting(true);
     try {
