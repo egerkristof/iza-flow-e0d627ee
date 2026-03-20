@@ -709,13 +709,12 @@ function Slide11CTA() {
         </div>
 
         <h2 className="font-black mb-6" style={{ fontSize: 96, color: `hsl(${C})`, lineHeight: 1.0 }}>
-          The best organisations
-          <br />don't just hire experts.
+          Stop scaling headcount.
           <br />
           <span style={{
             background: `linear-gradient(135deg, hsl(${BLUE}), hsl(${TEAL}))`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-          }}>They build systems that think.</span>
+          }}>Start scaling judgment.</span>
         </h2>
 
         <p className="mb-12" style={{ fontSize: 32, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
