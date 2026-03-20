@@ -638,20 +638,20 @@ function Slide09CategoryMap() {
               {/* Ring labels */}
               <text x="310" y="30" textAnchor="middle" fill={`hsl(${RED})`} fontSize="20" fontWeight="700">AI Tools</text>
               <text x="310" y="50" textAnchor="middle" fill={MUTED} fontSize="14">They generate outputs</text>
-              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Knowledge Platforms</text>
+              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Document Platforms</text>
               <text x="310" y="146" textAnchor="middle" fill={MUTED} fontSize="13">They store information</text>
 
-              {/* AI Tool names - positioned on outer ring */}
-              <text x="60" y="105" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">ChatGPT</text>
-              <text x="490" y="105" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Copilot</text>
-              <text x="60" y="535" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Gemini</text>
-              <text x="500" y="535" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Claude</text>
+              {/* AI Tool names - between outer and middle rings */}
+              <text x="80" y="160" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">ChatGPT</text>
+              <text x="470" y="160" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Copilot</text>
+              <text x="80" y="490" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Gemini</text>
+              <text x="480" y="490" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Claude</text>
 
-              {/* Knowledge Platform names - positioned on middle ring */}
-              <text x="120" y="240" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Notion</text>
-              <text x="430" y="240" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Confluence</text>
-              <text x="135" y="400" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Guru</text>
-              <text x="455" y="400" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Glean</text>
+              {/* Document Platform names - inside middle ring */}
+              <text x="170" y="270" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Notion</text>
+              <text x="400" y="270" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Confluence</text>
+              <text x="175" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Guru</text>
+              <text x="430" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Glean</text>
             </svg>
           </div>
 
@@ -659,7 +659,7 @@ function Slide09CategoryMap() {
           <div className="flex flex-col gap-6 ml-16 max-w-[500px]">
             {[
               { ring: "AI Tools", desc: "Generate text, code, images. No organizational context. No consistency. No governance.", color: RED },
-              { ring: "Knowledge Platforms", desc: "Store documents and search them. Static. Don't drive execution. Don't learn from usage.", color: GOLD },
+              { ring: "Document Platforms", desc: "Store documents and search them. Static. Don't drive execution. Don't learn from usage.", color: GOLD },
               { ring: "LIZA OS", desc: "The management layer. Makes organizational knowledge executable. Governs AI usage. Learns from every interaction. Compounds over time.", color: ACCENT },
             ].map(({ ring, desc, color }) => (
               <div key={ring} className="flex gap-4">
