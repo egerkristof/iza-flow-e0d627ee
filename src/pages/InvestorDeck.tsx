@@ -470,8 +470,8 @@ function Slide07CaseStudy() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Enterprise Validation" color={GREEN} />
         <h2 className="font-bold mb-6" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
-          Live demo with Graphisoft<br />
-          <span style={{ color: `hsl(${GREEN})` }}>(Nemetschek Group, 200+ employees)</span>
+          Live demo with a Global AEC Software Company<br />
+          <span style={{ color: `hsl(${GREEN})` }}>(part of a €6B Technology Group, 200+ employees)</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -482,8 +482,8 @@ function Slide07CaseStudy() {
               <p className="font-semibold mb-2" style={{ fontSize: 20, color: `hsl(${ACCENT})`, letterSpacing: "0.1em" }}>SCENARIO</p>
               <p className="font-bold mb-2" style={{ fontSize: 28, color: TEXT }}>Post-merger integration across 4 departments</p>
               <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>
-                DDS-CAD merger into ARCHICAD. Leadership changes, team restructuring,
-                CICD pipeline unification, travel budget reallocation.
+                Product line merger into flagship platform. Leadership changes, team restructuring,
+                CI/CD pipeline unification, travel budget reallocation.
               </p>
             </div>
 
@@ -492,7 +492,7 @@ function Slide07CaseStudy() {
               <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>WHAT HAPPENED</p>
               {[
                 "Strategic decision propagated in real-time from Strategy → HR → R&D",
-                "AI generated change management comms following Graphisoft's playbook",
+                "AI generated change management comms following the company's playbook",
                 "AI leaked a sensitive personnel change in the all-hands draft",
                 "Senior corrected the AI. System learned the governance rule instantly.",
                 "Next execution: AI automatically enforced the rule. No reminder needed.",
@@ -536,7 +536,7 @@ function Slide07CaseStudy() {
               style={{ borderColor: `hsl(${ACCENT} / 0.18)`, background: `hsl(${ACCENT} / 0.04)` }}>
               <Building2 size={28} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
               <p style={{ fontSize: 19, color: MUTED }}>
-                <strong style={{ color: TEXT }}>Sylwester Pawluk, VP Product @ Graphisoft</strong> serves as Strategic Advisor to LIZA OS
+                <strong style={{ color: TEXT }}>VP Product at the company</strong> now serves as Strategic Advisor to LIZA OS
               </p>
             </div>
           </div>
