@@ -20,6 +20,7 @@ import AdminTrials from "./pages/AdminTrials";
 import AdminPage from "./pages/Admin";
 import PitchDeck from "./pages/PitchDeck";
 import InvestorDeck from "./pages/InvestorDeck";
+import SeedInvestorDeck from "./pages/SeedInvestorDeck";
 import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 
 import ConsultingDeck from "./pages/ConsultingDeck";
@@ -100,6 +101,7 @@ const App = () => (
             {/* Decks */}
             <Route path="/pitch" element={<PitchDeck />} />
             <Route path="/investor" element={<InvestorDeck />} />
+            <Route path="/investor-seed" element={<SeedInvestorDeck />} />
             <Route path="/sales" element={<ConsultingDeck />} />
             <Route path="/linkedin-card" element={<LinkedInImageCard />} />
 
