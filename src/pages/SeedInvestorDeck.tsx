@@ -278,10 +278,10 @@ function Slide04Validation() {
             {
               title: "Enterprise A — Global AEC Software (€6B Group)",
               color: ACCENT,
-              stats: "200+ employees · 16 attendees · 107-min live demo",
+              stats: "200+ employees · 16 attendees · 107-min first session",
               points: [
-                "Post-merger integration across 4 departments (Strategy, HR, R&D, Change Mgmt)",
-                "AI learned governance rules in real-time during the demo",
+                "Design partnership: post-merger integration across 4 departments (Strategy, HR, R&D, Change Mgmt)",
+                "AI learned governance rules in real-time during the first engagement session",
                 "VP Product now serves as Strategic Advisor",
               ],
             },

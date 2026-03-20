@@ -470,7 +470,7 @@ function Slide07CaseStudy() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Enterprise Validation" color={GREEN} />
         <h2 className="font-bold mb-6" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
-          Live demo with a Global AEC Software Company<br />
+          Design partnership with a Global AEC Software Company<br />
           <span style={{ color: `hsl(${GREEN})` }}>(part of a €6B Technology Group, 200+ employees)</span>
         </h2>
 
@@ -479,17 +479,17 @@ function Slide07CaseStudy() {
           <div className="w-[55%] flex flex-col gap-4">
             <div className="rounded-xl border p-6"
               style={{ borderColor: `hsl(${ACCENT} / 0.18)`, background: `hsl(${ACCENT} / 0.04)` }}>
-              <p className="font-semibold mb-2" style={{ fontSize: 20, color: `hsl(${ACCENT})`, letterSpacing: "0.1em" }}>SCENARIO</p>
+              <p className="font-semibold mb-2" style={{ fontSize: 20, color: `hsl(${ACCENT})`, letterSpacing: "0.1em" }}>ENGAGEMENT SCOPE</p>
               <p className="font-bold mb-2" style={{ fontSize: 28, color: TEXT }}>Post-merger integration across 4 departments</p>
               <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>
                 Product line merger into flagship platform. Leadership changes, team restructuring,
-                CI/CD pipeline unification, travel budget reallocation.
+                CI/CD pipeline unification, travel budget reallocation. Identified as first design partnership to validate multi-departmental deployment.
               </p>
             </div>
 
             <div className="rounded-xl border p-6"
               style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>WHAT HAPPENED</p>
+              <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>WHAT HAPPENED IN THE FIRST SESSION</p>
               {[
                 "Strategic decision propagated in real-time from Strategy → HR → R&D",
                 "AI generated change management comms following the company's playbook",
@@ -511,18 +511,18 @@ function Slide07CaseStudy() {
               <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>WHAT THIS PROVES</p>
               <p className="font-bold mb-3" style={{ fontSize: 26, color: TEXT }}>This isn't a tool problem. It's an infrastructure problem.</p>
               <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>
-                The demo covered Strategy, HR, Change Management, and R&D Sprint Planning
-                in a single session. No other platform connects these workflows through a shared,
+                The session covered Strategy, HR, Change Management, and R&D Sprint Planning
+                in a single engagement. No other platform connects these workflows through a shared,
                 learning knowledge graph.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               {[
-                { label: "4", sub: "Departments covered", color: ACCENT },
+                { label: "4", sub: "Departments identified", color: ACCENT },
                 { label: "16", sub: "Attendees (VP, Dev, HR, PM)", color: GREEN },
-                { label: "107", sub: "Minutes of live demo", color: GOLD },
-                { label: "Real", sub: "Use cases, not simulated", color: ACCENT },
+                { label: "107", sub: "Minutes, first session", color: GOLD },
+                { label: "Real", sub: "Use cases, live data", color: ACCENT },
               ].map(({ label, sub, color }) => (
                 <div key={sub} className="rounded-xl border p-5 text-center"
                   style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
@@ -563,7 +563,7 @@ function Slide08Traction() {
         <div className="grid grid-cols-4 gap-7 mb-10">
           {[
             { stat: "Live Product", sub: "Functional platform with AI edge functions, role-based modes, protocol execution, and knowledge graph.", color: ACCENT },
-            { stat: "Enterprise Pilot", sub: "Full-day demo with a global AEC software company (€6B group). VP-level engagement across 4 departments.", color: GREEN },
+            { stat: "Design Partnership", sub: "Active engagement with a global AEC software company (€6B group). VP-level participation across 4 departments. Entering structured deployment.", color: GREEN },
             { stat: "Multi-Vertical", sub: "Validated across exec search, architecture, sales operations, marketing, and professional services.", color: ACCENT },
             { stat: "AACE v3.1", sub: "Proprietary AI context specification. Intent-locking, hierarchical knowledge injection, drift detection. The IP moat.", color: GREEN },
           ].map(({ stat, sub, color }) => (
