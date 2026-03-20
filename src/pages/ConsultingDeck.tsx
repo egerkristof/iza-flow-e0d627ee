@@ -566,9 +566,9 @@ function Slide09Stakes() {
       <div className="relative z-10 flex h-full items-center px-[140px] gap-16 w-full">
         {/* Center label */}
         <div className="flex flex-col items-center gap-3 flex-shrink-0 w-[180px]">
-          <Tag label="12–18 months" />
+          <Tag label="The Fork" />
           <Clock style={{ width: 56, height: 56, color: `hsl(${BLUE})` }} />
-          <p className="text-center font-bold" style={{ fontSize: 22, color: `hsl(${BLUE})` }}>The window</p>
+          <p className="text-center font-bold" style={{ fontSize: 22, color: `hsl(${BLUE})` }}>Every month compounds</p>
         </div>
 
         {/* If you wait */}
