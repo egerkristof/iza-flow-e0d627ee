@@ -1175,7 +1175,6 @@ export default function InvestorDeck() {
   const [showGrid, setShowGrid] = useState(false);
   const [showNav, setShowNav] = useState(true);
   const exportRef = useRef<HTMLDivElement>(null);
-  const exportRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobileViewport();
   const isPortrait = useIsPortrait();
 
