@@ -779,17 +779,17 @@ function Slide11CTA() {
 // ─── Slide registry ───────────────────────────────────────────────────────────
 
 const SLIDES = [
-  { id: 1, label: "Cover", component: Slide01Cover },
-  { id: 2, label: "The Standards Gap", component: Slide02Problem },
-  { id: 3, label: "Maturity Model", component: Slide03RootCause },
-  { id: 4, label: "Three Gaps", component: Slide04Tried },
-  { id: 5, label: "The LIZA Loop", component: Slide05Solution },
-  { id: 6, label: "How It Works", component: Slide06HowItWorks },
-  { id: 7, label: "Two Paths", component: Slide07TwoPaths },
-  { id: 8, label: "Capabilities", component: Slide08Capabilities },
-  { id: 9, label: "The Fork", component: Slide09Stakes },
-  { id: 10, label: "Who Built This", component: Slide10Who },
-  { id: 11, label: "Next Steps", component: Slide11CTA },
+  { id: 1, title: "Cover", component: <Slide01Cover /> },
+  { id: 2, title: "The Standards Gap", component: <Slide02Problem /> },
+  { id: 3, title: "Maturity Model", component: <Slide03RootCause /> },
+  { id: 4, title: "Three Gaps", component: <Slide04Tried /> },
+  { id: 5, title: "The LIZA Loop", component: <Slide05Solution /> },
+  { id: 6, title: "How It Works", component: <Slide06HowItWorks /> },
+  { id: 7, title: "Two Paths", component: <Slide07TwoPaths /> },
+  { id: 8, title: "Capabilities", component: <Slide08Capabilities /> },
+  { id: 9, title: "The Fork", component: <Slide09Stakes /> },
+  { id: 10, title: "Who Built This", component: <Slide10Who /> },
+  { id: 11, title: "Next Steps", component: <Slide11CTA /> },
 ];
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
