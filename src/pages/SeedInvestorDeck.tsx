@@ -3,10 +3,11 @@ import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentat
 import {
   Users, Brain, Zap, Target,
   Shield, CheckCircle2, Globe, Layers, Award,
-  Download, Loader2, Workflow, Eye, Lightbulb, BookOpen,
+  Loader2, Workflow, Eye, Lightbulb, BookOpen,
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ExportMenu } from "@/components/ExportMenu";
 import { cn } from "@/lib/utils";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
