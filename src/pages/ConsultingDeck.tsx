@@ -932,9 +932,7 @@ export default function ConsultingDeck() {
             <ChevronRight size={18} style={{ color: `hsl(${C})` }} />
           </button>
           <div className="w-px h-4" style={{ background: `hsl(${MUT} / 0.3)` }} />
-          <button onClick={handleExportPdf} disabled={exporting} className="p-1.5 rounded-lg disabled:opacity-50">
-            {exporting ? <Loader2 size={16} className="animate-spin" style={{ color: `hsl(${MUT})` }} /> : <Download size={16} style={{ color: `hsl(${MUT})` }} />}
-          </button>
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Sales-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={`hsl(${MUT})`} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>

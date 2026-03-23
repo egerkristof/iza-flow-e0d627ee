@@ -941,9 +941,7 @@ export default function SeedInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <button onClick={handleExportPdf} disabled={exporting} className="p-1.5 rounded-lg disabled:opacity-50">
-            {exporting ? <Loader2 size={16} className="animate-spin" style={{ color: MUTED }} /> : <Download size={16} style={{ color: MUTED }} />}
-          </button>
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pre-Seed-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
