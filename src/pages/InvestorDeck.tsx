@@ -1188,54 +1188,7 @@ export default function InvestorDeck() {
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
   useSwipe(next, prev);
 
-  const handleExportPdf = async () => {
-    setExporting(true);
-    await new Promise(r => setTimeout(r, 200));
-    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(undefined))));
-    await new Promise(r => setTimeout(r, 300));
-    try {
-      const html2canvas = (await import('html2canvas')).default;
-      const { jsPDF } = await import('jspdf');
-      const container = exportRef.current;
-      if (!container) return;
-      const slideEls = Array.from(container.children) as HTMLElement[];
-      // A4 landscape in mm: 297 × 210
-      const A4_W = 297;
-      const A4_H = 210;
-      const MARGIN = 8;
-      const contentW = A4_W - MARGIN * 2;
-      const contentH = A4_H - MARGIN * 2;
-      const slideAspect = 1920 / 1080;
-      const fitW = contentW;
-      const fitH = fitW / slideAspect;
-      const finalW = fitH > contentH ? contentH * slideAspect : fitW;
-      const finalH = fitH > contentH ? contentH : fitH;
-      const offsetX = MARGIN + (contentW - finalW) / 2;
-      const offsetY = MARGIN + (contentH - finalH) / 2;
-
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-      for (let i = 0; i < slideEls.length; i++) {
-        if (i > 0) pdf.addPage('a4', 'landscape');
-        const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
-        const origStyles: string[] = [];
-        const affected: HTMLElement[] = [];
-        gradientEls.forEach((el) => {
-          const cs = el.style.cssText;
-          if (cs.includes('background-clip') || cs.includes('BackgroundClip') || cs.includes('text-fill-color') || cs.includes('TextFillColor')) {
-            origStyles.push(cs);
-            affected.push(el);
-            el.style.cssText = `color: hsl(${ACCENT}); font: inherit;`;
-          }
-        });
-        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
-        affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, finalW, finalH);
-      }
-      pdf.save('LIZA-OS-Investor-Deck.pdf');
-    } finally {
-      setExporting(false);
-    }
-  };
+  // Export handled by ExportMenu component
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
