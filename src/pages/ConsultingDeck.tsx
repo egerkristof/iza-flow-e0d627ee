@@ -7,6 +7,7 @@ import {
   Download, Loader2, Users, BarChart3, Shield, Workflow
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
 import zoltanPhoto from "@/assets/zoltan-kauker.png";
