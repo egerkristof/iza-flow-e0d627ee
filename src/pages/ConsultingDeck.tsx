@@ -4,9 +4,10 @@ import {
   ChevronLeft, ChevronRight, Maximize2, Grid3x3, X,
   Brain, Target, Zap, BookOpen, TrendingUp, CheckCircle2,
   ArrowRight, AlertTriangle, Clock, Award, Layers, Lock,
-  Download, Loader2, Users, BarChart3, Shield, Workflow
+  Loader2, Users, BarChart3, Shield, Workflow
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
