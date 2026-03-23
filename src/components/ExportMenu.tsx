@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Download, Loader2, FileText, Presentation, ExternalLink, ChevronDown } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
