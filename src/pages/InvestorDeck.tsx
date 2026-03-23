@@ -4,8 +4,9 @@ import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   TrendingUp, Users, Brain, Zap, Target, BarChart3,
   DollarSign, Shield, CheckCircle2, ArrowRight, Globe, Layers, Award, Briefcase,
-  Download, Loader2, AlertTriangle, Building2, Workflow, Eye, Lightbulb, BookOpen
+  Loader2, AlertTriangle, Building2, Workflow, Eye, Lightbulb, BookOpen
 } from "lucide-react";
+import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import istvanPhoto from "@/assets/istvan-boscha.png";
