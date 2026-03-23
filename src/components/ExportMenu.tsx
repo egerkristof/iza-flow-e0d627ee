@@ -86,8 +86,6 @@ async function exportPptx(exportRef: React.RefObject<HTMLDivElement>, fileName: 
 }
 
 async function exportGoogleSlides(exportRef: React.RefObject<HTMLDivElement>, fileName: string) {
-  // Google Slides doesn't have a direct client-side API to create presentations.
-  // We export as PPTX and open Google Slides import page.
   const PptxGenJS = (await import("pptxgenjs")).default;
   const canvases = await captureSlides(exportRef);
   if (!canvases.length) return;
@@ -103,10 +101,25 @@ async function exportGoogleSlides(exportRef: React.RefObject<HTMLDivElement>, fi
     slide.addImage({ data: imgData, x: 0, y: 0, w: "100%", h: "100%" });
   }
 
-  // Download PPTX first, then open Google Slides
-  await pptx.writeFile({ fileName: `${fileName}.pptx` });
-  // Open Google Slides in new tab where user can import the file
-  window.open("https://slides.google.com/create", "_blank");
+  // Generate as blob, upload to storage, then open Google Slides import
+  const blob = await pptx.write({ outputType: "blob" }) as Blob;
+  const storagePath = `exports/${fileName}-${Date.now()}.pptx`;
+
+  const { error } = await supabase.storage
+    .from("temp-exports")
+    .upload(storagePath, blob, { contentType: "application/vnd.openxmlformats-officedocument.presentationml.presentation", upsert: true });
+
+  if (error) {
+    console.error("Upload failed, falling back to download:", error);
+    await pptx.writeFile({ fileName: `${fileName}.pptx` });
+    return;
+  }
+
+  const { data: urlData } = supabase.storage.from("temp-exports").getPublicUrl(storagePath);
+  const publicUrl = urlData.publicUrl;
+
+  // Open Google Slides with import URL
+  window.open(`https://docs.google.com/presentation/d/?usp=import&url=${encodeURIComponent(publicUrl)}`, "_blank");
 }
 
 const FORMAT_OPTIONS: { id: ExportFormat; label: string; icon: React.ReactNode; desc: string }[] = [
