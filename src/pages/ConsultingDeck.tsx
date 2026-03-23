@@ -7,6 +7,7 @@ import {
   Download, Loader2, Users, BarChart3, Shield, Workflow
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
 import zoltanPhoto from "@/assets/zoltan-kauker.png";
@@ -779,32 +780,41 @@ function Slide11CTA() {
 // ─── Slide registry ───────────────────────────────────────────────────────────
 
 const SLIDES = [
-  { id: 1, label: "Cover", component: Slide01Cover },
-  { id: 2, label: "The Standards Gap", component: Slide02Problem },
-  { id: 3, label: "Maturity Model", component: Slide03RootCause },
-  { id: 4, label: "Three Gaps", component: Slide04Tried },
-  { id: 5, label: "The LIZA Loop", component: Slide05Solution },
-  { id: 6, label: "How It Works", component: Slide06HowItWorks },
-  { id: 7, label: "Two Paths", component: Slide07TwoPaths },
-  { id: 8, label: "Capabilities", component: Slide08Capabilities },
-  { id: 9, label: "The Fork", component: Slide09Stakes },
-  { id: 10, label: "Who Built This", component: Slide10Who },
-  { id: 11, label: "Next Steps", component: Slide11CTA },
+  { id: 1, title: "Cover", component: <Slide01Cover /> },
+  { id: 2, title: "The Standards Gap", component: <Slide02Problem /> },
+  { id: 3, title: "Maturity Model", component: <Slide03RootCause /> },
+  { id: 4, title: "Three Gaps", component: <Slide04Tried /> },
+  { id: 5, title: "The LIZA Loop", component: <Slide05Solution /> },
+  { id: 6, title: "How It Works", component: <Slide06HowItWorks /> },
+  { id: 7, title: "Two Paths", component: <Slide07TwoPaths /> },
+  { id: 8, title: "Capabilities", component: <Slide08Capabilities /> },
+  { id: 9, title: "The Fork", component: <Slide09Stakes /> },
+  { id: 10, title: "Who Built This", component: <Slide10Who /> },
+  { id: 11, title: "Next Steps", component: <Slide11CTA /> },
 ];
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
 
+const CHROME_BG = "hsl(220 15% 97%)";
+const CHROME_BORDER = "hsl(220 12% 90%)";
+
 export default function ConsultingDeck() {
   const [current, setCurrent] = useState(0);
-  const [grid, setGrid] = useState(false);
-  const [fs, setFs] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showGrid, setShowGrid] = useState(false);
+  const [showNav, setShowNav] = useState(true);
   const [exporting, setExporting] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobileViewport();
   const isPortrait = useIsPortrait();
 
-  const prev = useCallback(() => setCurrent(c => Math.max(c - 1, 0)), []);
-  const next = useCallback(() => setCurrent(c => Math.min(c + 1, SLIDES.length - 1)), []);
+  const goTo = useCallback((idx: number) => {
+    setCurrent(Math.max(0, Math.min(SLIDES.length - 1, idx)));
+    setShowGrid(false);
+  }, []);
+
+  const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+  const next = useCallback(() => goTo(current + 1), [current, goTo]);
   useSwipe(next, prev);
 
   const handleExportPdf = async () => {
@@ -822,10 +832,12 @@ export default function ConsultingDeck() {
       const A4_W = 297, A4_H = 210, MARGIN = 8;
       const contentW = A4_W - MARGIN * 2, contentH = A4_H - MARGIN * 2;
       const slideAspect = 1920 / 1080;
-      let fitW = contentW, fitH = contentW / slideAspect;
-      if (fitH > contentH) { fitH = contentH; fitW = contentH * slideAspect; }
-      const offsetX = MARGIN + (contentW - fitW) / 2;
-      const offsetY = MARGIN + (contentH - fitH) / 2;
+      const fitW = contentW;
+      const fitH = fitW / slideAspect;
+      const finalW = fitH > contentH ? contentH * slideAspect : fitW;
+      const finalH = fitH > contentH ? contentH : fitH;
+      const offsetX = MARGIN + (contentW - finalW) / 2;
+      const offsetY = MARGIN + (contentH - finalH) / 2;
       for (let i = 0; i < slideEls.length; i++) {
         if (i > 0) pdf.addPage('a4', 'landscape');
         const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
@@ -841,7 +853,7 @@ export default function ConsultingDeck() {
         });
         const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
         affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, fitW, fitH);
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, finalW, finalH);
       }
       pdf.save('LIZA-OS-Sales-Deck.pdf');
     } finally {
@@ -850,25 +862,38 @@ export default function ConsultingDeck() {
   };
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === " ") next();
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "g" || e.key === "G") setGrid(v => !v);
-      if (e.key === "f" || e.key === "F") {
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
-        else document.exitFullscreen().catch(() => {});
-      }
-      if (e.key === "Escape") setGrid(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") { e.preventDefault(); next(); }
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); prev(); }
+      if (e.key === "Escape") { setIsFullscreen(false); setShowGrid(false); }
+      if (e.key === "g" || e.key === "G") setShowGrid(v => !v);
+      if (e.key === "f" || e.key === "F5") { e.preventDefault(); enterFullscreen(); }
     };
-    window.addEventListener("keydown", handler);
-    const onFsChange = () => setFs(!!document.fullscreenElement);
-    document.addEventListener("fullscreenchange", onFsChange);
-    return () => { window.removeEventListener("keydown", handler); document.removeEventListener("fullscreenchange", onFsChange); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [next, prev]);
 
-  const Slide = SLIDES[current].component;
+  const enterFullscreen = () => {
+    document.documentElement.requestFullscreen?.().then(() => setIsFullscreen(true)).catch(() => {});
+  };
 
-  // ─── Mobile: auto-hide controls ─────────────────────────────────────────────
+  useEffect(() => {
+    const onFsc = () => { if (!document.fullscreenElement) setIsFullscreen(false); };
+    document.addEventListener("fullscreenchange", onFsc);
+    return () => document.removeEventListener("fullscreenchange", onFsc);
+  }, []);
+
+  useEffect(() => {
+    if (!isFullscreen) { setShowNav(true); return; }
+    let timer: ReturnType<typeof setTimeout>;
+    const show = () => { setShowNav(true); clearTimeout(timer); timer = setTimeout(() => setShowNav(false), 2500); };
+    window.addEventListener("mousemove", show);
+    show();
+    return () => { window.removeEventListener("mousemove", show); clearTimeout(timer); };
+  }, [isFullscreen]);
+
+  const slide = SLIDES[current];
+
   const [mobileControlsVisible, setMobileControlsVisible] = useState(true);
   const mobileTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -883,17 +908,16 @@ export default function ConsultingDeck() {
     return () => clearTimeout(mobileTimerRef.current);
   }, [isMobile, isPortrait, showMobileControls]);
 
-  // ─── Mobile: clean present mode ─────────────────────────────────────────────
+  // ─── Mobile ─────────────────────────────────────────────────────────────────
   if (isMobile) {
     return (
-      <div className="fixed inset-0 z-[9999]" style={{ background: "hsl(0 0% 100%)" }}
+      <div className="fixed inset-0 z-[9999]" style={{ background: BG }}
         onClick={() => { if (!isPortrait) showMobileControls(); }}>
-        {/* Rotate hint overlay */}
         {isPortrait && (
           <div className="absolute inset-0 z-[10000] flex flex-col items-center justify-center gap-4 px-8"
             style={{ background: "hsl(0 0% 100% / 0.92)", backdropFilter: "blur(8px)" }}>
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ background: `hsl(${BLUE} / 0.15)`, border: `1px solid hsl(${BLUE} / 0.3)` }}>
+              style={{ background: `hsl(${BLUE} / 0.1)`, border: `1px solid hsl(${BLUE} / 0.3)` }}>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={`hsl(${BLUE})`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="4" y="2" width="16" height="20" rx="2" />
                 <path d="M12 18h.01" />
@@ -908,10 +932,8 @@ export default function ConsultingDeck() {
           </div>
         )}
 
-        {/* Full-bleed slide */}
-        <ScaledSlide><Slide /></ScaledSlide>
+        <ScaledSlide>{slide.component}</ScaledSlide>
 
-        {/* Landscape tap-zone arrows */}
         {!isPortrait && (
           <>
             <button
@@ -935,10 +957,9 @@ export default function ConsultingDeck() {
           </>
         )}
 
-        {/* Minimal floating controls — auto-hide */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full transition-opacity duration-300"
           style={{
-            background: "hsl(0 0% 100% / 0.9)", border: "1px solid hsl(220 12% 90%)", backdropFilter: "blur(8px)",
+            background: "hsl(0 0% 100% / 0.9)", border: `1px solid ${CHROME_BORDER}`, backdropFilter: "blur(8px)",
             opacity: mobileControlsVisible ? 1 : 0, pointerEvents: mobileControlsVisible ? "auto" : "none",
           }}
           onClick={(e) => e.stopPropagation()}>
@@ -957,11 +978,10 @@ export default function ConsultingDeck() {
           </button>
         </div>
 
-        {/* Export container */}
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
           {SLIDES.map(s => (
             <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
-              <s.component />
+              {s.component}
             </div>
           ))}
         </div>
@@ -969,120 +989,128 @@ export default function ConsultingDeck() {
     );
   }
 
-  // ─── Desktop: full chrome ───────────────────────────────────────────────────
+  // ─── Fullscreen ─────────────────────────────────────────────────────────────
+  if (isFullscreen) {
+    return (
+      <div className="fixed inset-0 bg-white z-[9999]" style={{ cursor: showNav ? "default" : "none" }}>
+        <ScaledSlide>{slide.component}</ScaledSlide>
+        {showNav && (
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-3 rounded-full shadow-lg"
+            style={{ background: "hsl(0 0% 100% / 0.95)", border: `1px solid ${CHROME_BORDER}` }}>
+            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg hover:bg-black/5 disabled:opacity-30">
+              <ChevronLeft size={20} style={{ color: `hsl(${C})` }} />
+            </button>
+            <span className="text-sm font-mono px-2" style={{ color: `hsl(${MUT})` }}>{current + 1} / {SLIDES.length}</span>
+            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg hover:bg-black/5 disabled:opacity-30">
+              <ChevronRight size={20} style={{ color: `hsl(${C})` }} />
+            </button>
+            <button onClick={() => { document.exitFullscreen?.(); setIsFullscreen(false); }} className="p-2 rounded-lg hover:bg-black/5 ml-2">
+              <X size={20} style={{ color: `hsl(${MUT})` }} />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ─── Desktop ────────────────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col h-screen" style={{ background: "hsl(220 15% 97%)" }}>
-      {/* Toolbar */}
-      <div className="flex items-center justify-between px-6 py-3 border-b flex-shrink-0"
-        style={{ borderColor: "hsl(220 12% 90%)", background: "hsl(220 15% 97%)" }}>
-        <div className="flex items-center gap-4">
-          <div className="w-7 h-7 rounded flex items-center justify-center font-black text-sm"
-            style={{ background: `hsl(${BLUE})`, color: "hsl(0 0% 100%)" }}>L</div>
-          <span className="font-semibold" style={{ fontSize: 14, color: `hsl(${C})` }}>LIZA OS — Sales Deck</span>
-          <span style={{ fontSize: 12, color: `hsl(${MUT})` }}>·</span>
-          <span style={{ fontSize: 13, color: `hsl(${MUT})` }}>{SLIDES[current].label}</span>
-        </div>
+    <div className="flex flex-col h-screen" style={{ background: CHROME_BG }}>
+      <div className="flex items-center justify-between px-5 py-3 border-b shrink-0"
+        style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
         <div className="flex items-center gap-3">
-          <button onClick={() => setGrid(v => !v)}
-            className={cn("flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
-              grid ? "text-foreground" : "text-muted-foreground hover:text-foreground")}
-            style={{ background: grid ? `hsl(${BLUE} / 0.1)` : "transparent" }}>
-            <Grid3x3 size={15} /> Grid
-          </button>
-          <button onClick={handleExportPdf} disabled={exporting}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50">
-            {exporting ? <Loader2 size={15} className="animate-spin" /> : <Download size={15} />}
-            {exporting ? "Exporting..." : "PDF"}
-          </button>
-          <button onClick={() => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {}); else document.exitFullscreen().catch(() => {}); }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            <Maximize2 size={15} /> {fs ? "Exit" : "Present"}
-          </button>
-          <span className="font-mono text-sm" style={{ color: `hsl(${MUT})` }}>
-            {String(current + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
+          <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${BLUE})` }} />
+          <span className="text-sm font-semibold" style={{ color: `hsl(${C})` }}>LIZA OS — Sales Deck</span>
+          <span className="text-xs px-2 py-0.5 rounded"
+            style={{ background: `hsl(${BLUE} / 0.1)`, color: `hsl(${BLUE})` }}>
+            {SLIDES.length} slides
           </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")}>
+            <Grid3x3 size={15} className="mr-1.5" /> Grid
+          </Button>
+          <Button size="sm" variant="ghost" onClick={handleExportPdf} disabled={exporting}>
+            {exporting ? <Loader2 size={15} className="mr-1.5 animate-spin" /> : <Download size={15} className="mr-1.5" />}
+            {exporting ? "Exporting..." : "PDF"}
+          </Button>
+          <Button size="sm" variant="ghost" onClick={enterFullscreen}>
+            <Maximize2 size={15} className="mr-1.5" /> Present
+          </Button>
         </div>
       </div>
 
-      {/* Main area */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <div className="w-[180px] flex-shrink-0 overflow-y-auto py-4 px-3 border-r space-y-2"
-          style={{ borderColor: "hsl(220 12% 90%)", background: "hsl(220 15% 97%)" }}>
+        <div className="w-44 flex flex-col gap-2 p-3 overflow-y-auto border-r shrink-0"
+          style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
           {SLIDES.map((s, i) => (
-            <button key={s.id} onClick={() => { setCurrent(i); setGrid(false); }}
-              className="w-full rounded-lg overflow-hidden border transition-all"
-              style={{
-                borderColor: i === current ? `hsl(${BLUE} / 0.6)` : "hsl(220 12% 90%)",
-                background: i === current ? `hsl(${BLUE} / 0.06)` : "transparent",
-              }}>
-              <div className="w-full aspect-video">
-                <ScaledSlide><s.component /></ScaledSlide>
+            <button key={s.id} onClick={() => goTo(i)}
+              className={cn("w-full rounded-lg overflow-hidden border-2 transition-all text-left shrink-0 flex flex-col",
+                i === current ? "border-primary" : "border-transparent opacity-60 hover:opacity-90"
+              )}>
+              <div className="w-full" style={{ aspectRatio: "16/9", pointerEvents: "none" }}>
+                <ScaledSlide>{s.component}</ScaledSlide>
               </div>
-              <div className="px-2 py-1.5 flex items-center gap-2">
-                <span className="font-mono font-bold" style={{ fontSize: 10, color: i === current ? `hsl(${BLUE})` : `hsl(${MUT})` }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="truncate" style={{ fontSize: 10, color: i === current ? `hsl(${C})` : `hsl(${MUT})` }}>
-                  {s.label}
-                </span>
-              </div>
+              <p className="text-[10px] px-1.5 py-1" style={{ color: `hsl(${MUT})` }}>
+                {String(i + 1).padStart(2, "0")} {s.title}
+              </p>
             </button>
           ))}
         </div>
 
-        {/* Canvas */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {grid ? (
-            <div className="flex-1 overflow-y-auto p-8 grid grid-cols-3 gap-6"
-              style={{ background: "hsl(220 15% 97%)" }}>
-              {SLIDES.map((s, i) => (
-                <button key={s.id} onClick={() => { setCurrent(i); setGrid(false); }}
-                  className="rounded-xl overflow-hidden border transition-all"
-                  style={{ borderColor: i === current ? `hsl(${BLUE} / 0.6)` : "hsl(220 12% 90%)" }}>
-                  <div className="w-full aspect-video">
-                    <ScaledSlide><s.component /></ScaledSlide>
-                  </div>
-                  <div className="px-4 py-2 flex items-center gap-3" style={{ background: "hsl(220 15% 95%)" }}>
-                    <span className="font-mono font-bold" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>{String(i + 1).padStart(2, "0")}</span>
-                    <span style={{ fontSize: 13, color: `hsl(${MUT})` }}>{s.label}</span>
-                  </div>
-                </button>
-              ))}
+          {showGrid ? (
+            <div className="flex-1 overflow-y-auto p-8">
+              <div className="grid grid-cols-3 gap-6">
+                {SLIDES.map((s, i) => (
+                  <button key={s.id} onClick={() => goTo(i)}
+                    className={cn("flex flex-col gap-2 rounded-xl overflow-hidden border-2 transition-all",
+                      i === current ? "border-primary" : "border-transparent hover:border-border"
+                    )}>
+                    <div className="w-full" style={{ aspectRatio: "16/9" }}>
+                      <ScaledSlide>{s.component}</ScaledSlide>
+                    </div>
+                    <p className="text-xs px-2 pb-2" style={{ color: `hsl(${MUT})` }}>
+                      <span className="font-mono">{String(i + 1).padStart(2, "0")}</span> — {s.title}
+                    </p>
+                  </button>
+                ))}
+              </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col">
-              <div className="flex-1 p-6">
-                <ScaledSlide><Slide /></ScaledSlide>
+            <div className="flex-1 overflow-hidden p-6">
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border"
+                style={{ borderColor: CHROME_BORDER }}>
+                <ScaledSlide>{slide.component}</ScaledSlide>
               </div>
-              {/* Nav */}
-              <div className="flex items-center justify-between px-8 py-4 border-t flex-shrink-0"
-                style={{ borderColor: "hsl(220 12% 90%)" }}>
-                <button onClick={prev}
-                  disabled={current === 0}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
-                  style={{ color: `hsl(${C})`, background: "hsl(220 15% 93%)", fontSize: 14 }}>
-                  <ChevronLeft size={18} /> Previous
-                </button>
+            </div>
+          )}
 
-                <div className="flex items-center gap-2">
-                  {SLIDES.map((_, i) => (
-                    <button key={i} onClick={() => setCurrent(i)}
-                      className="rounded-full transition-all"
-                      style={{
-                        width: i === current ? 24 : 8, height: 8,
-                        background: i === current ? `hsl(${BLUE})` : `hsl(${MUT} / 0.4)`,
-                      }} />
-                  ))}
-                </div>
-
-                <button onClick={next}
-                  disabled={current === SLIDES.length - 1}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-30"
-                  style={{ color: `hsl(${C})`, background: "hsl(220 15% 93%)", fontSize: 14 }}>
-                  Next <ChevronRight size={18} />
-                </button>
+          {!showGrid && (
+            <div className="flex items-center justify-between px-8 py-3 border-t shrink-0"
+              style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
+              <div className="flex gap-2">
+                {SLIDES.map((_, i) => (
+                  <button key={i} onClick={() => goTo(i)}
+                    className="h-1.5 rounded-full transition-all"
+                    style={{
+                      width: i === current ? 32 : 8,
+                      background: i === current ? `hsl(${BLUE})` : CHROME_BORDER,
+                    }} />
+                ))}
               </div>
+              <div className="flex items-center gap-3">
+                <Button size="sm" variant="outline" onClick={prev} disabled={current === 0}>
+                  <ChevronLeft size={16} />
+                </Button>
+                <span className="text-xs font-mono" style={{ color: `hsl(${MUT})` }}>
+                  {current + 1} / {SLIDES.length}
+                </span>
+                <Button size="sm" variant="outline" onClick={next} disabled={current === SLIDES.length - 1}>
+                  <ChevronRight size={16} />
+                </Button>
+              </div>
+              <p className="text-xs" style={{ color: `hsl(${MUT})` }}>← → navigate &nbsp; G grid &nbsp; F present</p>
             </div>
           )}
         </div>
@@ -1091,7 +1119,7 @@ export default function ConsultingDeck() {
       <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
         {SLIDES.map(s => (
           <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
-            <s.component />
+            {s.component}
           </div>
         ))}
       </div>
