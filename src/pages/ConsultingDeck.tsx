@@ -804,7 +804,6 @@ export default function ConsultingDeck() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
   const [showNav, setShowNav] = useState(true);
-  const [exporting, setExporting] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobileViewport();
   const isPortrait = useIsPortrait();
