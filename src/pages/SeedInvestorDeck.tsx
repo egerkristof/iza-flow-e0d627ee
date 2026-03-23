@@ -3,10 +3,11 @@ import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentat
 import {
   Users, Brain, Zap, Target,
   Shield, CheckCircle2, Globe, Layers, Award,
-  Download, Loader2, Workflow, Eye, Lightbulb, BookOpen,
+  Loader2, Workflow, Eye, Lightbulb, BookOpen,
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ExportMenu } from "@/components/ExportMenu";
 import { cn } from "@/lib/utils";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
@@ -830,7 +831,6 @@ export default function SeedInvestorDeck() {
   const [showGrid, setShowGrid] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showNav, setShowNav] = useState(true);
-  const [exporting, setExporting] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobileViewport();
@@ -841,53 +841,7 @@ export default function SeedInvestorDeck() {
   const prev = useCallback(() => setCurrent(c => Math.max(c - 1, 0)), []);
   const goTo = useCallback((i: number) => { setCurrent(i); setShowGrid(false); }, []);
 
-  const handleExportPdf = async () => {
-    setExporting(true);
-    try {
-      const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
-        import("jspdf"), import("html2canvas")
-      ]);
-      await new Promise(r => setTimeout(r, 500));
-      const slideEls = exportRef.current?.querySelectorAll<HTMLElement>(":scope > div");
-      if (!slideEls?.length) return;
-      // A4 landscape in mm: 297 × 210
-      const A4_W = 297;
-      const A4_H = 210;
-      const MARGIN = 8;
-      const contentW = A4_W - MARGIN * 2;
-      const contentH = A4_H - MARGIN * 2;
-      // Scale 16:9 slide to fit A4 landscape with margins
-      const slideAspect = 1920 / 1080;
-      const fitW = contentW;
-      const fitH = fitW / slideAspect;
-      const finalW = fitH > contentH ? contentH * slideAspect : fitW;
-      const finalH = fitH > contentH ? contentH : fitH;
-      const offsetX = MARGIN + (contentW - finalW) / 2;
-      const offsetY = MARGIN + (contentH - finalH) / 2;
-
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-      for (let i = 0; i < slideEls.length; i++) {
-        if (i > 0) pdf.addPage('a4', 'landscape');
-        const gradientEls = slideEls[i].querySelectorAll<HTMLElement>('span');
-        const origStyles: string[] = [];
-        const affected: HTMLElement[] = [];
-        gradientEls.forEach((el) => {
-          const cs = el.style.cssText;
-          if (cs.includes('background-clip') || cs.includes('BackgroundClip') || cs.includes('text-fill-color') || cs.includes('TextFillColor')) {
-            origStyles.push(cs);
-            affected.push(el);
-            el.style.cssText = `color: hsl(${ACCENT}); font: inherit;`;
-          }
-        });
-        const canvas = await html2canvas(slideEls[i], { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
-        affected.forEach((el, j) => { el.style.cssText = origStyles[j]; });
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, finalW, finalH);
-      }
-      pdf.save('LIZA-OS-Pre-Seed-Deck.pdf');
-    } finally {
-      setExporting(false);
-    }
-  };
+  // Export handled by ExportMenu component
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -986,12 +940,10 @@ export default function SeedInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <button onClick={handleExportPdf} disabled={exporting} className="p-1.5 rounded-lg disabled:opacity-50">
-            {exporting ? <Loader2 size={16} className="animate-spin" style={{ color: MUTED }} /> : <Download size={16} style={{ color: MUTED }} />}
-          </button>
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pre-Seed-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
-        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
           {SLIDES.map(s => (
             <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>{s.component}</div>
           ))}
@@ -1043,10 +995,7 @@ export default function SeedInvestorDeck() {
           <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")}>
             <Grid3x3 size={15} className="mr-1.5" /> Grid
           </Button>
-          <Button size="sm" variant="ghost" onClick={handleExportPdf} disabled={exporting}>
-            {exporting ? <Loader2 size={15} className="mr-1.5 animate-spin" /> : <Download size={15} className="mr-1.5" />}
-            {exporting ? "Exporting..." : "PDF"}
-          </Button>
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pre-Seed-Deck" slideCount={SLIDES.length} variant="desktop" />
           <Button size="sm" variant="ghost" onClick={enterFullscreen}>
             <Maximize2 size={15} className="mr-1.5" /> Present
           </Button>
@@ -1129,7 +1078,7 @@ export default function SeedInvestorDeck() {
         </div>
       </div>
 
-      <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
+      <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
         {SLIDES.map(s => (
           <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>{s.component}</div>
         ))}
