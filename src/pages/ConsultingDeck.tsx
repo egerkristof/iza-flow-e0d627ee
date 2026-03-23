@@ -934,7 +934,7 @@ export default function ConsultingDeck() {
           <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Sales-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={`hsl(${MUT})`} />
         </div>
 
-        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, visibility: exporting ? 'visible' : 'hidden', pointerEvents: 'none' }}>
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
           {SLIDES.map(s => (
             <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
               {s.component}
