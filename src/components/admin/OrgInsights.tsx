@@ -60,7 +60,7 @@ const FREE_EMAIL_DOMAINS = new Set([
 ]);
 
 // Founder emails excluded from aggregate analysis
-const FOUNDER_EMAILS = new Set(["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"]);
+const FOUNDER_EMAILS = new Set(["kristof.eger@lizaos.ai", "kristof.eger@aliz.ai", "istvan.boscha@aliz.ai"]);
 
 export default function OrgInsights({ results }: { results: DiagnosticResult[] }) {
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
