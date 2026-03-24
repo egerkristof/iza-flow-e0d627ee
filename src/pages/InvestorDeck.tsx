@@ -753,10 +753,13 @@ function Slide10MarketValidation() {
 
               <div className="rounded-xl border p-5"
                 style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-                <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>The key insight</p>
-                <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>
-                  You cannot "reverse engineer" a strategy decision from logs. It doesn't leave that kind of trace.
-                  Edra automates what already happened. LIZA governs what happens next.
+                <p className="font-bold mb-2" style={{ fontSize: 20, color: TEXT }}>The key insight</p>
+                <p className="italic mb-3" style={{ fontSize: 18, color: `hsl(${GOLD})`, lineHeight: 1.5 }}>
+                  "Data reflects what happened, not what should happen next."
+                </p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+                  — Edra's own founders. And then they built entirely on historical data.
+                  We took the opposite path: capture live expert judgment for novel work that leaves no data trail.
                 </p>
               </div>
             </div>
