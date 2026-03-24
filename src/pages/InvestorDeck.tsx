@@ -679,7 +679,7 @@ function Slide09CategoryMap() {
   );
 }
 
-// ─── Slide 10 — Market Validation (Edra Comp) ───────────────────────────────
+// ─── Slide 10 — Market Validation (Category Formation) ──────────────────────
 
 function Slide10MarketValidation() {
   return (
@@ -687,82 +687,69 @@ function Slide10MarketValidation() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Market Validation" color={GREEN} />
-        <h2 className="font-bold mb-10" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
-          The smartest money in the world<br />
-          <span style={{ color: `hsl(${GREEN})` }}>just validated our thesis.</span>
+        <h2 className="font-bold mb-8" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
+          $80M+ invested into our category.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>Three approaches. One missing layer.</span>
         </h2>
 
-        <div className="flex gap-8 flex-1 min-h-0">
-          {/* Left: Edra as validation */}
-          <div className="w-1/2 flex flex-col gap-5">
-            <div className="rounded-2xl border p-8"
-              style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>MARCH 2026</p>
-              <p className="font-bold mb-2" style={{ fontSize: 32, color: TEXT }}>Sequoia leads $30M into "Executable Knowledge"</p>
-              <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
-                Edra (ex-Palantir founders) raised $30M from Sequoia, 8VC, and HubSpot Ventures
-                to turn enterprise data into knowledge AI agents can execute.
-                The category we've been building is now investable at scale.
-              </p>
+        <div className="grid grid-cols-3 gap-5 mb-6">
+          {[
+            {
+              name: "Edra.ai", funding: "$30M", investors: "Sequoia, 8VC, HubSpot",
+              color: SUBTLE, approach: "Process Mining",
+              desc: "Ex-Palantir. Mines IT tickets, support logs, and data exhaust to auto-generate SOPs.",
+              domain: "Complicated (Repeatable)",
+              example: "\"How to reset a password\"",
+            },
+            {
+              name: "Mem0.ai", funding: "$24M", investors: "Basis Set, YC, Peak XV",
+              color: SUBTLE, approach: "Memory Infrastructure",
+              desc: "Developer tooling. Gives AI agents persistent memory across sessions. 50K+ GitHub stars.",
+              domain: "Infrastructure (Plumbing)",
+              example: "\"Remember user preferences\"",
+            },
+            {
+              name: "Paradox", funding: "~$26M", investors: "European VCs",
+              color: SUBTLE, approach: "Organizational Theory",
+              desc: "Copenhagen. Researches strategic drift and \"shared world models.\" Pre-product, 12 people.",
+              domain: "Complex (Theory-stage)",
+              example: "\"Why alignment breaks\"",
+            },
+          ].map(({ name, funding, investors, color, approach, desc, domain, example }) => (
+            <div key={name} className="rounded-2xl border p-6 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.04)` }}>
+              <div className="flex items-center justify-between mb-3">
+                <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{name}</p>
+                <span className="font-black" style={{ fontSize: 22, color: `hsl(${color})` }}>{funding}</span>
+              </div>
+              <p style={{ fontSize: 15, color: `hsl(${color})`, marginBottom: 8 }}>{investors}</p>
+              <p className="font-semibold mb-2" style={{ fontSize: 17, color: TEXT }}>{approach}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45, flex: 1 }}>{desc}</p>
+              <div className="mt-4 pt-3 border-t" style={{ borderColor: `hsl(${color} / 0.15)` }}>
+                <p style={{ fontSize: 14, color: SUBTLE }}>{domain}</p>
+                <p className="italic mt-1" style={{ fontSize: 15, color: `hsl(${color})` }}>{example}</p>
+              </div>
             </div>
+          ))}
+        </div>
 
-            <div className="rounded-2xl border p-8"
-              style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
-              <p className="font-bold mb-3" style={{ fontSize: 26, color: TEXT }}>What this proves</p>
-              {[
-                "\"Executable Knowledge\" is a recognized infrastructure category",
-                "Tier-1 VCs see this as a $B+ market opportunity",
-                "The problem is real: every enterprise needs this layer",
-              ].map((p, i) => (
-                <p key={i} className="flex items-start gap-3 mb-2" style={{ fontSize: 21, color: MUTED }}>
-                  <CheckCircle2 size={18} style={{ color: `hsl(${GOLD})`, flexShrink: 0, marginTop: 3 }} /> {p}
-                </p>
-              ))}
+        {/* LIZA as the governance layer */}
+        <div className="rounded-2xl border p-7 flex gap-8 items-center"
+          style={{ borderColor: `hsl(${ACCENT} / 0.3)`, background: `hsl(${ACCENT} / 0.06)` }}>
+          <div className="flex-1">
+            <div className="flex items-center gap-4 mb-3">
+              <p className="font-black" style={{ fontSize: 32, color: `hsl(${ACCENT})` }}>LIZA OS</p>
+              <span className="font-semibold px-3 py-1 rounded-full" style={{ fontSize: 14, background: `hsl(${ACCENT} / 0.12)`, color: `hsl(${ACCENT})` }}>The Governance Layer</span>
             </div>
+            <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>
+              Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
+              <strong style={{ color: TEXT }}> Only LIZA governs what should happen next</strong>: expert-validated, continuously updated, enforced in every AI interaction.
+            </p>
           </div>
-
-          {/* Right: The Cynefin line */}
-          <div className="w-1/2 flex flex-col gap-5">
-            <div className="rounded-2xl border p-8 flex-1"
-              style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.04)` }}>
-              <p className="font-bold mb-5" style={{ fontSize: 26, color: TEXT }}>Different domains. Same thesis.</p>
-              
-              <div className="flex gap-4 mb-5">
-                <div className="flex-1 rounded-xl border p-5"
-                  style={{ borderColor: `hsl(${SUBTLE} / 0.3)`, background: `hsl(${SUBTLE} / 0.04)` }}>
-                  <p className="font-bold mb-2" style={{ fontSize: 20, color: SUBTLE }}>Edra</p>
-                  <p className="font-bold mb-1" style={{ fontSize: 18, color: TEXT }}>Complicated Domain</p>
-                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>
-                    IT tickets, support logs, repeatable processes.
-                    Mines past data to automate routine resolutions.
-                  </p>
-                  <p className="font-semibold mt-3" style={{ fontSize: 16, color: SUBTLE }}>→ "How to reset a password"</p>
-                </div>
-
-                <div className="flex-1 rounded-xl border p-5"
-                  style={{ borderColor: `hsl(${ACCENT} / 0.3)`, background: `hsl(${ACCENT} / 0.06)` }}>
-                  <p className="font-bold mb-2" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>LIZA OS</p>
-                  <p className="font-bold mb-1" style={{ fontSize: 18, color: TEXT }}>Complex Domain</p>
-                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>
-                    Strategy, consulting, complex sales.
-                    Captures live expert judgment. Governs novel decisions.
-                  </p>
-                  <p className="font-semibold mt-3" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>→ "How to close a $100K deal"</p>
-                </div>
-              </div>
-
-              <div className="rounded-xl border p-5"
-                style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-                <p className="font-bold mb-2" style={{ fontSize: 20, color: TEXT }}>The key insight</p>
-                <p className="italic mb-3" style={{ fontSize: 18, color: `hsl(${GOLD})`, lineHeight: 1.5 }}>
-                  "Data reflects what happened, not what should happen next."
-                </p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                  — Edra's own founders. And then they built entirely on historical data.
-                  We took the opposite path: capture live expert judgment for novel work that leaves no data trail.
-                </p>
-              </div>
-            </div>
+          <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
+            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$80M+</p>
+            <p style={{ fontSize: 16, color: MUTED }}>Category investment</p>
+            <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>in last 12 months</p>
           </div>
         </div>
       </div>
