@@ -517,10 +517,11 @@ function Slide06Category() {
 
             <div className="rounded-xl border p-5 mt-2"
               style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>Why this isn't another SaaS tool</p>
+              <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>Category validated by Tier-1 capital</p>
               <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>
-                SaaS features commoditize in weeks. The knowledge graph underneath is the defensible asset.
-                The longer teams use LIZA, the deeper the moat.
+                Sequoia just led $30M into Edra for "Executable Knowledge" in IT support (process mining from logs).
+                We're the same thesis for judgment-heavy work: strategy, consulting, complex sales.
+                They automate the routine. We govern the novel.
               </p>
             </div>
           </div>

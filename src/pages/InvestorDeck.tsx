@@ -1247,13 +1247,14 @@ const SLIDES = [
   { id: 7, title: "Enterprise Validation", component: <Slide07CaseStudy /> },
   { id: 8, title: "Traction", component: <Slide08Traction /> },
   { id: 9, title: "Category Map", component: <Slide09CategoryMap /> },
-  { id: 10, title: "Business Model", component: <Slide10BusinessModel /> },
-  { id: 11, title: "Go-To-Market", component: <Slide11GTM /> },
-  { id: 12, title: "Team", component: <Slide12Team /> },
-  { id: 13, title: "Financials", component: <Slide13Financials /> },
-  { id: 14, title: "Use of Funds", component: <Slide14UseOfFunds /> },
-  { id: 15, title: "The Ask", component: <Slide15TheAsk /> },
-  { id: 16, title: "Closing", component: <Slide16Closing /> },
+  { id: 10, title: "Market Validation", component: <Slide10MarketValidation /> },
+  { id: 11, title: "Business Model", component: <Slide10BusinessModel /> },
+  { id: 12, title: "Go-To-Market", component: <Slide11GTM /> },
+  { id: 13, title: "Team", component: <Slide12Team /> },
+  { id: 14, title: "Financials", component: <Slide13Financials /> },
+  { id: 15, title: "Use of Funds", component: <Slide14UseOfFunds /> },
+  { id: 16, title: "The Ask", component: <Slide15TheAsk /> },
+  { id: 17, title: "Closing", component: <Slide16Closing /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
