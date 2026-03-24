@@ -679,7 +679,96 @@ function Slide09CategoryMap() {
   );
 }
 
-// ─── Slide 10 — Business Model ───────────────────────────────────────────────
+// ─── Slide 10 — Market Validation (Edra Comp) ───────────────────────────────
+
+function Slide10MarketValidation() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <Tag label="Market Validation" color={GREEN} />
+        <h2 className="font-bold mb-10" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          The smartest money in the world<br />
+          <span style={{ color: `hsl(${GREEN})` }}>just validated our thesis.</span>
+        </h2>
+
+        <div className="flex gap-8 flex-1 min-h-0">
+          {/* Left: Edra as validation */}
+          <div className="w-1/2 flex flex-col gap-5">
+            <div className="rounded-2xl border p-8"
+              style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+              <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>MARCH 2026</p>
+              <p className="font-bold mb-2" style={{ fontSize: 32, color: TEXT }}>Sequoia leads $30M into "Executable Knowledge"</p>
+              <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
+                Edra (ex-Palantir founders) raised $30M from Sequoia, 8VC, and HubSpot Ventures
+                to turn enterprise data into knowledge AI agents can execute.
+                The category we've been building is now investable at scale.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border p-8"
+              style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
+              <p className="font-bold mb-3" style={{ fontSize: 26, color: TEXT }}>What this proves</p>
+              {[
+                "\"Executable Knowledge\" is a recognized infrastructure category",
+                "Tier-1 VCs see this as a $B+ market opportunity",
+                "The problem is real: every enterprise needs this layer",
+              ].map((p, i) => (
+                <p key={i} className="flex items-start gap-3 mb-2" style={{ fontSize: 21, color: MUTED }}>
+                  <CheckCircle2 size={18} style={{ color: `hsl(${GOLD})`, flexShrink: 0, marginTop: 3 }} /> {p}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: The Cynefin line */}
+          <div className="w-1/2 flex flex-col gap-5">
+            <div className="rounded-2xl border p-8 flex-1"
+              style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.04)` }}>
+              <p className="font-bold mb-5" style={{ fontSize: 26, color: TEXT }}>Different domains. Same thesis.</p>
+              
+              <div className="flex gap-4 mb-5">
+                <div className="flex-1 rounded-xl border p-5"
+                  style={{ borderColor: `hsl(${SUBTLE} / 0.3)`, background: `hsl(${SUBTLE} / 0.04)` }}>
+                  <p className="font-bold mb-2" style={{ fontSize: 20, color: SUBTLE }}>Edra</p>
+                  <p className="font-bold mb-1" style={{ fontSize: 18, color: TEXT }}>Complicated Domain</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>
+                    IT tickets, support logs, repeatable processes.
+                    Mines past data to automate routine resolutions.
+                  </p>
+                  <p className="font-semibold mt-3" style={{ fontSize: 16, color: SUBTLE }}>→ "How to reset a password"</p>
+                </div>
+
+                <div className="flex-1 rounded-xl border p-5"
+                  style={{ borderColor: `hsl(${ACCENT} / 0.3)`, background: `hsl(${ACCENT} / 0.06)` }}>
+                  <p className="font-bold mb-2" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>LIZA OS</p>
+                  <p className="font-bold mb-1" style={{ fontSize: 18, color: TEXT }}>Complex Domain</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>
+                    Strategy, consulting, complex sales.
+                    Captures live expert judgment. Governs novel decisions.
+                  </p>
+                  <p className="font-semibold mt-3" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>→ "How to close a $100K deal"</p>
+                </div>
+              </div>
+
+              <div className="rounded-xl border p-5"
+                style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+                <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>The key insight</p>
+                <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>
+                  You cannot "reverse engineer" a strategy decision from logs. It doesn't leave that kind of trace.
+                  Edra automates what already happened. LIZA governs what happens next.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── Slide 11 — Business Model ───────────────────────────────────────────────
 
 function Slide10BusinessModel() {
   return (
@@ -1158,13 +1247,14 @@ const SLIDES = [
   { id: 7, title: "Enterprise Validation", component: <Slide07CaseStudy /> },
   { id: 8, title: "Traction", component: <Slide08Traction /> },
   { id: 9, title: "Category Map", component: <Slide09CategoryMap /> },
-  { id: 10, title: "Business Model", component: <Slide10BusinessModel /> },
-  { id: 11, title: "Go-To-Market", component: <Slide11GTM /> },
-  { id: 12, title: "Team", component: <Slide12Team /> },
-  { id: 13, title: "Financials", component: <Slide13Financials /> },
-  { id: 14, title: "Use of Funds", component: <Slide14UseOfFunds /> },
-  { id: 15, title: "The Ask", component: <Slide15TheAsk /> },
-  { id: 16, title: "Closing", component: <Slide16Closing /> },
+  { id: 10, title: "Market Validation", component: <Slide10MarketValidation /> },
+  { id: 11, title: "Business Model", component: <Slide10BusinessModel /> },
+  { id: 12, title: "Go-To-Market", component: <Slide11GTM /> },
+  { id: 13, title: "Team", component: <Slide12Team /> },
+  { id: 14, title: "Financials", component: <Slide13Financials /> },
+  { id: 15, title: "Use of Funds", component: <Slide14UseOfFunds /> },
+  { id: 16, title: "The Ask", component: <Slide15TheAsk /> },
+  { id: 17, title: "Closing", component: <Slide16Closing /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
