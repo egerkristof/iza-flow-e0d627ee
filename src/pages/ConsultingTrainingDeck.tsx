@@ -452,7 +452,7 @@ function Slide07Sandbox() {
             {[
               "Teams build with realistic scenarios in a safe, isolated simulation environment",
               "Visually see how adding a strategic rule instantly changes the AI's behavior",
-              "Zero data risk — your live data is never required",
+              "Zero data risk: your live data is never required",
               "Architectural principles transfer to whichever internal systems you choose",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-4">
