@@ -253,7 +253,7 @@ function Slide04Methodology() {
     {
       step: "03", icon: <Rocket size={36} />, color: GOLD,
       title: "Apply", subtitle: "Departmental Implementation",
-      body: "We move into every specific department — not just tech — to translate their real-world problems into working AI ecosystems.",
+      body: "We move into every specific department, not just tech, to translate their real-world problems into working AI ecosystems.",
     },
   ];
 
