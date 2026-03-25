@@ -619,7 +619,7 @@ function Slide09Team() {
 
         <div className="mt-6 flex items-center gap-8">
           {[
-            { n: "15+", label: "Years in AI transformation" },
+            { n: "15+", label: "Years in technology transformation" },
             { n: "200+", label: "Consulting engagements" },
             { n: "8", label: "Countries" },
             { n: "3", label: "University programs" },
