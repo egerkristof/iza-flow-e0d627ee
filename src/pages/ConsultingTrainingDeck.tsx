@@ -809,10 +809,11 @@ const SLIDES = [
   { id: 4, title: "Assess, Align, Apply", component: <Slide04Methodology /> },
   { id: 5, title: "Foundation Keynote", component: <Slide05Foundation /> },
   { id: 6, title: "Departmental Tracks", component: <Slide06Tracks /> },
-  { id: 7, title: "Training Environment", component: <Slide07Sandbox /> },
+  { id: 7, title: "LIZA OS Environment", component: <Slide07Sandbox /> },
   { id: 8, title: "Deliverables", component: <Slide08Deliverables /> },
-  { id: 9, title: "The Team", component: <Slide09Team /> },
-  { id: 10, title: "Next Steps", component: <Slide10NextSteps /> },
+  { id: 9, title: "Delivery & Pricing", component: <Slide09Pricing /> },
+  { id: 10, title: "The Team", component: <Slide09Team /> },
+  { id: 11, title: "Next Steps", component: <Slide10NextSteps /> },
 ];
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
