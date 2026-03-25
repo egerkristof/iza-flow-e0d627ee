@@ -129,9 +129,6 @@ function Slide01Title() {
           <Chip color={GOLD}>Apply</Chip>
         </div>
 
-        <p className="mt-10" style={{ fontSize: 20, color: `hsl(${MUT} / 0.6)` }}>
-          Delivered by Aliz / LizaOS
-        </p>
       </div>
       <Bar />
     </div>
