@@ -569,8 +569,8 @@ function Slide08Deliverables() {
 function Slide09Team() {
   const team = [
     {
-      name: "István Boscha", role: "AI Infrastructure · 15 Years",
-      bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years implementing data and AI solutions for digital transformation globally.",
+      name: "István Boscha", role: "AI Infrastructure & Data",
+      bio: "Founder of a Google Cloud Professional Services Partner firm. 15+ years implementing data and AI solutions for technology transformation.",
       photo: istvanPhoto, initials: "IB", color: ACCENT,
     },
     {
