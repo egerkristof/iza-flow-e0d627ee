@@ -829,7 +829,7 @@ export default function ConsultingTrainingDeck() {
           <Button variant="ghost" size="icon" onClick={enterFullscreen} className="hover:bg-white/5" style={{ color: `hsl(${MUT})` }}>
             <Maximize2 size={18} />
           </Button>
-          <ExportMenu exportRef={exportRef} slideTitle={SLIDES[current].title} allSlides={SLIDES} ScaledSlideComponent={ScaledSlide} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-Consulting-Training" slideCount={SLIDES.length} accentColor={`hsl(${ACCENT})`} />
         </div>
       </div>
 
