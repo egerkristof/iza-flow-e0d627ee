@@ -304,7 +304,7 @@ function Slide05Foundation() {
     {
       icon: <Brain size={32} />, color: TEAL,
       title: "Why AI Confidently Gets It Wrong",
-      body: "What happens under the hood when LLM probabilities meet enterprise context — and why \"just prompt better\" doesn't fix it.",
+      body: "What happens under the hood when LLM probabilities meet enterprise context, and why \"just prompt better\" doesn't fix it.",
     },
     {
       icon: <Workflow size={32} />, color: GOLD,
