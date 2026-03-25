@@ -203,7 +203,7 @@ function Slide03Outcomes() {
     {
       icon: <Code size={44} />, color: GOLD,
       title: "Deploy \"Knowledge as Code\"",
-      body: "Transition from executing one-off prompts in isolated silos to collaboratively engineering continuous context — turning judgment into scalable assets.",
+      body: "Transition from executing one-off prompts in isolated silos to collaboratively engineering continuous context, turning judgment into scalable assets.",
     },
   ];
 
