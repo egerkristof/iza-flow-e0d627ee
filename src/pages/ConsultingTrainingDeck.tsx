@@ -425,7 +425,7 @@ function Slide06Tracks() {
   );
 }
 
-// ─── Slide 07 — The Sandbox ───────────────────────────────────────────────────
+// ─── Slide 07 — The Sandbox (LIZA OS) ─────────────────────────────────────────
 
 function Slide07Sandbox() {
   return (
@@ -437,23 +437,25 @@ function Slide07Sandbox() {
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full">
         {/* Left */}
         <div className="flex-1">
-          <Tag label="Training Environment" />
-          <h2 className="font-black mb-6" style={{ fontSize: 64, color: `hsl(${C})`, lineHeight: 1.1 }}>
-            Learn by building.
+          <Tag label="Powered by LIZA OS" />
+          <h2 className="font-black mb-6" style={{ fontSize: 60, color: `hsl(${C})`, lineHeight: 1.1 }}>
+            All training runs inside
             <br />
-            <span style={{ color: `hsl(${ACCENT})` }}>Zero IT overhead.</span>
+            <span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              LIZA OS.
+            </span>
           </h2>
           <p className="mb-8" style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
-            Standard AI tools operate as "black boxes," making it impossible to teach
-            <strong style={{ color: `hsl(${C})` }}> how organizational memory and rules are applied</strong>.
+            LIZA OS is our purpose-built platform for <strong style={{ color: `hsl(${C})` }}>organizational knowledge engineering</strong>.
+            Unlike generic AI tools, it makes the invisible visible — showing teams exactly how context, rules, and judgment shape AI behavior.
           </p>
 
           <div className="space-y-4">
             {[
-              "Teams build with realistic scenarios in a safe, isolated simulation environment",
+              "Teams build real playbooks and knowledge structures in a safe sandbox environment",
               "Visually see how adding a strategic rule instantly changes the AI's behavior",
-              "Zero data risk: your live data is never required",
-              "Architectural principles transfer to whichever internal systems you choose",
+              "Zero IT overhead — no installation, no data migration, browser-based",
+              "Everything created during training becomes your operational starter kit",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-4">
                 <CheckCircle2 size={22} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 3 }} />
@@ -470,7 +472,7 @@ function Slide07Sandbox() {
             <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `linear-gradient(90deg, hsl(${ACCENT}), hsl(${TEAL}))` }} />
             <div className="flex items-center gap-3 mb-6">
               <div className="w-3 h-3 rounded-full animate-pulse" style={{ background: `hsl(${ACCENT})` }} />
-              <span className="font-bold tracking-[0.2em] uppercase" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>LizaOS Simulation</span>
+              <span className="font-bold tracking-[0.2em] uppercase" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>LIZA OS — Live Environment</span>
             </div>
 
             <div className="space-y-4 mb-6">
@@ -490,8 +492,8 @@ function Slide07Sandbox() {
 
             <div className="rounded-xl p-5" style={{ background: `hsl(${ACCENT} / 0.08)`, border: `1px solid hsl(${ACCENT} / 0.2)` }}>
               <p style={{ fontSize: 18, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-                <strong style={{ color: `hsl(${C})` }}>The goal:</strong> We teach the architectural principles of AI operations.
-                Once mastered here, your teams deploy "knowledge as code" across your chosen systems.
+                <strong style={{ color: `hsl(${C})` }}>What stays with you:</strong> The knowledge assets, playbooks, and organizational context
+                your team builds during training remain in LIZA OS — ready for continued use.
               </p>
             </div>
           </div>
