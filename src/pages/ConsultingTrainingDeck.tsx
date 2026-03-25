@@ -704,8 +704,8 @@ const SLIDES = [
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
 
-const CHROME_BG = "hsl(220 18% 5%)";
-const CHROME_BORDER = "hsl(220 15% 16%)";
+const CHROME_BG = "hsl(210 18% 97%)";
+const CHROME_BORDER = "hsl(214 18% 88%)";
 
 export default function ConsultingTrainingDeck() {
   const [current, setCurrent] = useState(0);
