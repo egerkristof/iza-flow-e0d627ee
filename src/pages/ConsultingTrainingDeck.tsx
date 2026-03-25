@@ -511,54 +511,165 @@ function Slide08Deliverables() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <GridBg />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
-        <Tag label="The Deliverable" />
-        <h2 className="font-black mb-4" style={{ fontSize: 68, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          The Organizational Snapshot
+        <Tag label="What You Walk Away With" />
+        <h2 className="font-black mb-4" style={{ fontSize: 64, color: `hsl(${C})`, lineHeight: 1.1 }}>
+          Not just a report.
+          <br />
+          <span style={{ color: `hsl(${ACCENT})` }}>A running system.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
-          This program concludes with strategic feedback for your executive team.
+          Every deliverable lives inside LIZA OS — ready to use on day one after the program.
         </p>
 
-        <div className="grid grid-cols-2 gap-8">
-          {/* Left */}
+        <div className="grid grid-cols-3 gap-6">
+          {/* Col 1 — Knowledge Assets */}
+          <div className="rounded-2xl border p-8 relative overflow-hidden"
+            style={{ background: BG2, borderColor: `hsl(${ACCENT} / 0.25)` }}>
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${ACCENT})` }} />
+            <div className="flex items-center gap-3 mb-5">
+              <Brain size={28} style={{ color: `hsl(${ACCENT})` }} />
+              <p className="font-bold" style={{ fontSize: 24, color: `hsl(${ACCENT})` }}>Knowledge Assets</p>
+            </div>
+            <div className="space-y-3">
+              {[
+                "Extracted organizational knowledge structured in LIZA OS",
+                "Departmental playbooks built during training",
+                "Decision frameworks and guardrails codified as reusable context",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle2 size={18} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 3 }} />
+                  <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Col 2 — Strategic Report */}
+          <div className="rounded-2xl border p-8 relative overflow-hidden"
+            style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.25)` }}>
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${TEAL})` }} />
+            <div className="flex items-center gap-3 mb-5">
+              <BarChart3 size={28} style={{ color: `hsl(${TEAL})` }} />
+              <p className="font-bold" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>Maturity Report</p>
+            </div>
+            <div className="space-y-3">
+              {[
+                "AI-Native Maturity scoring per department",
+                "Talent mapping: identified \"System Designer\" profiles",
+                "Prioritized roadmap with immediate next steps",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle2 size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0, marginTop: 3 }} />
+                  <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Col 3 — Platform Access */}
+          <div className="rounded-2xl border p-8 relative overflow-hidden"
+            style={{ background: BG2, borderColor: `hsl(${GOLD} / 0.25)` }}>
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${GOLD})` }} />
+            <div className="flex items-center gap-3 mb-5">
+              <Rocket size={28} style={{ color: `hsl(${GOLD})` }} />
+              <p className="font-bold" style={{ fontSize: 24, color: `hsl(${GOLD})` }}>LIZA OS Access</p>
+            </div>
+            <div className="space-y-3">
+              {[
+                "Platform access included during the entire program",
+                "All knowledge and playbooks remain yours to keep",
+                "Continued access available for ongoing operations",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle2 size={18} style={{ color: `hsl(${GOLD})`, flexShrink: 0, marginTop: 3 }} />
+                  <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <Bar />
+    </div>
+  );
+}
+
+// ─── Slide 09 — Delivery & Pricing ────────────────────────────────────────────
+
+function Slide09Pricing() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <GridBg />
+      <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
+        <Tag label="Delivery & Investment" />
+        <h2 className="font-black mb-4" style={{ fontSize: 64, color: `hsl(${C})`, lineHeight: 1.1 }}>
+          Modular content.
+          <br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Flexible delivery.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
+          Every engagement is scoped to your organization's needs. You choose the format.
+        </p>
+
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          {/* Delivery modes */}
           <div className="rounded-2xl border p-9 relative overflow-hidden"
             style={{ background: BG2, borderColor: `hsl(${ACCENT} / 0.25)` }}>
             <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${ACCENT})` }} />
-            <p className="font-bold mb-6" style={{ fontSize: 26, color: `hsl(${ACCENT})` }}>Continuous Data Gathering</p>
-            <div className="space-y-4">
+            <p className="font-bold mb-6" style={{ fontSize: 26, color: `hsl(${ACCENT})` }}>Delivery Formats</p>
+            <div className="space-y-5">
               {[
-                "Real-time insight capture during Discovery and Application phases",
-                "Department-level readiness scoring across all participating teams",
-                "Talent mapping: identified \"System Designer\" profiles",
-                "Cultural friction points and adoption barriers documented",
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <CheckCircle2 size={20} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 3 }} />
-                  <p style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{item}</p>
+                { icon: <Zap size={22} />, title: "Intensive Sprint", desc: "Consecutive days for maximum momentum. Ideal for leadership off-sites and transformation kicks." },
+                { icon: <Clock size={22} />, title: "Distributed Program", desc: "Spread across weeks with practice periods between sessions. Allows deeper organizational embedding." },
+                { icon: <Puzzle size={22} />, title: "Modular Mix", desc: "Pick individual modules. Start with Foundation, add departmental tracks as needed." },
+              ].map(({ icon, title, desc }, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: `hsl(${ACCENT} / 0.12)`, color: `hsl(${ACCENT})` }}>{icon}</div>
+                  <div>
+                    <p className="font-bold" style={{ fontSize: 21, color: `hsl(${C})` }}>{title}</p>
+                    <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right */}
+          {/* Pricing */}
           <div className="rounded-2xl border p-9 relative overflow-hidden"
-            style={{ background: BG2, borderColor: `hsl(${TEAL} / 0.25)` }}>
-            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${TEAL})` }} />
-            <p className="font-bold mb-6" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>AI-Native Maturity Report</p>
-            <div className="space-y-4">
+            style={{ background: BG2, borderColor: `hsl(${GOLD} / 0.25)` }}>
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${GOLD})` }} />
+            <p className="font-bold mb-6" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Investment</p>
+
+            <div className="rounded-xl p-6 mb-6" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.2)` }}>
+              <p className="font-black mb-1" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1 }}>
+                €3,500 <span style={{ fontSize: 28, color: `hsl(${MUT})` }}>/ day</span>
+              </p>
+              <p className="mt-3" style={{ fontSize: 20, color: `hsl(${MUT})` }}>
+                Standard unit for all program modules
+              </p>
+            </div>
+
+            <div className="space-y-3">
               {[
-                "Final comprehensive report delivered to leadership",
-                "Departmental readiness heatmap with specific scores",
-                "Immediate opportunities for scaled AI deployment",
-                "Clear roadmap with prioritized next steps",
+                "LIZA OS platform access included during the program",
+                "All created knowledge assets remain with your organization",
+                "Final program scope defined after Discovery call",
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <CheckCircle2 size={20} style={{ color: `hsl(${TEAL})`, flexShrink: 0, marginTop: 3 }} />
-                  <p style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{item}</p>
+                  <CheckCircle2 size={18} style={{ color: `hsl(${GOLD})`, flexShrink: 0, marginTop: 3 }} />
+                  <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{item}</p>
                 </div>
               ))}
             </div>
           </div>
+        </div>
+
+        <div className="px-8 py-5 rounded-xl border" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <p style={{ fontSize: 22, color: `hsl(${MUT})` }}>
+            <strong style={{ color: `hsl(${TEAL})` }}>Typical programs range from 3–10 days</strong> depending on scope.
+            A Foundation Keynote + 2 departmental tracks = ~5 days. Full organizational transformation = 8–10 days.
+          </p>
         </div>
       </div>
       <Bar />
