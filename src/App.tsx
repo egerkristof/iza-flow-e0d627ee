@@ -23,6 +23,7 @@ import InvestorDeck from "./pages/InvestorDeck";
 import SeedInvestorDeck from "./pages/SeedInvestorDeck";
 import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 
+import ConsultingTrainingDeck from "./pages/ConsultingTrainingDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
 import LinkedInImageCard from "./pages/LinkedInImageCard";
 import HomePage from "./pages/marketing/Home";
