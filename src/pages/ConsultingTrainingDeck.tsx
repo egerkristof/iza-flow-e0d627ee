@@ -60,7 +60,7 @@ const PURPLE = "260 60% 48%";
 function GridBg() {
   return (
     <div className="absolute inset-0 opacity-[0.04]" style={{
-      backgroundImage: `linear-gradient(hsl(215 15% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(215 15% 40%) 1px, transparent 1px)`,
+      backgroundImage: `linear-gradient(hsl(215 15% 85%) 1px, transparent 1px), linear-gradient(90deg, hsl(215 15% 85%) 1px, transparent 1px)`,
       backgroundSize: "80px 80px"
     }} />
   );
