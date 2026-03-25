@@ -46,16 +46,16 @@ function ScaledSlide({ children }: { children: React.ReactNode }) {
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 
-const BG     = "hsl(220 20% 7%)";
-const BG2    = "hsl(220 18% 11%)";
-const BG3    = "hsl(220 16% 15%)";
-const C      = "0 0% 95%";
-const MUT    = "215 15% 62%";
-const ACCENT = "200 90% 52%";
-const TEAL   = "155 72% 45%";
-const GOLD   = "38 92% 55%";
-const RED    = "0 72% 55%";
-const PURPLE = "260 60% 60%";
+const BG     = "hsl(0 0% 100%)";
+const BG2    = "hsl(210 20% 97%)";
+const BG3    = "hsl(210 18% 94%)";
+const C      = "222 47% 11%";
+const MUT    = "215 14% 40%";
+const ACCENT = "200 90% 40%";
+const TEAL   = "155 72% 36%";
+const GOLD   = "38 92% 42%";
+const RED    = "0 72% 45%";
+const PURPLE = "260 60% 48%";
 
 function GridBg() {
   return (
