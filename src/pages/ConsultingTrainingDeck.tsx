@@ -862,6 +862,21 @@ export default function ConsultingTrainingDeck() {
     return () => document.removeEventListener("fullscreenchange", onFs);
   }, []);
 
+  // ─── Mobile controls auto-hide ──────────────────────────────────────
+  const [mobileControlsVisible, setMobileControlsVisible] = useState(true);
+  const mobileTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const showMobileControls = useCallback(() => {
+    setMobileControlsVisible(true);
+    clearTimeout(mobileTimerRef.current);
+    mobileTimerRef.current = setTimeout(() => setMobileControlsVisible(false), 3000);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile && !isPortrait) showMobileControls();
+    return () => clearTimeout(mobileTimerRef.current);
+  }, [isMobile, isPortrait, showMobileControls]);
+
   useEffect(() => {
     if (!isFullscreen) return;
     let timer: ReturnType<typeof setTimeout>;
@@ -870,6 +885,69 @@ export default function ConsultingTrainingDeck() {
     window.addEventListener("mousemove", show);
     return () => { window.removeEventListener("mousemove", show); clearTimeout(timer); };
   }, [isFullscreen]);
+
+  // ─── Mobile view ────────────────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 z-[9999]" style={{ background: BG }}
+        onClick={() => { if (!isPortrait) showMobileControls(); }}>
+        {isPortrait && (
+          <div className="absolute inset-0 z-[10000] flex flex-col items-center justify-center gap-4 px-8"
+            style={{ background: "hsl(0 0% 100% / 0.92)", backdropFilter: "blur(8px)" }}>
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
+              style={{ background: `hsl(${ACCENT} / 0.1)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={`hsl(${ACCENT})`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" />
+                <path d="M12 18h.01" />
+              </svg>
+            </div>
+            <p className="text-center font-semibold" style={{ fontSize: 18, color: `hsl(${C})` }}>Rotate your device to landscape</p>
+            <p className="text-center" style={{ fontSize: 14, color: `hsl(${MUT})` }}>for the best viewing experience</p>
+          </div>
+        )}
+
+        <ScaledSlide>{SLIDES[current].component}</ScaledSlide>
+
+        {!isPortrait && (
+          <>
+            <button onClick={(e) => { e.stopPropagation(); prev(); showMobileControls(); }} disabled={current === 0}
+              className="absolute left-0 top-0 h-full w-[15%] z-[10001] flex items-center justify-start pl-4 disabled:opacity-0 transition-opacity"
+              style={{ background: "linear-gradient(90deg, hsl(0 0% 0% / 0.06), transparent)" }} aria-label="Previous slide">
+              <ChevronLeft size={32} style={{ color: "hsl(215 15% 42% / 0.5)" }} />
+            </button>
+            <button onClick={(e) => { e.stopPropagation(); next(); showMobileControls(); }} disabled={current === SLIDES.length - 1}
+              className="absolute right-0 top-0 h-full w-[15%] z-[10001] flex items-center justify-end pr-4 disabled:opacity-0 transition-opacity"
+              style={{ background: "linear-gradient(270deg, hsl(0 0% 0% / 0.06), transparent)" }} aria-label="Next slide">
+              <ChevronRight size={32} style={{ color: "hsl(215 15% 42% / 0.5)" }} />
+            </button>
+          </>
+        )}
+
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full transition-opacity duration-300"
+          style={{
+            background: "hsl(0 0% 100% / 0.9)", border: `1px solid ${CHROME_BORDER}`, backdropFilter: "blur(8px)",
+            opacity: mobileControlsVisible ? 1 : 0, pointerEvents: mobileControlsVisible ? "auto" : "none",
+          }}
+          onClick={(e) => e.stopPropagation()}>
+          <button onClick={prev} disabled={current === 0} className="p-1.5 rounded-lg disabled:opacity-20">
+            <ChevronLeft size={18} style={{ color: `hsl(${C})` }} />
+          </button>
+          <span className="font-mono text-xs px-1" style={{ color: `hsl(${MUT})` }}>{current + 1}/{SLIDES.length}</span>
+          <button onClick={next} disabled={current === SLIDES.length - 1} className="p-1.5 rounded-lg disabled:opacity-20">
+            <ChevronRight size={18} style={{ color: `hsl(${C})` }} />
+          </button>
+          <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-Consulting-Training" slideCount={SLIDES.length} variant="mobile" iconColor={`hsl(${MUT})`} />
+        </div>
+
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
+          {SLIDES.map(s => (
+            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>{s.component}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   // ─── Fullscreen ─────────────────────────────────────────────────────
   if (isFullscreen) {
