@@ -693,7 +693,7 @@ const SLIDES = [
   { id: 1, title: "Title", component: <Slide01Title /> },
   { id: 2, title: "The Execution Gap", component: <Slide02Problem /> },
   { id: 3, title: "The 80/20 Transformation", component: <Slide03Outcomes /> },
-  { id: 4, title: "Assess–Align–Apply", component: <Slide04Methodology /> },
+  { id: 4, title: "Assess, Align, Apply", component: <Slide04Methodology /> },
   { id: 5, title: "Foundation Keynote", component: <Slide05Foundation /> },
   { id: 6, title: "Departmental Tracks", component: <Slide06Tracks /> },
   { id: 7, title: "Training Environment", component: <Slide07Sandbox /> },
