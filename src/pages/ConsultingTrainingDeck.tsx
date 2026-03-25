@@ -263,7 +263,7 @@ function Slide04Methodology() {
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
         <Tag label="Delivery Methodology" />
         <h2 className="font-black mb-4" style={{ fontSize: 68, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          The Assess–Align–Apply Model
+          The Assess, Align, Apply Model
         </h2>
         <p className="mb-10" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
           A fully modular, customizable approach to organizational transformation.
