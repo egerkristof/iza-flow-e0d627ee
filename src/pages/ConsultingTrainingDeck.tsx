@@ -46,21 +46,21 @@ function ScaledSlide({ children }: { children: React.ReactNode }) {
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 
-const BG     = "hsl(220 20% 7%)";
-const BG2    = "hsl(220 18% 11%)";
-const BG3    = "hsl(220 16% 15%)";
-const C      = "0 0% 95%";
-const MUT    = "215 15% 62%";
-const ACCENT = "200 90% 52%";
-const TEAL   = "155 72% 45%";
-const GOLD   = "38 92% 55%";
-const RED    = "0 72% 55%";
-const PURPLE = "260 60% 60%";
+const BG     = "hsl(0 0% 100%)";
+const BG2    = "hsl(210 20% 97%)";
+const BG3    = "hsl(210 18% 94%)";
+const C      = "222 47% 11%";
+const MUT    = "215 14% 40%";
+const ACCENT = "200 90% 40%";
+const TEAL   = "155 72% 36%";
+const GOLD   = "38 92% 42%";
+const RED    = "0 72% 45%";
+const PURPLE = "260 60% 48%";
 
 function GridBg() {
   return (
     <div className="absolute inset-0 opacity-[0.04]" style={{
-      backgroundImage: `linear-gradient(hsl(215 15% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(215 15% 40%) 1px, transparent 1px)`,
+      backgroundImage: `linear-gradient(hsl(215 15% 85%) 1px, transparent 1px), linear-gradient(90deg, hsl(215 15% 85%) 1px, transparent 1px)`,
       backgroundSize: "80px 80px"
     }} />
   );
@@ -129,9 +129,6 @@ function Slide01Title() {
           <Chip color={GOLD}>Apply</Chip>
         </div>
 
-        <p className="mt-10" style={{ fontSize: 20, color: `hsl(${MUT} / 0.6)` }}>
-          Delivered by Aliz / LizaOS
-        </p>
       </div>
       <Bar />
     </div>
@@ -206,7 +203,7 @@ function Slide03Outcomes() {
     {
       icon: <Code size={44} />, color: GOLD,
       title: "Deploy \"Knowledge as Code\"",
-      body: "Transition from executing one-off prompts in isolated silos to collaboratively engineering continuous context — turning judgment into scalable assets.",
+      body: "Transition from executing one-off prompts in isolated silos to collaboratively engineering continuous context, turning judgment into scalable assets.",
     },
   ];
 
@@ -256,7 +253,7 @@ function Slide04Methodology() {
     {
       step: "03", icon: <Rocket size={36} />, color: GOLD,
       title: "Apply", subtitle: "Departmental Implementation",
-      body: "We move into every specific department — not just tech — to translate their real-world problems into working AI ecosystems.",
+      body: "We move into every specific department, not just tech, to translate their real-world problems into working AI ecosystems.",
     },
   ];
 
@@ -266,7 +263,7 @@ function Slide04Methodology() {
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
         <Tag label="Delivery Methodology" />
         <h2 className="font-black mb-4" style={{ fontSize: 68, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          The Assess–Align–Apply Model
+          The Assess, Align, Apply Model
         </h2>
         <p className="mb-10" style={{ fontSize: 26, color: `hsl(${MUT})` }}>
           A fully modular, customizable approach to organizational transformation.
@@ -307,7 +304,7 @@ function Slide05Foundation() {
     {
       icon: <Brain size={32} />, color: TEAL,
       title: "Why AI Confidently Gets It Wrong",
-      body: "What happens under the hood when LLM probabilities meet enterprise context — and why \"just prompt better\" doesn't fix it.",
+      body: "What happens under the hood when LLM probabilities meet enterprise context, and why \"just prompt better\" doesn't fix it.",
     },
     {
       icon: <Workflow size={32} />, color: GOLD,
@@ -401,7 +398,7 @@ function Slide06Tracks() {
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 58, color: `hsl(${C})`, lineHeight: 1.1 }}>
           Applied Context Engineering
         </h2>
-        <p className="mb-2" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>Departmental Tracks — Turning Strategy into Executable Knowledge</p>
+        <p className="mb-2" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>Departmental Tracks: Turning Strategy into Executable Knowledge</p>
         <p className="mb-7" style={{ fontSize: 19, color: `hsl(${MUT})` }}>
           Every track is strictly tailored to the specific problems surfaced during the Assess phase.
         </p>
@@ -455,7 +452,7 @@ function Slide07Sandbox() {
             {[
               "Teams build with realistic scenarios in a safe, isolated simulation environment",
               "Visually see how adding a strategic rule instantly changes the AI's behavior",
-              "Zero data risk — your live data is never required",
+              "Zero data risk: your live data is never required",
               "Architectural principles transfer to whichever internal systems you choose",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-4">
@@ -572,8 +569,8 @@ function Slide08Deliverables() {
 function Slide09Team() {
   const team = [
     {
-      name: "István Boscha", role: "AI Infrastructure · 15 Years",
-      bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years implementing data and AI solutions for digital transformation globally.",
+      name: "István Boscha", role: "AI Infrastructure & Data",
+      bio: "Founder of a Google Cloud Professional Services Partner firm. 15+ years implementing data and AI solutions for technology transformation.",
       photo: istvanPhoto, initials: "IB", color: ACCENT,
     },
     {
@@ -599,7 +596,7 @@ function Slide09Team() {
         <p className="mb-10" style={{ fontSize: 24, color: `hsl(${MUT})` }}>
           We've delivered this at <strong style={{ color: `hsl(${C})` }}>BGE Budapest</strong>,{" "}
           <strong style={{ color: `hsl(${C})` }}>University of Vienna</strong>, and{" "}
-          <strong style={{ color: `hsl(${C})` }}>University of Lviv</strong> — and across enterprise consulting engagements for the last 4 years.
+          <strong style={{ color: `hsl(${C})` }}>University of Lviv</strong>, and across enterprise consulting engagements for the last 4 years.
         </p>
 
         <div className="grid grid-cols-3 gap-6">
@@ -622,7 +619,7 @@ function Slide09Team() {
 
         <div className="mt-6 flex items-center gap-8">
           {[
-            { n: "15+", label: "Years in AI transformation" },
+            { n: "15+", label: "Years in technology transformation" },
             { n: "200+", label: "Consulting engagements" },
             { n: "8", label: "Countries" },
             { n: "3", label: "University programs" },
@@ -696,7 +693,7 @@ const SLIDES = [
   { id: 1, title: "Title", component: <Slide01Title /> },
   { id: 2, title: "The Execution Gap", component: <Slide02Problem /> },
   { id: 3, title: "The 80/20 Transformation", component: <Slide03Outcomes /> },
-  { id: 4, title: "Assess–Align–Apply", component: <Slide04Methodology /> },
+  { id: 4, title: "Assess, Align, Apply", component: <Slide04Methodology /> },
   { id: 5, title: "Foundation Keynote", component: <Slide05Foundation /> },
   { id: 6, title: "Departmental Tracks", component: <Slide06Tracks /> },
   { id: 7, title: "Training Environment", component: <Slide07Sandbox /> },
@@ -707,8 +704,8 @@ const SLIDES = [
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
 
-const CHROME_BG = "hsl(220 18% 5%)";
-const CHROME_BORDER = "hsl(220 15% 16%)";
+const CHROME_BG = "hsl(210 18% 97%)";
+const CHROME_BORDER = "hsl(214 18% 88%)";
 
 export default function ConsultingTrainingDeck() {
   const [current, setCurrent] = useState(0);
