@@ -810,6 +810,8 @@ export default function ConsultingTrainingDeck() {
   }
 
   // ─── Default ────────────────────────────────────────────────────────
+  const slide = SLIDES[current];
+
   return (
     <div className="flex flex-col h-screen" style={{ background: CHROME_BG }}>
       {/* Toolbar */}
@@ -819,47 +821,102 @@ export default function ConsultingTrainingDeck() {
           <span className="font-bold text-sm" style={{ color: `hsl(${ACCENT})` }}>LIZA OS</span>
           <span className="text-xs" style={{ color: `hsl(${MUT})` }}>Consulting & Training</span>
         </div>
-        <div className="flex items-center gap-1">
-          <Button variant="ghost" size="icon" onClick={() => setShowGrid(true)} className="hover:bg-white/5" style={{ color: `hsl(${MUT})` }}>
-            <Grid3x3 size={18} />
-          </Button>
-          <Button variant="ghost" size="icon" onClick={enterFullscreen} className="hover:bg-white/5" style={{ color: `hsl(${MUT})` }}>
-            <Maximize2 size={18} />
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")} style={{ color: `hsl(${MUT})` }}>
+            <Grid3x3 size={15} className="mr-1.5" /> Grid
           </Button>
           <ExportMenu exportRef={exportRef} fileName="LIZA-Consulting-Training" slideCount={SLIDES.length} accentColor={`hsl(${ACCENT})`} />
+          <Button size="sm" variant="ghost" onClick={enterFullscreen} style={{ color: `hsl(${MUT})` }}>
+            <Maximize2 size={15} className="mr-1.5" /> Present
+          </Button>
         </div>
       </div>
 
-      {/* Canvas */}
-      <div className="flex-1 flex items-center justify-center p-4 md:p-8 min-h-0">
-        <div ref={exportRef} className="w-full max-w-6xl aspect-video rounded-xl overflow-hidden border shadow-2xl"
-          style={{ borderColor: CHROME_BORDER }}>
-          <ScaledSlide>{SLIDES[current].component}</ScaledSlide>
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar thumbnails */}
+        {!isMobile && (
+          <div className="w-44 flex flex-col gap-2 p-3 overflow-y-auto border-r shrink-0"
+            style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
+            {SLIDES.map((s, i) => (
+              <button key={s.id} onClick={() => goTo(i)}
+                className={cn("w-full rounded-lg overflow-hidden border-2 transition-all text-left shrink-0 flex flex-col",
+                  i === current ? "border-primary" : "border-transparent opacity-60 hover:opacity-90"
+                )}>
+                <div className="w-full" style={{ aspectRatio: "16/9", pointerEvents: "none" }}>
+                  <ScaledSlide>{s.component}</ScaledSlide>
+                </div>
+                <p className="text-[10px] px-1.5 py-1" style={{ color: `hsl(${MUT})` }}>
+                  {String(i + 1).padStart(2, "0")} {s.title}
+                </p>
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {showGrid ? (
+            <div className="flex-1 overflow-y-auto p-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                {SLIDES.map((s, i) => (
+                  <button key={s.id} onClick={() => goTo(i)}
+                    className={cn("flex flex-col gap-2 rounded-xl overflow-hidden border-2 transition-all",
+                      i === current ? "border-primary" : "border-transparent hover:border-border"
+                    )}>
+                    <div className="w-full" style={{ aspectRatio: "16/9" }}>
+                      <ScaledSlide>{s.component}</ScaledSlide>
+                    </div>
+                    <p className="text-xs px-2 pb-2" style={{ color: `hsl(${MUT})` }}>
+                      <span className="font-mono">{String(i + 1).padStart(2, "0")}</span> {s.title}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="flex-1 overflow-hidden p-6">
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border"
+                style={{ borderColor: CHROME_BORDER }}>
+                <ScaledSlide>{slide.component}</ScaledSlide>
+              </div>
+            </div>
+          )}
+
+          {!showGrid && (
+            <div className="flex items-center justify-between px-8 py-3 border-t shrink-0"
+              style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
+              <div className="flex gap-2">
+                {SLIDES.map((_, i) => (
+                  <button key={i} onClick={() => goTo(i)}
+                    className="h-1.5 rounded-full transition-all"
+                    style={{
+                      width: i === current ? 32 : 8,
+                      background: i === current ? `hsl(${ACCENT})` : CHROME_BORDER,
+                    }} />
+                ))}
+              </div>
+              <div className="flex items-center gap-3">
+                <Button size="sm" variant="outline" onClick={prev} disabled={current === 0}>
+                  <ChevronLeft size={16} />
+                </Button>
+                <span className="text-xs font-mono" style={{ color: `hsl(${MUT})` }}>
+                  {current + 1} / {SLIDES.length}
+                </span>
+                <Button size="sm" variant="outline" onClick={next} disabled={current === SLIDES.length - 1}>
+                  <ChevronRight size={16} />
+                </Button>
+              </div>
+              <p className="text-xs" style={{ color: `hsl(${MUT} / 0.6)` }}>← → navigate &nbsp; G grid &nbsp; F present</p>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="flex items-center justify-center gap-4 px-4 h-14 border-t flex-shrink-0"
-        style={{ background: CHROME_BG, borderColor: CHROME_BORDER }}>
-        <Button variant="ghost" size="icon" onClick={prev} disabled={current === 0} className="hover:bg-white/5" style={{ color: `hsl(${MUT})` }}>
-          <ChevronLeft size={20} />
-        </Button>
-        <div className="flex items-center gap-1.5">
-          {SLIDES.map((_, i) => (
-            <button key={i} onClick={() => goTo(i)}
-              className="rounded-full transition-all"
-              style={{
-                width: i === current ? 24 : 8, height: 8,
-                background: i === current ? `hsl(${ACCENT})` : `hsl(${MUT} / 0.3)`,
-              }} />
-          ))}
-        </div>
-        <Button variant="ghost" size="icon" onClick={next} disabled={current === SLIDES.length - 1} className="hover:bg-white/5" style={{ color: `hsl(${MUT})` }}>
-          <ChevronRight size={20} />
-        </Button>
-        <span className="font-mono text-xs ml-4" style={{ color: `hsl(${MUT} / 0.6)` }}>
-          {current + 1} / {SLIDES.length}
-        </span>
+      <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
+        {SLIDES.map(s => (
+          <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>
+            {s.component}
+          </div>
+        ))}
       </div>
     </div>
   );
