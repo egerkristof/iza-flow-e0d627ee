@@ -596,7 +596,7 @@ function Slide09Team() {
         <p className="mb-10" style={{ fontSize: 24, color: `hsl(${MUT})` }}>
           We've delivered this at <strong style={{ color: `hsl(${C})` }}>BGE Budapest</strong>,{" "}
           <strong style={{ color: `hsl(${C})` }}>University of Vienna</strong>, and{" "}
-          <strong style={{ color: `hsl(${C})` }}>University of Lviv</strong> — and across enterprise consulting engagements for the last 4 years.
+          <strong style={{ color: `hsl(${C})` }}>University of Lviv</strong>, and across enterprise consulting engagements for the last 4 years.
         </p>
 
         <div className="grid grid-cols-3 gap-6">
