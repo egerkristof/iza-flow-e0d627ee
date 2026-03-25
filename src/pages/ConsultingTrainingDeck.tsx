@@ -398,7 +398,7 @@ function Slide06Tracks() {
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 58, color: `hsl(${C})`, lineHeight: 1.1 }}>
           Applied Context Engineering
         </h2>
-        <p className="mb-2" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>Departmental Tracks — Turning Strategy into Executable Knowledge</p>
+        <p className="mb-2" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>Departmental Tracks: Turning Strategy into Executable Knowledge</p>
         <p className="mb-7" style={{ fontSize: 19, color: `hsl(${MUT})` }}>
           Every track is strictly tailored to the specific problems surfaced during the Assess phase.
         </p>
