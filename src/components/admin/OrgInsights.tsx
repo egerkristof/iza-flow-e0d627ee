@@ -717,55 +717,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     doc.text(archetypeEntries.map(([arch, count]) => `${arch} (${count})`).join("  |  "), margin + 42, y);
     y += 10;
 
-    // Seniority-level score spread with horizontal bars
-    if (org.roleTierSpread.length > 1) {
-      checkNewPage(org.roleTierSpread.length * 10 + 20);
-      drawSectionHeader("Score by Seniority Level");
-
-      const labelColWidth = 38;
-      const barStartX = margin + labelColWidth;
-      const barMaxW = contentWidth - labelColWidth - 30;
-      const barHeight = 5;
-      const rowSpacing = 9;
-
-      for (const { tier, avgScore: tAvg, count: tCount } of org.roleTierSpread) {
-        const tColor = getScoreColor(tAvg);
-        const barW = Math.max((tAvg / 100) * barMaxW, 3);
-
-        // Tier label (right-aligned in label column)
-        setFont(8.5, "normal", [60, 60, 60]);
-        doc.text(tier, barStartX - 3, y + 3.5, { align: "right" });
-
-        // Background bar
-        doc.setFillColor(235, 235, 235);
-        doc.roundedRect(barStartX, y, barMaxW, barHeight, 2, 2, "F");
-
-        // Score bar
-        doc.setFillColor(...tColor);
-        doc.roundedRect(barStartX, y, barW, barHeight, 2, 2, "F");
-
-        // Score value + count
-        setFont(10, "bold", [30, 30, 30]);
-        doc.text(`${tAvg}`, barStartX + barMaxW + 4, y + 3.8);
-        setFont(8, "normal", [140, 140, 140]);
-        doc.text(`(${tCount})`, barStartX + barMaxW + 16, y + 3.8);
-
-        y += rowSpacing;
-      }
-
-      const maxTier = org.roleTierSpread[0];
-      const minTier = org.roleTierSpread[org.roleTierSpread.length - 1];
-      const tierGap = maxTier.avgScore - minTier.avgScore;
-      if (tierGap > 10) {
-        y += 2;
-        setFont(8.5, "italic", [180, 100, 10]);
-        const gapText = `${tierGap}-point perception gap: ${maxTier.tier} (${maxTier.avgScore}) vs ${minTier.tier} (${minTier.avgScore}). Leaders often overestimate team AI maturity because their own experience is stronger.`;
-        const gapLines = doc.splitTextToSize(gapText, contentWidth - 8);
-        doc.text(gapLines, margin + 4, y);
-        y += gapLines.length * 3.8 + 2;
-      }
-      y += 4;
-    }
+    // (Seniority breakdown shown in executive dashboard above)
 
     // ════════════════════════════════════════════
     // YOUR IMPROVEMENT ROADMAP (consolidated)
