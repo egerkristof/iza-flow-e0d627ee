@@ -134,7 +134,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       // Role tier spread
       const tierGroups: Record<string, number[]> = {};
       for (const r of items) {
-        const tier = r.role_tier || "Unknown";
+        const tier = r.role_tier || "Not specified";
         if (!tierGroups[tier]) tierGroups[tier] = [];
         tierGroups[tier].push(r.overall_score);
       }
