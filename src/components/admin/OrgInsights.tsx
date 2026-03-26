@@ -423,7 +423,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     doc.setDrawColor(252, 165, 165);
     doc.roundedRect(margin, y, cardW, cardH, 2, 2, "FD");
     setFont(8, "bold", [220, 38, 38]);
-    doc.text("\u2193  Biggest Gap", margin + 5, y + 6);
+    doc.text("Biggest Gap", margin + 5, y + 6);
     setFont(11, "bold", [30, 30, 30]);
     doc.text(gapLabelTop, margin + 5, y + 12);
     setFont(8.5, "normal", [100, 100, 100]);
@@ -435,7 +435,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     doc.setDrawColor(147, 197, 253);
     doc.roundedRect(rightX, y, cardW, cardH, 2, 2, "FD");
     setFont(8, "bold", [37, 99, 235]);
-    doc.text("\u2191  Strongest Area", rightX + 5, y + 6);
+    doc.text("Strongest Area", rightX + 5, y + 6);
     setFont(11, "bold", [30, 30, 30]);
     doc.text(strengthLabelTop, rightX + 5, y + 12);
     setFont(8.5, "normal", [100, 100, 100]);
@@ -445,7 +445,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
 
     // ── Score by Seniority Level (top section) ──
     if (org.roleTierSpread.length > 1) {
-      checkNewPage(org.roleTierSpread.length * 10 + 20);
+      // Calculate total height needed for seniority + spread to avoid orphan page breaks
+      const seniorityBlockH = org.roleTierSpread.length * 9 + 20;
+      const indScoresPreCalc = org.results.map(r => r.overall_score).sort((a, b) => a - b);
+      const spreadBlockH = 55; // header + bars + labels + context
+      checkNewPage(seniorityBlockH + spreadBlockH + 10);
+
       setFont(9, "bold", [140, 140, 140]);
       doc.text("SCORE BY SENIORITY LEVEL", margin, y + 4);
       y += 10;
@@ -481,10 +486,20 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       const tGap = maxT.avgScore - minT.avgScore;
       if (tGap > 10) {
         setFont(8, "italic", [217, 119, 6]);
-        doc.text(`\u26A0 ${tGap}-point spread: perception gap between seniority levels`, margin, y + 2);
+        doc.text(`${tGap}-point spread: perception gap between seniority levels`, margin, y + 2);
         y += 7;
       }
-      y += 4;
+
+      // Contextual explanation
+      setFont(7.5, "normal", [120, 120, 120]);
+      const senContext = tGap > 15
+        ? "Large perception gaps between seniority levels often indicate that leaders overestimate team AI maturity based on their own experience. This disconnect creates blind spots in capability planning and resource allocation."
+        : tGap > 10
+          ? "A moderate spread suggests emerging alignment challenges. Different seniority levels experience AI tooling differently, which can lead to mismatched expectations around output quality and adoption speed."
+          : "Scores are relatively consistent across seniority levels, indicating shared awareness of current AI execution maturity. This alignment is a foundation for coordinated improvement.";
+      const senCtxLines = doc.splitTextToSize(senContext, contentWidth);
+      doc.text(senCtxLines, margin, y + 2);
+      y += senCtxLines.length * 3.2 + 6;
     }
 
     // ── Individual Score Spread (anonymous bar chart) ──
@@ -497,8 +512,9 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       const spreadStartX = margin;
       const minScore = Math.min(...indScores);
       const maxScore = Math.max(...indScores);
+      const scoreRange = maxScore - minScore;
 
-      checkNewPage(spreadMaxH + 24);
+      checkNewPage(spreadMaxH + 34);
       setFont(9, "bold", [140, 140, 140]);
       doc.text("INDIVIDUAL SCORE SPREAD (ANONYMOUS)", margin, y + 4);
       y += 12;
@@ -517,7 +533,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       setFont(7.5, "normal", [140, 140, 140]);
       doc.text(`Low: ${minScore}`, margin, y);
       doc.text(`High: ${maxScore}`, margin + totalSpreadW, y, { align: "right" });
-      y += 8;
+      y += 5;
+
+      // Contextual explanation
+      setFont(7.5, "normal", [120, 120, 120]);
+      const spreadContext = scoreRange > 30
+        ? `Each bar represents one team member's overall score, sorted low to high. A ${scoreRange}-point range reveals highly uneven AI adoption -- the team's collective output is limited by its weakest link, not its strongest.`
+        : scoreRange > 15
+          ? `Each bar represents one team member's overall score, sorted low to high. A ${scoreRange}-point range shows moderate variance -- targeted knowledge-sharing from stronger to weaker members would compress this spread quickly.`
+          : `Each bar represents one team member's overall score, sorted low to high. A tight ${scoreRange}-point range indicates the team is aligned in how they work with AI. Improvements can be rolled out uniformly.`;
+      const spreadCtxLines = doc.splitTextToSize(spreadContext, contentWidth);
+      doc.text(spreadCtxLines, margin, y);
+      y += spreadCtxLines.length * 3.2 + 4;
     }
 
     drawDivider();
