@@ -409,6 +409,119 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     y += methNote.length * 3.2 + 4;
     drawDivider();
 
+    // ── Biggest Gap / Strongest Area cards (side-by-side) ──
+    const gapLabelTop = DIMENSION_LABELS[org.lowestDimension.key as Dimension] || org.lowestDimension.label;
+    const strengthLabelTop = DIMENSION_LABELS[org.highestDimension.key as Dimension] || org.highestDimension.label;
+    const cardH = 20;
+    const cardGap = 6;
+    const cardW = (contentWidth - cardGap) / 2;
+
+    checkNewPage(cardH + 30);
+
+    // Gap card (red-tinted)
+    doc.setFillColor(254, 242, 242);
+    doc.setDrawColor(252, 165, 165);
+    doc.roundedRect(margin, y, cardW, cardH, 2, 2, "FD");
+    setFont(8, "bold", [220, 38, 38]);
+    doc.text("\u2193  Biggest Gap", margin + 5, y + 6);
+    setFont(11, "bold", [30, 30, 30]);
+    doc.text(gapLabelTop, margin + 5, y + 12);
+    setFont(8.5, "normal", [100, 100, 100]);
+    doc.text(`Score: ${org.lowestDimension.score}/100`, margin + 5, y + 17);
+
+    // Strength card (blue-tinted)
+    const rightX = margin + cardW + cardGap;
+    doc.setFillColor(239, 246, 255);
+    doc.setDrawColor(147, 197, 253);
+    doc.roundedRect(rightX, y, cardW, cardH, 2, 2, "FD");
+    setFont(8, "bold", [37, 99, 235]);
+    doc.text("\u2191  Strongest Area", rightX + 5, y + 6);
+    setFont(11, "bold", [30, 30, 30]);
+    doc.text(strengthLabelTop, rightX + 5, y + 12);
+    setFont(8.5, "normal", [100, 100, 100]);
+    doc.text(`Score: ${org.highestDimension.score}/100`, rightX + 5, y + 17);
+
+    y += cardH + 8;
+
+    // ── Score by Seniority Level (top section) ──
+    if (org.roleTierSpread.length > 1) {
+      checkNewPage(org.roleTierSpread.length * 10 + 20);
+      setFont(9, "bold", [140, 140, 140]);
+      doc.text("SCORE BY SENIORITY LEVEL", margin, y + 4);
+      y += 10;
+
+      const senLabelW = 38;
+      const senBarStart = margin + senLabelW;
+      const senBarMax = contentWidth - senLabelW - 30;
+      const senBarH = 5;
+
+      for (const { tier, avgScore: tAvg, count: tCount } of org.roleTierSpread) {
+        const tColor = getScoreColor(tAvg);
+        const barW = Math.max((tAvg / 100) * senBarMax, 3);
+
+        setFont(8.5, "normal", [60, 60, 60]);
+        doc.text(tier, senBarStart - 3, y + 3.5, { align: "right" });
+
+        doc.setFillColor(235, 235, 235);
+        doc.roundedRect(senBarStart, y, senBarMax, senBarH, 2, 2, "F");
+        doc.setFillColor(...tColor);
+        doc.roundedRect(senBarStart, y, barW, senBarH, 2, 2, "F");
+
+        setFont(10, "bold", [30, 30, 30]);
+        doc.text(`${tAvg}`, senBarStart + senBarMax + 4, y + 3.8);
+        setFont(8, "normal", [140, 140, 140]);
+        doc.text(`(${tCount})`, senBarStart + senBarMax + 16, y + 3.8);
+
+        y += 9;
+      }
+
+      // Perception gap warning
+      const maxT = org.roleTierSpread[0];
+      const minT = org.roleTierSpread[org.roleTierSpread.length - 1];
+      const tGap = maxT.avgScore - minT.avgScore;
+      if (tGap > 10) {
+        setFont(8, "italic", [217, 119, 6]);
+        doc.text(`\u26A0 ${tGap}-point spread: perception gap between seniority levels`, margin, y + 2);
+        y += 7;
+      }
+      y += 4;
+    }
+
+    // ── Individual Score Spread (anonymous bar chart) ──
+    {
+      const indScores = org.results.map(r => r.overall_score).sort((a, b) => a - b);
+      const spreadBarW = 10;
+      const spreadBarGap = 3;
+      const spreadMaxH = 30;
+      const totalSpreadW = indScores.length * (spreadBarW + spreadBarGap) - spreadBarGap;
+      const spreadStartX = margin;
+      const minScore = Math.min(...indScores);
+      const maxScore = Math.max(...indScores);
+
+      checkNewPage(spreadMaxH + 24);
+      setFont(9, "bold", [140, 140, 140]);
+      doc.text("INDIVIDUAL SCORE SPREAD (ANONYMOUS)", margin, y + 4);
+      y += 12;
+
+      const baseY = y + spreadMaxH;
+      for (let i = 0; i < indScores.length; i++) {
+        const s = indScores[i];
+        const barH = Math.max((s / 100) * spreadMaxH, 3);
+        const bx = spreadStartX + i * (spreadBarW + spreadBarGap);
+        const clr = getScoreColor(s);
+        doc.setFillColor(...clr);
+        doc.roundedRect(bx, baseY - barH, spreadBarW, barH, 1.5, 1.5, "F");
+      }
+
+      y = baseY + 4;
+      setFont(7.5, "normal", [140, 140, 140]);
+      doc.text(`Low: ${minScore}`, margin, y);
+      doc.text(`High: ${maxScore}`, margin + totalSpreadW, y, { align: "right" });
+      y += 8;
+    }
+
+    drawDivider();
+
     // ── Dimension Scorecard (compact visual) ──
     drawSectionHeader("Dimension Scorecard");
 
