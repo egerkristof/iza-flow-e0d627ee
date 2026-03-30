@@ -373,7 +373,7 @@ function Slide03ContextStarvation() {
             <br /><span style={{ color: `hsl(${GOLD})` }}>It is missing human judgment.</span>
           </h2>
           <p className="mb-6" style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
-            When AI fails, it is <strong style={{ color: `hsl(${C})` }}>"Context Starved"</strong> — it lacks the unwritten
+            When AI fails, it is <strong style={{ color: `hsl(${C})` }}>"Context Starved."</strong> It lacks the unwritten
             rules your senior experts hold in their heads.
           </p>
           <div className="rounded-xl p-6" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.2)` }}>
@@ -877,7 +877,7 @@ function SlideTrackSales() {
       icon={<Briefcase size={24} />}
       title="Sales & GTM"
       subtitle="Scaling the Consultative Edge"
-      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis"</strong> — top reps win on nuance; the rest rely on generic AI outreach. From deal qualification to account management to proposal cycles, <strong style={{ color: `hsl(${C})` }}>the entire revenue engine lacks codified strategy</strong>.</>}
+      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis."</strong> Top reps win on nuance; the rest rely on generic AI outreach. From deal qualification to account management to proposal cycles, <strong style={{ color: `hsl(${C})` }}>the entire revenue engine lacks codified strategy</strong>.</>}
       transformation={<>Turn your best performers' unwritten strategies into <strong style={{ color: `hsl(${C})` }}>scalable infrastructure</strong> across the full customer lifecycle, from first contact to long-term account growth.</>}
       implementations={[
         { title: "Deal Qualification Gatekeeper", desc: "MEDDPICC enforcement as an active agent, not a checklist" },
@@ -914,7 +914,7 @@ function SlideTrackStrategy() {
       title="Strategy & Leadership"
       subtitle="Governing the Agentic Organization"
       challenge={<>Leaders lack the systems to govern an AI-native organization. <strong style={{ color: `hsl(${C})` }}>How do you implement improvement, transformation, and innovation initiatives</strong> when every department runs agentic workflows?</>}
-      transformation={<>Building the <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower"</strong> — connecting departmental AI implementations into a unified value tree from vision to initiative execution.</>}
+      transformation={<>Building the <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower,"</strong> connecting departmental AI implementations into a unified value tree from vision to initiative execution.</>}
       implementations={[
         { title: "Scenario Builder & Strategy Radar", desc: "Stress-test strategic decisions and model future skill alignment across the organization" },
         { title: "Cross-Department Value Tree", desc: "How all departmental AI implementations connect, from top-level vision down to initiative execution" },
@@ -996,13 +996,13 @@ function SlideValueTree() {
             <br /><span style={{ color: `hsl(${GOLD})` }}>The Value Tree</span>
           </h2>
           <p className="mb-6" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-            Each department doesn't operate in isolation. When implemented together, they form a <strong style={{ color: `hsl(${C})` }}>unified value tree</strong> — from top-level strategic vision down to agentic initiative execution.
+            Each department doesn't operate in isolation. When implemented together, they form a <strong style={{ color: `hsl(${C})` }}>unified value tree</strong>, from top-level strategic vision down to agentic initiative execution.
           </p>
 
           <div className="rounded-xl p-5 mb-4" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.2)` }}>
             <p className="font-bold mb-2" style={{ fontSize: 19, color: `hsl(${GOLD})` }}>Why This Matters</p>
             <p style={{ fontSize: 18, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-              This is how you turn an AI-native organization into a <strong style={{ color: `hsl(${C})` }}>governed operating model</strong> — where improvement, transformation, and innovation initiatives are traceable from boardroom decisions to frontline execution.
+              This is how you turn an AI-native organization into a <strong style={{ color: `hsl(${C})` }}>governed operating model</strong> where improvement, transformation, and innovation initiatives are traceable from boardroom decisions to frontline execution.
             </p>
           </div>
         </div>
