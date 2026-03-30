@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Users, UserPlus, Pencil, Check, X, ChevronDown, ChevronUp, Unlink } from "lucide-react";
+import { Users, UserPlus, Pencil, Check, X, ChevronDown, ChevronUp, Unlink, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
@@ -41,6 +41,7 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
   const [saving, setSaving] = useState(false);
   const [expandedTeam, setExpandedTeam] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"teams" | "all">("teams");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter out founders and anonymous
   const relevantResults = useMemo(() =>
@@ -48,7 +49,19 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
     [results]
   );
 
-  // Team groups
+  // Search filter
+  const matchesSearch = useCallback((r: DiagnosticResult) => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return true;
+    return (r.email || "").toLowerCase().includes(q) ||
+      (r.respondent_role || "").toLowerCase().includes(q) ||
+      (r.company_name || "").toLowerCase().includes(q) ||
+      (r.industry || "").toLowerCase().includes(q) ||
+      (r.industry_refined || "").toLowerCase().includes(q) ||
+      (r.team_leader_email || "").toLowerCase().includes(q);
+  }, [searchQuery]);
+
+  // Team groups (filtered by search)
   const teams = useMemo(() => {
     const groups: Record<string, DiagnosticResult[]> = {};
     for (const r of relevantResults) {
@@ -63,13 +76,20 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
       members: members.sort((a, b) => b.overall_score - a.overall_score),
       avgScore: Math.round(members.reduce((s, m) => s + m.overall_score, 0) / members.length),
     }));
-    return teamList.sort((a, b) => b.members.length - a.members.length);
-  }, [relevantResults]);
 
-  const unassigned = useMemo(() =>
-    relevantResults.filter(r => !r.team_leader_email?.trim()),
-    [relevantResults]
-  );
+    // Filter teams: show team if leader email matches OR any member matches
+    const q = searchQuery.toLowerCase().trim();
+    const filtered = q
+      ? teamList.filter(t => t.leaderEmail.includes(q) || t.members.some(matchesSearch))
+      : teamList;
+
+    return filtered.sort((a, b) => b.members.length - a.members.length);
+  }, [relevantResults, searchQuery, matchesSearch]);
+
+  const unassigned = useMemo(() => {
+    const base = relevantResults.filter(r => !r.team_leader_email?.trim());
+    return searchQuery.trim() ? base.filter(matchesSearch) : base;
+  }, [relevantResults, searchQuery, matchesSearch]);
 
   const saveTeamLeader = useCallback(async (resultId: string, newLeader: string | null) => {
     setSaving(true);
@@ -185,6 +205,16 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
             All Respondents
           </Button>
         </div>
+      </div>
+
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search by email, name, company, role…"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-9"
+        />
       </div>
 
       {viewMode === "teams" ? (
@@ -316,6 +346,7 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
                 </TableHeader>
                 <TableBody>
                   {relevantResults
+                    .filter(matchesSearch)
                     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
                     .map(r => renderMemberRow(r, true))}
                 </TableBody>

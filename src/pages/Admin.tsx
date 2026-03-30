@@ -126,6 +126,7 @@ export default function AdminPage() {
   const [results, setResults] = useState<DiagnosticResult[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [loadingData, setLoadingData] = useState(true);
+  const [diagnosticSearch, setDiagnosticSearch] = useState("");
 
   // Insights Lab state
   const [pastResearch, setPastResearch] = useState<ResearchEntry[]>([]);
@@ -597,14 +598,32 @@ export default function AdminPage() {
                 </div>
                 <Button variant="outline" size="sm" onClick={() => void loadData()} disabled={loadingData} className="gap-1.5">
                   <RefreshCw className={`h-3.5 w-3.5 ${loadingData ? "animate-spin" : ""}`} />
-                  Refresh
+                 Refresh
                 </Button>
               </div>
+
+              <Input
+                placeholder="Search by email, name, company, role…"
+                value={diagnosticSearch}
+                onChange={(e) => setDiagnosticSearch(e.target.value)}
+                className="max-w-sm"
+              />
 
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base">Submissions</CardTitle>
-                  <CardDescription>{results.length} submission{results.length !== 1 ? "s" : ""} total</CardDescription>
+                  <CardDescription>{(() => {
+                    const q = diagnosticSearch.toLowerCase().trim();
+                    const filtered = q ? results.filter(r =>
+                      (r.email || "").toLowerCase().includes(q) ||
+                      (r.respondent_role || "").toLowerCase().includes(q) ||
+                      (r.company_name || "").toLowerCase().includes(q) ||
+                      (r.archetype || "").toLowerCase().includes(q) ||
+                      (r.industry || "").toLowerCase().includes(q) ||
+                      (r.industry_refined || "").toLowerCase().includes(q)
+                    ) : results;
+                    return `${filtered.length} of ${results.length} submission${results.length !== 1 ? "s" : ""}`;
+                  })()}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {loadingData ? (
@@ -627,7 +646,16 @@ export default function AdminPage() {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {results.map((r) => (
+                        {results.filter(r => {
+                          const q = diagnosticSearch.toLowerCase().trim();
+                          if (!q) return true;
+                          return (r.email || "").toLowerCase().includes(q) ||
+                            (r.respondent_role || "").toLowerCase().includes(q) ||
+                            (r.company_name || "").toLowerCase().includes(q) ||
+                            (r.archetype || "").toLowerCase().includes(q) ||
+                            (r.industry || "").toLowerCase().includes(q) ||
+                            (r.industry_refined || "").toLowerCase().includes(q);
+                        }).map((r) => (
                           <Fragment key={r.id}>
                             <TableRow className="cursor-pointer" onClick={() => setExpandedId(expandedId === r.id ? null : r.id)}>
                               <TableCell className="text-sm">{format(new Date(r.created_at), "MMM d, yyyy HH:mm")}</TableCell>
