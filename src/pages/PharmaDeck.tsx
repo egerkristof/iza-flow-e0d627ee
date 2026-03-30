@@ -158,10 +158,10 @@ function Slide01Problem() {
 
           <div className="grid grid-cols-2 gap-4">
             {[
-              { v: "€2.6B", l: "Average cost to bring one drug to market", src: "Deloitte, 2023" },
+              { v: "€2.6B", l: "Average cost to bring one drug to market — inconsistent execution is a major contributor", src: "Deloitte, 2023" },
               { v: "90%", l: "Of clinical candidates fail before approval", src: "FDA, 2022" },
               { v: "42%", l: "Of deviations traced to inconsistent SOP interpretation", src: "PDA Survey" },
-              { v: "68%", l: "Of pharma leaders say knowledge transfer is their top risk", src: "McKinsey" },
+              { v: "68%", l: "Of pharma leaders say knowledge transfer is their top operational risk", src: "McKinsey" },
             ].map(s => (
               <div key={s.l} className="rounded-xl px-5 py-4" style={{ background: BG2, border: `1px solid hsl(${ACCENT} / 0.12)` }}>
                 <p className="font-black" style={{ fontSize: 32, color: `hsl(${ACCENT})` }}>{s.v}</p>
