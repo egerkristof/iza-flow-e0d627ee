@@ -109,7 +109,7 @@ function PartDivider({ part, title, color = ACCENT, activePhase }: { part: strin
         style={{ background: `radial-gradient(circle, hsl(${color}), transparent 70%)` }} />
 
       {/* Journey progress bar at top */}
-      <div className="absolute top-[80px] left-1/2 -translate-x-1/2 flex items-center gap-0">
+      <div className="absolute top-[60px] left-1/2 -translate-x-1/2 flex items-center gap-0">
         {JOURNEY_PHASES.map((phase, i) => {
           const isActive = phase.key === activePhase;
           const isPast = JOURNEY_PHASES.findIndex(p => p.key === activePhase) > i;
@@ -117,36 +117,37 @@ function PartDivider({ part, title, color = ACCENT, activePhase }: { part: strin
           return (
             <div key={phase.key} className="flex items-center">
               {i > 0 && (
-                <div className="w-[60px] h-[2px]" style={{
-                  background: isPast ? `hsl(0 0% 100% / 0.4)` : `hsl(0 0% 100% / 0.1)`
+                <div className="w-[80px] h-[3px] rounded-full" style={{
+                  background: isPast ? `hsl(0 0% 100% / 0.5)` : isActive ? `linear-gradient(90deg, hsl(0 0% 100% / 0.4), hsl(${phase.color} / 0.6))` : `hsl(0 0% 100% / 0.12)`
                 }} />
               )}
-              <div className="flex flex-col items-center gap-2 relative" style={{ width: 140 }}>
-                <div className="flex items-center justify-center w-11 h-11 rounded-full border-2 transition-all"
+              <div className="flex flex-col items-center gap-3 relative" style={{ width: 160 }}>
+                <div className="flex items-center justify-center w-14 h-14 rounded-full border-[3px] transition-all"
                   style={{
-                    borderColor: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.3)` : `hsl(0 0% 100% / 0.12)`,
-                    background: isActive ? `hsl(${phase.color} / 0.25)` : `hsl(0 0% 100% / 0.04)`,
-                    color: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.4)` : `hsl(0 0% 100% / 0.15)`,
-                    ...(isActive ? { boxShadow: `0 0 24px hsl(${phase.color} / 0.3)` } : {}),
+                    borderColor: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.4)` : `hsl(0 0% 100% / 0.15)`,
+                    background: isActive ? `hsl(${phase.color} / 0.3)` : isPast ? `hsl(0 0% 100% / 0.06)` : `hsl(0 0% 100% / 0.04)`,
+                    color: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.5)` : `hsl(0 0% 100% / 0.18)`,
+                    ...(isActive ? { boxShadow: `0 0 32px hsl(${phase.color} / 0.45), 0 0 60px hsl(${phase.color} / 0.15)` } : {}),
                   }}>
                   {isSkipped && !isActive ? (
-                    <span style={{ fontSize: 14, fontWeight: 700 }}>✓</span>
+                    <span style={{ fontSize: 18, fontWeight: 700 }}>✓</span>
                   ) : (
-                    phase.icon
+                    <span style={{ fontSize: 20 }}>{phase.icon}</span>
                   )}
                 </div>
                 <div className="text-center">
-                  <p className="font-bold" style={{
-                    fontSize: isActive ? 16 : 14,
-                    color: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.4)` : `hsl(0 0% 100% / 0.18)`,
+                  <p className="font-extrabold tracking-wide" style={{
+                    fontSize: isActive ? 18 : 15,
+                    color: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.5)` : `hsl(0 0% 100% / 0.22)`,
+                    textShadow: isActive ? `0 0 20px hsl(${phase.color} / 0.4)` : 'none',
                   }}>
                     {phase.label}
                   </p>
                   {isActive && (
-                    <p style={{ fontSize: 12, color: `hsl(${phase.color} / 0.7)` }}>{phase.subtitle}</p>
+                    <p style={{ fontSize: 13, color: `hsl(${phase.color} / 0.85)`, fontWeight: 500, marginTop: 2 }}>{phase.subtitle}</p>
                   )}
                   {isSkipped && !isActive && (
-                    <p style={{ fontSize: 11, color: `hsl(0 0% 100% / 0.2)`, fontStyle: "italic" }}>Pre-engagement</p>
+                    <p style={{ fontSize: 12, color: `hsl(0 0% 100% / 0.25)`, fontStyle: "italic" }}>Pre-engagement</p>
                   )}
                 </div>
               </div>
@@ -155,12 +156,12 @@ function PartDivider({ part, title, color = ACCENT, activePhase }: { part: strin
         })}
       </div>
 
-      <div className="relative z-10 text-center mt-8">
-        <p className="font-bold tracking-[0.35em] uppercase mb-6"
-          style={{ fontSize: 20, color: `hsl(${color})` }}>{part}</p>
-        <h2 className="font-black" style={{ fontSize: 80, color: "hsl(0 0% 100%)", lineHeight: 1.1 }}>{title}</h2>
+      <div className="relative z-10 text-center mt-12">
+        <p className="font-extrabold tracking-[0.4em] uppercase mb-8"
+          style={{ fontSize: 26, color: `hsl(${color})`, textShadow: `0 0 30px hsl(${color} / 0.4)` }}>{part}</p>
+        <h2 className="font-black" style={{ fontSize: 88, color: "hsl(0 0% 100%)", lineHeight: 1.05, textShadow: '0 2px 40px hsl(0 0% 0% / 0.5)' }}>{title}</h2>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: `hsl(${color})` }} />
+      <div className="absolute bottom-0 left-0 right-0 h-[5px]" style={{ background: `linear-gradient(90deg, transparent, hsl(${color}), transparent)` }} />
     </div>
   );
 }
