@@ -877,12 +877,12 @@ function SlideTrackSales() {
       icon={<Briefcase size={24} />}
       title="Sales & GTM"
       subtitle="Scaling the Consultative Edge"
-      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis"</strong> — top reps win on nuance; the rest rely on generic AI outreach. Margin bleeds in proposal review cycles.</>}
-      transformation={<>Turn your best closer's unwritten strategies into <strong style={{ color: `hsl(${C})` }}>scalable infrastructure</strong> that every team member operates through.</>}
+      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis"</strong> — top reps win on nuance; the rest rely on generic AI outreach. From deal qualification to account management to proposal cycles, <strong style={{ color: `hsl(${C})` }}>the entire revenue engine lacks codified strategy</strong>.</>}
+      transformation={<>Turn your best performers' unwritten strategies into <strong style={{ color: `hsl(${C})` }}>scalable infrastructure</strong> across the full customer lifecycle — from first contact to long-term account growth.</>}
       implementations={[
         { title: "Deal Qualification Gatekeeper", desc: "MEDDPICC enforcement as an active agent — not a checklist" },
+        { title: "Account Management Playbooks", desc: "Codified relationship strategies, renewal workflows, and expansion triggers" },
         { title: "Proposal Generation Engine", desc: "Proprietary value prop + compliance guardrails baked into every output" },
-        { title: "Competitive Positioning Agent", desc: "Win/loss intelligence codified as persistent battle cards" },
       ]}
     />
   );
