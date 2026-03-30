@@ -61,7 +61,7 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
       (r.team_leader_email || "").toLowerCase().includes(q);
   }, [searchQuery]);
 
-  // Team groups
+  // Team groups (filtered by search)
   const teams = useMemo(() => {
     const groups: Record<string, DiagnosticResult[]> = {};
     for (const r of relevantResults) {
@@ -76,13 +76,20 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
       members: members.sort((a, b) => b.overall_score - a.overall_score),
       avgScore: Math.round(members.reduce((s, m) => s + m.overall_score, 0) / members.length),
     }));
-    return teamList.sort((a, b) => b.members.length - a.members.length);
-  }, [relevantResults]);
 
-  const unassigned = useMemo(() =>
-    relevantResults.filter(r => !r.team_leader_email?.trim()),
-    [relevantResults]
-  );
+    // Filter teams: show team if leader email matches OR any member matches
+    const q = searchQuery.toLowerCase().trim();
+    const filtered = q
+      ? teamList.filter(t => t.leaderEmail.includes(q) || t.members.some(matchesSearch))
+      : teamList;
+
+    return filtered.sort((a, b) => b.members.length - a.members.length);
+  }, [relevantResults, searchQuery, matchesSearch]);
+
+  const unassigned = useMemo(() => {
+    const base = relevantResults.filter(r => !r.team_leader_email?.trim());
+    return searchQuery.trim() ? base.filter(matchesSearch) : base;
+  }, [relevantResults, searchQuery, matchesSearch]);
 
   const saveTeamLeader = useCallback(async (resultId: string, newLeader: string | null) => {
     setSaving(true);
