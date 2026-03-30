@@ -716,7 +716,7 @@ function Slide10MarketValidation() {
               example: "\"Remember user preferences\"",
             },
             {
-              name: "Paradox", funding: "~$26M", investors: "European VCs",
+              name: "Paradox", funding: "~$26M", investors: "Speedinvest, European VCs",
               color: SUBTLE, approach: "Organizational Theory",
               desc: "Copenhagen. Researches strategic drift and \"shared world models.\" Pre-product, 12 people.",
               domain: "Complex (Theory-stage)",
