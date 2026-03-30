@@ -932,11 +932,9 @@ function SlideTrackFinance() {
       title="Finance & Risk"
       subtitle="Automating Narrative, Enforcing Control"
       challenge={<>Finance spends <strong style={{ color: `hsl(${C})` }}>80% of time aggregating data</strong>. Commodity AI hallucinates numbers or fails to apply strict internal policy constraints.</>}
-      transformation={<>Building <strong style={{ color: `hsl(${C})` }}>"Guardrail Agents"</strong> with hard-coded reporting standards — AI that generates within your exact compliance framework.</>}
+      transformation={<>Building <strong style={{ color: `hsl(${C})` }}>"Guardrail Agents"</strong> with hard-coded reporting standards. AI that generates within your exact compliance framework.</>}
       implementations={[
-        { title: "Financial Narrative Synthesis (MD&A)", desc: "Automated management discussion with enforced GAAP/IFRS language" },
-        { title: "CapEx / Investment Request Triage", desc: "Structured intake with policy-compliant scoring and recommendation" },
-        { title: "Variance Analysis Automation", desc: "Pattern detection across periods with contextual commentary generation" },
+        { title: "Customized Based on Need", desc: "Finance implementations are precision-tailored to your specific reporting, compliance, and governance requirements" },
       ]}
     />
   );
