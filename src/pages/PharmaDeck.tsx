@@ -299,7 +299,7 @@ function Slide03Options() {
       color: GOLD,
       points: [
         "ChatGPT / Copilot generate faster — but lack domain-specific gate enforcement",
-        "No audit trail, no step-level compliance checks, no GxP alignment",
+        "No audit trail, no step-level compliance checks, no path to GxP alignment",
         "Without encoded judgment, AI outputs require the same expert review they were meant to replace",
       ],
     },
@@ -312,7 +312,7 @@ function Slide03Options() {
       points: [
         "Encode how your best people think — not just what they document",
         "Gate-enforced playbooks ensure every person executes at senior level",
-        "Full audit trail, GxP-ready, ICH-compliant architecture",
+        "Full audit trail, architected for GxP and ICH alignment from day one",
       ],
     },
   ];
@@ -396,7 +396,7 @@ function Slide04Results() {
               { v: "↑ 90%+", l: "Dramatically improved consistency across teams and sites", color: TEAL, sub: "Same playbook, same quality gates — regardless of who runs it" },
               { v: "Near 0", l: "Critical knowledge loss when senior experts leave", color: TEAL, sub: "Judgment is encoded in the system, not trapped in people's heads" },
               { v: "60–70%", l: "Reduction in onboarding time for new hires", color: ACCENT, sub: "Junior staff execute at senior level from day one" },
-              { v: "Full", l: "Audit trail for every decision and gate", color: GOLD, sub: "GxP-ready, regulator-friendly provenance" },
+              { v: "Full", l: "Audit trail for every decision and gate", color: GOLD, sub: "Designed to support GxP and regulatory requirements" },
             ].map(s => (
               <div key={s.l} className="rounded-xl p-6" style={{ background: `hsl(${s.color} / 0.04)`, border: `1px solid hsl(${s.color} / 0.15)` }}>
                 <p className="font-black mb-1" style={{ fontSize: 44, color: `hsl(${s.color})` }}>{s.v}</p>
@@ -509,9 +509,9 @@ function Slide05How() {
 
         <div className="mt-8 flex gap-4">
           {[
-            { icon: <Shield size={18} />, t: "GxP audit trail built-in" },
-            { icon: <ShieldCheck size={18} />, t: "21 CFR Part 11 aligned" },
-            { icon: <CheckCircle2 size={18} />, t: "ICH E6(R3) compliant" },
+            { icon: <Shield size={18} />, t: "Audit trail built-in" },
+            { icon: <ShieldCheck size={18} />, t: "Designed for 21 CFR Part 11" },
+            { icon: <CheckCircle2 size={18} />, t: "Architected for ICH E6(R3)" },
           ].map(b => (
             <div key={b.t} className="flex items-center gap-2 px-4 py-2 rounded-full"
               style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.15)` }}>
@@ -609,9 +609,9 @@ function Slide06Summary() {
 
           <div className="mt-6 flex items-center gap-6">
             {[
-              { v: "GxP", l: "Ready" },
-              { v: "21 CFR", l: "Aligned" },
-              { v: "ICH", l: "Compliant" },
+              { v: "GxP", l: "Designed for" },
+              { v: "21 CFR", l: "Architected for" },
+              { v: "ICH", l: "Targeting" },
             ].map(s => (
               <div key={s.l} className="text-center">
                 <p className="font-black" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>{s.v}</p>
