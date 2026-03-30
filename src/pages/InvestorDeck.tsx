@@ -688,14 +688,14 @@ function Slide10MarketValidation() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Market Validation" color={GREEN} />
         <h2 className="font-bold mb-6" style={{ fontSize: 60, color: TEXT, lineHeight: 1.1 }}>
-          $95M+ invested into our category.<br />
+          $98M+ invested into our category.<br />
           <span style={{ color: `hsl(${GREEN})` }}>Four approaches. One missing layer.</span>
         </h2>
 
         <div className="grid grid-cols-4 gap-4 mb-5">
           {[
             {
-              name: "Interloom", funding: "$16.5M", investors: "Air Street, DN Capital, BEK",
+              name: "Interloom", funding: "$19.5M", investors: "DN Capital, Air Street, BEK",
               color: SUBTLE, approach: "Back-Office Automation",
               desc: "Context graphs + procedures for repeatable ops. Facility mgmt, insurance, banking, ITSM.",
               domain: "Complicated (Repeatable)",
@@ -754,7 +754,7 @@ function Slide10MarketValidation() {
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
-            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$95M+</p>
+            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$98M+</p>
             <p style={{ fontSize: 16, color: MUTED }}>Category investment</p>
             <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>in last 12 months</p>
           </div>
