@@ -312,7 +312,7 @@ function Slide03Options() {
       points: [
         "Encode how your best people think — not just what they document",
         "Gate-enforced playbooks ensure every person executes at senior level",
-        "Full audit trail, GxP-ready, ICH-compliant architecture",
+        "Full audit trail, architected for GxP and ICH alignment from day one",
       ],
     },
   ];
