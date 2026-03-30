@@ -85,10 +85,17 @@ async function exportPptx(exportRef: React.RefObject<HTMLDivElement>, fileName: 
   await pptx.writeFile({ fileName: `${fileName}.pptx` });
 }
 
-async function exportGoogleSlides(exportRef: React.RefObject<HTMLDivElement>, fileName: string) {
+async function exportGoogleSlides(
+  exportRef: React.RefObject<HTMLDivElement>,
+  fileName: string,
+  popupWindow?: Window | null,
+) {
   const PptxGenJS = (await import("pptxgenjs")).default;
   const canvases = await captureSlides(exportRef);
-  if (!canvases.length) return;
+  if (!canvases.length) {
+    if (popupWindow && !popupWindow.closed) popupWindow.close();
+    return;
+  }
 
   const pptx = new PptxGenJS();
   pptx.layout = "LAYOUT_16x9";
@@ -101,25 +108,38 @@ async function exportGoogleSlides(exportRef: React.RefObject<HTMLDivElement>, fi
     slide.addImage({ data: imgData, x: 0, y: 0, w: "100%", h: "100%" });
   }
 
-  // Generate as blob, upload to storage, then open Google Slides import
-  const blob = await pptx.write({ outputType: "blob" }) as Blob;
+  const blob = (await pptx.write({ outputType: "blob" })) as Blob;
+  const pptxFile = new File([blob], `${fileName}.pptx`, {
+    type: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  });
   const storagePath = `exports/${fileName}-${Date.now()}.pptx`;
 
   const { error } = await supabase.storage
     .from("temp-exports")
-    .upload(storagePath, blob, { contentType: "application/vnd.openxmlformats-officedocument.presentationml.presentation", upsert: true });
+    .upload(storagePath, pptxFile, {
+      contentType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      upsert: true,
+    });
 
   if (error) {
     console.error("Upload failed, falling back to download:", error);
+    if (popupWindow && !popupWindow.closed) popupWindow.close();
     await pptx.writeFile({ fileName: `${fileName}.pptx` });
     return;
   }
 
   const { data: urlData } = supabase.storage.from("temp-exports").getPublicUrl(storagePath);
-  const publicUrl = urlData.publicUrl;
+  const importUrl = `https://docs.google.com/presentation/u/0/?usp=import&url=${encodeURIComponent(urlData.publicUrl)}`;
 
-  // Open Google Slides with import URL
-  window.open(`https://docs.google.com/presentation/u/0/?usp=import&url=${encodeURIComponent(publicUrl)}`, "_blank");
+  if (popupWindow && !popupWindow.closed) {
+    popupWindow.location.href = importUrl;
+    return;
+  }
+
+  const opened = window.open(importUrl, "_blank");
+  if (!opened) {
+    await pptx.writeFile({ fileName: `${fileName}.pptx` });
+  }
 }
 
 const FORMAT_OPTIONS: { id: ExportFormat; label: string; icon: React.ReactNode; desc: string }[] = [
@@ -145,6 +165,12 @@ export function ExportMenu({ exportRef, fileName, variant = "desktop", iconColor
   }, [open]);
 
   const handleExport = async (format: ExportFormat) => {
+    const popupWindow = format === "gslides" ? window.open("", "_blank") : null;
+    if (popupWindow) {
+      popupWindow.document.title = "Preparing Google Slides...";
+      popupWindow.document.body.innerHTML = "<p style='font-family:sans-serif;padding:24px'>Preparing your Google Slides export...</p>";
+    }
+
     setExporting(true);
     setActiveFormat(format);
     setOpen(false);
@@ -155,7 +181,7 @@ export function ExportMenu({ exportRef, fileName, variant = "desktop", iconColor
       switch (format) {
         case "pdf": await exportPdf(exportRef, fileName); break;
         case "pptx": await exportPptx(exportRef, fileName); break;
-        case "gslides": await exportGoogleSlides(exportRef, fileName); break;
+        case "gslides": await exportGoogleSlides(exportRef, fileName, popupWindow); break;
       }
     } finally {
       setExporting(false);
