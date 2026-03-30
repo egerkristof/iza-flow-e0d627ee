@@ -25,6 +25,7 @@ import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 
 import ConsultingTrainingDeck from "./pages/ConsultingTrainingDeck";
 import PharmaDeck from "./pages/PharmaDeck";
+import PharmaAuditDeck from "./pages/PharmaAuditDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
 import LinkedInImageCard from "./pages/LinkedInImageCard";
 import HomePage from "./pages/marketing/Home";
