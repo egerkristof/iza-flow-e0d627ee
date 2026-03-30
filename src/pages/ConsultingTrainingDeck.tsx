@@ -1494,13 +1494,13 @@ const SLIDES = [
   { id: 20, title: "Track: HR & Talent", component: <SlideTrackHR /> },
   { id: 21, title: "The Value Tree", component: <SlideValueTree /> },
   // Part 4: Platform & Deliverables
-  { id: 21, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} activePhase="anchor" /> },
-  { id: 22, title: "The Simulation Environment", component: <SlideAnchor /> },
-  { id: 23, title: "Deliverables", component: <SlideDeliverables /> },
-  { id: 24, title: "Engagement & Pricing", component: <SlidePricing /> },
-  { id: 25, title: "Proven in Practice", component: <SlideProofPoint /> },
-  { id: 26, title: "The Team", component: <SlideTeam /> },
-  { id: 27, title: "Next Steps", component: <SlideNextSteps /> },
+  { id: 22, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} activePhase="anchor" /> },
+  { id: 23, title: "The Simulation Environment", component: <SlideAnchor /> },
+  { id: 24, title: "Deliverables", component: <SlideDeliverables /> },
+  { id: 25, title: "Engagement & Pricing", component: <SlidePricing /> },
+  { id: 26, title: "Proven in Practice", component: <SlideProofPoint /> },
+  { id: 27, title: "The Team", component: <SlideTeam /> },
+  { id: 28, title: "Next Steps", component: <SlideNextSteps /> },
 ];
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
