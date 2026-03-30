@@ -126,6 +126,7 @@ export default function AdminPage() {
   const [results, setResults] = useState<DiagnosticResult[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [loadingData, setLoadingData] = useState(true);
+  const [diagnosticSearch, setDiagnosticSearch] = useState("");
 
   // Insights Lab state
   const [pastResearch, setPastResearch] = useState<ResearchEntry[]>([]);
