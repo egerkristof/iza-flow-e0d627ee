@@ -3,6 +3,7 @@ import { Download, Loader2, FileText, Presentation, ExternalLink, ChevronDown } 
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { buildGoogleSlidesImportUrl, writeGoogleSlidesPopup } from "@/lib/google-slides-popup";
 
 type ExportFormat = "pdf" | "pptx" | "gslides";
 
@@ -114,30 +115,44 @@ async function exportGoogleSlides(
   });
   const storagePath = `exports/${fileName}-${Date.now()}.pptx`;
 
-  const { error } = await supabase.storage
-    .from("temp-exports")
-    .upload(storagePath, pptxFile, {
-      contentType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      upsert: true,
+  try {
+    const { error } = await supabase.storage
+      .from("temp-exports")
+      .upload(storagePath, pptxFile, {
+        contentType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        upsert: true,
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    const { data: urlData } = supabase.storage.from("temp-exports").getPublicUrl(storagePath);
+    const pptxUrl = urlData.publicUrl;
+    const importUrl = buildGoogleSlidesImportUrl(pptxUrl);
+
+    if (writeGoogleSlidesPopup(popupWindow ?? null, {
+      title: "Opening Google Slides…",
+      message: "Your PowerPoint is ready. If Google Slides does not open automatically, use the button below.",
+      primaryHref: importUrl,
+      primaryLabel: "Continue to Google Slides",
+      secondaryHref: pptxUrl,
+      secondaryLabel: "Download the .pptx file",
+      autoOpenHref: importUrl,
+    })) {
+      return;
+    }
+
+    const opened = window.open(importUrl, "_blank", "noopener,noreferrer");
+    if (!opened) {
+      await pptx.writeFile({ fileName: `${fileName}.pptx` });
+    }
+  } catch (error) {
+    console.error("Google Slides export failed, falling back to download:", error);
+    writeGoogleSlidesPopup(popupWindow ?? null, {
+      title: "Google Slides handoff failed",
+      message: "The direct Google Slides handoff was blocked, so the PowerPoint file is downloading instead.",
     });
-
-  if (error) {
-    console.error("Upload failed, falling back to download:", error);
-    if (popupWindow && !popupWindow.closed) popupWindow.close();
-    await pptx.writeFile({ fileName: `${fileName}.pptx` });
-    return;
-  }
-
-  const { data: urlData } = supabase.storage.from("temp-exports").getPublicUrl(storagePath);
-  const importUrl = `https://docs.google.com/presentation/u/0/?usp=import&url=${encodeURIComponent(urlData.publicUrl)}`;
-
-  if (popupWindow && !popupWindow.closed) {
-    popupWindow.location.href = importUrl;
-    return;
-  }
-
-  const opened = window.open(importUrl, "_blank");
-  if (!opened) {
     await pptx.writeFile({ fileName: `${fileName}.pptx` });
   }
 }
@@ -167,8 +182,10 @@ export function ExportMenu({ exportRef, fileName, variant = "desktop", iconColor
   const handleExport = async (format: ExportFormat) => {
     const popupWindow = format === "gslides" ? window.open("", "_blank") : null;
     if (popupWindow) {
-      popupWindow.document.title = "Preparing Google Slides...";
-      popupWindow.document.body.innerHTML = "<p style='font-family:sans-serif;padding:24px'>Preparing your Google Slides export...</p>";
+      writeGoogleSlidesPopup(popupWindow, {
+        title: "Preparing Google Slides…",
+        message: "We’re exporting your deck now and will hand it off to Google Slides automatically.",
+      });
     }
 
     setExporting(true);
