@@ -24,6 +24,7 @@ import SeedInvestorDeck from "./pages/SeedInvestorDeck";
 import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 
 import ConsultingTrainingDeck from "./pages/ConsultingTrainingDeck";
+import PharmaDeck from "./pages/PharmaDeck";
 import ConsultingDeck from "./pages/ConsultingDeck";
 import LinkedInImageCard from "./pages/LinkedInImageCard";
 import HomePage from "./pages/marketing/Home";
@@ -105,6 +106,7 @@ const App = () => (
             <Route path="/investor-seed" element={<SeedInvestorDeck />} />
             <Route path="/sales" element={<ConsultingDeck />} />
             <Route path="/transform" element={<ConsultingTrainingDeck />} />
+            <Route path="/pharma" element={<PharmaDeck />} />
             <Route path="/linkedin-card" element={<LinkedInImageCard />} />
 
             {/* App */}
