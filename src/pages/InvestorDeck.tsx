@@ -709,7 +709,7 @@ function Slide10MarketValidation() {
               example: "\"How to reset a password\"",
             },
             {
-              name: "Mem0.ai", funding: "$24M", investors: "Basis Set, YC, Peak XV",
+              name: "Mem0.ai", funding: "$44.5M", investors: "Basis Set, YC, Peak XV",
               color: SUBTLE, approach: "Memory Infrastructure",
               desc: "Developer tooling. Gives AI agents persistent memory across sessions. 50K+ GitHub stars.",
               domain: "Infrastructure (Plumbing)",
