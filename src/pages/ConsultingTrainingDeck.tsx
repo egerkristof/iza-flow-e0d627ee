@@ -935,7 +935,7 @@ function SlideAnchor() {
       <GridBg />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full">
         <div className="flex-1">
-          <Chip color={PURPLE}>Anchor Phase</Chip>
+          <Chip color={PURPLE}>Anchor · Platform</Chip>
           <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, color: `hsl(${C})`, lineHeight: 1.1 }}>
             The Simulation
             <br />
