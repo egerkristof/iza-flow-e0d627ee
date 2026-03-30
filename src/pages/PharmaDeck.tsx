@@ -179,7 +179,7 @@ function Slide01Problem() {
               { q: "Our SOPs are world-class. Our execution isn't.", who: "VP Quality, Top-20 Pharma" },
               { q: "We have the same process in 8 sites. We get 8 different outcomes.", who: "Head of Clinical Ops" },
               { q: "When our best people leave, years of judgment walk out the door.", who: "Chief Scientific Officer" },
-              { q: "AI gives us speed. But speed without consistency is just faster failure.", who: "Head of Regulatory Affairs" },
+              { q: "AI gives us speed. But without domain-specific gate enforcement, it's just faster non-compliance.", who: "Head of Regulatory Affairs" },
             ].map(item => (
               <div key={item.q} className="border-l-2 pl-4" style={{ borderColor: `hsl(${ACCENT} / 0.5)` }}>
                 <p className="italic mb-1" style={{ fontSize: 17, color: `hsl(0 0% 100% / 0.85)`, lineHeight: 1.45 }}>"{item.q}"</p>
