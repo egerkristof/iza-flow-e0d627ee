@@ -896,11 +896,11 @@ function SlideTrackProduct() {
       title="Product & Engineering"
       subtitle="Protecting Architectural Intent"
       challenge={<>Application Lifecycle Management is broken. Strategic intent evaporates between requirements and code. <strong style={{ color: `hsl(${C})` }}>"Vibe coding"</strong> with generic Copilots generates technical debt at scale.</>}
-      transformation={<>Governing the <strong style={{ color: `hsl(${C})` }}>full ALM pipeline</strong> — from requirement analysis to the last piece of code — with context-aware AI that carries architectural intent through every stage.</>}
+      transformation={<>Governing the <strong style={{ color: `hsl(${C})` }}>full ALM pipeline</strong>, from requirement analysis to the last piece of code, with context-aware AI that carries architectural intent through every stage.</>}
       implementations={[
-        { title: "Requirements-to-Code Context Bridges", desc: "Enforcing API patterns, security constraints, and architectural standards from specification to implementation" },
-        { title: '"Critic Agent" Design Reviews', desc: "Automated review against your own standards before human review" },
-        { title: "Technical Debt Sentinel", desc: "Continuous drift detection against architectural decisions across the full lifecycle" },
+        { title: "Requirements Traceability Engine", desc: "Ensuring strategic intent flows from business requirements through architecture into implementation without loss" },
+        { title: "Stakeholder Communication Governance", desc: "Codified review and approval workflows that maintain alignment between business and engineering teams" },
+        { title: "ALM Drift Detection", desc: "Continuous monitoring of requirement coverage, change impact, and architectural decision compliance across the full lifecycle" },
       ]}
     />
   );
