@@ -597,8 +597,8 @@ const SLIDES = [
   { id: "context", title: "2 · The Context", component: <Slide02Context /> },
   { id: "options", title: "3 · The Options", component: <Slide03Options /> },
   { id: "results", title: "4 · The Results", component: <Slide04Results /> },
-  { id: "how",     title: "5 · The "How"", component: <Slide05How /> },
-  { id: "what",    title: "6 · The "What"", component: <Slide06What /> },
+  { id: "how",     title: '5 · The "How"', component: <Slide05How /> },
+  { id: "what",    title: '6 · The "What"', component: <Slide06What /> },
 ];
 
 const CHROME_BG = "hsl(210 15% 97%)";
