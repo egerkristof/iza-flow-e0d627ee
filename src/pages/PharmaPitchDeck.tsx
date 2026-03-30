@@ -481,7 +481,7 @@ function Act2_Capabilities() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={2} slideLabel="WHAT THE ENGINE DOES" />
+      <ActBar activeAct={1} slideLabel="WHAT THE ENGINE DOES" />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px] pt-[90px]">
         <h2 className="font-black mb-3" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
           The LIZA <span style={{ color: `hsl(${GOLD})` }}>Audit Engine</span>
