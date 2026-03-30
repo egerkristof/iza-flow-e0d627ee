@@ -91,7 +91,14 @@ function Chip({ children, color = ACCENT }: { children: React.ReactNode; color?:
   );
 }
 
-function PartDivider({ part, title, color = ACCENT }: { part: string; title: string; color?: string }) {
+const JOURNEY_PHASES = [
+  { key: "assess", label: "Assess", subtitle: "Diagnosis", color: ACCENT, icon: <BarChart3 size={18} /> },
+  { key: "align", label: "Align", subtitle: "Training", color: TEAL, icon: <GraduationCap size={18} /> },
+  { key: "apply", label: "Apply", subtitle: "Consulting", color: GOLD, icon: <Rocket size={18} /> },
+  { key: "anchor", label: "Anchor", subtitle: "Platform", color: PURPLE, icon: <Lock size={18} /> },
+];
+
+function PartDivider({ part, title, color = ACCENT, activePhase }: { part: string; title: string; color?: string; activePhase: string }) {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: `hsl(${DARK})` }}>
       <div className="absolute inset-0 opacity-[0.06]" style={{
@@ -100,7 +107,55 @@ function PartDivider({ part, title, color = ACCENT }: { part: string; title: str
       }} />
       <div className="absolute w-[800px] h-[800px] rounded-full opacity-[0.08]"
         style={{ background: `radial-gradient(circle, hsl(${color}), transparent 70%)` }} />
-      <div className="relative z-10 text-center">
+
+      {/* Journey progress bar at top */}
+      <div className="absolute top-[80px] left-1/2 -translate-x-1/2 flex items-center gap-0">
+        {JOURNEY_PHASES.map((phase, i) => {
+          const isActive = phase.key === activePhase;
+          const isPast = JOURNEY_PHASES.findIndex(p => p.key === activePhase) > i;
+          const isSkipped = phase.key === "assess";
+          return (
+            <div key={phase.key} className="flex items-center">
+              {i > 0 && (
+                <div className="w-[60px] h-[2px]" style={{
+                  background: isPast ? `hsl(0 0% 100% / 0.4)` : `hsl(0 0% 100% / 0.1)`
+                }} />
+              )}
+              <div className="flex flex-col items-center gap-2 relative" style={{ width: 140 }}>
+                <div className="flex items-center justify-center w-11 h-11 rounded-full border-2 transition-all"
+                  style={{
+                    borderColor: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.3)` : `hsl(0 0% 100% / 0.12)`,
+                    background: isActive ? `hsl(${phase.color} / 0.25)` : `hsl(0 0% 100% / 0.04)`,
+                    color: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.4)` : `hsl(0 0% 100% / 0.15)`,
+                    ...(isActive ? { boxShadow: `0 0 24px hsl(${phase.color} / 0.3)` } : {}),
+                  }}>
+                  {isSkipped && !isActive ? (
+                    <span style={{ fontSize: 14, fontWeight: 700 }}>—</span>
+                  ) : (
+                    phase.icon
+                  )}
+                </div>
+                <div className="text-center">
+                  <p className="font-bold" style={{
+                    fontSize: isActive ? 16 : 14,
+                    color: isActive ? `hsl(${phase.color})` : isPast ? `hsl(0 0% 100% / 0.4)` : `hsl(0 0% 100% / 0.18)`,
+                  }}>
+                    {phase.label}
+                  </p>
+                  {isActive && (
+                    <p style={{ fontSize: 12, color: `hsl(${phase.color} / 0.7)` }}>{phase.subtitle}</p>
+                  )}
+                  {isSkipped && !isActive && (
+                    <p style={{ fontSize: 11, color: `hsl(0 0% 100% / 0.2)`, fontStyle: "italic" }}>Pre-engagement</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="relative z-10 text-center mt-8">
         <p className="font-bold tracking-[0.35em] uppercase mb-6"
           style={{ fontSize: 20, color: `hsl(${color})` }}>{part}</p>
         <h2 className="font-black" style={{ fontSize: 80, color: "hsl(0 0% 100%)", lineHeight: 1.1 }}>{title}</h2>
@@ -1325,7 +1380,7 @@ const SLIDES = [
   { id: 4, title: "The Workforce Spectrum", component: <Slide04Transformation /> },
   { id: 5, title: "The Journey", component: <Slide05Journey /> },
   // Part 2: Curriculum
-  { id: 6, title: "Part 2: Training", component: <PartDivider part="Part 2 · Align" title="The Training Curriculum" color={TEAL} /> },
+  { id: 6, title: "Part 2: Training", component: <PartDivider part="Part 2 · Align" title="The Training Curriculum" color={TEAL} activePhase="align" /> },
   { id: 7, title: "Curriculum Overview", component: <SlideCurriculumOverview /> },
   { id: 8, title: "Module 1: Execution Gap", component: <SlideModule1 /> },
   { id: 9, title: "Module 2: Human Engine", component: <SlideModule2 /> },
@@ -1333,7 +1388,7 @@ const SLIDES = [
   { id: 11, title: "Module 4: Safe Infrastructure", component: <SlideModule4 /> },
   { id: 12, title: "Module 5: AI-Native Business", component: <SlideModule5 /> },
   // Part 3: Departmental Consulting
-  { id: 13, title: "Part 3: Consulting", component: <PartDivider part="Part 3 · Apply" title="Departmental Consulting" color={GOLD} /> },
+  { id: 13, title: "Part 3: Consulting", component: <PartDivider part="Part 3 · Apply" title="Departmental Consulting" color={GOLD} activePhase="apply" /> },
   { id: 14, title: "Department Tracks", component: <SlideDepartmentGrid /> },
   { id: 15, title: "Track: Sales & GTM", component: <SlideTrackSales /> },
   { id: 16, title: "Track: Product & Eng", component: <SlideTrackProduct /> },
@@ -1342,7 +1397,7 @@ const SLIDES = [
   { id: 19, title: "Track: Operations", component: <SlideTrackOperations /> },
   { id: 20, title: "Track: HR & Talent", component: <SlideTrackHR /> },
   // Part 4: Platform & Deliverables
-  { id: 21, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} /> },
+  { id: 21, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} activePhase="anchor" /> },
   { id: 22, title: "The Simulation Environment", component: <SlideAnchor /> },
   { id: 23, title: "Deliverables", component: <SlideDeliverables /> },
   { id: 24, title: "Engagement & Pricing", component: <SlidePricing /> },
