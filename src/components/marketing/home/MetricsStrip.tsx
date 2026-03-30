@@ -1,5 +1,5 @@
 const METRICS = [
-  { value: "200+", label: "Consulting engagements" },
+  { value: "15+", label: "Clients (select named, others anonymous)" },
   { value: "8", label: "Countries" },
   { value: "15+", label: "Years combined methodology" },
   { value: "15+", label: "Teams in Beta" },
