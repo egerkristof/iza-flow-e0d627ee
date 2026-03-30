@@ -396,7 +396,7 @@ function Slide03ContextStarvation() {
           <div className="absolute left-4 right-4 rounded-b-[60px] flex flex-col items-center justify-center gap-3 px-10"
             style={{ top: 182, bottom: 0, background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.2)`, borderTop: "none" }}>
             <p className="font-bold text-center" style={{ fontSize: 24, color: `hsl(${GOLD})` }}>Missing Context</p>
-            {["Organizational DNA", "Brand tone & voice", "Negative constraints", "Historical failures", "Decision frameworks"].map(item => (
+            {["Organizational DNA", "Brand tone & voice", "Guardrails", "Negative constraints", "Historical failures", "Decision frameworks", "etc."].map(item => (
               <p key={item} style={{ fontSize: 18, color: `hsl(${MUT})` }}>{item}</p>
             ))}
           </div>
