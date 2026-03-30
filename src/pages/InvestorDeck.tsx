@@ -688,7 +688,7 @@ function Slide10MarketValidation() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Market Validation" color={GREEN} />
         <h2 className="font-bold mb-6" style={{ fontSize: 60, color: TEXT, lineHeight: 1.1 }}>
-          $117M+ invested into our category.<br />
+          $95M+ invested into our category.<br />
           <span style={{ color: `hsl(${GREEN})` }}>Four approaches. One missing layer.</span>
         </h2>
 
@@ -716,7 +716,7 @@ function Slide10MarketValidation() {
               example: "\"Remember user preferences\"",
             },
             {
-              name: "Paradox", funding: "~$26M", investors: "Speedinvest, European VCs",
+              name: "Paradox", funding: "~$3.8M", investors: "Speedinvest, European VCs",
               color: SUBTLE, approach: "Organizational Theory",
               desc: "Copenhagen. Researches strategic drift and \"shared world models.\" Pre-product, 12 people.",
               domain: "Complex (Theory-stage)",
@@ -754,7 +754,7 @@ function Slide10MarketValidation() {
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
-            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$117M+</p>
+            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$95M+</p>
             <p style={{ fontSize: 16, color: MUTED }}>Category investment</p>
             <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>in last 12 months</p>
           </div>
