@@ -492,9 +492,9 @@ function SlideCurriculumOverview() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <GridBg />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
-        <Chip color={TEAL}>Align Phase</Chip>
+        <Chip color={TEAL}>Align · Training</Chip>
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          The Foundation Curriculum
+          The Training Curriculum
         </h2>
         <p className="mb-8" style={{ fontSize: 24, color: `hsl(${MUT})` }}>
           5 modular, executive-grade education modules. Ratio: <strong style={{ color: `hsl(${C})` }}>80% Mindset / 20% Application</strong>.
