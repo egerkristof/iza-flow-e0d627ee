@@ -448,7 +448,7 @@ function Slide05How() {
     {
       step: "Step 1",
       title: "Extract",
-      desc: "We sit with your senior experts and extract their judgment — not just what they do, but how they decide. The criteria, the edge cases, the 'taste' that separates good from great.",
+      desc: "Structured knowledge sprints with your senior experts to surface their decision criteria — not just what they do, but the edge-case reasoning, trade-offs, and institutional context that SOPs never capture.",
       color: ACCENT,
       icon: <Sparkles size={22} />,
     },
