@@ -455,7 +455,7 @@ function Slide05How() {
     {
       step: "Step 2",
       title: "Encode",
-      desc: "That judgment becomes executable Playbooks with gate enforcement. Every step has quality checks, compliance gates, and encoded decision criteria — not just instructions.",
+      desc: "Extracted judgment becomes executable Playbooks with gate enforcement — decision trees, quality checks, and compliance gates wired into every step. Unlike standard KM, this isn't a document; it's a runnable process.",
       color: GOLD,
       icon: <ShieldCheck size={22} />,
     },
