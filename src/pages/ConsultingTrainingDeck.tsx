@@ -824,7 +824,7 @@ function SlideDepartmentGrid() {
     { icon: <Briefcase size={28} />, color: ACCENT, title: "Sales & GTM",
       line: "Scale your best closer's strategies as infrastructure" },
     { icon: <Code size={28} />, color: TEAL, title: "Product & Engineering",
-      line: "Protect architectural intent from prompt to production" },
+      line: "Govern the full Application Lifecycle from requirements to code" },
     { icon: <Landmark size={28} />, color: GOLD, title: "Strategy & Leadership",
       line: "Build the Executive Control Tower for agentic governance" },
     { icon: <Scale size={28} />, color: PURPLE, title: "Finance & Risk",
