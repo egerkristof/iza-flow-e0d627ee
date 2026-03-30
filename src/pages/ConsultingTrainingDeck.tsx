@@ -894,7 +894,7 @@ function SlideTrackProduct() {
       chipColor={TEAL}
       icon={<Code size={24} />}
       title="Product & Engineering"
-      subtitle="Protecting Architectural Intent"
+      subtitle="Governing Application Lifecycle Management"
       challenge={<>Application Lifecycle Management is broken. Strategic intent evaporates between requirements and code. <strong style={{ color: `hsl(${C})` }}>"Vibe coding"</strong> with generic Copilots generates technical debt at scale.</>}
       transformation={<>Governing the <strong style={{ color: `hsl(${C})` }}>full ALM pipeline</strong>, from requirement analysis to the last piece of code, with context-aware AI that carries architectural intent through every stage.</>}
       implementations={[
