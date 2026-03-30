@@ -299,7 +299,7 @@ function Slide03Options() {
       color: GOLD,
       points: [
         "ChatGPT / Copilot generate faster — but lack domain-specific gate enforcement",
-        "No audit trail, no step-level compliance checks, no GxP alignment",
+        "No audit trail, no step-level compliance checks, no path to GxP alignment",
         "Without encoded judgment, AI outputs require the same expert review they were meant to replace",
       ],
     },
