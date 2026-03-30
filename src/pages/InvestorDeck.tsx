@@ -687,13 +687,20 @@ function Slide10MarketValidation() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Market Validation" color={GREEN} />
-        <h2 className="font-bold mb-8" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
-          $80M+ invested into our category.<br />
-          <span style={{ color: `hsl(${GREEN})` }}>Three approaches. One missing layer.</span>
+        <h2 className="font-bold mb-6" style={{ fontSize: 60, color: TEXT, lineHeight: 1.1 }}>
+          $96M+ invested into our category.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>Four approaches. One missing layer.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-5 mb-6">
+        <div className="grid grid-cols-4 gap-4 mb-5">
           {[
+            {
+              name: "Interloom", funding: "$16.5M", investors: "Air Street, DN Capital, BEK",
+              color: SUBTLE, approach: "Back-Office Automation",
+              desc: "Context graphs + procedures for repeatable ops. Facility mgmt, insurance, banking, ITSM.",
+              domain: "Complicated (Repeatable)",
+              example: "\"Process this work order\"",
+            },
             {
               name: "Edra.ai", funding: "$30M", investors: "Sequoia, 8VC, HubSpot",
               color: SUBTLE, approach: "Process Mining",
@@ -716,18 +723,18 @@ function Slide10MarketValidation() {
               example: "\"Why alignment breaks\"",
             },
           ].map(({ name, funding, investors, color, approach, desc, domain, example }) => (
-            <div key={name} className="rounded-2xl border p-6 flex flex-col"
+            <div key={name} className="rounded-2xl border p-5 flex flex-col"
               style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.04)` }}>
-              <div className="flex items-center justify-between mb-3">
-                <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{name}</p>
-                <span className="font-black" style={{ fontSize: 22, color: `hsl(${color})` }}>{funding}</span>
+              <div className="flex items-center justify-between mb-2">
+                <p className="font-bold" style={{ fontSize: 21, color: TEXT }}>{name}</p>
+                <span className="font-black" style={{ fontSize: 19, color: `hsl(${color})` }}>{funding}</span>
               </div>
-              <p style={{ fontSize: 15, color: `hsl(${color})`, marginBottom: 8 }}>{investors}</p>
-              <p className="font-semibold mb-2" style={{ fontSize: 17, color: TEXT }}>{approach}</p>
-              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45, flex: 1 }}>{desc}</p>
-              <div className="mt-4 pt-3 border-t" style={{ borderColor: `hsl(${color} / 0.15)` }}>
-                <p style={{ fontSize: 14, color: SUBTLE }}>{domain}</p>
-                <p className="italic mt-1" style={{ fontSize: 15, color: `hsl(${color})` }}>{example}</p>
+              <p style={{ fontSize: 13, color: `hsl(${color})`, marginBottom: 6 }}>{investors}</p>
+              <p className="font-semibold mb-1" style={{ fontSize: 15, color: TEXT }}>{approach}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.4, flex: 1 }}>{desc}</p>
+              <div className="mt-3 pt-2 border-t" style={{ borderColor: `hsl(${color} / 0.15)` }}>
+                <p style={{ fontSize: 12, color: SUBTLE }}>{domain}</p>
+                <p className="italic mt-1" style={{ fontSize: 13, color: `hsl(${color})` }}>{example}</p>
               </div>
             </div>
           ))}
