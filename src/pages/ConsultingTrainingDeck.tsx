@@ -895,12 +895,12 @@ function SlideTrackProduct() {
       icon={<Code size={24} />}
       title="Product & Engineering"
       subtitle="Protecting Architectural Intent"
-      challenge={<>Strategic product intent evaporates when translated into execution. <strong style={{ color: `hsl(${C})` }}>"Vibe coding"</strong> with generic Copilots generates technical debt at scale.</>}
-      transformation={<>Moving from flat Jira tickets to <strong style={{ color: `hsl(${C})` }}>context-aware "Smart Briefs"</strong> that carry architectural intent all the way to the code.</>}
+      challenge={<>Application Lifecycle Management is broken. Strategic intent evaporates between requirements and code. <strong style={{ color: `hsl(${C})` }}>"Vibe coding"</strong> with generic Copilots generates technical debt at scale.</>}
+      transformation={<>Governing the <strong style={{ color: `hsl(${C})` }}>full ALM pipeline</strong> — from requirement analysis to the last piece of code — with context-aware AI that carries architectural intent through every stage.</>}
       implementations={[
-        { title: "PRD-to-Code Context Bridges", desc: "Enforcing API patterns, security constraints, and architectural standards" },
+        { title: "Requirements-to-Code Context Bridges", desc: "Enforcing API patterns, security constraints, and architectural standards from specification to implementation" },
         { title: '"Critic Agent" Design Reviews', desc: "Automated review against your own standards before human review" },
-        { title: "Technical Debt Sentinel", desc: "Continuous drift detection against architectural decisions" },
+        { title: "Technical Debt Sentinel", desc: "Continuous drift detection against architectural decisions across the full lifecycle" },
       ]}
     />
   );
