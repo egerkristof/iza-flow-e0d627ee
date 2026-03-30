@@ -191,8 +191,8 @@ function Slide01Title() {
         </h1>
 
         <p style={{ fontSize: 28, color: `hsl(${MUT})`, maxWidth: 1050, lineHeight: 1.55 }}>
-          You use ALM to manage software lifecycle.
-          <br />Your drug lifecycle deserves the <strong style={{ color: `hsl(${C})` }}>same operational rigour</strong>.
+          Veeva manages your documents and your CRM.
+          <br />LIZA manages the <strong style={{ color: `hsl(${C})` }}>judgment behind them</strong>.
         </p>
 
         <div className="mt-14 flex items-center gap-5">
