@@ -109,51 +109,20 @@ async function exportGoogleSlides(
     slide.addImage({ data: imgData, x: 0, y: 0, w: "100%", h: "100%" });
   }
 
-  const blob = (await pptx.write({ outputType: "blob" })) as Blob;
-  const pptxFile = new File([blob], `${fileName}.pptx`, {
-    type: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  // Download the file locally first
+  await pptx.writeFile({ fileName: `${fileName}.pptx` });
+
+  // Then open Google Slides with instructions
+  writeGoogleSlidesPopup(popupWindow ?? null, {
+    title: "Almost there!",
+    message: "Your .pptx file has been downloaded. Open Google Slides and use File → Import slides to upload it.",
+    primaryHref: "https://slides.google.com",
+    primaryLabel: "Open Google Slides",
   });
-  const storagePath = `exports/${fileName}-${Date.now()}.pptx`;
 
-  try {
-    const { error } = await supabase.storage
-      .from("temp-exports")
-      .upload(storagePath, pptxFile, {
-        contentType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        upsert: true,
-      });
-
-    if (error) {
-      throw error;
-    }
-
-    const { data: urlData } = supabase.storage.from("temp-exports").getPublicUrl(storagePath);
-    const pptxUrl = urlData.publicUrl;
-    const importUrl = buildGoogleSlidesImportUrl(pptxUrl);
-
-    if (writeGoogleSlidesPopup(popupWindow ?? null, {
-      title: "Opening Google Slides…",
-      message: "Your PowerPoint is ready. If Google Slides does not open automatically, use the button below.",
-      primaryHref: importUrl,
-      primaryLabel: "Continue to Google Slides",
-      secondaryHref: pptxUrl,
-      secondaryLabel: "Download the .pptx file",
-      autoOpenHref: importUrl,
-    })) {
-      return;
-    }
-
-    const opened = window.open(importUrl, "_blank", "noopener,noreferrer");
-    if (!opened) {
-      await pptx.writeFile({ fileName: `${fileName}.pptx` });
-    }
-  } catch (error) {
-    console.error("Google Slides export failed, falling back to download:", error);
-    writeGoogleSlidesPopup(popupWindow ?? null, {
-      title: "Google Slides handoff failed",
-      message: "The direct Google Slides handoff was blocked, so the PowerPoint file is downloading instead.",
-    });
-    await pptx.writeFile({ fileName: `${fileName}.pptx` });
+  // If popup was blocked, just let the download speak for itself
+  if (!popupWindow || popupWindow.closed) {
+    window.open("https://slides.google.com", "_blank", "noopener,noreferrer");
   }
 }
 
