@@ -264,7 +264,7 @@ function Act1_WhyNow() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={1} slideLabel="WHY NOW" />
+      <ActBar activeAct={2} slideLabel="WHY NOW" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 54, color: `hsl(${C})`, lineHeight: 1.05 }}>
