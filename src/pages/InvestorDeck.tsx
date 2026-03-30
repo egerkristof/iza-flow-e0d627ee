@@ -748,13 +748,13 @@ function Slide10MarketValidation() {
               <p className="font-black" style={{ fontSize: 32, color: `hsl(${ACCENT})` }}>LIZA OS</p>
               <span className="font-semibold px-3 py-1 rounded-full" style={{ fontSize: 14, background: `hsl(${ACCENT} / 0.12)`, color: `hsl(${ACCENT})` }}>The Governance Layer</span>
             </div>
-            <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>
-              Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
-              <strong style={{ color: TEXT }}> Only LIZA governs what should happen next</strong>: expert-validated, continuously updated, enforced in every AI interaction.
+            <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.55 }}>
+              Interloom automates the predictable. Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
+              <strong style={{ color: TEXT }}> Only LIZA governs the messy reality</strong> — the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
-            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$80M+</p>
+            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$96M+</p>
             <p style={{ fontSize: 16, color: MUTED }}>Category investment</p>
             <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>in last 12 months</p>
           </div>
