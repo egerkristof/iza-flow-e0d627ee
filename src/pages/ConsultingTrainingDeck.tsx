@@ -1305,8 +1305,6 @@ function SlideNextSteps() {
         <div className="mt-10 text-center">
           <p style={{ fontSize: 22, color: `hsl(${MUT})` }}>
             <strong style={{ color: `hsl(${ACCENT})` }}>kristof.eger@lizaos.ai</strong>
-            <span className="mx-4" style={{ color: `hsl(${MUT} / 0.3)` }}>|</span>
-            <strong style={{ color: `hsl(${ACCENT})` }}>istvan.boscha@lizaos.ai</strong>
           </p>
         </div>
       </div>
