@@ -20,6 +20,7 @@ import OrgInsights from "@/components/admin/OrgInsights";
 import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
 import ConsultingReference from "@/components/admin/ConsultingReference";
 import PersonalizedConsulting from "@/components/admin/PersonalizedConsulting";
+import TeamBuilder from "@/components/admin/TeamBuilder";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 import ReactMarkdown from "react-markdown";
