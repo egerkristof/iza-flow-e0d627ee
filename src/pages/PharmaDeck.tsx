@@ -729,7 +729,7 @@ export default function PharmaDeck() {
     mobileTimer.current = setTimeout(() => setMobileControlsVisible(false), 3000);
   }, []);
 
-  useSwipe({ onSwipeLeft: next, onSwipeRight: prev, enabled: isMobile && !isPortrait });
+  useSwipe(next, prev);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
