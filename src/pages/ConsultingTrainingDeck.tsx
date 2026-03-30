@@ -1317,10 +1317,7 @@ function SlideProofPoint() {
                 <p className="font-bold mb-3" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>Consulting Clients</p>
                 <div className="space-y-2">
                   {[
-                    { name: "alleys.ai", desc: "AI strategy & operational consulting" },
-                    { name: "Egon Zehnder", desc: "Executive search & leadership advisory" },
-                    { name: "Emarsys (SAP)", desc: "Marketing platform — AI workflow design" },
-                    { name: "Intran", desc: "Digital marketing agency — process automation" },
+                    { name: "aliz.ai", desc: "Data & AI professional services firm" },
                   ].map(({ name, desc }) => (
                     <div key={name} className="flex items-center gap-3">
                       <Briefcase size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
