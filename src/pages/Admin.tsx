@@ -646,7 +646,16 @@ export default function AdminPage() {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {results.map((r) => (
+                        {results.filter(r => {
+                          const q = diagnosticSearch.toLowerCase().trim();
+                          if (!q) return true;
+                          return (r.email || "").toLowerCase().includes(q) ||
+                            (r.respondent_role || "").toLowerCase().includes(q) ||
+                            (r.company_name || "").toLowerCase().includes(q) ||
+                            (r.archetype || "").toLowerCase().includes(q) ||
+                            (r.industry || "").toLowerCase().includes(q) ||
+                            (r.industry_refined || "").toLowerCase().includes(q);
+                        }).map((r) => (
                           <Fragment key={r.id}>
                             <TableRow className="cursor-pointer" onClick={() => setExpandedId(expandedId === r.id ? null : r.id)}>
                               <TableCell className="text-sm">{format(new Date(r.created_at), "MMM d, yyyy HH:mm")}</TableCell>
