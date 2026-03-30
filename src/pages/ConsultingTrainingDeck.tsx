@@ -396,7 +396,7 @@ function Slide03ContextStarvation() {
           <div className="absolute left-4 right-4 rounded-b-[60px] flex flex-col items-center justify-center gap-3 px-10"
             style={{ top: 182, bottom: 0, background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.2)`, borderTop: "none" }}>
             <p className="font-bold text-center" style={{ fontSize: 24, color: `hsl(${GOLD})` }}>Missing Context</p>
-            {["Organizational DNA", "Brand tone & voice", "Negative constraints", "Historical failures", "Decision frameworks"].map(item => (
+            {["Organizational DNA", "Brand tone & voice", "Guardrails", "Negative constraints", "Historical failures", "Decision frameworks", "etc."].map(item => (
               <p key={item} style={{ fontSize: 18, color: `hsl(${MUT})` }}>{item}</p>
             ))}
           </div>
@@ -419,9 +419,7 @@ function Slide04Transformation() {
           80% Human Mindset.{" "}
           <span style={{ color: `hsl(${ACCENT})` }}>20% Tooling.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-          Not everyone becomes a System Designer. The AI-native workforce is a <strong style={{ color: `hsl(${C})` }}>spectrum</strong> — and the real leadership challenge is building the right mix.
-        </p>
+        <div className="mb-10" style={{ height: 8 }} />
 
         {/* 3-tier spectrum */}
         <div className="grid grid-cols-3 gap-6 mb-8">
@@ -879,12 +877,12 @@ function SlideTrackSales() {
       icon={<Briefcase size={24} />}
       title="Sales & GTM"
       subtitle="Scaling the Consultative Edge"
-      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis"</strong> — top reps win on nuance; the rest rely on generic AI outreach. Margin bleeds in proposal review cycles.</>}
-      transformation={<>Turn your best closer's unwritten strategies into <strong style={{ color: `hsl(${C})` }}>scalable infrastructure</strong> that every team member operates through.</>}
+      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis"</strong> — top reps win on nuance; the rest rely on generic AI outreach. From deal qualification to account management to proposal cycles, <strong style={{ color: `hsl(${C})` }}>the entire revenue engine lacks codified strategy</strong>.</>}
+      transformation={<>Turn your best performers' unwritten strategies into <strong style={{ color: `hsl(${C})` }}>scalable infrastructure</strong> across the full customer lifecycle — from first contact to long-term account growth.</>}
       implementations={[
         { title: "Deal Qualification Gatekeeper", desc: "MEDDPICC enforcement as an active agent — not a checklist" },
+        { title: "Account Management Playbooks", desc: "Codified relationship strategies, renewal workflows, and expansion triggers" },
         { title: "Proposal Generation Engine", desc: "Proprietary value prop + compliance guardrails baked into every output" },
-        { title: "Competitive Positioning Agent", desc: "Win/loss intelligence codified as persistent battle cards" },
       ]}
     />
   );
@@ -897,12 +895,12 @@ function SlideTrackProduct() {
       icon={<Code size={24} />}
       title="Product & Engineering"
       subtitle="Protecting Architectural Intent"
-      challenge={<>Strategic product intent evaporates when translated into execution. <strong style={{ color: `hsl(${C})` }}>"Vibe coding"</strong> with generic Copilots generates technical debt at scale.</>}
-      transformation={<>Moving from flat Jira tickets to <strong style={{ color: `hsl(${C})` }}>context-aware "Smart Briefs"</strong> that carry architectural intent all the way to the code.</>}
+      challenge={<>Application Lifecycle Management is broken. Strategic intent evaporates between requirements and code. <strong style={{ color: `hsl(${C})` }}>"Vibe coding"</strong> with generic Copilots generates technical debt at scale.</>}
+      transformation={<>Governing the <strong style={{ color: `hsl(${C})` }}>full ALM pipeline</strong> — from requirement analysis to the last piece of code — with context-aware AI that carries architectural intent through every stage.</>}
       implementations={[
-        { title: "PRD-to-Code Context Bridges", desc: "Enforcing API patterns, security constraints, and architectural standards" },
+        { title: "Requirements-to-Code Context Bridges", desc: "Enforcing API patterns, security constraints, and architectural standards from specification to implementation" },
         { title: '"Critic Agent" Design Reviews', desc: "Automated review against your own standards before human review" },
-        { title: "Technical Debt Sentinel", desc: "Continuous drift detection against architectural decisions" },
+        { title: "Technical Debt Sentinel", desc: "Continuous drift detection against architectural decisions across the full lifecycle" },
       ]}
     />
   );
@@ -915,12 +913,12 @@ function SlideTrackStrategy() {
       icon={<Landmark size={24} />}
       title="Strategy & Leadership"
       subtitle="Governing the Agentic Organization"
-      challenge={<>Strategic drift. Executives rely on <strong style={{ color: `hsl(${C})` }}>lagging indicators and static dashboards</strong>, unable to stress-test decisions against real-time market shifts.</>}
-      transformation={<>Creating an <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower"</strong> — a governed intelligence layer that keeps strategy execution visible and accountable.</>}
+      challenge={<>Leaders lack the systems to govern an AI-native organization. <strong style={{ color: `hsl(${C})` }}>How do you implement improvement, transformation, and innovation initiatives</strong> when every department runs agentic workflows?</>}
+      transformation={<>Building the <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower"</strong> — connecting departmental AI implementations into a unified value tree from vision to initiative execution.</>}
       implementations={[
-        { title: '"Red Team" Critic Agents', desc: "AI-powered adversarial review of strategic proposals before board decisions" },
-        { title: "M&A Target Triage & Synthesis", desc: "Automated due diligence assembly with codified evaluation criteria" },
-        { title: "Execution Drift Radar", desc: "Real-time monitoring of strategic initiative alignment across departments" },
+        { title: "Scenario Builder & Strategy Radar", desc: "Stress-test strategic decisions and model future skill alignment across the organization" },
+        { title: "Cross-Department Value Tree", desc: "How all departmental AI implementations connect — from top-level vision down to initiative execution" },
+        { title: "Execution Drift Radar", desc: "Real-time monitoring of strategic initiative alignment across all agentic workflows" },
       ]}
     />
   );
@@ -980,6 +978,84 @@ function SlideTrackHR() {
   );
 }
 
+function SlideValueTree() {
+  const departments = [
+    { icon: <Briefcase size={20} />, color: ACCENT, title: "Sales & GTM", output: "Deal intelligence, account playbooks" },
+    { icon: <Code size={20} />, color: TEAL, title: "Product & Eng", output: "ALM governance, architectural intent" },
+    { icon: <Scale size={20} />, color: PURPLE, title: "Finance & Risk", output: "Guardrail agents, compliance frameworks" },
+    { icon: <Factory size={20} />, color: RED, title: "Operations", output: "Executable SOPs, incident protocols" },
+    { icon: <Users size={20} />, color: TEAL, title: "HR & Talent", output: "Cultural DNA, onboarding systems" },
+  ];
+
+  return (
+    <div className="w-full h-full flex relative" style={{ background: BG }}>
+      <GridBg />
+      <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full">
+        <div className="flex-1">
+          <Chip color={GOLD}>The Bigger Picture</Chip>
+          <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.1 }}>
+            From Vision to Execution:
+            <br /><span style={{ color: `hsl(${GOLD})` }}>The Value Tree</span>
+          </h2>
+          <p className="mb-6" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
+            Each department doesn't operate in isolation. When implemented together, they form a <strong style={{ color: `hsl(${C})` }}>unified value tree</strong> — from top-level strategic vision down to agentic initiative execution.
+          </p>
+
+          <div className="rounded-xl p-5 mb-4" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.2)` }}>
+            <p className="font-bold mb-2" style={{ fontSize: 19, color: `hsl(${GOLD})` }}>Why This Matters</p>
+            <p style={{ fontSize: 18, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
+              This is how you turn an AI-native organization into a <strong style={{ color: `hsl(${C})` }}>governed operating model</strong> — where improvement, transformation, and innovation initiatives are traceable from boardroom decisions to frontline execution.
+            </p>
+          </div>
+        </div>
+
+        <div className="w-[560px] flex-shrink-0">
+          <div className="rounded-2xl border p-7 relative overflow-hidden" style={{ background: BG2, borderColor: `hsl(${GOLD} / 0.3)` }}>
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${GOLD})` }} />
+
+            {/* Vision */}
+            <div className="rounded-xl p-4 mb-4 text-center" style={{ background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+              <Landmark size={24} style={{ color: `hsl(${GOLD})`, margin: "0 auto 8px" }} />
+              <p className="font-black" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>Strategic Vision & Leadership</p>
+              <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>Executive Control Tower</p>
+            </div>
+
+            <div className="flex justify-center mb-3">
+              <ArrowDown size={20} style={{ color: `hsl(${GOLD} / 0.5)` }} />
+            </div>
+
+            {/* Departments */}
+            <div className="space-y-2 mb-4">
+              {departments.map(({ icon, color, title, output }) => (
+                <div key={title} className="flex items-center gap-3 rounded-lg px-4 py-2" style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.15)` }}>
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
+                    style={{ background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold" style={{ fontSize: 15, color: `hsl(${C})` }}>{title}</p>
+                    <p style={{ fontSize: 13, color: `hsl(${MUT})` }}>{output}</p>
+                  </div>
+                  <ArrowRight size={14} style={{ color: `hsl(${color} / 0.4)`, flexShrink: 0 }} />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-center mb-3">
+              <ArrowDown size={20} style={{ color: `hsl(${TEAL} / 0.5)` }} />
+            </div>
+
+            {/* Execution */}
+            <div className="rounded-xl p-4 text-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
+              <p className="font-bold" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>Governed Agentic Execution</p>
+              <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>Traceable from vision → initiative → workflow → outcome</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Bar />
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // PART 4: PLATFORM & DELIVERABLES
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1000,7 +1076,7 @@ function SlideAnchor() {
           </h2>
           <p className="mb-8" style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
             Standard AI tools operate as "black boxes." You cannot effectively teach Context Engineering when the
-            system hides how memory and organizational rules are applied.
+            system hides how memory and organizational rules are applied. <strong style={{ color: `hsl(${C})` }}>LIZA OS</strong> is purpose-built to make this transparent — every rule, every context layer, every decision is visible and governable.
           </p>
 
           <div className="space-y-4">
@@ -1222,21 +1298,41 @@ function SlideProofPoint() {
 
           <div className="flex flex-col gap-5">
             <div className="rounded-2xl border p-8" style={{ background: BG2, borderColor: `hsl(${ACCENT} / 0.2)` }}>
-              <p className="font-bold mb-4" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>Delivered At</p>
-              <div className="space-y-3">
+              <p className="font-bold mb-3" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>Executive Education</p>
+              <div className="space-y-2">
                 {[
                   { name: "BGE Budapest", desc: "Executive AI Transformation Program" },
                   { name: "University of Vienna", desc: "Guest Lecture Series: AI-Native Organizations" },
                   { name: "University of Lviv", desc: "Applied AI & Knowledge Engineering Workshop" },
                 ].map(({ name, desc }) => (
                   <div key={name} className="flex items-center gap-3">
-                    <Award size={20} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
+                    <GraduationCap size={18} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
                     <div>
-                      <p className="font-bold" style={{ fontSize: 19, color: `hsl(${C})` }}>{name}</p>
-                      <p style={{ fontSize: 16, color: `hsl(${MUT})` }}>{desc}</p>
+                      <p className="font-bold" style={{ fontSize: 17, color: `hsl(${C})` }}>{name}</p>
+                      <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>{desc}</p>
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="mt-4 pt-4" style={{ borderTop: `1px solid hsl(${TEAL} / 0.2)` }}>
+                <p className="font-bold mb-3" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>Consulting Clients</p>
+                <div className="space-y-2">
+                  {[
+                    { name: "alleys.ai", desc: "AI strategy & operational consulting" },
+                    { name: "Egon Zehnder", desc: "Executive search & leadership advisory" },
+                    { name: "Emarsys (SAP)", desc: "Marketing platform — AI workflow design" },
+                    { name: "Intran", desc: "Digital marketing agency — process automation" },
+                  ].map(({ name, desc }) => (
+                    <div key={name} className="flex items-center gap-3">
+                      <Briefcase size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+                      <div>
+                        <p className="font-bold" style={{ fontSize: 17, color: `hsl(${C})` }}>{name}</p>
+                        <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>{desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -1396,14 +1492,15 @@ const SLIDES = [
   { id: 18, title: "Track: Finance & Risk", component: <SlideTrackFinance /> },
   { id: 19, title: "Track: Operations", component: <SlideTrackOperations /> },
   { id: 20, title: "Track: HR & Talent", component: <SlideTrackHR /> },
+  { id: 21, title: "The Value Tree", component: <SlideValueTree /> },
   // Part 4: Platform & Deliverables
-  { id: 21, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} activePhase="anchor" /> },
-  { id: 22, title: "The Simulation Environment", component: <SlideAnchor /> },
-  { id: 23, title: "Deliverables", component: <SlideDeliverables /> },
-  { id: 24, title: "Engagement & Pricing", component: <SlidePricing /> },
-  { id: 25, title: "Proven in Practice", component: <SlideProofPoint /> },
-  { id: 26, title: "The Team", component: <SlideTeam /> },
-  { id: 27, title: "Next Steps", component: <SlideNextSteps /> },
+  { id: 22, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} activePhase="anchor" /> },
+  { id: 23, title: "The Simulation Environment", component: <SlideAnchor /> },
+  { id: 24, title: "Deliverables", component: <SlideDeliverables /> },
+  { id: 25, title: "Engagement & Pricing", component: <SlidePricing /> },
+  { id: 26, title: "Proven in Practice", component: <SlideProofPoint /> },
+  { id: 27, title: "The Team", component: <SlideTeam /> },
+  { id: 28, title: "Next Steps", component: <SlideNextSteps /> },
 ];
 
 // ─── Shell ────────────────────────────────────────────────────────────────────
