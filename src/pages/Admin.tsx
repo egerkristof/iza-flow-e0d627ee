@@ -20,6 +20,7 @@ import OrgInsights from "@/components/admin/OrgInsights";
 import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
 import ConsultingReference from "@/components/admin/ConsultingReference";
 import PersonalizedConsulting from "@/components/admin/PersonalizedConsulting";
+import TeamBuilder from "@/components/admin/TeamBuilder";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 import ReactMarkdown from "react-markdown";
@@ -63,7 +64,7 @@ interface ResearchEntry {
   created_at: string;
 }
 
-type AdminView = "members" | "diagnostics" | "org-insights" | "content-insights" | "consulting" | "client-prep" | "presentations";
+type AdminView = "members" | "diagnostics" | "org-insights" | "team-builder" | "content-insights" | "consulting" | "client-prep" | "presentations";
 type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
 
 /* ── Helpers ── */
@@ -429,6 +430,7 @@ export default function AdminPage() {
     { key: "members", label: "Members", icon: <Users className="h-4 w-4" /> },
     { key: "diagnostics", label: "Diagnostics", icon: <ClipboardList className="h-4 w-4" /> },
     { key: "org-insights", label: "Org Insights", icon: <Building2 className="h-4 w-4" /> },
+    { key: "team-builder", label: "Team Builder", icon: <Users className="h-4 w-4" /> },
     { key: "content-insights", label: "Content & Insights", icon: <Pen className="h-4 w-4" /> },
     { key: "consulting", label: "Consulting", icon: <BookOpen className="h-4 w-4" /> },
     { key: "client-prep", label: "Client Prep", icon: <Sparkles className="h-4 w-4" /> },
@@ -984,6 +986,10 @@ export default function AdminPage() {
                 </>
               )}
             </>
+          )}
+
+          {activeView === "team-builder" && (
+            <TeamBuilder results={results} onRefresh={() => void loadData()} />
           )}
 
           {activeView === "consulting" && <ConsultingReference />}
