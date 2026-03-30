@@ -157,7 +157,7 @@ function SlideTitle() {
                 <div>
                   <p className="font-bold" style={{ fontSize: 16, color: `hsl(${act.color})` }}>{act.label}</p>
                   <p style={{ fontSize: 12, color: `hsl(0 0% 100% / 0.4)` }}>
-                    {act.num === 1 ? "Why pharma needs a new layer" : act.num === 2 ? "Purpose-built audit capabilities" : "Full lifecycle vision"}
+                    {act.num === 1 ? "Purpose-built audit capabilities" : act.num === 2 ? "Why pharma needs a new layer" : "Full lifecycle vision"}
                   </p>
                 </div>
               </div>
