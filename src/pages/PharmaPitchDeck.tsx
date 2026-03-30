@@ -538,7 +538,7 @@ function Act2_Results() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={2} slideLabel="PROVEN RESULTS" />
+      <ActBar activeAct={1} slideLabel="PROVEN RESULTS" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
