@@ -509,9 +509,9 @@ function Slide05How() {
 
         <div className="mt-8 flex gap-4">
           {[
-            { icon: <Shield size={18} />, t: "GxP audit trail built-in" },
-            { icon: <ShieldCheck size={18} />, t: "21 CFR Part 11 aligned" },
-            { icon: <CheckCircle2 size={18} />, t: "ICH E6(R3) compliant" },
+            { icon: <Shield size={18} />, t: "Audit trail built-in" },
+            { icon: <ShieldCheck size={18} />, t: "Designed for 21 CFR Part 11" },
+            { icon: <CheckCircle2 size={18} />, t: "Architected for ICH E6(R3)" },
           ].map(b => (
             <div key={b.t} className="flex items-center gap-2 px-4 py-2 rounded-full"
               style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.15)` }}>
