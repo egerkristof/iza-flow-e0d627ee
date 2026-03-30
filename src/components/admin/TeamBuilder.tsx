@@ -346,6 +346,7 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
                 </TableHeader>
                 <TableBody>
                   {relevantResults
+                    .filter(matchesSearch)
                     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
                     .map(r => renderMemberRow(r, true))}
                 </TableBody>
