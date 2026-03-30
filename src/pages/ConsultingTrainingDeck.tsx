@@ -1327,6 +1327,10 @@ function SlideProofPoint() {
                       </div>
                     </div>
                   ))}
+                  <div className="flex items-center gap-3 mt-2">
+                    <Lock size={18} style={{ color: `hsl(${MUT} / 0.5)`, flexShrink: 0 }} />
+                    <p style={{ fontSize: 15, color: `hsl(${MUT})`, fontStyle: "italic" }}>Additional clients: Confidential</p>
+                  </div>
                 </div>
               </div>
             </div>
