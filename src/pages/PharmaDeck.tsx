@@ -158,10 +158,10 @@ function Slide01Problem() {
 
           <div className="grid grid-cols-2 gap-4">
             {[
-              { v: "€2.6B", l: "Average cost to bring one drug to market", src: "Deloitte, 2023" },
+              { v: "€2.6B", l: "Average cost to bring one drug to market — inconsistent execution is a major contributor", src: "Deloitte, 2023" },
               { v: "90%", l: "Of clinical candidates fail before approval", src: "FDA, 2022" },
               { v: "42%", l: "Of deviations traced to inconsistent SOP interpretation", src: "PDA Survey" },
-              { v: "68%", l: "Of pharma leaders say knowledge transfer is their top risk", src: "McKinsey" },
+              { v: "68%", l: "Of pharma leaders say knowledge transfer is their top operational risk", src: "McKinsey" },
             ].map(s => (
               <div key={s.l} className="rounded-xl px-5 py-4" style={{ background: BG2, border: `1px solid hsl(${ACCENT} / 0.12)` }}>
                 <p className="font-black" style={{ fontSize: 32, color: `hsl(${ACCENT})` }}>{s.v}</p>
@@ -179,7 +179,7 @@ function Slide01Problem() {
               { q: "Our SOPs are world-class. Our execution isn't.", who: "VP Quality, Top-20 Pharma" },
               { q: "We have the same process in 8 sites. We get 8 different outcomes.", who: "Head of Clinical Ops" },
               { q: "When our best people leave, years of judgment walk out the door.", who: "Chief Scientific Officer" },
-              { q: "AI gives us speed. But speed without consistency is just faster failure.", who: "Head of Regulatory Affairs" },
+              { q: "AI gives us speed. But without domain-specific gate enforcement, it's just faster non-compliance.", who: "Head of Regulatory Affairs" },
             ].map(item => (
               <div key={item.q} className="border-l-2 pl-4" style={{ borderColor: `hsl(${ACCENT} / 0.5)` }}>
                 <p className="italic mb-1" style={{ fontSize: 17, color: `hsl(0 0% 100% / 0.85)`, lineHeight: 1.45 }}>"{item.q}"</p>
@@ -218,7 +218,7 @@ function Slide02WhyNow() {
                 <p className="font-bold" style={{ fontSize: 20, color: `hsl(${RED})` }}>The AI Acceleration Trap</p>
               </div>
               <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-                Teams are adopting AI tools that generate outputs <em>faster</em> — but without encoded judgment, they're producing <strong style={{ color: `hsl(${C})` }}>inconsistent work at higher speed</strong>. The hallucination problem in pharma isn't a bug — it's a regulatory catastrophe waiting to happen.
+                Teams are adopting AI tools that generate outputs <em>faster</em> — but without encoded judgment, they're producing <strong style={{ color: `hsl(${C})` }}>inconsistent work at higher speed</strong>. Without domain-specific gate enforcement, AI in pharma isn't just unreliable — it's a regulatory event waiting to happen.
               </p>
             </div>
 
@@ -295,12 +295,12 @@ function Slide03Options() {
     {
       label: "Option B",
       title: "Generic AI / Copilots",
-      verdict: "Speed without judgment",
+      verdict: "Speed without domain-specific enforcement",
       color: GOLD,
       points: [
-        "ChatGPT / Copilot generate faster — but can't enforce your standards",
-        "No audit trail, no gate enforcement, no GxP compliance",
-        "Hallucinations in pharma aren't bugs — they're regulatory events",
+        "ChatGPT / Copilot generate faster — but lack domain-specific gate enforcement",
+        "No audit trail, no step-level compliance checks, no GxP alignment",
+        "Without encoded judgment, AI outputs require the same expert review they were meant to replace",
       ],
     },
     {
@@ -393,8 +393,8 @@ function Slide04Results() {
 
           <div className="grid grid-cols-2 gap-5 mb-8">
             {[
-              { v: "100%", l: "Consistent execution across teams and sites", color: TEAL, sub: "Same playbook, same quality — regardless of who runs it" },
-              { v: "0", l: "Knowledge lost when senior experts leave", color: TEAL, sub: "Judgment is encoded, not trapped in people's heads" },
+              { v: "↑ 90%+", l: "Dramatically improved consistency across teams and sites", color: TEAL, sub: "Same playbook, same quality gates — regardless of who runs it" },
+              { v: "Near 0", l: "Critical knowledge loss when senior experts leave", color: TEAL, sub: "Judgment is encoded in the system, not trapped in people's heads" },
               { v: "60–70%", l: "Reduction in onboarding time for new hires", color: ACCENT, sub: "Junior staff execute at senior level from day one" },
               { v: "Full", l: "Audit trail for every decision and gate", color: GOLD, sub: "GxP-ready, regulator-friendly provenance" },
             ].map(s => (
@@ -448,14 +448,14 @@ function Slide05How() {
     {
       step: "Step 1",
       title: "Extract",
-      desc: "We sit with your senior experts and extract their judgment — not just what they do, but how they decide. The criteria, the edge cases, the 'taste' that separates good from great.",
+      desc: "Structured knowledge sprints with your senior experts to surface their decision criteria — not just what they do, but the edge-case reasoning, trade-offs, and institutional context that SOPs never capture.",
       color: ACCENT,
       icon: <Sparkles size={22} />,
     },
     {
       step: "Step 2",
       title: "Encode",
-      desc: "That judgment becomes executable Playbooks with gate enforcement. Every step has quality checks, compliance gates, and encoded decision criteria — not just instructions.",
+      desc: "Extracted judgment becomes executable Playbooks with gate enforcement — decision trees, quality checks, and compliance gates wired into every step. Unlike standard KM, this isn't a document; it's a runnable process.",
       color: GOLD,
       icon: <ShieldCheck size={22} />,
     },
@@ -469,7 +469,7 @@ function Slide05How() {
     {
       step: "Step 4",
       title: "Evolve",
-      desc: "Every execution generates feedback. Deviations are detected, patterns surfaced, and playbooks improve. Your organisational judgment compounds — it gets smarter with use.",
+      desc: "Every execution generates structured feedback. Deviations are detected, drift patterns surfaced, and playbooks are continuously refined. Unlike static KM systems, LIZA's judgment layer compounds — it gets smarter with every use.",
       color: CORAL,
       icon: <Activity size={22} />,
     },
@@ -555,9 +555,9 @@ function Slide06Summary() {
 
           <div className="space-y-4 mb-8">
             {[
-              { num: "1", t: "The problem is real", d: "Inconsistent execution costs billions and kills drugs that should have succeeded." },
-              { num: "2", t: "The window is closing", d: "Senior experts are retiring, AI is accelerating outputs without judgment, and regulators want proof of consistency." },
-              { num: "3", t: "More docs and generic AI won't fix it", d: "You need to encode how your best people think — and make it executable." },
+              { num: "1", t: "The problem is real", d: "Inconsistent execution is a major contributor to the billions lost in drug development — and the research confirms it." },
+              { num: "2", t: "The window is closing", d: "Senior experts are retiring, AI is accelerating outputs without domain-specific enforcement, and regulators want proof of consistency." },
+              { num: "3", t: "More docs and generic AI won't fix it", d: "You need to encode how your best people think — and make it executable, not just searchable." },
               { num: "4", t: "LIZA OS is the missing layer", d: "Extract judgment → Encode it → Execute consistently → Evolve with every use." },
             ].map(item => (
               <div key={item.num} className="flex items-start gap-4 rounded-xl p-4"
