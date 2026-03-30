@@ -295,12 +295,12 @@ function Slide03Options() {
     {
       label: "Option B",
       title: "Generic AI / Copilots",
-      verdict: "Speed without judgment",
+      verdict: "Speed without domain-specific enforcement",
       color: GOLD,
       points: [
-        "ChatGPT / Copilot generate faster — but can't enforce your standards",
-        "No audit trail, no gate enforcement, no GxP compliance",
-        "Hallucinations in pharma aren't bugs — they're regulatory events",
+        "ChatGPT / Copilot generate faster — but lack domain-specific gate enforcement",
+        "No audit trail, no step-level compliance checks, no GxP alignment",
+        "Without encoded judgment, AI outputs require the same expert review they were meant to replace",
       ],
     },
     {
