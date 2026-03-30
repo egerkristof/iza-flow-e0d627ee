@@ -419,7 +419,7 @@ function Act2_AuditProblem() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={2} slideLabel="THE AUDIT CRISIS" />
+      <ActBar activeAct={1} slideLabel="THE AUDIT CRISIS" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-16 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
