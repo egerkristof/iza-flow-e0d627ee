@@ -207,6 +207,16 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
         </div>
       </div>
 
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search by email, name, company, role…"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-9"
+        />
+      </div>
+
       {viewMode === "teams" ? (
         <div className="space-y-4">
           {/* Team Cards */}
