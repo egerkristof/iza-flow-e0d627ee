@@ -218,7 +218,7 @@ function Slide02WhyNow() {
                 <p className="font-bold" style={{ fontSize: 20, color: `hsl(${RED})` }}>The AI Acceleration Trap</p>
               </div>
               <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-                Teams are adopting AI tools that generate outputs <em>faster</em> — but without encoded judgment, they're producing <strong style={{ color: `hsl(${C})` }}>inconsistent work at higher speed</strong>. The hallucination problem in pharma isn't a bug — it's a regulatory catastrophe waiting to happen.
+                Teams are adopting AI tools that generate outputs <em>faster</em> — but without encoded judgment, they're producing <strong style={{ color: `hsl(${C})` }}>inconsistent work at higher speed</strong>. Without domain-specific gate enforcement, AI in pharma isn't just unreliable — it's a regulatory event waiting to happen.
               </p>
             </div>
 
