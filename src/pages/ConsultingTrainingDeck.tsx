@@ -420,8 +420,8 @@ function Slide05Journey() {
   const phases = [
     { step: "01", icon: <BarChart3 size={36} />, color: ACCENT, title: "Assess", subtitle: "Diagnosis",
       body: "Map operational bottlenecks via our AI Execution Maturity Diagnostic. Quantify readiness per department." },
-    { step: "02", icon: <HeartHandshake size={36} />, color: TEAL, title: "Align", subtitle: "Education",
-      body: "Shift mindsets through foundational curriculum modules. 5 modules, executive-grade." },
+    { step: "02", icon: <GraduationCap size={36} />, color: TEAL, title: "Align", subtitle: "Training",
+      body: "Shift mindsets through the Training Curriculum. 5 executive-grade modules building the shared vocabulary." },
     { step: "03", icon: <Rocket size={36} />, color: GOLD, title: "Apply", subtitle: "Consulting",
       body: "Half-day departmental deep-dives to extract tacit knowledge and build real AI workflows." },
     { step: "04", icon: <Lock size={36} />, color: PURPLE, title: "Anchor", subtitle: "Infrastructure",
