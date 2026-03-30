@@ -754,7 +754,7 @@ function Slide10MarketValidation() {
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
-            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$95M+</p>
+            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$98M+</p>
             <p style={{ fontSize: 16, color: MUTED }}>Category investment</p>
             <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>in last 12 months</p>
           </div>
