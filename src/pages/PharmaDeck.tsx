@@ -124,11 +124,11 @@ function StepBar({ activeStep }: { activeStep: number }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 1 — THE PROJECT
-// "What was this organisation trying to accomplish?"
+// SLIDE 1 — THE PROBLEM
+// "What does the research say? What are people telling us?"
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide01Project() {
+function Slide01Problem() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
@@ -141,48 +141,49 @@ function Slide01Project() {
               <Pill size={22} style={{ color: `hsl(${ACCENT})` }} />
             </div>
             <div>
-              <p className="font-bold" style={{ fontSize: 14, color: `hsl(${MUT})`, letterSpacing: "0.12em" }}>ONE REAL CUSTOMER · THEIR POV</p>
-              <p className="font-bold" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>Mid-Sized Pharma · EU Specialty & Biosimilars</p>
+              <p className="font-bold" style={{ fontSize: 14, color: `hsl(${MUT})`, letterSpacing: "0.12em" }}>WHAT THE RESEARCH SHOWS</p>
+              <p className="font-bold" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>The Standards Gap in Life Sciences</p>
             </div>
           </div>
 
-          <h2 className="font-black mb-6" style={{ fontSize: 60, color: `hsl(${C})`, lineHeight: 1.05 }}>
-            "Get our first biosimilar
-            <br /><span style={{ color: `hsl(${ACCENT})` }}>from Phase III to EMA approval
-            <br />in under 18 months."</span>
+          <h2 className="font-black mb-6" style={{ fontSize: 56, color: `hsl(${C})`, lineHeight: 1.05 }}>
+            Every pharma company has SOPs.
+            <br /><span style={{ color: `hsl(${RED})` }}>Nobody follows them
+            <br />the same way.</span>
           </h2>
 
           <p className="mb-8" style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 700 }}>
-            A €400M-revenue specialty pharma company had completed Phase III for their first biosimilar.
-            Now they needed to assemble a regulatory dossier, navigate EMA scientific advice,
-            and launch in 12+ EU markets — <strong style={{ color: `hsl(${C})` }}>with a regulatory affairs team of 9 people</strong>.
+            Research consistently shows the same pattern: organisations invest heavily in documenting processes, but <strong style={{ color: `hsl(${C})` }}>execution varies wildly between teams, sites, and individuals</strong>. The documents exist. The consistency doesn't.
           </p>
 
-          <div className="flex gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {[
-              { v: "€400M", l: "Revenue" },
-              { v: "9", l: "RA team members" },
-              { v: "12+", l: "Target markets" },
-              { v: "18 mo", l: "Timeline to approval" },
+              { v: "€2.6B", l: "Average cost to bring one drug to market", src: "Deloitte, 2023" },
+              { v: "90%", l: "Of clinical candidates fail before approval", src: "FDA, 2022" },
+              { v: "42%", l: "Of deviations traced to inconsistent SOP interpretation", src: "PDA Survey" },
+              { v: "68%", l: "Of pharma leaders say knowledge transfer is their top risk", src: "McKinsey" },
             ].map(s => (
-              <div key={s.l} className="rounded-xl px-5 py-4 text-center" style={{ background: BG2, border: `1px solid hsl(${ACCENT} / 0.12)`, minWidth: 120 }}>
-                <p className="font-black" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>{s.v}</p>
-                <p style={{ fontSize: 13, color: `hsl(${MUT})` }}>{s.l}</p>
+              <div key={s.l} className="rounded-xl px-5 py-4" style={{ background: BG2, border: `1px solid hsl(${ACCENT} / 0.12)` }}>
+                <p className="font-black" style={{ fontSize: 32, color: `hsl(${ACCENT})` }}>{s.v}</p>
+                <p className="font-semibold mb-1" style={{ fontSize: 15, color: `hsl(${C})` }}>{s.l}</p>
+                <p style={{ fontSize: 12, color: `hsl(${MUT})`, fontStyle: "italic" }}>{s.src}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="w-[420px] flex-shrink-0 rounded-2xl p-8" style={{ background: `hsl(${DARK})` }}>
-          <p className="font-bold mb-5" style={{ fontSize: 22, color: "hsl(0 0% 100%)" }}>The Project</p>
-          <p className="mb-6" style={{ fontSize: 19, color: `hsl(0 0% 100% / 0.7)`, lineHeight: 1.55 }}>
-            Take a completed Phase III biosimilar through the full regulatory gauntlet — eCTD assembly, EMA submission, national variation filings — and get it to market before the patent window closed.
-          </p>
-          <div className="space-y-3">
-            {["Assemble CTD Modules 2–5", "File EMA centralised procedure", "Prepare 12 national dossier variations", "Train 4 junior RA associates simultaneously"].map(t => (
-              <div key={t} className="flex items-start gap-3">
-                <ArrowRight size={16} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 4 }} />
-                <p style={{ fontSize: 16, color: `hsl(0 0% 100% / 0.8)` }}>{t}</p>
+          <p className="font-bold mb-5" style={{ fontSize: 22, color: "hsl(0 0% 100%)" }}>What we keep hearing</p>
+          <div className="space-y-5">
+            {[
+              { q: "Our SOPs are world-class. Our execution isn't.", who: "VP Quality, Top-20 Pharma" },
+              { q: "We have the same process in 8 sites. We get 8 different outcomes.", who: "Head of Clinical Ops" },
+              { q: "When our best people leave, years of judgment walk out the door.", who: "Chief Scientific Officer" },
+              { q: "AI gives us speed. But speed without consistency is just faster failure.", who: "Head of Regulatory Affairs" },
+            ].map(item => (
+              <div key={item.q} className="border-l-2 pl-4" style={{ borderColor: `hsl(${ACCENT} / 0.5)` }}>
+                <p className="italic mb-1" style={{ fontSize: 17, color: `hsl(0 0% 100% / 0.85)`, lineHeight: 1.45 }}>"{item.q}"</p>
+                <p style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>{item.who}</p>
               </div>
             ))}
           </div>
@@ -194,11 +195,11 @@ function Slide01Project() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 2 — THE CONTEXT
-// "Why was this on their critical path vs everything else?"
+// SLIDE 2 — WHY NOW
+// "Why is this the urgent problem? Why treat it now?"
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide02Context() {
+function Slide02WhyNow() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
@@ -206,57 +207,65 @@ function Slide02Context() {
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[80px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 56, color: `hsl(${C})`, lineHeight: 1.05 }}>
-            Why <span style={{ color: `hsl(${RED})` }}>this</span> project,
-            <br />why <span style={{ color: `hsl(${RED})` }}>now</span>?
+            Three forces making this
+            <br /><span style={{ color: `hsl(${RED})` }}>unsolvable with current tools</span>
           </h2>
 
           <div className="space-y-5 mb-8">
             <div className="rounded-xl p-6" style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.15)` }}>
               <div className="flex items-center gap-3 mb-3">
                 <AlertTriangle size={22} style={{ color: `hsl(${RED})` }} />
-                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${RED})` }}>The Patent Clock</p>
+                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${RED})` }}>The AI Acceleration Trap</p>
               </div>
               <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-                The originator's SPC expires in 22 months. Every month of delay costs an estimated <strong style={{ color: `hsl(${C})` }}>€8M in lost first-mover advantage</strong>. Three competitors are also in late-stage development.
+                Teams are adopting AI tools that generate outputs <em>faster</em> — but without encoded judgment, they're producing <strong style={{ color: `hsl(${C})` }}>inconsistent work at higher speed</strong>. The hallucination problem in pharma isn't a bug — it's a regulatory catastrophe waiting to happen.
               </p>
             </div>
 
             <div className="rounded-xl p-6" style={{ background: `hsl(${GOLD} / 0.04)`, border: `1px solid hsl(${GOLD} / 0.15)` }}>
               <div className="flex items-center gap-3 mb-3">
                 <Clock size={22} style={{ color: `hsl(${GOLD})` }} />
-                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>The Knowledge Bottleneck</p>
+                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>The Expertise Cliff</p>
               </div>
               <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-                Only <strong style={{ color: `hsl(${C})` }}>2 of their 9 RA team members</strong> had ever filed a centralised EMA procedure. The head of RA was 14 months from retirement. If this filing failed, the institutional knowledge to fix it would be gone.
+                The most experienced regulatory, clinical, and quality professionals are retiring. Industry research shows <strong style={{ color: `hsl(${C})` }}>40% of senior pharma expertise will turn over by 2030</strong>. When they leave, decades of judgment leave with them — and it's not in the SOPs.
               </p>
             </div>
 
             <div className="rounded-xl p-6" style={{ background: `hsl(${ACCENT} / 0.04)`, border: `1px solid hsl(${ACCENT} / 0.15)` }}>
               <div className="flex items-center gap-3 mb-3">
                 <Users size={22} style={{ color: `hsl(${ACCENT})` }} />
-                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>The Scale Problem</p>
+                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>The Compliance Squeeze</p>
               </div>
               <p style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-                12 national variation dossiers. Each slightly different. They couldn't hire 12 senior RA specialists — and outsourcing to a CRO for all 12 would cost <strong style={{ color: `hsl(${C})` }}>€3M+ and take longer</strong>.
+                Regulators are tightening expectations — ICH E6(R3), EU GMP Annex 11 updates, FDA's evolving AI guidance. They want <strong style={{ color: `hsl(${C})` }}>demonstrable consistency and traceability</strong>, not just documented procedures.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="w-[400px] flex-shrink-0 rounded-2xl p-8" style={{ background: `hsl(${DARK})` }}>
-          <p className="font-bold mb-5" style={{ fontSize: 22, color: `hsl(${RED})` }}>What was at stake</p>
+        <div className="w-[380px] flex-shrink-0 rounded-2xl p-8" style={{ background: `hsl(${DARK})` }}>
+          <p className="font-bold mb-5" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>The gap is widening</p>
+          <p className="mb-6" style={{ fontSize: 18, color: `hsl(0 0% 100% / 0.75)`, lineHeight: 1.55 }}>
+            Each of these forces is accelerating independently. Together, they create a compounding problem: <strong style={{ color: "hsl(0 0% 100%)" }}>more AI, fewer experts, stricter regulators</strong>.
+          </p>
           <div className="space-y-5">
             {[
-              { v: "€96M+", l: "Potential revenue loss from 12-month delay", color: RED },
-              { v: "22 mo", l: "Until patent window closes", color: GOLD },
-              { v: "3", l: "Competitors in parallel development", color: CORAL },
-              { v: "14 mo", l: "Until Head of RA retires", color: ACCENT },
+              { v: "3×", l: "Faster output velocity with AI tools", color: RED },
+              { v: "40%", l: "Senior expertise turnover by 2030", color: GOLD },
+              { v: "2024", l: "ICH E6(R3) effective date", color: ACCENT },
             ].map(s => (
               <div key={s.l} className="flex items-baseline gap-4">
                 <span className="font-black" style={{ fontSize: 32, color: `hsl(${s.color})`, flexShrink: 0 }}>{s.v}</span>
                 <span style={{ fontSize: 16, color: `hsl(0 0% 100% / 0.7)`, lineHeight: 1.4 }}>{s.l}</span>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 rounded-lg p-4" style={{ background: `hsl(${RED} / 0.15)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+            <p className="text-center font-semibold" style={{ fontSize: 15, color: `hsl(${RED})` }}>
+              The window to encode senior judgment before it's lost is closing.
+            </p>
           </div>
         </div>
       </div>
@@ -267,42 +276,43 @@ function Slide02Context() {
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 3 — THE OPTIONS
-// "What options did they consider?"
+// "What prevents people from solving this? What are the current options?"
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide03Options() {
   const options = [
     {
       label: "Option A",
-      title: "Hire Senior RA Staff",
-      verdict: "Too slow",
+      title: "More Documentation",
+      verdict: "Necessary but insufficient",
       color: RED,
       points: [
-        "6–9 month recruitment cycle for experienced RA leads",
-        "Salary cost: €120K–180K × 3 hires = €450K+/yr",
-        "Still depends on tacit knowledge transfer from Head of RA",
+        "SOPs, work instructions, and training manuals already exist",
+        "Documents describe what to do — not how to think about edge cases",
+        "Usage audits consistently show 'read and understood' ≠ consistent execution",
       ],
     },
     {
       label: "Option B",
-      title: "Outsource to a CRO",
-      verdict: "Too expensive, too disconnected",
+      title: "Generic AI / Copilots",
+      verdict: "Speed without judgment",
       color: GOLD,
       points: [
-        "Full-service CRO quote: €3.2M for 12-market dossier",
-        "Timeline: 20–24 months (longer than in-house)",
-        "No knowledge retained internally — next product starts from zero",
+        "ChatGPT / Copilot generate faster — but can't enforce your standards",
+        "No audit trail, no gate enforcement, no GxP compliance",
+        "Hallucinations in pharma aren't bugs — they're regulatory events",
       ],
     },
     {
       label: "Option C",
-      title: "Use Generic AI Tools",
-      verdict: "Too risky",
-      color: CORAL,
+      title: "LIZA OS",
+      verdict: "Encoded judgment at scale",
+      color: TEAL,
+      isHighlighted: true,
       points: [
-        "ChatGPT / Copilot can draft — but can't enforce GxP judgment",
-        "No audit trail, no gate enforcement, no versioning",
-        "\"AI-generated\" regulatory text is a red flag for assessors",
+        "Encode how your best people think — not just what they document",
+        "Gate-enforced playbooks ensure every person executes at senior level",
+        "Full audit trail, GxP-ready, ICH-compliant architecture",
       ],
     },
   ];
@@ -313,15 +323,26 @@ function Slide03Options() {
       <StepBar activeStep={3} />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px] pt-[80px]">
         <h2 className="font-black mb-3" style={{ fontSize: 56, color: `hsl(${C})`, lineHeight: 1.05 }}>
-          Three options. <span style={{ color: `hsl(${MUT})` }}>None of them worked.</span>
+          Why budgets don't move — <span style={{ color: `hsl(${MUT})` }}>and what changes.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: `hsl(${MUT})`, maxWidth: 900 }}>
-          Every conventional path either took too long, cost too much, or left the knowledge locked in people's heads.
+        <p className="mb-10" style={{ fontSize: 22, color: `hsl(${MUT})`, maxWidth: 950 }}>
+          Organisations recognise the problem, but existing approaches either address the wrong layer or create new risks. Here's what the market currently offers — and what's missing.
         </p>
 
         <div className="grid grid-cols-3 gap-7">
           {options.map(opt => (
-            <div key={opt.label} className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: `hsl(${opt.color} / 0.2)`, background: `hsl(${opt.color} / 0.03)` }}>
+            <div key={opt.label} className="rounded-2xl border p-7 flex flex-col relative"
+              style={{
+                borderColor: opt.isHighlighted ? `hsl(${opt.color} / 0.5)` : `hsl(${opt.color} / 0.2)`,
+                background: opt.isHighlighted ? `hsl(${opt.color} / 0.06)` : `hsl(${opt.color} / 0.03)`,
+                ...(opt.isHighlighted ? { boxShadow: `0 0 40px hsl(${opt.color} / 0.1)` } : {}),
+              }}>
+              {opt.isHighlighted && (
+                <div className="absolute -top-3 right-6 rounded-full px-4 py-1"
+                  style={{ background: `hsl(${TEAL})`, color: "hsl(0 0% 100%)" }}>
+                  <span className="font-bold" style={{ fontSize: 12 }}>THE MISSING LAYER</span>
+                </div>
+              )}
               <p className="font-bold tracking-[0.15em] uppercase mb-2" style={{ fontSize: 14, color: `hsl(${opt.color})` }}>{opt.label}</p>
               <h3 className="font-black mb-2" style={{ fontSize: 28, color: `hsl(${C})` }}>{opt.title}</h3>
               <div className="rounded-full px-4 py-1 mb-5 self-start" style={{ background: `hsl(${opt.color} / 0.1)`, border: `1px solid hsl(${opt.color} / 0.3)` }}>
@@ -330,7 +351,10 @@ function Slide03Options() {
               <div className="space-y-3 flex-1">
                 {opt.points.map((p, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <X size={16} style={{ color: `hsl(${opt.color})`, flexShrink: 0, marginTop: 3 }} />
+                    {opt.isHighlighted
+                      ? <CheckCircle2 size={16} style={{ color: `hsl(${opt.color})`, flexShrink: 0, marginTop: 3 }} />
+                      : <X size={16} style={{ color: `hsl(${opt.color})`, flexShrink: 0, marginTop: 3 }} />
+                    }
                     <p style={{ fontSize: 17, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{p}</p>
                   </div>
                 ))}
@@ -339,9 +363,9 @@ function Slide03Options() {
           ))}
         </div>
 
-        <div className="mt-8 rounded-xl p-5 text-center" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.2)` }}>
+        <div className="mt-8 rounded-xl p-5 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
           <p style={{ fontSize: 22, color: `hsl(${C})`, fontWeight: 700 }}>
-            They needed a way to <span style={{ color: `hsl(${ACCENT})` }}>encode their Head of RA's judgment</span> so 7 junior associates could execute at senior level — <em>before she retired</em>.
+            The problem isn't documentation or AI speed. It's that <span style={{ color: `hsl(${TEAL})` }}>nobody has encoded how the best people think</span> — and made it the default for everyone else.
           </p>
         </div>
       </div>
@@ -352,7 +376,7 @@ function Slide03Options() {
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 4 — THE RESULTS
-// "What did success look like? How did they know they accomplished it?"
+// "What would success look like? What should people expect?"
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide04Results() {
@@ -363,16 +387,16 @@ function Slide04Results() {
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[80px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 56, color: `hsl(${C})`, lineHeight: 1.05 }}>
-            Approved in <span style={{ color: `hsl(${TEAL})` }}>14 months</span>.
-            <br />Zero major deficiencies.
+            What <span style={{ color: `hsl(${TEAL})` }}>success</span> looks like
+            <br />when judgment is encoded.
           </h2>
 
           <div className="grid grid-cols-2 gap-5 mb-8">
             {[
-              { v: "14 mo", l: "From Phase III completion to EMA positive opinion", color: TEAL, sub: "vs. 18-month target" },
-              { v: "0", l: "Major deficiency letters", color: TEAL, sub: "First-cycle approval" },
-              { v: "12", l: "National dossier variations filed within 6 weeks of centralised approval", color: ACCENT, sub: "vs. typical 4–6 months" },
-              { v: "€2.1M", l: "Saved vs. CRO outsourcing quote", color: GOLD, sub: "67% cost reduction" },
+              { v: "100%", l: "Consistent execution across teams and sites", color: TEAL, sub: "Same playbook, same quality — regardless of who runs it" },
+              { v: "0", l: "Knowledge lost when senior experts leave", color: TEAL, sub: "Judgment is encoded, not trapped in people's heads" },
+              { v: "60–70%", l: "Reduction in onboarding time for new hires", color: ACCENT, sub: "Junior staff execute at senior level from day one" },
+              { v: "Full", l: "Audit trail for every decision and gate", color: GOLD, sub: "GxP-ready, regulator-friendly provenance" },
             ].map(s => (
               <div key={s.l} className="rounded-xl p-6" style={{ background: `hsl(${s.color} / 0.04)`, border: `1px solid hsl(${s.color} / 0.15)` }}>
                 <p className="font-black mb-1" style={{ fontSize: 44, color: `hsl(${s.color})` }}>{s.v}</p>
@@ -384,26 +408,26 @@ function Slide04Results() {
 
           <div className="rounded-xl p-5" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
             <p style={{ fontSize: 20, color: `hsl(${C})`, fontWeight: 600, lineHeight: 1.5 }}>
-              "The EMA assessor commented that the dossier was <span style={{ color: `hsl(${TEAL})` }}>unusually consistent across modules</span> — they could trace every clinical decision back to documented rationale. That's never happened to us before."
+              The goal isn't to replace your experts. It's to make their <span style={{ color: `hsl(${TEAL})` }}>judgment the organisational default</span> — so that when anyone executes a process, they execute it the way your best person would.
             </p>
-            <p className="mt-2" style={{ fontSize: 15, color: `hsl(${MUT})`, fontStyle: "italic" }}>— VP Regulatory Affairs</p>
           </div>
         </div>
 
         <div className="w-[380px] flex-shrink-0 rounded-2xl p-7" style={{ background: `hsl(${DARK})` }}>
-          <p className="font-bold mb-5" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>The Hidden Win</p>
-          <p className="mb-6" style={{ fontSize: 18, color: `hsl(0 0% 100% / 0.75)`, lineHeight: 1.55 }}>
-            When the Head of RA retired 3 months after approval, the team didn't skip a beat. Her judgment was encoded. The next biosimilar filing started immediately — with the <strong style={{ color: "hsl(0 0% 100%)" }}>same playbooks, same consistency</strong>.
-          </p>
-          <div className="space-y-4">
+          <p className="font-bold mb-5" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>The shift</p>
+          <div className="space-y-6">
             {[
-              "Knowledge survived personnel transition",
-              "2nd biosimilar filing started 2 weeks after retirement",
-              "Junior associates now operate at senior level",
-            ].map(t => (
-              <div key={t} className="flex items-start gap-3">
-                <CheckCircle2 size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0, marginTop: 3 }} />
-                <p style={{ fontSize: 16, color: `hsl(0 0% 100% / 0.8)`, lineHeight: 1.4 }}>{t}</p>
+              { from: "SOPs as static PDFs", to: "Living, executable playbooks" },
+              { from: "Training = 'read and sign'", to: "Training = guided execution with gates" },
+              { from: "Knowledge in people's heads", to: "Judgment encoded in the system" },
+              { from: "AI generates plausible text", to: "AI governed by your standards" },
+            ].map(s => (
+              <div key={s.from}>
+                <p className="line-through mb-1" style={{ fontSize: 15, color: `hsl(0 0% 100% / 0.4)` }}>{s.from}</p>
+                <div className="flex items-center gap-2">
+                  <ArrowRight size={14} style={{ color: `hsl(${TEAL})` }} />
+                  <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>{s.to}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -415,37 +439,37 @@ function Slide04Results() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 5 — THE "HOW"
-// "How exactly did they complete the project?"
+// SLIDE 5 — HOW LIZA SOLVES IT
+// "How does this actually work?"
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide05How() {
   const phases = [
     {
-      week: "Weeks 1–3",
-      title: "Knowledge Extraction",
-      desc: "Sat with the Head of RA and encoded her judgment into LIZA Playbooks — how she decides CTD module structure, what triggers a Type II variation, how she reads deficiency letters.",
+      step: "Step 1",
+      title: "Extract",
+      desc: "We sit with your senior experts and extract their judgment — not just what they do, but how they decide. The criteria, the edge cases, the 'taste' that separates good from great.",
       color: ACCENT,
       icon: <Sparkles size={22} />,
     },
     {
-      week: "Weeks 4–8",
-      title: "Protocol Execution",
-      desc: "Junior associates began executing eCTD assembly using gate-enforced playbooks. Every section had encoded quality checks, cross-reference validation, and compliance gates.",
+      step: "Step 2",
+      title: "Encode",
+      desc: "That judgment becomes executable Playbooks with gate enforcement. Every step has quality checks, compliance gates, and encoded decision criteria — not just instructions.",
       color: GOLD,
       icon: <ShieldCheck size={22} />,
     },
     {
-      week: "Weeks 9–14",
-      title: "Dossier Assembly",
-      desc: "Context Bundles mapped directly to CTD modules. Module 2.5 (Clinical Overview) pulled from governed clinical data. Full audit trail built automatically.",
+      step: "Step 3",
+      title: "Execute",
+      desc: "Your entire team — senior and junior alike — runs the same playbooks. The system guides, enforces gates, and captures a full audit trail. Consistency becomes the default.",
       color: TEAL,
       icon: <FileCheck size={22} />,
     },
     {
-      week: "Months 5–14",
-      title: "Submission & Variations",
-      desc: "Centralised EMA filing + 12 national variations executed in parallel by the same 9-person team. Playbooks encoded which markets need specific adaptations.",
+      step: "Step 4",
+      title: "Evolve",
+      desc: "Every execution generates feedback. Deviations are detected, patterns surfaced, and playbooks improve. Your organisational judgment compounds — it gets smarter with use.",
       color: CORAL,
       icon: <Activity size={22} />,
     },
@@ -457,10 +481,10 @@ function Slide05How() {
       <StepBar activeStep={5} />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px] pt-[80px]">
         <h2 className="font-black mb-3" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
-          How they did it — <span style={{ color: `hsl(${CORAL})` }}>with LIZA</span>
+          How LIZA OS works — <span style={{ color: `hsl(${CORAL})` }}>in practice</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 22, color: `hsl(${MUT})`, maxWidth: 900 }}>
-          The Head of RA's 25 years of judgment, encoded into executable playbooks. Her team ran them — with full gate enforcement and audit trails.
+          Not another document management system. Not another AI chatbot. A management layer that turns your best people's judgment into your organisation's operating standard.
         </p>
 
         <div className="grid grid-cols-4 gap-6">
@@ -472,11 +496,11 @@ function Slide05How() {
                 </div>
               )}
               <div className="rounded-full px-3 py-1 mb-4 self-start" style={{ background: `hsl(${p.color} / 0.1)`, border: `1px solid hsl(${p.color} / 0.25)` }}>
-                <span className="font-bold" style={{ fontSize: 13, color: `hsl(${p.color})` }}>{p.week}</span>
+                <span className="font-bold" style={{ fontSize: 13, color: `hsl(${p.color})` }}>{p.step}</span>
               </div>
               <div className="flex items-center gap-2 mb-3" style={{ color: `hsl(${p.color})` }}>
                 {p.icon}
-                <h3 className="font-black" style={{ fontSize: 22, color: `hsl(${C})` }}>{p.title}</h3>
+                <h3 className="font-black" style={{ fontSize: 24, color: `hsl(${C})` }}>{p.title}</h3>
               </div>
               <p style={{ fontSize: 17, color: `hsl(${MUT})`, lineHeight: 1.5 }}>{p.desc}</p>
             </div>
@@ -485,9 +509,9 @@ function Slide05How() {
 
         <div className="mt-8 flex gap-4">
           {[
-            { icon: <Shield size={18} />, t: "Full GxP audit trail" },
+            { icon: <Shield size={18} />, t: "GxP audit trail built-in" },
             { icon: <ShieldCheck size={18} />, t: "21 CFR Part 11 aligned" },
-            { icon: <CheckCircle2 size={18} />, t: "ICH E6(R3) compliant execution" },
+            { icon: <CheckCircle2 size={18} />, t: "ICH E6(R3) compliant" },
           ].map(b => (
             <div key={b.t} className="flex items-center gap-2 px-4 py-2 rounded-full"
               style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.15)` }}>
@@ -503,11 +527,10 @@ function Slide05How() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 6 — THE "WHAT"
-// "What did they buy? (Your packaging, positioning, pricing, offer)"
+// SLIDE 6 — SUMMARY & CTA
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide06What() {
+function Slide06Summary() {
   const CAL_URL = "https://calendar.app.google/3v8jevUcsgRQnLyL9";
 
   return (
@@ -523,28 +546,28 @@ function Slide06What() {
 
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[80px]">
         <div className="flex-1">
-          <h2 className="font-black mb-6" style={{ fontSize: 56, color: "hsl(0 0% 100%)", lineHeight: 1.05 }}>
-            What they got:
+          <h2 className="font-black mb-8" style={{ fontSize: 56, color: "hsl(0 0% 100%)", lineHeight: 1.05 }}>
+            Your SOPs exist.
             <br /><span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              LIZA OS for Pharma
+              Make them actually work.
             </span>
           </h2>
 
           <div className="space-y-4 mb-8">
             {[
-              { t: "Knowledge Extraction Sprint", d: "2-week engagement to encode your senior experts' judgment into executable playbooks", icon: <Sparkles size={20} /> },
-              { t: "LIZA OS Platform", d: "Context Bundles, Protocol Execution, Gate Enforcement, Audit Trails — your regulatory operating system", icon: <Shield size={20} /> },
-              { t: "Pharma Compliance Architecture", d: "GxP-ready, 21 CFR Part 11 aligned, ICH E6(R3) compliant execution framework", icon: <ShieldCheck size={20} /> },
-              { t: "Ongoing Knowledge Refinement", d: "Every filing, every deficiency response, every variation — feeds back and makes your playbooks smarter", icon: <Activity size={20} /> },
+              { num: "1", t: "The problem is real", d: "Inconsistent execution costs billions and kills drugs that should have succeeded." },
+              { num: "2", t: "The window is closing", d: "Senior experts are retiring, AI is accelerating outputs without judgment, and regulators want proof of consistency." },
+              { num: "3", t: "More docs and generic AI won't fix it", d: "You need to encode how your best people think — and make it executable." },
+              { num: "4", t: "LIZA OS is the missing layer", d: "Extract judgment → Encode it → Execute consistently → Evolve with every use." },
             ].map(item => (
-              <div key={item.t} className="flex items-start gap-4 rounded-xl p-5"
+              <div key={item.num} className="flex items-start gap-4 rounded-xl p-4"
                 style={{ background: `hsl(0 0% 100% / 0.05)`, border: `1px solid hsl(0 0% 100% / 0.08)` }}>
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: `hsl(${ACCENT} / 0.15)`, color: `hsl(${ACCENT})` }}>
-                  {item.icon}
+                <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background: `hsl(${ACCENT} / 0.2)`, color: `hsl(${ACCENT})` }}>
+                  <span className="font-black" style={{ fontSize: 16 }}>{item.num}</span>
                 </div>
                 <div>
-                  <p className="font-bold mb-1" style={{ fontSize: 20, color: "hsl(0 0% 100%)" }}>{item.t}</p>
+                  <p className="font-bold mb-0.5" style={{ fontSize: 20, color: "hsl(0 0% 100%)" }}>{item.t}</p>
                   <p style={{ fontSize: 17, color: `hsl(0 0% 100% / 0.6)`, lineHeight: 1.45 }}>{item.d}</p>
                 </div>
               </div>
@@ -566,19 +589,33 @@ function Slide06What() {
         </div>
 
         <div className="w-[380px] flex-shrink-0 rounded-2xl p-7" style={{ background: `hsl(0 0% 100% / 0.06)`, border: `1px solid hsl(0 0% 100% / 0.1)` }}>
-          <p className="font-extrabold mb-5" style={{ fontSize: 22, color: `hsl(${CORAL})` }}>Clone this story.</p>
+          <p className="font-extrabold mb-5" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>Start here</p>
           <p className="mb-6" style={{ fontSize: 18, color: `hsl(0 0% 100% / 0.7)`, lineHeight: 1.55 }}>
-            This isn't a one-off. It's a <strong style={{ color: "hsl(0 0% 100%)" }}>repeatable pattern</strong>. Every pharma company has senior experts whose judgment isn't encoded. Every team has the same bottleneck.
+            A <strong style={{ color: "hsl(0 0% 100%)" }}>20-minute Diagnostic Debrief</strong> to assess your organisation's Standards Gap — where judgment is encoded, where it isn't, and where the highest-ROI opportunities are.
           </p>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
-              "Your SOPs exist. Your people don't follow them consistently.",
-              "Your experts will retire. Their judgment doesn't have to.",
-              "Your next filing can be as consistent as your best filing.",
+              "Map your consistency gaps across teams",
+              "Identify which expert judgment is most at risk",
+              "Get a prioritised roadmap for encoding",
+              "No commitment — just clarity",
             ].map(t => (
               <div key={t} className="flex items-start gap-3">
-                <CheckCircle2 size={16} style={{ color: `hsl(${CORAL})`, flexShrink: 0, marginTop: 3 }} />
+                <CheckCircle2 size={16} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 3 }} />
                 <p style={{ fontSize: 15, color: `hsl(0 0% 100% / 0.75)`, lineHeight: 1.4 }}>{t}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-center gap-6">
+            {[
+              { v: "GxP", l: "Ready" },
+              { v: "21 CFR", l: "Aligned" },
+              { v: "ICH", l: "Compliant" },
+            ].map(s => (
+              <div key={s.l} className="text-center">
+                <p className="font-black" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>{s.v}</p>
+                <p style={{ fontSize: 11, color: `hsl(0 0% 100% / 0.4)` }}>{s.l}</p>
               </div>
             ))}
           </div>
@@ -593,12 +630,12 @@ function Slide06What() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const SLIDES = [
-  { id: "project", title: "1 · The Project", component: <Slide01Project /> },
-  { id: "context", title: "2 · The Context", component: <Slide02Context /> },
+  { id: "problem", title: "1 · The Problem", component: <Slide01Problem /> },
+  { id: "why-now", title: "2 · Why Now", component: <Slide02WhyNow /> },
   { id: "options", title: "3 · The Options", component: <Slide03Options /> },
   { id: "results", title: "4 · The Results", component: <Slide04Results /> },
-  { id: "how",     title: '5 · The "How"', component: <Slide05How /> },
-  { id: "what",    title: '6 · The "What"', component: <Slide06What /> },
+  { id: "how",     title: "5 · How It Works", component: <Slide05How /> },
+  { id: "summary", title: "6 · Summary", component: <Slide06Summary /> },
 ];
 
 const CHROME_BG = "hsl(210 15% 97%)";
