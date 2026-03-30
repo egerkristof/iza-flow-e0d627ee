@@ -1318,6 +1318,7 @@ function SlideProofPoint() {
                 <div className="space-y-2">
                   {[
                     { name: "aliz.ai", desc: "Data & AI professional services firm" },
+                    { name: "Alverad", desc: "Cybersecurity consulting and security management" },
                   ].map(({ name, desc }) => (
                     <div key={name} className="flex items-center gap-3">
                       <Briefcase size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
