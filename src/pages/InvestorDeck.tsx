@@ -695,7 +695,7 @@ function Slide10MarketValidation() {
         <div className="grid grid-cols-4 gap-4 mb-5">
           {[
             {
-              name: "Interloom", funding: "$16.5M", investors: "Air Street, DN Capital, BEK",
+              name: "Interloom", funding: "$19.5M", investors: "DN Capital, Air Street, BEK",
               color: SUBTLE, approach: "Back-Office Automation",
               desc: "Context graphs + procedures for repeatable ops. Facility mgmt, insurance, banking, ITSM.",
               domain: "Complicated (Repeatable)",
