@@ -176,7 +176,7 @@ function ModuleDeepDive({ chipColor, moduleNum, title, subtitle, audience, conce
       <GridBg />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full">
         <div className="flex-1">
-          <Chip color={chipColor}>Module {moduleNum} Deep Dive</Chip>
+          <Chip color={chipColor}>Training Module {moduleNum}</Chip>
           <h2 className="font-black mt-5 mb-2" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.1 }}>
             {title}:
             <br /><span style={{ color: `hsl(${chipColor})` }}>{subtitle}</span>
@@ -420,8 +420,8 @@ function Slide05Journey() {
   const phases = [
     { step: "01", icon: <BarChart3 size={36} />, color: ACCENT, title: "Assess", subtitle: "Diagnosis",
       body: "Map operational bottlenecks via our AI Execution Maturity Diagnostic. Quantify readiness per department." },
-    { step: "02", icon: <HeartHandshake size={36} />, color: TEAL, title: "Align", subtitle: "Education",
-      body: "Shift mindsets through foundational curriculum modules. 5 modules, executive-grade." },
+    { step: "02", icon: <GraduationCap size={36} />, color: TEAL, title: "Align", subtitle: "Training",
+      body: "Shift mindsets through the Training Curriculum. 5 executive-grade modules building the shared vocabulary." },
     { step: "03", icon: <Rocket size={36} />, color: GOLD, title: "Apply", subtitle: "Consulting",
       body: "Half-day departmental deep-dives to extract tacit knowledge and build real AI workflows." },
     { step: "04", icon: <Lock size={36} />, color: PURPLE, title: "Anchor", subtitle: "Infrastructure",
@@ -492,9 +492,9 @@ function SlideCurriculumOverview() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <GridBg />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
-        <Chip color={TEAL}>Align Phase</Chip>
+        <Chip color={TEAL}>Align · Training</Chip>
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          The Foundation Curriculum
+          The Training Curriculum
         </h2>
         <p className="mb-8" style={{ fontSize: 24, color: `hsl(${MUT})` }}>
           5 modular, executive-grade education modules. Ratio: <strong style={{ color: `hsl(${C})` }}>80% Mindset / 20% Application</strong>.
@@ -935,7 +935,7 @@ function SlideAnchor() {
       <GridBg />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full">
         <div className="flex-1">
-          <Chip color={PURPLE}>Anchor Phase</Chip>
+          <Chip color={PURPLE}>Anchor · Platform</Chip>
           <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, color: `hsl(${C})`, lineHeight: 1.1 }}>
             The Simulation
             <br />
@@ -1305,8 +1305,6 @@ function SlideNextSteps() {
         <div className="mt-10 text-center">
           <p style={{ fontSize: 22, color: `hsl(${MUT})` }}>
             <strong style={{ color: `hsl(${ACCENT})` }}>kristof.eger@lizaos.ai</strong>
-            <span className="mx-4" style={{ color: `hsl(${MUT} / 0.3)` }}>|</span>
-            <strong style={{ color: `hsl(${ACCENT})` }}>istvan.boscha@lizaos.ai</strong>
           </p>
         </div>
       </div>
@@ -1327,7 +1325,7 @@ const SLIDES = [
   { id: 4, title: "The Workforce Spectrum", component: <Slide04Transformation /> },
   { id: 5, title: "The Journey", component: <Slide05Journey /> },
   // Part 2: Curriculum
-  { id: 6, title: "Part 2: Curriculum", component: <PartDivider part="Part 2" title="The Curriculum" color={TEAL} /> },
+  { id: 6, title: "Part 2: Training", component: <PartDivider part="Part 2 · Align" title="The Training Curriculum" color={TEAL} /> },
   { id: 7, title: "Curriculum Overview", component: <SlideCurriculumOverview /> },
   { id: 8, title: "Module 1: Execution Gap", component: <SlideModule1 /> },
   { id: 9, title: "Module 2: Human Engine", component: <SlideModule2 /> },
@@ -1335,7 +1333,7 @@ const SLIDES = [
   { id: 11, title: "Module 4: Safe Infrastructure", component: <SlideModule4 /> },
   { id: 12, title: "Module 5: AI-Native Business", component: <SlideModule5 /> },
   // Part 3: Departmental Consulting
-  { id: 13, title: "Part 3: Consulting", component: <PartDivider part="Part 3" title="Departmental Consulting" color={GOLD} /> },
+  { id: 13, title: "Part 3: Consulting", component: <PartDivider part="Part 3 · Apply" title="Departmental Consulting" color={GOLD} /> },
   { id: 14, title: "Department Tracks", component: <SlideDepartmentGrid /> },
   { id: 15, title: "Track: Sales & GTM", component: <SlideTrackSales /> },
   { id: 16, title: "Track: Product & Eng", component: <SlideTrackProduct /> },
@@ -1344,7 +1342,7 @@ const SLIDES = [
   { id: 19, title: "Track: Operations", component: <SlideTrackOperations /> },
   { id: 20, title: "Track: HR & Talent", component: <SlideTrackHR /> },
   // Part 4: Platform & Deliverables
-  { id: 21, title: "Part 4: Anchor", component: <PartDivider part="Part 4" title="Platform & Deliverables" color={PURPLE} /> },
+  { id: 21, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} /> },
   { id: 22, title: "The Simulation Environment", component: <SlideAnchor /> },
   { id: 23, title: "Deliverables", component: <SlideDeliverables /> },
   { id: 24, title: "Engagement & Pricing", component: <SlidePricing /> },
