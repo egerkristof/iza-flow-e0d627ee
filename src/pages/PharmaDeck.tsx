@@ -73,8 +73,8 @@ const STEPS = [
   { num: 2, label: "Context", color: ACCENT, icon: <Map size={18} /> },
   { num: 3, label: "Options", color: ACCENT, icon: <CircleDot size={18} /> },
   { num: 4, label: "Results", color: ACCENT, icon: <Trophy size={18} /> },
-  { num: 5, label: ""How"", color: CORAL, icon: <Wrench size={18} /> },
-  { num: 6, label: ""What"", color: CORAL, icon: <Package size={18} /> },
+  { num: 5, label: '"How"', color: CORAL, icon: <Wrench size={18} /> },
+  { num: 6, label: '"What"', color: CORAL, icon: <Package size={18} /> },
 ];
 
 function StepBar({ activeStep }: { activeStep: number }) {
