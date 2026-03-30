@@ -817,16 +817,16 @@ function Act3_Summary() {
 
 const SLIDES = [
   { id: "title",        title: "Title",                     component: <SlideTitle /> },
-  // Act 1 — The Platform
-  { id: "act1-divider", title: "Act 1 · The Platform",      component: <SectionDivider actNum={1} title="The Platform" subtitle="Why pharma needs a new management layer — the Standards Gap, the forces driving it, and why current tools can't solve it." icon={<Building2 size={36} />} color={ACCENT} /> },
-  { id: "a1-problem",   title: "Standards Gap",              component: <Act1_Problem /> },
-  { id: "a1-why-now",   title: "Why Now",                    component: <Act1_WhyNow /> },
-  { id: "a1-options",   title: "The Options",                component: <Act1_Options /> },
-  // Act 2 — Audit Engine
-  { id: "act2-divider", title: "Act 2 · Audit Engine",      component: <SectionDivider actNum={2} title="The Audit Engine" subtitle="Purpose-built for pharma audits: GxP, GMP, vendor qualifications. Capabilities, proof points, and how it works." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
-  { id: "a2-problem",   title: "Audit Crisis",               component: <Act2_AuditProblem /> },
-  { id: "a2-caps",      title: "How It Works",               component: <Act2_Capabilities /> },
-  { id: "a2-results",   title: "Audit Results",              component: <Act2_Results /> },
+  // Act 1 — Audit Engine
+  { id: "act1-divider", title: "Act 1 · Audit Engine",      component: <SectionDivider actNum={1} title="The Audit Engine" subtitle="Purpose-built for pharma audits: GxP, GMP, vendor qualifications. Capabilities, proof points, and how it works." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
+  { id: "a1-problem",   title: "Audit Crisis",               component: <Act2_AuditProblem /> },
+  { id: "a1-caps",      title: "How It Works",               component: <Act2_Capabilities /> },
+  { id: "a1-results",   title: "Audit Results",              component: <Act2_Results /> },
+  // Act 2 — The Platform
+  { id: "act2-divider", title: "Act 2 · The Platform",      component: <SectionDivider actNum={2} title="The Platform" subtitle="Why pharma needs a new management layer — the Standards Gap, the forces driving it, and why current tools can't solve it." icon={<Building2 size={36} />} color={ACCENT} /> },
+  { id: "a2-problem",   title: "Standards Gap",              component: <Act1_Problem /> },
+  { id: "a2-why-now",   title: "Why Now",                    component: <Act1_WhyNow /> },
+  { id: "a2-options",   title: "The Options",                component: <Act1_Options /> },
   // Act 3 — Lifecycle
   { id: "act3-divider", title: "Act 3 · Lifecycle",          component: <SectionDivider actNum={3} title="Medicine Lifecycle" subtitle="From audit entry point to full lifecycle management — clinical ops, regulatory, quality, pharmacovigilance." icon={<Pill size={36} />} color={CORAL} /> },
   { id: "a3-vision",    title: "Lifecycle Vision",           component: <Act3_LifecycleVision /> },
