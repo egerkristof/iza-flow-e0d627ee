@@ -191,8 +191,8 @@ function Slide01Title() {
         </h1>
 
         <p style={{ fontSize: 28, color: `hsl(${MUT})`, maxWidth: 1050, lineHeight: 1.55 }}>
-          You use ALM to manage software lifecycle.
-          <br />Your drug lifecycle deserves the <strong style={{ color: `hsl(${C})` }}>same operational rigour</strong>.
+          Veeva manages your documents and your CRM.
+          <br />LIZA manages the <strong style={{ color: `hsl(${C})` }}>judgment behind them</strong>.
         </p>
 
         <div className="mt-14 flex items-center gap-5">
@@ -299,48 +299,52 @@ function Slide03AIFails() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 04 — THE ALM ANALOGY
+// SLIDE 04 — THE MISSING LAYER (VEEVA COMPARISON)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide04ALMAnalogy() {
+function Slide04MissingLayer() {
   const rows = [
-    { alm: "Requirements", pharma: "Unmet Medical Need", liza: "Knowledge Extraction", icon: <Search size={20} /> },
-    { alm: "Design & Architecture", pharma: "Target Validation", liza: "Expert Playbooks", icon: <Dna size={20} /> },
-    { alm: "Development & Testing", pharma: "Pre-Clinical / Clinical", liza: "Protocol Execution", icon: <TestTubes size={20} /> },
-    { alm: "Quality Assurance", pharma: "Phase I–III Trials", liza: "Gate Enforcement", icon: <ShieldCheck size={20} /> },
-    { alm: "Release & Deployment", pharma: "Regulatory Submission", liza: "Context Bundles (Dossiers)", icon: <FileCheck size={20} /> },
-    { alm: "Monitoring & Support", pharma: "Post-Market Surveillance", liza: "Nerve Center / Signals", icon: <Activity size={20} /> },
+    { stage: "Unmet Medical Need", veeva: "—", liza: "Knowledge Extraction & Research Playbooks", icon: <Search size={20} /> },
+    { stage: "Target Validation", veeva: "Vault QualityDocs", liza: "Expert Judgment Playbooks (Go/No-Go)", icon: <Dna size={20} /> },
+    { stage: "Pre-Clinical / Clinical", veeva: "Vault CTMS, eTMF", liza: "Protocol Execution with Gate Enforcement", icon: <TestTubes size={20} /> },
+    { stage: "Phase I–III Trials", veeva: "Vault Clinical Ops", liza: "Safety Signal Judgment + Deviation Detection", icon: <ShieldCheck size={20} /> },
+    { stage: "Regulatory Submission", veeva: "Vault RIM, Submissions", liza: "Context Bundles → Governed Dossier Assembly", icon: <FileCheck size={20} /> },
+    { stage: "Post-Market Surveillance", veeva: "Vault Safety", liza: "Nerve Center — Living Pharmacovigilance", icon: <Activity size={20} /> },
   ];
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <GridBg />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px]">
-        <Tag label="The Frame" />
+        <Tag label="The Missing Layer" />
         <h2 className="font-black mb-3" style={{ fontSize: 56, color: `hsl(${C})`, lineHeight: 1.1 }}>
-          Software has ALM.
-          <br /><span style={{ color: `hsl(${ACCENT})` }}>Your Drug Lifecycle Deserves the Same.</span>
+          Veeva Manages Documents.
+          <br /><span style={{ color: `hsl(${ACCENT})` }}>Who Manages the Judgment?</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: `hsl(${MUT})`, maxWidth: 900 }}>
-          Application Lifecycle Management transformed software from chaos to engineering discipline. LIZA does the same for medicine development.
+        <p className="mb-10" style={{ fontSize: 22, color: `hsl(${MUT})`, maxWidth: 950 }}>
+          Your Veeva stack stores and tracks. But the <em>expert reasoning</em> behind every protocol decision, every regulatory strategy, every safety assessment — that lives in people's heads. LIZA encodes it.
         </p>
 
         <div className="rounded-2xl border overflow-hidden" style={{ borderColor: `hsl(${ACCENT} / 0.2)` }}>
-          <div className="grid grid-cols-4 gap-0" style={{ background: `hsl(${DARK})` }}>
-            <div className="px-6 py-4"><p className="font-bold" style={{ fontSize: 16, color: `hsl(0 0% 100% / 0.5)` }}>ALM Stage</p></div>
-            <div className="px-6 py-4"><p className="font-bold" style={{ fontSize: 16, color: `hsl(0 0% 100% / 0.5)` }}>Pharma Equivalent</p></div>
-            <div className="px-6 py-4 col-span-2"><p className="font-bold" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>LIZA OS Capability</p></div>
+          <div className="grid grid-cols-[1.2fr_1fr_1.8fr] gap-0" style={{ background: `hsl(${DARK})` }}>
+            <div className="px-6 py-4"><p className="font-bold" style={{ fontSize: 16, color: `hsl(0 0% 100% / 0.5)` }}>Drug Lifecycle Stage</p></div>
+            <div className="px-6 py-4"><p className="font-bold" style={{ fontSize: 16, color: `hsl(0 0% 100% / 0.5)` }}>Veeva Vault</p></div>
+            <div className="px-6 py-4"><p className="font-bold" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>LIZA OS — The Judgment Layer</p></div>
           </div>
           {rows.map((r, i) => (
-            <div key={r.alm} className="grid grid-cols-4 gap-0 border-t" style={{ borderColor: `hsl(${ACCENT} / 0.1)`, background: i % 2 === 0 ? BG : BG2 }}>
-              <div className="px-6 py-4 flex items-center"><p style={{ fontSize: 18, color: `hsl(${MUT})` }}>{r.alm}</p></div>
-              <div className="px-6 py-4 flex items-center"><p className="font-semibold" style={{ fontSize: 18, color: `hsl(${C})` }}>{r.pharma}</p></div>
-              <div className="px-6 py-4 col-span-2 flex items-center gap-3">
+            <div key={r.stage} className="grid grid-cols-[1.2fr_1fr_1.8fr] gap-0 border-t" style={{ borderColor: `hsl(${ACCENT} / 0.1)`, background: i % 2 === 0 ? BG : BG2 }}>
+              <div className="px-6 py-4 flex items-center"><p className="font-semibold" style={{ fontSize: 18, color: `hsl(${C})` }}>{r.stage}</p></div>
+              <div className="px-6 py-4 flex items-center"><p style={{ fontSize: 17, color: r.veeva === "—" ? `hsl(${MUT} / 0.4)` : `hsl(${MUT})` }}>{r.veeva}</p></div>
+              <div className="px-6 py-4 flex items-center gap-3">
                 <span style={{ color: `hsl(${ACCENT})` }}>{r.icon}</span>
-                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>{r.liza}</p>
+                <p className="font-bold" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>{r.liza}</p>
               </div>
             </div>
           ))}
         </div>
+
+        <p className="mt-6 text-center" style={{ fontSize: 18, color: `hsl(${MUT})`, fontStyle: "italic" }}>
+          Veeva is the system of record. LIZA is the system of <strong style={{ color: `hsl(${C})` }}>reasoning</strong>.
+        </p>
       </div>
       <Bar />
     </div>
@@ -692,7 +696,7 @@ const SLIDES = [
   { id: "title", title: "Medicine Lifecycle Management", component: <Slide01Title /> },
   { id: "crisis", title: "The Consistency Crisis", component: <Slide02ConsistencyCrisis /> },
   { id: "ai-fails", title: "Why AI Gets Pharma Wrong", component: <Slide03AIFails /> },
-  { id: "alm", title: "The ALM Analogy", component: <Slide04ALMAnalogy /> },
+  { id: "missing-layer", title: "The Missing Layer", component: <Slide04MissingLayer /> },
   { id: "div-discover", title: "Phase 1: Discover", component: <Slide05Divider /> },
   { id: "discovery", title: "Research & Target Validation", component: <Slide06Discovery /> },
   { id: "div-develop", title: "Phase 2: Develop", component: <Slide07Divider /> },
