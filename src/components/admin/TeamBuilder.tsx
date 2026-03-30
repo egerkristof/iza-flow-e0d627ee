@@ -41,6 +41,7 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
   const [saving, setSaving] = useState(false);
   const [expandedTeam, setExpandedTeam] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"teams" | "all">("teams");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter out founders and anonymous
   const relevantResults = useMemo(() =>
