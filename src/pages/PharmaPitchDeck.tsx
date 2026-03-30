@@ -71,8 +71,8 @@ function Bar() {
 // ─── Act indicator (replaces StepBar) ────────────────────────────────────────
 
 const ACTS = [
-  { num: 1, label: "The Platform", color: ACCENT },
-  { num: 2, label: "Audit Engine", color: GOLD },
+  { num: 1, label: "Audit Engine", color: GOLD },
+  { num: 2, label: "The Platform", color: ACCENT },
   { num: 3, label: "Lifecycle", color: CORAL },
 ];
 
@@ -157,7 +157,7 @@ function SlideTitle() {
                 <div>
                   <p className="font-bold" style={{ fontSize: 16, color: `hsl(${act.color})` }}>{act.label}</p>
                   <p style={{ fontSize: 12, color: `hsl(0 0% 100% / 0.4)` }}>
-                    {act.num === 1 ? "Why pharma needs a new layer" : act.num === 2 ? "Purpose-built audit capabilities" : "Full lifecycle vision"}
+                    {act.num === 1 ? "Purpose-built audit capabilities" : act.num === 2 ? "Why pharma needs a new layer" : "Full lifecycle vision"}
                   </p>
                 </div>
               </div>
@@ -210,7 +210,7 @@ function Act1_Problem() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={1} slideLabel="THE STANDARDS GAP" />
+      <ActBar activeAct={2} slideLabel="THE STANDARDS GAP" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-16 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 54, color: `hsl(${C})`, lineHeight: 1.05 }}>
@@ -264,7 +264,7 @@ function Act1_WhyNow() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={1} slideLabel="WHY NOW" />
+      <ActBar activeAct={2} slideLabel="WHY NOW" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 54, color: `hsl(${C})`, lineHeight: 1.05 }}>
@@ -363,7 +363,7 @@ function Act1_Options() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={1} slideLabel="THE OPTIONS" />
+      <ActBar activeAct={2} slideLabel="THE OPTIONS" />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px] pt-[90px]">
         <h2 className="font-black mb-3" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
           Why budgets don't move — <span style={{ color: `hsl(${MUT})` }}>and what changes.</span>
@@ -419,7 +419,7 @@ function Act2_AuditProblem() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={2} slideLabel="THE AUDIT CRISIS" />
+      <ActBar activeAct={1} slideLabel="THE AUDIT CRISIS" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-16 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
@@ -481,7 +481,7 @@ function Act2_Capabilities() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={2} slideLabel="WHAT THE ENGINE DOES" />
+      <ActBar activeAct={1} slideLabel="WHAT THE ENGINE DOES" />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px] pt-[90px]">
         <h2 className="font-black mb-3" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
           The LIZA <span style={{ color: `hsl(${GOLD})` }}>Audit Engine</span>
@@ -538,7 +538,7 @@ function Act2_Results() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={2} slideLabel="PROVEN RESULTS" />
+      <ActBar activeAct={1} slideLabel="PROVEN RESULTS" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.05 }}>
@@ -817,16 +817,16 @@ function Act3_Summary() {
 
 const SLIDES = [
   { id: "title",        title: "Title",                     component: <SlideTitle /> },
-  // Act 1 — The Platform
-  { id: "act1-divider", title: "Act 1 · The Platform",      component: <SectionDivider actNum={1} title="The Platform" subtitle="Why pharma needs a new management layer — the Standards Gap, the forces driving it, and why current tools can't solve it." icon={<Building2 size={36} />} color={ACCENT} /> },
-  { id: "a1-problem",   title: "Standards Gap",              component: <Act1_Problem /> },
-  { id: "a1-why-now",   title: "Why Now",                    component: <Act1_WhyNow /> },
-  { id: "a1-options",   title: "The Options",                component: <Act1_Options /> },
-  // Act 2 — Audit Engine
-  { id: "act2-divider", title: "Act 2 · Audit Engine",      component: <SectionDivider actNum={2} title="The Audit Engine" subtitle="Purpose-built for pharma audits: GxP, GMP, vendor qualifications. Capabilities, proof points, and how it works." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
-  { id: "a2-problem",   title: "Audit Crisis",               component: <Act2_AuditProblem /> },
-  { id: "a2-caps",      title: "How It Works",               component: <Act2_Capabilities /> },
-  { id: "a2-results",   title: "Audit Results",              component: <Act2_Results /> },
+  // Act 1 — Audit Engine
+  { id: "act1-divider", title: "Act 1 · Audit Engine",      component: <SectionDivider actNum={1} title="The Audit Engine" subtitle="Purpose-built for pharma audits: GxP, GMP, vendor qualifications. Capabilities, proof points, and how it works." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
+  { id: "a1-problem",   title: "Audit Crisis",               component: <Act2_AuditProblem /> },
+  { id: "a1-caps",      title: "How It Works",               component: <Act2_Capabilities /> },
+  { id: "a1-results",   title: "Audit Results",              component: <Act2_Results /> },
+  // Act 2 — The Platform
+  { id: "act2-divider", title: "Act 2 · The Platform",      component: <SectionDivider actNum={2} title="The Platform" subtitle="Why pharma needs a new management layer — the Standards Gap, the forces driving it, and why current tools can't solve it." icon={<Building2 size={36} />} color={ACCENT} /> },
+  { id: "a2-problem",   title: "Standards Gap",              component: <Act1_Problem /> },
+  { id: "a2-why-now",   title: "Why Now",                    component: <Act1_WhyNow /> },
+  { id: "a2-options",   title: "The Options",                component: <Act1_Options /> },
   // Act 3 — Lifecycle
   { id: "act3-divider", title: "Act 3 · Lifecycle",          component: <SectionDivider actNum={3} title="Medicine Lifecycle" subtitle="From audit entry point to full lifecycle management — clinical ops, regulatory, quality, pharmacovigilance." icon={<Pill size={36} />} color={CORAL} /> },
   { id: "a3-vision",    title: "Lifecycle Vision",           component: <Act3_LifecycleVision /> },
