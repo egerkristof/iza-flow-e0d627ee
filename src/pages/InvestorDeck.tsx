@@ -648,11 +648,11 @@ function Slide09CategoryMap() {
               <text x="80" y="490" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Gemini</text>
               <text x="480" y="490" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Claude</text>
 
-              {/* Document Platform names - inside middle ring */}
-              <text x="170" y="270" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Notion</text>
-              <text x="400" y="270" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Confluence</text>
-              <text x="175" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Guru</text>
-              <text x="430" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Glean</text>
+              {/* Document/Workflow Platform names - inside middle ring */}
+              <text x="155" y="260" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Notion</text>
+              <text x="400" y="260" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Confluence</text>
+              <text x="145" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Interloom</text>
+              <text x="420" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Glean</text>
             </svg>
           </div>
 
