@@ -688,7 +688,7 @@ function Slide10MarketValidation() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Market Validation" color={GREEN} />
         <h2 className="font-bold mb-6" style={{ fontSize: 60, color: TEXT, lineHeight: 1.1 }}>
-          $117M+ invested into our category.<br />
+          $95M+ invested into our category.<br />
           <span style={{ color: `hsl(${GREEN})` }}>Four approaches. One missing layer.</span>
         </h2>
 
