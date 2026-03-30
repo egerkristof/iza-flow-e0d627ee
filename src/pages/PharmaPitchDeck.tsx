@@ -71,8 +71,8 @@ function Bar() {
 // ─── Act indicator (replaces StepBar) ────────────────────────────────────────
 
 const ACTS = [
-  { num: 1, label: "The Platform", color: ACCENT },
-  { num: 2, label: "Audit Engine", color: GOLD },
+  { num: 1, label: "Audit Engine", color: GOLD },
+  { num: 2, label: "The Platform", color: ACCENT },
   { num: 3, label: "Lifecycle", color: CORAL },
 ];
 
