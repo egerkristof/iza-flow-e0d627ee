@@ -111,12 +111,12 @@ function StepBar({ activeStep }: { activeStep: number }) {
       {/* Demand / Supply labels */}
       <div className="absolute -top-[28px] left-[30px]" style={{ width: 460 }}>
         <div className="rounded-full px-4 py-1 text-center" style={{ background: `hsl(${ACCENT} / 0.08)`, border: `1px solid hsl(${ACCENT} / 0.2)` }}>
-          <span className="font-semibold" style={{ fontSize: 11, color: `hsl(${ACCENT})`, letterSpacing: "0.1em" }}>"DEMAND" — What they needed</span>
+          <span className="font-semibold" style={{ fontSize: 11, color: `hsl(${ACCENT})`, letterSpacing: "0.1em" }}>THE CHALLENGE — What research shows</span>
         </div>
       </div>
       <div className="absolute -top-[28px] right-[10px]" style={{ width: 280 }}>
         <div className="rounded-full px-4 py-1 text-center" style={{ background: `hsl(${CORAL} / 0.08)`, border: `1px solid hsl(${CORAL} / 0.2)` }}>
-          <span className="font-semibold" style={{ fontSize: 11, color: `hsl(${CORAL})`, letterSpacing: "0.1em" }}>"SUPPLY" — What we provide</span>
+          <span className="font-semibold" style={{ fontSize: 11, color: `hsl(${CORAL})`, letterSpacing: "0.1em" }}>THE SOLUTION — LIZA OS</span>
         </div>
       </div>
     </div>
