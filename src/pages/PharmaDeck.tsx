@@ -555,9 +555,9 @@ function Slide06Summary() {
 
           <div className="space-y-4 mb-8">
             {[
-              { num: "1", t: "The problem is real", d: "Inconsistent execution costs billions and kills drugs that should have succeeded." },
-              { num: "2", t: "The window is closing", d: "Senior experts are retiring, AI is accelerating outputs without judgment, and regulators want proof of consistency." },
-              { num: "3", t: "More docs and generic AI won't fix it", d: "You need to encode how your best people think — and make it executable." },
+              { num: "1", t: "The problem is real", d: "Inconsistent execution is a major contributor to the billions lost in drug development — and the research confirms it." },
+              { num: "2", t: "The window is closing", d: "Senior experts are retiring, AI is accelerating outputs without domain-specific enforcement, and regulators want proof of consistency." },
+              { num: "3", t: "More docs and generic AI won't fix it", d: "You need to encode how your best people think — and make it executable, not just searchable." },
               { num: "4", t: "LIZA OS is the missing layer", d: "Extract judgment → Encode it → Execute consistently → Evolve with every use." },
             ].map(item => (
               <div key={item.num} className="flex items-start gap-4 rounded-xl p-4"
