@@ -998,7 +998,7 @@ function SlideAnchor() {
           </h2>
           <p className="mb-8" style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
             Standard AI tools operate as "black boxes." You cannot effectively teach Context Engineering when the
-            system hides how memory and organizational rules are applied.
+            system hides how memory and organizational rules are applied. <strong style={{ color: `hsl(${C})` }}>LIZA OS</strong> is purpose-built to make this transparent — every rule, every context layer, every decision is visible and governable.
           </p>
 
           <div className="space-y-4">
