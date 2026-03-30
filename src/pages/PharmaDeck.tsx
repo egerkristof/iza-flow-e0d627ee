@@ -696,7 +696,7 @@ const SLIDES = [
   { id: "title", title: "Medicine Lifecycle Management", component: <Slide01Title /> },
   { id: "crisis", title: "The Consistency Crisis", component: <Slide02ConsistencyCrisis /> },
   { id: "ai-fails", title: "Why AI Gets Pharma Wrong", component: <Slide03AIFails /> },
-  { id: "alm", title: "The ALM Analogy", component: <Slide04ALMAnalogy /> },
+  { id: "missing-layer", title: "The Missing Layer", component: <Slide04MissingLayer /> },
   { id: "div-discover", title: "Phase 1: Discover", component: <Slide05Divider /> },
   { id: "discovery", title: "Research & Target Validation", component: <Slide06Discovery /> },
   { id: "div-develop", title: "Phase 2: Develop", component: <Slide07Divider /> },
