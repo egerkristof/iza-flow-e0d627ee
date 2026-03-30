@@ -913,12 +913,12 @@ function SlideTrackStrategy() {
       icon={<Landmark size={24} />}
       title="Strategy & Leadership"
       subtitle="Governing the Agentic Organization"
-      challenge={<>Strategic drift. Executives rely on <strong style={{ color: `hsl(${C})` }}>lagging indicators and static dashboards</strong>, unable to stress-test decisions against real-time market shifts.</>}
-      transformation={<>Creating an <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower"</strong> — a governed intelligence layer that keeps strategy execution visible and accountable.</>}
+      challenge={<>Leaders lack the systems to govern an AI-native organization. <strong style={{ color: `hsl(${C})` }}>How do you implement improvement, transformation, and innovation initiatives</strong> when every department runs agentic workflows?</>}
+      transformation={<>Building the <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower"</strong> — connecting departmental AI implementations into a unified value tree from vision to initiative execution.</>}
       implementations={[
-        { title: '"Red Team" Critic Agents', desc: "AI-powered adversarial review of strategic proposals before board decisions" },
-        { title: "M&A Target Triage & Synthesis", desc: "Automated due diligence assembly with codified evaluation criteria" },
-        { title: "Execution Drift Radar", desc: "Real-time monitoring of strategic initiative alignment across departments" },
+        { title: "Scenario Builder & Strategy Radar", desc: "Stress-test strategic decisions and model future skill alignment across the organization" },
+        { title: "Cross-Department Value Tree", desc: "How all departmental AI implementations connect — from top-level vision down to initiative execution" },
+        { title: "Execution Drift Radar", desc: "Real-time monitoring of strategic initiative alignment across all agentic workflows" },
       ]}
     />
   );
