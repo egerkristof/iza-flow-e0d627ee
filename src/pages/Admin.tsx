@@ -432,6 +432,7 @@ export default function AdminPage() {
     { key: "content-insights", label: "Content & Insights", icon: <Pen className="h-4 w-4" /> },
     { key: "consulting", label: "Consulting", icon: <BookOpen className="h-4 w-4" /> },
     { key: "client-prep", label: "Client Prep", icon: <Sparkles className="h-4 w-4" /> },
+    { key: "presentations", label: "Presentations", icon: <Presentation className="h-4 w-4" /> },
   ];
 
   return (
