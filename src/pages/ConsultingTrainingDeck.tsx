@@ -1492,6 +1492,7 @@ const SLIDES = [
   { id: 18, title: "Track: Finance & Risk", component: <SlideTrackFinance /> },
   { id: 19, title: "Track: Operations", component: <SlideTrackOperations /> },
   { id: 20, title: "Track: HR & Talent", component: <SlideTrackHR /> },
+  { id: 21, title: "The Value Tree", component: <SlideValueTree /> },
   // Part 4: Platform & Deliverables
   { id: 21, title: "Part 4: Anchor", component: <PartDivider part="Part 4 · Anchor" title="Platform & Deliverables" color={PURPLE} activePhase="anchor" /> },
   { id: 22, title: "The Simulation Environment", component: <SlideAnchor /> },
