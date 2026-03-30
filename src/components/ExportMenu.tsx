@@ -119,7 +119,7 @@ async function exportGoogleSlides(exportRef: React.RefObject<HTMLDivElement>, fi
   const publicUrl = urlData.publicUrl;
 
   // Open Google Slides with import URL
-  window.open(`https://docs.google.com/presentation/d/?usp=import&url=${encodeURIComponent(publicUrl)}`, "_blank");
+  window.open(`https://docs.google.com/presentation/u/0/?usp=import&url=${encodeURIComponent(publicUrl)}`, "_blank");
 }
 
 const FORMAT_OPTIONS: { id: ExportFormat; label: string; icon: React.ReactNode; desc: string }[] = [
