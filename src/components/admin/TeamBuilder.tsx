@@ -49,6 +49,18 @@ export default function TeamBuilder({ results, onRefresh }: { results: Diagnosti
     [results]
   );
 
+  // Search filter
+  const matchesSearch = useCallback((r: DiagnosticResult) => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return true;
+    return (r.email || "").toLowerCase().includes(q) ||
+      (r.respondent_role || "").toLowerCase().includes(q) ||
+      (r.company_name || "").toLowerCase().includes(q) ||
+      (r.industry || "").toLowerCase().includes(q) ||
+      (r.industry_refined || "").toLowerCase().includes(q) ||
+      (r.team_leader_email || "").toLowerCase().includes(q);
+  }, [searchQuery]);
+
   // Team groups
   const teams = useMemo(() => {
     const groups: Record<string, DiagnosticResult[]> = {};
