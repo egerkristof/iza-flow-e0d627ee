@@ -609,9 +609,9 @@ function Slide06Summary() {
 
           <div className="mt-6 flex items-center gap-6">
             {[
-              { v: "GxP", l: "Ready" },
-              { v: "21 CFR", l: "Aligned" },
-              { v: "ICH", l: "Compliant" },
+              { v: "GxP", l: "Designed for" },
+              { v: "21 CFR", l: "Architected for" },
+              { v: "ICH", l: "Targeting" },
             ].map(s => (
               <div key={s.l} className="text-center">
                 <p className="font-black" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>{s.v}</p>
