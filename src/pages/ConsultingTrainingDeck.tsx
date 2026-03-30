@@ -1380,7 +1380,7 @@ const SLIDES = [
   { id: 4, title: "The Workforce Spectrum", component: <Slide04Transformation /> },
   { id: 5, title: "The Journey", component: <Slide05Journey /> },
   // Part 2: Curriculum
-  { id: 6, title: "Part 2: Training", component: <PartDivider part="Part 2 · Align" title="The Training Curriculum" color={TEAL} /> },
+  { id: 6, title: "Part 2: Training", component: <PartDivider part="Part 2 · Align" title="The Training Curriculum" color={TEAL} activePhase="align" /> },
   { id: 7, title: "Curriculum Overview", component: <SlideCurriculumOverview /> },
   { id: 8, title: "Module 1: Execution Gap", component: <SlideModule1 /> },
   { id: 9, title: "Module 2: Human Engine", component: <SlideModule2 /> },
