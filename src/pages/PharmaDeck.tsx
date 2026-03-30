@@ -396,7 +396,7 @@ function Slide04Results() {
               { v: "↑ 90%+", l: "Dramatically improved consistency across teams and sites", color: TEAL, sub: "Same playbook, same quality gates — regardless of who runs it" },
               { v: "Near 0", l: "Critical knowledge loss when senior experts leave", color: TEAL, sub: "Judgment is encoded in the system, not trapped in people's heads" },
               { v: "60–70%", l: "Reduction in onboarding time for new hires", color: ACCENT, sub: "Junior staff execute at senior level from day one" },
-              { v: "Full", l: "Audit trail for every decision and gate", color: GOLD, sub: "GxP-ready, regulator-friendly provenance" },
+              { v: "Full", l: "Audit trail for every decision and gate", color: GOLD, sub: "Designed to support GxP and regulatory requirements" },
             ].map(s => (
               <div key={s.l} className="rounded-xl p-6" style={{ background: `hsl(${s.color} / 0.04)`, border: `1px solid hsl(${s.color} / 0.15)` }}>
                 <p className="font-black mb-1" style={{ fontSize: 44, color: `hsl(${s.color})` }}>{s.v}</p>
