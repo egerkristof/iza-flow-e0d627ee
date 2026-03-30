@@ -14,7 +14,7 @@ import {
   Users, ClipboardList, Send, ChevronDown, ChevronUp, LogOut, ShieldCheck,
   Mail, MailX, MessageSquareText, Eye, Lightbulb, TrendingDown, Building2,
   RefreshCw, Zap, BarChart3, BookOpen, Layers, Loader2, Target, Crosshair,
-  TrendingUp, Pen, Sparkles,
+  TrendingUp, Pen, Sparkles, Presentation, ExternalLink,
 } from "lucide-react";
 import OrgInsights from "@/components/admin/OrgInsights";
 import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
@@ -63,7 +63,7 @@ interface ResearchEntry {
   created_at: string;
 }
 
-type AdminView = "members" | "diagnostics" | "org-insights" | "content-insights" | "consulting" | "client-prep";
+type AdminView = "members" | "diagnostics" | "org-insights" | "content-insights" | "consulting" | "client-prep" | "presentations";
 type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
 
 /* ── Helpers ── */
@@ -432,6 +432,7 @@ export default function AdminPage() {
     { key: "content-insights", label: "Content & Insights", icon: <Pen className="h-4 w-4" /> },
     { key: "consulting", label: "Consulting", icon: <BookOpen className="h-4 w-4" /> },
     { key: "client-prep", label: "Client Prep", icon: <Sparkles className="h-4 w-4" /> },
+    { key: "presentations", label: "Presentations", icon: <Presentation className="h-4 w-4" /> },
   ];
 
   return (
@@ -988,6 +989,38 @@ export default function AdminPage() {
           {activeView === "consulting" && <ConsultingReference />}
 
           {activeView === "client-prep" && <PersonalizedConsulting results={results} />}
+
+          {activeView === "presentations" && (
+            <>
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Presentations</h1>
+                <p className="text-sm text-muted-foreground">Quick links to all existing decks and presentations.</p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {[
+                  { title: "Pitch Deck", path: "/pitch", description: "Core startup pitch deck" },
+                  { title: "Investor Deck", path: "/investor", description: "Detailed investor presentation" },
+                  { title: "Seed Investor Deck", path: "/investor-seed", description: "Pre-seed / seed stage deck" },
+                  { title: "Sales Deck", path: "/sales", description: "Consulting sales presentation" },
+                  { title: "Training Deck", path: "/training", description: "Architecting the AI-Native Organization" },
+                  { title: "LinkedIn Card", path: "/linkedin-card", description: "LinkedIn image card generator" },
+                ].map((deck) => (
+                  <Card key={deck.path} className="group hover:border-primary/40 transition-colors cursor-pointer" onClick={() => window.open(deck.path, "_blank")}>
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-sm font-semibold">{deck.title}</CardTitle>
+                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <CardDescription className="text-xs">{deck.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <code className="text-[11px] text-muted-foreground/60 font-mono">{deck.path}</code>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </main>
     </div>
