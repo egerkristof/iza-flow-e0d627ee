@@ -469,7 +469,7 @@ function Slide05How() {
     {
       step: "Step 4",
       title: "Evolve",
-      desc: "Every execution generates feedback. Deviations are detected, patterns surfaced, and playbooks improve. Your organisational judgment compounds — it gets smarter with use.",
+      desc: "Every execution generates structured feedback. Deviations are detected, drift patterns surfaced, and playbooks are continuously refined. Unlike static KM systems, LIZA's judgment layer compounds — it gets smarter with every use.",
       color: CORAL,
       icon: <Activity size={22} />,
     },
