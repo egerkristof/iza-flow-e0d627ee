@@ -130,7 +130,7 @@ function PartDivider({ part, title, color = ACCENT, activePhase }: { part: strin
                     ...(isActive ? { boxShadow: `0 0 24px hsl(${phase.color} / 0.3)` } : {}),
                   }}>
                   {isSkipped && !isActive ? (
-                    <span style={{ fontSize: 14, fontWeight: 700 }}>—</span>
+                    <span style={{ fontSize: 14, fontWeight: 700 }}>✓</span>
                   ) : (
                     phase.icon
                   )}
@@ -343,7 +343,7 @@ function Slide02InfraGap() {
             </div>
             <p style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
               Rapid AI adoption without shared standards <strong style={{ color: `hsl(${C})` }}>amplifies existing ambiguity</strong>.
-              When a junior employee types a vague prompt, the AI executes literally — exposing the lack of clear internal alignment.
+              When a junior employee types a vague prompt, the AI executes literally, exposing the lack of clear internal alignment.
             </p>
           </div>
         </div>
@@ -373,7 +373,7 @@ function Slide03ContextStarvation() {
             <br /><span style={{ color: `hsl(${GOLD})` }}>It is missing human judgment.</span>
           </h2>
           <p className="mb-6" style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
-            When AI fails, it is <strong style={{ color: `hsl(${C})` }}>"Context Starved"</strong> — it lacks the unwritten
+            When AI fails, it is <strong style={{ color: `hsl(${C})` }}>"Context Starved."</strong> It lacks the unwritten
             rules your senior experts hold in their heads.
           </p>
           <div className="rounded-xl p-6" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.2)` }}>
@@ -521,23 +521,23 @@ function SlideCurriculumOverview() {
   const modules = [
     { n: "01", icon: <Crosshair size={26} />, color: ACCENT, title: "The Execution Gap",
       audience: "All Staff & Leadership",
-      core: "Cynefin Framework — map work complexity to identify automation targets vs. human-oversight areas.",
+      core: "Cynefin Framework. Map work complexity to identify automation targets vs. human-oversight areas.",
     },
     { n: "02", icon: <Brain size={26} />, color: TEAL, title: "The Human Engine",
       audience: "Managers & Senior Experts",
-      core: "Naturalistic Decision Making — how experts decide under pressure. The System Executor → System Designer shift.",
+      core: "Naturalistic Decision Making. How experts decide under pressure. The System Executor → System Designer shift.",
     },
     { n: "03", icon: <Workflow size={26} />, color: GOLD, title: "Active Context",
       audience: "Frontline & Knowledge Workers",
-      core: "The Knowledge Extraction Protocol — translate tacit 'how-we-do-things-here' into explicit AI instructions.",
+      core: "The Knowledge Extraction Protocol. Translate tacit 'how-we-do-things-here' into explicit AI instructions.",
     },
     { n: "04", icon: <Shield size={26} />, color: PURPLE, title: "Safe Infrastructure",
       audience: "Engineering, IT & Operations",
-      core: "Separation of Logic from the LLM — business rules live in your systems, not inside the AI model.",
+      core: "Separation of Logic from the LLM. Business rules live in your systems, not inside the AI model.",
     },
     { n: "05", icon: <Landmark size={26} />, color: RED, title: "The AI-Native Business Model",
       audience: "C-Suite & Strategy",
-      core: "Governance as Enterprise Valuation — restructuring for the economy where judgment compounds, not just labor.",
+      core: "Governance as Enterprise Valuation. Restructuring for the economy where judgment compounds, not just labor.",
     },
   ];
 
@@ -633,7 +633,7 @@ function SlideModule2() {
       subtitle="Judgment in the Age of AI"
       audience="Managers, Leaders & Senior Experts"
       concept="Naturalistic Decision Making (NDM)"
-      conceptDesc={<>How human experts <strong style={{ color: `hsl(${C})` }}>actually make decisions</strong> under pressure — through pattern recognition, core values, and accumulated experience. This is the knowledge AI cannot replicate but can be governed by.</>}
+      conceptDesc={<>How human experts <strong style={{ color: `hsl(${C})` }}>actually make decisions</strong> under pressure: through pattern recognition, core values, and accumulated experience. This is the knowledge AI cannot replicate but can be governed by.</>}
       applicationTitle="The Identity Shift Exercise"
       applicationDesc={<>Participants map their own work: what's lower-order (automatable) vs. higher-order (their unique value). The result: a personal clarity on <strong style={{ color: `hsl(${C})` }}>where their career value now lives</strong> in the AI-native economy.</>}
       rightContent={
@@ -696,7 +696,7 @@ function SlideModule3() {
             { step: "2", label: "Diagnose", desc: "Map which tacit knowledge the AI was missing" },
             { step: "3", label: "Extract", desc: "Interview the expert; structure the 'Mindflow'" },
             { step: "4", label: "Codify", desc: "Build the Context Bundle in LIZA OS sandbox" },
-            { step: "5", label: "Validate", desc: "Re-run the task — measure improvement live" },
+            { step: "5", label: "Validate", desc: "Re-run the task and measure improvement live" },
           ].map(({ step, label, desc }) => (
             <div key={step} className="flex items-center gap-4 mb-4">
               <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
@@ -732,7 +732,7 @@ function SlideModule4() {
       concept="Separation of Logic from the LLM"
       conceptDesc={<>The critical architectural rule: <strong style={{ color: `hsl(${C})` }}>business rules and compliance constraints must live in the infrastructure</strong> (your systems), not inside the AI model itself. The model is the engine; your rules are the steering wheel.</>}
       applicationTitle="Architecture Whiteboard Session"
-      applicationDesc={<>Teams design a safe automation architecture for their own use case — achieving both <strong style={{ color: `hsl(${C})` }}>high computer automation</strong> and <strong style={{ color: `hsl(${C})` }}>high human control</strong> simultaneously. No black boxes.</>}
+      applicationDesc={<>Teams design a safe automation architecture for their own use case, achieving both <strong style={{ color: `hsl(${C})` }}>high computer automation</strong> and <strong style={{ color: `hsl(${C})` }}>high human control</strong> simultaneously. No black boxes.</>}
       rightContent={
         <div className="rounded-2xl border p-7 relative overflow-hidden" style={{ background: BG2, borderColor: `hsl(${PURPLE} / 0.3)` }}>
           <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${PURPLE})` }} />
@@ -778,7 +778,7 @@ function SlideModule5() {
       subtitle="Restructuring for the New Economy"
       audience="C-Suite, Board & Strategy Teams"
       concept="Governance as Enterprise Valuation"
-      conceptDesc={<>The death of selling billable hours. The shift to selling <strong style={{ color: `hsl(${C})` }}>guaranteed, high-quality outcomes</strong> scaled by AI. Companies that codify judgment create compounding intellectual capital — which directly drives enterprise valuation.</>}
+      conceptDesc={<>The death of selling billable hours. The shift to selling <strong style={{ color: `hsl(${C})` }}>guaranteed, high-quality outcomes</strong> scaled by AI. Companies that codify judgment create compounding intellectual capital, which directly drives enterprise valuation.</>}
       applicationTitle="Business Model Canvas Redesign"
       applicationDesc={<>Leadership teams redesign their value delivery model: what shifts from effort-based to outcome-based? Where does <strong style={{ color: `hsl(${C})` }}>AI governance become a competitive moat</strong> rather than a cost center?</>}
       rightContent={
@@ -824,7 +824,7 @@ function SlideDepartmentGrid() {
     { icon: <Briefcase size={28} />, color: ACCENT, title: "Sales & GTM",
       line: "Scale your best closer's strategies as infrastructure" },
     { icon: <Code size={28} />, color: TEAL, title: "Product & Engineering",
-      line: "Protect architectural intent from prompt to production" },
+      line: "Govern the full Application Lifecycle from requirements to code" },
     { icon: <Landmark size={28} />, color: GOLD, title: "Strategy & Leadership",
       line: "Build the Executive Control Tower for agentic governance" },
     { icon: <Scale size={28} />, color: PURPLE, title: "Finance & Risk",
@@ -877,10 +877,10 @@ function SlideTrackSales() {
       icon={<Briefcase size={24} />}
       title="Sales & GTM"
       subtitle="Scaling the Consultative Edge"
-      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis"</strong> — top reps win on nuance; the rest rely on generic AI outreach. From deal qualification to account management to proposal cycles, <strong style={{ color: `hsl(${C})` }}>the entire revenue engine lacks codified strategy</strong>.</>}
-      transformation={<>Turn your best performers' unwritten strategies into <strong style={{ color: `hsl(${C})` }}>scalable infrastructure</strong> across the full customer lifecycle — from first contact to long-term account growth.</>}
+      challenge={<>The <strong style={{ color: `hsl(${C})` }}>"Consistency Crisis."</strong> Top reps win on nuance; the rest rely on generic AI outreach. From deal qualification to account management to proposal cycles, <strong style={{ color: `hsl(${C})` }}>the entire revenue engine lacks codified strategy</strong>.</>}
+      transformation={<>Turn your best performers' unwritten strategies into <strong style={{ color: `hsl(${C})` }}>scalable infrastructure</strong> across the full customer lifecycle, from first contact to long-term account growth.</>}
       implementations={[
-        { title: "Deal Qualification Gatekeeper", desc: "MEDDPICC enforcement as an active agent — not a checklist" },
+        { title: "Deal Qualification Gatekeeper", desc: "MEDDPICC enforcement as an active agent, not a checklist" },
         { title: "Account Management Playbooks", desc: "Codified relationship strategies, renewal workflows, and expansion triggers" },
         { title: "Proposal Generation Engine", desc: "Proprietary value prop + compliance guardrails baked into every output" },
       ]}
@@ -894,13 +894,13 @@ function SlideTrackProduct() {
       chipColor={TEAL}
       icon={<Code size={24} />}
       title="Product & Engineering"
-      subtitle="Protecting Architectural Intent"
+      subtitle="Governing Application Lifecycle Management"
       challenge={<>Application Lifecycle Management is broken. Strategic intent evaporates between requirements and code. <strong style={{ color: `hsl(${C})` }}>"Vibe coding"</strong> with generic Copilots generates technical debt at scale.</>}
-      transformation={<>Governing the <strong style={{ color: `hsl(${C})` }}>full ALM pipeline</strong> — from requirement analysis to the last piece of code — with context-aware AI that carries architectural intent through every stage.</>}
+      transformation={<>Governing the <strong style={{ color: `hsl(${C})` }}>full ALM pipeline</strong>, from requirement analysis to the last piece of code, with context-aware AI that carries architectural intent through every stage.</>}
       implementations={[
-        { title: "Requirements-to-Code Context Bridges", desc: "Enforcing API patterns, security constraints, and architectural standards from specification to implementation" },
-        { title: '"Critic Agent" Design Reviews', desc: "Automated review against your own standards before human review" },
-        { title: "Technical Debt Sentinel", desc: "Continuous drift detection against architectural decisions across the full lifecycle" },
+        { title: "Requirements Traceability Engine", desc: "Ensuring strategic intent flows from business requirements through architecture into implementation without loss" },
+        { title: "Stakeholder Communication Governance", desc: "Codified review and approval workflows that maintain alignment between business and engineering teams" },
+        { title: "ALM Drift Detection", desc: "Continuous monitoring of requirement coverage, change impact, and architectural decision compliance across the full lifecycle" },
       ]}
     />
   );
@@ -914,10 +914,10 @@ function SlideTrackStrategy() {
       title="Strategy & Leadership"
       subtitle="Governing the Agentic Organization"
       challenge={<>Leaders lack the systems to govern an AI-native organization. <strong style={{ color: `hsl(${C})` }}>How do you implement improvement, transformation, and innovation initiatives</strong> when every department runs agentic workflows?</>}
-      transformation={<>Building the <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower"</strong> — connecting departmental AI implementations into a unified value tree from vision to initiative execution.</>}
+      transformation={<>Building the <strong style={{ color: `hsl(${C})` }}>"Executive Control Tower,"</strong> connecting departmental AI implementations into a unified value tree from vision to initiative execution.</>}
       implementations={[
         { title: "Scenario Builder & Strategy Radar", desc: "Stress-test strategic decisions and model future skill alignment across the organization" },
-        { title: "Cross-Department Value Tree", desc: "How all departmental AI implementations connect — from top-level vision down to initiative execution" },
+        { title: "Cross-Department Value Tree", desc: "How all departmental AI implementations connect, from top-level vision down to initiative execution" },
         { title: "Execution Drift Radar", desc: "Real-time monitoring of strategic initiative alignment across all agentic workflows" },
       ]}
     />
@@ -932,11 +932,9 @@ function SlideTrackFinance() {
       title="Finance & Risk"
       subtitle="Automating Narrative, Enforcing Control"
       challenge={<>Finance spends <strong style={{ color: `hsl(${C})` }}>80% of time aggregating data</strong>. Commodity AI hallucinates numbers or fails to apply strict internal policy constraints.</>}
-      transformation={<>Building <strong style={{ color: `hsl(${C})` }}>"Guardrail Agents"</strong> with hard-coded reporting standards — AI that generates within your exact compliance framework.</>}
+      transformation={<>Building <strong style={{ color: `hsl(${C})` }}>"Guardrail Agents"</strong> with hard-coded reporting standards. AI that generates within your exact compliance framework.</>}
       implementations={[
-        { title: "Financial Narrative Synthesis (MD&A)", desc: "Automated management discussion with enforced GAAP/IFRS language" },
-        { title: "CapEx / Investment Request Triage", desc: "Structured intake with policy-compliant scoring and recommendation" },
-        { title: "Variance Analysis Automation", desc: "Pattern detection across periods with contextual commentary generation" },
+        { title: "Customized Based on Need", desc: "Finance implementations are precision-tailored to your specific reporting, compliance, and governance requirements" },
       ]}
     />
   );
@@ -950,7 +948,7 @@ function SlideTrackOperations() {
       title="Operations & Supply Chain"
       subtitle="From Dead SOPs to Active Infrastructure"
       challenge={<>SOPs live in <strong style={{ color: `hsl(${C})` }}>static PDFs that nobody reads</strong> during a crisis. Incident resolution is inconsistent and relies on tribal knowledge.</>}
-      transformation={<>Turning passive documentation into <strong style={{ color: `hsl(${C})` }}>"Executable Knowledge"</strong> that sits inside the operator's workflow — active during the moment of need.</>}
+      transformation={<>Turning passive documentation into <strong style={{ color: `hsl(${C})` }}>"Executable Knowledge"</strong> that sits inside the operator's workflow, active during the moment of need.</>}
       implementations={[
         { title: "Incident Response Orchestration", desc: "Step-by-step guided resolution with real-time context injection" },
         { title: "Dynamic Capacity Planning", desc: "Scenario simulation with codified operational constraints" },
@@ -998,13 +996,13 @@ function SlideValueTree() {
             <br /><span style={{ color: `hsl(${GOLD})` }}>The Value Tree</span>
           </h2>
           <p className="mb-6" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-            Each department doesn't operate in isolation. When implemented together, they form a <strong style={{ color: `hsl(${C})` }}>unified value tree</strong> — from top-level strategic vision down to agentic initiative execution.
+            Each department doesn't operate in isolation. When implemented together, they form a <strong style={{ color: `hsl(${C})` }}>unified value tree</strong>, from top-level strategic vision down to agentic initiative execution.
           </p>
 
           <div className="rounded-xl p-5 mb-4" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.2)` }}>
             <p className="font-bold mb-2" style={{ fontSize: 19, color: `hsl(${GOLD})` }}>Why This Matters</p>
             <p style={{ fontSize: 18, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-              This is how you turn an AI-native organization into a <strong style={{ color: `hsl(${C})` }}>governed operating model</strong> — where improvement, transformation, and innovation initiatives are traceable from boardroom decisions to frontline execution.
+              This is how you turn an AI-native organization into a <strong style={{ color: `hsl(${C})` }}>governed operating model</strong> where improvement, transformation, and innovation initiatives are traceable from boardroom decisions to frontline execution.
             </p>
           </div>
         </div>
@@ -1076,13 +1074,13 @@ function SlideAnchor() {
           </h2>
           <p className="mb-8" style={{ fontSize: 23, color: `hsl(${MUT})`, lineHeight: 1.6 }}>
             Standard AI tools operate as "black boxes." You cannot effectively teach Context Engineering when the
-            system hides how memory and organizational rules are applied. <strong style={{ color: `hsl(${C})` }}>LIZA OS</strong> is purpose-built to make this transparent — every rule, every context layer, every decision is visible and governable.
+            system hides how memory and organizational rules are applied. <strong style={{ color: `hsl(${C})` }}>LIZA OS</strong> is purpose-built to make this transparent. Every rule, every context layer, every decision is visible and governable.
           </p>
 
           <div className="space-y-4">
             {[
               "Teams see exactly how extracting their 'Mindflow' into a rule changes AI behavior instantly",
-              "Managed, isolated environment — zero IT overhead, browser-based",
+              "Managed, isolated environment. Zero IT overhead, browser-based",
               "Everything built during training becomes your operational starter kit",
               "Architectural principles learned here transfer to any internal system",
             ].map((item, i) => (
@@ -1197,7 +1195,7 @@ function SlidePricing() {
     { color: ACCENT, title: "Sprint", duration: "3 Days", price: "€10,500",
       items: ["Foundation Keynote (1 day)", "1 Departmental Track (half-day)", "AI Maturity Diagnostic", "LIZA OS sandbox access"],
       label: "Ideal for leadership off-sites" },
-    { color: TEAL, title: "Program", duration: "5–7 Days", price: "€17,500 – €24,500",
+    { color: TEAL, title: "Program", duration: "5 to 7 Days", price: "€17,500 to €24,500",
       items: ["Full Foundation Curriculum", "3 Departmental Tracks", "Maturity Report + System Designer mapping", "LIZA OS environment + starter kit"],
       label: "Most popular", highlight: true },
     { color: GOLD, title: "Transformation", duration: "Quarterly Retainer", price: "Custom",
@@ -1274,12 +1272,12 @@ function SlideProofPoint() {
               Case: European Professional Services Firm
             </p>
             <p className="font-black mb-5" style={{ fontSize: 28, color: `hsl(${C})` }}>
-              "We went from 4 hours of proposal prep to 45 minutes — and the quality improved."
+              "We went from 4 hours of proposal prep to 45 minutes, and the quality improved."
             </p>
             <p style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.6, marginBottom: 20 }}>
               A mid-market consulting firm deployed the Sales & GTM track.
               Within 3 weeks, the team had codified their top partner's deal qualification methodology
-              into a persistent Context Bundle — eliminating the "blank page" problem for junior consultants.
+              into a persistent Context Bundle, eliminating the "blank page" problem for junior consultants.
             </p>
 
             <div className="grid grid-cols-3 gap-4">
@@ -1319,10 +1317,7 @@ function SlideProofPoint() {
                 <p className="font-bold mb-3" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>Consulting Clients</p>
                 <div className="space-y-2">
                   {[
-                    { name: "alleys.ai", desc: "AI strategy & operational consulting" },
-                    { name: "Egon Zehnder", desc: "Executive search & leadership advisory" },
-                    { name: "Emarsys (SAP)", desc: "Marketing platform — AI workflow design" },
-                    { name: "Intran", desc: "Digital marketing agency — process automation" },
+                    { name: "aliz.ai", desc: "Data & AI professional services firm" },
                   ].map(({ name, desc }) => (
                     <div key={name} className="flex items-center gap-3">
                       <Briefcase size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
@@ -1332,6 +1327,10 @@ function SlideProofPoint() {
                       </div>
                     </div>
                   ))}
+                  <div className="flex items-center gap-3 mt-2">
+                    <Lock size={18} style={{ color: `hsl(${MUT} / 0.5)`, flexShrink: 0 }} />
+                    <p style={{ fontSize: 15, color: `hsl(${MUT})`, fontStyle: "italic" }}>Additional clients: Confidential</p>
+                  </div>
                 </div>
               </div>
             </div>
