@@ -1220,21 +1220,41 @@ function SlideProofPoint() {
 
           <div className="flex flex-col gap-5">
             <div className="rounded-2xl border p-8" style={{ background: BG2, borderColor: `hsl(${ACCENT} / 0.2)` }}>
-              <p className="font-bold mb-4" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>Delivered At</p>
-              <div className="space-y-3">
+              <p className="font-bold mb-3" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>Executive Education</p>
+              <div className="space-y-2">
                 {[
                   { name: "BGE Budapest", desc: "Executive AI Transformation Program" },
                   { name: "University of Vienna", desc: "Guest Lecture Series: AI-Native Organizations" },
                   { name: "University of Lviv", desc: "Applied AI & Knowledge Engineering Workshop" },
                 ].map(({ name, desc }) => (
                   <div key={name} className="flex items-center gap-3">
-                    <Award size={20} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
+                    <GraduationCap size={18} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
                     <div>
-                      <p className="font-bold" style={{ fontSize: 19, color: `hsl(${C})` }}>{name}</p>
-                      <p style={{ fontSize: 16, color: `hsl(${MUT})` }}>{desc}</p>
+                      <p className="font-bold" style={{ fontSize: 17, color: `hsl(${C})` }}>{name}</p>
+                      <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>{desc}</p>
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="mt-4 pt-4" style={{ borderTop: `1px solid hsl(${TEAL} / 0.2)` }}>
+                <p className="font-bold mb-3" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>Consulting Clients</p>
+                <div className="space-y-2">
+                  {[
+                    { name: "alleys.ai", desc: "AI strategy & operational consulting" },
+                    { name: "Egon Zehnder", desc: "Executive search & leadership advisory" },
+                    { name: "Emarsys (SAP)", desc: "Marketing platform — AI workflow design" },
+                    { name: "Intran", desc: "Digital marketing agency — process automation" },
+                  ].map(({ name, desc }) => (
+                    <div key={name} className="flex items-center gap-3">
+                      <Briefcase size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+                      <div>
+                        <p className="font-bold" style={{ fontSize: 17, color: `hsl(${C})` }}>{name}</p>
+                        <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>{desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
