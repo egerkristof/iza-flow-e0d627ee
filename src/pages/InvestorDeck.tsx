@@ -639,8 +639,8 @@ function Slide09CategoryMap() {
               {/* Ring labels */}
               <text x="310" y="30" textAnchor="middle" fill={`hsl(${RED})`} fontSize="20" fontWeight="700">AI Tools</text>
               <text x="310" y="50" textAnchor="middle" fill={MUTED} fontSize="14">They generate outputs</text>
-              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Document / RAG Platforms</text>
-              <text x="310" y="146" textAnchor="middle" fill={MUTED} fontSize="13">They store information</text>
+              <text x="310" y="128" textAnchor="middle" fill={`hsl(${GOLD})`} fontSize="18" fontWeight="700">Document / Workflow Platforms</text>
+              <text x="310" y="146" textAnchor="middle" fill={MUTED} fontSize="13">They store &amp; automate</text>
 
               {/* AI Tool names - between outer and middle rings */}
               <text x="80" y="160" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">ChatGPT</text>
@@ -648,11 +648,11 @@ function Slide09CategoryMap() {
               <text x="80" y="490" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Gemini</text>
               <text x="480" y="490" fill={`hsl(${RED} / 0.6)`} fontSize="18" fontWeight="600">Claude</text>
 
-              {/* Document Platform names - inside middle ring */}
-              <text x="170" y="270" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Notion</text>
-              <text x="400" y="270" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Confluence</text>
-              <text x="175" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Guru</text>
-              <text x="430" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Glean</text>
+              {/* Document/Workflow Platform names - inside middle ring */}
+              <text x="155" y="260" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Notion</text>
+              <text x="400" y="260" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Confluence</text>
+              <text x="145" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Interloom</text>
+              <text x="420" y="370" fill={`hsl(${GOLD} / 0.7)`} fontSize="17" fontWeight="600">Glean</text>
             </svg>
           </div>
 
@@ -660,8 +660,8 @@ function Slide09CategoryMap() {
           <div className="flex flex-col gap-6 ml-16 max-w-[500px]">
             {[
               { ring: "AI Tools", desc: "Generate text, code, images. No organizational context. No consistency. No governance.", color: RED },
-              { ring: "Document / RAG Platforms", desc: "Store documents and search them. Static. Don't drive execution. Don't learn from usage.", color: GOLD },
-              { ring: "LIZA OS", desc: "The management layer. Makes organizational knowledge executable. Governs AI usage. Learns from every interaction. Compounds over time.", color: ACCENT },
+              { ring: "Document / Workflow Platforms", desc: "Store documents, automate repeatable processes. Static knowledge. Don't govern judgment. Don't learn from the messy stuff.", color: GOLD },
+              { ring: "LIZA OS", desc: "The management layer. Makes organizational knowledge executable. Governs the messy reality — judgment calls, trade-offs, cross-functional alignment. Compounds over time.", color: ACCENT },
             ].map(({ ring, desc, color }) => (
               <div key={ring} className="flex gap-4">
                 <div className="w-4 h-4 rounded-full mt-1.5 shrink-0" style={{ background: `hsl(${color})` }} />
@@ -687,13 +687,20 @@ function Slide10MarketValidation() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <Tag label="Market Validation" color={GREEN} />
-        <h2 className="font-bold mb-8" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
-          $80M+ invested into our category.<br />
-          <span style={{ color: `hsl(${GREEN})` }}>Three approaches. One missing layer.</span>
+        <h2 className="font-bold mb-6" style={{ fontSize: 60, color: TEXT, lineHeight: 1.1 }}>
+          $96M+ invested into our category.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>Four approaches. One missing layer.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-5 mb-6">
+        <div className="grid grid-cols-4 gap-4 mb-5">
           {[
+            {
+              name: "Interloom", funding: "$16.5M", investors: "Air Street, DN Capital, BEK",
+              color: SUBTLE, approach: "Back-Office Automation",
+              desc: "Context graphs + procedures for repeatable ops. Facility mgmt, insurance, banking, ITSM.",
+              domain: "Complicated (Repeatable)",
+              example: "\"Process this work order\"",
+            },
             {
               name: "Edra.ai", funding: "$30M", investors: "Sequoia, 8VC, HubSpot",
               color: SUBTLE, approach: "Process Mining",
@@ -716,18 +723,18 @@ function Slide10MarketValidation() {
               example: "\"Why alignment breaks\"",
             },
           ].map(({ name, funding, investors, color, approach, desc, domain, example }) => (
-            <div key={name} className="rounded-2xl border p-6 flex flex-col"
+            <div key={name} className="rounded-2xl border p-5 flex flex-col"
               style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.04)` }}>
-              <div className="flex items-center justify-between mb-3">
-                <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{name}</p>
-                <span className="font-black" style={{ fontSize: 22, color: `hsl(${color})` }}>{funding}</span>
+              <div className="flex items-center justify-between mb-2">
+                <p className="font-bold" style={{ fontSize: 21, color: TEXT }}>{name}</p>
+                <span className="font-black" style={{ fontSize: 19, color: `hsl(${color})` }}>{funding}</span>
               </div>
-              <p style={{ fontSize: 15, color: `hsl(${color})`, marginBottom: 8 }}>{investors}</p>
-              <p className="font-semibold mb-2" style={{ fontSize: 17, color: TEXT }}>{approach}</p>
-              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45, flex: 1 }}>{desc}</p>
-              <div className="mt-4 pt-3 border-t" style={{ borderColor: `hsl(${color} / 0.15)` }}>
-                <p style={{ fontSize: 14, color: SUBTLE }}>{domain}</p>
-                <p className="italic mt-1" style={{ fontSize: 15, color: `hsl(${color})` }}>{example}</p>
+              <p style={{ fontSize: 13, color: `hsl(${color})`, marginBottom: 6 }}>{investors}</p>
+              <p className="font-semibold mb-1" style={{ fontSize: 15, color: TEXT }}>{approach}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.4, flex: 1 }}>{desc}</p>
+              <div className="mt-3 pt-2 border-t" style={{ borderColor: `hsl(${color} / 0.15)` }}>
+                <p style={{ fontSize: 12, color: SUBTLE }}>{domain}</p>
+                <p className="italic mt-1" style={{ fontSize: 13, color: `hsl(${color})` }}>{example}</p>
               </div>
             </div>
           ))}
@@ -741,13 +748,13 @@ function Slide10MarketValidation() {
               <p className="font-black" style={{ fontSize: 32, color: `hsl(${ACCENT})` }}>LIZA OS</p>
               <span className="font-semibold px-3 py-1 rounded-full" style={{ fontSize: 14, background: `hsl(${ACCENT} / 0.12)`, color: `hsl(${ACCENT})` }}>The Governance Layer</span>
             </div>
-            <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>
-              Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
-              <strong style={{ color: TEXT }}> Only LIZA governs what should happen next</strong>: expert-validated, continuously updated, enforced in every AI interaction.
+            <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.55 }}>
+              Interloom automates the predictable. Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
+              <strong style={{ color: TEXT }}> Only LIZA governs the messy reality</strong> — the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
-            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$80M+</p>
+            <p className="font-black" style={{ fontSize: 40, color: `hsl(${GREEN})` }}>$96M+</p>
             <p style={{ fontSize: 16, color: MUTED }}>Category investment</p>
             <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>in last 12 months</p>
           </div>
