@@ -106,6 +106,7 @@ const App = () => (
             <Route path="/investor-seed" element={<SeedInvestorDeck />} />
             <Route path="/sales" element={<ConsultingDeck />} />
             <Route path="/transform" element={<ConsultingTrainingDeck />} />
+            <Route path="/pharma" element={<PharmaDeck />} />
             <Route path="/linkedin-card" element={<LinkedInImageCard />} />
 
             {/* App */}
