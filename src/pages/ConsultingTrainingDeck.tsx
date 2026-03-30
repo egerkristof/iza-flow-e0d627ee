@@ -978,6 +978,84 @@ function SlideTrackHR() {
   );
 }
 
+function SlideValueTree() {
+  const departments = [
+    { icon: <Briefcase size={20} />, color: ACCENT, title: "Sales & GTM", output: "Deal intelligence, account playbooks" },
+    { icon: <Code size={20} />, color: TEAL, title: "Product & Eng", output: "ALM governance, architectural intent" },
+    { icon: <Scale size={20} />, color: PURPLE, title: "Finance & Risk", output: "Guardrail agents, compliance frameworks" },
+    { icon: <Factory size={20} />, color: RED, title: "Operations", output: "Executable SOPs, incident protocols" },
+    { icon: <Users size={20} />, color: TEAL, title: "HR & Talent", output: "Cultural DNA, onboarding systems" },
+  ];
+
+  return (
+    <div className="w-full h-full flex relative" style={{ background: BG }}>
+      <GridBg />
+      <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full">
+        <div className="flex-1">
+          <Chip color={GOLD}>The Bigger Picture</Chip>
+          <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.1 }}>
+            From Vision to Execution:
+            <br /><span style={{ color: `hsl(${GOLD})` }}>The Value Tree</span>
+          </h2>
+          <p className="mb-6" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
+            Each department doesn't operate in isolation. When implemented together, they form a <strong style={{ color: `hsl(${C})` }}>unified value tree</strong> — from top-level strategic vision down to agentic initiative execution.
+          </p>
+
+          <div className="rounded-xl p-5 mb-4" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.2)` }}>
+            <p className="font-bold mb-2" style={{ fontSize: 19, color: `hsl(${GOLD})` }}>Why This Matters</p>
+            <p style={{ fontSize: 18, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
+              This is how you turn an AI-native organization into a <strong style={{ color: `hsl(${C})` }}>governed operating model</strong> — where improvement, transformation, and innovation initiatives are traceable from boardroom decisions to frontline execution.
+            </p>
+          </div>
+        </div>
+
+        <div className="w-[560px] flex-shrink-0">
+          <div className="rounded-2xl border p-7 relative overflow-hidden" style={{ background: BG2, borderColor: `hsl(${GOLD} / 0.3)` }}>
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `hsl(${GOLD})` }} />
+
+            {/* Vision */}
+            <div className="rounded-xl p-4 mb-4 text-center" style={{ background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+              <Landmark size={24} style={{ color: `hsl(${GOLD})`, margin: "0 auto 8px" }} />
+              <p className="font-black" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>Strategic Vision & Leadership</p>
+              <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>Executive Control Tower</p>
+            </div>
+
+            <div className="flex justify-center mb-3">
+              <ArrowDown size={20} style={{ color: `hsl(${GOLD} / 0.5)` }} />
+            </div>
+
+            {/* Departments */}
+            <div className="space-y-2 mb-4">
+              {departments.map(({ icon, color, title, output }) => (
+                <div key={title} className="flex items-center gap-3 rounded-lg px-4 py-2" style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.15)` }}>
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
+                    style={{ background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold" style={{ fontSize: 15, color: `hsl(${C})` }}>{title}</p>
+                    <p style={{ fontSize: 13, color: `hsl(${MUT})` }}>{output}</p>
+                  </div>
+                  <ArrowRight size={14} style={{ color: `hsl(${color} / 0.4)`, flexShrink: 0 }} />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-center mb-3">
+              <ArrowDown size={20} style={{ color: `hsl(${TEAL} / 0.5)` }} />
+            </div>
+
+            {/* Execution */}
+            <div className="rounded-xl p-4 text-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
+              <p className="font-bold" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>Governed Agentic Execution</p>
+              <p style={{ fontSize: 14, color: `hsl(${MUT})` }}>Traceable from vision → initiative → workflow → outcome</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Bar />
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // PART 4: PLATFORM & DELIVERABLES
 // ═══════════════════════════════════════════════════════════════════════════════
