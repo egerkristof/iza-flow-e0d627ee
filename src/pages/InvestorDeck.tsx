@@ -660,8 +660,8 @@ function Slide09CategoryMap() {
           <div className="flex flex-col gap-6 ml-16 max-w-[500px]">
             {[
               { ring: "AI Tools", desc: "Generate text, code, images. No organizational context. No consistency. No governance.", color: RED },
-              { ring: "Document / RAG Platforms", desc: "Store documents and search them. Static. Don't drive execution. Don't learn from usage.", color: GOLD },
-              { ring: "LIZA OS", desc: "The management layer. Makes organizational knowledge executable. Governs AI usage. Learns from every interaction. Compounds over time.", color: ACCENT },
+              { ring: "Document / Workflow Platforms", desc: "Store documents, automate repeatable processes. Static knowledge. Don't govern judgment. Don't learn from the messy stuff.", color: GOLD },
+              { ring: "LIZA OS", desc: "The management layer. Makes organizational knowledge executable. Governs the messy reality — judgment calls, trade-offs, cross-functional alignment. Compounds over time.", color: ACCENT },
             ].map(({ ring, desc, color }) => (
               <div key={ring} className="flex gap-4">
                 <div className="w-4 h-4 rounded-full mt-1.5 shrink-0" style={{ background: `hsl(${color})` }} />
