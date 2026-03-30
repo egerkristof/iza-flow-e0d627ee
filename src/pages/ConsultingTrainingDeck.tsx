@@ -1339,7 +1339,7 @@ function SlideProofPoint() {
               <p className="font-bold mb-4" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>By the Numbers</p>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { n: "200+", label: "Consulting engagements" },
+                  { n: "15+", label: "Clients (named and anonymous)" },
                   { n: "15+", label: "Years transformation" },
                   { n: "8", label: "Countries" },
                   { n: "3", label: "University programs" },

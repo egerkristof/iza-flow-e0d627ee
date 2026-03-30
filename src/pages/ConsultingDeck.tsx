@@ -658,7 +658,7 @@ function Slide10Who() {
             <span style={{ color: `hsl(${TEAL})` }}> industry leaders.</span>
           </h2>
           <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 560 }}>
-            15 years building data and AI solutions. 200+ consulting engagements across 8 countries. We lived the Standards Gap before we built the fix.
+            15 years building data and AI solutions. 15+ clients across 8 countries. We lived the Standards Gap before we built the fix.
           </p>
         </div>
 
