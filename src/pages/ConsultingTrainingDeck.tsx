@@ -1335,7 +1335,7 @@ const SLIDES = [
   { id: 11, title: "Module 4: Safe Infrastructure", component: <SlideModule4 /> },
   { id: 12, title: "Module 5: AI-Native Business", component: <SlideModule5 /> },
   // Part 3: Departmental Consulting
-  { id: 13, title: "Part 3: Consulting", component: <PartDivider part="Part 3" title="Departmental Consulting" color={GOLD} /> },
+  { id: 13, title: "Part 3: Consulting", component: <PartDivider part="Part 3 · Apply" title="Departmental Consulting" color={GOLD} /> },
   { id: 14, title: "Department Tracks", component: <SlideDepartmentGrid /> },
   { id: 15, title: "Track: Sales & GTM", component: <SlideTrackSales /> },
   { id: 16, title: "Track: Product & Eng", component: <SlideTrackProduct /> },
