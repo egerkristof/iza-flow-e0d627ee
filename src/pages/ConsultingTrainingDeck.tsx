@@ -419,9 +419,7 @@ function Slide04Transformation() {
           80% Human Mindset.{" "}
           <span style={{ color: `hsl(${ACCENT})` }}>20% Tooling.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 24, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-          Not everyone becomes a System Designer. The AI-native workforce is a <strong style={{ color: `hsl(${C})` }}>spectrum</strong> — and the real leadership challenge is building the right mix.
-        </p>
+        <div className="mb-10" style={{ height: 8 }} />
 
         {/* 3-tier spectrum */}
         <div className="grid grid-cols-3 gap-6 mb-8">
