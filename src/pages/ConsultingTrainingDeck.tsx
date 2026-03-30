@@ -176,7 +176,7 @@ function ModuleDeepDive({ chipColor, moduleNum, title, subtitle, audience, conce
       <GridBg />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full">
         <div className="flex-1">
-          <Chip color={chipColor}>Module {moduleNum} Deep Dive</Chip>
+          <Chip color={chipColor}>Training Module {moduleNum}</Chip>
           <h2 className="font-black mt-5 mb-2" style={{ fontSize: 52, color: `hsl(${C})`, lineHeight: 1.1 }}>
             {title}:
             <br /><span style={{ color: `hsl(${chipColor})` }}>{subtitle}</span>
