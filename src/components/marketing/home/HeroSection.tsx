@@ -4,7 +4,7 @@ import { CAL_URL } from "./shared";
 
 const PROOF_POINTS = [
   "15 years of methodology refinement",
-  "200+ consulting engagements",
+  "15+ clients across 8 countries",
   "8 countries",
 ];
 
