@@ -988,6 +988,10 @@ export default function AdminPage() {
             </>
           )}
 
+          {activeView === "team-builder" && (
+            <TeamBuilder results={results} onRefresh={() => void loadData()} />
+          )}
+
           {activeView === "consulting" && <ConsultingReference />}
 
           {activeView === "client-prep" && <PersonalizedConsulting results={results} />}
