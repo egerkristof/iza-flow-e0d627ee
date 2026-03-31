@@ -492,13 +492,10 @@ function Act1_Architecture() {
       <ActBar activeAct={1} slideLabel="THE GxP OPERATING SYSTEM" />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px] pt-[90px]">
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: `hsl(${C})`, lineHeight: 1.05 }}>
-          LIZA: The <span style={{ color: `hsl(${ACCENT})` }}>Context Engine</span> Behind Human-Centred AI
+          LIZA: The <span style={{ color: `hsl(${ACCENT})` }}>Operating System</span> for AI-Native MLM
         </h2>
-        <p className="mb-4" style={{ fontSize: 19, color: `hsl(${MUT})`, maxWidth: 900, lineHeight: 1.55 }}>
-          Software development has ALM to govern how code moves from design to production. LIZA does the same for the medicine lifecycle: it feeds AI the right standards, the right procedures, and the right organisational memory so every output is not only fast, but accurate, traceable, and fully governed.
-        </p>
-        <p className="mb-6" style={{ fontSize: 16, color: `hsl(${ACCENT})`, maxWidth: 900, lineHeight: 1.5, fontWeight: 600 }}>
-          With LIZA, the work your teams already do well becomes AI-accelerated, without losing the rigour, traceability, or human oversight that regulators require.
+        <p className="mb-6" style={{ fontSize: 19, color: `hsl(${ACCENT})`, maxWidth: 900, lineHeight: 1.5, fontWeight: 600 }}>
+          Your teams keep their expertise. AI gives them speed. LIZA makes sure nothing falls through the cracks.
         </p>
 
         {/* Architecture flow */}
