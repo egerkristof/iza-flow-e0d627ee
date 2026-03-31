@@ -117,7 +117,7 @@ export default function IndustryPharmaPage() {
       <section className="pb-16 px-6">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs font-black tracking-[0.2em] uppercase text-center mb-6 text-primary">
-            The Medicine Lifecycle
+            The Regulated Product Lifecycle
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {LIFECYCLE.map((stage, i) => (
