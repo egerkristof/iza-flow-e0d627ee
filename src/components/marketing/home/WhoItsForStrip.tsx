@@ -9,8 +9,9 @@ const FUNCTIONS = [
 ];
 
 const INDUSTRIES = [
-  { icon: <Pill className="w-4 h-4" />, label: "Pharma & Life Sciences" },
-  { icon: <Building2 className="w-4 h-4" />, label: "Financial Services" },
+  { icon: <Pill className="w-4 h-4" />, label: "Pharma & Biotech" },
+  { icon: <Building2 className="w-4 h-4" />, label: "Lab Governance" },
+  { icon: <Building2 className="w-4 h-4" />, label: "Food Safety" },
   { icon: <Briefcase className="w-4 h-4" />, label: "Professional Services" },
 ];
 

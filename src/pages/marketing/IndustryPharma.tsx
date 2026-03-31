@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight, Shield, Pill, FileCheck, Activity, CheckCircle2,
   Microscope, FlaskConical, Truck, Factory, HeartPulse, Globe,
-  BookOpen, Eye, RefreshCw, Zap, AlertTriangle, Clock
+  BookOpen, Eye, RefreshCw, Zap, AlertTriangle, Clock,
+  Beaker, Apple, Stethoscope
 } from "lucide-react";
 import { SectionTag, CAL_URL } from "@/components/marketing/home/shared";
 
@@ -70,7 +71,36 @@ const HOW_IT_WORKS = [
 
 /* ── Compliance badges ───────────────────────────────────────────────────── */
 
-const COMPLIANCE = ["GAMP 5 Category 1", "21 CFR Part 11", "Annex 11", "ALCOA+ Principles", "EU GMP", "ICH Q10"];
+const COMPLIANCE = ["GAMP 5 Category 1", "21 CFR Part 11", "Annex 11", "ALCOA+ Principles", "EU GMP", "ICH Q10", "ISO 17025", "GLP"];
+
+/* ── Adjacent verticals ──────────────────────────────────────────────────── */
+
+const ADJACENT_VERTICALS = [
+  {
+    icon: <Pill className="w-5 h-5" />,
+    title: "Pharma & Biotech",
+    desc: "Medicine lifecycle from discovery through pharmacovigilance. GMP, GCP, GVP compliance.",
+    tags: ["GMP", "21 CFR Part 11", "GAMP 5"],
+  },
+  {
+    icon: <Apple className="w-5 h-5" />,
+    title: "Food Safety & Consumer Health",
+    desc: "Quality assurance across manufacturing, testing, and supply chain. HACCP and GMP governed.",
+    tags: ["GMP", "ISO 22000", "HACCP"],
+  },
+  {
+    icon: <FlaskConical className="w-5 h-5" />,
+    title: "Lab Governance & Testing",
+    desc: "Method validation, CAPA workflows, and accreditation readiness for analytical and clinical labs.",
+    tags: ["ISO 17025", "GLP", "LIMS"],
+  },
+  {
+    icon: <Stethoscope className="w-5 h-5" />,
+    title: "Medical Devices",
+    desc: "Design controls, risk management, and post-market surveillance governed by quality systems.",
+    tags: ["ISO 13485", "FDA QSR", "MDR"],
+  },
+];
 
 export default function IndustryPharmaPage() {
   return (
@@ -78,15 +108,15 @@ export default function IndustryPharmaPage() {
       {/* Hero */}
       <section className="pt-16 pb-14 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <SectionTag label="Pharma & Life Sciences" icon={<Pill className="w-3.5 h-3.5" />} />
+          <SectionTag label="Regulated Science & Manufacturing" icon={<Pill className="w-3.5 h-3.5" />} />
           <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-[1.1]">
             The Operating System for
             <br />
-            <span className="text-primary">Medicine Lifecycle Management.</span>
+            <span className="text-primary">Regulated Lifecycle Management.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
-            Your teams keep their expertise. AI gives them speed. LIZA makes sure nothing falls 
-            through the cracks — from R&D through post-market surveillance.
+            Whether it's pharma, food safety, or lab governance — your teams keep their expertise. 
+            AI gives them speed. LIZA makes sure nothing falls through the cracks.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
@@ -116,7 +146,7 @@ export default function IndustryPharmaPage() {
       <section className="pb-16 px-6">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs font-black tracking-[0.2em] uppercase text-center mb-6 text-primary">
-            The Medicine Lifecycle
+            The Regulated Product Lifecycle
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {LIFECYCLE.map((stage, i) => (
@@ -134,7 +164,7 @@ export default function IndustryPharmaPage() {
             ))}
           </div>
           <p className="text-center text-xs text-muted-foreground mt-4">
-            LIZA governs AI execution across every stage — not just one.
+            LIZA governs AI execution across every stage — pharma, food safety, clinical labs, and beyond.
           </p>
         </div>
       </section>
@@ -143,7 +173,7 @@ export default function IndustryPharmaPage() {
       <section className="pb-16 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 text-foreground">
-            Where AI breaks pharma without governance
+            Where AI breaks regulated operations without governance
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {PAIN_POINTS.map((p, i) => (
@@ -170,10 +200,10 @@ export default function IndustryPharmaPage() {
       <section className="pb-16 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-foreground">
-            How LIZA governs AI in pharma
+            How LIZA governs AI across regulated lifecycles
           </h2>
           <p className="text-sm text-muted-foreground text-center mb-10 max-w-lg mx-auto">
-            The same four-step system of reasoning — built for GxP compliance.
+            The same four-step system of reasoning — built for GxP, ISO, and GLP compliance.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {HOW_IT_WORKS.map((step) => (
@@ -209,7 +239,7 @@ export default function IndustryPharmaPage() {
               Designed for compliance, not certified
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
-              LIZA is architected around pharma standards. Your validated environment stays yours — LIZA governs the AI layer on top.
+              LIZA is architected around regulated industry standards. Your validated environment stays yours — LIZA governs the AI layer on top.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {COMPLIANCE.map((c) => (
@@ -223,6 +253,49 @@ export default function IndustryPharmaPage() {
                 </span>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* The Pattern Repeats */}
+      <section className="pb-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-foreground">
+            The pattern repeats across regulated industries
+          </h2>
+          <p className="text-sm text-muted-foreground text-center mb-8 max-w-lg mx-auto">
+            Wherever standards meet execution, LIZA governs the AI in between. Pharma is our deepest vertical, but the lifecycle architecture is the same.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {ADJACENT_VERTICALS.map((v) => (
+              <div
+                key={v.title}
+                className="rounded-2xl border p-6"
+                style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div
+                    className="w-9 h-9 rounded-lg flex items-center justify-center"
+                    style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
+                  >
+                    {v.icon}
+                  </div>
+                  <h3 className="font-bold text-foreground">{v.title}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-3">{v.desc}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {v.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[11px] font-medium px-2 py-0.5 rounded-md"
+                      style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

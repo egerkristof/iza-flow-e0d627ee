@@ -137,20 +137,20 @@ function SlideTitle() {
               style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
               <Pill size={28} style={{ color: `hsl(${ACCENT})` }} />
             </div>
-            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>LIZA OS FOR PHARMA</span>
+             <span className="font-bold tracking-[0.15em]" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>LIZA OS FOR REGULATED LIFECYCLES</span>
           </div>
 
           <h1 className="font-black mb-6" style={{ fontSize: 64, color: "hsl(0 0% 100%)", lineHeight: 1.0 }}>
             The Operating System
             <br /><span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              for Medicine Lifecycle
+              for Regulated Lifecycle
             </span>
             <br /><span style={{ fontSize: 52, color: "hsl(0 0% 100% / 0.7)" }}>Management</span>
           </h1>
 
           <p className="mb-10" style={{ fontSize: 22, color: `hsl(0 0% 100% / 0.6)`, lineHeight: 1.55, maxWidth: 750 }}>
-            From research to release, encode the judgment that makes
-            <br />good practice <em>actually</em> practiced. Across every team, site, and function.
+            From research to release, from lab to factory floor: encode the judgment
+            <br />that makes good practice <em>actually</em> practiced. Across every team, site, and function.
           </p>
 
           <div className="flex gap-6">
@@ -1186,6 +1186,89 @@ function Act3_DriftOversight() {
 
 const CAL_URL = "https://cal.com/liza-os/20min";
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// THE PATTERN REPEATS - Adjacent Verticals
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Act3_PatternRepeats() {
+  const verticals = [
+    { icon: <Pill size={22} />, title: "Pharma & Biotech", desc: "Medicine lifecycle from discovery through pharmacovigilance. GMP, GCP, GVP.", tags: ["GMP", "21 CFR Part 11", "GAMP 5"], color: ACCENT },
+    { icon: <Factory size={22} />, title: "Food Safety & Consumer Health", desc: "Quality assurance across manufacturing, testing, and supply chain.", tags: ["GMP", "ISO 22000", "HACCP"], color: TEAL },
+    { icon: <FlaskConical size={22} />, title: "Lab Governance & Testing", desc: "Method validation, CAPA workflows, and accreditation readiness.", tags: ["ISO 17025", "GLP", "LIMS"], color: GOLD },
+    { icon: <HeartPulse size={22} />, title: "Medical Devices", desc: "Design controls, risk management, and post-market surveillance.", tags: ["ISO 13485", "FDA QSR", "MDR"], color: CORAL },
+  ];
+  return (
+    <div className="w-full h-full flex relative" style={{ background: BG }}>
+      <GridBg />
+      <ActBar activeAct={3} slideLabel="THE PATTERN REPEATS" />
+      <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[90px]">
+        <div className="flex-1">
+          <h2 className="font-black mb-4" style={{ fontSize: 48, color: `hsl(${C})`, lineHeight: 1.05 }}>
+            The pattern repeats
+            <br /><span style={{ color: `hsl(${ACCENT})` }}>across every regulated lifecycle.</span>
+          </h2>
+          <p className="mb-8" style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55, maxWidth: 700 }}>
+            Pharma is our deepest vertical. But every industry with documented standards, expert judgment, and audit requirements shares the same architecture. The Capture, Govern, Execute, Learn loop is universal.
+          </p>
+
+          <div className="grid grid-cols-2 gap-5">
+            {verticals.map(v => (
+              <div key={v.title} className="rounded-xl p-5" style={{ background: `hsl(${v.color} / 0.04)`, border: `1px solid hsl(${v.color} / 0.15)` }}>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center"
+                    style={{ background: `hsl(${v.color} / 0.12)`, color: `hsl(${v.color})` }}>
+                    {v.icon}
+                  </div>
+                  <h3 className="font-bold" style={{ fontSize: 18, color: `hsl(${C})` }}>{v.title}</h3>
+                </div>
+                <p className="mb-3" style={{ fontSize: 14, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{v.desc}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {v.tags.map(tag => (
+                    <span key={tag} className="font-semibold px-2 py-0.5 rounded-md"
+                      style={{ fontSize: 11, background: `hsl(${v.color} / 0.08)`, color: `hsl(${v.color})` }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="w-[340px] flex-shrink-0 rounded-2xl p-6" style={{ background: `hsl(${DARK})` }}>
+          <p className="font-bold mb-4" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>One architecture, many lifecycles</p>
+          <p className="mb-5" style={{ fontSize: 15, color: `hsl(0 0% 100% / 0.65)`, lineHeight: 1.55 }}>
+            If your industry has documented standards that require consistent expert execution, LIZA governs the AI layer between the standard and the work.
+          </p>
+          <div className="space-y-3">
+            {[
+              { label: "Standards exist", desc: "SOPs, ISO frameworks, GxP guidelines" },
+              { label: "Judgment varies", desc: "Expert interpretation differs across teams" },
+              { label: "Audits happen", desc: "External or internal compliance verification" },
+              { label: "Knowledge ages", desc: "Tribal expertise retires before it transfers" },
+            ].map((item, i) => (
+              <div key={item.label} className="flex items-start gap-3 px-3 py-2.5 rounded-lg"
+                style={{ background: `hsl(${ACCENT} / 0.08)` }}>
+                <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})`, width: 20, flexShrink: 0 }}>{i + 1}</span>
+                <div>
+                  <p className="font-semibold" style={{ fontSize: 13, color: "hsl(0 0% 100%)" }}>{item.label}</p>
+                  <p style={{ fontSize: 12, color: `hsl(0 0% 100% / 0.5)` }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 rounded-lg p-3" style={{ background: `hsl(${TEAL} / 0.15)`, border: `1px solid hsl(${TEAL} / 0.3)` }}>
+            <p className="text-center font-semibold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
+              If these four are true, LIZA fits.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Bar />
+    </div>
+  );
+}
+
 function Act3_Summary() {
   return (
     <div className="w-full h-full flex relative" style={{ background: `hsl(${DARK})` }}>
@@ -1203,12 +1286,12 @@ function Act3_Summary() {
               style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
               <Pill size={24} style={{ color: `hsl(${ACCENT})` }} />
             </div>
-            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>LIZA OS FOR PHARMA</span>
+            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>LIZA OS FOR REGULATED LIFECYCLES</span>
           </div>
 
           <h2 className="font-black mb-8" style={{ fontSize: 52, color: "hsl(0 0% 100%)", lineHeight: 1.05 }}>
             The operating system
-            <br />for medicine lifecycle
+            <br />for regulated lifecycle
             <br /><span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>management.</span>
           </h2>
 
@@ -1311,6 +1394,7 @@ const SLIDES = [
   { id: "act3-divider", title: "Act 3 · Operating Model",  component: <SectionDivider actNum={3} title="Operating Model" subtitle="From audit entry point to cross-functional medicine lifecycle management." icon={<Pill size={36} />} color={CORAL} /> },
   { id: "a3-expand",   title: "Expansion Map",             component: <Act3_ExpansionMap /> },
   { id: "a3-drift",    title: "Drift & Oversight",         component: <Act3_DriftOversight /> },
+  { id: "a3-pattern",  title: "The Pattern Repeats",       component: <Act3_PatternRepeats /> },
   { id: "a3-summary",  title: "Summary & CTA",            component: <Act3_Summary /> },
 ];
 
@@ -1448,7 +1532,7 @@ export default function PharmaPitchDeck() {
     return (
       <div className="min-h-screen p-8" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between mb-6 max-w-7xl mx-auto">
-          <h2 className="text-xl font-bold" style={{ color: `hsl(${C})` }}>All Slides: Pharma MLM Pitch</h2>
+          <h2 className="text-xl font-bold" style={{ color: `hsl(${C})` }}>All Slides: Regulated Lifecycle Pitch</h2>
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(false)} style={{ color: `hsl(${MUT})` }}>
             <X size={18} className="mr-1" /> Close
           </Button>
@@ -1476,7 +1560,7 @@ export default function PharmaPitchDeck() {
         style={{ background: CHROME_BG, borderColor: CHROME_BORDER }}>
         <div className="flex items-center gap-3">
           <span className="font-bold text-sm" style={{ color: `hsl(${ACCENT})` }}>LIZA OS</span>
-          <span className="text-xs" style={{ color: `hsl(${MUT})` }}>Medicine Lifecycle Management, 3-Act Deck ({SLIDES.length} slides)</span>
+          <span className="text-xs" style={{ color: `hsl(${MUT})` }}>Regulated Lifecycle Management, 3-Act Deck ({SLIDES.length} slides)</span>
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} style={{ color: `hsl(${MUT})` }}>

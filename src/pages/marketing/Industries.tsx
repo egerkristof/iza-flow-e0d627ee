@@ -7,11 +7,11 @@ const INDUSTRIES = [
   {
     slug: "pharma",
     icon: <Pill className="w-6 h-6" />,
-    title: "Pharma & Life Sciences",
-    lifecycle: "Medicine Lifecycle Management",
+    title: "Regulated Science & Manufacturing",
+    lifecycle: "Product & Quality Lifecycle Management",
     description:
-      "From R&D through post-market surveillance — govern AI across GxP-regulated processes without losing speed or traceability.",
-    tags: ["GAMP 5", "21 CFR Part 11", "ALCOA+"],
+      "From R&D through post-market surveillance, from lab governance to food safety — govern AI across GxP and ISO-regulated processes without losing speed or traceability.",
+    tags: ["GMP", "ISO 17025", "GLP", "GAMP 5", "21 CFR Part 11"],
     available: true,
   },
   {
