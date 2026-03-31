@@ -2,12 +2,12 @@ import { SectionTag, GradientText } from "./shared";
 import { X, Minus, Check, GitCompare } from "lucide-react";
 
 const ROWS = [
-  { feature: "Define & enforce execution standards", wikis: false, prompts: false, ai: "partial", liza: true },
-  { feature: "Standards update continuously from real work", wikis: false, prompts: false, ai: false, liza: true },
-  { feature: "Execution quality consistent across team", wikis: false, prompts: "partial", ai: false, liza: true },
-  { feature: "Knowledge persists across sessions & tools", wikis: true, prompts: "partial", ai: false, liza: true },
-  { feature: "Captures un-externalized expert judgment", wikis: false, prompts: false, ai: false, liza: true },
-  { feature: "Leadership visibility into execution quality", wikis: false, prompts: false, ai: false, liza: true },
+  { feature: "Turn domain expertise into executable capabilities", legacy: false, automation: "partial", km: false, liza: true },
+  { feature: "Governance enforced in execution, not just on paper", legacy: false, automation: false, km: false, liza: true },
+  { feature: "Departments self-sufficient, not dependent on central team", legacy: false, automation: "partial", km: false, liza: true },
+  { feature: "Cross-team learning compounds automatically", legacy: false, automation: false, km: "partial", liza: true },
+  { feature: "Measurable adoption across all workflows", legacy: "partial", automation: "partial", km: false, liza: true },
+  { feature: "Auditing happens in execution, not after", legacy: false, automation: false, km: false, liza: true },
 ];
 
 function CellIcon({ value }: { value: boolean | string }) {
@@ -23,10 +23,10 @@ export function CategoryComparison() {
     <section className="py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
-          <SectionTag label="Why existing tools fall short" icon={<GitCompare className="w-3 h-3" />} />
+          <SectionTag label="Why existing approaches fall short" icon={<GitCompare className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            You already have the tools.{" "}
-            <GradientText>You're missing the governance.</GradientText>
+            You have the tools.{" "}
+            <GradientText>You're missing the governance layer.</GradientText>
           </h2>
         </div>
 
@@ -41,26 +41,26 @@ export function CategoryComparison() {
           >
             <div className="px-3 md:px-4 py-3 text-muted-foreground" />
             <div className="px-2 md:px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-              <span className="hidden md:inline">Wikis & Docs</span>
-              <span className="md:hidden">Wikis</span>
+              <span className="hidden md:inline">Legacy Processes</span>
+              <span className="md:hidden">Legacy</span>
+              <span className="block text-[9px] md:text-[10px] font-normal normal-case opacity-60">SOPs, training, wikis</span>
+            </div>
+            <div className="px-2 md:px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
+              <span className="hidden md:inline">Automation Platforms</span>
+              <span className="md:hidden">Automation</span>
+              <span className="block text-[9px] md:text-[10px] font-normal normal-case opacity-60">Zapier, Make, n8n</span>
+            </div>
+            <div className="px-2 md:px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
+              <span className="hidden md:inline">Knowledge Mgmt</span>
+              <span className="md:hidden">KM</span>
               <span className="block text-[9px] md:text-[10px] font-normal normal-case opacity-60">Notion, Confluence</span>
-            </div>
-            <div className="px-2 md:px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-              <span className="hidden md:inline">Prompt Libraries</span>
-              <span className="md:hidden">Prompts</span>
-              <span className="block text-[9px] md:text-[10px] font-normal normal-case opacity-60">Custom GPTs, Templates</span>
-            </div>
-            <div className="px-2 md:px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-              <span className="hidden md:inline">AI Assistants</span>
-              <span className="md:hidden">AI Tools</span>
-              <span className="block text-[9px] md:text-[10px] font-normal normal-case opacity-60">ChatGPT, Claude</span>
             </div>
             <div
               className="px-2 md:px-4 py-3 text-center font-black border-l"
               style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.06)" }}
             >
               LIZA OS
-              <span className="block text-[9px] md:text-[10px] font-semibold normal-case opacity-70">Governance</span>
+              <span className="block text-[9px] md:text-[10px] font-semibold normal-case opacity-70">Governance layer</span>
             </div>
           </div>
 
@@ -73,13 +73,13 @@ export function CategoryComparison() {
             >
               <div className="px-3 md:px-4 py-3 text-foreground/80">{r.feature}</div>
               <div className="px-2 md:px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-                <CellIcon value={r.wikis} />
+                <CellIcon value={r.legacy} />
               </div>
               <div className="px-2 md:px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-                <CellIcon value={r.prompts} />
+                <CellIcon value={r.automation} />
               </div>
               <div className="px-2 md:px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-                <CellIcon value={r.ai} />
+                <CellIcon value={r.km} />
               </div>
               <div
                 className="px-2 md:px-4 py-3 flex items-center justify-center border-l"
@@ -91,9 +91,8 @@ export function CategoryComparison() {
           ))}
         </div>
 
-        {/* Punchline */}
         <p className="text-center text-xs text-muted-foreground mt-5 max-w-lg mx-auto">
-          Wikis store knowledge. Prompts encode shortcuts. AI assistants execute in silos. Only LIZA governs how your team executes together, continuously.
+          Legacy processes don't scale. Automation platforms don't govern quality. Knowledge management doesn't execute. LIZA OS is the layer that connects expertise to execution — with governance built in.
         </p>
       </div>
     </section>
