@@ -23,6 +23,8 @@ import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import UseCasesPage from "./pages/marketing/UseCases";
+import IndustriesPage from "./pages/marketing/Industries";
+import IndustryPharmaPage from "./pages/marketing/IndustryPharma";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -66,6 +68,8 @@ const App = () => (
             {/* Marketing - product-led homepage */}
             <Route path="/" element={<HomePage />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
+            <Route path="/industries" element={<IndustriesPage />} />
+            <Route path="/industries/pharma" element={<IndustryPharmaPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
             <Route path="/diagnostic" element={<DiagnosticPage />} />
