@@ -1,25 +1,27 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
+import { PathSelector } from "@/components/marketing/home/PathSelector";
 import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
 import { LizaLoopSection } from "@/components/marketing/home/LizaLoopSection";
-import { GuideSection } from "@/components/marketing/home/GuideSection";
+import { TwoTrackValue } from "@/components/marketing/home/TwoTrackValue";
 import { CategoryComparison } from "@/components/marketing/home/CategoryComparison";
+import { GuideSection } from "@/components/marketing/home/GuideSection";
 import { FAQSection } from "@/components/marketing/home/FAQSection";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
 import { SectionDivider } from "@/components/marketing/home/SectionDivider";
-import { WhoItsForStrip } from "@/components/marketing/home/WhoItsForStrip";
 
 export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
-      <WhoItsForStrip />
+      <PathSelector />
       <ThreeReasonsSection />
       <SectionDivider />
       <LizaLoopSection />
-      <GuideSection />
+      <TwoTrackValue />
       <SectionDivider />
       <CategoryComparison />
+      <GuideSection />
       <FAQSection />
       <BetaCTASection />
     </MarketingLayout>
