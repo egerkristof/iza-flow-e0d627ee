@@ -1203,7 +1203,7 @@ function Act3_Summary() {
               style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
               <Pill size={24} style={{ color: `hsl(${ACCENT})` }} />
             </div>
-            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>LIZA OS FOR PHARMA</span>
+            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>LIZA OS FOR REGULATED LIFECYCLES</span>
           </div>
 
           <h2 className="font-black mb-8" style={{ fontSize: 52, color: "hsl(0 0% 100%)", lineHeight: 1.05 }}>
