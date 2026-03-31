@@ -16,11 +16,11 @@ export default function HomePage() {
       <HeroSection />
       <ProductMomentStrip />
       <SectionDivider />
-      <CapabilitiesSection />
-      <LizaLoopSection />
-      <SectionDivider />
       <ThreeReasonsSection />
       <CategoryComparison />
+      <SectionDivider />
+      <CapabilitiesSection />
+      <LizaLoopSection />
       <GuideSection />
       <FAQSection />
       <BetaCTASection />
