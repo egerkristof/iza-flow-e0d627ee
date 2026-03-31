@@ -49,14 +49,33 @@ export function HeroSection() {
           The governance layer for AI-native organizations.
         </p>
 
-        <p className="text-sm md:text-base mb-8 text-muted-foreground/80 max-w-xl mx-auto leading-relaxed">
+        <p className="text-sm md:text-base mb-10 text-muted-foreground/80 max-w-xl mx-auto leading-relaxed">
           LIZA OS turns your domain expertise into governed, modular capabilities
           that scale across departments — without a central bottleneck.
-          Every workflow compounds. Every team stays aligned.
+          Built for organizations scaling AI adoption across multiple teams.
         </p>
 
+        {/* Value pillars — above CTAs */}
+        <div className="grid md:grid-cols-3 gap-6 text-left mb-10">
+          {PILLARS.map((p) => (
+            <div key={p.title}>
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center mb-2.5"
+                style={{
+                  background: "hsl(var(--primary) / 0.1)",
+                  color: "hsl(var(--primary))",
+                }}
+              >
+                {p.icon}
+              </div>
+              <h3 className="text-sm font-bold text-foreground mb-1">{p.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
           <Link
             to="/diagnostic"
             className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
@@ -79,8 +98,11 @@ export function HeroSection() {
           </a>
         </div>
 
-        {/* Inline trust proof */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-14">
+        {/* Next steps clarity + trust proof */}
+        <p className="text-xs text-muted-foreground/60 mb-4">
+          Get your score → Book a 20-min debrief → Walk away with an action plan.
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
           {PROOF_POINTS.map((point, i) => (
             <span key={i} className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               {i > 0 && (
@@ -91,25 +113,6 @@ export function HeroSection() {
               )}
               {point}
             </span>
-          ))}
-        </div>
-
-        {/* Value pillars — integrated into hero */}
-        <div className="grid md:grid-cols-3 gap-6 text-left">
-          {PILLARS.map((p) => (
-            <div key={p.title}>
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center mb-2.5"
-                style={{
-                  background: "hsl(var(--primary) / 0.1)",
-                  color: "hsl(var(--primary))",
-                }}
-              >
-                {p.icon}
-              </div>
-              <h3 className="text-sm font-bold text-foreground mb-1">{p.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-            </div>
           ))}
         </div>
       </div>
