@@ -1,43 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, FileText, Users, RotateCcw } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CAL_URL } from "./shared";
 
 const PROOF_POINTS = [
   "15 years of methodology refinement",
   "15+ clients across 8 countries",
-  "8 countries",
 ];
-
-function ConceptDiagram() {
-  const steps = [
-    { icon: <FileText className="w-4 h-4" />, label: "Capture your playbooks", sub: "From docs, chats & tribal knowledge" },
-    { icon: <Users className="w-4 h-4" />, label: "Run AI sessions together", sub: "Same living standards, every time" },
-    { icon: <RotateCcw className="w-4 h-4" />, label: "Harvest what works", sub: "Learnings feed back automatically" },
-  ];
-
-  return (
-    <div className="flex flex-row items-center justify-center gap-3 sm:gap-4">
-      {steps.map((step, i) => (
-        <div key={i} className="flex flex-row items-center gap-3 sm:gap-4">
-          <div
-            className="flex flex-col items-center gap-1.5 px-3 sm:px-6 py-3 sm:py-4 rounded-xl border"
-            style={{
-              borderColor: "hsl(var(--border))",
-              background: "hsl(var(--card))",
-            }}
-          >
-            <span style={{ color: "hsl(var(--primary))" }}>{step.icon}</span>
-            <span className="text-[11px] sm:text-sm font-semibold text-foreground text-center leading-tight">{step.label}</span>
-            <span className="text-[10px] sm:text-xs text-muted-foreground text-center leading-tight">{step.sub}</span>
-          </div>
-          {i < steps.length - 1 && (
-            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground shrink-0" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export function HeroSection() {
   return (
@@ -53,7 +21,6 @@ export function HeroSection() {
       />
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
-        {/* Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
           Your team gets wildly different
           <br />
@@ -62,7 +29,6 @@ export function HeroSection() {
           <span className="text-primary">Fix that.</span>
         </h1>
 
-        {/* Category line */}
         <p className="text-base md:text-lg font-semibold mb-6 text-muted-foreground">
           LIZA OS: The management layer for <span className="text-primary">AI-native operations.</span>
         </p>
@@ -92,7 +58,7 @@ export function HeroSection() {
         </div>
 
         {/* Inline trust proof */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-14">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
           {PROOF_POINTS.map((point, i) => (
             <span key={i} className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               {i > 0 && (
@@ -105,9 +71,6 @@ export function HeroSection() {
             </span>
           ))}
         </div>
-
-        {/* Conceptual product diagram */}
-        <ConceptDiagram />
       </div>
     </section>
   );
