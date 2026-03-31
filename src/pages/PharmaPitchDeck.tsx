@@ -1532,7 +1532,7 @@ export default function PharmaPitchDeck() {
     return (
       <div className="min-h-screen p-8" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between mb-6 max-w-7xl mx-auto">
-          <h2 className="text-xl font-bold" style={{ color: `hsl(${C})` }}>All Slides: Pharma MLM Pitch</h2>
+          <h2 className="text-xl font-bold" style={{ color: `hsl(${C})` }}>All Slides: Regulated Lifecycle Pitch</h2>
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(false)} style={{ color: `hsl(${MUT})` }}>
             <X size={18} className="mr-1" /> Close
           </Button>
