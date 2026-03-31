@@ -7,6 +7,7 @@ import { CategoryComparison } from "@/components/marketing/home/CategoryComparis
 import { GuideSection } from "@/components/marketing/home/GuideSection";
 import { FAQSection } from "@/components/marketing/home/FAQSection";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
+import { ProductMomentStrip } from "@/components/marketing/home/ProductMomentStrip";
 import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 
 export default function HomePage() {
@@ -19,6 +20,7 @@ export default function HomePage() {
       <SectionDivider />
       <CapabilitiesSection />
       <LizaLoopSection />
+      <ProductMomentStrip />
       <GuideSection />
       <FAQSection />
       <BetaCTASection />
