@@ -21,6 +21,10 @@ export function HeroSection() {
       />
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] mb-4 text-primary">
+          The management layer for AI-native teams
+        </p>
+
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
           AI that serves your expertise.
           <br />
@@ -28,8 +32,9 @@ export function HeroSection() {
         </h1>
 
         <p className="text-base md:text-lg font-semibold mb-6 text-muted-foreground max-w-xl mx-auto">
-          Your hardest operations depend on judgment, not just speed.
-          LIZA OS puts AI in service of the work that matters most.
+          Most AI platforms are built for developers. LIZA OS puts
+          subject matter experts in control — they design workflows,
+          set governance, and scale what actually matters.
         </p>
 
         {/* CTAs */}
