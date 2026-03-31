@@ -71,7 +71,36 @@ const HOW_IT_WORKS = [
 
 /* ── Compliance badges ───────────────────────────────────────────────────── */
 
-const COMPLIANCE = ["GAMP 5 Category 1", "21 CFR Part 11", "Annex 11", "ALCOA+ Principles", "EU GMP", "ICH Q10"];
+const COMPLIANCE = ["GAMP 5 Category 1", "21 CFR Part 11", "Annex 11", "ALCOA+ Principles", "EU GMP", "ICH Q10", "ISO 17025", "GLP"];
+
+/* ── Adjacent verticals ──────────────────────────────────────────────────── */
+
+const ADJACENT_VERTICALS = [
+  {
+    icon: <Pill className="w-5 h-5" />,
+    title: "Pharma & Biotech",
+    desc: "Medicine lifecycle from discovery through pharmacovigilance. GMP, GCP, GVP compliance.",
+    tags: ["GMP", "21 CFR Part 11", "GAMP 5"],
+  },
+  {
+    icon: <Apple className="w-5 h-5" />,
+    title: "Food Safety & Consumer Health",
+    desc: "Quality assurance across manufacturing, testing, and supply chain. HACCP and GMP governed.",
+    tags: ["GMP", "ISO 22000", "HACCP"],
+  },
+  {
+    icon: <FlaskConical className="w-5 h-5" />,
+    title: "Lab Governance & Testing",
+    desc: "Method validation, CAPA workflows, and accreditation readiness for analytical and clinical labs.",
+    tags: ["ISO 17025", "GLP", "LIMS"],
+  },
+  {
+    icon: <Stethoscope className="w-5 h-5" />,
+    title: "Medical Devices",
+    desc: "Design controls, risk management, and post-market surveillance governed by quality systems.",
+    tags: ["ISO 13485", "FDA QSR", "MDR"],
+  },
+];
 
 export default function IndustryPharmaPage() {
   return (
