@@ -17,10 +17,10 @@ export default function HomePage() {
       <ProductMomentStrip />
       <SectionDivider />
       <ThreeReasonsSection />
-      <CategoryComparison />
       <SectionDivider />
       <CapabilitiesSection />
       <LizaLoopSection />
+      <CategoryComparison />
       <GuideSection />
       <FAQSection />
       <BetaCTASection />
