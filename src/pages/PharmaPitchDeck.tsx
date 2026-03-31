@@ -495,16 +495,16 @@ function Act1_Architecture() {
           LIZA: The <span style={{ color: `hsl(${ACCENT})` }}>System of Reasoning</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 19, color: `hsl(${MUT})`, maxWidth: 900, lineHeight: 1.55 }}>
-          Like ALM (Application Lifecycle Management) for software, LIZA provides the management layer for the medicine lifecycle — encoding expert judgment into executable, auditable protocols that compound institutional knowledge.
+          Software development has ALM (Application Lifecycle Management) to govern how code moves from design to production. LIZA does the same for the medicine lifecycle: it turns expert judgment into governed, repeatable workflows that every team can execute consistently.
         </p>
 
         {/* Architecture flow */}
         <div className="grid grid-cols-4 gap-5 mb-5">
           {[
-            { step: "Extract", desc: "Capture how your best people think — the heuristics, decision patterns, and judgment calls that aren't in the SOP.", color: ACCENT, icon: <Search size={20} /> },
-            { step: "Structure", desc: "Organise into Context Bundles: Playbooks, Procedures, Directives, Principles, Knowledge — versioned and governed.", color: TEAL, icon: <Layers size={20} /> },
-            { step: "Execute", desc: "Deploy as Protocols with gate enforcement. AI drafts, humans decide. Full traceability on every action.", color: GOLD, icon: <Zap size={20} /> },
-            { step: "Remember", desc: "Every execution teaches the system. Exceptions captured, patterns detected, protocols evolved. Institutional memory compounds.", color: CORAL, icon: <Brain size={20} /> },
+            { step: "Capture", desc: "Record how your senior QA leads, regulatory experts, and process owners actually make decisions. Turn tribal knowledge into documented, reusable decision logic.", color: ACCENT, icon: <Search size={20} /> },
+            { step: "Organise", desc: "Group related procedures, quality standards, reference documents, and decision criteria into governed sets. Version-controlled, role-scoped, and audit-ready.", color: TEAL, icon: <Layers size={20} /> },
+            { step: "Execute", desc: "Run step-by-step workflows with built-in quality gates. AI prepares drafts and evidence; qualified staff review and approve. Full traceability on every action.", color: GOLD, icon: <Zap size={20} /> },
+            { step: "Learn", desc: "Each completed workflow feeds back into the system. Evidence gaps, process exceptions, and successful patterns update the knowledge base automatically.", color: CORAL, icon: <Brain size={20} /> },
           ].map((p, i) => (
             <div key={p.step} className="rounded-2xl border p-5 flex flex-col relative" style={{ borderColor: `hsl(${p.color} / 0.2)`, background: `hsl(${p.color} / 0.03)` }}>
               {i < 3 && (
@@ -524,19 +524,19 @@ function Act1_Architecture() {
           ))}
         </div>
 
-        {/* Context Bundle example */}
+        {/* What a governed set contains */}
         <div className="flex items-center gap-4">
           <div className="rounded-xl px-5 py-3" style={{ background: `hsl(${DARK})` }}>
-            <p className="font-bold mb-1.5" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Example: Context Bundle</p>
+            <p className="font-bold mb-1.5" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>What a governed set contains</p>
             <div className="flex gap-2">
-              {["Playbook", "Procedure", "Directive", "Principle", "Knowledge"].map(t => (
+              {["Process workflows", "Quality standards", "Decision criteria", "Reference documents", "Training materials"].map(t => (
                 <span key={t} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 11, background: `hsl(${ACCENT} / 0.15)`, color: `hsl(${ACCENT})` }}>{t}</span>
               ))}
             </div>
           </div>
           <div className="rounded-xl px-5 py-3 flex-1" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
             <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
-              Human-in-the-loop always: AI proposes, qualified personnel approve. Full audit trail with e-signature.
+              Human-in-the-loop always: AI prepares, qualified personnel review and approve. Full audit trail with e-signature.
             </p>
           </div>
         </div>
