@@ -149,8 +149,8 @@ function SlideTitle() {
           </h1>
 
           <p className="mb-10" style={{ fontSize: 22, color: `hsl(0 0% 100% / 0.6)`, lineHeight: 1.55, maxWidth: 750 }}>
-            From research to release, encode the judgment that makes
-            <br />good practice <em>actually</em> practiced. Across every team, site, and function.
+            From research to release, from lab to factory floor: encode the judgment
+            <br />that makes good practice <em>actually</em> practiced. Across every team, site, and function.
           </p>
 
           <div className="flex gap-6">
