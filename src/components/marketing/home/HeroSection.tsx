@@ -33,6 +33,7 @@ export function HeroSection() {
 
         <p className="text-sm md:text-base mb-8 text-muted-foreground/80 max-w-lg mx-auto leading-relaxed">
           Turn domain expertise into governed capabilities that scale across departments.
+          Whether you're a team of five defining your first playbooks or an enterprise scaling across departments.
         </p>
 
         {/* CTAs */}
