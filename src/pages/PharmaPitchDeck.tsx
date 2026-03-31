@@ -501,10 +501,10 @@ function Act1_Architecture() {
         {/* Architecture flow */}
         <div className="grid grid-cols-4 gap-5 mb-5">
           {[
-            { step: "Capture", desc: "Record how your senior QA leads, regulatory experts, and process owners actually make decisions. LIZA turns this tribal knowledge into structured context that AI can reason with.", color: ACCENT, icon: <Search size={20} /> },
-            { step: "Organise", desc: "Group procedures, quality standards, and decision criteria into governed sets. When AI runs a task, LIZA injects only the relevant context, so outputs reflect your actual standards.", color: TEAL, icon: <Layers size={20} /> },
-            { step: "Execute", desc: "AI drafts documents, maps evidence, and prepares submissions at machine speed. Qualified staff review and approve through built-in quality gates. Full traceability on every action.", color: GOLD, icon: <Zap size={20} /> },
-            { step: "Learn", desc: "Each completed workflow feeds back into the system. Evidence gaps, exceptions, and successful patterns update the knowledge base, so AI gets smarter with every cycle.", color: CORAL, icon: <Brain size={20} /> },
+            { step: "Capture", desc: "Record how your best people actually make decisions. Turn tribal knowledge into structured, reusable logic.", color: ACCENT, icon: <Search size={20} /> },
+            { step: "Organise", desc: "Group standards, procedures, and decision criteria into governed sets that AI receives as context for every task.", color: TEAL, icon: <Layers size={20} /> },
+            { step: "Execute", desc: "AI drafts at machine speed. Qualified staff review and approve through built-in quality gates. Full traceability throughout.", color: GOLD, icon: <Zap size={20} /> },
+            { step: "Learn", desc: "Every completed workflow feeds back. Exceptions and successful patterns update the knowledge base automatically.", color: CORAL, icon: <Brain size={20} /> },
           ].map((p, i) => (
             <div key={p.step} className="rounded-2xl border p-5 flex flex-col relative" style={{ borderColor: `hsl(${p.color} / 0.2)`, background: `hsl(${p.color} / 0.03)` }}>
               {i < 3 && (
