@@ -1560,7 +1560,7 @@ export default function PharmaPitchDeck() {
         style={{ background: CHROME_BG, borderColor: CHROME_BORDER }}>
         <div className="flex items-center gap-3">
           <span className="font-bold text-sm" style={{ color: `hsl(${ACCENT})` }}>LIZA OS</span>
-          <span className="text-xs" style={{ color: `hsl(${MUT})` }}>Medicine Lifecycle Management, 3-Act Deck ({SLIDES.length} slides)</span>
+          <span className="text-xs" style={{ color: `hsl(${MUT})` }}>Regulated Lifecycle Management, 3-Act Deck ({SLIDES.length} slides)</span>
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} style={{ color: `hsl(${MUT})` }}>
