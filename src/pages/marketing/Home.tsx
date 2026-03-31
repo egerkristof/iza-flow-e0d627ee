@@ -15,10 +15,10 @@ export default function HomePage() {
       <HeroSection />
       <SectionDivider />
       <ThreeReasonsSection />
-      <CapabilitiesSection />
-      <SectionDivider />
-      <LizaLoopSection />
       <CategoryComparison />
+      <SectionDivider />
+      <CapabilitiesSection />
+      <LizaLoopSection />
       <GuideSection />
       <FAQSection />
       <BetaCTASection />
