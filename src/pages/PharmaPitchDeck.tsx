@@ -149,7 +149,7 @@ function SlideTitle() {
           </h1>
 
           <p className="mb-10" style={{ fontSize: 22, color: `hsl(0 0% 100% / 0.6)`, lineHeight: 1.55, maxWidth: 750 }}>
-            From research to release - encode the judgment that makes
+            From research to release, encode the judgment that makes
             <br />good practice <em>actually</em> practiced. Across every team, site, and function.
           </p>
 
@@ -253,7 +253,7 @@ function Act1_LifecycleChallenge() {
               { v: "EUR 2.6B", l: "Average cost to bring one drug to market", src: "Deloitte Centre for Regulatory Strategy, 2023" },
               { v: "~90%", l: "Of clinical candidates fail before approval", src: "FDA Clinical Trial Analysis, 2022" },
               { v: "40%+", l: "Senior expertise projected to turn over by 2030", src: "BLS workforce aging projections" },
-              { v: "3x", l: "Faster AI output - but inconsistency scales faster too", src: "Industry observation" },
+              { v: "3x", l: "Faster AI output, but inconsistency scales faster too", src: "Industry observation" },
             ].map(s => (
               <div key={s.l} className="rounded-xl px-5 py-3.5" style={{ background: BG2, border: `1px solid hsl(${ACCENT} / 0.12)` }}>
                 <p className="font-black" style={{ fontSize: 26, color: `hsl(${ACCENT})` }}>{s.v}</p>
@@ -417,7 +417,7 @@ function Act1_Options() {
       label: "Option A", title: "More Documentation", verdict: "Increases divergence risk", color: RED,
       points: [
         "More SOPs = more places for inconsistent interpretation",
-        "Documents describe what to do - not how to think",
+        "Documents describe what to do, not how to think",
         "'Read and understood' signatures prove nothing about execution quality",
       ],
     },
@@ -432,7 +432,7 @@ function Act1_Options() {
     {
       label: "Option C", title: "GRC / QMS Platforms", verdict: "Manages records, not judgment", color: GOLD,
       points: [
-        "Track what happened - don't guide what should happen",
+        "Track what happened. Does not guide what should happen",
         "Excellent at compliance documentation, weak at decision support",
         "No mechanism to encode expert reasoning into execution",
       ],
@@ -1132,7 +1132,7 @@ function Act3_DriftOversight() {
             <br />Evolve protocols.
           </h2>
           <p className="mb-6" style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55, maxWidth: 650 }}>
-            LIZA doesn't just enforce. It senses when enforcement isn't enough - when operators deviate for good reasons, the system captures that intelligence and proposes protocol updates.
+            LIZA does not just enforce. It senses when enforcement falls short - when operators deviate for good reasons, the system captures that intelligence and proposes protocol updates.
           </p>
 
           <div className="grid grid-cols-2 gap-5 mb-6">
@@ -1291,27 +1291,27 @@ function Act3_Summary() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const SLIDES = [
-  { id: "title",        title: "Title",                     component: <SlideTitle /> },
+  { id: "title",       title: "Title",                    component: <SlideTitle /> },
   // Act 1 - The GxP Challenge (7 slides)
   { id: "act1-divider", title: "Act 1 · The GxP Challenge", component: <SectionDivider actNum={1} title="The GxP Challenge" subtitle="From research to release - why the medicine lifecycle needs an operating system for judgment." icon={<Globe size={36} />} color={ACCENT} /> },
-  { id: "a1-lifecycle", title: "Medicine Lifecycle",         component: <Act1_LifecycleChallenge /> },
-  { id: "a1-gap",       title: "The Standards Gap",          component: <Act1_StandardsGap /> },
-  { id: "a1-why-now",   title: "Why Now",                    component: <Act1_WhyNow /> },
-  { id: "a1-options",   title: "The Options",                component: <Act1_Options /> },
-  { id: "a1-arch",      title: "System of Reasoning",        component: <Act1_Architecture /> },
-  { id: "a1-trust",     title: "Trust & Compliance",         component: <Act1_TrustCompliance /> },
-  { id: "a1-int",       title: "Integration Architecture",   component: <Act1_Integrations /> },
+  { id: "a1-lifecycle", title: "Medicine Lifecycle",        component: <Act1_LifecycleChallenge /> },
+  { id: "a1-gap",      title: "The Standards Gap",         component: <Act1_StandardsGap /> },
+  { id: "a1-why-now",  title: "Why Now",                   component: <Act1_WhyNow /> },
+  { id: "a1-options",  title: "The Options",               component: <Act1_Options /> },
+  { id: "a1-arch",     title: "System of Reasoning",       component: <Act1_Architecture /> },
+  { id: "a1-trust",    title: "Trust & Compliance",        component: <Act1_TrustCompliance /> },
+  { id: "a1-int",      title: "Integration Architecture",  component: <Act1_Integrations /> },
   // Act 2 - The Audit Engine (5 slides)
-  { id: "act2-divider", title: "Act 2 · The Audit Engine",  component: <SectionDivider actNum={2} title="The Audit Engine" subtitle="Audit protects the edges of quality in every regulated industry. Here's how LIZA makes it 10x faster." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
-  { id: "a2-crisis",    title: "Audit Crisis",               component: <Act2_AuditCrisis /> },
-  { id: "a2-dual",      title: "Prepare + Run",              component: <Act2_DualCapability /> },
-  { id: "a2-how",       title: "How It Works",               component: <Act2_HowItWorks /> },
-  { id: "a2-results",   title: "Proven Results",             component: <Act2_Results /> },
+  { id: "act2-divider", title: "Act 2 · The Audit Engine", component: <SectionDivider actNum={2} title="The Audit Engine" subtitle="Audit protects the edges of quality in every regulated industry. Here's how LIZA makes it 10x faster." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
+  { id: "a2-crisis",   title: "Audit Crisis",              component: <Act2_AuditCrisis /> },
+  { id: "a2-dual",     title: "Prepare + Run",             component: <Act2_DualCapability /> },
+  { id: "a2-how",      title: "How It Works",              component: <Act2_HowItWorks /> },
+  { id: "a2-results",  title: "Proven Results",            component: <Act2_Results /> },
   // Act 3 - Operating Model (4 slides)
-  { id: "act3-divider", title: "Act 3 · Operating Model",   component: <SectionDivider actNum={3} title="Operating Model" subtitle="From audit entry point to cross-functional medicine lifecycle management." icon={<Pill size={36} />} color={CORAL} /> },
-  { id: "a3-expand",    title: "Expansion Map",              component: <Act3_ExpansionMap /> },
-  { id: "a3-drift",     title: "Drift & Oversight",          component: <Act3_DriftOversight /> },
-  { id: "a3-summary",   title: "Summary & CTA",             component: <Act3_Summary /> },
+  { id: "act3-divider", title: "Act 3 · Operating Model",  component: <SectionDivider actNum={3} title="Operating Model" subtitle="From audit entry point to cross-functional medicine lifecycle management." icon={<Pill size={36} />} color={CORAL} /> },
+  { id: "a3-expand",   title: "Expansion Map",             component: <Act3_ExpansionMap /> },
+  { id: "a3-drift",    title: "Drift & Oversight",         component: <Act3_DriftOversight /> },
+  { id: "a3-summary",  title: "Summary & CTA",            component: <Act3_Summary /> },
 ];
 
 const CHROME_BG = "hsl(200 15% 97%)";
