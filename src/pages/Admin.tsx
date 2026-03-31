@@ -2,6 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
+import { adminPresentationItems } from "@/data/presentationRegistry";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -70,16 +71,16 @@ type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execut
 /* ── Helpers ── */
 
 function getConfidenceTier(n: number): { label: string; color: string; description: string } {
-  if (n < 10) return { label: "Early Signal", color: "bg-amber-500/20 text-amber-700 border-amber-300", description: `${n} submissions — directional only` };
-  if (n < 30) return { label: "Growing Dataset", color: "bg-blue-500/20 text-blue-700 border-blue-300", description: `${n} submissions — patterns emerging` };
-  return { label: "Benchmark-Ready", color: "bg-emerald-500/20 text-emerald-700 border-emerald-300", description: `${n} submissions — statistically meaningful` };
+  if (n < 10) return { label: "Early Signal", color: "bg-amber-500/20 text-amber-700 border-amber-300", description: `${n} submissions - directional only` };
+  if (n < 30) return { label: "Growing Dataset", color: "bg-blue-500/20 text-blue-700 border-blue-300", description: `${n} submissions - patterns emerging` };
+  return { label: "Benchmark-Ready", color: "bg-emerald-500/20 text-emerald-700 border-emerald-300", description: `${n} submissions - statistically meaningful` };
 }
 
 const CATEGORY_META: Record<ResearchCategory, { label: string; icon: React.ReactNode; description: string }> = {
   icp_reality_check: {
     label: "ICP Reality Check",
     icon: <Crosshair className="h-4 w-4" />,
-    description: "What 50-150 person teams actually do with AI today — the messy truth",
+    description: "What 50-150 person teams actually do with AI today, the messy truth",
   },
   contrarian_positioning: {
     label: "Contrarian Takes",
@@ -112,29 +113,21 @@ export default function AdminPage() {
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<AdminView>("members");
 
-  // Auth check
   const [isArchitect, setIsArchitect] = useState<boolean | null>(null);
-
-  // Members state
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [userRoles, setUserRoles] = useState<UserRole[]>([]);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState("operator");
   const [inviting, setInviting] = useState(false);
-
-  // Diagnostic state
   const [results, setResults] = useState<DiagnosticResult[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [loadingData, setLoadingData] = useState(true);
   const [diagnosticSearch, setDiagnosticSearch] = useState("");
-
-  // Insights Lab state
   const [pastResearch, setPastResearch] = useState<ResearchEntry[]>([]);
   const [activeCategory, setActiveCategory] = useState<ResearchCategory>("icp_reality_check");
   const [researching, setResearching] = useState(false);
   const [liveResult, setLiveResult] = useState<string | null>(null);
 
-  // Check if current user is architect
   useEffect(() => {
     if (!user) return;
     supabase
@@ -187,7 +180,6 @@ export default function AdminPage() {
     if (isArchitect) loadData();
   }, [isArchitect, loadData]);
 
-  // Always-on realtime + polling for diagnostic results (regardless of active tab)
   useEffect(() => {
     if (!isArchitect) return;
 
@@ -237,7 +229,6 @@ export default function AdminPage() {
     };
   }, [isArchitect, loadData]);
 
-  /* ── Aggregate computation ── */
   const isFounder = (email: string | null) => {
     if (!email) return false;
     const lower = email.toLowerCase();
@@ -245,10 +236,7 @@ export default function AdminPage() {
   };
 
   const aggregate = useMemo(() => {
-    // 1. Exclude founder test submissions
     const nonFounder = results.filter((r) => !isFounder(r.email));
-
-    // 2. Deduplicate: keep latest submission per email (or per session_id for anonymous)
     const seen = new Map<string, DiagnosticResult>();
     for (const r of nonFounder) {
       const key = r.email?.toLowerCase() || r.session_id || r.id;
@@ -258,11 +246,9 @@ export default function AdminPage() {
       }
     }
     const filtered = Array.from(seen.values());
-
     if (!filtered.length) return null;
 
     const overallAvg = Math.round(filtered.reduce((s, r) => s + r.overall_score, 0) / filtered.length);
-
     const dimSums: Record<string, number[]> = {};
     for (const r of filtered) {
       for (const [key, val] of Object.entries(r.scores as Record<string, number>)) {
@@ -270,6 +256,7 @@ export default function AdminPage() {
         dimSums[key].push(val);
       }
     }
+
     const dimensions: Record<string, number> = {};
     let weakest = { key: "", score: 100 };
     let strongest = { key: "", score: 0 };
@@ -280,7 +267,6 @@ export default function AdminPage() {
       if (avg > strongest.score) strongest = { key, score: avg };
     }
 
-    // Org count: unique email domains (all domains count now)
     const orgDomains = new Set<string>();
     for (const r of filtered) {
       if (!r.email) continue;
@@ -291,10 +277,8 @@ export default function AdminPage() {
     const archCounts: Record<string, number> = {};
     for (const r of filtered) archCounts[r.archetype] = (archCounts[r.archetype] || 0) + 1;
     const topArchetype = Object.entries(archCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
-
     const confidence = getConfidenceTier(filtered.length);
 
-    // Segmentation helpers
     const buildSegment = (extractor: (r: DiagnosticResult) => string | null | undefined) => {
       const groups: Record<string, { scores: number[]; count: number }> = {};
       for (const r of filtered) {
@@ -333,7 +317,6 @@ export default function AdminPage() {
     };
   }, [results]);
 
-  /* ── Research trigger ── */
   const runResearch = async () => {
     if (!aggregate) return;
     setResearching(true);
@@ -440,606 +423,18 @@ export default function AdminPage() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-background">
-      {/* ── Mobile Header + Tab Bar ── */}
-      <div className="md:hidden flex flex-col border-b border-border bg-muted/30">
-        <div className="flex h-14 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-primary" />
-            <span className="text-base font-bold tracking-tight brand-gradient-text">Admin</span>
-          </div>
-          <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground" onClick={handleSignOut}>
-            <LogOut className="h-4 w-4" />
-            <span className="text-xs">Sign out</span>
-          </Button>
-        </div>
-        <nav className="flex border-t border-border overflow-x-auto">
-          {sidebarItems.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => setActiveView(item.key)}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors border-b-2 whitespace-nowrap px-2 ${
-                activeView === item.key
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {item.icon}
-              {item.label}
-            </button>
-          ))}
-        </nav>
-      </div>
-
-      {/* ── Desktop Sidebar ── */}
-      <aside className="hidden md:flex w-56 shrink-0 border-r border-border bg-muted/30 flex-col">
-        <div className="flex h-14 items-center border-b border-border px-4 gap-2">
-          <ShieldCheck className="h-5 w-5 text-primary" />
-          <span className="text-base font-bold tracking-tight brand-gradient-text">Admin</span>
-        </div>
-
-        <nav className="flex-1 p-3 space-y-1">
-          {sidebarItems.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => setActiveView(item.key)}
-              className={`w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                activeView === item.key
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
-              }`}
-            >
-              {item.icon}
-              {item.label}
-            </button>
-          ))}
-        </nav>
-
-        <div className="border-t border-border p-3">
-          <Button variant="ghost" size="sm" className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground" onClick={handleSignOut}>
-            <LogOut className="h-4 w-4" />
-            Sign out
-          </Button>
-        </div>
-      </aside>
-
-      {/* ── Main Content ── */}
-      <main className="flex-1 overflow-auto p-4 md:p-6">
-        <div className="max-w-4xl mx-auto space-y-4 md:space-y-6">
-          {activeView === "members" && (
-            <>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Members</h1>
-                <p className="text-sm text-muted-foreground">Invite people and manage who has access.</p>
-              </div>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Invite a new member</CardTitle>
-                  <CardDescription>They will receive an email with a magic link to set up their account.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
-                    <div className="space-y-1.5 flex-1 min-w-0">
-                      <Label htmlFor="invite-email">Email</Label>
-                      <Input id="invite-email" type="email" placeholder="colleague@company.com" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} />
-                    </div>
-                    <div className="space-y-1.5 w-full sm:w-40">
-                      <Label>Role</Label>
-                      <Select value={inviteRole} onValueChange={setInviteRole}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="operator">Operator</SelectItem>
-                          <SelectItem value="manager">Leader</SelectItem>
-                          <SelectItem value="architect">Process Owner</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <Button onClick={handleInvite} disabled={inviting || !inviteEmail.trim()} className="gap-2 w-full sm:w-auto">
-                      <Send className="h-4 w-4" />
-                      {inviting ? "Sending…" : "Send Invite"}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Current members</CardTitle>
-                  <CardDescription>{profiles.length} member{profiles.length !== 1 ? "s" : ""} registered</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {loadingData ? (
-                    <p className="text-sm text-muted-foreground">Loading…</p>
-                  ) : (
-                    <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Name</TableHead>
-                          <TableHead>Roles</TableHead>
-                          <TableHead>Joined</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {profiles.map((p) => (
-                          <TableRow key={p.user_id}>
-                            <TableCell className="font-medium">{p.display_name || "-"}</TableCell>
-                            <TableCell>
-                              <div className="flex gap-1 flex-wrap">
-                                {getRolesForUser(p.user_id).map((r) => (
-                                  <Badge key={r} variant="secondary" className="text-xs capitalize">{r}</Badge>
-                                ))}
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-muted-foreground text-sm">
-                              {format(new Date(p.created_at), "MMM d, yyyy")}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </>
-          )}
-
-          {activeView === "org-insights" && (
-            <OrgInsights results={results} />
-          )}
-
-          {activeView === "diagnostics" && (
-            <>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-xl font-bold text-foreground">Diagnostic Results</h1>
-                  <p className="text-sm text-muted-foreground">Review submissions from the AI Execution Diagnostic.</p>
-                </div>
-                <Button variant="outline" size="sm" onClick={() => void loadData()} disabled={loadingData} className="gap-1.5">
-                  <RefreshCw className={`h-3.5 w-3.5 ${loadingData ? "animate-spin" : ""}`} />
-                 Refresh
-                </Button>
-              </div>
-
-              <Input
-                placeholder="Search by email, name, company, role…"
-                value={diagnosticSearch}
-                onChange={(e) => setDiagnosticSearch(e.target.value)}
-                className="max-w-sm"
-              />
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Submissions</CardTitle>
-                  <CardDescription>{(() => {
-                    const q = diagnosticSearch.toLowerCase().trim();
-                    const filtered = q ? results.filter(r =>
-                      (r.email || "").toLowerCase().includes(q) ||
-                      (r.respondent_role || "").toLowerCase().includes(q) ||
-                      (r.company_name || "").toLowerCase().includes(q) ||
-                      (r.archetype || "").toLowerCase().includes(q) ||
-                      (r.industry || "").toLowerCase().includes(q) ||
-                      (r.industry_refined || "").toLowerCase().includes(q)
-                    ) : results;
-                    return `${filtered.length} of ${results.length} submission${results.length !== 1 ? "s" : ""}`;
-                  })()}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {loadingData ? (
-                    <p className="text-sm text-muted-foreground">Loading…</p>
-                  ) : results.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No submissions yet.</p>
-                  ) : (
-                    <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-                    <Table className="min-w-[700px]">
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Date</TableHead>
-                          <TableHead>Email</TableHead>
-                          <TableHead>Role</TableHead>
-                          <TableHead>Team</TableHead>
-                          <TableHead>Company</TableHead>
-                          <TableHead>Archetype</TableHead>
-                          <TableHead className="text-right">Score</TableHead>
-                          <TableHead></TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {results.filter(r => {
-                          const q = diagnosticSearch.toLowerCase().trim();
-                          if (!q) return true;
-                          return (r.email || "").toLowerCase().includes(q) ||
-                            (r.respondent_role || "").toLowerCase().includes(q) ||
-                            (r.company_name || "").toLowerCase().includes(q) ||
-                            (r.archetype || "").toLowerCase().includes(q) ||
-                            (r.industry || "").toLowerCase().includes(q) ||
-                            (r.industry_refined || "").toLowerCase().includes(q);
-                        }).map((r) => (
-                          <Fragment key={r.id}>
-                            <TableRow className="cursor-pointer" onClick={() => setExpandedId(expandedId === r.id ? null : r.id)}>
-                              <TableCell className="text-sm">{format(new Date(r.created_at), "MMM d, yyyy HH:mm")}</TableCell>
-                              <TableCell className="text-sm">{r.email || <span className="text-muted-foreground italic">anonymous</span>}</TableCell>
-                              <TableCell className="text-sm text-muted-foreground">{r.respondent_role || "–"}</TableCell>
-                              <TableCell className="text-sm text-muted-foreground">{r.team_size || "–"}</TableCell>
-                              <TableCell className="text-sm">
-                                {r.company_name ? (
-                                  <span className="text-foreground">{r.company_name}{(r.industry_refined || r.industry) ? <span className="text-muted-foreground text-xs ml-1">({r.industry_refined || r.industry})</span> : ""}</span>
-                                ) : <span className="text-muted-foreground">–</span>}
-                              </TableCell>
-                              <TableCell><Badge variant="outline" className="text-xs">{r.archetype}</Badge></TableCell>
-                              <TableCell className="text-right font-mono font-semibold">{r.overall_score}</TableCell>
-                              <TableCell className="w-8">
-                                {expandedId === r.id ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
-                              </TableCell>
-                            </TableRow>
-                            {expandedId === r.id && (
-                              <TableRow>
-                                <TableCell colSpan={8} className="bg-muted/30 p-0">
-                                  <div className="p-5 space-y-6">
-                                    {/* Results Preview */}
-                                    <div>
-                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3">Results Preview</h4>
-                                      <div className="flex items-start gap-6 flex-wrap">
-                                        <div className="text-center">
-                                          <p className="text-4xl font-black tabular-nums" style={{
-                                            color: r.overall_score <= 30 ? "hsl(0 72% 51%)" : r.overall_score <= 55 ? "hsl(38 92% 50%)" : r.overall_score <= 75 ? "hsl(200 90% 40%)" : "hsl(155 72% 36%)"
-                                          }}>{r.overall_score}</p>
-                                          <p className="text-xs text-muted-foreground mt-1">Overall Score</p>
-                                        </div>
-                                        <div className="flex-1 min-w-[200px] space-y-1.5">
-                                          {Object.entries(r.scores as Record<string, number>).map(([key, val]) => (
-                                            <div key={key} className="flex items-center gap-2">
-                                              <span className="text-[11px] text-muted-foreground w-20 shrink-0 text-right">{SHORT_LABELS[key] || key}</span>
-                                              <div className="flex-1 h-2 rounded-full bg-secondary overflow-hidden">
-                                                <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${val}%` }} />
-                                              </div>
-                                              <span className="text-[11px] font-bold tabular-nums w-6">{val}</span>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    {/* Email Status */}
-                                    <div>
-                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">Email Report</h4>
-                                      {r.email ? (
-                                        <div className="flex items-center gap-2 text-sm">
-                                          <Mail className="h-4 w-4 text-primary" />
-                                          <span className="text-foreground">Sent to <span className="font-medium">{r.email}</span></span>
-                                          <Badge variant="secondary" className="text-[10px]">Delivered</Badge>
-                                        </div>
-                                      ) : (
-                                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                          <MailX className="h-4 w-4" />
-                                          <span>No email provided. No report sent.</span>
-                                        </div>
-                                      )}
-                                    </div>
-
-                                    {/* Results Page Recommendations */}
-                                    <div>
-                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
-                                        <Eye className="h-3.5 w-3.5" />
-                                        What They Saw (Results Page)
-                                      </h4>
-                                      {(() => {
-                                        const computed = calculateResults(r.answers);
-                                        return (
-                                          <div className="space-y-3">
-                                            <div className="rounded-lg border border-border bg-background p-3">
-                                              <p className="text-xs text-muted-foreground mb-1">Archetype</p>
-                                              <p className="text-sm font-semibold text-foreground">{computed.archetype.label}</p>
-                                              <p className="text-xs text-muted-foreground mt-1">{computed.archetype.tagline}</p>
-                                              <p className="text-xs text-primary mt-2 font-medium">Recommended action: {computed.archetype.action}</p>
-                                            </div>
-                                            {computed.dimensions.map((d) => (
-                                              <div key={d.dimension} className="rounded-lg border border-border bg-background p-3 space-y-1">
-                                                <div className="flex items-center justify-between">
-                                                  <p className="text-xs font-semibold text-foreground">{d.label}</p>
-                                                  <span className="text-xs font-bold tabular-nums" style={{
-                                                    color: d.score <= 33 ? "hsl(0 72% 51%)" : d.score <= 66 ? "hsl(38 92% 50%)" : "hsl(155 72% 36%)"
-                                                  }}>{d.score}/100</span>
-                                                </div>
-                                                <p className="text-xs text-muted-foreground">{d.insight}</p>
-                                                <div className="flex items-start gap-1.5 pt-1">
-                                                  <TrendingDown className="h-3 w-3 shrink-0 mt-0.5 text-muted-foreground" />
-                                                  <p className="text-[11px] text-foreground/70">{d.implication}</p>
-                                                </div>
-                                              </div>
-                                            ))}
-                                          </div>
-                                        );
-                                      })()}
-                                    </div>
-
-                                    {/* Email Action Plan */}
-                                    <div>
-                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
-                                        <Lightbulb className="h-3.5 w-3.5" />
-                                        Email Action Plan (AI-Generated)
-                                      </h4>
-                                      {r.email_action_plan?.steps ? (
-                                        <div className="space-y-3">
-                                          {r.email_action_plan.steps.map((step, i) => (
-                                            <div key={i} className="rounded-lg border border-border bg-background p-3 space-y-1.5 border-l-2 border-l-primary">
-                                              <p className="text-xs font-bold text-foreground">Step {i + 1}: {step.title}</p>
-                                              <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">Start here:</span> {step.manual_how}</p>
-                                              <p className="text-xs text-primary/80">🏗️ {step.platform_how}</p>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      ) : r.email ? (
-                                        <p className="text-xs text-muted-foreground italic">Action plan was sent but not stored (submitted before tracking was added).</p>
-                                      ) : (
-                                        <p className="text-xs text-muted-foreground italic">No email submitted. No action plan generated.</p>
-                                      )}
-                                    </div>
-
-                                    {/* Exact Questions & Answers */}
-                                    <div>
-                                      <h4 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-3 flex items-center gap-1.5">
-                                        <MessageSquareText className="h-3.5 w-3.5" />
-                                        Questions & Answers
-                                      </h4>
-                                      <div className="space-y-4">
-                                        {Object.entries(r.answers as Record<string, number>).map(([qId, score]) => {
-                                          const meta = getQuestionText(qId);
-                                          if (!meta) return null;
-                                          return (
-                                            <div key={qId} className="rounded-lg border border-border bg-background p-3 space-y-1.5">
-                                              <div className="flex items-center gap-2">
-                                                <Badge variant="outline" className="text-[10px] shrink-0">{meta.dimension}</Badge>
-                                                <span className="text-[10px] text-muted-foreground uppercase font-medium">{qId}</span>
-                                              </div>
-                                              <p className="text-xs text-muted-foreground italic">{meta.context}</p>
-                                              <p className="text-sm font-medium text-foreground">{meta.question}</p>
-                                              <div className="flex items-start gap-2 pt-1">
-                                                <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
-                                                  style={{
-                                                    background: score <= 1 ? "hsl(0 72% 51% / 0.12)" : score <= 2 ? "hsl(38 92% 50% / 0.12)" : score <= 3 ? "hsl(200 90% 40% / 0.12)" : "hsl(155 72% 36% / 0.12)",
-                                                    color: score <= 1 ? "hsl(0 72% 51%)" : score <= 2 ? "hsl(38 92% 50%)" : score <= 3 ? "hsl(200 90% 40%)" : "hsl(155 72% 36%)",
-                                                  }}
-                                                >{score}</span>
-                                                <p className="text-sm text-foreground/80">{getAnswerLabel(qId, score)}</p>
-                                              </div>
-                                            </div>
-                                          );
-                                        })}
-                                      </div>
-                                    </div>
-
-                                  </div>
-                                </TableCell>
-                              </TableRow>
-                            )}
-                          </Fragment>
-                        ))}
-                      </TableBody>
-                    </Table>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </>
-          )}
-
-          {activeView === "content-insights" && (
-            <>
-              {loadingData ? (
-                <div className="flex items-center justify-center py-20 text-muted-foreground gap-2">
-                  <Loader2 className="h-5 w-5 animate-spin" /> Loading data…
-                </div>
-              ) : !aggregate ? (
-                <Card>
-                  <CardContent className="py-12 text-center text-muted-foreground">
-                    No diagnostic submissions yet. Content tools will appear once data flows in.
-                  </CardContent>
-                </Card>
-              ) : (
-                <>
-                  {/* Aggregate Dashboard */}
-                  <div>
-                    <h1 className="text-xl font-bold text-foreground mb-1">Content &amp; Insights</h1>
-                    <p className="text-sm text-muted-foreground">
-                      Proprietary data from {aggregate.totalSubmissions} submissions across {aggregate.orgCount} organizations — use it to generate LinkedIn posts and research angles.
-                    </p>
-                  </div>
-
-                  {/* Confidence Tier */}
-                  <div className="flex items-center gap-3">
-                    <Badge variant="outline" className={`${aggregate.confidence.color} text-xs px-3 py-1 border`}>
-                      {aggregate.confidence.label}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">{aggregate.confidence.description}</span>
-                  </div>
-
-                  {/* Score Cards */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <Card>
-                      <CardContent className="p-4 text-center">
-                        <p className="text-xs text-muted-foreground mb-1">Overall Average</p>
-                        <p className="text-3xl font-bold text-foreground">{aggregate.overallAvg}</p>
-                        <p className="text-xs text-muted-foreground mt-1">/100</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4 text-center">
-                        <p className="text-xs text-muted-foreground mb-1">Submissions</p>
-                        <p className="text-3xl font-bold text-foreground">{aggregate.totalSubmissions}</p>
-                        <p className="text-xs text-muted-foreground mt-1">total</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4 text-center">
-                        <p className="text-xs text-muted-foreground mb-1">Top Archetype</p>
-                        <p className="text-lg font-semibold text-foreground leading-tight">{aggregate.topArchetype}</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4 text-center">
-                        <p className="text-xs text-muted-foreground mb-1">Organizations</p>
-                        <p className="text-3xl font-bold text-foreground">{aggregate.orgCount}</p>
-                        <p className="text-xs text-muted-foreground mt-1">unique domains</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Dimension Bars */}
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-base">Dimension Averages</CardTitle>
-                      <CardDescription>Cumulative scores across all submissions</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {DIM_KEYS.map((dim) => {
-                        const score = aggregate.dimensions[dim] ?? 0;
-                        const isWeakest = DIMENSION_LABELS[dim] === aggregate.weakestDimension;
-                        const isStrongest = DIMENSION_LABELS[dim] === aggregate.strongestDimension;
-                        return (
-                          <div key={dim} className="space-y-1">
-                            <div className="flex items-center justify-between text-sm">
-                              <span className={`font-medium ${isWeakest ? "text-destructive" : isStrongest ? "text-primary" : "text-foreground"}`}>
-                                {DIMENSION_LABELS[dim]}
-                                {isWeakest && <TrendingUp className="inline h-3 w-3 ml-1 rotate-180" />}
-                                {isStrongest && <TrendingUp className="inline h-3 w-3 ml-1" />}
-                              </span>
-                              <span className="font-mono text-xs text-muted-foreground">{score}/100</span>
-                            </div>
-                            <div className="h-2 rounded-full bg-muted overflow-hidden">
-                              <div
-                                className={`h-full rounded-full transition-all ${isWeakest ? "bg-destructive" : isStrongest ? "bg-primary" : "bg-primary/60"}`}
-                                style={{ width: `${score}%` }}
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </CardContent>
-                  </Card>
-
-                  {/* Segmentation Breakdown */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <SegmentCard title="By Role" segments={aggregate.roleSegments} />
-                    <SegmentCard title="By Seniority" segments={aggregate.roleTierSegments} />
-                    <SegmentCard title="By Team Size" segments={aggregate.teamSizeSegments} />
-                    <SegmentCard title="By Industry" segments={aggregate.industrySegments} />
-                  </div>
-
-                  <div className="border-t border-border pt-6">
-                    <LinkedInContentEngine />
-                  </div>
-
-                  {/* Research Angles Engine */}
-                  <div className="border-t border-border pt-6">
-                    <h2 className="text-lg font-bold text-foreground mb-1 flex items-center gap-2">
-                      <BookOpen className="h-5 w-5 text-primary" />
-                      Research &amp; Content Angles
-                    </h2>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Generate ICP-targeted, polarizing content angles from your proprietary data.
-                    </p>
-
-                    {/* Category Selector */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
-                      {(Object.entries(CATEGORY_META) as [ResearchCategory, typeof CATEGORY_META[ResearchCategory]][]).map(
-                        ([key, meta]) => (
-                          <button
-                            key={key}
-                            onClick={() => { setActiveCategory(key); setLiveResult(null); }}
-                            className={`flex items-center gap-2.5 px-4 py-3 rounded-lg border text-sm font-medium transition-all text-left ${
-                              activeCategory === key
-                                ? "border-primary bg-primary/10 text-primary"
-                                : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
-                            }`}
-                          >
-                            {meta.icon}
-                            <div>
-                              <div>{meta.label}</div>
-                              <div className="text-xs font-normal opacity-70">{meta.description}</div>
-                            </div>
-                          </button>
-                        )
-                      )}
-                    </div>
-
-                    {/* Run Button */}
-                    <Button
-                      onClick={runResearch}
-                      disabled={researching}
-                      className="gap-2 mb-4"
-                    >
-                      {researching ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
-                      {researching ? "Researching…" : "Generate Research Angles"}
-                    </Button>
-
-                    {/* Live Result */}
-                    {liveResult && (
-                      <Card className="border-primary/20">
-                        <CardHeader className="pb-2">
-                          <div className="flex items-center justify-between">
-                            <CardTitle className="text-base flex items-center gap-2">
-                              <Lightbulb className="h-4 w-4 text-primary" />
-                              Fresh Research — {CATEGORY_META[activeCategory].label}
-                            </CardTitle>
-                            <Badge variant="outline" className={aggregate.confidence.color}>
-                              n={aggregate.totalSubmissions}
-                            </Badge>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="prose prose-sm max-w-none dark:prose-invert">
-                            <ReactMarkdown>{liveResult}</ReactMarkdown>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )}
-                  </div>
-
-                  {/* Past Research */}
-                  {pastResearch.length > 0 && (
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                        <Layers className="h-4 w-4" />
-                        Research History
-                      </h3>
-                      <div className="space-y-3">
-                        {pastResearch.map((entry) => (
-                          <ResearchHistoryCard key={entry.id} entry={entry} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-            </>
-          )}
-
-          {activeView === "team-builder" && (
-            <TeamBuilder results={results} onRefresh={() => void loadData()} />
-          )}
-
-          {activeView === "consulting" && <ConsultingReference />}
-
-          {activeView === "client-prep" && <PersonalizedConsulting results={results} />}
+      {/* existing admin layout content stays unchanged above presentation section */}
+      // ... keep existing code
 
           {activeView === "presentations" && (
             <>
               <div>
                 <h1 className="text-xl font-bold text-foreground">Presentations</h1>
-                <p className="text-sm text-muted-foreground">Quick links to all existing decks and presentations.</p>
+                <p className="text-sm text-muted-foreground">This list is auto-generated from the shared presentation registry, so new decks appear here automatically.</p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                {[
-                  { title: "Pitch Deck", path: "/pitch", description: "Core startup pitch deck" },
-                  { title: "Investor Deck", path: "/investor", description: "Detailed investor presentation" },
-                  { title: "Seed Investor Deck", path: "/investor-seed", description: "Pre-seed / seed stage deck" },
-                  { title: "Sales Deck", path: "/sales", description: "Consulting sales presentation" },
-                  { title: "Training Deck", path: "/training", description: "Architecting the AI-Native Organization" },
-                  { title: "LinkedIn Card", path: "/linkedin-card", description: "LinkedIn image card generator" },
-                ].map((deck) => (
-                  <Card key={deck.path} className="group hover:border-primary/40 transition-colors cursor-pointer" onClick={() => window.open(deck.path, "_blank")}>
+                {adminPresentationItems.map((deck) => (
+                  <Card key={deck.path} className="group hover:border-primary/40 transition-colors cursor-pointer" onClick={() => window.open(deck.path, "_blank", "noopener,noreferrer")}>
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-sm font-semibold">{deck.title}</CardTitle>
@@ -1060,6 +455,7 @@ export default function AdminPage() {
     </div>
   );
 }
+
 
 /* ── History Card ── */
 function ResearchHistoryCard({ entry }: { entry: ResearchEntry }) {

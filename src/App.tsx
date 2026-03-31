@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { AppLayout } from "@/components/AppLayout";
+import { presentationRoutes } from "@/data/presentationRegistry";
 import Index from "./pages/Index";
 import AuthPage from "./pages/Auth";
 import WorkbooksPage from "./pages/Workbooks";
@@ -18,17 +19,7 @@ import ResourceEditorPage from "./pages/ResourceEditor";
 import NotFound from "./pages/NotFound";
 import AdminTrials from "./pages/AdminTrials";
 import AdminPage from "./pages/Admin";
-import PitchDeck from "./pages/PitchDeck";
-import InvestorDeck from "./pages/InvestorDeck";
-import SeedInvestorDeck from "./pages/SeedInvestorDeck";
 import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
-
-import ConsultingTrainingDeck from "./pages/ConsultingTrainingDeck";
-import PharmaDeck from "./pages/PharmaDeck";
-import PharmaAuditDeck from "./pages/PharmaAuditDeck";
-import PharmaPitchDeck from "./pages/PharmaPitchDeck";
-import ConsultingDeck from "./pages/ConsultingDeck";
-import LinkedInImageCard from "./pages/LinkedInImageCard";
 import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import UseCasesPage from "./pages/marketing/UseCases";
@@ -72,7 +63,7 @@ const App = () => (
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
 
-            {/* Marketing — product-led homepage */}
+            {/* Marketing - product-led homepage */}
             <Route path="/" element={<HomePage />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
@@ -85,13 +76,13 @@ const App = () => (
             <Route path="/admin/manage" element={<AdminPage />} />
             <Route path="/admin/insights" element={<Navigate to="/admin/manage" replace />} />
 
-            {/* Retired pages — redirect to home */}
+            {/* Retired pages - redirect to home */}
             <Route path="/extract" element={<Navigate to="/" replace />} />
             <Route path="/extract/test" element={<Navigate to="/" replace />} />
             <Route path="/solutions/audit" element={<SecurityAuditPage />} />
             <Route path="/sprint" element={<Navigate to="/" replace />} />
 
-            {/* Legacy redirects — all flatten to single hops */}
+            {/* Legacy redirects - all flatten to single hops */}
             <Route path="/codify" element={<Navigate to="/" replace />} />
             <Route path="/scale" element={<Navigate to="/" replace />} />
             <Route path="/product" element={<Navigate to="/" replace />} />
@@ -101,17 +92,14 @@ const App = () => (
             <Route path="/advisory" element={<Navigate to="/" replace />} />
             <Route path="/enterprise" element={<Navigate to="/" replace />} />
             <Route path="/consulting" element={<Navigate to="/sales" replace />} />
+            <Route path="/pharma" element={<Navigate to="/pharma-pitch" replace />} />
+            <Route path="/pharma-audit" element={<Navigate to="/pharma-pitch" replace />} />
 
             {/* Decks */}
-            <Route path="/pitch" element={<PitchDeck />} />
-            <Route path="/investor" element={<InvestorDeck />} />
-            <Route path="/investor-seed" element={<SeedInvestorDeck />} />
-            <Route path="/sales" element={<ConsultingDeck />} />
-            <Route path="/transform" element={<ConsultingTrainingDeck />} />
-            <Route path="/pharma" element={<PharmaDeck />} />
-            <Route path="/pharma-audit" element={<PharmaAuditDeck />} />
-            <Route path="/pharma-pitch" element={<PharmaPitchDeck />} />
-            <Route path="/linkedin-card" element={<LinkedInImageCard />} />
+            {presentationRoutes.map((presentation) => {
+              const Component = presentation.component;
+              return <Route key={presentation.id} path={presentation.path} element={<Component />} />;
+            })}
 
             {/* App */}
             <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
@@ -125,7 +113,6 @@ const App = () => (
             <Route path="/research-templates" element={<ProtectedRoute blockedRoles={["operator"]}><ResearchTemplatesPage /></ProtectedRoute>} />
             <Route path="/admin/trials" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminTrials /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
-            <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
@@ -135,3 +122,4 @@ const App = () => (
 );
 
 export default App;
+
