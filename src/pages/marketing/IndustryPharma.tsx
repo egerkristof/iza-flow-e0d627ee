@@ -79,15 +79,15 @@ export default function IndustryPharmaPage() {
       {/* Hero */}
       <section className="pt-16 pb-14 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <SectionTag label="Pharma & Life Sciences" icon={<Pill className="w-3.5 h-3.5" />} />
+          <SectionTag label="Regulated Science & Manufacturing" icon={<Pill className="w-3.5 h-3.5" />} />
           <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-[1.1]">
             The Operating System for
             <br />
-            <span className="text-primary">Medicine Lifecycle Management.</span>
+            <span className="text-primary">Regulated Lifecycle Management.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
-            Your teams keep their expertise. AI gives them speed. LIZA makes sure nothing falls 
-            through the cracks — from R&D through post-market surveillance.
+            Whether it's pharma, food safety, or lab governance — your teams keep their expertise. 
+            AI gives them speed. LIZA makes sure nothing falls through the cracks.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
