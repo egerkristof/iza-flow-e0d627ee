@@ -23,6 +23,8 @@ import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 import HomePage from "./pages/marketing/Home";
 import ManifestoPage from "./pages/marketing/Manifesto";
 import UseCasesPage from "./pages/marketing/UseCases";
+import IndustriesPage from "./pages/marketing/Industries";
+import IndustryPharmaPage from "./pages/marketing/IndustryPharma";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
