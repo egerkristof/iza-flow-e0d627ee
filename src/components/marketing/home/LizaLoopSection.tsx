@@ -45,12 +45,14 @@ export function LizaLoopSection() {
       <section id="liza-loop" className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <SectionTag label="How it works" icon={<Layers className="w-3 h-3" />} />
+            <SectionTag label="LIZA OS" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              The loop that makes it stick.
+              Where you define knowledge.<br />
+              <span className="text-muted-foreground font-bold text-2xl md:text-3xl">Where AI executes from it.</span>
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Three steps. One loop. Your team's best thinking becomes the default for everyone.
+              LIZA OS is the platform where your organization's expertise becomes executable —
+              so every AI workflow runs on what your best people actually know.
             </p>
           </div>
 
