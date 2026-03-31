@@ -43,15 +43,16 @@ export function CapabilitiesSection() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <SectionTag label="The new core unit" />
+          <SectionTag label="The missing layer" />
           <h2 className="text-2xl md:text-3xl font-black mb-3 text-foreground">
-            Knowledge that compounds.<br />
-            <span className="text-muted-foreground font-bold text-xl md:text-2xl">Execution that scales.</span>
+            No AI tool has solved<br />
+            <span className="text-muted-foreground font-bold text-xl md:text-2xl">how to define knowledge well.</span>
           </h2>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            In AI-native teams, a few knowledge designers encode domain expertise —
-            playbooks, judgment, compliance rules — and hand off execution to humans and AI working together.
-            Every document exists to be executed. Every execution feeds back into knowledge.
+            Current tools help you chat, search, or automate — but none of them capture
+            what your organization actually knows: the playbooks, the judgment calls,
+            the compliance rules, the hard-won expertise. LIZA turns all of that into
+            executable knowledge — structured, governed, and ready to compound.
           </p>
         </div>
 
