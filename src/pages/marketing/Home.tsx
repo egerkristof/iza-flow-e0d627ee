@@ -1,9 +1,9 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
-import { PathSelector } from "@/components/marketing/home/PathSelector";
+import { CoreLoopStrip } from "@/components/marketing/home/CoreLoopStrip";
+import { TwoEntryPoints } from "@/components/marketing/home/TwoEntryPoints";
 import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
 import { LizaLoopSection } from "@/components/marketing/home/LizaLoopSection";
-import { TwoTrackValue } from "@/components/marketing/home/TwoTrackValue";
 import { CategoryComparison } from "@/components/marketing/home/CategoryComparison";
 import { GuideSection } from "@/components/marketing/home/GuideSection";
 import { FAQSection } from "@/components/marketing/home/FAQSection";
@@ -14,11 +14,11 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
-      <PathSelector />
-      <ThreeReasonsSection />
+      <CoreLoopStrip />
+      <TwoEntryPoints />
       <SectionDivider />
+      <ThreeReasonsSection />
       <LizaLoopSection />
-      <TwoTrackValue />
       <SectionDivider />
       <CategoryComparison />
       <GuideSection />
