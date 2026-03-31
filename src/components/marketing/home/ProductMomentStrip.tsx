@@ -3,18 +3,18 @@ import { Upload, FileText, Users } from "lucide-react";
 const MOMENTS = [
   {
     icon: <Upload className="w-4 h-4" />,
-    step: "Upload a document",
-    result: "LIZA extracts structured playbooks, decision logic, and compliance rules — automatically.",
+    step: "1. Define your standards",
+    result: "Capture playbooks, best practices, and decision logic from your best people — so the organization never loses what works.",
   },
   {
     icon: <FileText className="w-4 h-4" />,
-    step: "Your team opens a workbook",
-    result: "Your standards are already there. Governance is built in. No copy-pasting, no guessing.",
+    step: "2. Your team executes with them built in",
+    result: "When anyone opens a workbook, your standards are already there. No copy-pasting, no guessing, no drift.",
   },
   {
     icon: <Users className="w-4 h-4" />,
-    step: "Someone discovers a better approach",
-    result: "It feeds back into the shared capability. The whole team levels up — without a meeting.",
+    step: "3. Everyone learns, the system improves",
+    result: "When someone discovers a better way, it feeds back into the shared standard. The whole team levels up — without a meeting.",
   },
 ];
 
@@ -23,7 +23,7 @@ export function ProductMomentStrip() {
     <section className="py-16 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <p className="text-center text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-8">
-          What it feels like on Monday morning
+          What this looks like on Monday morning
         </p>
         <div className="grid md:grid-cols-3 gap-6">
           {MOMENTS.map((m, i) => (
