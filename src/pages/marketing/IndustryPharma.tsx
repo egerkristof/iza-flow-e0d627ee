@@ -257,6 +257,49 @@ export default function IndustryPharmaPage() {
         </div>
       </section>
 
+      {/* The Pattern Repeats */}
+      <section className="pb-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-foreground">
+            The pattern repeats across regulated industries
+          </h2>
+          <p className="text-sm text-muted-foreground text-center mb-8 max-w-lg mx-auto">
+            Wherever standards meet execution, LIZA governs the AI in between. Pharma is our deepest vertical, but the lifecycle architecture is the same.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {ADJACENT_VERTICALS.map((v) => (
+              <div
+                key={v.title}
+                className="rounded-2xl border p-6"
+                style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div
+                    className="w-9 h-9 rounded-lg flex items-center justify-center"
+                    style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
+                  >
+                    {v.icon}
+                  </div>
+                  <h3 className="font-bold text-foreground">{v.title}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-3">{v.desc}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {v.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[11px] font-medium px-2 py-0.5 rounded-md"
+                      style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="pb-20 px-6">
         <div className="max-w-2xl mx-auto text-center">
