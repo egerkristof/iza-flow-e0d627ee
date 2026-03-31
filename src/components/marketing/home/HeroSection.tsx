@@ -22,15 +22,14 @@ export function HeroSection() {
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
-          Your team gets wildly different
+          AI that serves your expertise.
           <br />
-          results from AI.
-          <br />
-          <span className="text-primary">Fix that.</span>
+          <span className="text-primary">Not just your efficiency.</span>
         </h1>
 
-        <p className="text-base md:text-lg font-semibold mb-6 text-muted-foreground">
-          LIZA OS: The management layer for <span className="text-primary">AI-native operations.</span>
+        <p className="text-base md:text-lg font-semibold mb-6 text-muted-foreground max-w-xl mx-auto">
+          Your hardest operations depend on judgment, not just speed.
+          LIZA OS puts AI in service of the work that matters most.
         </p>
 
         {/* CTAs */}
