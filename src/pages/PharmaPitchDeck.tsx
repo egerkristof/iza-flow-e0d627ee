@@ -492,22 +492,19 @@ function Act1_Architecture() {
       <ActBar activeAct={1} slideLabel="THE GxP OPERATING SYSTEM" />
       <div className="relative z-10 flex flex-col justify-center h-full px-[120px] pt-[90px]">
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: `hsl(${C})`, lineHeight: 1.05 }}>
-          LIZA: The <span style={{ color: `hsl(${ACCENT})` }}>Context Engine</span> Behind Human-Centred AI
+          LIZA: The <span style={{ color: `hsl(${ACCENT})` }}>Operating System</span> for AI-Native MLM
         </h2>
-        <p className="mb-4" style={{ fontSize: 19, color: `hsl(${MUT})`, maxWidth: 900, lineHeight: 1.55 }}>
-          Software development has ALM to govern how code moves from design to production. LIZA does the same for the medicine lifecycle: it feeds AI the right standards, the right procedures, and the right organisational memory so every output is not only fast, but accurate, traceable, and fully governed.
-        </p>
-        <p className="mb-6" style={{ fontSize: 16, color: `hsl(${ACCENT})`, maxWidth: 900, lineHeight: 1.5, fontWeight: 600 }}>
-          With LIZA, the work your teams already do well becomes AI-accelerated, without losing the rigour, traceability, or human oversight that regulators require.
+        <p className="mb-6" style={{ fontSize: 19, color: `hsl(${ACCENT})`, maxWidth: 900, lineHeight: 1.5, fontWeight: 600 }}>
+          Your teams keep their expertise. AI gives them speed. LIZA makes sure nothing falls through the cracks.
         </p>
 
         {/* Architecture flow */}
         <div className="grid grid-cols-4 gap-5 mb-5">
           {[
-            { step: "Capture", desc: "Record how your senior QA leads, regulatory experts, and process owners actually make decisions. LIZA turns this tribal knowledge into structured context that AI can reason with.", color: ACCENT, icon: <Search size={20} /> },
-            { step: "Organise", desc: "Group procedures, quality standards, and decision criteria into governed sets. When AI runs a task, LIZA injects only the relevant context, so outputs reflect your actual standards.", color: TEAL, icon: <Layers size={20} /> },
-            { step: "Execute", desc: "AI drafts documents, maps evidence, and prepares submissions at machine speed. Qualified staff review and approve through built-in quality gates. Full traceability on every action.", color: GOLD, icon: <Zap size={20} /> },
-            { step: "Learn", desc: "Each completed workflow feeds back into the system. Evidence gaps, exceptions, and successful patterns update the knowledge base, so AI gets smarter with every cycle.", color: CORAL, icon: <Brain size={20} /> },
+            { step: "Capture", desc: "Record how your best people actually make decisions. Turn tribal knowledge into structured, reusable logic.", color: ACCENT, icon: <Search size={20} /> },
+            { step: "Organise", desc: "Group standards, procedures, and decision criteria into governed sets that AI receives as context for every task.", color: TEAL, icon: <Layers size={20} /> },
+            { step: "Execute", desc: "AI drafts at machine speed. Qualified staff review and approve through built-in quality gates. Full traceability throughout.", color: GOLD, icon: <Zap size={20} /> },
+            { step: "Learn", desc: "Every completed workflow feeds back. Exceptions and successful patterns update the knowledge base automatically.", color: CORAL, icon: <Brain size={20} /> },
           ].map((p, i) => (
             <div key={p.step} className="rounded-2xl border p-5 flex flex-col relative" style={{ borderColor: `hsl(${p.color} / 0.2)`, background: `hsl(${p.color} / 0.03)` }}>
               {i < 3 && (
