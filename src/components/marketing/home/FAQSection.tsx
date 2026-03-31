@@ -9,36 +9,36 @@ import {
 
 const FAQS = [
   {
-    q: "My team already uses ChatGPT and Claude daily. What does LIZA add?",
-    a: "Those tools make individuals fast. LIZA makes the team consistent. It connects everyone's AI usage through shared, living playbooks that update as fast as your team learns.",
+    q: "How is this different from workflow automation (Zapier, Make, n8n)?",
+    a: "Automation platforms execute tasks. LIZA OS governs how work gets done. It encodes your domain expertise — decision logic, quality standards, compliance rules — into capabilities that humans and AI execute together. Automation is a subset of what LIZA orchestrates.",
   },
   {
-    q: "We've built custom GPTs and prompt templates. How is this different?",
-    a: "Custom GPTs are static: someone builds them, others copy them, they go stale. LIZA's playbooks are living, enforced automatically, and evolve from real execution.",
+    q: "We already have SOPs and documented processes. Why do we need this?",
+    a: "Because documentation without execution is filing. Your SOPs exist in one place, execution happens in another, and there's no governance connecting them. LIZA makes documentation executable — every standard is enforced in the workflow itself.",
   },
   {
-    q: "Our best practices change fast with AI. Can LIZA keep up?",
-    a: "That's exactly the problem LIZA solves. When someone discovers a better approach mid-engagement, it feeds back into the shared playbook immediately. No quarterly review needed.",
+    q: "Does this replace our existing AI tools and platforms?",
+    a: "No. LIZA OS is the governance layer above your tools. It ensures your team's standards, playbooks, and compliance requirements are enforced regardless of which AI model, automation, or tool someone uses.",
   },
   {
-    q: "Does LIZA replace our existing AI tools?",
-    a: "No. LIZA is the management layer above your AI tools. It ensures your team's standards are injected into every session, regardless of which model someone prefers.",
+    q: "How do departments adopt this without creating a central bottleneck?",
+    a: "That's the core design principle. Capabilities are modular — each department composes the ones they need into their workflows. Same governance standards, independent execution. The Head of AI sets strategy, not day-to-day operations.",
   },
   {
-    q: "How does leadership get visibility without micromanaging?",
-    a: "LIZA gives leaders a bird's-eye view of execution quality, playbook health, and team learning velocity without sitting in every session.",
+    q: "How do we measure adoption across the organization?",
+    a: "LIZA tracks which capabilities are deployed, how they're being used, and what's compounding across teams. You get measurable adoption metrics — not just 'we rolled out a tool' but '% of core workflows governed by capabilities.'",
   },
   {
-    q: "How long until my team is actually using it?",
-    a: "Most teams are operational within a day. Upload existing docs, LIZA extracts structured playbooks automatically. No 6-week onboarding.",
+    q: "How does this handle compliance and auditing?",
+    a: "Governance is built into every capability — quality gates, approval flows, compliance checks. Auditing happens during execution, not after. Every decision point is traceable back to the governing standard.",
   },
   {
-    q: "What does it cost?",
-    a: "We're in private beta. The first month is free for every team. After that, pricing scales with team size. Book a discovery call and we'll walk you through it.",
+    q: "How long until we're operational?",
+    a: "Most teams are operational within days. Upload existing documents, LIZA extracts structured capabilities automatically. No 6-week onboarding, no custom integration project.",
   },
   {
-    q: "Is my team's knowledge secure?",
-    a: "Yes. Your playbooks stay in your organisation's environment. We don't train on your data.",
+    q: "Is our knowledge secure?",
+    a: "Yes. Your domain expertise stays in your organization's environment. We don't train on your data.",
   },
 ];
 

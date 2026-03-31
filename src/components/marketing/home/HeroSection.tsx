@@ -1,9 +1,27 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Brain, Layers, Zap } from "lucide-react";
 import { CAL_URL } from "./shared";
 
+const PILLARS = [
+  {
+    icon: <Brain className="w-4 h-4" />,
+    title: "Expertise becomes infrastructure",
+    desc: "Your standards, SOPs, and senior judgment become governed capabilities — not static docs nobody opens.",
+  },
+  {
+    icon: <Layers className="w-4 h-4" />,
+    title: "Every workflow compounds",
+    desc: "What one team learns feeds back into the system. Knowledge accumulates across departments, not just individuals.",
+  },
+  {
+    icon: <Zap className="w-4 h-4" />,
+    title: "Departments become self-sufficient",
+    desc: "No central bottleneck. Each team operates with governed autonomy — same standards, independent execution.",
+  },
+];
+
 const PROOF_POINTS = [
-  "15 years of methodology refinement",
+  "15 years building execution infrastructure",
   "15+ clients across 8 countries",
 ];
 
@@ -22,19 +40,19 @@ export function HeroSection() {
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
-          Domain expertise drives the AI.
+          Make every team execute
           <br />
-          <span className="text-primary">Not the other way around.</span>
+          <span className="text-primary">like your best team.</span>
         </h1>
 
         <p className="text-lg md:text-xl font-semibold mb-6 text-muted-foreground max-w-2xl mx-auto">
-          The management layer for AI-native teams.
+          The governance layer for AI-native organizations.
         </p>
 
-        <p className="text-sm md:text-base mb-8 text-muted-foreground/80 max-w-xl mx-auto">
-          Most AI platforms are built for developers and focused on automation.
-          LIZA OS puts subject matter experts in control — they design workflows,
-          set governance, and scale what actually matters.
+        <p className="text-sm md:text-base mb-8 text-muted-foreground/80 max-w-xl mx-auto leading-relaxed">
+          LIZA OS turns your domain expertise into governed, modular capabilities
+          that scale across departments — without a central bottleneck.
+          Every workflow compounds. Every team stays aligned.
         </p>
 
         {/* CTAs */}
@@ -62,7 +80,7 @@ export function HeroSection() {
         </div>
 
         {/* Inline trust proof */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-14">
           {PROOF_POINTS.map((point, i) => (
             <span key={i} className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               {i > 0 && (
@@ -73,6 +91,25 @@ export function HeroSection() {
               )}
               {point}
             </span>
+          ))}
+        </div>
+
+        {/* Value pillars — integrated into hero */}
+        <div className="grid md:grid-cols-3 gap-6 text-left">
+          {PILLARS.map((p) => (
+            <div key={p.title}>
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center mb-2.5"
+                style={{
+                  background: "hsl(var(--primary) / 0.1)",
+                  color: "hsl(var(--primary))",
+                }}
+              >
+                {p.icon}
+              </div>
+              <h3 className="text-sm font-bold text-foreground mb-1">{p.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+            </div>
           ))}
         </div>
       </div>

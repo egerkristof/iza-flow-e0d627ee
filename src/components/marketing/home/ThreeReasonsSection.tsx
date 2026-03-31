@@ -3,44 +3,44 @@ import { X, Check, AlertTriangle } from "lucide-react";
 const REASONS = [
   {
     number: "01",
-    claim: "No way to define and enforce how AI work gets done.",
+    claim: "Expertise stays locked in people.",
     explanation:
-      "Your playbooks exist in wikis and shared drives. They never reach the actual AI session. Every person improvises their own version of \"best practice\" inside ChatGPT.",
+      "Your best operators carry the playbooks in their heads. When they're unavailable, quality drops. When they leave, it walks out the door. No amount of documentation fixes this — because documentation without execution is just filing.",
     align: "left" as const,
     comparisons: [
-      { label: "Notion / Confluence", status: "no" as const, why: "Static pages nobody opens mid-task" },
-      { label: "Prompt libraries", status: "no" as const, why: "Copy-paste, no enforcement or versioning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Living playbooks enforced in every session" },
+      { label: "SOPs & Wikis", status: "no" as const, why: "Written once, never reaches the workflow" },
+      { label: "Training programs", status: "partial" as const, why: "Transfers knowledge, not ongoing governance" },
+      { label: "LIZA OS", status: "yes" as const, why: "Expertise encoded into executable capabilities" },
     ],
   },
   {
     number: "02",
-    claim: "No way to execute as a team inside AI.",
+    claim: "No governance layer across departments.",
     explanation:
-      "Everyone prompts alone. Insights stay in individual chats. What one person learns never reaches the rest. Your team operates as a collection of soloists, not a unit.",
+      "Every team picks their own tools, builds their own processes, defines their own standards. You get tool sprawl, inconsistent quality, and no way to measure adoption. The Head of AI becomes a firefighter, not a strategist.",
     align: "right" as const,
     comparisons: [
-      { label: "ChatGPT / Claude", status: "no" as const, why: "Individual silos, zero shared context" },
-      { label: "Slack / Teams", status: "partial" as const, why: "Conversations about AI, not inside AI" },
-      { label: "LIZA OS", status: "yes" as const, why: "Team-wide context injected in every session" },
+      { label: "Automation platforms", status: "partial" as const, why: "Automates tasks, doesn't govern quality" },
+      { label: "AI tool policies", status: "no" as const, why: "Rules on paper, no enforcement in execution" },
+      { label: "LIZA OS", status: "yes" as const, why: "Governed standards enforced across every team" },
     ],
   },
   {
     number: "03",
-    claim: "No way to learn and compound across engagements.",
+    claim: "Nothing compounds across teams.",
     explanation:
-      "Every session starts from scratch. Nothing compounds. Your system never gets smarter no matter how many projects your team completes.",
+      "What Sales discovers never reaches Marketing. What one project team learns doesn't upgrade the next engagement. You have adoption metrics but no learning infrastructure. Every department starts from scratch.",
     align: "left" as const,
     comparisons: [
-      { label: "Retrospective tools", status: "partial" as const, why: "Depends on who writes post-mortems" },
-      { label: "AI memory features", status: "no" as const, why: "Per-user, no team-level learning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Continuous learning loops across the team" },
+      { label: "Retrospectives", status: "partial" as const, why: "Insights captured, rarely operationalized" },
+      { label: "Knowledge bases", status: "no" as const, why: "Static repositories that decay over time" },
+      { label: "LIZA OS", status: "yes" as const, why: "Execution feeds back into capabilities automatically" },
     ],
   },
 ];
 
 function StatusBadge({ status }: { status: "yes" | "no" | "partial" }) {
-  if (status === "yes") {
+  if (status === "yes")
     return (
       <span
         className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full"
@@ -49,8 +49,7 @@ function StatusBadge({ status }: { status: "yes" | "no" | "partial" }) {
         <Check className="w-3 h-3" /> Yes
       </span>
     );
-  }
-  if (status === "no") {
+  if (status === "no")
     return (
       <span
         className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full"
@@ -59,7 +58,6 @@ function StatusBadge({ status }: { status: "yes" | "no" | "partial" }) {
         <X className="w-3 h-3" /> No
       </span>
     );
-  }
   return (
     <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
       <AlertTriangle className="w-3 h-3" /> Partial
@@ -81,7 +79,7 @@ function ComparisonRow({ label, status, why, isLiza }: { label: string; status: 
       </span>
       <div className="flex items-center gap-3 shrink-0">
         <StatusBadge status={status} />
-        <span className="text-[11px] text-muted-foreground/60 max-w-[160px] text-right leading-tight hidden sm:block">{why}</span>
+        <span className="text-[11px] text-muted-foreground/60 max-w-[180px] text-right leading-tight hidden sm:block">{why}</span>
       </div>
     </div>
   );
@@ -89,10 +87,8 @@ function ComparisonRow({ label, status, why, isLiza }: { label: string; status: 
 
 function ReasonBand({ number, claim, explanation, align, comparisons }: typeof REASONS[number]) {
   const isRight = align === "right";
-
   return (
     <div className={`flex flex-col ${isRight ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-16 items-start`}>
-      {/* Text side */}
       <div className="flex-1 min-w-0">
         <span
           className="text-5xl md:text-6xl font-black leading-none block mb-4"
@@ -107,8 +103,6 @@ function ReasonBand({ number, claim, explanation, align, comparisons }: typeof R
           {explanation}
         </p>
       </div>
-
-      {/* Comparison side */}
       <div className="flex-1 min-w-0 w-full space-y-2">
         {comparisons.map((c) => (
           <ComparisonRow key={c.label} {...c} isLiza={c.label === "LIZA OS"} />
@@ -126,32 +120,29 @@ export function ThreeReasonsSection() {
       style={{ background: "hsl(var(--card))" }}
     >
       <div className="max-w-5xl mx-auto">
-        {/* Section header */}
         <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The root cause</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
           Three structural gaps
           <br />
-          <span className="text-muted-foreground">no AI tool was built to close.</span>
+          <span className="text-muted-foreground">that no tool was built to close.</span>
         </h2>
         <p className="text-base text-muted-foreground max-w-lg mb-20">
-          It's not the people. It's not the AI. It's the missing infrastructure between them.
+          It's not the people. It's not the AI. It's the missing infrastructure between expertise and execution.
         </p>
 
-        {/* Alternating bands */}
         <div className="space-y-20 md:space-y-28">
           {REASONS.map((r) => (
             <ReasonBand key={r.number} {...r} />
           ))}
         </div>
 
-        {/* Closing bridge */}
         <div className="mt-24 text-center">
           <div className="inline-block">
             <p className="text-2xl md:text-3xl font-black text-foreground mb-2">
               LIZA OS closes all three.
             </p>
             <p className="text-base text-muted-foreground">
-              One platform to define, execute, and adapt AI usage. As a team.
+              One platform to capture expertise, govern execution, and compound what works — across every department.
             </p>
           </div>
         </div>
