@@ -137,7 +137,7 @@ function SlideTitle() {
               style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
               <Pill size={28} style={{ color: `hsl(${ACCENT})` }} />
             </div>
-            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>LIZA OS FOR PHARMA</span>
+             <span className="font-bold tracking-[0.15em]" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>LIZA OS FOR REGULATED LIFECYCLES</span>
           </div>
 
           <h1 className="font-black mb-6" style={{ fontSize: 64, color: "hsl(0 0% 100%)", lineHeight: 1.0 }}>
