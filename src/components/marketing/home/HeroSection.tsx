@@ -33,6 +33,7 @@ export function HeroSection() {
 
         <p className="text-sm md:text-base mb-8 text-muted-foreground/80 max-w-lg mx-auto leading-relaxed">
           Turn domain expertise into governed capabilities that scale across departments.
+          Whether you're a team of five defining your first playbooks or an enterprise scaling across departments.
         </p>
 
         {/* CTAs */}
@@ -60,7 +61,7 @@ export function HeroSection() {
         </div>
 
         {/* Next steps + trust */}
-        <p className="text-xs text-muted-foreground/60 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           Get your score → Book a 20-min debrief → Walk away with an action plan.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
