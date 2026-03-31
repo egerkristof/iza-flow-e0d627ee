@@ -8,8 +8,8 @@ const MOMENTS = [
   },
   {
     icon: <FileText className="w-4 h-4" />,
-    step: "2. Your team executes with them built in",
-    result: "When anyone opens a workbook, your standards are already there. No copy-pasting, no guessing, no drift.",
+    step: "2. Your team moves at the speed of AI — safely",
+    result: "When anyone works with AI, your standards are already built in. They get full AI speed with full governance. No drift, no risk.",
   },
   {
     icon: <Users className="w-4 h-4" />,
