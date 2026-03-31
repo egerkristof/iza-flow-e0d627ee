@@ -1208,7 +1208,7 @@ function Act3_Summary() {
 
           <h2 className="font-black mb-8" style={{ fontSize: 52, color: "hsl(0 0% 100%)", lineHeight: 1.05 }}>
             The operating system
-            <br />for medicine lifecycle
+            <br />for regulated lifecycle
             <br /><span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>management.</span>
           </h2>
 
