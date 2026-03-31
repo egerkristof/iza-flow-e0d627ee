@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight, Shield, Pill, FileCheck, Activity, CheckCircle2,
   Microscope, FlaskConical, Truck, Factory, HeartPulse, Globe,
-  BookOpen, Eye, RefreshCw, Zap, AlertTriangle, Clock
+  BookOpen, Eye, RefreshCw, Zap, AlertTriangle, Clock,
+  Beaker, Apple, Stethoscope
 } from "lucide-react";
 import { SectionTag, CAL_URL } from "@/components/marketing/home/shared";
 
