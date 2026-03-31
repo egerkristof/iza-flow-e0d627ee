@@ -1,24 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Brain, Layers, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CAL_URL } from "./shared";
-
-const PILLARS = [
-  {
-    icon: <Brain className="w-4 h-4" />,
-    title: "Expertise becomes infrastructure",
-    desc: "Your standards, SOPs, and senior judgment become governed capabilities — not static docs nobody opens.",
-  },
-  {
-    icon: <Layers className="w-4 h-4" />,
-    title: "Every workflow compounds",
-    desc: "What one team learns feeds back into the system. Knowledge accumulates across departments, not just individuals.",
-  },
-  {
-    icon: <Zap className="w-4 h-4" />,
-    title: "Departments become self-sufficient",
-    desc: "No central bottleneck. Each team operates with governed autonomy — same standards, independent execution.",
-  },
-];
 
 const PROOF_POINTS = [
   "15 years building execution infrastructure",
@@ -40,39 +22,18 @@ export function HeroSection() {
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
-          Make every team execute
+          Your best people's judgment.
           <br />
-          <span className="text-primary">like your best team.</span>
+          <span className="text-primary">Every workflow. At scale.</span>
         </h1>
 
         <p className="text-lg md:text-xl font-semibold mb-6 text-muted-foreground max-w-2xl mx-auto">
           The governance layer for AI-native organizations.
         </p>
 
-        <p className="text-sm md:text-base mb-10 text-muted-foreground/80 max-w-xl mx-auto leading-relaxed">
-          LIZA OS turns your domain expertise into governed, modular capabilities
-          that scale across departments — without a central bottleneck.
-          Built for organizations scaling AI adoption across multiple teams.
+        <p className="text-sm md:text-base mb-8 text-muted-foreground/80 max-w-lg mx-auto leading-relaxed">
+          Turn domain expertise into governed capabilities that scale across departments.
         </p>
-
-        {/* Value pillars — above CTAs */}
-        <div className="grid md:grid-cols-3 gap-6 text-left mb-10">
-          {PILLARS.map((p) => (
-            <div key={p.title}>
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center mb-2.5"
-                style={{
-                  background: "hsl(var(--primary) / 0.1)",
-                  color: "hsl(var(--primary))",
-                }}
-              >
-                {p.icon}
-              </div>
-              <h3 className="text-sm font-bold text-foreground mb-1">{p.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-            </div>
-          ))}
-        </div>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
@@ -98,7 +59,7 @@ export function HeroSection() {
           </a>
         </div>
 
-        {/* Next steps clarity + trust proof */}
+        {/* Next steps + trust */}
         <p className="text-xs text-muted-foreground/60 mb-4">
           Get your score → Book a 20-min debrief → Walk away with an action plan.
         </p>
