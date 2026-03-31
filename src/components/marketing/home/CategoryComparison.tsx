@@ -1,12 +1,12 @@
 import { SectionTag, GradientText } from "./shared";
 import { X, Minus, Check, GitCompare } from "lucide-react";
 
-const COLS = [
+const COLS: { key: "legacy" | "automation" | "km" | "liza"; label: string; sub: string; isLiza?: boolean }[] = [
   { key: "legacy", label: "Legacy Processes", sub: "SOPs, training, wikis" },
   { key: "automation", label: "Automation", sub: "Zapier, Make, n8n" },
   { key: "km", label: "Knowledge Mgmt", sub: "Notion, Confluence" },
   { key: "liza", label: "LIZA OS", sub: "Governance layer", isLiza: true },
-] as const;
+];
 
 const ROWS = [
   { feature: "Turn domain expertise into executable capabilities", legacy: false, automation: "partial", km: false, liza: true },
