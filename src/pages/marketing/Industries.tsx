@@ -5,7 +5,7 @@ import { SectionTag } from "@/components/marketing/home/shared";
 
 const INDUSTRIES = [
   {
-    slug: "pharma",
+    slug: "regulated",
     icon: <Pill className="w-6 h-6" />,
     title: "Regulated Science & Manufacturing",
     lifecycle: "Product & Quality Lifecycle Management",
