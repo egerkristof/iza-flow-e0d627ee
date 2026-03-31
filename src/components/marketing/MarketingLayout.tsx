@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 const NAV_ITEMS = [
   { label: "LIZA OS", href: "/" },
   { label: "Use Cases", href: "/use-cases" },
+  { label: "Industries", href: "/industries" },
   { label: "Manifesto", href: "/manifesto" },
   { label: "Diagnostic", href: "/diagnostic" },
 ];

@@ -68,6 +68,8 @@ const App = () => (
             {/* Marketing - product-led homepage */}
             <Route path="/" element={<HomePage />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
+            <Route path="/industries" element={<IndustriesPage />} />
+            <Route path="/industries/pharma" element={<IndustryPharmaPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
             <Route path="/diagnostic" element={<DiagnosticPage />} />
