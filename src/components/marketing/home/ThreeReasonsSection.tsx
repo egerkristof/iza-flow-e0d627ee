@@ -127,7 +127,7 @@ export function ThreeReasonsSection() {
             LIZA OS closes all three.
           </p>
           <p className="text-base text-muted-foreground mb-6">
-            One platform to define, execute, and adapt AI usage. As a team.
+            One platform to capture expertise, govern execution, and compound what works.
           </p>
           <Link
             to="/diagnostic"

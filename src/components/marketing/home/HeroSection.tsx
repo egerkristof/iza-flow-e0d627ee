@@ -61,7 +61,7 @@ export function HeroSection() {
         </div>
 
         {/* Next steps + trust */}
-        <p className="text-xs text-muted-foreground/60 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           Get your score → Book a 20-min debrief → Walk away with an action plan.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
