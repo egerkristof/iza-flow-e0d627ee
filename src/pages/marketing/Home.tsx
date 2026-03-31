@@ -14,13 +14,13 @@ export default function HomePage() {
   return (
     <MarketingLayout>
       <HeroSection />
-      <SectionDivider />
-      <ThreeReasonsSection />
-      <CategoryComparison />
+      <ProductMomentStrip />
       <SectionDivider />
       <CapabilitiesSection />
       <LizaLoopSection />
-      <ProductMomentStrip />
+      <SectionDivider />
+      <ThreeReasonsSection />
+      <CategoryComparison />
       <GuideSection />
       <FAQSection />
       <BetaCTASection />
