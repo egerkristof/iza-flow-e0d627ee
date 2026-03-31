@@ -117,7 +117,7 @@ function ActBar({ activeAct, slideLabel }: { activeAct: number; slideLabel: stri
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// TITLE SLIDE — LIZA as the GxP Operating System
+// TITLE SLIDE - LIZA as the GxP Operating System
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideTitle() {
@@ -149,7 +149,7 @@ function SlideTitle() {
           </h1>
 
           <p className="mb-10" style={{ fontSize: 22, color: `hsl(0 0% 100% / 0.6)`, lineHeight: 1.55, maxWidth: 750 }}>
-            From research to release — encode the judgment that makes
+            From research to release, encode the judgment that makes
             <br />good practice <em>actually</em> practiced. Across every team, site, and function.
           </p>
 
@@ -207,7 +207,7 @@ function SectionDivider({ actNum, title, subtitle, icon, color }: {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 1 — THE GxP CHALLENGE (Problem + Platform Response)
+// ACT 1 - THE GxP CHALLENGE (Problem + Platform Response)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Act1_LifecycleChallenge() {
@@ -224,7 +224,7 @@ function Act1_LifecycleChallenge() {
           </h2>
 
           <p className="mb-6" style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 700 }}>
-            Every stage of the medicine lifecycle — from discovery through manufacturing to post-market surveillance — depends on <strong style={{ color: `hsl(${C})` }}>expert judgment executed consistently</strong> across teams, sites, and regulatory jurisdictions. Today, that judgment lives in people's heads.
+            Every stage of the medicine lifecycle, from discovery through manufacturing to post-market surveillance, depends on <strong style={{ color: `hsl(${C})` }}>expert judgment executed consistently</strong> across teams, sites, and regulatory jurisdictions. Today, that judgment lives in people's heads.
           </p>
 
           <div className="flex items-center gap-1 mb-6">
@@ -253,7 +253,7 @@ function Act1_LifecycleChallenge() {
               { v: "EUR 2.6B", l: "Average cost to bring one drug to market", src: "Deloitte Centre for Regulatory Strategy, 2023" },
               { v: "~90%", l: "Of clinical candidates fail before approval", src: "FDA Clinical Trial Analysis, 2022" },
               { v: "40%+", l: "Senior expertise projected to turn over by 2030", src: "BLS workforce aging projections" },
-              { v: "3x", l: "Faster AI output — but inconsistency scales faster too", src: "Industry observation" },
+              { v: "3x", l: "Faster AI output, but inconsistency scales faster too", src: "Industry observation" },
             ].map(s => (
               <div key={s.l} className="rounded-xl px-5 py-3.5" style={{ background: BG2, border: `1px solid hsl(${ACCENT} / 0.12)` }}>
                 <p className="font-black" style={{ fontSize: 26, color: `hsl(${ACCENT})` }}>{s.v}</p>
@@ -267,7 +267,7 @@ function Act1_LifecycleChallenge() {
         <div className="w-[360px] flex-shrink-0 rounded-2xl p-6" style={{ background: `hsl(${DARK})` }}>
           <p className="font-bold mb-4" style={{ fontSize: 18, color: "hsl(0 0% 100%)" }}>GxP: "Good Practice" standards</p>
           <p className="mb-5" style={{ fontSize: 15, color: `hsl(0 0% 100% / 0.65)`, lineHeight: 1.5 }}>
-            GMP, GCP, GLP, GDP, GVP — each governs a lifecycle stage. Each demands consistent execution of documented procedures. Each is ultimately a <strong style={{ color: `hsl(${ACCENT})` }}>judgment management problem</strong>.
+            GMP, GCP, GLP, GDP, GVP: each governs a lifecycle stage. Each demands consistent execution of documented procedures. Each is ultimately a <strong style={{ color: `hsl(${ACCENT})` }}>judgment management problem</strong>.
           </p>
           <div className="space-y-2.5">
             {[
@@ -304,7 +304,7 @@ function Act1_StandardsGap() {
           </h2>
 
           <p className="mb-6" style={{ fontSize: 21, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 700 }}>
-            Pharma companies invest heavily in documenting processes. But documents describe <em>what</em> to do — not <em>how</em> to think. The gap between the SOP and the decision is where <strong style={{ color: `hsl(${C})` }}>quality failures, audit findings, and inconsistency</strong> live.
+            Pharma companies invest heavily in documenting processes. But documents describe <em>what</em> to do, not <em>how</em> to think. The gap between the SOP and the decision is where <strong style={{ color: `hsl(${C})` }}>quality failures, audit findings, and inconsistency</strong> live.
           </p>
 
           <p className="mb-8" style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 700, fontStyle: "italic" }}>
@@ -314,8 +314,8 @@ function Act1_StandardsGap() {
           <div className="grid grid-cols-3 gap-4">
             {[
               { title: "Document", desc: "SOPs, policies, guidelines exist everywhere. Read-and-understood signatures prove nothing about execution quality.", color: RED, icon: <BookOpen size={20} /> },
-              { title: "Judgment Gap", desc: "How your best QA lead interprets an ambiguous deviation vs. a junior analyst — that's what determines outcomes.", color: GOLD, icon: <Brain size={20} /> },
-              { title: "Inconsistency", desc: "Same process, 8 sites, 8 different outcomes. The variation isn't in the document — it's in the interpretation.", color: RED, icon: <BarChart3 size={20} /> },
+              { title: "Judgment Gap", desc: "How your best QA lead interprets an ambiguous deviation vs. a junior analyst. That is what determines outcomes.", color: GOLD, icon: <Brain size={20} /> },
+              { title: "Inconsistency", desc: "Same process, 8 sites, 8 different outcomes. The variation isn't in the document. It is in the interpretation.", color: RED, icon: <BarChart3 size={20} /> },
             ].map(b => (
               <div key={b.title} className="rounded-xl p-5" style={{ background: `hsl(${b.color} / 0.04)`, border: `1px solid hsl(${b.color} / 0.15)` }}>
                 <div className="flex items-center gap-2 mb-2" style={{ color: `hsl(${b.color})` }}>
@@ -368,7 +368,7 @@ function Act1_WhyNow() {
                 <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})` }}>The AI Acceleration Trap</p>
               </div>
               <p style={{ fontSize: 17, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-                Teams adopting AI tools generate outputs <em>faster</em> — but without encoded judgment, they produce <strong style={{ color: `hsl(${C})` }}>inconsistent work at higher speed</strong>. Without gate enforcement, AI in pharma is a regulatory event waiting to happen.
+                Teams adopting AI tools generate outputs <em>faster</em>, but without encoded judgment, they produce <strong style={{ color: `hsl(${C})` }}>inconsistent work at higher speed</strong>. Without gate enforcement, AI in pharma is a regulatory event waiting to happen.
               </p>
             </div>
 
@@ -378,7 +378,7 @@ function Act1_WhyNow() {
                 <p className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>The Expertise Cliff</p>
               </div>
               <p style={{ fontSize: 17, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
-                Senior pharma expertise is projected to see <strong style={{ color: `hsl(${C})` }}>significant turnover by 2030</strong>. When they leave, decades of judgment leave with them — and it's not in the SOPs. The window to encode that judgment is closing.
+                Senior pharma expertise is projected to see <strong style={{ color: `hsl(${C})` }}>significant turnover by 2030</strong>. When they leave, decades of judgment leave with them, and none of it is in the SOPs. The window to encode that judgment is closing.
               </p>
             </div>
 
@@ -417,7 +417,7 @@ function Act1_Options() {
       label: "Option A", title: "More Documentation", verdict: "Increases divergence risk", color: RED,
       points: [
         "More SOPs = more places for inconsistent interpretation",
-        "Documents describe what to do — not how to think",
+        "Documents describe what to do, not how to think",
         "'Read and understood' signatures prove nothing about execution quality",
       ],
     },
@@ -432,7 +432,7 @@ function Act1_Options() {
     {
       label: "Option C", title: "GRC / QMS Platforms", verdict: "Manages records, not judgment", color: GOLD,
       points: [
-        "Track what happened — don't guide what should happen",
+        "Track what happened. Does not guide what should happen",
         "Excellent at compliance documentation, weak at decision support",
         "No mechanism to encode expert reasoning into execution",
       ],
@@ -495,16 +495,16 @@ function Act1_Architecture() {
           LIZA: The <span style={{ color: `hsl(${ACCENT})` }}>System of Reasoning</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 19, color: `hsl(${MUT})`, maxWidth: 900, lineHeight: 1.55 }}>
-          Like ALM (Application Lifecycle Management) for software, LIZA provides the management layer for the medicine lifecycle — encoding expert judgment into executable, auditable protocols that compound institutional knowledge.
+          Software development has ALM (Application Lifecycle Management) to govern how code moves from design to production. LIZA does the same for the medicine lifecycle: it turns expert judgment into governed, repeatable workflows that every team can execute consistently.
         </p>
 
         {/* Architecture flow */}
         <div className="grid grid-cols-4 gap-5 mb-5">
           {[
-            { step: "Extract", desc: "Capture how your best people think — the heuristics, decision patterns, and judgment calls that aren't in the SOP.", color: ACCENT, icon: <Search size={20} /> },
-            { step: "Structure", desc: "Organise into Context Bundles: Playbooks, Procedures, Directives, Principles, Knowledge — versioned and governed.", color: TEAL, icon: <Layers size={20} /> },
-            { step: "Execute", desc: "Deploy as Protocols with gate enforcement. AI drafts, humans decide. Full traceability on every action.", color: GOLD, icon: <Zap size={20} /> },
-            { step: "Remember", desc: "Every execution teaches the system. Exceptions captured, patterns detected, protocols evolved. Institutional memory compounds.", color: CORAL, icon: <Brain size={20} /> },
+            { step: "Capture", desc: "Record how your senior QA leads, regulatory experts, and process owners actually make decisions. Turn tribal knowledge into documented, reusable decision logic.", color: ACCENT, icon: <Search size={20} /> },
+            { step: "Organise", desc: "Group related procedures, quality standards, reference documents, and decision criteria into governed sets. Version-controlled, role-scoped, and audit-ready.", color: TEAL, icon: <Layers size={20} /> },
+            { step: "Execute", desc: "Run step-by-step workflows with built-in quality gates. AI prepares drafts and evidence; qualified staff review and approve. Full traceability on every action.", color: GOLD, icon: <Zap size={20} /> },
+            { step: "Learn", desc: "Each completed workflow feeds back into the system. Evidence gaps, process exceptions, and successful patterns update the knowledge base automatically.", color: CORAL, icon: <Brain size={20} /> },
           ].map((p, i) => (
             <div key={p.step} className="rounded-2xl border p-5 flex flex-col relative" style={{ borderColor: `hsl(${p.color} / 0.2)`, background: `hsl(${p.color} / 0.03)` }}>
               {i < 3 && (
@@ -524,19 +524,19 @@ function Act1_Architecture() {
           ))}
         </div>
 
-        {/* Context Bundle example */}
+        {/* What a governed set contains */}
         <div className="flex items-center gap-4">
           <div className="rounded-xl px-5 py-3" style={{ background: `hsl(${DARK})` }}>
-            <p className="font-bold mb-1.5" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Example: Context Bundle</p>
+            <p className="font-bold mb-1.5" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>What a governed set contains</p>
             <div className="flex gap-2">
-              {["Playbook", "Procedure", "Directive", "Principle", "Knowledge"].map(t => (
+              {["Process workflows", "Quality standards", "Decision criteria", "Reference documents", "Training materials"].map(t => (
                 <span key={t} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 11, background: `hsl(${ACCENT} / 0.15)`, color: `hsl(${ACCENT})` }}>{t}</span>
               ))}
             </div>
           </div>
           <div className="rounded-xl px-5 py-3 flex-1" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
             <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
-              Human-in-the-loop always: AI proposes, qualified personnel approve. Full audit trail with e-signature.
+              Human-in-the-loop always: AI prepares, qualified personnel review and approve. Full audit trail with e-signature.
             </p>
           </div>
         </div>
@@ -556,7 +556,7 @@ function Act1_TrustCompliance() {
           Built for trust. <span style={{ color: `hsl(${TEAL})` }}>Designed for qualification.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 19, color: `hsl(${MUT})`, maxWidth: 900, lineHeight: 1.55 }}>
-          LIZA is architected from the ground up in line with modern data protection and security standards. Our design thinking anticipates the specific compliance requirements of regulated industries — with a clear path to formal qualification.
+          LIZA is architected from the ground up in line with modern data protection and security standards. Our design thinking anticipates the specific compliance requirements of regulated industries, with a clear path to formal qualification.
         </p>
 
         <div className="grid grid-cols-3 gap-5 mb-5">
@@ -617,7 +617,7 @@ function Act1_TrustCompliance() {
             <p className="font-semibold mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>BUILT IN</p>
             <div className="space-y-2.5">
               {[
-                "AI proposes, human decides — always",
+                "AI proposes, human decides, always",
                 "ALCOA+ data integrity principles embedded",
                 "AI model versioning and change control",
                 "Training data provenance and explainability",
@@ -635,7 +635,7 @@ function Act1_TrustCompliance() {
 
         <div className="rounded-xl px-6 py-3" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${C})`, lineHeight: 1.5 }}>
-            <span style={{ color: `hsl(${TEAL})` }}>Our approach:</span> Build with compliance DNA from day one. The architecture decisions that matter most — immutable trails, role enforcement, versioned outputs — are foundation, not afterthought. Formal GxP qualification is a structured path on existing architecture, not a rebuild.
+            <span style={{ color: `hsl(${TEAL})` }}>Our approach:</span> Build with compliance DNA from day one. The architecture decisions that matter most (immutable trails, role enforcement, versioned outputs) are foundation, not afterthought. Formal GxP qualification is a structured path on existing architecture, not a rebuild.
           </p>
         </div>
       </div>
@@ -656,7 +656,7 @@ function Act1_Integrations() {
             <br /><span style={{ color: `hsl(${ACCENT})` }}>No migration.</span>
           </h2>
           <p className="mb-6" style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 650 }}>
-            LIZA integrates through the <strong style={{ color: `hsl(${C})` }}>Model Context Protocol (MCP)</strong> — an open standard for tool connectivity. Today we connect to a broad range of enterprise tools. Pharma-specific system connectors are on our near-term roadmap.
+            LIZA integrates through the <strong style={{ color: `hsl(${C})` }}>Model Context Protocol (MCP)</strong>, an open standard for tool connectivity. Today we connect to a broad range of enterprise tools. Pharma-specific system connectors are on our near-term roadmap.
           </p>
 
           <div className="grid grid-cols-2 gap-5 mb-5">
@@ -705,7 +705,7 @@ function Act1_Integrations() {
               <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>Model Context Protocol (MCP)</p>
             </div>
             <p style={{ fontSize: 14, color: `hsl(${MUT})`, lineHeight: 1.45 }}>
-              MCP is an open standard for connecting AI systems to tools and data sources. It means we can add new connectors rapidly without custom integration work — including pharma-specific systems as demand crystallises.
+              MCP is an open standard for connecting AI systems to tools and data sources. It means we can add new connectors rapidly without custom integration work, including pharma-specific systems as demand crystallises.
             </p>
           </div>
         </div>
@@ -730,7 +730,7 @@ function Act1_Integrations() {
           </div>
           <div className="mt-5 rounded-lg p-3" style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
             <p className="text-center font-semibold" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>
-              LIZA augments your QMS — it doesn't replace it
+              LIZA augments your QMS. It does not replace it
             </p>
           </div>
         </div>
@@ -741,7 +741,7 @@ function Act1_Integrations() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 2 — THE AUDIT ENGINE (Specific proof point)
+// ACT 2 - THE AUDIT ENGINE (Specific proof point)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Act2_AuditCrisis() {
@@ -757,7 +757,7 @@ function Act2_AuditCrisis() {
           </h2>
 
           <p className="mb-6" style={{ fontSize: 20, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 700 }}>
-            In every regulated industry — pharma, security, finance — audits are the mechanism that protects quality at the edges of the operation. And in every industry, they follow the same pattern: <strong style={{ color: `hsl(${C})` }}>search, read, draft, format, repeat</strong>. Hundreds of times per audit.
+            In every regulated industry (pharma, security, finance), audits are the mechanism that protects quality at the edges of the operation. And in every industry, they follow the same pattern: <strong style={{ color: `hsl(${C})` }}>search, read, draft, format, repeat</strong>. Hundreds of times per audit.
           </p>
 
           <div className="grid grid-cols-2 gap-4">
@@ -793,7 +793,7 @@ function Act2_AuditCrisis() {
           </div>
           <div className="rounded-lg p-3" style={{ background: `hsl(${GOLD} / 0.15)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
             <p className="text-center font-semibold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
-              This is where LIZA's architecture proves itself first — then extends across the lifecycle.
+              This is where LIZA's architecture proves itself first, then extends across the lifecycle.
             </p>
           </div>
         </div>
@@ -813,7 +813,7 @@ function Act2_DualCapability() {
           Two capabilities. <span style={{ color: `hsl(${GOLD})` }}>One engine.</span>
         </h2>
         <p className="mb-7" style={{ fontSize: 20, color: `hsl(${MUT})`, maxWidth: 900 }}>
-          LIZA doesn't just run audits faster — it keeps you inspection-ready every day. Both capabilities share the same knowledge graph and compound over time.
+          LIZA does not just run audits faster. It keeps you inspection-ready every day. Both capabilities share the same knowledge graph and compound over time.
         </p>
 
         <div className="grid grid-cols-2 gap-8 mb-6">
@@ -830,10 +830,10 @@ function Act2_DualCapability() {
             </div>
             <div className="space-y-3 mb-5">
               {[
-                "Connect to knowledge graph — score current state vs audit scope",
+                "Connect to knowledge graph and score current state vs audit scope",
                 "Identify gaps: missing evidence, obsolete documents, weak coverage",
                 "Confidence scoring by clause and requirement area",
-                "Continuous monitoring — readiness score updates as evidence changes",
+                "Continuous monitoring: readiness score updates as evidence changes",
               ].map(p => (
                 <div key={p} className="flex items-start gap-2">
                   <CheckCircle2 size={15} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 3 }} />
@@ -869,7 +869,7 @@ function Act2_DualCapability() {
                 "Ingest audit question sets (Excel) and client documentation",
                 "Auto-match evidence, draft structured answers with citations",
                 "Confidence scoring flags where human review matters most",
-                "Full traceability — every answer links to source documentation",
+                "Full traceability: every answer links to source documentation",
               ].map(p => (
                 <div key={p} className="flex items-start gap-2">
                   <CheckCircle2 size={15} style={{ color: `hsl(${GOLD})`, flexShrink: 0, marginTop: 3 }} />
@@ -920,7 +920,7 @@ function Act2_HowItWorks() {
           {[
             { step: "1", title: "Ingest", desc: "Upload audit question set (Excel) and client documentation. Engine indexes, maps, and cross-references automatically.", color: ACCENT, icon: <FileSearch size={20} /> },
             { step: "2", title: "Execute", desc: "Processes every question: searches evidence, matches documentation, drafts structured answers with citations and confidence scores.", color: GOLD, icon: <Zap size={20} /> },
-            { step: "3", title: "Validate", desc: "QA pass flags low-confidence answers and missing evidence. Auditors review and sign off — not re-do. Immutable evidence snapshots.", color: TEAL, icon: <ShieldCheck size={20} /> },
+            { step: "3", title: "Validate", desc: "QA pass flags low-confidence answers and missing evidence. Auditors review and sign off, not re-do. Immutable evidence snapshots.", color: TEAL, icon: <ShieldCheck size={20} /> },
             { step: "4", title: "Compound", desc: "Evidence gaps become Directives in the knowledge graph. Future audits leverage past patterns. Readiness score improves continuously.", color: CORAL, icon: <Brain size={20} /> },
           ].map((p, i) => (
             <div key={p.title} className="rounded-2xl border p-5 flex flex-col relative" style={{ borderColor: `hsl(${p.color} / 0.2)`, background: `hsl(${p.color} / 0.03)` }}>
@@ -976,7 +976,7 @@ function Act2_Results() {
           <div className="grid grid-cols-2 gap-5 mb-6">
             {[
               { v: "18 → 1.5", l: "Days reduced to hours for first-pass generation", color: TEAL, sub: "N=3 cybersecurity audits, ~800 questions each. Baseline: senior subcontractor working alone." },
-              { v: "84%", l: "First-pass accuracy — vs ~40% with generic AI", color: TEAL, sub: "Measured by qualified reviewer accept rate. 16% required revision (0% critical errors, 16% minor edits)." },
+              { v: "84%", l: "First-pass accuracy, vs ~40% with generic AI", color: TEAL, sub: "Measured by qualified reviewer accept rate. 16% required revision (0% critical errors, 16% minor edits)." },
               { v: "10x", l: "Throughput increase per senior auditor", color: GOLD, sub: "One senior can supervise multiple parallel audits simultaneously." },
               { v: "62→89%", l: "Readiness score improvement over 6 weeks", color: GOLD, sub: "Continuous gap detection identifies evidence decay before it becomes an inspection risk." },
             ].map(s => (
@@ -1014,7 +1014,7 @@ function Act2_Results() {
           </div>
           <div className="rounded-lg p-3" style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
             <p className="text-center font-semibold" style={{ fontSize: 12, color: `hsl(${ACCENT})` }}>
-              GxP pharma pilot planned — same methodology, GMP/vendor qualification audit types
+              GxP pharma pilot planned: same methodology, GMP/vendor qualification audit types
             </p>
           </div>
         </div>
@@ -1025,7 +1025,7 @@ function Act2_Results() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 3 — OPERATING MODEL EXPANSION
+// ACT 3 - OPERATING MODEL EXPANSION
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Act3_ExpansionMap() {
@@ -1132,15 +1132,15 @@ function Act3_DriftOversight() {
             <br />Evolve protocols.
           </h2>
           <p className="mb-6" style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55, maxWidth: 650 }}>
-            LIZA doesn't just enforce. It senses when enforcement isn't enough — when operators deviate for good reasons, the system captures that intelligence and proposes protocol updates.
+            LIZA does not just enforce. It senses when enforcement falls short: when operators deviate for good reasons, the system captures that intelligence and proposes protocol updates.
           </p>
 
           <div className="grid grid-cols-2 gap-5 mb-6">
             {[
               { title: "Drift Heatmap", desc: "Execution consistency by site, team, and protocol step. Instantly see where adherence drops and why.", color: RED, icon: <Gauge size={20} /> },
-              { title: "Exception Capture", desc: "When operators deviate, the system captures narrative context — not just the fact of deviation, but the reasoning.", color: GOLD, icon: <Radio size={20} /> },
+              { title: "Exception Capture", desc: "When operators deviate, the system captures narrative context, not just the fact of deviation, but the reasoning.", color: GOLD, icon: <Radio size={20} /> },
               { title: "Pattern Clustering", desc: "Repeated exceptions in the same area surface as signals. The system proposes new heuristic variants for governed trial.", color: ACCENT, icon: <GitBranch size={20} /> },
-              { title: "Re-encoding Queue", desc: "Protocols that show persistent drift get flagged for expert review and update — keeping the system alive and adaptive.", color: TEAL, icon: <RefreshCw size={20} /> },
+              { title: "Re-encoding Queue", desc: "Protocols that show persistent drift get flagged for expert review and update, keeping the system alive and adaptive.", color: TEAL, icon: <RefreshCw size={20} /> },
             ].map(d => (
               <div key={d.title} className="rounded-xl p-5" style={{ background: `hsl(${d.color} / 0.04)`, border: `1px solid hsl(${d.color} / 0.15)` }}>
                 <div className="flex items-center gap-2 mb-2" style={{ color: `hsl(${d.color})` }}>
@@ -1154,7 +1154,7 @@ function Act3_DriftOversight() {
 
           <div className="rounded-xl px-5 py-4" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.2)` }}>
             <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${C})`, lineHeight: 1.5 }}>
-              <span style={{ color: `hsl(${ACCENT})` }}>Enabling constraints, not rigid enforcement.</span> The system provides structure while sensing when that structure needs to evolve — turning exceptions into organisational intelligence.
+              <span style={{ color: `hsl(${ACCENT})` }}>Enabling constraints, not rigid enforcement.</span> The system provides structure while sensing when that structure needs to evolve, turning exceptions into organisational intelligence.
             </p>
           </div>
         </div>
@@ -1168,7 +1168,7 @@ function Act3_DriftOversight() {
               { step: "3", label: "Patterns clustered across executions", color: ACCENT },
               { step: "4", label: "New heuristic variant proposed", color: TEAL },
               { step: "5", label: "Expert reviews and approves update", color: CORAL },
-              { step: "6", label: "Protocol evolves — governed, versioned", color: TEAL },
+              { step: "6", label: "Protocol evolves: governed, versioned", color: TEAL },
             ].map(item => (
               <div key={item.step} className="flex items-center gap-3 rounded-lg px-4 py-2.5"
                 style={{ background: `hsl(${item.color} / 0.1)`, border: `1px solid hsl(${item.color} / 0.2)` }}>
@@ -1214,7 +1214,7 @@ function Act3_Summary() {
 
           <div className="space-y-3 mb-8">
             {[
-              { num: "1", t: "The standards gap is real — and widening", d: "Inconsistent execution costs billions. AI without governance makes it worse." },
+              { num: "1", t: "The standards gap is real, and widening", d: "Inconsistent execution costs billions. AI without governance makes it worse." },
               { num: "2", t: "Audit is the fastest proof point", d: "18 days to 1.5 hours. 84% first-pass accuracy. Measurable from day one." },
               { num: "3", t: "The platform compounds across the lifecycle", d: "Same architecture handles any judgment-heavy GxP process. Every domain encoded makes the system smarter." },
             ].map(item => (
@@ -1291,27 +1291,27 @@ function Act3_Summary() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const SLIDES = [
-  { id: "title",        title: "Title",                     component: <SlideTitle /> },
-  // Act 1 — The GxP Challenge (7 slides)
-  { id: "act1-divider", title: "Act 1 · The GxP Challenge", component: <SectionDivider actNum={1} title="The GxP Challenge" subtitle="From research to release — why the medicine lifecycle needs an operating system for judgment." icon={<Globe size={36} />} color={ACCENT} /> },
-  { id: "a1-lifecycle", title: "Medicine Lifecycle",         component: <Act1_LifecycleChallenge /> },
-  { id: "a1-gap",       title: "The Standards Gap",          component: <Act1_StandardsGap /> },
-  { id: "a1-why-now",   title: "Why Now",                    component: <Act1_WhyNow /> },
-  { id: "a1-options",   title: "The Options",                component: <Act1_Options /> },
-  { id: "a1-arch",      title: "System of Reasoning",        component: <Act1_Architecture /> },
-  { id: "a1-trust",     title: "Trust & Compliance",         component: <Act1_TrustCompliance /> },
-  { id: "a1-int",       title: "Integration Architecture",   component: <Act1_Integrations /> },
-  // Act 2 — The Audit Engine (5 slides)
-  { id: "act2-divider", title: "Act 2 · The Audit Engine",  component: <SectionDivider actNum={2} title="The Audit Engine" subtitle="Audit protects the edges of quality in every regulated industry. Here's how LIZA makes it 10x faster." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
-  { id: "a2-crisis",    title: "Audit Crisis",               component: <Act2_AuditCrisis /> },
-  { id: "a2-dual",      title: "Prepare + Run",              component: <Act2_DualCapability /> },
-  { id: "a2-how",       title: "How It Works",               component: <Act2_HowItWorks /> },
-  { id: "a2-results",   title: "Proven Results",             component: <Act2_Results /> },
-  // Act 3 — Operating Model (4 slides)
-  { id: "act3-divider", title: "Act 3 · Operating Model",   component: <SectionDivider actNum={3} title="Operating Model" subtitle="From audit entry point to cross-functional medicine lifecycle management." icon={<Pill size={36} />} color={CORAL} /> },
-  { id: "a3-expand",    title: "Expansion Map",              component: <Act3_ExpansionMap /> },
-  { id: "a3-drift",     title: "Drift & Oversight",          component: <Act3_DriftOversight /> },
-  { id: "a3-summary",   title: "Summary & CTA",             component: <Act3_Summary /> },
+  { id: "title",       title: "Title",                    component: <SlideTitle /> },
+  // Act 1 - The GxP Challenge (7 slides)
+  { id: "act1-divider", title: "Act 1 · The GxP Challenge", component: <SectionDivider actNum={1} title="The GxP Challenge" subtitle="From research to release: why the medicine lifecycle needs an operating system for judgment." icon={<Globe size={36} />} color={ACCENT} /> },
+  { id: "a1-lifecycle", title: "Medicine Lifecycle",        component: <Act1_LifecycleChallenge /> },
+  { id: "a1-gap",      title: "The Standards Gap",         component: <Act1_StandardsGap /> },
+  { id: "a1-why-now",  title: "Why Now",                   component: <Act1_WhyNow /> },
+  { id: "a1-options",  title: "The Options",               component: <Act1_Options /> },
+  { id: "a1-arch",     title: "System of Reasoning",       component: <Act1_Architecture /> },
+  { id: "a1-trust",    title: "Trust & Compliance",        component: <Act1_TrustCompliance /> },
+  { id: "a1-int",      title: "Integration Architecture",  component: <Act1_Integrations /> },
+  // Act 2 - The Audit Engine (5 slides)
+  { id: "act2-divider", title: "Act 2 · The Audit Engine", component: <SectionDivider actNum={2} title="The Audit Engine" subtitle="Audit protects the edges of quality in every regulated industry. Here's how LIZA makes it 10x faster." icon={<ClipboardCheck size={36} />} color={GOLD} /> },
+  { id: "a2-crisis",   title: "Audit Crisis",              component: <Act2_AuditCrisis /> },
+  { id: "a2-dual",     title: "Prepare + Run",             component: <Act2_DualCapability /> },
+  { id: "a2-how",      title: "How It Works",              component: <Act2_HowItWorks /> },
+  { id: "a2-results",  title: "Proven Results",            component: <Act2_Results /> },
+  // Act 3 - Operating Model (4 slides)
+  { id: "act3-divider", title: "Act 3 · Operating Model",  component: <SectionDivider actNum={3} title="Operating Model" subtitle="From audit entry point to cross-functional medicine lifecycle management." icon={<Pill size={36} />} color={CORAL} /> },
+  { id: "a3-expand",   title: "Expansion Map",             component: <Act3_ExpansionMap /> },
+  { id: "a3-drift",    title: "Drift & Oversight",         component: <Act3_DriftOversight /> },
+  { id: "a3-summary",  title: "Summary & CTA",            component: <Act3_Summary /> },
 ];
 
 const CHROME_BG = "hsl(200 15% 97%)";
@@ -1448,7 +1448,7 @@ export default function PharmaPitchDeck() {
     return (
       <div className="min-h-screen p-8" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between mb-6 max-w-7xl mx-auto">
-          <h2 className="text-xl font-bold" style={{ color: `hsl(${C})` }}>All Slides — Pharma MLM Pitch</h2>
+          <h2 className="text-xl font-bold" style={{ color: `hsl(${C})` }}>All Slides: Pharma MLM Pitch</h2>
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(false)} style={{ color: `hsl(${MUT})` }}>
             <X size={18} className="mr-1" /> Close
           </Button>
@@ -1476,7 +1476,7 @@ export default function PharmaPitchDeck() {
         style={{ background: CHROME_BG, borderColor: CHROME_BORDER }}>
         <div className="flex items-center gap-3">
           <span className="font-bold text-sm" style={{ color: `hsl(${ACCENT})` }}>LIZA OS</span>
-          <span className="text-xs" style={{ color: `hsl(${MUT})` }}>Medicine Lifecycle Management — 3-Act Deck ({SLIDES.length} slides)</span>
+          <span className="text-xs" style={{ color: `hsl(${MUT})` }}>Medicine Lifecycle Management, 3-Act Deck ({SLIDES.length} slides)</span>
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} style={{ color: `hsl(${MUT})` }}>
