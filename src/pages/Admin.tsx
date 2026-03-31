@@ -422,33 +422,375 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-background">
-      {/* existing admin layout content stays unchanged above presentation section */}
-      // ... keep existing code
+    <div className="flex min-h-screen flex-col bg-background md:flex-row">
+      <aside className="w-full border-b border-border bg-muted/20 md:w-72 md:border-b-0 md:border-r">
+        <div className="flex items-center justify-between border-b border-border px-4 py-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              <span className="text-base font-bold text-foreground">Admin</span>
+            </div>
+            <p className="mt-1 text-xs text-muted-foreground">Operations, insights, and presentation control</p>
+          </div>
+          <Button variant="ghost" size="sm" className="gap-2" onClick={handleSignOut}>
+            <LogOut className="h-4 w-4" />
+            <span className="hidden sm:inline">Sign out</span>
+          </Button>
+        </div>
+
+        <div className="grid gap-1 p-3">
+          {sidebarItems.map((item) => {
+            const active = activeView === item.key;
+            return (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => setActiveView(item.key)}
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors"
+              >
+                <div
+                  className={active ? "text-primary" : "text-muted-foreground"}
+                >
+                  {item.icon}
+                </div>
+                <span className={active ? "font-semibold text-foreground" : "text-muted-foreground"}>{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </aside>
+
+      <main className="flex-1">
+        <div className="flex items-center justify-between border-b border-border px-6 py-4">
+          <div>
+            <p className="text-sm font-medium text-foreground">Admin Management Panel</p>
+            <p className="text-xs text-muted-foreground">Live diagnostics, research, and presentation inventory</p>
+          </div>
+          <Button variant="outline" size="sm" className="gap-2" onClick={() => void loadData()} disabled={loadingData}>
+            {loadingData ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+            Refresh
+          </Button>
+        </div>
+
+        <div className="space-y-6 p-6">
+          {activeView === "members" && (
+            <div className="space-y-6">
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Members</h1>
+                <p className="text-sm text-muted-foreground">Invite teammates and review current member roles.</p>
+              </div>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Invite member</CardTitle>
+                  <CardDescription>Send an invitation and assign the initial role.</CardDescription>
+                </CardHeader>
+                <CardContent className="grid gap-4 md:grid-cols-[1fr_180px_auto]">
+                  <div className="space-y-2">
+                    <Label htmlFor="invite-email">Email</Label>
+                    <Input id="invite-email" type="email" placeholder="name@company.com" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Role</Label>
+                    <Select value={inviteRole} onValueChange={setInviteRole}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="operator">Operator</SelectItem>
+                        <SelectItem value="manager">Manager</SelectItem>
+                        <SelectItem value="architect">Architect</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex items-end">
+                    <Button className="gap-2" onClick={handleInvite} disabled={inviting || !inviteEmail.trim()}>
+                      {inviting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                      Invite
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Current members</CardTitle>
+                  <CardDescription>{profiles.length} profiles synced from the workspace</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Roles</TableHead>
+                        <TableHead>User ID</TableHead>
+                        <TableHead>Created</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {profiles.map((profile) => (
+                        <TableRow key={profile.user_id}>
+                          <TableCell>
+                            <div>
+                              <p className="font-medium text-foreground">{profile.display_name || "Unnamed member"}</p>
+                              <p className="text-xs text-muted-foreground">{profile.avatar_url || "No avatar set"}</p>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-wrap gap-1">
+                              {getRolesForUser(profile.user_id).length ? getRolesForUser(profile.user_id).map((role) => (
+                                <Badge key={role} variant="secondary">{role}</Badge>
+                              )) : <Badge variant="outline">No role</Badge>}
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-mono text-xs text-muted-foreground">{profile.user_id}</TableCell>
+                          <TableCell className="text-sm text-muted-foreground">{format(new Date(profile.created_at), "MMM d, yyyy")}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {activeView === "diagnostics" && (
+            <div className="space-y-6">
+              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <h1 className="text-xl font-bold text-foreground">Diagnostics</h1>
+                  <p className="text-sm text-muted-foreground">Live respondent submissions with drill-down details.</p>
+                </div>
+                <div className="w-full md:w-80">
+                  <Label htmlFor="diagnostic-search" className="mb-2 block">Search</Label>
+                  <Input
+                    id="diagnostic-search"
+                    placeholder="Name, email, company, role, archetype"
+                    value={diagnosticSearch}
+                    onChange={(e) => setDiagnosticSearch(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                {results
+                  .filter((result) => {
+                    const q = diagnosticSearch.trim().toLowerCase();
+                    if (!q) return true;
+                    return [
+                      result.email,
+                      result.company_name,
+                      result.respondent_role,
+                      result.role_tier,
+                      result.industry,
+                      result.industry_refined,
+                      result.archetype,
+                    ].some((value) => value?.toLowerCase().includes(q));
+                  })
+                  .map((result) => {
+                    const expanded = expandedId === result.id;
+                    return (
+                      <Card key={result.id}>
+                        <CardHeader className="pb-3">
+                          <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                            <div className="space-y-1">
+                              <CardTitle className="text-base">{result.email || "Anonymous submission"}</CardTitle>
+                              <CardDescription>
+                                {result.company_name || "Unknown company"} · {result.respondent_role || "Unknown role"} · {format(new Date(result.created_at), "MMM d, yyyy h:mm a")}
+                              </CardDescription>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge variant="secondary">{result.archetype}</Badge>
+                              <Badge variant="outline">{result.overall_score}/100</Badge>
+                              <Button variant="ghost" size="sm" onClick={() => setExpandedId(expanded ? null : result.id)}>
+                                {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                              </Button>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        {expanded && (
+                          <CardContent className="space-y-6 border-t border-border pt-4">
+                            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+                              {Object.entries(result.scores).map(([key, value]) => (
+                                <div key={key} className="rounded-lg border border-border bg-muted/30 p-3">
+                                  <p className="text-xs font-medium text-muted-foreground">{SHORT_LABELS[key] || key}</p>
+                                  <p className="mt-1 text-lg font-semibold text-foreground">{value}/100</p>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="space-y-3">
+                              <p className="text-sm font-semibold text-foreground">Question breakdown</p>
+                              <div className="grid gap-3">
+                                {Object.entries(result.answers).map(([questionId, score]) => {
+                                  const questionMeta = getQuestionText(questionId);
+                                  return (
+                                    <div key={questionId} className="rounded-lg border border-border p-3">
+                                      <div className="flex flex-col gap-1 md:flex-row md:items-start md:justify-between">
+                                        <div>
+                                          <p className="text-sm font-medium text-foreground">{questionMeta?.question || questionId}</p>
+                                          <p className="text-xs text-muted-foreground">{questionMeta?.dimension || "Unknown dimension"}</p>
+                                        </div>
+                                        <Badge variant="outline">{getAnswerLabel(questionId, score)}</Badge>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </CardContent>
+                        )}
+                      </Card>
+                    );
+                  })}
+              </div>
+            </div>
+          )}
+
+          {activeView === "org-insights" && <OrgInsights results={results} />}
+
+          {activeView === "team-builder" && (
+            <TeamBuilder results={results} onRefresh={() => void loadData()} />
+          )}
+
+          {activeView === "content-insights" && (
+            <div className="space-y-6">
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Content & Insights</h1>
+                <p className="text-sm text-muted-foreground">Aggregate diagnostic analysis and research workspace.</p>
+              </div>
+
+              {aggregate ? (
+                <>
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    <Card>
+                      <CardHeader className="pb-2">
+                        <CardDescription>Total submissions</CardDescription>
+                        <CardTitle>{aggregate.totalSubmissions}</CardTitle>
+                      </CardHeader>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-2">
+                        <CardDescription>Organizations</CardDescription>
+                        <CardTitle>{aggregate.orgCount}</CardTitle>
+                      </CardHeader>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-2">
+                        <CardDescription>Average maturity</CardDescription>
+                        <CardTitle>{aggregate.overallAvg}/100</CardTitle>
+                      </CardHeader>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-2">
+                        <CardDescription>Confidence</CardDescription>
+                        <CardTitle>{aggregate.confidenceTier}</CardTitle>
+                      </CardHeader>
+                    </Card>
+                  </div>
+
+                  <div className="grid gap-4 xl:grid-cols-2">
+                    <SegmentCard title="Role" segments={aggregate.roleSegments} />
+                    <SegmentCard title="Industry" segments={aggregate.industrySegments} />
+                    <SegmentCard title="Team Size" segments={aggregate.teamSizeSegments} />
+                    <SegmentCard title="Seniority" segments={aggregate.roleTierSegments} />
+                  </div>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base">Research trigger</CardTitle>
+                      <CardDescription>Run a fresh synthesis based on the current aggregate data.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid gap-4 md:grid-cols-[240px_auto] md:items-end">
+                        <div className="space-y-2">
+                          <Label>Research category</Label>
+                          <Select value={activeCategory} onValueChange={(value) => setActiveCategory(value as ResearchCategory)}>
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.entries(CATEGORY_META).map(([key, meta]) => (
+                                <SelectItem key={key} value={key}>{meta.label}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Button className="gap-2" onClick={runResearch} disabled={researching}>
+                            {researching ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                            Run research
+                          </Button>
+                          <p className="text-xs text-muted-foreground">{CATEGORY_META[activeCategory].description}</p>
+                        </div>
+                      </div>
+
+                      {liveResult && (
+                        <Card className="border-border bg-muted/20">
+                          <CardHeader>
+                            <CardTitle className="text-sm">Latest result</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="prose prose-sm max-w-none dark:prose-invert">
+                              <ReactMarkdown>{liveResult}</ReactMarkdown>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <LinkedInContentEngine />
+
+                  <div className="space-y-3">
+                    <div>
+                      <h2 className="text-base font-semibold text-foreground">Research history</h2>
+                      <p className="text-sm text-muted-foreground">Recent generated insight runs.</p>
+                    </div>
+                    <div className="grid gap-3">
+                      {pastResearch.map((entry) => (
+                        <ResearchHistoryCard key={entry.id} entry={entry} />
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Card>
+                  <CardContent className="pt-6">
+                    <p className="text-sm text-muted-foreground">No aggregate diagnostic data yet.</p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
+
+          {activeView === "consulting" && <ConsultingReference />}
+
+          {activeView === "client-prep" && <PersonalizedConsulting results={results} />}
 
           {activeView === "presentations" && (
-            <>
+            <div className="space-y-6">
               <div>
                 <h1 className="text-xl font-bold text-foreground">Presentations</h1>
                 <p className="text-sm text-muted-foreground">This list is auto-generated from the shared presentation registry, so new decks appear here automatically.</p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 {adminPresentationItems.map((deck) => (
-                  <Card key={deck.path} className="group hover:border-primary/40 transition-colors cursor-pointer" onClick={() => window.open(deck.path, "_blank", "noopener,noreferrer")}>
+                  <Card key={deck.path} className="group cursor-pointer transition-colors hover:border-primary/40" onClick={() => window.open(deck.path, "_blank", "noopener,noreferrer")}>
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-sm font-semibold">{deck.title}</CardTitle>
-                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
                       </div>
                       <CardDescription className="text-xs">{deck.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      <code className="text-[11px] text-muted-foreground/60 font-mono">{deck.path}</code>
+                      <code className="font-mono text-[11px] text-muted-foreground/60">{deck.path}</code>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-            </>
+            </div>
           )}
         </div>
       </main>
