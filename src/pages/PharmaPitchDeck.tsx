@@ -143,7 +143,7 @@ function SlideTitle() {
           <h1 className="font-black mb-6" style={{ fontSize: 64, color: "hsl(0 0% 100%)", lineHeight: 1.0 }}>
             The Operating System
             <br /><span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              for Medicine Lifecycle
+              for Regulated Lifecycle
             </span>
             <br /><span style={{ fontSize: 52, color: "hsl(0 0% 100% / 0.7)" }}>Management</span>
           </h1>
