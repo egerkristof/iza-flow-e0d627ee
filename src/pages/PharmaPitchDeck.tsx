@@ -1186,6 +1186,89 @@ function Act3_DriftOversight() {
 
 const CAL_URL = "https://cal.com/liza-os/20min";
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// THE PATTERN REPEATS - Adjacent Verticals
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Act3_PatternRepeats() {
+  const verticals = [
+    { icon: <Pill size={22} />, title: "Pharma & Biotech", desc: "Medicine lifecycle from discovery through pharmacovigilance. GMP, GCP, GVP.", tags: ["GMP", "21 CFR Part 11", "GAMP 5"], color: ACCENT },
+    { icon: <Factory size={22} />, title: "Food Safety & Consumer Health", desc: "Quality assurance across manufacturing, testing, and supply chain.", tags: ["GMP", "ISO 22000", "HACCP"], color: TEAL },
+    { icon: <FlaskConical size={22} />, title: "Lab Governance & Testing", desc: "Method validation, CAPA workflows, and accreditation readiness.", tags: ["ISO 17025", "GLP", "LIMS"], color: GOLD },
+    { icon: <HeartPulse size={22} />, title: "Medical Devices", desc: "Design controls, risk management, and post-market surveillance.", tags: ["ISO 13485", "FDA QSR", "MDR"], color: CORAL },
+  ];
+  return (
+    <div className="w-full h-full flex relative" style={{ background: BG }}>
+      <GridBg />
+      <ActBar activeAct={3} slideLabel="THE PATTERN REPEATS" />
+      <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[90px]">
+        <div className="flex-1">
+          <h2 className="font-black mb-4" style={{ fontSize: 48, color: `hsl(${C})`, lineHeight: 1.05 }}>
+            The pattern repeats
+            <br /><span style={{ color: `hsl(${ACCENT})` }}>across every regulated lifecycle.</span>
+          </h2>
+          <p className="mb-8" style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55, maxWidth: 700 }}>
+            Pharma is our deepest vertical. But every industry with documented standards, expert judgment, and audit requirements shares the same architecture. The Capture, Govern, Execute, Learn loop is universal.
+          </p>
+
+          <div className="grid grid-cols-2 gap-5">
+            {verticals.map(v => (
+              <div key={v.title} className="rounded-xl p-5" style={{ background: `hsl(${v.color} / 0.04)`, border: `1px solid hsl(${v.color} / 0.15)` }}>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center"
+                    style={{ background: `hsl(${v.color} / 0.12)`, color: `hsl(${v.color})` }}>
+                    {v.icon}
+                  </div>
+                  <h3 className="font-bold" style={{ fontSize: 18, color: `hsl(${C})` }}>{v.title}</h3>
+                </div>
+                <p className="mb-3" style={{ fontSize: 14, color: `hsl(${MUT})`, lineHeight: 1.45 }}>{v.desc}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {v.tags.map(tag => (
+                    <span key={tag} className="font-semibold px-2 py-0.5 rounded-md"
+                      style={{ fontSize: 11, background: `hsl(${v.color} / 0.08)`, color: `hsl(${v.color})` }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="w-[340px] flex-shrink-0 rounded-2xl p-6" style={{ background: `hsl(${DARK})` }}>
+          <p className="font-bold mb-4" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>One architecture, many lifecycles</p>
+          <p className="mb-5" style={{ fontSize: 15, color: `hsl(0 0% 100% / 0.65)`, lineHeight: 1.55 }}>
+            If your industry has documented standards that require consistent expert execution, LIZA governs the AI layer between the standard and the work.
+          </p>
+          <div className="space-y-3">
+            {[
+              { label: "Standards exist", desc: "SOPs, ISO frameworks, GxP guidelines" },
+              { label: "Judgment varies", desc: "Expert interpretation differs across teams" },
+              { label: "Audits happen", desc: "External or internal compliance verification" },
+              { label: "Knowledge ages", desc: "Tribal expertise retires before it transfers" },
+            ].map((item, i) => (
+              <div key={item.label} className="flex items-start gap-3 px-3 py-2.5 rounded-lg"
+                style={{ background: `hsl(${ACCENT} / 0.08)` }}>
+                <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})`, width: 20, flexShrink: 0 }}>{i + 1}</span>
+                <div>
+                  <p className="font-semibold" style={{ fontSize: 13, color: "hsl(0 0% 100%)" }}>{item.label}</p>
+                  <p style={{ fontSize: 12, color: `hsl(0 0% 100% / 0.5)` }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 rounded-lg p-3" style={{ background: `hsl(${TEAL} / 0.15)`, border: `1px solid hsl(${TEAL} / 0.3)` }}>
+            <p className="text-center font-semibold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
+              If these four are true, LIZA fits.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Bar />
+    </div>
+  );
+}
+
 function Act3_Summary() {
   return (
     <div className="w-full h-full flex relative" style={{ background: `hsl(${DARK})` }}>
