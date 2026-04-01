@@ -41,7 +41,7 @@ export function HeroSection() {
               boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
             }}
           >
-            Score your AI execution in 90s
+            Score your AI execution
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <a

@@ -74,18 +74,18 @@ const MOMENTS = [
       <div className="relative w-full h-28 mb-4 overflow-hidden rounded-xl" style={{ background: "hsl(var(--primary) / 0.04)" }}>
         {/* AI session box */}
         <motion.div
-          className="absolute left-4 top-4 right-4 bottom-4 rounded-lg border flex flex-col"
+          className="absolute left-4 top-3 right-4 bottom-3 rounded-lg border flex flex-col"
           style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.4 }}
         >
-          <div className="flex items-center gap-1.5 px-3 py-1.5 border-b" style={{ borderColor: "hsl(var(--border))" }}>
+          <div className="flex items-center gap-1.5 px-3 py-1 border-b" style={{ borderColor: "hsl(var(--border))" }}>
             <Zap className="w-2.5 h-2.5" style={{ color: "hsl(var(--primary))" }} />
             <span className="text-[9px] font-bold text-muted-foreground">AI SESSION</span>
           </div>
-          <div className="flex-1 px-3 py-2 space-y-1.5">
+          <div className="flex-1 px-3 py-1.5 space-y-1">
             <motion.div
               className="flex items-center gap-1.5"
               initial={{ opacity: 0, x: -8 }}

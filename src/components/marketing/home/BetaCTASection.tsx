@@ -17,7 +17,7 @@ export function BetaCTASection() {
               <GradientText>Is it scaling with you?</GradientText>
             </h2>
             <p className="text-base mb-2 text-muted-foreground">
-              Find out in 90 seconds. One score, five dimensions, zero signup.
+              One score, five dimensions, zero signup.
             </p>
             <p className="text-xs text-muted-foreground/60 mb-8">
               Get your score → Book a 20-min debrief → Walk away with an action plan.
@@ -33,7 +33,7 @@ export function BetaCTASection() {
                   boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
                 }}
               >
-                Score your AI execution in 90s <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Score your AI execution <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href={CAL_URL}
