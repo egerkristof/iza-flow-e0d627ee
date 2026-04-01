@@ -203,7 +203,7 @@ export default function IndustryPharmaPage() {
             How LIZA governs AI across regulated lifecycles
           </h2>
           <p className="text-sm text-muted-foreground text-center mb-10 max-w-lg mx-auto">
-            The same four-step system of reasoning — built for GxP, ISO, and GLP compliance.
+            The same four-step system of reasoning, built for GxP, ISO, and GLP compliance.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {HOW_IT_WORKS.map((step) => (
