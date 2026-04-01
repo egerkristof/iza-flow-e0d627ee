@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layers, ArrowRight, Shield, Users, Brain } from "lucide-react";
+import { motion } from "framer-motion";
 import { CAL_URL } from "./shared";
 import { SectionTag } from "./shared";
 
@@ -58,8 +59,12 @@ export function LizaLoopSection() {
 
           <div className="space-y-16">
             {STEPS.map((s, i) => (
-              <div
+              <motion.div
                 key={s.key}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, ease: "easeOut" }}
                 className={`flex flex-col ${i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} gap-8 items-center`}
               >
                 <div
@@ -92,7 +97,7 @@ export function LizaLoopSection() {
                     <p className="text-xs font-semibold" style={{ color: "hsl(var(--success))" }}>→ {s.after}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 

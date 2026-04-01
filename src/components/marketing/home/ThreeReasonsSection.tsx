@@ -1,6 +1,7 @@
 import { X, Check, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const REASONS = [
   {
@@ -82,10 +83,23 @@ function ComparisonRow({ label, status, why, isLiza }: { label: string; status: 
 function ReasonBand({ number, claim, explanation, align, comparisons }: typeof REASONS[number]) {
   const isRight = align === "right";
   return (
-    <div className={`flex flex-col ${isRight ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-16 items-start`}>
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+      className={`flex flex-col ${isRight ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-16 items-start`}
+    >
       <div className="flex-1 min-w-0">
-        <span className="text-5xl md:text-6xl font-black leading-none block mb-4"
-          style={{ color: "hsl(var(--primary) / 0.12)" }}>
+        <span
+          className="text-5xl md:text-6xl font-black leading-none block mb-4"
+          style={{
+            background: "var(--gradient-brand)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            opacity: 0.35,
+          }}
+        >
           {number}
         </span>
         <h3 className="text-xl md:text-2xl font-black text-foreground leading-tight mb-4">{claim}</h3>
@@ -96,7 +110,7 @@ function ReasonBand({ number, claim, explanation, align, comparisons }: typeof R
           <ComparisonRow key={c.label} {...c} isLiza={c.label === "LIZA OS"} />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
