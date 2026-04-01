@@ -1241,6 +1241,20 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
         )}
       </div>
 
+      {teamLeaderFilter && (
+        <div className="rounded-lg border-2 border-primary/30 bg-primary/5 px-5 py-4 flex items-center gap-3">
+          <Users className="h-5 w-5 text-primary shrink-0" />
+          <div>
+            <p className="text-sm font-semibold text-foreground">
+              Team Report for <span className="text-primary">{teamLeaderFilter}</span>
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Showing {filteredResults.length} submission{filteredResults.length !== 1 ? "s" : ""} assigned to this team leader
+            </p>
+          </div>
+        </div>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
