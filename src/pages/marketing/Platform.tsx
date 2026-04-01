@@ -148,7 +148,7 @@ const FEATURES = [
   {
     icon: <Brain className="w-6 h-6" />,
     title: "Knowledge Extraction Engine",
-    desc: "Surfaces the tacit layer from your process docs, transcripts, and senior interviews — the judgment never written down.",
+    desc: "Surfaces the tacit layer from your process docs, transcripts, and senior interviews. The judgment never written down.",
   },
   {
     icon: <Layers className="w-6 h-6" />,
