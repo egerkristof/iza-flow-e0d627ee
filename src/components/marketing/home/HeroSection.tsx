@@ -19,7 +19,7 @@ export function HeroSection() {
         <h1 className="text-3xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
           No AI tool was built to
           <br />
-          <span className="text-primary">define your knowledge.</span>
+          <span className="text-primary">execute with your knowledge.</span>
         </h1>
 
         <p className="text-base md:text-lg font-semibold mb-8 text-muted-foreground max-w-xl mx-auto">
