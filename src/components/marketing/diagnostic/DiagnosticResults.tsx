@@ -30,7 +30,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
   output_consistency: {
     low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3 to 5 hours per deliverable, plus a trust problem: stakeholders can tell when quality depends on who did the work.",
-    mid: "Outputs are recognisable but uneven. The 30 to 40% excess senior review time is a symptom, not the root cause. The real issue: your team's quality ceiling is determined by individual capability, not collective knowledge. Your best people's approaches aren't compounding into team-wide standards — they're locked in individual workflows, and every project starts from scratch instead of building on the last.",
+    mid: "Outputs are recognisable but uneven. The 30 to 40% excess senior review time is a symptom, not the root cause. The real issue: your team's quality ceiling is determined by individual capability, not collective knowledge. Your best people's approaches aren't compounding into team-wide standards. They're locked in individual workflows, and every project starts from scratch instead of building on the last.",
     high: "Stakeholders get your team's quality standard regardless of who delivers. That's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive, and your strongest people push the quality frontier instead of maintaining the baseline.",
   },
   knowledge_compounding: {
