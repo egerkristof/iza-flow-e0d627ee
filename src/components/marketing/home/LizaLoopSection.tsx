@@ -97,8 +97,7 @@ export function LizaLoopSection() {
                     <p className="text-xs font-semibold" style={{ color: "hsl(var(--success))" }}>→ {s.after}</p>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
             ))}
           </div>
 
