@@ -7,8 +7,11 @@ const REASONS = [
   {
     number: "01",
     claim: "Your knowledge never reaches the AI.",
-    explanation:
-      "The best current solutions let AI reference your existing documentation. That is not the same as having your decision logic, quality standards, and playbooks enforced inside every AI session. The gap between referenced and enforced is where quality breaks down.",
+    explanation: (
+      <>
+        The best current solutions let AI <span className="text-foreground font-semibold">reference</span> your existing documentation. That is not the same as having your decision logic, quality standards, and playbooks <span className="text-foreground font-black">enforced</span> inside every AI session. The gap between <span className="text-muted-foreground/80 line-through decoration-1">referenced</span> and <span className="font-black" style={{ color: "hsl(var(--primary))" }}>enforced</span> is where quality breaks down.
+      </>
+    ),
     align: "left" as const,
     comparisons: [
       { label: "RAG / retrieval tools", status: "partial" as const, why: "Retrieves text, doesn't enforce standards" },
@@ -19,8 +22,11 @@ const REASONS = [
   {
     number: "02",
     claim: "You can't build collective knowledge.",
-    explanation:
-      "Some tools offer shared memory or team context, but none are designed for collective knowledge by architecture. You can't reach insights that are both shared across teams and governable by leadership.",
+    explanation: (
+      <>
+        Some tools offer shared memory or team context, but <span className="font-black text-foreground">none are designed for collective knowledge by architecture</span>. You can't reach insights that are both <span className="font-semibold" style={{ color: "hsl(var(--primary))" }}>shared across teams</span> and <span className="font-semibold" style={{ color: "hsl(var(--primary))" }}>governable by leadership</span>.
+      </>
+    ),
     align: "right" as const,
     comparisons: [
       { label: "ChatGPT / Claude memory", status: "partial" as const, why: "Per-user memory, not collective by design" },
@@ -31,8 +37,11 @@ const REASONS = [
   {
     number: "03",
     claim: "No knowledge architecture compounds.",
-    explanation:
-      "Some tools retain context between sessions, but no intentional knowledge architecture is being built. LIZA treats knowledge as code: a compounding asset that improves your human-AI effectiveness today while building organizational capability for the future.",
+    explanation: (
+      <>
+        Some tools retain context between sessions, but <span className="text-foreground font-semibold">no intentional knowledge architecture</span> is being built. LIZA treats <span className="font-black" style={{ color: "hsl(var(--primary))" }}>knowledge as code</span>: a compounding asset that improves your human-AI effectiveness today while building <span className="text-foreground font-semibold">organizational capability for the future</span>.
+      </>
+    ),
     align: "left" as const,
     comparisons: [
       { label: "AI memory / history", status: "partial" as const, why: "Retains context, doesn't build architecture" },
@@ -80,7 +89,7 @@ function ComparisonRow({ label, status, why, isLiza }: { label: string; status: 
   );
 }
 
-function ReasonBand({ number, claim, explanation, align, comparisons }: typeof REASONS[number]) {
+function ReasonBand({ number, claim, explanation, align, comparisons }: { number: string; claim: string; explanation: React.ReactNode; align: "left" | "right"; comparisons: { label: string; status: "yes" | "no" | "partial"; why: string }[] }) {
   const isRight = align === "right";
   return (
     <motion.div
