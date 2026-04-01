@@ -420,6 +420,7 @@ export default function AdminPage() {
     { key: "consulting", label: "Consulting", icon: <BookOpen className="h-4 w-4" /> },
     { key: "client-prep", label: "Client Prep", icon: <Sparkles className="h-4 w-4" /> },
     { key: "presentations", label: "Presentations", icon: <Presentation className="h-4 w-4" /> },
+    { key: "platform-signups", label: "Platform Signups", icon: <Layers className="h-4 w-4" /> },
   ];
 
   return (

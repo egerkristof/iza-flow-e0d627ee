@@ -74,6 +74,7 @@ const App = () => (
             <Route path="/industries/pharma" element={<Navigate to="/industries/regulated" replace />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
+            <Route path="/platform-signup" element={<PlatformSignupPage />} />
             <Route path="/diagnostic" element={<DiagnosticPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
