@@ -153,7 +153,7 @@ const FEATURES = [
   {
     icon: <Layers className="w-6 h-6" />,
     title: "Context Bundles",
-    desc: "Playbooks, Procedures, Directives, and Principles — versioned, governed, always current.",
+    desc: "Playbooks, Procedures, Directives, and Principles. Versioned, governed, always current.",
   },
   {
     icon: <Zap className="w-6 h-6" />,
