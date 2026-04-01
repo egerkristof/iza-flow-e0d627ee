@@ -29,6 +29,7 @@ import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import BetaPage from "./pages/marketing/Beta";
+import PlatformSignupPage from "./pages/marketing/PlatformSignup";
 import DiagnosticPage from "./pages/marketing/Diagnostic";
 import PrivacyPage from "./pages/marketing/Privacy";
 import TermsPage from "./pages/marketing/Terms";
@@ -73,6 +74,7 @@ const App = () => (
             <Route path="/industries/pharma" element={<Navigate to="/industries/regulated" replace />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
+            <Route path="/platform-signup" element={<PlatformSignupPage />} />
             <Route path="/diagnostic" element={<DiagnosticPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />

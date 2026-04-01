@@ -22,6 +22,7 @@ import LinkedInContentEngine from "@/components/admin/LinkedInContentEngine";
 import ConsultingReference from "@/components/admin/ConsultingReference";
 import PersonalizedConsulting from "@/components/admin/PersonalizedConsulting";
 import TeamBuilder from "@/components/admin/TeamBuilder";
+import PlatformSignups from "@/components/admin/PlatformSignups";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 import ReactMarkdown from "react-markdown";
@@ -65,7 +66,7 @@ interface ResearchEntry {
   created_at: string;
 }
 
-type AdminView = "members" | "diagnostics" | "org-insights" | "team-builder" | "content-insights" | "consulting" | "client-prep" | "presentations";
+type AdminView = "members" | "diagnostics" | "org-insights" | "team-builder" | "content-insights" | "consulting" | "client-prep" | "presentations" | "platform-signups";
 type ResearchCategory = "icp_reality_check" | "contrarian_positioning" | "execution_stack_shifts" | "maturity_benchmarks";
 
 /* ── Helpers ── */
@@ -419,6 +420,7 @@ export default function AdminPage() {
     { key: "consulting", label: "Consulting", icon: <BookOpen className="h-4 w-4" /> },
     { key: "client-prep", label: "Client Prep", icon: <Sparkles className="h-4 w-4" /> },
     { key: "presentations", label: "Presentations", icon: <Presentation className="h-4 w-4" /> },
+    { key: "platform-signups", label: "Platform Signups", icon: <Layers className="h-4 w-4" /> },
   ];
 
   return (
@@ -792,6 +794,8 @@ export default function AdminPage() {
               </div>
             </div>
           )}
+
+          {activeView === "platform-signups" && <PlatformSignups />}
         </div>
       </main>
     </div>
