@@ -161,7 +161,7 @@ export function ThreeReasonsSection() {
               boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.3)",
             }}
           >
-            Find out where your team stands <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            Score your AI execution <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </div>

@@ -17,7 +17,7 @@ export function BetaCTASection() {
               <GradientText>Is it scaling with you?</GradientText>
             </h2>
             <p className="text-base mb-2 text-muted-foreground">
-              Find out in 90 seconds. One score, five dimensions, zero signup.
+              One score, five dimensions, zero signup.
             </p>
             <p className="text-xs text-muted-foreground/60 mb-8">
               Get your score → Book a 20-min debrief → Walk away with an action plan.

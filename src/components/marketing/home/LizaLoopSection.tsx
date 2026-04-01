@@ -104,7 +104,7 @@ export function LizaLoopSection() {
           {/* Mid-page CTA — Diagnostic */}
           <div className="mt-14 text-center">
             <p className="text-sm text-muted-foreground mb-4">
-              How ready is your organization? Find out in 90 seconds.
+              How ready is your organization?
             </p>
             <Link
               to="/diagnostic"
@@ -115,7 +115,7 @@ export function LizaLoopSection() {
                 boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.3)",
               }}
             >
-              Take the 90s Diagnostic <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              Score your AI execution <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
