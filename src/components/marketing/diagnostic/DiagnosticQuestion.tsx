@@ -1,7 +1,24 @@
+import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import type { DiagnosticQuestion as QType } from "@/lib/diagnostic-scoring";
 
 const SCORE_LABELS = ["A", "B", "C", "D"];
+
+/** Deterministic shuffle seeded by question id — stable across re-renders */
+function shuffleOptions(options: QType["options"], seed: string) {
+  // Simple hash from string
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) {
+    h = (h * 31 + seed.charCodeAt(i)) | 0;
+  }
+  const arr = [...options];
+  for (let i = arr.length - 1; i > 0; i--) {
+    h = (h * 1103515245 + 12345) | 0;
+    const j = ((h >>> 0) % (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 interface Props {
   question: QType;
@@ -10,6 +27,11 @@ interface Props {
 }
 
 export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props) {
+  const shuffledOptions = useMemo(
+    () => shuffleOptions(question.options, question.id),
+    [question.id, question.options]
+  );
+
   return (
     <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-right-3 duration-400">
       <div
@@ -49,7 +71,7 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
           </h2>
 
           <div className="flex flex-col gap-2 md:gap-2.5">
-            {question.options.map((opt, idx) => {
+            {shuffledOptions.map((opt, idx) => {
               const isSelected = selectedScore === opt.score;
               return (
                 <button
