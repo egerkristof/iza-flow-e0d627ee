@@ -166,7 +166,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     return orgList.sort((a, b) => b.count - a.count);
   }, [filteredResults, includeFreeMail]);
 
-  const generatePDF = (org: OrgData, showParticipants: boolean, fullyAnonymized: boolean = false) => {
+  const generatePDF = (org: OrgData, showParticipants: boolean, fullyAnonymized: boolean = false, teamReportFor?: string | null) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -306,6 +306,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     setFont(9, "normal", [100, 100, 100]);
     doc.text(`Prepared for: ${displayName}`, margin + 4, y + 4);
     doc.text(`${org.count} team member assessments (anonymised)  ·  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin + 4, y + 10);
+
+    // Team report banner
+    if (teamReportFor && !fullyAnonymized) {
+      y += 22;
+      doc.setFillColor(20, 80, 160);
+      doc.roundedRect(margin, y - 2, contentWidth, 14, 2, 2, "F");
+      setFont(10, "bold", [255, 255, 255]);
+      doc.text(`TEAM REPORT FOR: ${teamReportFor}`, margin + 6, y + 6);
+      setFont(8, "normal", [220, 230, 255]);
+      doc.text("This report covers assessments submitted by direct reports of this team leader.", margin + 6, y + 12);
+      y += 18;
+    }
 
     if (!fullyAnonymized && showParticipants) {
       const participantEmails = org.results
@@ -1190,9 +1202,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       : "Confidential. Prepared by LIZA OS. Data is anonymous and aggregated.",
       margin, pageHeight - 10);
 
+    const dateSuffix = new Date().toISOString().slice(0, 10);
     const fileName = fullyAnonymized
-      ? `AI-Execution-Audit_Anonymous_${new Date().toISOString().slice(0, 10)}.pdf`
-      : `AI-Execution-Audit_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`;
+      ? `AI-Execution-Audit_Anonymous_${dateSuffix}.pdf`
+      : teamReportFor
+        ? `AI-Execution-Audit_TeamReport_${teamReportFor.replace(/[^a-zA-Z0-9@.]/g, '_')}_${dateSuffix}.pdf`
+        : `AI-Execution-Audit_${org.domain}_${dateSuffix}.pdf`;
     doc.save(fileName);
   };
 
@@ -1310,7 +1325,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         variant="outline"
                         size="sm"
                         className="gap-1.5"
-                        onClick={(e) => { e.stopPropagation(); generatePDF(org, includeNames); }}
+                        onClick={(e) => { e.stopPropagation(); generatePDF(org, includeNames, false, teamLeaderFilter); }}
                       >
                         <Download className="h-3.5 w-3.5" />
                         PDF
