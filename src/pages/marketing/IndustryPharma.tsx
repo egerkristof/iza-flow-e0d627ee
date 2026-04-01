@@ -47,7 +47,7 @@ const HOW_IT_WORKS = [
     icon: <BookOpen className="w-5 h-5" />,
     step: "01",
     title: "Capture",
-    desc: "SOPs, quality standards, and tribal knowledge become structured, reusable context — not static PDFs.",
+    desc: "SOPs, quality standards, and tribal knowledge become structured, reusable context. Not static PDFs.",
   },
   {
     icon: <Shield className="w-5 h-5" />,
