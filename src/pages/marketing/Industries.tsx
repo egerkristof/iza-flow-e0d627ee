@@ -49,7 +49,7 @@ export default function IndustriesPage() {
             <span className="text-primary">LIZA governs the AI inside it.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-            Where documentation meets execution, where compliance meets speed — LIZA is the operating system 
+            Where documentation meets execution, where compliance meets speed, LIZA is the operating system 
             that ensures AI-assisted work stays accurate, traceable, and audit-ready.
           </p>
         </div>
