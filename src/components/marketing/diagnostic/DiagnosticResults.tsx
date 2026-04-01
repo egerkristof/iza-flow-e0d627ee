@@ -35,7 +35,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
   knowledge_compounding: {
     low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size: you're funding individual experiments, not building collective capability.",
-    mid: "Knowledge spreads, but it takes 4 to 6 weeks for a good technique to reach the whole team, if it ever does. The real cost isn't the delay — it's that each project starts from scratch instead of standing on the shoulders of the last one. Your team is improving linearly when it should be compounding. And every person who leaves takes learned capability with them.",
+    mid: "Knowledge spreads, but it takes 4 to 6 weeks for a good technique to reach the whole team, if it ever does. The real cost isn't the delay. It's that each project starts from scratch instead of standing on the shoulders of the last one. Your team is improving linearly when it should be compounding. And every person who leaves takes learned capability with them.",
     high: "Each project genuinely makes the next one better. Your team's collective capability compounds rather than resets — and survives turnover. This is what separates high-growth teams from the rest: not individual brilliance, but shared intelligence that accelerates over time.",
   },
   collective_visibility: {
