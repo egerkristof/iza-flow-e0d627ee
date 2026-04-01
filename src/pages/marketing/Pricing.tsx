@@ -298,7 +298,7 @@ function CreditsExplainer() {
           <div>
             <h4 className="font-bold text-sm mb-1">What happens at zero?</h4>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              AI features pause until you buy more credits or your monthly allowance renews. Everything else — editing, viewing, tasks, manual steps — keeps working normally. One-click top-up from the banner, back online instantly.
+              AI features pause until you buy more credits or your monthly allowance renews. Everything else (editing, viewing, tasks, manual steps) keeps working normally. One-click top-up from the banner, back online instantly.
             </p>
           </div>
         </div>
