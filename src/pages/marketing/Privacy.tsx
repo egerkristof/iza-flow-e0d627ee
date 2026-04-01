@@ -54,13 +54,13 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-bold text-foreground pt-4">7. Your Rights</h2>
           <p>Under the GDPR, you have the right to:</p>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Access</strong> — Request a copy of the personal data we hold about you.</li>
-            <li><strong>Rectification</strong> — Ask us to correct inaccurate data.</li>
-            <li><strong>Erasure</strong> — Request deletion of your personal data ("right to be forgotten").</li>
-            <li><strong>Restriction</strong> — Ask us to limit how we process your data.</li>
-            <li><strong>Data portability</strong> — Receive your data in a structured, machine-readable format.</li>
-            <li><strong>Object</strong> — Object to processing based on legitimate interest.</li>
-            <li><strong>Withdraw consent</strong> — Where processing is based on consent, withdraw it at any time.</li>
+            <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
+            <li><strong>Rectification:</strong> Ask us to correct inaccurate data.</li>
+            <li><strong>Erasure:</strong> Request deletion of your personal data ("right to be forgotten").</li>
+            <li><strong>Restriction:</strong> Ask us to limit how we process your data.</li>
+            <li><strong>Data portability:</strong> Receive your data in a structured, machine-readable format.</li>
+            <li><strong>Object:</strong> Object to processing based on legitimate interest.</li>
+            <li><strong>Withdraw consent:</strong> Where processing is based on consent, withdraw it at any time.</li>
           </ul>
           <p>
             To exercise any of these rights, email us at{" "}
