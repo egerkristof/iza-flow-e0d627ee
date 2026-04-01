@@ -1202,9 +1202,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       : "Confidential. Prepared by LIZA OS. Data is anonymous and aggregated.",
       margin, pageHeight - 10);
 
+    const dateSuffix = new Date().toISOString().slice(0, 10);
     const fileName = fullyAnonymized
-      ? `AI-Execution-Audit_Anonymous_${new Date().toISOString().slice(0, 10)}.pdf`
-      : `AI-Execution-Audit_${org.domain}_${new Date().toISOString().slice(0, 10)}.pdf`;
+      ? `AI-Execution-Audit_Anonymous_${dateSuffix}.pdf`
+      : teamReportFor
+        ? `AI-Execution-Audit_TeamReport_${teamReportFor.replace(/[^a-zA-Z0-9@.]/g, '_')}_${dateSuffix}.pdf`
+        : `AI-Execution-Audit_${org.domain}_${dateSuffix}.pdf`;
     doc.save(fileName);
   };
 
