@@ -123,8 +123,11 @@ export function ThreeReasonsSection() {
           <p className="text-2xl md:text-3xl font-black text-foreground mb-2">
             LIZA OS closes all three.
           </p>
-          <p className="text-base text-muted-foreground mb-6">
+          <p className="text-base text-muted-foreground mb-2">
             One platform to capture expertise, govern execution, and compound what works.
+          </p>
+          <p className="text-sm font-semibold text-primary mb-6">
+            And the knowledge it builds is yours. Extract it, take it anywhere — zero lock-in.
           </p>
           <Link
             to="/diagnostic"
