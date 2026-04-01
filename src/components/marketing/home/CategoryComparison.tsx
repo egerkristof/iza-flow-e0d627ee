@@ -76,54 +76,45 @@ function DesktopComparison() {
     >
       {/* Header */}
       <div
-        className="grid grid-cols-5 gap-0 text-xs font-bold tracking-wide uppercase"
+        className="grid grid-cols-6 gap-0 text-xs font-bold tracking-wide uppercase"
         style={{ background: "hsl(var(--card))" }}
       >
         <div className="px-4 py-3 text-muted-foreground" />
-        <div className="px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-          Legacy Processes
-          <span className="block text-[10px] font-normal normal-case opacity-60">SOPs, training, wikis</span>
-        </div>
-        <div className="px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-          Automation Platforms
-          <span className="block text-[10px] font-normal normal-case opacity-60">Zapier, Make, n8n</span>
-        </div>
-        <div className="px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-          Knowledge Mgmt
-          <span className="block text-[10px] font-normal normal-case opacity-60">Notion, Confluence</span>
-        </div>
-        <div
-          className="px-4 py-3 text-center font-black border-l"
-          style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.06)" }}
-        >
-          LIZA OS
-          <span className="block text-[10px] font-semibold normal-case opacity-70">Governance layer</span>
-        </div>
+        {COLS.map((col) => (
+          <div
+            key={col.key}
+            className={`px-4 py-3 text-center border-l ${col.isLiza ? "font-black" : "text-muted-foreground"}`}
+            style={{
+              borderColor: "hsl(var(--border))",
+              ...(col.isLiza ? { color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.06)" } : {}),
+            }}
+          >
+            {col.label}
+            <span className={`block text-[10px] font-normal normal-case ${col.isLiza ? "font-semibold opacity-70" : "opacity-60"}`}>{col.sub}</span>
+          </div>
+        ))}
       </div>
 
       {/* Rows */}
       {ROWS.map((r, i) => (
         <div
           key={i}
-          className="grid grid-cols-5 gap-0 border-t text-sm"
+          className="grid grid-cols-6 gap-0 border-t text-sm"
           style={{ borderColor: "hsl(var(--border))" }}
         >
           <div className="px-4 py-3 text-foreground/80">{r.feature}</div>
-          <div className="px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-            <CellIcon value={r.legacy} />
-          </div>
-          <div className="px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-            <CellIcon value={r.automation} />
-          </div>
-          <div className="px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-            <CellIcon value={r.km} />
-          </div>
-          <div
-            className="px-4 py-3 flex items-center justify-center border-l"
-            style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--primary) / 0.03)" }}
-          >
-            <CellIcon value={r.liza} />
-          </div>
+          {COLS.map((col) => (
+            <div
+              key={col.key}
+              className="px-4 py-3 flex items-center justify-center border-l"
+              style={{
+                borderColor: "hsl(var(--border))",
+                ...(col.isLiza ? { background: "hsl(var(--primary) / 0.03)" } : {}),
+              }}
+            >
+              <CellIcon value={r[col.key]} />
+            </div>
+          ))}
         </div>
       ))}
     </div>

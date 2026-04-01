@@ -111,9 +111,6 @@ export function ThreeReasonsSection() {
           <br />
           <span className="text-muted-foreground">fails to reach AI.</span>
         </h2>
-        <p className="text-base text-muted-foreground max-w-lg mb-20">
-          It's not the people. It's not the AI. It's the missing knowledge infrastructure between them.
-        </p>
 
         <div className="space-y-20 md:space-y-28">
           {REASONS.map((r) => (

@@ -25,10 +25,10 @@ export function GuideSection() {
         <div className="text-center mb-10">
           <SectionTag label="We've lived this" icon={<Compass className="w-3 h-3" />} />
           <h2 className="text-2xl md:text-3xl font-black mb-3">
-            We managed execution the hard way. Then AI made it harder.
+            We spent 15 years defining knowledge for teams. Then we built the infrastructure.
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            15+ clients across 8 countries taught us that execution quality depends on shared, living standards. AI amplified the urgency. So we built the missing infrastructure.
+            15+ clients across 8 countries showed us that execution quality depends on shared, living standards. AI made that non-negotiable. So we built LIZA OS.
           </p>
         </div>
 

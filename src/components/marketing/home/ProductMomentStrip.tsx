@@ -3,18 +3,18 @@ import { Upload, FileText, Users } from "lucide-react";
 const MOMENTS = [
   {
     icon: <Upload className="w-4 h-4" />,
-    step: "1. Define your standards",
-    result: "Capture playbooks, best practices, and decision logic from your best people — so the organization never loses what works.",
+    step: "1. Upload and capture",
+    result: "Upload your playbooks, best practices, and decision logic. LIZA converts them into executable knowledge for your human-AI environment, fast and guided.",
   },
   {
     icon: <FileText className="w-4 h-4" />,
-    step: "2. Your team moves at the speed of AI — safely",
-    result: "When anyone works with AI, your standards are already built in. They get full AI speed with full governance. No drift, no risk.",
+    step: "2. Execute at AI speed, safely",
+    result: "When anyone works with AI, your standards are already built in. Full speed, full governance. No drift, no risk.",
   },
   {
     icon: <Users className="w-4 h-4" />,
-    step: "3. Everyone learns, the system improves",
-    result: "When someone discovers a better way, it feeds back into the shared standard. The whole team levels up — without a meeting.",
+    step: "3. Learn and compound",
+    result: "Every discovery feeds back into shared standards. Knowledge compounds across the team, permanently.",
   },
 ];
 
