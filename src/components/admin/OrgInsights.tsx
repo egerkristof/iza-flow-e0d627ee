@@ -546,7 +546,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
       y = baseY + 4;
       setFont(7.5, "normal", [140, 140, 140]);
       doc.text(`Low: ${minScore}`, margin, y);
-      doc.text(`High: ${maxScore}`, margin + totalSpreadW, y, { align: "right" });
+      doc.text(`High: ${maxScore}`, margin + Math.min(totalSpreadW, contentWidth), y, { align: "right" });
       y += 5;
 
       // Contextual explanation
