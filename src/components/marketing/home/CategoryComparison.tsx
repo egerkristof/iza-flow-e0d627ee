@@ -1,20 +1,21 @@
 import { SectionTag, GradientText } from "./shared";
 import { X, Minus, Check, GitCompare } from "lucide-react";
 
-const COLS: { key: "legacy" | "automation" | "km" | "liza"; label: string; sub: string; isLiza?: boolean }[] = [
+const COLS: { key: "legacy" | "ai" | "automation" | "km" | "liza"; label: string; sub: string; isLiza?: boolean }[] = [
   { key: "legacy", label: "Legacy Processes", sub: "SOPs, training, wikis" },
+  { key: "ai", label: "AI Tools", sub: "ChatGPT, Claude, Copilot" },
   { key: "automation", label: "Automation", sub: "Zapier, Make, n8n" },
   { key: "km", label: "Knowledge Mgmt", sub: "Notion, Confluence" },
   { key: "liza", label: "LIZA OS", sub: "Governance layer", isLiza: true },
 ];
 
-const ROWS = [
-  { feature: "Turn domain expertise into executable capabilities", legacy: false, automation: "partial", km: false, liza: true },
-  { feature: "Governance enforced in execution, not just on paper", legacy: false, automation: false, km: false, liza: true },
-  { feature: "Departments self-sufficient, not dependent on central team", legacy: false, automation: "partial", km: false, liza: true },
-  { feature: "Cross-team learning compounds automatically", legacy: false, automation: false, km: "partial", liza: true },
-  { feature: "Measurable adoption across all workflows", legacy: "partial", automation: "partial", km: false, liza: true },
-  { feature: "Auditing happens in execution, not after", legacy: false, automation: false, km: false, liza: true },
+const ROWS: { feature: string; legacy: boolean | string; ai: boolean | string; automation: boolean | string; km: boolean | string; liza: boolean | string }[] = [
+  { feature: "Turn domain expertise into executable capabilities", legacy: false, ai: false, automation: "partial", km: false, liza: true },
+  { feature: "Governance enforced in execution, not just on paper", legacy: false, ai: false, automation: false, km: false, liza: true },
+  { feature: "Collective knowledge shared across teams", legacy: false, ai: false, automation: false, km: "partial", liza: true },
+  { feature: "Cross-team learning compounds automatically", legacy: false, ai: "partial", automation: false, km: "partial", liza: true },
+  { feature: "Measurable adoption across all workflows", legacy: "partial", ai: false, automation: "partial", km: false, liza: true },
+  { feature: "Auditing happens in execution, not after", legacy: false, ai: false, automation: false, km: false, liza: true },
 ];
 
 function CellIcon({ value }: { value: boolean | string }) {
