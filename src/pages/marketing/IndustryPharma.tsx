@@ -115,7 +115,7 @@ export default function IndustryPharmaPage() {
             <span className="text-primary">Regulated Lifecycle Management.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
-            Whether it's pharma, food safety, or lab governance — your teams keep their expertise. 
+            Whether it's pharma, food safety, or lab governance, your teams keep their expertise. 
             AI gives them speed. LIZA makes sure nothing falls through the cracks.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
