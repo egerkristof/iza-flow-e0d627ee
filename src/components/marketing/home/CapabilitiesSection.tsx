@@ -51,7 +51,7 @@ export function CapabilitiesSection() {
           <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
             It's the structured, governed layer between what your experts know and what
             AI actually does. Playbooks, judgment calls, compliance rules, and hard-won
-            expertise — captured once, enforced everywhere, and improving with every use.
+            expertise, captured once, enforced everywhere, and improving with every use.
           </p>
         </div>
 

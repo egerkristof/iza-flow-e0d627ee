@@ -107,7 +107,7 @@ export function JudgmentGapDiagram() {
       </div>
 
       <p className="text-center text-xs mt-4 italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-        Between these two moments lives your capacity to choose — and that choice is judgment.
+        Between these two moments lives your capacity to choose, and that choice is judgment.
       </p>
     </div>
   );

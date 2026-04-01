@@ -385,7 +385,7 @@ function SprintBridge() {
               Start with the Protocol Sprint
             </h2>
             <p className="text-muted-foreground text-base mb-8 max-w-lg leading-relaxed">
-              Don't want to start from scratch? For <span className="text-foreground font-semibold">€5,000</span>, we extract and codify your first critical process in 5 days — and you get <span className="font-semibold" style={{ color: `hsl(${GRN})` }}>3,000 bonus credits + 3 months of Team tier included</span>.
+              Don't want to start from scratch? For <span className="text-foreground font-semibold">€5,000</span>, we extract and codify your first critical process in 5 days, and you get <span className="font-semibold" style={{ color: `hsl(${GRN})` }}>3,000 bonus credits + 3 months of Team tier included</span>.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">

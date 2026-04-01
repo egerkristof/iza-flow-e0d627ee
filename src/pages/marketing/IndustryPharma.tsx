@@ -239,7 +239,7 @@ export default function IndustryPharmaPage() {
               Designed for compliance, not certified
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
-              LIZA is architected around regulated industry standards. Your validated environment stays yours — LIZA governs the AI layer on top.
+              LIZA is architected around regulated industry standards. Your validated environment stays yours. LIZA governs the AI layer on top.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {COMPLIANCE.map((c) => (

@@ -138,7 +138,7 @@ export function CategoryComparison() {
         <MobileComparison />
 
         <p className="text-center text-xs text-muted-foreground mt-5 max-w-lg mx-auto">
-          Legacy processes don't scale. Automation platforms don't govern quality. Knowledge management doesn't execute. LIZA OS connects expertise to execution — with governance built in.
+          Legacy processes don't scale. Automation platforms don't govern quality. Knowledge management doesn't execute. LIZA OS connects expertise to execution, with governance built in.
         </p>
       </div>
     </section>

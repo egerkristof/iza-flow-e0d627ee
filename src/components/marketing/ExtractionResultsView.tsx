@@ -269,7 +269,7 @@ export function ExtractionResultsView({ result, onReset }: ExtractionResultsView
         </h3>
         <p className="text-sm text-muted-foreground mb-6 max-w-lg mx-auto">
           You just saw how fast expertise turns into structure. The Protocol Sprint takes one
-          critical process and builds it into a live system — with guided execution, compliance
+          critical process and builds it into a live system with guided execution, compliance
           gates, and a team that's aligned from day one.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">

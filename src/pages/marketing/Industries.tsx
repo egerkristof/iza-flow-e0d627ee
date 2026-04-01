@@ -20,7 +20,7 @@ const INDUSTRIES = [
     title: "Financial Services",
     lifecycle: "Risk & Compliance Lifecycle",
     description:
-      "Model validation, regulatory reporting, and audit readiness — AI execution governed by your compliance frameworks.",
+      "Model validation, regulatory reporting, and audit readiness. AI execution governed by your compliance frameworks.",
     tags: ["MaRisk", "DORA", "Basel III"],
     available: false,
   },

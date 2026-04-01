@@ -204,7 +204,7 @@ const CATEGORIES = [
   {
     label: "PRINCIPLE",
     tagline: "Core beliefs",
-    desc: "The heuristics that guide decision-making at judgment points. Not rules — wisdom.",
+    desc: "The heuristics that guide decision-making at judgment points. Not rules, wisdom.",
     col: "270 60% 65%",
     role: "Contextual",
   },
