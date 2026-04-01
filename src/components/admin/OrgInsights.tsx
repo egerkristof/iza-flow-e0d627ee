@@ -517,10 +517,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     // ── Individual Score Spread (anonymous bar chart) ──
     {
       const indScores = org.results.map(r => r.overall_score).sort((a, b) => a - b);
-      const spreadBarW = 10;
-      const spreadBarGap = 3;
+      const n = indScores.length;
+      // Dynamically size bars so they always fit within contentWidth
+      const spreadBarGap = n > 20 ? 1.5 : n > 12 ? 2 : 3;
+      const spreadBarW = Math.max(4, Math.min(10, (contentWidth - (n - 1) * spreadBarGap) / n));
       const spreadMaxH = 30;
-      const totalSpreadW = indScores.length * (spreadBarW + spreadBarGap) - spreadBarGap;
+      const totalSpreadW = n * (spreadBarW + spreadBarGap) - spreadBarGap;
       const spreadStartX = margin;
       const minScore = Math.min(...indScores);
       const maxScore = Math.max(...indScores);
