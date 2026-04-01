@@ -1322,7 +1322,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         variant="outline"
                         size="sm"
                         className="gap-1.5"
-                        onClick={(e) => { e.stopPropagation(); generatePDF(org, includeNames); }}
+                        onClick={(e) => { e.stopPropagation(); generatePDF(org, includeNames, false, teamLeaderFilter); }}
                       >
                         <Download className="h-3.5 w-3.5" />
                         PDF
