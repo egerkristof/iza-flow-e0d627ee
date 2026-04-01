@@ -164,7 +164,7 @@ export default function IndustryPharmaPage() {
             ))}
           </div>
           <p className="text-center text-xs text-muted-foreground mt-4">
-            LIZA governs AI execution across every stage — pharma, food safety, clinical labs, and beyond.
+            LIZA governs AI execution across every stage: pharma, food safety, clinical labs, and beyond.
           </p>
         </div>
       </section>
