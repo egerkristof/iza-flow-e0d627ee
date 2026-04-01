@@ -16,6 +16,7 @@ const ROWS: { feature: string; legacy: boolean | string; ai: boolean | string; a
   { feature: "Cross-team learning compounds automatically", legacy: false, ai: "partial", automation: false, km: "partial", liza: true },
   { feature: "Measurable adoption across all workflows", legacy: "partial", ai: false, automation: "partial", km: false, liza: true },
   { feature: "Auditing happens in execution, not after", legacy: false, ai: false, automation: false, km: false, liza: true },
+  { feature: "Your knowledge is portable — zero lock-in", legacy: false, ai: false, automation: false, km: false, liza: true },
 ];
 
 function CellIcon({ value }: { value: boolean | string }) {
