@@ -89,7 +89,7 @@ function ComparisonRow({ label, status, why, isLiza }: { label: string; status: 
   );
 }
 
-function ReasonBand({ number, claim, explanation, align, comparisons }: typeof REASONS[number]) {
+function ReasonBand({ number, claim, explanation, align, comparisons }: { number: string; claim: string; explanation: React.ReactNode; align: "left" | "right"; comparisons: { label: string; status: "yes" | "no" | "partial"; why: string }[] }) {
   const isRight = align === "right";
   return (
     <motion.div
