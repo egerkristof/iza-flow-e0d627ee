@@ -1,20 +1,21 @@
 import { SectionTag, GradientText } from "./shared";
 import { X, Minus, Check, GitCompare } from "lucide-react";
 
-const COLS: { key: "legacy" | "automation" | "km" | "liza"; label: string; sub: string; isLiza?: boolean }[] = [
+const COLS: { key: "legacy" | "ai" | "automation" | "km" | "liza"; label: string; sub: string; isLiza?: boolean }[] = [
   { key: "legacy", label: "Legacy Processes", sub: "SOPs, training, wikis" },
+  { key: "ai", label: "AI Tools", sub: "ChatGPT, Claude, Copilot" },
   { key: "automation", label: "Automation", sub: "Zapier, Make, n8n" },
   { key: "km", label: "Knowledge Mgmt", sub: "Notion, Confluence" },
   { key: "liza", label: "LIZA OS", sub: "Governance layer", isLiza: true },
 ];
 
-const ROWS = [
-  { feature: "Turn domain expertise into executable capabilities", legacy: false, automation: "partial", km: false, liza: true },
-  { feature: "Governance enforced in execution, not just on paper", legacy: false, automation: false, km: false, liza: true },
-  { feature: "Departments self-sufficient, not dependent on central team", legacy: false, automation: "partial", km: false, liza: true },
-  { feature: "Cross-team learning compounds automatically", legacy: false, automation: false, km: "partial", liza: true },
-  { feature: "Measurable adoption across all workflows", legacy: "partial", automation: "partial", km: false, liza: true },
-  { feature: "Auditing happens in execution, not after", legacy: false, automation: false, km: false, liza: true },
+const ROWS: { feature: string; legacy: boolean | string; ai: boolean | string; automation: boolean | string; km: boolean | string; liza: boolean | string }[] = [
+  { feature: "Turn domain expertise into executable capabilities", legacy: false, ai: false, automation: "partial", km: false, liza: true },
+  { feature: "Governance enforced in execution, not just on paper", legacy: false, ai: false, automation: false, km: false, liza: true },
+  { feature: "Collective knowledge shared across teams", legacy: false, ai: false, automation: false, km: "partial", liza: true },
+  { feature: "Cross-team learning compounds automatically", legacy: false, ai: "partial", automation: false, km: "partial", liza: true },
+  { feature: "Measurable adoption across all workflows", legacy: "partial", ai: false, automation: "partial", km: false, liza: true },
+  { feature: "Auditing happens in execution, not after", legacy: false, ai: false, automation: false, km: false, liza: true },
 ];
 
 function CellIcon({ value }: { value: boolean | string }) {
@@ -75,54 +76,45 @@ function DesktopComparison() {
     >
       {/* Header */}
       <div
-        className="grid grid-cols-5 gap-0 text-xs font-bold tracking-wide uppercase"
+        className="grid grid-cols-6 gap-0 text-xs font-bold tracking-wide uppercase"
         style={{ background: "hsl(var(--card))" }}
       >
         <div className="px-4 py-3 text-muted-foreground" />
-        <div className="px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-          Legacy Processes
-          <span className="block text-[10px] font-normal normal-case opacity-60">SOPs, training, wikis</span>
-        </div>
-        <div className="px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-          Automation Platforms
-          <span className="block text-[10px] font-normal normal-case opacity-60">Zapier, Make, n8n</span>
-        </div>
-        <div className="px-4 py-3 text-center text-muted-foreground border-l" style={{ borderColor: "hsl(var(--border))" }}>
-          Knowledge Mgmt
-          <span className="block text-[10px] font-normal normal-case opacity-60">Notion, Confluence</span>
-        </div>
-        <div
-          className="px-4 py-3 text-center font-black border-l"
-          style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.06)" }}
-        >
-          LIZA OS
-          <span className="block text-[10px] font-semibold normal-case opacity-70">Governance layer</span>
-        </div>
+        {COLS.map((col) => (
+          <div
+            key={col.key}
+            className={`px-4 py-3 text-center border-l ${col.isLiza ? "font-black" : "text-muted-foreground"}`}
+            style={{
+              borderColor: "hsl(var(--border))",
+              ...(col.isLiza ? { color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.06)" } : {}),
+            }}
+          >
+            {col.label}
+            <span className={`block text-[10px] font-normal normal-case ${col.isLiza ? "font-semibold opacity-70" : "opacity-60"}`}>{col.sub}</span>
+          </div>
+        ))}
       </div>
 
       {/* Rows */}
       {ROWS.map((r, i) => (
         <div
           key={i}
-          className="grid grid-cols-5 gap-0 border-t text-sm"
+          className="grid grid-cols-6 gap-0 border-t text-sm"
           style={{ borderColor: "hsl(var(--border))" }}
         >
           <div className="px-4 py-3 text-foreground/80">{r.feature}</div>
-          <div className="px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-            <CellIcon value={r.legacy} />
-          </div>
-          <div className="px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-            <CellIcon value={r.automation} />
-          </div>
-          <div className="px-4 py-3 flex items-center justify-center border-l" style={{ borderColor: "hsl(var(--border))" }}>
-            <CellIcon value={r.km} />
-          </div>
-          <div
-            className="px-4 py-3 flex items-center justify-center border-l"
-            style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--primary) / 0.03)" }}
-          >
-            <CellIcon value={r.liza} />
-          </div>
+          {COLS.map((col) => (
+            <div
+              key={col.key}
+              className="px-4 py-3 flex items-center justify-center border-l"
+              style={{
+                borderColor: "hsl(var(--border))",
+                ...(col.isLiza ? { background: "hsl(var(--primary) / 0.03)" } : {}),
+              }}
+            >
+              <CellIcon value={r[col.key]} />
+            </div>
+          ))}
         </div>
       ))}
     </div>

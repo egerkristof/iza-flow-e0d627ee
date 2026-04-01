@@ -7,36 +7,36 @@ const REASONS = [
     number: "01",
     claim: "Your knowledge never reaches the AI.",
     explanation:
-      "Playbooks exist in wikis. Decision logic lives in people's heads. Compliance frameworks sit in shared drives. None of it enters the actual AI session — so every person improvises their own version of \"best practice.\"",
+      "Sure, you can upload documents to a RAG system or paste context into a prompt. But that's not the same as having your decision logic, quality standards, and playbooks live as executable knowledge inside every AI session. The gap between 'uploaded' and 'enforced' is where quality breaks down.",
     align: "left" as const,
     comparisons: [
-      { label: "Notion / Confluence", status: "no" as const, why: "Static pages nobody opens mid-task" },
+      { label: "RAG / retrieval tools", status: "partial" as const, why: "Retrieves text, doesn't enforce standards" },
       { label: "Prompt libraries", status: "no" as const, why: "Copy-paste, no enforcement or versioning" },
       { label: "LIZA OS", status: "yes" as const, why: "Living knowledge enforced in every session" },
     ],
   },
   {
     number: "02",
-    claim: "Everyone builds knowledge alone.",
+    claim: "You can't build collective knowledge.",
     explanation:
-      "Insights stay in individual chats. What one person learns never reaches the team's shared standard. Your organization operates as a collection of soloists — each building their own version of the truth.",
+      "Some tools now offer shared memory or team context. But they aren't designed for collective knowledge by architecture. You can't get to synergistic insights that are both shared across teams and governable by leadership. Every person still operates with their own version of the truth.",
     align: "right" as const,
     comparisons: [
-      { label: "ChatGPT / Claude", status: "no" as const, why: "Individual silos, zero shared context" },
-      { label: "Slack / Teams", status: "partial" as const, why: "Conversations about AI, not inside AI" },
-      { label: "LIZA OS", status: "yes" as const, why: "Team-wide knowledge injected in every session" },
+      { label: "ChatGPT / Claude memory", status: "partial" as const, why: "Per-user memory, not collective by design" },
+      { label: "Slack / Teams", status: "no" as const, why: "Conversations about AI, not inside AI" },
+      { label: "LIZA OS", status: "yes" as const, why: "Collective knowledge, governed and shared" },
     ],
   },
   {
     number: "03",
-    claim: "Nothing compounds.",
+    claim: "No knowledge architecture compounds.",
     explanation:
-      "Every session starts from scratch. Your organization never gets smarter no matter how many projects your team completes. Knowledge is created, used once, and lost.",
+      "Some tools retain context between sessions. But there's no intentional knowledge architecture being built up. LIZA treats knowledge as code: a compounding asset that makes your human-AI teams more effective now while building organizational capability for the future. Every project adds to the asset, not just the output.",
     align: "left" as const,
     comparisons: [
+      { label: "AI memory / history", status: "partial" as const, why: "Retains context, doesn't build architecture" },
       { label: "Retrospective tools", status: "partial" as const, why: "Depends on who writes post-mortems" },
-      { label: "AI memory features", status: "no" as const, why: "Per-user, no team-level learning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Continuous learning compounds across the team" },
+      { label: "LIZA OS", status: "yes" as const, why: "Knowledge as a compounding strategic asset" },
     ],
   },
 ];
@@ -111,11 +111,8 @@ export function ThreeReasonsSection() {
           <br />
           <span className="text-muted-foreground">fails to reach AI.</span>
         </h2>
-        <p className="text-base text-muted-foreground max-w-lg mb-20">
-          It's not the people. It's not the AI. It's the missing knowledge infrastructure between them.
-        </p>
 
-        <div className="space-y-20 md:space-y-28">
+        <div className="mt-20 space-y-20 md:space-y-28">
           {REASONS.map((r) => (
             <ReasonBand key={r.number} {...r} />
           ))}
