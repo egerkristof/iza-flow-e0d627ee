@@ -31,7 +31,7 @@ const REASONS = [
     number: "03",
     claim: "No knowledge architecture compounds.",
     explanation:
-      "Some tools retain context between sessions, but no intentional knowledge architecture is being built. LIZA treats knowledge as code — a compounding asset that improves your human-AI effectiveness today while building organizational capability for the future.",
+      "Some tools retain context between sessions, but no intentional knowledge architecture is being built. LIZA treats knowledge as code: a compounding asset that improves your human-AI effectiveness today while building organizational capability for the future.",
     align: "left" as const,
     comparisons: [
       { label: "AI memory / history", status: "partial" as const, why: "Retains context, doesn't build architecture" },
