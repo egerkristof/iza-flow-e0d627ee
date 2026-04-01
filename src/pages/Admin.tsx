@@ -598,7 +598,7 @@ export default function AdminPage() {
                             <div className="space-y-1">
                               <CardTitle className="text-base">{result.email || "Anonymous submission"}</CardTitle>
                               <CardDescription>
-                                {result.company_name || "Unknown company"} · {result.respondent_role || "Unknown role"} · {format(new Date(result.created_at), "MMM d, yyyy h:mm a")}
+                                {result.company_name || "Unknown company"} · {result.respondent_role || "Unknown role"}{result.team_size ? ` · Team: ${result.team_size}` : ""} · {format(new Date(result.created_at), "MMM d, yyyy h:mm a")}
                               </CardDescription>
                             </div>
                             <div className="flex items-center gap-2">
