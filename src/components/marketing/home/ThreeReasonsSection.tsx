@@ -5,38 +5,38 @@ import { ArrowRight } from "lucide-react";
 const REASONS = [
   {
     number: "01",
-    claim: "No way to define and enforce how AI work gets done.",
+    claim: "Your knowledge never reaches the AI.",
     explanation:
-      "Your playbooks exist in wikis and shared drives. They never reach the actual AI session. Every person improvises their own version of \"best practice\" inside ChatGPT.",
+      "Playbooks exist in wikis. Decision logic lives in people's heads. Compliance frameworks sit in shared drives. None of it enters the actual AI session — so every person improvises their own version of \"best practice.\"",
     align: "left" as const,
     comparisons: [
       { label: "Notion / Confluence", status: "no" as const, why: "Static pages nobody opens mid-task" },
       { label: "Prompt libraries", status: "no" as const, why: "Copy-paste, no enforcement or versioning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Living playbooks enforced in every session" },
+      { label: "LIZA OS", status: "yes" as const, why: "Living knowledge enforced in every session" },
     ],
   },
   {
     number: "02",
-    claim: "No way to execute as a team inside AI.",
+    claim: "Everyone builds knowledge alone.",
     explanation:
-      "Everyone prompts alone. Insights stay in individual chats. What one person learns never reaches the rest. Your team operates as a collection of soloists, not a unit.",
+      "Insights stay in individual chats. What one person learns never reaches the team's shared standard. Your organization operates as a collection of soloists — each building their own version of the truth.",
     align: "right" as const,
     comparisons: [
       { label: "ChatGPT / Claude", status: "no" as const, why: "Individual silos, zero shared context" },
       { label: "Slack / Teams", status: "partial" as const, why: "Conversations about AI, not inside AI" },
-      { label: "LIZA OS", status: "yes" as const, why: "Team-wide context injected in every session" },
+      { label: "LIZA OS", status: "yes" as const, why: "Team-wide knowledge injected in every session" },
     ],
   },
   {
     number: "03",
-    claim: "No way to learn and compound across engagements.",
+    claim: "Nothing compounds.",
     explanation:
-      "Every session starts from scratch. Nothing compounds. Your system never gets smarter no matter how many projects your team completes.",
+      "Every session starts from scratch. Your organization never gets smarter no matter how many projects your team completes. Knowledge is created, used once, and lost.",
     align: "left" as const,
     comparisons: [
       { label: "Retrospective tools", status: "partial" as const, why: "Depends on who writes post-mortems" },
       { label: "AI memory features", status: "no" as const, why: "Per-user, no team-level learning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Continuous learning loops across the team" },
+      { label: "LIZA OS", status: "yes" as const, why: "Continuous learning compounds across the team" },
     ],
   },
 ];
@@ -107,12 +107,12 @@ export function ThreeReasonsSection() {
       <div className="max-w-5xl mx-auto">
         <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The root cause</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
-          Three structural gaps
+          Three ways your knowledge
           <br />
-          <span className="text-muted-foreground">no AI tool was built to close.</span>
+          <span className="text-muted-foreground">fails to reach AI.</span>
         </h2>
         <p className="text-base text-muted-foreground max-w-lg mb-20">
-          It's not the people. It's not the AI. It's the missing infrastructure between them.
+          It's not the people. It's not the AI. It's the missing knowledge infrastructure between them.
         </p>
 
         <div className="space-y-20 md:space-y-28">
