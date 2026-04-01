@@ -11,7 +11,7 @@ const COLS: { key: "legacy" | "ai" | "automation" | "km" | "liza"; label: string
 
 const ROWS: { feature: string; legacy: boolean | string; ai: boolean | string; automation: boolean | string; km: boolean | string; liza: boolean | string }[] = [
   { feature: "Turn domain expertise into executable capabilities", legacy: false, ai: false, automation: "partial", km: false, liza: true },
-  { feature: "Governance enforced in execution, not just on paper", legacy: false, ai: false, automation: false, km: false, liza: true },
+  { feature: "Governance enforced where AI actually executes", legacy: false, ai: false, automation: false, km: false, liza: true },
   { feature: "Collective knowledge shared across teams", legacy: false, ai: false, automation: false, km: "partial", liza: true },
   { feature: "Cross-team learning compounds automatically", legacy: false, ai: "partial", automation: false, km: "partial", liza: true },
   { feature: "Measurable adoption across all workflows", legacy: "partial", ai: false, automation: "partial", km: false, liza: true },
