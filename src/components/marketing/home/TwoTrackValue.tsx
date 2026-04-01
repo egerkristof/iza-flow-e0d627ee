@@ -3,7 +3,7 @@ import { ArrowRight, Shield, Workflow, Brain, Repeat, Target, Sparkles, BookOpen
 import { SectionTag } from "./shared";
 
 const ENTERPRISE_ITEMS = [
-  { icon: <Shield className="w-4 h-4" />, title: "Regulatory compliance built in", desc: "GMP, ISO 17025, 21 CFR Part 11 — your standards become executable playbooks" },
+  { icon: <Shield className="w-4 h-4" />, title: "Regulatory compliance built in", desc: "GMP, ISO 17025, 21 CFR Part 11. Your standards become executable playbooks" },
   { icon: <Workflow className="w-4 h-4" />, title: "End-to-end lifecycle governance", desc: "From research to release, every phase connected through living context" },
   { icon: <Brain className="w-4 h-4" />, title: "Institutional knowledge preserved", desc: "Senior expertise encoded, not lost when people leave" },
   { icon: <Repeat className="w-4 h-4" />, title: "Continuous improvement loops", desc: "Every execution feeds back into the system. Your organisation compounds" },

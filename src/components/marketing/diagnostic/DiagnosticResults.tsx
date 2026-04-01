@@ -45,7 +45,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
   learning_velocity: {
     low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability. That's a negative ROI trajectory.",
-    mid: "Some learning happens, but it takes a quarter to change how the team works. The real cost: while your team iterates slowly, competitors who learn faster compound their advantage every month. After 12 months, that gap isn't linear — it's exponential. And the creative, strategic potential your people have is consumed by re-solving problems that should already be solved.",
+    mid: "Some learning happens, but it takes a quarter to change how the team works. The real cost: while your team iterates slowly, competitors who learn faster compound their advantage every month. After 12 months, that gap isn't linear, it's exponential. And the creative, strategic potential your people have is consumed by re-solving problems that should already be solved.",
     high: "New techniques reach your whole team within days. In a landscape where AI capabilities change monthly, this speed of adaptation is a genuine strategic advantage. Your team's capacity for higher-order, creative work grows with every improvement cycle.",
   },
 };

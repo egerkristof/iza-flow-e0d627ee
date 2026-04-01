@@ -127,7 +127,7 @@ export function ThreeReasonsSection() {
             One platform to capture expertise, govern execution, and compound what works.
           </p>
           <p className="text-sm font-semibold text-primary mb-6">
-            And the knowledge it builds is yours. Extract it, take it anywhere — zero lock-in.
+            And the knowledge it builds is yours. Extract it, take it anywhere. Zero lock-in.
           </p>
           <Link
             to="/diagnostic"
