@@ -30,7 +30,7 @@ const INDUSTRIES = [
     title: "Professional Services",
     lifecycle: "Engagement Delivery Lifecycle",
     description:
-      "From scoping to delivery to knowledge harvest — make every engagement as good as your best team's last one.",
+      "From scoping to delivery to knowledge harvest. Make every engagement as good as your best team's last one.",
     tags: ["ISO 20700", "Delivery Playbooks"],
     available: false,
   },
