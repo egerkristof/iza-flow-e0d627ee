@@ -98,6 +98,7 @@ export function LizaLoopSection() {
                   </div>
                 </div>
               </div>
+            </motion.div>
             ))}
           </div>
 

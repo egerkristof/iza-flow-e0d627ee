@@ -110,7 +110,7 @@ function ReasonBand({ number, claim, explanation, align, comparisons }: typeof R
           <ComparisonRow key={c.label} {...c} isLiza={c.label === "LIZA OS"} />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
