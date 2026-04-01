@@ -307,6 +307,18 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     doc.text(`Prepared for: ${displayName}`, margin + 4, y + 4);
     doc.text(`${org.count} team member assessments (anonymised)  ·  ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`, margin + 4, y + 10);
 
+    // Team report banner
+    if (teamReportFor && !fullyAnonymized) {
+      y += 22;
+      doc.setFillColor(20, 80, 160);
+      doc.roundedRect(margin, y - 2, contentWidth, 14, 2, 2, "F");
+      setFont(10, "bold", [255, 255, 255]);
+      doc.text(`TEAM REPORT FOR: ${teamReportFor}`, margin + 6, y + 6);
+      setFont(8, "normal", [220, 230, 255]);
+      doc.text("This report covers assessments submitted by direct reports of this team leader.", margin + 6, y + 12);
+      y += 18;
+    }
+
     if (!fullyAnonymized && showParticipants) {
       const participantEmails = org.results
         .map(r => r.email)
