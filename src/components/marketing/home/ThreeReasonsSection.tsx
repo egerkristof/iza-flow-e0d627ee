@@ -19,7 +19,7 @@ const REASONS = [
     number: "02",
     claim: "You can't build collective knowledge.",
     explanation:
-      "Some tools offer shared memory or team context — but none are designed for collective knowledge by architecture. You can't reach insights that are both shared across teams and governable by leadership.",
+      "Some tools offer shared memory or team context, but none are designed for collective knowledge by architecture. You can't reach insights that are both shared across teams and governable by leadership.",
     align: "right" as const,
     comparisons: [
       { label: "ChatGPT / Claude memory", status: "partial" as const, why: "Per-user memory, not collective by design" },
