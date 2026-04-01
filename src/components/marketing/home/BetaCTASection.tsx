@@ -33,7 +33,7 @@ export function BetaCTASection() {
                   boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
                 }}
               >
-                Score your AI-readiness — 90s <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Score your AI execution — 90s <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href={CAL_URL}
