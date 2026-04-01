@@ -112,7 +112,7 @@ export function ThreeReasonsSection() {
           <span className="text-muted-foreground">fails to reach AI.</span>
         </h2>
 
-        <div className="space-y-20 md:space-y-28">
+        <div className="mt-20 space-y-20 md:space-y-28">
           {REASONS.map((r) => (
             <ReasonBand key={r.number} {...r} />
           ))}
