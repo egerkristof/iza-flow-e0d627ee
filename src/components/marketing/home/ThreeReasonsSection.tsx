@@ -1,6 +1,7 @@
 import { X, Check, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const REASONS = [
   {
