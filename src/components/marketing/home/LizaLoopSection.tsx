@@ -51,7 +51,7 @@ export function LizaLoopSection() {
               <span className="text-muted-foreground font-bold text-2xl md:text-3xl">Three capabilities. One compounding loop.</span>
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              LIZA OS is the engine that turns executable knowledge into daily operations —
+              LIZA OS is the engine that turns executable knowledge into daily operations:
               defining standards, enforcing them in every AI session, and compounding what works.
             </p>
           </div>

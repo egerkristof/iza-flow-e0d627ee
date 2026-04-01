@@ -148,12 +148,12 @@ const FEATURES = [
   {
     icon: <Brain className="w-6 h-6" />,
     title: "Knowledge Extraction Engine",
-    desc: "Surfaces the tacit layer from your process docs, transcripts, and senior interviews — the judgment never written down.",
+    desc: "Surfaces the tacit layer from your process docs, transcripts, and senior interviews. The judgment never written down.",
   },
   {
     icon: <Layers className="w-6 h-6" />,
     title: "Context Bundles",
-    desc: "Playbooks, Procedures, Directives, and Principles — versioned, governed, always current.",
+    desc: "Playbooks, Procedures, Directives, and Principles. Versioned, governed, always current.",
   },
   {
     icon: <Zap className="w-6 h-6" />,
@@ -204,7 +204,7 @@ const CATEGORIES = [
   {
     label: "PRINCIPLE",
     tagline: "Core beliefs",
-    desc: "The heuristics that guide decision-making at judgment points. Not rules — wisdom.",
+    desc: "The heuristics that guide decision-making at judgment points. Not rules, wisdom.",
     col: "270 60% 65%",
     role: "Contextual",
   },

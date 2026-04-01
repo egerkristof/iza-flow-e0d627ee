@@ -118,7 +118,7 @@ export default function BetaPage() {
               Join the Private Beta.
             </h1>
             <p className="text-base text-muted-foreground mb-2 max-w-md mx-auto">
-              LIZA OS is the management layer that lets your team define, enforce, and continuously improve how they execute with AI — so your best thinking becomes the default for everyone.
+              LIZA OS is the management layer that lets your team define, enforce, and continuously improve how they execute with AI, so your best thinking becomes the default for everyone.
             </p>
             <p className="text-lg text-muted-foreground">
               For teams of 5–30. 1 month free, then €2,000/mo.

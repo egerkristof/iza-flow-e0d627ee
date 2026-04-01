@@ -26,7 +26,7 @@ export function WhoItsForStrip() {
           For teams that hit the AI ceiling
         </p>
         <p className="text-sm text-muted-foreground mb-8 max-w-md mx-auto">
-          Your people already use AI. The problem is they each use it differently — especially in industries where the stakes are too high for inconsistent AI.
+          Your people already use AI. The problem is they each use it differently, especially in industries where the stakes are too high for inconsistent AI.
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">

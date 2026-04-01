@@ -19,7 +19,7 @@ const REASONS = [
     number: "02",
     claim: "You can't build collective knowledge.",
     explanation:
-      "Some tools offer shared memory or team context — but none are designed for collective knowledge by architecture. You can't reach insights that are both shared across teams and governable by leadership.",
+      "Some tools offer shared memory or team context, but none are designed for collective knowledge by architecture. You can't reach insights that are both shared across teams and governable by leadership.",
     align: "right" as const,
     comparisons: [
       { label: "ChatGPT / Claude memory", status: "partial" as const, why: "Per-user memory, not collective by design" },
@@ -31,7 +31,7 @@ const REASONS = [
     number: "03",
     claim: "No knowledge architecture compounds.",
     explanation:
-      "Some tools retain context between sessions, but no intentional knowledge architecture is being built. LIZA treats knowledge as code — a compounding asset that improves your human-AI effectiveness today while building organizational capability for the future.",
+      "Some tools retain context between sessions, but no intentional knowledge architecture is being built. LIZA treats knowledge as code: a compounding asset that improves your human-AI effectiveness today while building organizational capability for the future.",
     align: "left" as const,
     comparisons: [
       { label: "AI memory / history", status: "partial" as const, why: "Retains context, doesn't build architecture" },
@@ -127,7 +127,7 @@ export function ThreeReasonsSection() {
             One platform to capture expertise, govern execution, and compound what works.
           </p>
           <p className="text-sm font-semibold text-primary mb-6">
-            And the knowledge it builds is yours. Extract it, take it anywhere — zero lock-in.
+            And the knowledge it builds is yours. Extract it, take it anywhere. Zero lock-in.
           </p>
           <Link
             to="/diagnostic"

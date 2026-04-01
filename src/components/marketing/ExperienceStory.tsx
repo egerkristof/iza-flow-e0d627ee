@@ -727,7 +727,7 @@ function ExecutionDrillDown({ protocol, preview, onBack }: {
                   <div>
                     <p className="text-[10px] font-semibold text-primary mb-0.5">How LIZA helps</p>
                     <p className="text-[11px] text-muted-foreground">
-                      LIZA monitors this step in real-time — tracking progress, flagging when output drifts from the playbook, and capturing learnings that feed back into your knowledge base.
+                      LIZA monitors this step in real-time, tracking progress, flagging when output drifts from the playbook, and capturing learnings that feed back into your knowledge base.
                     </p>
                   </div>
                 </div>

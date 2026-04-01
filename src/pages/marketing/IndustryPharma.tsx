@@ -36,7 +36,7 @@ const PAIN_POINTS = [
   {
     icon: <Eye className="w-5 h-5" />,
     title: "No Visibility Across Teams",
-    desc: "Leaders can't see which teams follow standards and which drift — until an observation is raised.",
+    desc: "Leaders can't see which teams follow standards and which drift until an observation is raised.",
   },
 ];
 
@@ -47,7 +47,7 @@ const HOW_IT_WORKS = [
     icon: <BookOpen className="w-5 h-5" />,
     step: "01",
     title: "Capture",
-    desc: "SOPs, quality standards, and tribal knowledge become structured, reusable context — not static PDFs.",
+    desc: "SOPs, quality standards, and tribal knowledge become structured, reusable context. Not static PDFs.",
   },
   {
     icon: <Shield className="w-5 h-5" />,
@@ -115,7 +115,7 @@ export default function IndustryPharmaPage() {
             <span className="text-primary">Regulated Lifecycle Management.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
-            Whether it's pharma, food safety, or lab governance — your teams keep their expertise. 
+            Whether it's pharma, food safety, or lab governance, your teams keep their expertise. 
             AI gives them speed. LIZA makes sure nothing falls through the cracks.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -164,7 +164,7 @@ export default function IndustryPharmaPage() {
             ))}
           </div>
           <p className="text-center text-xs text-muted-foreground mt-4">
-            LIZA governs AI execution across every stage — pharma, food safety, clinical labs, and beyond.
+            LIZA governs AI execution across every stage: pharma, food safety, clinical labs, and beyond.
           </p>
         </div>
       </section>
@@ -203,7 +203,7 @@ export default function IndustryPharmaPage() {
             How LIZA governs AI across regulated lifecycles
           </h2>
           <p className="text-sm text-muted-foreground text-center mb-10 max-w-lg mx-auto">
-            The same four-step system of reasoning — built for GxP, ISO, and GLP compliance.
+            The same four-step system of reasoning, built for GxP, ISO, and GLP compliance.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {HOW_IT_WORKS.map((step) => (
@@ -239,7 +239,7 @@ export default function IndustryPharmaPage() {
               Designed for compliance, not certified
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
-              LIZA is architected around regulated industry standards. Your validated environment stays yours — LIZA governs the AI layer on top.
+              LIZA is architected around regulated industry standards. Your validated environment stays yours. LIZA governs the AI layer on top.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {COMPLIANCE.map((c) => (

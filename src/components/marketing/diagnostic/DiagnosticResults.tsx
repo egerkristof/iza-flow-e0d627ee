@@ -30,13 +30,13 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
   output_consistency: {
     low: "If two people on your team get the same brief, you'll get two very different outputs. That means rework cycles of 3 to 5 hours per deliverable, plus a trust problem: stakeholders can tell when quality depends on who did the work.",
-    mid: "Outputs are recognisable but uneven. The 30 to 40% excess senior review time is a symptom, not the root cause. The real issue: your team's quality ceiling is determined by individual capability, not collective knowledge. Your best people's approaches aren't compounding into team-wide standards — they're locked in individual workflows, and every project starts from scratch instead of building on the last.",
+    mid: "Outputs are recognisable but uneven. The 30 to 40% excess senior review time is a symptom, not the root cause. The real issue: your team's quality ceiling is determined by individual capability, not collective knowledge. Your best people's approaches aren't compounding into team-wide standards. They're locked in individual workflows, and every project starts from scratch instead of building on the last.",
     high: "Stakeholders get your team's quality standard regardless of who delivers. That's a genuine competitive moat. You can grow the team without diluting what makes your work distinctive, and your strongest people push the quality frontier instead of maintaining the baseline.",
   },
   knowledge_compounding: {
     low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. Multiply that by your team size: you're funding individual experiments, not building collective capability.",
-    mid: "Knowledge spreads, but it takes 4 to 6 weeks for a good technique to reach the whole team, if it ever does. The real cost isn't the delay — it's that each project starts from scratch instead of standing on the shoulders of the last one. Your team is improving linearly when it should be compounding. And every person who leaves takes learned capability with them.",
-    high: "Each project genuinely makes the next one better. Your team's collective capability compounds rather than resets — and survives turnover. This is what separates high-growth teams from the rest: not individual brilliance, but shared intelligence that accelerates over time.",
+    mid: "Knowledge spreads, but it takes 4 to 6 weeks for a good technique to reach the whole team, if it ever does. The real cost isn't the delay. It's that each project starts from scratch instead of standing on the shoulders of the last one. Your team is improving linearly when it should be compounding. And every person who leaves takes learned capability with them.",
+    high: "Each project genuinely makes the next one better. Your team's collective capability compounds rather than resets, and survives turnover. This is what separates high-growth teams from the rest: not individual brilliance, but shared intelligence that accelerates over time.",
   },
   collective_visibility: {
     low: "You have zero visibility into how your team uses AI day-to-day. You can't answer: who's struggling, who found a breakthrough, or whether AI is actually improving output quality. You're managing a black box.",
@@ -45,7 +45,7 @@ const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string
   },
   learning_velocity: {
     low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach hasn't meaningfully changed. You're spending on licenses but not building capability. That's a negative ROI trajectory.",
-    mid: "Some learning happens, but it takes a quarter to change how the team works. The real cost: while your team iterates slowly, competitors who learn faster compound their advantage every month. After 12 months, that gap isn't linear — it's exponential. And the creative, strategic potential your people have is consumed by re-solving problems that should already be solved.",
+    mid: "Some learning happens, but it takes a quarter to change how the team works. The real cost: while your team iterates slowly, competitors who learn faster compound their advantage every month. After 12 months, that gap isn't linear, it's exponential. And the creative, strategic potential your people have is consumed by re-solving problems that should already be solved.",
     high: "New techniques reach your whole team within days. In a landscape where AI capabilities change monthly, this speed of adaptation is a genuine strategic advantage. Your team's capacity for higher-order, creative work grows with every improvement cycle.",
   },
 };
@@ -300,7 +300,7 @@ function EmailCapture({
                 className="mt-0.5"
               />
               <label htmlFor="add-to-team" className="text-xs text-muted-foreground leading-relaxed cursor-pointer select-none">
-                Add my results to a <span className="font-semibold text-foreground">team report</span> — your team leader will receive a consolidated view when 2+ members complete this.
+                Add my results to a <span className="font-semibold text-foreground">team report</span>. Your team leader will receive a consolidated view when 2+ members complete this.
               </label>
             </div>
             {addToTeam && (

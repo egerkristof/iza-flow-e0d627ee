@@ -27,7 +27,7 @@ export default function TermsPage() {
 
           <h2 className="text-lg font-bold text-foreground pt-4">4. Intellectual Property</h2>
           <p>
-            All content on this website — including the diagnostic methodology, scoring model, text, graphics, and software — is the intellectual property of LIZA OS / Kristof Eger. You may not reproduce, distribute, or create derivative works without written permission.
+            All content on this website, including the diagnostic methodology, scoring model, text, graphics, and software, is the intellectual property of LIZA OS / Kristof Eger. You may not reproduce, distribute, or create derivative works without written permission.
           </p>
 
           <h2 className="text-lg font-bold text-foreground pt-4">5. User Conduct</h2>

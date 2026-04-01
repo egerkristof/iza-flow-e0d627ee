@@ -15,7 +15,7 @@ const TRACKS = [
     icon: <Zap className="w-6 h-6" />,
     label: "Teams",
     headline: "Building with a lean team?",
-    desc: "Pick the capabilities you need today. Living playbooks, team-wide AI consistency, and compounding knowledge — no lifecycle required.",
+    desc: "Pick the capabilities you need today. Living playbooks, team-wide AI consistency, and compounding knowledge. No lifecycle required.",
     cta: "See what you can do",
     to: "/use-cases",
     col: "155 72% 46%",

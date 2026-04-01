@@ -10,7 +10,7 @@ const INDUSTRIES = [
     title: "Regulated Science & Manufacturing",
     lifecycle: "Product & Quality Lifecycle Management",
     description:
-      "From R&D through post-market surveillance, from lab governance to food safety — govern AI across GxP and ISO-regulated processes without losing speed or traceability.",
+      "From R&D through post-market surveillance, from lab governance to food safety: govern AI across GxP and ISO-regulated processes without losing speed or traceability.",
     tags: ["GMP", "ISO 17025", "GLP", "GAMP 5", "21 CFR Part 11"],
     available: true,
   },
@@ -20,7 +20,7 @@ const INDUSTRIES = [
     title: "Financial Services",
     lifecycle: "Risk & Compliance Lifecycle",
     description:
-      "Model validation, regulatory reporting, and audit readiness — AI execution governed by your compliance frameworks.",
+      "Model validation, regulatory reporting, and audit readiness. AI execution governed by your compliance frameworks.",
     tags: ["MaRisk", "DORA", "Basel III"],
     available: false,
   },
@@ -30,7 +30,7 @@ const INDUSTRIES = [
     title: "Professional Services",
     lifecycle: "Engagement Delivery Lifecycle",
     description:
-      "From scoping to delivery to knowledge harvest — make every engagement as good as your best team's last one.",
+      "From scoping to delivery to knowledge harvest. Make every engagement as good as your best team's last one.",
     tags: ["ISO 20700", "Delivery Playbooks"],
     available: false,
   },
@@ -49,7 +49,7 @@ export default function IndustriesPage() {
             <span className="text-primary">LIZA governs the AI inside it.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-            Where documentation meets execution, where compliance meets speed — LIZA is the operating system 
+            Where documentation meets execution, where compliance meets speed, LIZA is the operating system 
             that ensures AI-assisted work stays accurate, traceable, and audit-ready.
           </p>
         </div>
@@ -70,10 +70,10 @@ export default function IndustriesPage() {
               and documentation standards determine quality.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              AI makes these processes faster — but without governance, it makes them 
+              AI makes these processes faster, but without governance, it makes them 
               inconsistent and unauditable. LIZA sits between your people and their AI tools, 
               ensuring every output meets your standards. Think of it as ALM 
-              (Application Lifecycle Management) — but for your industry's core processes.
+              (Application Lifecycle Management), but for your industry's core processes.
             </p>
           </div>
 
