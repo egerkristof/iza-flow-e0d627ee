@@ -5,38 +5,38 @@ import { ArrowRight } from "lucide-react";
 const REASONS = [
   {
     number: "01",
-    claim: "No way to define and enforce how AI work gets done.",
+    claim: "Your knowledge never reaches the AI.",
     explanation:
-      "Your playbooks exist in wikis and shared drives. They never reach the actual AI session. Every person improvises their own version of \"best practice\" inside ChatGPT.",
+      "Playbooks exist in wikis. Decision logic lives in people's heads. Compliance frameworks sit in shared drives. None of it enters the actual AI session — so every person improvises their own version of \"best practice.\"",
     align: "left" as const,
     comparisons: [
       { label: "Notion / Confluence", status: "no" as const, why: "Static pages nobody opens mid-task" },
       { label: "Prompt libraries", status: "no" as const, why: "Copy-paste, no enforcement or versioning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Living playbooks enforced in every session" },
+      { label: "LIZA OS", status: "yes" as const, why: "Living knowledge enforced in every session" },
     ],
   },
   {
     number: "02",
-    claim: "No way to execute as a team inside AI.",
+    claim: "Everyone builds knowledge alone.",
     explanation:
-      "Everyone prompts alone. Insights stay in individual chats. What one person learns never reaches the rest. Your team operates as a collection of soloists, not a unit.",
+      "Insights stay in individual chats. What one person learns never reaches the team's shared standard. Your organization operates as a collection of soloists — each building their own version of the truth.",
     align: "right" as const,
     comparisons: [
       { label: "ChatGPT / Claude", status: "no" as const, why: "Individual silos, zero shared context" },
       { label: "Slack / Teams", status: "partial" as const, why: "Conversations about AI, not inside AI" },
-      { label: "LIZA OS", status: "yes" as const, why: "Team-wide context injected in every session" },
+      { label: "LIZA OS", status: "yes" as const, why: "Team-wide knowledge injected in every session" },
     ],
   },
   {
     number: "03",
-    claim: "No way to learn and compound across engagements.",
+    claim: "Nothing compounds.",
     explanation:
-      "Every session starts from scratch. Nothing compounds. Your system never gets smarter no matter how many projects your team completes.",
+      "Every session starts from scratch. Your organization never gets smarter no matter how many projects your team completes. Knowledge is created, used once, and lost.",
     align: "left" as const,
     comparisons: [
       { label: "Retrospective tools", status: "partial" as const, why: "Depends on who writes post-mortems" },
       { label: "AI memory features", status: "no" as const, why: "Per-user, no team-level learning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Continuous learning loops across the team" },
+      { label: "LIZA OS", status: "yes" as const, why: "Continuous learning compounds across the team" },
     ],
   },
 ];
