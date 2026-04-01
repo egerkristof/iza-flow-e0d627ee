@@ -29,6 +29,7 @@ import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import BetaPage from "./pages/marketing/Beta";
+import PlatformSignupPage from "./pages/marketing/PlatformSignup";
 import DiagnosticPage from "./pages/marketing/Diagnostic";
 import PrivacyPage from "./pages/marketing/Privacy";
 import TermsPage from "./pages/marketing/Terms";
