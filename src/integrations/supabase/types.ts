@@ -1062,6 +1062,42 @@ export type Database = {
         }
         Relationships: []
       }
+      platform_signups: {
+        Row: {
+          additional_notes: string | null
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          primary_interest: string | null
+          role: string | null
+          team_size: string | null
+        }
+        Insert: {
+          additional_notes?: string | null
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          primary_interest?: string | null
+          role?: string | null
+          team_size?: string | null
+        }
+        Update: {
+          additional_notes?: string | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          primary_interest?: string | null
+          role?: string | null
+          team_size?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
