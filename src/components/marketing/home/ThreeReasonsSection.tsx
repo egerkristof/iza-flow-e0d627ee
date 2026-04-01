@@ -7,7 +7,7 @@ const REASONS = [
     number: "01",
     claim: "Your knowledge never reaches the AI.",
     explanation:
-      "Sure, you can upload documents to a RAG system or paste context into a prompt. But that's not the same as having your decision logic, quality standards, and playbooks live as executable knowledge inside every AI session. The gap between 'uploaded' and 'enforced' is where quality breaks down.",
+      "The best current solutions let AI reference your existing documentation. That is not the same as having your decision logic, quality standards, and playbooks enforced inside every AI session. The gap between referenced and enforced is where quality breaks down.",
     align: "left" as const,
     comparisons: [
       { label: "RAG / retrieval tools", status: "partial" as const, why: "Retrieves text, doesn't enforce standards" },
@@ -19,7 +19,7 @@ const REASONS = [
     number: "02",
     claim: "You can't build collective knowledge.",
     explanation:
-      "Some tools now offer shared memory or team context. But they aren't designed for collective knowledge by architecture. You can't get to synergistic insights that are both shared across teams and governable by leadership. Every person still operates with their own version of the truth.",
+      "Some tools offer shared memory or team context — but none are designed for collective knowledge by architecture. You can't reach insights that are both shared across teams and governable by leadership.",
     align: "right" as const,
     comparisons: [
       { label: "ChatGPT / Claude memory", status: "partial" as const, why: "Per-user memory, not collective by design" },
@@ -31,7 +31,7 @@ const REASONS = [
     number: "03",
     claim: "No knowledge architecture compounds.",
     explanation:
-      "Some tools retain context between sessions. But there's no intentional knowledge architecture being built up. LIZA treats knowledge as code: a compounding asset that makes your human-AI teams more effective now while building organizational capability for the future. Every project adds to the asset, not just the output.",
+      "Some tools retain context between sessions, but no intentional knowledge architecture is being built. LIZA treats knowledge as code — a compounding asset that improves your human-AI effectiveness today while building organizational capability for the future.",
     align: "left" as const,
     comparisons: [
       { label: "AI memory / history", status: "partial" as const, why: "Retains context, doesn't build architecture" },
