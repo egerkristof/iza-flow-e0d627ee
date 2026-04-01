@@ -9,7 +9,7 @@ const REASONS = [
     claim: "Your knowledge never reaches the AI.",
     explanation: (
       <>
-        The best current solutions let AI <span className="text-foreground font-semibold">reference</span> your existing documentation. That is not the same as having your decision logic, quality standards, and playbooks <span className="text-foreground font-black">enforced</span> inside every AI session. The gap between <span className="text-muted-foreground/80 line-through decoration-1">referenced</span> and <span className="font-black" style={{ color: "hsl(var(--primary))" }}>enforced</span> is where quality breaks down.
+        The best current solutions let AI reference your existing documentation. That is not the same as having your <span className="font-black" style={{ color: "hsl(var(--primary))" }}>decision logic, quality standards, and playbooks enforced</span> inside every AI session. The gap between <span className="text-muted-foreground/80 line-through decoration-1">referenced</span> and <span className="font-black" style={{ color: "hsl(var(--primary))" }}>enforced</span> is where quality breaks down.
       </>
     ),
     align: "left" as const,
