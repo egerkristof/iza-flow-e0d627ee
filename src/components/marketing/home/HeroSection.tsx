@@ -23,7 +23,7 @@ export function HeroSection() {
         </h1>
 
         <p className="text-base md:text-lg font-semibold mb-8 text-muted-foreground max-w-xl mx-auto">
-          LIZA OS turns your expertise into executable knowledge, so every AI workflow runs on the standards your best people set.
+          LIZA OS captures your organization's best practices and turns them into executable knowledge, so every AI workflow your team runs is governed by proven standards.
         </p>
 
         {/* CTAs */}
