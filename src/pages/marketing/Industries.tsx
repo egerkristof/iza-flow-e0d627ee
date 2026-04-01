@@ -70,10 +70,10 @@ export default function IndustriesPage() {
               and documentation standards determine quality.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              AI makes these processes faster — but without governance, it makes them 
+              AI makes these processes faster, but without governance, it makes them 
               inconsistent and unauditable. LIZA sits between your people and their AI tools, 
               ensuring every output meets your standards. Think of it as ALM 
-              (Application Lifecycle Management) — but for your industry's core processes.
+              (Application Lifecycle Management), but for your industry's core processes.
             </p>
           </div>
 

@@ -375,7 +375,7 @@ function LizaDifferentiator() {
           </h2>
           <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
             Extraction, codification, and governance happen{" "}
-            <span className="font-semibold text-foreground">inside LIZA OS</span> — you leave with a system that runs, not a slide deck.
+            <span className="font-semibold text-foreground">inside LIZA OS</span>. You leave with a system that runs, not a slide deck.
           </p>
         </div>
 

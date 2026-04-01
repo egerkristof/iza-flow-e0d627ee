@@ -300,7 +300,7 @@ function EmailCapture({
                 className="mt-0.5"
               />
               <label htmlFor="add-to-team" className="text-xs text-muted-foreground leading-relaxed cursor-pointer select-none">
-                Add my results to a <span className="font-semibold text-foreground">team report</span> — your team leader will receive a consolidated view when 2+ members complete this.
+                Add my results to a <span className="font-semibold text-foreground">team report</span>. Your team leader will receive a consolidated view when 2+ members complete this.
               </label>
             </div>
             {addToTeam && (

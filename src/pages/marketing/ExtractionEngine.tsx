@@ -216,7 +216,7 @@ export default function ExtractionEngine() {
                   <div className="flex-1">
                     <h3 className="text-base font-bold text-foreground mb-1">See it work on a sample</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Pick a realistic business document and watch LIZA extract playbooks, identify gaps, and build protocols — in 30 seconds.
+                      Pick a realistic business document and watch LIZA extract playbooks, identify gaps, and build protocols in 30 seconds.
                     </p>
                     <span className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold text-primary">
                       Browse samples below <ChevronDown className="w-3.5 h-3.5" />

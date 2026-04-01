@@ -87,7 +87,7 @@ export default function PrivacyPage() {
 
           <h2 className="text-lg font-bold text-foreground pt-4">11. Contact</h2>
           <p>
-            Kristof Eger — Data Controller<br />
+            Kristof Eger, Data Controller<br />
             <a href="mailto:kristof.eger@lizaos.ai" className="text-primary underline">kristof.eger@lizaos.ai</a>
           </p>
           <p>
