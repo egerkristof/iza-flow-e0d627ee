@@ -354,7 +354,7 @@ function ValidationBridge() {
           style={{ background: `hsl(var(--primary) / 0.04)`, borderColor: `hsl(var(--primary) / 0.2)` }}>
           <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "var(--gradient-brand)" }} />
           <p className="text-base leading-relaxed text-muted-foreground italic">
-            "AI transformation fails when companies automate broken processes. We start by codifying the judgment layer — the part that was never written down.{" "}
+            "AI transformation fails when companies automate broken processes. We start by codifying the judgment layer, the part that was never written down.{" "}
             <span className="text-foreground font-semibold not-italic">That's the foundation everything else scales on.</span>"
           </p>
         </div>
