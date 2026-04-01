@@ -51,7 +51,7 @@ export function HeroSection() {
         </div>
 
         <p className="text-xs text-muted-foreground">
-          15 years of methodology · 15+ clients across 8 countries
+          15 years of methodology · trusted across 8 countries
         </p>
       </div>
     </section>
