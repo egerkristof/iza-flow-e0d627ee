@@ -794,6 +794,8 @@ export default function AdminPage() {
               </div>
             </div>
           )}
+
+          {activeView === "platform-signups" && <PlatformSignups />}
         </div>
       </main>
     </div>
