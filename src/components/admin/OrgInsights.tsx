@@ -311,12 +311,12 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     if (teamReportFor && !fullyAnonymized) {
       y += 22;
       doc.setFillColor(20, 80, 160);
-      doc.roundedRect(margin, y - 2, contentWidth, 14, 2, 2, "F");
+      doc.roundedRect(margin, y - 2, contentWidth, 22, 2, 2, "F");
       setFont(10, "bold", [255, 255, 255]);
       doc.text(`TEAM REPORT FOR: ${teamReportFor}`, margin + 6, y + 6);
       setFont(8, "normal", [220, 230, 255]);
-      doc.text("This report covers assessments submitted by direct reports of this team leader.", margin + 6, y + 12);
-      y += 18;
+      doc.text("This report covers assessments submitted by direct reports of this team leader.", margin + 6, y + 14);
+      y += 26;
     }
 
     if (!fullyAnonymized && showParticipants) {
