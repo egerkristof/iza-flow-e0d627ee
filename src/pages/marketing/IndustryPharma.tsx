@@ -36,7 +36,7 @@ const PAIN_POINTS = [
   {
     icon: <Eye className="w-5 h-5" />,
     title: "No Visibility Across Teams",
-    desc: "Leaders can't see which teams follow standards and which drift — until an observation is raised.",
+    desc: "Leaders can't see which teams follow standards and which drift until an observation is raised.",
   },
 ];
 
