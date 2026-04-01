@@ -23,7 +23,7 @@ export function ProductMomentStrip() {
     <section className="py-16 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-4xl mx-auto">
         <p className="text-center text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-8">
-          What this looks like on Monday morning
+          What executable knowledge looks like in practice
         </p>
         <div className="grid md:grid-cols-3 gap-6">
           {MOMENTS.map((m, i) => (

@@ -47,12 +47,12 @@ export function LizaLoopSection() {
           <div className="text-center mb-14">
             <SectionTag label="LIZA OS" icon={<Layers className="w-3 h-3" />} />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              Where you define knowledge.<br />
-              <span className="text-muted-foreground font-bold text-2xl md:text-3xl">Where AI executes from it.</span>
+              How LIZA OS makes it work.<br />
+              <span className="text-muted-foreground font-bold text-2xl md:text-3xl">Three capabilities. One compounding loop.</span>
             </h2>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              LIZA OS is the platform where your organization's expertise becomes executable —
-              so every AI workflow runs on what your best people actually know.
+              LIZA OS is the engine that turns executable knowledge into daily operations —
+              defining standards, enforcing them in every AI session, and compounding what works.
             </p>
           </div>
 

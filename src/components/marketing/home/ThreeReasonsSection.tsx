@@ -107,12 +107,12 @@ export function ThreeReasonsSection() {
       <div className="max-w-5xl mx-auto">
         <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The root cause</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
-          Three structural gaps
+          Three ways your knowledge
           <br />
-          <span className="text-muted-foreground">no AI tool was built to close.</span>
+          <span className="text-muted-foreground">fails to reach AI.</span>
         </h2>
         <p className="text-base text-muted-foreground max-w-lg mb-20">
-          It's not the people. It's not the AI. It's the missing infrastructure between them.
+          It's not the people. It's not the AI. It's the missing knowledge infrastructure between them.
         </p>
 
         <div className="space-y-20 md:space-y-28">

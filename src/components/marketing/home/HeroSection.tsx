@@ -17,13 +17,13 @@ export function HeroSection() {
 
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <h1 className="text-3xl md:text-5xl lg:text-[3.25rem] font-black mb-4 leading-[1.1] tracking-tight">
-          Your best people's judgment.
+          AI is everywhere. But no one has solved
           <br />
-          <span className="text-primary">Every workflow. At scale.</span>
+          <span className="text-primary">how to define the knowledge it runs on.</span>
         </h1>
 
-        <p className="text-base md:text-lg font-semibold mb-8 text-muted-foreground">
-          The governance layer for AI-native organizations.
+        <p className="text-base md:text-lg font-semibold mb-8 text-muted-foreground max-w-xl mx-auto">
+          LIZA OS turns your organization's expertise into executable knowledge — so every AI workflow runs on what your best people actually know.
         </p>
 
         {/* CTAs */}

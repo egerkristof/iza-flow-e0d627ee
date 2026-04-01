@@ -43,16 +43,15 @@ export function CapabilitiesSection() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <SectionTag label="The missing layer" />
+          <SectionTag label="Executable knowledge" />
           <h2 className="text-2xl md:text-3xl font-black mb-3 text-foreground">
-            No AI tool has solved<br />
-            <span className="text-muted-foreground font-bold text-xl md:text-2xl">how to define knowledge well.</span>
+            What is executable knowledge?<br />
+            <span className="text-muted-foreground font-bold text-xl md:text-2xl">It's not a document. It's not a prompt.</span>
           </h2>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Current tools help you chat, search, or automate — but none of them capture
-            what your organization actually knows: the playbooks, the judgment calls,
-            the compliance rules, the hard-won expertise. LIZA turns all of that into
-            executable knowledge — structured, governed, and ready to compound.
+            It's the structured, governed layer between what your experts know and what
+            AI actually does. Playbooks, judgment calls, compliance rules, and hard-won
+            expertise — captured once, enforced everywhere, and improving with every use.
           </p>
         </div>
 
