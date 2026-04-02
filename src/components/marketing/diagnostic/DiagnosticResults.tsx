@@ -11,12 +11,15 @@ import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp, Loader2, Sparkl
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { INDUSTRIES, INDUSTRY_CTA, type IndustryKey } from "@/lib/diagnostic-industries";
 
 interface Props {
   result: DiagnosticResult;
   answers: Record<string, number>;
   existingRecordId?: string | null;
   sessionId?: string | null;
+  industryKey?: IndustryKey | null;
+  teamKey?: string | null;
 }
 
 const BENCHMARK_AVG = 35;
