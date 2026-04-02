@@ -333,7 +333,7 @@ function EmailCapture({
   );
 }
 
-export function DiagnosticResults({ result, answers, existingRecordId, sessionId }: Props) {
+export function DiagnosticResults({ result, answers, existingRecordId, sessionId, industryKey, teamKey }: Props) {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [respondentRole, setRespondentRole] = useState("");
