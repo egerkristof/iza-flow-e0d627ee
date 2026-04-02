@@ -1005,7 +1005,7 @@ export default function SeedInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pre-Seed-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Seed-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
