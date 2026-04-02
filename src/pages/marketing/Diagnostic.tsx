@@ -325,6 +325,7 @@ export default function DiagnosticPage() {
                 selectedScore={phase === "intro" ? undefined : answers[currentQuestion.id]}
                 onSelect={handleSelect}
                 industryKey={effectiveIndustryKey}
+                customContexts={customContexts}
               />
               {phase === "questions" && (
                 <div className="max-w-2xl mx-auto flex items-center justify-between animate-in fade-in duration-300">
