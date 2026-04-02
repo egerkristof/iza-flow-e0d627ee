@@ -157,8 +157,17 @@ export default function DiagnosticPage() {
     if (!canStart) return;
     setSelectorOpen(false);
     setCurtainLifting(true);
+
+    // If custom industry or custom team, map to closest known context in background
+    const needsMapping = selectedIndustry === "other" || selectedTeam === "other";
+    if (needsMapping) {
+      const industryText = resolvedIndustryLabel || "General";
+      const teamText = resolvedTeamLabel || "General";
+      mapContext(industryText, teamText);
+    }
+
     setTimeout(() => setPhase("questions"), 700);
-  }, [canStart]);
+  }, [canStart, selectedIndustry, selectedTeam, resolvedIndustryLabel, resolvedTeamLabel, mapContext]);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
