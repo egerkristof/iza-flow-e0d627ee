@@ -692,15 +692,11 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
             </div>
           </div>
 
-          <div className="text-center px-5 py-5 space-y-3 border-t border-border">
-            <p className="text-sm text-muted-foreground">
-              20 min · We'll unpack your score and show you what changes get teams from {result.overall} to 55+.
+          {/* Retake CTA */}
+          <div className="text-center px-5 py-5 space-y-2 border-t border-border">
+            <p className="text-xs text-muted-foreground">
+              Improved your AI execution? <a href="/diagnostic" className="text-primary hover:underline font-semibold">Retake the diagnostic</a> to measure your progress.
             </p>
-            <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-              <Button variant="brand" size="lg" className="text-base">
-                Book your Diagnostic Debrief <ArrowRight className="w-4 h-4" />
-              </Button>
-            </a>
           </div>
         </CardContent>
       </Card>
