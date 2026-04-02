@@ -30,6 +30,8 @@ interface RequestBody {
   session_id?: string | null;
   diagnostic_result_id?: string;
   results_base_url?: string;
+  industry_selected?: string | null;
+  team_selected?: string | null;
 }
 
 const FRIENDLY_LABELS: Record<string, string> = {
