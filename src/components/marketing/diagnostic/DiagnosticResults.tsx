@@ -392,6 +392,8 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
           session_id: sessionId || null,
           diagnostic_result_id: existingRecordId || null,
           results_base_url: window.location.origin,
+          industry_selected: industryKey || null,
+          team_selected: teamKey || null,
         },
       });
 
