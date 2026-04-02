@@ -526,8 +526,26 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
       </Card>
 
 
+      {/* === Debrief CTA — right after score reveal for maximum conversion === */}
+      <div className="text-center space-y-3 py-2">
+        <p className="text-sm text-muted-foreground">
+          20 min · We'll unpack your score and show you what changes get teams from {result.overall} to {result.overall >= 55 ? "75+" : "55+"}.
+        </p>
+        <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
+          <Button variant="brand" size="lg" className="text-base">
+            Book your Diagnostic Debrief <ArrowRight className="w-4 h-4" />
+          </Button>
+        </a>
+        {industryKey && INDUSTRY_CTA[industryKey] && (
+          <div className="pt-1">
+            <a href={INDUSTRY_CTA[industryKey]!.href} className="text-xs text-primary hover:underline font-medium">
+              {INDUSTRY_CTA[industryKey]!.label} →
+            </a>
+          </div>
+        )}
+      </div>
 
-      {/* Dimension breakdown with business cost framing */}
+
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">
           {result.overall >= 67
