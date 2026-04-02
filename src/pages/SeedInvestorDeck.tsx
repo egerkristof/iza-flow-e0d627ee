@@ -1046,10 +1046,10 @@ export default function SeedInvestorDeck() {
         style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GREEN})` }} />
-          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — Pre-Seed Deck</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — Seed Deck</span>
           <span className="text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${GREEN} / 0.1)`, color: `hsl(${GREEN})` }}>
-            Pre-Seed · {SLIDES.length} slides
+            Seed · {SLIDES.length} slides
           </span>
           <span className="text-xs px-2 py-0.5 rounded ml-1"
             style={{ background: "hsl(0 72% 50% / 0.08)", color: "hsl(0 72% 50%)" }}>
