@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import type { DiagnosticQuestion as QType } from "@/lib/diagnostic-scoring";
+import { INDUSTRY_CONTEXTS, type IndustryKey } from "@/lib/diagnostic-industries";
 
 const SCORE_LABELS = ["A", "B", "C", "D"];
 
 /** Deterministic shuffle seeded by question id — stable across re-renders */
 function shuffleOptions(options: QType["options"], seed: string) {
-  // Simple hash from string
   let h = 0;
   for (let i = 0; i < seed.length; i++) {
     h = (h * 31 + seed.charCodeAt(i)) | 0;
@@ -24,13 +24,25 @@ interface Props {
   question: QType;
   selectedScore: number | undefined;
   onSelect: (questionId: string, score: number) => void;
+  industryKey?: IndustryKey | null;
 }
 
-export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props) {
+export function DiagnosticQuestion({ question, selectedScore, onSelect, industryKey }: Props) {
   const shuffledOptions = useMemo(
     () => shuffleOptions(question.options, question.id),
     [question.id, question.options]
   );
+
+  // Use industry-specific context if available, otherwise fall back to generic
+  const contextText = useMemo(() => {
+    if (industryKey && industryKey !== "other") {
+      const industryContexts = INDUSTRY_CONTEXTS[industryKey];
+      if (industryContexts?.[question.id]) {
+        return industryContexts[question.id];
+      }
+    }
+    return question.context;
+  }, [industryKey, question.id, question.context]);
 
   return (
     <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-right-3 duration-400">
@@ -54,11 +66,11 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props)
             style={{ background: "hsl(var(--primary) / 0.08)" }}
           />
           <p className="relative text-base md:text-[1.4rem] text-foreground font-bold leading-snug md:leading-[1.45] tracking-tight">
-            {question.context}
+            {contextText}
           </p>
         </div>
 
-        {/* Visual separator — thin gradient line */}
+        {/* Visual separator */}
         <div
           className="h-px w-full"
           style={{ background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2) 30%, hsl(var(--primary) / 0.2) 70%, transparent)" }}

@@ -30,6 +30,8 @@ interface RequestBody {
   session_id?: string | null;
   diagnostic_result_id?: string;
   results_base_url?: string;
+  industry_selected?: string | null;
+  team_selected?: string | null;
 }
 
 const FRIENDLY_LABELS: Record<string, string> = {
@@ -46,7 +48,7 @@ serve(async (req) => {
   }
 
   try {
-    const { email, respondent_role, team_size, team_leader_email, overall, archetype, dimensions, answers, scores, session_id, diagnostic_result_id, results_base_url } =
+    const { email, respondent_role, team_size, team_leader_email, overall, archetype, dimensions, answers, scores, session_id, diagnostic_result_id, results_base_url, industry_selected, team_selected } =
       (await req.json()) as RequestBody;
 
     if (!email?.trim()) {
@@ -158,6 +160,19 @@ If you cannot determine, use null for that field.`;
 
     const normalizedTeamLeaderEmail = team_leader_email?.trim().toLowerCase() || null;
 
+    // Map industry_selected to a human-readable label for the industry field if not already enriched
+    const INDUSTRY_LABELS: Record<string, string> = {
+      pharma: "Pharma & Life Sciences",
+      profservices: "Professional Services",
+      tech: "Technology",
+      manufacturing: "Manufacturing & Engineering",
+    };
+
+    // Self-selected industry takes precedence over AI enrichment
+    if (industry_selected && INDUSTRY_LABELS[industry_selected] && !industry) {
+      industry = INDUSTRY_LABELS[industry_selected];
+    }
+
     const leadPayload: Record<string, unknown> = {
       email: email.trim(),
       respondent_role: respondent_role?.trim() || null,
@@ -165,7 +180,7 @@ If you cannot determine, use null for that field.`;
       team_leader_email: normalizedTeamLeaderEmail,
       company_name: companyName,
       industry,
-      industry_refined: industryRefined,
+      industry_refined: industryRefined || (industry_selected ? `Self-selected: ${industry_selected}/${team_selected || "unspecified"}` : null),
       role_tier: roleTier,
     };
 
@@ -555,12 +570,13 @@ Return ONLY valid JSON in this exact format:
       )
       .join("");
 
-    const enrichmentLine = companyName || industry || respondent_role || team_size
+    const enrichmentLine = companyName || industry || respondent_role || team_size || industry_selected
       ? `<p style="margin:6px 0 16px;font-size:13px;color:#475569;">${[
           respondent_role ? `Role: <strong>${respondent_role}</strong>` : null,
           team_size ? `Team: <strong>${team_size}</strong>` : null,
           companyName ? `Company: <strong>${companyName}</strong>` : null,
           industry ? `Industry: <strong>${industry}</strong>` : null,
+          industry_selected ? `Self-selected: <strong>${industry_selected}${team_selected ? ` / ${team_selected}` : ""}</strong>` : null,
         ].filter(Boolean).join(" · ")}</p>`
       : "";
 

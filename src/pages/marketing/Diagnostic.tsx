@@ -4,9 +4,10 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { DiagnosticQuestion } from "@/components/marketing/diagnostic/DiagnosticQuestion";
 import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticResults";
 import { QUESTIONS, calculateResults } from "@/lib/diagnostic-scoring";
+import { INDUSTRIES, type IndustryKey } from "@/lib/diagnostic-industries";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronRight } from "lucide-react";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
 type Phase = "intro" | "questions" | "calculating" | "results";
@@ -28,6 +29,17 @@ export default function DiagnosticPage() {
   const finishingRef = useRef(false);
   const recordIdRef = useRef<string | null>(null);
   const sessionId = useMemo(() => generateSessionId(), []);
+
+  // Industry / team selection state
+  const [selectedIndustry, setSelectedIndustry] = useState<IndustryKey | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
+
+  const selectedIndustryData = useMemo(
+    () => INDUSTRIES.find((i) => i.key === selectedIndustry) ?? null,
+    [selectedIndustry]
+  );
+
+  const canStart = selectedIndustry != null && selectedTeam != null;
 
   useEffect(() => {
     (async () => {
@@ -62,9 +74,10 @@ export default function DiagnosticPage() {
   }, [searchParams]);
 
   const handleLiftCurtain = useCallback(() => {
+    if (!canStart) return;
     setCurtainLifting(true);
     setTimeout(() => setPhase("questions"), 700);
-  }, []);
+  }, [canStart]);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
@@ -152,7 +165,7 @@ export default function DiagnosticPage() {
   return (
     <MarketingLayout>
       <div className="min-h-[85vh] flex flex-col relative overflow-hidden">
-        {/* === Progress bar — refined floating bar === */}
+        {/* === Progress bar === */}
         {phase === "questions" && (
           <div className="sticky top-16 z-40 animate-in fade-in slide-in-from-top-2 duration-500">
             <div className="bg-card/90 backdrop-blur-md border-b border-border/50 px-6 py-3">
@@ -165,7 +178,6 @@ export default function DiagnosticPage() {
                     ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
                   </span>
                 </div>
-                {/* Custom progress bar with brand gradient + glow */}
                 <div className="h-1.5 w-full rounded-full bg-border/50 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 ease-out"
@@ -181,12 +193,11 @@ export default function DiagnosticPage() {
           </div>
         )}
 
-        {/* === Question layer — visible behind curtain during intro === */}
+        {/* === Question layer === */}
         {showQuestions && (
           <div
             className="flex-1 flex items-center justify-center px-4 md:px-6 py-12 md:py-16 transition-all duration-500"
             style={{
-              // Subtle scale-up when curtain lifts
               transform: phase === "intro" ? "scale(0.96)" : "scale(1)",
               opacity: phase === "intro" ? 0.4 : 1,
               filter: phase === "intro" ? "blur(2px)" : "none",
@@ -199,6 +210,7 @@ export default function DiagnosticPage() {
                 question={phase === "intro" ? firstQuestion : currentQuestion}
                 selectedScore={phase === "intro" ? undefined : answers[currentQuestion.id]}
                 onSelect={handleSelect}
+                industryKey={selectedIndustry}
               />
               {phase === "questions" && (
                 <div className="max-w-2xl mx-auto flex items-center justify-between animate-in fade-in duration-300">
@@ -228,7 +240,7 @@ export default function DiagnosticPage() {
           </div>
         )}
 
-        {/* === Frosted curtain — full viewport, slides up to reveal Q1 === */}
+        {/* === Frosted curtain with industry/team selector === */}
         {showCurtain && (
           <div
             className={`absolute inset-0 z-30 flex flex-col items-center justify-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -279,6 +291,68 @@ export default function DiagnosticPage() {
                 </p>
               </div>
 
+              {/* === Two-stage industry/team selector === */}
+              <div className="max-w-md mx-auto space-y-3 text-left">
+                {/* Industry selection */}
+                <p className="text-[11px] font-bold tracking-[0.12em] uppercase text-muted-foreground text-center">
+                  Tell us about your team
+                </p>
+                <div className="grid grid-cols-1 gap-1.5">
+                  {INDUSTRIES.map((ind) => {
+                    const isSelected = selectedIndustry === ind.key;
+                    return (
+                      <button
+                        key={ind.key}
+                        onClick={() => {
+                          setSelectedIndustry(ind.key);
+                          setSelectedTeam(null);
+                        }}
+                        className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 ${
+                          isSelected
+                            ? "border-primary bg-primary/[0.06] shadow-[0_0_0_1px_hsl(var(--primary)/0.2)]"
+                            : "border-border/60 bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
+                        }`}
+                      >
+                        <div className="flex-1 min-w-0">
+                          <p className={`text-sm font-semibold ${isSelected ? "text-foreground" : "text-muted-foreground"}`}>
+                            {ind.label}
+                          </p>
+                          <p className="text-[11px] text-muted-foreground/60 truncate">{ind.description}</p>
+                        </div>
+                        <ChevronRight className={`w-4 h-4 shrink-0 transition-transform ${isSelected ? "text-primary rotate-90" : "text-muted-foreground/40"}`} />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Team selection — shown after industry */}
+                {selectedIndustryData && (
+                  <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
+                    <p className="text-[11px] font-semibold text-muted-foreground/70 text-center">
+                      Which team?
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 justify-center">
+                      {selectedIndustryData.teams.map((team) => {
+                        const isTeamSelected = selectedTeam === team.key;
+                        return (
+                          <button
+                            key={team.key}
+                            onClick={() => setSelectedTeam(team.key)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
+                              isTeamSelected
+                                ? "border-primary bg-primary/[0.08] text-primary"
+                                : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
+                            }`}
+                          >
+                            {team.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {/* CTA */}
               <div className="space-y-3 pt-2">
                 <Button
@@ -286,6 +360,7 @@ export default function DiagnosticPage() {
                   size="lg"
                   className="text-sm md:text-base px-8 md:px-10 h-12 md:h-13 w-full sm:w-auto shadow-[0_0_30px_-6px_hsl(200_90%_52%/0.4)] hover:shadow-[0_0_40px_-6px_hsl(200_90%_52%/0.6)]"
                   onClick={handleLiftCurtain}
+                  disabled={!canStart}
                 >
                   Score Your AI Execution <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -299,13 +374,6 @@ export default function DiagnosticPage() {
                   )}
                 </p>
               </div>
-
-              {/* Peek hint — subtle indicator that content is behind */}
-              <div className="pt-4 flex flex-col items-center gap-1 animate-bounce" style={{ animationDuration: "2.5s" }}>
-                <div className="w-5 h-5 rounded-full border border-primary/20 flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-                </div>
-              </div>
             </div>
           </div>
         )}
@@ -314,7 +382,6 @@ export default function DiagnosticPage() {
         {phase === "calculating" && (
           <div className="flex-1 flex items-center justify-center px-6 py-16">
             <div className="text-center space-y-8 animate-in fade-in duration-500 max-w-md">
-              {/* Concentric ring spinner */}
               <div className="relative mx-auto w-24 h-24">
                 <div
                   className="absolute inset-0 rounded-full border-2 animate-spin"
@@ -341,9 +408,7 @@ export default function DiagnosticPage() {
                     animationDuration: "2.4s",
                   }}
                 />
-                <div
-                  className="absolute inset-0 flex items-center justify-center"
-                >
+                <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-3 h-3 rounded-full bg-primary/60 animate-pulse" />
                 </div>
               </div>
@@ -357,7 +422,6 @@ export default function DiagnosticPage() {
                 </p>
               </div>
 
-              {/* Dimension pills — staggered reveal */}
               <div className="flex flex-wrap justify-center gap-2">
                 {["Standards Adoption", "Delivery Consistency", "Knowledge Sharing", "Team Visibility", "Improvement Speed"].map((dim, i) => (
                   <span
@@ -388,6 +452,8 @@ export default function DiagnosticPage() {
               answers={answers}
               existingRecordId={recordIdRef.current}
               sessionId={sessionId}
+              industryKey={selectedIndustry}
+              teamKey={selectedTeam}
             />
           </div>
         )}
