@@ -348,6 +348,8 @@ export default function DiagnosticPage() {
                       onClick={() => {
                         setSelectedIndustry(ind.key);
                         setSelectedTeam(null);
+                        setCustomIndustry("");
+                        setCustomTeam("");
                       }}
                       className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 ${
                         isSelected
