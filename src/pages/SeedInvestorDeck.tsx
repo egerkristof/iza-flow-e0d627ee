@@ -152,7 +152,7 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — The Judgment Gap ─────────────────────────────────────────────
+// ─── Slide 02 — The End of SaaS Thesis ───────────────────────────────────────
 
 function Slide02Thesis() {
   return (
@@ -160,36 +160,35 @@ function Slide02Thesis() {
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <DarkTag label="The Investment Thesis" color={GOLD} />
-        <h2 className="font-black mb-10" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
-          The Judgment Gap is the<br />
-          <span style={{ color: `hsl(${GOLD})` }}>real AI infrastructure problem.</span>
+        <h2 className="font-black mb-14" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
+          Every AI startup is building<br />
+          <span style={{ color: `hsl(${GOLD})` }}>the same thing.</span>
         </h2>
 
-        <div className="grid grid-cols-2 gap-8 mb-8">
-          <div className="rounded-2xl border p-8"
-            style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
-            <p className="font-black mb-3" style={{ fontSize: 32, color: DARK_TEXT }}>The Judgment Gap</p>
-            <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.55 }}>
-              Between every stimulus and response lives human judgment: creativity, conscience, self-awareness, willpower. AI tools have no access to it. The explicit layer is commoditized. The tacit layer is untouched.
-            </p>
-          </div>
-          <div className="rounded-2xl border p-8"
-            style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
-            <p className="font-black mb-3" style={{ fontSize: 32, color: DARK_TEXT }}>The Standards Gap</p>
-            <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.55 }}>
-              Operationally, this means: same prompt, five people, five different outputs. Every AI tool generates content, but none carry your organization's knowledge of <em>how to think</em>.
-            </p>
-          </div>
+        <div className="grid grid-cols-3 gap-8 mb-10">
+          {[
+            { icon: "💬", label: "Chats", desc: "Every tool has a conversation interface with an LLM." },
+            { icon: "🤖", label: "Agents", desc: "Every tool lets you build autonomous workflows." },
+            { icon: "📄", label: "Context", desc: "Every tool offers RAG, memory, and document grounding." },
+          ].map(({ icon, label, desc }) => (
+            <div key={label} className="rounded-2xl border p-8 text-center"
+              style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
+              <p style={{ fontSize: 56 }}>{icon}</p>
+              <p className="font-bold mt-4 mb-2" style={{ fontSize: 32, color: DARK_TEXT }}>{label}</p>
+              <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.5 }}>{desc}</p>
+            </div>
+          ))}
         </div>
 
         <div className="rounded-2xl border p-10 flex-1 flex flex-col justify-center"
           style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
-          <p className="font-black mb-4" style={{ fontSize: 36, color: DARK_TEXT }}>
-            Every AI startup builds chats, agents, and context. These features are commoditizing.
+          <p className="font-black mb-4" style={{ fontSize: 40, color: DARK_TEXT }}>
+            These features are commoditizing in real-time.
           </p>
-          <p style={{ fontSize: 26, color: DARK_MUTED, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 28, color: DARK_MUTED, lineHeight: 1.6 }}>
             The defensible layer isn't the tool. It's the <strong style={{ color: `hsl(${GOLD})` }}>organizational knowledge</strong> that makes the tool work consistently.
-            We're building the <strong style={{ color: `hsl(${GOLD})` }}>management layer underneath all of them.</strong>
+            LIZA is the infrastructure that captures, governs, and operationalizes that knowledge.
+            We're not building a better SaaS product. We're building the <strong style={{ color: `hsl(${GOLD})` }}>management layer underneath all of them.</strong>
           </p>
         </div>
       </div>
