@@ -300,7 +300,7 @@ export default function DiagnosticPage() {
                 question={phase === "intro" ? firstQuestion : currentQuestion}
                 selectedScore={phase === "intro" ? undefined : answers[currentQuestion.id]}
                 onSelect={handleSelect}
-                industryKey={selectedIndustry}
+                industryKey={effectiveIndustryKey}
               />
               {phase === "questions" && (
                 <div className="max-w-2xl mx-auto flex items-center justify-between animate-in fade-in duration-300">
