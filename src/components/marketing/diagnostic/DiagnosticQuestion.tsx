@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import type { DiagnosticQuestion as QType } from "@/lib/diagnostic-scoring";
-import { INDUSTRY_CONTEXTS, type IndustryKey } from "@/lib/diagnostic-industries";
 
 const SCORE_LABELS = ["A", "B", "C", "D"];
 
 /** Deterministic shuffle seeded by question id — stable across re-renders */
 function shuffleOptions(options: QType["options"], seed: string) {
+  // Simple hash from string
   let h = 0;
   for (let i = 0; i < seed.length; i++) {
     h = (h * 31 + seed.charCodeAt(i)) | 0;
@@ -24,32 +24,13 @@ interface Props {
   question: QType;
   selectedScore: number | undefined;
   onSelect: (questionId: string, score: number) => void;
-  industryKey?: IndustryKey | null;
-  customContexts?: Record<string, string> | null;
 }
 
-export function DiagnosticQuestion({ question, selectedScore, onSelect, industryKey, customContexts }: Props) {
+export function DiagnosticQuestion({ question, selectedScore, onSelect }: Props) {
   const shuffledOptions = useMemo(
     () => shuffleOptions(question.options, question.id),
     [question.id, question.options]
   );
-
-  // Priority: AI-generated custom contexts > static industry contexts > generic
-  const contextText = useMemo(() => {
-    // 1. Check AI-generated custom contexts first
-    if (customContexts?.[question.id]) {
-      return customContexts[question.id];
-    }
-    // 2. Fall back to static industry contexts
-    if (industryKey && industryKey !== "other") {
-      const industryContexts = INDUSTRY_CONTEXTS[industryKey];
-      if (industryContexts?.[question.id]) {
-        return industryContexts[question.id];
-      }
-    }
-    // 3. Generic fallback
-    return question.context;
-  }, [customContexts, industryKey, question.id, question.context]);
 
   return (
     <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-right-3 duration-400">
@@ -73,11 +54,11 @@ export function DiagnosticQuestion({ question, selectedScore, onSelect, industry
             style={{ background: "hsl(var(--primary) / 0.08)" }}
           />
           <p className="relative text-base md:text-[1.4rem] text-foreground font-bold leading-snug md:leading-[1.45] tracking-tight">
-            {contextText}
+            {question.context}
           </p>
         </div>
 
-        {/* Visual separator */}
+        {/* Visual separator — thin gradient line */}
         <div
           className="h-px w-full"
           style={{ background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2) 30%, hsl(var(--primary) / 0.2) 70%, transparent)" }}

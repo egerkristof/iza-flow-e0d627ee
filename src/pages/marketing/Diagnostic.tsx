@@ -4,16 +4,12 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { DiagnosticQuestion } from "@/components/marketing/diagnostic/DiagnosticQuestion";
 import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticResults";
 import { QUESTIONS, calculateResults } from "@/lib/diagnostic-scoring";
-import { INDUSTRIES, type IndustryKey } from "@/lib/diagnostic-industries";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, ArrowLeft, ChevronRight, Loader2 } from "lucide-react";
-import { toast } from "sonner";
+import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
-type Phase = "intro" | "preparing" | "questions" | "calculating" | "results";
+type Phase = "intro" | "questions" | "calculating" | "results";
 
 function generateSessionId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -32,97 +28,6 @@ export default function DiagnosticPage() {
   const finishingRef = useRef(false);
   const recordIdRef = useRef<string | null>(null);
   const sessionId = useMemo(() => generateSessionId(), []);
-
-  // AI-generated story contexts keyed by question id
-  const [customContexts, setCustomContexts] = useState<Record<string, string> | null>(null);
-
-  // Industry / team selection state
-  const [selectedIndustry, setSelectedIndustry] = useState<IndustryKey | null>(null);
-  const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const [selectorOpen, setSelectorOpen] = useState(false);
-  const [customIndustry, setCustomIndustry] = useState("");
-  const [customTeam, setCustomTeam] = useState("");
-
-  // AI-generated teams for custom industries
-  const [aiTeams, setAiTeams] = useState<{ key: string; label: string }[] | null>(null);
-  const [loadingTeams, setLoadingTeams] = useState(false);
-
-  // Mapped industry context for custom selections
-  const [mappedIndustryKey, setMappedIndustryKey] = useState<IndustryKey | null>(null);
-
-  const selectedIndustryData = useMemo(
-    () => INDUSTRIES.find((i) => i.key === selectedIndustry) ?? null,
-    [selectedIndustry]
-  );
-
-  // Teams to display: static for known industries, AI-generated for "other"
-  const displayTeams = useMemo(() => {
-    if (selectedIndustry === "other" && aiTeams) return aiTeams;
-    return selectedIndustryData?.teams ?? null;
-  }, [selectedIndustry, aiTeams, selectedIndustryData]);
-
-  const needsCustomIndustry = selectedIndustry === "other" && !customIndustry.trim();
-  const needsCustomTeam = selectedTeam === "other" && !customTeam.trim();
-  const canStart = selectedIndustry != null && selectedTeam != null && !needsCustomIndustry && !needsCustomTeam;
-
-  // The effective industry key for question contexts
-  const effectiveIndustryKey = useMemo<IndustryKey | null>(() => {
-    if (selectedIndustry && selectedIndustry !== "other") return selectedIndustry;
-    return mappedIndustryKey;
-  }, [selectedIndustry, mappedIndustryKey]);
-
-  // Resolved labels for passing downstream
-  const resolvedIndustryLabel = selectedIndustry === "other" && customIndustry.trim()
-    ? customIndustry.trim()
-    : selectedIndustryData?.label ?? null;
-  const resolvedTeamLabel = selectedTeam === "other" && customTeam.trim()
-    ? customTeam.trim()
-    : displayTeams?.find(t => t.key === selectedTeam)?.label ?? null;
-
-  // Fetch AI-generated teams when custom industry is provided
-  const fetchAiTeams = useCallback(async (industry: string) => {
-    setLoadingTeams(true);
-    setAiTeams(null);
-    setSelectedTeam(null);
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-teams", {
-        body: { industry },
-      });
-      if (error) throw error;
-      if (data?.teams) {
-        setAiTeams(data.teams);
-      }
-    } catch (err) {
-      console.error("Failed to generate teams:", err);
-      // Fallback: show generic teams
-      setAiTeams([
-        { key: "operations", label: "Operations" },
-        { key: "strategy", label: "Strategy" },
-        { key: "it", label: "IT / Technology" },
-        { key: "hr", label: "People / HR" },
-        { key: "other", label: "Other" },
-      ]);
-      toast.error("Couldn't generate teams. Showing defaults.");
-    } finally {
-      setLoadingTeams(false);
-    }
-  }, []);
-
-  // Map custom industry/team to closest known context when starting
-  const mapContext = useCallback(async (industry: string, team: string) => {
-    try {
-      const { data, error } = await supabase.functions.invoke("map-team-context", {
-        body: { industry, team },
-      });
-      if (error) throw error;
-      if (data?.mapped_industry) {
-        setMappedIndustryKey(data.mapped_industry as IndustryKey);
-      }
-    } catch (err) {
-      console.error("Failed to map context:", err);
-      setMappedIndustryKey("profservices"); // safe default
-    }
-  }, []);
 
   useEffect(() => {
     (async () => {
@@ -157,42 +62,9 @@ export default function DiagnosticPage() {
   }, [searchParams]);
 
   const handleLiftCurtain = useCallback(() => {
-    if (!canStart) return;
-    setSelectorOpen(false);
     setCurtainLifting(true);
-    setCustomContexts(null); // Reset from any prior run
-
-    // If custom industry or custom team, map to closest known context in background
-    const needsMapping = selectedIndustry === "other" || selectedTeam === "other";
-    if (needsMapping) {
-      const industryText = resolvedIndustryLabel || "General";
-      const teamText = resolvedTeamLabel || "General";
-      mapContext(industryText, teamText);
-    }
-
-    // Transition to preparing phase after curtain lifts
-    setTimeout(() => {
-      setPhase("preparing");
-
-      // Generate personalized contexts
-      const industryText = resolvedIndustryLabel || "General";
-      const teamText = resolvedTeamLabel || "General";
-      (async () => {
-        try {
-          const { data, error } = await supabase.functions.invoke("generate-contexts", {
-            body: { industry: industryText, team: teamText },
-          });
-          if (!error && data?.contexts) {
-            setCustomContexts(data.contexts);
-          }
-        } catch (err) {
-          console.error("Failed to generate contexts:", err);
-        }
-        // Move to questions after a minimum display time
-        setTimeout(() => setPhase("questions"), 600);
-      })();
-    }, 700);
-  }, [canStart, selectedIndustry, selectedTeam, resolvedIndustryLabel, resolvedTeamLabel, mapContext]);
+    setTimeout(() => setPhase("questions"), 700);
+  }, []);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
@@ -280,7 +152,7 @@ export default function DiagnosticPage() {
   return (
     <MarketingLayout>
       <div className="min-h-[85vh] flex flex-col relative overflow-hidden">
-        {/* === Progress bar === */}
+        {/* === Progress bar — refined floating bar === */}
         {phase === "questions" && (
           <div className="sticky top-16 z-40 animate-in fade-in slide-in-from-top-2 duration-500">
             <div className="bg-card/90 backdrop-blur-md border-b border-border/50 px-6 py-3">
@@ -293,6 +165,7 @@ export default function DiagnosticPage() {
                     ~{Math.ceil((QUESTIONS.length - safeQ) * 8 / 60)} min left
                   </span>
                 </div>
+                {/* Custom progress bar with brand gradient + glow */}
                 <div className="h-1.5 w-full rounded-full bg-border/50 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500 ease-out"
@@ -308,11 +181,12 @@ export default function DiagnosticPage() {
           </div>
         )}
 
-        {/* === Question layer === */}
+        {/* === Question layer — visible behind curtain during intro === */}
         {showQuestions && (
           <div
             className="flex-1 flex items-center justify-center px-4 md:px-6 py-12 md:py-16 transition-all duration-500"
             style={{
+              // Subtle scale-up when curtain lifts
               transform: phase === "intro" ? "scale(0.96)" : "scale(1)",
               opacity: phase === "intro" ? 0.4 : 1,
               filter: phase === "intro" ? "blur(2px)" : "none",
@@ -325,8 +199,6 @@ export default function DiagnosticPage() {
                 question={phase === "intro" ? firstQuestion : currentQuestion}
                 selectedScore={phase === "intro" ? undefined : answers[currentQuestion.id]}
                 onSelect={handleSelect}
-                industryKey={effectiveIndustryKey}
-                customContexts={customContexts}
               />
               {phase === "questions" && (
                 <div className="max-w-2xl mx-auto flex items-center justify-between animate-in fade-in duration-300">
@@ -356,7 +228,7 @@ export default function DiagnosticPage() {
           </div>
         )}
 
-        {/* === Frosted curtain with industry/team selector === */}
+        {/* === Frosted curtain — full viewport, slides up to reveal Q1 === */}
         {showCurtain && (
           <div
             className={`absolute inset-0 z-30 flex flex-col items-center justify-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -413,7 +285,7 @@ export default function DiagnosticPage() {
                   variant="brand"
                   size="lg"
                   className="text-sm md:text-base px-8 md:px-10 h-12 md:h-13 w-full sm:w-auto shadow-[0_0_30px_-6px_hsl(200_90%_52%/0.4)] hover:shadow-[0_0_40px_-6px_hsl(200_90%_52%/0.6)]"
-                  onClick={() => setSelectorOpen(true)}
+                  onClick={handleLiftCurtain}
                 >
                   Score Your AI Execution <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -427,175 +299,12 @@ export default function DiagnosticPage() {
                   )}
                 </p>
               </div>
-            </div>
-          </div>
-        )}
 
-        {/* === Industry / Team selection dialog === */}
-        <Dialog open={selectorOpen} onOpenChange={setSelectorOpen}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-lg font-bold tracking-tight">Tell us about your team</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 pt-1">
-              {/* Industry selection */}
-              <div className="grid grid-cols-1 gap-1.5">
-                {INDUSTRIES.map((ind) => {
-                  const isSelected = selectedIndustry === ind.key;
-                  return (
-                    <button
-                      key={ind.key}
-                      onClick={() => {
-                        setSelectedIndustry(ind.key);
-                        setSelectedTeam(null);
-                        setCustomIndustry("");
-                        setCustomTeam("");
-                      }}
-                      className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 ${
-                        isSelected
-                          ? "border-primary bg-primary/[0.06] shadow-[0_0_0_1px_hsl(var(--primary)/0.2)]"
-                          : "border-border/60 bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
-                      }`}
-                    >
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-semibold ${isSelected ? "text-foreground" : "text-muted-foreground"}`}>
-                          {ind.label}
-                        </p>
-                        <p className="text-[11px] text-muted-foreground/60 truncate">{ind.description}</p>
-                      </div>
-                      <ChevronRight className={`w-4 h-4 shrink-0 transition-transform ${isSelected ? "text-primary rotate-90" : "text-muted-foreground/40"}`} />
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Custom industry input with generate button */}
-              {selectedIndustry === "other" && (
-                <div className="animate-in fade-in duration-200 px-1 space-y-2">
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder="Your industry (e.g. Financial Services, Education)"
-                      value={customIndustry}
-                      onChange={(e) => setCustomIndustry(e.target.value)}
-                      className="text-sm h-9 flex-1"
-                      autoFocus
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && customIndustry.trim().length >= 2) {
-                          fetchAiTeams(customIndustry.trim());
-                        }
-                      }}
-                    />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-9 px-3 text-xs shrink-0"
-                      disabled={customIndustry.trim().length < 2 || loadingTeams}
-                      onClick={() => fetchAiTeams(customIndustry.trim())}
-                    >
-                      {loadingTeams ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Find teams"}
-                    </Button>
-                  </div>
+              {/* Peek hint — subtle indicator that content is behind */}
+              <div className="pt-4 flex flex-col items-center gap-1 animate-bounce" style={{ animationDuration: "2.5s" }}>
+                <div className="w-5 h-5 rounded-full border border-primary/20 flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
                 </div>
-              )}
-
-              {/* Team selection — shows for known industries OR after AI generates teams */}
-              {displayTeams && !loadingTeams && (
-                <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
-                  <p className="text-[11px] font-semibold text-muted-foreground/70 text-center">
-                    Which team?
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 justify-center">
-                    {displayTeams.map((team) => {
-                      const isTeamSelected = selectedTeam === team.key;
-                      return (
-                        <button
-                          key={team.key}
-                          onClick={() => { setSelectedTeam(team.key); setCustomTeam(""); }}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
-                            isTeamSelected
-                              ? "border-primary bg-primary/[0.08] text-primary"
-                              : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
-                          }`}
-                        >
-                          {team.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {/* Custom team input */}
-                  {selectedTeam === "other" && (
-                    <div className="animate-in fade-in duration-200">
-                      <Input
-                        placeholder="Your team or function (e.g. MSC, Data Governance)"
-                        value={customTeam}
-                        onChange={(e) => setCustomTeam(e.target.value)}
-                        className="text-sm h-9"
-                        autoFocus
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Loading teams indicator */}
-              {loadingTeams && (
-                <div className="flex items-center justify-center gap-2 py-4 animate-in fade-in duration-200">
-                  <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                  <span className="text-xs text-muted-foreground">Finding relevant teams...</span>
-                </div>
-              )}
-
-              {/* Start button */}
-              <Button
-                variant="brand"
-                size="lg"
-                className="w-full h-12 text-sm font-semibold"
-                disabled={!canStart}
-                onClick={handleLiftCurtain}
-              >
-                Start Assessment <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        {/* === Preparing phase — personalizing contexts === */}
-        {phase === "preparing" && (
-          <div className="flex-1 flex items-center justify-center px-6 py-16">
-            <div className="text-center space-y-6 animate-in fade-in duration-500 max-w-sm">
-              <div className="relative mx-auto w-16 h-16">
-                <div
-                  className="absolute inset-0 rounded-full border-2 animate-spin"
-                  style={{
-                    borderColor: "hsl(var(--primary) / 0.1)",
-                    borderTopColor: "hsl(var(--primary) / 0.5)",
-                    animationDuration: "1.4s",
-                  }}
-                />
-                <div
-                  className="absolute inset-2.5 rounded-full border-2 animate-spin"
-                  style={{
-                    borderColor: "hsl(var(--brand-green) / 0.1)",
-                    borderTopColor: "hsl(var(--brand-green) / 0.4)",
-                    animationDuration: "2s",
-                    animationDirection: "reverse",
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-primary/50 animate-pulse" />
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                <p className="text-base font-bold text-foreground tracking-tight">
-                  Setting up your diagnostic…
-                </p>
-                <p className="text-xs text-muted-foreground/70">
-                  Tailoring scenarios for{" "}
-                  <span className="font-semibold text-muted-foreground">{resolvedTeamLabel}</span>
-                  {resolvedIndustryLabel && (
-                    <> in <span className="font-semibold text-muted-foreground">{resolvedIndustryLabel}</span></>
-                  )}
-                </p>
               </div>
             </div>
           </div>
@@ -605,6 +314,7 @@ export default function DiagnosticPage() {
         {phase === "calculating" && (
           <div className="flex-1 flex items-center justify-center px-6 py-16">
             <div className="text-center space-y-8 animate-in fade-in duration-500 max-w-md">
+              {/* Concentric ring spinner */}
               <div className="relative mx-auto w-24 h-24">
                 <div
                   className="absolute inset-0 rounded-full border-2 animate-spin"
@@ -631,7 +341,9 @@ export default function DiagnosticPage() {
                     animationDuration: "2.4s",
                   }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                >
                   <div className="w-3 h-3 rounded-full bg-primary/60 animate-pulse" />
                 </div>
               </div>
@@ -645,6 +357,7 @@ export default function DiagnosticPage() {
                 </p>
               </div>
 
+              {/* Dimension pills — staggered reveal */}
               <div className="flex flex-wrap justify-center gap-2">
                 {["Standards Adoption", "Delivery Consistency", "Knowledge Sharing", "Team Visibility", "Improvement Speed"].map((dim, i) => (
                   <span
@@ -675,10 +388,6 @@ export default function DiagnosticPage() {
               answers={answers}
               existingRecordId={recordIdRef.current}
               sessionId={sessionId}
-              industryKey={selectedIndustry}
-              teamKey={selectedTeam}
-              industryLabel={resolvedIndustryLabel}
-              teamLabel={resolvedTeamLabel}
             />
           </div>
         )}

@@ -11,17 +11,12 @@ import { ArrowRight, Mail, TrendingDown, ChevronDown, ChevronUp, Loader2, Sparkl
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { INDUSTRIES, INDUSTRY_CTA, type IndustryKey } from "@/lib/diagnostic-industries";
 
 interface Props {
   result: DiagnosticResult;
   answers: Record<string, number>;
   existingRecordId?: string | null;
   sessionId?: string | null;
-  industryKey?: IndustryKey | null;
-  teamKey?: string | null;
-  industryLabel?: string | null;
-  teamLabel?: string | null;
 }
 
 const BENCHMARK_AVG = 35;
@@ -335,7 +330,7 @@ function EmailCapture({
   );
 }
 
-export function DiagnosticResults({ result, answers, existingRecordId, sessionId, industryKey, teamKey, industryLabel, teamLabel }: Props) {
+export function DiagnosticResults({ result, answers, existingRecordId, sessionId }: Props) {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [respondentRole, setRespondentRole] = useState("");
@@ -394,8 +389,6 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
           session_id: sessionId || null,
           diagnostic_result_id: existingRecordId || null,
           results_base_url: window.location.origin,
-          industry_selected: industryLabel || industryKey || null,
-          team_selected: teamLabel || teamKey || null,
         },
       });
 
@@ -528,26 +521,8 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
       </Card>
 
 
-      {/* === Debrief CTA — right after score reveal for maximum conversion === */}
-      <div className="text-center space-y-3 py-2">
-        <p className="text-sm text-muted-foreground">
-          20 min · We'll unpack your score and show you what changes get teams from {result.overall} to {result.overall >= 55 ? "75+" : "55+"}.
-        </p>
-        <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-          <Button variant="brand" size="lg" className="text-base">
-            Book your Diagnostic Debrief <ArrowRight className="w-4 h-4" />
-          </Button>
-        </a>
-        {industryKey && INDUSTRY_CTA[industryKey] && (
-          <div className="pt-1">
-            <a href={INDUSTRY_CTA[industryKey]!.href} className="text-xs text-primary hover:underline font-medium">
-              {INDUSTRY_CTA[industryKey]!.label} →
-            </a>
-          </div>
-        )}
-      </div>
 
-
+      {/* Dimension breakdown with business cost framing */}
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">
           {result.overall >= 67
@@ -694,11 +669,15 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
             </div>
           </div>
 
-          {/* Retake CTA */}
-          <div className="text-center px-5 py-5 space-y-2 border-t border-border">
-            <p className="text-xs text-muted-foreground">
-              Improved your AI execution? <a href="/diagnostic" className="text-primary hover:underline font-semibold">Retake the diagnostic</a> to measure your progress.
+          <div className="text-center px-5 py-5 space-y-3 border-t border-border">
+            <p className="text-sm text-muted-foreground">
+              20 min · We'll unpack your score and show you what changes get teams from {result.overall} to 55+.
             </p>
+            <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
+              <Button variant="brand" size="lg" className="text-base">
+                Book your Diagnostic Debrief <ArrowRight className="w-4 h-4" />
+              </Button>
+            </a>
           </div>
         </CardContent>
       </Card>
