@@ -1337,7 +1337,7 @@ function Slide16Closing() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01Cover /> },
-  { id: 2, title: "Investment Thesis", component: <Slide02Thesis /> },
+  { id: 2, title: "The Judgment Gap", component: <Slide02Thesis /> },
   { id: 3, title: "The Problem", component: <Slide03Problem /> },
   { id: 4, title: "Infrastructure Gap", component: <Slide04Market /> },
   { id: 5, title: "The Solution", component: <Slide05Solution /> },
