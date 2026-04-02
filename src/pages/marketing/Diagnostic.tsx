@@ -394,7 +394,7 @@ export default function DiagnosticPage() {
                       return (
                         <button
                           key={team.key}
-                          onClick={() => setSelectedTeam(team.key)}
+                          onClick={() => { setSelectedTeam(team.key); setCustomTeam(""); }}
                           className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
                             isTeamSelected
                               ? "border-primary bg-primary/[0.08] text-primary"
@@ -406,6 +406,18 @@ export default function DiagnosticPage() {
                       );
                     })}
                   </div>
+                  {/* Custom team input */}
+                  {selectedTeam === "other" && (
+                    <div className="animate-in fade-in duration-200">
+                      <Input
+                        placeholder="Your team or function (e.g. MSC, Data Governance)"
+                        value={customTeam}
+                        onChange={(e) => setCustomTeam(e.target.value)}
+                        className="text-sm h-9"
+                        autoFocus
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
