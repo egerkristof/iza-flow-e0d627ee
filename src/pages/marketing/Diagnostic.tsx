@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, ArrowLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronRight, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
 type Phase = "intro" | "questions" | "calculating" | "results";
@@ -39,14 +40,33 @@ export default function DiagnosticPage() {
   const [customIndustry, setCustomIndustry] = useState("");
   const [customTeam, setCustomTeam] = useState("");
 
+  // AI-generated teams for custom industries
+  const [aiTeams, setAiTeams] = useState<{ key: string; label: string }[] | null>(null);
+  const [loadingTeams, setLoadingTeams] = useState(false);
+
+  // Mapped industry context for custom selections
+  const [mappedIndustryKey, setMappedIndustryKey] = useState<IndustryKey | null>(null);
+
   const selectedIndustryData = useMemo(
     () => INDUSTRIES.find((i) => i.key === selectedIndustry) ?? null,
     [selectedIndustry]
   );
 
+  // Teams to display: static for known industries, AI-generated for "other"
+  const displayTeams = useMemo(() => {
+    if (selectedIndustry === "other" && aiTeams) return aiTeams;
+    return selectedIndustryData?.teams ?? null;
+  }, [selectedIndustry, aiTeams, selectedIndustryData]);
+
   const needsCustomIndustry = selectedIndustry === "other" && !customIndustry.trim();
   const needsCustomTeam = selectedTeam === "other" && !customTeam.trim();
   const canStart = selectedIndustry != null && selectedTeam != null && !needsCustomIndustry && !needsCustomTeam;
+
+  // The effective industry key for question contexts
+  const effectiveIndustryKey = useMemo<IndustryKey | null>(() => {
+    if (selectedIndustry && selectedIndustry !== "other") return selectedIndustry;
+    return mappedIndustryKey;
+  }, [selectedIndustry, mappedIndustryKey]);
 
   // Resolved labels for passing downstream
   const resolvedIndustryLabel = selectedIndustry === "other" && customIndustry.trim()
@@ -54,7 +74,52 @@ export default function DiagnosticPage() {
     : selectedIndustryData?.label ?? null;
   const resolvedTeamLabel = selectedTeam === "other" && customTeam.trim()
     ? customTeam.trim()
-    : selectedIndustryData?.teams.find(t => t.key === selectedTeam)?.label ?? null;
+    : displayTeams?.find(t => t.key === selectedTeam)?.label ?? null;
+
+  // Fetch AI-generated teams when custom industry is provided
+  const fetchAiTeams = useCallback(async (industry: string) => {
+    setLoadingTeams(true);
+    setAiTeams(null);
+    setSelectedTeam(null);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-teams", {
+        body: { industry },
+      });
+      if (error) throw error;
+      if (data?.teams) {
+        setAiTeams(data.teams);
+      }
+    } catch (err) {
+      console.error("Failed to generate teams:", err);
+      // Fallback: show generic teams
+      setAiTeams([
+        { key: "operations", label: "Operations" },
+        { key: "strategy", label: "Strategy" },
+        { key: "it", label: "IT / Technology" },
+        { key: "hr", label: "People / HR" },
+        { key: "other", label: "Other" },
+      ]);
+      toast.error("Couldn't generate teams. Showing defaults.");
+    } finally {
+      setLoadingTeams(false);
+    }
+  }, []);
+
+  // Map custom industry/team to closest known context when starting
+  const mapContext = useCallback(async (industry: string, team: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke("map-team-context", {
+        body: { industry, team },
+      });
+      if (error) throw error;
+      if (data?.mapped_industry) {
+        setMappedIndustryKey(data.mapped_industry as IndustryKey);
+      }
+    } catch (err) {
+      console.error("Failed to map context:", err);
+      setMappedIndustryKey("profservices"); // safe default
+    }
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -92,8 +157,17 @@ export default function DiagnosticPage() {
     if (!canStart) return;
     setSelectorOpen(false);
     setCurtainLifting(true);
+
+    // If custom industry or custom team, map to closest known context in background
+    const needsMapping = selectedIndustry === "other" || selectedTeam === "other";
+    if (needsMapping) {
+      const industryText = resolvedIndustryLabel || "General";
+      const teamText = resolvedTeamLabel || "General";
+      mapContext(industryText, teamText);
+    }
+
     setTimeout(() => setPhase("questions"), 700);
-  }, [canStart]);
+  }, [canStart, selectedIndustry, selectedTeam, resolvedIndustryLabel, resolvedTeamLabel, mapContext]);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
     if (finishingRef.current) return;
@@ -226,7 +300,7 @@ export default function DiagnosticPage() {
                 question={phase === "intro" ? firstQuestion : currentQuestion}
                 selectedScore={phase === "intro" ? undefined : answers[currentQuestion.id]}
                 onSelect={handleSelect}
-                industryKey={selectedIndustry}
+                industryKey={effectiveIndustryKey}
               />
               {phase === "questions" && (
                 <div className="max-w-2xl mx-auto flex items-center justify-between animate-in fade-in duration-300">
@@ -369,27 +443,43 @@ export default function DiagnosticPage() {
                 })}
               </div>
 
-              {/* Custom industry input */}
+              {/* Custom industry input with generate button */}
               {selectedIndustry === "other" && (
-                <div className="animate-in fade-in duration-200 px-1">
-                  <Input
-                    placeholder="Your industry (e.g. Financial Services, Education)"
-                    value={customIndustry}
-                    onChange={(e) => setCustomIndustry(e.target.value)}
-                    className="text-sm h-9"
-                    autoFocus
-                  />
+                <div className="animate-in fade-in duration-200 px-1 space-y-2">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Your industry (e.g. Financial Services, Education)"
+                      value={customIndustry}
+                      onChange={(e) => setCustomIndustry(e.target.value)}
+                      className="text-sm h-9 flex-1"
+                      autoFocus
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && customIndustry.trim().length >= 2) {
+                          fetchAiTeams(customIndustry.trim());
+                        }
+                      }}
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 px-3 text-xs shrink-0"
+                      disabled={customIndustry.trim().length < 2 || loadingTeams}
+                      onClick={() => fetchAiTeams(customIndustry.trim())}
+                    >
+                      {loadingTeams ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Find teams"}
+                    </Button>
+                  </div>
                 </div>
               )}
 
-              {/* Team selection */}
-              {selectedIndustryData && (
+              {/* Team selection — shows for known industries OR after AI generates teams */}
+              {displayTeams && !loadingTeams && (
                 <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
                   <p className="text-[11px] font-semibold text-muted-foreground/70 text-center">
                     Which team?
                   </p>
                   <div className="flex flex-wrap gap-1.5 justify-center">
-                    {selectedIndustryData.teams.map((team) => {
+                    {displayTeams.map((team) => {
                       const isTeamSelected = selectedTeam === team.key;
                       return (
                         <button
@@ -418,6 +508,14 @@ export default function DiagnosticPage() {
                       />
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* Loading teams indicator */}
+              {loadingTeams && (
+                <div className="flex items-center justify-center gap-2 py-4 animate-in fade-in duration-200">
+                  <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                  <span className="text-xs text-muted-foreground">Finding relevant teams...</span>
                 </div>
               )}
 
