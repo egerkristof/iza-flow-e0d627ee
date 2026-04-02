@@ -511,6 +511,8 @@ export default function DiagnosticPage() {
               sessionId={sessionId}
               industryKey={selectedIndustry}
               teamKey={selectedTeam}
+              industryLabel={resolvedIndustryLabel}
+              teamLabel={resolvedTeamLabel}
             />
           </div>
         )}
