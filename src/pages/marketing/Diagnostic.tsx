@@ -169,7 +169,28 @@ export default function DiagnosticPage() {
       mapContext(industryText, teamText);
     }
 
-    setTimeout(() => setPhase("questions"), 700);
+    // Transition to preparing phase after curtain lifts
+    setTimeout(() => {
+      setPhase("preparing");
+
+      // Generate personalized contexts
+      const industryText = resolvedIndustryLabel || "General";
+      const teamText = resolvedTeamLabel || "General";
+      (async () => {
+        try {
+          const { data, error } = await supabase.functions.invoke("generate-contexts", {
+            body: { industry: industryText, team: teamText },
+          });
+          if (!error && data?.contexts) {
+            setCustomContexts(data.contexts);
+          }
+        } catch (err) {
+          console.error("Failed to generate contexts:", err);
+        }
+        // Move to questions after a minimum display time
+        setTimeout(() => setPhase("questions"), 600);
+      })();
+    }, 700);
   }, [canStart, selectedIndustry, selectedTeam, resolvedIndustryLabel, resolvedTeamLabel, mapContext]);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
