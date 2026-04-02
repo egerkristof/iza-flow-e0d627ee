@@ -335,7 +335,7 @@ function EmailCapture({
   );
 }
 
-export function DiagnosticResults({ result, answers, existingRecordId, sessionId, industryKey, teamKey }: Props) {
+export function DiagnosticResults({ result, answers, existingRecordId, sessionId, industryKey, teamKey, industryLabel, teamLabel }: Props) {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [respondentRole, setRespondentRole] = useState("");
