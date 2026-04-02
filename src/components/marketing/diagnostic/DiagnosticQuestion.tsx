@@ -25,24 +25,31 @@ interface Props {
   selectedScore: number | undefined;
   onSelect: (questionId: string, score: number) => void;
   industryKey?: IndustryKey | null;
+  customContexts?: Record<string, string> | null;
 }
 
-export function DiagnosticQuestion({ question, selectedScore, onSelect, industryKey }: Props) {
+export function DiagnosticQuestion({ question, selectedScore, onSelect, industryKey, customContexts }: Props) {
   const shuffledOptions = useMemo(
     () => shuffleOptions(question.options, question.id),
     [question.id, question.options]
   );
 
-  // Use industry-specific context if available, otherwise fall back to generic
+  // Priority: AI-generated custom contexts > static industry contexts > generic
   const contextText = useMemo(() => {
+    // 1. Check AI-generated custom contexts first
+    if (customContexts?.[question.id]) {
+      return customContexts[question.id];
+    }
+    // 2. Fall back to static industry contexts
     if (industryKey && industryKey !== "other") {
       const industryContexts = INDUSTRY_CONTEXTS[industryKey];
       if (industryContexts?.[question.id]) {
         return industryContexts[question.id];
       }
     }
+    // 3. Generic fallback
     return question.context;
-  }, [industryKey, question.id, question.context]);
+  }, [customContexts, industryKey, question.id, question.context]);
 
   return (
     <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-right-3 duration-400">

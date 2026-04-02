@@ -13,7 +13,7 @@ import { ArrowRight, ArrowLeft, ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
-type Phase = "intro" | "questions" | "calculating" | "results";
+type Phase = "intro" | "preparing" | "questions" | "calculating" | "results";
 
 function generateSessionId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -32,6 +32,9 @@ export default function DiagnosticPage() {
   const finishingRef = useRef(false);
   const recordIdRef = useRef<string | null>(null);
   const sessionId = useMemo(() => generateSessionId(), []);
+
+  // AI-generated story contexts keyed by question id
+  const [customContexts, setCustomContexts] = useState<Record<string, string> | null>(null);
 
   // Industry / team selection state
   const [selectedIndustry, setSelectedIndustry] = useState<IndustryKey | null>(null);
@@ -166,7 +169,28 @@ export default function DiagnosticPage() {
       mapContext(industryText, teamText);
     }
 
-    setTimeout(() => setPhase("questions"), 700);
+    // Transition to preparing phase after curtain lifts
+    setTimeout(() => {
+      setPhase("preparing");
+
+      // Generate personalized contexts
+      const industryText = resolvedIndustryLabel || "General";
+      const teamText = resolvedTeamLabel || "General";
+      (async () => {
+        try {
+          const { data, error } = await supabase.functions.invoke("generate-contexts", {
+            body: { industry: industryText, team: teamText },
+          });
+          if (!error && data?.contexts) {
+            setCustomContexts(data.contexts);
+          }
+        } catch (err) {
+          console.error("Failed to generate contexts:", err);
+        }
+        // Move to questions after a minimum display time
+        setTimeout(() => setPhase("questions"), 600);
+      })();
+    }, 700);
   }, [canStart, selectedIndustry, selectedTeam, resolvedIndustryLabel, resolvedTeamLabel, mapContext]);
 
   const finishDiagnostic = useCallback(async (finalAnswers: Record<string, number>) => {
@@ -301,6 +325,7 @@ export default function DiagnosticPage() {
                 selectedScore={phase === "intro" ? undefined : answers[currentQuestion.id]}
                 onSelect={handleSelect}
                 industryKey={effectiveIndustryKey}
+                customContexts={customContexts}
               />
               {phase === "questions" && (
                 <div className="max-w-2xl mx-auto flex items-center justify-between animate-in fade-in duration-300">
@@ -532,6 +557,48 @@ export default function DiagnosticPage() {
             </div>
           </DialogContent>
         </Dialog>
+
+        {/* === Preparing phase — personalizing contexts === */}
+        {phase === "preparing" && (
+          <div className="flex-1 flex items-center justify-center px-6 py-16">
+            <div className="text-center space-y-6 animate-in fade-in duration-500 max-w-sm">
+              <div className="relative mx-auto w-16 h-16">
+                <div
+                  className="absolute inset-0 rounded-full border-2 animate-spin"
+                  style={{
+                    borderColor: "hsl(var(--primary) / 0.1)",
+                    borderTopColor: "hsl(var(--primary) / 0.5)",
+                    animationDuration: "1.4s",
+                  }}
+                />
+                <div
+                  className="absolute inset-2.5 rounded-full border-2 animate-spin"
+                  style={{
+                    borderColor: "hsl(var(--brand-green) / 0.1)",
+                    borderTopColor: "hsl(var(--brand-green) / 0.4)",
+                    animationDuration: "2s",
+                    animationDirection: "reverse",
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-primary/50 animate-pulse" />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <p className="text-base font-bold text-foreground tracking-tight">
+                  Setting up your diagnostic…
+                </p>
+                <p className="text-xs text-muted-foreground/70">
+                  Tailoring scenarios for{" "}
+                  <span className="font-semibold text-muted-foreground">{resolvedTeamLabel}</span>
+                  {resolvedIndustryLabel && (
+                    <> in <span className="font-semibold text-muted-foreground">{resolvedIndustryLabel}</span></>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* === Calculating phase === */}
         {phase === "calculating" && (
