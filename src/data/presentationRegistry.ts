@@ -1,5 +1,4 @@
 import type { ComponentType } from "react";
-import PitchDeck from "@/pages/PitchDeck";
 import InvestorDeck from "@/pages/InvestorDeck";
 import SeedInvestorDeck from "@/pages/SeedInvestorDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
@@ -17,14 +16,6 @@ export type PresentationRoute = {
 };
 
 export const presentationRoutes: PresentationRoute[] = [
-  {
-    id: "pitch",
-    title: "Pitch Deck",
-    path: "/pitch",
-    description: "Core startup pitch deck",
-    component: PitchDeck,
-    showInAdmin: true,
-  },
   {
     id: "investor",
     title: "Investor Deck",
