@@ -517,9 +517,9 @@ function Slide06Category() {
 
             <div className="rounded-xl border p-5 mt-2"
               style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>$80M+ invested into this category</p>
+              <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>$98M+ invested into this category</p>
               <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>
-                Sequoia led $30M into Edra (process mining). YC backed Mem0's $24M (agent memory). Paradox raised ~$26M (organizational alignment).
+                Sequoia led $30M into Edra (process mining). YC backed Mem0's $44.5M (agent memory). Interloom raised $19.5M (back-office automation). Paradox raised ~$3.8M (organizational alignment).
                 All validate the same gap: organizations can't transfer what they know to AI.
                 They mine, remember, and theorize. We govern.
               </p>
