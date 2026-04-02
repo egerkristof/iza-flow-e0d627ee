@@ -558,6 +558,48 @@ export default function DiagnosticPage() {
           </DialogContent>
         </Dialog>
 
+        {/* === Preparing phase — personalizing contexts === */}
+        {phase === "preparing" && (
+          <div className="flex-1 flex items-center justify-center px-6 py-16">
+            <div className="text-center space-y-6 animate-in fade-in duration-500 max-w-sm">
+              <div className="relative mx-auto w-16 h-16">
+                <div
+                  className="absolute inset-0 rounded-full border-2 animate-spin"
+                  style={{
+                    borderColor: "hsl(var(--primary) / 0.1)",
+                    borderTopColor: "hsl(var(--primary) / 0.5)",
+                    animationDuration: "1.4s",
+                  }}
+                />
+                <div
+                  className="absolute inset-2.5 rounded-full border-2 animate-spin"
+                  style={{
+                    borderColor: "hsl(var(--brand-green) / 0.1)",
+                    borderTopColor: "hsl(var(--brand-green) / 0.4)",
+                    animationDuration: "2s",
+                    animationDirection: "reverse",
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-primary/50 animate-pulse" />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <p className="text-base font-bold text-foreground tracking-tight">
+                  Setting up your diagnostic…
+                </p>
+                <p className="text-xs text-muted-foreground/70">
+                  Tailoring scenarios for{" "}
+                  <span className="font-semibold text-muted-foreground">{resolvedTeamLabel}</span>
+                  {resolvedIndustryLabel && (
+                    <> in <span className="font-semibold text-muted-foreground">{resolvedIndustryLabel}</span></>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* === Calculating phase === */}
         {phase === "calculating" && (
           <div className="flex-1 flex items-center justify-center px-6 py-16">
