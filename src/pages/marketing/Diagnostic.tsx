@@ -294,76 +294,13 @@ export default function DiagnosticPage() {
                 </p>
               </div>
 
-              {/* === Two-stage industry/team selector === */}
-              <div className="max-w-md mx-auto space-y-3 text-left">
-                {/* Industry selection */}
-                <p className="text-[11px] font-bold tracking-[0.12em] uppercase text-muted-foreground text-center">
-                  Tell us about your team
-                </p>
-                <div className="grid grid-cols-1 gap-1.5">
-                  {INDUSTRIES.map((ind) => {
-                    const isSelected = selectedIndustry === ind.key;
-                    return (
-                      <button
-                        key={ind.key}
-                        onClick={() => {
-                          setSelectedIndustry(ind.key);
-                          setSelectedTeam(null);
-                        }}
-                        className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 ${
-                          isSelected
-                            ? "border-primary bg-primary/[0.06] shadow-[0_0_0_1px_hsl(var(--primary)/0.2)]"
-                            : "border-border/60 bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
-                        }`}
-                      >
-                        <div className="flex-1 min-w-0">
-                          <p className={`text-sm font-semibold ${isSelected ? "text-foreground" : "text-muted-foreground"}`}>
-                            {ind.label}
-                          </p>
-                          <p className="text-[11px] text-muted-foreground/60 truncate">{ind.description}</p>
-                        </div>
-                        <ChevronRight className={`w-4 h-4 shrink-0 transition-transform ${isSelected ? "text-primary rotate-90" : "text-muted-foreground/40"}`} />
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Team selection — shown after industry */}
-                {selectedIndustryData && (
-                  <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
-                    <p className="text-[11px] font-semibold text-muted-foreground/70 text-center">
-                      Which team?
-                    </p>
-                    <div className="flex flex-wrap gap-1.5 justify-center">
-                      {selectedIndustryData.teams.map((team) => {
-                        const isTeamSelected = selectedTeam === team.key;
-                        return (
-                          <button
-                            key={team.key}
-                            onClick={() => setSelectedTeam(team.key)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
-                              isTeamSelected
-                                ? "border-primary bg-primary/[0.08] text-primary"
-                                : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
-                            }`}
-                          >
-                            {team.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </div>
-
               {/* CTA */}
               <div className="space-y-3 pt-2">
                 <Button
                   variant="brand"
                   size="lg"
                   className="text-sm md:text-base px-8 md:px-10 h-12 md:h-13 w-full sm:w-auto shadow-[0_0_30px_-6px_hsl(200_90%_52%/0.4)] hover:shadow-[0_0_40px_-6px_hsl(200_90%_52%/0.6)]"
-                  onClick={handleLiftCurtain}
-                  disabled={!canStart}
+                  onClick={() => setSelectorOpen(true)}
                 >
                   Score Your AI Execution <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -380,6 +317,83 @@ export default function DiagnosticPage() {
             </div>
           </div>
         )}
+
+        {/* === Industry / Team selection dialog === */}
+        <Dialog open={selectorOpen} onOpenChange={setSelectorOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-bold tracking-tight">Tell us about your team</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 pt-1">
+              {/* Industry selection */}
+              <div className="grid grid-cols-1 gap-1.5">
+                {INDUSTRIES.map((ind) => {
+                  const isSelected = selectedIndustry === ind.key;
+                  return (
+                    <button
+                      key={ind.key}
+                      onClick={() => {
+                        setSelectedIndustry(ind.key);
+                        setSelectedTeam(null);
+                      }}
+                      className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 ${
+                        isSelected
+                          ? "border-primary bg-primary/[0.06] shadow-[0_0_0_1px_hsl(var(--primary)/0.2)]"
+                          : "border-border/60 bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
+                      }`}
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-semibold ${isSelected ? "text-foreground" : "text-muted-foreground"}`}>
+                          {ind.label}
+                        </p>
+                        <p className="text-[11px] text-muted-foreground/60 truncate">{ind.description}</p>
+                      </div>
+                      <ChevronRight className={`w-4 h-4 shrink-0 transition-transform ${isSelected ? "text-primary rotate-90" : "text-muted-foreground/40"}`} />
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Team selection */}
+              {selectedIndustryData && (
+                <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
+                  <p className="text-[11px] font-semibold text-muted-foreground/70 text-center">
+                    Which team?
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 justify-center">
+                    {selectedIndustryData.teams.map((team) => {
+                      const isTeamSelected = selectedTeam === team.key;
+                      return (
+                        <button
+                          key={team.key}
+                          onClick={() => setSelectedTeam(team.key)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
+                            isTeamSelected
+                              ? "border-primary bg-primary/[0.08] text-primary"
+                              : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
+                          }`}
+                        >
+                          {team.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Start button */}
+              <Button
+                variant="brand"
+                size="lg"
+                className="w-full h-12 text-sm font-semibold"
+                disabled={!canStart}
+                onClick={handleLiftCurtain}
+              >
+                Start Assessment <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* === Calculating phase === */}
         {phase === "calculating" && (
