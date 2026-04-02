@@ -6,6 +6,7 @@ import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticR
 import { QUESTIONS, calculateResults } from "@/lib/diagnostic-scoring";
 import { INDUSTRIES, type IndustryKey } from "@/lib/diagnostic-industries";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, ArrowLeft, ChevronRight } from "lucide-react";
@@ -35,13 +36,25 @@ export default function DiagnosticPage() {
   const [selectedIndustry, setSelectedIndustry] = useState<IndustryKey | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [selectorOpen, setSelectorOpen] = useState(false);
+  const [customIndustry, setCustomIndustry] = useState("");
+  const [customTeam, setCustomTeam] = useState("");
 
   const selectedIndustryData = useMemo(
     () => INDUSTRIES.find((i) => i.key === selectedIndustry) ?? null,
     [selectedIndustry]
   );
 
-  const canStart = selectedIndustry != null && selectedTeam != null;
+  const needsCustomIndustry = selectedIndustry === "other" && !customIndustry.trim();
+  const needsCustomTeam = selectedTeam === "other" && !customTeam.trim();
+  const canStart = selectedIndustry != null && selectedTeam != null && !needsCustomIndustry && !needsCustomTeam;
+
+  // Resolved labels for passing downstream
+  const resolvedIndustryLabel = selectedIndustry === "other" && customIndustry.trim()
+    ? customIndustry.trim()
+    : selectedIndustryData?.label ?? null;
+  const resolvedTeamLabel = selectedTeam === "other" && customTeam.trim()
+    ? customTeam.trim()
+    : selectedIndustryData?.teams.find(t => t.key === selectedTeam)?.label ?? null;
 
   useEffect(() => {
     (async () => {
@@ -335,6 +348,8 @@ export default function DiagnosticPage() {
                       onClick={() => {
                         setSelectedIndustry(ind.key);
                         setSelectedTeam(null);
+                        setCustomIndustry("");
+                        setCustomTeam("");
                       }}
                       className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 ${
                         isSelected
@@ -354,6 +369,19 @@ export default function DiagnosticPage() {
                 })}
               </div>
 
+              {/* Custom industry input */}
+              {selectedIndustry === "other" && (
+                <div className="animate-in fade-in duration-200 px-1">
+                  <Input
+                    placeholder="Your industry (e.g. Financial Services, Education)"
+                    value={customIndustry}
+                    onChange={(e) => setCustomIndustry(e.target.value)}
+                    className="text-sm h-9"
+                    autoFocus
+                  />
+                </div>
+              )}
+
               {/* Team selection */}
               {selectedIndustryData && (
                 <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
@@ -366,7 +394,7 @@ export default function DiagnosticPage() {
                       return (
                         <button
                           key={team.key}
-                          onClick={() => setSelectedTeam(team.key)}
+                          onClick={() => { setSelectedTeam(team.key); setCustomTeam(""); }}
                           className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
                             isTeamSelected
                               ? "border-primary bg-primary/[0.08] text-primary"
@@ -378,6 +406,18 @@ export default function DiagnosticPage() {
                       );
                     })}
                   </div>
+                  {/* Custom team input */}
+                  {selectedTeam === "other" && (
+                    <div className="animate-in fade-in duration-200">
+                      <Input
+                        placeholder="Your team or function (e.g. MSC, Data Governance)"
+                        value={customTeam}
+                        onChange={(e) => setCustomTeam(e.target.value)}
+                        className="text-sm h-9"
+                        autoFocus
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -471,6 +511,8 @@ export default function DiagnosticPage() {
               sessionId={sessionId}
               industryKey={selectedIndustry}
               teamKey={selectedTeam}
+              industryLabel={resolvedIndustryLabel}
+              teamLabel={resolvedTeamLabel}
             />
           </div>
         )}

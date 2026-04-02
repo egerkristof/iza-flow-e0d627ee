@@ -20,6 +20,8 @@ interface Props {
   sessionId?: string | null;
   industryKey?: IndustryKey | null;
   teamKey?: string | null;
+  industryLabel?: string | null;
+  teamLabel?: string | null;
 }
 
 const BENCHMARK_AVG = 35;
@@ -333,7 +335,7 @@ function EmailCapture({
   );
 }
 
-export function DiagnosticResults({ result, answers, existingRecordId, sessionId, industryKey, teamKey }: Props) {
+export function DiagnosticResults({ result, answers, existingRecordId, sessionId, industryKey, teamKey, industryLabel, teamLabel }: Props) {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [respondentRole, setRespondentRole] = useState("");
@@ -392,8 +394,8 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
           session_id: sessionId || null,
           diagnostic_result_id: existingRecordId || null,
           results_base_url: window.location.origin,
-          industry_selected: industryKey || null,
-          team_selected: teamKey || null,
+          industry_selected: industryLabel || industryKey || null,
+          team_selected: teamLabel || teamKey || null,
         },
       });
 
