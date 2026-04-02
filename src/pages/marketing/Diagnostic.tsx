@@ -77,6 +77,7 @@ export default function DiagnosticPage() {
 
   const handleLiftCurtain = useCallback(() => {
     if (!canStart) return;
+    setSelectorOpen(false);
     setCurtainLifting(true);
     setTimeout(() => setPhase("questions"), 700);
   }, [canStart]);
