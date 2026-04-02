@@ -152,7 +152,7 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — The End of SaaS Thesis ───────────────────────────────────────
+// ─── Slide 02 — The Judgment Gap ─────────────────────────────────────────────
 
 function Slide02Thesis() {
   return (
@@ -160,30 +160,36 @@ function Slide02Thesis() {
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <DarkTag label="The Investment Thesis" color={GOLD} />
-        <h2 className="font-black mb-14" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Every AI startup is building<br />
-          <span style={{ color: `hsl(${GOLD})` }}>the same thing.</span>
+        <h2 className="font-black mb-10" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
+          The Judgment Gap is the<br />
+          <span style={{ color: `hsl(${GOLD})` }}>real AI infrastructure problem.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-8 mb-10">
-          {[
-            { icon: "💬", label: "Chats", desc: "Every tool has a conversation interface with an LLM." },
-            { icon: "🤖", label: "Agents", desc: "Every tool lets you build autonomous workflows." },
-            { icon: "📄", label: "Context", desc: "Every tool offers RAG, memory, and document grounding." },
-          ].map(({ icon, label, desc }) => (
-            <div key={label} className="rounded-2xl border p-8 text-center"
-              style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
-              <p style={{ fontSize: 56 }}>{icon}</p>
-              <p className="font-bold mt-4 mb-2" style={{ fontSize: 32, color: DARK_TEXT }}>{label}</p>
-              <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.5 }}>{desc}</p>
-            </div>
-          ))}
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          <div className="rounded-2xl border p-8"
+            style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
+            <p className="font-black mb-4" style={{ fontSize: 36, color: DARK_TEXT }}>
+              The Judgment Gap
+            </p>
+            <p style={{ fontSize: 24, color: DARK_MUTED, lineHeight: 1.6 }}>
+              Between every stimulus and response, there is a space where human judgment lives: creativity, conscience, self-awareness, willpower. This is where expertise actually happens. AI tools have no access to it.
+            </p>
+          </div>
+          <div className="rounded-2xl border p-8"
+            style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
+            <p className="font-black mb-4" style={{ fontSize: 36, color: DARK_TEXT }}>
+              The Standards Gap
+            </p>
+            <p style={{ fontSize: 24, color: DARK_MUTED, lineHeight: 1.6 }}>
+              The Judgment Gap manifests operationally as the Standards Gap: every AI tool generates outputs, but none carry your organization's knowledge of <em>how to think</em>. Same prompt, five people, five different outputs.
+            </p>
+          </div>
         </div>
 
         <div className="rounded-2xl border p-10 flex-1 flex flex-col justify-center"
           style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
           <p className="font-black mb-4" style={{ fontSize: 40, color: DARK_TEXT }}>
-            These features are commoditizing in real-time.
+            Every AI startup builds chats, agents, and context. These features are commoditizing.
           </p>
           <p style={{ fontSize: 28, color: DARK_MUTED, lineHeight: 1.6 }}>
             The defensible layer isn't the tool. It's the <strong style={{ color: `hsl(${GOLD})` }}>organizational knowledge</strong> that makes the tool work consistently.
@@ -749,8 +755,9 @@ function Slide10MarketValidation() {
               <span className="font-semibold px-3 py-1 rounded-full" style={{ fontSize: 14, background: `hsl(${ACCENT} / 0.12)`, color: `hsl(${ACCENT})` }}>The Governance Layer</span>
             </div>
             <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.55 }}>
-              Interloom automates the predictable. Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
-              <strong style={{ color: TEXT }}> Only LIZA governs the messy reality</strong> — the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
+              Edra mines what happened. Mem0 remembers what was said. Interloom automates the predictable. Paradox studies why alignment breaks.
+              <strong style={{ color: TEXT }}> They refine the map. We talk to the territory.</strong>{" "}
+              Only LIZA governs the messy reality: the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
@@ -917,7 +924,101 @@ function Slide11GTM() {
   );
 }
 
-// ─── Slide 12 — Team ─────────────────────────────────────────────────────────
+// ─── Slide 12 — Vertical Expansion ───────────────────────────────────────────
+
+function Slide12Verticals() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
+        <Tag label="Vertical Expansion" color={GREEN} />
+        <h2 className="font-bold mb-8" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          One engine. Multiple regulated verticals.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>The ALM pattern repeats.</span>
+        </h2>
+
+        <div className="flex gap-6 mb-6 flex-1 min-h-0">
+          {/* Core pattern */}
+          <div className="w-[40%] flex flex-col gap-4 justify-center">
+            <div className="rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.04)` }}>
+              <p className="font-semibold mb-2" style={{ fontSize: 20, color: `hsl(${ACCENT})`, letterSpacing: "0.1em" }}>THE PATTERN</p>
+              <p className="font-bold mb-3" style={{ fontSize: 28, color: TEXT }}>Application Lifecycle Management (ALM)</p>
+              <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>
+                Every industry with complex, high-stakes processes has the same structural problem: expert judgment trapped in tribal knowledge, static SOPs, and unmanaged AI usage. LIZA becomes the "System of Reasoning" layer above existing Systems of Record.
+              </p>
+            </div>
+            <div className="rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
+              <p className="font-semibold mb-2" style={{ fontSize: 20, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>EXPANSION STRATEGY</p>
+              <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>
+                Land horizontally with AI-native teams (current sales motion). Expand vertically with industry-specific playbook packs and compliance frameworks. Each vertical deepens the moat.
+              </p>
+            </div>
+          </div>
+
+          {/* Verticals */}
+          <div className="w-[60%] grid grid-cols-2 gap-4">
+            {[
+              {
+                vertical: "Pharma & Biotech", status: "Live", color: GREEN,
+                label: "Medicine Lifecycle Management",
+                frameworks: "GMP, GAMP 5, 21 CFR Part 11",
+                example: "Audit execution: 18-day process to 1.5 hours",
+                sits: "Above Veeva Vault, LIMS",
+              },
+              {
+                vertical: "Food Safety & Manufacturing", status: "Validated", color: ACCENT,
+                label: "Quality Lifecycle Management",
+                frameworks: "ISO 22000, HACCP, GMP",
+                example: "Supplier audit judgment encoded for junior inspectors",
+                sits: "Above SAP QM, TraceGains",
+              },
+              {
+                vertical: "Lab Governance", status: "Validated", color: GOLD,
+                label: "Lab Lifecycle Management",
+                frameworks: "ISO 17025, GLP",
+                example: "Method validation judgment scaled across labs",
+                sits: "Above LabWare LIMS, Benchling",
+              },
+              {
+                vertical: "Professional Services", status: "Live", color: GREEN,
+                label: "Delivery Lifecycle Management",
+                frameworks: "MEDDIC, custom methodology",
+                example: "Senior judgment encoded into delivery protocols",
+                sits: "Above Salesforce, HubSpot, Notion",
+              },
+            ].map(({ vertical, status, color, label, frameworks, example, sits }) => (
+              <div key={vertical} className="rounded-xl border p-5 flex flex-col"
+                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{vertical}</p>
+                  <span className="px-2.5 py-0.5 rounded-full font-semibold" style={{ fontSize: 13, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+                </div>
+                <p className="font-semibold mb-2" style={{ fontSize: 17, color: `hsl(${color})` }}>{label}</p>
+                <p className="mb-1" style={{ fontSize: 16, color: MUTED }}>Frameworks: {frameworks}</p>
+                <p className="mb-1 italic" style={{ fontSize: 16, color: MUTED }}>"{example}"</p>
+                <p className="mt-auto pt-2 border-t" style={{ fontSize: 14, color: SUBTLE, borderColor: `hsl(${color} / 0.15)` }}>Sits above: {sits}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-xl border px-8 py-5 flex items-center gap-6"
+          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+          <TrendingUp size={32} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 22, color: MUTED }}>
+            <strong style={{ color: TEXT }}>Each vertical is a separate wedge into a multi-billion-dollar compliance market.</strong>{" "}
+            The core engine is the same. The playbook packs are industry-specific. Expansion is capital-efficient.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ─── Slide 13 — Team ─────────────────────────────────────────────────────────
 
 function Slide12Team() {
   const founders = [
@@ -1236,7 +1337,7 @@ function Slide16Closing() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01Cover /> },
-  { id: 2, title: "Investment Thesis", component: <Slide02Thesis /> },
+  { id: 2, title: "The Judgment Gap", component: <Slide02Thesis /> },
   { id: 3, title: "The Problem", component: <Slide03Problem /> },
   { id: 4, title: "Infrastructure Gap", component: <Slide04Market /> },
   { id: 5, title: "The Solution", component: <Slide05Solution /> },
@@ -1247,7 +1348,8 @@ const SLIDES = [
   { id: 10, title: "Market Validation", component: <Slide10MarketValidation /> },
   { id: 11, title: "Business Model", component: <Slide10BusinessModel /> },
   { id: 12, title: "Go-To-Market", component: <Slide11GTM /> },
-  { id: 13, title: "Team", component: <Slide12Team /> },
+  { id: 13, title: "Vertical Expansion", component: <Slide12Verticals /> },
+  { id: 14, title: "Team", component: <Slide12Team /> },
   { id: 14, title: "Financials", component: <Slide13Financials /> },
   { id: 15, title: "Use of Funds", component: <Slide14UseOfFunds /> },
   { id: 16, title: "The Ask", component: <Slide15TheAsk /> },

@@ -118,7 +118,7 @@ function Slide01Cover() {
         <div className="flex items-center gap-3 mb-12 px-7 py-3 rounded-full border"
           style={{ borderColor: `hsl(${GREEN} / 0.35)`, background: `hsl(${GREEN} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${GREEN})` }} />
-          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>LIZA OS · Pre-Seed</span>
+          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>LIZA OS · Seed</span>
         </div>
 
         <h1 className="font-black mb-10" style={{ fontSize: 100, lineHeight: 1.0, color: DARK_TEXT }}>
@@ -136,7 +136,7 @@ function Slide01Cover() {
 
         <div className="mt-20 flex items-center gap-20">
           {[
-            ["€300K", "Pre-seed to validate & close first paying customers"],
+            ["€300K", "Seed round to validate & close first paying customers"],
             ["Live", "Product in market with enterprise validation"],
             ["12 mo", "Runway to Series Seed milestones"],
           ].map(([k, v]) => (
@@ -152,7 +152,7 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — The End of SaaS Thesis ───────────────────────────────────────
+// ─── Slide 02 — The Judgment Gap ─────────────────────────────────────────────
 
 function Slide02Thesis() {
   return (
@@ -160,35 +160,36 @@ function Slide02Thesis() {
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <DarkTag label="The Investment Thesis" color={GOLD} />
-        <h2 className="font-black mb-14" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Every AI startup is building<br />
-          <span style={{ color: `hsl(${GOLD})` }}>the same thing.</span>
+        <h2 className="font-black mb-10" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
+          The Judgment Gap is the<br />
+          <span style={{ color: `hsl(${GOLD})` }}>real AI infrastructure problem.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-8 mb-10">
-          {[
-            { icon: "💬", label: "Chats", desc: "Every tool has a conversation interface with an LLM." },
-            { icon: "🤖", label: "Agents", desc: "Every tool lets you build autonomous workflows." },
-            { icon: "📄", label: "Context", desc: "Every tool offers RAG, memory, and document grounding." },
-          ].map(({ icon, label, desc }) => (
-            <div key={label} className="rounded-2xl border p-8 text-center"
-              style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
-              <p style={{ fontSize: 56 }}>{icon}</p>
-              <p className="font-bold mt-4 mb-2" style={{ fontSize: 32, color: DARK_TEXT }}>{label}</p>
-              <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.5 }}>{desc}</p>
-            </div>
-          ))}
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          <div className="rounded-2xl border p-8"
+            style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
+            <p className="font-black mb-3" style={{ fontSize: 32, color: DARK_TEXT }}>The Judgment Gap</p>
+            <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.55 }}>
+              Between every stimulus and response lives human judgment: creativity, conscience, self-awareness, willpower. AI tools have no access to it. The explicit layer is commoditized. The tacit layer is untouched.
+            </p>
+          </div>
+          <div className="rounded-2xl border p-8"
+            style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
+            <p className="font-black mb-3" style={{ fontSize: 32, color: DARK_TEXT }}>The Standards Gap</p>
+            <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.55 }}>
+              Operationally, this means: same prompt, five people, five different outputs. Every AI tool generates content, but none carry your organization's knowledge of <em>how to think</em>.
+            </p>
+          </div>
         </div>
 
         <div className="rounded-2xl border p-10 flex-1 flex flex-col justify-center"
           style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
-          <p className="font-black mb-4" style={{ fontSize: 40, color: DARK_TEXT }}>
-            These features are commoditizing in real-time.
+          <p className="font-black mb-4" style={{ fontSize: 36, color: DARK_TEXT }}>
+            Every AI startup builds chats, agents, and context. These features are commoditizing.
           </p>
-          <p style={{ fontSize: 28, color: DARK_MUTED, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 26, color: DARK_MUTED, lineHeight: 1.6 }}>
             The defensible layer isn't the tool. It's the <strong style={{ color: `hsl(${GOLD})` }}>organizational knowledge</strong> that makes the tool work consistently.
-            LIZA is the infrastructure that captures, governs, and operationalizes that knowledge.
-            We're not building a better SaaS product. We're building the <strong style={{ color: `hsl(${GOLD})` }}>management layer underneath all of them.</strong>
+            We're building the <strong style={{ color: `hsl(${GOLD})` }}>management layer underneath all of them.</strong>
           </p>
         </div>
       </div>
@@ -517,9 +518,9 @@ function Slide06Category() {
 
             <div className="rounded-xl border p-5 mt-2"
               style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>$80M+ invested into this category</p>
+              <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>$98M+ invested into this category</p>
               <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>
-                Sequoia led $30M into Edra (process mining). YC backed Mem0's $24M (agent memory). Paradox raised ~$26M (organizational alignment).
+                Sequoia led $30M into Edra (process mining). YC backed Mem0's $44.5M (agent memory). Interloom raised $19.5M (back-office automation). Paradox raised ~$3.8M (organizational alignment).
                 All validate the same gap: organizations can't transfer what they know to AI.
                 They mine, remember, and theorize. We govern.
               </p>
@@ -532,7 +533,69 @@ function Slide06Category() {
   );
 }
 
-// ─── Slide 07 — Team ─────────────────────────────────────────────────────────
+// ─── Slide 07 — Vertical Expansion ───────────────────────────────────────────
+
+function Slide07Verticals() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <Tag label="Vertical Expansion" color={GREEN} />
+        <h2 className="font-bold mb-8" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          One engine. Multiple verticals.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>The pattern repeats.</span>
+        </h2>
+
+        <div className="grid grid-cols-2 gap-6 mb-6 flex-1 min-h-0">
+          {[
+            {
+              vertical: "Pharma & Biotech", status: "Live", color: GREEN,
+              label: "Medicine Lifecycle Management",
+              desc: "GMP, GAMP 5, 21 CFR Part 11. Audit execution: 18 days to 1.5 hours. Sits above Veeva Vault, LIMS.",
+            },
+            {
+              vertical: "Professional Services", status: "Live", color: ACCENT,
+              label: "Delivery Lifecycle Management",
+              desc: "Senior judgment encoded into delivery protocols. Custom methodology enforcement. Sits above Salesforce, Notion.",
+            },
+            {
+              vertical: "Food Safety & Manufacturing", status: "Validated", color: GOLD,
+              label: "Quality Lifecycle Management",
+              desc: "ISO 22000, HACCP, GMP. Supplier audit judgment for junior inspectors. Sits above SAP QM, TraceGains.",
+            },
+            {
+              vertical: "Lab Governance", status: "Validated", color: ACCENT,
+              label: "Lab Lifecycle Management",
+              desc: "ISO 17025, GLP. Method validation judgment scaled across labs. Sits above LabWare LIMS, Benchling.",
+            },
+          ].map(({ vertical, status, color, label, desc }) => (
+            <div key={vertical} className="rounded-2xl border p-7 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+              <div className="flex items-center justify-between mb-2">
+                <p className="font-bold" style={{ fontSize: 26, color: TEXT }}>{vertical}</p>
+                <span className="px-3 py-1 rounded-full font-semibold" style={{ fontSize: 15, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+              </div>
+              <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${color})` }}>{label}</p>
+              <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-xl border px-8 py-5 flex items-center gap-6"
+          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+          <Award size={32} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 22, color: MUTED }}>
+            <strong style={{ color: TEXT }}>Each vertical is a separate wedge into a multi-billion-dollar compliance market.</strong>{" "}
+            Same core engine. Industry-specific playbook packs. Capital-efficient expansion.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ─── Slide 08 — Team ─────────────────────────────────────────────────────────
 
 function Slide07Team() {
   const founders = [
@@ -639,7 +702,7 @@ function Slide08UseOfFunds() {
                 });
               })()}
               <text x="160" y="152" textAnchor="middle" fill={TEXT} fontSize="34" fontWeight="900">€300K</text>
-              <text x="160" y="180" textAnchor="middle" fill={MUTED} fontSize="20">Pre-Seed</text>
+              <text x="160" y="180" textAnchor="middle" fill={MUTED} fontSize="20">Seed</text>
             </svg>
             <div className="flex flex-col gap-2 mt-3">
               {allocations.map(({ label, pct, color }) => (
@@ -769,7 +832,7 @@ function Slide10TheAsk() {
         <div className="text-center mb-14">
           <DarkTag label="The Ask" color={GREEN} />
           <h2 className="font-black" style={{ fontSize: 96, color: DARK_TEXT, lineHeight: 1.0 }}>
-            €300K Pre-Seed
+            €300K Seed
           </h2>
           <p style={{ fontSize: 34, color: DARK_MUTED, marginTop: 16 }}>
             12-month runway &nbsp;·&nbsp; Revenue validation &nbsp;·&nbsp; Series Seed at month 12
@@ -813,12 +876,13 @@ function Slide10TheAsk() {
 
 const SLIDES = [
   { id: "cover", title: "Cover", component: <Slide01Cover /> },
-  { id: "thesis", title: "End of SaaS", component: <Slide02Thesis /> },
+  { id: "thesis", title: "The Judgment Gap", component: <Slide02Thesis /> },
   { id: "problem", title: "Problem", component: <Slide02Problem /> },
   { id: "solution", title: "Solution", component: <Slide03Solution /> },
   { id: "validation", title: "Early Validation", component: <Slide04Validation /> },
   { id: "product", title: "What's Built", component: <Slide05Product /> },
   { id: "category", title: "Category Map", component: <Slide06Category /> },
+  { id: "verticals", title: "Vertical Expansion", component: <Slide07Verticals /> },
   { id: "team", title: "Team", component: <Slide07Team /> },
   { id: "funds", title: "Use of Funds", component: <Slide08UseOfFunds /> },
   { id: "milestones", title: "12-Month Plan", component: <Slide09Milestones /> },
@@ -941,7 +1005,7 @@ export default function SeedInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pre-Seed-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Seed-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -982,10 +1046,10 @@ export default function SeedInvestorDeck() {
         style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GREEN})` }} />
-          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — Pre-Seed Deck</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — Seed Deck</span>
           <span className="text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${GREEN} / 0.1)`, color: `hsl(${GREEN})` }}>
-            Pre-Seed · {SLIDES.length} slides
+            Seed · {SLIDES.length} slides
           </span>
           <span className="text-xs px-2 py-0.5 rounded ml-1"
             style={{ background: "hsl(0 72% 50% / 0.08)", color: "hsl(0 72% 50%)" }}>
@@ -996,7 +1060,7 @@ export default function SeedInvestorDeck() {
           <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")}>
             <Grid3x3 size={15} className="mr-1.5" /> Grid
           </Button>
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pre-Seed-Deck" slideCount={SLIDES.length} variant="desktop" />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Seed-Deck" slideCount={SLIDES.length} variant="desktop" />
           <Button size="sm" variant="ghost" onClick={enterFullscreen}>
             <Maximize2 size={15} className="mr-1.5" /> Present
           </Button>
