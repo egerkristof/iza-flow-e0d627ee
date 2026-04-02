@@ -40,14 +40,33 @@ export default function DiagnosticPage() {
   const [customIndustry, setCustomIndustry] = useState("");
   const [customTeam, setCustomTeam] = useState("");
 
+  // AI-generated teams for custom industries
+  const [aiTeams, setAiTeams] = useState<{ key: string; label: string }[] | null>(null);
+  const [loadingTeams, setLoadingTeams] = useState(false);
+
+  // Mapped industry context for custom selections
+  const [mappedIndustryKey, setMappedIndustryKey] = useState<IndustryKey | null>(null);
+
   const selectedIndustryData = useMemo(
     () => INDUSTRIES.find((i) => i.key === selectedIndustry) ?? null,
     [selectedIndustry]
   );
 
+  // Teams to display: static for known industries, AI-generated for "other"
+  const displayTeams = useMemo(() => {
+    if (selectedIndustry === "other" && aiTeams) return aiTeams;
+    return selectedIndustryData?.teams ?? null;
+  }, [selectedIndustry, aiTeams, selectedIndustryData]);
+
   const needsCustomIndustry = selectedIndustry === "other" && !customIndustry.trim();
   const needsCustomTeam = selectedTeam === "other" && !customTeam.trim();
   const canStart = selectedIndustry != null && selectedTeam != null && !needsCustomIndustry && !needsCustomTeam;
+
+  // The effective industry key for question contexts
+  const effectiveIndustryKey = useMemo<IndustryKey | null>(() => {
+    if (selectedIndustry && selectedIndustry !== "other") return selectedIndustry;
+    return mappedIndustryKey;
+  }, [selectedIndustry, mappedIndustryKey]);
 
   // Resolved labels for passing downstream
   const resolvedIndustryLabel = selectedIndustry === "other" && customIndustry.trim()
@@ -55,7 +74,52 @@ export default function DiagnosticPage() {
     : selectedIndustryData?.label ?? null;
   const resolvedTeamLabel = selectedTeam === "other" && customTeam.trim()
     ? customTeam.trim()
-    : selectedIndustryData?.teams.find(t => t.key === selectedTeam)?.label ?? null;
+    : displayTeams?.find(t => t.key === selectedTeam)?.label ?? null;
+
+  // Fetch AI-generated teams when custom industry is provided
+  const fetchAiTeams = useCallback(async (industry: string) => {
+    setLoadingTeams(true);
+    setAiTeams(null);
+    setSelectedTeam(null);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-teams", {
+        body: { industry },
+      });
+      if (error) throw error;
+      if (data?.teams) {
+        setAiTeams(data.teams);
+      }
+    } catch (err) {
+      console.error("Failed to generate teams:", err);
+      // Fallback: show generic teams
+      setAiTeams([
+        { key: "operations", label: "Operations" },
+        { key: "strategy", label: "Strategy" },
+        { key: "it", label: "IT / Technology" },
+        { key: "hr", label: "People / HR" },
+        { key: "other", label: "Other" },
+      ]);
+      toast.error("Couldn't generate teams. Showing defaults.");
+    } finally {
+      setLoadingTeams(false);
+    }
+  }, []);
+
+  // Map custom industry/team to closest known context when starting
+  const mapContext = useCallback(async (industry: string, team: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke("map-team-context", {
+        body: { industry, team },
+      });
+      if (error) throw error;
+      if (data?.mapped_industry) {
+        setMappedIndustryKey(data.mapped_industry as IndustryKey);
+      }
+    } catch (err) {
+      console.error("Failed to map context:", err);
+      setMappedIndustryKey("profservices"); // safe default
+    }
+  }, []);
 
   useEffect(() => {
     (async () => {
