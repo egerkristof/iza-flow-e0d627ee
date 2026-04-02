@@ -570,12 +570,13 @@ Return ONLY valid JSON in this exact format:
       )
       .join("");
 
-    const enrichmentLine = companyName || industry || respondent_role || team_size
+    const enrichmentLine = companyName || industry || respondent_role || team_size || industry_selected
       ? `<p style="margin:6px 0 16px;font-size:13px;color:#475569;">${[
           respondent_role ? `Role: <strong>${respondent_role}</strong>` : null,
           team_size ? `Team: <strong>${team_size}</strong>` : null,
           companyName ? `Company: <strong>${companyName}</strong>` : null,
           industry ? `Industry: <strong>${industry}</strong>` : null,
+          industry_selected ? `Self-selected: <strong>${industry_selected}${team_selected ? ` / ${team_selected}` : ""}</strong>` : null,
         ].filter(Boolean).join(" · ")}</p>`
       : "";
 
