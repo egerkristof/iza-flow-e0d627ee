@@ -152,7 +152,7 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — The Judgment Gap ─────────────────────────────────────────────
+// ─── Slide 02 — The End of SaaS Thesis ───────────────────────────────────────
 
 function Slide02Thesis() {
   return (
@@ -160,36 +160,30 @@ function Slide02Thesis() {
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <DarkTag label="The Investment Thesis" color={GOLD} />
-        <h2 className="font-black mb-10" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
-          The Judgment Gap is the<br />
-          <span style={{ color: `hsl(${GOLD})` }}>real AI infrastructure problem.</span>
+        <h2 className="font-black mb-14" style={{ fontSize: 78, color: DARK_TEXT, lineHeight: 1.05 }}>
+          Every AI startup is building<br />
+          <span style={{ color: `hsl(${GOLD})` }}>the same thing.</span>
         </h2>
 
-        <div className="grid grid-cols-2 gap-8 mb-8">
-          <div className="rounded-2xl border p-8"
-            style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
-            <p className="font-black mb-4" style={{ fontSize: 36, color: DARK_TEXT }}>
-              The Judgment Gap
-            </p>
-            <p style={{ fontSize: 24, color: DARK_MUTED, lineHeight: 1.6 }}>
-              Between every stimulus and response, there is a space where human judgment lives: creativity, conscience, self-awareness, willpower. This is where expertise actually happens. AI tools have no access to it.
-            </p>
-          </div>
-          <div className="rounded-2xl border p-8"
-            style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
-            <p className="font-black mb-4" style={{ fontSize: 36, color: DARK_TEXT }}>
-              The Standards Gap
-            </p>
-            <p style={{ fontSize: 24, color: DARK_MUTED, lineHeight: 1.6 }}>
-              The Judgment Gap manifests operationally as the Standards Gap: every AI tool generates outputs, but none carry your organization's knowledge of <em>how to think</em>. Same prompt, five people, five different outputs.
-            </p>
-          </div>
+        <div className="grid grid-cols-3 gap-8 mb-10">
+          {[
+            { icon: "💬", label: "Chats", desc: "Every tool has a conversation interface with an LLM." },
+            { icon: "🤖", label: "Agents", desc: "Every tool lets you build autonomous workflows." },
+            { icon: "📄", label: "Context", desc: "Every tool offers RAG, memory, and document grounding." },
+          ].map(({ icon, label, desc }) => (
+            <div key={label} className="rounded-2xl border p-8 text-center"
+              style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
+              <p style={{ fontSize: 56 }}>{icon}</p>
+              <p className="font-bold mt-4 mb-2" style={{ fontSize: 32, color: DARK_TEXT }}>{label}</p>
+              <p style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.5 }}>{desc}</p>
+            </div>
+          ))}
         </div>
 
         <div className="rounded-2xl border p-10 flex-1 flex flex-col justify-center"
           style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
           <p className="font-black mb-4" style={{ fontSize: 40, color: DARK_TEXT }}>
-            Every AI startup builds chats, agents, and context. These features are commoditizing.
+            These features are commoditizing in real-time.
           </p>
           <p style={{ fontSize: 28, color: DARK_MUTED, lineHeight: 1.6 }}>
             The defensible layer isn't the tool. It's the <strong style={{ color: `hsl(${GOLD})` }}>organizational knowledge</strong> that makes the tool work consistently.
@@ -755,9 +749,8 @@ function Slide10MarketValidation() {
               <span className="font-semibold px-3 py-1 rounded-full" style={{ fontSize: 14, background: `hsl(${ACCENT} / 0.12)`, color: `hsl(${ACCENT})` }}>The Governance Layer</span>
             </div>
             <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.55 }}>
-              Edra mines what happened. Mem0 remembers what was said. Interloom automates the predictable. Paradox studies why alignment breaks.
-              <strong style={{ color: TEXT }}> They refine the map. We talk to the territory.</strong>{" "}
-              Only LIZA governs the messy reality: the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
+              Interloom automates the predictable. Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
+              <strong style={{ color: TEXT }}> Only LIZA governs the messy reality</strong> — the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>
@@ -1337,7 +1330,7 @@ function Slide16Closing() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01Cover /> },
-  { id: 2, title: "The Judgment Gap", component: <Slide02Thesis /> },
+  { id: 2, title: "The Thesis", component: <Slide02Thesis /> },
   { id: 3, title: "The Problem", component: <Slide03Problem /> },
   { id: 4, title: "Infrastructure Gap", component: <Slide04Market /> },
   { id: 5, title: "The Solution", component: <Slide05Solution /> },
