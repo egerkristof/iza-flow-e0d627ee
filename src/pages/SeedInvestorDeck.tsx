@@ -702,7 +702,7 @@ function Slide08UseOfFunds() {
                 });
               })()}
               <text x="160" y="152" textAnchor="middle" fill={TEXT} fontSize="34" fontWeight="900">€300K</text>
-              <text x="160" y="180" textAnchor="middle" fill={MUTED} fontSize="20">Pre-Seed</text>
+              <text x="160" y="180" textAnchor="middle" fill={MUTED} fontSize="20">Seed</text>
             </svg>
             <div className="flex flex-col gap-2 mt-3">
               {allocations.map(({ label, pct, color }) => (
