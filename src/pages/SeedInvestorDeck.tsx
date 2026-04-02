@@ -533,7 +533,69 @@ function Slide06Category() {
   );
 }
 
-// ─── Slide 07 — Team ─────────────────────────────────────────────────────────
+// ─── Slide 07 — Vertical Expansion ───────────────────────────────────────────
+
+function Slide07Verticals() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <Tag label="Vertical Expansion" color={GREEN} />
+        <h2 className="font-bold mb-8" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          One engine. Multiple verticals.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>The pattern repeats.</span>
+        </h2>
+
+        <div className="grid grid-cols-2 gap-6 mb-6 flex-1 min-h-0">
+          {[
+            {
+              vertical: "Pharma & Biotech", status: "Live", color: GREEN,
+              label: "Medicine Lifecycle Management",
+              desc: "GMP, GAMP 5, 21 CFR Part 11. Audit execution: 18 days to 1.5 hours. Sits above Veeva Vault, LIMS.",
+            },
+            {
+              vertical: "Professional Services", status: "Live", color: ACCENT,
+              label: "Delivery Lifecycle Management",
+              desc: "Senior judgment encoded into delivery protocols. Custom methodology enforcement. Sits above Salesforce, Notion.",
+            },
+            {
+              vertical: "Food Safety & Manufacturing", status: "Validated", color: GOLD,
+              label: "Quality Lifecycle Management",
+              desc: "ISO 22000, HACCP, GMP. Supplier audit judgment for junior inspectors. Sits above SAP QM, TraceGains.",
+            },
+            {
+              vertical: "Lab Governance", status: "Validated", color: ACCENT,
+              label: "Lab Lifecycle Management",
+              desc: "ISO 17025, GLP. Method validation judgment scaled across labs. Sits above LabWare LIMS, Benchling.",
+            },
+          ].map(({ vertical, status, color, label, desc }) => (
+            <div key={vertical} className="rounded-2xl border p-7 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+              <div className="flex items-center justify-between mb-2">
+                <p className="font-bold" style={{ fontSize: 26, color: TEXT }}>{vertical}</p>
+                <span className="px-3 py-1 rounded-full font-semibold" style={{ fontSize: 15, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+              </div>
+              <p className="font-semibold mb-3" style={{ fontSize: 20, color: `hsl(${color})` }}>{label}</p>
+              <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-xl border px-8 py-5 flex items-center gap-6"
+          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+          <Award size={32} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 22, color: MUTED }}>
+            <strong style={{ color: TEXT }}>Each vertical is a separate wedge into a multi-billion-dollar compliance market.</strong>{" "}
+            Same core engine. Industry-specific playbook packs. Capital-efficient expansion.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ─── Slide 08 — Team ─────────────────────────────────────────────────────────
 
 function Slide07Team() {
   const founders = [
