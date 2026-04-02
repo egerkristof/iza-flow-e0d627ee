@@ -876,12 +876,13 @@ function Slide10TheAsk() {
 
 const SLIDES = [
   { id: "cover", title: "Cover", component: <Slide01Cover /> },
-  { id: "thesis", title: "End of SaaS", component: <Slide02Thesis /> },
+  { id: "thesis", title: "The Judgment Gap", component: <Slide02Thesis /> },
   { id: "problem", title: "Problem", component: <Slide02Problem /> },
   { id: "solution", title: "Solution", component: <Slide03Solution /> },
   { id: "validation", title: "Early Validation", component: <Slide04Validation /> },
   { id: "product", title: "What's Built", component: <Slide05Product /> },
   { id: "category", title: "Category Map", component: <Slide06Category /> },
+  { id: "verticals", title: "Vertical Expansion", component: <Slide07Verticals /> },
   { id: "team", title: "Team", component: <Slide07Team /> },
   { id: "funds", title: "Use of Funds", component: <Slide08UseOfFunds /> },
   { id: "milestones", title: "12-Month Plan", component: <Slide09Milestones /> },
