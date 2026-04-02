@@ -160,6 +160,7 @@ export default function DiagnosticPage() {
     if (!canStart) return;
     setSelectorOpen(false);
     setCurtainLifting(true);
+    setCustomContexts(null); // Reset from any prior run
 
     // If custom industry or custom team, map to closest known context in background
     const needsMapping = selectedIndustry === "other" || selectedTeam === "other";
