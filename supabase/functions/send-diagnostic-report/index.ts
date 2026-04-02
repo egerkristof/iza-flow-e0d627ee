@@ -160,6 +160,19 @@ If you cannot determine, use null for that field.`;
 
     const normalizedTeamLeaderEmail = team_leader_email?.trim().toLowerCase() || null;
 
+    // Map industry_selected to a human-readable label for the industry field if not already enriched
+    const INDUSTRY_LABELS: Record<string, string> = {
+      pharma: "Pharma & Life Sciences",
+      profservices: "Professional Services",
+      tech: "Technology",
+      manufacturing: "Manufacturing & Engineering",
+    };
+
+    // Self-selected industry takes precedence over AI enrichment
+    if (industry_selected && INDUSTRY_LABELS[industry_selected] && !industry) {
+      industry = INDUSTRY_LABELS[industry_selected];
+    }
+
     const leadPayload: Record<string, unknown> = {
       email: email.trim(),
       respondent_role: respondent_role?.trim() || null,
@@ -167,7 +180,7 @@ If you cannot determine, use null for that field.`;
       team_leader_email: normalizedTeamLeaderEmail,
       company_name: companyName,
       industry,
-      industry_refined: industryRefined,
+      industry_refined: industryRefined || (industry_selected ? `Self-selected: ${industry_selected}/${team_selected || "unspecified"}` : null),
       role_tier: roleTier,
     };
 
