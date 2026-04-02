@@ -35,6 +35,8 @@ export default function DiagnosticPage() {
   const [selectedIndustry, setSelectedIndustry] = useState<IndustryKey | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [selectorOpen, setSelectorOpen] = useState(false);
+  const [customIndustry, setCustomIndustry] = useState("");
+  const [customTeam, setCustomTeam] = useState("");
 
   const selectedIndustryData = useMemo(
     () => INDUSTRIES.find((i) => i.key === selectedIndustry) ?? null,
