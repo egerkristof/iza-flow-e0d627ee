@@ -20,6 +20,8 @@ interface Props {
   sessionId?: string | null;
   industryKey?: IndustryKey | null;
   teamKey?: string | null;
+  industryLabel?: string | null;
+  teamLabel?: string | null;
 }
 
 const BENCHMARK_AVG = 35;
