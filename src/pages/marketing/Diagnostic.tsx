@@ -13,7 +13,7 @@ import { ArrowRight, ArrowLeft, ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
-type Phase = "intro" | "questions" | "calculating" | "results";
+type Phase = "intro" | "preparing" | "questions" | "calculating" | "results";
 
 function generateSessionId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
