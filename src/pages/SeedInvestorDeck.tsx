@@ -136,7 +136,7 @@ function Slide01Cover() {
 
         <div className="mt-20 flex items-center gap-20">
           {[
-            ["€300K", "Pre-seed to validate & close first paying customers"],
+            ["€300K", "Seed round to validate & close first paying customers"],
             ["Live", "Product in market with enterprise validation"],
             ["12 mo", "Runway to Series Seed milestones"],
           ].map(([k, v]) => (
