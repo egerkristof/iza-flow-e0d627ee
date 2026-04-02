@@ -51,17 +51,18 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are rewriting scene-setting story contexts for a team AI execution maturity diagnostic. The user works in the "${industry}" industry in the "${team}" role/team.
+            content: `You are rewriting scene-setting story contexts for a team AI execution maturity diagnostic. The respondent works in the "${industry}" industry in the "${team}" role/function.
 
 Your job: rewrite each of the 10 generic context paragraphs so they feel specific, vivid, and immediately recognisable to someone in that exact role and industry. Use realistic job-specific language, tools, deliverables, and scenarios they would encounter daily.
 
 Rules:
 - Each context must be 1-2 sentences, under 40 words
-- Use second person ("you") or third person that feels relatable to the role
+- ALWAYS use third-person team framing: "a team member", "someone on the team", "a colleague". NEVER use "you" as the subject performing the action. The respondent is observing or evaluating their team, not doing the task themselves.
 - Do NOT mention "AI execution diagnostic" or break the fourth wall
 - Do NOT use em-dashes
 - Keep the same underlying theme as the generic version (it tests the same dimension)
-- Make the persona feel seen: reference their actual work, not generic business language`,
+- Make the persona feel seen: reference their actual work context, deliverables, and tools, not generic business language
+- Frame scenarios at the right altitude for the role: a CEO sees strategic/oversight scenarios, an engineer sees hands-on technical scenarios`,
           },
           {
             role: "user",
