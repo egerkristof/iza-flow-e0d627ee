@@ -33,6 +33,9 @@ export default function DiagnosticPage() {
   const recordIdRef = useRef<string | null>(null);
   const sessionId = useMemo(() => generateSessionId(), []);
 
+  // AI-generated story contexts keyed by question id
+  const [customContexts, setCustomContexts] = useState<Record<string, string> | null>(null);
+
   // Industry / team selection state
   const [selectedIndustry, setSelectedIndustry] = useState<IndustryKey | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
