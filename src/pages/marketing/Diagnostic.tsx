@@ -443,27 +443,43 @@ export default function DiagnosticPage() {
                 })}
               </div>
 
-              {/* Custom industry input */}
+              {/* Custom industry input with generate button */}
               {selectedIndustry === "other" && (
-                <div className="animate-in fade-in duration-200 px-1">
-                  <Input
-                    placeholder="Your industry (e.g. Financial Services, Education)"
-                    value={customIndustry}
-                    onChange={(e) => setCustomIndustry(e.target.value)}
-                    className="text-sm h-9"
-                    autoFocus
-                  />
+                <div className="animate-in fade-in duration-200 px-1 space-y-2">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Your industry (e.g. Financial Services, Education)"
+                      value={customIndustry}
+                      onChange={(e) => setCustomIndustry(e.target.value)}
+                      className="text-sm h-9 flex-1"
+                      autoFocus
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && customIndustry.trim().length >= 2) {
+                          fetchAiTeams(customIndustry.trim());
+                        }
+                      }}
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 px-3 text-xs shrink-0"
+                      disabled={customIndustry.trim().length < 2 || loadingTeams}
+                      onClick={() => fetchAiTeams(customIndustry.trim())}
+                    >
+                      {loadingTeams ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Find teams"}
+                    </Button>
+                  </div>
                 </div>
               )}
 
-              {/* Team selection */}
-              {selectedIndustryData && (
+              {/* Team selection — shows for known industries OR after AI generates teams */}
+              {displayTeams && !loadingTeams && (
                 <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
                   <p className="text-[11px] font-semibold text-muted-foreground/70 text-center">
                     Which team?
                   </p>
                   <div className="flex flex-wrap gap-1.5 justify-center">
-                    {selectedIndustryData.teams.map((team) => {
+                    {displayTeams.map((team) => {
                       const isTeamSelected = selectedTeam === team.key;
                       return (
                         <button
@@ -492,6 +508,14 @@ export default function DiagnosticPage() {
                       />
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* Loading teams indicator */}
+              {loadingTeams && (
+                <div className="flex items-center justify-center gap-2 py-4 animate-in fade-in duration-200">
+                  <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                  <span className="text-xs text-muted-foreground">Finding relevant teams...</span>
                 </div>
               )}
 
