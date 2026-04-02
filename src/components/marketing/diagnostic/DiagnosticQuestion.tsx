@@ -25,6 +25,7 @@ interface Props {
   selectedScore: number | undefined;
   onSelect: (questionId: string, score: number) => void;
   industryKey?: IndustryKey | null;
+  customContexts?: Record<string, string> | null;
 }
 
 export function DiagnosticQuestion({ question, selectedScore, onSelect, industryKey }: Props) {
