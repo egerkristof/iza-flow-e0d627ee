@@ -6,6 +6,7 @@ import { DiagnosticResults } from "@/components/marketing/diagnostic/DiagnosticR
 import { QUESTIONS, calculateResults } from "@/lib/diagnostic-scoring";
 import { INDUSTRIES, type IndustryKey } from "@/lib/diagnostic-industries";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, ArrowLeft, ChevronRight } from "lucide-react";
