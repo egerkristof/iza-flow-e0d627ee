@@ -924,7 +924,101 @@ function Slide11GTM() {
   );
 }
 
-// ─── Slide 12 — Team ─────────────────────────────────────────────────────────
+// ─── Slide 12 — Vertical Expansion ───────────────────────────────────────────
+
+function Slide12Verticals() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
+        <Tag label="Vertical Expansion" color={GREEN} />
+        <h2 className="font-bold mb-8" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          One engine. Multiple regulated verticals.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>The ALM pattern repeats.</span>
+        </h2>
+
+        <div className="flex gap-6 mb-6 flex-1 min-h-0">
+          {/* Core pattern */}
+          <div className="w-[40%] flex flex-col gap-4 justify-center">
+            <div className="rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.04)` }}>
+              <p className="font-semibold mb-2" style={{ fontSize: 20, color: `hsl(${ACCENT})`, letterSpacing: "0.1em" }}>THE PATTERN</p>
+              <p className="font-bold mb-3" style={{ fontSize: 28, color: TEXT }}>Application Lifecycle Management (ALM)</p>
+              <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>
+                Every industry with complex, high-stakes processes has the same structural problem: expert judgment trapped in tribal knowledge, static SOPs, and unmanaged AI usage. LIZA becomes the "System of Reasoning" layer above existing Systems of Record.
+              </p>
+            </div>
+            <div className="rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
+              <p className="font-semibold mb-2" style={{ fontSize: 20, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>EXPANSION STRATEGY</p>
+              <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.55 }}>
+                Land horizontally with AI-native teams (current sales motion). Expand vertically with industry-specific playbook packs and compliance frameworks. Each vertical deepens the moat.
+              </p>
+            </div>
+          </div>
+
+          {/* Verticals */}
+          <div className="w-[60%] grid grid-cols-2 gap-4">
+            {[
+              {
+                vertical: "Pharma & Biotech", status: "Live", color: GREEN,
+                label: "Medicine Lifecycle Management",
+                frameworks: "GMP, GAMP 5, 21 CFR Part 11",
+                example: "Audit execution: 18-day process to 1.5 hours",
+                sits: "Above Veeva Vault, LIMS",
+              },
+              {
+                vertical: "Food Safety & Manufacturing", status: "Validated", color: ACCENT,
+                label: "Quality Lifecycle Management",
+                frameworks: "ISO 22000, HACCP, GMP",
+                example: "Supplier audit judgment encoded for junior inspectors",
+                sits: "Above SAP QM, TraceGains",
+              },
+              {
+                vertical: "Lab Governance", status: "Validated", color: GOLD,
+                label: "Lab Lifecycle Management",
+                frameworks: "ISO 17025, GLP",
+                example: "Method validation judgment scaled across labs",
+                sits: "Above LabWare LIMS, Benchling",
+              },
+              {
+                vertical: "Professional Services", status: "Live", color: GREEN,
+                label: "Delivery Lifecycle Management",
+                frameworks: "MEDDIC, custom methodology",
+                example: "Senior judgment encoded into delivery protocols",
+                sits: "Above Salesforce, HubSpot, Notion",
+              },
+            ].map(({ vertical, status, color, label, frameworks, example, sits }) => (
+              <div key={vertical} className="rounded-xl border p-5 flex flex-col"
+                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{vertical}</p>
+                  <span className="px-2.5 py-0.5 rounded-full font-semibold" style={{ fontSize: 13, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+                </div>
+                <p className="font-semibold mb-2" style={{ fontSize: 17, color: `hsl(${color})` }}>{label}</p>
+                <p className="mb-1" style={{ fontSize: 16, color: MUTED }}>Frameworks: {frameworks}</p>
+                <p className="mb-1 italic" style={{ fontSize: 16, color: MUTED }}>"{example}"</p>
+                <p className="mt-auto pt-2 border-t" style={{ fontSize: 14, color: SUBTLE, borderColor: `hsl(${color} / 0.15)` }}>Sits above: {sits}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-xl border px-8 py-5 flex items-center gap-6"
+          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+          <TrendingUp size={32} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 22, color: MUTED }}>
+            <strong style={{ color: TEXT }}>Each vertical is a separate wedge into a multi-billion-dollar compliance market.</strong>{" "}
+            The core engine is the same. The playbook packs are industry-specific. Expansion is capital-efficient.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ─── Slide 13 — Team ─────────────────────────────────────────────────────────
 
 function Slide12Team() {
   const founders = [
