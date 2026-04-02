@@ -44,7 +44,17 @@ export default function DiagnosticPage() {
     [selectedIndustry]
   );
 
-  const canStart = selectedIndustry != null && selectedTeam != null;
+  const needsCustomIndustry = selectedIndustry === "other" && !customIndustry.trim();
+  const needsCustomTeam = selectedTeam === "other" && !customTeam.trim();
+  const canStart = selectedIndustry != null && selectedTeam != null && !needsCustomIndustry && !needsCustomTeam;
+
+  // Resolved labels for passing downstream
+  const resolvedIndustryLabel = selectedIndustry === "other" && customIndustry.trim()
+    ? customIndustry.trim()
+    : selectedIndustryData?.label ?? null;
+  const resolvedTeamLabel = selectedTeam === "other" && customTeam.trim()
+    ? customTeam.trim()
+    : selectedIndustryData?.teams.find(t => t.key === selectedTeam)?.label ?? null;
 
   useEffect(() => {
     (async () => {
