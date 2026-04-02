@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, ArrowLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronRight, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import type { DiagnosticResult } from "@/lib/diagnostic-scoring";
 
 type Phase = "intro" | "questions" | "calculating" | "results";
