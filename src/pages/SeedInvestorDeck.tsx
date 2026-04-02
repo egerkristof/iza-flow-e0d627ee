@@ -832,7 +832,7 @@ function Slide10TheAsk() {
         <div className="text-center mb-14">
           <DarkTag label="The Ask" color={GREEN} />
           <h2 className="font-black" style={{ fontSize: 96, color: DARK_TEXT, lineHeight: 1.0 }}>
-            €300K Pre-Seed
+            €300K Seed
           </h2>
           <p style={{ fontSize: 34, color: DARK_MUTED, marginTop: 16 }}>
             12-month runway &nbsp;·&nbsp; Revenue validation &nbsp;·&nbsp; Series Seed at month 12
