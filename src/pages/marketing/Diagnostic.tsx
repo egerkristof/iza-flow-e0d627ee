@@ -367,6 +367,19 @@ export default function DiagnosticPage() {
                 })}
               </div>
 
+              {/* Custom industry input */}
+              {selectedIndustry === "other" && (
+                <div className="animate-in fade-in duration-200 px-1">
+                  <Input
+                    placeholder="Your industry (e.g. Financial Services, Education)"
+                    value={customIndustry}
+                    onChange={(e) => setCustomIndustry(e.target.value)}
+                    className="text-sm h-9"
+                    autoFocus
+                  />
+                </div>
+              )}
+
               {/* Team selection */}
               {selectedIndustryData && (
                 <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 pt-1">
