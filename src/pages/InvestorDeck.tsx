@@ -749,9 +749,8 @@ function Slide10MarketValidation() {
               <span className="font-semibold px-3 py-1 rounded-full" style={{ fontSize: 14, background: `hsl(${ACCENT} / 0.12)`, color: `hsl(${ACCENT})` }}>The Governance Layer</span>
             </div>
             <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.55 }}>
-              Edra mines what happened. Mem0 remembers what was said. Interloom automates the predictable. Paradox studies why alignment breaks.
-              <strong style={{ color: TEXT }}> They refine the map. We talk to the territory.</strong>{" "}
-              Only LIZA governs the messy reality: the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
+              Interloom automates the predictable. Edra mines what happened. Mem0 remembers what was said. Paradox studies why alignment breaks.
+              <strong style={{ color: TEXT }}> Only LIZA governs the messy reality</strong> — the judgment calls, strategic trade-offs, and cross-functional alignment that can't be reduced to a flowchart.
             </p>
           </div>
           <div className="shrink-0 flex flex-col items-center gap-2 px-6 py-4 rounded-xl" style={{ background: `hsl(${GREEN} / 0.08)` }}>

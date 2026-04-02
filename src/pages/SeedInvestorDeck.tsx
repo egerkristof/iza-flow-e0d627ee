@@ -875,7 +875,7 @@ function Slide10TheAsk() {
 
 const SLIDES = [
   { id: "cover", title: "Cover", component: <Slide01Cover /> },
-  { id: "thesis", title: "The Judgment Gap", component: <Slide02Thesis /> },
+  { id: "thesis", title: "The Thesis", component: <Slide02Thesis /> },
   { id: "problem", title: "Problem", component: <Slide02Problem /> },
   { id: "solution", title: "Solution", component: <Slide03Solution /> },
   { id: "validation", title: "Early Validation", component: <Slide04Validation /> },
