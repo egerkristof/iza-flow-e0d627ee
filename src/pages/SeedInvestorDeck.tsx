@@ -118,7 +118,7 @@ function Slide01Cover() {
         <div className="flex items-center gap-3 mb-12 px-7 py-3 rounded-full border"
           style={{ borderColor: `hsl(${GREEN} / 0.35)`, background: `hsl(${GREEN} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${GREEN})` }} />
-          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>LIZA OS · Pre-Seed</span>
+          <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>LIZA OS · Seed</span>
         </div>
 
         <h1 className="font-black mb-10" style={{ fontSize: 100, lineHeight: 1.0, color: DARK_TEXT }}>
