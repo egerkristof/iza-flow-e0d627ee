@@ -41,7 +41,471 @@ const FRIENDLY_LABELS: Record<string, string> = {
   learning_velocity: "Improvement Speed",
 };
 
-serve(async (req) => {
+const DIMENSION_DESCRIPTIONS: Record<string, string> = {
+  standard_internalization: "When someone on your team opens an AI chat, does your team's methodology, quality bar, and accumulated thinking actually reach that session, or do they start from a blank prompt every time?",
+  output_consistency: "If two people use AI on the same brief, how similar are the results? This measures whether AI amplifies team standards or individual habits.",
+  knowledge_compounding: "When someone discovers a better prompt, workflow, or AI technique, does it stay in their chat history or does the whole team benefit?",
+  collective_visibility: "Can your team see how each other uses AI? Can juniors learn from seniors' prompting? Can you report on AI effectiveness if asked?",
+  learning_velocity: "When a new AI technique or tool update emerges, how quickly does your team evaluate it, adopt it, and update their shared approach?",
+};
+
+const COST_TRANSLATIONS: Record<string, { low: string; mid: string; high: string }> = {
+  standard_internalization: {
+    low: "Every AI session starts from zero. Across a 10-person team, that is roughly 5 to 10 hours per week spent re-explaining context that already exists in your team's methodology docs, past projects, and senior people's heads.",
+    mid: "Some standards reach AI sessions, but inconsistently. The 2 to 3 hours per person per week lost to re-prompting is the visible cost. The hidden cost: your best people's judgment is not reaching the work, so output quality depends on who is prompting rather than what the team collectively knows.",
+    high: "Your standards are actively shaping AI sessions. That is rare. New hires ramp faster, senior review shifts from correction to strategy, and your methodology travels with the process, not individual people.",
+  },
+  output_consistency: {
+    low: "If two people on your team get the same brief, you will get two very different outputs. That means rework cycles of 3 to 5 hours per deliverable, plus a trust problem: stakeholders can tell when quality depends on who did the work.",
+    mid: "Outputs are recognisable but uneven. The 30 to 40% excess senior review time is a symptom, not the root cause. The real issue: your team's quality ceiling is determined by individual capability, not collective knowledge.",
+    high: "Stakeholders get your team's quality standard regardless of who delivers. That is a genuine competitive moat. You can grow the team without diluting what makes your work distinctive.",
+  },
+  knowledge_compounding: {
+    low: "Your team pays for the same learning curve every project. When someone figures out a better prompting approach or workflow, it stays with them. You are funding individual experiments, not building collective capability.",
+    mid: "Knowledge spreads, but it takes 4 to 6 weeks for a good technique to reach the whole team, if it ever does. The real cost is not the delay. It is that each project starts from scratch instead of standing on the shoulders of the last one.",
+    high: "Each project genuinely makes the next one better. Your team's collective capability compounds rather than resets, and survives turnover. This is what separates high-growth teams from the rest.",
+  },
+  collective_visibility: {
+    low: "You have zero visibility into how your team uses AI day-to-day. You cannot answer: who is struggling, who found a breakthrough, or whether AI is actually improving output quality. You are managing a black box.",
+    mid: "You have anecdotal visibility through hallway conversations and occasional Slack shares. But the question that matters is unanswerable: is your AI investment making the team more capable, or just faster at mediocre work?",
+    high: "Your team can see how colleagues navigate complexity with AI, especially juniors learning from seniors. This is how institutional expertise actually transfers in the AI age.",
+  },
+  learning_velocity: {
+    low: "Projects end and lessons vanish. After 6+ months of AI tool investment, your team's approach has not meaningfully changed. You are spending on licenses but not building capability.",
+    mid: "Some learning happens, but it takes a quarter to change how the team works. While your team iterates slowly, competitors who learn faster compound their advantage every month.",
+    high: "New techniques reach your whole team within days. In a landscape where AI capabilities change monthly, this speed of adaptation is a genuine strategic advantage.",
+  },
+};
+
+const STRATEGIC_CONSEQUENCES: Record<string, { low: string; mid: string; high: string }> = {
+  standard_internalization: {
+    low: "Which means you cannot scale output without scaling your most experienced people. Every new hire multiplies supervision load instead of reducing it.",
+    mid: "Which means your growth is throttled by onboarding speed. New people take months to reach the quality bar your best people hit naturally.",
+    high: "Which means you can take on more work without proportionally adding senior oversight. Your methodology is doing the quality control, not your calendar.",
+  },
+  output_consistency: {
+    low: "Which means your team's output quality is unpredictable. Stakeholders notice, even if they do not say it yet.",
+    mid: "Which means your capacity ceiling is set by your strongest operators, not your team size.",
+    high: "Which means your output quality holds as you grow. Consistency lets you systematise execution and focus senior time on strategy.",
+  },
+  knowledge_compounding: {
+    low: "Which means your team is getting linearly better at best while competitors who compound knowledge are improving exponentially. After 12 months, that gap is a different league.",
+    mid: "Which means you are one resignation away from losing capabilities you cannot rebuild. Tribal knowledge that is not codified is organisational risk.",
+    high: "Which means your competitive advantage accelerates over time. Every project deposits knowledge that makes the next one faster, cheaper, or higher quality.",
+  },
+  collective_visibility: {
+    low: "Which means your leadership decisions about AI investment are based on anecdote, not evidence. You are allocating budget to tools you cannot measure.",
+    mid: "Which means you are making workforce and resource planning decisions blind. You do not know which roles AI is genuinely augmenting.",
+    high: "Which means you can make data-informed decisions about where AI creates value and where it does not.",
+  },
+  learning_velocity: {
+    low: "Which means competitors who learn faster will compound their advantage every quarter. The gap after 12 months is not linear. It is exponential.",
+    mid: "Which means you are adopting AI capabilities 3 to 6 months behind the curve. That delay translates directly to lost competitive positioning.",
+    high: "Which means you are turning AI evolution speed into a strategic advantage. Speed of adaptation is the meta-skill that makes every other capability more valuable.",
+  },
+};
+
+// ── PDF Report Generator ──
+interface PdfContext {
+  overall: number;
+  archetype: { label: string; tagline: string; action: string };
+  dimensions: DimensionScore[];
+  actionPlan: { steps: { title: string; manual_how: string; platform_how: string }[] };
+  weakest: DimensionScore;
+  secondWeakest: DimensionScore;
+  isAbove55: boolean;
+  companyName: string | null;
+}
+
+async function generateReportPdf(ctx: PdfContext): Promise<Uint8Array> {
+  const doc = await PDFDocument.create();
+  const helvetica = await doc.embedFont(StandardFonts.Helvetica);
+  const helveticaBold = await doc.embedFont(StandardFonts.HelveticaBold);
+
+  const W = 595.28; // A4 width
+  const H = 841.89; // A4 height
+  const M = 50; // margin
+  const CW = W - 2 * M; // content width
+  const brandBlue = rgb(0.01, 0.52, 0.78); // #0284c7
+  const darkText = rgb(0.1, 0.1, 0.12);
+  const mutedText = rgb(0.39, 0.45, 0.53);
+  const red = rgb(0.86, 0.15, 0.15);
+  const amber = rgb(0.85, 0.53, 0.08);
+  const green = rgb(0.09, 0.64, 0.36);
+  const lightBg = rgb(0.97, 0.98, 0.99);
+
+  function scoreRgb(score: number) {
+    return score <= 33 ? red : score <= 66 ? amber : green;
+  }
+
+  // Wrap text into lines that fit within maxWidth
+  function wrapText(text: string, font: typeof helvetica, fontSize: number, maxWidth: number): string[] {
+    const words = text.split(/\s+/);
+    const lines: string[] = [];
+    let currentLine = "";
+    for (const word of words) {
+      const testLine = currentLine ? `${currentLine} ${word}` : word;
+      const width = font.widthOfTextAtSize(testLine, fontSize);
+      if (width > maxWidth && currentLine) {
+        lines.push(currentLine);
+        currentLine = word;
+      } else {
+        currentLine = testLine;
+      }
+    }
+    if (currentLine) lines.push(currentLine);
+    return lines;
+  }
+
+  // Draw wrapped text, return final Y position
+  function drawWrapped(
+    page: ReturnType<typeof doc.addPage>,
+    text: string,
+    x: number,
+    y: number,
+    font: typeof helvetica,
+    fontSize: number,
+    color: typeof darkText,
+    maxWidth: number,
+    lineHeight = 1.4,
+  ): number {
+    const lines = wrapText(text, font, fontSize, maxWidth);
+    let curY = y;
+    for (const line of lines) {
+      if (curY < M + 30) {
+        page = doc.addPage([W, H]);
+        curY = H - M;
+      }
+      page.drawText(line, { x, y: curY, size: fontSize, font, color });
+      curY -= fontSize * lineHeight;
+    }
+    return curY;
+  }
+
+  // Track current page so drawWrapped can add pages
+  let currentPage = doc.addPage([W, H]);
+  let y = H - M;
+
+  // Helper to get/create page with auto-pagination
+  function ensureSpace(needed: number): void {
+    if (y < M + needed) {
+      currentPage = doc.addPage([W, H]);
+      y = H - M;
+    }
+  }
+
+  function drawText(text: string, x: number, yPos: number, opts: { size: number; font: typeof helvetica; color: typeof darkText }) {
+    currentPage.drawText(text, { x, y: yPos, ...opts });
+  }
+
+  function drawSection(title: string) {
+    ensureSpace(60);
+    y -= 10;
+    currentPage.drawRectangle({ x: M, y: y - 2, width: CW, height: 1, color: rgb(0.88, 0.91, 0.94) });
+    y -= 24;
+    drawText(title.toUpperCase(), M, y, { size: 9, font: helveticaBold, color: brandBlue });
+    y -= 20;
+  }
+
+  // ══════════════════════════════════════════
+  // PAGE 1: EXECUTIVE SUMMARY
+  // ══════════════════════════════════════════
+
+  // Header
+  drawText("LIZA OS", M, y, { size: 10, font: helveticaBold, color: brandBlue });
+  const dateStr = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const dateW = helvetica.widthOfTextAtSize(dateStr, 9);
+  drawText(dateStr, W - M - dateW, y, { size: 9, font: helvetica, color: mutedText });
+  y -= 30;
+
+  drawText("AI Execution Diagnostic Report", M, y, { size: 22, font: helveticaBold, color: darkText });
+  y -= 18;
+  if (ctx.companyName) {
+    drawText(`Prepared for ${ctx.companyName}`, M, y, { size: 11, font: helvetica, color: mutedText });
+    y -= 16;
+  }
+  y -= 20;
+
+  // Score block
+  const scoreStr = String(ctx.overall);
+  const scoreFontSize = 72;
+  const scoreW = helveticaBold.widthOfTextAtSize(scoreStr, scoreFontSize);
+  const scoreBlockX = M;
+
+  // Score background
+  currentPage.drawRectangle({ x: M, y: y - 85, width: CW, height: 110, color: lightBg, borderColor: rgb(0.88, 0.91, 0.94), borderWidth: 1 });
+
+  drawText(scoreStr, scoreBlockX + 20, y - 65, { size: scoreFontSize, font: helveticaBold, color: scoreRgb(ctx.overall) });
+
+  // Archetype info next to score
+  const infoX = scoreBlockX + scoreW + 50;
+  drawText(ctx.archetype.label, infoX, y - 20, { size: 16, font: helveticaBold, color: darkText });
+  const tagLines = wrapText(ctx.archetype.tagline, helvetica, 10, CW - scoreW - 80);
+  let tagY = y - 38;
+  for (const line of tagLines) {
+    drawText(line, infoX, tagY, { size: 10, font: helvetica, color: mutedText });
+    tagY -= 14;
+  }
+
+  // Benchmark line
+  drawText(`Industry avg: 35  |  You: ${ctx.overall}  |  ${ctx.isAbove55 ? "Top 1%: 75+" : "Structured: 55+"}`, infoX, tagY - 4, { size: 9, font: helveticaBold, color: mutedText });
+
+  y -= 110;
+  y -= 20;
+
+  // Dimension scores table
+  drawSection("Dimension Scores");
+
+  for (const d of ctx.dimensions) {
+    ensureSpace(30);
+    const label = FRIENDLY_LABELS[d.dimension] || d.label;
+    drawText(label, M, y, { size: 10, font: helveticaBold, color: darkText });
+
+    // Score bar
+    const barX = M + 140;
+    const barW = CW - 180;
+    const barH = 8;
+    currentPage.drawRectangle({ x: barX, y: y - 1, width: barW, height: barH, color: rgb(0.93, 0.94, 0.96) });
+    currentPage.drawRectangle({ x: barX, y: y - 1, width: barW * (d.score / 100), height: barH, color: brandBlue });
+
+    const scoreLabel = `${d.score}`;
+    const scoreLabelW = helveticaBold.widthOfTextAtSize(scoreLabel, 10);
+    drawText(scoreLabel, W - M - scoreLabelW, y, { size: 10, font: helveticaBold, color: scoreRgb(d.score) });
+
+    y -= 24;
+  }
+
+  // ══════════════════════════════════════════
+  // DIMENSION DEEP DIVE
+  // ══════════════════════════════════════════
+  drawSection("Dimension Analysis");
+
+  for (const d of ctx.dimensions) {
+    ensureSpace(120);
+    const label = FRIENDLY_LABELS[d.dimension] || d.label;
+    const tier = d.score <= 33 ? "low" : d.score <= 66 ? "mid" : "high";
+
+    // Dimension header with score
+    drawText(`${label}: ${d.score}/100`, M, y, { size: 12, font: helveticaBold, color: darkText });
+    y -= 16;
+
+    // Description
+    const desc = DIMENSION_DESCRIPTIONS[d.dimension] || "";
+    if (desc) {
+      const descLines = wrapText(desc, helvetica, 8.5, CW);
+      for (const line of descLines) {
+        ensureSpace(14);
+        drawText(line, M, y, { size: 8.5, font: helvetica, color: mutedText });
+        y -= 12;
+      }
+      y -= 4;
+    }
+
+    // Insight
+    const insightLines = wrapText(d.insight, helvetica, 9.5, CW);
+    for (const line of insightLines) {
+      ensureSpace(14);
+      drawText(line, M, y, { size: 9.5, font: helvetica, color: darkText });
+      y -= 13;
+    }
+    y -= 4;
+
+    // Cost translation
+    const cost = COST_TRANSLATIONS[d.dimension]?.[tier];
+    if (cost) {
+      ensureSpace(16);
+      drawText("What this costs your team:", M, y, { size: 9, font: helveticaBold, color: d.score <= 66 ? red : green });
+      y -= 14;
+      const costLines = wrapText(cost, helvetica, 9, CW - 10);
+      for (const line of costLines) {
+        ensureSpace(13);
+        drawText(line, M + 10, y, { size: 9, font: helvetica, color: darkText });
+        y -= 13;
+      }
+      y -= 4;
+    }
+
+    // Strategic consequence
+    const conseq = STRATEGIC_CONSEQUENCES[d.dimension]?.[tier];
+    if (conseq) {
+      ensureSpace(16);
+      drawText("Strategic implication:", M, y, { size: 9, font: helveticaBold, color: brandBlue });
+      y -= 14;
+      const cLines = wrapText(conseq, helvetica, 9, CW - 10);
+      for (const line of cLines) {
+        ensureSpace(13);
+        drawText(line, M + 10, y, { size: 9, font: helvetica, color: darkText });
+        y -= 13;
+      }
+    }
+
+    y -= 20;
+  }
+
+  // ══════════════════════════════════════════
+  // ACTION PLAN
+  // ══════════════════════════════════════════
+  drawSection("Your Personalised Action Plan");
+
+  const wLabel = FRIENDLY_LABELS[ctx.weakest.dimension] || ctx.weakest.label;
+  const sLabel = FRIENDLY_LABELS[ctx.secondWeakest.dimension] || ctx.secondWeakest.label;
+  drawText(`Driven by: ${wLabel} (${ctx.weakest.score}/100) and ${sLabel} (${ctx.secondWeakest.score}/100)`, M, y, { size: 9, font: helvetica, color: mutedText });
+  y -= 20;
+
+  for (let i = 0; i < ctx.actionPlan.steps.length; i++) {
+    const step = ctx.actionPlan.steps[i];
+    ensureSpace(80);
+
+    drawText(`Step ${i + 1}: ${step.title}`, M, y, { size: 11, font: helveticaBold, color: darkText });
+    y -= 18;
+
+    drawText("Start here:", M + 10, y, { size: 9, font: helveticaBold, color: darkText });
+    y -= 14;
+    const manualLines = wrapText(step.manual_how, helvetica, 9, CW - 20);
+    for (const line of manualLines) {
+      ensureSpace(13);
+      drawText(line, M + 10, y, { size: 9, font: helvetica, color: darkText });
+      y -= 13;
+    }
+    y -= 6;
+
+    const platLines = wrapText(step.platform_how, helvetica, 9, CW - 20);
+    for (const line of platLines) {
+      ensureSpace(13);
+      drawText(line, M + 10, y, { size: 9, font: helvetica, color: brandBlue });
+      y -= 13;
+    }
+
+    y -= 16;
+  }
+
+  // ══════════════════════════════════════════
+  // LEAD / LAG METRICS
+  // ══════════════════════════════════════════
+  drawSection("How You Will Know It Is Working");
+
+  const metricsData: Record<string, { lead: string; lag: string }> = {
+    standard_internalization: {
+      lead: "% of AI sessions where your team's reference doc is loaded before prompting",
+      lag: "Reduction in senior review/correction time per deliverable",
+    },
+    output_consistency: {
+      lead: "% of deliverables self-checked against a quality reference before submission",
+      lag: "Variance in peer-review scores across team members (narrowing)",
+    },
+    knowledge_compounding: {
+      lead: "# of learnings formally promoted to the shared reference per month",
+      lag: "Time spent on problems a colleague already solved (trending down)",
+    },
+    collective_visibility: {
+      lead: "# of show-and-tell or paired observation sessions held per month",
+      lag: "Junior team members' confidence in AI-assisted tasks (quarterly survey)",
+    },
+    learning_velocity: {
+      lead: "# of shared learnings validated on real work (not just discussed)",
+      lag: "Average cycle time from learning surfaced to team-wide adoption",
+    },
+  };
+
+  for (const d of [ctx.weakest, ctx.secondWeakest]) {
+    const m = metricsData[d.dimension];
+    if (!m) continue;
+    const label = FRIENDLY_LABELS[d.dimension] || d.label;
+    ensureSpace(60);
+
+    drawText(`${label} (${d.score}/100)`, M, y, { size: 10, font: helveticaBold, color: darkText });
+    y -= 16;
+    drawText("Lead indicator:", M + 10, y, { size: 8.5, font: helveticaBold, color: green });
+    y -= 12;
+    const leadLines = wrapText(m.lead, helvetica, 8.5, CW - 20);
+    for (const line of leadLines) {
+      ensureSpace(12);
+      drawText(line, M + 10, y, { size: 8.5, font: helvetica, color: darkText });
+      y -= 12;
+    }
+    y -= 4;
+    drawText("Lag indicator:", M + 10, y, { size: 8.5, font: helveticaBold, color: brandBlue });
+    y -= 12;
+    const lagLines = wrapText(m.lag, helvetica, 8.5, CW - 20);
+    for (const line of lagLines) {
+      ensureSpace(12);
+      drawText(line, M + 10, y, { size: 8.5, font: helvetica, color: darkText });
+      y -= 12;
+    }
+    y -= 14;
+  }
+
+  // ══════════════════════════════════════════
+  // COMPARISON TABLE
+  // ══════════════════════════════════════════
+  const targetLabel = ctx.isAbove55 ? "Top 1% teams (75+)" : "Codified teams (55+)";
+  drawSection(`You (${ctx.overall}) vs. ${targetLabel}`);
+
+  const compRows = ctx.isAbove55
+    ? [
+        ["AI standards", "Documented but unevenly applied", "Embedded in every session automatically"],
+        ["Knowledge capture", "Happens when someone remembers", "Systematic, after every session"],
+        ["Team learning", "Shared in meetings, adopted slowly", "Compounding: each project lifts the next"],
+        ["Quality assurance", "Manual review catches gaps", "Built into the process, not bolted on"],
+        ["Competitive moat", "Improving steadily", "Widening gap every quarter"],
+      ]
+    : [
+        ["AI session prep", "Re-explain from scratch", "Standards loaded automatically"],
+        ["Output quality", "Depends who does it", "Consistent regardless"],
+        ["New technique found", "Stays with one person", "Reaches whole team in days"],
+        ["Senior review", "Catching basic errors", "Focused on strategy"],
+        ["AI ROI", "Cannot measure it", "Tracked and reported"],
+      ];
+
+  // Table header
+  ensureSpace(30);
+  const col1X = M;
+  const col2X = M + 130;
+  const col3X = M + 330;
+
+  drawText("", col1X, y, { size: 8, font: helveticaBold, color: mutedText });
+  drawText(`You (${ctx.overall})`, col2X, y, { size: 8, font: helveticaBold, color: scoreRgb(ctx.overall) });
+  drawText(targetLabel, col3X, y, { size: 8, font: helveticaBold, color: brandBlue });
+  y -= 14;
+  currentPage.drawRectangle({ x: M, y: y + 4, width: CW, height: 0.5, color: rgb(0.88, 0.91, 0.94) });
+
+  for (const [cat, you, them] of compRows) {
+    ensureSpace(16);
+    drawText(cat, col1X, y, { size: 8.5, font: helvetica, color: mutedText });
+    drawText(you, col2X, y, { size: 8.5, font: helvetica, color: ctx.isAbove55 ? amber : red });
+    drawText(them, col3X, y, { size: 8.5, font: helvetica, color: brandBlue });
+    y -= 16;
+  }
+
+  // ══════════════════════════════════════════
+  // FOOTER / CTA
+  // ══════════════════════════════════════════
+  ensureSpace(60);
+  y -= 10;
+  currentPage.drawRectangle({ x: M, y: y - 2, width: CW, height: 1, color: rgb(0.88, 0.91, 0.94) });
+  y -= 20;
+  drawText("Ready to close these gaps structurally?", M, y, { size: 11, font: helveticaBold, color: darkText });
+  y -= 16;
+  drawText("Book a 20-minute Diagnostic Debrief. We unpack your score, map each gap to the", M, y, { size: 9, font: helvetica, color: mutedText });
+  y -= 13;
+  drawText("behaviours driving it, and show you how LIZA OS makes it automatic.", M, y, { size: 9, font: helvetica, color: mutedText });
+  y -= 16;
+  drawText("Book at: calendar.app.google/3v8jevUcsgRQnLyL9", M, y, { size: 9, font: helveticaBold, color: brandBlue });
+  y -= 24;
+  drawText("LIZA OS  |  The management layer for AI-powered teams  |  lizaos.ai", M, y, { size: 7.5, font: helvetica, color: mutedText });
+
+  // Add page numbers
+  const pages = doc.getPages();
+  for (let i = 0; i < pages.length; i++) {
+    const p = pages[i];
+    const numStr = `${i + 1} / ${pages.length}`;
+    const numW = helvetica.widthOfTextAtSize(numStr, 8);
+    p.drawText(numStr, { x: W - M - numW, y: 25, size: 8, font: helvetica, color: mutedText });
+  }
+
+  return await doc.save();
+}
+
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
