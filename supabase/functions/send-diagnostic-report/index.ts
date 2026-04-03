@@ -382,7 +382,7 @@ async function generateReportPdf(ctx: PdfContext): Promise<Uint8Array> {
   // ══════════════════════════════════════════
   // LEAD / LAG METRICS
   // ══════════════════════════════════════════
-  drawSection("How You Will Know It Is Working");
+  drawSection("Metrics For Your Two Weakest Areas");
 
   const metricsData: Record<string, { lead: string; lag: string }> = {
     standard_internalization: {
