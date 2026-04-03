@@ -896,7 +896,7 @@ Return ONLY valid JSON in this exact format:
 
     <!-- Action Plan -->
     <div style="margin-bottom:24px;">
-      <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#1a1a2e;">Your 3-Step Action Plan</p>
+      <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#1a1a2e;">Your Personalised Action Plan</p>
       <div style="margin-bottom:12px;">
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${weakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${weakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[weakest.dimension] || weakest.label}: ${weakest.score}/100</span>
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${secondWeakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${secondWeakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[secondWeakest.dimension] || secondWeakest.label}: ${secondWeakest.score}/100</span>
