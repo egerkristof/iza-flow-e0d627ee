@@ -871,8 +871,10 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:0;font-size:56px;font-weight:900;color:${scoreColor};line-height:1;">${overall}</p>
       <p style="margin:8px 0 0;font-size:18px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;">${archetype.tagline}</p>
-      ${resultsUrl ? `<p style="margin:12px 0 0;"><a href="${resultsUrl}" style="font-size:13px;color:#0284c7;font-weight:600;text-decoration:underline;">Bookmark your results: View your full breakdown →</a></p>` : ""}
-      <p style="margin:8px 0 0;font-size:12px;color:#64748b;">Your full diagnostic report is attached as a PDF.</p>
+      <div style="margin:14px auto 0;padding:10px 16px;background:#f0f9ff;border-radius:8px;border:1px solid #bae6fd;display:inline-block;">
+        <p style="margin:0;font-size:13px;color:#0369a1;font-weight:600;">📎 Your full AI Execution Report is attached as a PDF — save it, share it with your team, or bring it to your debrief call.</p>
+      </div>
+      ${resultsUrl ? `<p style="margin:10px 0 0;"><a href="${resultsUrl}" style="font-size:12px;color:#0284c7;font-weight:600;text-decoration:underline;">Or view your interactive results online →</a></p>` : ""}
     </div>
 
     <!-- Benchmark context -->
