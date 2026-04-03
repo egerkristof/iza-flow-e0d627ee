@@ -874,7 +874,7 @@ Return ONLY valid JSON in this exact format:
       <div style="margin:14px auto 0;padding:10px 16px;background:#f0f9ff;border-radius:8px;border:1px solid #bae6fd;display:inline-block;">
         <p style="margin:0;font-size:13px;color:#0369a1;font-weight:600;">📎 Your full AI Execution Report is attached as a PDF — save it, share it with your team, or bring it to your debrief call.</p>
       </div>
-      ${resultsUrl ? `<p style="margin:10px 0 0;"><a href="${resultsUrl}" style="font-size:12px;color:#0284c7;font-weight:600;text-decoration:underline;">Or view your interactive results online →</a></p>` : ""}
+      
     </div>
 
     <!-- Benchmark context -->
