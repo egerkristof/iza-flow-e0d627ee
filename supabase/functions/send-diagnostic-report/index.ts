@@ -474,28 +474,77 @@ Return ONLY valid JSON in this exact format:
       }).join("")}
     </div>
 
-    <!-- You vs ${targetBenchmark}+ contrast -->
+    <!-- Cost of Inaction: Investment Case -->
+    <div style="margin-bottom:24px;padding:20px;background:linear-gradient(135deg,#fef2f2 0%,#fff7ed 100%);border-radius:10px;border:1px solid #fecaca;">
+      <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#dc2626;">Cost of Inaction</p>
+      <p style="margin:0 0 14px;font-size:16px;font-weight:800;color:#1a1a2e;">What this gap costs your team every month</p>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        ${(() => {
+          const costEstimates: Record<string, { metric: string; estimate: string }> = {
+            standard_internalization: {
+              metric: "Hours lost to re-explaining context",
+              estimate: overall <= 40 ? "5-10 hrs/week across team" : "2-4 hrs/week across team",
+            },
+            output_consistency: {
+              metric: "Rework cycles per deliverable",
+              estimate: overall <= 40 ? "3-5 hrs rework per output" : "1-2 hrs rework per output",
+            },
+            knowledge_compounding: {
+              metric: "Duplicate problem-solving effort",
+              estimate: overall <= 40 ? "Each person re-learns from zero" : "4-6 week lag before techniques spread",
+            },
+            collective_visibility: {
+              metric: "Breakthroughs that stay siloed",
+              estimate: overall <= 40 ? "Zero visibility into AI ROI" : "Anecdotal only, no measurement",
+            },
+            learning_velocity: {
+              metric: "Time to adopt new AI capabilities",
+              estimate: overall <= 40 ? "6+ months behind the curve" : "3-6 months behind competitors",
+            },
+          };
+          return [weakest, secondWeakest].map(d => {
+            const c = costEstimates[d.dimension];
+            if (!c) return "";
+            const label = FRIENDLY_LABELS[d.dimension] || d.label;
+            return \`
+            <tr>
+              <td style="padding:8px 0;border-bottom:1px solid rgba(220,38,38,0.1);color:#475569;font-weight:600;">\${label}</td>
+              <td style="padding:8px 0;border-bottom:1px solid rgba(220,38,38,0.1);color:#475569;">\${c.metric}</td>
+              <td style="padding:8px 0;border-bottom:1px solid rgba(220,38,38,0.1);color:#dc2626;font-weight:700;text-align:right;">\${c.estimate}</td>
+            </tr>\`;
+          }).join("");
+        })()}
+      </table>
+      <p style="margin:14px 0 0;font-size:12px;color:#92400e;line-height:1.5;">
+        ${overall <= 40
+          ? "At current patterns, your team is spending the equivalent of 1-2 full-time salaries per year on redundant AI effort: re-prompting, reworking outputs, and re-solving problems that teammates already cracked."
+          : "Your team has built some structure, but the remaining gaps still cost the equivalent of a significant portion of one full-time salary per year in redundant effort, rework, and missed compounding."
+        }
+      </p>
+    </div>
+
+    <!-- You vs \${targetBenchmark}+ contrast -->
     <div style="margin-bottom:24px;">
-      <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#1a1a2e;">Your team today vs. ${isAbove55 ? 'top 1% teams (75+)' : 'codified teams (55+)'}</p>
+      <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#1a1a2e;">Your team today vs. \${isAbove55 ? 'top 1% teams (75+)' : 'codified teams (55+)'}</p>
       <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;font-size:12px;">
         <tr style="background:#f8fafc;">
           <td style="padding:6px 10px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0;"></td>
-          <td style="padding:6px 10px;font-weight:700;color:${scoreColor};text-align:center;border-bottom:1px solid #e2e8f0;">You (${overall})</td>
-          <td style="padding:6px 10px;font-weight:700;color:#0284c7;text-align:center;border-bottom:1px solid #e2e8f0;">${targetBenchmark}+ teams</td>
+          <td style="padding:6px 10px;font-weight:700;color:\${scoreColor};text-align:center;border-bottom:1px solid #e2e8f0;">You (\${overall})</td>
+          <td style="padding:6px 10px;font-weight:700;color:#0284c7;text-align:center;border-bottom:1px solid #e2e8f0;">\${targetBenchmark}+ teams</td>
         </tr>
-        ${isAbove55 ? `
+        \${isAbove55 ? \`
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">AI standards</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Documented but unevenly applied</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Embedded in every session automatically</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Knowledge capture</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Happens when someone remembers</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Systematic, after every session</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Team learning</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Shared in meetings, adopted slowly</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Compounding: each project lifts the next</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Quality assurance</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;border-bottom:1px solid #f0f0f0;">Manual review catches gaps</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Built into the process, not bolted on</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;">Competitive moat</td><td style="padding:6px 10px;text-align:center;color:#f59e0b;">Improving steadily</td><td style="padding:6px 10px;text-align:center;color:#0284c7;">Widening gap every quarter</td></tr>
-        ` : `
+        \` : \`
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">AI session prep</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Re-explain from scratch</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Standards loaded automatically</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Output quality</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Depends who does it</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Consistent regardless</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">New technique found</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Stays with one person</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Reaches whole team in days</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;border-bottom:1px solid #f0f0f0;">Senior review</td><td style="padding:6px 10px;text-align:center;color:#dc2626;border-bottom:1px solid #f0f0f0;">Catching basic errors</td><td style="padding:6px 10px;text-align:center;color:#0284c7;border-bottom:1px solid #f0f0f0;">Focused on strategy</td></tr>
         <tr><td style="padding:6px 10px;color:#64748b;">AI ROI</td><td style="padding:6px 10px;text-align:center;color:#dc2626;">Can't measure it</td><td style="padding:6px 10px;text-align:center;color:#0284c7;">Tracked and reported</td></tr>
-        `}
+        \`}
       </table>
     </div>
 
