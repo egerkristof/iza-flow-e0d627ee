@@ -597,7 +597,8 @@ Return ONLY valid JSON in this exact format:
 
     <!-- CTA -->
     <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
-      <p style="margin:0 0 12px;font-size:14px;color:#475569;">20 min · We'll unpack your score and show you ${isAbove55 ? 'the path from structured (55+) to elite (75+)' : 'what teams scoring 55+ do differently'}.</p>
+      <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#1a1a2e;">Ready to close these gaps structurally?</p>
+      <p style="margin:0 0 14px;font-size:13px;color:#475569;line-height:1.5;">20 min. We unpack your score, map each gap to the behaviours driving it, and show you how LIZA OS makes standards, knowledge capture, and visibility automatic.</p>
       <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book your Diagnostic Debrief →</a>
     </div>
 
