@@ -175,8 +175,8 @@ function EmailCapture({
     return (
       <Card className="border-primary/20 bg-primary/5">
         <CardContent className="p-5 md:p-6 text-center space-y-3">
-          <p className="text-base font-semibold text-foreground">✓ Your results report is on its way.</p>
-          <p className="text-xs text-muted-foreground">Check your spam or junk folder if it doesn't arrive within a couple of minutes.</p>
+          <p className="text-base font-semibold text-foreground">✓ Your detailed report is on its way.</p>
+          <p className="text-xs text-muted-foreground">Includes your personalised action plan, success metrics, and cost-of-inaction summary. Check spam if it doesn't arrive within a couple of minutes.</p>
           <SharePrompt variant="inline" />
         </CardContent>
       </Card>
@@ -195,10 +195,10 @@ function EmailCapture({
           </div>
           <div className="space-y-0.5">
             <p className="text-sm font-semibold text-foreground">
-              Get these results as a shareable report
+              Get your detailed AI execution report
             </p>
             <p className="text-xs text-muted-foreground">
-              We'll send your full score breakdown and action plan in a format you can forward to your team or leadership.
+              Includes a personalised 3-step action plan, success metrics to track, a cost-of-inaction estimate, and a comparison you can forward to leadership.
             </p>
           </div>
         </div>
@@ -257,7 +257,7 @@ function ActionPlan({
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 text-primary" />
             <p className="text-xs font-bold tracking-[0.15em] uppercase text-primary/70">
-              Your Action Plan
+              Quick Start
             </p>
           </div>
           <p className="text-lg md:text-xl font-bold text-foreground">
@@ -266,7 +266,7 @@ function ActionPlan({
               : "Start here to close your biggest gaps"}
           </p>
           <p className="text-sm text-muted-foreground">
-            Based on your two weakest dimensions. These are the highest-leverage changes your team can make this month.
+            Based on your two weakest dimensions. Your detailed report includes a deeper, AI-personalised action plan with success metrics.
           </p>
         </div>
 
