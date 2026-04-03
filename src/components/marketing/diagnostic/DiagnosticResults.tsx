@@ -257,7 +257,7 @@ function ActionPlan({
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 text-primary" />
             <p className="text-xs font-bold tracking-[0.15em] uppercase text-primary/70">
-              Your Action Plan
+              Quick Start
             </p>
           </div>
           <p className="text-lg md:text-xl font-bold text-foreground">
@@ -266,7 +266,7 @@ function ActionPlan({
               : "Start here to close your biggest gaps"}
           </p>
           <p className="text-sm text-muted-foreground">
-            Based on your two weakest dimensions. These are the highest-leverage changes your team can make this month.
+            Based on your two weakest dimensions. Your detailed report includes a deeper, AI-personalised action plan with success metrics.
           </p>
         </div>
 
