@@ -382,7 +382,7 @@ async function generateReportPdf(ctx: PdfContext): Promise<Uint8Array> {
   // ══════════════════════════════════════════
   // LEAD / LAG METRICS
   // ══════════════════════════════════════════
-  drawSection("How You Will Know It Is Working");
+  drawSection("Metrics For Your Two Weakest Areas");
 
   const metricsData: Record<string, { lead: string; lag: string }> = {
     standard_internalization: {
@@ -871,8 +871,10 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:0;font-size:56px;font-weight:900;color:${scoreColor};line-height:1;">${overall}</p>
       <p style="margin:8px 0 0;font-size:18px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;">${archetype.tagline}</p>
-      ${resultsUrl ? `<p style="margin:12px 0 0;"><a href="${resultsUrl}" style="font-size:13px;color:#0284c7;font-weight:600;text-decoration:underline;">Bookmark your results: View your full breakdown →</a></p>` : ""}
-      <p style="margin:8px 0 0;font-size:12px;color:#64748b;">Your full diagnostic report is attached as a PDF.</p>
+      <div style="margin:14px auto 0;padding:10px 16px;background:#f0f9ff;border-radius:8px;border:1px solid #bae6fd;display:inline-block;">
+        <p style="margin:0;font-size:13px;color:#0369a1;font-weight:600;">📎 Your full AI Execution Report is attached as a PDF — save it, share it with your team, or bring it to your debrief call.</p>
+      </div>
+      ${resultsUrl ? `<p style="margin:10px 0 0;"><a href="${resultsUrl}" style="font-size:12px;color:#0284c7;font-weight:600;text-decoration:underline;">Or view your interactive results online →</a></p>` : ""}
     </div>
 
     <!-- Benchmark context -->
@@ -896,7 +898,7 @@ Return ONLY valid JSON in this exact format:
 
     <!-- Action Plan -->
     <div style="margin-bottom:24px;">
-      <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#1a1a2e;">Your 3-Step Action Plan</p>
+      <p style="margin:0 0 8px;font-size:18px;font-weight:800;color:#1a1a2e;">Your Personalised Action Plan</p>
       <div style="margin-bottom:12px;">
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${weakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${weakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[weakest.dimension] || weakest.label}: ${weakest.score}/100</span>
         <span style="display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${secondWeakest.score <= 33 ? "#fef2f2" : "#fffbeb"};color:${secondWeakest.score <= 33 ? "#dc2626" : "#d97706"};margin-right:6px;">${FRIENDLY_LABELS[secondWeakest.dimension] || secondWeakest.label}: ${secondWeakest.score}/100</span>
@@ -920,8 +922,8 @@ Return ONLY valid JSON in this exact format:
 
     <!-- Lead/Lag metrics for weak dimensions -->
     <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
-      <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#1a1a2e;">How you'll know it's working</p>
-      <p style="margin:0 0 14px;font-size:12px;color:#64748b;">Track these signals as you implement. Lead indicators tell you the habits are forming. Lag indicators confirm results are following.</p>
+      <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#1a1a2e;">Metrics for your two weakest areas</p>
+      <p style="margin:0 0 14px;font-size:12px;color:#64748b;">Track these signals as you implement. Lead indicators confirm habits are forming. Lag indicators confirm business results are following.</p>
       ${[weakest, secondWeakest].map(d => {
         const label = FRIENDLY_LABELS[d.dimension] || d.label;
         const metrics: Record<string, { lead: string; lag: string }> = {
@@ -964,8 +966,8 @@ Return ONLY valid JSON in this exact format:
     <!-- Cost of Inaction: Investment Case -->
     <div style="margin-bottom:24px;padding:20px;background:linear-gradient(135deg,#fef2f2 0%,#fff7ed 100%);border-radius:10px;border:1px solid #fecaca;">
       <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#dc2626;">Cost of Inaction</p>
-      <p style="margin:0 0 6px;font-size:16px;font-weight:800;color:#1a1a2e;">What this gap typically costs a team like yours</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;line-height:1.5;">Based on patterns we see across teams scoring in the ${overall <= 40 ? "25-40" : overall <= 55 ? "40-55" : "55-70"} range.</p>
+      <p style="margin:0 0 6px;font-size:16px;font-weight:800;color:#1a1a2e;">What this gap typically costs</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;line-height:1.5;">Based on patterns across organisations scoring ${overall <= 40 ? "25 to 40" : overall <= 55 ? "40 to 55" : "55 to 70"} on this diagnostic.</p>
       ${(() => {
         const costData: Record<string, { title: string; lines: { icon: string; label: string; detail: string }[] }> = {
           standard_internalization: {
@@ -1049,10 +1051,10 @@ Return ONLY valid JSON in this exact format:
       })()}
       <div style="margin-top:4px;padding:12px 14px;background:rgba(146,64,14,0.06);border-radius:8px;">
         <p style="margin:0;font-size:12px;font-weight:700;color:#92400e;">
-          ${overall <= 40
-            ? "Typical cost for teams in this range: the equivalent of 1 to 2 full-time salaries per year spent on redundant AI effort, rework, and re-solving problems teammates already cracked."
-            : "Typical cost for teams in this range: a significant portion of one full-time salary per year in residual waste, plus the harder-to-measure cost of knowledge that never compounds and market shifts that take quarters to absorb."
-          }
+         ${overall <= 40
+            ? "For a team of 5, this typically adds up to 25 to 50 hours per week of avoidable rework, re-prompting, and duplicate problem-solving. At senior rates, that is the equivalent of 1 to 2 full-time hires per year spent on work that should not exist."
+            : "For a team of 5, this typically means 10 to 20 hours per week still lost to inconsistent handoffs, unshared learnings, and slow adoption of new capabilities. The compounding cost: every quarter of delay widens the gap between where your team is and where it could be."
+           }
         </p>
       </div>
     </div>
@@ -1109,7 +1111,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email.trim()],
-        subject: `Your AI Execution Report: ${overall}/100 · ${archetype.label}`,
+        subject: `Your AI Execution Report (${overall}/100) · Full PDF attached`,
         html,
         ...(pdfBase64 ? {
           attachments: [{
