@@ -477,49 +477,97 @@ Return ONLY valid JSON in this exact format:
     <!-- Cost of Inaction: Investment Case -->
     <div style="margin-bottom:24px;padding:20px;background:linear-gradient(135deg,#fef2f2 0%,#fff7ed 100%);border-radius:10px;border:1px solid #fecaca;">
       <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#dc2626;">Cost of Inaction</p>
-      <p style="margin:0 0 14px;font-size:16px;font-weight:800;color:#1a1a2e;">What this gap costs your team every month</p>
-      <table style="width:100%;border-collapse:collapse;font-size:13px;">
-        ${(() => {
-          const costEstimates: Record<string, { metric: string; estimate: string }> = {
-            standard_internalization: {
-              metric: "Hours lost to re-explaining context",
-              estimate: overall <= 40 ? "5-10 hrs/week across team" : "2-4 hrs/week across team",
-            },
-            output_consistency: {
-              metric: "Rework cycles per deliverable",
-              estimate: overall <= 40 ? "3-5 hrs rework per output" : "1-2 hrs rework per output",
-            },
-            knowledge_compounding: {
-              metric: "Duplicate problem-solving effort",
-              estimate: overall <= 40 ? "Each person re-learns from zero" : "4-6 week lag before techniques spread",
-            },
-            collective_visibility: {
-              metric: "Breakthroughs that stay siloed",
-              estimate: overall <= 40 ? "Zero visibility into AI ROI" : "Anecdotal only, no measurement",
-            },
-            learning_velocity: {
-              metric: "Time to adopt new AI capabilities",
-              estimate: overall <= 40 ? "6+ months behind the curve" : "3-6 months behind competitors",
-            },
-          };
-          return [weakest, secondWeakest].map(d => {
-            const c = costEstimates[d.dimension];
-            if (!c) return "";
-            const label = FRIENDLY_LABELS[d.dimension] || d.label;
-            return '<tr>' +
-              '<td style="padding:8px 0;border-bottom:1px solid rgba(220,38,38,0.1);color:#475569;font-weight:600;">' + label + '</td>' +
-              '<td style="padding:8px 0;border-bottom:1px solid rgba(220,38,38,0.1);color:#475569;">' + c.metric + '</td>' +
-              '<td style="padding:8px 0;border-bottom:1px solid rgba(220,38,38,0.1);color:#dc2626;font-weight:700;text-align:right;">' + c.estimate + '</td>' +
-              '</tr>';
-          }).join("");
-        })()}
-      </table>
-      <p style="margin:14px 0 0;font-size:12px;color:#92400e;line-height:1.5;">
-        ${overall <= 40
-          ? "At current patterns, your team is spending the equivalent of 1-2 full-time salaries per year on redundant AI effort: re-prompting, reworking outputs, and re-solving problems that teammates already cracked."
-          : "Your team has built some structure, but the remaining gaps still cost the equivalent of a significant portion of one full-time salary per year in redundant effort, rework, and missed compounding."
-        }
-      </p>
+      <p style="margin:0 0 6px;font-size:16px;font-weight:800;color:#1a1a2e;">What this gap typically costs a team like yours</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;line-height:1.5;">Based on patterns we see across teams scoring in the ${overall <= 40 ? "25-40" : overall <= 55 ? "40-55" : "55-70"} range.</p>
+      ${(() => {
+        const costData: Record<string, { title: string; lines: { icon: string; label: string; detail: string }[] }> = {
+          standard_internalization: {
+            title: "Standards Adoption",
+            lines: overall <= 40 ? [
+              { icon: "⏱", label: "Wasted effort", detail: "5 to 10 hrs/week re-explaining context AI should already have" },
+              { icon: "⚠️", label: "Governance risk", detail: "No way to ensure AI outputs meet your methodology. Quality depends on who prompts, not what your team knows" },
+              { icon: "📉", label: "Senior drag", detail: "Your strongest people review basics instead of doing strategic work. That is the most expensive hour on your payroll, spent on correction" },
+            ] : [
+              { icon: "⏱", label: "Residual waste", detail: "2 to 4 hrs/week still lost to inconsistent context loading across the team" },
+              { icon: "⚠️", label: "Governance gap", detail: "Standards exist but are unevenly applied. Some sessions follow your methodology, others do not. That variance is a compliance and quality risk" },
+              { icon: "📉", label: "Onboarding drag", detail: "New hires take months to absorb standards that should be embedded in the process from day one" },
+            ],
+          },
+          output_consistency: {
+            title: "Delivery Consistency",
+            lines: overall <= 40 ? [
+              { icon: "⏱", label: "Rework cost", detail: "3 to 5 hours of rework per deliverable when output quality depends on who did the work" },
+              { icon: "⚠️", label: "Quality risk", detail: "Stakeholders receive inconsistent quality. Trust erodes before anyone says it out loud" },
+              { icon: "📉", label: "Scaling ceiling", detail: "You cannot grow the team without diluting what makes your work distinctive. Every hire multiplies the variance" },
+            ] : [
+              { icon: "⏱", label: "Review overhead", detail: "30 to 40% excess senior review time spent catching inconsistencies that a shared standard would prevent" },
+              { icon: "⚠️", label: "Key-person dependency", detail: "Quality is tied to specific individuals, not to your team's collective capability. That is a risk you carry every day" },
+              { icon: "📉", label: "Capacity ceiling", detail: "Your output capacity is capped by your strongest operators, not your team size" },
+            ],
+          },
+          knowledge_compounding: {
+            title: "Knowledge Sharing",
+            lines: overall <= 40 ? [
+              { icon: "⏱", label: "Duplicate effort", detail: "Every person re-learns from zero. Multiply your team size by the hours lost: that is the cost of no shared memory" },
+              { icon: "⚠️", label: "Turnover risk", detail: "When someone leaves, their learned capability walks out with them. No documentation, no transfer, no recovery" },
+              { icon: "📉", label: "Linear growth", detail: "Your team improves at best linearly. Competitors who compound knowledge improve exponentially. After 12 months, that gap is a different league" },
+            ] : [
+              { icon: "⏱", label: "Adoption lag", detail: "4 to 6 weeks before a good technique reaches the whole team, if it ever does. Each project starts from scratch instead of building on the last" },
+              { icon: "⚠️", label: "Fragile knowledge", detail: "Learning spreads through conversations, not systems. One reorganisation or departure resets months of progress" },
+              { icon: "📉", label: "Missed compounding", detail: "Your team is improving, but each improvement deposits in individual accounts, not a shared one. The compound interest never kicks in" },
+            ],
+          },
+          collective_visibility: {
+            title: "Team Visibility",
+            lines: overall <= 40 ? [
+              { icon: "⏱", label: "Blind investment", detail: "Zero visibility into whether your AI spend is improving output quality or just adding a layer of noise" },
+              { icon: "⚠️", label: "Governance void", detail: "You cannot govern what you cannot see. No audit trail, no usage patterns, no way to identify risk or opportunity" },
+              { icon: "📉", label: "Talent waste", detail: "Senior breakthroughs stay siloed. Juniors cannot learn from how your best people navigate complexity with AI" },
+            ] : [
+              { icon: "⏱", label: "Anecdotal only", detail: "You know AI is being used but cannot measure whether it is making the team more capable or just faster at mediocre work" },
+              { icon: "⚠️", label: "Unmeasurable ROI", detail: "Leadership asks 'is AI working?' and your honest answer is 'we think so.' That is not a position of strength" },
+              { icon: "📉", label: "Missed patterns", detail: "You are making workforce and resource decisions without data on which roles AI genuinely augments versus which just use it as a search engine" },
+            ],
+          },
+          learning_velocity: {
+            title: "Improvement Speed",
+            lines: overall <= 40 ? [
+              { icon: "⏱", label: "Stale capability", detail: "After 6+ months of AI investment, your team's approach has not meaningfully changed. That is a negative ROI trajectory" },
+              { icon: "⚠️", label: "Market blindness", detail: "New tools and techniques ship monthly. Your team cannot evaluate how the latest capabilities complement or update your value proposition" },
+              { icon: "📉", label: "Compounding gap", detail: "Competitors who learn faster compound their advantage every quarter. After 12 months, the gap is not incremental. It is structural" },
+            ] : [
+              { icon: "⏱", label: "Slow adoption", detail: "A quarter to change how the team works. In a market where capabilities shift monthly, that delay translates directly to lost positioning" },
+              { icon: "⚠️", label: "Missed opportunities", detail: "New AI capabilities that could reshape your offering take months to reach frontline teams. By then, competitors already ship with them" },
+              { icon: "📉", label: "Strategic lag", detail: "Your team's creative and strategic potential is consumed by re-solving problems that should already be solved. The highest-value work gets crowded out" },
+            ],
+          },
+        };
+        return [weakest, secondWeakest].map(d => {
+          const data = costData[d.dimension];
+          if (!data) return "";
+          const label = FRIENDLY_LABELS[d.dimension] || d.label;
+          const scoreTag = '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;background:' + (d.score <= 33 ? "#fef2f2" : "#fffbeb") + ';color:' + (d.score <= 33 ? "#dc2626" : "#d97706") + ';">' + d.score + '/100</span>';
+          const rows = data.lines.map(line =>
+            '<tr>' +
+            '<td style="padding:6px 0 6px 0;vertical-align:top;width:22px;font-size:14px;">' + line.icon + '</td>' +
+            '<td style="padding:6px 8px;vertical-align:top;font-size:12px;font-weight:700;color:#1a1a2e;white-space:nowrap;">' + line.label + '</td>' +
+            '<td style="padding:6px 0;font-size:12px;color:#475569;line-height:1.5;">' + line.detail + '</td>' +
+            '</tr>'
+          ).join("");
+          return '<div style="margin-bottom:16px;' + (d === weakest ? 'padding-bottom:16px;border-bottom:1px solid rgba(220,38,38,0.12);' : '') + '">' +
+            '<p style="margin:0 0 8px;font-size:14px;font-weight:700;color:#1a1a2e;">' + label + ' ' + scoreTag + '</p>' +
+            '<table style="width:100%;border-collapse:collapse;">' + rows + '</table>' +
+            '</div>';
+        }).join("");
+      })()}
+      <div style="margin-top:4px;padding:12px 14px;background:rgba(146,64,14,0.06);border-radius:8px;">
+        <p style="margin:0;font-size:12px;font-weight:700;color:#92400e;">
+          ${overall <= 40
+            ? "Typical cost for teams in this range: the equivalent of 1 to 2 full-time salaries per year spent on redundant AI effort, rework, and re-solving problems teammates already cracked."
+            : "Typical cost for teams in this range: a significant portion of one full-time salary per year in residual waste, plus the harder-to-measure cost of knowledge that never compounds and market shifts that take quarters to absorb."
+          }
+        </p>
+      </div>
     </div>
 
     <!-- You vs ${targetBenchmark}+ contrast -->
@@ -549,7 +597,8 @@ Return ONLY valid JSON in this exact format:
 
     <!-- CTA -->
     <div style="text-align:center;padding:20px;background:#f0f9ff;border-radius:10px;margin-bottom:24px;">
-      <p style="margin:0 0 12px;font-size:14px;color:#475569;">20 min · We'll unpack your score and show you ${isAbove55 ? 'the path from structured (55+) to elite (75+)' : 'what teams scoring 55+ do differently'}.</p>
+      <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#1a1a2e;">Ready to close these gaps structurally?</p>
+      <p style="margin:0 0 14px;font-size:13px;color:#475569;line-height:1.5;">20 min. We unpack your score, map each gap to the behaviours driving it, and show you how LIZA OS makes standards, knowledge capture, and visibility automatic.</p>
       <a href="${CAL_URL}" style="display:inline-block;padding:12px 28px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Book your Diagnostic Debrief →</a>
     </div>
 
