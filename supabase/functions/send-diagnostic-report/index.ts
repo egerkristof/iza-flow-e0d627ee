@@ -964,8 +964,8 @@ Return ONLY valid JSON in this exact format:
     <!-- Cost of Inaction: Investment Case -->
     <div style="margin-bottom:24px;padding:20px;background:linear-gradient(135deg,#fef2f2 0%,#fff7ed 100%);border-radius:10px;border:1px solid #fecaca;">
       <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#dc2626;">Cost of Inaction</p>
-      <p style="margin:0 0 6px;font-size:16px;font-weight:800;color:#1a1a2e;">What this gap typically costs a team like yours</p>
-      <p style="margin:0 0 16px;font-size:13px;color:#64748b;line-height:1.5;">Based on patterns we see across teams scoring in the ${overall <= 40 ? "25-40" : overall <= 55 ? "40-55" : "55-70"} range.</p>
+      <p style="margin:0 0 6px;font-size:16px;font-weight:800;color:#1a1a2e;">What this gap typically costs</p>
+      <p style="margin:0 0 16px;font-size:13px;color:#64748b;line-height:1.5;">Based on patterns across organisations scoring ${overall <= 40 ? "25 to 40" : overall <= 55 ? "40 to 55" : "55 to 70"} on this diagnostic.</p>
       ${(() => {
         const costData: Record<string, { title: string; lines: { icon: string; label: string; detail: string }[] }> = {
           standard_internalization: {
