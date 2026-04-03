@@ -176,7 +176,7 @@ function EmailCapture({
       <Card className="border-primary/20 bg-primary/5">
         <CardContent className="p-5 md:p-6 text-center space-y-3">
           <p className="text-base font-semibold text-foreground">✓ Your detailed report is on its way.</p>
-          <p className="text-xs text-muted-foreground">Includes your personalised action plan, success metrics, and cost-of-inaction summary. Check spam if it doesn't arrive within a couple of minutes.</p>
+          <p className="text-xs text-muted-foreground">Includes your personalised action plan, success metrics, cost-of-inaction summary, and a full PDF report you can share with leadership. Check spam if it doesn't arrive within a couple of minutes.</p>
           <SharePrompt variant="inline" />
         </CardContent>
       </Card>
@@ -198,7 +198,7 @@ function EmailCapture({
               Get your detailed AI execution report
             </p>
             <p className="text-xs text-muted-foreground">
-              Includes a personalised 3-step action plan, success metrics to track, a cost-of-inaction estimate, and a comparison you can forward to leadership.
+              Includes a personalised 3-step action plan, success metrics, cost-of-inaction estimate, and a shareable PDF report with your full dimension analysis.
             </p>
           </div>
         </div>
