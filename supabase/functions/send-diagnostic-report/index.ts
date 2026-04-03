@@ -1109,7 +1109,7 @@ Return ONLY valid JSON in this exact format:
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email.trim()],
-        subject: `Your AI Execution Report: ${overall}/100 · ${archetype.label}`,
+        subject: `Your AI Execution Report (${overall}/100) · Full PDF attached`,
         html,
         ...(pdfBase64 ? {
           attachments: [{
