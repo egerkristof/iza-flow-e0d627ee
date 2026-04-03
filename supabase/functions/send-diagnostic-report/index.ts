@@ -871,6 +871,7 @@ Return ONLY valid JSON in this exact format:
       <p style="margin:8px 0 0;font-size:18px;font-weight:700;color:#1a1a2e;">${archetype.label}</p>
       <p style="margin:8px 0 0;font-size:14px;color:#64748b;line-height:1.5;">${archetype.tagline}</p>
       ${resultsUrl ? `<p style="margin:12px 0 0;"><a href="${resultsUrl}" style="font-size:13px;color:#0284c7;font-weight:600;text-decoration:underline;">Bookmark your results: View your full breakdown →</a></p>` : ""}
+      <p style="margin:8px 0 0;font-size:12px;color:#64748b;">Your full diagnostic report is attached as a PDF.</p>
     </div>
 
     <!-- Benchmark context -->
