@@ -812,6 +812,26 @@ Return ONLY valid JSON in this exact format:
         });
     }
 
+    // ── Step 3b: Generate PDF report ──
+    let pdfBase64: string | null = null;
+    try {
+      const pdfBytes = await generateReportPdf({
+        overall,
+        archetype,
+        dimensions,
+        actionPlan,
+        weakest,
+        secondWeakest,
+        isAbove55,
+        companyName,
+      });
+      // Convert Uint8Array to base64
+      const binStr = Array.from(pdfBytes).map(b => String.fromCharCode(b)).join("");
+      pdfBase64 = btoa(binStr);
+    } catch (pdfErr) {
+      console.error("PDF generation failed (non-blocking):", pdfErr);
+    }
+
     // ── Step 4: Build and send user email ──
     const scoreColor =
       overall <= 30 ? "#dc2626"
