@@ -920,8 +920,8 @@ Return ONLY valid JSON in this exact format:
 
     <!-- Lead/Lag metrics for weak dimensions -->
     <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
-      <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#1a1a2e;">How you'll know it's working</p>
-      <p style="margin:0 0 14px;font-size:12px;color:#64748b;">Track these signals as you implement. Lead indicators tell you the habits are forming. Lag indicators confirm results are following.</p>
+      <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#1a1a2e;">Metrics for your two weakest areas</p>
+      <p style="margin:0 0 14px;font-size:12px;color:#64748b;">Track these signals as you implement. Lead indicators confirm habits are forming. Lag indicators confirm business results are following.</p>
       ${[weakest, secondWeakest].map(d => {
         const label = FRIENDLY_LABELS[d.dimension] || d.label;
         const metrics: Record<string, { lead: string; lag: string }> = {
