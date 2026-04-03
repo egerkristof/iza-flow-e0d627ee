@@ -568,7 +568,7 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
       {/* === 5. BOOK A DEBRIEF CTA === */}
       <Card className="border-border overflow-hidden">
         <CardContent className="p-0">
-          <div className="text-center px-5 py-6 md:py-8 space-y-4"
+          <div className="text-center px-5 py-6 md:py-8 space-y-5"
             style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.06) 0%, hsl(var(--primary) / 0.02) 100%)" }}
           >
             <p className="text-xs font-bold tracking-[0.15em] uppercase text-primary/70">
@@ -578,8 +578,23 @@ export function DiagnosticResults({ result, answers, existingRecordId, sessionId
               Book your Diagnostic Debrief
             </p>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              20 minutes. We'll unpack your score, map your gaps to specific team behaviours, and build a prioritised roadmap to get from {result.overall} to 55+.
+              20 minutes. We unpack your score, map each gap to the specific team behaviours driving it, and show you the structural fix.
             </p>
+
+            {/* What the debrief covers */}
+            <div className="max-w-sm mx-auto text-left space-y-2">
+              {[
+                "Your two weakest dimensions dissected with concrete examples",
+                "A prioritised roadmap from " + result.overall + " to " + (result.overall >= 55 ? "75+" : "55+"),
+                "How LIZA OS makes standards, knowledge capture, and visibility automatic",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="mt-1 block w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item}</p>
+                </div>
+              ))}
+            </div>
+
             <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
               <Button variant="brand" size="lg" className="text-base">
                 Book your Debrief <ArrowRight className="w-4 h-4" />
