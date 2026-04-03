@@ -198,7 +198,7 @@ function EmailCapture({
               Get your detailed AI execution report
             </p>
             <p className="text-xs text-muted-foreground">
-              Includes a personalised 3-step action plan, success metrics to track, a cost-of-inaction estimate, and a comparison you can forward to leadership.
+              Includes a personalised 3-step action plan, success metrics, cost-of-inaction estimate, and a shareable PDF report with your full dimension analysis.
             </p>
           </div>
         </div>
