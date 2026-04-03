@@ -1049,14 +1049,6 @@ Return ONLY valid JSON in this exact format:
             '</div>';
         }).join("");
       })()}
-      <div style="margin-top:4px;padding:12px 14px;background:rgba(146,64,14,0.06);border-radius:8px;">
-        <p style="margin:0;font-size:12px;font-weight:700;color:#92400e;">
-         ${overall <= 40
-            ? "For a team of 5, this typically adds up to 25 to 50 hours per week of avoidable rework, re-prompting, and duplicate problem-solving. At senior rates, that is the equivalent of 1 to 2 full-time hires per year spent on work that should not exist."
-            : "For a team of 5, this typically means 10 to 20 hours per week still lost to inconsistent handoffs, unshared learnings, and slow adoption of new capabilities. The compounding cost: every quarter of delay widens the gap between where your team is and where it could be."
-           }
-        </p>
-      </div>
     </div>
 
     <!-- You vs ${targetBenchmark}+ contrast -->
