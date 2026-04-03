@@ -195,10 +195,10 @@ function EmailCapture({
           </div>
           <div className="space-y-0.5">
             <p className="text-sm font-semibold text-foreground">
-              Get these results as a shareable report
+              Get your detailed AI execution report
             </p>
             <p className="text-xs text-muted-foreground">
-              We'll send your full score breakdown and action plan in a format you can forward to your team or leadership.
+              Includes a personalised 3-step action plan, success metrics to track, a cost-of-inaction estimate, and a comparison you can forward to leadership.
             </p>
           </div>
         </div>
