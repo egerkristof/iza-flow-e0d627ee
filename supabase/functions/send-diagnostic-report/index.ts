@@ -506,6 +506,7 @@ async function generateReportPdf(ctx: PdfContext): Promise<Uint8Array> {
   return await doc.save();
 }
 
+serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
