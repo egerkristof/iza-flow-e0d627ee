@@ -1109,6 +1109,12 @@ Return ONLY valid JSON in this exact format:
         to: [email.trim()],
         subject: `Your AI Execution Report: ${overall}/100 · ${archetype.label}`,
         html,
+        ...(pdfBase64 ? {
+          attachments: [{
+            filename: `AI-Execution-Report-${overall}.pdf`,
+            content: pdfBase64,
+          }],
+        } : {}),
       }),
     });
 
