@@ -175,8 +175,8 @@ function EmailCapture({
     return (
       <Card className="border-primary/20 bg-primary/5">
         <CardContent className="p-5 md:p-6 text-center space-y-3">
-          <p className="text-base font-semibold text-foreground">✓ Your results report is on its way.</p>
-          <p className="text-xs text-muted-foreground">Check your spam or junk folder if it doesn't arrive within a couple of minutes.</p>
+          <p className="text-base font-semibold text-foreground">✓ Your detailed report is on its way.</p>
+          <p className="text-xs text-muted-foreground">Includes your personalised action plan, success metrics, and cost-of-inaction summary. Check spam if it doesn't arrive within a couple of minutes.</p>
           <SharePrompt variant="inline" />
         </CardContent>
       </Card>
