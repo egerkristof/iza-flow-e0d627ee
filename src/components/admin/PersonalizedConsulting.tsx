@@ -211,6 +211,7 @@ export default function PersonalizedConsulting({ results }: Props) {
   const [selectedTeamLabel, setSelectedTeamLabel] = useState<string | null>(null);
   const [brief, setBrief] = useState<string>("");
   const [generating, setGenerating] = useState(false);
+  const [generatingSlides, setGeneratingSlides] = useState(false);
   const [showList, setShowList] = useState(true);
 
   const baseUrl = import.meta.env.VITE_SUPABASE_URL;
