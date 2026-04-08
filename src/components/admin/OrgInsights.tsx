@@ -1327,7 +1327,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         variant="outline"
                         size="sm"
                         className="gap-1.5"
-                        onClick={(e) => { e.stopPropagation(); generatePDF(org, includeNames, false, teamLeaderFilter); }}
+                        onClick={(e) => { e.stopPropagation(); try { generatePDF(org, includeNames, false, teamLeaderFilter); } catch (err) { console.error("PDF generation failed:", err); alert("PDF generation failed: " + (err as Error).message); } }}
                       >
                         <Download className="h-3.5 w-3.5" />
                         PDF
