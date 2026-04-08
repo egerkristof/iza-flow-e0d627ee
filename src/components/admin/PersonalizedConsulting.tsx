@@ -306,7 +306,157 @@ export default function PersonalizedConsulting({ results }: Props) {
     }
   };
 
-  const weakest = selectedIndividual
+  // ── Generate PPTX slides for team ──
+  const generateTeamSlides = async (group: TeamGroup) => {
+    setGeneratingSlides(true);
+    try {
+      const pptx = new pptxgen();
+      pptx.layout = "LAYOUT_WIDE";
+      pptx.author = "LIZA OS";
+      pptx.subject = `Team Diagnostic: ${group.label}`;
+
+      const DARK = "1A1F2E";
+      const PRIMARY = "6366F1";
+      const PRIMARY_LIGHT = "818CF8";
+      const ACCENT_RED = "EF4444";
+      const ACCENT_GREEN = "22C55E";
+      const MUTED = "94A3B8";
+      const WHITE = "FFFFFF";
+      const CARD_BG = "1E2536";
+
+      // Slide 1: Title
+      const s1 = pptx.addSlide();
+      s1.background = { color: DARK };
+      s1.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: "100%", h: 0.06, fill: { color: PRIMARY } });
+      s1.addText("AI EXECUTION DIAGNOSTIC", { x: 0.8, y: 1.2, w: 11, fontSize: 14, color: PRIMARY_LIGHT, fontFace: "Arial", bold: true, charSpacing: 6 });
+      s1.addText(group.label.replace("Team: ", "").replace("Company: ", ""), { x: 0.8, y: 1.8, w: 11, fontSize: 40, color: WHITE, fontFace: "Arial", bold: true });
+      s1.addText("Team Performance Review", { x: 0.8, y: 2.8, w: 11, fontSize: 20, color: MUTED, fontFace: "Arial" });
+      s1.addText(`${group.results.length} participants  •  Avg score: ${Math.round(group.avgScore)}/100  •  Spread: ${group.scoreSpread} pts`, { x: 0.8, y: 4.0, w: 11, fontSize: 14, color: MUTED, fontFace: "Arial" });
+
+      // Slide 2: At a Glance
+      const s2 = pptx.addSlide();
+      s2.background = { color: DARK };
+      s2.addText("AT A GLANCE", { x: 0.8, y: 0.4, w: 5, fontSize: 12, color: PRIMARY_LIGHT, bold: true, charSpacing: 4, fontFace: "Arial" });
+      s2.addShape(pptx.ShapeType.rect, { x: 0.8, y: 0.7, w: 1.5, h: 0.04, fill: { color: PRIMARY } });
+
+      const metrics = [
+        { label: "AVG SCORE", value: `${Math.round(group.avgScore)}`, sub: "/100" },
+        { label: "MEMBERS", value: `${group.results.length}`, sub: "participants" },
+        { label: "SPREAD", value: `${group.scoreSpread}`, sub: group.scoreSpread > 20 ? "fragmented" : group.scoreSpread > 10 ? "moderate" : "aligned" },
+      ];
+      metrics.forEach((m, i) => {
+        const xPos = 0.8 + i * 3.8;
+        s2.addShape(pptx.ShapeType.roundRect, { x: xPos, y: 1.2, w: 3.4, h: 1.8, fill: { color: CARD_BG }, rectRadius: 0.1 });
+        s2.addText(m.label, { x: xPos + 0.3, y: 1.4, w: 2.8, fontSize: 10, color: MUTED, bold: true, charSpacing: 3, fontFace: "Arial" });
+        s2.addText(m.value, { x: xPos + 0.3, y: 1.8, w: 2.8, fontSize: 44, color: WHITE, bold: true, fontFace: "Arial" });
+        s2.addText(m.sub, { x: xPos + 0.3, y: 2.5, w: 2.8, fontSize: 12, color: MUTED, fontFace: "Arial" });
+      });
+
+      // Archetype distribution
+      s2.addText("ARCHETYPE DISTRIBUTION", { x: 0.8, y: 3.5, w: 5, fontSize: 10, color: MUTED, bold: true, charSpacing: 3, fontFace: "Arial" });
+      const archEntries = Object.entries(group.archetypeDistribution);
+      const archColors: Record<string, string> = { "Flying Solo": "EF4444", "Scattered Effort": "F59E0B", "Emerging System": "3B82F6", "Compound AI Team": "22C55E" };
+      archEntries.forEach(([arch, count], i) => {
+        const xPos = 0.8 + i * 3;
+        s2.addShape(pptx.ShapeType.roundRect, { x: xPos, y: 3.9, w: 2.6, h: 1.0, fill: { color: CARD_BG }, rectRadius: 0.08 });
+        s2.addText(`${count}×`, { x: xPos + 0.2, y: 3.95, w: 2.2, fontSize: 24, color: archColors[arch] || PRIMARY_LIGHT, bold: true, fontFace: "Arial" });
+        s2.addText(arch, { x: xPos + 0.2, y: 4.45, w: 2.2, fontSize: 11, color: MUTED, fontFace: "Arial" });
+      });
+
+      // Slide 3: Dimension Scores
+      const s3 = pptx.addSlide();
+      s3.background = { color: DARK };
+      s3.addText("DIMENSION SCORES", { x: 0.8, y: 0.4, w: 5, fontSize: 12, color: PRIMARY_LIGHT, bold: true, charSpacing: 4, fontFace: "Arial" });
+      s3.addShape(pptx.ShapeType.rect, { x: 0.8, y: 0.7, w: 1.5, h: 0.04, fill: { color: PRIMARY } });
+
+      const sortedDims = Object.entries(group.avgDimensions).sort(([, a], [, b]) => b - a);
+      sortedDims.forEach(([dim, score], i) => {
+        const yPos = 1.2 + i * 0.8;
+        const label = DIMENSION_LABELS[dim as Dimension] || dim;
+        const barWidth = (score / 100) * 8;
+        const isLowest = dim === group.lowestDimension.key;
+        const isHighest = dim === group.highestDimension.key;
+        const barColor = isLowest ? ACCENT_RED : isHighest ? ACCENT_GREEN : PRIMARY;
+
+        s3.addText(label, { x: 0.8, y: yPos, w: 3.5, fontSize: 13, color: WHITE, fontFace: "Arial" });
+        s3.addShape(pptx.ShapeType.roundRect, { x: 4.5, y: yPos + 0.1, w: 8, h: 0.35, fill: { color: CARD_BG }, rectRadius: 0.05 });
+        s3.addShape(pptx.ShapeType.roundRect, { x: 4.5, y: yPos + 0.1, w: barWidth, h: 0.35, fill: { color: barColor }, rectRadius: 0.05 });
+        s3.addText(`${Math.round(score)}`, { x: 12.7, y: yPos, w: 0.7, fontSize: 13, color: isLowest ? ACCENT_RED : isHighest ? ACCENT_GREEN : MUTED, bold: true, fontFace: "Arial", align: "right" });
+      });
+
+      // Slide 4: Perception Gap / Individual Spread
+      const s4 = pptx.addSlide();
+      s4.background = { color: DARK };
+      s4.addText("PERCEPTION GAP", { x: 0.8, y: 0.4, w: 5, fontSize: 12, color: PRIMARY_LIGHT, bold: true, charSpacing: 4, fontFace: "Arial" });
+      s4.addShape(pptx.ShapeType.rect, { x: 0.8, y: 0.7, w: 1.5, h: 0.04, fill: { color: PRIMARY } });
+      s4.addText("How individual scores compare — wider gaps indicate misaligned perceptions within the team.", { x: 0.8, y: 0.9, w: 11, fontSize: 12, color: MUTED, fontFace: "Arial" });
+
+      // Show each member's overall score as a dot chart
+      const sortedMembers = [...group.results].sort((a, b) => b.overall_score - a.overall_score);
+      sortedMembers.forEach((member, i) => {
+        const yPos = 1.6 + i * 0.45;
+        if (yPos > 4.8) return;
+        const nameStr = member.email ? member.email.split("@")[0] : `Member ${i + 1}`;
+        s4.addText(nameStr, { x: 0.8, y: yPos, w: 2.5, fontSize: 11, color: MUTED, fontFace: "Arial" });
+        // Score bar
+        const barW = (member.overall_score / 100) * 7;
+        s4.addShape(pptx.ShapeType.roundRect, { x: 3.5, y: yPos + 0.05, w: 7, h: 0.28, fill: { color: CARD_BG }, rectRadius: 0.04 });
+        s4.addShape(pptx.ShapeType.roundRect, { x: 3.5, y: yPos + 0.05, w: barW, h: 0.28, fill: { color: PRIMARY }, rectRadius: 0.04 });
+        s4.addText(`${member.overall_score}`, { x: 10.7, y: yPos, w: 0.8, fontSize: 11, color: WHITE, bold: true, fontFace: "Arial", align: "right" });
+        // Archetype badge
+        s4.addText(member.archetype, { x: 11.6, y: yPos, w: 1.6, fontSize: 9, color: archColors[member.archetype] || MUTED, fontFace: "Arial" });
+      });
+
+      // Slide 5: Key Findings & Action
+      const s5 = pptx.addSlide();
+      s5.background = { color: DARK };
+      s5.addText("KEY FINDINGS", { x: 0.8, y: 0.4, w: 5, fontSize: 12, color: PRIMARY_LIGHT, bold: true, charSpacing: 4, fontFace: "Arial" });
+      s5.addShape(pptx.ShapeType.rect, { x: 0.8, y: 0.7, w: 1.5, h: 0.04, fill: { color: PRIMARY } });
+
+      // Weakness card
+      s5.addShape(pptx.ShapeType.roundRect, { x: 0.8, y: 1.2, w: 5.8, h: 2.4, fill: { color: CARD_BG }, rectRadius: 0.1 });
+      s5.addShape(pptx.ShapeType.rect, { x: 0.8, y: 1.2, w: 0.06, h: 2.4, fill: { color: ACCENT_RED } });
+      s5.addText("BIGGEST GAP", { x: 1.2, y: 1.35, w: 5, fontSize: 10, color: ACCENT_RED, bold: true, charSpacing: 3, fontFace: "Arial" });
+      s5.addText(group.lowestDimension.label, { x: 1.2, y: 1.7, w: 5, fontSize: 22, color: WHITE, bold: true, fontFace: "Arial" });
+      s5.addText(`Score: ${group.lowestDimension.score}/100`, { x: 1.2, y: 2.3, w: 5, fontSize: 14, color: ACCENT_RED, fontFace: "Arial" });
+      s5.addText("This is where operational friction is highest.\nFocus improvement efforts here first.", { x: 1.2, y: 2.7, w: 5, fontSize: 12, color: MUTED, fontFace: "Arial" });
+
+      // Strength card
+      s5.addShape(pptx.ShapeType.roundRect, { x: 7, y: 1.2, w: 5.8, h: 2.4, fill: { color: CARD_BG }, rectRadius: 0.1 });
+      s5.addShape(pptx.ShapeType.rect, { x: 7, y: 1.2, w: 0.06, h: 2.4, fill: { color: ACCENT_GREEN } });
+      s5.addText("STRONGEST AREA", { x: 7.4, y: 1.35, w: 5, fontSize: 10, color: ACCENT_GREEN, bold: true, charSpacing: 3, fontFace: "Arial" });
+      s5.addText(group.highestDimension.label, { x: 7.4, y: 1.7, w: 5, fontSize: 22, color: WHITE, bold: true, fontFace: "Arial" });
+      s5.addText(`Score: ${group.highestDimension.score}/100`, { x: 7.4, y: 2.3, w: 5, fontSize: 14, color: ACCENT_GREEN, fontFace: "Arial" });
+      s5.addText("Leverage this cultural strength to\naddress the gap above.", { x: 7.4, y: 2.7, w: 5, fontSize: 12, color: MUTED, fontFace: "Arial" });
+
+      // Bottom insight
+      s5.addShape(pptx.ShapeType.roundRect, { x: 0.8, y: 4.0, w: 12, h: 1.2, fill: { color: CARD_BG }, rectRadius: 0.1 });
+      s5.addText("RECOMMENDED NEXT STEP", { x: 1.2, y: 4.15, w: 11, fontSize: 10, color: PRIMARY_LIGHT, bold: true, charSpacing: 3, fontFace: "Arial" });
+      s5.addText(
+        group.scoreSpread > 20
+          ? "High score spread indicates the team lacks shared standards. Priority: align on what 'good' looks like through shared protocols and context."
+          : group.lowestDimension.score < 40
+          ? `Critical gap in ${group.lowestDimension.label}. Start with a 30-day sprint focused on building foundational practices in this dimension.`
+          : `Solid baseline. Focus on moving ${group.lowestDimension.label} from 'functional' to 'systematic' through structured knowledge sharing.`,
+        { x: 1.2, y: 4.55, w: 11, fontSize: 13, color: WHITE, fontFace: "Arial" }
+      );
+
+      // Slide 6: Discussion
+      const s6 = pptx.addSlide();
+      s6.background = { color: DARK };
+      s6.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: "100%", h: 0.06, fill: { color: PRIMARY } });
+      s6.addText("DISCUSSION", { x: 0.8, y: 1.5, w: 11, fontSize: 14, color: PRIMARY_LIGHT, bold: true, charSpacing: 6, fontFace: "Arial" });
+      s6.addText("Where do you see the\nbiggest opportunity?", { x: 0.8, y: 2.0, w: 11, fontSize: 36, color: WHITE, bold: true, fontFace: "Arial" });
+      s6.addText(`${group.label}  •  ${new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}`, { x: 0.8, y: 4.2, w: 11, fontSize: 14, color: MUTED, fontFace: "Arial" });
+
+      const fileName = `${group.label.replace(/[^a-zA-Z0-9]/g, "_")}_presentation.pptx`;
+      await pptx.writeFile({ fileName });
+    } catch (err: any) {
+      alert(`Slide generation failed: ${err.message}`);
+    } finally {
+      setGeneratingSlides(false);
+    }
+  };
     ? Object.entries(selectedIndividual.scores).sort(([, a], [, b]) => (a as number) - (b as number))[0]
     : null;
   const strongest = selectedIndividual
