@@ -343,6 +343,9 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
     }
     y += 6;
 
+    // Ensure the score dashboard has enough room — if cover content (team banner + participants) pushed us too far, start a new page
+    checkNewPage(120); // score dashboard + benchmark + methodology needs ~120mm
+
     drawDivider();
 
     // ── Score Dashboard (visual, scannable) ──
@@ -1327,7 +1330,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         variant="outline"
                         size="sm"
                         className="gap-1.5"
-                        onClick={(e) => { e.stopPropagation(); generatePDF(org, includeNames, false, teamLeaderFilter); }}
+                        onClick={(e) => { e.stopPropagation(); try { generatePDF(org, includeNames, false, teamLeaderFilter); } catch (err) { console.error("PDF generation failed:", err); alert("PDF generation failed: " + (err as Error).message); } }}
                       >
                         <Download className="h-3.5 w-3.5" />
                         PDF
@@ -1337,7 +1340,7 @@ export default function OrgInsights({ results }: { results: DiagnosticResult[] }
                         variant="ghost"
                         size="sm"
                         className="gap-1.5 text-muted-foreground"
-                        onClick={(e) => { e.stopPropagation(); generatePDF(org, false, true); }}
+                        onClick={(e) => { e.stopPropagation(); try { generatePDF(org, false, true); } catch (err) { console.error("PDF generation failed:", err); alert("PDF generation failed: " + (err as Error).message); } }}
                         title="Download fully anonymised report for public sharing"
                       >
                         <Download className="h-3.5 w-3.5" />
