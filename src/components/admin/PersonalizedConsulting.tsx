@@ -7,8 +7,9 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   UserRound, Search, Sparkles, Loader2, ChevronDown, ChevronUp,
-  BarChart3, Building2, Users as UsersIcon, Presentation,
+  BarChart3, Building2, Users as UsersIcon, Presentation, Download,
 } from "lucide-react";
+import pptxgen from "pptxgenjs";
 import { DIMENSION_LABELS, type Dimension } from "@/lib/diagnostic-scoring";
 import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
