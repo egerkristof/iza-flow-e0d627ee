@@ -718,24 +718,49 @@ export default function PersonalizedConsulting({ results }: Props) {
                 {mode === "team" ? "Team Presentation Prep" : "Consulting Brief"}
                 {generating && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
               </CardTitle>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  if (mode === "individual" && selectedIndividual) generateIndividualBrief(selectedIndividual);
-                  if (mode === "team" && selectedTeam) generateTeamBrief(selectedTeam);
-                }}
-                disabled={generating}
-                className="gap-1.5 text-xs"
-              >
-                <Sparkles className="h-3 w-3" />
-                Regenerate
-              </Button>
+              <div className="flex items-center gap-2">
+                {mode === "team" && selectedTeam && brief && !generating && (
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={() => generateTeamSlides(selectedTeam)}
+                    disabled={generatingSlides}
+                    className="gap-1.5 text-xs"
+                  >
+                    {generatingSlides ? <Loader2 className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3" />}
+                    Download Slides
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (mode === "individual" && selectedIndividual) generateIndividualBrief(selectedIndividual);
+                    if (mode === "team" && selectedTeam) generateTeamBrief(selectedTeam);
+                  }}
+                  disabled={generating}
+                  className="gap-1.5 text-xs"
+                >
+                  <Sparkles className="h-3 w-3" />
+                  Regenerate
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
             {brief ? (
-              <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
+              <div className="prose prose-sm max-w-none dark:prose-invert
+                [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-foreground [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:pb-2 [&_h2]:border-b [&_h2]:border-border/40
+                [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-foreground [&_h3]:mt-6 [&_h3]:mb-2
+                [&_p]:text-muted-foreground [&_p]:leading-7 [&_p]:my-3
+                [&_ul]:my-3 [&_ul]:space-y-2 [&_ul]:pl-5
+                [&_ol]:my-3 [&_ol]:space-y-2 [&_ol]:pl-5
+                [&_li]:text-muted-foreground [&_li]:leading-7
+                [&_strong]:text-foreground [&_strong]:font-semibold
+                [&_em]:text-foreground/80
+                [&_blockquote]:border-l-2 [&_blockquote]:border-primary/40 [&_blockquote]:bg-primary/5 [&_blockquote]:px-4 [&_blockquote]:py-3 [&_blockquote]:rounded-r-md [&_blockquote]:my-4
+                [&_hr]:border-border/30 [&_hr]:my-8
+              ">
                 <ReactMarkdown>{brief}</ReactMarkdown>
               </div>
             ) : (
