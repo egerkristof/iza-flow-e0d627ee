@@ -457,6 +457,8 @@ export default function PersonalizedConsulting({ results }: Props) {
       setGeneratingSlides(false);
     }
   };
+
+  const weakest = selectedIndividual
     ? Object.entries(selectedIndividual.scores).sort(([, a], [, b]) => (a as number) - (b as number))[0]
     : null;
   const strongest = selectedIndividual
