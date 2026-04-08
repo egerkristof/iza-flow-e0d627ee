@@ -391,21 +391,32 @@ export default function PersonalizedConsulting({ results }: Props) {
       s4.addShape(pptx.ShapeType.rect, { x: 0.8, y: 0.7, w: 1.5, h: 0.04, fill: { color: PRIMARY } });
       s4.addText("How individual scores compare — wider gaps indicate misaligned perceptions within the team.", { x: 0.8, y: 0.9, w: 11, fontSize: 12, color: MUTED, fontFace: "Arial" });
 
-      // Show each member's overall score as a dot chart
+      // Show each member's overall score — paginate across slides
       const sortedMembers = [...group.results].sort((a, b) => b.overall_score - a.overall_score);
-      sortedMembers.forEach((member, i) => {
-        const yPos = 1.6 + i * 0.45;
-        if (yPos > 4.8) return;
-        const nameStr = member.email ? member.email.split("@")[0] : `Member ${i + 1}`;
-        s4.addText(nameStr, { x: 0.8, y: yPos, w: 2.5, fontSize: 11, color: MUTED, fontFace: "Arial" });
-        // Score bar
-        const barW = (member.overall_score / 100) * 7;
-        s4.addShape(pptx.ShapeType.roundRect, { x: 3.5, y: yPos + 0.05, w: 7, h: 0.28, fill: { color: CARD_BG }, rectRadius: 0.04 });
-        s4.addShape(pptx.ShapeType.roundRect, { x: 3.5, y: yPos + 0.05, w: barW, h: 0.28, fill: { color: PRIMARY }, rectRadius: 0.04 });
-        s4.addText(`${member.overall_score}`, { x: 10.7, y: yPos, w: 0.8, fontSize: 11, color: WHITE, bold: true, fontFace: "Arial", align: "right" });
-        // Archetype badge
-        s4.addText(member.archetype, { x: 11.6, y: yPos, w: 1.6, fontSize: 9, color: archColors[member.archetype] || MUTED, fontFace: "Arial" });
-      });
+      const MAX_PER_PAGE = 7;
+      const pages = Math.ceil(sortedMembers.length / MAX_PER_PAGE);
+
+      for (let page = 0; page < pages; page++) {
+        const slide = page === 0 ? s4 : pptx.addSlide();
+        if (page > 0) {
+          slide.background = { color: DARK };
+          slide.addText(`PERCEPTION GAP (${page + 1}/${pages})`, { x: 0.8, y: 0.4, w: 5, fontSize: 12, color: PRIMARY_LIGHT, bold: true, charSpacing: 4, fontFace: "Arial" });
+          slide.addShape(pptx.ShapeType.rect, { x: 0.8, y: 0.7, w: 1.5, h: 0.04, fill: { color: PRIMARY } });
+          slide.addText("How individual scores compare — wider gaps indicate misaligned perceptions within the team.", { x: 0.8, y: 0.9, w: 11, fontSize: 12, color: MUTED, fontFace: "Arial" });
+        }
+
+        const pageMembers = sortedMembers.slice(page * MAX_PER_PAGE, (page + 1) * MAX_PER_PAGE);
+        pageMembers.forEach((member, i) => {
+          const yPos = 1.6 + i * 0.45;
+          const nameStr = member.email ? member.email.split("@")[0] : `Member ${i + 1 + page * MAX_PER_PAGE}`;
+          slide.addText(nameStr, { x: 0.8, y: yPos, w: 2.5, fontSize: 11, color: MUTED, fontFace: "Arial" });
+          const barW = (member.overall_score / 100) * 7;
+          slide.addShape(pptx.ShapeType.roundRect, { x: 3.5, y: yPos + 0.05, w: 7, h: 0.28, fill: { color: CARD_BG }, rectRadius: 0.04 });
+          slide.addShape(pptx.ShapeType.roundRect, { x: 3.5, y: yPos + 0.05, w: barW, h: 0.28, fill: { color: PRIMARY }, rectRadius: 0.04 });
+          slide.addText(`${member.overall_score}`, { x: 10.7, y: yPos, w: 0.8, fontSize: 11, color: WHITE, bold: true, fontFace: "Arial", align: "right" });
+          slide.addText(member.archetype, { x: 11.6, y: yPos, w: 1.6, fontSize: 9, color: archColors[member.archetype] || MUTED, fontFace: "Arial" });
+        });
+      }
 
       // Slide 5: Key Findings & Action
       const s5 = pptx.addSlide();
