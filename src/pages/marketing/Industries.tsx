@@ -110,15 +110,14 @@ export default function IndustriesPage() {
       {/* Hero */}
       <section className="pt-16 pb-12 px-6 text-center">
         <div className="max-w-3xl mx-auto">
-          <SectionTag label="Industry & Function Solutions" />
+          <SectionTag label="Where LIZA Works" />
           <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-[1.1]">
-            Every function has a lifecycle.
-            <br />
-            <span className="text-primary">LIZA governs the AI inside it.</span>
+            One pattern. Every lifecycle.
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-            Whether it's a regulated process or a revenue-critical function, LIZA ensures 
-            AI-assisted work stays accurate, consistent, and audit-ready.
+            From regulated industries to revenue-critical functions, the challenge is the same: 
+            AI makes work faster, but without governance it makes work inconsistent. 
+            LIZA is the operating layer that fixes that.
           </p>
         </div>
       </section>
