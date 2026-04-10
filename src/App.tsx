@@ -25,6 +25,14 @@ import ManifestoPage from "./pages/marketing/Manifesto";
 import UseCasesPage from "./pages/marketing/UseCases";
 import IndustriesPage from "./pages/marketing/Industries";
 import IndustryPharmaPage from "./pages/marketing/IndustryPharma";
+import IndustryProfessionalServicesPage from "./pages/marketing/IndustryProfessionalServices";
+import IndustrySalesPage from "./pages/marketing/IndustrySales";
+import IndustryGTMPage from "./pages/marketing/IndustryGTM";
+import IndustryMarketingPage from "./pages/marketing/IndustryMarketing";
+import IndustryBizDevPage from "./pages/marketing/IndustryBizDev";
+import IndustryAccountMgmtPage from "./pages/marketing/IndustryAccountMgmt";
+import IndustryOnboardingPage from "./pages/marketing/IndustryOnboarding";
+import IndustryMeetingsPage from "./pages/marketing/IndustryMeetings";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -72,6 +80,14 @@ const App = () => (
             <Route path="/industries" element={<IndustriesPage />} />
             <Route path="/industries/regulated" element={<IndustryPharmaPage />} />
             <Route path="/industries/pharma" element={<Navigate to="/industries/regulated" replace />} />
+            <Route path="/industries/professional-services" element={<IndustryProfessionalServicesPage />} />
+            <Route path="/industries/sales" element={<IndustrySalesPage />} />
+            <Route path="/industries/gtm" element={<IndustryGTMPage />} />
+            <Route path="/industries/marketing" element={<IndustryMarketingPage />} />
+            <Route path="/industries/business-development" element={<IndustryBizDevPage />} />
+            <Route path="/industries/account-management" element={<IndustryAccountMgmtPage />} />
+            <Route path="/industries/onboarding" element={<IndustryOnboardingPage />} />
+            <Route path="/industries/meetings" element={<IndustryMeetingsPage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
             <Route path="/platform-signup" element={<PlatformSignupPage />} />
