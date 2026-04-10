@@ -31,6 +31,7 @@ const REGULATED_INDUSTRIES = [
 
 const FUNCTIONAL_LIFECYCLES = [
   {
+    slug: "professional-services",
     icon: <Briefcase className="w-6 h-6" />,
     title: "Professional Services",
     lifecycle: "Engagement Delivery Lifecycle",
@@ -40,6 +41,7 @@ const FUNCTIONAL_LIFECYCLES = [
     col: "270 60% 65%",
   },
   {
+    slug: "sales",
     icon: <TrendingUp className="w-6 h-6" />,
     title: "Sales",
     lifecycle: "Deal Execution Lifecycle",
@@ -49,6 +51,7 @@ const FUNCTIONAL_LIFECYCLES = [
     col: "38 92% 50%",
   },
   {
+    slug: "gtm",
     icon: <Target className="w-6 h-6" />,
     title: "Go-to-Market",
     lifecycle: "Launch & Expansion Lifecycle",
@@ -58,6 +61,7 @@ const FUNCTIONAL_LIFECYCLES = [
     col: "200 90% 52%",
   },
   {
+    slug: "marketing",
     icon: <Megaphone className="w-6 h-6" />,
     title: "Marketing",
     lifecycle: "Positioning & Campaign Lifecycle",
@@ -67,6 +71,7 @@ const FUNCTIONAL_LIFECYCLES = [
     col: "330 70% 55%",
   },
   {
+    slug: "business-development",
     icon: <Handshake className="w-6 h-6" />,
     title: "Business Development",
     lifecycle: "Partnership & Pipeline Lifecycle",
@@ -76,6 +81,7 @@ const FUNCTIONAL_LIFECYCLES = [
     col: "155 72% 46%",
   },
   {
+    slug: "account-management",
     icon: <Users className="w-6 h-6" />,
     title: "Account Management",
     lifecycle: "Retention & Growth Lifecycle",
@@ -85,6 +91,7 @@ const FUNCTIONAL_LIFECYCLES = [
     col: "180 65% 45%",
   },
   {
+    slug: "onboarding",
     icon: <GraduationCap className="w-6 h-6" />,
     title: "Onboarding & Enablement",
     lifecycle: "Knowledge Transfer Lifecycle",
@@ -94,6 +101,7 @@ const FUNCTIONAL_LIFECYCLES = [
     col: "45 85% 55%",
   },
   {
+    slug: "meetings",
     icon: <Radio className="w-6 h-6" />,
     title: "Meeting Intelligence",
     lifecycle: "Decision Capture Lifecycle",
@@ -252,7 +260,7 @@ export default function IndustriesPage() {
                   <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                     {fn.description}
                   </p>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap items-center gap-1.5">
                     {fn.tags.map((tag) => (
                       <span
                         key={tag}
@@ -265,6 +273,12 @@ export default function IndustriesPage() {
                         {tag}
                       </span>
                     ))}
+                    <Link
+                      to={`/industries/${fn.slug}`}
+                      className="ml-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                    >
+                      Explore <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 </div>
               ))}
