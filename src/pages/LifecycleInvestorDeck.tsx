@@ -109,19 +109,21 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS
+            LIZA OS · Seed
           </span>
         </div>
 
         <h1 className="font-black mb-10" style={{ fontSize: 84, lineHeight: 1.05, color: DARK_TEXT }}>
-          AI can execute anything.<br />
+          AI fuses how you work<br />
+          with what you produce.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Who tells it how?
+            Who manages that?
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 32, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The first infrastructure for how organizations think, decide, and deliver.
+          The first infrastructure for managing AI artifacts —<br />
+          where organizational judgment meets machine execution.
         </p>
 
         <p style={{ fontSize: 20, color: DARK_SUBTLE }}>
