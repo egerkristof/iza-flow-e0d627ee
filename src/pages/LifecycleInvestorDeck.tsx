@@ -1049,10 +1049,10 @@ function Slide12() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "Expertise Runs Business", component: <Slide02 /> },
-  { id: 3, title: "Seniors Filled the Gaps", component: <Slide03 /> },
-  { id: 4, title: "AI Changed the Game", component: <Slide04 /> },
-  { id: 5, title: "The Update Problem", component: <Slide05 /> },
+  { id: 2, title: "Two Systems Exist", component: <Slide02 /> },
+  { id: 3, title: "The Human Bridge", component: <Slide03 /> },
+  { id: 4, title: "LLMs Break Both Sides", component: <Slide04 /> },
+  { id: 5, title: "The Fusion Problem", component: <Slide05 /> },
   { id: 6, title: "Solved Before ($B Markets)", component: <Slide06 /> },
   { id: 7, title: "The Solution", component: <Slide07 /> },
   { id: 8, title: "Category Validation", component: <Slide08 /> },
