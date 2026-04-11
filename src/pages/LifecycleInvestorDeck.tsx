@@ -4,7 +4,7 @@ import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
   AlertTriangle, CheckCircle2, DollarSign,
-  Users, Globe, Briefcase,
+  Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
