@@ -279,7 +279,7 @@ function Slide03() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 4 — THE LLM SHIFT (Semantic power breaks the balance)
+// SLIDE 4 — THE LLM SHIFT (Hows and Whats FUSE)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide04() {
@@ -289,68 +289,70 @@ function Slide04() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The LLM Shift</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 55, color: TEXT, lineHeight: 1.05 }}>
-          LLMs gave us a <span style={{ color: `hsl(${TEAL})` }}>semantic engine</span> that turns<br/>
-          <span style={{ color: `hsl(${TEAL})` }}>Hows</span> into <span style={{ color: `hsl(${BLUE})` }}>Whats</span> — <span style={{ color: `hsl(${WARM})` }}>instantly, at scale.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+          LLMs don't just turn <span style={{ color: `hsl(${TEAL})` }}>Hows</span> into <span style={{ color: `hsl(${BLUE})` }}>Whats</span>.<br/>
+          They <span style={{ color: `hsl(${WARM})` }}>fuse them</span> into a new kind of artifact.
         </h2>
         <p className="mb-8" style={{ fontSize: 24, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          For the first time, machines can read expertise and produce artifacts from it. 
-          But this power revealed a fatal dependency: the quality of every AI-generated <strong>What</strong> is now 
-          <em> entirely</em> determined by the quality of the <strong>How</strong> it was given.
+          Every AI-generated artifact is <strong>simultaneously</strong> a What (the output) and an encoded How (the judgment that shaped it).
+          This fusion creates a new category of asset that no existing tool manages.
         </p>
 
         <div className="flex-1 flex gap-10 items-stretch">
-          {/* The Power */}
-          <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="flex items-center gap-3 mb-5">
-              <Zap size={22} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>The Power — Semantic Execution</p>
-            </div>
-            <div className="flex flex-col gap-3 flex-1">
-              {[
-                "Give it your sales methodology → it writes the proposal",
-                "Give it your code standards → it generates the module",
-                "Give it your onboarding guide → it builds the training",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${TEAL} / 0.06)` }}>
-                  <CheckCircle2 size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-                  <span style={{ fontSize: 20, color: TEXT }}>{item}</span>
-                </div>
-              ))}
-            </div>
-            <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-              Execution is instant. And it scales infinitely.
-            </p>
-          </div>
-
-          {/* The Break */}
+          {/* The Fusion */}
           <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
             <div className="flex items-center gap-3 mb-5">
-              <AlertTriangle size={22} style={{ color: `hsl(${WARM})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${WARM})` }}>The Break — No Human Bridge</p>
+              <Zap size={22} style={{ color: `hsl(${WARM})` }} />
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${WARM})` }}>The Fusion Problem</p>
             </div>
             <div className="flex flex-col gap-3 flex-1">
               {[
-                "AI executes literally — it can't judge what's missing",
-                "No senior to compensate for stale or incomplete knowledge",
-                "One bad How → 50 bad Whats, generated in seconds",
+                "AI writes a proposal → it encodes your pricing logic, deal structure, positioning",
+                "AI generates training → it encodes your onboarding methodology, cultural norms",
+                "AI drafts compliance docs → it encodes your interpretation of regulations",
+                "Every output is now a carrier of organizational judgment",
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${WARM} / 0.06)` }}>
-                  <X size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
-                  <span style={{ fontSize: 20, color: TEXT }}>{item}</span>
+                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: i === 3 ? `hsl(${WARM} / 0.08)` : `hsl(${WARM} / 0.04)` }}>
+                  {i < 3 ? <ArrowRight size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} /> : <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />}
+                  <span style={{ fontSize: 20, color: TEXT, fontWeight: i === 3 ? 700 : 400 }}>{item}</span>
                 </div>
               ))}
             </div>
             <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
-              The Hows were never ready for this.
+              And nobody is managing any of it.
+            </p>
+          </div>
+
+          {/* The Analogy */}
+          <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <div className="flex items-center gap-3 mb-5">
+              <BookOpen size={22} style={{ color: `hsl(${TEAL})` }} />
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>We've Seen This Before</p>
+            </div>
+            <div className="flex flex-col gap-4 flex-1">
+              {[
+                { era: "Code", what: "Developers wrote software", tool: "Git gave it version control", market: "$34B ALM" },
+                { era: "Products", what: "Engineers designed parts", tool: "PLM gave it change management", market: "$65B PLM" },
+                { era: "Regulations", what: "Teams wrote compliance docs", tool: "GxP gave it audit trails", market: "$18B GxP" },
+                { era: "AI Artifacts", what: "LLMs generate everything", tool: "??? gives it governance", market: "Whitespace" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-4 px-5 py-3 rounded-lg" style={{ background: i === 3 ? `hsl(${TEAL} / 0.08)` : `hsl(${TEAL} / 0.04)`, border: i === 3 ? `1px solid hsl(${TEAL} / 0.25)` : "none" }}>
+                  <span className="font-black w-28 shrink-0" style={{ fontSize: 14, color: i === 3 ? `hsl(${TEAL})` : SUBTLE }}>{item.era}</span>
+                  <span className="flex-1" style={{ fontSize: 17, color: i === 3 ? TEXT : MUTED }}>{item.tool}</span>
+                  <span className="font-bold shrink-0" style={{ fontSize: 15, color: i === 3 ? `hsl(${WARM})` : `hsl(${TEAL})` }}>{item.market}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
+              Every critical layer that got governance created a $B category.
             </p>
           </div>
         </div>
 
         <div className="mt-6 px-10 py-4 rounded-xl text-center" style={{ background: CARD_ALT, border: `1px solid hsl(215 10% 90%)` }}>
           <p style={{ fontSize: 22, color: TEXT }}>
-            <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>$100B+</span> of infrastructure governs the <strong>Whats</strong> (ALM, PLM, GxP). 
-            <span className="font-bold" style={{ color: `hsl(${WARM})` }}> $0</span> governs the <strong>Hows</strong> that AI now executes from.
+            <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>$100B+</span> of infrastructure governs the <strong>Whats</strong>. 
+            <span className="font-bold" style={{ color: `hsl(${WARM})` }}> $0</span> governs the <strong>AI artifacts</strong> that now fuse Whats and Hows together.
           </p>
         </div>
       </div>
