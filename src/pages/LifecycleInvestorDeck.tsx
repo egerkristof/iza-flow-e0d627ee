@@ -401,17 +401,17 @@ function Slide05() {
           {/* The insight */}
           <div className="w-[500px] flex flex-col gap-6 justify-center">
             <div className="rounded-2xl border p-8" style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(200 25% 10%)` }}>
-              <p className="font-black mb-3" style={{ fontSize: 28, color: DARK_TEXT }}>This is Configuration Management for knowledge.</p>
+              <p className="font-black mb-3" style={{ fontSize: 28, color: DARK_TEXT }}>This is version control for expertise.</p>
               <p style={{ fontSize: 19, color: DARK_MUTED, lineHeight: 1.55 }}>
-                Software has version control. Physical products have PLM. Regulated docs have GxP.
-                Organizational knowledge has <strong style={{ color: `hsl(${WARM})` }}>nothing</strong>.
+                Software has Git. Products have PLM. Regulated docs have compliance systems.
+                Organizational expertise has <strong style={{ color: `hsl(${WARM})` }}>nothing</strong>.
               </p>
             </div>
             <div className="rounded-2xl border p-8" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-              <p className="font-black mb-3" style={{ fontSize: 28, color: DARK_TEXT }}>The How Layer needs infrastructure.</p>
+              <p className="font-black mb-3" style={{ fontSize: 28, color: DARK_TEXT }}>Expertise needs infrastructure.</p>
               <p style={{ fontSize: 19, color: DARK_MUTED, lineHeight: 1.55 }}>
-                Not just encoding. Not just organizing. <strong style={{ color: `hsl(${TEAL})` }}>Connected change propagation</strong> — so when
-                knowledge evolves, every artifact follows.
+                Not just capturing it. Not just organizing it. <strong style={{ color: `hsl(${TEAL})` }}>Connected change propagation</strong> — so when
+                an expert updates their approach, every AI output follows.
               </p>
             </div>
           </div>
