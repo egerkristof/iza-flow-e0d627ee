@@ -381,14 +381,14 @@ function Slide05() {
         <div className="flex-1 flex gap-8 items-stretch">
           {/* The cascade */}
           <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.04)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-5" style={{ fontSize: 16, color: `hsl(${WARM})` }}>A single How changes...</p>
+            <p className="font-bold tracking-[0.15em] uppercase mb-5" style={{ fontSize: 16, color: `hsl(${WARM})` }}>One piece of expertise changes...</p>
             <div className="flex flex-col gap-3 flex-1">
               {[
                 "Pricing model updated by the VP of Sales",
                 "→ 47 AI-generated proposals still use the old model",
                 "→ 12 training decks teach the wrong methodology",
                 "→ 8 onboarding scripts reference deprecated terms",
-                "→ Every downstream What is now wrong",
+                "→ Every downstream output is now wrong",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-lg" style={{ background: i === 0 ? `hsl(${TEAL} / 0.08)` : `hsl(${WARM} / 0.06)` }}>
                   {i === 0 ? <CheckCircle2 size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} /> : <X size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />}
