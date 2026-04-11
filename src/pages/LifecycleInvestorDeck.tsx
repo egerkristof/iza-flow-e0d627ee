@@ -136,7 +136,7 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 2 — THE FOUNDATION (Organizations produce Whats from Hows)
+// SLIDE 2 — EVERY COMPANY RUNS ON EXPERTISE
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
@@ -144,30 +144,27 @@ function Slide02() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>The Foundation</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>The Starting Point</p>
 
         <h2 className="font-black mb-4" style={{ fontSize: 58, color: TEXT, lineHeight: 1.05 }}>
-          Every organization produces{" "}
-          <span style={{ color: `hsl(${BLUE})` }}>Whats</span>{" "}
-          from{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>Hows.</span>
+          Every company runs on expertise<br />
+          that <span style={{ color: `hsl(${TEAL})` }}>lives in people's heads.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          Artifacts — proposals, contracts, code, training materials — are the <strong>Whats</strong>. 
-          The judgment, methodology, and expertise that shape them are the <strong>Hows</strong>.
+          Your best people know <em>how</em> to do things right. That expertise shapes every output your company produces.
         </p>
 
         <div className="flex-1 flex gap-10 items-stretch">
-          {/* THE HOWS */}
+          {/* Expertise examples */}
           <div className="flex-1 rounded-2xl border p-10 flex flex-col justify-center" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>The Hows — Expertise</p>
+            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>The Expertise — what your best people know</p>
             <div className="flex flex-col gap-4">
               {[
-                "How we qualify a lead",
-                "How we price a complex deal",
-                "How we onboard a new hire",
-                "How we handle a regulatory audit",
-                "How we write production-ready code",
+                "How to qualify a lead so you don't waste time",
+                "How to price a complex deal without leaving money on the table",
+                "How to onboard a new hire in 2 weeks instead of 3 months",
+                "How to pass an audit without a panic scramble",
+                "How to write code that doesn't break in production",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-4 px-5 py-4 rounded-lg" style={{ background: `hsl(${TEAL} / 0.06)` }}>
                   <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${TEAL})` }} />
@@ -179,20 +176,20 @@ function Slide02() {
 
           {/* ARROW */}
           <div className="flex flex-col items-center justify-center gap-3 px-2">
-            <p className="font-bold" style={{ fontSize: 16, color: SUBTLE }}>shapes</p>
+            <p className="font-bold" style={{ fontSize: 16, color: SUBTLE }}>produces</p>
             <ArrowRight size={32} style={{ color: MUTED }} />
           </div>
 
-          {/* THE WHATS */}
+          {/* The outputs */}
           <div className="flex-1 rounded-2xl border p-10 flex flex-col justify-center" style={{ borderColor: `hsl(${BLUE} / 0.25)`, background: `hsl(${BLUE} / 0.04)` }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${BLUE})` }}>The Whats — Artifacts</p>
+            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${BLUE})` }}>The Outputs — what your company delivers</p>
             <div className="flex flex-col gap-4">
               {[
-                "Proposals & SOWs",
-                "Training materials",
-                "Contracts & compliance docs",
-                "Code & architecture",
-                "Reports & presentations",
+                "Proposals that win deals",
+                "Training that actually works",
+                "Contracts that protect you",
+                "Code that scales",
+                "Reports that drive decisions",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-4 px-5 py-4 rounded-lg" style={{ background: `hsl(${BLUE} / 0.06)` }}>
                   <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${BLUE})` }} />
@@ -205,7 +202,7 @@ function Slide02() {
 
         <div className="mt-8 text-center">
           <p style={{ fontSize: 24, color: MUTED }}>
-            The quality of every <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>What</span> is determined by the quality of the <span className="font-bold" style={{ color: `hsl(${TEAL})` }}>How</span> behind it.
+            The quality of every <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>output</span> depends entirely on the quality of the <span className="font-bold" style={{ color: `hsl(${TEAL})` }}>expertise</span> behind it.
           </p>
         </div>
       </div>
