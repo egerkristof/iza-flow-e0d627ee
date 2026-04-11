@@ -160,7 +160,7 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — The Lifecycle Problem ────────────────────────────────────────
+// ─── Slide 02 — The Problem (Plain Language) ────────────────────────────────
 
 function Slide02LifecycleProblem() {
   return (
@@ -168,13 +168,16 @@ function Slide02LifecycleProblem() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <Tag label="The Problem" color={WARM} />
-        <h2 className="font-bold mb-10" style={{ fontSize: 72, color: TEXT, lineHeight: 1.1 }}>
-          Every lifecycle is a chain of decisions.<br />
-          <span style={{ color: `hsl(${WARM})` }}>Every chain breaks the same way.</span>
+        <h2 className="font-bold mb-6" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          Work doesn't happen in isolation.<br />
+          <span style={{ color: `hsl(${WARM})` }}>But every tool treats it like it does.</span>
         </h2>
+        <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
+          In any business, work flows through stages. A sales team scopes a deal, marketing creates materials for it,
+          delivery executes on it. These stages are connected — but the tools people use aren't.
+        </p>
 
         <div className="flex-1 flex gap-8">
-          {/* Lifecycle visual */}
           <div className="flex-1 flex flex-col justify-center">
             <div className="flex items-center gap-3 mb-10">
               {["Scope", "Plan", "Execute", "Deliver", "Review"].map((step, i) => (
@@ -189,20 +192,19 @@ function Slide02LifecycleProblem() {
             </div>
 
             <div className="rounded-2xl border p-8" style={{ background: `hsl(${WARM} / 0.04)`, borderColor: `hsl(${WARM} / 0.2)` }}>
-              <p className="font-bold mb-3" style={{ fontSize: 28, color: TEXT }}>When step 3 changes, steps 4 and 5 don't know.</p>
+              <p className="font-bold mb-3" style={{ fontSize: 28, color: TEXT }}>When something changes in step 3, steps 4 and 5 don't know about it.</p>
               <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
-                Requirements shift. Messaging pivots. A test fails. The change happens locally, but its consequences are global.
-                Downstream artifacts, decisions, and deliverables silently drift out of alignment.
+                A client changes their requirements. The project plan doesn't update. The proposal stays the same.
+                The invoice references the wrong scope. Nobody notices until it's too late.
               </p>
             </div>
           </div>
 
-          {/* Impact stats */}
           <div className="w-[380px] flex flex-col gap-6">
             {[
-              { stat: "73%", label: "of process failures come from upstream changes not propagated downstream", color: WARM },
-              { stat: "5.2x", label: "more rework in teams without lifecycle governance", color: WARM },
-              { stat: "$0", label: "currently spent on the layer that connects lifecycle stages", color: TEAL },
+              { stat: "73%", label: "of process failures trace back to changes that didn't reach the right people", color: WARM },
+              { stat: "5.2x", label: "more rework when teams don't have a way to keep things in sync", color: WARM },
+              { stat: "$0", label: "spent today on tools that connect these stages together", color: TEAL },
             ].map(({ stat, label, color }) => (
               <div key={stat} className="rounded-xl border p-6"
                 style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -218,21 +220,20 @@ function Slide02LifecycleProblem() {
   );
 }
 
-// ─── Slide 03 — The Two Knowledge Layers ─────────────────────────────────────
+// ─── Slide 03 — Two Things That Drift Apart ─────────────────────────────────
 
 function Slide03TwoLayers() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="The Thesis" color={SEAFOAM} />
-        <h2 className="font-black mb-6" style={{ fontSize: 72, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Two layers of knowledge.<br />
-          <span style={{ color: `hsl(${SEAFOAM})` }}>One governance engine.</span>
+        <DarkTag label="The Insight" color={SEAFOAM} />
+        <h2 className="font-black mb-6" style={{ fontSize: 68, color: DARK_TEXT, lineHeight: 1.05 }}>
+          Every organization has two types<br />
+          of knowledge. <span style={{ color: `hsl(${SEAFOAM})` }}>They always drift apart.</span>
         </h2>
-        <p className="mb-12" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1000, lineHeight: 1.5 }}>
-          Every business lifecycle produces two kinds of knowledge that must stay in sync.
-          Today, they drift apart silently. LIZA governs both.
+        <p className="mb-10" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
+          Think of it this way: there's <strong style={{ color: DARK_TEXT }}>how your best people do things</strong> (their expertise, their playbooks) — and then there's <strong style={{ color: DARK_TEXT }}>what actually gets produced</strong> (the documents, decisions, deliverables). These two should match. They almost never do.
         </p>
 
         <div className="flex-1 grid grid-cols-2 gap-10">
@@ -244,16 +245,16 @@ function Slide03TwoLayers() {
                 <BookOpen size={28} style={{ color: `hsl(${TEAL})` }} />
               </div>
               <div>
-                <p className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>Meta-Knowledge Layer</p>
-                <p style={{ fontSize: 20, color: `hsl(${TEAL})` }}>How things should be done</p>
+                <p className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>What People Know</p>
+                <p style={{ fontSize: 20, color: `hsl(${TEAL})` }}>The expertise, standards, and best practices</p>
               </div>
             </div>
             <div className="flex flex-col gap-4 flex-1">
               {[
-                "Playbooks that encode your best people's judgment",
-                "Standards that evolve as the organization learns",
-                "Procedures that capture the 'why' behind decisions",
-                "Directives that prevent known failure modes",
+                "How your top salesperson qualifies a deal",
+                "The delivery methodology your best PM follows",
+                "Quality standards your team has learned from experience",
+                "Rules and guidelines that prevent costly mistakes",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <CheckCircle2 size={20} className="mt-1 shrink-0" style={{ color: `hsl(${TEAL})` }} />
@@ -263,7 +264,7 @@ function Slide03TwoLayers() {
             </div>
             <div className="mt-6 px-5 py-3 rounded-lg" style={{ background: `hsl(${TEAL} / 0.12)` }}>
               <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-                "Turn your best expert's judgment into organizational capability"
+                Today this lives in people's heads, scattered docs, and tribal knowledge
               </p>
             </div>
           </div>
@@ -276,16 +277,16 @@ function Slide03TwoLayers() {
                 <GitBranch size={28} style={{ color: `hsl(${MINT})` }} />
               </div>
               <div>
-                <p className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>Artifact Layer</p>
-                <p style={{ fontSize: 20, color: `hsl(${MINT})` }}>What gets produced and delivered</p>
+                <p className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>What Gets Produced</p>
+                <p style={{ fontSize: 20, color: `hsl(${MINT})` }}>The documents, decisions, and deliverables</p>
               </div>
             </div>
             <div className="flex flex-col gap-4 flex-1">
               {[
-                "Deliverables created at each lifecycle stage",
-                "Decisions and their downstream dependencies",
-                "Outputs that must update when inputs change",
-                "Artifacts linked across lifecycle boundaries",
+                "The proposal your team sent to the client last week",
+                "The project plan that drives a six-month engagement",
+                "The campaign materials based on the latest positioning",
+                "The compliance docs that reference current regulations",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <CheckCircle2 size={20} className="mt-1 shrink-0" style={{ color: `hsl(${MINT})` }} />
@@ -295,7 +296,7 @@ function Slide03TwoLayers() {
             </div>
             <div className="mt-6 px-5 py-3 rounded-lg" style={{ background: `hsl(${MINT} / 0.12)` }}>
               <p className="font-bold" style={{ fontSize: 18, color: `hsl(${MINT})` }}>
-                "When scope changes, delivery artifacts update automatically"
+                Today these are created once, then silently go stale
               </p>
             </div>
           </div>
@@ -308,7 +309,7 @@ function Slide03TwoLayers() {
             style={{ background: `hsl(${SEAFOAM} / 0.1)`, border: `1px solid hsl(${SEAFOAM} / 0.3)` }}>
             <Link2 size={20} style={{ color: `hsl(${SEAFOAM})` }} />
             <span className="font-bold" style={{ fontSize: 20, color: `hsl(${SEAFOAM})` }}>
-              Connected by the LIZA Knowledge Graph
+              LIZA keeps both in sync — automatically
             </span>
           </div>
           <div className="h-px flex-1" style={{ background: `hsl(${MINT} / 0.3)` }} />
@@ -319,39 +320,42 @@ function Slide03TwoLayers() {
   );
 }
 
-// ─── Slide 04 — What Breaks Today ────────────────────────────────────────────
+// ─── Slide 04 — What Actually Happens ────────────────────────────────────────
 
 function Slide04WhatBreaks() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="The Drift Crisis" color={WARM} />
+        <Tag label="Real Examples" color={WARM} />
         <h2 className="font-bold mb-12" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
-          One change. <span style={{ color: `hsl(${WARM})` }}>N broken artifacts.</span>
+          One thing changes. <span style={{ color: `hsl(${WARM})` }}>Ten things break.</span>
         </h2>
 
         <div className="flex-1 grid grid-cols-3 gap-8">
           {[
             {
-              title: "Professional Services",
-              scenario: "Client scope changes mid-engagement",
-              breaks: ["Delivery plan still references old scope", "Resource allocation misaligned", "SOW and invoice don't match deliverables"],
+              title: "Consulting",
+              scenario: "A client changes scope halfway through",
+              breaks: ["The project plan still references the old scope", "Team allocation doesn't match the new reality", "The invoice doesn't match what was actually delivered"],
               icon: <Briefcase size={40} />,
+              cost: "Weeks of rework and uncomfortable client conversations",
             },
             {
               title: "Sales",
-              scenario: "Pipeline forecast shifts for the quarter",
-              breaks: ["Territory plans reference old targets", "Commission structures miscalculated", "Marketing campaigns target wrong segments"],
+              scenario: "Market conditions change the forecast",
+              breaks: ["Territory plans still target the old numbers", "Commission models are based on outdated goals", "Marketing is running campaigns for the wrong audience"],
               icon: <TrendingUp size={40} />,
+              cost: "Misaligned teams chasing the wrong targets",
             },
             {
               title: "Marketing",
-              scenario: "Messaging pivot after customer research",
-              breaks: ["Sales deck still uses old positioning", "Website copy contradicts new messaging", "SDR scripts reference deprecated value props"],
+              scenario: "Research reveals a better positioning",
+              breaks: ["The sales deck still uses the old messaging", "Website copy says something completely different", "Outreach scripts reference things you no longer believe"],
               icon: <Eye size={40} />,
+              cost: "Your customer hears three different stories",
             },
-          ].map(({ title, scenario, breaks, icon }) => (
+          ].map(({ title, scenario, breaks, icon, cost }) => (
             <div key={title} className="rounded-2xl border p-8 flex flex-col"
               style={{ borderColor: `hsl(${WARM} / 0.15)`, background: `hsl(${WARM} / 0.03)` }}>
               <div className="mb-4" style={{ color: `hsl(${TEAL})` }}>{icon}</div>
@@ -367,7 +371,7 @@ function Slide04WhatBreaks() {
               </div>
               <div className="mt-5 pt-4" style={{ borderTop: `1px solid hsl(${WARM} / 0.15)` }}>
                 <p className="font-bold" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
-                  Cost: weeks of rework, client trust erosion
+                  {cost}
                 </p>
               </div>
             </div>
@@ -379,29 +383,30 @@ function Slide04WhatBreaks() {
   );
 }
 
-// ─── Slide 05 — The Propagation Crisis ───────────────────────────────────────
+// ─── Slide 05 — Why AI Makes It Worse ────────────────────────────────────────
 
 function Slide05Propagation() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="Why Now" color={WARM} />
-        <h2 className="font-black mb-8" style={{ fontSize: 72, color: DARK_TEXT, lineHeight: 1.05 }}>
-          AI makes this <span style={{ color: `hsl(${WARM})` }}>10x worse.</span>
+        <DarkTag label="Why This Matters Now" color={WARM} />
+        <h2 className="font-black mb-8" style={{ fontSize: 68, color: DARK_TEXT, lineHeight: 1.05 }}>
+          AI is making this problem<br />
+          <span style={{ color: `hsl(${WARM})` }}>dramatically worse.</span>
         </h2>
 
         <div className="flex-1 flex gap-10">
           {/* Before AI */}
           <div className="flex-1 rounded-2xl border p-10 flex flex-col"
             style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
-            <p className="font-bold mb-6" style={{ fontSize: 30, color: DARK_MUTED }}>Before AI Agents</p>
+            <p className="font-bold mb-6" style={{ fontSize: 30, color: DARK_MUTED }}>Before AI</p>
             <div className="flex flex-col gap-5 flex-1">
               {[
-                "Humans create artifacts manually at a manageable pace",
-                "Changes propagate through meetings and email threads",
-                "Drift accumulates slowly, gets caught in reviews",
-                "One person might produce 5 artifacts per week",
+                "People create documents at a human pace",
+                "When something changes, someone sends an email or calls a meeting",
+                "Mistakes get caught in review cycles",
+                "Maybe 5-10 important documents per person per week",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: DARK_MUTED }} />
@@ -414,7 +419,6 @@ function Slide05Propagation() {
             </div>
           </div>
 
-          {/* Arrow */}
           <div className="flex items-center">
             <ArrowRight size={48} style={{ color: `hsl(${WARM})` }} />
           </div>
@@ -422,13 +426,13 @@ function Slide05Propagation() {
           {/* With AI */}
           <div className="flex-1 rounded-2xl border p-10 flex flex-col"
             style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.06)` }}>
-            <p className="font-bold mb-6" style={{ fontSize: 30, color: `hsl(${WARM})` }}>With AI Agents</p>
+            <p className="font-bold mb-6" style={{ fontSize: 30, color: `hsl(${WARM})` }}>With AI</p>
             <div className="flex flex-col gap-5 flex-1">
               {[
-                "AI generates artifacts at 100x the human pace",
-                "Every artifact is disconnected from every other",
-                "Changes can't propagate because there's no graph",
-                "One person triggers 500 artifacts per week",
+                "AI generates documents, plans, and analyses at 100x the speed",
+                "But none of these outputs are connected to each other",
+                "When the underlying facts change, nothing updates automatically",
+                "One person can now trigger hundreds of outputs per week",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <AlertTriangle size={18} className="mt-1.5 shrink-0" style={{ color: `hsl(${WARM})` }} />
@@ -437,7 +441,7 @@ function Slide05Propagation() {
               ))}
             </div>
             <div className="mt-6 text-center py-4 rounded-xl" style={{ background: `hsl(${WARM} / 0.15)` }}>
-              <p className="font-black" style={{ fontSize: 48, color: `hsl(${WARM})` }}>Catastrophic</p>
+              <p className="font-black" style={{ fontSize: 48, color: `hsl(${WARM})` }}>Unsustainable</p>
             </div>
           </div>
         </div>
@@ -445,7 +449,7 @@ function Slide05Propagation() {
         <div className="mt-8 rounded-xl px-8 py-5 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p className="font-bold" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>
-            The organizations that govern their lifecycle graphs will outperform those that don't. This is the infrastructure gap.
+            The faster AI produces, the more you need a system to keep everything aligned. That system doesn't exist yet.
           </p>
         </div>
       </div>
@@ -454,38 +458,38 @@ function Slide05Propagation() {
   );
 }
 
-// ─── Slide 06 — How LIZA Solves It ───────────────────────────────────────────
+// ─── Slide 06 — How LIZA Works ───────────────────────────────────────────────
 
 function Slide06Solution() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="The Solution" color={TEAL} />
+        <Tag label="How LIZA Works" color={TEAL} />
         <h2 className="font-bold mb-12" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
-          LIZA: <span style={{ color: `hsl(${TEAL})` }}>Decision-Chain Integrity</span> at scale.
+          Four steps. <span style={{ color: `hsl(${TEAL})` }}>One continuous loop.</span>
         </h2>
 
         <div className="flex-1 grid grid-cols-4 gap-6">
           {[
             {
               icon: <Brain size={36} />, step: "01", label: "Capture",
-              desc: "Extract the tacit knowledge from your best people. Turn tribal expertise into structured, executable playbooks.",
+              desc: "Your best people's expertise gets turned into clear, structured playbooks — not just documents, but actual rules the system can use.",
               color: TEAL,
             },
             {
               icon: <Layers size={36} />, step: "02", label: "Organize",
-              desc: "Bundle knowledge into governed context sets. Map dependencies between lifecycle stages, artifacts, and decisions.",
+              desc: "Playbooks are grouped by business function and linked together — so the system knows what depends on what across your lifecycle.",
               color: SEAFOAM,
             },
             {
               icon: <Workflow size={36} />, step: "03", label: "Execute",
-              desc: "Deploy playbooks as protocols with quality gates. Every AI interaction is grounded in your standards, not generic training.",
+              desc: "When people work, AI follows your playbooks — not generic training. Quality gates ensure standards are met at every step.",
               color: MINT,
             },
             {
-              icon: <RefreshCw size={36} />, step: "04", label: "Propagate",
-              desc: "When anything changes, LIZA identifies every downstream artifact that needs updating and surfaces it for review.",
+              icon: <RefreshCw size={36} />, step: "04", label: "Update",
+              desc: "When something changes — a new insight, a market shift, a client request — every connected document and decision gets flagged for review.",
               color: TEAL,
             },
           ].map(({ icon, step, label, desc, color }) => (
@@ -505,7 +509,7 @@ function Slide06Solution() {
         <div className="mt-8 flex items-center justify-center gap-6">
           <Repeat size={24} style={{ color: `hsl(${TEAL})` }} />
           <p className="font-bold" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            A continuous loop. Your organization gets smarter with every execution cycle.
+            The more people use it, the smarter the system gets. Knowledge compounds over time.
           </p>
         </div>
       </div>
@@ -514,27 +518,26 @@ function Slide06Solution() {
   );
 }
 
-// ─── Slide 07 — The Knowledge Graph ──────────────────────────────────────────
+// ─── Slide 07 — What's Under the Hood ────────────────────────────────────────
 
 function Slide07KnowledgeGraph() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="Architecture" color={SEAFOAM} />
+        <DarkTag label="Under the Hood" color={SEAFOAM} />
         <h2 className="font-black mb-8" style={{ fontSize: 68, color: DARK_TEXT, lineHeight: 1.05 }}>
-          The AACE Framework:<br />
-          <span style={{ color: `hsl(${SEAFOAM})` }}>AI-Assisted Context Engine</span>
+          A connected system<br />
+          <span style={{ color: `hsl(${SEAFOAM})` }}>that knows what depends on what.</span>
         </h2>
 
         <div className="flex-1 flex gap-10">
-          {/* Left: Architecture diagram */}
           <div className="flex-1 flex flex-col gap-6">
             {[
-              { label: "Context Bundles", desc: "Governed knowledge sets mapped to lifecycle domains", icon: <Database size={28} />, color: TEAL },
-              { label: "Protocols", desc: "Executable procedures with quality gates and drift detection", icon: <Settings size={28} />, color: SEAFOAM },
-              { label: "Workbooks", desc: "Intent management with artifact tracking and version control", icon: <FileText size={28} />, color: MINT },
-              { label: "Knowledge Graph", desc: "Dependency mapping between all layers, stages, and artifacts", icon: <Network size={28} />, color: TEAL },
+              { label: "Knowledge Bundles", desc: "Your team's expertise organized by business function — sales, delivery, marketing, compliance", icon: <Database size={28} />, color: TEAL },
+              { label: "Step-by-Step Guides", desc: "Clear procedures with built-in checkpoints, so people follow best practices consistently", icon: <Settings size={28} />, color: SEAFOAM },
+              { label: "Workspaces", desc: "Where work actually happens — every document, decision, and task tracked in one place", icon: <FileText size={28} />, color: MINT },
+              { label: "The Connection Map", desc: "The system tracks how everything relates, so a change in one place surfaces everywhere it matters", icon: <Network size={28} />, color: TEAL },
             ].map(({ label, desc, icon, color }) => (
               <div key={label} className="flex items-center gap-6 rounded-xl border p-6"
                 style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -550,17 +553,16 @@ function Slide07KnowledgeGraph() {
             ))}
           </div>
 
-          {/* Right: The connection */}
           <div className="w-[500px] rounded-2xl border p-10 flex flex-col justify-center"
             style={{ borderColor: `hsl(${SEAFOAM} / 0.25)`, background: `hsl(${SEAFOAM} / 0.06)` }}>
             <p className="font-black mb-6" style={{ fontSize: 36, color: DARK_TEXT }}>
-              Two graphs. One engine.
+              Two sides of the same coin.
             </p>
             <div className="flex flex-col gap-6">
               <div className="rounded-xl p-5" style={{ background: `hsl(${TEAL} / 0.12)` }}>
-                <p className="font-bold mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>Meta-Knowledge Graph</p>
+                <p className="font-bold mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>What Your People Know</p>
                 <p style={{ fontSize: 18, color: DARK_MUTED }}>
-                  Playbooks ← Procedures ← Directives ← Principles. Updated continuously as your organization learns.
+                  Best practices, playbooks, standards, and lessons learned — continuously updated as the team gets smarter.
                 </p>
               </div>
               <div className="flex justify-center">
@@ -571,9 +573,9 @@ function Slide07KnowledgeGraph() {
                 </div>
               </div>
               <div className="rounded-xl p-5" style={{ background: `hsl(${MINT} / 0.12)` }}>
-                <p className="font-bold mb-2" style={{ fontSize: 22, color: `hsl(${MINT})` }}>Artifact Graph</p>
+                <p className="font-bold mb-2" style={{ fontSize: 22, color: `hsl(${MINT})` }}>What Gets Delivered</p>
                 <p style={{ fontSize: 18, color: DARK_MUTED }}>
-                  Deliverables ← Decisions ← Dependencies ← Outputs. Change propagation across every lifecycle stage.
+                  Proposals, plans, reports, and decisions — all connected. When knowledge updates, deliverables update too.
                 </p>
               </div>
             </div>
@@ -585,37 +587,37 @@ function Slide07KnowledgeGraph() {
   );
 }
 
-// ─── Slide 08 — Lifecycle Examples ───────────────────────────────────────────
+// ─── Slide 08 — Works Across Every Business Function ─────────────────────────
 
 function Slide08Lifecycles() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="Universal Pattern" color={TEAL} />
+        <Tag label="Where It Applies" color={TEAL} />
         <h2 className="font-bold mb-10" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
-          One engine. <span style={{ color: `hsl(${TEAL})` }}>Every lifecycle.</span>
+          Same engine. <span style={{ color: `hsl(${TEAL})` }}>Any business function.</span>
         </h2>
 
         <div className="flex-1 grid grid-cols-2 gap-6">
           {[
-            { title: "Sales Lifecycle", stages: "Qualify → Discover → Propose → Negotiate → Close", meta: "Playbooks on ICP scoring, objection handling, pricing strategy", artifact: "Proposals, SOWs, forecasts all linked and auto-updating" },
-            { title: "Marketing Lifecycle", stages: "Research → Position → Create → Distribute → Measure", meta: "Brand guidelines, messaging frameworks, channel strategies", artifact: "Campaigns, content, sales enablement all in sync" },
-            { title: "Professional Services", stages: "Scope → Staff → Deliver → Review → Renew", meta: "Delivery methodologies, quality standards, client protocols", artifact: "SOWs, project plans, status reports, invoices all connected" },
-            { title: "Regulated Industries", stages: "Research → Develop → Validate → Submit → Monitor", meta: "GMP procedures, audit standards, compliance frameworks", artifact: "Batch records, validation docs, regulatory submissions linked" },
-          ].map(({ title, stages, meta, artifact }) => (
+            { title: "Sales", stages: "Qualify → Discover → Propose → Negotiate → Close", know: "How your best reps qualify deals and handle objections", produce: "Proposals, contracts, and forecasts that stay in sync when strategy changes" },
+            { title: "Marketing", stages: "Research → Position → Create → Distribute → Measure", know: "Your messaging framework and brand guidelines", produce: "Campaigns, content, and enablement materials that update when positioning shifts" },
+            { title: "Professional Services", stages: "Scope → Staff → Deliver → Review → Renew", know: "Delivery methodologies and quality standards from years of experience", produce: "SOWs, project plans, and status reports that reflect the current reality" },
+            { title: "Regulated Industries", stages: "Research → Develop → Validate → Submit → Monitor", know: "Compliance procedures and audit standards that must be followed exactly", produce: "Validation documents and regulatory filings that stay current and traceable" },
+          ].map(({ title, stages, know, produce }) => (
             <div key={title} className="rounded-xl border p-7 flex flex-col"
               style={{ borderColor: `hsl(${TEAL} / 0.15)` }}>
               <p className="font-bold mb-2" style={{ fontSize: 26, color: TEXT }}>{title}</p>
               <p className="font-mono mb-4" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>{stages}</p>
               <div className="flex gap-4 flex-1">
                 <div className="flex-1 rounded-lg p-4" style={{ background: `hsl(${TEAL} / 0.05)` }}>
-                  <p className="font-bold mb-1" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>META-KNOWLEDGE</p>
-                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{meta}</p>
+                  <p className="font-bold mb-1" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>WHAT PEOPLE KNOW</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{know}</p>
                 </div>
                 <div className="flex-1 rounded-lg p-4" style={{ background: `hsl(${MINT} / 0.05)` }}>
-                  <p className="font-bold mb-1" style={{ fontSize: 14, color: `hsl(${MINT})` }}>ARTIFACTS</p>
-                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{artifact}</p>
+                  <p className="font-bold mb-1" style={{ fontSize: 14, color: `hsl(${MINT})` }}>WHAT GETS PRODUCED</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{produce}</p>
                 </div>
               </div>
             </div>
