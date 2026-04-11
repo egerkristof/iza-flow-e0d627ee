@@ -925,15 +925,15 @@ function Slide12Closing() {
         </div>
 
         <h2 className="font-black mb-8" style={{ fontSize: 80, color: DARK_TEXT, lineHeight: 1.05 }}>
-          The management layer for<br />
+          Keep what people know<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            lifecycle intelligence.
+            and what they produce in sync.
           </span>
         </h2>
 
         <p style={{ fontSize: 32, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.6, marginBottom: 56 }}>
-          Govern how your people work. Govern what they produce.<br />
-          Keep both in sync as your organization scales.
+          As AI accelerates every business function, LIZA ensures that<br />
+          your team's expertise and your organization's outputs stay aligned.
         </p>
 
         <div className="flex gap-10">
