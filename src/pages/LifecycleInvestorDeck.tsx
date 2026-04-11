@@ -169,45 +169,46 @@ function Slide02() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The Shift</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 62, color: TEXT, lineHeight: 1.05 }}>
-          AI broke the balance.
+        <h2 className="font-black mb-4" style={{ fontSize: 58, color: TEXT, lineHeight: 1.05 }}>
+          Execution became instant.<br/>
+          <span style={{ color: `hsl(${WARM})` }}>Knowledge didn't.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          Execution and knowledge used to move at the same speed. Seniors bridged the gaps.
-          AI made execution instant — but knowledge stayed where it was.
+          Before generative AI, execution was slow and manual. Knowledge didn't need to be perfect —
+          senior colleagues filled in the gaps in real time. GenAI made execution instant, but knowledge stayed in PDFs, wikis, and people's heads.
         </p>
 
         <div className="flex-1 flex gap-12">
           {/* BEFORE */}
           <div className="flex-1 rounded-2xl border p-10 flex flex-col" style={{ borderColor: `hsl(215 10% 88%)`, background: CARD_ALT }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-3" style={{ fontSize: 18, color: SUBTLE }}>Before AI</p>
-            <p className="mb-6" style={{ fontSize: 18, color: MUTED }}>Balanced — both slow, both manageable</p>
+            <p className="font-bold tracking-[0.2em] uppercase mb-3" style={{ fontSize: 18, color: SUBTLE }}>Before GenAI</p>
+            <p className="mb-6" style={{ fontSize: 18, color: MUTED }}>Slow execution. Knowledge gaps filled by experience.</p>
             <div className="flex-1">
-              <BarPair execPct={35} knowPct={40} execColor={BLUE} knowColor={GREEN} execLabel="Slow" knowLabel="Adequate" />
+              <BarPair execPct={35} knowPct={40} execColor={BLUE} knowColor={GREEN} execLabel="Manual, human-driven" knowLabel="Good enough" />
             </div>
             <div className="mt-5 px-4 py-3 rounded-lg text-center" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.15)` }}>
-              <p style={{ fontSize: 18, color: `hsl(${GREEN})` }}>✓ Seniors compensated for knowledge gaps</p>
+              <p style={{ fontSize: 18, color: `hsl(${GREEN})` }}>✓ Seniors knew what was in the PDF — and what wasn't</p>
             </div>
           </div>
 
-          {/* AI ARRIVES */}
+          {/* GenAI ARRIVES */}
           <div className="flex flex-col items-center justify-center gap-4 px-2">
             <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: `hsl(${WARM} / 0.12)` }}>
               <Zap size={28} style={{ color: `hsl(${WARM})` }} />
             </div>
-            <p className="font-bold text-center" style={{ fontSize: 18, color: `hsl(${WARM})` }}>AI<br/>arrives</p>
+            <p className="font-bold text-center" style={{ fontSize: 18, color: `hsl(${WARM})` }}>GenAI<br/>arrives</p>
             <div className="w-px h-24" style={{ background: `hsl(${WARM} / 0.3)` }} />
           </div>
 
           {/* AFTER */}
           <div className="flex-1 rounded-2xl border-2 p-10 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.04)` }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-3" style={{ fontSize: 18, color: `hsl(${WARM})` }}>After AI</p>
-            <p className="mb-6" style={{ fontSize: 18, color: MUTED }}>Broken — execution rockets, knowledge stays flat</p>
+            <p className="font-bold tracking-[0.2em] uppercase mb-3" style={{ fontSize: 18, color: `hsl(${WARM})` }}>After GenAI</p>
+            <p className="mb-6" style={{ fontSize: 18, color: MUTED }}>Instant execution. Same unstructured knowledge.</p>
             <div className="flex-1">
               <BarPair execPct={92} knowPct={35} execColor={GREEN} knowColor={WARM} execLabel="Instant" knowLabel="Still a PDF" />
             </div>
             <div className="mt-5 px-4 py-3 rounded-lg text-center" style={{ background: `hsl(${WARM} / 0.06)`, border: `1px solid hsl(${WARM} / 0.15)` }}>
-              <p style={{ fontSize: 18, color: `hsl(${WARM})` }}>✗ AI can't compensate. It executes literally.</p>
+              <p style={{ fontSize: 18, color: `hsl(${WARM})` }}>✗ GenAI can't compensate. It executes literally.</p>
             </div>
           </div>
         </div>
@@ -313,11 +314,12 @@ function Slide04() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The Propagation Crisis</p>
 
         <h2 className="font-black mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          Two problems. One cause: AI executes faster than knowledge can keep up.
+          GenAI generates every artifact from your knowledge.<br/>
+          <span style={{ color: `hsl(${WARM})` }}>That knowledge was never ready — and it never stays current.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 24, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          The source knowledge was never machine-ready. And when it changes, nothing propagates.
-          AI turns both gaps into organizational risk — at machine speed.
+          Your proposals, training decks, and contracts are now AI-generated. But the knowledge behind them
+          is scattered, incomplete, and disconnected. When it changes, nothing downstream follows.
         </p>
 
         <div className="flex-1 flex gap-10">
@@ -325,14 +327,14 @@ function Slide04() {
           <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${RED} / 0.2)`, background: `hsl(${RED} / 0.03)` }}>
             <div className="flex items-center gap-3 mb-5">
               <AlertTriangle size={22} style={{ color: `hsl(${RED})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 16, color: `hsl(${RED})` }}>Crisis 1 — The Source Was Never Ready</p>
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 16, color: `hsl(${RED})` }}>Problem 1 — The Source Was Never Ready</p>
             </div>
             <div className="flex flex-col gap-3 flex-1">
               {[
                 "Your best salesperson's method lives in their head",
                 "The onboarding process is a wiki from 2021",
-                "Quality standards are a PDF no one reads anymore",
-                "AI executes from all of these — literally, uncritically",
+                "Quality standards are a PDF nobody maintains",
+                "GenAI now executes from all of these — literally",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${RED} / 0.04)` }}>
                   <X size={16} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
@@ -349,14 +351,14 @@ function Slide04() {
           <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.2)`, background: `hsl(${WARM} / 0.03)` }}>
             <div className="flex items-center gap-3 mb-5">
               <AlertTriangle size={22} style={{ color: `hsl(${WARM})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 16, color: `hsl(${WARM})` }}>Crisis 2 — Nothing Propagates</p>
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 16, color: `hsl(${WARM})` }}>Problem 2 — Nothing Stays In Sync</p>
             </div>
             <div className="flex flex-col gap-3 flex-1">
               {[
-                "You update your pricing model — 47 AI outputs still use the old one",
-                "A compliance rule changes — 12 prompts still enforce the previous version",
-                "A best practice evolves — none of the AI-generated training reflects it",
-                "The How changes constantly. The What never updates.",
+                "Pricing model updated — 47 AI-generated proposals still use the old one",
+                "Compliance rule changes — 12 prompts still enforce the old version",
+                "A best practice evolves — AI-generated training doesn't reflect it",
+                "Every knowledge update creates a cascade of stale outputs",
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${WARM} / 0.04)` }}>
                   <X size={16} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
@@ -365,15 +367,15 @@ function Slide04() {
               ))}
             </div>
             <p className="text-center mt-4 font-semibold" style={{ fontSize: 17, color: `hsl(${WARM})` }}>
-              AI generates perfectly — from stale, disconnected knowledge
+              Knowledge changes. AI-generated artifacts don't follow.
             </p>
           </div>
         </div>
 
         <div className="mt-6 px-10 py-4 rounded-xl text-center" style={{ background: CARD_ALT, border: `1px solid hsl(215 10% 90%)` }}>
           <p style={{ fontSize: 22, color: TEXT }}>
-            <span className="font-bold">The result:</span> AI generates all your <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>Whats</span> from
-            loosely defined <span className="font-bold" style={{ color: `hsl(${WARM})` }}>Hows</span> — and when either changes, the other doesn't follow.
+            <span className="font-bold">This is the Propagation Crisis:</span> knowledge that was never machine-ready,
+            feeding AI that generates at machine speed, with zero mechanism to keep anything in sync.
           </p>
         </div>
       </div>
@@ -390,19 +392,19 @@ function Slide05() {
   const steps = [
     {
       icon: <BookOpen size={36} />, num: "01", title: "Capture",
-      desc: "AI extracts tribal knowledge from your best people and turns it into structured, executable knowledge.",
+      desc: "Extract how your best people actually work — from documents, conversations, and execution patterns.",
     },
     {
       icon: <Network size={36} />, num: "02", title: "Organize",
-      desc: "Knowledge becomes governed, versioned, connected. The How is encoded for machines, not just humans.",
+      desc: "Structure knowledge into governed, versioned bundles that machines can consume and humans can trust.",
     },
     {
       icon: <Zap size={36} />, num: "03", title: "Execute",
-      desc: "AI executes with your best judgment built in. The How becomes the What — continuously, automatically.",
+      desc: "GenAI executes with your organization's judgment built in — producing artifacts from living knowledge.",
     },
     {
       icon: <RefreshCw size={36} />, num: "04", title: "Propagate",
-      desc: "When knowledge changes, every output updates. When outputs reveal patterns, knowledge improves. How and What stay unified.",
+      desc: "When knowledge evolves, every downstream artifact updates. When execution reveals new patterns, knowledge improves.",
     },
   ];
 
@@ -413,14 +415,14 @@ function Slide05() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL} / 0.8)` }}>The Solution</p>
 
         <h2 className="font-black mb-3" style={{ fontSize: 55, color: DARK_TEXT, lineHeight: 1.05 }}>
-          AI caused the crisis.{" "}
+          What if your knowledge was always{" "}
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            AI is also the cure.
+            machine-ready, connected, and alive?
           </span>
         </h2>
         <p className="mb-5" style={{ fontSize: 23, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          LIZA continuously encodes expert judgment into executable knowledge that AI agents consume —
-          and keeps every artifact synchronized when that knowledge evolves. The How and the What, unified.
+          LIZA is the infrastructure that makes organizational knowledge executable for GenAI — continuously captured
+          from your best people, governed for trust, and propagated to every artifact it produces.
         </p>
 
         <div className="flex-1 grid grid-cols-4 gap-7">
