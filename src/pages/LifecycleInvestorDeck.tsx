@@ -117,8 +117,8 @@ function Slide01Cover() {
       <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full opacity-[0.06]"
         style={{ background: `radial-gradient(circle, hsl(${MINT}), transparent 70%)` }} />
 
-      <div className="relative z-10 flex flex-col items-center text-center px-32">
-        <div className="flex items-center gap-3 mb-12 px-7 py-3 rounded-full border"
+      <div className="relative z-10 flex flex-col items-center text-center px-28">
+        <div className="flex items-center gap-3 mb-10 px-7 py-3 rounded-full border"
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
@@ -126,29 +126,31 @@ function Slide01Cover() {
           </span>
         </div>
 
-        <h1 className="font-black mb-10" style={{ fontSize: 96, lineHeight: 1.0, color: DARK_TEXT }}>
-          Every business runs on<br />
+        <p className="font-semibold mb-5" style={{ fontSize: 32, color: DARK_MUTED, maxWidth: 1100 }}>
+          Everyone's adopting AI. But more output doesn't mean better outcomes.
+        </p>
+
+        <h1 className="font-black mb-8" style={{ fontSize: 88, lineHeight: 1.0, color: DARK_TEXT }}>
+          AI is beginning to<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            repeating decision chains.
+            scale judgment.
           </span>
         </h1>
 
-        <p style={{ fontSize: 36, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.55 }}>
-          LIZA is the management layer that governs both<br />
-          <strong style={{ color: DARK_TEXT }}>how your people work</strong> and{" "}
-          <strong style={{ color: DARK_TEXT }}>what they produce</strong>,<br />
-          keeping both in sync as things change.
+        <p style={{ fontSize: 34, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.55 }}>
+          The infrastructure to govern it is just forming.<br />
+          <strong style={{ color: DARK_TEXT }}>We're building the complete version.</strong>
         </p>
 
-        <div className="mt-20 flex items-center gap-20">
+        <div className="mt-16 flex items-center gap-16">
           {[
-            ["2 Layers", "of organizational knowledge that drift apart"],
-            ["N Artifacts", "that break when upstream decisions change"],
-            ["1 Engine", "that keeps your entire lifecycle governed"],
+            ["The Problem", "AI produces faster than organizations can govern"],
+            ["The Shift", "A new category is forming to solve this — with $98M+ invested"],
+            ["Our Edge", "We govern the full lifecycle, not just memory or context"],
           ].map(([k, v]) => (
-            <div key={k} className="flex flex-col items-center gap-2 max-w-[320px]">
-              <span className="font-black" style={{ fontSize: 48, color: DARK_TEXT }}>{k}</span>
-              <span className="text-center" style={{ fontSize: 22, color: DARK_SUBTLE }}>{v}</span>
+            <div key={k} className="flex flex-col items-center gap-2 max-w-[360px]">
+              <span className="font-black" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>{k}</span>
+              <span className="text-center" style={{ fontSize: 21, color: DARK_SUBTLE }}>{v}</span>
             </div>
           ))}
         </div>
