@@ -115,16 +115,15 @@ function Slide01() {
           </span>
         </div>
 
-        <h1 className="font-black mb-10" style={{ fontSize: 88, lineHeight: 1.05, color: DARK_TEXT }}>
-          Your best people's expertise<br />
-          runs your business.<br />
+        <h1 className="font-black mb-10" style={{ fontSize: 84, lineHeight: 1.05, color: DARK_TEXT }}>
+          AI does what you tell it.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            AI is about to break that.
+            Who manages what you tell it?
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 32, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          We're building the management layer for organizational expertise<br />
+          The management layer for organizational expertise<br />
           in the age of AI.
         </p>
 
