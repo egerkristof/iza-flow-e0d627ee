@@ -137,7 +137,7 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 2 — TWO SYSTEMS EXIST (expanded with more industries)
+// SLIDE 2 — EVERY COMPANY MANAGES OUTPUTS. NOBODY MANAGES THE INSTRUCTIONS.
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
@@ -147,20 +147,22 @@ function Slide02() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>The Starting Point</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 55, color: TEXT, lineHeight: 1.05 }}>
-          Every company runs on two things:<br />
-          <span style={{ color: `hsl(${BLUE})` }}>what you produce</span> and{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>how you produce it.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+          Every company manages{" "}
+          <span style={{ color: `hsl(${BLUE})` }}>what comes out.</span><br />
+          Nobody manages{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>what goes in.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 23, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          And for each side, there are dedicated systems. But they solve fundamentally different problems.
+          Billions have been spent governing outputs. Near zero has been spent governing the expertise,
+          judgment, and standards that should shape them.
         </p>
 
         <div className="flex-1 flex gap-8 items-stretch">
-          {/* WHAT side */}
+          {/* OUTPUT side */}
           <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${BLUE} / 0.25)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-bold tracking-[0.2em] uppercase mb-4" style={{ fontSize: 17, color: `hsl(${BLUE})` }}>
-              "What" Systems — manage your outputs
+              Output Systems — $100B+ invested
             </p>
             <div className="flex flex-col gap-2 flex-1">
               {[
@@ -179,7 +181,7 @@ function Slide02() {
             </div>
             <div className="mt-4 px-4 py-3 rounded-lg" style={{ background: `hsl(${BLUE} / 0.08)` }}>
               <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${BLUE})` }}>
-                Strength: governs what comes out. Quality gates, versioning, approvals.
+                These govern what comes out. Quality gates, versioning, approvals.
               </p>
             </div>
           </div>
@@ -191,10 +193,10 @@ function Slide02() {
             <div className="w-0.5 flex-1" style={{ background: `hsl(215 10% 85%)` }} />
           </div>
 
-          {/* HOW side */}
+          {/* INSTRUCTION side */}
           <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
             <p className="font-bold tracking-[0.2em] uppercase mb-4" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>
-              "How" Systems — manage your expertise
+              Instruction Systems — near $0 invested
             </p>
             <div className="flex flex-col gap-2 flex-1">
               {[
@@ -213,7 +215,7 @@ function Slide02() {
             </div>
             <div className="mt-4 px-4 py-3 rounded-lg" style={{ background: `hsl(${TEAL} / 0.08)` }}>
               <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>
-                Strength: captures some inputs. But incomplete, static, open-ended.
+                These store some inputs. But incomplete, static, and unconnected.
               </p>
             </div>
           </div>
@@ -221,9 +223,7 @@ function Slide02() {
 
         <div className="mt-4 text-center">
           <p style={{ fontSize: 22, color: MUTED }}>
-            <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>$100B+</span> manages the outputs.{" "}
-            <span className="font-bold" style={{ color: `hsl(${TEAL})` }}>Near $0</span> manages the expertise.{" "}
-            For decades, it didn't matter — because of one thing.
+            For decades, this gap didn't matter. Because of one thing.
           </p>
         </div>
       </div>
