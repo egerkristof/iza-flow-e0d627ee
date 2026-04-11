@@ -967,10 +967,11 @@ const SLIDES = [
   { id: 6, title: "The Solution", component: <Slide06Solution /> },
   { id: 7, title: "The Knowledge Graph", component: <Slide07KnowledgeGraph /> },
   { id: 8, title: "Every Lifecycle", component: <Slide08Lifecycles /> },
-  { id: 9, title: "Market Validation", component: <Slide09Market /> },
-  { id: 10, title: "Traction & GTM", component: <Slide10Traction /> },
-  { id: 11, title: "Team", component: <Slide11Team /> },
-  { id: 12, title: "Closing", component: <Slide12Closing /> },
+  { id: 9, title: "Market Evolution", component: <Slide09MarketEvolution /> },
+  { id: 10, title: "Our Edge in Wave 2", component: <Slide10LizaEdge /> },
+  { id: 11, title: "Traction & GTM", component: <Slide10Traction /> },
+  { id: 12, title: "Team", component: <Slide11Team /> },
+  { id: 13, title: "Closing", component: <Slide12Closing /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
