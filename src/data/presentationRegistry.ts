@@ -65,6 +65,14 @@ export const presentationRoutes: PresentationRoute[] = [
     component: LinkedInImageCard,
     showInAdmin: true,
   },
+  {
+    id: "investor-lifecycle",
+    title: "Lifecycle Investor Deck",
+    path: "/investor-lifecycle",
+    description: "Lifecycle management investment thesis",
+    component: LifecycleInvestorDeck,
+    showInAdmin: true,
+  },
 ];
 
 export const adminPresentationItems = presentationRoutes.filter((item) => item.showInAdmin !== false);
