@@ -5,6 +5,7 @@ import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
 import LinkedInImageCard from "@/pages/LinkedInImageCard";
+import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
 
 export type PresentationRoute = {
   id: string;
