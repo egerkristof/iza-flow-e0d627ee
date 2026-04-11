@@ -113,17 +113,17 @@ function Slide01() {
           </span>
         </div>
 
-        <h1 className="font-black mb-10" style={{ fontSize: 84, lineHeight: 1.05, color: DARK_TEXT }}>
-          AI fuses how you work<br />
-          with what you produce.<br />
+        <h1 className="font-black mb-10" style={{ fontSize: 88, lineHeight: 1.05, color: DARK_TEXT }}>
+          Your best people's expertise<br />
+          runs your business.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Who manages that?
+            AI is about to break that.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 32, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The first infrastructure for managing AI artifacts —<br />
-          where organizational judgment meets machine execution.
+          We're building the management layer for organizational expertise<br />
+          in the age of AI.
         </p>
 
         <p style={{ fontSize: 20, color: DARK_SUBTLE }}>
