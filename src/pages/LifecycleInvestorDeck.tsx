@@ -204,12 +204,16 @@ function Slide03() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL} / 0.8)` }}>The Gap</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 62, color: DARK_TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-4" style={{ fontSize: 58, color: DARK_TEXT, lineHeight: 1.05 }}>
           $100B+ governs what you produce.<br />
-          <span style={{ color: `hsl(${WARM})` }}>Nothing governs how.</span>
+          <span style={{ color: `hsl(${WARM})` }}>Nothing governs how — and AI makes that fatal.</span>
         </h2>
+        <p className="mb-8" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
+          AI now generates proposals, training decks, and contracts from your organizational knowledge.
+          But that knowledge has no infrastructure. Every AI output inherits unmanaged, ungoverned "how."
+        </p>
 
-        <div className="flex-1 flex gap-10 mt-6">
+        <div className="flex-1 flex gap-10">
           <div className="flex-1 rounded-2xl border p-9 flex flex-col" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
             <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${BLUE})` }}>The What — Your Artifacts</p>
             <div className="flex flex-col gap-4 flex-1">
@@ -234,9 +238,9 @@ function Slide03() {
             <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${WARM})` }}>The How — Your Knowledge</p>
             <div className="flex flex-col gap-4 flex-1">
               {[
-                { label: "Sales methodology", where: "A wiki page nobody reads", icon: "📄" },
-                { label: "Onboarding expertise", where: "Tribal knowledge in someone's head", icon: "🧠" },
-                { label: "Quality standards", where: "A PDF from 2019", icon: "📋" },
+                { label: "Sales methodology", where: "A wiki page — now fed to 12 AI agents", icon: "📄" },
+                { label: "Onboarding expertise", where: "Tribal knowledge — now AI generates from it", icon: "🧠" },
+                { label: "Quality standards", where: "A PDF from 2019 — now in 50 AI prompts", icon: "📋" },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-5 px-6 py-5 rounded-xl" style={{ background: `hsl(${WARM} / 0.06)`, border: `1px solid hsl(${WARM} / 0.1)` }}>
                   <span style={{ fontSize: 32 }}>{item.icon}</span>
@@ -247,7 +251,7 @@ function Slide03() {
                 </div>
               ))}
             </div>
-            <p className="text-center mt-5 font-semibold" style={{ fontSize: 20, color: `hsl(${WARM})` }}>Undocumented. Disconnected. Improvised.</p>
+            <p className="text-center mt-5 font-semibold" style={{ fontSize: 20, color: `hsl(${WARM})` }}>Ungoverned. AI amplifies every gap.</p>
           </div>
         </div>
       </div>
@@ -267,45 +271,46 @@ function Slide04() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The Propagation Crisis</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 58, color: TEXT, lineHeight: 1.05 }}>
-          You update a pricing model.<br />
-          <span style={{ color: `hsl(${WARM})` }}>47 outputs still use the old one.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 55, color: TEXT, lineHeight: 1.05 }}>
+          AI generates 50 outputs from one stale source.<br />
+          <span style={{ color: `hsl(${WARM})` }}>None of them know it changed.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 24, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          In code, changing a component updates every page that uses it. In knowledge work, nothing connects. That's the crisis.
+          You update a pricing model. AI has already generated 47 proposals, 8 decks, and 12 prompts from the old one.
+          In code, changing a component updates every page. In AI-powered knowledge work, nothing connects.
         </p>
 
         <div className="flex-1 flex gap-10">
           <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${RED} / 0.2)`, background: `hsl(${RED} / 0.03)` }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-5" style={{ fontSize: 16, color: `hsl(${RED})` }}>Today — Static Knowledge</p>
+            <p className="font-bold tracking-[0.2em] uppercase mb-5" style={{ fontSize: 16, color: `hsl(${RED})` }}>Today — AI Amplifies the Problem</p>
             <div className="flex flex-col gap-3 flex-1">
               <div className="text-center py-4 rounded-xl mb-3" style={{ background: `hsl(${RED} / 0.06)` }}>
                 <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Pricing model updated</p>
               </div>
-              {["23 proposals — still using old pricing", "8 training decks — teaching wrong model", "4 contracts — inconsistent terms", "12 AI prompts — generating wrong outputs"].map((item) => (
+              {["AI generated 23 proposals — all using old pricing", "AI created 8 training decks — teaching wrong model", "AI drafted 4 contracts — inconsistent terms", "12 AI prompts — still embedding stale knowledge"].map((item) => (
                 <div key={item} className="flex items-center gap-3 px-5 py-3 rounded-lg" style={{ background: `hsl(${RED} / 0.04)` }}>
                   <X size={16} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
                   <span style={{ fontSize: 19, color: MUTED }}>{item}</span>
                 </div>
               ))}
             </div>
-            <p className="text-center mt-4 font-semibold" style={{ fontSize: 18, color: `hsl(${RED})` }}>Nobody flagged. Nobody noticed.</p>
+            <p className="text-center mt-4 font-semibold" style={{ fontSize: 18, color: `hsl(${RED})` }}>AI executed perfectly — from the wrong source.</p>
           </div>
 
           <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.03)` }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-5" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>With LIZA — Connected Knowledge</p>
+            <p className="font-bold tracking-[0.2em] uppercase mb-5" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>With LIZA — AI Becomes the Solution</p>
             <div className="flex flex-col gap-3 flex-1">
               <div className="text-center py-4 rounded-xl mb-3" style={{ background: `hsl(${TEAL} / 0.06)` }}>
                 <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Pricing model updated</p>
               </div>
-              {["23 proposals — flagged for review", "8 training decks — queued for update", "4 contracts — version-bumped automatically", "12 AI prompts — synced in real time"].map((item) => (
+              {["23 proposals — flagged for review automatically", "8 training decks — queued for regeneration", "4 contracts — version-bumped with audit trail", "12 AI prompts — synced to new knowledge in real time"].map((item) => (
                 <div key={item} className="flex items-center gap-3 px-5 py-3 rounded-lg" style={{ background: `hsl(${TEAL} / 0.04)` }}>
                   <CheckCircle2 size={16} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
                   <span style={{ fontSize: 19, color: TEXT }}>{item}</span>
                 </div>
               ))}
             </div>
-            <p className="text-center mt-4 font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>One change. Automatic propagation.</p>
+            <p className="text-center mt-4 font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Same AI. Connected knowledge. Automatic propagation.</p>
           </div>
         </div>
       </div>
@@ -322,19 +327,19 @@ function Slide05() {
   const steps = [
     {
       icon: <BookOpen size={36} />, num: "01", title: "Capture",
-      desc: "Your best people's expertise becomes structured, versionable, and alive. Source control for judgment.",
+      desc: "Expert knowledge becomes structured, versionable, and alive. AI extracts and organizes what was tribal.",
     },
     {
       icon: <Network size={36} />, num: "02", title: "Organize",
-      desc: "Knowledge organized into governed bundles scoped to roles and workflows. A dependency graph for expertise.",
+      desc: "Knowledge organized into governed bundles. The How and the What become one connected graph.",
     },
     {
       icon: <Zap size={36} />, num: "03", title: "Execute",
-      desc: "AI-assisted work runs with your team's best judgment built in. Quality gates at every critical step.",
+      desc: "AI executes with your best judgment built in. The gap between knowing and doing collapses.",
     },
     {
       icon: <RefreshCw size={36} />, num: "04", title: "Propagate",
-      desc: "When knowledge changes, every connected output updates. When outputs reveal patterns, knowledge improves.",
+      desc: "When knowledge changes, every AI output updates. When outputs reveal patterns, knowledge improves.",
     },
   ];
 
@@ -344,12 +349,14 @@ function Slide05() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL} / 0.8)` }}>The Solution</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 62, color: DARK_TEXT, lineHeight: 1.05 }}>
-          LIZA: The How Layer.
+        <h2 className="font-black mb-4" style={{ fontSize: 58, color: DARK_TEXT, lineHeight: 1.05 }}>
+          AI caused the crisis.<br />
+          <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            AI is also the cure.
+          </span>
         </h2>
-        <p className="mb-12" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The same disciplines that made aviation safe, software reliable, and pharma compliant.
-          Applied to how organizations think, decide, and deliver.
+        <p className="mb-12" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
+          LLMs make semantic synthesis cheap and fast for the first time. LIZA uses this to collapse the gap between what you know and what you produce — the first unified governance layer for the How and the What.
         </p>
 
         <div className="flex-1 grid grid-cols-4 gap-7">
