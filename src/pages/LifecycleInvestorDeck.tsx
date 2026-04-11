@@ -233,7 +233,7 @@ function Slide02() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 3 — THE HUMAN BRIDGE
+// SLIDE 3 — YOUR PEOPLE WERE THE INSTRUCTION LAYER
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide03() {
@@ -244,12 +244,13 @@ function Slide03() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>The Human Era</p>
 
         <h2 className="font-black mb-4" style={{ fontSize: 55, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Senior people were the bridge<br/>
-          <span style={{ color: `hsl(${GREEN})` }}>between How and What.</span>
+          Your senior people{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>were the instruction layer.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 23, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          Your best people read incomplete docs, filled in the gaps from experience, and slowly produced
-          quality outputs. Even if only 50-80% of expertise was written down, it was enough — they carried the rest.
+          Your best consultant's judgment about which client gets which approach.
+          Your senior engineer's instinct for when a shortcut is safe.
+          None of that is in any wiki. They carried it — and it was enough.
         </p>
 
         <div className="flex-1 flex items-center justify-center">
