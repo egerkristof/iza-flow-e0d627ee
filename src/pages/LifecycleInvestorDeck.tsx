@@ -627,60 +627,161 @@ function Slide08Lifecycles() {
   );
 }
 
-// ─── Slide 09 — Market & Validation ──────────────────────────────────────────
+// ─── Slide 09 — Market Evolution ─────────────────────────────────────────────
 
-function Slide09Market() {
+function Slide09MarketEvolution() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="Market Validation" color={SEAFOAM} />
-        <h2 className="font-black mb-10" style={{ fontSize: 68, color: DARK_TEXT, lineHeight: 1.05 }}>
-          $98M+ validates the category.<br />
-          <span style={{ color: `hsl(${SEAFOAM})` }}>No one governs the lifecycle.</span>
+        <DarkTag label="Market Context" color={SEAFOAM} />
+        <h2 className="font-black mb-4" style={{ fontSize: 64, color: DARK_TEXT, lineHeight: 1.05 }}>
+          What people buy today.<br />
+          <span style={{ color: `hsl(${SEAFOAM})` }}>What's forming next.</span>
         </h2>
+        <p className="mb-10" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1000 }}>
+          The market is evolving from stateless AI tools to intelligent systems that learn. LIZA is part of this next wave — with a specific edge.
+        </p>
 
-        <div className="flex-1 flex gap-8">
-          <div className="flex-1 grid grid-cols-2 gap-5">
-            {[
-              { name: "Edra", raised: "$30M", focus: "Operational knowledge capture", gap: "No lifecycle graph" },
-              { name: "Mem0.ai", raised: "$44.5M", focus: "AI memory infrastructure", gap: "No execution layer" },
-              { name: "Interloom", raised: "$19.5M", focus: "Institutional knowledge", gap: "No change propagation" },
-              { name: "Paradox", raised: "$3.8M", focus: "Expertise codification", gap: "No artifact governance" },
-            ].map(({ name, raised, focus, gap }) => (
-              <div key={name} className="rounded-xl border p-6"
-                style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="font-bold" style={{ fontSize: 24, color: DARK_TEXT }}>{name}</p>
-                  <span className="px-3 py-1 rounded-full font-bold"
-                    style={{ fontSize: 16, background: `hsl(${SEAFOAM} / 0.15)`, color: `hsl(${SEAFOAM})` }}>{raised}</span>
-                </div>
-                <p style={{ fontSize: 18, color: DARK_MUTED, marginBottom: 8 }}>{focus}</p>
-                <p className="font-bold" style={{ fontSize: 16, color: `hsl(${WARM})` }}>Gap: {gap}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="w-[420px] rounded-2xl border p-10 flex flex-col justify-center"
-            style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-black mb-6" style={{ fontSize: 36, color: DARK_TEXT }}>LIZA's Moat</p>
-            <div className="flex flex-col gap-5">
+        <div className="flex-1 grid grid-cols-2 gap-8">
+          {/* Wave 1 */}
+          <div className="rounded-2xl border p-9 flex flex-col"
+            style={{ borderColor: "hsl(0 0% 100% / 0.08)", background: DARK_CARD }}>
+            <p className="font-bold mb-1" style={{ fontSize: 18, color: DARK_SUBTLE }}>WHAT PEOPLE BUY TODAY</p>
+            <p className="font-black mb-5" style={{ fontSize: 36, color: DARK_MUTED }}>Wave 1: AI as Assistant</p>
+            <div className="flex flex-col gap-4 flex-1">
               {[
-                "Dual-layer knowledge governance",
-                "Change propagation across lifecycle stages",
-                "Human-in-the-loop artifact review",
-                "Vertical-ready from day one",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3">
-                  <Shield size={20} className="mt-1 shrink-0" style={{ color: `hsl(${TEAL})` }} />
-                  <p style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.4 }}>{item}</p>
+                { tool: "ChatGPT / Gemini / Claude", what: "Answer questions, generate content on demand" },
+                { tool: "Copilot / Cursor", what: "Autocomplete tasks in existing workflows" },
+                { tool: "Agentic tools", what: "Execute multi-step tasks with some memory" },
+              ].map(({ tool, what }) => (
+                <div key={tool} className="flex items-start gap-3 rounded-lg p-4" style={{ background: "hsl(0 0% 100% / 0.03)" }}>
+                  <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: DARK_MUTED }} />
+                  <div>
+                    <p className="font-bold" style={{ fontSize: 22, color: DARK_TEXT }}>{tool}</p>
+                    <p style={{ fontSize: 18, color: DARK_MUTED }}>{what}</p>
+                  </div>
                 </div>
               ))}
+            </div>
+            <div className="mt-5 rounded-xl px-5 py-4" style={{ background: "hsl(0 0% 100% / 0.04)" }}>
+              <p className="font-bold" style={{ fontSize: 18, color: DARK_SUBTLE }}>
+                ⚡ Stateless. No standards. No organizational learning. Every session starts from zero.
+              </p>
+            </div>
+          </div>
+
+          {/* Wave 2 */}
+          <div className="rounded-2xl border p-9 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p className="font-bold mb-1" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>WHAT'S FORMING NOW — $98M+ INVESTED</p>
+            <p className="font-black mb-5" style={{ fontSize: 36, color: DARK_TEXT }}>Wave 2: AI with Intelligence</p>
+            <div className="flex flex-col gap-4 flex-1">
+              {[
+                { tool: "Edra ($30M)", what: "Workflow memory & operational knowledge", focus: "Knowledge capture" },
+                { tool: "Mem0.ai ($44.5M)", what: "Persistent AI memory infrastructure", focus: "Context injection" },
+                { tool: "Interloom ($19.5M)", what: "Institutional knowledge for teams", focus: "Team knowledge" },
+              ].map(({ tool, what, focus }) => (
+                <div key={tool} className="flex items-start gap-3 rounded-lg p-4" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                  <CheckCircle2 size={20} className="mt-1 shrink-0" style={{ color: `hsl(${TEAL})` }} />
+                  <div>
+                    <p className="font-bold" style={{ fontSize: 22, color: DARK_TEXT }}>{tool}</p>
+                    <p style={{ fontSize: 18, color: DARK_MUTED }}>{what}</p>
+                    <span className="text-xs font-bold px-2 py-0.5 rounded mt-1 inline-block"
+                      style={{ background: `hsl(${SEAFOAM} / 0.15)`, color: `hsl(${SEAFOAM})` }}>{focus}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 rounded-xl px-5 py-4" style={{ background: `hsl(${TEAL} / 0.12)` }}>
+              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
+                Each player has picked a slice. None governs the full lifecycle.
+              </p>
             </div>
           </div>
         </div>
       </div>
       <SlideBar from={SEAFOAM} to={TEAL} />
+    </div>
+  );
+}
+
+// ─── Slide 10 — LIZA's Edge in Wave 2 ───────────────────────────────────────
+
+function Slide10LizaEdge() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
+        <Tag label="Our Edge" color={TEAL} />
+        <h2 className="font-bold mb-4" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
+          Same thesis. <span style={{ color: `hsl(${TEAL})` }}>Two capabilities no one else has.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 24, color: MUTED, maxWidth: 1000 }}>
+          We share the Wave 2 thesis: AI needs business intelligence to be useful. But we solve two problems the category hasn't touched yet.
+        </p>
+
+        <div className="flex-1 grid grid-cols-2 gap-10">
+          {/* Differentiator 1 */}
+          <div className="rounded-2xl border p-10 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6"
+              style={{ background: `hsl(${TEAL} / 0.12)` }}>
+              <Brain size={32} style={{ color: `hsl(${TEAL})` }} />
+            </div>
+            <p className="font-black mb-3" style={{ fontSize: 34, color: TEXT }}>Continuous Learning</p>
+            <p className="font-bold mb-4" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
+              How do you scale what's valuable about humans in the age of AI?
+            </p>
+            <div className="flex flex-col gap-3 flex-1">
+              {[
+                "Every execution cycle teaches the system something new",
+                "Human judgment is captured and fed back into organizational standards",
+                "Knowledge isn't static injection — it's a living, evolving flow",
+                "Your best people's expertise becomes everyone's capability",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 size={18} className="mt-1 shrink-0" style={{ color: `hsl(${TEAL})` }} />
+                  <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 px-5 py-3 rounded-lg" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+              <p className="font-bold" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>Others inject knowledge. We grow it.</p>
+            </div>
+          </div>
+
+          {/* Differentiator 2 */}
+          <div className="rounded-2xl border p-10 flex flex-col"
+            style={{ borderColor: `hsl(${MINT} / 0.2)`, background: `hsl(${MINT} / 0.04)` }}>
+            <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6"
+              style={{ background: `hsl(${MINT} / 0.12)` }}>
+              <RefreshCw size={32} style={{ color: `hsl(${MINT})` }} />
+            </div>
+            <p className="font-black mb-3" style={{ fontSize: 34, color: TEXT }}>Artifact Propagation</p>
+            <p className="font-bold mb-4" style={{ fontSize: 22, color: `hsl(${MINT})` }}>
+              When knowledge changes, everything downstream needs to know.
+            </p>
+            <div className="flex flex-col gap-3 flex-1">
+              {[
+                "A signal from the edge changes one node in your knowledge graph",
+                "That change may affect dozens of connected artifacts across the lifecycle",
+                "LIZA maps these dependencies and surfaces what needs updating",
+                "No more silent drift between what you know and what you've built",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 size={18} className="mt-1 shrink-0" style={{ color: `hsl(${MINT})` }} />
+                  <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 px-5 py-3 rounded-lg" style={{ background: `hsl(${MINT} / 0.08)` }}>
+              <p className="font-bold" style={{ fontSize: 17, color: `hsl(${MINT})` }}>Others store knowledge. We propagate change.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
     </div>
   );
 }
