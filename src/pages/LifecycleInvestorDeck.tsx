@@ -423,7 +423,7 @@ function Slide05() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 6 — THE INFRASTRUCTURE GAP ($100B Whats vs $0 Hows)
+// SLIDE 6 — THIS PROBLEM HAS BEEN SOLVED BEFORE (ALM → PLM → ??? pattern)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide06() {
@@ -431,30 +431,34 @@ function Slide06() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>The Infrastructure Gap</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>The Opportunity</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 55, color: TEXT, lineHeight: 1.05 }}>
-          Every layer that got governance<br />
-          <span style={{ color: `hsl(${TEAL})` }}>created a multi-billion dollar category.</span>
+          This exact problem has been solved before —<br />
+          <span style={{ color: `hsl(${TEAL})` }}>and each time, it created a massive market.</span>
         </h2>
+        <p className="mb-6" style={{ fontSize: 23, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
+          Whenever a critical business layer got version control, governance, and change management, it became a multi-billion dollar
+          infrastructure category. Expertise is the next layer.
+        </p>
 
         <div className="flex gap-4 mb-8">
           {[
-            { era: "1990s", name: "ALM", layer: "Code", market: "$34B", color: BLUE, desc: "Version control, CI/CD, testing" },
-            { era: "2000s", name: "PLM", layer: "Physical Products", market: "$65B", color: GREEN, desc: "Bill of materials, change orders" },
-            { era: "2010s", name: "GxP", layer: "Regulated Docs", market: "$18B", color: SEAFOAM, desc: "Compliance, audit trails" },
-            { era: "Now", name: "The How Layer", layer: "Knowledge & Judgment", market: "Whitespace", color: TEAL, highlight: true, desc: "No infrastructure exists" },
+            { era: "1990s", name: "ALM", what: "Code", market: "$34B", color: BLUE, desc: "Developers needed version control, testing, CI/CD. Git and Jira were born." },
+            { era: "2000s", name: "PLM", what: "Physical Products", market: "$65B", color: GREEN, desc: "Engineers needed bill-of-materials tracking and change orders. Siemens, PTC emerged." },
+            { era: "2010s", name: "GxP", what: "Regulated Docs", market: "$18B", color: SEAFOAM, desc: "Pharma needed audit trails and compliance management. Veeva Vault was born." },
+            { era: "Now", name: "???", what: "Expertise", market: "Nothing", color: WARM, highlight: true, desc: "AI executes from organizational expertise. No infrastructure manages it." },
           ].map((item, i) => (
             <div key={item.name} className="flex-1 flex items-center gap-3">
-              <div className="rounded-xl px-5 py-4 flex-1 text-center" style={{
-                background: item.highlight ? `hsl(${item.color} / 0.08)` : CARD_ALT,
-                border: item.highlight ? `2px solid hsl(${item.color} / 0.35)` : `1px solid hsl(215 10% 90%)`,
+              <div className="rounded-xl px-5 py-5 flex-1 text-center" style={{
+                background: item.highlight ? `hsl(${item.color} / 0.06)` : CARD_ALT,
+                border: item.highlight ? `2px dashed hsl(${item.color} / 0.4)` : `1px solid hsl(215 10% 90%)`,
               }}>
                 <p className="font-bold mb-1" style={{ fontSize: 14, color: `hsl(${item.color})` }}>{item.era}</p>
-                <p className="font-black" style={{ fontSize: 26, color: TEXT }}>{item.name}</p>
-                <p style={{ fontSize: 16, color: MUTED }}>{item.layer}</p>
-                <p className="font-bold mt-1" style={{ fontSize: 17, color: `hsl(${item.color})` }}>{item.market}</p>
-                <p className="mt-1" style={{ fontSize: 13, color: SUBTLE }}>{item.desc}</p>
+                <p className="font-black" style={{ fontSize: 28, color: item.highlight ? `hsl(${item.color})` : TEXT }}>{item.name}</p>
+                <p className="font-semibold" style={{ fontSize: 16, color: MUTED }}>{item.what}</p>
+                <p className="font-bold mt-1" style={{ fontSize: 18, color: `hsl(${item.color})` }}>{item.market}</p>
+                <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{item.desc}</p>
               </div>
               {i < 3 && <ArrowRight size={20} style={{ color: SUBTLE, flexShrink: 0 }} />}
             </div>
@@ -467,17 +471,17 @@ function Slide06() {
             <AlertTriangle size={48} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
             <div>
               <p className="font-black mb-2" style={{ fontSize: 48, color: `hsl(${WARM})`, lineHeight: 1 }}>$0</p>
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>governs the Hows that LLMs now execute from</p>
-              <p className="mt-2" style={{ fontSize: 18, color: MUTED }}>Every AI tool generates Whats. No infrastructure governs the Hows behind them.</p>
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>is spent managing the expertise that AI now executes from</p>
+              <p className="mt-2" style={{ fontSize: 18, color: MUTED }}>$100B+ manages code, products, and compliance. Zero manages the expertise behind AI outputs.</p>
             </div>
           </div>
           <div className="flex-1 rounded-2xl border p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
             <p className="font-bold mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>The pattern is clear</p>
             <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.6 }}>
-              Every time a critical layer of organizational output got version control, governance, and change propagation,
-              it created a multi-billion dollar infrastructure category.
-              <strong style={{ color: TEXT }}> The How Layer is next.</strong>
+              Every time organizations said "this is too important to manage informally,"
+              an infrastructure category emerged.
+              <strong style={{ color: TEXT }}> Organizational expertise is next.</strong>
             </p>
           </div>
         </div>
