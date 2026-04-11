@@ -499,19 +499,19 @@ function Slide07() {
   const steps = [
     {
       icon: <BookOpen size={36} />, num: "01", title: "Capture",
-      desc: "Extract how your best people actually work — from documents, conversations, and execution patterns.",
+      desc: "Extract how your best people actually work — from documents, conversations, and live execution.",
     },
     {
       icon: <Network size={36} />, num: "02", title: "Organize",
-      desc: "Structure Hows into governed, versioned bundles — machine-readable and human-trustworthy.",
+      desc: "Structure expertise into governed, versioned bundles that AI can actually read and follow correctly.",
     },
     {
       icon: <Zap size={36} />, num: "03", title: "Execute",
-      desc: "LLMs generate Whats with organizational judgment built in — the semantic engine gets a proper fuel source.",
+      desc: "AI generates outputs with organizational judgment built in — not from generic training, but from your expertise.",
     },
     {
       icon: <RefreshCw size={36} />, num: "04", title: "Propagate",
-      desc: "When a How evolves, every downstream What updates. When execution reveals drift, the How improves.",
+      desc: "When expertise evolves, every downstream output updates. When execution reveals gaps, the expertise improves.",
     },
   ];
 
@@ -522,14 +522,13 @@ function Slide07() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL} / 0.8)` }}>The Solution</p>
 
         <h2 className="font-black mb-3" style={{ fontSize: 55, color: DARK_TEXT, lineHeight: 1.05 }}>
-          LIZA is the infrastructure for the{" "}
+          LIZA makes organizational expertise{" "}
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            How Layer.
+            machine-ready.
           </span>
         </h2>
         <p className="mb-5" style={{ fontSize: 23, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          The next big frontier isn't better LLMs — it's encoding and scaling the <strong>Hows</strong> that LLMs execute from.
-          LIZA makes organizational expertise machine-ready, governed, and alive.
+          Not a chatbot. Not a wiki. The management infrastructure that makes sure AI executes with the same judgment as your best people.
         </p>
 
         <div className="flex-1 grid grid-cols-4 gap-7">
