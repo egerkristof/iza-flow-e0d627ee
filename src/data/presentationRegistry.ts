@@ -5,6 +5,7 @@ import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
 import LinkedInImageCard from "@/pages/LinkedInImageCard";
+import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -62,6 +63,14 @@ export const presentationRoutes: PresentationRoute[] = [
     path: "/linkedin-card",
     description: "LinkedIn image card generator",
     component: LinkedInImageCard,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-lifecycle",
+    title: "Lifecycle Investor Deck",
+    path: "/investor-lifecycle",
+    description: "Lifecycle management investment thesis",
+    component: LifecycleInvestorDeck,
     showInAdmin: true,
   },
 ];
