@@ -952,8 +952,8 @@ function Slide12() {
         <div className="rounded-xl px-10 py-5 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
-            $100B+ governs the <strong>Whats</strong> companies produce. Zero governs the <strong>Hows</strong> behind them.<br />
-            <strong style={{ color: `hsl(${TEAL})` }}>We're building The How Layer.</strong>
+            $100B+ manages code, products, and compliance. Zero manages the expertise AI executes from.<br />
+            <strong style={{ color: `hsl(${TEAL})` }}>We're building that infrastructure.</strong>
           </p>
         </div>
 
