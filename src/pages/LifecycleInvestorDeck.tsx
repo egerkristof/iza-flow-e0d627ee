@@ -278,7 +278,7 @@ function Slide03() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 4 — THE LLM SHIFT (Hows and Whats FUSE)
+// SLIDE 4 — AI CHANGES EVERYTHING (AI reads expertise literally)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide04() {
@@ -286,72 +286,70 @@ function Slide04() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The LLM Shift</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The Shift</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          LLMs don't just turn <span style={{ color: `hsl(${TEAL})` }}>Hows</span> into <span style={{ color: `hsl(${BLUE})` }}>Whats</span>.<br/>
-          They <span style={{ color: `hsl(${WARM})` }}>fuse them</span> into a new kind of artifact.
+        <h2 className="font-black mb-4" style={{ fontSize: 55, color: TEXT, lineHeight: 1.05 }}>
+          Now AI executes from that expertise.<br/>
+          <span style={{ color: `hsl(${WARM})` }}>But it reads everything literally.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 24, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          Every AI-generated artifact is <strong>simultaneously</strong> a What (the output) and an encoded How (the judgment that shaped it).
-          This fusion creates a new category of asset that no existing tool manages.
+          Give AI your sales playbook, and it writes 50 proposals in an hour. But if the playbook is incomplete, outdated,
+          or missing the nuances your best people carry in their heads — <strong>every single output is wrong.</strong>
         </p>
 
         <div className="flex-1 flex gap-10 items-stretch">
-          {/* The Fusion */}
-          <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
+          {/* Before: Human compensated */}
+          <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.04)` }}>
             <div className="flex items-center gap-3 mb-5">
-              <Zap size={22} style={{ color: `hsl(${WARM})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${WARM})` }}>The Fusion Problem</p>
+              <CheckCircle2 size={22} style={{ color: `hsl(${GREEN})` }} />
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${GREEN})` }}>Before AI</p>
             </div>
             <div className="flex flex-col gap-3 flex-1">
               {[
-                "AI writes a proposal → it encodes your pricing logic, deal structure, positioning",
-                "AI generates training → it encodes your onboarding methodology, cultural norms",
-                "AI drafts compliance docs → it encodes your interpretation of regulations",
-                "Every output is now a carrier of organizational judgment",
+                "A senior person reads the playbook",
+                "Fills in gaps from their own experience",
+                "Adjusts for context the document doesn't cover",
+                "Produces one good output, manually",
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: i === 3 ? `hsl(${WARM} / 0.08)` : `hsl(${WARM} / 0.04)` }}>
-                  {i < 3 ? <ArrowRight size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} /> : <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />}
-                  <span style={{ fontSize: 20, color: TEXT, fontWeight: i === 3 ? 700 : 400 }}>{item}</span>
+                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+                  <CheckCircle2 size={18} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+                  <span style={{ fontSize: 20, color: TEXT }}>{item}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>
+              Slow, but accurate. One at a time.
+            </p>
+          </div>
+
+          {/* After: AI doesn't compensate */}
+          <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
+            <div className="flex items-center gap-3 mb-5">
+              <AlertTriangle size={22} style={{ color: `hsl(${WARM})` }} />
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${WARM})` }}>With AI</p>
+            </div>
+            <div className="flex flex-col gap-3 flex-1">
+              {[
+                "AI reads the same playbook",
+                "Follows it exactly — no judgment, no gap-filling",
+                "Doesn't know what's missing or outdated",
+                "Produces 50 outputs instantly — all with the same flaws",
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${WARM} / 0.06)` }}>
+                  <X size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
+                  <span style={{ fontSize: 20, color: TEXT }}>{item}</span>
                 </div>
               ))}
             </div>
             <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
-              And nobody is managing any of it.
-            </p>
-          </div>
-
-          {/* The Analogy */}
-          <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="flex items-center gap-3 mb-5">
-              <BookOpen size={22} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>We've Seen This Before</p>
-            </div>
-            <div className="flex flex-col gap-4 flex-1">
-              {[
-                { era: "Code", what: "Developers wrote software", tool: "Git gave it version control", market: "$34B ALM" },
-                { era: "Products", what: "Engineers designed parts", tool: "PLM gave it change management", market: "$65B PLM" },
-                { era: "Regulations", what: "Teams wrote compliance docs", tool: "GxP gave it audit trails", market: "$18B GxP" },
-                { era: "AI Artifacts", what: "LLMs generate everything", tool: "??? gives it governance", market: "Whitespace" },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 px-5 py-3 rounded-lg" style={{ background: i === 3 ? `hsl(${TEAL} / 0.08)` : `hsl(${TEAL} / 0.04)`, border: i === 3 ? `1px solid hsl(${TEAL} / 0.25)` : "none" }}>
-                  <span className="font-black w-28 shrink-0" style={{ fontSize: 14, color: i === 3 ? `hsl(${TEAL})` : SUBTLE }}>{item.era}</span>
-                  <span className="flex-1" style={{ fontSize: 17, color: i === 3 ? TEXT : MUTED }}>{item.tool}</span>
-                  <span className="font-bold shrink-0" style={{ fontSize: 15, color: i === 3 ? `hsl(${WARM})` : `hsl(${TEAL})` }}>{item.market}</span>
-                </div>
-              ))}
-            </div>
-            <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-              Every critical layer that got governance created a $B category.
+              Fast, but wrong. At scale.
             </p>
           </div>
         </div>
 
         <div className="mt-6 px-10 py-4 rounded-xl text-center" style={{ background: CARD_ALT, border: `1px solid hsl(215 10% 90%)` }}>
           <p style={{ fontSize: 22, color: TEXT }}>
-            <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>$100B+</span> of infrastructure governs the <strong>Whats</strong>. 
-            <span className="font-bold" style={{ color: `hsl(${WARM})` }}> $0</span> governs the <strong>AI artifacts</strong> that now fuse Whats and Hows together.
+            AI didn't create a new problem. It <strong>amplified an old one</strong>: your expertise was never designed to be read by machines.
           </p>
         </div>
       </div>
