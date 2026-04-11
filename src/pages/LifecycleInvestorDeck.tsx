@@ -223,10 +223,10 @@ function Slide03() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>The Human Era</p>
 
         <h2 className="font-black mb-4" style={{ fontSize: 55, color: DARK_TEXT, lineHeight: 1.05 }}>
-          This worked — because <span style={{ color: `hsl(${GREEN})` }}>humans were the bridge.</span>
+          For decades, this worked — because<br/><span style={{ color: `hsl(${GREEN})` }}>senior people filled the gaps.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          Execution was slow, manual, one-at-a-time. The <strong>Hows</strong> didn't need to be written down perfectly —
+          Execution was slow, manual, one-at-a-time. The expertise didn't need to be written down perfectly —
           senior colleagues carried the judgment and filled the gaps in real time.
         </p>
 
@@ -235,7 +235,7 @@ function Slide03() {
             {/* Source */}
             <div className="flex-1 rounded-2xl border p-8 text-center" style={{ borderColor: `hsl(200 15% 16%)`, background: `hsl(200 25% 10%)` }}>
               <p style={{ fontSize: 48 }}>📄</p>
-              <p className="font-bold mt-3" style={{ fontSize: 22, color: DARK_TEXT }}>Static How</p>
+              <p className="font-bold mt-3" style={{ fontSize: 22, color: DARK_TEXT }}>Static Expertise</p>
               <p className="mt-1" style={{ fontSize: 17, color: DARK_MUTED }}>PDFs, wikis, tribal knowledge</p>
               <p className="mt-2" style={{ fontSize: 15, color: DARK_SUBTLE }}>Incomplete. Outdated. Implicit.</p>
             </div>
@@ -370,12 +370,12 @@ function Slide05() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The Propagation Crisis</p>
 
         <h2 className="font-black mb-4" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.05 }}>
-          When a <span style={{ color: `hsl(${TEAL})` }}>How</span> changes, every <span style={{ color: `hsl(${BLUE})` }}>What</span> should follow.<br/>
+          When expertise changes,<br/>every AI output should update.<br/>
           <span style={{ color: `hsl(${WARM})` }}>Today, nothing does.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 23, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          LLMs don't just have a source quality problem. They have a <strong>change propagation</strong> problem.
-          When expertise evolves, every AI-generated artifact downstream is instantly stale.
+          AI doesn't just have a source quality problem. It has a <strong>change propagation</strong> problem.
+          When your best person updates their approach, every AI-generated output downstream is instantly stale.
         </p>
 
         <div className="flex-1 flex gap-8 items-stretch">
