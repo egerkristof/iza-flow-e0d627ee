@@ -109,19 +109,21 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS
+            LIZA OS · Seed
           </span>
         </div>
 
         <h1 className="font-black mb-10" style={{ fontSize: 84, lineHeight: 1.05, color: DARK_TEXT }}>
-          AI can execute anything.<br />
+          AI fuses how you work<br />
+          with what you produce.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Who tells it how?
+            Who manages that?
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 32, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The first infrastructure for how organizations think, decide, and deliver.
+          The first infrastructure for managing AI artifacts —<br />
+          where organizational judgment meets machine execution.
         </p>
 
         <p style={{ fontSize: 20, color: DARK_SUBTLE }}>
@@ -279,7 +281,7 @@ function Slide03() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 4 — THE LLM SHIFT (Semantic power breaks the balance)
+// SLIDE 4 — THE LLM SHIFT (Hows and Whats FUSE)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide04() {
@@ -289,68 +291,70 @@ function Slide04() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${WARM})` }}>The LLM Shift</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 55, color: TEXT, lineHeight: 1.05 }}>
-          LLMs gave us a <span style={{ color: `hsl(${TEAL})` }}>semantic engine</span> that turns<br/>
-          <span style={{ color: `hsl(${TEAL})` }}>Hows</span> into <span style={{ color: `hsl(${BLUE})` }}>Whats</span> — <span style={{ color: `hsl(${WARM})` }}>instantly, at scale.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+          LLMs don't just turn <span style={{ color: `hsl(${TEAL})` }}>Hows</span> into <span style={{ color: `hsl(${BLUE})` }}>Whats</span>.<br/>
+          They <span style={{ color: `hsl(${WARM})` }}>fuse them</span> into a new kind of artifact.
         </h2>
         <p className="mb-8" style={{ fontSize: 24, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          For the first time, machines can read expertise and produce artifacts from it. 
-          But this power revealed a fatal dependency: the quality of every AI-generated <strong>What</strong> is now 
-          <em> entirely</em> determined by the quality of the <strong>How</strong> it was given.
+          Every AI-generated artifact is <strong>simultaneously</strong> a What (the output) and an encoded How (the judgment that shaped it).
+          This fusion creates a new category of asset that no existing tool manages.
         </p>
 
         <div className="flex-1 flex gap-10 items-stretch">
-          {/* The Power */}
-          <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="flex items-center gap-3 mb-5">
-              <Zap size={22} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>The Power — Semantic Execution</p>
-            </div>
-            <div className="flex flex-col gap-3 flex-1">
-              {[
-                "Give it your sales methodology → it writes the proposal",
-                "Give it your code standards → it generates the module",
-                "Give it your onboarding guide → it builds the training",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${TEAL} / 0.06)` }}>
-                  <CheckCircle2 size={18} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-                  <span style={{ fontSize: 20, color: TEXT }}>{item}</span>
-                </div>
-              ))}
-            </div>
-            <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-              Execution is instant. And it scales infinitely.
-            </p>
-          </div>
-
-          {/* The Break */}
+          {/* The Fusion */}
           <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
             <div className="flex items-center gap-3 mb-5">
-              <AlertTriangle size={22} style={{ color: `hsl(${WARM})` }} />
-              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${WARM})` }}>The Break — No Human Bridge</p>
+              <Zap size={22} style={{ color: `hsl(${WARM})` }} />
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${WARM})` }}>The Fusion Problem</p>
             </div>
             <div className="flex flex-col gap-3 flex-1">
               {[
-                "AI executes literally — it can't judge what's missing",
-                "No senior to compensate for stale or incomplete knowledge",
-                "One bad How → 50 bad Whats, generated in seconds",
+                "AI writes a proposal → it encodes your pricing logic, deal structure, positioning",
+                "AI generates training → it encodes your onboarding methodology, cultural norms",
+                "AI drafts compliance docs → it encodes your interpretation of regulations",
+                "Every output is now a carrier of organizational judgment",
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: `hsl(${WARM} / 0.06)` }}>
-                  <X size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
-                  <span style={{ fontSize: 20, color: TEXT }}>{item}</span>
+                <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-lg" style={{ background: i === 3 ? `hsl(${WARM} / 0.08)` : `hsl(${WARM} / 0.04)` }}>
+                  {i < 3 ? <ArrowRight size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} /> : <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />}
+                  <span style={{ fontSize: 20, color: TEXT, fontWeight: i === 3 ? 700 : 400 }}>{item}</span>
                 </div>
               ))}
             </div>
             <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
-              The Hows were never ready for this.
+              And nobody is managing any of it.
+            </p>
+          </div>
+
+          {/* The Analogy */}
+          <div className="flex-1 rounded-2xl border p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <div className="flex items-center gap-3 mb-5">
+              <BookOpen size={22} style={{ color: `hsl(${TEAL})` }} />
+              <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>We've Seen This Before</p>
+            </div>
+            <div className="flex flex-col gap-4 flex-1">
+              {[
+                { era: "Code", what: "Developers wrote software", tool: "Git gave it version control", market: "$34B ALM" },
+                { era: "Products", what: "Engineers designed parts", tool: "PLM gave it change management", market: "$65B PLM" },
+                { era: "Regulations", what: "Teams wrote compliance docs", tool: "GxP gave it audit trails", market: "$18B GxP" },
+                { era: "AI Artifacts", what: "LLMs generate everything", tool: "??? gives it governance", market: "Whitespace" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-4 px-5 py-3 rounded-lg" style={{ background: i === 3 ? `hsl(${TEAL} / 0.08)` : `hsl(${TEAL} / 0.04)`, border: i === 3 ? `1px solid hsl(${TEAL} / 0.25)` : "none" }}>
+                  <span className="font-black w-28 shrink-0" style={{ fontSize: 14, color: i === 3 ? `hsl(${TEAL})` : SUBTLE }}>{item.era}</span>
+                  <span className="flex-1" style={{ fontSize: 17, color: i === 3 ? TEXT : MUTED }}>{item.tool}</span>
+                  <span className="font-bold shrink-0" style={{ fontSize: 15, color: i === 3 ? `hsl(${WARM})` : `hsl(${TEAL})` }}>{item.market}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-center mt-5 font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
+              Every critical layer that got governance created a $B category.
             </p>
           </div>
         </div>
 
         <div className="mt-6 px-10 py-4 rounded-xl text-center" style={{ background: CARD_ALT, border: `1px solid hsl(215 10% 90%)` }}>
           <p style={{ fontSize: 22, color: TEXT }}>
-            <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>$100B+</span> of infrastructure governs the <strong>Whats</strong> (ALM, PLM, GxP). 
-            <span className="font-bold" style={{ color: `hsl(${WARM})` }}> $0</span> governs the <strong>Hows</strong> that AI now executes from.
+            <span className="font-bold" style={{ color: `hsl(${BLUE})` }}>$100B+</span> of infrastructure governs the <strong>Whats</strong>. 
+            <span className="font-bold" style={{ color: `hsl(${WARM})` }}> $0</span> governs the <strong>AI artifacts</strong> that now fuse Whats and Hows together.
           </p>
         </div>
       </div>
@@ -639,77 +643,84 @@ function Slide08() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 9 — ENTERPRISE PROOF (Graphisoft case study)
+// SLIDE 9 — EARLY VALIDATION (Real enterprise proof across verticals)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide09() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Enterprise Validation</p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Early Validation</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 50, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Design partnership with a Global AEC Software Company<br />
-          <span style={{ color: `hsl(${GREEN})` }}>(part of a €6B Technology Group)</span>
+        <h2 className="font-black mb-8" style={{ fontSize: 50, color: DARK_TEXT, lineHeight: 1.05 }}>
+          Not theoretical demand.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>Real-world signal across verticals.</span>
         </h2>
 
-        <div className="flex gap-8 flex-1 min-h-0">
-          <div className="flex-1 flex flex-col gap-4">
-            <div className="rounded-xl border p-6" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.04)` }}>
-              <p className="font-semibold mb-2" style={{ fontSize: 16, color: `hsl(${TEAL})`, letterSpacing: "0.1em" }}>ENGAGEMENT</p>
-              <p className="font-bold mb-2" style={{ fontSize: 24, color: DARK_TEXT }}>Post-merger integration across 4 departments</p>
-              <p style={{ fontSize: 18, color: DARK_MUTED, lineHeight: 1.5 }}>
-                Product line merger into flagship platform. Leadership changes, team restructuring,
-                CI/CD pipeline unification. First design partnership to validate multi-departmental deployment.
-              </p>
-            </div>
-            <div className="rounded-xl border p-6 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <p className="font-semibold mb-3" style={{ fontSize: 16, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>WHAT HAPPENED IN THE FIRST SESSION</p>
-              {[
-                "Strategic decision propagated in real-time: Strategy → HR → R&D",
-                "AI generated change comms following the company's playbook",
-                "AI leaked a sensitive personnel change in the draft",
-                "Senior corrected the AI. System learned the rule instantly.",
-                "Next execution: AI automatically enforced it. No reminder.",
-              ].map((point, i) => (
-                <p key={i} className="flex items-start gap-3 mb-2" style={{ fontSize: 18, color: DARK_MUTED }}>
-                  <span className="font-bold shrink-0" style={{ color: `hsl(${GREEN})` }}>→</span> {point}
+        <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
+          {[
+            {
+              title: "Enterprise A — Global AEC Software (€6B Group)",
+              color: TEAL,
+              stats: "200+ employees · 16 VP-level attendees · 107-min first session",
+              points: [
+                "Design partnership: post-merger integration across 4 departments (Strategy, HR, R&D, Change Mgmt)",
+                "AI learned governance rules in real-time during first engagement session",
+                "VP Product now serves as Strategic Advisor to LIZA OS",
+              ],
+            },
+            {
+              title: "Enterprise B — Executive Search Firm",
+              color: GREEN,
+              stats: "Boutique firm · Senior partner engagement",
+              points: [
+                "Encoded senior partner's candidate evaluation judgment into playbooks",
+                "New associates running searches at senior quality from week 2",
+                "Validated onboarding accelerator use case",
+              ],
+            },
+            {
+              title: "Enterprise C — Professional Services Consultancy",
+              color: GOLD,
+              stats: "Mid-market · Multi-team deployment",
+              points: [
+                "Delivery methodology encoded into executable protocols",
+                "Client communication playbooks reduced escalations",
+                "Validated professional services delivery use case",
+              ],
+            },
+            {
+              title: "Enterprise D — B2B Sales Organization",
+              color: TEAL,
+              stats: "SaaS company · Sales team pilot",
+              points: [
+                "Top seller's deal qualification judgment encoded for entire team",
+                "Competitive positioning playbooks updated from live deal feedback",
+                "Validated sales playbook use case",
+              ],
+            },
+          ].map(({ title, color, stats, points }) => (
+            <div key={title} className="rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+              <p className="font-bold mb-1" style={{ fontSize: 22, color: DARK_TEXT }}>{title}</p>
+              <p className="mb-3" style={{ fontSize: 17, color: `hsl(${color})` }}>{stats}</p>
+              {points.map((p, i) => (
+                <p key={i} className="flex items-start gap-2.5 mb-1.5" style={{ fontSize: 18, color: DARK_MUTED }}>
+                  <span className="font-bold shrink-0" style={{ color: `hsl(${color})` }}>→</span> {p}
                 </p>
               ))}
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="w-[420px] flex flex-col gap-4 justify-center">
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "4", sub: "Departments", color: TEAL },
-                { label: "16", sub: "VP-level attendees", color: GREEN },
-                { label: "107", sub: "Minutes, first session", color: GOLD },
-                { label: "Real", sub: "Live data, live cases", color: TEAL },
-              ].map(({ label, sub, color }) => (
-                <div key={sub} className="rounded-xl border p-5 text-center"
-                  style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-                  <p className="font-black" style={{ fontSize: 32, color: `hsl(${color})`, lineHeight: 1 }}>{label}</p>
-                  <p className="mt-1" style={{ fontSize: 15, color: DARK_MUTED }}>{sub}</p>
-                </div>
-              ))}
-            </div>
-            <div className="rounded-xl border p-5 flex items-center gap-4"
-              style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.04)` }}>
-              <Building2 size={24} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-              <p style={{ fontSize: 16, color: DARK_MUTED }}>
-                <strong style={{ color: DARK_TEXT }}>VP Product</strong> now serves as Strategic Advisor to LIZA OS
-              </p>
-            </div>
-            <div className="rounded-xl border p-5" style={{ borderColor: `hsl(${WARM} / 0.2)`, background: `hsl(${WARM} / 0.04)` }}>
-              <p className="font-bold mb-2" style={{ fontSize: 18, color: DARK_TEXT }}>What this proves</p>
-              <p style={{ fontSize: 16, color: DARK_MUTED, lineHeight: 1.5 }}>
-                This isn't a tool problem. It's an infrastructure problem. No other platform connects
-                Strategy, HR, Change Management, and R&D through a shared, learning knowledge graph.
-              </p>
-            </div>
-          </div>
+        <div className="mt-4 rounded-xl border px-8 py-4 flex items-center gap-6"
+          style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
+          <Target size={28} style={{ color: `hsl(${GOLD})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 19, color: DARK_MUTED }}>
+            <strong style={{ color: DARK_TEXT }}>Same core problem in every vertical:</strong> scaling senior judgment beyond the individuals who carry it.
+            15+ clients across 8 countries. 15+ years of consulting depth behind the platform.
+          </p>
         </div>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
@@ -718,7 +729,7 @@ function Slide09() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 10 — VERTICAL EXPANSION (ALM pattern repeats)
+// SLIDE 10 — VERTICAL EXPANSION (Honest: what's live, what's thesis)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide10() {
@@ -729,8 +740,8 @@ function Slide10() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Vertical Expansion</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          One engine. Every industry where <span style={{ color: `hsl(${BLUE})` }}>Whats</span> are governed<br/>
-          <span style={{ color: `hsl(${TEAL})` }}>but Hows are not.</span>
+          Wherever <span style={{ color: `hsl(${BLUE})` }}>Whats</span> are managed but <span style={{ color: `hsl(${TEAL})` }}>Hows</span> are not,<br/>
+          <span style={{ color: `hsl(${GREEN})` }}>we're the missing layer.</span>
         </h2>
 
         <div className="flex gap-5 flex-1 min-h-0">
@@ -746,7 +757,7 @@ function Slide10() {
             <div className="rounded-2xl border p-6" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
               <p className="font-semibold mb-2" style={{ fontSize: 16, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>EXPANSION STRATEGY</p>
               <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
-                Land horizontally with AI-native teams. Expand vertically with industry-specific compliance frameworks.
+                Land horizontally with AI-native teams (ProServ, Sales, Consulting). Expand vertically with industry-specific compliance frameworks.
                 Each vertical deepens the moat.
               </p>
             </div>
@@ -755,28 +766,28 @@ function Slide10() {
           <div className="w-[62%] grid grid-cols-2 gap-4">
             {[
               {
-                vertical: "Pharma & Biotech", status: "Live", color: GREEN,
-                label: "Medicine Lifecycle Management",
-                whatSystem: "Veeva Vault, LIMS ($65B PLM)",
-                example: "Audit execution: 18-day process → 1.5 hours",
-              },
-              {
-                vertical: "Professional Services", status: "Live", color: GREEN,
+                vertical: "Professional Services", status: "Deployed", color: GREEN,
                 label: "Delivery Lifecycle Management",
                 whatSystem: "Salesforce, HubSpot, Notion",
                 example: "Senior judgment encoded into delivery protocols",
               },
               {
-                vertical: "Food Safety & Manufacturing", status: "Validated", color: TEAL,
+                vertical: "Sales Operations", status: "Deployed", color: GREEN,
+                label: "Sales Execution Management",
+                whatSystem: "CRM, Content Tools",
+                example: "Top-seller playbooks scaled to entire team",
+              },
+              {
+                vertical: "Pharma & Biotech", status: "Thesis", color: GOLD,
+                label: "Medicine Lifecycle Management",
+                whatSystem: "Veeva Vault, LIMS ($65B PLM)",
+                example: "GxP audit judgment at scale — validated opportunity",
+              },
+              {
+                vertical: "Food Safety & Manufacturing", status: "Thesis", color: GOLD,
                 label: "Quality Lifecycle Management",
                 whatSystem: "SAP QM, TraceGains ($18B GxP)",
                 example: "Supplier audit judgment scaled to junior inspectors",
-              },
-              {
-                vertical: "Lab Governance", status: "Validated", color: GOLD,
-                label: "Lab Lifecycle Management",
-                whatSystem: "LabWare, Benchling",
-                example: "Method validation judgment scaled across labs",
               },
             ].map(({ vertical, status, color, label, whatSystem, example }) => (
               <div key={vertical} className="rounded-xl border p-5 flex flex-col"
@@ -797,7 +808,7 @@ function Slide10() {
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={24} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 18, color: MUTED }}>
-            <strong style={{ color: TEXT }}>Each vertical is a separate wedge into a multi-billion-dollar compliance market.</strong>{" "}
+            <strong style={{ color: TEXT }}>Each vertical is a separate wedge into a multi-billion-dollar market.</strong>{" "}
             Same core engine. Industry-specific playbooks. Capital-efficient expansion.
           </p>
         </div>
@@ -808,7 +819,7 @@ function Slide10() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 11 — TEAM & TRACTION
+// SLIDE 11 — TEAM & TRACTION (Real data)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide11() {
@@ -820,7 +831,7 @@ function Slide11() {
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
           Built by practitioners.<br/>
-          <span style={{ color: `hsl(${TEAL})` }}>Validated by enterprise leaders.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>Not first-time founders.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -852,9 +863,9 @@ function Slide11() {
             </div>
           </div>
 
-          {/* Traction */}
+          {/* What's Built + Traction */}
           <div className="w-[480px] flex flex-col gap-5">
-            <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${GREEN})`, letterSpacing: "0.15em" }}>TRACTION</p>
+            <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${GREEN})`, letterSpacing: "0.15em" }}>WHAT'S ALREADY BUILT</p>
             <div className="grid grid-cols-3 gap-3">
               {[
                 { stat: "15+", label: "Clients", icon: <Users size={20} /> },
@@ -869,10 +880,10 @@ function Slide11() {
               ))}
             </div>
             {[
-              { title: "Live Product", desc: "Platform with AI edge functions, role-based modes, protocol execution, and knowledge graph.", color: TEAL },
-              { title: "Design Partnership", desc: "Active engagement with global AEC software company (€6B group). VP-level across 4 departments.", color: GREEN },
-              { title: "Multi-Vertical", desc: "Validated across pharma, professional services, sales operations, marketing, and executive search.", color: TEAL },
-              { title: "AACE v3.1", desc: "Proprietary context specification. Intent-locking, hierarchical knowledge injection, drift detection. The IP moat.", color: GREEN },
+              { title: "Live Product", desc: "Platform with knowledge graph, protocol execution, role-based modes, AI edge functions.", color: TEAL },
+              { title: "AACE v3.1 Spec", desc: "Proprietary context specification. Intent-locking, hierarchical knowledge injection, drift detection. The IP moat.", color: GREEN },
+              { title: "AI Standards Diagnostic", desc: "Live lead-gen tool. Teams self-assess AI maturity across 5 dimensions. Funnel to pilot.", color: TEAL },
+              { title: "Capital Efficiency", desc: "Built product, marketing site, diagnostic tool, and enterprise pipeline with near-zero burn.", color: GREEN },
             ].map(({ title, desc, color }) => (
               <div key={title} className="rounded-xl border p-4"
                 style={{ borderColor: `hsl(${color} / 0.15)`, background: `hsl(${color} / 0.03)` }}>
@@ -889,7 +900,7 @@ function Slide11() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 12 — THE ASK
+// SLIDE 12 — THE ASK (€300K with SAFE, allocation, milestones)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide12() {
@@ -899,50 +910,56 @@ function Slide12() {
       <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06]"
         style={{ background: `radial-gradient(circle, hsl(${MINT}), transparent 70%)` }} />
 
-      <div className="relative z-10 flex flex-col items-center text-center px-32">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-6" style={{ fontSize: 24, color: `hsl(${TEAL} / 0.8)` }}>Seed Round</p>
+      <div className="relative z-10 w-full px-28">
+        <div className="text-center mb-10">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL} / 0.8)` }}>Seed Round</p>
+          <h2 className="font-black mb-4" style={{ fontSize: 96, color: DARK_TEXT }}>€300K</h2>
+          <p style={{ fontSize: 26, color: DARK_MUTED }}>
+            Post-money SAFE &nbsp;·&nbsp; 12-month runway &nbsp;·&nbsp; Series Seed at month 12
+          </p>
+        </div>
 
-        <h2 className="font-black mb-8" style={{ fontSize: 96, color: DARK_TEXT }}>€300K</h2>
-
-        <p className="mb-10" style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 900, lineHeight: 1.5 }}>
-          To complete the platform, onboard design partners,<br />and establish the category.
-        </p>
-
-        <div className="flex gap-6 mb-12">
+        <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { pct: "50%", label: "Product & Engineering", color: TEAL },
-            { pct: "30%", label: "GTM & Category", color: SEAFOAM },
-            { pct: "20%", label: "Design Partners", color: MINT },
+            { pct: "40%", amt: "€120K", label: "First Paying Customers", desc: "Close 3-5 pilots. Convert validation into revenue.", color: TEAL },
+            { pct: "30%", amt: "€90K", label: "Product Hardening", desc: "Stabilize core. Complete SECI flywheel. Production-grade.", color: SEAFOAM },
+            { pct: "20%", amt: "€60K", label: "GTM Foundation", desc: "Case studies. Diagnostic funnel. Channel partner conversations.", color: MINT },
+            { pct: "10%", amt: "€30K", label: "Operations", desc: "Legal, IP protection, EU AI Act groundwork.", color: GOLD },
           ].map((a) => (
-            <div key={a.label} className="flex flex-col items-center gap-2 px-8 py-5 rounded-xl"
-              style={{ background: `hsl(${a.color} / 0.08)`, border: `1px solid hsl(${a.color} / 0.2)`, minWidth: 220 }}>
-              <span className="font-black" style={{ fontSize: 40, color: `hsl(${a.color})` }}>{a.pct}</span>
-              <span style={{ fontSize: 19, color: DARK_MUTED }}>{a.label}</span>
+            <div key={a.label} className="rounded-xl border p-5 text-center"
+              style={{ borderColor: `hsl(${a.color} / 0.2)`, background: `hsl(${a.color} / 0.06)` }}>
+              <p className="font-black" style={{ fontSize: 36, color: `hsl(${a.color})`, lineHeight: 1 }}>{a.pct}</p>
+              <p className="font-bold mt-1" style={{ fontSize: 16, color: `hsl(${a.color} / 0.7)` }}>{a.amt}</p>
+              <p className="font-bold mt-3" style={{ fontSize: 17, color: DARK_TEXT }}>{a.label}</p>
+              <p className="mt-1" style={{ fontSize: 14, color: DARK_MUTED }}>{a.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="rounded-xl px-14 py-7 mb-12"
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          {[
+            { month: "Month 1-4", target: "€50-80K ARR", milestone: "2-3 paying pilots. First case study.", color: TEAL },
+            { month: "Month 5-8", target: "€120-180K ARR", milestone: "5 customers across 2+ verticals. Net retention >100%.", color: SEAFOAM },
+            { month: "Month 9-12", target: "€200-300K ARR", milestone: "8-10 customers. Series Seed raise with proof, not projections.", color: MINT },
+          ].map(({ month, target, milestone, color }) => (
+            <div key={month} className="rounded-xl border p-5"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+              <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{month}</p>
+              <p className="font-black mt-1" style={{ fontSize: 28, color: DARK_TEXT }}>{target}</p>
+              <p className="mt-2" style={{ fontSize: 15, color: DARK_MUTED }}>{milestone}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-xl px-10 py-5 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-          <p style={{ fontSize: 28, color: DARK_TEXT, lineHeight: 1.5 }}>
-            $100B+ governs the <strong>Whats</strong> companies produce.<br />
-            Zero governs the <strong>Hows</strong> behind them.<br />
+          <p style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
+            $100B+ governs the <strong>Whats</strong> companies produce. Zero governs the <strong>Hows</strong> behind them.<br />
             <strong style={{ color: `hsl(${TEAL})` }}>We're building The How Layer.</strong>
           </p>
         </div>
 
-        <div className="flex gap-8">
-          <div className="px-14 py-6 rounded-2xl"
-            style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))` }}>
-            <span className="font-bold" style={{ fontSize: 26, color: "white" }}>Schedule a Founder Call</span>
-          </div>
-          <div className="px-14 py-6 rounded-2xl border"
-            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.08)` }}>
-            <span className="font-bold" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>Request Data Room</span>
-          </div>
-        </div>
-
-        <p className="mt-10" style={{ fontSize: 22, color: DARK_SUBTLE }}>
+        <p className="mt-6 text-center" style={{ fontSize: 18, color: DARK_SUBTLE }}>
           lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential
         </p>
       </div>
