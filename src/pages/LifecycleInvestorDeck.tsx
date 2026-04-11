@@ -142,7 +142,10 @@ function Slide01Cover() {
           </span>
         </h1>
 
-        <p style={{ fontSize: 30, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.55 }}>
+        <p className="mb-6" style={{ fontSize: 32, color: DARK_TEXT, maxWidth: 1100, lineHeight: 1.4, fontWeight: 500 }}>
+          When AI executes everything, what governs quality?
+        </p>
+        <p style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.55 }}>
           Every organization runs on expertise: how to sell, how to deliver,
           how to stay compliant. AI can execute all of it — but only if someone
           manages <strong style={{ color: DARK_TEXT }}>what it should know and when that knowledge changes.</strong>
@@ -247,10 +250,20 @@ function Slide03TheShift() {
           AI doesn't just assist work.<br />
           <span style={{ color: `hsl(${WARM})` }}>It executes it.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
-          The question is no longer "can AI do this?" — it's "does AI know what <em>good</em> looks like
-          for <em>our</em> organization?" That's the context problem.
-        </p>
+        <div className="mb-10 flex flex-col gap-4" style={{ maxWidth: 1100 }}>
+          {[
+            { num: "1", text: "LLMs can now execute virtually any knowledge task — writing, analysis, compliance, sales." },
+            { num: "2", text: "But they only produce good output when given the right context: your expertise, your standards, your judgment." },
+            { num: "3", text: "That context — your organization's accumulated knowledge — is now the real product. And products need lifecycle management." },
+          ].map((step) => (
+            <div key={step.num} className="flex items-start gap-5 px-6 py-4 rounded-xl"
+              style={{ background: `hsl(${WARM} / 0.06)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
+              <span className="font-black flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
+                style={{ background: `hsl(${WARM} / 0.15)`, color: `hsl(${WARM})`, fontSize: 22 }}>{step.num}</span>
+              <span style={{ fontSize: 24, color: TEXT, lineHeight: 1.5 }}>{step.text}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="flex-1 grid grid-cols-2 gap-10">
           {/* Left: Before AI */}
@@ -394,13 +407,13 @@ function Slide05ProvenModel() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
         <Tag label="The Precedent" />
         <h2 className="font-black mb-4" style={{ fontSize: 60, color: TEXT, lineHeight: 1.1 }}>
-          This exact problem was solved before.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>For software. It created a $34B market.</span>
+          Software had this problem.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>ALM solved it. A $34B market was born.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 24, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          In the 1990s, software projects had the same chaos: missed requirements, untraceable changes,
-          no quality control. Then Application Lifecycle Management (ALM) brought four disciplines
-          that transformed the industry. The same disciplines apply now — to a much larger domain.
+          In the 1990s, software had the same chaos: missed requirements, untraceable changes,
+          no quality control. Application Lifecycle Management (ALM) introduced four disciplines
+          that transformed the industry. <strong style={{ color: TEXT }}>Knowledge work has nothing equivalent. Until now.</strong>
         </p>
 
         <div className="flex-1 grid grid-cols-4 gap-6">
