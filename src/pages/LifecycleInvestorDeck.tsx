@@ -113,10 +113,8 @@ function DarkTag({ label, color = TEAL }: { label: string; color?: string }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 1 — THE SHIFT: Everything Becomes a Product
+// SLIDE 01 — COVER
 // ═══════════════════════════════════════════════════════════════════════════════
-
-// ─── Slide 01 — Cover ────────────────────────────────────────────────────────
 
 function Slide01Cover() {
   return (
@@ -137,27 +135,28 @@ function Slide01Cover() {
         </div>
 
         <h1 className="font-black mb-8" style={{ fontSize: 82, lineHeight: 1.0, color: DARK_TEXT }}>
-          In the age of AI,<br />
-          every workflow becomes<br />
+          AI scales output.<br />
+          Nothing scales the<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            a product.
+            judgment behind it.
           </span>
         </h1>
 
-        <p style={{ fontSize: 32, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.55 }}>
-          ALM governed how software gets built.<br />
-          <strong style={{ color: DARK_TEXT }}>Nothing governs how judgment-driven work gets built. Until now.</strong>
+        <p style={{ fontSize: 30, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.55 }}>
+          Every organization runs on expertise: how to sell, how to deliver,
+          how to stay compliant. AI can execute all of it — but only if someone
+          manages <strong style={{ color: DARK_TEXT }}>what it should know and when that knowledge changes.</strong>
         </p>
 
         <div className="mt-16 flex items-center gap-16">
           {[
-            ["$34B+", "ALM/PLM market proved lifecycle management works"],
-            ["0 tools", "exist for managing knowledge-driven lifecycles"],
-            ["LIZA OS", "The lifecycle management system for the AI age"],
+            ["The problem", "AI creates 100x more output — but disconnected from the expertise that should govern it"],
+            ["The proof", "Software solved this with lifecycle management. It created a $34B market."],
+            ["LIZA OS", "The first system that manages the lifecycle of organizational judgment"],
           ].map(([k, v]) => (
-            <div key={k} className="flex flex-col items-center gap-2 max-w-[360px]">
-              <span className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>{k}</span>
-              <span className="text-center" style={{ fontSize: 20, color: DARK_SUBTLE }}>{v}</span>
+            <div key={k} className="flex flex-col items-center gap-2 max-w-[380px]">
+              <span className="font-black uppercase tracking-wider" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>{k}</span>
+              <span className="text-center" style={{ fontSize: 19, color: DARK_SUBTLE }}>{v}</span>
             </div>
           ))}
         </div>
@@ -167,128 +166,65 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — What ALM Solved ──────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 02 — THIS HAPPENS EVERY WEEK (moved up for emotional hook)
+// ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide02WhatALMSolved() {
-  const almPillars = [
-    { icon: <GitBranch size={28} />, title: "Requirements Traceability", desc: "Every requirement traced from source through design, code, and tests. Nothing fell through the cracks." },
-    { icon: <RefreshCw size={28} />, title: "Change Propagation", desc: "When a requirement changed, every dependency was flagged. Connected code, tests, and docs updated together." },
-    { icon: <GitMerge size={28} />, title: "Artifact Versioning", desc: "Every file, every change, every decision — versioned and auditable. Full history, zero ambiguity." },
-    { icon: <Shield size={28} />, title: "Quality Gates", desc: "No code shipped without passing defined gates. Reviews, tests, and approvals built into the process." },
+function Slide02SoundFamiliar() {
+  const scenarios = [
+    {
+      icon: <Users size={32} />,
+      title: "Your best person left.",
+      desc: "They took 8 years of expertise with them. The wiki they wrote is outdated. New hires make the same mistakes for months. There was no system to capture what they knew.",
+      color: WARM,
+    },
+    {
+      icon: <Zap size={32} />,
+      title: "AI made everyone faster — and less consistent.",
+      desc: "Each team member prompts differently, uses different shortcuts, gets different results. Output volume is up 10x. Quality consistency is down. Nobody defined what 'good' looks like.",
+      color: TEAL,
+    },
+    {
+      icon: <AlertTriangle size={32} />,
+      title: "A standard changed. Nothing downstream updated.",
+      desc: "The compliance team updated the methodology last month. The 23 proposals, 8 training decks, and 4 client contracts that depend on it are still using the old version. Nobody even knows which ones.",
+      color: RED,
+    },
   ];
 
-  return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="Act 1 · The Proven Model" />
-        <h2 className="font-black mb-4" style={{ fontSize: 62, color: TEXT, lineHeight: 1.1 }}>
-          ALM solved chaos for software.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>It created a $34B+ market.</span>
-        </h2>
-        <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
-          Before ALM, software projects were chaos — missed requirements, untraceable changes, no quality control.
-          ALM brought four disciplines that transformed how software gets built.
-        </p>
-
-        <div className="flex-1 grid grid-cols-4 gap-6">
-          {almPillars.map((p) => (
-            <div key={p.title} className="rounded-2xl border p-7 flex flex-col"
-              style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: CARD_ALT }}>
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                style={{ background: `hsl(${TEAL} / 0.1)`, color: `hsl(${TEAL})` }}>
-                {p.icon}
-              </div>
-              <p className="font-bold mb-3" style={{ fontSize: 26, color: TEXT }}>{p.title}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.55 }}>{p.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 flex items-center justify-center gap-6">
-          {["IBM Rational", "PTC Codebeamer", "Siemens Polarion", "Microsoft Azure DevOps"].map((t) => (
-            <span key={t} className="px-4 py-2 rounded-lg" style={{ fontSize: 18, background: `hsl(${TEAL} / 0.06)`, color: MUTED }}>
-              {t}
-            </span>
-          ))}
-          <span style={{ fontSize: 18, color: SUBTLE }}>built multi-billion dollar businesses on this.</span>
-        </div>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
-// ─── Slide 03 — But Work Has Changed ─────────────────────────────────────────
-
-function Slide03WorkChanged() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="The Shift" color={WARM} />
-        <h2 className="font-black mb-6" style={{ fontSize: 64, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Software isn't the only thing<br />
-          <span style={{ color: `hsl(${WARM})` }}>that needs lifecycle management.</span>
+        <DarkTag label="The Problem" color={WARM} />
+        <h2 className="font-black mb-6" style={{ fontSize: 64, color: DARK_TEXT, lineHeight: 1.1 }}>
+          These aren't edge cases.<br />
+          <span style={{ color: `hsl(${WARM})` }}>They happen every week.</span>
         </h2>
-        <p className="mb-12" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
-          In the AI age, every repeating workflow is becoming a product with a lifecycle:
-          versions, dependencies, quality requirements, and connected artifacts.
+        <p className="mb-12" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 950 }}>
+          Every organization that runs on expertise — consulting, pharma, engineering, enterprise sales —
+          has the same three problems. None have a system to solve them.
         </p>
 
-        <div className="flex-1 grid grid-cols-2 gap-8">
-          {/* Left: Old world */}
-          <div className="rounded-2xl border p-8" style={{ borderColor: `hsl(200 15% 16%)`, background: DARK_CARD }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: DARK_SUBTLE }}>
-              What ALM managed
-            </p>
-            <div className="flex flex-col gap-4">
-              {[
-                { label: "Code files", icon: <FileText size={20} /> },
-                { label: "Test cases", icon: <CheckCircle2 size={20} /> },
-                { label: "Requirements docs", icon: <BookOpen size={20} /> },
-                { label: "Build pipelines", icon: <Cog size={20} /> },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-4 px-5 py-3 rounded-lg"
-                  style={{ background: `hsl(200 10% 14%)` }}>
-                  <span style={{ color: DARK_SUBTLE }}>{item.icon}</span>
-                  <span style={{ fontSize: 22, color: DARK_MUTED }}>{item.label}</span>
-                </div>
-              ))}
+        <div className="flex-1 grid grid-cols-3 gap-8">
+          {scenarios.map((s) => (
+            <div key={s.title} className="rounded-2xl border p-8 flex flex-col"
+              style={{ borderColor: `hsl(${s.color} / 0.25)`, background: `hsl(${s.color} / 0.06)` }}>
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6"
+                style={{ background: `hsl(${s.color} / 0.15)`, color: `hsl(${s.color})` }}>
+                {s.icon}
+              </div>
+              <p className="font-bold mb-4" style={{ fontSize: 28, color: DARK_TEXT }}>{s.title}</p>
+              <p className="flex-1" style={{ fontSize: 21, color: DARK_MUTED, lineHeight: 1.55 }}>{s.desc}</p>
             </div>
-            <p className="mt-5 text-center" style={{ fontSize: 18, color: DARK_SUBTLE }}>Deterministic artifacts. Predictable outcomes.</p>
-          </div>
-
-          {/* Right: New world */}
-          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-              What needs lifecycle management now
-            </p>
-            <div className="flex flex-col gap-4">
-              {[
-                { label: "Sales playbooks & proposals", icon: <Target size={20} /> },
-                { label: "Consulting methodologies", icon: <BookOpen size={20} /> },
-                { label: "Compliance & quality standards", icon: <Shield size={20} /> },
-                { label: "Training programs & onboarding", icon: <Users size={20} /> },
-                { label: "Client deliverables & reports", icon: <FileText size={20} /> },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-4 px-5 py-3 rounded-lg"
-                  style={{ background: `hsl(${TEAL} / 0.08)` }}>
-                  <span style={{ color: `hsl(${TEAL})` }}>{item.icon}</span>
-                  <span style={{ fontSize: 22, color: DARK_TEXT }}>{item.label}</span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-5 text-center font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-              Judgment-driven artifacts. Complex, evolving, interconnected.
-            </p>
-          </div>
+          ))}
         </div>
 
-        <div className="mt-6 text-center">
-          <p style={{ fontSize: 24, color: DARK_MUTED }}>
-            Every one of these has versions, dependencies, and quality requirements.
-            <strong style={{ color: DARK_TEXT }}> None of them have an ALM.</strong>
+        <div className="mt-8 rounded-xl px-10 py-6 text-center"
+          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
+          <p style={{ fontSize: 24, color: DARK_TEXT }}>
+            These problems share a root cause:
+            <strong style={{ color: `hsl(${TEAL})` }}> expertise lives in people's heads. It has no system, no versioning, no lifecycle.</strong>
           </p>
         </div>
       </div>
@@ -298,24 +234,95 @@ function Slide03WorkChanged() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 2 — THE CONSEQUENCE: Unmanaged Lifecycles Produce Defects
+// SLIDE 03 — THE SHIFT: AI Changed What "Work" Is
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ─── Slide 04 — Unmanaged Lifecycles ─────────────────────────────────────────
-
-function Slide04UnmanagedLifecycles() {
+function Slide03TheShift() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="Act 2 · The Consequence" color={WARM} />
+        <Tag label="The Shift" color={WARM} />
         <h2 className="font-black mb-6" style={{ fontSize: 62, color: TEXT, lineHeight: 1.1 }}>
-          ALM proved the rule:<br />
-          <span style={{ color: `hsl(${WARM})` }}>unmanaged lifecycles produce defects.</span>
+          AI doesn't just assist work.<br />
+          <span style={{ color: `hsl(${WARM})` }}>It executes it.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
-          Before ALM, every missed requirement was a shipped bug. Today, every untracked knowledge change
-          is a wrong proposal, a non-compliant report, or a client deliverable based on outdated thinking.
+          The question is no longer "can AI do this?" — it's "does AI know what <em>good</em> looks like
+          for <em>our</em> organization?" That's the context problem.
+        </p>
+
+        <div className="flex-1 grid grid-cols-2 gap-10">
+          {/* Left: Before AI */}
+          <div className="rounded-2xl border p-8" style={{ borderColor: `hsl(215 10% 88%)`, background: CARD_ALT }}>
+            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: SUBTLE }}>
+              Before: Output was slow, managed by people
+            </p>
+            <div className="flex flex-col gap-4">
+              {[
+                "One proposal per week — senior person reviewed it",
+                "One onboarding program — HR updated it annually",
+                "One compliance report — the expert who wrote it owned it",
+                "Knowledge lived in people. It worked because output was slow.",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-4 px-5 py-3 rounded-lg"
+                  style={{ background: `hsl(215 10% 94%)` }}>
+                  <span style={{ fontSize: 22, color: MUTED }}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: After AI */}
+          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <p className="font-bold tracking-[0.2em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
+              Now: Output is instant, but disconnected from expertise
+            </p>
+            <div className="flex flex-col gap-4">
+              {[
+                "50 proposals per week — AI generates them in minutes",
+                "Custom onboarding per hire — AI builds it on the fly",
+                "Continuous compliance — AI drafts reports in real time",
+                "But whose expertise governs what AI produces? Nobody's.",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-4 px-5 py-3 rounded-lg"
+                  style={{ background: `hsl(${TEAL} / 0.06)` }}>
+                  <span style={{ fontSize: 22, color: TEXT }}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 text-center">
+          <p style={{ fontSize: 24, color: MUTED }}>
+            AI turned every repeating workflow into something that runs continuously —
+            <strong style={{ color: TEXT }}> like software. But without any of the systems software has.</strong>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={WARM} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 04 — THE CONSEQUENCE: Unmanaged Lifecycles = Defects
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide04UnmanagedLifecycles() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
+      <DarkGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
+        <DarkTag label="The Consequence" color={WARM} />
+        <h2 className="font-black mb-6" style={{ fontSize: 62, color: DARK_TEXT, lineHeight: 1.1 }}>
+          When knowledge changes,<br />
+          <span style={{ color: `hsl(${WARM})` }}>nothing downstream knows.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
+          Your pricing model changed. Your compliance framework updated. Your best practice evolved.
+          But every proposal, report, and deliverable that depends on them? Still using the old version.
         </p>
 
         <div className="flex-1 flex gap-10 items-center">
@@ -338,8 +345,8 @@ function Slide04UnmanagedLifecycles() {
               ].map((node) => (
                 <div key={node.label} className="absolute flex items-center gap-2 px-5 py-3 rounded-lg"
                   style={{
-                    left: node.x, top: node.y, fontSize: 18, color: MUTED,
-                    background: `hsl(${RED} / 0.04)`, border: `1px dashed hsl(${RED} / 0.2)`,
+                    left: node.x, top: node.y, fontSize: 18, color: DARK_MUTED,
+                    background: `hsl(${RED} / 0.06)`, border: `1px dashed hsl(${RED} / 0.3)`,
                   }}>
                   <FileText size={16} style={{ color: `hsl(${RED} / 0.5)` }} />
                   {node.label}
@@ -347,25 +354,25 @@ function Slide04UnmanagedLifecycles() {
                 </div>
               ))}
             </div>
-            <p className="text-center mt-4" style={{ fontSize: 22, color: SUBTLE }}>
-              One methodology update should reach every connected artifact.<br />
+            <p className="text-center mt-4" style={{ fontSize: 22, color: DARK_SUBTLE }}>
+              One methodology update should reach every connected output.<br />
               <strong style={{ color: `hsl(${WARM})` }}>Today, it reaches zero.</strong>
             </p>
           </div>
 
           <div className="w-[380px] flex flex-col gap-6">
             {[
-              { stat: "47", unit: "artifacts", label: "touched by an average methodology change", color: WARM },
-              { stat: "0", unit: "of them", label: "update automatically when the methodology evolves", color: RED },
-              { stat: "100×", unit: "speed", label: "AI amplifies this — more output, more things that drift", color: TEAL },
+              { stat: "Dozens", unit: "of outputs", label: "depend on any single piece of organizational knowledge", color: WARM },
+              { stat: "Zero", unit: "of them", label: "update automatically when that knowledge evolves", color: RED },
+              { stat: "100x", unit: "more", label: "output from AI — meaning 100x more things drifting out of sync", color: TEAL },
             ].map(({ stat, unit, label, color }) => (
               <div key={stat} className="rounded-xl border p-6"
-                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+                style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.06)` }}>
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-black" style={{ fontSize: 44, color: `hsl(${color})` }}>{stat}</span>
+                  <span className="font-black" style={{ fontSize: 40, color: `hsl(${color})` }}>{stat}</span>
                   <span className="font-semibold" style={{ fontSize: 20, color: `hsl(${color} / 0.7)` }}>{unit}</span>
                 </div>
-                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{label}</p>
+                <p style={{ fontSize: 18, color: DARK_MUTED, lineHeight: 1.4 }}>{label}</p>
               </div>
             ))}
           </div>
@@ -376,135 +383,54 @@ function Slide04UnmanagedLifecycles() {
   );
 }
 
-// ─── Slide 05 — Sound Familiar? ──────────────────────────────────────────────
-
-function Slide05SoundFamiliar() {
-  const scenarios = [
-    {
-      icon: <Users size={32} />,
-      title: "Your best person left.",
-      desc: "They took 8 years of expertise with them. The wiki they wrote is outdated. New hires make the same mistakes for months. There was no system to capture their judgment.",
-      color: WARM,
-    },
-    {
-      icon: <Zap size={32} />,
-      title: "AI made everyone faster — and less consistent.",
-      desc: "Each team member prompts differently, uses different shortcuts, gets different results. Output volume is up. Quality consistency is down. There's no standard to enforce.",
-      color: TEAL,
-    },
-    {
-      icon: <AlertTriangle size={32} />,
-      title: "A standard changed. Nobody knows what's affected.",
-      desc: "The compliance team updated the methodology. But the 23 proposals, 8 training decks, and 4 client contracts that depend on it? Still using the old version.",
-      color: RED,
-    },
-  ];
-
-  return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="Sound Familiar?" color={WARM} />
-        <h2 className="font-black mb-6" style={{ fontSize: 64, color: DARK_TEXT, lineHeight: 1.1 }}>
-          These aren't edge cases.<br />
-          <span style={{ color: `hsl(${WARM})` }}>They happen every week.</span>
-        </h2>
-        <p className="mb-12" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 950 }}>
-          In software, these would be critical bugs. In knowledge work, they're "just how things are."
-          ALM proved it doesn't have to be.
-        </p>
-
-        <div className="flex-1 grid grid-cols-3 gap-8">
-          {scenarios.map((s) => (
-            <div key={s.title} className="rounded-2xl border p-8 flex flex-col"
-              style={{ borderColor: `hsl(${s.color} / 0.25)`, background: `hsl(${s.color} / 0.06)` }}>
-              <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6"
-                style={{ background: `hsl(${s.color} / 0.15)`, color: `hsl(${s.color})` }}>
-                {s.icon}
-              </div>
-              <p className="font-bold mb-4" style={{ fontSize: 28, color: DARK_TEXT }}>{s.title}</p>
-              <p className="flex-1" style={{ fontSize: 21, color: DARK_MUTED, lineHeight: 1.55 }}>{s.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 rounded-xl px-10 py-6 text-center"
-          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
-          <p style={{ fontSize: 24, color: DARK_TEXT }}>
-            In software: untracked requirement = shipped bug.
-            <br />
-            In knowledge work: <strong style={{ color: `hsl(${TEAL})` }}>untracked expertise change = organizational drift at scale.</strong>
-          </p>
-        </div>
-      </div>
-      <SlideBar from={WARM} to={TEAL} />
-    </div>
-  );
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 3 — THE INSIGHT: Two Layers, One System
+// SLIDE 05 — THIS WAS SOLVED BEFORE (ALM as proof, not anchor)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ─── Slide 06 — The ALM Parallel ─────────────────────────────────────────────
-
-function Slide06ALMParallel() {
-  const rows = [
-    { alm: "Source code files", liza: "Expertise & best practices", pillar: "Managed artifacts" },
-    { alm: "Requirements → tests", liza: "Standards → deliverables", pillar: "Traceability" },
-    { alm: "Code dependencies", liza: "Knowledge dependencies", pillar: "Change propagation" },
-    { alm: "File history & diffs", liza: "Knowledge versioning & diffs", pillar: "Version control" },
-    { alm: "Automated test suites", liza: "Human review + AI compliance", pillar: "Quality gates" },
-    { alm: "Developers", liza: "Every knowledge worker", pillar: "Users" },
-  ];
-
+function Slide05ProvenModel() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="Act 3 · The Insight" />
-        <h2 className="font-black mb-4" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          Same disciplines. New domain.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Massively larger market.</span>
+        <Tag label="The Precedent" />
+        <h2 className="font-black mb-4" style={{ fontSize: 60, color: TEXT, lineHeight: 1.1 }}>
+          This exact problem was solved before.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>For software. It created a $34B market.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 24, color: MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
-          ALM managed code. LIZA manages judgment. The principles are identical.
-          The addressable market is every organization that runs on expertise.
+        <p className="mb-10" style={{ fontSize: 24, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
+          In the 1990s, software projects had the same chaos: missed requirements, untraceable changes,
+          no quality control. Then Application Lifecycle Management (ALM) brought four disciplines
+          that transformed the industry. The same disciplines apply now — to a much larger domain.
         </p>
 
-        <div className="flex-1">
-          <div className="rounded-2xl border overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.2)` }}>
-            {/* Header */}
-            <div className="grid grid-cols-3 gap-0">
-              <div className="px-6 py-4" style={{ background: `hsl(215 10% 94%)` }}>
-                <p className="font-bold" style={{ fontSize: 20, color: SUBTLE }}>Discipline</p>
+        <div className="flex-1 grid grid-cols-4 gap-6">
+          {[
+            { icon: <GitBranch size={28} />, title: "Traceability", desc: "Every requirement traced from source through code and tests. Nothing fell through the cracks.", now: "Every piece of expertise traced to every output it governs." },
+            { icon: <RefreshCw size={28} />, title: "Change Propagation", desc: "When a requirement changed, every dependency was flagged and updated.", now: "When knowledge changes, every proposal, report, and deliverable that depends on it updates." },
+            { icon: <GitMerge size={28} />, title: "Version Control", desc: "Every file, every change, every decision — versioned and auditable.", now: "Every methodology, standard, and best practice — versioned and auditable." },
+            { icon: <Shield size={28} />, title: "Quality Gates", desc: "No code shipped without passing defined reviews and approvals.", now: "No deliverable goes out without passing human review at critical steps." },
+          ].map((p) => (
+            <div key={p.title} className="rounded-2xl border p-6 flex flex-col"
+              style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: CARD_ALT }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${TEAL} / 0.1)`, color: `hsl(${TEAL})` }}>
+                {p.icon}
               </div>
-              <div className="px-6 py-4" style={{ background: `hsl(215 10% 94%)` }}>
-                <p className="font-bold" style={{ fontSize: 20, color: MUTED }}>ALM (Software)</p>
-              </div>
-              <div className="px-6 py-4" style={{ background: `hsl(${TEAL} / 0.08)` }}>
-                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>LIZA (Judgment)</p>
+              <p className="font-bold mb-2" style={{ fontSize: 24, color: TEXT }}>{p.title}</p>
+              <p className="mb-3" style={{ fontSize: 18, color: SUBTLE, lineHeight: 1.45 }}>{p.desc}</p>
+              <div className="mt-auto pt-3 border-t" style={{ borderColor: `hsl(${TEAL} / 0.15)` }}>
+                <p style={{ fontSize: 17, color: `hsl(${TEAL})`, lineHeight: 1.4 }}>
+                  <strong>Now:</strong> {p.now}
+                </p>
               </div>
             </div>
-            {rows.map((r, i) => (
-              <div key={r.pillar} className="grid grid-cols-3 gap-0 border-t" style={{ borderColor: `hsl(215 10% 92%)` }}>
-                <div className="px-6 py-4" style={{ background: i % 2 === 0 ? BG : CARD_ALT }}>
-                  <p className="font-semibold" style={{ fontSize: 20, color: TEXT }}>{r.pillar}</p>
-                </div>
-                <div className="px-6 py-4" style={{ background: i % 2 === 0 ? BG : CARD_ALT }}>
-                  <p style={{ fontSize: 20, color: MUTED }}>{r.alm}</p>
-                </div>
-                <div className="px-6 py-4" style={{ background: `hsl(${TEAL} / ${i % 2 === 0 ? '0.03' : '0.06'})` }}>
-                  <p className="font-medium" style={{ fontSize: 20, color: TEXT }}>{r.liza}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
 
-        <div className="mt-6 text-center">
-          <p className="font-semibold" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-            ALM proved that managed lifecycles outperform unmanaged ones. Every time.
+        <div className="mt-5 text-center">
+          <p style={{ fontSize: 20, color: SUBTLE }}>
+            IBM, PTC, Siemens, and Microsoft built multi-billion dollar businesses on these disciplines for code.
+            <strong style={{ color: TEXT }}> Nobody has built them for the rest of work.</strong>
           </p>
         </div>
       </div>
@@ -513,21 +439,23 @@ function Slide06ALMParallel() {
   );
 }
 
-// ─── Slide 07 — Two Layers ───────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 06 — THE INSIGHT: Two Layers That Must Stay in Sync
+// ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide07TwoLayers() {
+function Slide06TwoLayers() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="The Architecture" color={TEAL} />
+        <DarkTag label="The Insight" color={TEAL} />
         <h2 className="font-black mb-6" style={{ fontSize: 60, color: DARK_TEXT, lineHeight: 1.05 }}>
-          When knowledge changes,<br />
-          <span style={{ color: `hsl(${TEAL})` }}>every artifact should know.</span>
+          Every organization has two layers.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Today, nothing connects them.</span>
         </h2>
         <p className="mb-12" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1000, lineHeight: 1.5 }}>
-          And when an artifact reveals something new — a client insight, a project learning — the knowledge base should update too.
-          Just like ALM kept code and requirements in sync.
+          When knowledge changes, every output should know. When an output reveals
+          something new, the knowledge base should update. This is the loop that's missing.
         </p>
 
         <div className="flex-1 flex items-center justify-center">
@@ -536,11 +464,11 @@ function Slide07TwoLayers() {
             <div className="w-[520px] rounded-2xl p-10" style={{ background: `hsl(${TEAL} / 0.1)`, border: `2px solid hsl(${TEAL} / 0.3)` }}>
               <div className="flex items-center gap-3 mb-6">
                 <Brain size={28} style={{ color: `hsl(${TEAL})` }} />
-                <span className="font-bold" style={{ fontSize: 28, color: DARK_TEXT }}>What People Know</span>
+                <span className="font-bold" style={{ fontSize: 28, color: DARK_TEXT }}>What Your Organization Knows</span>
               </div>
-              <p className="mb-4" style={{ fontSize: 18, color: DARK_SUBTLE }}>Like requirements in ALM</p>
+              <p className="mb-5" style={{ fontSize: 18, color: DARK_SUBTLE }}>Expertise, standards, methodologies, best practices</p>
               <div className="flex flex-col gap-3">
-                {["Methodology updated", "New compliance rule", "Pricing model changed", "Best practice discovered"].map((item) => (
+                {["Sales methodology updated", "Compliance standard revised", "Pricing model changed", "New best practice discovered"].map((item) => (
                   <div key={item} className="px-5 py-3 rounded-lg flex items-center gap-3"
                     style={{ background: `hsl(${TEAL} / 0.08)` }}>
                     <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${TEAL})` }} />
@@ -570,9 +498,9 @@ function Slide07TwoLayers() {
             <div className="w-[520px] rounded-2xl p-10" style={{ background: `hsl(${SEAFOAM} / 0.1)`, border: `2px solid hsl(${SEAFOAM} / 0.3)` }}>
               <div className="flex items-center gap-3 mb-6">
                 <Layers size={28} style={{ color: `hsl(${SEAFOAM})` }} />
-                <span className="font-bold" style={{ fontSize: 28, color: DARK_TEXT }}>What Gets Produced</span>
+                <span className="font-bold" style={{ fontSize: 28, color: DARK_TEXT }}>What Your Organization Produces</span>
               </div>
-              <p className="mb-4" style={{ fontSize: 18, color: DARK_SUBTLE }}>Like source code in ALM</p>
+              <p className="mb-5" style={{ fontSize: 18, color: DARK_SUBTLE }}>Proposals, reports, deliverables, training materials</p>
               <div className="flex flex-col gap-3">
                 {["Proposals auto-updated", "Training decks flagged", "SOPs version-bumped", "Client briefs synced"].map((item) => (
                   <div key={item} className="px-5 py-3 rounded-lg flex items-center gap-3"
@@ -592,28 +520,26 @@ function Slide07TwoLayers() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 4 — THE SOLUTION: LIZA OS
+// SLIDE 07 — THE SOLUTION: LIZA OS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ─── Slide 08 — The Four-Step Loop ───────────────────────────────────────────
-
-function Slide08LizaOS() {
+function Slide07LizaOS() {
   const steps = [
     {
       icon: <BookOpen size={32} />, step: "01", title: "Capture",
-      desc: "Your best people's expertise — playbooks, standards, tribal knowledge — becomes structured, versionable, and alive. Like source control for judgment.",
+      desc: "Your best people's expertise — playbooks, standards, methodologies — becomes structured, versionable, and alive. Not a wiki that rots. A living system that evolves.",
     },
     {
       icon: <Network size={32} />, step: "02", title: "Organize",
-      desc: "Knowledge is organized into governed bundles scoped to roles, teams, and workflows. Dependencies are mapped. Like a requirements graph.",
+      desc: "Knowledge is organized into governed bundles scoped to roles, teams, and workflows. Dependencies are mapped so you know what connects to what.",
     },
     {
       icon: <Zap size={32} />, step: "03", title: "Execute",
-      desc: "AI-assisted work runs with your team's best judgment built in. Quality gates ensure human review at critical steps. Like CI/CD for knowledge work.",
+      desc: "AI-assisted work runs with your team's best judgment built in. Quality gates ensure human review at critical decision points. Consistency at scale.",
     },
     {
       icon: <RefreshCw size={32} />, step: "04", title: "Propagate",
-      desc: "When knowledge changes, every connected artifact updates. When artifacts reveal patterns, knowledge improves. Like change propagation in ALM.",
+      desc: "When knowledge changes, every connected output knows. When outputs reveal patterns, knowledge improves. The system compounds over time.",
     },
   ];
 
@@ -621,13 +547,15 @@ function Slide08LizaOS() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="Act 4 · The Solution" />
+        <Tag label="The Solution" />
         <h2 className="font-black mb-4" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          LIZA: Lifecycle management<br />
-          <span style={{ color: `hsl(${TEAL})` }}>for everything AI produces.</span>
+          LIZA: The lifecycle management system<br />
+          <span style={{ color: `hsl(${TEAL})` }}>for organizational judgment.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 24, color: MUTED, maxWidth: 1000, lineHeight: 1.5 }}>
-          Four steps. One loop. The same disciplines that made software reliable — now applied to how your organization thinks, decides, and delivers.
+          Four steps. One loop. The disciplines that made software reliable —
+          traceability, versioning, change propagation, quality gates —
+          applied to how your organization thinks, decides, and delivers.
         </p>
 
         <div className="flex-1 grid grid-cols-4 gap-6">
@@ -655,7 +583,7 @@ function Slide08LizaOS() {
         <div className="mt-6 flex items-center justify-center gap-3">
           <RefreshCw size={20} style={{ color: `hsl(${MINT})` }} />
           <p style={{ fontSize: 22, color: MUTED }}>
-            Step 4 feeds back into Step 1 — <strong style={{ color: TEXT }}>the system compounds over time, just like a well-maintained codebase.</strong>
+            Step 4 feeds back into Step 1 — <strong style={{ color: TEXT }}>the system gets smarter with every use.</strong>
           </p>
         </div>
       </div>
@@ -664,77 +592,64 @@ function Slide08LizaOS() {
   );
 }
 
-// ─── Slide 09 — The Lovable Proof ────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 08 — HOW IT WORKS IN PRACTICE
+// ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide09LovableProof() {
+function Slide08InPractice() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="You've Already Seen This" color={MINT} />
+        <DarkTag label="In Practice" color={MINT} />
         <h2 className="font-black mb-6" style={{ fontSize: 60, color: DARK_TEXT, lineHeight: 1.1 }}>
-          This deck was built with<br />
-          <span style={{ color: `hsl(${MINT})` }}>a primitive version of what we're building.</span>
+          Change one standard.<br />
+          <span style={{ color: `hsl(${MINT})` }}>Every connected output updates.</span>
         </h2>
-        <p className="mb-12" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
-          Modern AI coding tools like Lovable already demonstrate the pattern:
-          change one component, and the system identifies 15 other files that need updating.
-          But this only works for code. LIZA does it for everything else.
+        <p className="mb-10" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1050, lineHeight: 1.5 }}>
+          AI coding tools already do this for code — change one component and the system
+          flags every other file that needs updating. LIZA does the same thing for organizational
+          knowledge: methodologies, standards, and every deliverable that depends on them.
         </p>
 
         <div className="flex-1 grid grid-cols-2 gap-10">
-          {/* Left: What exists today */}
-          <div className="rounded-2xl border p-8" style={{ borderColor: `hsl(${BLUE} / 0.3)`, background: `hsl(${BLUE} / 0.06)` }}>
-            <div className="flex items-center gap-3 mb-6">
-              <Box size={28} style={{ color: `hsl(${BLUE})` }} />
-              <span className="font-bold" style={{ fontSize: 26, color: DARK_TEXT }}>AI Coding Tools (Today)</span>
-            </div>
+          {/* Without LIZA */}
+          <div className="rounded-2xl border p-8" style={{ borderColor: `hsl(${RED} / 0.2)`, background: `hsl(${RED} / 0.04)` }}>
+            <p className="font-bold mb-6" style={{ fontSize: 24, color: DARK_TEXT }}>Without LIZA</p>
             <div className="flex flex-col gap-4">
               {[
-                "Change a component → system flags impacted files",
-                "Dependency graph tracks what connects to what",
-                "Automated propagation across the codebase",
-                "Version history for every change",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3 px-4 py-3 rounded-lg"
-                  style={{ background: `hsl(${BLUE} / 0.08)` }}>
-                  <CheckCircle2 size={18} style={{ color: `hsl(${BLUE})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 20, color: DARK_TEXT }}>{item}</span>
+                { step: "Compliance team updates a methodology", icon: <FileText size={20} /> },
+                { step: "Email sent: 'Please update your materials'", icon: <AlertTriangle size={20} /> },
+                { step: "3 teams update. 5 teams miss it.", icon: <X size={20} /> },
+                { step: "Client receives proposal with old standards", icon: <X size={20} /> },
+                { step: "Discovered during audit — 4 months later", icon: <AlertTriangle size={20} /> },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-4 px-5 py-3 rounded-lg"
+                  style={{ background: `hsl(${RED} / 0.06)` }}>
+                  <span style={{ color: `hsl(${RED} / 0.6)` }}>{item.icon}</span>
+                  <span style={{ fontSize: 20, color: DARK_MUTED }}>{item.step}</span>
                 </div>
               ))}
-            </div>
-            <div className="mt-5 px-4 py-3 rounded-lg" style={{ background: `hsl(${BLUE} / 0.12)` }}>
-              <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${BLUE})` }}>
-                Works for code. Only code.
-              </p>
             </div>
           </div>
 
-          {/* Right: LIZA */}
-          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)` }}>
-            <div className="flex items-center gap-3 mb-6">
-              <Network size={28} style={{ color: `hsl(${TEAL})` }} />
-              <span className="font-bold" style={{ fontSize: 26, color: DARK_TEXT }}>LIZA OS (What We're Building)</span>
-            </div>
+          {/* With LIZA */}
+          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p className="font-bold mb-6" style={{ fontSize: 24, color: DARK_TEXT }}>With LIZA</p>
             <div className="flex flex-col gap-4">
               {[
-                "Change a standard → system flags impacted deliverables",
-                "Knowledge graph tracks expertise dependencies",
-                "Governed propagation across all living artifacts",
-                "Version history for every piece of expertise",
-                "Feedback loop: artifacts improve the knowledge base",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3 px-4 py-3 rounded-lg"
-                  style={{ background: `hsl(${TEAL} / 0.1)` }}>
-                  <CheckCircle2 size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 20, color: DARK_TEXT }}>{item}</span>
+                { step: "Compliance team updates methodology in LIZA", icon: <BookOpen size={20} /> },
+                { step: "System identifies 23 connected outputs", icon: <Network size={20} /> },
+                { step: "Each output flagged with specific changes needed", icon: <Eye size={20} /> },
+                { step: "Teams review and approve updated versions", icon: <CheckCircle2 size={20} /> },
+                { step: "Full audit trail from standard to deliverable", icon: <Shield size={20} /> },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-4 px-5 py-3 rounded-lg"
+                  style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                  <span style={{ color: `hsl(${TEAL})` }}>{item.icon}</span>
+                  <span style={{ fontSize: 20, color: DARK_TEXT }}>{item.step}</span>
                 </div>
               ))}
-            </div>
-            <div className="mt-5 px-4 py-3 rounded-lg" style={{ background: `hsl(${TEAL} / 0.15)` }}>
-              <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-                Works for everything your organization produces.
-              </p>
             </div>
           </div>
         </div>
@@ -745,12 +660,10 @@ function Slide09LovableProof() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 5 — THE PROOF
+// SLIDE 09 — COMPETITIVE LANDSCAPE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ─── Slide 10 — Competitive Landscape ────────────────────────────────────────
-
-function Slide10Competition() {
+function Slide09Competition() {
   const competitors = [
     {
       name: "Edra", raised: "$30M", focus: "Repeatable Ops",
@@ -758,14 +671,14 @@ function Slide10Competition() {
       limitation: "Only handles standardized tasks. No judgment, no expertise capture.",
     },
     {
-      name: "Mem0", raised: "$44.5M", focus: "Memory Plumbing",
-      desc: "Persistent memory for AI agents. Remembers preferences and history.",
+      name: "Mem0", raised: "$44.5M", focus: "Memory Layer",
+      desc: "Persistent memory for AI agents. Remembers preferences and conversation history.",
       limitation: "Memory without governance. Stores what happened — doesn't manage what should happen.",
     },
     {
       name: "Interloom", raised: "$16.5M", focus: "Knowledge Graphs",
-      desc: "Maps tacit knowledge into navigable graphs for discovery.",
-      limitation: "Captures knowledge but doesn't connect it to live artifacts or execution.",
+      desc: "Maps tacit knowledge into navigable graphs for discovery and search.",
+      limitation: "Captures knowledge but doesn't connect it to live outputs or execution.",
     },
   ];
 
@@ -773,13 +686,13 @@ function Slide10Competition() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <Tag label="Act 5 · The Proof" />
+        <Tag label="The Market" />
         <h2 className="font-black mb-4" style={{ fontSize: 58, color: TEXT, lineHeight: 1.1 }}>
-          $98M+ validates the problem.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Nobody is building the full ALM.</span>
+          $98M+ in funding validates the problem.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Nobody is building the full system.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 24, color: MUTED, maxWidth: 1000 }}>
-          Every competitor solves one piece. None deliver the full lifecycle — capture, govern, execute, propagate.
+          Every competitor solves one piece. None deliver the full lifecycle — capture, govern, execute, and propagate.
         </p>
 
         <div className="flex-1 flex gap-5">
@@ -806,12 +719,12 @@ function Slide10Competition() {
             style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
             <div className="flex items-center justify-between mb-4">
               <span className="font-bold" style={{ fontSize: 26, color: TEXT }}>LIZA OS</span>
-              <span className="px-3 py-1 rounded-lg font-bold" style={{ fontSize: 16, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Full ALM</span>
+              <span className="px-3 py-1 rounded-lg font-bold" style={{ fontSize: 16, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Full System</span>
             </div>
             <span className="font-semibold mb-3 px-3 py-1 rounded-lg self-start"
               style={{ fontSize: 15, background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>Lifecycle Management</span>
             <p className="mb-4" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>
-              Captures expertise, governs it, executes with it, and propagates changes across all connected artifacts.
+              Captures expertise, governs it, executes with it, and propagates changes across all connected outputs.
             </p>
             <div className="mt-auto pt-4 border-t" style={{ borderColor: `hsl(${TEAL} / 0.2)` }}>
               <p className="flex items-start gap-2" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>
@@ -827,20 +740,23 @@ function Slide10Competition() {
   );
 }
 
-// ─── Slide 11 — Traction & Wedge ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 10 — TRACTION & GTM
+// ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide11Traction() {
+function Slide10Traction() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="Traction & Go-to-Market" color={SEAFOAM} />
+        <DarkTag label="Traction" color={SEAFOAM} />
         <h2 className="font-black mb-6" style={{ fontSize: 60, color: DARK_TEXT, lineHeight: 1.1 }}>
           Consulting as the wedge.<br />
           <span style={{ color: `hsl(${SEAFOAM})` }}>Platform as the moat.</span>
         </h2>
         <p className="mb-12" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1000 }}>
-          We land with consulting — solving real lifecycle problems. We expand with the platform — making the solution permanent and self-improving.
+          We land with consulting — solving real lifecycle problems and capturing institutional knowledge firsthand.
+          We expand with the platform — making the solution permanent, scalable, and self-improving.
         </p>
 
         <div className="flex-1 flex gap-10">
@@ -849,7 +765,7 @@ function Slide11Traction() {
               {[
                 { stat: "15+", label: "Clients across industries", icon: <Users size={24} /> },
                 { stat: "8", label: "Countries served", icon: <Globe size={24} /> },
-                { stat: "15+", label: "Years of consulting expertise", icon: <Briefcase size={24} /> },
+                { stat: "15+", label: "Years of domain expertise", icon: <Briefcase size={24} /> },
               ].map(({ stat, label, icon }) => (
                 <div key={stat} className="rounded-xl p-6 flex flex-col items-center text-center"
                   style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
@@ -897,9 +813,11 @@ function Slide11Traction() {
   );
 }
 
-// ─── Slide 12 — Team ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 11 — TEAM
+// ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide12Team() {
+function Slide11Team() {
   const team = [
     {
       name: "István Boscha", role: "Product & CEO",
@@ -928,7 +846,7 @@ function Slide12Team() {
         </h2>
         <p className="mb-12" style={{ fontSize: 24, color: MUTED, maxWidth: 1000 }}>
           We've spent our careers helping organizations standardize expertise and scale quality.
-          LIZA is the ALM we wished existed for the work we do every day.
+          LIZA is the system we wished existed for the work we do every day.
         </p>
 
         <div className="flex-1 grid grid-cols-3 gap-8">
@@ -957,24 +875,22 @@ function Slide12Team() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ACT 6 — THE ASK
+// SLIDE 12 — BUSINESS MODEL
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ─── Slide 13 — Business Model ───────────────────────────────────────────────
-
-function Slide13BusinessModel() {
+function Slide12BusinessModel() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <DarkTag label="Act 6 · The Ask" color={GOLD} />
+        <DarkTag label="The Model" color={GOLD} />
         <h2 className="font-black mb-6" style={{ fontSize: 60, color: DARK_TEXT, lineHeight: 1.1 }}>
           Land with consulting.<br />
           <span style={{ color: `hsl(${GOLD})` }}>Expand with the platform.</span>
         </h2>
         <p className="mb-12" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1000 }}>
           Consulting captures real institutional knowledge and proves value.
-          The platform makes it permanent, scalable, and self-improving — just like ALM transformed software delivery.
+          The platform makes it permanent, scalable, and self-improving.
         </p>
 
         <div className="flex-1 grid grid-cols-2 gap-10">
@@ -989,7 +905,7 @@ function Slide13BusinessModel() {
                 "4-week Assess, Align, Apply engagement",
                 "Captures institutional knowledge firsthand",
                 "Builds trust through measurable outcomes",
-                "Natural expansion: more teams, more lifecycles",
+                "Natural expansion: more teams, more workflows",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <CheckCircle2 size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
@@ -1013,7 +929,7 @@ function Slide13BusinessModel() {
                 "SaaS per-seat + usage-based pricing",
                 "Knowledge compounds — switching cost grows over time",
                 "Network effects within organizations",
-                "Vertical expansion: same ALM, new industries",
+                "Vertical expansion: same system, new industries",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <CheckCircle2 size={18} style={{ color: `hsl(${GOLD})`, marginTop: 3, flexShrink: 0 }} />
@@ -1032,9 +948,11 @@ function Slide13BusinessModel() {
   );
 }
 
-// ─── Slide 14 — The Ask ──────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 13 — THE ASK
+// ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide14TheAsk() {
+function Slide13TheAsk() {
   const allocation = [
     { label: "Product & Engineering", pct: "50%", color: TEAL },
     { label: "Design Partnerships", pct: "25%", color: SEAFOAM },
@@ -1079,24 +997,12 @@ function Slide14TheAsk() {
         <div className="rounded-xl px-12 py-6 mb-10"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 26, color: DARK_TEXT, lineHeight: 1.5 }}>
-            ALM created a $34B market by governing how software gets built.<br />
-            In the age of AI, every workflow becomes a product.<br />
-            <strong style={{ color: `hsl(${TEAL})` }}>LIZA is the lifecycle management system for all of them.</strong>
+            Lifecycle management created a $34B market for software.<br />
+            <strong style={{ color: `hsl(${TEAL})` }}>We're building it for everything else.</strong>
           </p>
         </div>
 
-        <div className="flex gap-10">
-          <div className="flex flex-col items-center gap-3 px-14 py-6 rounded-2xl"
-            style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))` }}>
-            <span className="font-bold" style={{ fontSize: 26, color: "white" }}>Schedule a Founder Call</span>
-          </div>
-          <div className="flex flex-col items-center gap-3 px-14 py-6 rounded-2xl border"
-            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.08)` }}>
-            <span className="font-bold" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>Request Data Room</span>
-          </div>
-        </div>
-
-        <p className="mt-10" style={{ fontSize: 22, color: DARK_SUBTLE }}>
+        <p style={{ fontSize: 18, color: DARK_SUBTLE }}>
           lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential
         </p>
       </div>
@@ -1109,19 +1015,18 @@ function Slide14TheAsk() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01Cover /> },
-  { id: 2, title: "What ALM Solved", component: <Slide02WhatALMSolved /> },
-  { id: 3, title: "Work Has Changed", component: <Slide03WorkChanged /> },
-  { id: 4, title: "Unmanaged Lifecycles", component: <Slide04UnmanagedLifecycles /> },
-  { id: 5, title: "Sound Familiar?", component: <Slide05SoundFamiliar /> },
-  { id: 6, title: "The ALM Parallel", component: <Slide06ALMParallel /> },
-  { id: 7, title: "Two Layers", component: <Slide07TwoLayers /> },
-  { id: 8, title: "LIZA OS", component: <Slide08LizaOS /> },
-  { id: 9, title: "The Lovable Proof", component: <Slide09LovableProof /> },
-  { id: 10, title: "Competitive Landscape", component: <Slide10Competition /> },
-  { id: 11, title: "Traction & GTM", component: <Slide11Traction /> },
-  { id: 12, title: "Team", component: <Slide12Team /> },
-  { id: 13, title: "Business Model", component: <Slide13BusinessModel /> },
-  { id: 14, title: "The Ask", component: <Slide14TheAsk /> },
+  { id: 2, title: "The Problem", component: <Slide02SoundFamiliar /> },
+  { id: 3, title: "The Shift", component: <Slide03TheShift /> },
+  { id: 4, title: "The Consequence", component: <Slide04UnmanagedLifecycles /> },
+  { id: 5, title: "The Precedent", component: <Slide05ProvenModel /> },
+  { id: 6, title: "Two Layers", component: <Slide06TwoLayers /> },
+  { id: 7, title: "LIZA OS", component: <Slide07LizaOS /> },
+  { id: 8, title: "In Practice", component: <Slide08InPractice /> },
+  { id: 9, title: "The Market", component: <Slide09Competition /> },
+  { id: 10, title: "Traction & GTM", component: <Slide10Traction /> },
+  { id: 11, title: "Team", component: <Slide11Team /> },
+  { id: 12, title: "Business Model", component: <Slide12BusinessModel /> },
+  { id: 13, title: "The Ask", component: <Slide13TheAsk /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
@@ -1236,7 +1141,7 @@ export default function LifecycleInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-ALM-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
           {SLIDES.map(s => (
@@ -1276,7 +1181,7 @@ export default function LifecycleInvestorDeck() {
         style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${TEAL})` }} />
-          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — ALM for the AI Age</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — Investor Deck</span>
           <span className="text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${TEAL} / 0.1)`, color: `hsl(${TEAL})` }}>
             {SLIDES.length} slides
@@ -1290,7 +1195,7 @@ export default function LifecycleInvestorDeck() {
           <Button size="sm" variant="ghost" onClick={() => setShowGrid(v => !v)} className={cn(showGrid && "bg-accent")}>
             <Grid3x3 size={15} className="mr-1.5" /> Grid
           </Button>
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-ALM-Investor-Deck" slideCount={SLIDES.length} variant="desktop" />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} variant="desktop" />
           <Button size="sm" variant="ghost" onClick={enterFullscreen}>
             <Maximize2 size={15} className="mr-1.5" /> Present
           </Button>
