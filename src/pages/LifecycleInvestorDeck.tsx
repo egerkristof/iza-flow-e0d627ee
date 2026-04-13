@@ -140,60 +140,103 @@ function Slide01() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const examples = [
-    { role: "Senior Consultant", emoji: "💼", knows: "When to deviate from standard pricing for strategic accounts", ai: "Uses default pricing. Client gets the wrong offer. Deal lost." },
-    { role: "Lead Architect", emoji: "🏗️", knows: "Which framework fits which compliance environment", ai: "Picks the popular one. Project hits regulatory wall at month 4." },
-    { role: "Top Sales Rep", emoji: "📊", knows: "When to walk away from a deal that looks good on paper", ai: "Writes an enthusiastic follow-up. Team wastes 3 months." },
+  const cases = [
+    {
+      role: "Consulting & Services",
+      emoji: "💼",
+      team: "12 consultants",
+      knows: "When to deviate from standard pricing for strategic accounts",
+      ai: "Uses default pricing. Client gets the wrong offer. Deal lost.",
+      cost: "~€180K",
+      driver: "40% of AI productivity gains lost to rework",
+    },
+    {
+      role: "Engineering & Architecture",
+      emoji: "🏗️",
+      team: "15 engineers",
+      knows: "Which framework fits which compliance environment",
+      ai: "Picks the popular one. Project hits regulatory wall at month 4.",
+      cost: "~€120K",
+      driver: "2–3 sprint cycles of rework per quarter",
+    },
+    {
+      role: "Sales & Revenue",
+      emoji: "📊",
+      team: "10 reps",
+      knows: "When to walk away from a deal that looks good on paper",
+      ai: "Writes an enthusiastic follow-up. Team wastes 3 months on dead pipeline.",
+      cost: "~€250K",
+      driver: "8–12% lower win rates from wrong proposals",
+    },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${WARM})` }}>The Problem</p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-12 pb-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${WARM})` }}>The Problem — Quantified</p>
 
-        <h2 className="font-black mb-8" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           Your best people know things{" "}
           <span style={{ color: `hsl(${WARM})` }}>your AI never will.</span>
         </h2>
 
-        {/* Full-width stacked case files */}
-        <div className="flex flex-col gap-4 flex-1 min-h-0">
-          {examples.map((ex, i) => (
+        {/* Case files with cost badges */}
+        <div className="flex flex-col gap-3 flex-1 min-h-0">
+          {cases.map((c, i) => (
             <div key={i} className="flex-1 rounded-2xl border flex items-stretch overflow-hidden"
               style={{ borderColor: `hsl(${WARM} / 0.15)`, background: `hsl(${WARM} / 0.02)` }}>
-              {/* Role label */}
-              <div className="w-[260px] flex flex-col items-center justify-center px-6 flex-shrink-0"
+              {/* Role + cost badge */}
+              <div className="w-[240px] flex flex-col items-center justify-center px-5 flex-shrink-0 relative"
                 style={{ background: `hsl(220 15% 97%)`, borderRight: `1px solid hsl(215 12% 90%)` }}>
-                <span style={{ fontSize: 40 }}>{ex.emoji}</span>
-                <p className="font-black mt-2 text-center" style={{ fontSize: 20, color: TEXT }}>{ex.role}</p>
+                <span style={{ fontSize: 36 }}>{c.emoji}</span>
+                <p className="font-black mt-1.5 text-center" style={{ fontSize: 17, color: TEXT }}>{c.role}</p>
+                <p className="mt-0.5" style={{ fontSize: 12, color: MUTED }}>{c.team}</p>
+                {/* Cost badge */}
+                <div className="mt-2 rounded-lg px-4 py-1.5" style={{ background: `hsl(${RED} / 0.08)`, border: `1.5px solid hsl(${RED} / 0.25)` }}>
+                  <p className="font-black" style={{ fontSize: 20, color: `hsl(${RED})` }}>{c.cost}<span style={{ fontSize: 12, fontWeight: 600 }}>/yr</span></p>
+                </div>
               </div>
 
               {/* KNOWS */}
-              <div className="flex-1 flex flex-col justify-center px-8 py-5"
+              <div className="flex-1 flex flex-col justify-center px-7 py-4"
                 style={{ background: `hsl(${TEAL} / 0.04)`, borderRight: `2px solid hsl(${WARM} / 0.12)` }}>
-                <p className="font-black tracking-[0.15em] uppercase mb-2" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>KNOWS</p>
-                <p className="font-semibold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>{ex.knows}</p>
+                <p className="font-black tracking-[0.15em] uppercase mb-1.5" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>KNOWS</p>
+                <p className="font-semibold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>{c.knows}</p>
               </div>
 
               {/* AI DOES INSTEAD */}
-              <div className="flex-1 flex flex-col justify-center px-8 py-5"
+              <div className="flex-1 flex flex-col justify-center px-7 py-4"
                 style={{ background: `hsl(${WARM} / 0.05)` }}>
-                <p className="font-black tracking-[0.15em] uppercase mb-2" style={{ fontSize: 13, color: `hsl(${WARM})` }}>AI DOES INSTEAD</p>
-                <p className="font-semibold" style={{ fontSize: 22, color: `hsl(${WARM})`, lineHeight: 1.4 }}>{ex.ai}</p>
+                <p className="font-black tracking-[0.15em] uppercase mb-1.5" style={{ fontSize: 12, color: `hsl(${WARM})` }}>AI DOES INSTEAD</p>
+                <p className="font-semibold" style={{ fontSize: 20, color: `hsl(${WARM})`, lineHeight: 1.35 }}>{c.ai}</p>
+                <p className="mt-1.5" style={{ fontSize: 12, color: MUTED, fontStyle: "italic" }}>{c.driver}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Scaling kicker — big and bold */}
-        <div className="mt-5 rounded-xl px-10 py-5 text-center"
-          style={{ background: `hsl(${WARM} / 0.07)`, border: `2px solid hsl(${WARM} / 0.25)` }}>
-          <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.3 }}>
-            Now scale this across every AI interaction, every day.{" "}
-            <span style={{ color: `hsl(${WARM})` }}>That's what scaling with AI actually scales.</span>
-          </p>
+        {/* Combined Instruction Gap Tax */}
+        <div className="mt-4 rounded-xl flex items-center justify-between px-10 py-5"
+          style={{ background: `hsl(${RED} / 0.06)`, border: `2px solid hsl(${RED} / 0.2)` }}>
+          <div className="flex-1">
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${RED})` }}>
+              The Instruction Gap Tax
+            </p>
+            <p className="font-semibold" style={{ fontSize: 18, color: TEXT }}>
+              For a 100-person org — not in AI spend, but in <span style={{ color: `hsl(${WARM})` }}>human cleanup.</span>
+            </p>
+          </div>
+          <div className="flex items-baseline gap-1 ml-8">
+            <span className="font-black" style={{ fontSize: 56, color: `hsl(${RED})` }}>€550K</span>
+            <span className="font-bold" style={{ fontSize: 20, color: `hsl(${RED} / 0.7)` }}>/year</span>
+          </div>
         </div>
+
+        {/* Source attribution */}
+        <p className="mt-2 text-right" style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic" }}>
+          Sources: Workday Global AI Impact Study 2026 · Zapier AI Workslop Report · Four Dots AI Hallucination Index
+        </p>
       </div>
       <SlideBar from={WARM} to={TEAL} />
     </div>
