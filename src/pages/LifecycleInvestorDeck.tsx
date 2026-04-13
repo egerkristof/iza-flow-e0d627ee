@@ -1040,17 +1040,16 @@ function Slide12() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Problem", component: <Slide02 /> },
-  { id: 3, title: "The Market Today", component: <Slide03 /> },
-  { id: 4, title: "The Structural Gap", component: <Slide03B /> },
-  { id: 5, title: "Market Opportunity", component: <Slide04 /> },
-  { id: 6, title: "The Solution", component: <Slide05 /> },
-  { id: 7, title: "How It Works", component: <Slide06 /> },
-  { id: 8, title: "Early Validation", component: <Slide07 /> },
-  { id: 9, title: "Expansion Path", component: <Slide08 /> },
-  { id: 10, title: "What's Built", component: <Slide09 /> },
-  { id: 11, title: "Business Model", component: <Slide10 /> },
-  { id: 12, title: "Team", component: <Slide11 /> },
-  { id: 13, title: "The Ask", component: <Slide12 /> },
+  { id: 3, title: "Why This Happens", component: <Slide03 /> },
+  { id: 4, title: "The Emerging Category", component: <Slide04 /> },
+  { id: 5, title: "The Solution", component: <Slide05 /> },
+  { id: 6, title: "How It Works", component: <Slide06 /> },
+  { id: 7, title: "Early Validation", component: <Slide07 /> },
+  { id: 8, title: "Expansion Path", component: <Slide08 /> },
+  { id: 9, title: "What's Built", component: <Slide09 /> },
+  { id: 10, title: "Business Model", component: <Slide10 /> },
+  { id: 11, title: "Team", component: <Slide11 /> },
+  { id: 12, title: "The Ask", component: <Slide12 /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
