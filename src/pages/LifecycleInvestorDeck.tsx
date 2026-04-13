@@ -473,7 +473,105 @@ function Slide05() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 06 — HOW IT WORKS (4-step loop)
+// SLIDE 06 — CATEGORY VALIDATION (Emerging players + TAM)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide06() {
+  const players = [
+    { name: "Edra", funding: "$30M", round: "Series A · 2024", what: "Process mining → executable SOPs for AI agents", focus: "Predictable back-office processes", color: GREEN },
+    { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer — persistent context across sessions", focus: "Developer memory infrastructure", color: SEAFOAM },
+    { name: "Interloom", funding: "$16.5M", round: "Series A · 2023", what: "Tacit knowledge capture for operations teams", focus: "Repeatable operational workflows", color: BLUE },
+    { name: "Paradox.ai", funding: "~$3.8M", round: "Seed · 2024", what: "Knowledge governance for regulated industries", focus: "Compliance-first documentation", color: GOLD },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
+      <DarkGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Category Validation</p>
+
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+          We're not alone.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>$90M+ invested in 24 months.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 21, color: DARK_MUTED, maxWidth: 1200 }}>
+          Smart money recognized the gap. These companies are building executable knowledge infrastructure. LIZA is built for the hardest, highest-value segment: where expertise requires <em>judgment</em>, not just retrieval.
+        </p>
+
+        <div className="flex gap-6 flex-1 min-h-0">
+          {/* Emerging players */}
+          <div className="flex-1 flex flex-col gap-3">
+            <p className="font-bold tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: DARK_SUBTLE }}>The category players</p>
+            {players.map(({ name, funding, round, what, focus, color }) => (
+              <div key={name} className="flex items-center gap-4 rounded-xl border px-5 py-3"
+                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
+                <div className="w-[140px] shrink-0">
+                  <p className="font-bold" style={{ fontSize: 18, color: DARK_TEXT }}>{name}</p>
+                  <p className="font-black" style={{ fontSize: 14, color: `hsl(${color})` }}>{funding}</p>
+                  <p style={{ fontSize: 12, color: DARK_SUBTLE }}>{round}</p>
+                </div>
+                <div className="flex-1">
+                  <p style={{ fontSize: 15, color: DARK_MUTED }}>{what}</p>
+                  <p className="mt-1 font-semibold" style={{ fontSize: 13, color: DARK_SUBTLE }}>Focus: {focus}</p>
+                </div>
+              </div>
+            ))}
+
+            {/* LIZA row */}
+            <div className="rounded-xl border-2 px-5 py-4 mt-auto"
+              style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)` }}>
+              <div className="flex items-center gap-4">
+                <div className="w-[140px] shrink-0">
+                  <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>LIZA OS</p>
+                  <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold" style={{ fontSize: 16, color: DARK_TEXT }}>
+                    The Instruction Layer — governs <strong>judgment-heavy</strong> expertise where stakes are highest.
+                  </p>
+                  <p className="mt-1" style={{ fontSize: 14, color: DARK_MUTED }}>
+                    They automate the predictable. We govern what isn't.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* TAM/SAM/SOM */}
+          <div className="w-[380px] rounded-2xl border p-6 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
+            <div className="flex flex-col gap-4 flex-1 justify-center">
+              {[
+                { label: "TAM", value: "$28B", desc: "Global AI governance & knowledge management infrastructure", size: "w-full" },
+                { label: "SAM", value: "$4.2B", desc: "Mid-market knowledge-intensive orgs (50–1000 employees)", size: "w-[85%]" },
+                { label: "SOM", value: "$120M", desc: "DACH professional services, consulting & regulated industries", size: "w-[60%]" },
+              ].map(({ label, value, desc, size }) => (
+                <div key={label}>
+                  <div className={`${size} rounded-xl px-5 py-3`} style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                    <div className="flex items-baseline gap-3 mb-1">
+                      <span className="font-black" style={{ fontSize: 13, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
+                      <span className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>{value}</span>
+                    </div>
+                    <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.4 }}>{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 px-4 py-2.5 rounded-lg" style={{ background: `hsl(${GREEN} / 0.08)` }}>
+              <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
+                Wedge: Professional services → Regulated → Enterprise
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 07 — HOW IT WORKS (4-step loop)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide06() {
