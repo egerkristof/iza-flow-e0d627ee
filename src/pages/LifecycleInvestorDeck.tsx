@@ -574,7 +574,7 @@ function Slide06() {
 // SLIDE 07 — HOW IT WORKS (4-step loop)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide06() {
+function Slide07() {
   const steps = [
     {
       icon: <BookOpen size={36} />, num: "01", title: "Capture",
@@ -660,7 +660,7 @@ function Slide06() {
 // SLIDE 07 — PROOF (Validation with outcome metrics)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide07() {
+function Slide08() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
@@ -746,7 +746,7 @@ function Slide07() {
 // SLIDE 08 — VERTICALS (Expansion path)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide08() {
+function Slide09() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
@@ -817,7 +817,7 @@ function Slide08() {
 // SLIDE 09 — WHAT'S BUILT (Product is live)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide09() {
+function Slide10() {
   const features = [
     {
       layer: "Knowledge Graph", color: ACCENT,
@@ -900,7 +900,7 @@ function Slide09() {
 // SLIDE 10 — BUSINESS MODEL
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide10() {
+function Slide11() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
@@ -998,7 +998,7 @@ function Slide10() {
 // SLIDE 11 — TEAM
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide11() {
+function Slide12() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
@@ -1076,7 +1076,7 @@ function Slide11() {
 // SLIDE 12 — THE ASK (€1.5M + milestones + use of funds)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide12() {
+function Slide13() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: DARK_BG }}>
       <DarkGrid />
