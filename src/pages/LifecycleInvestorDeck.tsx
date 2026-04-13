@@ -1202,11 +1202,11 @@ function Slide14() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "Outputs vs Instructions", component: <Slide02 /> },
-  { id: 3, title: "The Human Instruction Layer", component: <Slide03 /> },
-  { id: 4, title: "AI Invents the Rest", component: <Slide04 /> },
-  { id: 5, title: "The Proof", component: <Slide05 /> },
-  { id: 6, title: "The Instruction Layer", component: <Slide06 /> },
+  { id: 2, title: "Three Layers", component: <Slide02 /> },
+  { id: 3, title: "Humans Were Intelligence", component: <Slide03 /> },
+  { id: 4, title: "Intelligence Changed Species", component: <Slide04 /> },
+  { id: 5, title: "Nobody Is Solving This", component: <Slide05 /> },
+  { id: 6, title: "System of Intelligence", component: <Slide06 /> },
   { id: 7, title: "The Solution", component: <Slide07 /> },
   { id: 8, title: "Category Validation", component: <Slide08 /> },
   { id: 9, title: "Early Validation", component: <Slide09 /> },
