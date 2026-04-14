@@ -782,15 +782,15 @@ function Slide07() {
   const steps = [
     {
       num: "01", title: "Capture", icon: <BookOpen size={28} />,
-      desc: "Extract collective judgment from senior experts into structured, governed playbooks.",
-      flow: ["Interview experts", "Upload documents", "AI extracts structure"],
+      desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
+      flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
       output: "Versioned playbooks ready",
       color: GOLD,
     },
     {
       num: "02", title: "Organize", icon: <Network size={28} />,
-      desc: "Structure knowledge into governed bundles with scope, versioning, and domain ownership.",
-      flow: ["Group by capability", "Set scope & access", "Version & publish"],
+      desc: "The AACE framework auto-structures knowledge into governed bundles by capability, scope, and domain.",
+      flow: ["Auto-classify by capability", "Set scope & ownership", "Version & publish"],
       output: "Governed knowledge graph",
       color: TEAL,
     },
