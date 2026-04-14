@@ -885,17 +885,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Glean", funding: "$600M+", what: "Enterprise search & retrieval. Finds documents — doesn't govern execution.", color: "215 25% 50%" },
-    { name: "Guru", funding: "$100M+", what: "Wiki + AI answers. Serves knowledge — doesn't enforce standards.", color: BLUE },
-    { name: "Edra", funding: "$30M", what: "Process mining to SOPs. Captures processes — doesn't inject judgment.", color: GREEN },
-    { name: "Mem0.ai", funding: "$24M", what: "AI memory layer. Remembers context — doesn't govern quality.", color: SEAFOAM },
-    { name: "Interloom", funding: "$16.5M", what: "Tacit knowledge capture. Records expertise — doesn't operationalize it.", color: GOLD },
+    { name: "Edra", funding: "$30M", round: "Series A · 2024", what: "Process mining → executable SOPs for AI agents", color: GREEN },
+    { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer — persistent context across sessions", color: SEAFOAM },
+    { name: "Interloom", funding: "$16.5M", round: "Series A · 2023", what: "Tacit knowledge capture for operations teams", color: BLUE },
+    { name: "Paradox.ai", funding: "~$3.8M", round: "Seed · 2024", what: "Knowledge governance for regulated industries", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine. Intent-locking, knowledge injection, drift detection.", icon: <Cpu size={18} /> },
-    { layer: "Compounding Blueprint", desc: "Every customer's knowledge graph deepens with usage. Switching cost grows organically.", icon: <Layers size={18} /> },
-    { layer: "Cross-team Network Effect", desc: "Standards propagate across teams. Value multiplies with each department onboarded.", icon: <Network size={18} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine. Intent-locking, knowledge injection, drift detection. Hard to replicate.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Blueprint", desc: "Every customer's knowledge graph deepens with usage. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Cross-team Network Effect", desc: "Standards propagate across teams. Value multiplies with each department onboarded.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -904,85 +903,84 @@ function Slide06() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
-          $775M+ invested around the edges.{" "}
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+          $70M+ recently invested around the edges.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 18, color: DARK_MUTED, maxWidth: 1000 }}>
-          Others retrieve, remember, or mine. LIZA operationalizes: expert judgment becomes executable infrastructure.
-        </p>
 
-        <div className="flex gap-6 flex-1 min-h-0">
-          {/* Competitive landscape */}
-          <div className="flex-[3] flex flex-col gap-2.5">
-            {players.map(({ name, funding, what, color }) => (
-              <div key={name} className="flex items-center gap-5 rounded-xl border px-5 py-3"
-                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-                <div className="w-[130px] shrink-0">
-                  <p className="font-bold" style={{ fontSize: 17, color: DARK_TEXT }}>{name}</p>
-                  <p className="font-black" style={{ fontSize: 14, color: `hsl(${color})` }}>{funding}</p>
-                </div>
-                <p style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.4 }}>{what}</p>
+        {/* Top: 4 competitor cards + LIZA OS as the big center piece */}
+        <div className="flex gap-4 mb-6">
+          {players.map(({ name, funding, round, what, color }) => (
+            <div key={name} className="flex-1 rounded-xl border px-5 py-4"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
+              <p className="font-bold" style={{ fontSize: 18, color: DARK_TEXT }}>{name}</p>
+              <p className="font-black" style={{ fontSize: 15, color: `hsl(${color})` }}>{funding}</p>
+              <p className="mb-2" style={{ fontSize: 12, color: DARK_SUBTLE }}>{round}</p>
+              <p style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.35 }}>{what}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* LIZA OS — big differentiation box */}
+        <div className="rounded-2xl border-2 px-8 py-5 mb-6 flex items-center gap-6"
+          style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)`, boxShadow: `0 0 60px hsl(${TEAL} / 0.06)` }}>
+          <div className="shrink-0">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                <Brain size={26} style={{ color: `hsl(${TEAL})` }} />
               </div>
-            ))}
-
-            {/* LIZA differentiation */}
-            <div className="rounded-xl border-2 px-5 py-4 mt-auto"
-              style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)` }}>
-              <div className="flex items-center gap-4">
-                <div className="w-[130px] shrink-0">
-                  <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                  <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
-                </div>
-                <p className="font-semibold" style={{ fontSize: 16, color: DARK_TEXT, lineHeight: 1.4 }}>
-                  The only platform that makes organizational judgment{" "}
-                  <span style={{ color: `hsl(${TEAL})` }}>queryable, versionable, and executable.</span>{" "}
-                  Others give AI documents. We give AI judgment.
-                </p>
+              <div>
+                <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
               </div>
             </div>
           </div>
+          <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
+          <div className="flex-1">
+            <p className="font-bold" style={{ fontSize: 20, color: DARK_TEXT, lineHeight: 1.35 }}>
+              Others mine, remember, or capture.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA operationalizes.</span>
+            </p>
+            <p className="mt-1" style={{ fontSize: 16, color: DARK_MUTED }}>
+              The only platform that makes organizational judgment queryable, versionable, and executable.
+              Other tools give AI your documents. We give AI your judgment.
+            </p>
+          </div>
+        </div>
 
-          {/* Right column: Market size + Moat */}
-          <div className="w-[400px] flex flex-col gap-4">
-            {/* Market */}
-            <div className="rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-              <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Market Size</p>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "TAM", value: "$28B", desc: "AI governance + knowledge infrastructure", size: "w-full" },
-                  { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs in target verticals", size: "w-[85%]" },
-                  { label: "SOM", value: "$340M", desc: "EU professional services, pharma, regulated", size: "w-[60%]" },
-                ].map(({ label, value, desc, size }) => (
-                  <div key={label} className={`${size} rounded-xl px-5 py-3`} style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-                    <div className="flex items-baseline gap-3 mb-0.5">
-                      <span className="font-black" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
-                      <span className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>{value}</span>
-                    </div>
-                    <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.3 }}>{desc}</p>
+        {/* Bottom: 3 equal columns — Market + Defensibility x3 */}
+        <div className="flex gap-5 flex-1 min-h-0">
+          {/* Market Size */}
+          <div className="flex-1 rounded-2xl border p-6 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
+            <div className="flex flex-col gap-3 flex-1 justify-center">
+              {[
+                { label: "TAM", value: "$28B", desc: "AI governance + knowledge infrastructure" },
+                { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs in target verticals" },
+                { label: "SOM", value: "$340M", desc: "EU prof services, pharma, regulated" },
+              ].map(({ label, value, desc }) => (
+                <div key={label} className="rounded-xl px-5 py-3" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                  <div className="flex items-baseline gap-3 mb-0.5">
+                    <span className="font-black" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
+                    <span className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>{value}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Moat */}
-            <div className="rounded-2xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
-              <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Defensibility</p>
-              <div className="flex flex-col gap-2.5">
-                {moatLayers.map(({ layer, desc, icon }) => (
-                  <div key={layer} className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
-                      {icon}
-                    </div>
-                    <div>
-                      <p className="font-bold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>{layer}</p>
-                      <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.35 }}>{desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.3 }}>{desc}</p>
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* Defensibility — 3 moat layers */}
+          {moatLayers.map(({ layer, desc, icon }) => (
+            <div key={layer} className="flex-1 rounded-2xl border p-6 flex flex-col"
+              style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>
+                {icon}
+              </div>
+              <p className="font-black mb-2" style={{ fontSize: 17, color: `hsl(${GOLD})` }}>{layer}</p>
+              <p className="flex-1" style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.45 }}>{desc}</p>
+            </div>
+          ))}
         </div>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
