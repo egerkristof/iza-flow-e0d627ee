@@ -396,8 +396,7 @@ function Slide04() {
   );
 }
 
-      color: RED,
-      icon: <Shield size={24} style={{ color: `hsl(${RED})` }} />,
+
       steps: [
         { label: "Discovery" },
         { label: "Formulation" },
