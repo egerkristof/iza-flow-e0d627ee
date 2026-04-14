@@ -1108,7 +1108,7 @@ function Slide08() {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 flex-1 min-h-0">
+        <div className="grid grid-cols-4 gap-4">
           {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
             <div key={title} className="rounded-2xl border flex flex-col overflow-hidden"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
