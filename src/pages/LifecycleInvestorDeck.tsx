@@ -1711,6 +1711,25 @@ function Slide13() {
   );
 }
 
+function SlideAppendixDivider() {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: DARK_BG }}>
+      <SlideGrid />
+      <div className="relative z-10 text-center">
+        <p className="font-semibold tracking-[0.3em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL} / 0.6)` }}>
+          LIZA OS
+        </p>
+        <h1 className="font-black" style={{ fontSize: 80, color: "hsl(0 0% 100%)", lineHeight: 1.1 }}>
+          Appendix
+        </h1>
+        <p className="mt-4" style={{ fontSize: 22, color: DARK_SUBTLE }}>
+          Supporting detail &amp; technical depth
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ─── Slide registry ──────────────────────────────────────────────────────────
 
 const SLIDES = [
@@ -1727,8 +1746,9 @@ const SLIDES = [
   { id: 11, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
   { id: 12, title: "Team", component: <Slide12 /> },
   { id: 13, title: "The Ask", component: <Slide13 /> },
-  { id: 14, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 15, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 14, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 15, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 16, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
