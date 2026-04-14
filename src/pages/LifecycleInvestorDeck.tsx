@@ -1575,8 +1575,8 @@ function Slide12() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Team</p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          Built by practitioners.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>Not first-time founders.</span>
+          15+ years encoding organizational intelligence.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>200+ enterprise engagements.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
