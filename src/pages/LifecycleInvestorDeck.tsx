@@ -839,25 +839,47 @@ function Slide07() {
                 </div>
 
                 {/* Description */}
-                <p className="mb-4" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{s.desc}</p>
+                <p className="mb-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{s.desc}</p>
 
-                {/* Flow steps */}
-                <div className="flex flex-col gap-1.5 flex-1">
-                  {s.flow.map((f, j) => (
-                    <div key={j} className="flex items-center gap-2 px-3 py-2 rounded-lg"
-                      style={{ background: `hsl(${s.color} / 0.06)` }}>
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: `hsl(${s.color} / 0.15)` }}>
-                        <span className="font-bold" style={{ fontSize: 10, color: `hsl(${s.color})` }}>{j + 1}</span>
-                      </div>
-                      <p style={{ fontSize: 13, color: TEXT }}>{f}</p>
-                    </div>
-                  ))}
+                {/* Mini diagram */}
+                <div className="flex-1 flex flex-col items-center justify-center px-2 py-3">
+                  <svg width="100%" height="100%" viewBox="0 0 300 220" style={{ maxWidth: 300, maxHeight: 220 }}>
+                    {/* Flow nodes */}
+                    {s.flow.map((f, j) => {
+                      const y = 20 + j * 75;
+                      return (
+                        <g key={j}>
+                          {/* Connector line from previous */}
+                          {j > 0 && (
+                            <line x1="150" y1={y - 40} x2="150" y2={y - 4}
+                              stroke={`hsl(${s.color})`} strokeWidth="2" strokeDasharray="4 3" opacity="0.35" />
+                          )}
+                          {j > 0 && (
+                            <polygon points={`145,${y - 6} 155,${y - 6} 150,${y}`}
+                              fill={`hsl(${s.color})`} opacity="0.5" />
+                          )}
+                          {/* Node */}
+                          <rect x="30" y={y} width="240" height="36" rx="10"
+                            fill={`hsl(${s.color})`} fillOpacity="0.08"
+                            stroke={`hsl(${s.color})`} strokeOpacity="0.3" strokeWidth="1.5" />
+                          {/* Number badge */}
+                          <circle cx="52" cy={y + 18} r="10"
+                            fill={`hsl(${s.color})`} fillOpacity="0.18" />
+                          <text x="52" y={y + 22} textAnchor="middle"
+                            fill={`hsl(${s.color})`} fontSize="11" fontWeight="800">{j + 1}</text>
+                          {/* Label */}
+                          <text x="72" y={y + 22} fill={TEXT} fontSize="14" fontWeight="600">{f}</text>
+                        </g>
+                      );
+                    })}
+                  </svg>
                 </div>
 
                 {/* Output */}
-                <div className="mt-3 px-3 py-2 rounded-lg" style={{ background: `hsl(${s.color} / 0.1)`, border: `1px solid hsl(${s.color} / 0.2)` }}>
-                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${s.color})` }}>→ {s.output}</p>
+                <div className="mt-2 px-3 py-2.5 rounded-lg flex items-center gap-2"
+                  style={{ background: `hsl(${s.color} / 0.1)`, border: `1px solid hsl(${s.color} / 0.2)` }}>
+                  <CheckCircle2 size={14} style={{ color: `hsl(${s.color})` }} />
+                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${s.color})` }}>{s.output}</p>
                 </div>
               </div>
 
