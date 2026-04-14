@@ -75,7 +75,6 @@ function SlideGrid() {
   );
 }
 
-}
 
 function SlideBar({ from = TEAL, to = MINT }: { from?: string; to?: string }) {
   return (
