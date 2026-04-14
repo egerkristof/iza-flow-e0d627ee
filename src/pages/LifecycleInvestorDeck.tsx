@@ -359,7 +359,7 @@ function Slide03() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 04 — THE SOLUTION (LIZA fills every gap from Slide 03)
+// SLIDE 04 — THE SOLUTION (The missing layer between passive systems and AI)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide04() {
@@ -369,52 +369,55 @@ function Slide04() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>The Solution</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 50, color: DARK_TEXT, lineHeight: 1.05 }}>
-          LIZA rebuilds the bridge.{" "}
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+          LIZA OS: the{" "}
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            With everything AI is missing.
+            Instruction Layer.
           </span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 21, color: DARK_MUTED, maxWidth: 1200 }}>
-          Other tools give AI your documents. LIZA gives AI <strong style={{ color: DARK_TEXT }}>your judgment</strong>.
+        <p className="mb-7" style={{ fontSize: 21, color: DARK_MUTED, maxWidth: 1200 }}>
+          The infrastructure that turns collective organizational judgment into governed, executable instructions for AI.
+          Other tools give AI your documents. LIZA gives AI <strong style={{ color: DARK_TEXT }}>your organization's intelligence</strong>.
         </p>
 
-        {/* The rebuilt bridge visual */}
+        {/* Three-layer visual */}
         <div className="flex-1 flex items-center gap-0">
-          {/* Record */}
+          {/* Passive Systems */}
           <div className="w-[240px] rounded-2xl border p-5 flex flex-col items-center text-center flex-shrink-0"
-            style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <BookOpen size={32} style={{ color: `hsl(${TEAL})` }} />
-            <p className="font-black mt-2" style={{ fontSize: 18, color: DARK_TEXT }}>System of Record</p>
-            <p className="mt-1" style={{ fontSize: 13, color: DARK_MUTED }}>SOPs, Wikis, Playbooks</p>
+            style={{ borderColor: `hsl(${WARM} / 0.2)`, background: `hsl(${WARM} / 0.06)` }}>
+            <Database size={32} style={{ color: `hsl(${WARM})` }} />
+            <p className="font-black mt-2" style={{ fontSize: 17, color: DARK_TEXT }}>Passive Systems</p>
+            <p className="mt-1" style={{ fontSize: 13, color: DARK_MUTED }}>Store but can't reason</p>
+            <p className="mt-2 px-3 py-1 rounded-md" style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.1)` }}>
+              DOORS, Confluence, CRM
+            </p>
           </div>
 
           <div className="flex-shrink-0 px-2"><ArrowRight size={22} style={{ color: DARK_SUBTLE }} /></div>
 
-          {/* LIZA — the new bridge, mirroring Slide 03's gaps */}
+          {/* LIZA — the new layer */}
           <div className="flex-1 rounded-2xl border-2 p-6 flex flex-col items-center text-center mx-2"
             style={{ borderColor: `hsl(${TEAL} / 0.5)`, background: `hsl(${TEAL} / 0.1)`,
               boxShadow: `0 0 80px hsl(${TEAL} / 0.15)` }}>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-11 h-11 rounded-xl flex items-center justify-center"
                 style={{ background: `hsl(${TEAL} / 0.2)` }}>
-                <Network size={26} style={{ color: `hsl(${TEAL})` }} />
+                <Brain size={26} style={{ color: `hsl(${TEAL})` }} />
               </div>
-              <p className="font-black" style={{ fontSize: 30, color: `hsl(${TEAL})` }}>LIZA OS</p>
+              <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
             </div>
             <p className="font-bold mb-4" style={{ fontSize: 16, color: DARK_TEXT }}>
-              The Instruction Layer — where expertise becomes infrastructure
+              The Instruction Layer — where organizational judgment becomes infrastructure
             </p>
 
-            {/* Gap → Solution mapping (mirrors Slide 03 exactly) */}
             <div className="grid grid-cols-2 gap-2.5 w-full mb-3">
               {[
-                { gap: "Static context", fix: "Living, semantic knowledge", icon: <RefreshCw size={16} /> },
-                { gap: "Partial tools", fix: "Full expertise capture", icon: <Layers size={16} /> },
-                { gap: "No adaptive judgment", fix: "Learns from every interaction", icon: <Lightbulb size={16} /> },
+                { gap: "Scattered expertise", fix: "Unified knowledge graph", icon: <Network size={16} /> },
+                { gap: "Static documents", fix: "Living, semantic standards", icon: <RefreshCw size={16} /> },
+                { gap: "No judgment encoding", fix: "Captures why, not just what", icon: <Lightbulb size={16} /> },
                 { gap: "No governance", fix: "Versioned, governed, auditable", icon: <Shield size={16} /> },
-                { gap: "No ethics/nuance", fix: "Encodes creativity & values", icon: <Award size={16} /> },
-                { gap: "No continuous learning", fix: "Feedback loop built in", icon: <Eye size={16} /> },
+                { gap: "No connected change", fix: "One update propagates everywhere", icon: <Layers size={16} /> },
+                { gap: "No feedback loop", fix: "Every execution improves standards", icon: <Eye size={16} /> },
               ].map(item => (
                 <div key={item.gap} className="rounded-lg px-4 py-2.5 text-left flex items-start gap-2.5" style={{ background: `hsl(${TEAL} / 0.1)` }}>
                   <div className="mt-0.5 flex-shrink-0" style={{ color: `hsl(${MINT})` }}>{item.icon}</div>
@@ -429,12 +432,15 @@ function Slide04() {
 
           <div className="flex-shrink-0 px-2"><ArrowRight size={22} style={{ color: DARK_SUBTLE }} /></div>
 
-          {/* Output */}
+          {/* Governed Output */}
           <div className="w-[240px] rounded-2xl border p-5 flex flex-col items-center text-center flex-shrink-0"
-            style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.06)` }}>
-            <Zap size={32} style={{ color: `hsl(${BLUE})` }} />
-            <p className="font-black mt-2" style={{ fontSize: 18, color: DARK_TEXT }}>System of Output</p>
-            <p className="mt-1" style={{ fontSize: 13, color: DARK_MUTED }}>Expert-quality. Every time.</p>
+            style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
+            <Zap size={32} style={{ color: `hsl(${GREEN})` }} />
+            <p className="font-black mt-2" style={{ fontSize: 17, color: DARK_TEXT }}>Governed Output</p>
+            <p className="mt-1" style={{ fontSize: 13, color: DARK_MUTED }}>Org-quality. Every time.</p>
+            <p className="mt-2 px-3 py-1 rounded-md" style={{ fontSize: 11, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.1)` }}>
+              Traceable to human decisions
+            </p>
           </div>
         </div>
 
@@ -442,8 +448,8 @@ function Slide04() {
         <div className="mt-5 rounded-xl px-8 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p className="font-bold" style={{ fontSize: 20, color: DARK_TEXT }}>
-            Every interaction teaches the system what makes your best people great.{" "}
-            <span style={{ color: `hsl(${TEAL})` }}>That's the infrastructure AI was missing.</span>
+            Every interaction compounds collective intelligence.{" "}
+            <span style={{ color: `hsl(${TEAL})` }}>The organization gets smarter — not just the individuals.</span>
           </p>
         </div>
       </div>
