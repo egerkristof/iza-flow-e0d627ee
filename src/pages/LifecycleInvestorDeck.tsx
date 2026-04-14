@@ -150,152 +150,218 @@ function Slide02() {
         </p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.08 }}>
-          Human intelligence turns inputs into outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There is no system for it.</span>
+          Inputs and outputs are structured.<br />
+          <span style={{ color: `hsl(${WARM})` }}>There is no system for the intelligence in between.</span>
         </h2>
 
-        {/* Double Diamond SVG — corrected geometry */}
+        {/* Instruction gap map */}
         <div className="flex-1 flex items-center justify-center">
           <svg width="100%" height="100%" viewBox="0 0 1400 560" style={{ maxWidth: 1400, maxHeight: 560 }}>
-            {/* Stage labels */}
-            <text x="250" y="60" textAnchor="middle" fill={DARK_SUBTLE} fontSize="16" fontWeight="800" letterSpacing="0.18em">CONVERGE</text>
-            <text x="505" y="60" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="16" fontWeight="800" letterSpacing="0.18em">DIVERGE</text>
-            <text x="905" y="60" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="16" fontWeight="800" letterSpacing="0.18em">CONVERGE</text>
-            <text x="1185" y="60" textAnchor="middle" fill={DARK_SUBTLE} fontSize="16" fontWeight="800" letterSpacing="0.18em">PRODUCE</text>
+            {[
+              { x: 225, color: DARK_SUBTLE, label: 'START WITH INPUTS' },
+              { x: 565, color: `hsl(${WARM})`, label: 'WORK GETS MESSY' },
+              { x: 835, color: `hsl(${WARM})`, label: 'EXPERTS MAKE DECISIONS' },
+              { x: 1175, color: DARK_SUBTLE, label: 'END WITH OUTPUTS' },
+            ].map((item) => (
+              <text
+                key={item.label}
+                x={item.x}
+                y="58"
+                textAnchor="middle"
+                fill={item.color}
+                fontSize="14"
+                fontWeight="800"
+                letterSpacing="0.14em"
+              >
+                {item.label}
+              </text>
+            ))}
 
-            {/* Left artifact diamond */}
-            <polygon
-              points="90,280 380,105 380,455"
+            {/* Input container */}
+            <path
+              d="M 310 150 L 220 150 A 130 130 0 0 0 220 410 L 310 410 Z"
               fill={`hsl(${TEAL})`}
-              fillOpacity="0.07"
+              fillOpacity="0.1"
+              stroke={`hsl(${TEAL})`}
+              strokeWidth="2.5"
+              strokeOpacity="0.44"
+            />
+
+            {/* Left convergence shape */}
+            <polygon
+              points="310,280 520,145 520,415"
+              fill={`hsl(${TEAL})`}
+              fillOpacity="0.06"
               stroke={`hsl(${TEAL})`}
               strokeWidth="2.5"
               strokeOpacity="0.38"
+              strokeLinejoin="round"
             />
 
-            {/* Left intelligence divergence */}
+            {/* Left divergence shape */}
             <polygon
-              points="380,105 620,280 380,455"
+              points="520,145 645,280 520,415"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.04"
+              fillOpacity="0.05"
               stroke={`hsl(${WARM})`}
               strokeWidth="2"
-              strokeOpacity="0.28"
+              strokeOpacity="0.34"
               strokeDasharray="7 4"
+              strokeLinejoin="round"
             />
 
-            {/* Right intelligence convergence */}
+            {/* Right convergence shape */}
             <polygon
-              points="780,280 1020,105 1020,455"
+              points="755,280 880,145 880,415"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.04"
+              fillOpacity="0.05"
               stroke={`hsl(${WARM})`}
               strokeWidth="2"
-              strokeOpacity="0.28"
+              strokeOpacity="0.34"
               strokeDasharray="7 4"
+              strokeLinejoin="round"
             />
 
-            {/* Right output diamond */}
+            {/* Right output shape */}
             <polygon
-              points="1020,105 1310,280 1020,455"
+              points="880,145 1090,280 880,415"
               fill={`hsl(${GREEN})`}
-              fillOpacity="0.07"
+              fillOpacity="0.06"
               stroke={`hsl(${GREEN})`}
               strokeWidth="2.5"
               strokeOpacity="0.38"
+              strokeLinejoin="round"
             />
 
-            {/* Center missing layer card */}
+            {/* Output container */}
+            <path
+              d="M 1090 150 L 1180 150 A 130 130 0 0 1 1180 410 L 1090 410 Z"
+              fill={`hsl(${GREEN})`}
+              fillOpacity="0.1"
+              stroke={`hsl(${GREEN})`}
+              strokeWidth="2.5"
+              strokeOpacity="0.44"
+            />
+
+            {/* Center missing layer */}
             <rect
-              x="635"
-              y="178"
-              width="130"
-              height="204"
+              x="650"
+              y="182"
+              width="100"
+              height="196"
               rx="22"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.12"
+              fillOpacity="0.13"
               stroke={`hsl(${WARM})`}
               strokeWidth="2.5"
-              strokeOpacity="0.45"
+              strokeOpacity="0.5"
               strokeDasharray="8 4"
             />
             <circle cx="700" cy="235" r="24" fill={`hsl(${WARM})`} fillOpacity="0.16" />
             <text x="700" y="243" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22" fontWeight="900">!</text>
-            <text x="700" y="285" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="18" fontWeight="900">No System</text>
-            <text x="700" y="309" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="18" fontWeight="900">For This</text>
-            <text x="700" y="342" textAnchor="middle" fill={DARK_MUTED} fontSize="12" fontWeight="700">Lives in people’s heads</text>
+            <text x="700" y="280" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900">Missing</text>
+            <text x="700" y="302" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900">System of</text>
+            <text x="700" y="324" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900">Intelligence</text>
+            <text x="700" y="352" textAnchor="middle" fill={DARK_MUTED} fontSize="11" fontWeight="800">Context • judgment</text>
+            <text x="700" y="368" textAnchor="middle" fill={DARK_MUTED} fontSize="11" fontWeight="800">decisions • exceptions</text>
 
-            {/* Input artifact pills — now inside the shape */}
+            {/* Input container label */}
+            <text x="252" y="205" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="26" fontWeight="900">Input</text>
+            <text x="252" y="236" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="26" fontWeight="900">Artifacts</text>
+
+            {/* Output container label */}
+            <text x="1148" y="205" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="26" fontWeight="900">Output</text>
+            <text x="1148" y="236" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="26" fontWeight="900">Artifacts</text>
+
+            {/* Input pills */}
             {[
-              { label: "SOPs", x: 150, y: 180 },
-              { label: "Requirements", x: 175, y: 225 },
-              { label: "Policies", x: 185, y: 270 },
-              { label: "Templates", x: 175, y: 315 },
-              { label: "Data", x: 150, y: 360 },
+              { label: 'SOPs', y: 270, width: 64 },
+              { label: 'Requirements', y: 310, width: 112 },
+              { label: 'Policies', y: 350, width: 78 },
+              { label: 'Templates', y: 390, width: 86 },
+              { label: 'Data', y: 430, width: 62 },
             ].map((item) => (
               <g key={item.label}>
-                <rect x={item.x - 48} y={item.y - 14} width="96" height="28" rx="14" fill={`hsl(${TEAL})`} fillOpacity="0.14" />
-                <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
+                <rect
+                  x={252 - item.width / 2}
+                  y={item.y - 14}
+                  width={item.width}
+                  height="28"
+                  rx="14"
+                  fill={`hsl(${TEAL})`}
+                  fillOpacity="0.18"
+                />
+                <text x="252" y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
               </g>
             ))}
 
-            {/* Input label */}
-            <text x="235" y="270" fill={`hsl(${TEAL})`} fontSize="28" fontWeight="900">Input</text>
-            <text x="235" y="305" fill={`hsl(${TEAL})`} fontSize="28" fontWeight="900">Artifacts</text>
-
-            {/* Divergence bullets */}
+            {/* Sensemaking tags */}
             {[
-              { label: "Interpret context", y: 180 },
-              { label: "Apply judgment", y: 245 },
-              { label: "Handle exceptions", y: 320 },
-              { label: "Remember precedent", y: 395 },
+              { label: 'Interpret context', x: 410, y: 176, width: 142, rotate: -8 },
+              { label: 'Apply judgment', x: 452, y: 240, width: 130, rotate: 6 },
+              { label: 'Handle exceptions', x: 412, y: 316, width: 146, rotate: -5 },
+              { label: 'Remember precedent', x: 444, y: 387, width: 164, rotate: 8 },
+              { label: 'Price decisions', x: 885, y: 176, width: 126, rotate: 7 },
+              { label: 'Resolve trade-offs', x: 848, y: 243, width: 144, rotate: -6 },
+              { label: 'Choose the standard', x: 888, y: 316, width: 154, rotate: 4 },
+              { label: 'Approve direction', x: 862, y: 387, width: 138, rotate: -7 },
             ].map((item) => (
-              <g key={item.label}>
-                <circle cx="440" cy={item.y} r="5.5" fill={`hsl(${WARM})`} fillOpacity="0.55" />
-                <text x="455" y={item.y + 5} fill={DARK_TEXT} fontSize="15" fontWeight="650">{item.label}</text>
+              <g key={item.label} transform={`rotate(${item.rotate} ${item.x + item.width / 2} ${item.y})`}>
+                <rect
+                  x={item.x}
+                  y={item.y - 16}
+                  width={item.width}
+                  height="32"
+                  rx="16"
+                  fill={`hsl(${WARM})`}
+                  fillOpacity="0.14"
+                  stroke={`hsl(${WARM})`}
+                  strokeOpacity="0.3"
+                />
+                <text
+                  x={item.x + item.width / 2}
+                  y={item.y + 5}
+                  textAnchor="middle"
+                  fill={DARK_TEXT}
+                  fontSize="13"
+                  fontWeight="700"
+                >
+                  {item.label}
+                </text>
               </g>
             ))}
 
-            {/* Convergence bullets */}
+            {/* Output pills */}
             {[
-              { label: "Pricing decision", y: 180 },
-              { label: "Compliance ruling", y: 245 },
-              { label: "Quality standard", y: 320 },
-              { label: "Strategic choice", y: 395 },
+              { label: 'Reports', y: 270, width: 76 },
+              { label: 'Proposals', y: 310, width: 92 },
+              { label: 'Decisions', y: 350, width: 90 },
+              { label: 'Deliverables', y: 390, width: 104 },
             ].map((item) => (
               <g key={item.label}>
-                <circle cx="925" cy={item.y} r="5.5" fill={`hsl(${GREEN})`} fillOpacity="0.55" />
-                <text x="940" y={item.y + 5} fill={DARK_TEXT} fontSize="15" fontWeight="650">{item.label}</text>
-              </g>
-            ))}
-
-            {/* Output label */}
-            <text x="1090" y="270" fill={`hsl(${GREEN})`} fontSize="28" fontWeight="900">Output</text>
-            <text x="1090" y="305" fill={`hsl(${GREEN})`} fontSize="28" fontWeight="900">Artifacts</text>
-
-            {/* Output pills — now inside the shape */}
-            {[
-              { label: "Reports", x: 1190, y: 195 },
-              { label: "Proposals", x: 1210, y: 245 },
-              { label: "Decisions", x: 1210, y: 295 },
-              { label: "Deliverables", x: 1190, y: 345 },
-            ].map((item) => (
-              <g key={item.label}>
-                <rect x={item.x - 54} y={item.y - 14} width="108" height="28" rx="14" fill={`hsl(${GREEN})`} fillOpacity="0.14" />
-                <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
+                <rect
+                  x={1148 - item.width / 2}
+                  y={item.y - 14}
+                  width={item.width}
+                  height="28"
+                  rx="14"
+                  fill={`hsl(${GREEN})`}
+                  fillOpacity="0.18"
+                />
+                <text x="1148" y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
               </g>
             ))}
 
             {/* Bottom proof labels */}
-            <text x="120" y="500" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ We have these.</text>
-            <text x="1140" y="500" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ We have these too.</text>
+            <text x="220" y="485" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ Companies already have these.</text>
+            <text x="1010" y="485" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ AI already generates these.</text>
           </svg>
         </div>
 
         {/* Bottom: the punchline */}
         <div className="mt-5 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
           <p className="font-black" style={{ fontSize: 24, color: DARK_TEXT }}>
-            Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
+            If the intelligence is not encoded, <span style={{ color: `hsl(${WARM})` }}>AI fills in the gaps.</span>
           </p>
         </div>
       </div>
