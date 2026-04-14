@@ -1445,13 +1445,13 @@ function Slide11() {
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.06)` }}>
-              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>GTM Motion</p>
+              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Self-Serve GTM Funnel</p>
               <div className="flex flex-col gap-2">
                 {[
-                  "Free diagnostic → identifies gaps",
-                  "Pilot sprint → encodes first playbooks",
-                  "Platform subscription → ongoing execution",
-                  "Expansion → more teams, more packs",
+                  "Free diagnostic → self-assessment identifies gaps",
+                  "Guided kickstart → first playbooks live in days",
+                  "Platform subscription → teams run independently",
+                  "Organic expansion → more teams, more packs",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
@@ -1480,9 +1480,9 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Identify one high-value process (e.g. proposal writing, deal qualification)",
-        "Interview 2-3 senior experts (90 min each)",
-        "LIZA extracts judgment into structured playbooks",
+        "Client selects one high-value process (e.g. proposal writing, deal qualification)",
+        "Platform guides structured knowledge capture from 2-3 senior experts",
+        "LIZA auto-generates executable playbooks from the input",
       ],
       output: "3-5 executable playbooks ready",
     },
@@ -1492,9 +1492,9 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Junior team members run playbooks with AI guidance",
+        "Team members self-serve: run playbooks with AI guidance",
         "Real work, real clients, real outputs",
-        "LIZA tracks drift, captures feedback automatically",
+        "Platform tracks drift and captures feedback automatically",
       ],
       output: "Measurable quality comparison: before vs. after",
     },
@@ -1504,9 +1504,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Review: time saved, quality delta, rework reduction",
-        "Knowledge graph auto-improved from execution feedback",
-        "Business case for full deployment with real numbers",
+        "Automated review: time saved, quality delta, rework reduction",
+        "Knowledge graph self-improves from execution feedback",
+        "Business case for full self-serve deployment with real numbers",
       ],
       output: "ROI proven. Expansion decision with data.",
     },
