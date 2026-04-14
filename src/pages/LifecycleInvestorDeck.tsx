@@ -1598,8 +1598,8 @@ function Slide12() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Team</p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          15+ years encoding organizational intelligence.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>200+ enterprise engagements.</span>
+          15+ years in AI & data transformation.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>200+ enterprise engagements globally.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1634,7 +1634,7 @@ function Slide12() {
             <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${GREEN})`, letterSpacing: "0.15em" }}>WHY US</p>
             <div className="grid grid-cols-3 gap-3">
               {[
-                { stat: "15+", label: "Clients served", icon: <Users size={20} /> },
+                { stat: "200+", label: "Enterprise engagements", icon: <Users size={20} /> },
                 { stat: "8", label: "Countries", icon: <Globe size={20} /> },
                 { stat: "15+ yrs", label: "AI consulting", icon: <Briefcase size={20} /> },
               ].map(({ stat, label, icon }) => (
