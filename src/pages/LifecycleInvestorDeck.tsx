@@ -600,22 +600,53 @@ function SlideArchitecture() {
                   <p className="font-bold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>YOUR IP · PORTABLE · SOVEREIGN</p>
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-2.5">
-                {[
-                  { label: "Standards & SOPs", desc: "Versioned, governed" },
-                  { label: "Expert Judgment", desc: "Encoded as rules" },
-                  { label: "Decision Exceptions", desc: "Context-specific" },
-                  { label: "Accumulated Memory", desc: "Grows with usage" },
-                ].map(item => (
-                  <div key={item.label} className="rounded-xl px-3 py-2.5" style={{ background: `hsl(${GOLD} / 0.08)` }}>
-                    <p className="font-bold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>{item.label}</p>
-                    <p style={{ fontSize: 12, color: MUTED }}>{item.desc}</p>
+              <div className="flex gap-3">
+                {/* Left: Knowledge Graph visualization */}
+                <div className="w-[160px] shrink-0 rounded-xl flex flex-col items-center justify-center p-3"
+                  style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px dashed hsl(${GOLD} / 0.25)` }}>
+                  <svg width="140" height="100" viewBox="0 0 140 100">
+                    {/* Edges */}
+                    <line x1="70" y1="15" x2="25" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                    <line x1="70" y1="15" x2="115" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                    <line x1="25" y1="50" x2="50" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                    <line x1="115" y1="50" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                    <line x1="25" y1="50" x2="115" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1" opacity="0.15" strokeDasharray="3 2" />
+                    <line x1="50" y1="85" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                    <line x1="70" y1="15" x2="50" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1" opacity="0.12" strokeDasharray="3 2" />
+                    <line x1="70" y1="15" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1" opacity="0.12" strokeDasharray="3 2" />
+                    {/* Nodes */}
+                    <circle cx="70" cy="15" r="8" fill={`hsl(${GOLD})`} fillOpacity="0.2" stroke={`hsl(${GOLD})`} strokeWidth="2" />
+                    <circle cx="25" cy="50" r="6" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                    <circle cx="115" cy="50" r="6" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                    <circle cx="50" cy="85" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                    <circle cx="90" cy="85" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                    {/* Center glow */}
+                    <circle cx="70" cy="50" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.35" />
+                  </svg>
+                  <p className="font-black mt-1" style={{ fontSize: 11, color: `hsl(${GOLD})`, letterSpacing: "0.12em" }}>KNOWLEDGE GRAPH</p>
+                  <p style={{ fontSize: 10, color: MUTED }}>Category-defining infra</p>
+                </div>
+
+                {/* Right: capability cards */}
+                <div className="flex-1 flex flex-col gap-2">
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { label: "Standards & SOPs", desc: "Versioned, governed" },
+                      { label: "Expert Judgment", desc: "Encoded as rules" },
+                      { label: "Decision Exceptions", desc: "Context-specific" },
+                      { label: "Accumulated Memory", desc: "Grows with usage" },
+                    ].map(item => (
+                      <div key={item.label} className="rounded-xl px-3 py-2" style={{ background: `hsl(${GOLD} / 0.08)` }}>
+                        <p className="font-bold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>{item.label}</p>
+                        <p style={{ fontSize: 11, color: MUTED }}>{item.desc}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+                    Built on a governed knowledge graph — the category-defining technology for AI-native organizations.
+                  </p>
+                </div>
               </div>
-              <p className="mt-3 font-semibold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>
-                Built from your existing systems + expert interviews. Gets smarter with every execution.
-              </p>
             </div>
 
             {/* Nervous System — LIZA's engine */}
