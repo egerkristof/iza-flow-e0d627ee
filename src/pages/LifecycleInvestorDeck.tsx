@@ -75,13 +75,6 @@ function SlideGrid() {
   );
 }
 
-function DarkGrid() {
-  return (
-    <div className="absolute inset-0 opacity-[0.08]" style={{
-      backgroundImage: `linear-gradient(hsl(200 15% 20%) 1px, transparent 1px), linear-gradient(90deg, hsl(200 15% 20%) 1px, transparent 1px)`,
-      backgroundSize: "80px 80px"
-    }} />
-  );
 }
 
 function SlideBar({ from = TEAL, to = MINT }: { from?: string; to?: string }) {
