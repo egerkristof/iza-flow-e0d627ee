@@ -154,97 +154,141 @@ function Slide02() {
           <span style={{ color: `hsl(${WARM})` }}>There is no system for it.</span>
         </h2>
 
-        {/* Double Diamond SVG — convergence/divergence visual */}
+        {/* Double Diamond SVG — corrected geometry */}
         <div className="flex-1 flex items-center justify-center">
-          <svg width="100%" height="100%" viewBox="0 0 1400 500" style={{ maxWidth: 1400, maxHeight: 500 }}>
-            {/* ── Diamond 1: Input → Interpret ── */}
-            {/* Left convergence point — Input Artifacts */}
-            <polygon points="60,250 350,80 350,420" fill={`hsl(${TEAL})`} fillOpacity="0.06"
-              stroke={`hsl(${TEAL})`} strokeWidth="2" strokeOpacity="0.3" />
-            {/* Input label */}
-            <text x="120" y="230" fill={`hsl(${TEAL})`} fontSize="22" fontWeight="900">Input</text>
-            <text x="120" y="258" fill={`hsl(${TEAL})`} fontSize="22" fontWeight="900">Artifacts</text>
-            {/* Input examples — stacked at convergence */}
-            {["SOPs", "Requirements", "Policies", "Templates", "Data"].map((t, i) => (
-              <g key={t}>
-                <rect x="30" y={130 + i * 32} width="80" height="24" rx="12"
-                  fill={`hsl(${TEAL})`} fillOpacity="0.12" />
-                <text x="70" y={146 + i * 32} textAnchor="middle"
-                  fill={DARK_TEXT} fontSize="12" fontWeight="600">{t}</text>
-              </g>
-            ))}
+          <svg width="100%" height="100%" viewBox="0 0 1400 560" style={{ maxWidth: 1400, maxHeight: 560 }}>
+            {/* Stage labels */}
+            <text x="250" y="60" textAnchor="middle" fill={DARK_SUBTLE} fontSize="16" fontWeight="800" letterSpacing="0.18em">CONVERGE</text>
+            <text x="505" y="60" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="16" fontWeight="800" letterSpacing="0.18em">DIVERGE</text>
+            <text x="905" y="60" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="16" fontWeight="800" letterSpacing="0.18em">CONVERGE</text>
+            <text x="1185" y="60" textAnchor="middle" fill={DARK_SUBTLE} fontSize="16" fontWeight="800" letterSpacing="0.18em">PRODUCE</text>
 
-            {/* First divergence — intelligence explores */}
-            <polygon points="350,80 640,250 350,420" fill={`hsl(${WARM})`} fillOpacity="0.04"
-              stroke={`hsl(${WARM})`} strokeWidth="2" strokeOpacity="0.25" strokeDasharray="6 3" />
+            {/* Left artifact diamond */}
+            <polygon
+              points="90,280 380,105 380,455"
+              fill={`hsl(${TEAL})`}
+              fillOpacity="0.07"
+              stroke={`hsl(${TEAL})`}
+              strokeWidth="2.5"
+              strokeOpacity="0.38"
+            />
 
-            {/* Divergence labels — what intelligence does */}
+            {/* Left intelligence divergence */}
+            <polygon
+              points="380,105 620,280 380,455"
+              fill={`hsl(${WARM})`}
+              fillOpacity="0.04"
+              stroke={`hsl(${WARM})`}
+              strokeWidth="2"
+              strokeOpacity="0.28"
+              strokeDasharray="7 4"
+            />
+
+            {/* Right intelligence convergence */}
+            <polygon
+              points="780,280 1020,105 1020,455"
+              fill={`hsl(${WARM})`}
+              fillOpacity="0.04"
+              stroke={`hsl(${WARM})`}
+              strokeWidth="2"
+              strokeOpacity="0.28"
+              strokeDasharray="7 4"
+            />
+
+            {/* Right output diamond */}
+            <polygon
+              points="1020,105 1310,280 1020,455"
+              fill={`hsl(${GREEN})`}
+              fillOpacity="0.07"
+              stroke={`hsl(${GREEN})`}
+              strokeWidth="2.5"
+              strokeOpacity="0.38"
+            />
+
+            {/* Center missing layer card */}
+            <rect
+              x="635"
+              y="178"
+              width="130"
+              height="204"
+              rx="22"
+              fill={`hsl(${WARM})`}
+              fillOpacity="0.12"
+              stroke={`hsl(${WARM})`}
+              strokeWidth="2.5"
+              strokeOpacity="0.45"
+              strokeDasharray="8 4"
+            />
+            <circle cx="700" cy="235" r="24" fill={`hsl(${WARM})`} fillOpacity="0.16" />
+            <text x="700" y="243" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22" fontWeight="900">!</text>
+            <text x="700" y="285" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="18" fontWeight="900">No System</text>
+            <text x="700" y="309" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="18" fontWeight="900">For This</text>
+            <text x="700" y="342" textAnchor="middle" fill={DARK_MUTED} fontSize="12" fontWeight="700">Lives in people’s heads</text>
+
+            {/* Input artifact pills — now inside the shape */}
             {[
-              { label: "Interpret context", y: 145 },
-              { label: "Apply judgment", y: 210 },
-              { label: "Handle exceptions", y: 290 },
-              { label: "Remember precedent", y: 355 },
-            ].map((item, i) => (
-              <g key={item.label}>
-                <circle cx="420" cy={item.y} r="5" fill={`hsl(${WARM})`} fillOpacity="0.4" />
-                <text x="432" y={item.y + 5} fill={DARK_TEXT} fontSize="14" fontWeight="600">{item.label}</text>
-              </g>
-            ))}
-
-            {/* ── Center: The Gap ── */}
-            <rect x="590" y="160" width="220" height="180" rx="20"
-              fill={`hsl(${WARM})`} fillOpacity="0.1"
-              stroke={`hsl(${WARM})`} strokeWidth="2.5" strokeOpacity="0.4" strokeDasharray="8 4" />
-            {/* Warning icon placeholder */}
-            <circle cx="700" cy="210" r="22" fill={`hsl(${WARM})`} fillOpacity="0.15" />
-            <text x="700" y="217" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22">⚠</text>
-            <text x="700" y="258" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="18" fontWeight="900">No System</text>
-            <text x="700" y="280" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="18" fontWeight="900">For This</text>
-            <text x="700" y="310" textAnchor="middle" fill={DARK_MUTED} fontSize="12" fontWeight="600">Lives in people's heads</text>
-
-            {/* ── Diamond 2: Converge → Output ── */}
-            {/* Second convergence — decision forms */}
-            <polygon points="640,250 1050,80 1050,420" fill={`hsl(${WARM})`} fillOpacity="0.04"
-              stroke={`hsl(${WARM})`} strokeWidth="2" strokeOpacity="0.25" strokeDasharray="6 3" />
-
-            {/* Convergence labels — what gets applied */}
-            {[
-              { label: "Pricing decision", y: 145 },
-              { label: "Compliance ruling", y: 210 },
-              { label: "Quality standard", y: 290 },
-              { label: "Strategic choice", y: 355 },
+              { label: "SOPs", x: 150, y: 180 },
+              { label: "Requirements", x: 175, y: 225 },
+              { label: "Policies", x: 185, y: 270 },
+              { label: "Templates", x: 175, y: 315 },
+              { label: "Data", x: 150, y: 360 },
             ].map((item) => (
               <g key={item.label}>
-                <circle cx="925" cy={item.y} r="5" fill={`hsl(${GREEN})`} fillOpacity="0.4" />
-                <text x="937" y={item.y + 5} fill={DARK_TEXT} fontSize="14" fontWeight="600">{item.label}</text>
+                <rect x={item.x - 48} y={item.y - 14} width="96" height="28" rx="14" fill={`hsl(${TEAL})`} fillOpacity="0.14" />
+                <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
               </g>
             ))}
 
-            {/* Right convergence point — Output Artifacts */}
-            <polygon points="1050,80 1340,250 1050,420" fill={`hsl(${GREEN})`} fillOpacity="0.06"
-              stroke={`hsl(${GREEN})`} strokeWidth="2" strokeOpacity="0.3" />
+            {/* Input label */}
+            <text x="235" y="270" fill={`hsl(${TEAL})`} fontSize="28" fontWeight="900">Input</text>
+            <text x="235" y="305" fill={`hsl(${TEAL})`} fontSize="28" fontWeight="900">Artifacts</text>
+
+            {/* Divergence bullets */}
+            {[
+              { label: "Interpret context", y: 180 },
+              { label: "Apply judgment", y: 245 },
+              { label: "Handle exceptions", y: 320 },
+              { label: "Remember precedent", y: 395 },
+            ].map((item) => (
+              <g key={item.label}>
+                <circle cx="440" cy={item.y} r="5.5" fill={`hsl(${WARM})`} fillOpacity="0.55" />
+                <text x="455" y={item.y + 5} fill={DARK_TEXT} fontSize="15" fontWeight="650">{item.label}</text>
+              </g>
+            ))}
+
+            {/* Convergence bullets */}
+            {[
+              { label: "Pricing decision", y: 180 },
+              { label: "Compliance ruling", y: 245 },
+              { label: "Quality standard", y: 320 },
+              { label: "Strategic choice", y: 395 },
+            ].map((item) => (
+              <g key={item.label}>
+                <circle cx="925" cy={item.y} r="5.5" fill={`hsl(${GREEN})`} fillOpacity="0.55" />
+                <text x="940" y={item.y + 5} fill={DARK_TEXT} fontSize="15" fontWeight="650">{item.label}</text>
+              </g>
+            ))}
+
             {/* Output label */}
-            <text x="1120" y="230" fill={`hsl(${GREEN})`} fontSize="22" fontWeight="900">Output</text>
-            <text x="1120" y="258" fill={`hsl(${GREEN})`} fontSize="22" fontWeight="900">Artifacts</text>
-            {/* Output examples */}
-            {["Reports", "Proposals", "Decisions", "Deliverables"].map((t, i) => (
-              <g key={t}>
-                <rect x="1270" y={148 + i * 32} width="95" height="24" rx="12"
-                  fill={`hsl(${GREEN})`} fillOpacity="0.12" />
-                <text x="1318" y={164 + i * 32} textAnchor="middle"
-                  fill={DARK_TEXT} fontSize="12" fontWeight="600">{t}</text>
+            <text x="1090" y="270" fill={`hsl(${GREEN})`} fontSize="28" fontWeight="900">Output</text>
+            <text x="1090" y="305" fill={`hsl(${GREEN})`} fontSize="28" fontWeight="900">Artifacts</text>
+
+            {/* Output pills — now inside the shape */}
+            {[
+              { label: "Reports", x: 1190, y: 195 },
+              { label: "Proposals", x: 1210, y: 245 },
+              { label: "Decisions", x: 1210, y: 295 },
+              { label: "Deliverables", x: 1190, y: 345 },
+            ].map((item) => (
+              <g key={item.label}>
+                <rect x={item.x - 54} y={item.y - 14} width="108" height="28" rx="14" fill={`hsl(${GREEN})`} fillOpacity="0.14" />
+                <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
               </g>
             ))}
 
-            {/* ── Labels above diamonds ── */}
-            <text x="205" y="55" textAnchor="middle" fill={DARK_SUBTLE} fontSize="13" fontWeight="700" letterSpacing="0.15em">CONVERGE</text>
-            <text x="495" y="55" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="13" fontWeight="700" letterSpacing="0.15em" opacity="0.7">DIVERGE</text>
-            <text x="845" y="55" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="13" fontWeight="700" letterSpacing="0.15em" opacity="0.7">CONVERGE</text>
-            <text x="1195" y="55" textAnchor="middle" fill={DARK_SUBTLE} fontSize="13" fontWeight="700" letterSpacing="0.15em">PRODUCE</text>
-
-            {/* ── "✓ We have these" labels ── */}
-            <text x="70" y="450" fill={DARK_SUBTLE} fontSize="13" fontWeight="700">✓ We have these.</text>
-            <text x="1270" y="450" fill={DARK_SUBTLE} fontSize="13" fontWeight="700">✓ We have these too.</text>
+            {/* Bottom proof labels */}
+            <text x="120" y="500" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ We have these.</text>
+            <text x="1140" y="500" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ We have these too.</text>
           </svg>
         </div>
 
