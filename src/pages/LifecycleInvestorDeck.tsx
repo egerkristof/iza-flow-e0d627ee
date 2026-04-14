@@ -391,11 +391,8 @@ function Slide03() {
     </div>
   );
 }
-      </div>
-      <SlideBar from={WARM} to={TEAL} />
-    </div>
-  );
-}
+
+
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 04 — THE INSTRUCTION LAYER
