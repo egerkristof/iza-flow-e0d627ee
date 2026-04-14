@@ -1518,13 +1518,10 @@ function SlideExecutionChallenge() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           The 30-Day Execution Challenge.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Prove value before you commit.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1100 }}>
-          One workflow. One team. 30 days. Measurable results, then expand only if the numbers are real.
-        </p>
 
         <div className="flex gap-5 flex-1 min-h-0">
           {phases.map((p, i) => (
