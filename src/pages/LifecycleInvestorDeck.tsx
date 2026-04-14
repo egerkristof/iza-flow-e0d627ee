@@ -567,10 +567,10 @@ function Slide05() {
           The Instruction Layer
         </p>
         <h2 className="font-black mb-1" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          LIZA OS fills the gap.
+          The missing category is a <span style={{ color: `hsl(${TEAL})` }}>system of intelligence.</span>
         </h2>
         <p className="mb-4" style={{ fontSize: 20, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          A system that sits between your input artifacts and your output artifacts — encoding, governing, and evolving your organization's collective judgment.
+          Systems of record store inputs. Copilots generate outputs. LIZA sits in between and turns expert judgment into an executable layer.
         </p>
 
         {/* Main flow: Input Artifacts → LIZA (horizontal rows) → Output Artifacts */}
@@ -579,13 +579,13 @@ function Slide05() {
           <div className="w-[200px] shrink-0 flex flex-col gap-3 justify-center">
             <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
               <Database size={30} className="mx-auto mb-2" style={{ color: `hsl(${BLUE})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Input Artifacts</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Systems of Record</p>
               <p style={{ fontSize: 13, color: MUTED }}>SOPs, requirements, policies</p>
             </div>
             <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.05)` }}>
               <Users size={30} className="mx-auto mb-2" style={{ color: `hsl(${GOLD})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Expert Judgment</p>
-              <p style={{ fontSize: 13, color: MUTED }}>Decisions, exceptions, rules</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Human Judgment</p>
+              <p style={{ fontSize: 13, color: MUTED }}>Decisions, exceptions, standards</p>
             </div>
           </div>
 
@@ -640,8 +640,8 @@ function Slide05() {
           <div className="w-[200px] shrink-0 flex flex-col justify-center">
             <div className="rounded-2xl border px-5 py-8 text-center h-full flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
               <Zap size={30} className="mx-auto mb-2" style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Output Artifacts</p>
-              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Proposals, reports, workflows — governed by your expertise</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI Outputs</p>
+              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Proposals, reports, workflows — now governed by your expertise</p>
               <p className="mt-3 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>Consistent. Traceable.</p>
             </div>
           </div>
@@ -868,8 +868,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Category Validation</p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.05 }}>
-          We're not alone.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>$90M+ invested in 24 months.</span>
+          The market is forming.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>$70M+ already invested around the edges.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -895,10 +895,10 @@ function Slide06() {
                 </div>
                 <div>
                   <p className="font-semibold" style={{ fontSize: 18, color: DARK_TEXT }}>
-                    The Instruction Layer — governs <strong>judgment-heavy</strong> expertise where stakes are highest.
+                    LIZA defines the category more sharply: <strong>the system of intelligence for judgment-heavy work.</strong>
                   </p>
                   <p className="mt-1" style={{ fontSize: 15, color: DARK_MUTED }}>
-                    They automate the predictable. We govern what isn't.
+                    Others tackle memory, mining, or governance. We operationalize expert judgment between record systems and AI outputs.
                   </p>
                 </div>
               </div>
@@ -926,7 +926,7 @@ function Slide06() {
             </div>
             <div className="mt-4 px-4 py-2.5 rounded-lg" style={{ background: `hsl(${GREEN} / 0.08)` }}>
               <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>
-                Wedge: Professional services → Regulated → Enterprise
+                Wedge: start where judgment is expensive, visible, and easy to prove — then expand into regulated and enterprise operations.
               </p>
             </div>
           </div>
@@ -1087,7 +1087,7 @@ function Slide08() {
 
         <h2 className="font-black mb-8" style={{ fontSize: 50, color: DARK_TEXT, lineHeight: 1.05 }}>
           Real organizations.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Real outcomes.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>Same pattern repeating.</span>
         </h2>
 
         <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
@@ -1153,6 +1153,14 @@ function Slide08() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-5 rounded-xl border px-6 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
+          <CheckCircle2 size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.45 }}>
+            <strong style={{ color: DARK_TEXT }}>Investor signal:</strong> the same motion repeats across consulting, sales, governance, and post-merger operations — capture senior judgment, run it through AI, improve quality and consistency.
+          </p>
         </div>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
@@ -1474,7 +1482,7 @@ function SlideExecutionChallenge() {
           <span style={{ color: `hsl(${GREEN})` }}>Prove value before you commit.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1100 }}>
-          One process. One team. 30 days. Measurable results — or walk away.
+          One workflow. One team. 30 days. Measurable results — then expand only if the numbers are real.
         </p>
 
         <div className="flex gap-5 flex-1 min-h-0">
@@ -1519,10 +1527,10 @@ function SlideExecutionChallenge() {
         {/* Bottom metrics */}
         <div className="mt-4 grid grid-cols-4 gap-4">
           {[
-            { metric: "€5-15K", label: "Sprint cost", sub: "Self-funding from savings" },
-            { metric: "1 team", label: "Starting scope", sub: "5-15 people" },
-            { metric: "30 days", label: "To measurable ROI", sub: "Not 6 months" },
-            { metric: "85%+", label: "Conversion rate", sub: "Sprint → annual contract" },
+            { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
+            { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
+            { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
+            { metric: "Clear go / no-go", label: "Decision point", sub: "Roll out annually only if ROI is proven" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-3 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 28, color: TEXT }}>{m.metric}</p>
