@@ -1518,10 +1518,13 @@ function SlideExecutionChallenge() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          The 30-Day Execution Challenge.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Prove value before you commit.</span>
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+          Self-serve by design.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with our first enterprise cohort.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 17, color: MUTED, maxWidth: 1100 }}>
+          The platform is built for independent team adoption. For our initial enterprise clients, we co-build alongside them to maximize learning velocity and shape the product.
+        </p>
 
         <div className="flex gap-5 flex-1 min-h-0">
           {phases.map((p, i) => (
