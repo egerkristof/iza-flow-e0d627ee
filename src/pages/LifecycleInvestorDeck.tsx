@@ -123,8 +123,8 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The infrastructure layer that turns organizational intelligence<br />
-          into <span style={{ color: `hsl(${TEAL})` }}>governed AI execution.</span>
+          Your experts know what good looks like. AI doesn't.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>We make expert judgment run everywhere AI executes.</span>
         </p>
 
         <p style={{ fontSize: 20, color: DARK_SUBTLE }}>
