@@ -1503,68 +1503,60 @@ function SlideExecutionChallenge() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-12 pb-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
           Self-serve by design.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with our first enterprise cohort.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 17, color: MUTED, maxWidth: 1100 }}>
-          The platform is built for independent team adoption. For our initial enterprise clients, we co-build alongside them to maximize learning velocity and shape the product.
-        </p>
 
-        <div className="flex gap-5 flex-1 min-h-0">
+        <div className="flex gap-6 flex-1 min-h-0">
           {phases.map((p, i) => (
             <div key={p.week} className="flex-1 rounded-2xl border flex flex-col overflow-hidden"
               style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `hsl(${p.color} / 0.03)` }}>
               {/* Header */}
-              <div className="px-6 py-4 flex items-center gap-3" style={{ borderBottom: `1px solid hsl(${p.color} / 0.15)` }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+              <div className="px-7 py-5 flex items-center gap-4" style={{ borderBottom: `1px solid hsl(${p.color} / 0.15)` }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center"
                   style={{ background: `hsl(${p.color} / 0.12)`, color: `hsl(${p.color})` }}>
                   {p.icon}
                 </div>
                 <div>
-                  <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 12, color: `hsl(${p.color})` }}>{p.week}</p>
-                  <p className="font-black" style={{ fontSize: 24, color: TEXT }}>{p.title}</p>
+                  <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${p.color})` }}>{p.week}</p>
+                  <p className="font-black" style={{ fontSize: 28, color: TEXT }}>{p.title}</p>
                 </div>
               </div>
               {/* Actions */}
-              <div className="flex-1 px-6 py-4 flex flex-col gap-2.5">
+              <div className="flex-1 px-7 py-5 flex flex-col gap-4">
                 {p.actions.map((a, j) => (
-                  <div key={j} className="flex items-start gap-2.5">
-                    <span className="font-bold shrink-0 mt-0.5" style={{ color: `hsl(${p.color})` }}>→</span>
-                    <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{a}</p>
+                  <div key={j} className="flex items-start gap-3">
+                    <span className="font-bold shrink-0 mt-0.5" style={{ fontSize: 18, color: `hsl(${p.color})` }}>→</span>
+                    <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{a}</p>
                   </div>
                 ))}
               </div>
               {/* Output */}
-              <div className="px-6 py-3 mt-auto" style={{ background: `hsl(${p.color} / 0.06)` }}>
-                <p className="font-bold" style={{ fontSize: 15, color: `hsl(${p.color})` }}>
+              <div className="px-7 py-4 mt-auto" style={{ background: `hsl(${p.color} / 0.06)` }}>
+                <p className="font-bold" style={{ fontSize: 17, color: `hsl(${p.color})` }}>
                   ✓ {p.output}
                 </p>
               </div>
-              {i < 2 && (
-                <div className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 hidden">
-                  <ArrowRight size={20} style={{ color: `hsl(${TEAL} / 0.3)` }} />
-                </div>
-              )}
             </div>
           ))}
         </div>
 
         {/* Bottom metrics */}
-        <div className="mt-5 grid grid-cols-4 gap-4">
+        <div className="mt-6 grid grid-cols-4 gap-5">
           {[
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
             { metric: "Go / no-go", label: "Decision point", sub: "Expand only if ROI is proven" },
           ].map(m => (
-            <div key={m.label} className="rounded-xl px-5 py-4 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
-              <p className="font-black" style={{ fontSize: 30, color: TEXT }}>{m.metric}</p>
-              <p className="font-bold mt-1" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>{m.label}</p>
-              <p style={{ fontSize: 13, color: MUTED }}>{m.sub}</p>
+            <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
+              <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
+              <p className="font-bold mt-1" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>{m.label}</p>
+              <p style={{ fontSize: 14, color: MUTED }}>{m.sub}</p>
             </div>
           ))}
         </div>
