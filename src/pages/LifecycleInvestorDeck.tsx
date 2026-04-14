@@ -250,7 +250,9 @@ function Slide03() {
       icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
       accent: RED,
       records: ["Batch records", "SOPs", "Validation protocols"],
-      gap: "AI applies the standard procedure, but the context demands Annex 7. Nobody told it.",
+      complexity: "COMPLICATED",
+      complexityNote: "Right answer exists, but requires expert routing",
+      gap: "AI drafts a deviation report using the standard procedure. But this batch falls under Annex 7, not Annex 1. A senior QA lead knows that instantly. The AI doesn't, because nobody encoded that judgment.",
       outputs: ["Deviation reports", "Submission docs"],
       cost: "Safety risk. Audit failure.",
     },
@@ -259,7 +261,9 @@ function Slide03() {
       icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
       records: ["Methodologies", "Client briefs", "Proposals"],
-      gap: "A junior has the template, not the partner's judgment. AI applies the average, not the exception.",
+      complexity: "COMPLEX",
+      complexityNote: "No single right answer. Requires contextual judgment",
+      gap: "AI generates a solid proposal from the template. But the client's CEO just changed strategy mid-engagement. A senior partner would reframe the entire approach. The AI delivers the standard playbook because it has no access to the partner's instinct.",
       outputs: ["Deliverables", "Advisory memos"],
       cost: "Margin erosion. Client escalation.",
     },
@@ -268,7 +272,9 @@ function Slide03() {
       icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
       records: ["Risk policies", "Case files", "Compliance docs"],
-      gap: "Context changes mid-case. AI prices risk using the average. Two analysts, same case, different outcomes.",
+      complexity: "COMPLEX",
+      complexityNote: "Context shifts continuously. Judgment cannot be templated",
+      gap: "AI prices risk using historical averages. But this client's exposure profile shifted after a recent acquisition. Two analysts using the same AI get different outputs because neither has encoded the firm's evolving risk posture.",
       outputs: ["Risk assessments", "Advisory reports"],
       cost: "Regulatory exposure. Inconsistent pricing.",
     },
@@ -349,12 +355,16 @@ function Slide03() {
                 <div className="flex items-center gap-2 mb-2">
                   {ind.icon}
                   <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{ind.name}</p>
-                  <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                    <AlertTriangle size={12} style={{ color: `hsl(${WARM})` }} />
-                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
+                  <div className="ml-auto flex items-center gap-2">
+                    <span className="rounded-full px-2.5 py-0.5 font-black" style={{ fontSize: 10, letterSpacing: "0.08em", background: ind.complexity === "COMPLEX" ? `hsl(${WARM} / 0.12)` : `hsl(${TEAL} / 0.12)`, color: ind.complexity === "COMPLEX" ? `hsl(${WARM})` : `hsl(${TEAL})` }}>{ind.complexity}</span>
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
+                      <AlertTriangle size={12} style={{ color: `hsl(${WARM})` }} />
+                      <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
+                    </div>
                   </div>
                 </div>
-                <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
+                <p style={{ fontSize: 10, color: MUTED, marginBottom: 4, fontStyle: "italic" }}>{ind.complexityNote}</p>
+                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
               </div>
               <div className="w-[200px] shrink-0 px-6 py-4 flex flex-col justify-center"
                 style={{ background: `hsl(${RED} / 0.04)` }}>
