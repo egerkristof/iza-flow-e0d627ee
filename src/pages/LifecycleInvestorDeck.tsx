@@ -1697,13 +1697,13 @@ const SLIDES = [
   { id: 5, title: "The Instruction Layer", component: <Slide05 /> },
   { id: 6, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 7, title: "Early Validation", component: <Slide08 /> },
-  { id: 9, title: "Expansion Path", component: <Slide09 /> },
-  { id: 10, title: "What's Built", component: <Slide10 /> },
-  { id: 11, title: "Where LIZA Sits", component: <SlideArchitecture /> },
-  { id: 12, title: "Business Model", component: <Slide11 /> },
-  { id: 13, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 14, title: "Team", component: <Slide12 /> },
-  { id: 15, title: "The Ask", component: <Slide13 /> },
+  { id: 8, title: "Expansion Path", component: <Slide09 /> },
+  { id: 9, title: "What's Built", component: <Slide10 /> },
+  { id: 10, title: "Where LIZA Sits", component: <SlideArchitecture /> },
+  { id: 11, title: "Business Model", component: <Slide11 /> },
+  { id: 12, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 13, title: "Team", component: <Slide12 /> },
+  { id: 14, title: "The Ask", component: <Slide13 /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
