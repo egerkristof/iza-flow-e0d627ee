@@ -343,7 +343,7 @@ function Slide03() {
                 style={{ background: `hsl(${GREEN} / 0.04)`, borderRight: `1.5px solid hsl(215 15% 92%)` }}>
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <Zap size={14} style={{ color: `hsl(${GREEN})` }} />
-                  <p className="font-bold" style={{ fontSize: 11, color: `hsl(${GREEN})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Output</p>
+                  <p className="font-bold" style={{ fontSize: 11, color: `hsl(${GREEN})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Output Artifacts</p>
                 </div>
                 <div className="flex flex-wrap gap-1">
                   {ind.outputs.map(o => (
