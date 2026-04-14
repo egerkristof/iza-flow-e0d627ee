@@ -149,78 +149,95 @@ function Slide02() {
           The Instruction Gap
         </p>
 
-        <h2 className="font-black mb-3" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.08 }}>
-          Work is an artifact chain. Intelligence connects it.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There's no system for that.</span>
+        <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.08 }}>
+          Human intelligence turns inputs into outputs.<br />
+          <span style={{ color: `hsl(${WARM})` }}>There is no system for it.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.55 }}>
-          Every lifecycle — ALM, GxP, GTM — chains artifacts through milestones: <span className="font-bold" style={{ color: DARK_TEXT }}>input → judgment → output → next input</span>.
-          We have systems for both sides. But the intelligence that connects them? <span className="font-bold" style={{ color: DARK_TEXT }}>It lives in people's heads.</span>
-        </p>
 
-        {/* Three-column diagram */}
+        {/* Visual: Input → Intelligence → Output with flow arrows */}
         <div className="flex-1 flex items-center justify-center">
           <div className="flex items-stretch gap-0 w-full max-w-[1500px]">
             {/* Input Artifacts */}
-            <div className="flex-1 rounded-l-[28px] border p-8 flex flex-col justify-center"
+            <div className="flex-1 rounded-l-[28px] border p-7 flex flex-col justify-center"
               style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-              <Database size={32} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-black mt-4" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Input Artifacts</p>
-              <p className="font-semibold mt-1" style={{ fontSize: 16, color: DARK_MUTED }}>Where every workflow starts</p>
-              <div className="flex flex-wrap gap-2 mt-5">
-                {["SOPs", "Requirements", "Policy manuals", "Templates", "CRM data"].map((t) => (
-                  <span key={t} className="rounded-full px-4 py-2 font-semibold" style={{ fontSize: 15, background: `hsl(${TEAL} / 0.1)`, color: DARK_TEXT }}>{t}</span>
+              <Database size={28} style={{ color: `hsl(${TEAL})` }} />
+              <p className="font-black mt-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>Input Artifacts</p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {["SOPs", "Requirements", "Policies", "Templates", "Data"].map((t) => (
+                  <span key={t} className="rounded-full px-3.5 py-1.5 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.1)`, color: DARK_TEXT }}>{t}</span>
                 ))}
               </div>
-              <p className="mt-5 font-bold" style={{ fontSize: 15, color: DARK_SUBTLE }}>✓ We have these.</p>
+              <p className="mt-4 font-bold" style={{ fontSize: 14, color: DARK_SUBTLE }}>✓ We have these.</p>
             </div>
 
-            {/* THE GAP */}
-            <div className="w-[340px] shrink-0 border-y-2 border-dashed flex flex-col items-center justify-center relative"
-              style={{ borderColor: `hsl(${WARM} / 0.4)`, background: `linear-gradient(180deg, hsl(${WARM} / 0.14), hsl(${WARM} / 0.06))` }}>
-              <div className="absolute inset-0 opacity-[0.06]" style={{ background: `repeating-linear-gradient(135deg, transparent, transparent 14px, hsl(${WARM}) 14px, hsl(${WARM}) 15px)` }} />
+            {/* Arrow: Input → Intelligence */}
+            <div className="shrink-0 flex items-center px-3">
+              <div className="flex flex-col items-center gap-1">
+                <ArrowRight size={24} style={{ color: `hsl(${WARM} / 0.5)` }} />
+                <p className="font-bold [writing-mode:vertical-lr] rotate-180" style={{ fontSize: 10, color: `hsl(${WARM} / 0.4)`, letterSpacing: "0.1em" }}>NEEDS</p>
+              </div>
+            </div>
+
+            {/* THE GAP — Human Intelligence */}
+            <div className="w-[380px] shrink-0 border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center relative"
+              style={{ borderColor: `hsl(${WARM} / 0.4)`, background: `linear-gradient(180deg, hsl(${WARM} / 0.12), hsl(${WARM} / 0.04))` }}>
+              <div className="absolute inset-0 rounded-[20px] opacity-[0.04]" style={{ background: `repeating-linear-gradient(135deg, transparent, transparent 14px, hsl(${WARM}) 14px, hsl(${WARM}) 15px)` }} />
               <div className="relative z-10 text-center px-6">
-                <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: `hsl(${WARM} / 0.18)` }}>
+                <div className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: `hsl(${WARM} / 0.18)` }}>
                   <AlertTriangle size={30} style={{ color: `hsl(${WARM})` }} />
                 </div>
-                <p className="font-black" style={{ fontSize: 24, color: `hsl(${WARM})`, lineHeight: 1.15 }}>
-                  No System of<br />Intelligence
+                <p className="font-black" style={{ fontSize: 22, color: `hsl(${WARM})`, lineHeight: 1.15 }}>
+                  Human Intelligence
                 </p>
-                <p className="mt-3 font-semibold" style={{ fontSize: 15, color: DARK_TEXT, lineHeight: 1.45 }}>
-                  Expert judgment<br />
-                  Decision exceptions<br />
-                  Contextual rules<br />
-                  Institutional memory
+                <p className="font-bold mt-1" style={{ fontSize: 14, color: DARK_TEXT }}>
+                  This is what turns one into the other.
                 </p>
-                <div className="mt-4 px-4 py-2 rounded-lg" style={{ background: `hsl(${WARM} / 0.12)` }}>
-                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${WARM})` }}>
-                    "Whatever you don't define, AI invents."
+                <div className="mt-4 flex flex-col gap-1">
+                  {["Expert judgment", "Decision exceptions", "Contextual rules", "Institutional memory"].map(item => (
+                    <div key={item} className="flex items-center gap-2 justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: `hsl(${WARM})` }} />
+                      <p className="font-semibold" style={{ fontSize: 14, color: DARK_TEXT }}>{item}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 px-4 py-2.5 rounded-xl" style={{ background: `hsl(${WARM} / 0.14)`, border: `1px solid hsl(${WARM} / 0.3)` }}>
+                  <p className="font-black" style={{ fontSize: 16, color: `hsl(${WARM})` }}>
+                    No system captures this.
+                  </p>
+                  <p className="font-semibold mt-0.5" style={{ fontSize: 12, color: DARK_MUTED }}>
+                    It lives in people's heads — and AI can't access it.
                   </p>
                 </div>
               </div>
             </div>
 
+            {/* Arrow: Intelligence → Output */}
+            <div className="shrink-0 flex items-center px-3">
+              <div className="flex flex-col items-center gap-1">
+                <ArrowRight size={24} style={{ color: `hsl(${WARM} / 0.5)` }} />
+                <p className="font-bold [writing-mode:vertical-lr] rotate-180" style={{ fontSize: 10, color: `hsl(${WARM} / 0.4)`, letterSpacing: "0.1em" }}>PRODUCES</p>
+              </div>
+            </div>
+
             {/* Output Artifacts */}
-            <div className="flex-1 rounded-r-[28px] border p-8 flex flex-col justify-center"
+            <div className="flex-1 rounded-r-[28px] border p-7 flex flex-col justify-center"
               style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.06)` }}>
-              <Zap size={32} style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-black mt-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Output Artifacts</p>
-              <p className="font-semibold mt-1" style={{ fontSize: 16, color: DARK_MUTED }}>What gets delivered next</p>
-              <div className="flex flex-wrap gap-2 mt-5">
-                {["AI-generated reports", "Proposals", "Automated workflows", "Deliverables"].map((t) => (
-                  <span key={t} className="rounded-full px-4 py-2 font-semibold" style={{ fontSize: 15, background: `hsl(${GREEN} / 0.1)`, color: DARK_TEXT }}>{t}</span>
+              <Zap size={28} style={{ color: `hsl(${GREEN})` }} />
+              <p className="font-black mt-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Output Artifacts</p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {["Reports", "Proposals", "Decisions", "Deliverables"].map((t) => (
+                  <span key={t} className="rounded-full px-3.5 py-1.5 font-semibold" style={{ fontSize: 14, background: `hsl(${GREEN} / 0.1)`, color: DARK_TEXT }}>{t}</span>
                 ))}
               </div>
-              <p className="mt-5 font-bold" style={{ fontSize: 15, color: DARK_SUBTLE }}>✓ We have these too.</p>
+              <p className="mt-4 font-bold" style={{ fontSize: 14, color: DARK_SUBTLE }}>✓ We have these too.</p>
             </div>
           </div>
         </div>
 
-        {/* Bottom callout — artifact chain framing */}
-        <div className="mt-6 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
+        {/* Bottom: the punchline */}
+        <div className="mt-5 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
           <p className="font-black" style={{ fontSize: 24, color: DARK_TEXT }}>
-            Artifact → <span style={{ color: `hsl(${WARM})` }}>Human Intelligence</span> → Artifact → <span style={{ color: `hsl(${WARM})` }}>Human Intelligence</span> → Artifact.
-            <span className="font-semibold" style={{ color: DARK_MUTED }}> &nbsp;This chain doesn't scale.</span>
+            Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
           </p>
         </div>
       </div>
