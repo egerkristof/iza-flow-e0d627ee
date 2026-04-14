@@ -1131,7 +1131,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
               </div>
               <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
-                White-glove expertise extraction. We encode your senior team's judgment into the platform.
+                White-glove extraction. We encode your organization's collective judgment into the platform.
                 Converts to long-term SaaS.
               </p>
             </div>
@@ -1432,7 +1432,7 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
-            Your best people's expertise is your competitive advantage.{" "}
+            Your organization's collective intelligence is your competitive advantage.{" "}
             <strong style={{ color: `hsl(${TEAL})` }}>We make it run the company.</strong>
           </p>
         </div>
