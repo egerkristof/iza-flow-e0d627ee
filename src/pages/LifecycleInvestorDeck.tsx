@@ -142,22 +142,31 @@ function Slide01() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const universalChain = [
-    { label: "Capture\nExpertise", broken: false },
-    { label: "Translate to\nStandards", broken: true },
-    { label: "Execute\nWork", broken: false },
-    { label: "Review\nOutput", broken: true },
-    { label: "Approve &\nDeliver", broken: false },
-    { label: "Learn &\nImprove", broken: true },
-  ];
-
-  const industries = [
-    { name: "Pharma", color: RED, icon: <Shield size={20} style={{ color: `hsl(${RED})` }} />,
-      chain: ["Discovery", "Formulation", "Clinical", "Manufacturing", "Release", "Audit"], breaks: [1, 4], consequence: "6-week production halt" },
-    { name: "Prof. Services", color: WARM, icon: <Users size={20} style={{ color: `hsl(${WARM})` }} />,
-      chain: ["Scoping", "Methodology", "Delivery", "QA Review", "Handoff", "Lessons"], breaks: [1, 3], consequence: "Trust eroded. Margin lost." },
-    { name: "Financial Services", color: GOLD, icon: <DollarSign size={20} style={{ color: `hsl(${GOLD})` }} />,
-      chain: ["Intake", "Risk Review", "Underwriting", "Approval", "Portfolio", "Audit"], breaks: [1, 2], consequence: "€2M exposure. Regulatory review." },
+  const phases = [
+    {
+      title: "Capture",
+      icon: <Brain size={28} style={{ color: `hsl(${TEAL})` }} />,
+      accent: TEAL,
+      problem: "Expert judgment stays partial",
+      description: "The rulebook never fully captures the exceptions, tradeoffs, and tacit know-how that make the work actually succeed.",
+      breakLabel: "Break 01",
+    },
+    {
+      title: "Execute",
+      icon: <Workflow size={28} style={{ color: `hsl(${WARM})` }} />,
+      accent: WARM,
+      problem: "Work runs without the right judgment",
+      description: "People and AI can access documents, but not the real organizational intelligence needed for context-specific decisions.",
+      breakLabel: "Break 02",
+    },
+    {
+      title: "Learn",
+      icon: <RefreshCw size={28} style={{ color: `hsl(${GOLD})` }} />,
+      accent: GOLD,
+      problem: "Corrections do not compound",
+      description: "Mistakes get fixed locally, but the system itself does not learn, so the same variance returns in the next cycle.",
+      breakLabel: "Break 03",
+    },
   ];
 
   return (
@@ -166,73 +175,65 @@ function Slide02() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${WARM})` }}>The Lifecycle X-Ray</p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          Every knowledge-intensive process follows the same chain.
+          Every AI-native workflow has the same three jobs.
         </h2>
-        <p className="mb-7" style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>And it breaks in the same places.</p>
+        <p className="mb-8" style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>
+          Capture judgment. Execute with it. Learn from outcomes. Most organizations break at all three.
+        </p>
 
-        <div className="grid grid-cols-6 gap-0 mb-2">
-          {universalChain.map((step, i) => (
-            <div key={step.label} className="relative flex flex-col items-center">
-              <div className="rounded-xl px-4 py-5 text-center w-full mx-1.5 flex items-center justify-center"
-                style={{ minHeight: 80, background: step.broken ? `hsl(${WARM} / 0.1)` : CARD_ALT,
-                  border: step.broken ? `2px solid hsl(${WARM} / 0.4)` : `1.5px solid hsl(215 10% 88%)` }}>
-                {step.broken && <AlertTriangle size={16} className="absolute top-2 right-2" style={{ color: `hsl(${WARM})` }} />}
-                <p className="font-bold whitespace-pre-line" style={{ fontSize: 15, color: step.broken ? `hsl(${WARM})` : TEXT, lineHeight: 1.25 }}>{step.label}</p>
+        <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
+          {phases.map((phase, index) => (
+            <div
+              key={phase.title}
+              className="relative rounded-[28px] border p-7 flex flex-col"
+              style={{
+                borderColor: `hsl(${phase.accent} / 0.22)`,
+                background: `linear-gradient(180deg, hsl(${phase.accent} / 0.06), hsl(${phase.accent} / 0.03))`,
+              }}
+            >
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: `hsl(${phase.accent} / 0.12)` }}>
+                    {phase.icon}
+                  </div>
+                  <div>
+                    <p className="font-black" style={{ fontSize: 28, color: TEXT }}>{phase.title}</p>
+                    <p className="font-bold tracking-[0.18em] uppercase" style={{ fontSize: 11, color: `hsl(${phase.accent})` }}>{phase.breakLabel}</p>
+                  </div>
+                </div>
+                <AlertTriangle size={18} style={{ color: `hsl(${phase.accent})` }} />
               </div>
-              {i < universalChain.length - 1 && (
-                <div className="absolute top-1/2 -right-1 -translate-y-1/2 z-10">
-                  {step.broken ? <div className="w-4 border-t-2 border-dashed" style={{ borderColor: `hsl(${WARM} / 0.5)` }} />
-                    : <ArrowRight size={14} style={{ color: `hsl(215 10% 70%)` }} />}
+
+              <div className="flex-1 flex flex-col justify-between gap-8">
+                <p className="font-black" style={{ fontSize: 34, color: TEXT, lineHeight: 1.1 }}>
+                  {phase.problem}
+                </p>
+                <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>
+                  {phase.description}
+                </p>
+              </div>
+
+              {index < phases.length - 1 && (
+                <div className="absolute top-1/2 -right-7 -translate-y-1/2 z-10 w-14 h-14 rounded-full flex items-center justify-center"
+                  style={{ background: BG, border: `1.5px solid hsl(215 15% 88%)` }}>
+                  <ArrowRight size={22} style={{ color: `hsl(${phase.accent})` }} />
                 </div>
               )}
             </div>
           ))}
         </div>
-        <div className="flex items-center gap-2 mb-7 ml-1">
-          <AlertTriangle size={14} style={{ color: `hsl(${WARM})` }} />
-          <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${WARM})` }}>Intelligence gap — organizational judgment is not encoded here</p>
-        </div>
 
-        <div className="flex flex-col gap-3 flex-1 min-h-0">
-          {industries.map((ind) => (
-            <div key={ind.name} className="rounded-xl border px-5 py-3.5 flex items-center gap-5"
-              style={{ borderColor: `hsl(${ind.color} / 0.2)`, background: `hsl(${ind.color} / 0.03)` }}>
-              <div className="flex items-center gap-2.5 w-[160px] shrink-0">
-                {ind.icon}
-                <p className="font-black" style={{ fontSize: 15, color: `hsl(${ind.color})` }}>{ind.name}</p>
-              </div>
-              <div className="flex-1 grid grid-cols-6 gap-1.5">
-                {ind.chain.map((step, j) => {
-                  const isBroken = ind.breaks.includes(j);
-                  return (
-                    <div key={step} className="rounded-md px-2 py-1.5 text-center"
-                      style={{ background: isBroken ? `hsl(${ind.color} / 0.12)` : `hsl(${ind.color} / 0.04)`,
-                        border: isBroken ? `1.5px solid hsl(${ind.color} / 0.35)` : `1px solid hsl(${ind.color} / 0.1)` }}>
-                      <p className="font-semibold" style={{ fontSize: 12, color: isBroken ? `hsl(${ind.color})` : TEXT }}>{step}</p>
-                    </div>
-                  );
-                })}
-              </div>
-              <p className="font-bold shrink-0 w-[200px] text-right" style={{ fontSize: 14, color: `hsl(${ind.color})` }}>{ind.consequence}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-5 flex gap-4 items-center">
-          <div className="flex-1 rounded-xl px-7 py-4" style={{ background: `hsl(${WARM} / 0.05)`, border: `1.5px solid hsl(${WARM} / 0.15)` }}>
-            <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
-              Different industries. Different terminology. <span className="font-black" style={{ color: `hsl(${WARM})` }}>Same three gaps.</span>
+        <div className="mt-6 flex items-stretch gap-4">
+          <div className="flex-1 rounded-2xl px-7 py-5" style={{ background: `hsl(${WARM} / 0.06)`, border: `1.5px solid hsl(${WARM} / 0.18)` }}>
+            <p className="font-black" style={{ fontSize: 23, color: TEXT, lineHeight: 1.35 }}>
+              This is not a prompting problem. <span style={{ color: `hsl(${WARM})` }}>It is an infrastructure problem.</span>
             </p>
           </div>
-          <div className="rounded-xl px-8 py-4 flex items-center gap-4 shrink-0" style={{ background: `hsl(${RED} / 0.06)`, border: `2px solid hsl(${RED} / 0.2)` }}>
-            <div>
-              <p className="font-black" style={{ fontSize: 15, color: TEXT }}>Instruction Gap Tax</p>
-              <p style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic" }}>100-person knowledge org</p>
-            </div>
-            <div className="flex items-baseline gap-1">
-              <span className="font-black" style={{ fontSize: 44, color: `hsl(${RED})` }}>€550K</span>
-              <span className="font-bold" style={{ fontSize: 16, color: `hsl(${RED} / 0.7)` }}>/yr</span>
-            </div>
+          <div className="rounded-2xl px-7 py-5 shrink-0" style={{ background: CARD_ALT, border: `1.5px solid hsl(215 15% 88%)` }}>
+            <p className="font-black mb-2" style={{ fontSize: 15, color: TEXT }}>Same pattern across</p>
+            <p className="font-semibold" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              Pharma · Professional Services · Financial Services
+            </p>
           </div>
         </div>
       </div>
@@ -251,8 +252,32 @@ function Slide02() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide03() {
-  const chain = ["Capture", "Translate", "Execute", "Review", "Approve", "Learn"];
-  const breaks = [1, 2, 5];
+  const rows = [
+    {
+      label: "Pharma",
+      icon: <Shield size={18} style={{ color: `hsl(${RED})` }} />,
+      accent: RED,
+      capture: "Process know-how stays with a few operators.",
+      execute: "Teams improvise around regulated edge cases.",
+      learn: "Deviation lessons stay local instead of updating the standard.",
+    },
+    {
+      label: "Professional Services",
+      icon: <Briefcase size={18} style={{ color: `hsl(${WARM})` }} />,
+      accent: WARM,
+      capture: "Partner judgment never becomes a reusable method.",
+      execute: "Teams recreate quality through heroics and QA reviews.",
+      learn: "Delivery lessons do not reliably improve future work.",
+    },
+    {
+      label: "Financial Services",
+      icon: <DollarSign size={18} style={{ color: `hsl(${GOLD})` }} />,
+      accent: GOLD,
+      capture: "Policy nuance and exceptions remain fragmented.",
+      execute: "Risk decisions vary because context is not governed.",
+      learn: "Reviews catch issues, but the system does not get smarter.",
+    },
+  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
@@ -263,89 +288,51 @@ function Slide03() {
         </p>
 
         <h2 className="font-black mb-3" style={{ fontSize: 50, color: DARK_TEXT, lineHeight: 1.08 }}>
-          Every lifecycle breaks in <span style={{ color: `hsl(${WARM})` }}>the same three places.</span>
+          Different industries. <span style={{ color: `hsl(${WARM})` }}>Same failure pattern.</span>
         </h2>
         <p className="mb-7" style={{ fontSize: 21, color: DARK_MUTED, lineHeight: 1.5 }}>
-          Before execution. During execution. After execution. That is why the problem is infrastructure, not prompting.
+          The language changes. The infrastructure failure does not.
         </p>
 
-        <div className="grid grid-cols-6 gap-3 mb-7">
-          {chain.map((step, index) => {
-            const isBreak = breaks.includes(index);
-            return (
-              <div key={step} className="relative">
-                <div
-                  className="rounded-xl px-3 py-4 text-center"
-                  style={{
-                    background: isBreak ? `hsl(${WARM} / 0.12)` : `hsl(200 15% 10%)`,
-                    border: isBreak ? `1.5px solid hsl(${WARM} / 0.35)` : `1px solid hsl(200 15% 20%)`,
-                  }}
-                >
-                  <p className="font-bold" style={{ fontSize: 15, color: isBreak ? `hsl(${WARM})` : DARK_TEXT }}>
-                    {step}
+        <div className="rounded-[28px] border overflow-hidden flex-1" style={{ borderColor: `hsl(200 15% 20%)`, background: `hsl(200 20% 8%)` }}>
+          <div className="grid grid-cols-[260px_1fr_1fr_1fr]" style={{ borderBottom: `1px solid hsl(200 15% 18%)` }}>
+            <div className="px-6 py-5" />
+            {[
+              { title: "Capture", subtitle: "Judgment not fully encoded", color: TEAL },
+              { title: "Execute", subtitle: "Context not reliably applied", color: WARM },
+              { title: "Learn", subtitle: "Feedback does not compound", color: GOLD },
+            ].map((column) => (
+              <div key={column.title} className="px-6 py-5" style={{ borderLeft: `1px solid hsl(200 15% 18%)` }}>
+                <p className="font-black" style={{ fontSize: 24, color: DARK_TEXT }}>{column.title}</p>
+                <p className="font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${column.color})` }}>{column.subtitle}</p>
+              </div>
+            ))}
+          </div>
+
+          {rows.map((row) => (
+            <div key={row.label} className="grid grid-cols-[260px_1fr_1fr_1fr] min-h-[190px]" style={{ borderBottom: `1px solid hsl(200 15% 18%)` }}>
+              <div className="px-6 py-6 flex items-start gap-3" style={{ background: `hsl(${row.accent} / 0.08)` }}>
+                <div className="mt-1">{row.icon}</div>
+                <div>
+                  <p className="font-black" style={{ fontSize: 22, color: DARK_TEXT }}>{row.label}</p>
+                  <p className="mt-2" style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.45 }}>
+                    Surface language changes.<br />Underlying failure stays the same.
                   </p>
                 </div>
-                {index < chain.length - 1 && (
-                  <div className="absolute top-1/2 -right-2.5 -translate-y-1/2 z-10">
-                    <ArrowRight size={14} style={{ color: `hsl(200 15% 35%)` }} />
-                  </div>
-                )}
               </div>
-            );
-          })}
-        </div>
 
-        <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
-          {[
-            {
-              title: "Before the task",
-              subtitle: "Standards drift",
-              color: RED,
-              points: [
-                "Docs freeze. Reality changes.",
-                "Experts know the exceptions. Systems don't.",
-                "Teams start from outdated instructions.",
-              ],
-            },
-            {
-              title: "During the task",
-              subtitle: "Judgment is missing",
-              color: WARM,
-              points: [
-                "AI hits an ambiguous step.",
-                "No executable rule tells it what matters here.",
-                "So it invents a decision confidently.",
-              ],
-            },
-            {
-              title: "After the task",
-              subtitle: "Learning stays local",
-              color: GOLD,
-              points: [
-                "Someone catches the mistake manually.",
-                "The correction fixes this case, not the system.",
-                "The organization pays to relearn the lesson.",
-              ],
-            },
-          ].map((item) => (
-            <div key={item.title} className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: `hsl(${item.color} / 0.22)`, background: `hsl(${item.color} / 0.06)` }}>
-              <p className="font-black mb-1" style={{ fontSize: 24, color: DARK_TEXT }}>{item.title}</p>
-              <p className="font-bold mb-4" style={{ fontSize: 16, color: `hsl(${item.color})` }}>{item.subtitle}</p>
-              <div className="flex flex-col gap-3">
-                {item.points.map((point) => (
-                  <div key={point} className="flex items-start gap-3">
-                    <span className="font-black mt-0.5" style={{ color: `hsl(${item.color})` }}>→</span>
-                    <p style={{ fontSize: 16, color: DARK_MUTED, lineHeight: 1.45 }}>{point}</p>
-                  </div>
-                ))}
-              </div>
+              {[row.capture, row.execute, row.learn].map((cell, index) => (
+                <div key={`${row.label}-${index}`} className="px-6 py-6 flex items-start" style={{ borderLeft: `1px solid hsl(200 15% 18%)` }}>
+                  <p style={{ fontSize: 18, color: DARK_MUTED, lineHeight: 1.5 }}>{cell}</p>
+                </div>
+              ))}
             </div>
           ))}
         </div>
 
         <div className="mt-5 rounded-xl px-8 py-4 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
           <p className="font-black" style={{ fontSize: 22, color: DARK_TEXT }}>
-            AI exposes the gap. <span style={{ color: `hsl(${WARM})` }}>It does not create it.</span>
+            AI exposes the gap. <span style={{ color: `hsl(${WARM})` }}>It scales it.</span>
           </p>
         </div>
       </div>
@@ -359,6 +346,33 @@ function Slide03() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide04() {
+  const layers = [
+    {
+      title: "Systems of Record",
+      subtitle: "What the company knows",
+      icon: <Database size={24} style={{ color: `hsl(${TEAL})` }} />,
+      accent: TEAL,
+      items: ["Documents", "CRM records", "Requirements", "Historical outputs"],
+      footer: "Stores evidence.",
+    },
+    {
+      title: "Missing Intelligence Layer",
+      subtitle: "How the company should think",
+      icon: <Brain size={24} style={{ color: `hsl(${WARM})` }} />,
+      accent: WARM,
+      items: ["Rules", "Exceptions", "Context", "Learning loops"],
+      footer: "Not systematized.",
+    },
+    {
+      title: "Systems of Output",
+      subtitle: "What the company does",
+      icon: <Zap size={24} style={{ color: `hsl(${GREEN})` }} />,
+      accent: GREEN,
+      items: ["AI outputs", "Operator actions", "Decisions", "Customer delivery"],
+      footer: "Executes at scale.",
+    },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
@@ -368,88 +382,68 @@ function Slide04() {
         </p>
 
         <h2 className="font-black mb-3" style={{ fontSize: 50, color: DARK_TEXT, lineHeight: 1.08 }}>
-          You have systems for <span style={{ color: `hsl(${TEAL})` }}>data</span>. You have systems for <span style={{ color: `hsl(${GREEN})` }}>output</span>.
+          You have systems for <span style={{ color: `hsl(${TEAL})` }}>record</span>. You have systems for <span style={{ color: `hsl(${GREEN})` }}>output</span>.
           <br />
           You do <span style={{ color: `hsl(${WARM})` }}>not</span> have a system for intelligence.
         </h2>
         <p className="mb-8" style={{ fontSize: 21, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          That is why the lifecycle x-rays look different on the surface and identical underneath.
+          That is why expertise remains human, execution remains variable, and learning never compounds.
         </p>
 
-        <div className="flex gap-5 flex-1 min-h-0 items-stretch">
-          <div className="flex-1 rounded-2xl border p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
+        <div className="grid grid-cols-[1fr_280px_1fr] gap-6 flex-1 min-h-0 items-stretch">
+          <div className="rounded-[28px] border p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.05)` }}>
             <div className="flex items-center gap-3 mb-4">
-              <Database size={24} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-black" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>Systems of Record</p>
+              {layers[0].icon}
+              <div>
+                <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>{layers[0].title}</p>
+                <p className="font-semibold" style={{ fontSize: 15, color: DARK_MUTED }}>{layers[0].subtitle}</p>
+              </div>
             </div>
-            <p className="font-semibold mb-4" style={{ fontSize: 16, color: DARK_MUTED }}>Where facts are stored</p>
-            <div className="flex flex-col gap-2.5 flex-1">
-              {[
-                "CRM and pipeline data",
-                "SOPs and documentation",
-                "Requirements and standards",
-                "Templates and historical outputs",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-lg px-4 py-2.5" style={{ background: `hsl(${TEAL} / 0.06)` }}>
-                  <CheckCircle2 size={16} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-semibold" style={{ fontSize: 16, color: DARK_TEXT }}>{item}</p>
+            <div className="grid grid-cols-2 gap-3 flex-1 content-start mt-3">
+              {layers[0].items.map((item) => (
+                <div key={item} className="rounded-xl px-4 py-4" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                  <p className="font-semibold" style={{ fontSize: 18, color: DARK_TEXT }}>{item}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-4 font-bold text-center" style={{ fontSize: 14, color: `hsl(${TEAL} / 0.7)` }}>
-              Stores the evidence. Cannot govern the judgment.
-            </p>
+            <p className="mt-5 font-black" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>{layers[0].footer}</p>
           </div>
 
-          <div className="flex-1 rounded-2xl border-2 p-7 flex flex-col relative overflow-hidden" style={{ borderColor: `hsl(${WARM} / 0.4)`, background: `hsl(${WARM} / 0.06)` }}>
-            <div className="absolute inset-0 opacity-5" style={{ background: `repeating-linear-gradient(45deg, transparent, transparent 20px, hsl(${WARM}) 20px, hsl(${WARM}) 21px)` }} />
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-4">
-                <Brain size={24} style={{ color: `hsl(${WARM})` }} />
-                <p className="font-black" style={{ fontSize: 20, color: `hsl(${WARM})` }}>The Missing Layer</p>
+          <div className="rounded-[28px] border-2 p-8 flex flex-col justify-center relative overflow-hidden" style={{ borderColor: `hsl(${WARM} / 0.4)`, background: `linear-gradient(180deg, hsl(${WARM} / 0.12), hsl(${WARM} / 0.06))` }}>
+            <div className="absolute inset-0 opacity-[0.08]" style={{ background: `repeating-linear-gradient(135deg, transparent, transparent 16px, hsl(${WARM}) 16px, hsl(${WARM}) 17px)` }} />
+            <div className="relative z-10 text-center">
+              <div className="w-20 h-20 rounded-full mx-auto mb-5 flex items-center justify-center" style={{ background: `hsl(${WARM} / 0.14)` }}>
+                {layers[1].icon}
               </div>
-              <p className="font-semibold mb-4" style={{ fontSize: 16, color: `hsl(${WARM})` }}>Where organizational judgment should live</p>
-              <div className="flex flex-col gap-2.5 flex-1">
-                {[
-                  "Which rule matters in this exact context",
-                  "When to deviate from the standard",
-                  "What changed since the doc was written",
-                  "How corrections become tomorrow's default",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-3 rounded-lg px-4 py-2.5" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                    <X size={16} style={{ color: `hsl(${WARM})` }} />
-                    <p className="font-semibold" style={{ fontSize: 16, color: DARK_TEXT }}>{item}</p>
+              <p className="font-black" style={{ fontSize: 32, color: `hsl(${WARM})`, lineHeight: 1.1 }}>{layers[1].title}</p>
+              <p className="mt-2 font-semibold" style={{ fontSize: 16, color: DARK_TEXT }}>{layers[1].subtitle}</p>
+              <div className="flex flex-col gap-3 my-6">
+                {layers[1].items.map((item) => (
+                  <div key={item} className="rounded-xl px-4 py-3" style={{ background: `hsl(${WARM} / 0.12)` }}>
+                    <p className="font-semibold" style={{ fontSize: 18, color: DARK_TEXT }}>{item}</p>
                   </div>
                 ))}
               </div>
-              <p className="mt-4 font-black text-center" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
-                Lives in people's heads. Walks out the door. Never compounds.
-              </p>
+              <p className="font-black" style={{ fontSize: 24, color: `hsl(${WARM})` }}>{layers[1].footer}</p>
             </div>
           </div>
 
-          <div className="flex-1 rounded-2xl border p-7 flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.04)` }}>
+          <div className="rounded-[28px] border p-8 flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.05)` }}>
             <div className="flex items-center gap-3 mb-4">
-              <Zap size={24} style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-black" style={{ fontSize: 20, color: `hsl(${GREEN})` }}>Systems of Output</p>
+              {layers[2].icon}
+              <div>
+                <p className="font-black" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>{layers[2].title}</p>
+                <p className="font-semibold" style={{ fontSize: 15, color: DARK_MUTED }}>{layers[2].subtitle}</p>
+              </div>
             </div>
-            <p className="font-semibold mb-4" style={{ fontSize: 16, color: DARK_MUTED }}>Where AI executes</p>
-            <div className="flex flex-col gap-2.5 flex-1">
-              {[
-                "AI-generated deliverables",
-                "Automated reports and briefs",
-                "Code and configuration changes",
-                "Client and operator-facing decisions",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-lg px-4 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
-                  <ArrowRight size={16} style={{ color: `hsl(${GREEN})` }} />
-                  <p className="font-semibold" style={{ fontSize: 16, color: DARK_TEXT }}>{item}</p>
+            <div className="grid grid-cols-2 gap-3 flex-1 content-start mt-3">
+              {layers[2].items.map((item) => (
+                <div key={item} className="rounded-xl px-4 py-4" style={{ background: `hsl(${GREEN} / 0.08)` }}>
+                  <p className="font-semibold" style={{ fontSize: 18, color: DARK_TEXT }}>{item}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-4 font-bold text-center" style={{ fontSize: 14, color: `hsl(${GREEN} / 0.7)` }}>
-              Executes at scale. Cannot infer your institutional truth.
-            </p>
+            <p className="mt-5 font-black" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>{layers[2].footer}</p>
           </div>
         </div>
 
