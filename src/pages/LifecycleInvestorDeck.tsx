@@ -1518,13 +1518,10 @@ function SlideExecutionChallenge() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           The 30-Day Execution Challenge.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Prove value before you commit.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1100 }}>
-          One workflow. One team. 30 days. Measurable results, then expand only if the numbers are real.
-        </p>
 
         <div className="flex gap-5 flex-1 min-h-0">
           {phases.map((p, i) => (
@@ -1566,17 +1563,17 @@ function SlideExecutionChallenge() {
         </div>
 
         {/* Bottom metrics */}
-        <div className="mt-4 grid grid-cols-4 gap-4">
+        <div className="mt-5 grid grid-cols-4 gap-4">
           {[
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Clear go / no-go", label: "Decision point", sub: "Roll out annually only if ROI is proven" },
+            { metric: "Go / no-go", label: "Decision point", sub: "Expand only if ROI is proven" },
           ].map(m => (
-            <div key={m.label} className="rounded-xl px-5 py-3 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
-              <p className="font-black" style={{ fontSize: 28, color: TEXT }}>{m.metric}</p>
-              <p className="font-bold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>{m.label}</p>
-              <p style={{ fontSize: 12, color: MUTED }}>{m.sub}</p>
+            <div key={m.label} className="rounded-xl px-5 py-4 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
+              <p className="font-black" style={{ fontSize: 30, color: TEXT }}>{m.metric}</p>
+              <p className="font-bold mt-1" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>{m.label}</p>
+              <p style={{ fontSize: 13, color: MUTED }}>{m.sub}</p>
             </div>
           ))}
         </div>
