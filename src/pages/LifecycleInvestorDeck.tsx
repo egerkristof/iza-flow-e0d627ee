@@ -1038,71 +1038,71 @@ function Slide08() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Early Validation</p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-14">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Early Validation</p>
 
-        <h2 className="font-black mb-8" style={{ fontSize: 50, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Real organizations.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Same pattern repeating.</span>
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+          Paid engagements.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Measurable outcomes.</span>
         </h2>
 
-        <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
+        <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
           {[
             {
               title: "Global AEC Software Company",
-              subtitle: "€6B Group · 200+ employees",
+              subtitle: "Paid engagement · R&D, HR & Engineering",
               color: TEAL,
-              outcome: "VP Product now serves as Strategic Advisor",
+              outcome: "CTO-sponsored, multi-department rollout underway",
               points: [
-                "16 VP-level attendees in first session (107 min)",
-                "Post-merger governance across 4 departments",
-                "AI learned governance rules live — in real time",
+                "Encoding artifact workflows across R&D, HR, and Engineering",
+                "Working directly with the CTO on organizational rollout",
+                "Active paid engagement — live now",
               ],
             },
             {
-              title: "Executive Search Firm",
-              subtitle: "Boutique · Senior partner engagement",
+              title: "Top-Tier Swiss Executive Search Firm",
+              subtitle: "Design partnership · Candidate evaluation",
               color: GREEN,
-              outcome: "New associates at senior quality from week 2",
+              outcome: "3-day senior task → 30 minutes at same quality",
               points: [
-                "Encoded senior partner's candidate evaluation judgment",
-                "Associates running searches at expert quality immediately",
-                "Onboarding time compressed from months to days",
+                "Encoded senior partner's C-level candidate evaluation judgment",
+                "Confidential executive reports generated in 30 min vs. 3 days",
+                "Maintained senior-level quality with junior staff execution",
               ],
             },
             {
               title: "Professional Services Consultancy",
-              subtitle: "Mid-market · Multi-team deployment",
+              subtitle: "Multi-team deployment · Sales, PM & Marketing",
               color: GOLD,
-              outcome: "Client escalations reduced measurably",
+              outcome: "75% reduction in proposal creation time",
               points: [
-                "Delivery methodology encoded into executable protocols",
-                "Client communication standardized across all consultants",
-                "Quality consistency regardless of seniority",
+                "Codified workflows across sales, project management & marketing",
+                "Cross-department collaboration standardized and governed",
+                "25% improvement in deal velocity across the team",
               ],
             },
             {
-              title: "B2B Sales Organization",
-              subtitle: "SaaS · Sales team pilot",
-              color: TEAL,
-              outcome: "Entire team executing top seller's playbook",
+              title: "Cybersecurity Audit Firm",
+              subtitle: "Security audit automation · 800+ questions",
+              color: ACCENT,
+              outcome: "Audit time: 18 days → 1 day",
               points: [
-                "Best seller's deal qualification judgment encoded",
-                "Competitive positioning updates from live deal feedback",
-                "Ramp time for new hires cut significantly",
+                "800+ audit questions processed through governed execution",
+                "Full compliance traceability maintained throughout",
+                "95% reduction in audit cycle time",
               ],
             },
           ].map(({ title, subtitle, color, outcome, points }) => (
-            <div key={title} className="rounded-2xl border p-6 flex flex-col"
+            <div key={title} className="rounded-2xl border p-5 flex flex-col"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
-              <p className="font-bold" style={{ fontSize: 20, color: DARK_TEXT }}>{title}</p>
-              <p className="mb-2" style={{ fontSize: 15, color: `hsl(${color})` }}>{subtitle}</p>
+              <p className="font-bold" style={{ fontSize: 19, color: DARK_TEXT }}>{title}</p>
+              <p className="mb-2" style={{ fontSize: 14, color: `hsl(${color})` }}>{subtitle}</p>
               <div className="rounded-lg px-4 py-2 mb-3" style={{ background: `hsl(${color} / 0.1)` }}>
-                <p className="font-bold" style={{ fontSize: 16, color: `hsl(${color})` }}>🎯 {outcome}</p>
+                <p className="font-bold" style={{ fontSize: 15, color: `hsl(${color})` }}>🎯 {outcome}</p>
               </div>
               <div className="flex flex-col gap-1.5 flex-1">
                 {points.map((p, i) => (
-                  <p key={i} className="flex items-start gap-2" style={{ fontSize: 16, color: DARK_MUTED }}>
+                  <p key={i} className="flex items-start gap-2" style={{ fontSize: 15, color: DARK_MUTED }}>
                     <span className="font-bold shrink-0" style={{ color: `hsl(${color})` }}>→</span> {p}
                   </p>
                 ))}
@@ -1111,12 +1111,20 @@ function Slide08() {
           ))}
         </div>
 
-        <div className="mt-5 rounded-xl border px-6 py-4 flex items-center gap-4"
-          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
-          <CheckCircle2 size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.45 }}>
-            <strong style={{ color: DARK_TEXT }}>Investor signal:</strong> the same motion repeats across consulting, sales, governance, and post-merger operations — capture senior judgment, run it through AI, improve quality and consistency.
-          </p>
+        {/* Metrics strip */}
+        <div className="mt-4 flex gap-4">
+          {[
+            { metric: "75%", label: "Faster proposal creation" },
+            { metric: "25%", label: "Improved deal velocity" },
+            { metric: "95%", label: "Audit time reduction" },
+            { metric: "98%", label: "Senior-quality consistency" },
+          ].map(({ metric, label }) => (
+            <div key={label} className="flex-1 rounded-xl px-4 py-3 text-center"
+              style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.15)` }}>
+              <p className="font-black" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>{metric}</p>
+              <p style={{ fontSize: 12, color: DARK_MUTED }}>{label}</p>
+            </div>
+          ))}
         </div>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
