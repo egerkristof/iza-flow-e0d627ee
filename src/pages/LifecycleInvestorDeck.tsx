@@ -173,10 +173,13 @@ function Slide02() {
                 </span>
               ))}
             </div>
-            <div className="flex items-center gap-2 mt-6">
+            <div className="flex items-center gap-2 mt-5">
               <Check size={18} style={{ color: `hsl(${TEAL})` }} />
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
+            <p className="mt-2" style={{ fontSize: 14, color: `hsl(${WARM})`, lineHeight: 1.4 }}>
+              ⚠ But none of it is queryable by AI. It sits in files no model can reason over.
+            </p>
           </div>
 
           {/* CENTER — THE GAP (deliberately stark) */}
@@ -216,10 +219,13 @@ function Slide02() {
                 </span>
               ))}
             </div>
-            <div className="flex items-center gap-2 mt-6">
+            <div className="flex items-center gap-2 mt-5">
               <Check size={18} style={{ color: `hsl(${GREEN})` }} />
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
+            <p className="mt-2" style={{ fontSize: 14, color: `hsl(${WARM})`, lineHeight: 1.4 }}>
+              ⚠ But without judgment, outputs are generic. Every answer is the average, not the expert.
+            </p>
           </div>
         </div>
 
