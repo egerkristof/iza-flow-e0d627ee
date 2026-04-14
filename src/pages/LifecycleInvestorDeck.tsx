@@ -1093,7 +1093,7 @@ function Slide08() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 pt-12 pb-10">
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <div className="flex items-end justify-between mb-6">
           <div>
             <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Early Validation</p>
@@ -1108,7 +1108,7 @@ function Slide08() {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4 flex-1">
           {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
             <div key={title} className="rounded-2xl border flex flex-col overflow-hidden"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
