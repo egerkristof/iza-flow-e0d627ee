@@ -5,7 +5,7 @@ import {
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
   AlertTriangle, CheckCircle2, DollarSign,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
-  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket,
+  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
@@ -258,9 +258,36 @@ function Slide03() {
       outputs: ["AI underwriting", "Auto-advisory"],
       cost: "Regulatory exposure. Inconsistent pricing.",
     },
+    {
+      name: "Engineering",
+      icon: <Layers size={22} style={{ color: `hsl(${TEAL})` }} />,
+      accent: TEAL,
+      records: ["Jira", "Confluence", "Git"],
+      gap: "AI generates code that compiles — but violates architectural decisions made 6 months ago. No one documented why.",
+      outputs: ["Copilot", "AI code review"],
+      cost: "Tech debt. Rework cycles.",
+    },
+    {
+      name: "Sales & GTM",
+      icon: <TrendingUp size={22} style={{ color: `hsl(${GREEN})` }} />,
+      accent: GREEN,
+      records: ["CRM", "Playbooks", "Pricing sheets"],
+      gap: "AI drafts the proposal using last quarter's positioning. The strategic pivot hasn't reached the tools.",
+      outputs: ["AI proposals", "Auto-sequences"],
+      cost: "Lost deals. Brand inconsistency.",
+    },
+    {
+      name: "Legal & Compliance",
+      icon: <FileText size={22} style={{ color: `hsl(215 25% 50%)` }} />,
+      accent: "215 25% 50%",
+      records: ["Contract DB", "Regulatory filings", "Policy docs"],
+      gap: "AI applies standard clause library — but misses jurisdiction-specific exceptions the senior partner knows.",
+      outputs: ["AI contract review", "Auto-drafting"],
+      cost: "Liability. Compliance gaps.",
+    },
   ];
 
-  const alsoApplies = ["Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops", "Marketing"];
+  const alsoApplies = ["Supply Chain", "HR & People Ops", "Marketing"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -274,10 +301,10 @@ function Slide03() {
         </h2>
 
         {/* Industry rows — Records → GAP → Output → Cost */}
-        <div className="flex flex-col gap-2.5 mb-4">
+        <div className="flex flex-col gap-1.5 mb-3">
           {industries.map((ind) => (
             <div key={ind.name} className="flex items-stretch gap-0 rounded-[14px] overflow-hidden border"
-              style={{ borderColor: `hsl(${ind.accent} / 0.15)`, minHeight: 100 }}>
+              style={{ borderColor: `hsl(${ind.accent} / 0.15)`, minHeight: 72 }}>
 
               {/* RECORDS */}
               <div className="w-[230px] shrink-0 px-4 py-3 flex flex-col justify-center"
