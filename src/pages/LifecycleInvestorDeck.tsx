@@ -451,19 +451,19 @@ function Slide05() {
           A system that sits between your input artifacts and your output artifacts — encoding, governing, and evolving your organization's collective judgment.
         </p>
 
-        {/* Main flow: Records → LIZA (horizontal rows) → Output */}
+        {/* Main flow: Input Artifacts → LIZA (horizontal rows) → Output Artifacts */}
         <div className="flex-1 flex items-stretch gap-0">
-          {/* Left: Inputs */}
+          {/* Left: Input Artifacts */}
           <div className="w-[200px] shrink-0 flex flex-col gap-3 justify-center">
             <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
               <Database size={30} className="mx-auto mb-2" style={{ color: `hsl(${BLUE})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Records</p>
-              <p style={{ fontSize: 13, color: MUTED }}>SOPs, CRM, docs</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Input Artifacts</p>
+              <p style={{ fontSize: 13, color: MUTED }}>SOPs, requirements, policies</p>
             </div>
             <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.05)` }}>
               <Users size={30} className="mx-auto mb-2" style={{ color: `hsl(${GOLD})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Experts</p>
-              <p style={{ fontSize: 13, color: MUTED }}>Judgment, exceptions</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Expert Judgment</p>
+              <p style={{ fontSize: 13, color: MUTED }}>Decisions, exceptions, rules</p>
             </div>
           </div>
 
