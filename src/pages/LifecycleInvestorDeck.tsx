@@ -172,9 +172,9 @@ function Slide02() {
             <polygon points="1178,66 1194,72 1178,78" fill={`hsl(${GREEN})`} />
 
             <g>
-              <rect x="70" y="44" width="250" height="54" rx="16" fill={`hsl(${TEAL})`} fillOpacity="0.12" stroke={`hsl(${TEAL})`} strokeOpacity="0.32" />
-              <text x="195" y="66" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">START HERE</text>
-              <text x="195" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="16" fontWeight="800">Companies already have inputs</text>
+              <rect x="54" y="34" width="286" height="72" rx="20" fill={`hsl(${TEAL})`} fillOpacity="0.12" stroke={`hsl(${TEAL})`} strokeOpacity="0.32" />
+              <text x="197" y="61" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">START HERE</text>
+              <text x="197" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="18" fontWeight="800">Companies already have inputs</text>
             </g>
 
             <g>
@@ -188,9 +188,9 @@ function Slide02() {
             </g>
 
             <g>
-              <rect x="1080" y="44" width="250" height="54" rx="16" fill={`hsl(${GREEN})`} fillOpacity="0.12" stroke={`hsl(${GREEN})`} strokeOpacity="0.32" />
-              <text x="1205" y="66" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">END HERE</text>
-              <text x="1205" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="16" fontWeight="800">AI already generates outputs</text>
+              <rect x="1060" y="34" width="286" height="72" rx="20" fill={`hsl(${GREEN})`} fillOpacity="0.12" stroke={`hsl(${GREEN})`} strokeOpacity="0.32" />
+              <text x="1203" y="61" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">END HERE</text>
+              <text x="1203" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="18" fontWeight="800">AI already generates outputs</text>
             </g>
 
             {/* Input box */}
@@ -294,17 +294,17 @@ function Slide02() {
             />
 
             {/* Messy intelligence field */}
-            <ellipse cx="700" cy="289" rx="210" ry="156" fill={`hsl(${WARM})`} fillOpacity="0.05" stroke={`hsl(${WARM})`} strokeOpacity="0.12" strokeDasharray="5 8" />
+            <ellipse cx="700" cy="289" rx="245" ry="168" fill={`hsl(${WARM})`} fillOpacity="0.05" stroke={`hsl(${WARM})`} strokeOpacity="0.12" strokeDasharray="5 8" />
             <text x="700" y="126" textAnchor="middle" fill={DARK_MUTED} fontSize="14" fontWeight="800" letterSpacing="0.14em">THIS IS WHERE IT MAKES OR BREAKS</text>
 
             {[
-              { label: "Interpret context", x: 535, y: 204, width: 148, rotate: -9 },
-              { label: "Apply judgment", x: 630, y: 185, width: 136, rotate: 8 },
-              { label: "Handle exceptions", x: 768, y: 214, width: 154, rotate: -7 },
-              { label: "Remember precedent", x: 563, y: 348, width: 168, rotate: 10 },
-              { label: "Resolve trade-offs", x: 747, y: 346, width: 152, rotate: -8 },
-              { label: "Choose the standard", x: 646, y: 392, width: 156, rotate: 6 },
-              { label: "Approve direction", x: 815, y: 397, width: 142, rotate: -5 },
+              { label: "Interpret context", x: 560, y: 194, width: 148, rotate: -9 },
+              { label: "Apply judgment", x: 708, y: 176, width: 136, rotate: 7 },
+              { label: "Handle exceptions", x: 846, y: 205, width: 154, rotate: -8 },
+              { label: "Remember precedent", x: 548, y: 376, width: 168, rotate: 9 },
+              { label: "Resolve trade-offs", x: 856, y: 372, width: 152, rotate: -9 },
+              { label: "Choose the standard", x: 622, y: 420, width: 156, rotate: 5 },
+              { label: "Approve direction", x: 782, y: 425, width: 142, rotate: -4 },
             ].map((item) => (
               <g key={item.label} transform={`rotate(${item.rotate} ${item.x} ${item.y})`}>
                 <rect
@@ -324,10 +324,10 @@ function Slide02() {
 
             {/* Center missing layer */}
             <rect
-              x="600"
-              y="198"
-              width="200"
-              height="182"
+              x="586"
+              y="214"
+              width="228"
+              height="160"
               rx="26"
               fill={`hsl(${WARM})`}
               fillOpacity="0.14"
@@ -336,12 +336,11 @@ function Slide02() {
               strokeOpacity="0.5"
               strokeDasharray="8 4"
             />
-            <circle cx="700" cy="242" r="25" fill={`hsl(${WARM})`} fillOpacity="0.18" />
-            <text x="700" y="250" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22" fontWeight="900">!</text>
-            <text x="700" y="286" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="24" fontWeight="900">Missing System of</text>
-            <text x="700" y="316" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="24" fontWeight="900">Intelligence</text>
-            <text x="700" y="345" textAnchor="middle" fill={DARK_TEXT} fontSize="14" fontWeight="800">Humans bridge this manually today.</text>
-            <text x="700" y="366" textAnchor="middle" fill={DARK_MUTED} fontSize="13" fontWeight="700">This is where AI quality breaks or compounds.</text>
+            <circle cx="700" cy="246" r="24" fill={`hsl(${WARM})`} fillOpacity="0.18" />
+            <text x="700" y="254" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22" fontWeight="900">!</text>
+            <text x="700" y="290" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="25" fontWeight="900">Missing System of Intelligence</text>
+            <text x="700" y="322" textAnchor="middle" fill={DARK_TEXT} fontSize="15" fontWeight="800">Humans still bridge this manually.</text>
+            <text x="700" y="346" textAnchor="middle" fill={DARK_MUTED} fontSize="13" fontWeight="700">This is where AI quality breaks or compounds.</text>
           </svg>
         </div>
 
