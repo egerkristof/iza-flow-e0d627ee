@@ -355,12 +355,16 @@ function Slide03() {
                 <div className="flex items-center gap-2 mb-2">
                   {ind.icon}
                   <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{ind.name}</p>
-                  <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                    <AlertTriangle size={12} style={{ color: `hsl(${WARM})` }} />
-                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
+                  <div className="ml-auto flex items-center gap-2">
+                    <span className="rounded-full px-2.5 py-0.5 font-black" style={{ fontSize: 10, letterSpacing: "0.08em", background: ind.complexity === "COMPLEX" ? `hsl(${WARM} / 0.12)` : `hsl(${TEAL} / 0.12)`, color: ind.complexity === "COMPLEX" ? `hsl(${WARM})` : `hsl(${TEAL})` }}>{ind.complexity}</span>
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
+                      <AlertTriangle size={12} style={{ color: `hsl(${WARM})` }} />
+                      <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
+                    </div>
                   </div>
                 </div>
-                <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
+                <p style={{ fontSize: 10, color: MUTED, marginBottom: 4, fontStyle: "italic" }}>{ind.complexityNote}</p>
+                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
               </div>
               <div className="w-[200px] shrink-0 px-6 py-4 flex flex-col justify-center"
                 style={{ background: `hsl(${RED} / 0.04)` }}>
