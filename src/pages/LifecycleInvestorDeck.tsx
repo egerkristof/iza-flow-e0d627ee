@@ -1142,22 +1142,22 @@ function Slide09() {
       vertical: "Professional Services", status: "Deployed", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Senior judgment locked in individual heads. AI makes juniors faster but not better.",
-      result: "New hires at senior quality from week 2. Every engagement governed.",
-      proof: "Executive search, consulting — live",
+      result: "75% faster proposals. 25% deal velocity increase. Multi-team rollout live.",
+      proof: "Consultancy & digital agency — active",
     },
     {
-      vertical: "Pharma & Life Sciences", status: "Validated", color: GOLD,
+      vertical: "Application Lifecycle Mgmt", status: "Deployed", color: TEAL,
+      icon: <Cpu size={24} style={{ color: `hsl(${TEAL})` }} />,
+      problem: "Software & engineering workflows rely on tribal knowledge. AI outputs lack organizational context.",
+      result: "Artifact workflows governed across R&D, HR, and Engineering. CTO-sponsored.",
+      proof: "Global AEC software company — paid engagement",
+    },
+    {
+      vertical: "Pharma & Life Sciences", status: "Expanding", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
       problem: "GxP compliance demands traceable expertise. AI without governance is a regulatory liability.",
       result: "Audit prep from weeks to hours. Full provenance. Every AI output traceable.",
-      proof: "GMP/GxP lifecycle validated",
-    },
-    {
-      vertical: "Financial Services", status: "Next", color: ACCENT,
-      icon: <DollarSign size={24} style={{ color: `hsl(${ACCENT})` }} />,
-      problem: "Underwriting and advisory judgment is person-dependent. AI generates without institutional risk context.",
-      result: "Judgment-consistent output across every analyst. Standards enforced in execution.",
-      proof: "$28B TAM intersection",
+      proof: "Cybersecurity audit validated · Pharma next",
     },
   ];
 
@@ -1178,7 +1178,7 @@ function Slide09() {
 
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           Same engine.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Every industry where judgment matters.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>Every function where judgment matters.</span>
         </h2>
         <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 900 }}>
           The pattern repeats: wherever expert standards meet AI execution, the Instruction Gap exists. We start narrow, then expand.
