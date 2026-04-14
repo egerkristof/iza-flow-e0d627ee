@@ -401,11 +401,11 @@ function SlideWhyNow() {
       source: "Workday, Jan 2026",
     },
     {
-      metric: "$0",
-      label: "invested in the judgment layer between records and AI",
-      insight: "Every adjacent category is funded. The center is empty.",
+      metric: "New",
+      label: "category emerging — no dominant player yet",
+      insight: "$70M+ invested around the edges. No one owns the operational intelligence layer.",
       color: TEAL,
-      source: "LIZA category analysis",
+      source: "LIZA category analysis, 2024–25",
     },
   ];
 
