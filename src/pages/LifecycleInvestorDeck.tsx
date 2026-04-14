@@ -799,7 +799,7 @@ function Slide07() {
           <span style={{ color: `hsl(${TEAL})` }}>One compounding loop.</span>
         </h2>
         <p className="mb-5" style={{ fontSize: 20, color: MUTED, maxWidth: 1000 }}>
-          Each cycle makes your organization's AI smarter.
+          Each cycle compounds your organization's collective intelligence.
         </p>
 
         <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
