@@ -527,6 +527,129 @@ function Slide05() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 05B — WHERE LIZA SITS (Architecture — augment, don't replace)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideArchitecture() {
+  const existingSystems = [
+    { name: "Confluence / Wiki", layer: "Knowledge", color: BLUE },
+    { name: "JIRA / Monday", layer: "Project Mgmt", color: BLUE },
+    { name: "Salesforce / HubSpot", layer: "CRM", color: BLUE },
+    { name: "DOORS / Polarion", layer: "Requirements", color: BLUE },
+    { name: "Veeva / SAP", layer: "Compliance", color: BLUE },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>Architecture</p>
+
+        <h2 className="font-black mb-2" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
+          LIZA doesn't replace your tools.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>It makes them intelligent.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1200 }}>
+          Your customer IP (the graph) stays yours. LIZA provides the reasoning layer on top.
+        </p>
+
+        {/* Architecture stack */}
+        <div className="flex-1 flex flex-col gap-4 justify-center">
+          {/* Layer 3: AI Output */}
+          <div className="rounded-2xl border px-8 py-5 text-center"
+            style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>AI Output Layer</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>Any LLM · Any Workflow · Any Team</p>
+            <p style={{ fontSize: 14, color: MUTED }}>Proposals, code, reports, decisions — all governed by your expertise</p>
+          </div>
+
+          {/* Arrow */}
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center">
+              <div className="w-0.5 h-3" style={{ background: `hsl(${TEAL} / 0.3)` }} />
+              <div className="w-3 h-3 rotate-45 -mt-1.5" style={{ borderRight: `2px solid hsl(${TEAL})`, borderBottom: `2px solid hsl(${TEAL})` }} />
+            </div>
+          </div>
+
+          {/* Layer 2: LIZA — THE NEW LAYER */}
+          <div className="rounded-2xl border-3 px-8 py-6 relative overflow-hidden"
+            style={{ borderColor: `hsl(${TEAL} / 0.5)`, background: `hsl(${TEAL} / 0.06)`,
+              boxShadow: `0 0 60px hsl(${TEAL} / 0.1), inset 0 0 60px hsl(${TEAL} / 0.03)`,
+              border: `3px solid hsl(${TEAL} / 0.4)` }}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center"
+                  style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                  <Brain size={32} style={{ color: `hsl(${TEAL})` }} />
+                </div>
+                <div>
+                  <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS — The Instruction Layer</p>
+                  <p className="font-semibold" style={{ fontSize: 16, color: MUTED }}>Your organization's "Nervous System" — reasons, governs, evolves</p>
+                </div>
+              </div>
+              <div className="px-4 py-2 rounded-full" style={{ background: `hsl(${TEAL} / 0.12)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                <p className="font-bold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>NEW LAYER</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-3 mt-4">
+              {[
+                { label: "Blueprint", desc: "Your expertise graph — versioned, governed, auditable", icon: <Layers size={18} /> },
+                { label: "Nervous System", desc: "Semantic reasoning — detects drift, propagates changes", icon: <Cpu size={18} /> },
+                { label: "Protocol Engine", desc: "Turns playbooks into guided AI execution workflows", icon: <Workflow size={18} /> },
+                { label: "Feedback Loop", desc: "Every interaction teaches — standards improve continuously", icon: <RefreshCw size={18} /> },
+              ].map(item => (
+                <div key={item.label} className="rounded-xl px-4 py-3" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                  <div className="flex items-center gap-2 mb-1" style={{ color: `hsl(${TEAL})` }}>
+                    {item.icon}
+                    <p className="font-bold" style={{ fontSize: 15 }}>{item.label}</p>
+                  </div>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center">
+              <div className="w-0.5 h-3" style={{ background: `hsl(${BLUE} / 0.3)` }} />
+              <div className="w-3 h-3 rotate-45 -mt-1.5" style={{ borderRight: `2px solid hsl(${BLUE})`, borderBottom: `2px solid hsl(${BLUE})` }} />
+            </div>
+          </div>
+
+          {/* Layer 1: Existing Systems of Record */}
+          <div className="rounded-2xl border px-8 py-5"
+            style={{ borderColor: `hsl(${BLUE} / 0.15)`, background: `hsl(${BLUE} / 0.03)` }}>
+            <p className="font-black tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>
+              Your Existing Systems of Record — Unchanged
+            </p>
+            <div className="flex gap-3">
+              {existingSystems.map(s => (
+                <div key={s.name} className="flex-1 rounded-lg px-4 py-2.5 text-center"
+                  style={{ background: `hsl(${BLUE} / 0.06)`, border: `1px solid hsl(${BLUE} / 0.12)` }}>
+                  <p className="font-bold" style={{ fontSize: 14, color: TEXT }}>{s.name}</p>
+                  <p style={{ fontSize: 12, color: MUTED }}>{s.layer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="mt-4 rounded-xl px-8 py-3.5 text-center"
+          style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+          <p className="font-black" style={{ fontSize: 19, color: TEXT }}>
+            No rip-and-replace. LIZA reads from your existing systems, adds the reasoning layer,{" "}
+            <span style={{ color: `hsl(${TEAL})` }}>and governs what AI does with them.</span>
+          </p>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 06 — CATEGORY VALIDATION (Emerging players + TAM)
 // ═══════════════════════════════════════════════════════════════════════════════
 
