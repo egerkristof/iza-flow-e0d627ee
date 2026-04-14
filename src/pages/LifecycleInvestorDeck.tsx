@@ -5,7 +5,7 @@ import {
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
   AlertTriangle, CheckCircle2, DollarSign,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
-  Layers, Eye, Workflow, Lightbulb, Award,
+  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
