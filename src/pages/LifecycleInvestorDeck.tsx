@@ -159,11 +159,11 @@ function Slide02() {
       color: WARM,
     },
     {
-      icon: <Layers size={28} style={{ color: `hsl(${GOLD})` }} />,
-      industry: "Systems Engineering",
-      headline: "AI updates a requirements spec.",
-      story: "Silently drops a safety constraint from v2.1. Downstream teams inherit the gap. Nobody notices until integration testing.",
-      cost: "3-month delay. Safety review.",
+      icon: <DollarSign size={28} style={{ color: `hsl(${GOLD})` }} />,
+      industry: "Financial Services",
+      headline: "AI drafts an underwriting recommendation.",
+      story: "Applies standard risk criteria. Misses a sector exclusion the senior underwriter updated last month. The policy goes out.",
+      cost: "€2M exposure. Regulatory review.",
       color: GOLD,
     },
   ];
@@ -179,7 +179,7 @@ function Slide02() {
           <span style={{ color: `hsl(${WARM})` }}>ungoverned decisions</span> at scale.
         </h2>
         <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>
-          Most organizations don't know it yet.
+          Three industries. The same failure. One missing layer.
         </p>
 
         {/* Three story cards */}
@@ -206,9 +206,9 @@ function Slide02() {
         <div className="mt-5 flex gap-4 items-center">
           <div className="flex-1 rounded-xl px-7 py-4" style={{ background: `hsl(${WARM} / 0.05)`, border: `1.5px solid hsl(${WARM} / 0.15)` }}>
             <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.5 }}>
-              It's not an industry problem. It's a{" "}
+              Not an industry problem. A{" "}
               <span className="font-black" style={{ color: `hsl(${WARM})` }}>structural problem.</span>{" "}
-              The same pattern repeats in aerospace, legal, financial services — wherever AI executes without encoded expertise.
+              The same pattern repeats wherever AI executes without encoded expertise.
             </p>
           </div>
           <div className="rounded-xl px-8 py-4 flex items-center gap-4 shrink-0"
@@ -353,8 +353,8 @@ function Slide04() {
           </span>
         </h2>
         <p className="mb-5" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          We turn human expertise into infrastructure.{" "}
-          <strong style={{ color: DARK_TEXT }}>Experts design. AI executes. LIZA governs the loop.</strong>
+          Experts design the rules. AI executes within them.{" "}
+          <strong style={{ color: DARK_TEXT }}>LIZA governs the loop.</strong>
         </p>
 
         {/* Three-panel layout */}
@@ -477,7 +477,7 @@ function Slide04() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 05 — IN PRACTICE (organizational intelligence propagation)
+// SLIDE 05 — WHEN THE LAYER EXISTS (org-level transformation)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide05() {
@@ -485,14 +485,14 @@ function Slide05() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>In Practice</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>When the Layer Exists</p>
 
         <h2 className="font-black mb-3" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          One expert's pricing update.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>Every team benefits. Instantly.</span>
+          Without the layer, expertise is trapped.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>With it, it compounds.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 20, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          Organizational intelligence isn't about one person doing better work. It's about every person doing their best work, governed by the collective.
+        <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
+          The difference isn't a tool improvement. It's an infrastructure shift.
         </p>
 
         {/* Side by side */}
@@ -500,29 +500,29 @@ function Slide05() {
           {/* Without */}
           <div className="flex-1 rounded-2xl border-2 p-6 flex flex-col"
             style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.03)` }}>
-            <p className="font-black tracking-[0.12em] uppercase mb-3" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
-              Without LIZA
+            <p className="font-black tracking-[0.12em] uppercase mb-4" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
+              Without the Instruction Layer
             </p>
-            <div className="flex flex-col gap-3.5 flex-1 justify-center">
+            <div className="flex flex-col gap-4 flex-1 justify-center">
               {[
-                { event: "Senior partner updates pricing strategy", result: "Saves it in a shared drive. Sends email to team." },
-                { event: "3 consultants write proposals that week", result: "Two use old pricing. One doesn't see the email." },
-                { event: "AI generates a competitive analysis", result: "Uses outdated competitive positioning. No one notices." },
-                { event: "Client calls out the inconsistency", result: "Fire drill. Senior rewrites everything. Trust damaged." },
+                { label: "Expertise is siloed", detail: "Best practices live in senior people's heads. When they leave, the knowledge leaves." },
+                { label: "AI amplifies the wrong version", detail: "Every team member prompts differently. AI pulls from stale docs. Nobody notices until the client does." },
+                { label: "Quality depends on seniority", detail: "Junior output is inconsistent. Seniors spend 40% of their time reviewing and correcting." },
+                { label: "Nothing compounds", detail: "Corrections happen once. Lessons stay local. The same mistakes repeat across teams, projects, quarters." },
               ].map((s, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="font-black shrink-0 w-7 h-7 rounded-lg flex items-center justify-center"
                     style={{ fontSize: 14, background: `hsl(${WARM} / 0.1)`, color: `hsl(${WARM})` }}>{i + 1}</span>
                   <div>
-                    <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>{s.event}</p>
-                    <p style={{ fontSize: 15, color: `hsl(${WARM})`, lineHeight: 1.35 }}>{s.result}</p>
+                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>{s.label}</p>
+                    <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{s.detail}</p>
                   </div>
                 </div>
               ))}
             </div>
             <div className="mt-3 px-5 py-3 rounded-lg" style={{ background: `hsl(${RED} / 0.08)` }}>
               <p className="font-bold" style={{ fontSize: 17, color: `hsl(${RED})` }}>
-                ✗ Knowledge stays siloed. AI amplifies the wrong version. At scale.
+                ✗ Linear teams. Person-dependent quality. Zero organizational learning.
               </p>
             </div>
           </div>
@@ -530,29 +530,29 @@ function Slide05() {
           {/* With */}
           <div className="flex-1 rounded-2xl border-2 p-6 flex flex-col"
             style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.03)` }}>
-            <p className="font-black tracking-[0.12em] uppercase mb-3" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
-              With LIZA
+            <p className="font-black tracking-[0.12em] uppercase mb-4" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
+              With the Instruction Layer
             </p>
-            <div className="flex flex-col gap-3.5 flex-1 justify-center">
+            <div className="flex flex-col gap-4 flex-1 justify-center">
               {[
-                { event: "Senior partner updates pricing in LIZA", result: "Versioned change. Connected to methodology bundle." },
-                { event: "LIZA propagates to all dependent playbooks", result: "Proposals, competitive analysis, onboarding — all updated." },
-                { event: "Any team member runs any workflow", result: "AI automatically uses the latest pricing. Provenance tracked." },
-                { event: "Drift detected in one consultant's output", result: "Flagged for review. Feedback improves the standard." },
+                { label: "Expertise is encoded", detail: "Collective judgment is versioned infrastructure. It survives turnover, scales across teams." },
+                { label: "AI executes with organizational context", detail: "Every workflow governed by the latest standards. Provenance tracked. No hallucinated judgment." },
+                { label: "New hires perform like veterans", detail: "The system carries the expertise. Day-one output matches decade-long practitioners." },
+                { label: "Every execution improves the system", detail: "Corrections feed back. Standards evolve. The organization gets measurably smarter every week." },
               ].map((s, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="font-black shrink-0 w-7 h-7 rounded-lg flex items-center justify-center"
                     style={{ fontSize: 14, background: `hsl(${TEAL} / 0.1)`, color: `hsl(${TEAL})` }}>{i + 1}</span>
                   <div>
-                    <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>{s.event}</p>
-                    <p style={{ fontSize: 15, color: `hsl(${TEAL})`, lineHeight: 1.35 }}>{s.result}</p>
+                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>{s.label}</p>
+                    <p style={{ fontSize: 15, color: `hsl(${TEAL})`, lineHeight: 1.4 }}>{s.detail}</p>
                   </div>
                 </div>
               ))}
             </div>
             <div className="mt-3 px-5 py-3 rounded-lg" style={{ background: `hsl(${GREEN} / 0.08)` }}>
               <p className="font-bold" style={{ fontSize: 17, color: `hsl(${GREEN})` }}>
-                ✓ One update. Every team. Every workflow. Governed and traceable.
+                ✓ Compounding teams. System-level quality. Organizational intelligence as infrastructure.
               </p>
             </div>
           </div>
@@ -959,68 +959,75 @@ function Slide08() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 08 — VERTICALS (Expansion path)
+// SLIDE 08 — VERTICALS (Expansion path — 3 verticals)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide09() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Expansion Path</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
           Same engine.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Every knowledge-intensive industry.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>Three beachheads. One pattern.</span>
         </h2>
 
-        <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
+        <div className="flex gap-6 flex-1 min-h-0">
           {[
             {
               vertical: "Professional Services", status: "Deployed", color: GREEN,
-              problem: "Senior consultants carry methodology in their heads. Juniors can't replicate quality.",
-              result: "New consultants deliver at senior quality from week 2.",
+              icon: <Users size={28} style={{ color: `hsl(${GREEN})` }} />,
+              problem: "Senior consultants carry methodology in their heads. Juniors can't replicate quality. AI makes it worse — everyone prompts differently.",
+              result: "New consultants deliver at senior quality from week 2. Every engagement governed by the firm's collective judgment.",
+              proof: "Executive search firm, mid-market consultancy — live deployments",
             },
             {
-              vertical: "Sales Operations", status: "Deployed", color: GREEN,
-              problem: "Top sellers have instincts for deal qualification. Rest of the team guesses.",
-              result: "Entire team executes with top seller's judgment. Ramp time cut by 60%+.",
+              vertical: "Pharma & Life Sciences", status: "Validated", color: GOLD,
+              icon: <Shield size={28} style={{ color: `hsl(${GOLD})` }} />,
+              problem: "GxP compliance requires traceable expertise at every step. Tribal knowledge doesn't survive audits. AI without governance is a regulatory liability.",
+              result: "Audit preparation compressed from weeks to hours. Full provenance trails. Every AI output traceable to a versioned standard.",
+              proof: "GMP/GxP lifecycle validated with pharma domain experts",
             },
             {
-              vertical: "Pharma & Biotech", status: "Validated", color: GOLD,
-              problem: "GxP compliance requires audit-ready documentation with traceable expertise.",
-              result: "18-day audits compressed to hours. Full provenance trails.",
+              vertical: "Financial Services", status: "Next", color: ACCENT,
+              icon: <DollarSign size={28} style={{ color: `hsl(${ACCENT})` }} />,
+              problem: "Underwriting, advisory, and compliance judgment is person-dependent. AI generates confident recommendations without institutional risk context.",
+              result: "Risk assessment, compliance checks, and advisory output governed by institutional standards. Judgment-consistent across every analyst.",
+              proof: "$28B TAM intersection — compliance + knowledge-intensive ops",
             },
-            {
-              vertical: "Food Safety & Manufacturing", status: "Validated", color: GOLD,
-              problem: "ISO 22000/HACCP audit judgment doesn't scale to junior inspectors.",
-              result: "Junior inspectors execute at expert quality. Consistent across sites.",
-            },
-          ].map(({ vertical, status, color, problem, result }) => (
-            <div key={vertical} className="rounded-xl border p-6 flex flex-col"
+          ].map(({ vertical, status, color, icon, problem, result, proof }) => (
+            <div key={vertical} className="flex-1 rounded-2xl border p-7 flex flex-col"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
-              <div className="flex items-center justify-between mb-3">
-                <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{vertical}</p>
-                <span className="px-2.5 py-1 rounded-full font-semibold" style={{ fontSize: 13, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  {icon}
+                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{vertical}</p>
+                </div>
+                <span className="px-3 py-1.5 rounded-full font-bold" style={{ fontSize: 13, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
               </div>
-              <div className="flex items-start gap-2.5 mb-3">
-                <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 2 }} />
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{problem}</p>
+              <div className="flex items-start gap-2.5 mb-4">
+                <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{problem}</p>
               </div>
-              <div className="flex items-start gap-2.5 mt-auto">
-                <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 2 }} />
-                <p className="font-semibold" style={{ fontSize: 17, color: `hsl(${color})`, lineHeight: 1.45 }}>{result}</p>
+              <div className="flex items-start gap-2.5 mb-4 flex-1">
+                <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
+                <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, lineHeight: 1.5 }}>{result}</p>
+              </div>
+              <div className="rounded-lg px-4 py-2.5 mt-auto" style={{ background: `hsl(${color} / 0.06)` }}>
+                <p style={{ fontSize: 14, color: MUTED, fontStyle: "italic" }}>{proof}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-4 rounded-xl border px-6 py-4 flex items-center gap-5"
+        <div className="mt-5 rounded-xl border px-7 py-4 flex items-center gap-5"
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={24} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 18, color: MUTED }}>
-            <strong style={{ color: TEXT }}>Same core engine. Industry-specific expertise packs.</strong>{" "}
-            Each vertical deepens the moat. Capital-efficient expansion.
+            <strong style={{ color: TEXT }}>One core engine. Industry-specific expertise packs.</strong>{" "}
+            Each vertical deepens the moat. Capital-efficient expansion from a single codebase.
           </p>
         </div>
       </div>
@@ -1067,8 +1074,8 @@ function Slide10() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>Product Status</p>
         <h2 className="font-bold mb-6" style={{ fontSize: 56, color: TEXT, lineHeight: 1.1 }}>
-          This isn't a slide deck.{" "}
-          <span style={{ color: `hsl(${ACCENT})` }}>The product is live.</span>
+          The infrastructure is live.{" "}
+          <span style={{ color: `hsl(${ACCENT})` }}>Not a prototype.</span>
         </h2>
 
         <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
@@ -1483,10 +1490,10 @@ const SLIDES = [
   { id: 2, title: "The Problem", component: <Slide02 /> },
   { id: 3, title: "The Root Cause", component: <Slide03 /> },
   { id: 4, title: "The Solution", component: <Slide04 /> },
-  { id: 5, title: "The Solution (Detail)", component: <Slide05 /> },
-  { id: 6, title: "Where LIZA Sits", component: <SlideArchitecture /> },
-  { id: 7, title: "Category Validation", component: <Slide06 /> },
-  { id: 8, title: "How It Works", component: <Slide07 /> },
+  { id: 5, title: "When the Layer Exists", component: <Slide05 /> },
+  { id: 6, title: "Category Validation", component: <Slide06 /> },
+  { id: 7, title: "How It Works", component: <Slide07 /> },
+  { id: 8, title: "Where LIZA Sits", component: <SlideArchitecture /> },
   { id: 9, title: "Early Validation", component: <Slide08 /> },
   { id: 10, title: "Expansion Path", component: <Slide09 /> },
   { id: 11, title: "What's Built", component: <Slide10 /> },
