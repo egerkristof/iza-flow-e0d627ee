@@ -900,14 +900,14 @@ function Slide06() {
 function Slide07() {
   const steps = [
     {
-      num: "01", title: "Capture", icon: <BookOpen size={28} />,
+      num: "01", title: "Encode", icon: <BookOpen size={28} />,
       desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
       flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
       output: "Versioned playbooks ready",
       color: GOLD,
     },
     {
-      num: "02", title: "Organize", icon: <Network size={28} />,
+      num: "02", title: "Govern", icon: <Shield size={28} />,
       desc: "The AACE framework auto-structures knowledge into governed bundles by capability, scope, and domain.",
       flow: ["Auto-classify by capability", "Set scope & ownership", "Version & publish"],
       output: "Governed knowledge graph",
@@ -921,7 +921,7 @@ function Slide07() {
       color: GREEN,
     },
     {
-      num: "04", title: "Learn", icon: <RefreshCw size={28} />,
+      num: "04", title: "Evolve", icon: <RefreshCw size={28} />,
       desc: "Every execution feeds back. Drift is detected. Standards improve automatically.",
       flow: ["Track deviations", "Surface patterns", "Update playbooks"],
       output: "Standards auto-improve",
