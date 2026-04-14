@@ -850,84 +850,107 @@ function SlideArchitecture() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 06 — CATEGORY VALIDATION
+// SLIDE 06 — CATEGORY VALIDATION + MOAT
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide06() {
   const players = [
-    { name: "Edra", funding: "$30M", round: "Series A · 2024", what: "Process mining → executable SOPs for AI agents", color: GREEN },
-    { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer — persistent context across sessions", color: SEAFOAM },
-    { name: "Interloom", funding: "$16.5M", round: "Series A · 2023", what: "Tacit knowledge capture for operations teams", color: BLUE },
-    { name: "Paradox.ai", funding: "~$3.8M", round: "Seed · 2024", what: "Knowledge governance for regulated industries", color: GOLD },
+    { name: "Glean", funding: "$600M+", what: "Enterprise search & retrieval. Finds documents — doesn't govern execution.", color: "215 25% 50%" },
+    { name: "Guru", funding: "$100M+", what: "Wiki + AI answers. Serves knowledge — doesn't enforce standards.", color: BLUE },
+    { name: "Edra", funding: "$30M", what: "Process mining to SOPs. Captures processes — doesn't inject judgment.", color: GREEN },
+    { name: "Mem0.ai", funding: "$24M", what: "AI memory layer. Remembers context — doesn't govern quality.", color: SEAFOAM },
+    { name: "Interloom", funding: "$16.5M", what: "Tacit knowledge capture. Records expertise — doesn't operationalize it.", color: GOLD },
+  ];
+
+  const moatLayers = [
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine. Intent-locking, knowledge injection, drift detection.", icon: <Cpu size={18} /> },
+    { layer: "Compounding Blueprint", desc: "Every customer's knowledge graph deepens with usage. Switching cost grows organically.", icon: <Layers size={18} /> },
+    { layer: "Cross-team Network Effect", desc: "Standards propagate across teams. Value multiplies with each department onboarded.", icon: <Network size={18} /> },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Category Validation</p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
-        <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.05 }}>
-          The market is forming.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>$70M+ already invested around the edges.</span>
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+          $775M+ invested around the edges.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 18, color: DARK_MUTED, maxWidth: 1000 }}>
+          Others retrieve, remember, or mine. LIZA operationalizes: expert judgment becomes executable infrastructure.
+        </p>
 
         <div className="flex gap-6 flex-1 min-h-0">
-          <div className="flex-1 flex flex-col gap-4">
-            {players.map(({ name, funding, round, what, color }) => (
-              <div key={name} className="flex items-center gap-5 rounded-xl border px-6 py-4"
+          {/* Competitive landscape */}
+          <div className="flex-[3] flex flex-col gap-2.5">
+            {players.map(({ name, funding, what, color }) => (
+              <div key={name} className="flex items-center gap-5 rounded-xl border px-5 py-3"
                 style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-                <div className="w-[160px] shrink-0">
-                  <p className="font-bold" style={{ fontSize: 20, color: DARK_TEXT }}>{name}</p>
-                  <p className="font-black" style={{ fontSize: 16, color: `hsl(${color})` }}>{funding}</p>
-                  <p style={{ fontSize: 13, color: DARK_SUBTLE }}>{round}</p>
+                <div className="w-[130px] shrink-0">
+                  <p className="font-bold" style={{ fontSize: 17, color: DARK_TEXT }}>{name}</p>
+                  <p className="font-black" style={{ fontSize: 14, color: `hsl(${color})` }}>{funding}</p>
                 </div>
-                <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.4 }}>{what}</p>
+                <p style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.4 }}>{what}</p>
               </div>
             ))}
 
-            <div className="rounded-xl border-2 px-6 py-5 mt-auto"
+            {/* LIZA differentiation */}
+            <div className="rounded-xl border-2 px-5 py-4 mt-auto"
               style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)` }}>
-              <div className="flex items-center gap-5">
-                <div className="w-[160px] shrink-0">
-                  <p className="font-black" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                  <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
+              <div className="flex items-center gap-4">
+                <div className="w-[130px] shrink-0">
+                  <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>LIZA OS</p>
+                  <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
                 </div>
-                <div>
-                  <p className="font-semibold" style={{ fontSize: 18, color: DARK_TEXT }}>
-                    LIZA defines the category more sharply: <strong>the system of intelligence for judgment-heavy work.</strong>
-                  </p>
-                  <p className="mt-1" style={{ fontSize: 15, color: DARK_MUTED }}>
-                    Others tackle memory, mining, or governance. We operationalize expert judgment between record systems and AI outputs.
-                  </p>
-                </div>
+                <p className="font-semibold" style={{ fontSize: 16, color: DARK_TEXT, lineHeight: 1.4 }}>
+                  The only platform that makes organizational judgment{" "}
+                  <span style={{ color: `hsl(${TEAL})` }}>queryable, versionable, and executable.</span>{" "}
+                  Others give AI documents. We give AI judgment.
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="w-[400px] rounded-2xl border p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-5" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Market Size</p>
-            <div className="flex flex-col gap-5 flex-1 justify-center">
-              {[
-                { label: "TAM", value: "$28B", desc: "Global AI governance & knowledge management infrastructure", size: "w-full" },
-                { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs (50-5000 employees) in target verticals", size: "w-[85%]" },
-                { label: "SOM", value: "$340M", desc: "EU professional services, consulting, pharma & regulated industries", size: "w-[60%]" },
-              ].map(({ label, value, desc, size }) => (
-                <div key={label}>
-                  <div className={`${size} rounded-xl px-6 py-4`} style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-                    <div className="flex items-baseline gap-3 mb-1">
-                      <span className="font-black" style={{ fontSize: 14, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
-                      <span className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>{value}</span>
+          {/* Right column: Market size + Moat */}
+          <div className="w-[400px] flex flex-col gap-4">
+            {/* Market */}
+            <div className="rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+              <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Market Size</p>
+              <div className="flex flex-col gap-3">
+                {[
+                  { label: "TAM", value: "$28B", desc: "AI governance + knowledge infrastructure", size: "w-full" },
+                  { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs in target verticals", size: "w-[85%]" },
+                  { label: "SOM", value: "$340M", desc: "EU professional services, pharma, regulated", size: "w-[60%]" },
+                ].map(({ label, value, desc, size }) => (
+                  <div key={label} className={`${size} rounded-xl px-5 py-3`} style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                    <div className="flex items-baseline gap-3 mb-0.5">
+                      <span className="font-black" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
+                      <span className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>{value}</span>
                     </div>
-                    <p style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.4 }}>{desc}</p>
+                    <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.3 }}>{desc}</p>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-            <div className="mt-4 px-4 py-2.5 rounded-lg" style={{ background: `hsl(${GREEN} / 0.08)` }}>
-              <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>
-                Wedge: start where judgment is expensive, visible, and easy to prove — then expand into regulated and enterprise operations.
-              </p>
+
+            {/* Moat */}
+            <div className="rounded-2xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
+              <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Defensibility</p>
+              <div className="flex flex-col gap-2.5">
+                {moatLayers.map(({ layer, desc, icon }) => (
+                  <div key={layer} className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
+                      {icon}
+                    </div>
+                    <div>
+                      <p className="font-bold" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>{layer}</p>
+                      <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.35 }}>{desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -1169,73 +1192,111 @@ function Slide08() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 08 — VERTICALS (Expansion path — 3 verticals)
+// SLIDE 08 — VERTICALS (Expansion path — industries + functions)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide09() {
+  const beachheads = [
+    {
+      vertical: "Professional Services", status: "Deployed", color: GREEN,
+      icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
+      problem: "Senior judgment locked in individual heads. AI makes juniors faster but not better.",
+      result: "New hires at senior quality from week 2. Every engagement governed.",
+      proof: "Executive search, consulting — live",
+    },
+    {
+      vertical: "Pharma & Life Sciences", status: "Validated", color: GOLD,
+      icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
+      problem: "GxP compliance demands traceable expertise. AI without governance is a regulatory liability.",
+      result: "Audit prep from weeks to hours. Full provenance. Every AI output traceable.",
+      proof: "GMP/GxP lifecycle validated",
+    },
+    {
+      vertical: "Financial Services", status: "Next", color: ACCENT,
+      icon: <DollarSign size={24} style={{ color: `hsl(${ACCENT})` }} />,
+      problem: "Underwriting and advisory judgment is person-dependent. AI generates without institutional risk context.",
+      result: "Judgment-consistent output across every analyst. Standards enforced in execution.",
+      proof: "$28B TAM intersection",
+    },
+  ];
+
+  const expandInto = [
+    { name: "Legal & Compliance", col: "215 25% 50%" },
+    { name: "Engineering & Architecture", col: TEAL },
+    { name: "Sales & Revenue Ops", col: GREEN },
+    { name: "Marketing & Positioning", col: "330 70% 55%" },
+    { name: "Supply Chain & Procurement", col: GOLD },
+    { name: "HR & People Operations", col: ACCENT },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Expansion Path</p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Expansion Path</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           Same engine.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Three beachheads. One pattern.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>Every industry where judgment matters.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 900 }}>
+          The pattern repeats: wherever expert standards meet AI execution, the Instruction Gap exists. We start narrow, then expand.
+        </p>
 
-        <div className="flex gap-6 flex-1 min-h-0">
-          {[
-            {
-              vertical: "Professional Services", status: "Deployed", color: GREEN,
-              icon: <Users size={28} style={{ color: `hsl(${GREEN})` }} />,
-              problem: "Senior consultants carry methodology in their heads. Juniors can't replicate quality. AI makes it worse — everyone prompts differently.",
-              result: "New consultants deliver at senior quality from week 2. Every engagement governed by the firm's collective judgment.",
-              proof: "Executive search firm, mid-market consultancy — live deployments",
-            },
-            {
-              vertical: "Pharma & Life Sciences", status: "Validated", color: GOLD,
-              icon: <Shield size={28} style={{ color: `hsl(${GOLD})` }} />,
-              problem: "GxP compliance requires traceable expertise at every step. Tribal knowledge doesn't survive audits. AI without governance is a regulatory liability.",
-              result: "Audit preparation compressed from weeks to hours. Full provenance trails. Every AI output traceable to a versioned standard.",
-              proof: "GMP/GxP lifecycle validated with pharma domain experts",
-            },
-            {
-              vertical: "Financial Services", status: "Next", color: ACCENT,
-              icon: <DollarSign size={28} style={{ color: `hsl(${ACCENT})` }} />,
-              problem: "Underwriting, advisory, and compliance judgment is person-dependent. AI generates confident recommendations without institutional risk context.",
-              result: "Risk assessment, compliance checks, and advisory output governed by institutional standards. Judgment-consistent across every analyst.",
-              proof: "$28B TAM intersection — compliance + knowledge-intensive ops",
-            },
-          ].map(({ vertical, status, color, icon, problem, result, proof }) => (
-            <div key={vertical} className="flex-1 rounded-2xl border p-7 flex flex-col"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  {icon}
-                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{vertical}</p>
+        <div className="flex gap-5 flex-1 min-h-0">
+          {/* 3 beachheads */}
+          <div className="flex-[3] flex gap-4">
+            {beachheads.map(({ vertical, status, color, icon, problem, result, proof }) => (
+              <div key={vertical} className="flex-1 rounded-2xl border p-5 flex flex-col"
+                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    {icon}
+                    <p className="font-black" style={{ fontSize: 18, color: TEXT }}>{vertical}</p>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
                 </div>
-                <span className="px-3 py-1.5 rounded-full font-bold" style={{ fontSize: 13, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+                <div className="flex items-start gap-2 mb-3">
+                  <AlertTriangle size={15} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
+                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{problem}</p>
+                </div>
+                <div className="flex items-start gap-2 mb-3 flex-1">
+                  <CheckCircle2 size={15} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
+                  <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${color})`, lineHeight: 1.45 }}>{result}</p>
+                </div>
+                <div className="rounded-lg px-3 py-2 mt-auto" style={{ background: `hsl(${color} / 0.06)` }}>
+                  <p style={{ fontSize: 12, color: MUTED, fontStyle: "italic" }}>{proof}</p>
+                </div>
               </div>
-              <div className="flex items-start gap-2.5 mb-4">
-                <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
-                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{problem}</p>
-              </div>
-              <div className="flex items-start gap-2.5 mb-4 flex-1">
-                <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
-                <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, lineHeight: 1.5 }}>{result}</p>
-              </div>
-              <div className="rounded-lg px-4 py-2.5 mt-auto" style={{ background: `hsl(${color} / 0.06)` }}>
-                <p style={{ fontSize: 14, color: MUTED, fontStyle: "italic" }}>{proof}</p>
-              </div>
+            ))}
+          </div>
+
+          {/* Expansion column */}
+          <div className="w-[320px] flex flex-col gap-3">
+            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 12, color: MUTED }}>
+              The pattern applies to every function
+            </p>
+            <div className="flex-1 flex flex-col gap-2">
+              {expandInto.map(({ name, col }) => (
+                <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-3"
+                  style={{ background: `hsl(${col} / 0.05)`, border: `1px solid hsl(${col} / 0.15)` }}>
+                  <div className="w-2 h-2 rounded-full shrink-0" style={{ background: `hsl(${col})` }} />
+                  <p className="font-semibold" style={{ fontSize: 15, color: TEXT }}>{name}</p>
+                </div>
+              ))}
             </div>
-          ))}
+            <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+              <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
+                Wherever standards meet AI execution, the gap exists. One engine governs them all.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-5 rounded-xl border px-7 py-4 flex items-center gap-5"
+        <div className="mt-4 rounded-xl border px-7 py-3.5 flex items-center gap-5"
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-          <TrendingUp size={24} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p style={{ fontSize: 18, color: MUTED }}>
+          <TrendingUp size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 17, color: MUTED }}>
             <strong style={{ color: TEXT }}>One core engine. Industry-specific expertise packs.</strong>{" "}
             Each vertical deepens the moat. Capital-efficient expansion from a single codebase.
           </p>
