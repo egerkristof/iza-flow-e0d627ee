@@ -1397,8 +1397,8 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>€500–2,000/mo per team</span>
               </div>
               <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
-                Core platform access. Knowledge graph, workbooks, protocol execution, governance.
-                Usage-based AI execution on top.
+                Self-serve platform. Knowledge graph, workbooks, protocol execution, governance.
+                Teams onboard independently. Usage-based AI execution on top.
               </p>
             </div>
 
@@ -1408,19 +1408,19 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
               </div>
               <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
-                Industry-specific pre-built playbooks. Consulting frameworks, compliance templates,
-                sales methodologies. High-margin, deepens lock-in.
+                Pre-built industry playbooks. Plug into the platform, customize to your context.
+                Consulting frameworks, compliance templates, sales methodologies. High-margin.
               </p>
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Onboarding Sprint</p>
+                <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Guided Kickstart</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
               </div>
               <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
-                White-glove extraction. We encode your organization's collective judgment into the platform.
-                Converts to long-term SaaS.
+                For our first cohort of enterprise clients, we co-build alongside their teams to maximize
+                feedback velocity and accelerate product-market fit. Converts to self-serve SaaS.
               </p>
             </div>
           </div>
@@ -1445,13 +1445,13 @@ function Slide11() {
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.06)` }}>
-              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>GTM Motion</p>
+              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Self-Serve GTM Funnel</p>
               <div className="flex flex-col gap-2">
                 {[
-                  "Free diagnostic → identifies gaps",
-                  "Pilot sprint → encodes first playbooks",
-                  "Platform subscription → ongoing execution",
-                  "Expansion → more teams, more packs",
+                  "Free diagnostic → self-assessment identifies gaps",
+                  "Guided kickstart → first playbooks live in days",
+                  "Platform subscription → teams run independently",
+                  "Organic expansion → more teams, more packs",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
@@ -1480,9 +1480,9 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Identify one high-value process (e.g. proposal writing, deal qualification)",
-        "Interview 2-3 senior experts (90 min each)",
-        "LIZA extracts judgment into structured playbooks",
+        "Client selects one high-value process (e.g. proposal writing, deal qualification)",
+        "Platform guides structured knowledge capture from 2-3 senior experts",
+        "LIZA auto-generates executable playbooks from the input",
       ],
       output: "3-5 executable playbooks ready",
     },
@@ -1492,9 +1492,9 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Junior team members run playbooks with AI guidance",
+        "Team members self-serve: run playbooks with AI guidance",
         "Real work, real clients, real outputs",
-        "LIZA tracks drift, captures feedback automatically",
+        "Platform tracks drift and captures feedback automatically",
       ],
       output: "Measurable quality comparison: before vs. after",
     },
@@ -1504,9 +1504,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Review: time saved, quality delta, rework reduction",
-        "Knowledge graph auto-improved from execution feedback",
-        "Business case for full deployment with real numbers",
+        "Automated review: time saved, quality delta, rework reduction",
+        "Knowledge graph self-improves from execution feedback",
+        "Business case for full self-serve deployment with real numbers",
       ],
       output: "ROI proven. Expansion decision with data.",
     },
@@ -1518,10 +1518,13 @@ function SlideExecutionChallenge() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          The 30-Day Execution Challenge.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Prove value before you commit.</span>
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+          Self-serve by design.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with our first enterprise cohort.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 17, color: MUTED, maxWidth: 1100 }}>
+          The platform is built for independent team adoption. For our initial enterprise clients, we co-build alongside them to maximize learning velocity and shape the product.
+        </p>
 
         <div className="flex gap-5 flex-1 min-h-0">
           {phases.map((p, i) => (
