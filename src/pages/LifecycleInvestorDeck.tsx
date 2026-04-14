@@ -1728,6 +1728,7 @@ const SLIDES = [
   { id: 12, title: "Team", component: <Slide12 /> },
   { id: 13, title: "The Ask", component: <Slide13 /> },
   { id: 14, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 15, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
