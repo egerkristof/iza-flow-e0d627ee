@@ -565,10 +565,10 @@ function SlideArchitecture() {
         </p>
 
         <div className="flex-1 flex flex-col gap-3 justify-center">
-          {/* Layer 3: AI Output */}
+          {/* Layer 3: Output Artifacts */}
           <div className="rounded-2xl border px-8 py-4 text-center"
             style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed AI Output</p>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output Artifacts</p>
             <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Any LLM · Any Workflow · Any Team — all governed by your expertise</p>
           </div>
 
