@@ -3,7 +3,7 @@ import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
-  AlertTriangle, CheckCircle2, DollarSign,
+  AlertTriangle, Check, CheckCircle2, DollarSign,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
 } from "lucide-react";
