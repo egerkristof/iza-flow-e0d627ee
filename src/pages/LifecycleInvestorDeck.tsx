@@ -1600,13 +1600,27 @@ function Slide12() {
                 </div>
               </div>
             ))}
-            <div className="rounded-xl border p-4 flex items-center gap-4 mt-auto"
+            <div className="rounded-xl border p-5 mt-auto"
               style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
-              <Shield size={20} style={{ color: `hsl(${GOLD})`, flexShrink: 0 }} />
-              <p style={{ fontSize: 15, color: MUTED }}>
-                <strong style={{ color: TEXT }}>Advisory:</strong> Tom Ray (Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers)
-                + Enterprise VP Product Advisor
-              </p>
+              <p className="font-bold mb-3" style={{ fontSize: 16, color: `hsl(${GOLD})`, letterSpacing: "0.12em", textTransform: "uppercase" }}>Advisory Board</p>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0"
+                    style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})`, fontSize: 14 }}>TR</div>
+                  <div>
+                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Tom Ray</p>
+                    <p style={{ fontSize: 14, color: MUTED }}>Chairman, Aliz.ai · Founding CEO, EdgeCore Data Centers</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0"
+                    style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})`, fontSize: 14 }}>VP</div>
+                  <div>
+                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Enterprise VP Product Advisor</p>
+                    <p style={{ fontSize: 14, color: MUTED }}>Enterprise software · 15+ years in Product</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
