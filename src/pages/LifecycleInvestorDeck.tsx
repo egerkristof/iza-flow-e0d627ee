@@ -233,7 +233,7 @@ function Slide03() {
   const industries = [
     {
       name: "Life Sciences",
-      icon: <Shield size={24} style={{ color: `hsl(${RED})` }} />,
+      icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
       accent: RED,
       records: ["Veeva Vault", "LIMS", "QMS"],
       gap: "AI applies the standard procedure — but the context demands Annex 7. Nobody told it.",
@@ -242,7 +242,7 @@ function Slide03() {
     },
     {
       name: "Professional Services",
-      icon: <Briefcase size={24} style={{ color: `hsl(${WARM})` }} />,
+      icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
       records: ["Methodology", "Templates", "CRM"],
       gap: "A junior has the template, not the partner's judgment. AI applies the average, not the exception.",
@@ -251,7 +251,7 @@ function Slide03() {
     },
     {
       name: "Financial Services",
-      icon: <DollarSign size={24} style={{ color: `hsl(${GOLD})` }} />,
+      icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
       records: ["Policy manuals", "Risk models", "Compliance DB"],
       gap: "Context changes mid-case. AI prices risk using the average. Two analysts, same case — different outcomes.",
@@ -260,92 +260,130 @@ function Slide03() {
     },
   ];
 
+  const alsoApplies = ["Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops", "Marketing"];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
+      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 20, color: `hsl(${WARM})` }}>
           What That Costs
         </p>
-        <h2 className="font-black mb-1" style={{ fontSize: 46, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-4" style={{ fontSize: 44, color: TEXT, lineHeight: 1.08 }}>
           Same gap. Every industry.
         </h2>
-        <p className="mb-5" style={{ fontSize: 20, color: MUTED }}>
-          The pattern from slide 2 — repeated everywhere.
-        </p>
 
-        {/* Industry rows — each echoes Records → GAP → Output */}
-        <div className="flex flex-col gap-3 flex-1 min-h-0">
+        {/* Industry rows — Records → GAP → Output → Cost */}
+        <div className="flex flex-col gap-2.5 mb-4">
           {industries.map((ind) => (
-            <div key={ind.name} className="flex items-stretch gap-0 flex-1 rounded-[16px] overflow-hidden border"
-              style={{ borderColor: `hsl(${ind.accent} / 0.15)` }}>
+            <div key={ind.name} className="flex items-stretch gap-0 rounded-[14px] overflow-hidden border"
+              style={{ borderColor: `hsl(${ind.accent} / 0.15)`, minHeight: 100 }}>
 
-              {/* RECORDS column */}
-              <div className="w-[250px] shrink-0 px-5 py-4 flex flex-col justify-center"
+              {/* RECORDS */}
+              <div className="w-[230px] shrink-0 px-4 py-3 flex flex-col justify-center"
                 style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Database size={16} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Systems of Record</p>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Database size={14} style={{ color: `hsl(${TEAL})` }} />
+                  <p className="font-bold" style={{ fontSize: 11, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Records</p>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {ind.records.map(r => (
-                    <span key={r} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 13, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{r}</span>
+                    <span key={r} className="rounded-full px-2.5 py-0.5 font-semibold" style={{ fontSize: 12, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{r}</span>
                   ))}
                 </div>
               </div>
 
-              {/* THE GAP — center, prominent */}
-              <div className="flex-1 flex items-stretch">
-                <div className="flex-1 px-6 py-4 flex flex-col justify-center relative"
-                  style={{ background: `hsl(${WARM} / 0.06)`, borderRight: `1.5px solid hsl(${WARM} / 0.12)`, borderLeft: `1.5px solid hsl(${WARM} / 0.12)` }}>
-                  <div className="flex items-center gap-2.5 mb-2">
-                    {ind.icon}
-                    <p className="font-black" style={{ fontSize: 20, color: TEXT }}>{ind.name}</p>
-                    <div className="ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                      <AlertTriangle size={13} style={{ color: `hsl(${WARM})` }} />
-                      <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
-                    </div>
+              {/* THE GAP */}
+              <div className="flex-1 px-5 py-3 flex flex-col justify-center"
+                style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
+                <div className="flex items-center gap-2 mb-1.5">
+                  {ind.icon}
+                  <p className="font-black" style={{ fontSize: 18, color: TEXT }}>{ind.name}</p>
+                  <div className="ml-auto flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
+                    <AlertTriangle size={11} style={{ color: `hsl(${WARM})` }} />
+                    <span className="font-bold" style={{ fontSize: 10, color: `hsl(${WARM})` }}>THE GAP</span>
                   </div>
-                  <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
                 </div>
+                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>{ind.gap}</p>
               </div>
 
-              {/* OUTPUT column */}
-              <div className="w-[180px] shrink-0 px-4 py-4 flex flex-col justify-center"
+              {/* OUTPUT */}
+              <div className="w-[160px] shrink-0 px-3.5 py-3 flex flex-col justify-center"
                 style={{ background: `hsl(${GREEN} / 0.04)`, borderRight: `1.5px solid hsl(215 15% 92%)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Zap size={16} style={{ color: `hsl(${GREEN})` }} />
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GREEN})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Output</p>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Zap size={14} style={{ color: `hsl(${GREEN})` }} />
+                  <p className="font-bold" style={{ fontSize: 11, color: `hsl(${GREEN})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Output</p>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {ind.outputs.map(o => (
-                    <span key={o} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 13, background: `hsl(${GREEN} / 0.08)`, color: TEXT }}>{o}</span>
+                    <span key={o} className="rounded-full px-2.5 py-0.5 font-semibold" style={{ fontSize: 12, background: `hsl(${GREEN} / 0.08)`, color: TEXT }}>{o}</span>
                   ))}
                 </div>
               </div>
 
-              {/* COST column */}
-              <div className="w-[200px] shrink-0 px-5 py-4 flex flex-col justify-center"
+              {/* COST */}
+              <div className="w-[185px] shrink-0 px-4 py-3 flex flex-col justify-center"
                 style={{ background: `hsl(${RED} / 0.04)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The cost</p>
-                <p className="font-bold" style={{ fontSize: 17, color: `hsl(${RED})`, lineHeight: 1.4 }}>{ind.cost}</p>
+                <p className="font-bold mb-1" style={{ fontSize: 11, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The cost</p>
+                <p className="font-bold" style={{ fontSize: 15, color: `hsl(${RED})`, lineHeight: 1.35 }}>{ind.cost}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Cost callout */}
-        <div className="mt-4 rounded-2xl px-10 py-4 flex items-center justify-between"
-          style={{ background: `hsl(${WARM} / 0.06)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
-          <div>
-            <p className="font-black" style={{ fontSize: 24, color: TEXT }}>The "Instruction Gap Tax"</p>
-            <p className="mt-0.5" style={{ fontSize: 16, color: MUTED }}>
-              Human rework when organizational judgment is missing from AI execution.
-            </p>
+        {/* Also applies strip */}
+        <div className="flex items-center gap-3 mb-4 px-2">
+          <p className="font-bold shrink-0" style={{ fontSize: 14, color: MUTED }}>Same pattern in:</p>
+          <div className="flex flex-wrap gap-2">
+            {alsoApplies.map(a => (
+              <span key={a} className="rounded-full px-3.5 py-1 font-semibold border" style={{ fontSize: 13, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{a}</span>
+            ))}
           </div>
-          <div className="text-right shrink-0 ml-8">
-            <p className="font-black" style={{ fontSize: 54, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
-            <p className="font-semibold mt-1" style={{ fontSize: 16, color: MUTED }}>per year / 100 people</p>
+        </div>
+
+        {/* Cost callout — sourced */}
+        <div className="rounded-2xl px-8 py-5 flex items-stretch gap-8"
+          style={{ background: `hsl(${WARM} / 0.05)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
+
+          {/* Left: the number + label */}
+          <div className="flex flex-col justify-center shrink-0">
+            <p className="font-black" style={{ fontSize: 56, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
+            <p className="font-bold mt-1" style={{ fontSize: 16, color: TEXT }}>per year / 100 people</p>
+            <p className="mt-0.5" style={{ fontSize: 13, color: MUTED }}>The "Instruction Gap Tax"</p>
+          </div>
+
+          {/* Divider */}
+          <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
+
+          {/* Right: sourced breakdown */}
+          <div className="flex-1 flex flex-col justify-center gap-2">
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ background: `hsl(${WARM})` }} />
+              <div>
+                <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>
+                  <span className="font-bold">40% of AI productivity gains lost to rework</span> — employees fixing outputs AI got wrong
+                </p>
+                <p style={{ fontSize: 12, color: SUBTLE }}>Workday Global AI Impact Study, Jan 2026</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ background: `hsl(${WARM})` }} />
+              <div>
+                <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>
+                  <span className="font-bold">4.5 hours/week per employee</span> cleaning up AI mistakes — 58% of enterprise workers affected
+                </p>
+                <p style={{ fontSize: 12, color: SUBTLE }}>Zapier AI Workslop Report, Jan 2026</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ background: `hsl(${WARM})` }} />
+              <div>
+                <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>
+                  <span className="font-bold">Only 14% of workers</span> achieve net-positive AI productivity once rework is accounted for
+                </p>
+                <p style={{ fontSize: 12, color: SUBTLE }}>Workday, 2026</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -353,6 +391,8 @@ function Slide03() {
     </div>
   );
 }
+
+
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 04 — THE INSTRUCTION LAYER
