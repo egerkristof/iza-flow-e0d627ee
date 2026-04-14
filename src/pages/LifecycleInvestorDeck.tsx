@@ -478,9 +478,6 @@ function Slide05() {
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           The missing category is a <span style={{ color: `hsl(${TEAL})` }}>system of intelligence.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          Systems of record store what you know. Copilots generate what you ask. Nothing governs the gap.
-        </p>
 
         {/* Three-column flow */}
         <div className="flex-1 flex items-center gap-0">
