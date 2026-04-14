@@ -160,10 +160,10 @@ function Slide02() {
         {/* Three columns: Inputs → THE GAP → Outputs */}
         <div className="flex items-stretch gap-0 flex-1 min-h-0 max-h-[420px]">
 
-          {/* LEFT — Systems of Record */}
+          {/* LEFT — Input Artifacts */}
           <div className="flex-1 rounded-l-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)`, borderRight: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Systems of Record</p>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Input Artifacts</p>
             <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What companies already have</p>
             <div className="flex flex-wrap gap-3">
               {inputs.map(item => (
@@ -203,10 +203,10 @@ function Slide02() {
             </p>
           </div>
 
-          {/* RIGHT — Systems of Output */}
+          {/* RIGHT — Output Artifacts */}
           <div className="flex-1 rounded-r-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${GREEN} / 0.3)`, background: `hsl(${GREEN} / 0.06)`, borderLeft: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Systems of Output</p>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Output Artifacts</p>
             <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What AI already generates</p>
             <div className="flex flex-wrap gap-3">
               {outputs.map(item => (
@@ -332,7 +332,7 @@ function Slide03() {
                 style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-2 mb-2">
                   <Database size={16} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Systems of Record</p>
+                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Input Artifacts</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {ind.records.map(r => (
