@@ -197,7 +197,7 @@ function Slide02() {
               No System of<br />Intelligence
             </p>
             <p className="text-center px-5" style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.55 }}>
-              AI can generate fast — but it can't apply your expertise, your judgment, or your standards.
+              AI can generate fast, but it can't apply your expertise, your judgment, or your standards.
             </p>
             <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: DARK_TEXT }}>
               The result: experts redo AI's work instead of scaling their own.
@@ -222,7 +222,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.4 }}>
-              But without your standards, every output is generic — the average, not the expert.
+              But without your standards, every output is generic: the average, not the expert.
             </p>
           </div>
         </div>
@@ -250,7 +250,7 @@ function Slide03() {
       icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
       accent: RED,
       records: ["Batch records", "SOPs", "Validation protocols"],
-      gap: "AI applies the standard procedure — but the context demands Annex 7. Nobody told it.",
+      gap: "AI applies the standard procedure, but the context demands Annex 7. Nobody told it.",
       outputs: ["Deviation reports", "Submission docs"],
       cost: "Safety risk. Audit failure.",
     },
@@ -268,7 +268,7 @@ function Slide03() {
       icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
       records: ["Risk policies", "Case files", "Compliance docs"],
-      gap: "Context changes mid-case. AI prices risk using the average. Two analysts, same case — different outcomes.",
+      gap: "Context changes mid-case. AI prices risk using the average. Two analysts, same case, different outcomes.",
       outputs: ["Risk assessments", "Advisory reports"],
       cost: "Regulatory exposure. Inconsistent pricing.",
     },
@@ -301,7 +301,7 @@ function Slide03() {
               <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${WARM})` }} />
               <div>
                 <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">40% of AI productivity gains lost to rework</span> — employees fixing outputs AI got wrong
+                  <span className="font-bold">40% of AI productivity gains lost to rework</span>: employees fixing outputs AI got wrong
                 </p>
                 <p style={{ fontSize: 13, color: SUBTLE }}>Workday Global AI Impact Study, Jan 2026</p>
               </div>
@@ -310,7 +310,7 @@ function Slide03() {
               <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${WARM})` }} />
               <div>
                 <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">4.5 hours/week per employee</span> cleaning up AI mistakes — 58% of enterprise workers affected
+                  <span className="font-bold">4.5 hours/week per employee</span> cleaning up AI mistakes. 58% of enterprise workers affected
                 </p>
                 <p style={{ fontSize: 13, color: SUBTLE }}>Zapier AI Workslop Report, Jan 2026</p>
               </div>
@@ -411,7 +411,7 @@ function SlideWhyNow() {
 
   const shifts = [
     { shift: "AI tools became commodities", result: "Differentiation moved from 'which tool' to 'what knowledge runs through it'" },
-    { shift: "Regulators started asking 'how'", result: "EU AI Act, DORA, FDA AI guidance — governance is now mandatory, not optional" },
+    { shift: "Regulators started asking 'how'", result: "EU AI Act, DORA, FDA AI guidance. Governance is now mandatory, not optional" },
     { shift: "The senior talent bottleneck hit", result: "Companies can't hire enough experts. They need to scale the ones they have." },
   ];
 
@@ -548,7 +548,7 @@ function Slide05() {
               style={{ background: `hsl(${MINT} / 0.06)`, border: `1px dashed hsl(${MINT} / 0.25)` }}>
               <RefreshCw size={13} style={{ color: `hsl(${MINT})` }} />
               <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${MINT})` }}>
-                Continuous loop — your organization gets smarter with every execution
+                Continuous loop: your organization gets smarter with every execution
               </p>
             </div>
           </div>
@@ -617,7 +617,7 @@ function SlideArchitecture() {
           <span style={{ color: MUTED }}>It stays yours.</span>
         </h2>
         <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1200 }}>
-          LIZA extracts your collective intelligence into a versioned, portable asset — your Blueprint.
+          LIZA extracts your collective intelligence into a versioned, portable asset: your Blueprint.
           Our platform provides the reasoning engine. Your IP never leaves.
         </p>
 
@@ -626,7 +626,7 @@ function SlideArchitecture() {
           <div className="rounded-2xl border px-8 py-4 text-center"
             style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output Artifacts</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Any LLM · Any Workflow · Any Team — all governed by your expertise</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Any LLM · Any Workflow · Any Team. All governed by your expertise</p>
           </div>
 
           <div className="flex justify-center">
@@ -757,7 +757,7 @@ function SlideArchitecture() {
           <div className="rounded-2xl border px-8 py-4"
             style={{ borderColor: `hsl(${BLUE} / 0.15)`, background: `hsl(${BLUE} / 0.03)` }}>
             <p className="font-black tracking-[0.15em] uppercase mb-2.5" style={{ fontSize: 12, color: `hsl(${BLUE})` }}>
-              Your Existing Systems — Input Artifacts — Unchanged
+              Your Existing Systems · Input Artifacts · Unchanged
             </p>
             <div className="flex gap-3">
               {existingSystems.map(s => (
@@ -791,7 +791,7 @@ function SlideArchitecture() {
 function Slide06() {
   const players = [
     { name: "Edra", funding: "$30M", round: "Series A · 2024", what: "Process mining → executable SOPs for AI agents", color: GREEN },
-    { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer — persistent context across sessions", color: SEAFOAM },
+    { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer. Persistent context across sessions", color: SEAFOAM },
     { name: "Interloom", funding: "$16.5M", round: "Series A · 2023", what: "Tacit knowledge capture for operations teams", color: BLUE },
     { name: "Paradox.ai", funding: "~$3.8M", round: "Seed · 2024", what: "Knowledge governance for regulated industries", color: GOLD },
   ];
@@ -1021,7 +1021,7 @@ function Slide07() {
           style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px dashed hsl(${TEAL} / 0.25)` }}>
           <RefreshCw size={16} style={{ color: `hsl(${TEAL})` }} />
           <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
-            Step 4 feeds back into Step 1 — your playbooks sharpen with every cycle
+            Step 4 feeds back into Step 1. Your playbooks sharpen with every cycle
           </p>
         </div>
       </div>
@@ -1056,7 +1056,7 @@ function Slide08() {
               points: [
                 "Encoding artifact workflows across R&D, HR, and Engineering",
                 "Working directly with the CTO on organizational rollout",
-                "Active paid engagement — live now",
+                "Active paid engagement, live now",
               ],
             },
             {
@@ -1143,14 +1143,14 @@ function Slide09() {
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Senior judgment locked in individual heads. AI makes juniors faster but not better.",
       result: "75% faster proposals. 25% deal velocity increase. Multi-team rollout live.",
-      proof: "Consultancy & digital agency — active",
+      proof: "Consultancy & digital agency. Active",
     },
     {
       vertical: "Application Lifecycle Mgmt", status: "Deployed", color: TEAL,
       icon: <Cpu size={24} style={{ color: `hsl(${TEAL})` }} />,
       problem: "Software & engineering workflows rely on tribal knowledge. AI outputs lack organizational context.",
       result: "Artifact workflows governed across R&D, HR, and Engineering. CTO-sponsored.",
-      proof: "Global AEC software company — paid engagement",
+      proof: "Global AEC software company. Paid engagement",
     },
     {
       vertical: "Pharma & Life Sciences", status: "Expanding", color: GOLD,
@@ -1273,7 +1273,7 @@ function Slide10() {
     {
       layer: "Knowledge Graph", color: ACCENT,
       icon: <Layers size={28} />,
-      desc: "Living organizational memory — versioned, auditable, propagated.",
+      desc: "Living organizational memory. Versioned, auditable, propagated.",
       screenshot: "/images/product-define-enforce.png",
     },
     {
@@ -1500,7 +1500,7 @@ function SlideExecutionChallenge() {
           <span style={{ color: `hsl(${GREEN})` }}>Prove value before you commit.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1100 }}>
-          One workflow. One team. 30 days. Measurable results — then expand only if the numbers are real.
+          One workflow. One team. 30 days. Measurable results, then expand only if the numbers are real.
         </p>
 
         <div className="flex gap-5 flex-1 min-h-0">
@@ -1623,9 +1623,9 @@ function Slide12() {
               ))}
             </div>
             {[
-              { title: "We lived this problem", desc: "Built AI practices at enterprise scale. Saw the expertise gap firsthand — across industries, countries, team sizes.", color: GREEN },
+              { title: "We lived this problem", desc: "Built AI practices at enterprise scale. Saw the expertise gap firsthand across industries, countries, and team sizes.", color: GREEN },
               { title: "Capital efficient", desc: "Entire product, marketing site, diagnostic tool, and enterprise pipeline built with near-zero burn.", color: TEAL },
-              { title: "Proprietary IP", desc: "AACE v3.1 — the context specification. Intent-locking, knowledge injection, drift detection. Hard to replicate.", color: GREEN },
+              { title: "Proprietary IP", desc: "AACE v3.1: the context specification. Intent-locking, knowledge injection, drift detection. Hard to replicate.", color: GREEN },
             ].map(({ title, desc, color }) => (
               <div key={title} className="rounded-xl border p-4"
                 style={{ borderColor: `hsl(${color} / 0.15)`, background: `hsl(${color} / 0.03)` }}>
@@ -1673,7 +1673,7 @@ function Slide13() {
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
               <p className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>{pct}</p>
               <p className="font-bold" style={{ fontSize: 16, color: `hsl(${color})` }}>{label}</p>
-              <p style={{ fontSize: 14, color: DARK_MUTED }}>{amt} — {desc}</p>
+              <p style={{ fontSize: 14, color: DARK_MUTED }}>{amt}: {desc}</p>
             </div>
           ))}
         </div>
@@ -1915,7 +1915,7 @@ export default function LifecycleInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS — Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS Investor Deck</h2>
           <div className="flex items-center gap-3">
             <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
@@ -1953,7 +1953,7 @@ export default function LifecycleInvestorDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS — Investor Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS Investor Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
