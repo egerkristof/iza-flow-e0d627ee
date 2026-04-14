@@ -159,11 +159,11 @@ function Slide02() {
       color: WARM,
     },
     {
-      icon: <Layers size={28} style={{ color: `hsl(${GOLD})` }} />,
-      industry: "Systems Engineering",
-      headline: "AI updates a requirements spec.",
-      story: "Silently drops a safety constraint from v2.1. Downstream teams inherit the gap. Nobody notices until integration testing.",
-      cost: "3-month delay. Safety review.",
+      icon: <DollarSign size={28} style={{ color: `hsl(${GOLD})` }} />,
+      industry: "Financial Services",
+      headline: "AI drafts an underwriting recommendation.",
+      story: "Applies standard risk criteria. Misses a sector exclusion the senior underwriter updated last month. The policy goes out.",
+      cost: "€2M exposure. Regulatory review.",
       color: GOLD,
     },
   ];
@@ -179,7 +179,7 @@ function Slide02() {
           <span style={{ color: `hsl(${WARM})` }}>ungoverned decisions</span> at scale.
         </h2>
         <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>
-          Most organizations don't know it yet.
+          Three industries. The same failure. One missing layer.
         </p>
 
         {/* Three story cards */}
@@ -206,9 +206,9 @@ function Slide02() {
         <div className="mt-5 flex gap-4 items-center">
           <div className="flex-1 rounded-xl px-7 py-4" style={{ background: `hsl(${WARM} / 0.05)`, border: `1.5px solid hsl(${WARM} / 0.15)` }}>
             <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.5 }}>
-              It's not an industry problem. It's a{" "}
+              Not an industry problem. A{" "}
               <span className="font-black" style={{ color: `hsl(${WARM})` }}>structural problem.</span>{" "}
-              The same pattern repeats in aerospace, legal, financial services — wherever AI executes without encoded expertise.
+              The same pattern repeats wherever AI executes without encoded expertise.
             </p>
           </div>
           <div className="rounded-xl px-8 py-4 flex items-center gap-4 shrink-0"
