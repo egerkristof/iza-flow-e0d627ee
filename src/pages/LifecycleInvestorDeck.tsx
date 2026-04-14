@@ -459,7 +459,7 @@ function Slide04() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 05 — THE SOLUTION DETAILED (Before/After comparison)
+// SLIDE 05 — THE SOLUTION DETAILED (Before/After — systemic comparison)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide05() {
@@ -467,37 +467,36 @@ function Slide05() {
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>The Solution</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>In Practice</p>
 
-        <h2 className="font-black mb-4" style={{ fontSize: 55, color: DARK_TEXT, lineHeight: 1.05 }}>
-          LIZA OS: the{" "}
+        <h2 className="font-black mb-4" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.05 }}>
+          Same prompt.{" "}
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            System of Intelligence.
+            Governed result.
           </span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 23, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          Infrastructure that captures how your best people think, makes it executable by AI,
-          and ensures every output reflects your organization's actual expertise — not generic training data.
+        <p className="mb-8" style={{ fontSize: 22, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
+          The difference isn't the AI model. It's whether your organization's collective intelligence is in the loop.
         </p>
 
         <div className="flex-1 flex gap-6 items-stretch">
           {/* Before */}
           <div className="w-[380px] rounded-2xl border p-6 flex flex-col items-center justify-center text-center"
             style={{ borderColor: `hsl(${WARM} / 0.2)`, background: `hsl(${WARM} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 14, color: `hsl(${WARM})` }}>Without LIZA</p>
+            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 14, color: `hsl(${WARM})` }}>Without the Instruction Layer</p>
             <p style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5, marginBottom: 16 }}>
               "AI, write a proposal"
             </p>
             <div className="flex flex-col gap-2 w-full">
-              {["Wrong pricing", "Generic methodology", "No client context", "Inconsistent across team"].map(item => (
+              {["Wrong pricing (no org judgment)", "Generic methodology (no standards)", "No client context (no memory)", "Inconsistent across team (no governance)"].map(item => (
                 <div key={item} className="flex items-center gap-2 px-4 py-2 rounded-lg" style={{ background: `hsl(${WARM} / 0.1)` }}>
                   <span style={{ color: `hsl(${WARM})` }}>✗</span>
-                  <span style={{ fontSize: 16, color: DARK_TEXT }}>{item}</span>
+                  <span style={{ fontSize: 15, color: DARK_TEXT }}>{item}</span>
                 </div>
               ))}
             </div>
-            <p className="mt-4 font-semibold" style={{ fontSize: 16, color: `hsl(${WARM})` }}>
-              AI invents. Output looks right but isn't.
+            <p className="mt-4 font-semibold" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
+              AI fills gaps from training data. Looks right. Isn't.
             </p>
           </div>
 
@@ -506,16 +505,16 @@ function Slide05() {
           {/* After */}
           <div className="flex-1 rounded-2xl border-2 p-7 flex flex-col"
             style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>With LIZA</p>
+            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>With the Instruction Layer</p>
             <p style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5, marginBottom: 16 }}>
-              "AI, write a proposal" — <strong>same prompt, different result</strong>
+              Same prompt — <strong>governed by organizational intelligence</strong>
             </p>
             <div className="grid grid-cols-2 gap-3 flex-1">
               {[
-                { label: "Expertise captured", desc: "Pricing, methodology, tone — encoded from your senior people" },
-                { label: "Context injected", desc: "AI receives the right playbook, client history, competitive stance" },
-                { label: "Quality governed", desc: "Output follows your standards. Drift detected in real-time" },
-                { label: "Team-wide consistency", desc: "Junior and senior get the same expert-quality output" },
+                { label: "Judgment injected", desc: "Pricing rules, deal signals, client history — the collective wisdom encoded" },
+                { label: "Standards enforced", desc: "AI follows your methodology. Drift detected and flagged in real-time" },
+                { label: "Provenance tracked", desc: "Every output traces back to a versioned, human-approved standard" },
+                { label: "Organization learns", desc: "Corrections feed back. Standards improve. The system compounds." },
               ].map(item => (
                 <div key={item.label} className="rounded-xl px-5 py-4" style={{ background: `hsl(${TEAL} / 0.1)` }}>
                   <p className="font-bold mb-1" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>{item.label}</p>
@@ -525,7 +524,7 @@ function Slide05() {
             </div>
             <div className="mt-4 px-5 py-3 rounded-lg" style={{ background: `hsl(${GREEN} / 0.1)` }}>
               <p className="font-bold" style={{ fontSize: 17, color: `hsl(${GREEN})` }}>
-                ✓ Same prompt. Expert-quality output. Every time. Every person.
+                ✓ Same prompt. Organization-quality output. Every time. Every person.
               </p>
             </div>
           </div>
