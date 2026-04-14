@@ -1173,71 +1173,87 @@ function Slide09() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+      <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Expansion Path</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Same engine.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Every function where judgment matters.</span>
-        </h2>
-        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 900 }}>
-          The pattern repeats: wherever expert standards meet AI execution, the Instruction Gap exists. We start narrow, then expand.
-        </p>
+        <div className="mb-6 flex items-start justify-between gap-8">
+          <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
+            Same engine.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every function where judgment matters.</span>
+          </h2>
+          <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
+            style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-2" style={{ fontSize: 11, color: MUTED }}>
+              Pattern
+            </p>
+            <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
+              One engine governs every workflow where standards meet AI execution.
+            </p>
+          </div>
+        </div>
 
-        <div className="flex gap-5">
-          {/* 3 beachheads */}
-          <div className="flex-[3] flex gap-4">
-            {beachheads.map(({ vertical, status, color, icon, problem, result, proof }) => (
-              <div key={vertical} className="flex-1 rounded-2xl border p-5 flex flex-col"
-                style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    {icon}
-                    <p className="font-black" style={{ fontSize: 18, color: TEXT }}>{vertical}</p>
+        <div className="grid grid-cols-[1fr_1fr_1fr_0.92fr] gap-5 flex-1">
+          {beachheads.map(({ vertical, status, color, icon, problem, result, proof }) => (
+            <div key={vertical} className="rounded-[26px] border p-6 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1">{icon}</div>
+                  <div>
+                    <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.1 }}>{vertical}</p>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
                 </div>
-                <div className="flex items-start gap-2 mb-3">
-                  <AlertTriangle size={15} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
-                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{problem}</p>
-                </div>
-                <div className="flex items-start gap-2 mb-3">
-                  <CheckCircle2 size={15} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
-                  <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${color})`, lineHeight: 1.45 }}>{result}</p>
-                </div>
-                <div className="rounded-lg px-3 py-2" style={{ background: `hsl(${color} / 0.06)` }}>
-                  <p style={{ fontSize: 12, color: MUTED, fontStyle: "italic" }}>{proof}</p>
+                <span className="px-3 py-1 rounded-full font-bold shrink-0" style={{ fontSize: 11, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+              </div>
+
+              <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
+                <div className="flex items-start gap-2">
+                  <AlertTriangle size={16} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
+                  <div>
+                    <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${WARM})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>Where we start</p>
+                    <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{problem}</p>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Expansion column */}
-          <div className="w-[320px] flex flex-col gap-2">
-            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 12, color: MUTED }}>
+              <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${color} / 0.07)`, border: `1px solid hsl(${color} / 0.16)` }}>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 size={16} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
+                  <div>
+                    <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>What we unlock</p>
+                    <p className="font-semibold" style={{ fontSize: 17, color: `hsl(${color})`, lineHeight: 1.35 }}>{result}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.05)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 11, color: MUTED, textTransform: "uppercase", letterSpacing: "0.14em" }}>Proof</p>
+                <p style={{ fontSize: 13, color: MUTED, fontStyle: "italic", lineHeight: 1.35 }}>{proof}</p>
+              </div>
+            </div>
+          ))}
+
+          <div className="rounded-[26px] border p-5 flex flex-col"
+            style={{ borderColor: `hsl(${ACCENT} / 0.14)`, background: `hsl(${ACCENT} / 0.03)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 12, color: MUTED }}>
               The pattern applies to every function
             </p>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-3">
               {expandInto.map(({ name, col }) => (
-                <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-2.5"
+                <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-3.5"
                   style={{ background: `hsl(${col} / 0.05)`, border: `1px solid hsl(${col} / 0.15)` }}>
-                  <div className="w-2 h-2 rounded-full shrink-0" style={{ background: `hsl(${col})` }} />
-                  <p className="font-semibold" style={{ fontSize: 15, color: TEXT }}>{name}</p>
+                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: `hsl(${col})` }} />
+                  <p className="font-semibold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{name}</p>
                 </div>
               ))}
-            </div>
-            <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
-              <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
-                Wherever standards meet AI execution, the gap exists. One engine governs them all.
-              </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-4 rounded-xl border px-7 py-3.5 flex items-center gap-5"
+        <div className="mt-3 rounded-xl border px-6 py-3 flex items-center gap-4"
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-          <TrendingUp size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p style={{ fontSize: 17, color: MUTED }}>
+          <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 16, color: MUTED }}>
             <strong style={{ color: TEXT }}>One core engine. Industry-specific expertise packs.</strong>{" "}
             Each vertical deepens the moat. Capital-efficient expansion from a single codebase.
           </p>
