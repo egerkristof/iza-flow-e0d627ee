@@ -959,68 +959,75 @@ function Slide08() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 08 — VERTICALS (Expansion path)
+// SLIDE 08 — VERTICALS (Expansion path — 3 verticals)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide09() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-14">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Expansion Path</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
           Same engine.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Every knowledge-intensive industry.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>Three beachheads. One pattern.</span>
         </h2>
 
-        <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
+        <div className="flex gap-6 flex-1 min-h-0">
           {[
             {
               vertical: "Professional Services", status: "Deployed", color: GREEN,
-              problem: "Senior consultants carry methodology in their heads. Juniors can't replicate quality.",
-              result: "New consultants deliver at senior quality from week 2.",
+              icon: <Users size={28} style={{ color: `hsl(${GREEN})` }} />,
+              problem: "Senior consultants carry methodology in their heads. Juniors can't replicate quality. AI makes it worse — everyone prompts differently.",
+              result: "New consultants deliver at senior quality from week 2. Every engagement governed by the firm's collective judgment.",
+              proof: "Executive search firm, mid-market consultancy — live deployments",
             },
             {
-              vertical: "Sales Operations", status: "Deployed", color: GREEN,
-              problem: "Top sellers have instincts for deal qualification. Rest of the team guesses.",
-              result: "Entire team executes with top seller's judgment. Ramp time cut by 60%+.",
+              vertical: "Pharma & Life Sciences", status: "Validated", color: GOLD,
+              icon: <Shield size={28} style={{ color: `hsl(${GOLD})` }} />,
+              problem: "GxP compliance requires traceable expertise at every step. Tribal knowledge doesn't survive audits. AI without governance is a regulatory liability.",
+              result: "Audit preparation compressed from weeks to hours. Full provenance trails. Every AI output traceable to a versioned standard.",
+              proof: "GMP/GxP lifecycle validated with pharma domain experts",
             },
             {
-              vertical: "Pharma & Biotech", status: "Validated", color: GOLD,
-              problem: "GxP compliance requires audit-ready documentation with traceable expertise.",
-              result: "18-day audits compressed to hours. Full provenance trails.",
+              vertical: "Financial Services", status: "Next", color: ACCENT,
+              icon: <DollarSign size={28} style={{ color: `hsl(${ACCENT})` }} />,
+              problem: "Underwriting, advisory, and compliance judgment is person-dependent. AI generates confident recommendations without institutional risk context.",
+              result: "Risk assessment, compliance checks, and advisory output governed by institutional standards. Judgment-consistent across every analyst.",
+              proof: "$28B TAM intersection — compliance + knowledge-intensive ops",
             },
-            {
-              vertical: "Food Safety & Manufacturing", status: "Validated", color: GOLD,
-              problem: "ISO 22000/HACCP audit judgment doesn't scale to junior inspectors.",
-              result: "Junior inspectors execute at expert quality. Consistent across sites.",
-            },
-          ].map(({ vertical, status, color, problem, result }) => (
-            <div key={vertical} className="rounded-xl border p-6 flex flex-col"
+          ].map(({ vertical, status, color, icon, problem, result, proof }) => (
+            <div key={vertical} className="flex-1 rounded-2xl border p-7 flex flex-col"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
-              <div className="flex items-center justify-between mb-3">
-                <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{vertical}</p>
-                <span className="px-2.5 py-1 rounded-full font-semibold" style={{ fontSize: 13, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  {icon}
+                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{vertical}</p>
+                </div>
+                <span className="px-3 py-1.5 rounded-full font-bold" style={{ fontSize: 13, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
               </div>
-              <div className="flex items-start gap-2.5 mb-3">
-                <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 2 }} />
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{problem}</p>
+              <div className="flex items-start gap-2.5 mb-4">
+                <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{problem}</p>
               </div>
-              <div className="flex items-start gap-2.5 mt-auto">
-                <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 2 }} />
-                <p className="font-semibold" style={{ fontSize: 17, color: `hsl(${color})`, lineHeight: 1.45 }}>{result}</p>
+              <div className="flex items-start gap-2.5 mb-4 flex-1">
+                <CheckCircle2 size={18} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
+                <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, lineHeight: 1.5 }}>{result}</p>
+              </div>
+              <div className="rounded-lg px-4 py-2.5 mt-auto" style={{ background: `hsl(${color} / 0.06)` }}>
+                <p style={{ fontSize: 14, color: MUTED, fontStyle: "italic" }}>{proof}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-4 rounded-xl border px-6 py-4 flex items-center gap-5"
+        <div className="mt-5 rounded-xl border px-7 py-4 flex items-center gap-5"
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={24} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 18, color: MUTED }}>
-            <strong style={{ color: TEXT }}>Same core engine. Industry-specific expertise packs.</strong>{" "}
-            Each vertical deepens the moat. Capital-efficient expansion.
+            <strong style={{ color: TEXT }}>One core engine. Industry-specific expertise packs.</strong>{" "}
+            Each vertical deepens the moat. Capital-efficient expansion from a single codebase.
           </p>
         </div>
       </div>
