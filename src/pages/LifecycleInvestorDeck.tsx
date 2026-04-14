@@ -60,9 +60,9 @@ const TEAL = "174 97% 28%";
 const MINT = "160 96% 39%";
 const WARM = "15 85% 55%";
 const DARK_BG = "hsl(200 30% 6%)";
-const DARK_TEXT = "hsl(0 0% 95%)";
-const DARK_MUTED = "hsl(200 15% 60%)";
-const DARK_SUBTLE = "hsl(200 10% 45%)";
+const TEXT = "hsl(0 0% 95%)";
+const MUTED = "hsl(200 15% 60%)";
+const SUBTLE = "hsl(200 10% 45%)";
 const RED = "0 72% 50%";
 const GREEN = "155 72% 38%";
 const BLUE = "220 80% 50%";
@@ -101,8 +101,8 @@ function SlideBar({ from = TEAL, to = MINT }: { from?: string; to?: string }) {
 
 function Slide01() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
+    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
+      <SlideGrid />
       <div className="absolute top-1/4 left-1/3 w-[700px] h-[700px] rounded-full opacity-[0.08]"
         style={{ background: `radial-gradient(circle, hsl(${TEAL}), transparent 70%)` }} />
 
@@ -115,19 +115,19 @@ function Slide01() {
           </span>
         </div>
 
-        <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: DARK_TEXT }}>
+        <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
           The Operating System for<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             AI-Native Organizations.
           </span>
         </h1>
 
-        <p className="mb-14" style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
+        <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
           Your experts know what good looks like. AI doesn't.<br />
           <span style={{ color: `hsl(${TEAL})` }}>We make expert judgment run everywhere AI executes.</span>
         </p>
 
-        <p style={{ fontSize: 20, color: DARK_SUBTLE }}>
+        <p style={{ fontSize: 20, color: SUBTLE }}>
           Confidential &nbsp;·&nbsp; €1.5M Seed &nbsp;·&nbsp; Early Revenue
         </p>
       </div>
@@ -145,14 +145,14 @@ function Slide02() {
   const outputs = ["Reports", "Proposals", "Decisions", "Deliverables", "Actions", "Answers"];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
       <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
           The Instruction Gap
         </p>
 
-        <h2 className="font-black mb-10" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
           Companies have inputs. AI generates outputs.<br />
           <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your standards.</span>
         </h2>
@@ -164,11 +164,11 @@ function Slide02() {
           <div className="flex-1 rounded-l-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)`, borderRight: "none" }}>
             <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Input Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What companies feed AI today</p>
+            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What companies feed AI today</p>
             <div className="flex flex-wrap gap-3">
               {inputs.map(item => (
                 <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${TEAL} / 0.12)`, color: DARK_TEXT, border: `1px solid hsl(${TEAL} / 0.2)` }}>
+                  style={{ fontSize: 16, background: `hsl(${TEAL} / 0.12)`, color: TEXT, border: `1px solid hsl(${TEAL} / 0.2)` }}>
                   {item}
                 </span>
               ))}
@@ -177,7 +177,7 @@ function Slide02() {
               <Check size={18} style={{ color: `hsl(${TEAL})` }} />
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
-            <p className="mt-2" style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.4 }}>
+            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
               But none of it is queryable by AI. It sits in files no model can reason over.
             </p>
           </div>
@@ -196,10 +196,10 @@ function Slide02() {
             <p className="font-black text-center mb-2" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
               No System of<br />Intelligence
             </p>
-            <p className="text-center px-5" style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.55 }}>
+            <p className="text-center px-5" style={{ fontSize: 15, color: MUTED, lineHeight: 1.55 }}>
               AI can generate fast, but it can't apply your expertise, your judgment, or your standards.
             </p>
-            <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: DARK_TEXT }}>
+            <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: TEXT }}>
               The result: experts redo AI's work instead of scaling their own.
             </p>
           </div>
@@ -208,11 +208,11 @@ function Slide02() {
           <div className="flex-1 rounded-r-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${GREEN} / 0.3)`, background: `hsl(${GREEN} / 0.06)`, borderLeft: "none" }}>
             <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Output Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What AI produces without guidance</p>
+            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What AI produces without guidance</p>
             <div className="flex flex-wrap gap-3">
               {outputs.map(item => (
                 <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${GREEN} / 0.12)`, color: DARK_TEXT, border: `1px solid hsl(${GREEN} / 0.2)` }}>
+                  style={{ fontSize: 16, background: `hsl(${GREEN} / 0.12)`, color: TEXT, border: `1px solid hsl(${GREEN} / 0.2)` }}>
                   {item}
                 </span>
               ))}
@@ -221,7 +221,7 @@ function Slide02() {
               <Check size={18} style={{ color: `hsl(${GREEN})` }} />
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
-            <p className="mt-2" style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.4 }}>
+            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
               But without your standards, every output is generic: the average, not the expert.
             </p>
           </div>
@@ -229,7 +229,7 @@ function Slide02() {
 
         {/* Bottom punchline */}
         <div className="mt-8 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
-          <p className="font-black" style={{ fontSize: 26, color: DARK_TEXT }}>
+          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
             Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
           </p>
         </div>
@@ -416,12 +416,12 @@ function SlideWhyNow() {
   ];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
       <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Why Now</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 56, color: DARK_TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.08 }}>
           AI adoption is done.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>The governance crisis just started.</span>
         </h2>
@@ -432,9 +432,9 @@ function SlideWhyNow() {
             <div key={label} className="flex-1 rounded-2xl border p-7 flex flex-col items-center text-center"
               style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.06)` }}>
               <p className="font-black" style={{ fontSize: 72, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
-              <p className="font-bold mt-3 mb-3" style={{ fontSize: 20, color: DARK_TEXT, lineHeight: 1.3 }}>{label}</p>
-              <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.4 }}>{insight}</p>
-              <p className="mt-3" style={{ fontSize: 13, color: DARK_SUBTLE }}>{source}</p>
+              <p className="font-bold mt-3 mb-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.3 }}>{label}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{insight}</p>
+              <p className="mt-3" style={{ fontSize: 13, color: SUBTLE }}>{source}</p>
             </div>
           ))}
         </div>
@@ -448,8 +448,8 @@ function SlideWhyNow() {
                 style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
                 <span className="font-black shrink-0 mt-0.5" style={{ fontSize: 32, color: `hsl(${TEAL} / 0.4)` }}>{i + 1}</span>
                 <div>
-                  <p className="font-bold mb-1.5" style={{ fontSize: 20, color: DARK_TEXT }}>{shift}</p>
-                  <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.45 }}>{result}</p>
+                  <p className="font-bold mb-1.5" style={{ fontSize: 20, color: TEXT }}>{shift}</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{result}</p>
                 </div>
               </div>
             ))}
@@ -797,12 +797,12 @@ function Slide06() {
   ];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
       <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
-        <h2 className="font-black mb-5" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           $70M+ recently invested around the edges.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
         </h2>
@@ -812,10 +812,10 @@ function Slide06() {
           {players.map(({ name, funding, round, what, color }) => (
             <div key={name} className="flex-1 rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-              <p className="font-bold" style={{ fontSize: 20, color: DARK_TEXT }}>{name}</p>
+              <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>{name}</p>
               <p className="font-black" style={{ fontSize: 16, color: `hsl(${color})` }}>{funding}</p>
-              <p className="mb-2" style={{ fontSize: 13, color: DARK_SUBTLE }}>{round}</p>
-              <p style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.35 }}>{what}</p>
+              <p className="mb-2" style={{ fontSize: 13, color: SUBTLE }}>{round}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{what}</p>
             </div>
           ))}
         </div>
@@ -836,11 +836,11 @@ function Slide06() {
           </div>
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
-            <p className="font-bold" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.35 }}>
+            <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
               Others mine, remember, or capture.{" "}
               <span style={{ color: `hsl(${TEAL})` }}>LIZA operationalizes.</span>
             </p>
-            <p className="mt-1" style={{ fontSize: 17, color: DARK_MUTED }}>
+            <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
               The only platform that makes organizational judgment queryable, versionable, and executable.
               Other tools give AI your documents. We give AI your judgment.
             </p>
@@ -861,9 +861,9 @@ function Slide06() {
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
                     <span className="font-black" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
-                    <span className="font-black" style={{ fontSize: 34, color: DARK_TEXT }}>{value}</span>
+                    <span className="font-black" style={{ fontSize: 34, color: TEXT }}>{value}</span>
                   </div>
-                  <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.3 }}>{desc}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>{desc}</p>
                 </div>
               ))}
             </div>
@@ -877,7 +877,7 @@ function Slide06() {
                 {icon}
               </div>
               <p className="font-black mb-2" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>{layer}</p>
-              <p style={{ fontSize: 16, color: DARK_MUTED, lineHeight: 1.45 }}>{desc}</p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
             </div>
           ))}
         </div>
@@ -1085,20 +1085,20 @@ function Slide08() {
   ];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <div className="flex items-end justify-between mb-6">
           <div>
             <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Early Validation</p>
-            <h2 className="font-black" style={{ fontSize: 46, color: DARK_TEXT, lineHeight: 1.05 }}>
+            <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
               Paid engagements.{" "}
               <span style={{ color: `hsl(${GREEN})` }}>Measurable outcomes.</span>
             </h2>
           </div>
           <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
             <p className="font-black" style={{ fontSize: 32, color: `hsl(${GREEN})`, lineHeight: 1 }}>4</p>
-            <p style={{ fontSize: 13, color: DARK_MUTED }}>Active engagements</p>
+            <p style={{ fontSize: 13, color: MUTED }}>Active engagements</p>
           </div>
         </div>
 
@@ -1113,14 +1113,14 @@ function Slide08() {
               </div>
               {/* Content */}
               <div className="flex-1 px-5 pt-4 pb-5 flex flex-col">
-                <p className="font-bold" style={{ fontSize: 16, color: DARK_TEXT, lineHeight: 1.25 }}>{title}</p>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.25 }}>{title}</p>
                 <p className="mt-1" style={{ fontSize: 12, color: `hsl(${color})` }}>{subtitle} · {scope}</p>
                 <div className="rounded-lg px-3 py-2 mt-3" style={{ background: `hsl(${color} / 0.1)` }}>
                   <p className="font-bold" style={{ fontSize: 13, color: `hsl(${color})`, lineHeight: 1.3 }}>{outcome}</p>
                 </div>
                 <div className="flex flex-col gap-2 mt-3 flex-1">
                   {points.map((p, i) => (
-                    <p key={i} className="flex items-start gap-2" style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.4 }}>
+                    <p key={i} className="flex items-start gap-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
                       <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} /> {p}
                     </p>
                   ))}
@@ -1133,7 +1133,7 @@ function Slide08() {
         {/* Bottom proof bar */}
         <div className="mt-4 rounded-xl px-6 py-3 flex items-center justify-between"
           style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
-          <p className="font-bold" style={{ fontSize: 16, color: DARK_TEXT }}>
+          <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>
             All pre-product-market-fit. All with the current platform.
           </p>
           <div className="flex gap-6">
@@ -1144,7 +1144,7 @@ function Slide08() {
             ].map(({ n, l }) => (
               <div key={l} className="text-center">
                 <p className="font-black" style={{ fontSize: 22, color: `hsl(${GREEN})`, lineHeight: 1 }}>{n}</p>
-                <p style={{ fontSize: 11, color: DARK_MUTED }}>{l}</p>
+                <p style={{ fontSize: 11, color: MUTED }}>{l}</p>
               </div>
             ))}
           </div>
@@ -1376,12 +1376,12 @@ function Slide10() {
 
 function Slide11() {
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           Already charging.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Built to compound.</span>
         </h2>
@@ -1393,10 +1393,10 @@ function Slide11() {
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Platform SaaS</p>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Platform SaaS</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>€500–2,000/mo per team</span>
               </div>
-              <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Self-serve platform. Knowledge graph, workbooks, protocol execution, governance.
                 Teams onboard independently. Usage-based AI execution on top.
               </p>
@@ -1404,10 +1404,10 @@ function Slide11() {
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Expertise Packs</p>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Expertise Packs</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
               </div>
-              <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Pre-built industry playbooks. Plug into the platform, customize to your context.
                 Consulting frameworks, compliance templates, sales methodologies. High-margin.
               </p>
@@ -1415,10 +1415,10 @@ function Slide11() {
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Guided Kickstart</p>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Guided Kickstart</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
               </div>
-              <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 For our first cohort of enterprise clients, we co-build alongside their teams to maximize
                 feedback velocity and accelerate product-market fit. Converts to self-serve SaaS.
               </p>
@@ -1437,9 +1437,9 @@ function Slide11() {
                 { label: "NRR", value: ">120%", desc: "Expansion via teams + packs" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
-                  <p className="font-black" style={{ fontSize: 36, color: DARK_TEXT }}>{value}</p>
+                  <p className="font-black" style={{ fontSize: 36, color: TEXT }}>{value}</p>
                   <p className="font-bold mt-1" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>{label}</p>
-                  <p style={{ fontSize: 13, color: DARK_MUTED }}>{desc}</p>
+                  <p style={{ fontSize: 13, color: MUTED }}>{desc}</p>
                 </div>
               ))}
             </div>
@@ -1455,7 +1455,7 @@ function Slide11() {
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
-                    <span style={{ fontSize: 15, color: DARK_MUTED }}>{step}</span>
+                    <span style={{ fontSize: 15, color: MUTED }}>{step}</span>
                   </div>
                 ))}
               </div>
@@ -1670,16 +1670,16 @@ function Slide12() {
 
 function Slide13() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: DARK_BG }}>
-      <DarkGrid />
+    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
+      <SlideGrid />
       <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06]"
         style={{ background: `radial-gradient(circle, hsl(${MINT}), transparent 70%)` }} />
 
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Seed Round</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: DARK_TEXT }}>€1.5M</h2>
-          <p style={{ fontSize: 24, color: DARK_MUTED }}>
+          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€1.5M</h2>
+          <p style={{ fontSize: 24, color: MUTED }}>
             Post-money SAFE &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; Series A readiness
           </p>
         </div>
@@ -1694,9 +1694,9 @@ function Slide13() {
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-              <p className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>{pct}</p>
+              <p className="font-black" style={{ fontSize: 32, color: TEXT }}>{pct}</p>
               <p className="font-bold" style={{ fontSize: 16, color: `hsl(${color})` }}>{label}</p>
-              <p style={{ fontSize: 14, color: DARK_MUTED }}>{amt}: {desc}</p>
+              <p style={{ fontSize: 14, color: MUTED }}>{amt}: {desc}</p>
             </div>
           ))}
         </div>
@@ -1711,21 +1711,21 @@ function Slide13() {
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
               <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{month}</p>
-              <p className="font-black mt-1" style={{ fontSize: 28, color: DARK_TEXT }}>{target}</p>
-              <p className="mt-2" style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.4 }}>{milestone}</p>
+              <p className="font-black mt-1" style={{ fontSize: 28, color: TEXT }}>{target}</p>
+              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{milestone}</p>
             </div>
           ))}
         </div>
 
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-          <p style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
+          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             Your organization's collective intelligence is your competitive advantage.{" "}
             <strong style={{ color: `hsl(${TEAL})` }}>We make it run the company.</strong>
           </p>
         </div>
 
-        <p className="mt-5 text-center" style={{ fontSize: 18, color: DARK_SUBTLE }}>
+        <p className="mt-5 text-center" style={{ fontSize: 18, color: SUBTLE }}>
           lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential
         </p>
       </div>
@@ -1736,7 +1736,7 @@ function Slide13() {
 
 function SlideAppendixDivider() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: DARK_BG }}>
+    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 text-center">
         <p className="font-semibold tracking-[0.3em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL} / 0.6)` }}>
@@ -1745,7 +1745,7 @@ function SlideAppendixDivider() {
         <h1 className="font-black" style={{ fontSize: 80, color: "hsl(0 0% 100%)", lineHeight: 1.1 }}>
           Appendix
         </h1>
-        <p className="mt-4" style={{ fontSize: 22, color: DARK_SUBTLE }}>
+        <p className="mt-4" style={{ fontSize: 22, color: SUBTLE }}>
           Supporting detail &amp; technical depth
         </p>
       </div>
