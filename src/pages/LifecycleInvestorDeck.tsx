@@ -414,40 +414,41 @@ function SlideWhyNow() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Why Now</p>
+      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Why Now</p>
 
-        <h2 className="font-black mb-3" style={{ fontSize: 56, color: DARK_TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-2" style={{ fontSize: 56, color: DARK_TEXT, lineHeight: 1.08 }}>
           AI adoption is done.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>The governance crisis just started.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: DARK_MUTED, maxWidth: 1000 }}>
+        <p className="mb-7" style={{ fontSize: 22, color: DARK_MUTED, maxWidth: 1000 }}>
           Every enterprise has AI tools. Almost none have a system to make AI follow their standards.
         </p>
 
-        {/* Three signal cards — bigger */}
-        <div className="flex gap-6 mb-8 flex-1 min-h-0">
+        {/* Three signal cards — centered content, no flex-1 stretch */}
+        <div className="flex gap-6 mb-6">
           {signals.map(({ metric, label, insight, color, source }) => (
-            <div key={label} className="flex-1 rounded-2xl border p-8 flex flex-col"
+            <div key={label} className="flex-1 rounded-2xl border p-7 flex flex-col items-center text-center"
               style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.06)` }}>
-              <p className="font-black" style={{ fontSize: 80, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
-              <p className="font-bold mt-3 mb-4" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.3 }}>{label}</p>
-              <p className="flex-1" style={{ fontSize: 18, color: DARK_MUTED, lineHeight: 1.45 }}>{insight}</p>
-              <p className="mt-4" style={{ fontSize: 14, color: DARK_SUBTLE }}>{source}</p>
+              <p className="font-black" style={{ fontSize: 72, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
+              <p className="font-bold mt-3 mb-3" style={{ fontSize: 20, color: DARK_TEXT, lineHeight: 1.3 }}>{label}</p>
+              <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.4 }}>{insight}</p>
+              <p className="mt-3" style={{ fontSize: 13, color: DARK_SUBTLE }}>{source}</p>
             </div>
           ))}
         </div>
 
-        {/* Three structural shifts — bigger */}
-        <div className="rounded-2xl border p-7" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.04)` }}>
-          <p className="font-bold tracking-[0.15em] uppercase mb-5" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Three structural shifts converging</p>
-          <div className="flex gap-8">
+        {/* Three structural shifts — more prominent */}
+        <div className="rounded-2xl border p-7" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <p className="font-bold tracking-[0.15em] uppercase mb-5" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Three structural shifts converging</p>
+          <div className="flex gap-6">
             {shifts.map(({ shift, result }, i) => (
-              <div key={i} className="flex-1 flex items-start gap-4">
-                <span className="font-black shrink-0 mt-0.5" style={{ fontSize: 28, color: `hsl(${TEAL} / 0.3)` }}>{i + 1}</span>
+              <div key={i} className="flex-1 rounded-xl p-5 flex items-start gap-4"
+                style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+                <span className="font-black shrink-0 mt-0.5" style={{ fontSize: 32, color: `hsl(${TEAL} / 0.4)` }}>{i + 1}</span>
                 <div>
-                  <p className="font-bold mb-1.5" style={{ fontSize: 19, color: DARK_TEXT }}>{shift}</p>
-                  <p style={{ fontSize: 16, color: DARK_MUTED, lineHeight: 1.45 }}>{result}</p>
+                  <p className="font-bold mb-1.5" style={{ fontSize: 20, color: DARK_TEXT }}>{shift}</p>
+                  <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.45 }}>{result}</p>
                 </div>
               </div>
             ))}
