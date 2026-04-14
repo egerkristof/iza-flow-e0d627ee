@@ -1742,7 +1742,7 @@ function SlideAppendixDivider() {
         <p className="font-semibold tracking-[0.3em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL} / 0.6)` }}>
           LIZA OS
         </p>
-        <h1 className="font-black" style={{ fontSize: 80, color: "hsl(0 0% 100%)", lineHeight: 1.1 }}>
+        <h1 className="font-black" style={{ fontSize: 80, color: TEXT, lineHeight: 1.1 }}>
           Appendix
         </h1>
         <p className="mt-4" style={{ fontSize: 22, color: SUBTLE }}>
