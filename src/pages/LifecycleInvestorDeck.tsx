@@ -401,11 +401,11 @@ function SlideWhyNow() {
       source: "Workday, Jan 2026",
     },
     {
-      metric: "New",
-      label: "category emerging — no dominant player yet",
-      insight: "$70M+ invested around the edges. No one owns the operational intelligence layer.",
+      metric: "0",
+      label: "platforms govern how AI applies expert knowledge",
+      insight: "Tools exist to store knowledge and generate output. Nothing connects the two with governance.",
       color: TEAL,
-      source: "LIZA category analysis, 2024–25",
+      source: "LIZA market analysis, 2025",
     },
   ];
 
