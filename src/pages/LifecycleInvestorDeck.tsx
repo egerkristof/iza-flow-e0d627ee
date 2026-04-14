@@ -301,7 +301,7 @@ function Slide03() {
         </h2>
 
         {/* Industry rows — Records → GAP → Output → Cost */}
-        <div className="flex flex-col gap-2.5 mb-4">
+        <div className="flex flex-col gap-1.5 mb-3">
           {industries.map((ind) => (
             <div key={ind.name} className="flex items-stretch gap-0 rounded-[14px] overflow-hidden border"
               style={{ borderColor: `hsl(${ind.accent} / 0.15)`, minHeight: 100 }}>
