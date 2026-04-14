@@ -1404,7 +1404,7 @@ function Slide11() {
 
           {/* Unit economics */}
           <div className="w-[420px] flex flex-col gap-5">
-            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Unit Economics Target</p>
+            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Early Signals → Target Economics</p>
 
             <div className="grid grid-cols-2 gap-4">
               {[
