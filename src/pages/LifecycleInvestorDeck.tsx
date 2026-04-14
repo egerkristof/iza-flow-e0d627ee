@@ -1035,96 +1035,125 @@ function Slide07() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide08() {
+  const cases = [
+    {
+      title: "Global AEC Software Company",
+      subtitle: "Paid engagement",
+      scope: "R&D, HR & Engineering",
+      color: TEAL,
+      outcome: "CTO-sponsored, multi-department rollout",
+      metric: "3 depts",
+      metricLabel: "Active",
+      points: [
+        "Encoding artifact workflows across R&D, HR, and Engineering",
+        "Working directly with the CTO on organizational rollout",
+      ],
+    },
+    {
+      title: "Top-Tier Swiss Executive Search Firm",
+      subtitle: "Design partnership",
+      scope: "Candidate evaluation",
+      color: GREEN,
+      outcome: "3-day senior task → 30 minutes",
+      metric: "60×",
+      metricLabel: "Faster",
+      points: [
+        "Encoded senior partner's C-level candidate evaluation judgment",
+        "Maintained senior-level quality with junior staff execution",
+      ],
+    },
+    {
+      title: "Professional Services Consultancy",
+      subtitle: "Multi-team deployment",
+      scope: "Sales, PM & Marketing",
+      color: GOLD,
+      outcome: "75% faster proposal creation",
+      metric: "75%",
+      metricLabel: "Faster",
+      points: [
+        "Codified workflows across sales, project management & marketing",
+        "25% improvement in deal velocity across the team",
+      ],
+    },
+    {
+      title: "Cybersecurity Audit Firm",
+      subtitle: "Automation engagement",
+      scope: "800+ audit questions",
+      color: ACCENT,
+      outcome: "Audit cycle: 18 days → 1 day",
+      metric: "95%",
+      metricLabel: "Reduction",
+      points: [
+        "800+ audit questions processed through governed execution",
+        "Full compliance traceability maintained throughout",
+      ],
+    },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-14">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Early Validation</p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-12 pb-10">
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Early Validation</p>
+            <h2 className="font-black" style={{ fontSize: 46, color: DARK_TEXT, lineHeight: 1.05 }}>
+              Paid engagements.{" "}
+              <span style={{ color: `hsl(${GREEN})` }}>Measurable outcomes.</span>
+            </h2>
+          </div>
+          <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
+            <p className="font-black" style={{ fontSize: 32, color: `hsl(${GREEN})`, lineHeight: 1 }}>4</p>
+            <p style={{ fontSize: 13, color: DARK_MUTED }}>Active engagements</p>
+          </div>
+        </div>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Paid engagements.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Measurable outcomes.</span>
-        </h2>
-
-        <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
-          {[
-            {
-              title: "Global AEC Software Company",
-              subtitle: "Paid engagement · R&D, HR & Engineering",
-              color: TEAL,
-              outcome: "CTO-sponsored, multi-department rollout underway",
-              points: [
-                "Encoding artifact workflows across R&D, HR, and Engineering",
-                "Working directly with the CTO on organizational rollout",
-                "Active paid engagement, live now",
-              ],
-            },
-            {
-              title: "Top-Tier Swiss Executive Search Firm",
-              subtitle: "Design partnership · Candidate evaluation",
-              color: GREEN,
-              outcome: "3-day senior task → 30 minutes at same quality",
-              points: [
-                "Encoded senior partner's C-level candidate evaluation judgment",
-                "Confidential executive reports generated in 30 min vs. 3 days",
-                "Maintained senior-level quality with junior staff execution",
-              ],
-            },
-            {
-              title: "Professional Services Consultancy",
-              subtitle: "Multi-team deployment · Sales, PM & Marketing",
-              color: GOLD,
-              outcome: "75% reduction in proposal creation time",
-              points: [
-                "Codified workflows across sales, project management & marketing",
-                "Cross-department collaboration standardized and governed",
-                "25% improvement in deal velocity across the team",
-              ],
-            },
-            {
-              title: "Cybersecurity Audit Firm",
-              subtitle: "Security audit automation · 800+ questions",
-              color: ACCENT,
-              outcome: "Audit time: 18 days → 1 day",
-              points: [
-                "800+ audit questions processed through governed execution",
-                "Full compliance traceability maintained throughout",
-                "95% reduction in audit cycle time",
-              ],
-            },
-          ].map(({ title, subtitle, color, outcome, points }) => (
-            <div key={title} className="rounded-2xl border p-5 flex flex-col"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
-              <p className="font-bold" style={{ fontSize: 19, color: DARK_TEXT }}>{title}</p>
-              <p className="mb-2" style={{ fontSize: 14, color: `hsl(${color})` }}>{subtitle}</p>
-              <div className="rounded-lg px-4 py-2 mb-3" style={{ background: `hsl(${color} / 0.1)` }}>
-                <p className="font-bold" style={{ fontSize: 15, color: `hsl(${color})` }}>🎯 {outcome}</p>
+        <div className="grid grid-cols-4 gap-4 flex-1 min-h-0">
+          {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
+            <div key={title} className="rounded-2xl border flex flex-col overflow-hidden"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
+              {/* Metric hero */}
+              <div className="text-center pt-5 pb-3 px-4" style={{ borderBottom: `1px solid hsl(${color} / 0.12)` }}>
+                <p className="font-black" style={{ fontSize: 48, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
+                <p className="font-bold mt-1" style={{ fontSize: 13, color: `hsl(${color})` }}>{metricLabel}</p>
               </div>
-              <div className="flex flex-col gap-1.5 flex-1">
-                {points.map((p, i) => (
-                  <p key={i} className="flex items-start gap-2" style={{ fontSize: 15, color: DARK_MUTED }}>
-                    <span className="font-bold shrink-0" style={{ color: `hsl(${color})` }}>→</span> {p}
-                  </p>
-                ))}
+              {/* Content */}
+              <div className="flex-1 px-5 pt-4 pb-5 flex flex-col">
+                <p className="font-bold" style={{ fontSize: 16, color: DARK_TEXT, lineHeight: 1.25 }}>{title}</p>
+                <p className="mt-1" style={{ fontSize: 12, color: `hsl(${color})` }}>{subtitle} · {scope}</p>
+                <div className="rounded-lg px-3 py-2 mt-3" style={{ background: `hsl(${color} / 0.1)` }}>
+                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${color})`, lineHeight: 1.3 }}>{outcome}</p>
+                </div>
+                <div className="flex flex-col gap-2 mt-3 flex-1">
+                  {points.map((p, i) => (
+                    <p key={i} className="flex items-start gap-2" style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.4 }}>
+                      <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} /> {p}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Metrics strip */}
-        <div className="mt-4 flex gap-4">
-          {[
-            { metric: "75%", label: "Faster proposal creation" },
-            { metric: "25%", label: "Improved deal velocity" },
-            { metric: "95%", label: "Audit time reduction" },
-            { metric: "98%", label: "Senior-quality consistency" },
-          ].map(({ metric, label }) => (
-            <div key={label} className="flex-1 rounded-xl px-4 py-3 text-center"
-              style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.15)` }}>
-              <p className="font-black" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>{metric}</p>
-              <p style={{ fontSize: 12, color: DARK_MUTED }}>{label}</p>
-            </div>
-          ))}
+        {/* Bottom proof bar */}
+        <div className="mt-4 rounded-xl px-6 py-3 flex items-center justify-between"
+          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
+          <p className="font-bold" style={{ fontSize: 16, color: DARK_TEXT }}>
+            All pre-product-market-fit. All with the current platform.
+          </p>
+          <div className="flex gap-6">
+            {[
+              { n: "4", l: "Paid clients" },
+              { n: "3", l: "Industries" },
+              { n: "€0", l: "Paid acquisition" },
+            ].map(({ n, l }) => (
+              <div key={l} className="text-center">
+                <p className="font-black" style={{ fontSize: 22, color: `hsl(${GREEN})`, lineHeight: 1 }}>{n}</p>
+                <p style={{ fontSize: 11, color: DARK_MUTED }}>{l}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
