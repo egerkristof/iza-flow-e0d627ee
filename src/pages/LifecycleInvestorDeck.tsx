@@ -255,46 +255,46 @@ function Slide02() {
             <polygon
               points="350,289 520,165 520,413"
               fill={`hsl(${TEAL})`}
-              fillOpacity="0.05"
+              fillOpacity="0.1"
               stroke={`hsl(${TEAL})`}
-              strokeWidth="2"
-              strokeOpacity="0.24"
+              strokeWidth="2.4"
+              strokeOpacity="0.46"
               strokeDasharray="7 5"
               strokeLinejoin="round"
             />
             <polygon
               points="520,165 660,289 520,413"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.05"
+              fillOpacity="0.1"
               stroke={`hsl(${WARM})`}
-              strokeWidth="2"
-              strokeOpacity="0.32"
+              strokeWidth="2.4"
+              strokeOpacity="0.48"
               strokeDasharray="7 4"
               strokeLinejoin="round"
             />
             <polygon
               points="740,289 880,165 880,413"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.05"
+              fillOpacity="0.1"
               stroke={`hsl(${WARM})`}
-              strokeWidth="2"
-              strokeOpacity="0.32"
+              strokeWidth="2.4"
+              strokeOpacity="0.48"
               strokeDasharray="7 4"
               strokeLinejoin="round"
             />
             <polygon
               points="880,165 1050,289 880,413"
               fill={`hsl(${GREEN})`}
-              fillOpacity="0.05"
+              fillOpacity="0.1"
               stroke={`hsl(${GREEN})`}
-              strokeWidth="2"
-              strokeOpacity="0.24"
+              strokeWidth="2.4"
+              strokeOpacity="0.46"
               strokeDasharray="7 5"
               strokeLinejoin="round"
             />
 
             {/* Messy intelligence field */}
-            <ellipse cx="700" cy="289" rx="245" ry="168" fill={`hsl(${WARM})`} fillOpacity="0.05" stroke={`hsl(${WARM})`} strokeOpacity="0.12" strokeDasharray="5 8" />
+            <ellipse cx="700" cy="289" rx="245" ry="168" fill={`hsl(${WARM})`} fillOpacity="0.09" stroke={`hsl(${WARM})`} strokeOpacity="0.24" strokeWidth="2" strokeDasharray="5 8" />
             <text x="700" y="126" textAnchor="middle" fill={DARK_MUTED} fontSize="14" fontWeight="800" letterSpacing="0.14em">THIS IS WHERE IT MAKES OR BREAKS</text>
 
             {[
