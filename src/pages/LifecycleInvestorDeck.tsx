@@ -397,8 +397,6 @@ function Slide04() {
 }
 
 
-      steps: [
-        { label: "Discovery" },
         { label: "Formulation" },
         { label: "Clinical Design", broken: true },
         { label: "Manufacturing" },
