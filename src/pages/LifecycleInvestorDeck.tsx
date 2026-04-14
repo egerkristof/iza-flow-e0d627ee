@@ -154,7 +154,7 @@ function Slide02() {
 
         <h2 className="font-black mb-10" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.08 }}>
           Companies have inputs. AI generates outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>Nobody built the intelligence layer in between.</span>
+          <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your standards.</span>
         </h2>
 
         {/* Three columns: Inputs → THE GAP → Outputs */}
@@ -177,8 +177,8 @@ function Slide02() {
               <Check size={18} style={{ color: `hsl(${TEAL})` }} />
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
-            <p className="mt-2" style={{ fontSize: 14, color: `hsl(${WARM})`, lineHeight: 1.4 }}>
-              ⚠ But none of it is queryable by AI. It sits in files no model can reason over.
+            <p className="mt-2" style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.4 }}>
+              But none of it is queryable by AI. It sits in files no model can reason over.
             </p>
           </div>
 
@@ -193,16 +193,14 @@ function Slide02() {
               style={{ background: `hsl(${WARM} / 0.12)`, border: `2px solid hsl(${WARM} / 0.3)` }}>
               <span className="font-black" style={{ fontSize: 44, color: `hsl(${WARM})` }}>?</span>
             </div>
-            <p className="font-black text-center mb-2" style={{ fontSize: 26, color: `hsl(${WARM})` }}>
+            <p className="font-black text-center mb-2" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
               No System of<br />Intelligence
             </p>
-            <p className="text-center px-6" style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.5 }}>
-              Who interprets context?<br />
-              Who applies judgment?<br />
-              Who resolves exceptions?
+            <p className="text-center px-5" style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.55 }}>
+              AI can generate fast — but it can't apply your expertise, your judgment, or your standards.
             </p>
-            <p className="font-bold text-center mt-4 px-4" style={{ fontSize: 14, color: `hsl(${WARM} / 0.7)` }}>
-              Humans still bridge this manually — every single time.
+            <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: DARK_TEXT }}>
+              The result: experts redo AI's work instead of scaling their own.
             </p>
           </div>
 
@@ -223,8 +221,8 @@ function Slide02() {
               <Check size={18} style={{ color: `hsl(${GREEN})` }} />
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
-            <p className="mt-2" style={{ fontSize: 14, color: `hsl(${WARM})`, lineHeight: 1.4 }}>
-              ⚠ But without judgment, outputs are generic. Every answer is the average, not the expert.
+            <p className="mt-2" style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.4 }}>
+              But without your standards, every output is generic — the average, not the expert.
             </p>
           </div>
         </div>
