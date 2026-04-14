@@ -654,102 +654,112 @@ function SlideArchitecture() {
             </div>
           </div>
 
-          {/* Layer 2: LIZA — Split into Blueprint (big) + Nervous System */}
-          <div className="flex gap-4">
-            {/* Blueprint — THE BIG THING */}
-            <div className="flex-[3] rounded-2xl p-6 relative overflow-hidden"
-              style={{ background: `hsl(${GOLD} / 0.06)`, border: `3px solid hsl(${GOLD} / 0.4)`,
-                boxShadow: `0 0 60px hsl(${GOLD} / 0.08)` }}>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `hsl(${GOLD} / 0.15)` }}>
-                    <Layers size={28} style={{ color: `hsl(${GOLD})` }} />
-                  </div>
-                  <div>
-                    <p className="font-black" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Your Blueprint</p>
-                    <p className="font-semibold" style={{ fontSize: 14, color: MUTED }}>Your organization's intellectual property</p>
-                  </div>
+          {/* Layer 2: LIZA OS — Blueprint + Nervous System TOGETHER */}
+          <div className="rounded-3xl p-5 relative"
+            style={{ background: `hsl(${TEAL} / 0.03)`, border: `3px solid hsl(${TEAL} / 0.3)`,
+              boxShadow: `0 0 80px hsl(${TEAL} / 0.06)` }}>
+            {/* LIZA OS header — makes it unmistakable */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                  <Brain size={26} style={{ color: `hsl(${TEAL})` }} />
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: `hsl(${GOLD} / 0.12)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
-                  <Shield size={14} style={{ color: `hsl(${GOLD})` }} />
-                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>YOUR IP · PORTABLE · SOVEREIGN</p>
+                <div>
+                  <p className="font-black" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>LIZA OS</p>
+                  <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>The Instruction Layer</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                {/* Left: Knowledge Graph visualization */}
-                <div className="w-[160px] shrink-0 rounded-xl flex flex-col items-center justify-center p-3"
-                  style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px dashed hsl(${GOLD} / 0.25)` }}>
-                  <svg width="140" height="100" viewBox="0 0 140 100">
-                    {/* Edges */}
-                    <line x1="70" y1="15" x2="25" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
-                    <line x1="70" y1="15" x2="115" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
-                    <line x1="25" y1="50" x2="50" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
-                    <line x1="115" y1="50" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
-                    <line x1="25" y1="50" x2="115" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1" opacity="0.15" strokeDasharray="3 2" />
-                    <line x1="50" y1="85" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
-                    <line x1="70" y1="15" x2="50" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1" opacity="0.12" strokeDasharray="3 2" />
-                    <line x1="70" y1="15" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1" opacity="0.12" strokeDasharray="3 2" />
-                    {/* Nodes */}
-                    <circle cx="70" cy="15" r="8" fill={`hsl(${GOLD})`} fillOpacity="0.2" stroke={`hsl(${GOLD})`} strokeWidth="2" />
-                    <circle cx="25" cy="50" r="6" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
-                    <circle cx="115" cy="50" r="6" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
-                    <circle cx="50" cy="85" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
-                    <circle cx="90" cy="85" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
-                    {/* Center glow */}
-                    <circle cx="70" cy="50" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.35" />
-                  </svg>
-                  <p className="font-black mt-1" style={{ fontSize: 11, color: `hsl(${GOLD})`, letterSpacing: "0.12em" }}>KNOWLEDGE GRAPH</p>
-                  <p style={{ fontSize: 10, color: MUTED }}>Category-defining infra</p>
-                </div>
+              <div className="px-4 py-2 rounded-full" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
+                <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Blueprint + Nervous System = LIZA OS</p>
+              </div>
+            </div>
 
-                {/* Right: capability cards */}
-                <div className="flex-1 flex flex-col gap-2">
-                  <div className="grid grid-cols-4 gap-2">
+            <div className="flex gap-4">
+              {/* Blueprint — YOUR IP */}
+              <div className="flex-[3] rounded-2xl p-5 relative overflow-hidden"
+                style={{ background: `hsl(${GOLD} / 0.06)`, border: `2px solid hsl(${GOLD} / 0.35)` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `hsl(${GOLD} / 0.15)` }}>
+                      <Layers size={24} style={{ color: `hsl(${GOLD})` }} />
+                    </div>
+                    <div>
+                      <p className="font-black" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>Your Blueprint</p>
+                      <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Your organization's IP</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: `hsl(${GOLD} / 0.12)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+                    <Shield size={12} style={{ color: `hsl(${GOLD})` }} />
+                    <p className="font-bold" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>PORTABLE · SOVEREIGN</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-[140px] shrink-0 rounded-xl flex flex-col items-center justify-center p-2"
+                    style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px dashed hsl(${GOLD} / 0.25)` }}>
+                    <svg width="120" height="85" viewBox="0 0 140 100">
+                      <line x1="70" y1="15" x2="25" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="70" y1="15" x2="115" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="25" y1="50" x2="50" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="115" y1="50" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="50" y1="85" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <circle cx="70" cy="15" r="7" fill={`hsl(${GOLD})`} fillOpacity="0.2" stroke={`hsl(${GOLD})`} strokeWidth="2" />
+                      <circle cx="25" cy="50" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                      <circle cx="115" cy="50" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                      <circle cx="50" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                      <circle cx="90" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                    </svg>
+                    <p className="font-black" style={{ fontSize: 10, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>KNOWLEDGE GRAPH</p>
+                  </div>
+                  <div className="flex-1 grid grid-cols-2 gap-1.5">
                     {[
                       { label: "Standards & SOPs", desc: "Versioned, governed" },
                       { label: "Expert Judgment", desc: "Encoded as rules" },
                       { label: "Decision Exceptions", desc: "Context-specific" },
                       { label: "Accumulated Memory", desc: "Grows with usage" },
                     ].map(item => (
-                      <div key={item.label} className="rounded-xl px-3 py-2" style={{ background: `hsl(${GOLD} / 0.08)` }}>
-                        <p className="font-bold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>{item.label}</p>
-                        <p style={{ fontSize: 11, color: MUTED }}>{item.desc}</p>
+                      <div key={item.label} className="rounded-lg px-2.5 py-1.5" style={{ background: `hsl(${GOLD} / 0.08)` }}>
+                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>{item.label}</p>
+                        <p style={{ fontSize: 10, color: MUTED }}>{item.desc}</p>
                       </div>
                     ))}
                   </div>
-                  <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
-                    Built on a governed knowledge graph — the category-defining technology for AI-native organizations.
-                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Nervous System — LIZA's engine */}
-            <div className="flex-[2] rounded-2xl p-5 relative"
-              style={{ background: `hsl(${TEAL} / 0.06)`, border: `2px solid hsl(${TEAL} / 0.3)` }}>
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
-                  <Cpu size={22} style={{ color: `hsl(${TEAL})` }} />
-                </div>
-                <div>
-                  <p className="font-black" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>Nervous System</p>
-                  <p style={{ fontSize: 12, color: MUTED }}>LIZA's reasoning engine</p>
-                </div>
+              {/* Bidirectional connector */}
+              <div className="shrink-0 flex flex-col items-center justify-center gap-1 px-1">
+                <RefreshCw size={16} style={{ color: `hsl(${TEAL} / 0.4)` }} />
+                <div className="w-px flex-1" style={{ background: `hsl(${TEAL} / 0.2)` }} />
+                <RefreshCw size={16} style={{ color: `hsl(${TEAL} / 0.4)` }} />
               </div>
-              <div className="flex flex-col gap-2">
-                {[
-                  { label: "Protocol Engine", desc: "Turns playbooks into guided workflows" },
-                  { label: "Drift Detection", desc: "Flags deviations from standards" },
-                  { label: "Propagation", desc: "One update cascades everywhere" },
-                  { label: "Feedback Loop", desc: "Every execution teaches the system" },
-                ].map(item => (
-                  <div key={item.label} className="rounded-lg px-3 py-2" style={{ background: `hsl(${TEAL} / 0.08)` }}>
-                    <div className="flex items-center gap-2">
-                      <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>{item.label}</p>
-                      <span style={{ fontSize: 11, color: MUTED }}>— {item.desc}</span>
-                    </div>
+
+              {/* Nervous System */}
+              <div className="flex-[2] rounded-2xl p-4 relative"
+                style={{ background: `hsl(${TEAL} / 0.06)`, border: `2px solid hsl(${TEAL} / 0.25)` }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                    <Cpu size={20} style={{ color: `hsl(${TEAL})` }} />
                   </div>
-                ))}
+                  <div>
+                    <p className="font-black" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Nervous System</p>
+                    <p style={{ fontSize: 11, color: MUTED }}>Reasoning & orchestration</p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  {[
+                    { label: "Protocol Engine", desc: "Playbooks → guided workflows" },
+                    { label: "Drift Detection", desc: "Flags deviations from standards" },
+                    { label: "Propagation", desc: "One update cascades everywhere" },
+                    { label: "Feedback Loop", desc: "Every execution teaches the system" },
+                  ].map(item => (
+                    <div key={item.label} className="rounded-lg px-3 py-1.5" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>{item.label}</p>
+                        <span style={{ fontSize: 10, color: MUTED }}>— {item.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
