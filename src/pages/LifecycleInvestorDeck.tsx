@@ -428,17 +428,17 @@ function Slide05() {
           </div>
 
           {/* Arrow out */}
-          <div className="flex flex-col items-center justify-center px-4">
-            <ArrowRight size={28} style={{ color: `hsl(${TEAL} / 0.4)` }} />
+          <div className="flex flex-col items-center justify-center px-5">
+            <ArrowRight size={34} style={{ color: `hsl(${TEAL} / 0.4)` }} />
           </div>
 
           {/* Right: Governed Output */}
-          <div className="w-[220px] shrink-0">
-            <div className="rounded-2xl border px-5 py-6 text-center h-full flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
-              <Zap size={28} className="mx-auto mb-2" style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Governed Output</p>
-              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>Deliverables, decisions, workflows — all backed by your expertise</p>
-              <p className="mt-3 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>Consistent. Traceable.</p>
+          <div className="w-[240px] shrink-0">
+            <div className="rounded-2xl border px-6 py-8 text-center h-full flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
+              <Zap size={36} className="mx-auto mb-3" style={{ color: `hsl(${GREEN})` }} />
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Governed Output</p>
+              <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>Deliverables, decisions, workflows — all backed by your expertise</p>
+              <p className="mt-3 font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Consistent. Traceable.</p>
             </div>
           </div>
         </div>
