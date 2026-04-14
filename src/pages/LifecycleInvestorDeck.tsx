@@ -258,9 +258,36 @@ function Slide03() {
       outputs: ["AI underwriting", "Auto-advisory"],
       cost: "Regulatory exposure. Inconsistent pricing.",
     },
+    {
+      name: "Engineering",
+      icon: <Layers size={22} style={{ color: `hsl(${TEAL})` }} />,
+      accent: TEAL,
+      records: ["Jira", "Confluence", "Git"],
+      gap: "AI generates code that compiles — but violates architectural decisions made 6 months ago. No one documented why.",
+      outputs: ["Copilot", "AI code review"],
+      cost: "Tech debt. Rework cycles.",
+    },
+    {
+      name: "Sales & GTM",
+      icon: <TrendingUp size={22} style={{ color: `hsl(${GREEN})` }} />,
+      accent: GREEN,
+      records: ["CRM", "Playbooks", "Pricing sheets"],
+      gap: "AI drafts the proposal using last quarter's positioning. The strategic pivot hasn't reached the tools.",
+      outputs: ["AI proposals", "Auto-sequences"],
+      cost: "Lost deals. Brand inconsistency.",
+    },
+    {
+      name: "Legal & Compliance",
+      icon: <FileText size={22} style={{ color: `hsl(215 25% 50%)` }} />,
+      accent: "215 25% 50%",
+      records: ["Contract DB", "Regulatory filings", "Policy docs"],
+      gap: "AI applies standard clause library — but misses jurisdiction-specific exceptions the senior partner knows.",
+      outputs: ["AI contract review", "Auto-drafting"],
+      cost: "Liability. Compliance gaps.",
+    },
   ];
 
-  const alsoApplies = ["Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops", "Marketing"];
+  const alsoApplies = ["Supply Chain", "HR & People Ops", "Marketing"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
