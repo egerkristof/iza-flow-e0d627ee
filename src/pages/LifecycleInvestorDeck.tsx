@@ -344,15 +344,15 @@ function Slide05() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
+      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
           The Instruction Layer
         </p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-1" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
           LIZA OS fills the gap.
         </h2>
-        <p className="mb-6" style={{ fontSize: 22, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
+        <p className="mb-4" style={{ fontSize: 20, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
           A system that sits between your records and your AI — encoding, governing, and evolving your organization's collective judgment.
         </p>
 
