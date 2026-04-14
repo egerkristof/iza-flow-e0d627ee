@@ -315,7 +315,7 @@ function Slide03() {
                 style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <Database size={14} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 11, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Records</p>
+                  <p className="font-bold" style={{ fontSize: 11, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Input Artifacts</p>
                 </div>
                 <div className="flex flex-wrap gap-1">
                   {ind.records.map(r => (
