@@ -166,15 +166,15 @@ function Slide02() {
             </defs>
 
             {/* Top journey bar */}
-            <line x1="220" y1="72" x2="1180" y2="72" stroke="url(#instruction-line)" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
-            <circle cx="220" cy="72" r="7" fill={`hsl(${TEAL})`} />
-            <circle cx="1180" cy="72" r="7" fill={`hsl(${GREEN})`} />
-            <polygon points="1178,66 1194,72 1178,78" fill={`hsl(${GREEN})`} />
+            <line x1="220" y1="28" x2="1180" y2="28" stroke="url(#instruction-line)" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
+            <circle cx="220" cy="28" r="7" fill={`hsl(${TEAL})`} />
+            <circle cx="1180" cy="28" r="7" fill={`hsl(${GREEN})`} />
+            <polygon points="1178,22 1194,28 1178,34" fill={`hsl(${GREEN})`} />
 
             <g>
-              <rect x="54" y="34" width="286" height="72" rx="20" fill={`hsl(${TEAL})`} fillOpacity="0.12" stroke={`hsl(${TEAL})`} strokeOpacity="0.32" />
-              <text x="197" y="61" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">START HERE</text>
-              <text x="197" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="18" fontWeight="800">Companies already have inputs</text>
+              <rect x="54" y="44" width="286" height="72" rx="20" fill={`hsl(${TEAL})`} fillOpacity="0.12" stroke={`hsl(${TEAL})`} strokeOpacity="0.32" />
+              <text x="197" y="71" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">START HERE</text>
+              <text x="197" y="96" textAnchor="middle" fill={DARK_TEXT} fontSize="18" fontWeight="800">Companies already have inputs</text>
             </g>
 
             <g>
@@ -188,9 +188,9 @@ function Slide02() {
             </g>
 
             <g>
-              <rect x="1060" y="34" width="286" height="72" rx="20" fill={`hsl(${GREEN})`} fillOpacity="0.12" stroke={`hsl(${GREEN})`} strokeOpacity="0.32" />
-              <text x="1203" y="61" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">END HERE</text>
-              <text x="1203" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="18" fontWeight="800">AI already generates outputs</text>
+              <rect x="1060" y="44" width="286" height="72" rx="20" fill={`hsl(${GREEN})`} fillOpacity="0.12" stroke={`hsl(${GREEN})`} strokeOpacity="0.32" />
+              <text x="1203" y="71" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">END HERE</text>
+              <text x="1203" y="96" textAnchor="middle" fill={DARK_TEXT} fontSize="18" fontWeight="800">AI already generates outputs</text>
             </g>
 
             {/* Input box */}
@@ -255,46 +255,42 @@ function Slide02() {
             <polygon
               points="350,289 520,165 520,413"
               fill={`hsl(${TEAL})`}
-              fillOpacity="0.1"
+              fillOpacity="0.08"
               stroke={`hsl(${TEAL})`}
-              strokeWidth="2.4"
-              strokeOpacity="0.46"
-              strokeDasharray="7 5"
+              strokeWidth="1.4"
+              strokeOpacity="0.22"
               strokeLinejoin="round"
             />
             <polygon
               points="520,165 660,289 520,413"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.1"
+              fillOpacity="0.08"
               stroke={`hsl(${WARM})`}
-              strokeWidth="2.4"
-              strokeOpacity="0.48"
-              strokeDasharray="7 4"
+              strokeWidth="1.4"
+              strokeOpacity="0.22"
               strokeLinejoin="round"
             />
             <polygon
               points="740,289 880,165 880,413"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.1"
+              fillOpacity="0.08"
               stroke={`hsl(${WARM})`}
-              strokeWidth="2.4"
-              strokeOpacity="0.48"
-              strokeDasharray="7 4"
+              strokeWidth="1.4"
+              strokeOpacity="0.22"
               strokeLinejoin="round"
             />
             <polygon
               points="880,165 1050,289 880,413"
               fill={`hsl(${GREEN})`}
-              fillOpacity="0.1"
+              fillOpacity="0.08"
               stroke={`hsl(${GREEN})`}
-              strokeWidth="2.4"
-              strokeOpacity="0.46"
-              strokeDasharray="7 5"
+              strokeWidth="1.4"
+              strokeOpacity="0.22"
               strokeLinejoin="round"
             />
 
             {/* Messy intelligence field */}
-            <ellipse cx="700" cy="289" rx="245" ry="168" fill={`hsl(${WARM})`} fillOpacity="0.09" stroke={`hsl(${WARM})`} strokeOpacity="0.24" strokeWidth="2" strokeDasharray="5 8" />
+            <ellipse cx="700" cy="289" rx="245" ry="168" fill={`hsl(${WARM})`} fillOpacity="0.08" stroke={`hsl(${WARM})`} strokeOpacity="0.12" strokeWidth="1.5" />
             <text x="700" y="126" textAnchor="middle" fill={DARK_MUTED} fontSize="14" fontWeight="800" letterSpacing="0.14em">THIS IS WHERE IT MAKES OR BREAKS</text>
 
             {[
@@ -314,34 +310,12 @@ function Slide02() {
                   height="34"
                   rx="17"
                   fill={`hsl(${WARM})`}
-                  fillOpacity="0.14"
+                  fillOpacity="0.17"
                   stroke={`hsl(${WARM})`}
-                  strokeOpacity="0.26"
+                  strokeOpacity="0.18"
                 />
                 <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="800">{item.label}</text>
               </g>
-            ))}
-
-            {[
-              { x1: 598, y1: 210, x2: 640, y2: 238 },
-              { x1: 710, y1: 194, x2: 700, y2: 232 },
-              { x1: 818, y1: 216, x2: 758, y2: 238 },
-              { x1: 586, y1: 373, x2: 640, y2: 350 },
-              { x1: 812, y1: 372, x2: 758, y2: 350 },
-              { x1: 652, y1: 409, x2: 674, y2: 356 },
-              { x1: 748, y1: 409, x2: 726, y2: 356 },
-            ].map((line, index) => (
-              <line
-                key={index}
-                x1={line.x1}
-                y1={line.y1}
-                x2={line.x2}
-                y2={line.y2}
-                stroke={`hsl(${WARM})`}
-                strokeOpacity="0.26"
-                strokeWidth="1.5"
-                strokeDasharray="4 5"
-              />
             ))}
 
             {/* Center missing layer */}
@@ -352,11 +326,10 @@ function Slide02() {
               height="160"
               rx="26"
               fill={`hsl(${WARM})`}
-              fillOpacity="0.14"
+              fillOpacity="0.12"
               stroke={`hsl(${WARM})`}
-              strokeWidth="2.8"
-              strokeOpacity="0.5"
-              strokeDasharray="8 4"
+              strokeWidth="2"
+              strokeOpacity="0.3"
             />
             <circle cx="700" cy="246" r="24" fill={`hsl(${WARM})`} fillOpacity="0.18" />
             <text x="700" y="254" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22" fontWeight="900">!</text>
