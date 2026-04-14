@@ -448,7 +448,7 @@ function Slide05() {
           LIZA OS fills the gap.
         </h2>
         <p className="mb-4" style={{ fontSize: 20, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          A system that sits between your records and your AI — encoding, governing, and evolving your organization's collective judgment.
+          A system that sits between your input artifacts and your output artifacts — encoding, governing, and evolving your organization's collective judgment.
         </p>
 
         {/* Main flow: Records → LIZA (horizontal rows) → Output */}
