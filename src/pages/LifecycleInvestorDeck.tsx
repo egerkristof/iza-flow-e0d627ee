@@ -128,7 +128,7 @@ function Slide01() {
         </p>
 
         <p style={{ fontSize: 20, color: DARK_SUBTLE }}>
-          Confidential &nbsp;·&nbsp; €1.5M Seed &nbsp;·&nbsp; Pre-Revenue
+          Confidential &nbsp;·&nbsp; €1.5M Seed &nbsp;·&nbsp; Early Revenue
         </p>
       </div>
       <SlideBar />
