@@ -514,12 +514,12 @@ function Slide05() {
             <ArrowRight size={30} style={{ color: `hsl(${TEAL} / 0.4)` }} />
           </div>
 
-          {/* Right: Output */}
+          {/* Right: Output Artifacts */}
           <div className="w-[200px] shrink-0 flex flex-col justify-center">
             <div className="rounded-2xl border px-5 py-8 text-center h-full flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
               <Zap size={30} className="mx-auto mb-2" style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Governed Output</p>
-              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Deliverables, decisions, workflows — backed by your expertise</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Output Artifacts</p>
+              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Proposals, reports, workflows — governed by your expertise</p>
               <p className="mt-3 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>Consistent. Traceable.</p>
             </div>
           </div>
