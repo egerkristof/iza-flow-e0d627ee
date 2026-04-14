@@ -1727,8 +1727,9 @@ const SLIDES = [
   { id: 11, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
   { id: 12, title: "Team", component: <Slide12 /> },
   { id: 13, title: "The Ask", component: <Slide13 /> },
-  { id: 14, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 15, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 14, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 15, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 16, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
