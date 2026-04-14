@@ -353,8 +353,8 @@ function Slide04() {
           </span>
         </h2>
         <p className="mb-5" style={{ fontSize: 24, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          We turn human expertise into infrastructure.{" "}
-          <strong style={{ color: DARK_TEXT }}>Experts design. AI executes. LIZA governs the loop.</strong>
+          Experts design the rules. AI executes within them.{" "}
+          <strong style={{ color: DARK_TEXT }}>LIZA governs the loop.</strong>
         </p>
 
         {/* Three-panel layout */}
