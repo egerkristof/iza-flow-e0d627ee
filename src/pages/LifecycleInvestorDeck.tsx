@@ -425,9 +425,6 @@ function SlideWhyNow() {
           AI adoption is done.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>The governance crisis just started.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 22, color: DARK_MUTED, maxWidth: 1000 }}>
-          Every enterprise has AI tools. Almost none have a system to make AI follow their standards.
-        </p>
 
         {/* Three signal cards — centered content, no flex-1 stretch */}
         <div className="flex gap-6 mb-6">
