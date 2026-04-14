@@ -900,29 +900,29 @@ function Slide06() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
+      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-5" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
           $70M+ recently invested around the edges.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
         </h2>
 
-        {/* Top: 4 competitor cards + LIZA OS as the big center piece */}
-        <div className="flex gap-4 mb-6">
+        {/* Top: 4 competitor cards */}
+        <div className="flex gap-4 mb-5">
           {players.map(({ name, funding, round, what, color }) => (
             <div key={name} className="flex-1 rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-              <p className="font-bold" style={{ fontSize: 18, color: DARK_TEXT }}>{name}</p>
-              <p className="font-black" style={{ fontSize: 15, color: `hsl(${color})` }}>{funding}</p>
-              <p className="mb-2" style={{ fontSize: 12, color: DARK_SUBTLE }}>{round}</p>
-              <p style={{ fontSize: 14, color: DARK_MUTED, lineHeight: 1.35 }}>{what}</p>
+              <p className="font-bold" style={{ fontSize: 20, color: DARK_TEXT }}>{name}</p>
+              <p className="font-black" style={{ fontSize: 16, color: `hsl(${color})` }}>{funding}</p>
+              <p className="mb-2" style={{ fontSize: 13, color: DARK_SUBTLE }}>{round}</p>
+              <p style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.35 }}>{what}</p>
             </div>
           ))}
         </div>
 
         {/* LIZA OS — big differentiation box */}
-        <div className="rounded-2xl border-2 px-8 py-5 mb-6 flex items-center gap-6"
+        <div className="rounded-2xl border-2 px-8 py-5 mb-5 flex items-center gap-6"
           style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)`, boxShadow: `0 0 60px hsl(${TEAL} / 0.06)` }}>
           <div className="shrink-0">
             <div className="flex items-center gap-3 mb-1">
@@ -937,32 +937,32 @@ function Slide06() {
           </div>
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
-            <p className="font-bold" style={{ fontSize: 20, color: DARK_TEXT, lineHeight: 1.35 }}>
+            <p className="font-bold" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.35 }}>
               Others mine, remember, or capture.{" "}
               <span style={{ color: `hsl(${TEAL})` }}>LIZA operationalizes.</span>
             </p>
-            <p className="mt-1" style={{ fontSize: 16, color: DARK_MUTED }}>
+            <p className="mt-1" style={{ fontSize: 17, color: DARK_MUTED }}>
               The only platform that makes organizational judgment queryable, versionable, and executable.
               Other tools give AI your documents. We give AI your judgment.
             </p>
           </div>
         </div>
 
-        {/* Bottom: 3 equal columns — Market + Defensibility x3 */}
-        <div className="flex gap-5 flex-1 min-h-0">
+        {/* Bottom: Market + 3 Moat columns */}
+        <div className="flex gap-5">
           {/* Market Size */}
-          <div className="flex-1 rounded-2xl border p-6 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
-            <div className="flex flex-col gap-3 flex-1 justify-center">
+          <div className="flex-1 rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
+            <div className="flex flex-col gap-2.5">
               {[
                 { label: "TAM", value: "$28B", desc: "AI governance + knowledge infrastructure" },
                 { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs in target verticals" },
                 { label: "SOM", value: "$340M", desc: "EU prof services, pharma, regulated" },
               ].map(({ label, value, desc }) => (
-                <div key={label} className="rounded-xl px-5 py-3" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
                     <span className="font-black" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
-                    <span className="font-black" style={{ fontSize: 32, color: DARK_TEXT }}>{value}</span>
+                    <span className="font-black" style={{ fontSize: 34, color: DARK_TEXT }}>{value}</span>
                   </div>
                   <p style={{ fontSize: 13, color: DARK_MUTED, lineHeight: 1.3 }}>{desc}</p>
                 </div>
@@ -972,13 +972,13 @@ function Slide06() {
 
           {/* Defensibility — 3 moat layers */}
           {moatLayers.map(({ layer, desc, icon }) => (
-            <div key={layer} className="flex-1 rounded-2xl border p-6 flex flex-col"
+            <div key={layer} className="flex-1 rounded-2xl border p-5 flex flex-col justify-center"
               style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3" style={{ background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>
                 {icon}
               </div>
-              <p className="font-black mb-2" style={{ fontSize: 17, color: `hsl(${GOLD})` }}>{layer}</p>
-              <p className="flex-1" style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.45 }}>{desc}</p>
+              <p className="font-black mb-2" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>{layer}</p>
+              <p style={{ fontSize: 16, color: DARK_MUTED, lineHeight: 1.45 }}>{desc}</p>
             </div>
           ))}
         </div>
