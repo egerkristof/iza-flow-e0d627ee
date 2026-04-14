@@ -115,15 +115,16 @@ function Slide01() {
           </span>
         </div>
 
-        <h1 className="font-black mb-10" style={{ fontSize: 80, lineHeight: 1.05, color: DARK_TEXT }}>
-          The Operating System for<br />
+        <h1 className="font-black mb-10" style={{ fontSize: 78, lineHeight: 1.05, color: DARK_TEXT }}>
+          The Instruction Layer for<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             AI-Native Organizations.
           </span>
         </h1>
 
-        <p className="mb-14" style={{ fontSize: 30, color: DARK_MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          Your best people's expertise should run the company. Not die in their inbox.
+        <p className="mb-14" style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
+          Every organization runs on thousands of judgment calls.<br />
+          Your best people make them right. <span style={{ color: `hsl(${TEAL})` }}>No system governs them.</span>
         </p>
 
         <p style={{ fontSize: 20, color: DARK_SUBTLE }}>
