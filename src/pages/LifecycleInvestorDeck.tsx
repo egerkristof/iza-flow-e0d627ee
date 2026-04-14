@@ -1074,8 +1074,8 @@ function Slide10() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>Product Status</p>
         <h2 className="font-bold mb-6" style={{ fontSize: 56, color: TEXT, lineHeight: 1.1 }}>
-          This isn't a slide deck.{" "}
-          <span style={{ color: `hsl(${ACCENT})` }}>The product is live.</span>
+          The infrastructure is live.{" "}
+          <span style={{ color: `hsl(${ACCENT})` }}>Not a prototype.</span>
         </h2>
 
         <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
