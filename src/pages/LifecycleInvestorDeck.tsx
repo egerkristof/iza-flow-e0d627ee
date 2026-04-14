@@ -233,33 +233,30 @@ function Slide03() {
   const industries = [
     {
       name: "Life Sciences",
-      icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
+      icon: <Shield size={28} style={{ color: `hsl(${RED})` }} />,
       accent: RED,
-      category: "Regulated",
-      record: ["Veeva Vault", "LIMS", "QMS"],
-      output: ["NesGPT", "Copilot", "AI Analysis"],
+      record: "Veeva Vault · LIMS · QMS",
+      output: "NesGPT · Copilot · AI Analysis",
       scenario: "An analyst runs a stability test. The AI applies the standard procedure — but the context demands Annex 7. Nobody told it.",
-      cost: "Safety risk. Audit failure. Recall exposure.",
+      cost: "Safety risk. Audit failure.",
     },
     {
       name: "Professional Services",
-      icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
+      icon: <Briefcase size={28} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
-      category: "Knowledge-Intensive",
-      record: ["Methodology docs", "Templates", "CRM"],
-      output: ["AI proposals", "Copilot drafts", "Automated reports"],
-      scenario: "A junior consultant has the template, not the partner's judgment. The AI writes confidently — applying the average, not the exception.",
-      cost: "Margin erosion. Client escalation. Quality inconsistency.",
+      record: "Methodology docs · Templates · CRM",
+      output: "AI proposals · Copilot drafts",
+      scenario: "A junior has the template, not the partner's judgment. The AI writes confidently — applying the average, not the exception.",
+      cost: "Margin erosion. Client escalation.",
     },
     {
       name: "Financial Services",
-      icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
+      icon: <DollarSign size={28} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
-      category: "Regulated",
-      record: ["Policy manuals", "Risk models", "Compliance DB"],
-      output: ["AI underwriting", "Automated advisory", "Document processing"],
+      record: "Policy manuals · Risk models · Compliance DB",
+      output: "AI underwriting · Automated advisory",
       scenario: "Context changes mid-case. The AI prices risk using the average model. Two analysts, same case — different outcomes.",
-      cost: "Regulatory exposure. Inconsistent pricing. Compliance gaps.",
+      cost: "Regulatory exposure. Inconsistent pricing.",
     },
   ];
 
@@ -271,47 +268,47 @@ function Slide03() {
           What That Costs
         </p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           Same gap. Every industry.
         </h2>
-        <p className="mb-6" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>
-          The tools exist. The intelligence layer does not. Here's what that looks like.
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>
+          The tools exist. The intelligence layer does not.
         </p>
 
-        <div className="flex flex-col gap-3.5 flex-1 min-h-0">
+        <div className="flex flex-col gap-4 flex-1 min-h-0">
           {industries.map((ind) => (
-            <div key={ind.name} className="rounded-[18px] border flex items-stretch overflow-hidden flex-1"
-              style={{ borderColor: `hsl(${ind.accent} / 0.18)` }}>
-              
-              {/* Industry + Systems */}
-              <div className="w-[260px] shrink-0 px-5 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${ind.accent} / 0.05)`, borderRight: `1px solid hsl(${ind.accent} / 0.12)` }}>
-                <div className="flex items-center gap-2.5 mb-2">
+            <div key={ind.name} className="rounded-[20px] border flex items-stretch overflow-hidden flex-1"
+              style={{ borderColor: `hsl(${ind.accent} / 0.2)` }}>
+
+              {/* Industry name + systems */}
+              <div className="w-[300px] shrink-0 px-7 py-5 flex flex-col justify-center"
+                style={{ background: `hsl(${ind.accent} / 0.05)`, borderRight: `1.5px solid hsl(${ind.accent} / 0.15)` }}>
+                <div className="flex items-center gap-3 mb-3">
                   {ind.icon}
-                  <p className="font-black" style={{ fontSize: 20, color: TEXT }}>{ind.name}</p>
+                  <p className="font-black" style={{ fontSize: 24, color: TEXT }}>{ind.name}</p>
                 </div>
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <div>
-                    <p className="font-bold" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.12em", textTransform: "uppercase" }}>Records</p>
-                    <p style={{ fontSize: 13, color: MUTED }}>{ind.record.join(" · ")}</p>
+                    <p className="font-bold" style={{ fontSize: 13, color: SUBTLE, letterSpacing: "0.1em", textTransform: "uppercase" }}>Records</p>
+                    <p style={{ fontSize: 16, color: MUTED }}>{ind.record}</p>
                   </div>
                   <div>
-                    <p className="font-bold" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.12em", textTransform: "uppercase" }}>Output</p>
-                    <p style={{ fontSize: 13, color: MUTED }}>{ind.output.join(" · ")}</p>
+                    <p className="font-bold" style={{ fontSize: 13, color: SUBTLE, letterSpacing: "0.1em", textTransform: "uppercase" }}>Output</p>
+                    <p style={{ fontSize: 16, color: MUTED }}>{ind.output}</p>
                   </div>
                 </div>
               </div>
 
-              {/* The scenario */}
-              <div className="flex-1 px-6 py-4 flex flex-col justify-center" style={{ borderRight: `1px solid hsl(215 15% 90%)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 11, color: `hsl(${ind.accent})`, letterSpacing: "0.12em", textTransform: "uppercase" }}>What happens</p>
-                <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.5 }}>{ind.scenario}</p>
+              {/* Scenario */}
+              <div className="flex-1 px-8 py-5 flex flex-col justify-center" style={{ borderRight: `1.5px solid hsl(215 15% 90%)` }}>
+                <p className="font-bold mb-2" style={{ fontSize: 14, color: `hsl(${ind.accent})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What happens</p>
+                <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>{ind.scenario}</p>
               </div>
 
-              {/* The cost */}
-              <div className="w-[260px] shrink-0 px-5 py-4 flex flex-col justify-center" style={{ background: `hsl(${ind.accent} / 0.04)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 11, color: `hsl(${RED})`, letterSpacing: "0.12em", textTransform: "uppercase" }}>The cost</p>
-                <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${RED})`, lineHeight: 1.5 }}>{ind.cost}</p>
+              {/* Cost */}
+              <div className="w-[240px] shrink-0 px-7 py-5 flex flex-col justify-center" style={{ background: `hsl(${ind.accent} / 0.04)` }}>
+                <p className="font-bold mb-2" style={{ fontSize: 14, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The cost</p>
+                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, lineHeight: 1.45 }}>{ind.cost}</p>
               </div>
             </div>
           ))}
@@ -321,16 +318,16 @@ function Slide03() {
         <div className="mt-5 rounded-2xl px-10 py-5 flex items-center justify-between"
           style={{ background: `hsl(${WARM} / 0.06)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
           <div>
-            <p className="font-black" style={{ fontSize: 22, color: TEXT }}>
+            <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
               The "Instruction Gap Tax"
             </p>
-            <p className="mt-1" style={{ fontSize: 16, color: MUTED }}>
+            <p className="mt-1" style={{ fontSize: 18, color: MUTED }}>
               Human rework cost when organizational judgment is missing from AI execution.
             </p>
           </div>
           <div className="text-right shrink-0 ml-8">
-            <p className="font-black" style={{ fontSize: 52, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
-            <p className="font-semibold mt-1" style={{ fontSize: 16, color: MUTED }}>per year / 100 people</p>
+            <p className="font-black" style={{ fontSize: 58, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
+            <p className="font-semibold mt-1" style={{ fontSize: 18, color: MUTED }}>per year / 100 people</p>
           </div>
         </div>
       </div>
