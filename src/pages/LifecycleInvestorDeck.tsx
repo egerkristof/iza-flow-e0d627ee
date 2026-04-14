@@ -659,7 +659,7 @@ function SlideArchitecture() {
           <div className="rounded-2xl border px-8 py-4"
             style={{ borderColor: `hsl(${BLUE} / 0.15)`, background: `hsl(${BLUE} / 0.03)` }}>
             <p className="font-black tracking-[0.15em] uppercase mb-2.5" style={{ fontSize: 12, color: `hsl(${BLUE})` }}>
-              Your Existing Systems of Record — Unchanged
+              Your Existing Systems — Input Artifacts — Unchanged
             </p>
             <div className="flex gap-3">
               {existingSystems.map(s => (
