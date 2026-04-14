@@ -1397,8 +1397,8 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>€500–2,000/mo per team</span>
               </div>
               <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
-                Core platform access. Knowledge graph, workbooks, protocol execution, governance.
-                Usage-based AI execution on top.
+                Self-serve platform. Knowledge graph, workbooks, protocol execution, governance.
+                Teams onboard independently. Usage-based AI execution on top.
               </p>
             </div>
 
@@ -1408,19 +1408,19 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
               </div>
               <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
-                Industry-specific pre-built playbooks. Consulting frameworks, compliance templates,
-                sales methodologies. High-margin, deepens lock-in.
+                Pre-built industry playbooks. Plug into the platform, customize to your context.
+                Consulting frameworks, compliance templates, sales methodologies. High-margin.
               </p>
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Onboarding Sprint</p>
+                <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Guided Kickstart</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
               </div>
               <p style={{ fontSize: 17, color: DARK_MUTED, lineHeight: 1.5 }}>
-                White-glove extraction. We encode your organization's collective judgment into the platform.
-                Converts to long-term SaaS.
+                For our first cohort of enterprise clients, we co-build alongside their teams to maximize
+                feedback velocity and accelerate product-market fit. Converts to self-serve SaaS.
               </p>
             </div>
           </div>
