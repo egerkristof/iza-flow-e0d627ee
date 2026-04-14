@@ -373,8 +373,8 @@ function Slide05() {
           </div>
 
           {/* Arrow in */}
-          <div className="flex flex-col items-center justify-center px-4">
-            <ArrowRight size={28} style={{ color: `hsl(${TEAL} / 0.4)` }} />
+          <div className="flex flex-col items-center justify-center px-5">
+            <ArrowRight size={34} style={{ color: `hsl(${TEAL} / 0.4)` }} />
           </div>
 
           {/* Center: LIZA */}
