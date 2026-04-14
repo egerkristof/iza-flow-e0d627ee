@@ -344,74 +344,74 @@ function Slide05() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
           The Instruction Layer
         </p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-2" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
           LIZA OS fills the gap.
         </h2>
-        <p className="mb-5" style={{ fontSize: 20, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
+        <p className="mb-6" style={{ fontSize: 22, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
           A system that sits between your records and your AI — encoding, governing, and evolving your organization's collective judgment.
         </p>
 
         {/* Flow: Records → LIZA → Output */}
         <div className="flex-1 flex items-center gap-0">
           {/* Left: Records */}
-          <div className="w-[180px] shrink-0 flex flex-col gap-2">
-            <div className="rounded-xl border px-4 py-3 text-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
-              <Database size={20} className="mx-auto mb-1" style={{ color: `hsl(${BLUE})` }} />
-              <p className="font-bold" style={{ fontSize: 14, color: TEXT }}>Your Records</p>
-              <p style={{ fontSize: 11, color: MUTED }}>SOPs, CRM, docs, requirements</p>
+          <div className="w-[220px] shrink-0 flex flex-col gap-3">
+            <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
+              <Database size={28} className="mx-auto mb-2" style={{ color: `hsl(${BLUE})` }} />
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Records</p>
+              <p style={{ fontSize: 14, color: MUTED }}>SOPs, CRM, docs, requirements</p>
             </div>
-            <div className="rounded-xl border px-4 py-3 text-center" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.05)` }}>
-              <Users size={20} className="mx-auto mb-1" style={{ color: `hsl(${GOLD})` }} />
-              <p className="font-bold" style={{ fontSize: 14, color: TEXT }}>Your Experts</p>
-              <p style={{ fontSize: 11, color: MUTED }}>Methods, judgment, exceptions</p>
+            <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.05)` }}>
+              <Users size={28} className="mx-auto mb-2" style={{ color: `hsl(${GOLD})` }} />
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Experts</p>
+              <p style={{ fontSize: 14, color: MUTED }}>Methods, judgment, exceptions</p>
             </div>
           </div>
 
           {/* Arrow in */}
-          <div className="flex flex-col items-center justify-center px-3">
-            <ArrowRight size={22} style={{ color: `hsl(${TEAL} / 0.4)` }} />
+          <div className="flex flex-col items-center justify-center px-4">
+            <ArrowRight size={28} style={{ color: `hsl(${TEAL} / 0.4)` }} />
           </div>
 
           {/* Center: LIZA */}
-          <div className="flex-1 rounded-2xl p-6 flex flex-col" style={{ background: `hsl(${TEAL} / 0.06)`, boxShadow: `0 0 80px hsl(${TEAL} / 0.1)`, border: `3px solid hsl(${TEAL} / 0.35)` }}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
-                <Brain size={26} style={{ color: `hsl(${TEAL})` }} />
+          <div className="flex-1 rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${TEAL} / 0.06)`, boxShadow: `0 0 80px hsl(${TEAL} / 0.1)`, border: `3px solid hsl(${TEAL} / 0.35)` }}>
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                <Brain size={32} style={{ color: `hsl(${TEAL})` }} />
               </div>
               <div>
-                <p className="font-black" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                <p className="font-semibold" style={{ fontSize: 14, color: MUTED }}>The Instruction Layer</p>
+                <p className="font-black" style={{ fontSize: 30, color: `hsl(${TEAL})` }}>LIZA OS</p>
+                <p className="font-semibold" style={{ fontSize: 17, color: MUTED }}>The Instruction Layer</p>
               </div>
             </div>
 
             {/* Horizontal 4-step flow */}
-            <div className="flex items-stretch gap-0 mb-4 flex-1">
+            <div className="flex items-stretch gap-0 mb-5 flex-1">
               {[
-                { num: "1", label: "Encode", icon: <BookOpen size={20} />, desc: "Extract expert judgment into governed playbooks", who: "Experts", whoColor: GOLD },
-                { num: "2", label: "Govern", icon: <Shield size={20} />, desc: "Version, enforce, and trace every instruction", who: "LIZA", whoColor: TEAL },
-                { num: "3", label: "Execute", icon: <Zap size={20} />, desc: "Orchestrate AI with full organizational context", who: "AI + Teams", whoColor: GREEN },
-                { num: "4", label: "Evolve", icon: <RefreshCw size={20} />, desc: "Every execution improves the standard", who: "Feedback", whoColor: MINT },
+                { num: "1", label: "Encode", icon: <BookOpen size={24} />, desc: "Extract expert judgment into governed playbooks", who: "Experts", whoColor: GOLD },
+                { num: "2", label: "Govern", icon: <Shield size={24} />, desc: "Version, enforce, and trace every instruction", who: "LIZA", whoColor: TEAL },
+                { num: "3", label: "Execute", icon: <Zap size={24} />, desc: "Orchestrate AI with full organizational context", who: "AI + Teams", whoColor: GREEN },
+                { num: "4", label: "Evolve", icon: <RefreshCw size={24} />, desc: "Every execution improves the standard", who: "Feedback", whoColor: MINT },
               ].map((step, i) => (
                 <div key={step.label} className="flex-1 flex items-stretch">
-                  <div className="flex-1 rounded-xl px-4 py-3 flex flex-col relative" style={{ background: `hsl(${TEAL} / 0.08)` }}>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL} / 0.25)` }}>{step.num}</span>
+                  <div className="flex-1 rounded-xl px-5 py-4 flex flex-col relative" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                    <div className="flex items-center gap-2.5 mb-2">
+                      <span className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL} / 0.25)` }}>{step.num}</span>
                       <div style={{ color: `hsl(${MINT})` }}>{step.icon}</div>
-                      <p className="font-black" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>{step.label}</p>
+                      <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>{step.label}</p>
                     </div>
-                    <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4, flex: 1 }}>{step.desc}</p>
-                    <span className="mt-2 inline-block px-2.5 py-0.5 rounded-full self-start" style={{ background: `hsl(${step.whoColor} / 0.12)` }}>
-                      <span className="font-bold" style={{ fontSize: 10, color: `hsl(${step.whoColor})` }}>{step.who}</span>
+                    <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45, flex: 1 }}>{step.desc}</p>
+                    <span className="mt-3 inline-block px-3 py-1 rounded-full self-start" style={{ background: `hsl(${step.whoColor} / 0.12)` }}>
+                      <span className="font-bold" style={{ fontSize: 13, color: `hsl(${step.whoColor})` }}>{step.who}</span>
                     </span>
                   </div>
                   {i < 3 && (
-                    <div className="flex items-center px-1.5">
-                      <ArrowRight size={14} style={{ color: `hsl(${TEAL} / 0.3)` }} />
+                    <div className="flex items-center px-2">
+                      <ArrowRight size={18} style={{ color: `hsl(${TEAL} / 0.3)` }} />
                     </div>
                   )}
                 </div>
@@ -419,32 +419,32 @@ function Slide05() {
             </div>
 
             {/* Feedback loop arrow */}
-            <div className="flex items-center justify-center gap-3 px-4 py-2 rounded-lg" style={{ background: `hsl(${MINT} / 0.06)`, border: `1px dashed hsl(${MINT} / 0.25)` }}>
-              <RefreshCw size={14} style={{ color: `hsl(${MINT})` }} />
-              <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${MINT})` }}>
+            <div className="flex items-center justify-center gap-3 px-5 py-3 rounded-lg" style={{ background: `hsl(${MINT} / 0.06)`, border: `1px dashed hsl(${MINT} / 0.25)` }}>
+              <RefreshCw size={18} style={{ color: `hsl(${MINT})` }} />
+              <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${MINT})` }}>
                 Continuous loop: Step 4 feeds back into Step 1 — your organization gets smarter with every execution
               </p>
             </div>
           </div>
 
           {/* Arrow out */}
-          <div className="flex flex-col items-center justify-center px-3">
-            <ArrowRight size={22} style={{ color: `hsl(${TEAL} / 0.4)` }} />
+          <div className="flex flex-col items-center justify-center px-4">
+            <ArrowRight size={28} style={{ color: `hsl(${TEAL} / 0.4)` }} />
           </div>
 
           {/* Right: Governed Output */}
-          <div className="w-[180px] shrink-0">
-            <div className="rounded-xl border px-4 py-5 text-center h-full flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
-              <Zap size={24} className="mx-auto mb-2" style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-bold" style={{ fontSize: 15, color: TEXT }}>Governed Output</p>
-              <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>Deliverables, decisions, workflows — all backed by your expertise</p>
-              <p className="mt-2 font-bold" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Consistent. Traceable.</p>
+          <div className="w-[220px] shrink-0">
+            <div className="rounded-2xl border px-5 py-6 text-center h-full flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
+              <Zap size={28} className="mx-auto mb-2" style={{ color: `hsl(${GREEN})` }} />
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Governed Output</p>
+              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>Deliverables, decisions, workflows — all backed by your expertise</p>
+              <p className="mt-3 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>Consistent. Traceable.</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-4 rounded-xl px-10 py-3.5 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>
+        <div className="mt-4 rounded-xl px-10 py-4 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
+          <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
             Other tools give AI your documents. <span style={{ color: `hsl(${TEAL})` }}>LIZA gives AI your judgment.</span>
           </p>
         </div>
