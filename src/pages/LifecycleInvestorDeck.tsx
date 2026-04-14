@@ -164,7 +164,7 @@ function Slide02() {
           <div className="flex-1 rounded-l-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)`, borderRight: "none" }}>
             <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Input Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What companies already have</p>
+            <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What companies feed AI today</p>
             <div className="flex flex-wrap gap-3">
               {inputs.map(item => (
                 <span key={item} className="rounded-full px-5 py-2.5 font-bold"
@@ -208,7 +208,7 @@ function Slide02() {
           <div className="flex-1 rounded-r-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${GREEN} / 0.3)`, background: `hsl(${GREEN} / 0.06)`, borderLeft: "none" }}>
             <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Output Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What AI already generates</p>
+            <p className="font-bold mb-6" style={{ fontSize: 22, color: DARK_TEXT }}>What AI produces without guidance</p>
             <div className="flex flex-wrap gap-3">
               {outputs.map(item => (
                 <span key={item} className="rounded-full px-5 py-2.5 font-bold"
