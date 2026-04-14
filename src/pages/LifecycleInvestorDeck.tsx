@@ -764,8 +764,8 @@ function Slide07() {
   const steps = [
     {
       icon: <BookOpen size={36} />, num: "01", title: "Capture",
-      desc: "Extract how your best people actually work.",
-      example: "Sarah's proposal approach → reusable playbook",
+      desc: "Extract collective judgment from across teams.",
+      example: "Senior methodology → governed playbook",
       screenshot: "/images/product-learn-extraction.png",
     },
     {
@@ -776,14 +776,14 @@ function Slide07() {
     },
     {
       icon: <Zap size={36} />, num: "03", title: "Execute",
-      desc: "AI generates with your judgment built in.",
-      example: "Junior writes at senior quality. Automatically.",
+      desc: "AI generates with organizational intelligence built in.",
+      example: "Any team member → org-quality output. Automatically.",
       screenshot: "/images/product-execute-protocol.png",
     },
     {
       icon: <RefreshCw size={36} />, num: "04", title: "Learn",
       desc: "Every execution feeds back. Standards improve.",
-      example: "Sarah's correction → tomorrow's default",
+      example: "Team correction → tomorrow's default for everyone",
       screenshot: "/images/product-learn-debrief.png",
     },
   ];
