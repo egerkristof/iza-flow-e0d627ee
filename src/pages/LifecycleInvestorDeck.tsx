@@ -1378,20 +1378,20 @@ function Slide11() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
-        <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: DARK_TEXT, lineHeight: 1.05 }}>
           Already charging.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Built to compound.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
           {/* Pricing */}
-          <div className="flex-1 flex flex-col gap-5">
+            <div className="flex-1 flex flex-col gap-4">
             <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Revenue Streams</p>
 
-            <div className="rounded-xl border p-6" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
                 <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Platform SaaS</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>€500–2,000/mo per team</span>
@@ -1402,7 +1402,7 @@ function Slide11() {
               </p>
             </div>
 
-            <div className="rounded-xl border p-6" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
+            <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
                 <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Expertise Packs</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
@@ -1413,7 +1413,7 @@ function Slide11() {
               </p>
             </div>
 
-            <div className="rounded-xl border p-6" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
+            <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
                 <p className="font-black" style={{ fontSize: 28, color: DARK_TEXT }}>Onboarding Sprint</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
@@ -1426,7 +1426,7 @@ function Slide11() {
           </div>
 
           {/* Unit economics */}
-          <div className="w-[420px] flex flex-col gap-5">
+          <div className="w-[420px] flex flex-col gap-4">
             <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Early Signals → Target Economics</p>
 
             <div className="grid grid-cols-2 gap-4">
