@@ -239,54 +239,54 @@ function Slide03() {
       name: "Life Sciences",
       icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
       accent: RED,
-      records: ["Veeva Vault", "LIMS", "QMS"],
+      records: ["Batch records", "SOPs", "Validation protocols"],
       gap: "AI applies the standard procedure — but the context demands Annex 7. Nobody told it.",
-      outputs: ["NesGPT", "Copilot"],
+      outputs: ["Deviation reports", "Submission docs"],
       cost: "Safety risk. Audit failure.",
     },
     {
       name: "Professional Services",
       icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
-      records: ["Methodology", "Templates", "CRM"],
+      records: ["Methodologies", "Client briefs", "Proposals"],
       gap: "A junior has the template, not the partner's judgment. AI applies the average, not the exception.",
-      outputs: ["AI proposals", "Copilot drafts"],
+      outputs: ["Deliverables", "Advisory memos"],
       cost: "Margin erosion. Client escalation.",
     },
     {
       name: "Financial Services",
       icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
-      records: ["Policy manuals", "Risk models", "Compliance DB"],
+      records: ["Risk policies", "Case files", "Compliance docs"],
       gap: "Context changes mid-case. AI prices risk using the average. Two analysts, same case — different outcomes.",
-      outputs: ["AI underwriting", "Auto-advisory"],
+      outputs: ["Risk assessments", "Advisory reports"],
       cost: "Regulatory exposure. Inconsistent pricing.",
     },
     {
       name: "Engineering",
       icon: <Layers size={22} style={{ color: `hsl(${TEAL})` }} />,
       accent: TEAL,
-      records: ["Jira", "Confluence", "Git"],
+      records: ["Requirements", "Architecture docs", "Test specs"],
       gap: "AI generates code that compiles — but violates architectural decisions made 6 months ago. No one documented why.",
-      outputs: ["Copilot", "AI code review"],
+      outputs: ["Code", "Design reviews"],
       cost: "Tech debt. Rework cycles.",
     },
     {
       name: "Sales & GTM",
       icon: <TrendingUp size={22} style={{ color: `hsl(${GREEN})` }} />,
       accent: GREEN,
-      records: ["CRM", "Playbooks", "Pricing sheets"],
+      records: ["Pricing guides", "Battlecards", "Account plans"],
       gap: "AI drafts the proposal using last quarter's positioning. The strategic pivot hasn't reached the tools.",
-      outputs: ["AI proposals", "Auto-sequences"],
+      outputs: ["Proposals", "Sequences"],
       cost: "Lost deals. Brand inconsistency.",
     },
     {
       name: "Legal & Compliance",
       icon: <FileText size={22} style={{ color: `hsl(215 25% 50%)` }} />,
       accent: "215 25% 50%",
-      records: ["Contract DB", "Regulatory filings", "Policy docs"],
+      records: ["Contracts", "Regulatory filings", "Clause libraries"],
       gap: "AI applies standard clause library — but misses jurisdiction-specific exceptions the senior partner knows.",
-      outputs: ["AI contract review", "Auto-drafting"],
+      outputs: ["Contract drafts", "Opinions"],
       cost: "Liability. Compliance gaps.",
     },
   ];
@@ -448,22 +448,22 @@ function Slide05() {
           LIZA OS fills the gap.
         </h2>
         <p className="mb-4" style={{ fontSize: 20, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          A system that sits between your records and your AI — encoding, governing, and evolving your organization's collective judgment.
+          A system that sits between your input artifacts and your output artifacts — encoding, governing, and evolving your organization's collective judgment.
         </p>
 
-        {/* Main flow: Records → LIZA (horizontal rows) → Output */}
+        {/* Main flow: Input Artifacts → LIZA (horizontal rows) → Output Artifacts */}
         <div className="flex-1 flex items-stretch gap-0">
-          {/* Left: Inputs */}
+          {/* Left: Input Artifacts */}
           <div className="w-[200px] shrink-0 flex flex-col gap-3 justify-center">
             <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
               <Database size={30} className="mx-auto mb-2" style={{ color: `hsl(${BLUE})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Records</p>
-              <p style={{ fontSize: 13, color: MUTED }}>SOPs, CRM, docs</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Input Artifacts</p>
+              <p style={{ fontSize: 13, color: MUTED }}>SOPs, requirements, policies</p>
             </div>
             <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.05)` }}>
               <Users size={30} className="mx-auto mb-2" style={{ color: `hsl(${GOLD})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Experts</p>
-              <p style={{ fontSize: 13, color: MUTED }}>Judgment, exceptions</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Expert Judgment</p>
+              <p style={{ fontSize: 13, color: MUTED }}>Decisions, exceptions, rules</p>
             </div>
           </div>
 
@@ -514,12 +514,12 @@ function Slide05() {
             <ArrowRight size={30} style={{ color: `hsl(${TEAL} / 0.4)` }} />
           </div>
 
-          {/* Right: Output */}
+          {/* Right: Output Artifacts */}
           <div className="w-[200px] shrink-0 flex flex-col justify-center">
             <div className="rounded-2xl border px-5 py-8 text-center h-full flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.05)` }}>
               <Zap size={30} className="mx-auto mb-2" style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Governed Output</p>
-              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Deliverables, decisions, workflows — backed by your expertise</p>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Output Artifacts</p>
+              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Proposals, reports, workflows — governed by your expertise</p>
               <p className="mt-3 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>Consistent. Traceable.</p>
             </div>
           </div>
@@ -565,10 +565,10 @@ function SlideArchitecture() {
         </p>
 
         <div className="flex-1 flex flex-col gap-3 justify-center">
-          {/* Layer 3: AI Output */}
+          {/* Layer 3: Output Artifacts */}
           <div className="rounded-2xl border px-8 py-4 text-center"
             style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed AI Output</p>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output Artifacts</p>
             <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Any LLM · Any Workflow · Any Team — all governed by your expertise</p>
           </div>
 
@@ -659,7 +659,7 @@ function SlideArchitecture() {
           <div className="rounded-2xl border px-8 py-4"
             style={{ borderColor: `hsl(${BLUE} / 0.15)`, background: `hsl(${BLUE} / 0.03)` }}>
             <p className="font-black tracking-[0.15em] uppercase mb-2.5" style={{ fontSize: 12, color: `hsl(${BLUE})` }}>
-              Your Existing Systems of Record — Unchanged
+              Your Existing Systems — Input Artifacts — Unchanged
             </p>
             <div className="flex gap-3">
               {existingSystems.map(s => (
