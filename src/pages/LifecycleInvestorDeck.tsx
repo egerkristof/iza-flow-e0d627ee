@@ -357,7 +357,7 @@ function Slide05() {
         </p>
 
         {/* Flow: Records → LIZA → Output */}
-        <div className="flex-1 flex items-center gap-0">
+        <div className="flex-1 flex items-stretch gap-0">
           {/* Left: Records */}
           <div className="w-[240px] shrink-0 flex flex-col gap-4">
             <div className="rounded-2xl border px-6 py-6 text-center flex-1 flex flex-col justify-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
