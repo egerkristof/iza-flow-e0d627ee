@@ -359,16 +359,16 @@ function Slide05() {
         {/* Flow: Records → LIZA → Output */}
         <div className="flex-1 flex items-center gap-0">
           {/* Left: Records */}
-          <div className="w-[220px] shrink-0 flex flex-col gap-3">
-            <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
-              <Database size={28} className="mx-auto mb-2" style={{ color: `hsl(${BLUE})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Records</p>
-              <p style={{ fontSize: 14, color: MUTED }}>SOPs, CRM, docs, requirements</p>
+          <div className="w-[240px] shrink-0 flex flex-col gap-4">
+            <div className="rounded-2xl border px-6 py-6 text-center flex-1 flex flex-col justify-center" style={{ borderColor: `hsl(${BLUE} / 0.2)`, background: `hsl(${BLUE} / 0.05)` }}>
+              <Database size={36} className="mx-auto mb-3" style={{ color: `hsl(${BLUE})` }} />
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Your Records</p>
+              <p className="mt-1" style={{ fontSize: 16, color: MUTED }}>SOPs, CRM, docs, requirements</p>
             </div>
-            <div className="rounded-2xl border px-5 py-5 text-center" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.05)` }}>
-              <Users size={28} className="mx-auto mb-2" style={{ color: `hsl(${GOLD})` }} />
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Your Experts</p>
-              <p style={{ fontSize: 14, color: MUTED }}>Methods, judgment, exceptions</p>
+            <div className="rounded-2xl border px-6 py-6 text-center flex-1 flex flex-col justify-center" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.05)` }}>
+              <Users size={36} className="mx-auto mb-3" style={{ color: `hsl(${GOLD})` }} />
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Your Experts</p>
+              <p className="mt-1" style={{ fontSize: 16, color: MUTED }}>Methods, judgment, exceptions</p>
             </div>
           </div>
 
