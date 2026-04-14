@@ -1359,8 +1359,8 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Land with diagnostics.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Expand with expertise packs.</span>
+          Already charging.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Built to compound.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
