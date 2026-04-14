@@ -1172,6 +1172,124 @@ function Slide11() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 11B — 30-DAY EXECUTION CHALLENGE (GTM Wedge)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideExecutionChallenge() {
+  const phases = [
+    {
+      week: "Week 1",
+      title: "Extract",
+      icon: <BookOpen size={24} />,
+      color: TEAL,
+      actions: [
+        "Identify one high-value process (e.g. proposal writing, deal qualification)",
+        "Interview 2-3 senior experts (90 min each)",
+        "LIZA extracts judgment into structured playbooks",
+      ],
+      output: "3-5 executable playbooks ready",
+    },
+    {
+      week: "Week 2-3",
+      title: "Execute",
+      icon: <Zap size={24} />,
+      color: SEAFOAM,
+      actions: [
+        "Junior team members run playbooks with AI guidance",
+        "Real work, real clients, real outputs",
+        "LIZA tracks drift, captures feedback automatically",
+      ],
+      output: "Measurable quality comparison: before vs. after",
+    },
+    {
+      week: "Week 4",
+      title: "Prove",
+      icon: <TrendingUp size={24} />,
+      color: GREEN,
+      actions: [
+        "Review: time saved, quality delta, rework reduction",
+        "Knowledge graph auto-improved from execution feedback",
+        "Business case for full deployment with real numbers",
+      ],
+      output: "ROI proven. Expansion decision with data.",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
+
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+          The 30-Day Execution Challenge.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Prove value before you commit.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1100 }}>
+          One process. One team. 30 days. Measurable results — or walk away.
+        </p>
+
+        <div className="flex gap-5 flex-1 min-h-0">
+          {phases.map((p, i) => (
+            <div key={p.week} className="flex-1 rounded-2xl border flex flex-col overflow-hidden"
+              style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `hsl(${p.color} / 0.03)` }}>
+              {/* Header */}
+              <div className="px-6 py-4 flex items-center gap-3" style={{ borderBottom: `1px solid hsl(${p.color} / 0.15)` }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: `hsl(${p.color} / 0.12)`, color: `hsl(${p.color})` }}>
+                  {p.icon}
+                </div>
+                <div>
+                  <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 12, color: `hsl(${p.color})` }}>{p.week}</p>
+                  <p className="font-black" style={{ fontSize: 24, color: TEXT }}>{p.title}</p>
+                </div>
+              </div>
+              {/* Actions */}
+              <div className="flex-1 px-6 py-4 flex flex-col gap-2.5">
+                {p.actions.map((a, j) => (
+                  <div key={j} className="flex items-start gap-2.5">
+                    <span className="font-bold shrink-0 mt-0.5" style={{ color: `hsl(${p.color})` }}>→</span>
+                    <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{a}</p>
+                  </div>
+                ))}
+              </div>
+              {/* Output */}
+              <div className="px-6 py-3 mt-auto" style={{ background: `hsl(${p.color} / 0.06)` }}>
+                <p className="font-bold" style={{ fontSize: 15, color: `hsl(${p.color})` }}>
+                  ✓ {p.output}
+                </p>
+              </div>
+              {i < 2 && (
+                <div className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 hidden">
+                  <ArrowRight size={20} style={{ color: `hsl(${TEAL} / 0.3)` }} />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom metrics */}
+        <div className="mt-4 grid grid-cols-4 gap-4">
+          {[
+            { metric: "€5-15K", label: "Sprint cost", sub: "Self-funding from savings" },
+            { metric: "1 team", label: "Starting scope", sub: "5-15 people" },
+            { metric: "30 days", label: "To measurable ROI", sub: "Not 6 months" },
+            { metric: "85%+", label: "Conversion rate", sub: "Sprint → annual contract" },
+          ].map(m => (
+            <div key={m.label} className="rounded-xl px-5 py-3 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
+              <p className="font-black" style={{ fontSize: 28, color: TEXT }}>{m.metric}</p>
+              <p className="font-bold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>{m.label}</p>
+              <p style={{ fontSize: 12, color: MUTED }}>{m.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 11 — TEAM
 // ═══════════════════════════════════════════════════════════════════════════════
 
