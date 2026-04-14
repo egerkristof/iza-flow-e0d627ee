@@ -1184,7 +1184,7 @@ function Slide09() {
           The pattern repeats: wherever expert standards meet AI execution, the Instruction Gap exists. We start narrow, then expand.
         </p>
 
-        <div className="flex gap-5 flex-1 min-h-0">
+        <div className="flex gap-5">
           {/* 3 beachheads */}
           <div className="flex-[3] flex gap-4">
             {beachheads.map(({ vertical, status, color, icon, problem, result, proof }) => (
@@ -1201,11 +1201,11 @@ function Slide09() {
                   <AlertTriangle size={15} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
                   <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{problem}</p>
                 </div>
-                <div className="flex items-start gap-2 mb-3 flex-1">
+                <div className="flex items-start gap-2 mb-3">
                   <CheckCircle2 size={15} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
                   <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${color})`, lineHeight: 1.45 }}>{result}</p>
                 </div>
-                <div className="rounded-lg px-3 py-2 mt-auto" style={{ background: `hsl(${color} / 0.06)` }}>
+                <div className="rounded-lg px-3 py-2" style={{ background: `hsl(${color} / 0.06)` }}>
                   <p style={{ fontSize: 12, color: MUTED, fontStyle: "italic" }}>{proof}</p>
                 </div>
               </div>
@@ -1213,13 +1213,13 @@ function Slide09() {
           </div>
 
           {/* Expansion column */}
-          <div className="w-[320px] flex flex-col gap-3">
+          <div className="w-[320px] flex flex-col gap-2">
             <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 12, color: MUTED }}>
               The pattern applies to every function
             </p>
-            <div className="flex-1 flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
               {expandInto.map(({ name, col }) => (
-                <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-3"
+                <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-2.5"
                   style={{ background: `hsl(${col} / 0.05)`, border: `1px solid hsl(${col} / 0.15)` }}>
                   <div className="w-2 h-2 rounded-full shrink-0" style={{ background: `hsl(${col})` }} />
                   <p className="font-semibold" style={{ fontSize: 15, color: TEXT }}>{name}</p>
