@@ -150,218 +150,205 @@ function Slide02() {
         </p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.08 }}>
-          Inputs and outputs are structured.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There is no system for the intelligence in between.</span>
+          Companies have inputs. AI generates outputs.<br />
+          <span style={{ color: `hsl(${WARM})` }}>What is missing is the system for human intelligence in between.</span>
         </h2>
 
         {/* Instruction gap map */}
         <div className="flex-1 flex items-center justify-center">
           <svg width="100%" height="100%" viewBox="0 0 1400 560" style={{ maxWidth: 1400, maxHeight: 560 }}>
+            <defs>
+              <linearGradient id="instruction-line" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor={`hsl(${TEAL})`} stopOpacity="0.6" />
+                <stop offset="50%" stopColor={`hsl(${WARM})`} stopOpacity="0.7" />
+                <stop offset="100%" stopColor={`hsl(${GREEN})`} stopOpacity="0.6" />
+              </linearGradient>
+            </defs>
+
+            {/* Top journey bar */}
+            <line x1="220" y1="72" x2="1180" y2="72" stroke="url(#instruction-line)" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
+            <circle cx="220" cy="72" r="7" fill={`hsl(${TEAL})`} />
+            <circle cx="1180" cy="72" r="7" fill={`hsl(${GREEN})`} />
+            <polygon points="1178,66 1194,72 1178,78" fill={`hsl(${GREEN})`} />
+
+            <g>
+              <rect x="70" y="44" width="250" height="54" rx="16" fill={`hsl(${TEAL})`} fillOpacity="0.12" stroke={`hsl(${TEAL})`} strokeOpacity="0.32" />
+              <text x="195" y="66" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">START HERE</text>
+              <text x="195" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="16" fontWeight="800">Companies already have inputs</text>
+            </g>
+
+            <g>
+              <rect x="458" y="45" width="166" height="50" rx="25" fill={`hsl(${WARM})`} fillOpacity="0.12" stroke={`hsl(${WARM})`} strokeOpacity="0.34" />
+              <text x="541" y="75" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900" letterSpacing="0.08em">WORK GETS MESSY</text>
+            </g>
+
+            <g>
+              <rect x="700" y="45" width="194" height="50" rx="25" fill={`hsl(${WARM})`} fillOpacity="0.12" stroke={`hsl(${WARM})`} strokeOpacity="0.34" />
+              <text x="797" y="75" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900" letterSpacing="0.08em">EXPERTS MAKE DECISIONS</text>
+            </g>
+
+            <g>
+              <rect x="1080" y="44" width="250" height="54" rx="16" fill={`hsl(${GREEN})`} fillOpacity="0.12" stroke={`hsl(${GREEN})`} strokeOpacity="0.32" />
+              <text x="1205" y="66" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="13" fontWeight="900" letterSpacing="0.14em">END HERE</text>
+              <text x="1205" y="86" textAnchor="middle" fill={DARK_TEXT} fontSize="16" fontWeight="800">AI already generates outputs</text>
+            </g>
+
+            {/* Input box */}
+            <rect x="70" y="138" width="280" height="302" rx="28" fill={`hsl(${TEAL})`} fillOpacity="0.1" stroke={`hsl(${TEAL})`} strokeWidth="2.5" strokeOpacity="0.42" />
+            <text x="210" y="186" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="30" fontWeight="900">Input Artifacts</text>
+            <text x="210" y="212" textAnchor="middle" fill={DARK_MUTED} fontSize="14" fontWeight="800" letterSpacing="0.08em">COMPANIES ALREADY HAVE THESE</text>
+
             {[
-              { x: 225, color: DARK_SUBTLE, label: 'START WITH INPUTS' },
-              { x: 565, color: `hsl(${WARM})`, label: 'WORK GETS MESSY' },
-              { x: 835, color: `hsl(${WARM})`, label: 'EXPERTS MAKE DECISIONS' },
-              { x: 1175, color: DARK_SUBTLE, label: 'END WITH OUTPUTS' },
-            ].map((item) => (
-              <text
-                key={item.label}
-                x={item.x}
-                y="58"
-                textAnchor="middle"
-                fill={item.color}
-                fontSize="14"
-                fontWeight="800"
-                letterSpacing="0.14em"
-              >
-                {item.label}
-              </text>
-            ))}
-
-            {/* Input container */}
-            <path
-              d="M 310 150 L 220 150 A 130 130 0 0 0 220 410 L 310 410 Z"
-              fill={`hsl(${TEAL})`}
-              fillOpacity="0.1"
-              stroke={`hsl(${TEAL})`}
-              strokeWidth="2.5"
-              strokeOpacity="0.44"
-            />
-
-            {/* Left convergence shape */}
-            <polygon
-              points="310,280 520,145 520,415"
-              fill={`hsl(${TEAL})`}
-              fillOpacity="0.06"
-              stroke={`hsl(${TEAL})`}
-              strokeWidth="2.5"
-              strokeOpacity="0.38"
-              strokeLinejoin="round"
-            />
-
-            {/* Left divergence shape */}
-            <polygon
-              points="520,145 645,280 520,415"
-              fill={`hsl(${WARM})`}
-              fillOpacity="0.05"
-              stroke={`hsl(${WARM})`}
-              strokeWidth="2"
-              strokeOpacity="0.34"
-              strokeDasharray="7 4"
-              strokeLinejoin="round"
-            />
-
-            {/* Right convergence shape */}
-            <polygon
-              points="755,280 880,145 880,415"
-              fill={`hsl(${WARM})`}
-              fillOpacity="0.05"
-              stroke={`hsl(${WARM})`}
-              strokeWidth="2"
-              strokeOpacity="0.34"
-              strokeDasharray="7 4"
-              strokeLinejoin="round"
-            />
-
-            {/* Right output shape */}
-            <polygon
-              points="880,145 1090,280 880,415"
-              fill={`hsl(${GREEN})`}
-              fillOpacity="0.06"
-              stroke={`hsl(${GREEN})`}
-              strokeWidth="2.5"
-              strokeOpacity="0.38"
-              strokeLinejoin="round"
-            />
-
-            {/* Output container */}
-            <path
-              d="M 1090 150 L 1180 150 A 130 130 0 0 1 1180 410 L 1090 410 Z"
-              fill={`hsl(${GREEN})`}
-              fillOpacity="0.1"
-              stroke={`hsl(${GREEN})`}
-              strokeWidth="2.5"
-              strokeOpacity="0.44"
-            />
-
-            {/* Center missing layer */}
-            <rect
-              x="650"
-              y="182"
-              width="100"
-              height="196"
-              rx="22"
-              fill={`hsl(${WARM})`}
-              fillOpacity="0.13"
-              stroke={`hsl(${WARM})`}
-              strokeWidth="2.5"
-              strokeOpacity="0.5"
-              strokeDasharray="8 4"
-            />
-            <circle cx="700" cy="235" r="24" fill={`hsl(${WARM})`} fillOpacity="0.16" />
-            <text x="700" y="243" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22" fontWeight="900">!</text>
-            <text x="700" y="280" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900">Missing</text>
-            <text x="700" y="302" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900">System of</text>
-            <text x="700" y="324" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="15" fontWeight="900">Intelligence</text>
-            <text x="700" y="352" textAnchor="middle" fill={DARK_MUTED} fontSize="11" fontWeight="800">Context • judgment</text>
-            <text x="700" y="368" textAnchor="middle" fill={DARK_MUTED} fontSize="11" fontWeight="800">decisions • exceptions</text>
-
-            {/* Input container label */}
-            <text x="252" y="205" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="26" fontWeight="900">Input</text>
-            <text x="252" y="236" textAnchor="middle" fill={`hsl(${TEAL})`} fontSize="26" fontWeight="900">Artifacts</text>
-
-            {/* Output container label */}
-            <text x="1148" y="205" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="26" fontWeight="900">Output</text>
-            <text x="1148" y="236" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="26" fontWeight="900">Artifacts</text>
-
-            {/* Input pills */}
-            {[
-              { label: 'SOPs', y: 270, width: 64 },
-              { label: 'Requirements', y: 310, width: 112 },
-              { label: 'Policies', y: 350, width: 78 },
-              { label: 'Templates', y: 390, width: 86 },
-              { label: 'Data', y: 430, width: 62 },
+              { label: "SOPs", x: 145, y: 266, width: 74 },
+              { label: "Requirements", x: 270, y: 266, width: 126 },
+              { label: "Policies", x: 145, y: 318, width: 90 },
+              { label: "Templates", x: 270, y: 318, width: 104 },
+              { label: "Data", x: 145, y: 370, width: 74 },
+              { label: "Records", x: 270, y: 370, width: 92 },
             ].map((item) => (
               <g key={item.label}>
                 <rect
-                  x={252 - item.width / 2}
-                  y={item.y - 14}
+                  x={item.x - item.width / 2}
+                  y={item.y - 17}
                   width={item.width}
-                  height="28"
-                  rx="14"
+                  height="34"
+                  rx="17"
                   fill={`hsl(${TEAL})`}
                   fillOpacity="0.18"
+                  stroke={`hsl(${TEAL})`}
+                  strokeOpacity="0.12"
                 />
-                <text x="252" y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
+                <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="14" fontWeight="800">{item.label}</text>
               </g>
             ))}
 
-            {/* Sensemaking tags */}
+            {/* Output box */}
+            <rect x="1050" y="138" width="280" height="302" rx="28" fill={`hsl(${GREEN})`} fillOpacity="0.1" stroke={`hsl(${GREEN})`} strokeWidth="2.5" strokeOpacity="0.42" />
+            <text x="1190" y="186" textAnchor="middle" fill={`hsl(${GREEN})`} fontSize="30" fontWeight="900">Output Artifacts</text>
+            <text x="1190" y="212" textAnchor="middle" fill={DARK_MUTED} fontSize="14" fontWeight="800" letterSpacing="0.08em">AI ALREADY GENERATES THESE</text>
+
             {[
-              { label: 'Interpret context', x: 410, y: 176, width: 142, rotate: -8 },
-              { label: 'Apply judgment', x: 452, y: 240, width: 130, rotate: 6 },
-              { label: 'Handle exceptions', x: 412, y: 316, width: 146, rotate: -5 },
-              { label: 'Remember precedent', x: 444, y: 387, width: 164, rotate: 8 },
-              { label: 'Price decisions', x: 885, y: 176, width: 126, rotate: 7 },
-              { label: 'Resolve trade-offs', x: 848, y: 243, width: 144, rotate: -6 },
-              { label: 'Choose the standard', x: 888, y: 316, width: 154, rotate: 4 },
-              { label: 'Approve direction', x: 862, y: 387, width: 138, rotate: -7 },
+              { label: "Reports", x: 1125, y: 266, width: 92 },
+              { label: "Proposals", x: 1250, y: 266, width: 106 },
+              { label: "Decisions", x: 1125, y: 318, width: 102 },
+              { label: "Deliverables", x: 1250, y: 318, width: 122 },
+              { label: "Actions", x: 1125, y: 370, width: 86 },
+              { label: "Answers", x: 1250, y: 370, width: 92 },
             ].map((item) => (
-              <g key={item.label} transform={`rotate(${item.rotate} ${item.x + item.width / 2} ${item.y})`}>
+              <g key={item.label}>
                 <rect
-                  x={item.x}
-                  y={item.y - 16}
+                  x={item.x - item.width / 2}
+                  y={item.y - 17}
                   width={item.width}
-                  height="32"
-                  rx="16"
+                  height="34"
+                  rx="17"
+                  fill={`hsl(${GREEN})`}
+                  fillOpacity="0.18"
+                  stroke={`hsl(${GREEN})`}
+                  strokeOpacity="0.12"
+                />
+                <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="14" fontWeight="800">{item.label}</text>
+              </g>
+            ))}
+
+            {/* Flow wedges */}
+            <polygon
+              points="350,289 520,165 520,413"
+              fill={`hsl(${TEAL})`}
+              fillOpacity="0.05"
+              stroke={`hsl(${TEAL})`}
+              strokeWidth="2"
+              strokeOpacity="0.24"
+              strokeDasharray="7 5"
+              strokeLinejoin="round"
+            />
+            <polygon
+              points="520,165 660,289 520,413"
+              fill={`hsl(${WARM})`}
+              fillOpacity="0.05"
+              stroke={`hsl(${WARM})`}
+              strokeWidth="2"
+              strokeOpacity="0.32"
+              strokeDasharray="7 4"
+              strokeLinejoin="round"
+            />
+            <polygon
+              points="740,289 880,165 880,413"
+              fill={`hsl(${WARM})`}
+              fillOpacity="0.05"
+              stroke={`hsl(${WARM})`}
+              strokeWidth="2"
+              strokeOpacity="0.32"
+              strokeDasharray="7 4"
+              strokeLinejoin="round"
+            />
+            <polygon
+              points="880,165 1050,289 880,413"
+              fill={`hsl(${GREEN})`}
+              fillOpacity="0.05"
+              stroke={`hsl(${GREEN})`}
+              strokeWidth="2"
+              strokeOpacity="0.24"
+              strokeDasharray="7 5"
+              strokeLinejoin="round"
+            />
+
+            {/* Messy intelligence field */}
+            <ellipse cx="700" cy="289" rx="210" ry="156" fill={`hsl(${WARM})`} fillOpacity="0.05" stroke={`hsl(${WARM})`} strokeOpacity="0.12" strokeDasharray="5 8" />
+            <text x="700" y="126" textAnchor="middle" fill={DARK_MUTED} fontSize="14" fontWeight="800" letterSpacing="0.14em">THIS IS WHERE IT MAKES OR BREAKS</text>
+
+            {[
+              { label: "Interpret context", x: 535, y: 204, width: 148, rotate: -9 },
+              { label: "Apply judgment", x: 630, y: 185, width: 136, rotate: 8 },
+              { label: "Handle exceptions", x: 768, y: 214, width: 154, rotate: -7 },
+              { label: "Remember precedent", x: 563, y: 348, width: 168, rotate: 10 },
+              { label: "Resolve trade-offs", x: 747, y: 346, width: 152, rotate: -8 },
+              { label: "Choose the standard", x: 646, y: 392, width: 156, rotate: 6 },
+              { label: "Approve direction", x: 815, y: 397, width: 142, rotate: -5 },
+            ].map((item) => (
+              <g key={item.label} transform={`rotate(${item.rotate} ${item.x} ${item.y})`}>
+                <rect
+                  x={item.x - item.width / 2}
+                  y={item.y - 17}
+                  width={item.width}
+                  height="34"
+                  rx="17"
                   fill={`hsl(${WARM})`}
                   fillOpacity="0.14"
                   stroke={`hsl(${WARM})`}
-                  strokeOpacity="0.3"
+                  strokeOpacity="0.26"
                 />
-                <text
-                  x={item.x + item.width / 2}
-                  y={item.y + 5}
-                  textAnchor="middle"
-                  fill={DARK_TEXT}
-                  fontSize="13"
-                  fontWeight="700"
-                >
-                  {item.label}
-                </text>
+                <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="800">{item.label}</text>
               </g>
             ))}
 
-            {/* Output pills */}
-            {[
-              { label: 'Reports', y: 270, width: 76 },
-              { label: 'Proposals', y: 310, width: 92 },
-              { label: 'Decisions', y: 350, width: 90 },
-              { label: 'Deliverables', y: 390, width: 104 },
-            ].map((item) => (
-              <g key={item.label}>
-                <rect
-                  x={1148 - item.width / 2}
-                  y={item.y - 14}
-                  width={item.width}
-                  height="28"
-                  rx="14"
-                  fill={`hsl(${GREEN})`}
-                  fillOpacity="0.18"
-                />
-                <text x="1148" y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="700">{item.label}</text>
-              </g>
-            ))}
-
-            {/* Bottom proof labels */}
-            <text x="220" y="485" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ Companies already have these.</text>
-            <text x="1010" y="485" fill={DARK_SUBTLE} fontSize="14" fontWeight="700">✓ AI already generates these.</text>
+            {/* Center missing layer */}
+            <rect
+              x="600"
+              y="198"
+              width="200"
+              height="182"
+              rx="26"
+              fill={`hsl(${WARM})`}
+              fillOpacity="0.14"
+              stroke={`hsl(${WARM})`}
+              strokeWidth="2.8"
+              strokeOpacity="0.5"
+              strokeDasharray="8 4"
+            />
+            <circle cx="700" cy="242" r="25" fill={`hsl(${WARM})`} fillOpacity="0.18" />
+            <text x="700" y="250" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="22" fontWeight="900">!</text>
+            <text x="700" y="286" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="24" fontWeight="900">Missing System of</text>
+            <text x="700" y="316" textAnchor="middle" fill={`hsl(${WARM})`} fontSize="24" fontWeight="900">Intelligence</text>
+            <text x="700" y="345" textAnchor="middle" fill={DARK_TEXT} fontSize="14" fontWeight="800">Humans bridge this manually today.</text>
+            <text x="700" y="366" textAnchor="middle" fill={DARK_MUTED} fontSize="13" fontWeight="700">This is where AI quality breaks or compounds.</text>
           </svg>
         </div>
 
         {/* Bottom: the punchline */}
         <div className="mt-5 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
           <p className="font-black" style={{ fontSize: 24, color: DARK_TEXT }}>
-            If the intelligence is not encoded, <span style={{ color: `hsl(${WARM})` }}>AI fills in the gaps.</span>
+            Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
           </p>
         </div>
       </div>
