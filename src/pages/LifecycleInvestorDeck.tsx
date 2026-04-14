@@ -304,7 +304,7 @@ function Slide03() {
         <div className="flex flex-col gap-1.5 mb-3">
           {industries.map((ind) => (
             <div key={ind.name} className="flex items-stretch gap-0 rounded-[14px] overflow-hidden border"
-              style={{ borderColor: `hsl(${ind.accent} / 0.15)`, minHeight: 100 }}>
+              style={{ borderColor: `hsl(${ind.accent} / 0.15)`, minHeight: 72 }}>
 
               {/* RECORDS */}
               <div className="w-[230px] shrink-0 px-4 py-3 flex flex-col justify-center"
