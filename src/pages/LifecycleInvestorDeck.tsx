@@ -298,15 +298,15 @@ function Slide02() {
             <text x="700" y="126" textAnchor="middle" fill={DARK_MUTED} fontSize="14" fontWeight="800" letterSpacing="0.14em">THIS IS WHERE IT MAKES OR BREAKS</text>
 
             {[
-              { label: "Interpret context", x: 560, y: 194, width: 148, rotate: -9 },
-              { label: "Apply judgment", x: 708, y: 176, width: 136, rotate: 7 },
-              { label: "Handle exceptions", x: 846, y: 205, width: 154, rotate: -8 },
-              { label: "Remember precedent", x: 548, y: 376, width: 168, rotate: 9 },
-              { label: "Resolve trade-offs", x: 856, y: 372, width: 152, rotate: -9 },
-              { label: "Choose the standard", x: 622, y: 420, width: 156, rotate: 5 },
-              { label: "Approve direction", x: 782, y: 425, width: 142, rotate: -4 },
+              { label: "Interpret context", x: 560, y: 194, width: 148 },
+              { label: "Apply judgment", x: 710, y: 176, width: 136 },
+              { label: "Handle exceptions", x: 860, y: 202, width: 154 },
+              { label: "Use precedent", x: 540, y: 388, width: 140 },
+              { label: "Resolve trade-offs", x: 860, y: 386, width: 152 },
+              { label: "Set the standard", x: 620, y: 426, width: 146 },
+              { label: "Approve direction", x: 780, y: 426, width: 142 },
             ].map((item) => (
-              <g key={item.label} transform={`rotate(${item.rotate} ${item.x} ${item.y})`}>
+              <g key={item.label}>
                 <rect
                   x={item.x - item.width / 2}
                   y={item.y - 17}
@@ -320,6 +320,28 @@ function Slide02() {
                 />
                 <text x={item.x} y={item.y + 5} textAnchor="middle" fill={DARK_TEXT} fontSize="13" fontWeight="800">{item.label}</text>
               </g>
+            ))}
+
+            {[
+              { x1: 598, y1: 210, x2: 640, y2: 238 },
+              { x1: 710, y1: 194, x2: 700, y2: 232 },
+              { x1: 818, y1: 216, x2: 758, y2: 238 },
+              { x1: 586, y1: 373, x2: 640, y2: 350 },
+              { x1: 812, y1: 372, x2: 758, y2: 350 },
+              { x1: 652, y1: 409, x2: 674, y2: 356 },
+              { x1: 748, y1: 409, x2: 726, y2: 356 },
+            ].map((line, index) => (
+              <line
+                key={index}
+                x1={line.x1}
+                y1={line.y1}
+                x2={line.x2}
+                y2={line.y2}
+                stroke={`hsl(${WARM})`}
+                strokeOpacity="0.26"
+                strokeWidth="1.5"
+                strokeDasharray="4 5"
+              />
             ))}
 
             {/* Center missing layer */}
