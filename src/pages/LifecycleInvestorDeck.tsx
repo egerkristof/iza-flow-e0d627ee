@@ -428,7 +428,7 @@ function Slide05() {
           </div>
 
           {/* Arrow out */}
-          <div className="flex flex-col items-center justify-center px-5">
+          <div className="shrink-0 flex items-center justify-center px-5">
             <ArrowRight size={34} style={{ color: `hsl(${TEAL} / 0.4)` }} />
           </div>
 
