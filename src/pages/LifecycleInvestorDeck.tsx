@@ -1359,8 +1359,8 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: DARK_TEXT, lineHeight: 1.05 }}>
-          Land with diagnostics.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Expand with expertise packs.</span>
+          Already charging.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Built to compound.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1404,7 +1404,7 @@ function Slide11() {
 
           {/* Unit economics */}
           <div className="w-[420px] flex flex-col gap-5">
-            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Unit Economics Target</p>
+            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Early Signals → Target Economics</p>
 
             <div className="grid grid-cols-2 gap-4">
               {[
@@ -1575,8 +1575,8 @@ function Slide12() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Team</p>
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          Built by practitioners.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>Not first-time founders.</span>
+          15+ years encoding organizational intelligence.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>200+ enterprise engagements.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1717,18 +1717,16 @@ const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Instruction Gap", component: <Slide02 /> },
   { id: 3, title: "What That Costs", component: <Slide03 /> },
-  { id: 4, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 5, title: "The Instruction Layer", component: <Slide05 /> },
-  { id: 6, title: "How It Works", component: <Slide07 /> },
+  { id: 4, title: "Early Validation", component: <Slide08 /> },
+  { id: 5, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 6, title: "The Instruction Layer", component: <Slide05 /> },
   { id: 7, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 8, title: "Early Validation", component: <Slide08 /> },
-  { id: 9, title: "Expansion Path", component: <Slide09 /> },
-  { id: 10, title: "What's Built", component: <Slide10 /> },
-  { id: 11, title: "Where LIZA Sits", component: <SlideArchitecture /> },
-  { id: 12, title: "Business Model", component: <Slide11 /> },
-  { id: 13, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 14, title: "Team", component: <Slide12 /> },
-  { id: 15, title: "The Ask", component: <Slide13 /> },
+  { id: 8, title: "Expansion Path", component: <Slide09 /> },
+  { id: 9, title: "What's Built", component: <Slide10 /> },
+  { id: 10, title: "Business Model", component: <Slide11 /> },
+  { id: 11, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 12, title: "Team", component: <Slide12 /> },
+  { id: 13, title: "The Ask", component: <Slide13 /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
