@@ -8,8 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calculator, TrendingDown, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Calculator, TrendingDown } from "lucide-react";
 
 const DEPARTMENTS = [
   { value: "engineering", label: "Engineering / IT / Data", hours: 5.0 },
