@@ -15,17 +15,11 @@ export default function CalculatorPage() {
       {/* Hero */}
       <section className="pt-32 pb-8 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight mb-4">
+          <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">
             Your team is fixing AI outputs every week.
             <br />
             <span className="text-muted-foreground">How much is that actually costing you?</span>
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Most teams know they spend hours correcting, re-prompting, and re-doing AI work.
-            What they don't see is the structural cost underneath: the duplication across team members,
-            the knowledge that walks out the door, the governance each department reinvents alone.
-            Put your numbers in. See what shows up.
-          </p>
         </div>
       </section>
 
