@@ -1,19 +1,16 @@
-import { Helmet } from "react-helmet";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import InstructionGapCalculator from "@/components/marketing/InstructionGapCalculator";
 import { ArrowRight } from "lucide-react";
 
 export default function CalculatorPage() {
+  useEffect(() => {
+    document.title = "Instruction Gap Tax Calculator | LIZA OS";
+  }, []);
+
   return (
     <MarketingLayout>
-      <Helmet>
-        <title>Instruction Gap Tax Calculator | LIZA OS</title>
-        <meta
-          name="description"
-          content="Calculate the hidden cost of unstructured AI in your organization. Department-specific estimates based on 2026 research from Zapier and Workday."
-        />
-      </Helmet>
 
       {/* Hero */}
       <section className="pt-32 pb-8 px-6">
