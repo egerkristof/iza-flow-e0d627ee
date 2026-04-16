@@ -19,6 +19,8 @@ import {
   Zap,
   Brain,
   ArrowUpRight,
+  Network,
+  ShieldCheck,
 } from "lucide-react";
 
 const DEPARTMENTS = [
