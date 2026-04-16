@@ -9,6 +9,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
   Calculator,
   TrendingDown,
   Copy,
@@ -21,6 +26,7 @@ import {
   ArrowUpRight,
   Network,
   ShieldCheck,
+  ChevronDown,
 } from "lucide-react";
 import { DEPARTMENTS } from "./calculator/departments";
 
@@ -245,12 +251,17 @@ export default function InstructionGapCalculator() {
                   {formatCurrency(calc.reworkAnnual)}/year
                 </p>
                 <div
-                  className="rounded-lg px-3 py-2 mb-4 flex items-center gap-2"
+                  className="rounded-lg px-3 py-2.5 mb-4"
                   style={{ background: "hsl(var(--primary) / 0.08)" }}
                 >
-                  <TrendingDown className="w-4 h-4 shrink-0" style={{ color: "hsl(var(--primary))" }} />
-                  <p className="text-sm font-semibold" style={{ color: "hsl(var(--primary))" }}>
-                    Recoverable: {formatCurrency(calc.reworkRecoverable)}/year
+                  <div className="flex items-center gap-2 mb-1">
+                    <TrendingDown className="w-4 h-4 shrink-0" style={{ color: "hsl(var(--primary))" }} />
+                    <p className="text-sm font-semibold" style={{ color: "hsl(var(--primary))" }}>
+                      Recoverable: {formatCurrency(calc.reworkRecoverable)}/year
+                    </p>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    Teams with governed AI instruction sets typically reclaim ~65% of rework cost by replacing ad-hoc prompting with reusable, standardized patterns.
                   </p>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed italic">
@@ -261,12 +272,14 @@ export default function InstructionGapCalculator() {
           </div>
         </div>
 
-        {/* Team-level taxes */}
-        <div className="mt-6">
-          <p className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground mb-4 text-center">
-            Department-level taxes you may not be tracking
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {/* Team-level taxes — progressive disclosure */}
+        <ProgressiveSection
+          eyebrow="Department-level taxes"
+          summary="Hidden costs compounding inside your team"
+          summaryValue={calc.teamSubtotal}
+          opacity={0.85}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
             {TEAM_TAX_CARDS.map((tax) => (
               <TaxCard key={tax.key} tax={tax} value={calc.taxes[tax.key]} />
             ))}
@@ -278,14 +291,16 @@ export default function InstructionGapCalculator() {
             <p className="text-xs font-semibold text-muted-foreground">Department subtotal</p>
             <p className="text-sm font-black text-foreground">{formatCurrency(calc.teamSubtotal)}/year</p>
           </div>
-        </div>
+        </ProgressiveSection>
 
-        {/* Organizational taxes */}
-        <div className="mt-8">
-          <p className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1 text-center">
-            Potential organizational cost
-          </p>
-          <p className="text-[11px] text-muted-foreground mb-4 text-center max-w-md mx-auto">
+        {/* Organizational taxes — progressive disclosure, lighter still */}
+        <ProgressiveSection
+          eyebrow="Organizational ripple"
+          summary="Costs that spread across adjacent teams"
+          summaryValue={calc.orgSubtotal}
+          opacity={0.7}
+        >
+          <p className="text-[11px] text-muted-foreground mt-3 mb-4 max-w-md">
             These costs compound across team boundaries. Estimates assume ~3 adjacent departments interacting with yours.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -300,7 +315,7 @@ export default function InstructionGapCalculator() {
             <p className="text-xs font-semibold text-muted-foreground">Organizational subtotal</p>
             <p className="text-sm font-black text-foreground">{formatCurrency(calc.orgSubtotal)}/year</p>
           </div>
-        </div>
+        </ProgressiveSection>
 
         {/* Total Instruction Gap Tax */}
         <div
@@ -457,6 +472,62 @@ function TaxCard({
           </p>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ─── Progressive Section (collapsible, opacity-attenuated) ─── */
+
+function ProgressiveSection({
+  eyebrow,
+  summary,
+  summaryValue,
+  opacity,
+  children,
+}: {
+  eyebrow: string;
+  summary: string;
+  summaryValue: number;
+  opacity: number;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-4" style={{ opacity: open ? 1 : opacity, transition: "opacity 0.3s ease" }}>
+      <Collapsible open={open} onOpenChange={setOpen}>
+        <CollapsibleTrigger
+          className="w-full rounded-xl border px-4 py-3 flex items-center justify-between gap-3 hover:bg-muted/30 transition-colors text-left group"
+          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div
+              className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-transform"
+              style={{
+                background: "hsl(var(--primary) / 0.08)",
+                transform: open ? "rotate(180deg)" : "rotate(0deg)",
+              }}
+            >
+              <ChevronDown className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground">
+                {eyebrow}
+              </p>
+              <p className="text-sm font-semibold text-foreground truncate">{summary}</p>
+            </div>
+          </div>
+          <div className="text-right shrink-0">
+            <p className="text-base font-black text-foreground tracking-tight">
+              {formatCurrency(summaryValue)}
+              <span className="text-[11px] font-medium text-muted-foreground">/yr</span>
+            </p>
+            <p className="text-[10px] text-muted-foreground group-hover:text-primary transition-colors">
+              {open ? "Hide details" : "Show details"}
+            </p>
+          </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent>{children}</CollapsibleContent>
+      </Collapsible>
     </div>
   );
 }
