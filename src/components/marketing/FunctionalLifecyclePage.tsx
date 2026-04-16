@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { SectionTag, CAL_URL } from "@/components/marketing/home/shared";
 import { ReactNode } from "react";
+import InstructionGapCalculator from "@/components/marketing/InstructionGapCalculator";
 
 export interface LifecycleStage {
   icon: ReactNode;
@@ -44,6 +45,7 @@ export interface FunctionalLifecycleConfig {
   useCases: UseCase[];
   ctaHeadline: string;
   ctaNote: string;
+  showCalculator?: boolean;
 }
 
 const DEFAULT_HOW = [
@@ -162,6 +164,9 @@ export default function FunctionalLifecyclePage({ config }: { config: Functional
           </div>
         </div>
       </section>
+
+      {/* Instruction Gap Tax Calculator */}
+      {config.showCalculator !== false && <InstructionGapCalculator />}
 
       {/* How LIZA works */}
       <section className="pb-16 px-6">
