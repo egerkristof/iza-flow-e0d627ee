@@ -128,12 +128,18 @@ export function ThreeReasonsSection() {
     <section id="three-reasons" className="relative py-24 md:py-32 px-6"
       style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
-        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The root cause</p>
+        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The Instruction Gap</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
           Three structural gaps
           <br />
           <span className="text-muted-foreground">between your expertise and AI.</span>
         </h2>
+        <p className="text-base text-muted-foreground max-w-xl mx-auto mt-4 leading-relaxed">
+          Other tools give AI your <span className="line-through decoration-1">documents</span>.{" "}
+          <span className="font-black text-foreground">We give AI your judgment.</span>{" "}
+          That gap costs organizations an average of{" "}
+          <span className="font-black" style={{ color: "hsl(var(--primary))" }}>€550K/year</span> in rework, inconsistency, and lost expertise.
+        </p>
 
         <div className="mt-20 space-y-20 md:space-y-28">
           {REASONS.map((r) => (
