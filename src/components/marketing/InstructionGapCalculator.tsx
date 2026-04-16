@@ -8,8 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calculator, TrendingDown, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Calculator, TrendingDown } from "lucide-react";
 
 const DEPARTMENTS = [
   { value: "engineering", label: "Engineering / IT / Data", hours: 5.0 },
@@ -173,17 +172,9 @@ export default function InstructionGapCalculator() {
                 </div>
               </div>
 
-              <Link
-                to="/diagnostic"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all w-full"
-                style={{
-                  background: "var(--gradient-brand-btn)",
-                  color: "hsl(var(--primary-foreground))",
-                  boxShadow: "0 0 24px -4px hsl(var(--primary) / 0.3)",
-                }}
-              >
-                Measure your actual score <ArrowRight className="w-4 h-4" />
-              </Link>
+              <p className="text-xs text-muted-foreground leading-relaxed mt-4 italic">
+                This is a research-based estimate. Scroll down to see how structured governance reduces this cost.
+              </p>
             </div>
           </div>
 
