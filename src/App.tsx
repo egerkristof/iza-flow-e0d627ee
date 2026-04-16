@@ -41,6 +41,7 @@ import PlatformSignupPage from "./pages/marketing/PlatformSignup";
 import DiagnosticPage from "./pages/marketing/Diagnostic";
 import PrivacyPage from "./pages/marketing/Privacy";
 import TermsPage from "./pages/marketing/Terms";
+import CalculatorPage from "./pages/marketing/Calculator";
 
 const queryClient = new QueryClient();
 

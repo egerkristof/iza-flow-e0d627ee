@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: "Use Cases", href: "/use-cases" },
   { label: "Industries", href: "/industries" },
   { label: "Manifesto", href: "/manifesto" },
+  { label: "Calculator", href: "/calculator" },
   { label: "Diagnostic", href: "/diagnostic" },
 ];
 
