@@ -475,3 +475,59 @@ function TaxCard({
     </div>
   );
 }
+
+/* ─── Progressive Section (collapsible, opacity-attenuated) ─── */
+
+function ProgressiveSection({
+  eyebrow,
+  summary,
+  summaryValue,
+  opacity,
+  children,
+}: {
+  eyebrow: string;
+  summary: string;
+  summaryValue: number;
+  opacity: number;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-4" style={{ opacity: open ? 1 : opacity, transition: "opacity 0.3s ease" }}>
+      <Collapsible open={open} onOpenChange={setOpen}>
+        <CollapsibleTrigger
+          className="w-full rounded-xl border px-4 py-3 flex items-center justify-between gap-3 hover:bg-muted/30 transition-colors text-left group"
+          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div
+              className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-transform"
+              style={{
+                background: "hsl(var(--primary) / 0.08)",
+                transform: open ? "rotate(180deg)" : "rotate(0deg)",
+              }}
+            >
+              <ChevronDown className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground">
+                {eyebrow}
+              </p>
+              <p className="text-sm font-semibold text-foreground truncate">{summary}</p>
+            </div>
+          </div>
+          <div className="text-right shrink-0">
+            <p className="text-base font-black text-foreground tracking-tight">
+              {formatCurrency(summaryValue)}
+              <span className="text-[11px] font-medium text-muted-foreground">/yr</span>
+            </p>
+            <p className="text-[10px] text-muted-foreground group-hover:text-primary transition-colors">
+              {open ? "Hide details" : "Show details"}
+            </p>
+          </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent>{children}</CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+}
