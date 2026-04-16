@@ -19,6 +19,8 @@ import {
   Zap,
   Brain,
   ArrowUpRight,
+  Network,
+  ShieldCheck,
 } from "lucide-react";
 
 const DEPARTMENTS = [
@@ -40,6 +42,9 @@ const INCONSISTENCY_RATE = 0.20;
 const TURNOVER_RATE = 0.15;
 const ATTRITION_RAMP_WEEKS = 8;
 const ONBOARDING_RAMP_WEEKS = 6;
+const ADJACENT_TEAMS = 3;
+const HANDOFF_FRICTION_RATE = 0.18;
+const SHADOW_GOVERNANCE_HOURS = 3;
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-IE", {
@@ -77,6 +82,19 @@ const TAX_CARDS = [
     label: "Onboarding Tax",
     desc: "New hires building AI workflows from scratch with no codified processes to inherit.",
     assumption: "~15% turnover-driven hires × 6-week ramp to baseline",
+  },
+  {
+    key: "handoff",
+    icon: Network,
+    desc: "Adjacent teams re-contextualizing and re-prompting AI outputs that cross team boundaries without shared standards.",
+    assumption: "~3 adjacent teams × 18% of rework baseline lost in translation per boundary",
+  },
+  {
+    key: "shadowGovernance",
+    icon: ShieldCheck,
+    label: "Shadow Governance Tax",
+    desc: "Each department independently building its own AI review and QA processes. Legal, Marketing, Product all reinventing the same quality gates.",
+    assumption: "~3h/week per adjacent team in duplicated governance effort",
   },
 ] as const;
 
@@ -117,7 +135,9 @@ export default function InstructionGapCalculator() {
     const inconsistency = reworkAnnual * INCONSISTENCY_RATE;
     const attrition = (teamSize * TURNOVER_RATE) * (dept.hours * hourlyCost * ATTRITION_RAMP_WEEKS);
     const onboarding = (teamSize * TURNOVER_RATE) * (dept.hours * hourlyCost * ONBOARDING_RAMP_WEEKS);
-    const totalGap = reworkAnnual + duplication + inconsistency + attrition + onboarding;
+    const handoff = reworkAnnual * HANDOFF_FRICTION_RATE * ADJACENT_TEAMS;
+    const shadowGovernance = ADJACENT_TEAMS * SHADOW_GOVERNANCE_HOURS * hourlyCost * 52;
+    const totalGap = reworkAnnual + duplication + inconsistency + attrition + onboarding + handoff + shadowGovernance;
 
     return {
       reworkAnnual,
@@ -126,9 +146,11 @@ export default function InstructionGapCalculator() {
       inconsistency,
       attrition,
       onboarding,
+      handoff,
+      shadowGovernance,
       totalGap,
       recoverable: totalGap * RECOVERY_RATE,
-      taxes: { duplication, inconsistency, attrition, onboarding } as Record<string, number>,
+      taxes: { duplication, inconsistency, attrition, onboarding, handoff, shadowGovernance } as Record<string, number>,
     };
   }, [teamSize, dept.hours, hourlyCost]);
 
