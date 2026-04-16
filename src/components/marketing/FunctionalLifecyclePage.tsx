@@ -165,6 +165,9 @@ export default function FunctionalLifecyclePage({ config }: { config: Functional
         </div>
       </section>
 
+      {/* Instruction Gap Tax Calculator */}
+      {config.showCalculator !== false && <InstructionGapCalculator />}
+
       {/* How LIZA works */}
       <section className="pb-16 px-6">
         <div className="max-w-4xl mx-auto">
