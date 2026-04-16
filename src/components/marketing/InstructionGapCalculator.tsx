@@ -128,6 +128,7 @@ export default function InstructionGapCalculator() {
     return {
       reworkAnnual,
       reworkMonthly: reworkAnnual / 12,
+      reworkRecoverable: reworkAnnual * 0.65,
       duplication,
       inconsistency,
       attrition,
