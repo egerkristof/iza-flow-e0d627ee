@@ -126,27 +126,6 @@ export function HeroSection() {
           </a>
         </motion.div>
 
-        {/* ── Trust strip ── */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-x-8 gap-y-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
-          {TRUST_STATS.map((stat) => (
-            <div key={stat.label} className="flex items-baseline gap-1.5">
-              <span
-                className="text-lg md:text-xl font-black"
-                style={{ color: "hsl(var(--primary))" }}
-              >
-                {stat.value}
-              </span>
-              <span className="text-xs text-muted-foreground font-medium">
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </motion.div>
       </div>
 
       {/* ── Scroll hint ── */}
