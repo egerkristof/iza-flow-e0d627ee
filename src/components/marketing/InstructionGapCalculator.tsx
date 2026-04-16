@@ -1,6 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -21,30 +23,13 @@ import {
   ArrowUpRight,
   Network,
   ShieldCheck,
+  Plus,
+  X,
+  Building2,
 } from "lucide-react";
-
-const DEPARTMENTS = [
-  { value: "engineering", label: "Engineering / IT / Data", hours: 5.0 },
-  { value: "finance", label: "Finance & Accounting", hours: 4.6 },
-  { value: "bizdev", label: "Business Development", hours: 3.9 },
-  { value: "operations", label: "Operations & Supply Chain", hours: 3.9 },
-  { value: "hr", label: "Human Resources", hours: 3.8 },
-  { value: "product", label: "Product Development", hours: 3.8 },
-  { value: "legal", label: "Legal", hours: 3.6 },
-  { value: "marketing", label: "Marketing", hours: 3.3 },
-  { value: "sales", label: "Sales & Support", hours: 3.0 },
-  { value: "pm", label: "Project Management", hours: 2.8 },
-] as const;
-
-const RECOVERY_RATE = 0.65;
-const DUPLICATION_RATE = 0.25;
-const INCONSISTENCY_RATE = 0.20;
-const TURNOVER_RATE = 0.15;
-const ATTRITION_RAMP_WEEKS = 8;
-const ONBOARDING_RAMP_WEEKS = 6;
-const ADJACENT_TEAMS = 3;
-const HANDOFF_FRICTION_RATE = 0.18;
-const SHADOW_GOVERNANCE_HOURS = 3;
+import { DEPARTMENTS } from "./calculator/departments";
+import { useCalculator } from "./calculator/useCalculator";
+import type { DepartmentEntry } from "./calculator/types";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-IE", {
@@ -56,45 +41,42 @@ function formatCurrency(value: number) {
 
 const TAX_CARDS = [
   {
-    key: "duplication",
+    key: "totalDuplication",
     icon: Copy,
     label: "Duplication Tax",
     desc: "Team members independently solving problems a colleague already figured out.",
-    assumption: "~25% of rework is redundant effort across team members",
   },
   {
-    key: "inconsistency",
+    key: "totalInconsistency",
     icon: Split,
     label: "Inconsistency Tax",
     desc: "Cross-checking and aligning different AI outputs across the team.",
-    assumption: "~20% of rework hours spent reconciling divergent outputs",
   },
   {
-    key: "attrition",
+    key: "totalAttrition",
     icon: UserMinus,
     label: "Attrition Tax",
-    desc: "Rebuilding AI expertise lost when team members leave. Knowledge walks out the door.",
-    assumption: "~15% annual turnover × 8-week expertise reconstruction",
+    desc: "Rebuilding AI expertise lost when team members leave.",
   },
   {
-    key: "onboarding",
+    key: "totalOnboarding",
     icon: GraduationCap,
     label: "Onboarding Tax",
-    desc: "New hires building AI workflows from scratch with no codified processes to inherit.",
-    assumption: "~15% turnover-driven hires × 6-week ramp to baseline",
+    desc: "New hires building AI workflows from scratch with no codified processes.",
   },
   {
-    key: "handoff",
+    key: "totalHandoff",
     icon: Network,
-    desc: "Adjacent teams re-contextualizing and re-prompting AI outputs that cross team boundaries without shared standards.",
-    assumption: "~3 adjacent teams × 18% of rework baseline lost in translation per boundary",
+    label: "Handoff Friction Tax",
+    desc: "Adjacent teams re-contextualizing AI outputs that cross boundaries without shared standards.",
+    crossOrg: true,
   },
   {
-    key: "shadowGovernance",
+    key: "totalShadowGovernance",
     icon: ShieldCheck,
     label: "Shadow Governance Tax",
-    desc: "Each department independently building its own AI review and QA processes. Legal, Marketing, Product all reinventing the same quality gates.",
-    assumption: "~3h/week per adjacent team in duplicated governance effort",
+    desc: "Each department independently building its own AI review and QA processes.",
+    crossOrg: true,
   },
 ] as const;
 
@@ -104,55 +86,61 @@ const FORWARD_METRICS = [
     label: "Knowledge Capture Rate",
     getValue: () => "~0%",
     contrast: "AI-native teams: 60-80%",
-    desc: "Percentage of AI interactions that become reusable organizational intelligence. Currently, learnings die in individual chat histories.",
+    desc: "Percentage of AI interactions that become reusable organizational intelligence.",
   },
   {
     icon: Zap,
     label: "Execution Cycle Time",
     getValue: (deptHours: number) => `~${Math.round(deptHours * 1.5)}h`,
     contrast: "AI-native teams: 3-4× faster",
-    desc: "Average time from decision to governed AI execution. Without playbooks, every task starts from a blank prompt.",
+    desc: "Average time from decision to governed AI execution.",
   },
   {
     icon: ArrowUpRight,
     label: "Delegation Capacity",
-    getValue: (_, teamSize: number) => `~${Math.min(25, Math.round(10 + teamSize * 0.15))}%`,
+    getValue: (_: number, teamSize: number) =>
+      `~${Math.min(25, Math.round(10 + teamSize * 0.15))}%`,
     contrast: "AI-native teams: 60-75%",
-    desc: "Percentage of expert work that can be safely delegated to junior team members + AI. Without governed standards, seniors must review everything.",
+    desc: "Percentage of expert work safely delegatable to junior team members + AI.",
   },
 ] as const;
 
+let entryIdCounter = 0;
+function newEntryId() {
+  return `dept-${++entryIdCounter}`;
+}
+
 export default function InstructionGapCalculator() {
-  const [teamSize, setTeamSize] = useState(25);
-  const [department, setDepartment] = useState("operations");
   const [hourlyCost, setHourlyCost] = useState(75);
+  const [multiMode, setMultiMode] = useState(false);
+  const [entries, setEntries] = useState<DepartmentEntry[]>([
+    { id: newEntryId(), department: "operations", teamSize: 25 },
+  ]);
 
-  const dept = DEPARTMENTS.find((d) => d.value === department)!;
+  const addDepartment = useCallback(() => {
+    if (entries.length >= 5) return;
+    const used = new Set(entries.map((e) => e.department));
+    const next = DEPARTMENTS.find((d) => !used.has(d.value))?.value || "engineering";
+    setEntries((prev) => [...prev, { id: newEntryId(), department: next, teamSize: 15 }]);
+  }, [entries]);
 
-  const calculations = useMemo(() => {
-    const reworkAnnual = teamSize * dept.hours * hourlyCost * 52;
-    const duplication = reworkAnnual * DUPLICATION_RATE;
-    const inconsistency = reworkAnnual * INCONSISTENCY_RATE;
-    const attrition = (teamSize * TURNOVER_RATE) * (dept.hours * hourlyCost * ATTRITION_RAMP_WEEKS);
-    const onboarding = (teamSize * TURNOVER_RATE) * (dept.hours * hourlyCost * ONBOARDING_RAMP_WEEKS);
-    const handoff = reworkAnnual * HANDOFF_FRICTION_RATE * ADJACENT_TEAMS;
-    const shadowGovernance = ADJACENT_TEAMS * SHADOW_GOVERNANCE_HOURS * hourlyCost * 52;
-    const totalGap = reworkAnnual + duplication + inconsistency + attrition + onboarding + handoff + shadowGovernance;
+  const removeDepartment = useCallback((id: string) => {
+    setEntries((prev) => (prev.length <= 1 ? prev : prev.filter((e) => e.id !== id)));
+  }, []);
 
-    return {
-      reworkAnnual,
-      reworkMonthly: reworkAnnual / 12,
-      duplication,
-      inconsistency,
-      attrition,
-      onboarding,
-      handoff,
-      shadowGovernance,
-      totalGap,
-      recoverable: totalGap * RECOVERY_RATE,
-      taxes: { duplication, inconsistency, attrition, onboarding, handoff, shadowGovernance } as Record<string, number>,
-    };
-  }, [teamSize, dept.hours, hourlyCost]);
+  const updateEntry = useCallback(
+    (id: string, patch: Partial<DepartmentEntry>) => {
+      setEntries((prev) =>
+        prev.map((e) => (e.id === id ? { ...e, ...patch } : e))
+      );
+    },
+    []
+  );
+
+  const activeEntries = multiMode ? entries : [entries[0]];
+  const calc = useCalculator(activeEntries, hourlyCost, multiMode);
+  const primaryDept = DEPARTMENTS.find((d) => d.value === entries[0].department)!;
+  const totalTeamSize = activeEntries.reduce((s, e) => s + e.teamSize, 0);
 
   return (
     <section className="pb-16 px-6">
@@ -171,7 +159,7 @@ export default function InstructionGapCalculator() {
             Instruction Gap Tax
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-            What is unstructured AI costing your team?
+            What is unstructured AI costing your {multiMode ? "organization" : "team"}?
           </h2>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
             Based on published research from Zapier (n=1,100) and Workday (2026). Adjust the inputs to see your estimate.
@@ -186,44 +174,60 @@ export default function InstructionGapCalculator() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Inputs */}
             <div className="space-y-6">
-              <div>
-                <Label className="text-sm font-semibold text-foreground mb-3 block">
-                  Team members using AI: <span className="text-primary">{teamSize}</span>
-                </Label>
-                <Slider
-                  value={[teamSize]}
-                  onValueChange={([v]) => setTeamSize(v)}
-                  min={5}
-                  max={200}
-                  step={1}
-                />
-                <div className="flex justify-between text-[11px] text-muted-foreground mt-1">
-                  <span>5</span>
-                  <span>200</span>
+              {/* Primary department */}
+              <DepartmentInputCard
+                entry={entries[0]}
+                onUpdate={updateEntry}
+                canRemove={false}
+                onRemove={() => {}}
+                label={multiMode ? "Primary Department" : "Department"}
+              />
+
+              {/* Multi-department toggle */}
+              <div
+                className="rounded-xl border p-4 flex items-center justify-between gap-3"
+                style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--muted) / 0.3)" }}
+              >
+                <div className="flex items-center gap-3">
+                  <Building2 className="w-4 h-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Cross-department impact</p>
+                    <p className="text-[11px] text-muted-foreground">Add departments to see organizational cost</p>
+                  </div>
                 </div>
+                <Switch
+                  checked={multiMode}
+                  onCheckedChange={setMultiMode}
+                />
               </div>
 
-              <div>
-                <Label className="text-sm font-semibold text-foreground mb-3 block">
-                  Department
-                </Label>
-                <Select value={department} onValueChange={setDepartment}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {DEPARTMENTS.map((d) => (
-                      <SelectItem key={d.value} value={d.value}>
-                        {d.label} — {d.hours}h rework/wk
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <p className="text-[11px] text-muted-foreground mt-1.5">
-                  Rework hours sourced from Zapier AI Workslop Report, Jan 2026
-                </p>
-              </div>
+              {/* Additional departments */}
+              {multiMode && (
+                <div className="space-y-3">
+                  {entries.slice(1).map((entry) => (
+                    <DepartmentInputCard
+                      key={entry.id}
+                      entry={entry}
+                      onUpdate={updateEntry}
+                      canRemove
+                      onRemove={removeDepartment}
+                    />
+                  ))}
+                  {entries.length < 5 && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full text-xs"
+                      onClick={addDepartment}
+                    >
+                      <Plus className="w-3.5 h-3.5 mr-1.5" />
+                      Add Department
+                    </Button>
+                  )}
+                </div>
+              )}
 
+              {/* Hourly cost */}
               <div>
                 <Label className="text-sm font-semibold text-foreground mb-3 block">
                   Fully-loaded hourly cost: <span className="text-primary">€{hourlyCost}</span>
@@ -246,19 +250,43 @@ export default function InstructionGapCalculator() {
             <div className="flex flex-col justify-between">
               <div>
                 <p className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground mb-2">
-                  Direct AI rework cost
+                  Direct AI rework cost{multiMode && ` (${activeEntries.length} departments)`}
                 </p>
                 <p className="text-4xl md:text-5xl font-black text-foreground tracking-tight mb-1">
-                  {formatCurrency(calculations.reworkMonthly)}
+                  {formatCurrency(calc.totalRework / 12)}
                   <span className="text-lg font-medium text-muted-foreground">/month</span>
                 </p>
                 <p className="text-lg font-semibold text-muted-foreground mb-4">
-                  {formatCurrency(calculations.reworkAnnual)}/year
+                  {formatCurrency(calc.totalRework)}/year
+                  {multiMode && (
+                    <span className="text-sm font-normal"> · {totalTeamSize} people</span>
+                  )}
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed italic">
-                  This is only the visible cost. The structural taxes below compound underneath.
+                  This is only the visible cost. The structural taxes below compound underneath
+                  {multiMode
+                    ? " — cross-department taxes now reflect actual organizational boundaries."
+                    : "."}
                 </p>
               </div>
+
+              {/* Per-department breakdown in multi mode */}
+              {multiMode && calc.departments.length > 1 && (
+                <div className="mt-4 space-y-1.5">
+                  {calc.departments.map((d) => (
+                    <div
+                      key={d.id}
+                      className="flex justify-between text-xs px-3 py-1.5 rounded-lg"
+                      style={{ background: "hsl(var(--muted) / 0.3)" }}
+                    >
+                      <span className="text-muted-foreground">{d.label}</span>
+                      <span className="font-semibold text-foreground">
+                        {formatCurrency(d.reworkAnnual)}/yr
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -271,7 +299,7 @@ export default function InstructionGapCalculator() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {TAX_CARDS.map((tax) => {
               const Icon = tax.icon;
-              const value = calculations.taxes[tax.key];
+              const value = calc[tax.key as keyof typeof calc] as number;
               return (
                 <div
                   key={tax.key}
@@ -286,16 +314,26 @@ export default function InstructionGapCalculator() {
                       <Icon className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-foreground">{tax.label}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-bold text-foreground">{tax.label}</p>
+                        {"crossOrg" in tax && tax.crossOrg && multiMode && (
+                          <span
+                            className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style={{
+                              color: "hsl(var(--primary))",
+                              background: "hsl(var(--primary) / 0.08)",
+                            }}
+                          >
+                            Cross-Org
+                          </span>
+                        )}
+                      </div>
                       <p className="text-xl font-black text-foreground tracking-tight mt-0.5">
                         {formatCurrency(value)}
                         <span className="text-xs font-medium text-muted-foreground">/year</span>
                       </p>
                       <p className="text-[11px] text-muted-foreground leading-relaxed mt-1">
                         {tax.desc}
-                      </p>
-                      <p className="text-[10px] text-muted-foreground/60 mt-1 italic">
-                        {tax.assumption}
                       </p>
                     </div>
                   </div>
@@ -322,7 +360,7 @@ export default function InstructionGapCalculator() {
                 </p>
               </div>
               <p className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
-                {formatCurrency(calculations.totalGap)}
+                {formatCurrency(calc.totalGap)}
                 <span className="text-base font-medium text-muted-foreground">/year</span>
               </p>
             </div>
@@ -337,10 +375,10 @@ export default function InstructionGapCalculator() {
                 />
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    Recoverable: {formatCurrency(calculations.recoverable)}/year
+                    Recoverable: {formatCurrency(calc.recoverable)}/year
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                    Organizations with governed AI instruction sets report 60-70% reduction across all five dimensions.
+                    Organizations with governed AI instruction sets report 60-70% reduction across all dimensions.
                   </p>
                 </div>
               </div>
@@ -361,7 +399,7 @@ export default function InstructionGapCalculator() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {FORWARD_METRICS.map((metric) => {
               const Icon = metric.icon;
-              const currentValue = metric.getValue(dept.hours, teamSize);
+              const currentValue = metric.getValue(primaryDept.hours, totalTeamSize);
               return (
                 <div
                   key={metric.label}
@@ -403,12 +441,93 @@ export default function InstructionGapCalculator() {
           <p className="text-[10px] text-muted-foreground leading-relaxed">
             Sources: Zapier AI Workslop Report, Jan 2026 (n=1,100 enterprise users) · Workday Global AI Impact Study, 2026 · CIO.com, Apr 2026.
             Rework calculation: Team size × department-specific rework hours/week × hourly cost × 52 weeks.
-            Structural taxes derived from rework baseline using stated assumptions (duplication 25%, inconsistency 20%, turnover 15%, reconstruction 8 weeks, onboarding 6 weeks).
-            Recovery rate based on 65% midpoint of reported reduction with structured governance.
-            AI-native benchmarks are directional estimates based on organizations with governed AI instruction infrastructure.
+            Tax profiles are department-specific: duplication, inconsistency, turnover, and governance rates are tailored to each function's structural characteristics.
+            {multiMode && " Cross-department taxes (handoff friction, shadow governance) scale with the number of organizational boundaries."}
+            {" "}Recovery rate based on 65% midpoint of reported reduction with structured governance.
           </p>
         </div>
       </div>
     </section>
+  );
+}
+
+/* ─── Department Input Card ─── */
+
+function DepartmentInputCard({
+  entry,
+  onUpdate,
+  canRemove,
+  onRemove,
+  label,
+}: {
+  entry: DepartmentEntry;
+  onUpdate: (id: string, patch: Partial<DepartmentEntry>) => void;
+  canRemove: boolean;
+  onRemove: (id: string) => void;
+  label?: string;
+}) {
+  const dept = DEPARTMENTS.find((d) => d.value === entry.department)!;
+
+  return (
+    <div
+      className="rounded-xl border p-4 space-y-4"
+      style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+    >
+      {(label || canRemove) && (
+        <div className="flex items-center justify-between">
+          {label && (
+            <p className="text-xs font-bold tracking-[0.1em] uppercase text-muted-foreground">
+              {label}
+            </p>
+          )}
+          {canRemove && (
+            <button
+              onClick={() => onRemove(entry.id)}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      )}
+
+      <div>
+        <Label className="text-sm font-semibold text-foreground mb-2 block">
+          Team members: <span className="text-primary">{entry.teamSize}</span>
+        </Label>
+        <Slider
+          value={[entry.teamSize]}
+          onValueChange={([v]) => onUpdate(entry.id, { teamSize: v })}
+          min={5}
+          max={200}
+          step={1}
+        />
+        <div className="flex justify-between text-[11px] text-muted-foreground mt-1">
+          <span>5</span>
+          <span>200</span>
+        </div>
+      </div>
+
+      <div>
+        <Select
+          value={entry.department}
+          onValueChange={(v) => onUpdate(entry.id, { department: v })}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {DEPARTMENTS.map((d) => (
+              <SelectItem key={d.value} value={d.value}>
+                {d.label} — {d.hours}h rework/wk
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <p className="text-[11px] text-muted-foreground mt-1.5">
+          {dept.hours}h/wk rework · Duplication {Math.round(dept.taxProfile.duplication * 100)}% · Inconsistency {Math.round(dept.taxProfile.inconsistency * 100)}%
+        </p>
+      </div>
+    </div>
   );
 }
