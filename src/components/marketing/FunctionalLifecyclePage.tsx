@@ -45,6 +45,7 @@ export interface FunctionalLifecycleConfig {
   useCases: UseCase[];
   ctaHeadline: string;
   ctaNote: string;
+  showCalculator?: boolean;
 }
 
 const DEFAULT_HOW = [
