@@ -293,26 +293,18 @@ export default function IndustriesPage() {
           <p className="text-sm text-muted-foreground mb-4">
             Don't see your function? The lifecycle pattern applies everywhere standards meet execution.
           </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <Link
-              to="/use-cases"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              See all use cases →
-            </Link>
-            <Link
-              to="/diagnostic"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all"
-              style={{
-                background: "var(--gradient-brand-btn)",
-                color: "hsl(var(--primary-foreground))",
-                boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
-              }}
-            >
-              Take the Diagnostic
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <Link
+            to="/diagnostic"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all"
+            style={{
+              background: "var(--gradient-brand-btn)",
+              color: "hsl(var(--primary-foreground))",
+              boxShadow: "0 0 20px -4px hsl(var(--primary) / 0.4)",
+            }}
+          >
+            Take the Diagnostic
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
     </MarketingLayout>
