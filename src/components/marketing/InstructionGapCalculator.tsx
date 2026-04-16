@@ -85,14 +85,13 @@ const TAX_CARDS = [
   },
   {
     key: "handoff",
-    icon: ArrowUpRight,
-    label: "Handoff Friction Tax",
+    icon: Network,
     desc: "Adjacent teams re-contextualizing and re-prompting AI outputs that cross team boundaries without shared standards.",
     assumption: "~3 adjacent teams × 18% of rework baseline lost in translation per boundary",
   },
   {
     key: "shadowGovernance",
-    icon: Layers,
+    icon: ShieldCheck,
     label: "Shadow Governance Tax",
     desc: "Each department independently building its own AI review and QA processes. Legal, Marketing, Product all reinventing the same quality gates.",
     assumption: "~3h/week per adjacent team in duplicated governance effort",
