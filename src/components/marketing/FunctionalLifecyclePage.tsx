@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { SectionTag, CAL_URL } from "@/components/marketing/home/shared";
 import { ReactNode } from "react";
+import InstructionGapCalculator from "@/components/marketing/InstructionGapCalculator";
 
 export interface LifecycleStage {
   icon: ReactNode;
