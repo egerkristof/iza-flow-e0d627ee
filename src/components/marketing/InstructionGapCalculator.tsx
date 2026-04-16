@@ -241,9 +241,18 @@ export default function InstructionGapCalculator() {
                   {formatCurrency(calc.reworkMonthly)}
                   <span className="text-lg font-medium text-muted-foreground">/month</span>
                 </p>
-                <p className="text-lg font-semibold text-muted-foreground mb-4">
+                <p className="text-lg font-semibold text-muted-foreground mb-3">
                   {formatCurrency(calc.reworkAnnual)}/year
                 </p>
+                <div
+                  className="rounded-lg px-3 py-2 mb-4 flex items-center gap-2"
+                  style={{ background: "hsl(var(--primary) / 0.08)" }}
+                >
+                  <TrendingDown className="w-4 h-4 shrink-0" style={{ color: "hsl(var(--primary))" }} />
+                  <p className="text-sm font-semibold" style={{ color: "hsl(var(--primary))" }}>
+                    Recoverable: {formatCurrency(calc.reworkRecoverable)}/year
+                  </p>
+                </div>
                 <p className="text-xs text-muted-foreground leading-relaxed italic">
                   This is only the visible cost. The structural taxes below compound underneath.
                 </p>
