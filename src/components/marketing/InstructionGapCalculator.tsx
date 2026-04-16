@@ -141,7 +141,7 @@ export default function InstructionGapCalculator() {
             <div className="flex flex-col justify-between">
               <div>
                 <p className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground mb-2">
-                  Your estimated Instruction Gap Tax
+                  Your AI rework cost
                 </p>
                 <p className="text-4xl md:text-5xl font-black text-foreground tracking-tight mb-1">
                   {formatCurrency(monthly)}
