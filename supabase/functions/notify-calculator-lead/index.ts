@@ -403,31 +403,31 @@ serve(async (req) => {
       </div>
     `;
 
-    const userRes = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const userResult = await sendWithRetry(
+      RESEND_API_KEY,
+      {
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email],
         bcc: ["kristof.eger@lizaos.ai"],
         reply_to: "kristof.eger@lizaos.ai",
         subject: `Your full Context Gap report: ${totalGapStr}/year`,
         html: userHtml,
+      },
+      "user-snapshot",
+    );
+
+    // Always return 200: the lead is already saved in the dashboard.
+    // Surface per-email outcomes so the caller can log them, but never
+    // throw — a transient mail provider failure must not look like a
+    // total failure to the calculator UI.
+    return new Response(
+      JSON.stringify({
+        success: true,
+        internal: { ok: internalResult.ok, status: internalResult.status, attempts: internalResult.attempts },
+        user: { ok: userResult.ok, status: userResult.status, attempts: userResult.attempts },
       }),
-    });
-
-    if (!userRes.ok) {
-      const body = await userRes.text();
-      console.error("user email failed", userRes.status, body);
-      throw new Error(`Resend (user) [${userRes.status}]: ${body}`);
-    }
-
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
   } catch (err: any) {
     console.error("notify-calculator-lead error:", err);
     return new Response(
