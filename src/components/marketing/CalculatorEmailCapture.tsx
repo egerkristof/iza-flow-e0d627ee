@@ -9,7 +9,6 @@ import { useToast } from "@/hooks/use-toast";
 const schema = z.object({
   email: z.string().trim().email("Enter a valid email").max(255),
   name: z.string().trim().max(100).optional(),
-  company: z.string().trim().max(150).optional(),
 });
 
 interface Props {
