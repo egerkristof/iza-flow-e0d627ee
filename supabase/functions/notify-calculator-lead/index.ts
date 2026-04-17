@@ -291,6 +291,7 @@ serve(async (req) => {
       body: JSON.stringify({
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email],
+        bcc: ["kristof.eger@lizaos.ai"],
         reply_to: "kristof.eger@lizaos.ai",
         subject: `Your Instruction Gap breakdown: ${totalGapStr}/year`,
         html: userHtml,
