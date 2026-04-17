@@ -19,6 +19,18 @@ export interface CalcSnapshot {
   rework_annual: number;
   total_gap: number;
   recoverable: number;
+  // Optional richer breakdown for email content (not persisted)
+  team_subtotal?: number;
+  org_subtotal?: number;
+  taxes?: {
+    duplication: number;
+    inconsistency: number;
+    attrition: number;
+    onboarding: number;
+    handoff: number;
+    shadowGovernance: number;
+  };
+  department_label?: string;
 }
 
 export async function upsertCalcSession(
@@ -26,10 +38,12 @@ export async function upsertCalcSession(
   snapshot: CalcSnapshot,
 ): Promise<void> {
   try {
+    const { team_subtotal, org_subtotal, taxes, department_label, ...persistable } = snapshot;
+    void team_subtotal; void org_subtotal; void taxes; void department_label;
     await supabase.from("calculator_sessions").upsert(
       {
         session_id: sessionId,
-        ...snapshot,
+        ...persistable,
         referrer: typeof document !== "undefined" ? document.referrer || null : null,
         user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
       },

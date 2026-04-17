@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Mail, Loader2, CheckCircle2 } from "lucide-react";
+import { Mail, Loader2, CheckCircle2, Lock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import { attachLeadToCalcSession } from "@/lib/calculator-tracking";
+import { attachLeadToCalcSession, type CalcSnapshot } from "@/lib/calculator-tracking";
 import { useToast } from "@/hooks/use-toast";
 
 const schema = z.object({
@@ -15,17 +15,18 @@ const schema = z.object({
 interface Props {
   sessionId: string;
   totalGap: number;
-  snapshot?: {
-    team_size: number;
-    department: string;
-    hourly_cost: number;
-    rework_annual: number;
-    total_gap: number;
-    recoverable: number;
-  };
+  locked?: boolean;
+  onUnlock?: () => void;
+  snapshot?: CalcSnapshot;
 }
 
-export default function CalculatorEmailCapture({ sessionId, totalGap, snapshot }: Props) {
+export default function CalculatorEmailCapture({
+  sessionId,
+  totalGap,
+  locked,
+  onUnlock,
+  snapshot,
+}: Props) {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -60,7 +61,11 @@ export default function CalculatorEmailCapture({ sessionId, totalGap, snapshot }
       return;
     }
     setDone(true);
-    toast({ title: "On its way", description: "Check your inbox in the next minute or two." });
+    onUnlock?.();
+    toast({
+      title: "Breakdown unlocked",
+      description: "Per-tax detail revealed below + full report sent to your inbox.",
+    });
   };
 
   if (done) {
@@ -73,32 +78,50 @@ export default function CalculatorEmailCapture({ sessionId, totalGap, snapshot }
         }}
       >
         <CheckCircle2 className="w-8 h-8 mx-auto mb-2" style={{ color: "hsl(var(--primary))" }} />
-        <p className="text-base font-bold text-foreground">Snapshot saved</p>
+        <p className="text-base font-bold text-foreground">Full breakdown unlocked</p>
         <p className="text-sm text-muted-foreground mt-1">
-          We've logged your inputs. Expect a tailored breakdown in your inbox within 24 hours.
+          The per-tax detail is now revealed above. We've also sent the full report — with department-specific
+          interpretation and recovery sequence — to your inbox.
         </p>
       </div>
     );
   }
 
+  const eur = new Intl.NumberFormat("en-IE", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(totalGap);
+
   return (
     <div
       className="rounded-2xl border p-6 md:p-8"
-      style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+      style={{
+        borderColor: locked ? "hsl(var(--primary) / 0.35)" : "hsl(var(--border))",
+        background: locked ? "hsl(var(--primary) / 0.04)" : "hsl(var(--card))",
+      }}
     >
       <div className="flex items-start gap-3 mb-4">
         <div
           className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
           style={{ background: "hsl(var(--primary) / 0.1)" }}
         >
-          <Mail className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
+          {locked ? (
+            <Lock className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
+          ) : (
+            <Mail className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
+          )}
         </div>
         <div>
           <p className="text-base font-bold text-foreground">
-            Email me this breakdown
+            {locked
+              ? `Unlock the per-tax breakdown of your ${eur}/year gap`
+              : "Email me the full report"}
           </p>
           <p className="text-sm text-muted-foreground mt-0.5">
-            Get your {new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(totalGap)}/year snapshot plus the recovery playbook.
+            {locked
+              ? "See exactly where the cost leaks across all 6 taxes — plus a department-specific interpretation and recovery sequence sent to your inbox."
+              : "Per-tax detail, department interpretation, and the recovery playbook."}
           </p>
         </div>
       </div>
@@ -126,11 +149,17 @@ export default function CalculatorEmailCapture({ sessionId, totalGap, snapshot }
           maxLength={150}
         />
         <Button type="submit" disabled={submitting || !email}>
-          {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Send"}
+          {submitting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : locked ? (
+            "Unlock"
+          ) : (
+            "Send"
+          )}
         </Button>
       </form>
       <p className="text-[11px] text-muted-foreground mt-3">
-        No spam. We use this to send your snapshot and follow up if you book a call.
+        No spam. We use this to send your report and follow up if you book a call.
       </p>
     </div>
   );
