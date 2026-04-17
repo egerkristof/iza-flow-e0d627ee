@@ -76,7 +76,7 @@ export default function CalculatorSessions() {
           <div>
             <CardTitle className="text-base">Calculator usage</CardTitle>
             <CardDescription>
-              Engaged sessions on the Instruction Gap calculator (10s + interaction).
+              Engaged sessions on the Context Gap calculator (10s + interaction).
             </CardDescription>
           </div>
           {loading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}

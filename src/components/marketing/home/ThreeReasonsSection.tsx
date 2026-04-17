@@ -128,7 +128,7 @@ export function ThreeReasonsSection() {
     <section id="three-reasons" className="relative py-24 md:py-32 px-6"
       style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
-        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The Instruction Gap</p>
+        <p className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-4">The Context Gap</p>
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
           Three structural gaps
           <br />
