@@ -115,17 +115,30 @@ serve(async (req) => {
     const narrative = DEPT_NARRATIVE[deptKey] || DEFAULT_NARRATIVE;
     const deptName = department_label || department || "your team";
 
-    // Build per-tax rows if provided
-    const taxRow = (label: string, val: number, kind: "team" | "org") => `
+    // Per-tax explanations — mirror the on-page card descriptions
+    const TAX_DESCRIPTIONS: Record<string, string> = {
+      duplication: "Team members independently solving problems a colleague already figured out.",
+      inconsistency: "Cross-checking and aligning different AI outputs across the team.",
+      attrition: "Rebuilding AI expertise lost when team members leave.",
+      onboarding: "New hires building AI workflows from scratch with no codified processes.",
+      handoff: "Adjacent teams re-contextualizing AI outputs that cross boundaries without shared standards.",
+      shadowGovernance: "Each department independently building its own AI review and QA processes.",
+    };
+
+    // Build per-tax rows with description
+    const taxRow = (label: string, val: number, kind: "team" | "org", descKey: string) => `
       <tr>
-        <td style="padding:10px 14px; border-bottom:1px solid #f0f0f0; font-size:14px; color:#333;">
-          <div style="display:flex; align-items:center; gap:8px;">
+        <td style="padding:14px 16px; border-bottom:1px solid #f0f0f0; vertical-align:top;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
             <span style="display:inline-block; width:6px; height:6px; border-radius:999px; background:${kind === "org" ? "#0a7" : "#3b82f6"};"></span>
-            ${label}
+            <span style="font-size:14px; font-weight:700; color:#111;">${label}</span>
           </div>
+          <p style="margin:0; padding-left:14px; font-size:12px; color:#666; line-height:1.5;">
+            ${TAX_DESCRIPTIONS[descKey] || ""}
+          </p>
         </td>
-        <td style="padding:10px 14px; border-bottom:1px solid #f0f0f0; font-size:14px; color:#111; font-weight:700; text-align:right; white-space:nowrap;">
-          ${fmtEUR(val)}/yr
+        <td style="padding:14px 16px; border-bottom:1px solid #f0f0f0; font-size:15px; color:#111; font-weight:800; text-align:right; white-space:nowrap; vertical-align:top;">
+          ${fmtEUR(val)}<span style="font-size:11px; color:#888; font-weight:500;">/yr</span>
         </td>
       </tr>`;
 
@@ -134,32 +147,35 @@ serve(async (req) => {
       <table style="width:100%; border-collapse:collapse; border:1px solid #eee; border-radius:12px; overflow:hidden; margin:12px 0 8px;">
         <thead>
           <tr style="background:#fafafa;">
-            <td colspan="2" style="padding:10px 14px; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#666;">
+            <td colspan="2" style="padding:12px 16px; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#666;">
               Department-level taxes — subtotal ${teamSubStr}/yr
             </td>
           </tr>
         </thead>
         <tbody>
-          ${taxRow("Duplication Tax", taxes.duplication, "team")}
-          ${taxRow("Inconsistency Tax", taxes.inconsistency, "team")}
-          ${taxRow("Attrition Tax", taxes.attrition, "team")}
-          ${taxRow("Onboarding Tax", taxes.onboarding, "team")}
+          ${taxRow("Duplication Tax", taxes.duplication, "team", "duplication")}
+          ${taxRow("Inconsistency Tax", taxes.inconsistency, "team", "inconsistency")}
+          ${taxRow("Attrition Tax", taxes.attrition, "team", "attrition")}
+          ${taxRow("Onboarding Tax", taxes.onboarding, "team", "onboarding")}
         </tbody>
       </table>
 
-      <table style="width:100%; border-collapse:collapse; border:1px solid #eee; border-radius:12px; overflow:hidden; margin:8px 0 16px;">
+      <table style="width:100%; border-collapse:collapse; border:1px solid #eee; border-radius:12px; overflow:hidden; margin:8px 0 8px;">
         <thead>
           <tr style="background:#fafafa;">
-            <td colspan="2" style="padding:10px 14px; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#666;">
+            <td colspan="2" style="padding:12px 16px; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#666;">
               Organizational ripple — subtotal ${orgSubStr}/yr
             </td>
           </tr>
         </thead>
         <tbody>
-          ${taxRow("Handoff Friction Tax", taxes.handoff, "org")}
-          ${taxRow("Shadow Governance Tax", taxes.shadowGovernance, "org")}
+          ${taxRow("Handoff Friction Tax", taxes.handoff, "org", "handoff")}
+          ${taxRow("Shadow Governance Tax", taxes.shadowGovernance, "org", "shadowGovernance")}
         </tbody>
       </table>
+      <p style="margin:4px 0 16px; font-size:11px; color:#888; line-height:1.6; font-style:italic;">
+        Organizational ripple costs assume ~3 adjacent departments interacting with yours.
+      </p>
       `
       : "";
 
