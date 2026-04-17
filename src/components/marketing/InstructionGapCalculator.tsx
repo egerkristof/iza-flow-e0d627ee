@@ -364,7 +364,7 @@ export default function InstructionGapCalculator() {
               What AI-native organizations measure instead
             </p>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              These are the metrics that don't exist yet in your organization. They will define the next generation of operational performance.
+              The metrics that don't exist in your organization yet.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
