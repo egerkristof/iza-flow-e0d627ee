@@ -14,12 +14,25 @@ export default function CalculatorPage() {
 
       {/* Hero */}
       <section className="pt-32 pb-8 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">
-            Your team is fixing AI outputs every week.
+        <div className="max-w-3xl mx-auto text-center space-y-5">
+          <div className="flex items-center justify-center gap-2">
+            <div className="h-px w-8 bg-primary/30" />
+            <span className="text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-primary/70">
+              30-second cost check
+            </span>
+            <div className="h-px w-8 bg-primary/30" />
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-[1.08]">
+            Your AI isn't broken.
             <br />
-            <span className="text-muted-foreground">How much is that actually costing you?</span>
+            Your instructions are.
+            <br />
+            <span className="brand-gradient-text">Here's what that costs you.</span>
           </h1>
+          <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            Every week your team rewrites the same prompts, fixes the same hallucinations,
+            and reinvents the same standards. That's not a training problem. It has a price tag.
+          </p>
         </div>
       </section>
 
@@ -105,7 +118,7 @@ export default function CalculatorPage() {
               You've seen the cost. Now find the cause.
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
-              The calculator quantifies what you're losing. The diagnostic tells you exactly
+              The calculator quantifies what you're losing. The diagnostic shows you exactly
               where the instruction gaps are in your team's AI execution.
               Five minutes. No signup required.
             </p>
@@ -117,9 +130,19 @@ export default function CalculatorPage() {
                 color: "hsl(var(--primary-foreground))",
               }}
             >
-              Take the Diagnostic
+              Find the cause
               <ArrowRight className="w-4 h-4" />
             </Link>
+            <div className="mt-5">
+              <a
+                href="https://calendar.app.google/3v8jevUcsgRQnLyL9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4 decoration-muted-foreground/30 hover:decoration-foreground"
+              >
+                Or skip ahead — book a 20-min call
+              </a>
+            </div>
           </div>
         </div>
       </section>

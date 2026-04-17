@@ -7,8 +7,8 @@ const NAV_ITEMS = [
   { label: "LIZA OS", href: "/" },
   { label: "Industries", href: "/industries" },
   { label: "Manifesto", href: "/manifesto" },
-  { label: "Calculator", href: "/calculator" },
-  { label: "Diagnostic", href: "/diagnostic" },
+  { label: "See the cost", href: "/calculator" },
+  { label: "Find the cause", href: "/diagnostic" },
 ];
 
 
