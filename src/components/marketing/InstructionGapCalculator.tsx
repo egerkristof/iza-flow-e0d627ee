@@ -360,6 +360,7 @@ export default function InstructionGapCalculator() {
           summary="Costs that spread across adjacent teams"
           summaryValue={calc.orgSubtotal}
           opacity={0.7}
+          locked={!unlocked}
         >
           <p className="text-[11px] text-muted-foreground mt-3 mb-4 max-w-md">
             These costs compound across team boundaries. Estimates assume ~3 adjacent departments interacting with yours.
@@ -374,7 +375,17 @@ export default function InstructionGapCalculator() {
             style={{ background: "hsl(var(--muted) / 0.4)" }}
           >
             <p className="text-xs font-semibold text-muted-foreground">Organizational subtotal</p>
-            <p className="text-sm font-black text-foreground">{formatCurrency(calc.orgSubtotal)}/year</p>
+            {unlocked ? (
+              <p className="text-sm font-black text-foreground">{formatCurrency(calc.orgSubtotal)}/year</p>
+            ) : (
+              <p
+                className="text-sm font-black text-foreground select-none"
+                style={{ filter: "blur(5px)", userSelect: "none" }}
+                aria-hidden="true"
+              >
+                €••,•••/year
+              </p>
+            )}
           </div>
         </ProgressiveSection>
 
@@ -587,12 +598,14 @@ function ProgressiveSection({
   summary,
   summaryValue,
   opacity,
+  locked,
   children,
 }: {
   eyebrow: string;
   summary: string;
   summaryValue: number;
   opacity: number;
+  locked?: boolean;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -621,10 +634,20 @@ function ProgressiveSection({
             </div>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-base font-black text-foreground tracking-tight">
-              {formatCurrency(summaryValue)}
-              <span className="text-[11px] font-medium text-muted-foreground">/yr</span>
-            </p>
+            {locked ? (
+              <p
+                className="text-base font-black text-foreground tracking-tight select-none"
+                style={{ filter: "blur(5px)", userSelect: "none" }}
+                aria-hidden="true"
+              >
+                €••,•••<span className="text-[11px] font-medium">/yr</span>
+              </p>
+            ) : (
+              <p className="text-base font-black text-foreground tracking-tight">
+                {formatCurrency(summaryValue)}
+                <span className="text-[11px] font-medium text-muted-foreground">/yr</span>
+              </p>
+            )}
             <p className="text-[10px] text-muted-foreground group-hover:text-primary transition-colors">
               {open ? "Hide details" : "Show details"}
             </p>
