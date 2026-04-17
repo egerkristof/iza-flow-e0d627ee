@@ -220,46 +220,100 @@ serve(async (req) => {
       console.error("internal email failed", internalRes.status, body);
     }
 
-    // 2) User snapshot — full breakdown + interpretation + first fix
+    // 2) User snapshot — full mirror of the on-page experience + revealed figures
+    const reworkMonthlyStr = fmtEUR(Number(rework_annual) / 12);
+    const reworkRecoverableStr = fmtEUR(Number(rework_annual) * 0.65);
+    const deptHoursPerWeek = Number(team_size) > 0 && Number(hourly_cost) > 0
+      ? Math.round(Number(rework_annual) / 52 / Number(team_size) / Number(hourly_cost))
+      : 0;
+    const cycleHours = Math.round(deptHoursPerWeek * 1.5);
+    const delegationPct = Math.min(25, Math.round(10 + Number(team_size) * 0.15));
+
     const userHtml = `
-      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#111; max-width:600px; margin:0 auto;">
-        <h2 style="margin:0 0 8px; font-size:22px;">Your Instruction Gap breakdown</h2>
-        <p style="color:#555; margin:0 0 24px;">
-          Hi ${name || "there"}, here's the full per-tax breakdown for ${deptName} (${team_size ?? "—"} people) — plus where the cost concentrates and what to fix first.
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#111; max-width:640px; margin:0 auto; padding:8px;">
+        <p style="margin:0 0 6px; font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#0a7;">
+          Instruction Gap Tax · Full report
+        </p>
+        <h2 style="margin:0 0 8px; font-size:24px; letter-spacing:-0.01em;">Your full Instruction Gap breakdown</h2>
+        <p style="color:#555; margin:0 0 24px; font-size:14px; line-height:1.55;">
+          Hi ${name || "there"}, here's the complete picture for ${deptName} (${team_size ?? "—"} people) — every line item revealed, with the structural taxes and the metrics most teams never measure.
         </p>
 
-        <div style="border:1px solid #eee; border-radius:12px; padding:20px; margin-bottom:20px; background:#fafafa;">
-          <p style="margin:0 0 4px; font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.1em; font-weight:700;">Total annual gap</p>
-          <p style="margin:0 0 16px; font-size:30px; font-weight:800; color:#111; letter-spacing:-0.02em;">${totalGapStr}</p>
-          <p style="margin:0 0 4px; font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.1em; font-weight:700;">Recoverable with governed instructions</p>
-          <p style="margin:0; font-size:22px; font-weight:700; color:#0a7;">${recoverableStr} / year</p>
+        <div style="border:1px solid #eee; border-radius:14px; padding:20px; margin-bottom:18px; background:#fafafa;">
+          <p style="margin:0 0 6px; font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.12em; font-weight:700;">Direct AI rework cost</p>
+          <p style="margin:0 0 4px; font-size:30px; font-weight:800; color:#111; letter-spacing:-0.02em;">${reworkMonthlyStr}<span style="font-size:14px; color:#888; font-weight:500;"> / month</span></p>
+          <p style="margin:0 0 12px; font-size:14px; color:#666; font-weight:600;">${reworkStr} / year</p>
+          <div style="background:rgba(10,170,119,0.08); border-radius:8px; padding:10px 12px;">
+            <p style="margin:0; font-size:13px; font-weight:700; color:#0a7;">↓ Recoverable: ${reworkRecoverableStr}/year</p>
+            <p style="margin:4px 0 0; font-size:11px; color:#666; line-height:1.5;">
+              Teams with governed instruction sets typically reclaim ~65% of rework cost by replacing ad-hoc prompting with reusable patterns.
+            </p>
+          </div>
+          <p style="margin:12px 0 0; font-size:12px; color:#888; font-style:italic;">
+            This is only the visible cost. The structural taxes below compound underneath.
+          </p>
         </div>
 
-        <h3 style="margin:24px 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:0.1em; color:#555; font-weight:700;">
+        <h3 style="margin:24px 0 4px; font-size:13px; text-transform:uppercase; letter-spacing:0.12em; color:#555; font-weight:700;">
           Where the cost is leaking
         </h3>
         ${breakdownTable}
-        <p style="margin:0 0 20px; font-size:12px; color:#888; line-height:1.6;">
+        <p style="margin:0 0 18px; font-size:12px; color:#888; line-height:1.6;">
           Direct AI rework is the visible line: <strong style="color:#333;">${reworkStr}/year</strong>.
           The taxes above are the structural costs that compound underneath — most teams never measure them.
         </p>
 
+        <div style="border:1px solid rgba(10,170,119,0.35); background:rgba(10,170,119,0.05); border-radius:14px; padding:20px; margin:20px 0;">
+          <p style="margin:0 0 6px; font-size:11px; color:#0a7; text-transform:uppercase; letter-spacing:0.12em; font-weight:700;">Total Instruction Gap Tax</p>
+          <p style="margin:0 0 12px; font-size:30px; font-weight:800; color:#111; letter-spacing:-0.02em;">${totalGapStr}<span style="font-size:14px; color:#888; font-weight:500;"> / year</span></p>
+          <div style="background:rgba(10,170,119,0.1); border-radius:8px; padding:10px 12px;">
+            <p style="margin:0; font-size:13px; font-weight:700; color:#0a7;">↓ Recoverable: ${recoverableStr}/year</p>
+            <p style="margin:4px 0 0; font-size:11px; color:#666; line-height:1.5;">
+              Organizations with governed AI instruction sets report 60-70% reduction across all dimensions.
+            </p>
+          </div>
+        </div>
+
         <div style="border-left:3px solid #111; padding:0 0 0 16px; margin:24px 0;">
-          <p style="margin:0 0 6px; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#888; font-weight:700;">
+          <p style="margin:0 0 6px; font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#888; font-weight:700;">
             Why your profile produces this pattern
           </p>
           <p style="margin:0 0 8px; font-size:15px; font-weight:700; color:#111;">${narrative.headline}</p>
           <p style="margin:0; font-size:14px; color:#444; line-height:1.6;">${narrative.why}</p>
         </div>
 
-        <div style="background:#0a7; color:#fff; border-radius:12px; padding:20px; margin:24px 0;">
-          <p style="margin:0 0 6px; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; opacity:0.85; font-weight:700;">
+        <div style="background:#0a7; color:#fff; border-radius:12px; padding:18px 20px; margin:24px 0;">
+          <p style="margin:0 0 6px; font-size:11px; text-transform:uppercase; letter-spacing:0.12em; opacity:0.85; font-weight:700;">
             What to fix first
           </p>
           <p style="margin:0; font-size:15px; line-height:1.55;">${narrative.firstFix}</p>
         </div>
 
-        <h3 style="margin:24px 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:0.1em; color:#555; font-weight:700;">
+        <h3 style="margin:32px 0 4px; font-size:13px; text-transform:uppercase; letter-spacing:0.12em; color:#555; font-weight:700;">
+          What AI-native organizations measure instead
+        </h3>
+        <p style="margin:0 0 12px; font-size:13px; color:#666;">The metrics that don't exist in your organization yet.</p>
+        <table style="width:100%; border-collapse:separate; border-spacing:8px 0; margin:0 -8px 8px;">
+          <tr>
+            <td style="width:33%; vertical-align:top; border:1px solid #eee; border-radius:12px; padding:14px; text-align:center; background:#fff;">
+              <p style="margin:0 0 6px; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888;">Knowledge Capture</p>
+              <p style="margin:0 0 4px; font-size:22px; font-weight:800; color:#111;">~0%</p>
+              <p style="margin:0; font-size:11px; color:#0a7; font-weight:600;">AI-native: 60–80%</p>
+            </td>
+            <td style="width:33%; vertical-align:top; border:1px solid #eee; border-radius:12px; padding:14px; text-align:center; background:#fff;">
+              <p style="margin:0 0 6px; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888;">Cycle Time</p>
+              <p style="margin:0 0 4px; font-size:22px; font-weight:800; color:#111;">~${cycleHours}h</p>
+              <p style="margin:0; font-size:11px; color:#0a7; font-weight:600;">AI-native: 3–4× faster</p>
+            </td>
+            <td style="width:33%; vertical-align:top; border:1px solid #eee; border-radius:12px; padding:14px; text-align:center; background:#fff;">
+              <p style="margin:0 0 6px; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888;">Delegation</p>
+              <p style="margin:0 0 4px; font-size:22px; font-weight:800; color:#111;">~${delegationPct}%</p>
+              <p style="margin:0; font-size:11px; color:#0a7; font-weight:600;">AI-native: 60–75%</p>
+            </td>
+          </tr>
+        </table>
+
+        <h3 style="margin:24px 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:0.12em; color:#555; font-weight:700;">
           Your inputs
         </h3>
         <ul style="padding:0; list-style:none; margin:0 0 24px; color:#333; font-size:14px; line-height:1.7;">
@@ -268,14 +322,25 @@ serve(async (req) => {
           <li><strong>Fully-loaded hourly cost:</strong> ${hourlyStr}</li>
         </ul>
 
-        <div style="margin:24px 0;">
-          <a href="https://calendar.app.google/3v8jevUcsgRQnLyL9"
-             style="display:inline-block; background:#111; color:#fff; padding:14px 24px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px;">
-            Walk through your numbers — book 20 min
+        <div style="border:1px solid #111; border-radius:14px; padding:22px; margin:28px 0 16px; background:#0b0b0c; color:#f7f7f7;">
+          <p style="margin:0 0 6px; font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#9bdfc1;">AI-native organizations</p>
+          <p style="margin:0 0 12px; font-size:18px; font-weight:700; line-height:1.4;">
+            Eliminate every tax above. Then unlock what most teams can't measure: knowledge capture, faster cycles, and safe delegation.
+          </p>
+          <p style="margin:0 0 16px; font-size:13px; color:#cfcfcf; line-height:1.6;">
+            LIZA OS is the instruction layer that turns expert judgment into governed, executable AI workflows. The same work, captured once and propagated cleanly across your team and adjacent functions.
+          </p>
+          <a href="https://lizaos.ai"
+             style="display:inline-block; background:#fff; color:#111; padding:12px 20px; border-radius:8px; text-decoration:none; font-weight:700; font-size:13px; margin-right:8px;">
+            See the LIZA OS platform →
+          </a>
+          <a href="https://lizaos.ai/diagnostic"
+             style="display:inline-block; background:transparent; color:#fff; padding:12px 20px; border:1px solid rgba(255,255,255,0.4); border-radius:8px; text-decoration:none; font-weight:600; font-size:13px;">
+            Run the deeper assessment
           </a>
         </div>
 
-        <p style="color:#888; font-size:11px; margin-top:32px; line-height:1.6;">
+        <p style="color:#888; font-size:11px; margin-top:24px; line-height:1.6;">
           Methodology: rework hours sourced from Zapier AI Workslop Report (n=1,100, Jan 2026), cross-referenced with Workday Global AI Impact Study 2026.
           Department tax profiles calibrated to structural characteristics of each function. Recovery rate based on the 65% midpoint reported in organizations with structured governance.
         </p>
@@ -293,7 +358,7 @@ serve(async (req) => {
         to: [email],
         bcc: ["kristof.eger@lizaos.ai"],
         reply_to: "kristof.eger@lizaos.ai",
-        subject: `Your Instruction Gap breakdown: ${totalGapStr}/year`,
+        subject: `Your full Instruction Gap report: ${totalGapStr}/year`,
         html: userHtml,
       }),
     });
