@@ -300,7 +300,7 @@ export default function InstructionGapCalculator() {
           </div>
 
           {/* Visible vs hidden cost — subtle arrow nudge */}
-          <p className="mt-5 text-center text-xs text-muted-foreground italic">
+          <p className="mt-6 text-center text-base md:text-lg font-semibold text-foreground">
             This is only the visible cost.
           </p>
           <button
