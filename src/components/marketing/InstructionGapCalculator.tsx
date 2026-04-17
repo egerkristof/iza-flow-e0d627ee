@@ -113,6 +113,7 @@ export default function InstructionGapCalculator() {
   const [hourlyCost, setHourlyCost] = useState(75);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [engaged, setEngaged] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
   const sessionIdRef = useRef<string>("");
   if (!sessionIdRef.current) sessionIdRef.current = getOrCreateCalcSessionId();
 
@@ -390,11 +391,13 @@ export default function InstructionGapCalculator() {
           </div>
         </div>
 
-        {/* Email capture — soft lead-gen */}
+        {/* Email capture — gates per-tax breakdown */}
         <div className="mt-6">
           <CalculatorEmailCapture
             sessionId={sessionIdRef.current}
             totalGap={calc.totalGap}
+            locked={!unlocked}
+            onUnlock={() => setUnlocked(true)}
             snapshot={{
               team_size: teamSize,
               department,
@@ -474,10 +477,12 @@ function TaxCard({
   tax,
   value,
   isOrg,
+  locked,
 }: {
   tax: { key: string; icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; label: string; desc: string };
   value: number;
   isOrg?: boolean;
+  locked?: boolean;
 }) {
   const Icon = tax.icon;
   return (
@@ -492,7 +497,7 @@ function TaxCard({
         >
           <Icon className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
         </div>
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-foreground">{tax.label}</p>
             {isOrg && (
@@ -507,10 +512,24 @@ function TaxCard({
               </span>
             )}
           </div>
-          <p className="text-xl font-black text-foreground tracking-tight mt-0.5">
-            {formatCurrency(value)}
-            <span className="text-xs font-medium text-muted-foreground">/year</span>
-          </p>
+          {locked ? (
+            <p
+              className="text-xl font-black tracking-tight mt-0.5 select-none"
+              style={{
+                filter: "blur(6px)",
+                color: "hsl(var(--foreground))",
+                userSelect: "none",
+              }}
+              aria-hidden="true"
+            >
+              €••,•••<span className="text-xs font-medium">/year</span>
+            </p>
+          ) : (
+            <p className="text-xl font-black text-foreground tracking-tight mt-0.5">
+              {formatCurrency(value)}
+              <span className="text-xs font-medium text-muted-foreground">/year</span>
+            </p>
+          )}
           <p className="text-[11px] text-muted-foreground leading-relaxed mt-1">
             {tax.desc}
           </p>
