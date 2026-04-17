@@ -410,10 +410,7 @@ export default function InstructionGapCalculator() {
         {/* Footnotes */}
         <div className="mt-6 pt-4 border-t" style={{ borderColor: "hsl(var(--border))" }}>
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            Sources: Zapier AI Workslop Report, Jan 2026 (n=1,100 enterprise users) · Workday Global AI Impact Study, 2026 · CIO.com, Apr 2026.
-            Tax profiles are department-specific: duplication, inconsistency, turnover, and governance rates are tailored to each function.
-            Organizational taxes assume ~3 adjacent departments interacting with the selected team.
-            Recovery rate based on 65% midpoint of reported reduction with structured governance.
+            Department-specific tax profiles. Recovery rate based on 65% midpoint reported with structured governance. Full methodology above.
           </p>
         </div>
       </div>
