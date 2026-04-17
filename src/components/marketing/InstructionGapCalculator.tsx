@@ -295,13 +295,50 @@ export default function InstructionGapCalculator() {
                     Teams with governed AI instruction sets typically reclaim ~65% of rework cost by replacing ad-hoc prompting with reusable, standardized patterns.
                   </p>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed italic">
-                  This is only the visible cost. The structural taxes below compound underneath.
-                </p>
               </div>
             </div>
           </div>
+
+          {/* Visible vs hidden cost CTA */}
+          <button
+            type="button"
+            onClick={() => {
+              document.getElementById("hidden-costs-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="mt-6 w-full rounded-xl border px-5 py-4 flex items-center justify-between gap-4 text-left group transition-all hover:shadow-md"
+            style={{
+              borderColor: "hsl(var(--primary) / 0.35)",
+              background: "linear-gradient(135deg, hsl(var(--primary) / 0.06), hsl(var(--primary) / 0.02))",
+            }}
+          >
+            <div className="flex items-start gap-3 min-w-0">
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                style={{ background: "hsl(var(--primary) / 0.1)" }}
+              >
+                <Layers className="w-5 h-5" style={{ color: "hsl(var(--primary))" }} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm md:text-base font-bold text-foreground leading-snug">
+                  This is only the visible cost.
+                </p>
+                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mt-0.5">
+                  The structural taxes below compound underneath. Reveal your hidden costs.
+                </p>
+              </div>
+            </div>
+            <div
+              className="shrink-0 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-2 rounded-lg transition-transform group-hover:translate-y-0.5"
+              style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)" }}
+            >
+              <span className="hidden sm:inline">See hidden costs</span>
+              <span className="sm:hidden">Reveal</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </div>
+          </button>
         </div>
+
+        <div id="hidden-costs-anchor" className="scroll-mt-20" />
 
         {/* Team-level taxes — progressive disclosure */}
         <ProgressiveSection
