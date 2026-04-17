@@ -111,6 +111,10 @@ export default function InstructionGapCalculator() {
   const [teamSize, setTeamSize] = useState(25);
   const [department, setDepartment] = useState("operations");
   const [hourlyCost, setHourlyCost] = useState(75);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [engaged, setEngaged] = useState(false);
+  const sessionIdRef = useRef<string>("");
+  if (!sessionIdRef.current) sessionIdRef.current = getOrCreateCalcSessionId();
 
   const dept = DEPARTMENTS.find((d) => d.value === department)!;
   const p = dept.taxProfile;
