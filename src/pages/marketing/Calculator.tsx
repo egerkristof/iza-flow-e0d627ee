@@ -29,44 +29,11 @@ export default function CalculatorPage() {
             <br />
             <span className="brand-gradient-text">Here's what that costs you.</span>
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Every week your team rewrites the same prompts, fixes the same hallucinations,
-            and reinvents the same standards. That's not a training problem. It has a price tag.
-          </p>
         </div>
       </section>
 
       {/* Calculator */}
       <InstructionGapCalculator />
-
-      {/* Context bridge */}
-      <section className="px-6 pb-6">
-        <div className="max-w-3xl mx-auto">
-          <div
-            className="rounded-2xl border p-6 md:p-8"
-            style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
-          >
-            <h2 className="text-lg font-bold text-foreground mb-3">Why these numbers exist</h2>
-            <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-              <p>
-                Every AI tool your team uses today was built to be general-purpose. It doesn't know
-                your standards, your terminology, your quality bar, or how your department hands work
-                to the next one. So your people fill that gap manually, every single time.
-              </p>
-              <p>
-                That's not a training problem. It's an infrastructure problem. The knowledge that
-                should govern how AI executes in your organization doesn't exist in a form AI can use.
-                So every prompt starts from zero, every output needs human correction, and every
-                new hire rebuilds the wheel.
-              </p>
-              <p>
-                The taxes above aren't theoretical. They're what happens structurally when expertise
-                stays locked in individual heads instead of becoming organizational infrastructure.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Methodology */}
       <section className="px-6 pb-12">
