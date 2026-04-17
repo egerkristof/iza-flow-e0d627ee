@@ -23,6 +23,7 @@ import ConsultingReference from "@/components/admin/ConsultingReference";
 import PersonalizedConsulting from "@/components/admin/PersonalizedConsulting";
 import TeamBuilder from "@/components/admin/TeamBuilder";
 import PlatformSignups from "@/components/admin/PlatformSignups";
+import CalculatorSessions from "@/components/admin/CalculatorSessions";
 import { format } from "date-fns";
 import { QUESTIONS, DIMENSION_LABELS, calculateResults, type Dimension } from "@/lib/diagnostic-scoring";
 import ReactMarkdown from "react-markdown";
@@ -561,7 +562,7 @@ export default function AdminPage() {
               <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
                   <h1 className="text-xl font-bold text-foreground">Diagnostics</h1>
-                  <p className="text-sm text-muted-foreground">Live respondent submissions with drill-down details.</p>
+                  <p className="text-sm text-muted-foreground">Live respondent submissions plus calculator funnel activity.</p>
                 </div>
                 <div className="w-full md:w-80">
                   <Label htmlFor="diagnostic-search" className="mb-2 block">Search</Label>
@@ -573,6 +574,8 @@ export default function AdminPage() {
                   />
                 </div>
               </div>
+
+              <CalculatorSessions />
 
               <div className="grid gap-4">
                 {results
