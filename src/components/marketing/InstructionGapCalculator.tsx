@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import {
@@ -29,6 +29,8 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { DEPARTMENTS } from "./calculator/departments";
+import CalculatorEmailCapture from "./CalculatorEmailCapture";
+import { getOrCreateCalcSessionId, upsertCalcSession } from "@/lib/calculator-tracking";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-IE", {
