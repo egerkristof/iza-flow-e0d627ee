@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function CalculatorPage() {
   useEffect(() => {
-    document.title = "What Is Unstructured AI Costing You? | LIZA OS";
+    document.title = "What Is Your Context Gap Costing You? | LIZA OS";
   }, []);
 
   return (
