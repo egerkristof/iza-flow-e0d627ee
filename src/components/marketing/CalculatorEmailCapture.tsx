@@ -3,7 +3,7 @@ import { Mail, Loader2, CheckCircle2, Lock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import { attachLeadToCalcSession } from "@/lib/calculator-tracking";
+import { attachLeadToCalcSession, type CalcSnapshot } from "@/lib/calculator-tracking";
 import { useToast } from "@/hooks/use-toast";
 
 const schema = z.object({
@@ -17,14 +17,7 @@ interface Props {
   totalGap: number;
   locked?: boolean;
   onUnlock?: () => void;
-  snapshot?: {
-    team_size: number;
-    department: string;
-    hourly_cost: number;
-    rework_annual: number;
-    total_gap: number;
-    recoverable: number;
-  };
+  snapshot?: CalcSnapshot;
 }
 
 export default function CalculatorEmailCapture({
