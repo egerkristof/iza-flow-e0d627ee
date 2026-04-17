@@ -511,7 +511,7 @@ function Plan() {
       title: "Expert judgment becomes executable playbooks",
       steps: [
         "Your senior leads define their highest-value tasks inside LIZA OS",
-        "Tacit judgment is turned into instruction sets — intent, steps, governance",
+        "Tacit judgment is turned into a governed context layer — intent, steps, governance",
         "We stress-test protocols in real scenarios before they go live",
       ],
       output: "An executable protocol library inside LIZA OS",
