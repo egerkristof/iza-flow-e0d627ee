@@ -312,7 +312,7 @@ export default function InstructionGapCalculator() {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
             {TEAM_TAX_CARDS.map((tax) => (
-              <TaxCard key={tax.key} tax={tax} value={calc.taxes[tax.key]} />
+              <TaxCard key={tax.key} tax={tax} value={calc.taxes[tax.key]} locked={!unlocked} />
             ))}
           </div>
           <div
@@ -336,7 +336,7 @@ export default function InstructionGapCalculator() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {ORG_TAX_CARDS.map((tax) => (
-              <TaxCard key={tax.key} tax={tax} value={calc.taxes[tax.key]} isOrg />
+              <TaxCard key={tax.key} tax={tax} value={calc.taxes[tax.key]} isOrg locked={!unlocked} />
             ))}
           </div>
           <div
