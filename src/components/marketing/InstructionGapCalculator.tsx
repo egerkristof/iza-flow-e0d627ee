@@ -299,42 +299,24 @@ export default function InstructionGapCalculator() {
             </div>
           </div>
 
-          {/* Visible vs hidden cost CTA */}
+          {/* Visible vs hidden cost — subtle arrow nudge */}
+          <p className="mt-5 text-center text-xs text-muted-foreground italic">
+            This is only the visible cost.
+          </p>
           <button
             type="button"
+            aria-label="Scroll to hidden structural costs"
             onClick={() => {
               document.getElementById("hidden-costs-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
-            className="mt-6 w-full rounded-xl border px-5 py-4 flex items-center justify-between gap-4 text-left group transition-all hover:shadow-md"
+            className="mt-2 mx-auto flex items-center justify-center w-9 h-9 rounded-full border transition-all hover:translate-y-0.5"
             style={{
-              borderColor: "hsl(var(--primary) / 0.35)",
-              background: "linear-gradient(135deg, hsl(var(--primary) / 0.06), hsl(var(--primary) / 0.02))",
+              borderColor: "hsl(var(--primary) / 0.3)",
+              background: "hsl(var(--primary) / 0.06)",
+              color: "hsl(var(--primary))",
             }}
           >
-            <div className="flex items-start gap-3 min-w-0">
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                style={{ background: "hsl(var(--primary) / 0.1)" }}
-              >
-                <Layers className="w-5 h-5" style={{ color: "hsl(var(--primary))" }} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm md:text-base font-bold text-foreground leading-snug">
-                  This is only the visible cost.
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mt-0.5">
-                  The structural taxes below compound underneath. Reveal your hidden costs.
-                </p>
-              </div>
-            </div>
-            <div
-              className="shrink-0 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-2 rounded-lg transition-transform group-hover:translate-y-0.5"
-              style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)" }}
-            >
-              <span className="hidden sm:inline">See hidden costs</span>
-              <span className="sm:hidden">Reveal</span>
-              <ChevronDown className="w-3.5 h-3.5" />
-            </div>
+            <ChevronDown className="w-4 h-4 animate-bounce" />
           </button>
         </div>
 
@@ -346,6 +328,7 @@ export default function InstructionGapCalculator() {
           summary="Hidden costs compounding inside your team"
           summaryValue={calc.teamSubtotal}
           opacity={0.85}
+          locked={!unlocked}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
             {TEAM_TAX_CARDS.map((tax) => (
@@ -357,7 +340,17 @@ export default function InstructionGapCalculator() {
             style={{ background: "hsl(var(--muted) / 0.4)" }}
           >
             <p className="text-xs font-semibold text-muted-foreground">Department subtotal</p>
-            <p className="text-sm font-black text-foreground">{formatCurrency(calc.teamSubtotal)}/year</p>
+            {unlocked ? (
+              <p className="text-sm font-black text-foreground">{formatCurrency(calc.teamSubtotal)}/year</p>
+            ) : (
+              <p
+                className="text-sm font-black text-foreground select-none"
+                style={{ filter: "blur(5px)", userSelect: "none" }}
+                aria-hidden="true"
+              >
+                €••,•••/year
+              </p>
+            )}
           </div>
         </ProgressiveSection>
 
