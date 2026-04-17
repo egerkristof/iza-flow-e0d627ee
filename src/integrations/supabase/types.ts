@@ -193,6 +193,63 @@ export type Database = {
         }
         Relationships: []
       }
+      calculator_sessions: {
+        Row: {
+          company: string | null
+          created_at: string
+          department: string
+          email: string | null
+          email_captured_at: string | null
+          hourly_cost: number
+          id: string
+          name: string | null
+          recoverable: number
+          referrer: string | null
+          rework_annual: number
+          session_id: string
+          team_size: number
+          total_gap: number
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          department: string
+          email?: string | null
+          email_captured_at?: string | null
+          hourly_cost: number
+          id?: string
+          name?: string | null
+          recoverable: number
+          referrer?: string | null
+          rework_annual: number
+          session_id: string
+          team_size: number
+          total_gap: number
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          department?: string
+          email?: string | null
+          email_captured_at?: string | null
+          hourly_cost?: number
+          id?: string
+          name?: string | null
+          recoverable?: number
+          referrer?: string | null
+          rework_annual?: number
+          session_id?: string
+          team_size?: number
+          total_gap?: number
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       context_item_bundles: {
         Row: {
           bundle_id: string
