@@ -155,7 +155,7 @@ export default function InstructionGapCalculator() {
         {/* Header */}
         <div className="text-center mb-8">
           <p
-            className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border mb-4"
+            className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border"
             style={{
               color: "hsl(var(--primary))",
               borderColor: "hsl(var(--primary) / 0.25)",
@@ -165,11 +165,8 @@ export default function InstructionGapCalculator() {
             <Calculator className="w-3.5 h-3.5" />
             Instruction Gap Tax
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-            What is unstructured AI costing your team?
-          </h2>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Based on published research from Zapier (n=1,100) and Workday (2026). Adjust the inputs to see your estimate.
+          <p className="text-xs text-muted-foreground mt-3">
+            Adjust the inputs. Sources: Zapier (n=1,100), Workday 2026.
           </p>
         </div>
 
@@ -367,7 +364,7 @@ export default function InstructionGapCalculator() {
               What AI-native organizations measure instead
             </p>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              These are the metrics that don't exist yet in your organization. They will define the next generation of operational performance.
+              The metrics that don't exist in your organization yet.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -413,10 +410,7 @@ export default function InstructionGapCalculator() {
         {/* Footnotes */}
         <div className="mt-6 pt-4 border-t" style={{ borderColor: "hsl(var(--border))" }}>
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            Sources: Zapier AI Workslop Report, Jan 2026 (n=1,100 enterprise users) · Workday Global AI Impact Study, 2026 · CIO.com, Apr 2026.
-            Tax profiles are department-specific: duplication, inconsistency, turnover, and governance rates are tailored to each function.
-            Organizational taxes assume ~3 adjacent departments interacting with the selected team.
-            Recovery rate based on 65% midpoint of reported reduction with structured governance.
+            Department-specific tax profiles. Recovery rate based on 65% midpoint reported with structured governance. Full methodology above.
           </p>
         </div>
       </div>
