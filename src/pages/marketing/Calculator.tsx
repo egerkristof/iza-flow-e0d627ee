@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import InstructionGapCalculator from "@/components/marketing/InstructionGapCalculator";
+import ContextGapCalculator from "@/components/marketing/ContextGapCalculator";
 import { ArrowRight } from "lucide-react";
 
 export default function CalculatorPage() {
   useEffect(() => {
-    document.title = "What Is Unstructured AI Costing You? | LIZA OS";
+    document.title = "What Is Your Context Gap Costing You? | LIZA OS";
   }, []);
 
   return (
@@ -25,7 +25,7 @@ export default function CalculatorPage() {
           <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-[1.08]">
             Your AI isn't broken.
             <br />
-            Your instructions are.
+            It's missing your context.
             <br />
             <span className="brand-gradient-text">Here's what that costs you.</span>
           </h1>
@@ -33,7 +33,7 @@ export default function CalculatorPage() {
       </section>
 
       {/* Calculator */}
-      <InstructionGapCalculator />
+      <ContextGapCalculator />
 
       {/* Methodology */}
       <section className="px-6 pb-12">
@@ -63,7 +63,7 @@ export default function CalculatorPage() {
                 </p>
                 <p>
                   The 65% recovery rate represents the midpoint of reported reductions in organizations
-                  that have implemented governed AI instruction sets at infrastructure level.
+                  that have implemented a governed context layer at infrastructure level.
                 </p>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function CalculatorPage() {
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
               The calculator quantifies what you're losing. The diagnostic shows you exactly
-              where the instruction gaps are in your team's AI execution.
+              where the context gaps are in your team's AI execution.
               Five minutes. No signup required.
             </p>
             <Link

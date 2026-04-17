@@ -107,7 +107,7 @@ const FORWARD_METRICS = [
   },
 ] as const;
 
-export default function InstructionGapCalculator() {
+export default function ContextGapCalculator() {
   const [teamSize, setTeamSize] = useState(25);
   const [department, setDepartment] = useState("operations");
   const [hourlyCost, setHourlyCost] = useState(75);
@@ -197,7 +197,7 @@ export default function InstructionGapCalculator() {
             }}
           >
             <Calculator className="w-3.5 h-3.5" />
-            Instruction Gap Tax
+            Context Gap Tax
           </p>
           <p className="text-xs text-muted-foreground mt-3">
             Adjust the inputs. Sources: Zapier (n=1,100), Workday 2026.
@@ -292,7 +292,7 @@ export default function InstructionGapCalculator() {
                     </p>
                   </div>
                   <p className="text-[11px] text-muted-foreground leading-relaxed">
-                    Teams with governed AI instruction sets typically reclaim ~65% of rework cost by replacing ad-hoc prompting with reusable, standardized patterns.
+                    Teams with a governed context layer typically reclaim ~65% of rework cost by replacing ad-hoc prompting with reusable, standardized patterns.
                   </p>
                 </div>
               </div>
@@ -389,7 +389,7 @@ export default function InstructionGapCalculator() {
           </div>
         </ProgressiveSection>
 
-        {/* Total Instruction Gap Tax */}
+        {/* Total Context Gap Tax */}
         <div
           className="mt-6 rounded-2xl border p-6"
           style={{
@@ -402,7 +402,7 @@ export default function InstructionGapCalculator() {
               <div className="flex items-center gap-2 mb-1">
                 <Layers className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
                 <p className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground">
-                  Total Instruction Gap Tax
+                  Total Context Gap Tax
                 </p>
               </div>
               <p className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
@@ -424,7 +424,7 @@ export default function InstructionGapCalculator() {
                     Recoverable: {formatCurrency(calc.recoverable)}/year
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                    Organizations with governed AI instruction sets report 60-70% reduction across all dimensions.
+                    Organizations with a governed context layer report 60-70% reduction across all dimensions.
                   </p>
                 </div>
               </div>
