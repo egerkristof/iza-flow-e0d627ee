@@ -19,6 +19,18 @@ export interface CalcSnapshot {
   rework_annual: number;
   total_gap: number;
   recoverable: number;
+  // Optional richer breakdown for email content (not persisted)
+  team_subtotal?: number;
+  org_subtotal?: number;
+  taxes?: {
+    duplication: number;
+    inconsistency: number;
+    attrition: number;
+    onboarding: number;
+    handoff: number;
+    shadowGovernance: number;
+  };
+  department_label?: string;
 }
 
 export async function upsertCalcSession(
