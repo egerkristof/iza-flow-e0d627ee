@@ -265,24 +265,16 @@ serve(async (req) => {
       <p style="color:#888;font-size:13px;">Submitted via the Context Gap Calculator. Follow up within 48h.</p>
     `;
 
-    const internalRes = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const internalResult = await sendWithRetry(
+      RESEND_API_KEY,
+      {
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: ["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"],
         subject: `Calculator lead: ${email} (${totalGapStr}/yr gap)`,
         html: internalHtml,
-      }),
-    });
-
-    if (!internalRes.ok) {
-      const body = await internalRes.text();
-      console.error("internal email failed", internalRes.status, body);
-    }
+      },
+      "internal-notification",
+    );
 
     // 2) User snapshot — full mirror of the on-page experience + revealed figures
     const reworkMonthlyStr = fmtEUR(Number(rework_annual) / 12);
