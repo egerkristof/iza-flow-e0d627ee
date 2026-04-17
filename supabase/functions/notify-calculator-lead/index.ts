@@ -73,6 +73,54 @@ const DEFAULT_NARRATIVE = {
   firstFix: "Pick the single most-repeated AI workflow your team runs. Convert it to a governed playbook. Measure the recovery, then scale the pattern.",
 };
 
+// Resend POST with exponential backoff retries (handles 429 rate limits + 5xx).
+// Returns { ok, status, body, attempts }. Never throws.
+async function sendWithRetry(
+  apiKey: string,
+  payload: Record<string, unknown>,
+  label: string,
+  maxAttempts = 4,
+): Promise<{ ok: boolean; status: number; body: string; attempts: number }> {
+  let lastStatus = 0;
+  let lastBody = "";
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      lastStatus = res.status;
+      lastBody = await res.text();
+      if (res.ok) return { ok: true, status: res.status, body: lastBody, attempts: attempt };
+
+      // Retry on rate-limit and 5xx; everything else is terminal.
+      const retryable = res.status === 429 || res.status >= 500;
+      if (!retryable || attempt === maxAttempts) {
+        console.error(`${label} failed [${res.status}] attempt ${attempt}/${maxAttempts}: ${lastBody}`);
+        return { ok: false, status: res.status, body: lastBody, attempts: attempt };
+      }
+      const retryAfterHeader = res.headers.get("retry-after");
+      const retryAfterMs = retryAfterHeader ? Number(retryAfterHeader) * 1000 : 0;
+      const backoffMs = Math.max(retryAfterMs, 250 * Math.pow(2, attempt - 1));
+      console.warn(`${label} retry ${attempt}/${maxAttempts} in ${backoffMs}ms (status ${res.status})`);
+      await new Promise((r) => setTimeout(r, backoffMs));
+    } catch (err) {
+      lastBody = err instanceof Error ? err.message : String(err);
+      lastStatus = 0;
+      if (attempt === maxAttempts) {
+        console.error(`${label} threw on attempt ${attempt}/${maxAttempts}: ${lastBody}`);
+        return { ok: false, status: 0, body: lastBody, attempts: attempt };
+      }
+      await new Promise((r) => setTimeout(r, 250 * Math.pow(2, attempt - 1)));
+    }
+  }
+  return { ok: false, status: lastStatus, body: lastBody, attempts: maxAttempts };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
