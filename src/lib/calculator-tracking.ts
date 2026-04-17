@@ -38,10 +38,12 @@ export async function upsertCalcSession(
   snapshot: CalcSnapshot,
 ): Promise<void> {
   try {
+    const { team_subtotal, org_subtotal, taxes, department_label, ...persistable } = snapshot;
+    void team_subtotal; void org_subtotal; void taxes; void department_label;
     await supabase.from("calculator_sessions").upsert(
       {
         session_id: sessionId,
-        ...snapshot,
+        ...persistable,
         referrer: typeof document !== "undefined" ? document.referrer || null : null,
         user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
       },
