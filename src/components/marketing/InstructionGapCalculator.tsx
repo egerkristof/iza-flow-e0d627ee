@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import {
@@ -29,6 +29,8 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { DEPARTMENTS } from "./calculator/departments";
+import CalculatorEmailCapture from "./CalculatorEmailCapture";
+import { getOrCreateCalcSessionId, upsertCalcSession } from "@/lib/calculator-tracking";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-IE", {
@@ -109,6 +111,10 @@ export default function InstructionGapCalculator() {
   const [teamSize, setTeamSize] = useState(25);
   const [department, setDepartment] = useState("operations");
   const [hourlyCost, setHourlyCost] = useState(75);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [engaged, setEngaged] = useState(false);
+  const sessionIdRef = useRef<string>("");
+  if (!sessionIdRef.current) sessionIdRef.current = getOrCreateCalcSessionId();
 
   const dept = DEPARTMENTS.find((d) => d.value === department)!;
   const p = dept.taxProfile;
@@ -149,6 +155,33 @@ export default function InstructionGapCalculator() {
     };
   }, [teamSize, dept.hours, hourlyCost, p]);
 
+  // Engagement gate: 10s on the calculator + at least one input change
+  useEffect(() => {
+    if (!hasInteracted || engaged) return;
+    const t = setTimeout(() => setEngaged(true), 10_000);
+    return () => clearTimeout(t);
+  }, [hasInteracted, engaged]);
+
+  // Persist/refresh the snapshot once engaged, debounced as inputs change
+  useEffect(() => {
+    if (!engaged) return;
+    const t = setTimeout(() => {
+      void upsertCalcSession(sessionIdRef.current, {
+        team_size: teamSize,
+        department,
+        hourly_cost: hourlyCost,
+        rework_annual: Math.round(calc.reworkAnnual),
+        total_gap: Math.round(calc.totalGap),
+        recoverable: Math.round(calc.recoverable),
+      });
+    }, 800);
+    return () => clearTimeout(t);
+  }, [engaged, teamSize, department, hourlyCost, calc.reworkAnnual, calc.totalGap, calc.recoverable]);
+
+  const markInteracted = () => {
+    if (!hasInteracted) setHasInteracted(true);
+  };
+
   return (
     <section className="pb-16 px-6">
       <div className="max-w-4xl mx-auto">
@@ -184,7 +217,7 @@ export default function InstructionGapCalculator() {
                 </Label>
                 <Slider
                   value={[teamSize]}
-                  onValueChange={([v]) => setTeamSize(v)}
+                  onValueChange={([v]) => { setTeamSize(v); markInteracted(); }}
                   min={5}
                   max={200}
                   step={1}
@@ -199,7 +232,7 @@ export default function InstructionGapCalculator() {
                 <Label className="text-sm font-semibold text-foreground mb-3 block">
                   Department
                 </Label>
-                <Select value={department} onValueChange={setDepartment}>
+                <Select value={department} onValueChange={(v) => { setDepartment(v); markInteracted(); }}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -222,7 +255,7 @@ export default function InstructionGapCalculator() {
                 </Label>
                 <Slider
                   value={[hourlyCost]}
-                  onValueChange={([v]) => setHourlyCost(v)}
+                  onValueChange={([v]) => { setHourlyCost(v); markInteracted(); }}
                   min={40}
                   max={150}
                   step={5}
@@ -357,7 +390,12 @@ export default function InstructionGapCalculator() {
           </div>
         </div>
 
-        {/* Forward-looking AI-native metrics */}
+        {/* Email capture — soft lead-gen */}
+        <div className="mt-6">
+          <CalculatorEmailCapture sessionId={sessionIdRef.current} totalGap={calc.totalGap} />
+        </div>
+
+
         <div className="mt-10">
           <div className="text-center mb-5">
             <p className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground mb-2">
