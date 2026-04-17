@@ -37,7 +37,11 @@ export default function CalculatorEmailCapture({ sessionId, totalGap }: Props) {
       return;
     }
     setSubmitting(true);
-    const { error } = await attachLeadToCalcSession(sessionId, parsed.data);
+    const { error } = await attachLeadToCalcSession(sessionId, {
+      email: parsed.data.email,
+      name: parsed.data.name,
+      company: parsed.data.company,
+    });
     setSubmitting(false);
     if (error) {
       toast({ variant: "destructive", title: "Could not send", description: error });
