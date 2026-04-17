@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
-import InstructionGapCalculator from "@/components/marketing/InstructionGapCalculator";
+import ContextGapCalculator from "@/components/marketing/ContextGapCalculator";
 import { ArrowRight } from "lucide-react";
 
 export default function CalculatorPage() {
@@ -33,7 +33,7 @@ export default function CalculatorPage() {
       </section>
 
       {/* Calculator */}
-      <InstructionGapCalculator />
+      <ContextGapCalculator />
 
       {/* Methodology */}
       <section className="px-6 pb-12">
