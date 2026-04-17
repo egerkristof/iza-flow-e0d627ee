@@ -73,6 +73,54 @@ const DEFAULT_NARRATIVE = {
   firstFix: "Pick the single most-repeated AI workflow your team runs. Convert it to a governed playbook. Measure the recovery, then scale the pattern.",
 };
 
+// Resend POST with exponential backoff retries (handles 429 rate limits + 5xx).
+// Returns { ok, status, body, attempts }. Never throws.
+async function sendWithRetry(
+  apiKey: string,
+  payload: Record<string, unknown>,
+  label: string,
+  maxAttempts = 4,
+): Promise<{ ok: boolean; status: number; body: string; attempts: number }> {
+  let lastStatus = 0;
+  let lastBody = "";
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      lastStatus = res.status;
+      lastBody = await res.text();
+      if (res.ok) return { ok: true, status: res.status, body: lastBody, attempts: attempt };
+
+      // Retry on rate-limit and 5xx; everything else is terminal.
+      const retryable = res.status === 429 || res.status >= 500;
+      if (!retryable || attempt === maxAttempts) {
+        console.error(`${label} failed [${res.status}] attempt ${attempt}/${maxAttempts}: ${lastBody}`);
+        return { ok: false, status: res.status, body: lastBody, attempts: attempt };
+      }
+      const retryAfterHeader = res.headers.get("retry-after");
+      const retryAfterMs = retryAfterHeader ? Number(retryAfterHeader) * 1000 : 0;
+      const backoffMs = Math.max(retryAfterMs, 250 * Math.pow(2, attempt - 1));
+      console.warn(`${label} retry ${attempt}/${maxAttempts} in ${backoffMs}ms (status ${res.status})`);
+      await new Promise((r) => setTimeout(r, backoffMs));
+    } catch (err) {
+      lastBody = err instanceof Error ? err.message : String(err);
+      lastStatus = 0;
+      if (attempt === maxAttempts) {
+        console.error(`${label} threw on attempt ${attempt}/${maxAttempts}: ${lastBody}`);
+        return { ok: false, status: 0, body: lastBody, attempts: attempt };
+      }
+      await new Promise((r) => setTimeout(r, 250 * Math.pow(2, attempt - 1)));
+    }
+  }
+  return { ok: false, status: lastStatus, body: lastBody, attempts: maxAttempts };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -217,24 +265,16 @@ serve(async (req) => {
       <p style="color:#888;font-size:13px;">Submitted via the Context Gap Calculator. Follow up within 48h.</p>
     `;
 
-    const internalRes = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const internalResult = await sendWithRetry(
+      RESEND_API_KEY,
+      {
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: ["kristof.eger@lizaos.ai", "istvan.boscha@aliz.ai"],
         subject: `Calculator lead: ${email} (${totalGapStr}/yr gap)`,
         html: internalHtml,
-      }),
-    });
-
-    if (!internalRes.ok) {
-      const body = await internalRes.text();
-      console.error("internal email failed", internalRes.status, body);
-    }
+      },
+      "internal-notification",
+    );
 
     // 2) User snapshot — full mirror of the on-page experience + revealed figures
     const reworkMonthlyStr = fmtEUR(Number(rework_annual) / 12);
@@ -363,31 +403,31 @@ serve(async (req) => {
       </div>
     `;
 
-    const userRes = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const userResult = await sendWithRetry(
+      RESEND_API_KEY,
+      {
         from: "LIZA OS <invite@invite.lizaos.ai>",
         to: [email],
         bcc: ["kristof.eger@lizaos.ai"],
         reply_to: "kristof.eger@lizaos.ai",
         subject: `Your full Context Gap report: ${totalGapStr}/year`,
         html: userHtml,
+      },
+      "user-snapshot",
+    );
+
+    // Always return 200: the lead is already saved in the dashboard.
+    // Surface per-email outcomes so the caller can log them, but never
+    // throw — a transient mail provider failure must not look like a
+    // total failure to the calculator UI.
+    return new Response(
+      JSON.stringify({
+        success: true,
+        internal: { ok: internalResult.ok, status: internalResult.status, attempts: internalResult.attempts },
+        user: { ok: userResult.ok, status: userResult.status, attempts: userResult.attempts },
       }),
-    });
-
-    if (!userRes.ok) {
-      const body = await userRes.text();
-      console.error("user email failed", userRes.status, body);
-      throw new Error(`Resend (user) [${userRes.status}]: ${body}`);
-    }
-
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
   } catch (err: any) {
     console.error("notify-calculator-lead error:", err);
     return new Response(

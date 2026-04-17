@@ -60,33 +60,62 @@ export async function attachLeadToCalcSession(
   snapshot?: CalcSnapshot,
 ): Promise<{ error: string | null }> {
   try {
+    // CRITICAL: UPSERT (not UPDATE) so the lead is always captured on the
+    // dashboard, even if the engagement gate (10s + interaction) hasn't
+    // fired yet and no session row exists. Otherwise leads silently vanish.
+    const { team_subtotal, org_subtotal, taxes, department_label, ...persistableSnap } =
+      snapshot || ({} as CalcSnapshot);
+    void team_subtotal; void org_subtotal; void taxes; void department_label;
+
+    const row: Record<string, unknown> = {
+      session_id: sessionId,
+      email: lead.email,
+      name: lead.name || null,
+      company: lead.company || null,
+      email_captured_at: new Date().toISOString(),
+      referrer: typeof document !== "undefined" ? document.referrer || null : null,
+      user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
+      // Defaults so NOT NULL columns never fail on a fresh insert
+      team_size: persistableSnap.team_size ?? 0,
+      department: persistableSnap.department ?? "unknown",
+      hourly_cost: persistableSnap.hourly_cost ?? 0,
+      rework_annual: persistableSnap.rework_annual ?? 0,
+      total_gap: persistableSnap.total_gap ?? 0,
+      recoverable: persistableSnap.recoverable ?? 0,
+    };
+
     const { error } = await supabase
       .from("calculator_sessions")
-      .update({
-        email: lead.email,
-        name: lead.name || null,
-        company: lead.company || null,
-        email_captured_at: new Date().toISOString(),
-      })
-      .eq("session_id", sessionId);
-    if (error) return { error: error.message };
+      .upsert(row, { onConflict: "session_id" });
+    if (error) {
+      console.error("calc lead upsert failed", error);
+      return { error: error.message };
+    }
 
-    // Fire-and-forget email notifications (internal + user snapshot)
+    // Fire-and-forget email notifications (internal + user snapshot).
+    // Wrapped in try/catch so a transient mail provider issue never blocks
+    // the lead from being saved (it's already persisted above).
     try {
-      await supabase.functions.invoke("notify-calculator-lead", {
-        body: {
-          email: lead.email,
-          name: lead.name || null,
-          company: lead.company || null,
-          ...(snapshot || {}),
+      const { error: invokeErr } = await supabase.functions.invoke(
+        "notify-calculator-lead",
+        {
+          body: {
+            email: lead.email,
+            name: lead.name || null,
+            company: lead.company || null,
+            session_id: sessionId,
+            ...(snapshot || {}),
+          },
         },
-      });
+      );
+      if (invokeErr) console.error("notify-calculator-lead returned error", invokeErr);
     } catch (mailErr) {
       console.error("notify-calculator-lead invoke failed", mailErr);
     }
 
     return { error: null };
   } catch (err: any) {
+    console.error("attachLeadToCalcSession threw", err);
     return { error: err?.message || "Unknown error" };
   }
 }
