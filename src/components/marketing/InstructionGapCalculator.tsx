@@ -155,7 +155,7 @@ export default function InstructionGapCalculator() {
         {/* Header */}
         <div className="text-center mb-8">
           <p
-            className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border mb-4"
+            className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full border"
             style={{
               color: "hsl(var(--primary))",
               borderColor: "hsl(var(--primary) / 0.25)",
@@ -165,11 +165,8 @@ export default function InstructionGapCalculator() {
             <Calculator className="w-3.5 h-3.5" />
             Instruction Gap Tax
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-            What is unstructured AI costing your team?
-          </h2>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Based on published research from Zapier (n=1,100) and Workday (2026). Adjust the inputs to see your estimate.
+          <p className="text-xs text-muted-foreground mt-3">
+            Adjust the inputs. Sources: Zapier (n=1,100), Workday 2026.
           </p>
         </div>
 
