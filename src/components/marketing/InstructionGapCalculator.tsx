@@ -390,7 +390,12 @@ export default function InstructionGapCalculator() {
           </div>
         </div>
 
-        {/* Forward-looking AI-native metrics */}
+        {/* Email capture — soft lead-gen */}
+        <div className="mt-6">
+          <CalculatorEmailCapture sessionId={sessionIdRef.current} totalGap={calc.totalGap} />
+        </div>
+
+
         <div className="mt-10">
           <div className="text-center mb-5">
             <p className="text-xs font-bold tracking-[0.15em] uppercase text-muted-foreground mb-2">
