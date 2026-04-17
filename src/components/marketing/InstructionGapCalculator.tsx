@@ -392,8 +392,20 @@ export default function InstructionGapCalculator() {
 
         {/* Email capture — soft lead-gen */}
         <div className="mt-6">
-          <CalculatorEmailCapture sessionId={sessionIdRef.current} totalGap={calc.totalGap} />
+          <CalculatorEmailCapture
+            sessionId={sessionIdRef.current}
+            totalGap={calc.totalGap}
+            snapshot={{
+              team_size: teamSize,
+              department,
+              hourly_cost: hourlyCost,
+              rework_annual: Math.round(calc.reworkAnnual),
+              total_gap: Math.round(calc.totalGap),
+              recoverable: Math.round(calc.recoverable),
+            }}
+          />
         </div>
+
 
 
         <div className="mt-10">

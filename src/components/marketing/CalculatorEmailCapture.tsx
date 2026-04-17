@@ -15,9 +15,17 @@ const schema = z.object({
 interface Props {
   sessionId: string;
   totalGap: number;
+  snapshot?: {
+    team_size: number;
+    department: string;
+    hourly_cost: number;
+    rework_annual: number;
+    total_gap: number;
+    recoverable: number;
+  };
 }
 
-export default function CalculatorEmailCapture({ sessionId, totalGap }: Props) {
+export default function CalculatorEmailCapture({ sessionId, totalGap, snapshot }: Props) {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -37,18 +45,22 @@ export default function CalculatorEmailCapture({ sessionId, totalGap }: Props) {
       return;
     }
     setSubmitting(true);
-    const { error } = await attachLeadToCalcSession(sessionId, {
-      email: parsed.data.email,
-      name: parsed.data.name,
-      company: parsed.data.company,
-    });
+    const { error } = await attachLeadToCalcSession(
+      sessionId,
+      {
+        email: parsed.data.email,
+        name: parsed.data.name,
+        company: parsed.data.company,
+      },
+      snapshot,
+    );
     setSubmitting(false);
     if (error) {
       toast({ variant: "destructive", title: "Could not send", description: error });
       return;
     }
     setDone(true);
-    toast({ title: "On its way", description: "We'll send your snapshot shortly." });
+    toast({ title: "On its way", description: "Check your inbox in the next minute or two." });
   };
 
   if (done) {

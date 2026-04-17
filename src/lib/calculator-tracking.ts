@@ -43,6 +43,7 @@ export async function upsertCalcSession(
 export async function attachLeadToCalcSession(
   sessionId: string,
   lead: { email: string; name?: string; company?: string },
+  snapshot?: CalcSnapshot,
 ): Promise<{ error: string | null }> {
   try {
     const { error } = await supabase
@@ -55,6 +56,21 @@ export async function attachLeadToCalcSession(
       })
       .eq("session_id", sessionId);
     if (error) return { error: error.message };
+
+    // Fire-and-forget email notifications (internal + user snapshot)
+    try {
+      await supabase.functions.invoke("notify-calculator-lead", {
+        body: {
+          email: lead.email,
+          name: lead.name || null,
+          company: lead.company || null,
+          ...(snapshot || {}),
+        },
+      });
+    } catch (mailErr) {
+      console.error("notify-calculator-lead invoke failed", mailErr);
+    }
+
     return { error: null };
   } catch (err: any) {
     return { error: err?.message || "Unknown error" };
