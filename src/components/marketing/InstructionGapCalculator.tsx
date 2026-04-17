@@ -401,10 +401,21 @@ export default function InstructionGapCalculator() {
             snapshot={{
               team_size: teamSize,
               department,
+              department_label: dept.label,
               hourly_cost: hourlyCost,
               rework_annual: Math.round(calc.reworkAnnual),
               total_gap: Math.round(calc.totalGap),
               recoverable: Math.round(calc.recoverable),
+              team_subtotal: Math.round(calc.teamSubtotal),
+              org_subtotal: Math.round(calc.orgSubtotal),
+              taxes: {
+                duplication: Math.round(calc.duplication),
+                inconsistency: Math.round(calc.inconsistency),
+                attrition: Math.round(calc.attrition),
+                onboarding: Math.round(calc.onboarding),
+                handoff: Math.round(calc.handoff),
+                shadowGovernance: Math.round(calc.shadowGovernance),
+              },
             }}
           />
         </div>
