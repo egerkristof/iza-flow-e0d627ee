@@ -125,7 +125,7 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 02 — THE INSTRUCTION GAP
+// SLIDE 02 — THE CONTEXT GAP
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
@@ -137,7 +137,7 @@ function Slide02() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-          The Instruction Gap
+          The Context Gap
         </p>
 
         <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
@@ -281,7 +281,7 @@ function Slide03() {
           <div className="flex flex-col justify-center shrink-0">
             <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
             <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>per year / 100 people</p>
-            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The "Instruction Gap Tax"</p>
+            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The "Context Gap Tax"</p>
           </div>
           <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
           <div className="flex-1 flex flex-col justify-center gap-3">
@@ -452,7 +452,7 @@ function SlideWhyNow() {
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 04 — THE INSTRUCTION LAYER
+// SLIDE 04 — THE CONTEXT LAYER
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide05() {
@@ -461,7 +461,7 @@ function Slide05() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          The Instruction Layer
+          The Context Layer
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           The missing category is a <span style={{ color: `hsl(${TEAL})` }}>system of intelligence.</span>
@@ -504,7 +504,7 @@ function Slide05() {
               <Brain size={34} style={{ color: `hsl(${TEAL})` }} />
             </div>
             <p className="font-black mb-1" style={{ fontSize: 32, color: `hsl(${TEAL})` }}>LIZA OS</p>
-            <p className="font-semibold mb-6" style={{ fontSize: 16, color: MUTED }}>The Instruction Layer</p>
+            <p className="font-semibold mb-6" style={{ fontSize: 16, color: MUTED }}>The Context Layer</p>
 
             {/* Compact loop */}
             <div className="flex items-center gap-3">
@@ -630,7 +630,7 @@ function SlideArchitecture() {
                 </div>
                 <div>
                   <p className="font-black" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                  <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>The Instruction Layer</p>
+                  <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>The Context Layer</p>
                 </div>
               </div>
               <div className="px-4 py-2 rounded-full" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
@@ -1752,11 +1752,11 @@ function SlideAppendixDivider() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Instruction Gap", component: <Slide02 /> },
+  { id: 2, title: "The Context Gap", component: <Slide02 /> },
   { id: 3, title: "What That Costs", component: <Slide03 /> },
   { id: 4, title: "Early Validation", component: <Slide08 /> },
   { id: 5, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 6, title: "The Instruction Layer", component: <Slide05 /> },
+  { id: 6, title: "The Context Layer", component: <Slide05 /> },
   { id: 7, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 8, title: "Expansion Path", component: <Slide09 /> },
   { id: 9, title: "What's Built", component: <Slide10 /> },

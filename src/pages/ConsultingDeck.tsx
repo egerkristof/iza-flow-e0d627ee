@@ -127,14 +127,14 @@ function Slide01Cover() {
   );
 }
 
-// ─── Slide 02 — The Instruction Gap ─────────────────────────────────────────────
+// ─── Slide 02 — The Context Gap ─────────────────────────────────────────────
 
 function Slide02Problem() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <Grid />
       <div className="relative z-10 flex flex-col justify-center h-full px-28">
-        <Tag label="The Instruction Gap" color={RED} />
+        <Tag label="The Context Gap" color={RED} />
         <h2 className="font-bold mb-12" style={{ fontSize: 72, color: `hsl(${C})`, lineHeight: 1.1 }}>
           AI doesn't create inconsistency.
           <br />
@@ -470,7 +470,7 @@ function Slide07TwoPaths() {
             </h3>
             <p className="mb-5" style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.5 }}>
               90 seconds. Find out where your team sits on the maturity ladder.
-              Get a personalised report with your Instruction Gap score.
+              Get a personalised report with your Context Gap score.
             </p>
             <div className="space-y-3 flex-1">
               {[
@@ -658,7 +658,7 @@ function Slide10Who() {
             <span style={{ color: `hsl(${TEAL})` }}> industry leaders.</span>
           </h2>
           <p style={{ fontSize: 22, color: `hsl(${MUT})`, lineHeight: 1.6, maxWidth: 560 }}>
-            15 years building data and AI solutions. 15+ clients across 8 countries. We lived the Instruction Gap before we built the fix.
+            15 years building data and AI solutions. 15+ clients across 8 countries. We lived the Context Gap before we built the fix.
           </p>
         </div>
 
@@ -740,14 +740,14 @@ function Slide11CTA() {
         </h2>
 
         <p className="mb-12" style={{ fontSize: 32, color: `hsl(${MUT})`, lineHeight: 1.55 }}>
-          Find out where your team stands. Fix the Instruction Gap.
+          Find out where your team stands. Close the Context Gap.
           <br />
           Start in days, not months. See results in weeks.
         </p>
 
         <div className="flex items-center justify-center gap-8 mb-14">
           {[
-            { n: "01", label: "Take the 90s diagnostic", sub: "See your Instruction Gap score" },
+            { n: "01", label: "Take the 90s diagnostic", sub: "See your Context Gap score" },
             { n: "02", label: "Review your report", sub: "Personalised improvement roadmap" },
             { n: "03", label: "Build your first playbook", sub: "Deploy across your team" },
           ].map((s, i) => (
@@ -782,7 +782,7 @@ function Slide11CTA() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01Cover /> },
-  { id: 2, title: "The Instruction Gap", component: <Slide02Problem /> },
+  { id: 2, title: "The Context Gap", component: <Slide02Problem /> },
   { id: 3, title: "Maturity Model", component: <Slide03RootCause /> },
   { id: 4, title: "Three Gaps", component: <Slide04Tried /> },
   { id: 5, title: "The LIZA Loop", component: <Slide05Solution /> },
