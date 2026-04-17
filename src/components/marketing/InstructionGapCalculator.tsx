@@ -155,6 +155,33 @@ export default function InstructionGapCalculator() {
     };
   }, [teamSize, dept.hours, hourlyCost, p]);
 
+  // Engagement gate: 10s on the calculator + at least one input change
+  useEffect(() => {
+    if (!hasInteracted || engaged) return;
+    const t = setTimeout(() => setEngaged(true), 10_000);
+    return () => clearTimeout(t);
+  }, [hasInteracted, engaged]);
+
+  // Persist/refresh the snapshot once engaged, debounced as inputs change
+  useEffect(() => {
+    if (!engaged) return;
+    const t = setTimeout(() => {
+      void upsertCalcSession(sessionIdRef.current, {
+        team_size: teamSize,
+        department,
+        hourly_cost: hourlyCost,
+        rework_annual: Math.round(calc.reworkAnnual),
+        total_gap: Math.round(calc.totalGap),
+        recoverable: Math.round(calc.recoverable),
+      });
+    }, 800);
+    return () => clearTimeout(t);
+  }, [engaged, teamSize, department, hourlyCost, calc.reworkAnnual, calc.totalGap, calc.recoverable]);
+
+  const markInteracted = () => {
+    if (!hasInteracted) setHasInteracted(true);
+  };
+
   return (
     <section className="pb-16 px-6">
       <div className="max-w-4xl mx-auto">
