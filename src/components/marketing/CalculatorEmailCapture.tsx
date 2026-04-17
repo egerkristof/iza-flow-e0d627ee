@@ -30,13 +30,12 @@ export default function CalculatorEmailCapture({
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = schema.safeParse({ email, name, company });
+    const parsed = schema.safeParse({ email, name });
     if (!parsed.success) {
       toast({
         variant: "destructive",
@@ -51,7 +50,6 @@ export default function CalculatorEmailCapture({
       {
         email: parsed.data.email,
         name: parsed.data.name,
-        company: parsed.data.company,
       },
       snapshot,
     );
@@ -125,7 +123,7 @@ export default function CalculatorEmailCapture({
           </p>
         </div>
       </div>
-      <form onSubmit={onSubmit} className="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
+      <form onSubmit={onSubmit} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
         <Input
           type="email"
           placeholder="you@company.com"
@@ -136,17 +134,10 @@ export default function CalculatorEmailCapture({
         />
         <Input
           type="text"
-          placeholder="Name (optional)"
+          placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={100}
-        />
-        <Input
-          type="text"
-          placeholder="Company (optional)"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-          maxLength={150}
         />
         <Button type="submit" disabled={submitting || !email}>
           {submitting ? (
