@@ -69,7 +69,7 @@ const DEPT_NARRATIVE: Record<string, { headline: string; why: string; firstFix: 
 
 const DEFAULT_NARRATIVE = {
   headline: "Your gap is the cumulative cost of unstructured AI execution across the team.",
-  why: "Without governed instruction sets, every AI workflow is rebuilt ad-hoc, drifts in quality, and compounds friction at every team boundary.",
+  why: "Without a governed context layer, every AI workflow is rebuilt ad-hoc, drifts in quality, and compounds friction at every team boundary.",
   firstFix: "Pick the single most-repeated AI workflow your team runs. Convert it to a governed playbook. Measure the recovery, then scale the pattern.",
 };
 
@@ -181,7 +181,7 @@ serve(async (req) => {
 
     // 1) Internal notification
     const internalHtml = `
-      <h2>New Instruction Gap Calculator lead 📊</h2>
+      <h2>New Context Gap Calculator lead 📊</h2>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Name:</strong> ${name || "—"}</p>
       <p><strong>Company:</strong> ${company || "—"}</p>
@@ -197,7 +197,7 @@ serve(async (req) => {
         <li><strong>Annual rework cost:</strong> ${reworkStr}</li>
         <li><strong>Department subtotal:</strong> ${teamSubStr}</li>
         <li><strong>Organizational subtotal:</strong> ${orgSubStr}</li>
-        <li><strong>Total instruction gap:</strong> ${totalGapStr}</li>
+        <li><strong>Total context gap:</strong> ${totalGapStr}</li>
         <li><strong>Recoverable (65%):</strong> ${recoverableStr}</li>
       </ul>
       ${
@@ -214,7 +214,7 @@ serve(async (req) => {
           : ""
       }
       <hr style="margin:16px 0;border:none;border-top:1px solid #eee;" />
-      <p style="color:#888;font-size:13px;">Submitted via the Instruction Gap Calculator. Follow up within 48h.</p>
+      <p style="color:#888;font-size:13px;">Submitted via the Context Gap Calculator. Follow up within 48h.</p>
     `;
 
     const internalRes = await fetch("https://api.resend.com/emails", {
@@ -248,9 +248,9 @@ serve(async (req) => {
     const userHtml = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#111; max-width:640px; margin:0 auto; padding:8px;">
         <p style="margin:0 0 6px; font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#0a7;">
-          Instruction Gap Tax · Full report
+          Context Gap Tax · Full report
         </p>
-        <h2 style="margin:0 0 8px; font-size:24px; letter-spacing:-0.01em;">Your full Instruction Gap breakdown</h2>
+        <h2 style="margin:0 0 8px; font-size:24px; letter-spacing:-0.01em;">Your full Context Gap breakdown</h2>
         <p style="color:#555; margin:0 0 24px; font-size:14px; line-height:1.55;">
           Hi ${name || "there"}, here's the complete picture for ${deptName} (${team_size ?? "—"} people) — every line item revealed, with the structural taxes and the metrics most teams never measure.
         </p>
@@ -262,7 +262,7 @@ serve(async (req) => {
           <div style="background:rgba(10,170,119,0.08); border-radius:8px; padding:10px 12px;">
             <p style="margin:0; font-size:13px; font-weight:700; color:#0a7;">↓ Recoverable: ${reworkRecoverableStr}/year</p>
             <p style="margin:4px 0 0; font-size:11px; color:#666; line-height:1.5;">
-              Teams with governed instruction sets typically reclaim ~65% of rework cost by replacing ad-hoc prompting with reusable patterns.
+              Teams with a governed context layer typically reclaim ~65% of rework cost by replacing ad-hoc prompting with reusable patterns.
             </p>
           </div>
           <p style="margin:12px 0 0; font-size:12px; color:#888; font-style:italic;">
@@ -280,12 +280,12 @@ serve(async (req) => {
         </p>
 
         <div style="border:1px solid rgba(10,170,119,0.35); background:rgba(10,170,119,0.05); border-radius:14px; padding:20px; margin:20px 0;">
-          <p style="margin:0 0 6px; font-size:11px; color:#0a7; text-transform:uppercase; letter-spacing:0.12em; font-weight:700;">Total Instruction Gap Tax</p>
+          <p style="margin:0 0 6px; font-size:11px; color:#0a7; text-transform:uppercase; letter-spacing:0.12em; font-weight:700;">Total Context Gap Tax</p>
           <p style="margin:0 0 12px; font-size:30px; font-weight:800; color:#111; letter-spacing:-0.02em;">${totalGapStr}<span style="font-size:14px; color:#888; font-weight:500;"> / year</span></p>
           <div style="background:rgba(10,170,119,0.1); border-radius:8px; padding:10px 12px;">
             <p style="margin:0; font-size:13px; font-weight:700; color:#0a7;">↓ Recoverable: ${recoverableStr}/year</p>
             <p style="margin:4px 0 0; font-size:11px; color:#666; line-height:1.5;">
-              Organizations with governed AI instruction sets report 60-70% reduction across all dimensions.
+              Organizations with a governed context layer report 60-70% reduction across all dimensions.
             </p>
           </div>
         </div>
@@ -344,7 +344,7 @@ serve(async (req) => {
             Eliminate every tax above. Then unlock what most teams can't measure: knowledge capture, faster cycles, and safe delegation.
           </p>
           <p style="margin:0 0 16px; font-size:13px; color:#cfcfcf; line-height:1.6;">
-            LIZA OS is the instruction layer that turns expert judgment into governed, executable AI workflows. The same work, captured once and propagated cleanly across your team and adjacent functions.
+            LIZA OS is the context layer that turns expert judgment into governed, executable AI workflows. The same work, captured once and propagated cleanly across your team and adjacent functions.
           </p>
           <a href="https://lizaos.ai"
              style="display:inline-block; background:#fff; color:#111; padding:12px 20px; border-radius:8px; text-decoration:none; font-weight:700; font-size:13px; margin-right:8px;">
@@ -374,7 +374,7 @@ serve(async (req) => {
         to: [email],
         bcc: ["kristof.eger@lizaos.ai"],
         reply_to: "kristof.eger@lizaos.ai",
-        subject: `Your full Instruction Gap report: ${totalGapStr}/year`,
+        subject: `Your full Context Gap report: ${totalGapStr}/year`,
         html: userHtml,
       }),
     });
