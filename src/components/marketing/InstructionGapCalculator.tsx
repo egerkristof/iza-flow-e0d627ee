@@ -217,7 +217,7 @@ export default function InstructionGapCalculator() {
                 </Label>
                 <Slider
                   value={[teamSize]}
-                  onValueChange={([v]) => setTeamSize(v)}
+                  onValueChange={([v]) => { setTeamSize(v); markInteracted(); }}
                   min={5}
                   max={200}
                   step={1}
@@ -232,7 +232,7 @@ export default function InstructionGapCalculator() {
                 <Label className="text-sm font-semibold text-foreground mb-3 block">
                   Department
                 </Label>
-                <Select value={department} onValueChange={setDepartment}>
+                <Select value={department} onValueChange={(v) => { setDepartment(v); markInteracted(); }}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -255,7 +255,7 @@ export default function InstructionGapCalculator() {
                 </Label>
                 <Slider
                   value={[hourlyCost]}
-                  onValueChange={([v]) => setHourlyCost(v)}
+                  onValueChange={([v]) => { setHourlyCost(v); markInteracted(); }}
                   min={40}
                   max={150}
                   step={5}
