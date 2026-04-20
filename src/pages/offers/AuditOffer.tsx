@@ -8,20 +8,20 @@ const SECTIONS = [
   {
     h: "Why this audit is different",
     p: [
-      "Every AI audit on the market measures the same thing: tool adoption, license usage, prompt quality, model selection. They optimize the surface. They miss the layer underneath.",
-      "LIZA OS is built on a different premise: whatever you do not define, AI invents. Hallucination is not a model problem. It is a management problem. Your AI is pulling from generic training data because your organization has no Context Layer of its own — no encoded standards, no executable judgment, no system of record for how decisions actually get made.",
-      "This audit measures that gap. We map your Context Layer (or absence of one), quantify the Semantic Debt accumulating across your stack, and deliver a CEO-ready business case for closing it. You walk out with the evidence to unlock real budget and the operating model to spend it well.",
+      "You wrote the AI strategy. You picked the tools. You shipped the playbooks. And six months in, adoption is uneven, output quality drifts week to week, and you cannot point to where the gap actually lives.",
+      "It is not your strategy. It is not the model. The gap is between the standards you have written down and what your team can actually execute on a Tuesday afternoon, inside Notion docs, Slack threads, and isolated ChatGPT windows that have no idea what your standards are. We call this the Instruction Gap: the distance between the policy and the prompt.",
+      "This audit measures it. We map where your team is forced to improvise, quantify what that improvisation costs you in hours and rework, and deliver a CEO-ready business case for closing the gap. You walk out with the evidence to unlock budget and the operating model to spend it well.",
     ],
   },
 ];
 
 const DELIVERABLES = [
-  "A Context Layer map of your organization: where judgment lives today, who holds it, and where it leaks.",
-  "A Semantic Debt diagnostic across your current stack (Notion, Slack, ChatGPT, Copilot, bespoke tools) showing where contradictions and undefined standards are quietly degrading every AI output.",
-  "The 5 to 8 highest-leverage workflows where encoded standards would compound fastest, ranked by ROI and adoption risk.",
-  "A quantified Context Gap Tax: hours lost to rework, knowledge leakage, inconsistent output, and shadow AI. Most mid-market orgs we measure carry 400k to 700k EUR per year in this hidden cost.",
+  "A map of where your team is improvising: the workflows where your written standards are not making it into daily execution, and why.",
+  "A diagnostic of your current execution stack (Notion, Slack, ChatGPT, Copilot, bespoke tools) showing where contradictions and undefined standards are quietly degrading every AI output.",
+  "The 5 to 8 highest-leverage workflows where enforced standards would compound fastest, ranked by ROI and adoption risk.",
+  "A quantified cost-of-inaction: hours lost to rework, knowledge leakage, inconsistent output, and shadow AI. Most mid-market orgs we measure carry 400k to 700k EUR per year in this hidden cost.",
   "A CEO-ready business case (PDF and slide-ready) with conservative, expected, and aggressive scenarios.",
-  "A 90-day operational roadmap your team can execute, with or without LIZA OS.",
+  "A 90-day enforcement roadmap your team can execute, with or without LIZA OS.",
   "One executive readout (60 min) with you and, if you choose, your CEO or COO.",
 ];
 
@@ -85,11 +85,13 @@ export default function AuditOffer() {
 
         <header className="mb-12 border-b border-border pb-8">
           <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">LIZA OS · Offer Brief</p>
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">AI Opportunity Audit</h1>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            Your AI strategy is right. Your team isn't executing it.
+          </h1>
           <p className="text-lg text-muted-foreground">
-            A 3-week diagnostic of your Context Layer. The infrastructure every other AI audit ignores.
+            A 3-week audit that pinpoints where adoption breaks, quantifies what it costs, and gives you the business case to fix it.
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">€15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
+          <p className="mt-3 text-sm text-muted-foreground">AI Opportunity Audit · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
         </header>
 
         {SECTIONS.map((s) => (
@@ -178,11 +180,10 @@ export default function AuditOffer() {
         <section className="mb-12">
           <h2 className="mb-4 text-xl font-semibold text-foreground">Why us</h2>
           <p className="text-foreground/90">
-            LIZA OS is the operating system for AI-native organizations. We built it because every other category in the AI stack
-            is passive: Systems of Record (Notion, Veeva) store, Systems of Output (Salesforce, SAP) produce, copilots react. None
-            of them define how your organization actually thinks. LIZA is the active Context Layer that does. This audit is the
-            only diagnostic on the market built on that premise, run by the practitioners who built the category, with 15+ years
-            of shipping data and AI systems for enterprise.
+            We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
+            them enforce. The execution layer that turns strategy into daily, governed work simply did not exist, so we built
+            it. This audit is run by the practitioners who built that category, with 15+ years of shipping data and AI systems
+            for enterprise. It is product-agnostic: LIZA OS is one option in your roadmap, never the conclusion.
           </p>
         </section>
 
