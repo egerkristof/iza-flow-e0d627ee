@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -57,16 +57,16 @@ const NOT = [
 ];
 
 export default function AuditOffer() {
+  useEffect(() => {
+    const prev = document.title;
+    document.title = "AI Opportunity Audit — LIZA OS";
+    return () => {
+      document.title = prev;
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>AI Opportunity Audit — LIZA OS</title>
-        <meta
-          name="description"
-          content="A 3-week, €15k diagnostic for Heads of AI. Walk out with a CEO-ready business case to unlock the next phase of your AI mandate."
-        />
-      </Helmet>
-
       <div className="mx-auto max-w-3xl px-6 py-12 md:py-20">
         <div className="mb-10 flex items-center justify-between">
           <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
