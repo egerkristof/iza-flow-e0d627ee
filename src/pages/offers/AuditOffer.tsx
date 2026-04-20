@@ -59,7 +59,7 @@ const NOT = [
 export default function AuditOffer() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "AI Opportunity Audit — LIZA OS";
+    document.title = "AgOps Design Sprint — LIZA OS";
     // Prevent indexing — this page is for outbound/post-capture only
     let robots = document.querySelector('meta[name="robots"]');
     const created = !robots;
@@ -96,12 +96,12 @@ export default function AuditOffer() {
         <header className="mb-12 border-b border-border pb-8">
           <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">LIZA OS · Offer Brief</p>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-            Your AI strategy is right. Your team isn't executing it.
+            The AgOps Design Sprint
           </h1>
           <p className="text-lg text-muted-foreground">
-            A 3-week audit that pinpoints where adoption breaks, quantifies what it costs, and gives you the business case to fix it.
+            Your AI strategy is sound. Your human–AI workflows are breaking. A 3-week intensive design sprint to architect the execution infrastructure that makes your AI investments operational, governable, and adopted by your team.
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">AI Opportunity Audit · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
+          <p className="mt-3 text-sm text-muted-foreground">AgOps Design Sprint · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
         </header>
 
         {SECTIONS.map((s) => (
@@ -180,12 +180,19 @@ export default function AuditOffer() {
 
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-semibold text-foreground">What happens after</h2>
+          <p className="mb-3 text-foreground/90">
+            The sprint ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready
+            business case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in
+            LIZA OS.
+          </p>
+          <p className="mb-3 text-foreground/90">
+            Post-sprint engagements are priced to deliver a minimum 3x ROI on the hidden cost we identify in the diagnostic.
+            For most mid-market orgs, that means the initial 3-workflow enforcement build lands in the <strong>€35k–€50k</strong>{" "}
+            range, scaling from there as additional workflows are encoded.
+          </p>
           <p className="text-foreground/90">
-            The audit ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready business
-            case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in LIZA OS.
-            Typical post-audit engagement starts at €25k for the deployment sprint and scales from there. We are upfront about
-            this because the alternative — taking your roadmap to an internal team or another vendor — is the slowest, most
-            expensive way to close a gap we have already mapped, in a category we built.
+            We are upfront about this because the alternative — trying to build an enforcement layer internally or with another
+            vendor — is the slowest, most expensive way to close a gap we have already mapped, in a category we defined.
           </p>
         </section>
 
@@ -193,10 +200,10 @@ export default function AuditOffer() {
           <h2 className="mb-4 text-xl font-semibold text-foreground">Why us</h2>
           <p className="text-foreground/90">
             We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
-            them enforce. The execution layer that turns strategy into daily, governed work simply did not exist, so we built
-            it. This audit is run by the practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. We are not here to give you options. We are here to prove the diagnosis on your data and architect
-            the only solution we believe works.
+            them <em>enforce</em>. The execution infrastructure that turns strategy into daily, governed work simply did not
+            exist, so we built it. This sprint is run by the practitioners who built that category, with 15+ years of shipping
+            data and AI systems for enterprise. We are not here to give you options. We are here to design the only operational
+            architecture we believe works.
           </p>
         </section>
 
@@ -204,7 +211,7 @@ export default function AuditOffer() {
           <p className="mb-4 text-base text-foreground">To start, reply to the email or book a 30-minute scoping call.</p>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="gap-2">
-              <a href="mailto:kristof.eger@lizaos.ai?subject=AI%20Opportunity%20Audit">
+              <a href="mailto:kristof.eger@lizaos.ai?subject=AgOps%20Design%20Sprint">
                 <Mail className="h-4 w-4" />
                 Email Kristóf
               </a>
