@@ -20,28 +20,30 @@ const schema = z.object({
 });
 
 const SYMPTOMS = [
-  "Your team has the LLMs, the playbooks, and the strategy doc. Adoption still stalls.",
-  "Output quality is erratic. The same prompt does not produce the same standard twice.",
-  "Operators resist agents because the agents have no idea how your company actually decides.",
+  "You bought the LLMs, wrote the playbooks, ran the training. Adoption still stalls.",
+  "The same prompt does not produce the same standard twice. Quality drifts by operator.",
+  "Your best people work around the agents because the agents do not know how you decide.",
   "Governance lives in Notion. Execution happens in ChatGPT. Nothing connects the two.",
+  "Every team has its own prompts, its own context, its own version of the truth.",
+  "When someone leaves, their judgment leaves with them. Nothing compounds.",
 ];
 
 const WHAT_YOU_GET = [
   {
-    h: "An AgOps Blueprint",
-    p: "Architectural redesign of your 3 to 5 highest-leverage workflows, mapping the exact handoffs between human context, AI execution, and human review.",
+    h: "Your executable knowledge layer, mapped",
+    p: "We identify the 3 to 5 workflows where codifying your judgment as enforceable standards unlocks the most value, and we draft the structure of that layer for your business.",
   },
   {
     h: "Your cost of inaction, quantified",
-    p: "Where static documentation is failing to govern AI output. Most mid-market orgs we measure carry €400k–€700k/year in rework, margin bleed, and risk.",
+    p: "Where static docs are failing to govern AI output today. Most mid-market orgs we measure carry €400k to €700k a year in rework, inconsistency, and lost expertise.",
   },
   {
-    h: "A change management roadmap",
-    p: "How to introduce governed AI workflows in a way that drives enthusiastic adoption, not resistance from your best operators.",
+    h: "A human-AI adoption plan",
+    p: "How to roll governed workflows out so your best operators pull them in instead of resisting them. Change management built into the architecture, not bolted on.",
   },
   {
     h: "A CEO-ready business case",
-    p: "Conservative, expected, and aggressive ROI scenarios. Slide-ready, defensible, sized for board conversation.",
+    p: "Conservative, expected, and aggressive ROI scenarios. Slide-ready, defensible, sized for the board conversation that follows.",
   },
 ];
 
