@@ -180,11 +180,10 @@ export default function AuditOffer() {
         <section className="mb-12">
           <h2 className="mb-4 text-xl font-semibold text-foreground">Why us</h2>
           <p className="text-foreground/90">
-            LIZA OS is the operating system for AI-native organizations. We built it because every other category in the AI stack
-            is passive: Systems of Record (Notion, Veeva) store, Systems of Output (Salesforce, SAP) produce, copilots react. None
-            of them define how your organization actually thinks. LIZA is the active Context Layer that does. This audit is the
-            only diagnostic on the market built on that premise, run by the practitioners who built the category, with 15+ years
-            of shipping data and AI systems for enterprise.
+            We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
+            them enforce. The execution layer that turns strategy into daily, governed work simply did not exist, so we built
+            it. This audit is run by the practitioners who built that category, with 15+ years of shipping data and AI systems
+            for enterprise. It is product-agnostic: LIZA OS is one option in your roadmap, never the conclusion.
           </p>
         </section>
 
