@@ -42,6 +42,8 @@ import DiagnosticPage from "./pages/marketing/Diagnostic";
 import PrivacyPage from "./pages/marketing/Privacy";
 import TermsPage from "./pages/marketing/Terms";
 import CalculatorPage from "./pages/marketing/Calculator";
+import AuditLandingPage from "./pages/marketing/AuditLanding";
+import AuditOfferPage from "./pages/offers/AuditOffer";
 
 const queryClient = new QueryClient();
 
@@ -94,6 +96,8 @@ const App = () => (
             <Route path="/platform-signup" element={<PlatformSignupPage />} />
             <Route path="/diagnostic" element={<DiagnosticPage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
+            <Route path="/audit" element={<AuditLandingPage />} />
+            <Route path="/offers/audit" element={<AuditOfferPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
