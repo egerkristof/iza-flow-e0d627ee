@@ -60,7 +60,7 @@ const NOT = [
 export default function AuditOffer() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "AgOps Design Sprint — LIZA OS";
+    document.title = "AI Execution Blueprint — LIZA OS";
     // Prevent indexing — this page is for outbound/post-capture only
     let robots = document.querySelector('meta[name="robots"]');
     const created = !robots;
