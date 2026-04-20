@@ -6,21 +6,22 @@ import { ArrowLeft, Download, Mail } from "lucide-react";
 
 const SECTIONS = [
   {
-    h: "Why this exists",
+    h: "Why this audit is different",
     p: [
-      "You were hired 3–9 months ago to lead AI inside a 50–250 person company. You have the strategy. You have the playbooks. You have the LLM licences. But adoption is stalling, the CEO is starting to ask about ROI, and the gap between your roadmap and what the team actually does every day is widening.",
-      "The problem is not your strategy. It is that you are trying to enforce a 2026 operating model on 2015 infrastructure. There is no system of record for AI execution, so nothing compounds.",
-      "The AI Opportunity Audit gives you, in three weeks, the evidence and the CEO-ready business case you need to unlock real budget for an Operationalization Sprint. It is the artifact that turns you from \u201cthe AI person\u201d into the executive your CEO trusts with the AI mandate.",
+      "Every AI audit on the market measures the same thing: tool adoption, license usage, prompt quality, model selection. They optimize the surface. They miss the layer underneath.",
+      "LIZA OS is built on a different premise: whatever you do not define, AI invents. Hallucination is not a model problem. It is a management problem. Your AI is pulling from generic training data because your organization has no Context Layer of its own — no encoded standards, no executable judgment, no system of record for how decisions actually get made.",
+      "This audit measures that gap. We map your Context Layer (or absence of one), quantify the Semantic Debt accumulating across your stack, and deliver a CEO-ready business case for closing it. You walk out with the evidence to unlock real budget and the operating model to spend it well.",
     ],
   },
 ];
 
 const DELIVERABLES = [
-  "A prioritized map of the 5–8 highest-leverage AI workflows in your org, ranked by ROI potential and adoption risk.",
-  "A quantified \u201ccost of inaction\u201d model: hours lost to rework, knowledge leakage, inconsistent output, and shadow AI usage.",
-  "A CEO-ready ROI business case (PDF + slide-ready) with conservative, expected, and aggressive scenarios.",
+  "A Context Layer map of your organization: where judgment lives today, who holds it, and where it leaks.",
+  "A Semantic Debt diagnostic across your current stack (Notion, Slack, ChatGPT, Copilot, bespoke tools) showing where contradictions and undefined standards are quietly degrading every AI output.",
+  "The 5 to 8 highest-leverage workflows where encoded standards would compound fastest, ranked by ROI and adoption risk.",
+  "A quantified Context Gap Tax: hours lost to rework, knowledge leakage, inconsistent output, and shadow AI. Most mid-market orgs we measure carry 400k to 700k EUR per year in this hidden cost.",
+  "A CEO-ready business case (PDF and slide-ready) with conservative, expected, and aggressive scenarios.",
   "A 90-day operational roadmap your team can execute, with or without LIZA OS.",
-  "A diagnostic of your current execution stack — where Notion, Slack, ChatGPT, and bespoke tools are creating semantic debt.",
   "One executive readout (60 min) with you and, if you choose, your CEO or COO.",
 ];
 
@@ -50,9 +51,10 @@ const NEEDS = [
 ];
 
 const NOT = [
-  "Not a strategy doc. You already have one.",
-  "Not a generic AI maturity assessment. We measure your specific workflows.",
-  "Not a software pitch. The audit is product-agnostic; LIZA OS is one option in the roadmap, never the conclusion.",
+  "Not a tool adoption survey. Glean, Guru, and the consultancies already do that. We measure the layer underneath.",
+  "Not a generic AI maturity score. We map your specific Context Layer and quantify your specific Semantic Debt.",
+  "Not a strategy doc. You already have one. This produces the evidence to fund executing it.",
+  "Not a software pitch. The audit is product-agnostic. LIZA OS is one option in the roadmap, never the conclusion.",
   "Not a 6-month consulting retainer. Three weeks, fixed price, then we leave.",
 ];
 
@@ -85,7 +87,7 @@ export default function AuditOffer() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">LIZA OS · Offer Brief</p>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">AI Opportunity Audit</h1>
           <p className="text-lg text-muted-foreground">
-            A 3-week diagnostic for Heads of AI who need to prove ROI before the next board cycle.
+            A 3-week diagnostic of your Context Layer. The infrastructure every other AI audit ignores.
           </p>
           <p className="mt-3 text-sm text-muted-foreground">€15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
         </header>
@@ -167,18 +169,20 @@ export default function AuditOffer() {
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-semibold text-foreground">What happens after</h2>
           <p className="text-foreground/90">
-            You walk out with a CEO-ready business case. Most clients use it to unlock a €25k+ Operationalization Sprint where we
-            deploy LIZA OS to encode and enforce the top 3 workflows from the audit. But you are under no obligation. The audit
-            stands alone.
+            You walk out with a CEO-ready business case and the language to defend it. Most clients use the audit to unlock a
+            €25k+ Operationalization Sprint where we encode the top 3 workflows into LIZA OS as executable standards. The audit
+            stands alone. You are under no obligation.
           </p>
         </section>
 
         <section className="mb-12">
-          <h2 className="mb-4 text-xl font-semibold text-foreground">Who we are</h2>
+          <h2 className="mb-4 text-xl font-semibold text-foreground">Why us</h2>
           <p className="text-foreground/90">
-            LIZA OS is the operating system for AI-native organizations. We are practitioners with 15+ years of building data and
-            AI systems for enterprise clients including aliz.ai and Alverad. We do not write strategy decks; we operationalize the
-            strategy you already have.
+            LIZA OS is the operating system for AI-native organizations. We built it because every other category in the AI stack
+            is passive: Systems of Record (Notion, Veeva) store, Systems of Output (Salesforce, SAP) produce, copilots react. None
+            of them define how your organization actually thinks. LIZA is the active Context Layer that does. This audit is the
+            only diagnostic on the market built on that premise, run by the practitioners who built the category, with 15+ years
+            of shipping data and AI systems for enterprise.
           </p>
         </section>
 
