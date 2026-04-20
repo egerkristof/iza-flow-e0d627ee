@@ -301,6 +301,37 @@ function ActionPlan({
         <p className="text-xs text-muted-foreground/70 text-center pt-1">
           These are starting points. In a diagnostic debrief, we build the full roadmap together.
         </p>
+
+        {/* Blueprint entry point for low scorers */}
+        {overall <= 55 && (
+          <div
+            className="rounded-xl border p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+            style={{
+              borderColor: "hsl(var(--primary) / 0.25)",
+              background: "hsl(var(--primary) / 0.04)",
+            }}
+          >
+            <div className="space-y-1">
+              <p className="text-xs font-bold tracking-[0.15em] uppercase text-primary/70">
+                Need help scoping this?
+              </p>
+              <p className="text-sm text-foreground font-semibold">
+                The AI Execution Blueprint turns these gaps into a 3-week build plan.
+              </p>
+            </div>
+            <a
+              href="/audit"
+              className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold border whitespace-nowrap"
+              style={{
+                borderColor: "hsl(var(--primary) / 0.3)",
+                color: "hsl(var(--primary))",
+                background: "hsl(var(--background))",
+              }}
+            >
+              See the Blueprint <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
