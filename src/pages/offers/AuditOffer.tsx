@@ -9,8 +9,8 @@ const SECTIONS = [
     h: "Why this audit is different",
     p: [
       "You wrote the AI strategy. You picked the tools. You shipped the playbooks. And six months in, adoption is uneven, output quality drifts week to week, and you cannot point to where the gap actually lives.",
-      "It is not your strategy. It is not the model. The gap is between the standards you have written down and what your team can actually execute on a Tuesday afternoon, inside Notion docs, Slack threads, and isolated ChatGPT windows that have no idea what your standards are. We call this the Instruction Gap: the distance between the policy and the prompt.",
-      "This audit measures it. We map where your team is forced to improvise, quantify what that improvisation costs you in hours and rework, and deliver a CEO-ready business case for closing the gap. You walk out with the evidence to unlock budget and the operating model to spend it well.",
+      "We have a strong, specific point of view about why: every AI strategy fails at the same place. The standards you wrote down never reach the prompt. They sit in Notion docs, Slack threads, and isolated ChatGPT windows that have no idea what your standards are. We call this the Instruction Gap, and we do not believe any amount of training, prompting, or tool selection closes it. Only an enforcement layer does. We built one. It is called LIZA OS.",
+      "This audit is not a neutral diagnostic. It is the paid first step of an inevitable partnership. In three weeks we prove, with your data, exactly where your Instruction Gap lives, what it costs you, and what closing it is worth. By the executive readout, the business case for deploying the enforcement layer with us will be self-evident. If it is not, you owe us nothing past the kickoff.",
     ],
   },
 ];
@@ -18,10 +18,10 @@ const SECTIONS = [
 const DELIVERABLES = [
   "A map of where your team is improvising: the workflows where your written standards are not making it into daily execution, and why.",
   "A diagnostic of your current execution stack (Notion, Slack, ChatGPT, Copilot, bespoke tools) showing where contradictions and undefined standards are quietly degrading every AI output.",
-  "The 5 to 8 highest-leverage workflows where enforced standards would compound fastest, ranked by ROI and adoption risk.",
+  "The 5 to 8 highest-leverage workflows where an enforcement layer would compound fastest, ranked by ROI and adoption risk.",
   "A quantified cost-of-inaction: hours lost to rework, knowledge leakage, inconsistent output, and shadow AI. Most mid-market orgs we measure carry 400k to 700k EUR per year in this hidden cost.",
-  "A CEO-ready business case (PDF and slide-ready) with conservative, expected, and aggressive scenarios.",
-  "A 90-day enforcement roadmap your team can execute, with or without LIZA OS.",
+  "A CEO-ready business case (PDF and slide-ready) with conservative, expected, and aggressive scenarios for closing the gap.",
+  "A 90-day deployment plan: the first three workflows we encode into LIZA OS, the governance model around them, and the adoption milestones.",
   "One executive readout (60 min) with you and, if you choose, your CEO or COO.",
 ];
 
@@ -52,10 +52,10 @@ const NEEDS = [
 
 const NOT = [
   "Not a tool adoption survey. Glean, Guru, and the consultancies already do that. We measure the layer underneath.",
-  "Not a generic AI maturity score. We map your specific Context Layer and quantify your specific Semantic Debt.",
-  "Not a strategy doc. You already have one. This produces the evidence to fund executing it.",
-  "Not a software pitch. The audit is product-agnostic. LIZA OS is one option in the roadmap, never the conclusion.",
-  "Not a 6-month consulting retainer. Three weeks, fixed price, then we leave.",
+  "Not a generic AI maturity score. We map your specific Instruction Gap and quantify your specific cost of inaction.",
+  "Not a strategy doc. You already have one. This produces the evidence and the deployment plan to actually execute it.",
+  "Not a vendor-neutral diagnostic. We have a point of view: enforcement is the only thing that closes the Instruction Gap, and LIZA OS is the enforcement layer we built. The audit proves it on your data.",
+  "Not a 6-month consulting retainer. Three weeks, fixed price, then either we deploy together or we walk.",
 ];
 
 export default function AuditOffer() {
@@ -171,9 +171,11 @@ export default function AuditOffer() {
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-semibold text-foreground">What happens after</h2>
           <p className="text-foreground/90">
-            You walk out with a CEO-ready business case and the language to defend it. Most clients use the audit to unlock a
-            €25k+ Operationalization Sprint where we encode the top 3 workflows into LIZA OS as executable standards. The audit
-            stands alone. You are under no obligation.
+            The audit ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready business
+            case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in LIZA OS.
+            Typical post-audit engagement starts at €25k for the deployment sprint and scales from there. We are upfront about
+            this because the alternative — taking your roadmap to an internal team or another vendor — is the slowest, most
+            expensive way to close a gap we have already mapped, in a category we built.
           </p>
         </section>
 
@@ -183,7 +185,8 @@ export default function AuditOffer() {
             We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
             them enforce. The execution layer that turns strategy into daily, governed work simply did not exist, so we built
             it. This audit is run by the practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. It is product-agnostic: LIZA OS is one option in your roadmap, never the conclusion.
+            for enterprise. We are not here to give you options. We are here to prove the diagnosis on your data and architect
+            the only solution we believe works.
           </p>
         </section>
 
