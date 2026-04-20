@@ -67,7 +67,7 @@ export async function attachLeadToCalcSession(
       snapshot || ({} as CalcSnapshot);
     void team_subtotal; void org_subtotal; void taxes; void department_label;
 
-    const row: Record<string, unknown> = {
+    const row = {
       session_id: sessionId,
       email: lead.email,
       name: lead.name || null,
