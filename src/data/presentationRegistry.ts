@@ -6,6 +6,7 @@ import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
 import LinkedInImageCard from "@/pages/LinkedInImageCard";
 import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
+import AuditOffer from "@/pages/offers/AuditOffer";
 
 export type PresentationRoute = {
   id: string;
@@ -71,6 +72,14 @@ export const presentationRoutes: PresentationRoute[] = [
     path: "/linkedin-card",
     description: "LinkedIn image card generator",
     component: LinkedInImageCard,
+    showInAdmin: true,
+  },
+  {
+    id: "offer-audit-15k",
+    title: "AI Opportunity Audit (€15k Offer)",
+    path: "/offers/audit",
+    description: "3-week audit brief for Heads of AI. Web page + downloadable PDF.",
+    component: AuditOffer,
     showInAdmin: true,
   },
 ];
