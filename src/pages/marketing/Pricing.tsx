@@ -429,6 +429,14 @@ function SprintBridge() {
                 Book a Call
               </a>
             </div>
+
+            <p className="text-xs text-muted-foreground/70 mt-6">
+              Larger scope?{" "}
+              <Link to="/audit" className="font-semibold text-primary hover:underline">
+                The AI Execution Blueprint →
+              </Link>{" "}
+              architects your full knowledge layer in 3 weeks.
+            </p>
           </div>
         </div>
       </div>

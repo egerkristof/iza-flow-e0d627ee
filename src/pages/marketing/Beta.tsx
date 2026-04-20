@@ -99,6 +99,13 @@ export default function BetaPage() {
                 </div>
               ))}
             </div>
+
+            <p className="text-xs text-muted-foreground/70 mt-6">
+              Need a guided architecture exercise before going self-serve?{" "}
+              <a href="/audit" className="font-semibold text-primary hover:underline">
+                See the AI Execution Blueprint →
+              </a>
+            </p>
           </div>
         </section>
       </MarketingLayout>
