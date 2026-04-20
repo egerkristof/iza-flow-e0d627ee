@@ -182,9 +182,7 @@ export default function AuditOffer() {
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-semibold text-foreground">What happens after</h2>
           <p className="mb-3 text-foreground/90">
-            The sprint ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready
-            business case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in
-            LIZA OS.
+            The sprint ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready business case for building out the executable knowledge layer and a 90-day plan for the first three workflows we deploy together in LIZA OS.
           </p>
           <p className="mb-3 text-foreground/90">
             Post-sprint engagements are priced to deliver a minimum 3x ROI on the hidden cost we identify in the diagnostic.
@@ -192,19 +190,14 @@ export default function AuditOffer() {
             range, scaling from there as additional workflows are encoded.
           </p>
           <p className="text-foreground/90">
-            We are upfront about this because the alternative — trying to build an enforcement layer internally or with another
-            vendor — is the slowest, most expensive way to close a gap we have already mapped, in a category we defined.
+            We are direct about this because the alternative — trying to build the executable knowledge layer internally or with a vendor that has not done it before — is the slowest and most expensive way to close a gap we have already mapped.
           </p>
         </section>
 
         <section className="mb-12">
           <h2 className="mb-4 text-xl font-semibold text-foreground">Why us</h2>
           <p className="text-foreground/90">
-            We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
-            them <em>enforce</em>. The execution infrastructure that turns strategy into daily, governed work simply did not
-            exist, so we built it. This sprint is run by the practitioners who built that category, with 15+ years of shipping
-            data and AI systems for enterprise. We are not here to give you options. We are here to design the only operational
-            architecture we believe works.
+            We built LIZA OS because the executable knowledge layer did not exist as a product. Every tool in the AI stack reacts. Notion stores. Slack chats. ChatGPT answers. None of them govern or enforce. The sprint is run by the practitioners who built that layer, with 15+ years of shipping data and AI systems for enterprise. We have a strong point of view on where your AI budget should go and we are direct about it.
           </p>
         </section>
 
@@ -212,7 +205,7 @@ export default function AuditOffer() {
           <p className="mb-4 text-base text-foreground">To start, reply to the email or book a 30-minute scoping call.</p>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="gap-2">
-              <a href="mailto:kristof.eger@lizaos.ai?subject=AgOps%20Design%20Sprint">
+              <a href="mailto:kristof.eger@lizaos.ai?subject=AI%20Execution%20Blueprint">
                 <Mail className="h-4 w-4" />
                 Email Kristóf
               </a>
