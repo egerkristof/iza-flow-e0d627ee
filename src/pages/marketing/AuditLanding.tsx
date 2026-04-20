@@ -199,8 +199,9 @@ export default function AuditLanding() {
             What the sprint produces
           </h2>
           <p className="mb-8 max-w-2xl text-base text-muted-foreground">
-            Three weeks of practitioner-led architecture. Four artifacts you can take into a board
-            meeting on Monday morning.
+            Three weeks of practitioner-led work. Four artifacts you can take into a Monday board
+            meeting and a clear picture of where to direct AI budget so it compounds instead of
+            evaporating.
           </p>
           <div className="grid gap-5 md:grid-cols-2">
             {WHAT_YOU_GET.map((item, i) => (
@@ -225,11 +226,11 @@ export default function AuditLanding() {
             Why us
           </p>
           <p className="text-lg leading-relaxed text-foreground/90 md:text-xl">
-            We built LIZA OS because every tool in the AI stack reacts — Notion stores, Slack
-            chats, ChatGPT answers. None of them <em>enforce</em>. The audit is run by the
-            practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. We are not here to give you options. We are here to design the only
-            operational architecture we believe works.
+            We built LIZA OS because the executable knowledge layer did not exist as a product. Every
+            tool in the AI stack reacts. Notion stores. Slack chats. ChatGPT answers. None of them
+            govern or enforce. The sprint is run by the practitioners who built that layer, with
+            15+ years of shipping data and AI systems for enterprise. We have a strong point of view
+            on where your AI budget should go and we are direct about it.
           </p>
         </div>
       </section>
