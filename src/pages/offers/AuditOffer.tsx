@@ -171,9 +171,11 @@ export default function AuditOffer() {
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-semibold text-foreground">What happens after</h2>
           <p className="text-foreground/90">
-            You walk out with a CEO-ready business case and the language to defend it. Most clients use the audit to unlock a
-            €25k+ Operationalization Sprint where we encode the top 3 workflows into LIZA OS as executable standards. The audit
-            stands alone. You are under no obligation.
+            The audit ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready business
+            case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in LIZA OS.
+            Typical post-audit engagement starts at €25k for the deployment sprint and scales from there. We are upfront about
+            this because the alternative — taking your roadmap to an internal team or another vendor — is the slowest, most
+            expensive way to close a gap we have already mapped, in a category we built.
           </p>
         </section>
 
@@ -183,7 +185,8 @@ export default function AuditOffer() {
             We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
             them enforce. The execution layer that turns strategy into daily, governed work simply did not exist, so we built
             it. This audit is run by the practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. It is product-agnostic: LIZA OS is one option in your roadmap, never the conclusion.
+            for enterprise. We are not here to give you options. We are here to prove the diagnosis on your data and architect
+            the only solution we believe works.
           </p>
         </section>
 
