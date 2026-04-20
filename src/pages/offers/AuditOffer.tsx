@@ -62,8 +62,20 @@ export default function AuditOffer() {
   useEffect(() => {
     const prev = document.title;
     document.title = "AI Opportunity Audit — LIZA OS";
+    // Prevent indexing — this page is for outbound/post-capture only
+    let robots = document.querySelector('meta[name="robots"]');
+    const created = !robots;
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.setAttribute("name", "robots");
+      document.head.appendChild(robots);
+    }
+    const prevRobots = robots.getAttribute("content");
+    robots.setAttribute("content", "noindex, nofollow");
     return () => {
       document.title = prev;
+      if (created) robots?.remove();
+      else if (prevRobots !== null) robots?.setAttribute("content", prevRobots);
     };
   }, []);
 
