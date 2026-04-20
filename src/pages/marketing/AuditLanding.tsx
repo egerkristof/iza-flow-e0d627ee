@@ -142,11 +142,12 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
           <h2 className="mb-3 text-2xl font-semibold text-foreground md:text-3xl">
-            If any of these sound familiar, you have an AgOps problem.
+            If any of these sound familiar, you do not have a model problem. You have a knowledge problem.
           </h2>
-          <p className="mb-8 text-base text-muted-foreground">
-            Not a model problem. Not a strategy problem. A missing infrastructure layer between human
-            judgment and AI execution.
+          <p className="mb-8 max-w-2xl text-base text-muted-foreground">
+            Your AI does not know how your company decides. The standards your best people apply
+            without thinking are not codified anywhere your tools can reach. Until they are, every
+            workflow stays one-off and every result drifts.
           </p>
           <div className="grid gap-4 md:grid-cols-2">
             {SYMPTOMS.map((s) => (
@@ -158,6 +159,36 @@ export default function AuditLanding() {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* The central claim */}
+      <section className="border-b border-border bg-muted/30">
+        <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
+            The one thing every AI strategy is missing
+          </p>
+          <h2 className="mb-6 text-2xl font-semibold text-foreground md:text-3xl">
+            Executable knowledge is the layer everything else connects to.
+          </h2>
+          <div className="grid gap-8 md:grid-cols-2">
+            <p className="text-base leading-relaxed text-foreground/90">
+              Your LLMs, your RAG, your prompt libraries, your agents, your operators, your tools —
+              none of them work as a system on their own. They each need the same input: a clear,
+              governed, current definition of how your company actually decides. Quality standards.
+              Decision logic. Playbooks that hold across teams.
+            </p>
+            <p className="text-base leading-relaxed text-foreground/90">
+              That definition does not live in Notion. It does not live in a strategy doc. It does
+              not live in any single person&apos;s head. It has to be codified once, governed
+              centrally, and enforced inside every workflow. We call this layer{" "}
+              <span className="font-semibold text-foreground">executable knowledge</span>. It is the
+              focal point of an AI strategy that actually compounds.
+            </p>
+          </div>
+          <p className="mt-8 text-sm text-muted-foreground">
+            The sprint maps this layer for your business. The build deploys it.
+          </p>
         </div>
       </section>
 
