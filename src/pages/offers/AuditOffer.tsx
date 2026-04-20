@@ -51,9 +51,9 @@ const NEEDS = [
 ];
 
 const NOT = [
-  "Not a tool selection survey. We assume you have the base models. We engineer the operational layer above them.",
-  "Not a generic strategy doc. You already have a strategy. This sprint produces the operational blueprint to actually execute it.",
-  "Not a vendor-neutral diagnostic. We have a point of view: an active enforcement layer is the only thing that makes AgOps possible at scale. LIZA OS is the infrastructure we built to do exactly that. The sprint proves the necessity of this architecture on your data.",
+  "Not a tool selection survey. We assume you have the base models. We work on the layer above them.",
+  "Not another strategy doc. You already have a strategy. The sprint produces the executable layer your strategy needs in order to land.",
+  "Not vendor-neutral. We have a point of view. An active enforcement layer is the only thing that makes this work at scale, and LIZA OS is what we built to be that layer. The sprint proves the necessity of this infrastructure on your data.",
   "Not a 6-month consulting retainer. Three weeks, fixed price, then either we deploy together or we walk.",
 ];
 
@@ -97,12 +97,12 @@ export default function AuditOffer() {
         <header className="mb-12 border-b border-border pb-8">
           <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">LIZA OS · Offer Brief</p>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-            The AgOps Design Sprint
+            The AI Execution Blueprint
           </h1>
           <p className="text-lg text-muted-foreground">
-            Your AI strategy is sound. Your human–AI workflows are breaking. A 3-week intensive design sprint to architect the execution infrastructure that makes your AI investments operational, governable, and adopted by your team.
+            Three weeks. We map the executable knowledge layer your AI strategy is missing — the codified, governed definition of how your company decides — and show you exactly where to direct AI budget so it compounds instead of evaporating.
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">AgOps Design Sprint · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
+          <p className="mt-3 text-sm text-muted-foreground">€15,000 fixed fee · Remote delivery · Starts within 2 weeks · One sponsor, four to six operators.</p>
         </header>
 
         {SECTIONS.map((s) => (
