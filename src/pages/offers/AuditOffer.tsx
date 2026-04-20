@@ -85,11 +85,13 @@ export default function AuditOffer() {
 
         <header className="mb-12 border-b border-border pb-8">
           <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">LIZA OS · Offer Brief</p>
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">AI Opportunity Audit</h1>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            Your AI strategy is right. Your team isn't executing it.
+          </h1>
           <p className="text-lg text-muted-foreground">
-            A 3-week diagnostic of your Context Layer. The infrastructure every other AI audit ignores.
+            A 3-week audit that pinpoints where adoption breaks, quantifies what it costs, and gives you the business case to fix it.
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">€15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
+          <p className="mt-3 text-sm text-muted-foreground">AI Opportunity Audit · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
         </header>
 
         {SECTIONS.map((s) => (
