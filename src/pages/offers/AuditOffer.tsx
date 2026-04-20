@@ -6,40 +6,39 @@ import { ArrowLeft, Download, Mail } from "lucide-react";
 
 const SECTIONS = [
   {
-    h: "Why this audit is different",
+    h: "Why this sprint is different",
     p: [
-      "You wrote the AI strategy. You picked the tools. You shipped the playbooks. And six months in, adoption is uneven, output quality drifts week to week, and you cannot point to where the gap actually lives.",
-      "We have a strong, specific point of view about why: every AI strategy fails at the same place. The standards you wrote down never reach the prompt. They sit in Notion docs, Slack threads, and isolated ChatGPT windows that have no idea what your standards are. We call this the Instruction Gap, and we do not believe any amount of training, prompting, or tool selection closes it. Only an enforcement layer does. We built one. It is called LIZA OS.",
-      "This audit is not a neutral diagnostic. It is the paid first step of an inevitable partnership. In three weeks we prove, with your data, exactly where your Instruction Gap lives, what it costs you, and what closing it is worth. By the executive readout, the business case for deploying the enforcement layer with us will be self-evident. If it is not, you owe us nothing past the kickoff.",
+      "You have procured the LLMs and written the strategy. The moment those tools hit the reality of daily operations, the friction begins. Output quality is erratic, governance is a black box, and your best operators resist adoption because the tools have no idea how your company actually makes decisions.",
+      "The problem is not the model. It is the missing layer between the human and the agent. We call it Agentic Operations, or AgOps: the precise engineering of how human judgment and AI execution interact inside a governed workflow. We do not audit your failures. We design the operational blueprint to fix them.",
+      "We have a strong, specific point of view: running 2026 AI capabilities on 2015 static infrastructure (Notion docs, Slack, isolated chat windows) guarantees failure. You need an active enforcement layer. We built one. It is called LIZA OS.",
+      "This sprint is the paid first step of an inevitable partnership. In three weeks we map your most critical, broken workflows and redesign them for the agentic age. By the executive readout, the business case for deploying this infrastructure with us will be self-evident. If it is not, you owe us nothing past the kickoff.",
     ],
   },
 ];
 
 const DELIVERABLES = [
-  "A map of where your team is improvising: the workflows where your written standards are not making it into daily execution, and why.",
-  "A diagnostic of your current execution stack (Notion, Slack, ChatGPT, Copilot, bespoke tools) showing where contradictions and undefined standards are quietly degrading every AI output.",
-  "The 5 to 8 highest-leverage workflows where an enforcement layer would compound fastest, ranked by ROI and adoption risk.",
-  "A quantified cost-of-inaction: hours lost to rework, knowledge leakage, inconsistent output, and shadow AI. Most mid-market orgs we measure carry 400k to 700k EUR per year in this hidden cost.",
-  "A CEO-ready business case (PDF and slide-ready) with conservative, expected, and aggressive scenarios for closing the gap.",
-  "A 90-day deployment plan: the first three workflows we encode into LIZA OS, the governance model around them, and the adoption milestones.",
+  "The AgOps Blueprint: an architectural redesign of your 3 to 5 highest-leverage workflows, mapping the exact handoffs between human context, AI execution, and human review.",
+  "The Instruction Gap diagnostic: a quantification of where your current static documentation is failing to govern AI output, driving rework, margin bleed, and risk. Most mid-market orgs we measure carry 400k to 700k EUR per year in this hidden cost.",
+  "The Change Management roadmap: a tactical plan for introducing this new infrastructure to your team in a way that drives enthusiastic adoption rather than resistance.",
+  "A CEO-ready business case (PDF and slide-ready) quantifying cost of inaction vs. ROI of governed, enforceable workflows. Conservative, expected, and aggressive scenarios.",
   "One executive readout (60 min) with you and, if you choose, your CEO or COO.",
 ];
 
 const TIMELINE = [
   {
     week: "Week 1",
-    activity: "Discovery: 4–6 interviews (you + key operators), workflow shadowing, current-state mapping.",
-    output: "Workflow inventory + adoption barrier map.",
+    activity: "Discovery and mapping: 4–6 interviews (you + key operators), workflow shadowing, identification of Instruction Gaps in current operations.",
+    output: "Workflow inventory + gap map.",
   },
   {
     week: "Week 2",
-    activity: "Synthesis: Quantification of cost-of-inaction. Prioritization workshop with you. Draft of CEO business case.",
-    output: "Draft ROI model + ranked opportunity list.",
+    activity: "AgOps design: redesign of selected workflows for optimal human–AI collaboration. Prioritization workshop with you to quantify the ROI model.",
+    output: "Draft AgOps Blueprint + ROI model.",
   },
   {
     week: "Week 3",
-    activity: "Refinement and executive readout. Final business case and 90-day roadmap delivered.",
-    output: "Final business case PDF, roadmap, executive readout.",
+    activity: "Refinement and delivery. Final AgOps Blueprint, business case, and executive readout.",
+    output: "Final blueprint, business case, executive readout.",
   },
 ];
 
@@ -51,17 +50,16 @@ const NEEDS = [
 ];
 
 const NOT = [
-  "Not a tool adoption survey. Glean, Guru, and the consultancies already do that. We measure the layer underneath.",
-  "Not a generic AI maturity score. We map your specific Instruction Gap and quantify your specific cost of inaction.",
-  "Not a strategy doc. You already have one. This produces the evidence and the deployment plan to actually execute it.",
-  "Not a vendor-neutral diagnostic. We have a point of view: enforcement is the only thing that closes the Instruction Gap, and LIZA OS is the enforcement layer we built. The audit proves it on your data.",
+  "Not a tool selection survey. We assume you have the base models. We engineer the operational layer above them.",
+  "Not a generic strategy doc. You already have a strategy. This sprint produces the operational blueprint to actually execute it.",
+  "Not a vendor-neutral diagnostic. We have a point of view: an active enforcement layer is the only thing that makes AgOps possible at scale. LIZA OS is the infrastructure we built to do exactly that. The sprint proves the necessity of this architecture on your data.",
   "Not a 6-month consulting retainer. Three weeks, fixed price, then either we deploy together or we walk.",
 ];
 
 export default function AuditOffer() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "AI Opportunity Audit — LIZA OS";
+    document.title = "AgOps Design Sprint — LIZA OS";
     // Prevent indexing — this page is for outbound/post-capture only
     let robots = document.querySelector('meta[name="robots"]');
     const created = !robots;
@@ -98,12 +96,12 @@ export default function AuditOffer() {
         <header className="mb-12 border-b border-border pb-8">
           <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">LIZA OS · Offer Brief</p>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-            Your AI strategy is right. Your team isn't executing it.
+            The AgOps Design Sprint
           </h1>
           <p className="text-lg text-muted-foreground">
-            A 3-week audit that pinpoints where adoption breaks, quantifies what it costs, and gives you the business case to fix it.
+            Your AI strategy is sound. Your human–AI workflows are breaking. A 3-week intensive design sprint to architect the execution infrastructure that makes your AI investments operational, governable, and adopted by your team.
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">AI Opportunity Audit · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
+          <p className="mt-3 text-sm text-muted-foreground">AgOps Design Sprint · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
         </header>
 
         {SECTIONS.map((s) => (
@@ -182,12 +180,19 @@ export default function AuditOffer() {
 
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-semibold text-foreground">What happens after</h2>
+          <p className="mb-3 text-foreground/90">
+            The sprint ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready
+            business case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in
+            LIZA OS.
+          </p>
+          <p className="mb-3 text-foreground/90">
+            Post-sprint engagements are priced to deliver a minimum 3x ROI on the hidden cost we identify in the diagnostic.
+            For most mid-market orgs, that means the initial 3-workflow enforcement build lands in the <strong>€35k–€50k</strong>{" "}
+            range, scaling from there as additional workflows are encoded.
+          </p>
           <p className="text-foreground/90">
-            The audit ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready business
-            case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in LIZA OS.
-            Typical post-audit engagement starts at €25k for the deployment sprint and scales from there. We are upfront about
-            this because the alternative — taking your roadmap to an internal team or another vendor — is the slowest, most
-            expensive way to close a gap we have already mapped, in a category we built.
+            We are upfront about this because the alternative — trying to build an enforcement layer internally or with another
+            vendor — is the slowest, most expensive way to close a gap we have already mapped, in a category we defined.
           </p>
         </section>
 
@@ -195,10 +200,10 @@ export default function AuditOffer() {
           <h2 className="mb-4 text-xl font-semibold text-foreground">Why us</h2>
           <p className="text-foreground/90">
             We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
-            them enforce. The execution layer that turns strategy into daily, governed work simply did not exist, so we built
-            it. This audit is run by the practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. We are not here to give you options. We are here to prove the diagnosis on your data and architect
-            the only solution we believe works.
+            them <em>enforce</em>. The execution infrastructure that turns strategy into daily, governed work simply did not
+            exist, so we built it. This sprint is run by the practitioners who built that category, with 15+ years of shipping
+            data and AI systems for enterprise. We are not here to give you options. We are here to design the only operational
+            architecture we believe works.
           </p>
         </section>
 
@@ -206,7 +211,7 @@ export default function AuditOffer() {
           <p className="mb-4 text-base text-foreground">To start, reply to the email or book a 30-minute scoping call.</p>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="gap-2">
-              <a href="mailto:kristof.eger@lizaos.ai?subject=AI%20Opportunity%20Audit">
+              <a href="mailto:kristof.eger@lizaos.ai?subject=AgOps%20Design%20Sprint">
                 <Mail className="h-4 w-4" />
                 Email Kristóf
               </a>

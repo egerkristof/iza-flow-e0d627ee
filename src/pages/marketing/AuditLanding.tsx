@@ -20,28 +20,28 @@ const schema = z.object({
 });
 
 const SYMPTOMS = [
-  "Adoption is uneven across teams using the same playbooks.",
-  "Output quality drifts week to week — the same prompt does not produce the same standard.",
-  "Your written AI policy lives in Notion. Your team executes in ChatGPT. The two never meet.",
-  "You can quote the strategy. You cannot point to where, exactly, it breaks in daily work.",
+  "Your team has the LLMs, the playbooks, and the strategy doc. Adoption still stalls.",
+  "Output quality is erratic. The same prompt does not produce the same standard twice.",
+  "Operators resist agents because the agents have no idea how your company actually decides.",
+  "Governance lives in Notion. Execution happens in ChatGPT. Nothing connects the two.",
 ];
 
 const WHAT_YOU_GET = [
   {
-    h: "A map of your Instruction Gap",
-    p: "The specific workflows where your written standards never reach the prompt — and why.",
+    h: "An AgOps Blueprint",
+    p: "Architectural redesign of your 3 to 5 highest-leverage workflows, mapping the exact handoffs between human context, AI execution, and human review.",
   },
   {
     h: "Your cost of inaction, quantified",
-    p: "Hours lost to rework, knowledge leakage, inconsistent output. Most mid-market orgs we measure carry €400k–€700k/year in this hidden cost.",
+    p: "Where static documentation is failing to govern AI output. Most mid-market orgs we measure carry €400k–€700k/year in rework, margin bleed, and risk.",
+  },
+  {
+    h: "A change management roadmap",
+    p: "How to introduce governed AI workflows in a way that drives enthusiastic adoption, not resistance from your best operators.",
   },
   {
     h: "A CEO-ready business case",
-    p: "Conservative, expected, and aggressive scenarios — slide-ready, defensible, sized for board conversation.",
-  },
-  {
-    h: "A 90-day deployment plan",
-    p: "The first three workflows we encode into LIZA OS, the governance model, and the adoption milestones.",
+    p: "Conservative, expected, and aggressive ROI scenarios. Slide-ready, defensible, sized for board conversation.",
   },
 ];
 
@@ -53,7 +53,7 @@ export default function AuditLanding() {
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "AI Opportunity Audit — Close the Instruction Gap | LIZA OS";
+    document.title = "AgOps Design Sprint — Architect your AI execution layer | LIZA OS";
     if (typeof window !== "undefined" && localStorage.getItem(STORAGE_KEY) === "1") {
       setUnlocked(true);
     }
@@ -103,7 +103,7 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
           <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
-            AI Opportunity Audit · 3 weeks · Fixed scope
+            AgOps Design Sprint · 3 weeks · Fixed scope
           </p>
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground md:text-6xl">
             Your AI strategy is right.
@@ -111,9 +111,10 @@ export default function AuditLanding() {
             <span className="text-muted-foreground">Your team isn't executing it.</span>
           </h1>
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            A 3-week audit that pinpoints where adoption breaks, quantifies what it costs, and gives
-            you the business case to fix it. Built for the Head of AI who already wrote the
-            playbooks — and is watching them stall.
+            A 3-week design sprint that architects the execution infrastructure between your humans and
+            your agents. We call it Agentic Operations (AgOps): the engineering layer your strategy doc
+            cannot replace. Built for the Head of AI who already wrote the playbooks and is watching them
+            stall.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button asChild size="lg" className="gap-2">
@@ -139,11 +140,11 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
           <h2 className="mb-3 text-2xl font-semibold text-foreground md:text-3xl">
-            If any of these sound familiar, you have an Instruction Gap.
+            If any of these sound familiar, you have an AgOps problem.
           </h2>
           <p className="mb-8 text-base text-muted-foreground">
-            Not a tool problem. Not a strategy problem. A gap between what you wrote down and what
-            actually reaches the prompt.
+            Not a model problem. Not a strategy problem. A missing infrastructure layer between human
+            judgment and AI execution.
           </p>
           <div className="grid gap-4 md:grid-cols-2">
             {SYMPTOMS.map((s) => (
@@ -162,10 +163,10 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
           <h2 className="mb-3 text-2xl font-semibold text-foreground md:text-3xl">
-            What the audit produces
+            What the sprint produces
           </h2>
           <p className="mb-8 max-w-2xl text-base text-muted-foreground">
-            Three weeks of practitioner-led discovery. Four artifacts you can take into a board
+            Three weeks of practitioner-led architecture. Four artifacts you can take into a board
             meeting on Monday morning.
           </p>
           <div className="grid gap-5 md:grid-cols-2">
@@ -194,8 +195,8 @@ export default function AuditLanding() {
             We built LIZA OS because every tool in the AI stack reacts — Notion stores, Slack
             chats, ChatGPT answers. None of them <em>enforce</em>. The audit is run by the
             practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. We are not here to give you options. We are here to prove the diagnosis
-            on your data and architect the only solution we believe works.
+            for enterprise. We are not here to give you options. We are here to design the only
+            operational architecture we believe works.
           </p>
         </div>
       </section>
@@ -240,7 +241,7 @@ export default function AuditLanding() {
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-foreground md:text-2xl">
-                      Request the full audit brief
+                      Request the full sprint brief
                     </h2>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Scope, week-by-week timeline, pricing, deliverables, and engagement terms.
