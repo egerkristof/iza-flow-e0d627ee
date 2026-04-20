@@ -20,28 +20,28 @@ const schema = z.object({
 });
 
 const SYMPTOMS = [
-  "Adoption is uneven across teams using the same playbooks.",
-  "Output quality drifts week to week — the same prompt does not produce the same standard.",
-  "Your written AI policy lives in Notion. Your team executes in ChatGPT. The two never meet.",
-  "You can quote the strategy. You cannot point to where, exactly, it breaks in daily work.",
+  "Your team has the LLMs, the playbooks, and the strategy doc. Adoption still stalls.",
+  "Output quality is erratic. The same prompt does not produce the same standard twice.",
+  "Operators resist agents because the agents have no idea how your company actually decides.",
+  "Governance lives in Notion. Execution happens in ChatGPT. Nothing connects the two.",
 ];
 
 const WHAT_YOU_GET = [
   {
-    h: "A map of your Instruction Gap",
-    p: "The specific workflows where your written standards never reach the prompt — and why.",
+    h: "An AgOps Blueprint",
+    p: "Architectural redesign of your 3 to 5 highest-leverage workflows, mapping the exact handoffs between human context, AI execution, and human review.",
   },
   {
     h: "Your cost of inaction, quantified",
-    p: "Hours lost to rework, knowledge leakage, inconsistent output. Most mid-market orgs we measure carry €400k–€700k/year in this hidden cost.",
+    p: "Where static documentation is failing to govern AI output. Most mid-market orgs we measure carry €400k–€700k/year in rework, margin bleed, and risk.",
+  },
+  {
+    h: "A change management roadmap",
+    p: "How to introduce governed AI workflows in a way that drives enthusiastic adoption, not resistance from your best operators.",
   },
   {
     h: "A CEO-ready business case",
-    p: "Conservative, expected, and aggressive scenarios — slide-ready, defensible, sized for board conversation.",
-  },
-  {
-    h: "A 90-day deployment plan",
-    p: "The first three workflows we encode into LIZA OS, the governance model, and the adoption milestones.",
+    p: "Conservative, expected, and aggressive ROI scenarios. Slide-ready, defensible, sized for board conversation.",
   },
 ];
 
@@ -53,7 +53,7 @@ export default function AuditLanding() {
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "AI Opportunity Audit — Close the Instruction Gap | LIZA OS";
+    document.title = "AgOps Design Sprint — Architect your AI execution layer | LIZA OS";
     if (typeof window !== "undefined" && localStorage.getItem(STORAGE_KEY) === "1") {
       setUnlocked(true);
     }
