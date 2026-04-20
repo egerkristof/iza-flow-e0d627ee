@@ -6,39 +6,40 @@ import { ArrowLeft, Download, Mail } from "lucide-react";
 
 const SECTIONS = [
   {
-    h: "Why this sprint is different",
+    h: "What the sprint is for",
     p: [
-      "You have procured the LLMs and written the strategy. The moment those tools hit the reality of daily operations, the friction begins. Output quality is erratic, governance is a black box, and your best operators resist adoption because the tools have no idea how your company actually makes decisions.",
-      "The problem is not the model. It is the missing layer between the human and the agent. We call it Agentic Operations, or AgOps: the precise engineering of how human judgment and AI execution interact inside a governed workflow. We do not audit your failures. We design the operational blueprint to fix them.",
-      "We have a strong, specific point of view: running 2026 AI capabilities on 2015 static infrastructure (Notion docs, Slack, isolated chat windows) guarantees failure. You need an active enforcement layer. We built one. It is called LIZA OS.",
-      "This sprint is the paid first step of an inevitable partnership. In three weeks we map your most critical, broken workflows and redesign them for the agentic age. By the executive readout, the business case for deploying this infrastructure with us will be self-evident. If it is not, you owe us nothing past the kickoff.",
+      "You have the LLMs. You have a strategy doc. Your team has been trained. And yet output drifts, adoption stalls, and every AI investment behaves like a one-off. Three weeks in, we will tell you why and where to put your budget so it stops happening.",
+      "Every part of an AI stack — your LLMs, your RAG, your prompts, your agents, your operators, your tools — needs the same input to work as a system. A clear, governed, current definition of how your company actually decides. Quality standards. Decision logic. Playbooks that hold across teams. We call this layer executable knowledge.",
+      "Today this layer does not exist anywhere a tool can reach. It lives in your best operators' heads, in scattered Notion pages, in Slack threads, in old strategy decks. That is why your AI cannot execute to your standard. The sprint is the work of mapping this layer for your business and showing you exactly where investing in it pays back.",
+      "We have a strong, specific point of view. The reactive tools you already own (Notion stores, Slack chats, ChatGPT answers) cannot govern or enforce this layer. Static documentation cannot keep up with operational reality. You need an active enforcement layer, the kind we built into LIZA OS. The sprint proves the necessity of that infrastructure on your data. The build is the obvious next step. If it is not obvious by the readout, you owe us nothing past the kickoff.",
     ],
   },
 ];
 
 const DELIVERABLES = [
-  "The AgOps Blueprint: an architectural redesign of your 3 to 5 highest-leverage workflows, mapping the exact handoffs between human context, AI execution, and human review.",
-  "The Instruction Gap diagnostic: a quantification of where your current static documentation is failing to govern AI output, driving rework, margin bleed, and risk. Most mid-market orgs we measure carry 400k to 700k EUR per year in this hidden cost.",
-  "The Change Management roadmap: a tactical plan for introducing this new infrastructure to your team in a way that drives enthusiastic adoption rather than resistance.",
-  "A CEO-ready business case (PDF and slide-ready) quantifying cost of inaction vs. ROI of governed, enforceable workflows. Conservative, expected, and aggressive scenarios.",
+  "Your executable knowledge map: the 3 to 5 workflows where codifying your judgment as enforceable standards unlocks the most value, and a draft structure of that layer for your business.",
+  "Your cost of inaction, quantified: where today's static documentation is failing to govern AI output. Most mid-market orgs we measure carry 400k to 700k EUR per year in rework, inconsistency, and lost expertise.",
+  "Your AI budget allocation: a direct recommendation on where to spend (and where to stop spending) so the next 12 months of AI investment compounds around a single source of judgment instead of fragmenting further.",
+  "A human-AI adoption plan: how to roll governed workflows out so your best operators pull them in instead of resisting them. Change management built into the architecture, not bolted on.",
+  "A CEO-ready business case: conservative, expected, and aggressive ROI scenarios. Slide-ready, defensible, sized for the board conversation that follows.",
   "One executive readout (60 min) with you and, if you choose, your CEO or COO.",
 ];
 
 const TIMELINE = [
   {
     week: "Week 1",
-    activity: "Discovery and mapping: 4–6 interviews (you + key operators), workflow shadowing, identification of Instruction Gaps in current operations.",
-    output: "Workflow inventory + gap map.",
+    activity: "Discovery: 4 to 6 interviews with you and your key operators, workflow shadowing, surfacing the standards and decision logic that currently live only in people's heads.",
+    output: "Workflow inventory and knowledge gap map.",
   },
   {
     week: "Week 2",
-    activity: "AgOps design: redesign of selected workflows for optimal human–AI collaboration. Prioritization workshop with you to quantify the ROI model.",
-    output: "Draft AgOps Blueprint + ROI model.",
+    activity: "Design: drafting the executable knowledge layer for your top workflows. Prioritisation workshop with you to quantify the ROI model and budget allocation.",
+    output: "Draft executable knowledge map and ROI model.",
   },
   {
     week: "Week 3",
-    activity: "Refinement and delivery. Final AgOps Blueprint, business case, and executive readout.",
-    output: "Final blueprint, business case, executive readout.",
+    activity: "Refinement and delivery. Final map, business case, executive readout.",
+    output: "Final deliverables and a clear next decision.",
   },
 ];
 
@@ -50,16 +51,16 @@ const NEEDS = [
 ];
 
 const NOT = [
-  "Not a tool selection survey. We assume you have the base models. We engineer the operational layer above them.",
-  "Not a generic strategy doc. You already have a strategy. This sprint produces the operational blueprint to actually execute it.",
-  "Not a vendor-neutral diagnostic. We have a point of view: an active enforcement layer is the only thing that makes AgOps possible at scale. LIZA OS is the infrastructure we built to do exactly that. The sprint proves the necessity of this architecture on your data.",
+  "Not a tool selection survey. We assume you have the base models. We work on the layer above them.",
+  "Not another strategy doc. You already have a strategy. The sprint produces the executable layer your strategy needs in order to land.",
+  "Not vendor-neutral. We have a point of view. An active enforcement layer is the only thing that makes this work at scale, and LIZA OS is what we built to be that layer. The sprint proves the necessity of this infrastructure on your data.",
   "Not a 6-month consulting retainer. Three weeks, fixed price, then either we deploy together or we walk.",
 ];
 
 export default function AuditOffer() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "AgOps Design Sprint — LIZA OS";
+    document.title = "AI Execution Blueprint — LIZA OS";
     // Prevent indexing — this page is for outbound/post-capture only
     let robots = document.querySelector('meta[name="robots"]');
     const created = !robots;
@@ -96,12 +97,12 @@ export default function AuditOffer() {
         <header className="mb-12 border-b border-border pb-8">
           <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">LIZA OS · Offer Brief</p>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-            The AgOps Design Sprint
+            The AI Execution Blueprint
           </h1>
           <p className="text-lg text-muted-foreground">
-            Your AI strategy is sound. Your human–AI workflows are breaking. A 3-week intensive design sprint to architect the execution infrastructure that makes your AI investments operational, governable, and adopted by your team.
+            Three weeks. We map the executable knowledge layer your AI strategy is missing — the codified, governed definition of how your company decides — and show you exactly where to direct AI budget so it compounds instead of evaporating.
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">AgOps Design Sprint · €15,000 fixed fee · Remote delivery · Starts within 2 weeks.</p>
+          <p className="mt-3 text-sm text-muted-foreground">€15,000 fixed fee · Remote delivery · Starts within 2 weeks · One sponsor, four to six operators.</p>
         </header>
 
         {SECTIONS.map((s) => (
@@ -181,9 +182,7 @@ export default function AuditOffer() {
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-semibold text-foreground">What happens after</h2>
           <p className="mb-3 text-foreground/90">
-            The sprint ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready
-            business case for closing the Instruction Gap and a 90-day plan for the first three workflows we deploy together in
-            LIZA OS.
+            The sprint ends with a decision, not a deliverable on a shelf. By the executive readout you have a CEO-ready business case for building out the executable knowledge layer and a 90-day plan for the first three workflows we deploy together in LIZA OS.
           </p>
           <p className="mb-3 text-foreground/90">
             Post-sprint engagements are priced to deliver a minimum 3x ROI on the hidden cost we identify in the diagnostic.
@@ -191,19 +190,14 @@ export default function AuditOffer() {
             range, scaling from there as additional workflows are encoded.
           </p>
           <p className="text-foreground/90">
-            We are upfront about this because the alternative — trying to build an enforcement layer internally or with another
-            vendor — is the slowest, most expensive way to close a gap we have already mapped, in a category we defined.
+            We are direct about this because the alternative — trying to build the executable knowledge layer internally or with a vendor that has not done it before — is the slowest and most expensive way to close a gap we have already mapped.
           </p>
         </section>
 
         <section className="mb-12">
           <h2 className="mb-4 text-xl font-semibold text-foreground">Why us</h2>
           <p className="text-foreground/90">
-            We built LIZA OS because every tool in the AI stack reacts: Notion stores, Slack chats, ChatGPT answers. None of
-            them <em>enforce</em>. The execution infrastructure that turns strategy into daily, governed work simply did not
-            exist, so we built it. This sprint is run by the practitioners who built that category, with 15+ years of shipping
-            data and AI systems for enterprise. We are not here to give you options. We are here to design the only operational
-            architecture we believe works.
+            We built LIZA OS because the executable knowledge layer did not exist as a product. Every tool in the AI stack reacts. Notion stores. Slack chats. ChatGPT answers. None of them govern or enforce. The sprint is run by the practitioners who built that layer, with 15+ years of shipping data and AI systems for enterprise. We have a strong point of view on where your AI budget should go and we are direct about it.
           </p>
         </section>
 
@@ -211,7 +205,7 @@ export default function AuditOffer() {
           <p className="mb-4 text-base text-foreground">To start, reply to the email or book a 30-minute scoping call.</p>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="gap-2">
-              <a href="mailto:kristof.eger@lizaos.ai?subject=AgOps%20Design%20Sprint">
+              <a href="mailto:kristof.eger@lizaos.ai?subject=AI%20Execution%20Blueprint">
                 <Mail className="h-4 w-4" />
                 Email Kristóf
               </a>

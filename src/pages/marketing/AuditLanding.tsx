@@ -20,28 +20,30 @@ const schema = z.object({
 });
 
 const SYMPTOMS = [
-  "Your team has the LLMs, the playbooks, and the strategy doc. Adoption still stalls.",
-  "Output quality is erratic. The same prompt does not produce the same standard twice.",
-  "Operators resist agents because the agents have no idea how your company actually decides.",
+  "You bought the LLMs, wrote the playbooks, ran the training. Adoption still stalls.",
+  "The same prompt does not produce the same standard twice. Quality drifts by operator.",
+  "Your best people work around the agents because the agents do not know how you decide.",
   "Governance lives in Notion. Execution happens in ChatGPT. Nothing connects the two.",
+  "Every team has its own prompts, its own context, its own version of the truth.",
+  "When someone leaves, their judgment leaves with them. Nothing compounds.",
 ];
 
 const WHAT_YOU_GET = [
   {
-    h: "An AgOps Blueprint",
-    p: "Architectural redesign of your 3 to 5 highest-leverage workflows, mapping the exact handoffs between human context, AI execution, and human review.",
+    h: "Your executable knowledge layer, mapped",
+    p: "We identify the 3 to 5 workflows where codifying your judgment as enforceable standards unlocks the most value, and we draft the structure of that layer for your business.",
   },
   {
     h: "Your cost of inaction, quantified",
-    p: "Where static documentation is failing to govern AI output. Most mid-market orgs we measure carry €400k–€700k/year in rework, margin bleed, and risk.",
+    p: "Where static docs are failing to govern AI output today. Most mid-market orgs we measure carry €400k to €700k a year in rework, inconsistency, and lost expertise.",
   },
   {
-    h: "A change management roadmap",
-    p: "How to introduce governed AI workflows in a way that drives enthusiastic adoption, not resistance from your best operators.",
+    h: "A human-AI adoption plan",
+    p: "How to roll governed workflows out so your best operators pull them in instead of resisting them. Change management built into the architecture, not bolted on.",
   },
   {
     h: "A CEO-ready business case",
-    p: "Conservative, expected, and aggressive ROI scenarios. Slide-ready, defensible, sized for board conversation.",
+    p: "Conservative, expected, and aggressive ROI scenarios. Slide-ready, defensible, sized for the board conversation that follows.",
   },
 ];
 
@@ -103,18 +105,18 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
           <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
-            AgOps Design Sprint · 3 weeks · Fixed scope
+            AI Execution Blueprint · 3 weeks · Fixed scope
           </p>
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground md:text-6xl">
-            Your AI strategy is right.
+            You bought the AI.
             <br />
-            <span className="text-muted-foreground">Your team isn't executing it.</span>
+            <span className="text-muted-foreground">Your knowledge never reached it.</span>
           </h1>
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            A 3-week design sprint that architects the execution infrastructure between your humans and
-            your agents. We call it Agentic Operations (AgOps): the engineering layer your strategy doc
-            cannot replace. Built for the Head of AI who already wrote the playbooks and is watching them
-            stall.
+            Three weeks. We map the one piece every AI strategy is missing: the codified, governed
+            knowledge layer your LLMs, RAG, agents, and operators all need to execute against. We
+            call it executable knowledge. Without it, every AI investment stays disconnected. With
+            it, they all compound around a single source of judgment.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button asChild size="lg" className="gap-2">
@@ -140,11 +142,12 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
           <h2 className="mb-3 text-2xl font-semibold text-foreground md:text-3xl">
-            If any of these sound familiar, you have an AgOps problem.
+            If any of these sound familiar, you do not have a model problem. You have a knowledge problem.
           </h2>
-          <p className="mb-8 text-base text-muted-foreground">
-            Not a model problem. Not a strategy problem. A missing infrastructure layer between human
-            judgment and AI execution.
+          <p className="mb-8 max-w-2xl text-base text-muted-foreground">
+            Your AI does not know how your company decides. The standards your best people apply
+            without thinking are not codified anywhere your tools can reach. Until they are, every
+            workflow stays one-off and every result drifts.
           </p>
           <div className="grid gap-4 md:grid-cols-2">
             {SYMPTOMS.map((s) => (
@@ -159,6 +162,36 @@ export default function AuditLanding() {
         </div>
       </section>
 
+      {/* The central claim */}
+      <section className="border-b border-border bg-muted/30">
+        <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
+            The one thing every AI strategy is missing
+          </p>
+          <h2 className="mb-6 text-2xl font-semibold text-foreground md:text-3xl">
+            Executable knowledge is the layer everything else connects to.
+          </h2>
+          <div className="grid gap-8 md:grid-cols-2">
+            <p className="text-base leading-relaxed text-foreground/90">
+              Your LLMs, your RAG, your prompt libraries, your agents, your operators, your tools —
+              none of them work as a system on their own. They each need the same input: a clear,
+              governed, current definition of how your company actually decides. Quality standards.
+              Decision logic. Playbooks that hold across teams.
+            </p>
+            <p className="text-base leading-relaxed text-foreground/90">
+              That definition does not live in Notion. It does not live in a strategy doc. It does
+              not live in any single person&apos;s head. It has to be codified once, governed
+              centrally, and enforced inside every workflow. We call this layer{" "}
+              <span className="font-semibold text-foreground">executable knowledge</span>. It is the
+              focal point of an AI strategy that actually compounds.
+            </p>
+          </div>
+          <p className="mt-8 text-sm text-muted-foreground">
+            The sprint maps this layer for your business. The build deploys it.
+          </p>
+        </div>
+      </section>
+
       {/* What you get */}
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
@@ -166,8 +199,9 @@ export default function AuditLanding() {
             What the sprint produces
           </h2>
           <p className="mb-8 max-w-2xl text-base text-muted-foreground">
-            Three weeks of practitioner-led architecture. Four artifacts you can take into a board
-            meeting on Monday morning.
+            Three weeks of practitioner-led work. Four artifacts you can take into a Monday board
+            meeting and a clear picture of where to direct AI budget so it compounds instead of
+            evaporating.
           </p>
           <div className="grid gap-5 md:grid-cols-2">
             {WHAT_YOU_GET.map((item, i) => (
@@ -192,11 +226,11 @@ export default function AuditLanding() {
             Why us
           </p>
           <p className="text-lg leading-relaxed text-foreground/90 md:text-xl">
-            We built LIZA OS because every tool in the AI stack reacts — Notion stores, Slack
-            chats, ChatGPT answers. None of them <em>enforce</em>. The audit is run by the
-            practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. We are not here to give you options. We are here to design the only
-            operational architecture we believe works.
+            We built LIZA OS because the executable knowledge layer did not exist as a product. Every
+            tool in the AI stack reacts. Notion stores. Slack chats. ChatGPT answers. None of them
+            govern or enforce. The sprint is run by the practitioners who built that layer, with
+            15+ years of shipping data and AI systems for enterprise. We have a strong point of view
+            on where your AI budget should go and we are direct about it.
           </p>
         </div>
       </section>
