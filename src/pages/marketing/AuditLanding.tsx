@@ -103,7 +103,7 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
           <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
-            AI Opportunity Audit · 3 weeks · Fixed scope
+            AgOps Design Sprint · 3 weeks · Fixed scope
           </p>
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground md:text-6xl">
             Your AI strategy is right.
@@ -111,9 +111,10 @@ export default function AuditLanding() {
             <span className="text-muted-foreground">Your team isn't executing it.</span>
           </h1>
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            A 3-week audit that pinpoints where adoption breaks, quantifies what it costs, and gives
-            you the business case to fix it. Built for the Head of AI who already wrote the
-            playbooks — and is watching them stall.
+            A 3-week design sprint that architects the execution infrastructure between your humans and
+            your agents. We call it Agentic Operations (AgOps): the engineering layer your strategy doc
+            cannot replace. Built for the Head of AI who already wrote the playbooks and is watching them
+            stall.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button asChild size="lg" className="gap-2">
@@ -139,11 +140,11 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
           <h2 className="mb-3 text-2xl font-semibold text-foreground md:text-3xl">
-            If any of these sound familiar, you have an Instruction Gap.
+            If any of these sound familiar, you have an AgOps problem.
           </h2>
           <p className="mb-8 text-base text-muted-foreground">
-            Not a tool problem. Not a strategy problem. A gap between what you wrote down and what
-            actually reaches the prompt.
+            Not a model problem. Not a strategy problem. A missing infrastructure layer between human
+            judgment and AI execution.
           </p>
           <div className="grid gap-4 md:grid-cols-2">
             {SYMPTOMS.map((s) => (
@@ -162,10 +163,10 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-16 md:py-20">
           <h2 className="mb-3 text-2xl font-semibold text-foreground md:text-3xl">
-            What the audit produces
+            What the sprint produces
           </h2>
           <p className="mb-8 max-w-2xl text-base text-muted-foreground">
-            Three weeks of practitioner-led discovery. Four artifacts you can take into a board
+            Three weeks of practitioner-led architecture. Four artifacts you can take into a board
             meeting on Monday morning.
           </p>
           <div className="grid gap-5 md:grid-cols-2">
@@ -194,8 +195,8 @@ export default function AuditLanding() {
             We built LIZA OS because every tool in the AI stack reacts — Notion stores, Slack
             chats, ChatGPT answers. None of them <em>enforce</em>. The audit is run by the
             practitioners who built that category, with 15+ years of shipping data and AI systems
-            for enterprise. We are not here to give you options. We are here to prove the diagnosis
-            on your data and architect the only solution we believe works.
+            for enterprise. We are not here to give you options. We are here to design the only
+            operational architecture we believe works.
           </p>
         </div>
       </section>
@@ -240,7 +241,7 @@ export default function AuditLanding() {
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-foreground md:text-2xl">
-                      Request the full audit brief
+                      Request the full sprint brief
                     </h2>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Scope, week-by-week timeline, pricing, deliverables, and engagement terms.
