@@ -105,18 +105,18 @@ export default function AuditLanding() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
           <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">
-            AgOps Design Sprint · 3 weeks · Fixed scope
+            AI Execution Blueprint · 3 weeks · Fixed scope
           </p>
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground md:text-6xl">
-            Your AI strategy is right.
+            You bought the AI.
             <br />
-            <span className="text-muted-foreground">Your team isn't executing it.</span>
+            <span className="text-muted-foreground">Your knowledge never reached it.</span>
           </h1>
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            A 3-week design sprint that architects the execution infrastructure between your humans and
-            your agents. We call it Agentic Operations (AgOps): the engineering layer your strategy doc
-            cannot replace. Built for the Head of AI who already wrote the playbooks and is watching them
-            stall.
+            Three weeks. We map the one piece every AI strategy is missing: the codified, governed
+            knowledge layer your LLMs, RAG, agents, and operators all need to execute against. We
+            call it executable knowledge. Without it, every AI investment stays disconnected. With
+            it, they all compound around a single source of judgment.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button asChild size="lg" className="gap-2">
