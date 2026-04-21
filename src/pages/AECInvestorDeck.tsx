@@ -772,10 +772,10 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Edra", funding: "$30M", round: "Series A · 2024", what: "Process mining → executable SOPs for AI agents", color: GREEN },
-    { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer. Persistent context across sessions", color: SEAFOAM },
-    { name: "Interloom", funding: "$16.5M", round: "Series A · 2023", what: "Tacit knowledge capture for operations teams", color: BLUE },
-    { name: "Paradox.ai", funding: "~$3.8M", round: "Seed · 2024", what: "Knowledge governance for regulated industries", color: GOLD },
+    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
+    { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
+    { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
+    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. No instruction layer underneath.", color: GOLD },
   ];
 
   const moatLayers = [
@@ -791,8 +791,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          $70M+ recently invested around the edges.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
+          AEC AI tools read documents and predict risk.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>None of them encode your firm's judgment.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -825,12 +825,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others mine, remember, or capture.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA operationalizes.</span>
+              Others read drawings and contracts.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The only platform that makes organizational judgment queryable, versionable, and executable.
-              Other tools give AI your documents. We give AI your judgment.
+              The instruction layer underneath every AEC AI tool: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries (pharma, prof. services, cybersecurity audit).
             </p>
           </div>
         </div>
