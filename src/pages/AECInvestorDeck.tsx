@@ -1264,13 +1264,27 @@ function Slide09() {
           </div>
         </div>
 
-        <div className="mt-3 rounded-xl border px-6 py-3 flex items-center gap-4"
-          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-          <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p style={{ fontSize: 16, color: MUTED }}>
-            <strong style={{ color: TEXT }}>One core engine. AEC-specific knowledge packs per phase.</strong>{" "}
-            Complements (not competes with) Bluebeam, Allplan, Solibri, Document Crunch, Firmus AI.
-          </p>
+        <div className="mt-4 rounded-2xl border-2 p-5"
+          style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.05)` }}>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="px-3 py-1 rounded-full font-black tracking-[0.18em] uppercase" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Nemetschek GTM mechanic</div>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>
+              A 24-month ladder from co-sell to embedded layer.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { phase: "Months 0–6", title: "Co-Sell", color: GREEN, desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal." },
+              { phase: "Months 6–12", title: "Joint 30-Day Pilots", color: TEAL, desc: "Co-branded 'RFI Lifecycle Sprint' productized with Bluebeam. Generates AEC case studies + revenue share." },
+              { phase: "Months 12–24", title: "Embedded Instruction Layer", color: GOLD, desc: "LIZA becomes the governance & memory layer underneath one Nemetschek brand. Start with Bluebeam (RFIs), expand to Allplan (design intent)." },
+            ].map(({ phase, title, color, desc }) => (
+              <div key={title} className="rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
+                <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
+                <p className="font-bold mb-1" style={{ fontSize: 17, color: TEXT }}>{title}</p>
+                <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
