@@ -99,24 +99,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Seed Round
+            LIZA OS · AEC · Strategic Round
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Operating System for<br />
+          The Project Memory Layer for<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            AI-Native Organizations.
+            AI-Native Construction.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          Your experts know what good looks like. AI doesn't.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>We make expert judgment run everywhere AI executes.</span>
+          Your project teams know what good looks like. AI doesn't.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>We make project judgment run everywhere AI executes — across every spec, RFI, and submittal.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; €1.5M Seed &nbsp;·&nbsp; Early Revenue
+          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; AEC Beachhead
         </p>
       </div>
       <SlideBar />
@@ -234,35 +234,35 @@ function Slide02() {
 function Slide03() {
   const industries = [
     {
-      name: "Life Sciences",
+      name: "General Contractor",
       icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
       accent: RED,
-      records: ["Batch records", "SOPs", "Validation protocols"],
-      gap: "AI attempts to draft a deviation report based on its general training data. But this batch falls under Annex 7, not Annex 1. A senior QA lead recognizes that instantly. The AI cannot, because nobody encoded that judgment.",
-      outputs: ["Deviation reports", "Submission docs"],
-      cost: "Safety risk. Audit failure.",
+      records: ["Specs", "Submittals", "RFIs", "Drawings"],
+      gap: "AI drafts an RFI response from general construction knowledge. But this spec section was modified in Addendum 3, and the field condition was already resolved by a parallel RFI two weeks ago. A senior PM knows that. The AI doesn't, because nobody encoded the project memory.",
+      outputs: ["RFI responses", "Submittal logs"],
+      cost: "Rework. Schedule slip. Margin loss.",
     },
     {
-      name: "Professional Services",
+      name: "Architecture / Engineering",
       icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
-      records: ["Methodologies", "Client briefs", "Proposals"],
-      gap: "AI produces a generic proposal based on publicly available best practices. But the client's CEO just changed strategy mid-engagement. A senior partner would reframe the entire approach. The AI delivers a textbook response because it has no access to the partner's instinct.",
-      outputs: ["Deliverables", "Advisory memos"],
-      cost: "Margin erosion. Client escalation.",
+      records: ["Design intent", "Code references", "Spec sections"],
+      gap: "AI produces a code-compliant detail based on general references. But the project sits under a local amendment to IBC 2021 that the principal-in-charge negotiated with the AHJ last month. The AI delivers textbook code. The principal's judgment never made it into the model.",
+      outputs: ["Drawing reviews", "Spec markups"],
+      cost: "Liability exposure. Redesign cycles.",
     },
     {
-      name: "Financial Services",
+      name: "Owner / Developer",
       icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
-      records: ["Risk policies", "Case files", "Compliance docs"],
-      gap: "AI struggles to price risk beyond historical averages. But this client's exposure profile shifted after a recent acquisition. Two analysts using the same AI arrive at different outputs because neither has encoded the firm's evolving risk posture.",
-      outputs: ["Risk assessments", "Advisory reports"],
-      cost: "Regulatory exposure. Inconsistent pricing.",
+      records: ["Standards", "As-builts", "O&M manuals"],
+      gap: "AI summarises a project handover from the document set. But this owner's facility standards override 30% of the spec, and three change orders modified the as-built without updating the model. Two project managers querying the same AI get two different answers because the standard isn't encoded anywhere queryable.",
+      outputs: ["Closeout packages", "Handover docs"],
+      cost: "Operational risk. Warranty disputes.",
     },
   ];
 
-  const alsoApplies = ["Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops", "Marketing"];
+  const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
