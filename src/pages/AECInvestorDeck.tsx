@@ -581,11 +581,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Confluence / Wiki", layer: "Knowledge", color: BLUE },
-    { name: "JIRA / Monday", layer: "Project Mgmt", color: BLUE },
-    { name: "Salesforce / HubSpot", layer: "CRM", color: BLUE },
-    { name: "DOORS / Polarion", layer: "Requirements", color: BLUE },
-    { name: "Veeva / SAP", layer: "Compliance", color: BLUE },
+    { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
+    { name: "Bluebeam / Newforma", layer: "RFI & Markup", color: BLUE },
+    { name: "Revit / Allplan", layer: "Design / BIM", color: BLUE },
+    { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
+    { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
   ];
 
   return (
