@@ -1077,15 +1077,18 @@ function Slide08() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Early Validation</p>
+            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
             <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
-              Paid engagements.{" "}
-              <span style={{ color: `hsl(${GREEN})` }}>Measurable outcomes.</span>
+              Same architecture. Same gap.{" "}
+              <span style={{ color: `hsl(${GREEN})` }}>Now applied to AEC.</span>
             </h2>
+            <p className="mt-2" style={{ fontSize: 16, color: MUTED, maxWidth: 880 }}>
+              These are paid engagements outside AEC — proof the instruction-layer pattern generalizes. The same engine now ships an AEC-native knowledge pack with Nemetschek as the strategic anchor.
+            </p>
           </div>
           <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
             <p className="font-black" style={{ fontSize: 32, color: `hsl(${GREEN})`, lineHeight: 1 }}>4</p>
-            <p style={{ fontSize: 13, color: MUTED }}>Active engagements</p>
+            <p style={{ fontSize: 13, color: MUTED }}>Cross-industry proofs</p>
           </div>
         </div>
 
