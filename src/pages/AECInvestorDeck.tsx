@@ -1484,11 +1484,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Client selects one high-value process (e.g. proposal writing, deal qualification)",
-        "Platform guides structured knowledge capture from 2-3 senior experts",
-        "LIZA auto-generates executable playbooks from the input",
+        "GC or A/E selects one high-value workflow (e.g. RFI response, submittal review, spec compliance)",
+        "Platform guides structured capture from 2-3 senior PMs / principals",
+        "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
       ],
-      output: "3-5 executable playbooks ready",
+      output: "3-5 project-aware playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1496,11 +1496,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Team members self-serve: run playbooks with AI guidance",
-        "Real work, real clients, real outputs",
+        "Project team self-serves: run playbooks against live RFIs, submittals, and spec questions",
+        "Real projects, real owners, real deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality comparison: before vs. after",
+      output: "Measurable quality delta: senior PM vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1508,9 +1508,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: time saved, quality delta, rework reduction",
-        "Knowledge graph self-improves from execution feedback",
-        "Business case for full self-serve deployment with real numbers",
+        "Automated review: hours saved per RFI, rework avoided, schedule risk reduced",
+        "Project memory self-improves from every execution",
+        "Business case for firm-wide rollout with real project numbers",
       ],
       output: "ROI proven. Expansion decision with data.",
     },
