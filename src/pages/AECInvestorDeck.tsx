@@ -1771,7 +1771,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function LifecycleInvestorDeck() {
+export default function AECInvestorDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -1886,7 +1886,7 @@ export default function LifecycleInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -1933,9 +1933,9 @@ export default function LifecycleInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · AEC Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -1971,13 +1971,13 @@ export default function LifecycleInvestorDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS Investor Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · AEC Investor Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>

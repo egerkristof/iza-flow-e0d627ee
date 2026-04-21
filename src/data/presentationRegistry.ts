@@ -7,6 +7,7 @@ import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
 import LinkedInImageCard from "@/pages/LinkedInImageCard";
 import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
 import AuditOffer from "@/pages/offers/AuditOffer";
+import AECInvestorDeck from "@/pages/AECInvestorDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -24,6 +25,14 @@ export const presentationRoutes: PresentationRoute[] = [
     path: "/investor",
     description: "Primary investor presentation (Seed Round)",
     component: LifecycleInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-aec",
+    title: "AEC Investor Deck (Nemetschek)",
+    path: "/investor-aec",
+    description: "AEC-focused variant for Nemetschek Group strategic round + partnership",
+    component: AECInvestorDeck,
     showInAdmin: true,
   },
   {
