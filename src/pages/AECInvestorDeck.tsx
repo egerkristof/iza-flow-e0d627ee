@@ -581,11 +581,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Confluence / Wiki", layer: "Knowledge", color: BLUE },
-    { name: "JIRA / Monday", layer: "Project Mgmt", color: BLUE },
-    { name: "Salesforce / HubSpot", layer: "CRM", color: BLUE },
-    { name: "DOORS / Polarion", layer: "Requirements", color: BLUE },
-    { name: "Veeva / SAP", layer: "Compliance", color: BLUE },
+    { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
+    { name: "Bluebeam / Newforma", layer: "RFI & Markup", color: BLUE },
+    { name: "Revit / Allplan", layer: "Design / BIM", color: BLUE },
+    { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
+    { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
   ];
 
   return (
@@ -779,9 +779,9 @@ function Slide06() {
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine. Intent-locking, knowledge injection, drift detection. Hard to replicate.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Blueprint", desc: "Every customer's knowledge graph deepens with usage. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Cross-team Network Effect", desc: "Standards propagate across teams. Value multiplies with each department onboarded.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Nemetschek Distribution", desc: "Embedded under Bluebeam, Allplan, Solibri. Channel access to GCs, A/E, and owners that no horizontal vendor has.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -841,9 +841,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$28B", desc: "AI governance + knowledge infrastructure" },
-                { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs in target verticals" },
-                { label: "SOM", value: "$340M", desc: "EU prof services, pharma, regulated" },
+                { label: "TAM", value: "$15B", desc: "Global AEC software market (2025, ARC Advisory)" },
+                { label: "SAM", value: "$4.2B", desc: "AI + governance layer for AEC project workflows" },
+                { label: "SOM", value: "$280M", desc: "EU/NA mid-to-large GCs, A/E firms, developers" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1409,12 +1409,11 @@ function Slide11() {
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Expertise Packs</p>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>AEC Knowledge Packs</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Pre-built industry playbooks. Plug into the platform, customize to your context.
-                Consulting frameworks, compliance templates, sales methodologies. High-margin.
+                Pre-built AEC playbooks: RFI lifecycle, submittal review, code-amendment tracking, owner standards, closeout. Plug in, customize to firm + project. High-margin.
               </p>
             </div>
 
@@ -1485,11 +1484,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Client selects one high-value process (e.g. proposal writing, deal qualification)",
-        "Platform guides structured knowledge capture from 2-3 senior experts",
-        "LIZA auto-generates executable playbooks from the input",
+        "GC or A/E selects one high-value workflow (e.g. RFI response, submittal review, spec compliance)",
+        "Platform guides structured capture from 2-3 senior PMs / principals",
+        "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
       ],
-      output: "3-5 executable playbooks ready",
+      output: "3-5 project-aware playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1497,11 +1496,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Team members self-serve: run playbooks with AI guidance",
-        "Real work, real clients, real outputs",
+        "Project team self-serves: run playbooks against live RFIs, submittals, and spec questions",
+        "Real projects, real owners, real deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality comparison: before vs. after",
+      output: "Measurable quality delta: senior PM vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1509,9 +1508,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: time saved, quality delta, rework reduction",
-        "Knowledge graph self-improves from execution feedback",
-        "Business case for full self-serve deployment with real numbers",
+        "Automated review: hours saved per RFI, rework avoided, schedule risk reduced",
+        "Project memory self-improves from every execution",
+        "Business case for firm-wide rollout with real project numbers",
       ],
       output: "ROI proven. Expansion decision with data.",
     },
