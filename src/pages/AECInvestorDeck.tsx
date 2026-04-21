@@ -1266,8 +1266,8 @@ function Slide09() {
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 16, color: MUTED }}>
-            <strong style={{ color: TEXT }}>One core engine. Industry-specific expertise packs.</strong>{" "}
-            Each vertical deepens the moat. Capital-efficient expansion from a single codebase.
+            <strong style={{ color: TEXT }}>One core engine. AEC-specific knowledge packs per phase.</strong>{" "}
+            Complements (not competes with) Bluebeam, Allplan, Solibri, Document Crunch, Firmus AI.
           </p>
         </div>
       </div>
@@ -1672,20 +1672,20 @@ function Slide13() {
 
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Seed Round</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€1.5M</h2>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
+          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€1.5–2M</h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Post-money SAFE &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; Series A readiness
+            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; AEC beachhead build-out
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "Customer Acq.", pct: "40%", amt: "€600K", desc: "15-20 paying pilots", color: ACCENT },
-            { label: "Product", pct: "30%", amt: "€450K", desc: "Production hardening", color: GREEN },
-            { label: "GTM", pct: "20%", amt: "€300K", desc: "Case studies + channels", color: GOLD },
-            { label: "Operations", pct: "10%", amt: "€150K", desc: "Legal, IP, compliance", color: MUTED },
+            { label: "AEC Pilots", pct: "40%", amt: "€600–800K", desc: "10–15 GC + A/E pilots", color: ACCENT },
+            { label: "Integrations", pct: "30%", amt: "€450–600K", desc: "Bluebeam, Allplan, BIM bridges", color: GREEN },
+            { label: "AEC GTM", pct: "20%", amt: "€300–400K", desc: "Vertical case studies + channels", color: GOLD },
+            { label: "Operations", pct: "10%", amt: "€150–200K", desc: "Legal, IP, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -1699,9 +1699,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "€200-400K ARR", milestone: "5-8 paying customers. First case studies.", color: TEAL },
-            { month: "Month 7-12", target: "€600K-1M ARR", milestone: "15+ customers, 3+ verticals. NRR >120%.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1-1.5M ARR", milestone: "25+ customers. Series A raise.", color: MINT },
+            { month: "Month 1-6", target: "Bluebeam pilot live", milestone: "First GC integration. RFI lifecycle reference customer.", color: TEAL },
+            { month: "Month 7-12", target: "€500K-800K ARR", milestone: "5–8 AEC accounts. Allplan / Solibri integration in market.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1.2-1.8M ARR", milestone: "12+ AEC customers. Acquisition / Series A optionality.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -1715,8 +1715,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            Your organization's collective intelligence is your competitive advantage.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>We make it run the company.</strong>
+            Project memory is the layer the AEC AI stack is missing.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>Build it together. Own the layer underneath everything.</strong>
           </p>
         </div>
 
