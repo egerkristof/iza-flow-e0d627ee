@@ -1409,12 +1409,11 @@ function Slide11() {
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Expertise Packs</p>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>AEC Knowledge Packs</p>
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Pre-built industry playbooks. Plug into the platform, customize to your context.
-                Consulting frameworks, compliance templates, sales methodologies. High-margin.
+                Pre-built AEC playbooks: RFI lifecycle, submittal review, code-amendment tracking, owner standards, closeout. Plug in, customize to firm + project. High-margin.
               </p>
             </div>
 
