@@ -772,10 +772,10 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Edra", funding: "$30M", round: "Series A · 2024", what: "Process mining → executable SOPs for AI agents", color: GREEN },
-    { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer. Persistent context across sessions", color: SEAFOAM },
-    { name: "Interloom", funding: "$16.5M", round: "Series A · 2023", what: "Tacit knowledge capture for operations teams", color: BLUE },
-    { name: "Paradox.ai", funding: "~$3.8M", round: "Seed · 2024", what: "Knowledge governance for regulated industries", color: GOLD },
+    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
+    { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
+    { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
+    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. No instruction layer underneath.", color: GOLD },
   ];
 
   const moatLayers = [
@@ -791,8 +791,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          $70M+ recently invested around the edges.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
+          AEC AI tools read documents and predict risk.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>None of them encode your firm's judgment.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -825,12 +825,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others mine, remember, or capture.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA operationalizes.</span>
+              Others read drawings and contracts.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The only platform that makes organizational judgment queryable, versionable, and executable.
-              Other tools give AI your documents. We give AI your judgment.
+              The instruction layer underneath every AEC AI tool: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries (pharma, prof. services, cybersecurity audit).
             </p>
           </div>
         </div>
@@ -1078,15 +1077,18 @@ function Slide08() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Early Validation</p>
+            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
             <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
-              Paid engagements.{" "}
-              <span style={{ color: `hsl(${GREEN})` }}>Measurable outcomes.</span>
+              Same architecture. Same gap.{" "}
+              <span style={{ color: `hsl(${GREEN})` }}>Now applied to AEC.</span>
             </h2>
+            <p className="mt-2" style={{ fontSize: 16, color: MUTED, maxWidth: 880 }}>
+              These are paid engagements outside AEC — proof the instruction-layer pattern generalizes. The same engine now ships an AEC-native knowledge pack with Nemetschek as the strategic anchor.
+            </p>
           </div>
           <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
             <p className="font-black" style={{ fontSize: 32, color: `hsl(${GREEN})`, lineHeight: 1 }}>4</p>
-            <p style={{ fontSize: 13, color: MUTED }}>Active engagements</p>
+            <p style={{ fontSize: 13, color: MUTED }}>Cross-industry proofs</p>
           </div>
         </div>
 
@@ -1262,13 +1264,27 @@ function Slide09() {
           </div>
         </div>
 
-        <div className="mt-3 rounded-xl border px-6 py-3 flex items-center gap-4"
-          style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-          <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p style={{ fontSize: 16, color: MUTED }}>
-            <strong style={{ color: TEXT }}>One core engine. AEC-specific knowledge packs per phase.</strong>{" "}
-            Complements (not competes with) Bluebeam, Allplan, Solibri, Document Crunch, Firmus AI.
-          </p>
+        <div className="mt-4 rounded-2xl border-2 p-5"
+          style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.05)` }}>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="px-3 py-1 rounded-full font-black tracking-[0.18em] uppercase" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Nemetschek GTM mechanic</div>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>
+              A 24-month ladder from co-sell to embedded layer.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { phase: "Months 0–6", title: "Co-Sell", color: GREEN, desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal." },
+              { phase: "Months 6–12", title: "Joint 30-Day Pilots", color: TEAL, desc: "Co-branded 'RFI Lifecycle Sprint' productized with Bluebeam. Generates AEC case studies + revenue share." },
+              { phase: "Months 12–24", title: "Embedded Instruction Layer", color: GOLD, desc: "LIZA becomes the governance & memory layer underneath one Nemetschek brand. Start with Bluebeam (RFIs), expand to Allplan (design intent)." },
+            ].map(({ phase, title, color, desc }) => (
+              <div key={title} className="rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
+                <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
+                <p className="font-bold mb-1" style={{ fontSize: 17, color: TEXT }}>{title}</p>
+                <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
