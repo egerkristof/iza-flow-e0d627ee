@@ -779,9 +779,9 @@ function Slide06() {
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine. Intent-locking, knowledge injection, drift detection. Hard to replicate.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Blueprint", desc: "Every customer's knowledge graph deepens with usage. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Cross-team Network Effect", desc: "Standards propagate across teams. Value multiplies with each department onboarded.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Nemetschek Distribution", desc: "Embedded under Bluebeam, Allplan, Solibri. Channel access to GCs, A/E, and owners that no horizontal vendor has.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -841,9 +841,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$28B", desc: "AI governance + knowledge infrastructure" },
-                { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs in target verticals" },
-                { label: "SOM", value: "$340M", desc: "EU prof services, pharma, regulated" },
+                { label: "TAM", value: "$15B", desc: "Global AEC software market (2025, ARC Advisory)" },
+                { label: "SAM", value: "$4.2B", desc: "AI + governance layer for AEC project workflows" },
+                { label: "SOM", value: "$280M", desc: "EU/NA mid-to-large GCs, A/E firms, developers" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
