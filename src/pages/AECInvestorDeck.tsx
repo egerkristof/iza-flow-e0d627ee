@@ -269,10 +269,10 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What That Costs
+          What That Costs in AEC
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          Same gap. Every industry.
+          Same gap. Every project. Every stakeholder.
         </h2>
 
         {/* Cost callout — LEAD with the number */}
@@ -1151,55 +1151,55 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Professional Services", status: "Deployed", color: GREEN,
-      icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Senior judgment locked in individual heads. AI makes juniors faster but not better.",
-      result: "75% faster proposals. 25% deal velocity increase. Multi-team rollout live.",
-      proof: "Consultancy & digital agency. Active",
+      vertical: "Preconstruction", status: "Wedge", color: GREEN,
+      icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
+      problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
+      result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
+      proof: "Adjacent to Document Crunch & Handoff (Nemetschek portfolio)",
     },
     {
-      vertical: "Application Lifecycle Mgmt", status: "Deployed", color: TEAL,
-      icon: <Cpu size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "Software & engineering workflows rely on tribal knowledge. AI outputs lack organizational context.",
-      result: "Artifact workflows governed across R&D, HR, and Engineering. CTO-sponsored.",
-      proof: "Global AEC software company. Paid engagement",
+      vertical: "Construction Execution", status: "Anchor", color: TEAL,
+      icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
+      problem: "RFIs, submittals, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
+      result: "Unified RFI & submittal lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
+      proof: "Sits underneath Bluebeam, Allplan, Solibri",
     },
     {
-      vertical: "Pharma & Life Sciences", status: "Expanding", color: GOLD,
+      vertical: "Handover & Operations", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "GxP compliance demands traceable expertise. AI without governance is a regulatory liability.",
-      result: "Audit prep from weeks to hours. Full provenance. Every AI output traceable.",
-      proof: "Cybersecurity audit validated · Pharma next",
+      problem: "Closeout packages and as-builts diverge from owner standards. O&M knowledge evaporates after handover. Operators inherit fragmented data.",
+      result: "Standards-aware closeout. Living O&M memory. Owner-grade handover artifacts, every time.",
+      proof: "Owner / FM extension path · Bluebeam ↔ Vectorworks bridge",
     },
   ];
 
   const expandInto = [
-    { name: "Legal & Compliance", col: "215 25% 50%" },
-    { name: "Engineering & Architecture", col: TEAL },
-    { name: "Sales & Revenue Ops", col: GREEN },
-    { name: "Marketing & Positioning", col: "330 70% 55%" },
-    { name: "Supply Chain & Procurement", col: GOLD },
-    { name: "HR & People Operations", col: ACCENT },
+    { name: "BIM coordination & clash review", col: TEAL },
+    { name: "Spec & code compliance", col: "215 25% 50%" },
+    { name: "Cost estimating & change orders", col: GOLD },
+    { name: "Safety & QA/QC inspections", col: GREEN },
+    { name: "Subcontractor management", col: ACCENT },
+    { name: "Facility management & lifecycle", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>AEC Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            Same engine.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every function where judgment matters.</span>
+            One project memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the build.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
             <p className="font-bold tracking-[0.15em] uppercase mb-2" style={{ fontSize: 11, color: MUTED }}>
-              Pattern
+              The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              One engine governs every workflow where standards meet AI execution.
+              The missing connective tissue underneath the AEC AI stack.
             </p>
           </div>
         </div>
