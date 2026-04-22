@@ -2081,17 +2081,17 @@ export default function AECInvestorDeck() {
         {showNav && (
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-3 rounded-full shadow-lg"
             style={{ background: "hsl(0 0% 100% / 0.95)", border: `1px solid ${CHROME_BORDER}` }}>
-            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg disabled:opacity-20 hover:bg-gray-100">
+            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg disabled:opacity-20" style={{ background: showNav ? "transparent" : undefined }}>
               <ChevronLeft size={20} style={{ color: TEXT }} />
             </button>
             <span className="font-mono text-sm min-w-[60px] text-center" style={{ color: MUTED }}>
               {current + 1} / {SLIDES.length}
             </span>
-            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg disabled:opacity-20 hover:bg-gray-100">
+            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg disabled:opacity-20" style={{ background: showNav ? "transparent" : undefined }}>
               <ChevronRight size={20} style={{ color: TEXT }} />
             </button>
             <div className="w-px h-5" style={{ background: CHROME_BORDER }} />
-            <button onClick={() => document.exitFullscreen?.()} className="p-2 rounded-lg hover:bg-gray-100">
+            <button onClick={() => document.exitFullscreen?.()} className="p-2 rounded-lg" style={{ background: showNav ? "transparent" : undefined }}>
               <X size={18} style={{ color: MUTED }} />
             </button>
           </div>
