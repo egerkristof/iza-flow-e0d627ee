@@ -1483,59 +1483,56 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Already charging.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Built to compound.</span>
+          Platform base plus usage.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Built to align price with value.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
-          {/* Pricing */}
-            <div className="flex-1 flex flex-col gap-4">
+          <div className="flex-1 flex flex-col gap-4">
             <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Revenue Streams</p>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Platform SaaS</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>€500–2,000/mo per team</span>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Platform Base</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Self-serve platform. Knowledge graph, workbooks, protocol execution, governance.
-                Teams onboard independently. Usage-based AI execution on top.
+                Recurring access to the knowledge graph, workbooks, governance, permissions, and orchestration layer.
+                This is the durable system of record for how organizational judgment runs.
               </p>
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Expertise Packs</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>AI Credits</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Usage-based execution</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Pre-built industry playbooks. Plug into the platform, customize to your context.
-                Consulting frameworks, compliance templates, sales methodologies. High-margin.
+                Customers pay for high-intensity actions like extraction, governed runs, and scaled execution.
+                This is where value tracks usage and protects margin as AI compute costs rise.
               </p>
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
                 <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Guided Kickstart</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>Fixed-fee onboarding</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                For our first cohort of enterprise clients, we co-build alongside their teams to maximize
-                feedback velocity and accelerate product-market fit. Converts to self-serve SaaS.
+                Transitional entry offer to stand up the first workflows fast, prove ROI, and convert accounts into recurring platform plus credits customers.
               </p>
             </div>
           </div>
 
-          {/* Unit economics */}
           <div className="w-[420px] flex flex-col gap-4">
-            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Early Signals → Target Economics</p>
+            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Why this model wins</p>
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "ACV", value: "€18K", desc: "Average contract value" },
-                { label: "CAC", value: "€3K", desc: "Diagnostic-to-pilot funnel" },
-                { label: "LTV:CAC", value: "6:1", desc: "Target at steady state" },
-                { label: "NRR", value: ">120%", desc: "Expansion via teams + packs" },
+                { label: "Sticky base", value: "High", desc: "Infrastructure sits inside core workflows" },
+                { label: "Usage upside", value: "Direct", desc: "Revenue scales with execution volume" },
+                { label: "Margin logic", value: "Better", desc: "Credits absorb rising AI compute cost" },
+                { label: "Expansion", value: ">120%", desc: "More teams, more workflows, more usage" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
                   <p className="font-black" style={{ fontSize: 36, color: TEXT }}>{value}</p>
@@ -1546,13 +1543,13 @@ function Slide11() {
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.06)` }}>
-              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Self-Serve GTM Funnel</p>
+              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Pricing transition</p>
               <div className="flex flex-col gap-2">
                 {[
-                  "Free diagnostic → self-assessment identifies gaps",
-                  "Guided kickstart → first playbooks live in days",
-                  "Platform subscription → teams run independently",
-                  "Organic expansion → more teams, more packs",
+                  "Today: guided kickstarts accelerate learning and onboarding",
+                  "Near term: recurring platform base becomes the account anchor",
+                  "Strategic state: credit-led usage ties revenue to realized execution value",
+                  "Result: pricing compounds with adoption instead of capping at seat counts",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
