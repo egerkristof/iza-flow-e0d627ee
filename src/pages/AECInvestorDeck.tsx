@@ -1330,19 +1330,19 @@ function Slide09Partnership() {
           <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-5 items-stretch w-full">
             {ladder.map(({ phase, title, color, desc }, index) => (
               <div key={title} className="contents">
-                <div className="rounded-[32px] border px-8 py-8 flex flex-col min-h-[560px] justify-between"
+                <div className="rounded-[32px] border px-8 py-8 flex flex-col min-h-[560px]"
                   style={{ borderColor: `hsl(${color} / 0.2)`, background: `linear-gradient(180deg, hsl(${color} / 0.07), hsl(${color} / 0.03))` }}>
-                  <div>
-                    <p className="font-black tracking-[0.16em] uppercase mb-4" style={{ fontSize: 13, color: `hsl(${color})` }}>
+                  <div className="flex flex-col gap-5">
+                    <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 13, color: `hsl(${color})` }}>
                       {phase}
                     </p>
-                    <p className="font-black mb-5" style={{ fontSize: 40, color: TEXT, lineHeight: 1.02 }}>
+                    <p className="font-black" style={{ fontSize: 40, color: TEXT, lineHeight: 1.02 }}>
                       {title}
                     </p>
+                    <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
+                      {desc}
+                    </p>
                   </div>
-                  <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
-                    {desc}
-                  </p>
                 </div>
                 {index < ladder.length - 1 && (
                   <div className="flex items-center justify-center">
