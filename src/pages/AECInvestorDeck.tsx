@@ -1297,22 +1297,19 @@ function Slide09Partnership() {
       phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm introductions into priority Bluebeam and Allplan accounts.",
-      output: "Trusted enterprise entry",
+      desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal.",
     },
     {
       phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded RFI Lifecycle Sprint on live projects with shared proof.",
-      output: "Case studies and repeatable pilot motion",
+      desc: "Co-branded RFI Lifecycle Sprint productized with Bluebeam. Generates AEC case studies plus revenue share.",
     },
     {
       phase: "Months 12-24",
-      title: "Embedded Layer",
+      title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and project memory layer inside one Nemetschek workflow.",
-      output: "Strategic infrastructure position",
+      desc: "LIZA becomes the governance and memory layer underneath one Nemetschek brand. Start with Bluebeam for RFIs, then expand to Allplan for design intent.",
     },
   ];
 
@@ -1320,61 +1317,30 @@ function Slide09Partnership() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-          Strategic Partnership Path
-        </p>
-        <h2 className="font-black mb-8" style={{ fontSize: 58, color: TEXT, lineHeight: 1.04 }}>
-          From channel access to <span style={{ color: `hsl(${TEAL})` }}>embedded position</span>.
-        </h2>
+        <div className="mb-8">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
+            Nemetschek GTM Mechanic
+          </p>
+          <h2 className="font-black" style={{ fontSize: 60, color: TEXT, lineHeight: 1.02 }}>
+            A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
+          </h2>
+        </div>
 
-        <div className="rounded-[30px] border px-8 py-8 flex flex-col flex-1"
-          style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `linear-gradient(180deg, hsl(${TEAL} / 0.04), hsl(${GOLD} / 0.03))` }}>
-          <div className="flex items-center justify-between gap-6 mb-8">
-            <div className="rounded-2xl px-5 py-4"
-              style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.16)` }}>
-              <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>
-                LIZA
+        <div className="grid grid-cols-3 gap-6 flex-1">
+          {ladder.map(({ phase, title, color, desc }) => (
+            <div key={title} className="rounded-[28px] border px-7 py-7 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `linear-gradient(180deg, hsl(${color} / 0.06), hsl(${color} / 0.03))` }}>
+              <p className="font-black tracking-[0.16em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${color})` }}>
+                {phase}
               </p>
-              <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.2 }}>
-                Knowledge layer and execution IP
+              <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.08 }}>
+                {title}
               </p>
-            </div>
-
-            <ArrowRight size={30} style={{ color: `hsl(${ACCENT})` }} />
-
-            <div className="rounded-2xl px-5 py-4"
-              style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.16)` }}>
-              <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
-                Nemetschek
-              </p>
-              <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.2 }}>
-                Distribution, workflow surface, enterprise trust
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
+                {desc}
               </p>
             </div>
-          </div>
-
-          <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-stretch flex-1">
-            {ladder.map(({ phase, title, color, desc, output }, index) => (
-              <div key={title} className="contents">
-                <div className="rounded-[24px] px-5 py-5 flex flex-col"
-                  style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
-                  <p className="font-black tracking-[0.15em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
-                  <p className="font-black mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08 }}>{title}</p>
-                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
-                  <div className="mt-auto pt-5">
-                    <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.08)` }}>
-                      <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{output}</p>
-                    </div>
-                  </div>
-                </div>
-                {index < ladder.length - 1 && (
-                  <div className="flex items-center justify-center">
-                    <ArrowRight size={36} style={{ color: `hsl(${ACCENT})` }} />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
       <SlideBar from={TEAL} to={GOLD} />
