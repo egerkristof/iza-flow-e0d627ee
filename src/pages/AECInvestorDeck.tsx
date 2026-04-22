@@ -1309,37 +1309,37 @@ function Slide09Partnership() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-12">
+      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
             Nemetschek GTM Mechanic
           </p>
-          <h2 className="font-black max-w-[1520px] mx-auto" style={{ fontSize: 64, color: TEXT, lineHeight: 1.02 }}>
+          <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
             A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
           </h2>
         </div>
 
-        <div className="flex-1 flex items-center">
-          <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-5 items-stretch w-full">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="grid grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)_72px_minmax(0,1fr)] gap-4 items-center w-full max-w-[1600px]">
             {ladder.map(({ phase, title, color, desc }, index) => (
               <div key={title} className="contents">
-                <div className="rounded-[32px] border px-8 py-8 flex flex-col min-h-[560px]"
+                <div className="rounded-[30px] border px-8 py-10 flex flex-col justify-center min-h-[470px]"
                   style={{ borderColor: `hsl(${color} / 0.2)`, background: `linear-gradient(180deg, hsl(${color} / 0.07), hsl(${color} / 0.03))` }}>
-                  <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-4 text-center">
                     <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 13, color: `hsl(${color})` }}>
                       {phase}
                     </p>
-                    <p className="font-black" style={{ fontSize: 40, color: TEXT, lineHeight: 1.02 }}>
+                    <p className="font-black" style={{ fontSize: 38, color: TEXT, lineHeight: 1.04 }}>
                       {title}
                     </p>
-                    <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
+                    <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>
                       {desc}
                     </p>
                   </div>
                 </div>
                 {index < ladder.length - 1 && (
                   <div className="flex items-center justify-center">
-                    <div className="w-20 h-[3px] rounded-full" style={{ background: `linear-gradient(90deg, hsl(${color} / 0.35), hsl(${ACCENT} / 0.75))` }} />
+                    <div className="w-16 h-[3px] rounded-full" style={{ background: `linear-gradient(90deg, hsl(${color} / 0.35), hsl(${ACCENT} / 0.75))` }} />
                   </div>
                 )}
               </div>
