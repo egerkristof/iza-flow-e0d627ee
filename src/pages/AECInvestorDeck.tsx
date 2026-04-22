@@ -1595,33 +1595,36 @@ function SlideExecutionChallenge() {
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
-          {phases.map((p, i) => (
-            <div key={p.week} className="flex-1 rounded-2xl border flex flex-col overflow-hidden"
-              style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `hsl(${p.color} / 0.03)` }}>
-              {/* Header */}
-              <div className="px-7 py-5 flex items-center gap-4" style={{ borderBottom: `1px solid hsl(${p.color} / 0.15)` }}>
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+          {phases.map((p) => (
+            <div key={p.week} className="flex-1 rounded-[26px] border flex flex-col overflow-hidden"
+              style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `linear-gradient(180deg, hsl(${p.color} / 0.05), hsl(${p.color} / 0.025))` }}>
+              <div className="px-7 py-6 flex items-center gap-4" style={{ borderBottom: `1px solid hsl(${p.color} / 0.15)` }}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
                   style={{ background: `hsl(${p.color} / 0.12)`, color: `hsl(${p.color})` }}>
                   {p.icon}
                 </div>
                 <div>
                   <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${p.color})` }}>{p.week}</p>
-                  <p className="font-black" style={{ fontSize: 28, color: TEXT }}>{p.title}</p>
+                  <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.05 }}>{p.title}</p>
                 </div>
               </div>
-              {/* Actions */}
-              <div className="flex-1 px-7 py-5 flex flex-col gap-4">
+
+              <div className="flex-1 px-7 py-6 flex flex-col gap-4 justify-between">
                 {p.actions.map((a, j) => (
-                  <div key={j} className="flex items-start gap-3">
+                  <div key={j} className="flex items-start gap-3 rounded-xl px-4 py-4 flex-1"
+                    style={{ background: `hsl(${p.color} / 0.055)`, border: `1px solid hsl(${p.color} / 0.1)` }}>
                     <span className="font-bold shrink-0 mt-0.5" style={{ fontSize: 18, color: `hsl(${p.color})` }}>→</span>
                     <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{a}</p>
                   </div>
                 ))}
               </div>
-              {/* Output */}
-              <div className="px-7 py-4 mt-auto" style={{ background: `hsl(${p.color} / 0.06)` }}>
-                <p className="font-bold" style={{ fontSize: 17, color: `hsl(${p.color})` }}>
-                  ✓ {p.output}
+
+              <div className="px-7 py-5" style={{ background: `hsl(${p.color} / 0.07)`, borderTop: `1px solid hsl(${p.color} / 0.12)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${p.color})`, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                  Output
+                </p>
+                <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>
+                  {p.output}
                 </p>
               </div>
             </div>
