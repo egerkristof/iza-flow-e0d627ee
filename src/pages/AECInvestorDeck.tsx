@@ -1295,142 +1295,86 @@ function Slide09() {
 function Slide09Partnership() {
   const ladder = [
     {
-      phase: "Months 0–6",
+      phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA proves the workflow while Nemetschek removes the trust barrier.",
-      output: "Enterprise access + first lighthouse pilots",
+      desc: "Warm introductions into priority Bluebeam and Allplan accounts.",
+      output: "Trusted enterprise entry",
     },
     {
-      phase: "Months 6–12",
+      phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded RFI Lifecycle Sprint. Shared delivery, shared proof, shared economics. The product becomes concrete inside live projects.",
-      output: "AEC case studies + repeatable pilot motion",
+      desc: "Co-branded RFI Lifecycle Sprint on live projects with shared proof.",
+      output: "Case studies and repeatable pilot motion",
     },
     {
-      phase: "Months 12–24",
-      title: "Embedded Instruction Layer",
+      phase: "Months 12-24",
+      title: "Embedded Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one Nemetschek brand. Bluebeam first for RFIs, then Allplan for design intent.",
-      output: "Strategic infrastructure inside the ecosystem",
+      desc: "LIZA becomes the governance and project memory layer inside one Nemetschek workflow.",
+      output: "Strategic infrastructure position",
     },
-  ];
-
-  const reasons = [
-    "This is not funding a separate journey. It funds a joint commercial path neither side can unlock alone.",
-    "We bring the missing product layer: governed project memory, workflow logic, and fast iteration on real execution problems.",
-    "Nemetschek brings the enterprise wedge: trusted channels, customer access, and the right surface to embed into existing workflows.",
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <div className="flex items-start justify-between gap-8 mb-8">
-          <div className="max-w-[1220px]">
-            <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-              Strategic Partnership Path
-            </p>
-            <h2 className="font-black" style={{ fontSize: 56, color: TEXT, lineHeight: 1.04 }}>
-              This round funds a <span style={{ color: `hsl(${TEAL})` }}>joint journey</span>, not a separate one.
-            </h2>
-            <p className="mt-4" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1180 }}>
-              The real unlock is not just capital. It is capital plus distribution, pilots, and product embedding together. Without that, breaking into enterprise AEC accounts stays slow and founder-led.
-            </p>
-          </div>
-          <div className="w-[320px] rounded-[24px] p-5 shrink-0"
-            style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.18)` }}>
-            <p className="font-black tracking-[0.16em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${ACCENT})` }}>
-              Investment logic
-            </p>
-            <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-              Money funds the buildout.
-            </p>
-            <p className="font-bold mt-2" style={{ fontSize: 22, color: `hsl(${ACCENT})`, lineHeight: 1.2 }}>
-              Partnership funds the route to market.
-            </p>
-          </div>
-        </div>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
+          Strategic Partnership Path
+        </p>
+        <h2 className="font-black mb-8" style={{ fontSize: 58, color: TEXT, lineHeight: 1.04 }}>
+          From channel access to <span style={{ color: `hsl(${TEAL})` }}>embedded position</span>.
+        </h2>
 
-        <div className="grid grid-cols-[0.9fr_2.1fr] gap-6 flex-1 min-h-0">
-          <div className="rounded-[26px] border p-6 flex flex-col"
-            style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
-            <p className="font-black tracking-[0.16em] uppercase mb-4" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
-              Why this matters
-            </p>
-            <div className="space-y-4">
-              {reasons.map((reason, index) => (
-                <div key={reason} className="rounded-xl px-4 py-4"
-                  style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? GREEN : TEAL} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
-                  <div className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-                      style={{ background: `hsl(${GREEN} / 0.14)`, color: `hsl(${GREEN})` }}>
-                      <span className="font-black" style={{ fontSize: 14 }}>{index + 1}</span>
-                    </div>
-                    <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>{reason}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-auto rounded-xl px-4 py-4"
-              style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.14)` }}>
-              <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${WARM})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
-                The risk without the partnership
+        <div className="rounded-[30px] border px-8 py-8 flex flex-col flex-1"
+          style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `linear-gradient(180deg, hsl(${TEAL} / 0.04), hsl(${GOLD} / 0.03))` }}>
+          <div className="flex items-center justify-between gap-6 mb-8">
+            <div className="rounded-2xl px-5 py-4"
+              style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.16)` }}>
+              <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>
+                LIZA
               </p>
-              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-                Strong product, weak enterprise access. Too much time spent selling into trust-sensitive accounts from the outside.
+              <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.2 }}>
+                Knowledge layer and execution IP
+              </p>
+            </div>
+
+            <ArrowRight size={30} style={{ color: `hsl(${ACCENT})` }} />
+
+            <div className="rounded-2xl px-5 py-4"
+              style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.16)` }}>
+              <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
+                Nemetschek
+              </p>
+              <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.2 }}>
+                Distribution, workflow surface, enterprise trust
               </p>
             </div>
           </div>
 
-          <div className="rounded-[26px] border p-6 flex flex-col"
-            style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.03)` }}>
-            <div className="flex items-center justify-between gap-4 mb-6">
-              <div>
-                <p className="font-black tracking-[0.16em] uppercase mb-2" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
-                  24-Month Ladder
-                </p>
-                <p className="font-bold" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
-                  From trusted introduction to embedded infrastructure.
-                </p>
-              </div>
-              <div className="rounded-xl px-4 py-3"
-                style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.18)` }}>
-                <p className="font-black" style={{ fontSize: 18, color: `hsl(${GOLD})`, lineHeight: 1.1 }}>
-                  One shared outcome
-                </p>
-                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>
-                  Close the AEC execution gap inside the Nemetschek ecosystem.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 items-stretch flex-1">
-              {ladder.map(({ phase, title, color, desc, output }, index) => (
-                <div key={title} className="contents">
-                  <div className="rounded-2xl px-5 py-5 flex flex-col"
-                    style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
-                    <p className="font-black tracking-[0.16em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
-                    <p className="font-black mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{title}</p>
-                    <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
-                    <div className="mt-auto pt-4">
-                      <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.08)` }}>
-                        <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
-                          What this creates
-                        </p>
-                        <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{output}</p>
-                      </div>
+          <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-stretch flex-1">
+            {ladder.map(({ phase, title, color, desc, output }, index) => (
+              <div key={title} className="contents">
+                <div className="rounded-[24px] px-5 py-5 flex flex-col"
+                  style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
+                  <p className="font-black tracking-[0.15em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
+                  <p className="font-black mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08 }}>{title}</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
+                  <div className="mt-auto pt-5">
+                    <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.08)` }}>
+                      <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{output}</p>
                     </div>
                   </div>
-                  {index < ladder.length - 1 && (
-                    <div className="flex items-center justify-center">
-                      <ArrowRight size={34} style={{ color: `hsl(${ACCENT})` }} />
-                    </div>
-                  )}
                 </div>
-              ))}
-            </div>
+                {index < ladder.length - 1 && (
+                  <div className="flex items-center justify-center">
+                    <ArrowRight size={36} style={{ color: `hsl(${ACCENT})` }} />
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
