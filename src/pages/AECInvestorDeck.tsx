@@ -1018,19 +1018,6 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Global AEC Software Company",
-      subtitle: "Paid engagement",
-      scope: "R&D, HR & Engineering",
-      color: TEAL,
-      outcome: "CTO-sponsored, multi-department rollout",
-      metric: "3 depts",
-      metricLabel: "Active",
-      points: [
-        "Encoding artifact workflows across R&D, HR, and Engineering",
-        "Working directly with the CTO on organizational rollout",
-      ],
-    },
-    {
       title: "Top-Tier Swiss Executive Search Firm",
       subtitle: "Design partnership",
       scope: "Candidate evaluation",
