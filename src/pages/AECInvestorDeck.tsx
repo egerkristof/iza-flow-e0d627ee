@@ -1079,50 +1079,59 @@ function Slide08() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-5 flex-1">
+        <div className="grid grid-cols-3 gap-5 flex-1">
           {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
-            <div key={title} className="rounded-2xl border flex overflow-hidden"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
-              {/* Metric side */}
-              <div className="w-[140px] shrink-0 flex flex-col items-center justify-center px-4"
-                style={{ borderRight: `1px solid hsl(${color} / 0.12)`, background: `hsl(${color} / 0.06)` }}>
-                <p className="font-black" style={{ fontSize: 44, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
-                <p className="font-bold mt-1" style={{ fontSize: 13, color: `hsl(${color})` }}>{metricLabel}</p>
+            <div key={title} className="rounded-[24px] border p-6 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.18)`, background: `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))` }}>
+              <div className="flex items-start justify-between gap-4 mb-5">
+                <div>
+                  <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{title}</p>
+                  <p className="mt-2" style={{ fontSize: 13, color: `hsl(${color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                    {subtitle} · {scope}
+                  </p>
+                </div>
+                <div className="rounded-2xl px-4 py-3 text-right shrink-0"
+                  style={{ background: `hsl(${color} / 0.1)`, border: `1px solid hsl(${color} / 0.18)` }}>
+                  <p className="font-black" style={{ fontSize: 34, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
+                  <p className="font-bold mt-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.08em" }}>{metricLabel}</p>
+                </div>
               </div>
-              {/* Content */}
-              <div className="flex-1 px-6 py-5 flex flex-col">
-                <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.25 }}>{title}</p>
-                <p className="mt-1" style={{ fontSize: 13, color: `hsl(${color})` }}>{subtitle} · {scope}</p>
-                <div className="rounded-lg px-3 py-2 mt-3" style={{ background: `hsl(${color} / 0.1)` }}>
-                  <p className="font-bold" style={{ fontSize: 15, color: `hsl(${color})`, lineHeight: 1.3 }}>{outcome}</p>
-                </div>
-                <div className="flex flex-col gap-2 mt-3 flex-1">
-                  {points.map((p, i) => (
-                    <p key={i} className="flex items-start gap-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-                      <CheckCircle2 size={14} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} /> {p}
-                    </p>
-                  ))}
-                </div>
+
+              <div className="rounded-xl px-4 py-4 mb-4"
+                style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.12)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                  Outcome
+                </p>
+                <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>{outcome}</p>
+              </div>
+
+              <div className="flex flex-col gap-3 flex-1">
+                {points.map((p, i) => (
+                  <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
+                    style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? color : GREEN} / 0.035)` }}>
+                    <CheckCircle2 size={16} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} />
+                    <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{p}</p>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
         </div>
 
-        {/* Bottom proof bar */}
-        <div className="mt-4 rounded-xl px-6 py-3 flex items-center justify-between"
+        <div className="mt-4 rounded-xl px-6 py-4 flex items-center justify-between"
           style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
-          <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>
-            All pre-product-market-fit. All with the current platform.
+          <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>
+            Three live proofs that the architecture works before the AEC wedge fully lands.
           </p>
           <div className="flex gap-6">
             {[
-              { n: "4", l: "Paid clients" },
+              { n: "3", l: "Featured proofs" },
               { n: "3", l: "Industries" },
               { n: "€0", l: "Paid acquisition" },
             ].map(({ n, l }) => (
-              <div key={l} className="text-center">
-                <p className="font-black" style={{ fontSize: 22, color: `hsl(${GREEN})`, lineHeight: 1 }}>{n}</p>
-                <p style={{ fontSize: 11, color: MUTED }}>{l}</p>
+              <div key={l} className="text-center min-w-[88px]">
+                <p className="font-black" style={{ fontSize: 24, color: `hsl(${GREEN})`, lineHeight: 1 }}>{n}</p>
+                <p style={{ fontSize: 11, color: MUTED, letterSpacing: "0.06em", textTransform: "uppercase" }}>{l}</p>
               </div>
             ))}
           </div>
