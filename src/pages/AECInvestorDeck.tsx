@@ -312,6 +312,18 @@ function Slide03() {
                 <p style={{ fontSize: 13, color: SUBTLE }}>Workday, 2026</p>
               </div>
             </div>
+            <div className="grid grid-cols-3 gap-3 pt-2">
+              {[
+                { label: "Margin", value: "erodes", color: RED },
+                { label: "Schedule", value: "slips", color: WARM },
+                { label: "AI trust", value: "collapses", color: GOLD },
+              ].map((item) => (
+                <div key={item.label} className="rounded-xl px-4 py-3 text-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `1px solid hsl(${item.color} / 0.14)` }}>
+                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>{item.label}</p>
+                  <p className="font-black mt-1" style={{ fontSize: 22, color: TEXT }}>{item.value}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -364,6 +376,92 @@ function Slide03() {
         </div>
       </div>
       <SlideBar from={WARM} to={TEAL} />
+    </div>
+  );
+}
+
+function Slide03WorkflowProof() {
+  const workflows = [
+    {
+      persona: "General Contractor",
+      icon: <Shield size={28} />,
+      color: RED,
+      inputs: ["Specs", "Addenda", "Open RFIs"],
+      output: "RFI response draft",
+      failure: "AI answers from generic construction logic, but misses the exact addendum change and the field resolution already known by the senior PM.",
+      impact: "Rework, delay, margin loss.",
+    },
+    {
+      persona: "Architect / Engineer",
+      icon: <Briefcase size={28} />,
+      color: WARM,
+      inputs: ["Design intent", "Code refs", "AHJ decisions"],
+      output: "Detail or spec markup",
+      failure: "AI gives a textbook-compliant answer, but not the project-specific interpretation the principal already aligned with the authority having jurisdiction.",
+      impact: "Redesign cycles, liability exposure.",
+    },
+    {
+      persona: "Owner / Developer",
+      icon: <Building2 size={28} />,
+      color: GOLD,
+      inputs: ["Owner standards", "As-builts", "Change orders"],
+      output: "Handover summary",
+      failure: "AI summarizes the documents, but misses the owner's standard overrides and the field changes that never made it back into one authoritative memory layer.",
+      impact: "Operational risk, warranty disputes.",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
+          Where the Pattern Shows Up
+        </p>
+        <h2 className="font-black mb-4" style={{ fontSize: 54, color: TEXT, lineHeight: 1.08 }}>
+          Same project memory gap.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Three stakeholders investors instantly understand.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5, maxWidth: 1280 }}>
+          The problem is not document access. It is that project-specific judgment, exceptions, and evolving decisions never become a live system that AI can actually follow.
+        </p>
+
+        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
+          {workflows.map(({ persona, icon, color, inputs, output, failure, impact }) => (
+            <div key={persona} className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.04)` }}>
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>
+                  {icon}
+                </div>
+                <div>
+                  <p className="font-bold" style={{ fontSize: 28, color: TEXT }}>{persona}</p>
+                  <p style={{ fontSize: 14, color: `hsl(${color})`, letterSpacing: "0.09em", textTransform: "uppercase", fontWeight: 700 }}>Typical AI workflow</p>
+                </div>
+              </div>
+
+              <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
+                <p className="font-bold mb-3" style={{ fontSize: 15, color: TEXT }}>Known artifacts</p>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {inputs.map((item) => (
+                    <span key={item} className="rounded-full px-3 py-1.5 font-semibold" style={{ fontSize: 13, color: TEXT, background: `hsl(${color} / 0.1)` }}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <p style={{ fontSize: 15, color: MUTED }}><span className="font-bold" style={{ color: TEXT }}>AI output:</span> {output}</p>
+              </div>
+
+              <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.46 }}>{failure}</p>
+
+              <div className="mt-auto rounded-xl px-4 py-4" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.14)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Business consequence</p>
+                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>{impact}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={WARM} />
     </div>
   );
 }
@@ -1447,8 +1545,8 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Already charging.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Built to compound.</span>
+          Guided entry. Infrastructure base. Credit upside.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>The durable model is usage-aligned.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1458,22 +1556,21 @@ function Slide11() {
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Platform SaaS</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>€500–2,000/mo per team</span>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Platform Base</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Self-serve platform. Knowledge graph, workbooks, protocol execution, governance.
-                Teams onboard independently. Usage-based AI execution on top.
+                The current pricing is transitional. Long term, customers pay for the knowledge graph, governance layer, and workflow infrastructure that stays embedded in the firm.
               </p>
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>AEC Knowledge Packs</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>€2,000–10,000 one-time</span>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>AI Credits</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Metered usage</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Pre-built AEC playbooks: RFI lifecycle, submittal review, code-amendment tracking, owner standards, closeout. Plug in, customize to firm + project. High-margin.
+                Extraction, research, and execution-heavy workflows should be billed on credit consumption. That aligns pricing with both customer value and rising AI inference cost.
               </p>
             </div>
 
@@ -1483,8 +1580,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                For our first cohort of enterprise clients, we co-build alongside their teams to maximize
-                feedback velocity and accelerate product-market fit. Converts to self-serve SaaS.
+                The wedge remains a low-friction pilot. We codify one workflow, prove ROI, then convert to platform base plus usage.
               </p>
             </div>
           </div>
@@ -1495,10 +1591,10 @@ function Slide11() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "ACV", value: "€18K", desc: "Average contract value" },
+                { label: "ACV", value: "€18K", desc: "Current blended value" },
                 { label: "CAC", value: "€3K", desc: "Diagnostic-to-pilot funnel" },
                 { label: "LTV:CAC", value: "6:1", desc: "Target at steady state" },
-                { label: "NRR", value: ">120%", desc: "Expansion via teams + packs" },
+                { label: "NRR", value: ">120%", desc: "Expansion via base + credits" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
                   <p className="font-black" style={{ fontSize: 36, color: TEXT }}>{value}</p>
@@ -1509,13 +1605,13 @@ function Slide11() {
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.06)` }}>
-              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Self-Serve GTM Funnel</p>
+              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Revenue Logic</p>
               <div className="flex flex-col gap-2">
                 {[
-                  "Free diagnostic → self-assessment identifies gaps",
-                  "Guided kickstart → first playbooks live in days",
-                  "Platform subscription → teams run independently",
-                  "Organic expansion → more teams, more packs",
+                  "Diagnostic identifies workflow pain and creates urgency",
+                  "Guided kickstart proves one workflow with minimal adoption friction",
+                  "Platform base anchors the knowledge system inside the account",
+                  "Credits scale revenue as AI execution becomes mission-critical",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
@@ -1832,20 +1928,21 @@ const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
   { id: 3, title: "What That Costs", component: <Slide03 /> },
-  { id: 4, title: "Early Validation", component: <Slide08 /> },
-  { id: 5, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 6, title: "The Context Layer", component: <Slide05 /> },
-  { id: 7, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 8, title: "Expansion Path", component: <Slide09 /> },
-  { id: 9, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
-  { id: 10, title: "What's Built", component: <Slide10 /> },
-  { id: 11, title: "Business Model", component: <Slide11 /> },
-  { id: 12, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 13, title: "Team", component: <Slide12 /> },
-  { id: 14, title: "The Ask", component: <Slide13 /> },
-  { id: 14, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 15, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 16, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 4, title: "Stakeholder Workflows", component: <Slide03WorkflowProof /> },
+  { id: 5, title: "Early Validation", component: <Slide08 /> },
+  { id: 6, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 7, title: "The Context Layer", component: <Slide05 /> },
+  { id: 8, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 9, title: "Expansion Path", component: <Slide09 /> },
+  { id: 10, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 11, title: "What's Built", component: <Slide10 /> },
+  { id: 12, title: "Business Model", component: <Slide11 /> },
+  { id: 13, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 14, title: "Team", component: <Slide12 /> },
+  { id: 15, title: "The Ask", component: <Slide13 /> },
+  { id: 16, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 17, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 18, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
@@ -1984,17 +2081,17 @@ export default function AECInvestorDeck() {
         {showNav && (
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-3 rounded-full shadow-lg"
             style={{ background: "hsl(0 0% 100% / 0.95)", border: `1px solid ${CHROME_BORDER}` }}>
-            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg disabled:opacity-20 hover:bg-gray-100">
+            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg disabled:opacity-20" style={{ background: showNav ? "transparent" : undefined }}>
               <ChevronLeft size={20} style={{ color: TEXT }} />
             </button>
             <span className="font-mono text-sm min-w-[60px] text-center" style={{ color: MUTED }}>
               {current + 1} / {SLIDES.length}
             </span>
-            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg disabled:opacity-20 hover:bg-gray-100">
+            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg disabled:opacity-20" style={{ background: showNav ? "transparent" : undefined }}>
               <ChevronRight size={20} style={{ color: TEXT }} />
             </button>
             <div className="w-px h-5" style={{ background: CHROME_BORDER }} />
-            <button onClick={() => document.exitFullscreen?.()} className="p-2 rounded-lg hover:bg-gray-100">
+            <button onClick={() => document.exitFullscreen?.()} className="p-2 rounded-lg" style={{ background: showNav ? "transparent" : undefined }}>
               <X size={18} style={{ color: MUTED }} />
             </button>
           </div>
