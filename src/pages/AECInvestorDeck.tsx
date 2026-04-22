@@ -1104,7 +1104,7 @@ function Slide08() {
                 <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>{outcome}</p>
               </div>
 
-              <div className="flex flex-col gap-3 flex-1">
+              <div className="flex flex-col gap-3">
                 {points.map((p, i) => (
                   <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
                     style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? color : GREEN} / 0.035)` }}>
