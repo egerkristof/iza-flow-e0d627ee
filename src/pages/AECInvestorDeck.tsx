@@ -1080,36 +1080,36 @@ function Slide08() {
 
         <div className="grid grid-cols-3 gap-5 flex-1">
           {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
-            <div key={title} className="rounded-[24px] border p-6 flex flex-col"
+            <div key={title} className="rounded-[24px] border p-5 flex flex-col"
               style={{ borderColor: `hsl(${color} / 0.18)`, background: `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))` }}>
-              <div className="flex items-start justify-between gap-4 mb-5">
+              <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{title}</p>
-                  <p className="mt-2" style={{ fontSize: 13, color: `hsl(${color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                  <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.12 }}>{title}</p>
+                  <p className="mt-2" style={{ fontSize: 14, color: `hsl(${color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                     {subtitle} · {scope}
                   </p>
                 </div>
                 <div className="rounded-2xl px-4 py-3 text-right shrink-0"
                   style={{ background: `hsl(${color} / 0.1)`, border: `1px solid hsl(${color} / 0.18)` }}>
-                  <p className="font-black" style={{ fontSize: 34, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
+                  <p className="font-black" style={{ fontSize: 38, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
                   <p className="font-bold mt-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.08em" }}>{metricLabel}</p>
                 </div>
               </div>
 
-              <div className="rounded-xl px-4 py-4 mb-4"
+              <div className="rounded-xl px-4 py-3 mb-3"
                 style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.12)` }}>
                 <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
                   Outcome
                 </p>
-                <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>{outcome}</p>
+                <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.28 }}>{outcome}</p>
               </div>
 
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2.5">
                 {points.map((p, i) => (
                   <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
                     style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? color : GREEN} / 0.035)` }}>
-                    <CheckCircle2 size={16} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} />
-                    <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{p}</p>
+                    <CheckCircle2 size={17} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} />
+                    <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.42 }}>{p}</p>
                   </div>
                 ))}
               </div>
