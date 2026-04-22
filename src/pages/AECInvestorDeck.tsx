@@ -1316,31 +1316,42 @@ function Slide09Partnership() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <div className="mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
+      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-12">
+        <div className="mb-10 text-center">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
             Nemetschek GTM Mechanic
           </p>
-          <h2 className="font-black" style={{ fontSize: 60, color: TEXT, lineHeight: 1.02 }}>
+          <h2 className="font-black max-w-[1520px] mx-auto" style={{ fontSize: 64, color: TEXT, lineHeight: 1.02 }}>
             A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
           </h2>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {ladder.map(({ phase, title, color, desc }) => (
-            <div key={title} className="rounded-[28px] border px-7 py-7 flex flex-col"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `linear-gradient(180deg, hsl(${color} / 0.06), hsl(${color} / 0.03))` }}>
-              <p className="font-black tracking-[0.16em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${color})` }}>
-                {phase}
-              </p>
-              <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.08 }}>
-                {title}
-              </p>
-              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
-                {desc}
-              </p>
-            </div>
-          ))}
+        <div className="flex-1 flex items-center">
+          <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-5 items-stretch w-full">
+            {ladder.map(({ phase, title, color, desc }, index) => (
+              <div key={title} className="contents">
+                <div className="rounded-[32px] border px-8 py-8 flex flex-col min-h-[560px] justify-between"
+                  style={{ borderColor: `hsl(${color} / 0.2)`, background: `linear-gradient(180deg, hsl(${color} / 0.07), hsl(${color} / 0.03))` }}>
+                  <div>
+                    <p className="font-black tracking-[0.16em] uppercase mb-4" style={{ fontSize: 13, color: `hsl(${color})` }}>
+                      {phase}
+                    </p>
+                    <p className="font-black mb-5" style={{ fontSize: 40, color: TEXT, lineHeight: 1.02 }}>
+                      {title}
+                    </p>
+                  </div>
+                  <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
+                    {desc}
+                  </p>
+                </div>
+                {index < ladder.length - 1 && (
+                  <div className="flex items-center justify-center">
+                    <div className="w-20 h-[3px] rounded-full" style={{ background: `linear-gradient(90deg, hsl(${color} / 0.35), hsl(${ACCENT} / 0.75))` }} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar from={TEAL} to={GOLD} />
