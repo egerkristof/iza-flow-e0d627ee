@@ -1061,63 +1061,56 @@ function Slide08() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <div className="flex items-end justify-between mb-6">
-          <div>
-            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
-            <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
-              Prototype proven across workflows. <span style={{ color: `hsl(${GREEN})` }}>Now focused on AEC.</span>
-            </h2>
-            <p className="mt-2" style={{ fontSize: 16, color: MUTED, maxWidth: 920 }}>
-              We built the prototype to scale systemic intelligence through a governed knowledge layer. These early trials across multiple sectors proved the same context gap appears everywhere. The next step is to lean that architecture into AEC, where the pain is structural and the distribution path is strategic.
-            </p>
-          </div>
-          <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
-            <p className="font-black" style={{ fontSize: 32, color: `hsl(${GREEN})`, lineHeight: 1 }}>3</p>
-            <p style={{ fontSize: 13, color: MUTED }}>Cross-industry proofs</p>
-          </div>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <div className="mb-8">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
+          <h2 className="font-black max-w-[1420px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+            Prototype proven across workflows. <span style={{ color: `hsl(${GREEN})` }}>Now focused on AEC.</span>
+          </h2>
         </div>
 
-        <div className="grid grid-cols-3 gap-5 flex-1">
-          {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
-            <div key={title} className="rounded-[24px] border p-5 flex flex-col"
-              style={{ borderColor: `hsl(${color} / 0.18)`, background: `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))` }}>
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <div>
-                  <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.12 }}>{title}</p>
-                  <p className="mt-2" style={{ fontSize: 14, color: `hsl(${color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                    {subtitle} · {scope}
-                  </p>
-                </div>
-                <div className="rounded-2xl px-4 py-3 text-right shrink-0"
-                  style={{ background: `hsl(${color} / 0.1)`, border: `1px solid hsl(${color} / 0.18)` }}>
-                  <p className="font-black" style={{ fontSize: 38, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
-                  <p className="font-bold mt-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.08em" }}>{metricLabel}</p>
-                </div>
-              </div>
-
-              <div className="rounded-xl px-4 py-3 mb-3"
-                style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.12)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
-                  Outcome
-                </p>
-                <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.28 }}>{outcome}</p>
-              </div>
-
-              <div className="flex flex-col gap-2.5">
-                {points.map((p, i) => (
-                  <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
-                    style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? color : GREEN} / 0.035)` }}>
-                    <CheckCircle2 size={17} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} />
-                    <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.42 }}>{p}</p>
+        <div className="flex-1 flex items-center">
+          <div className="grid grid-cols-3 gap-5 w-full">
+            {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
+              <div key={title} className="rounded-[24px] border px-5 py-5 flex flex-col min-h-[560px] justify-center"
+                style={{ borderColor: `hsl(${color} / 0.18)`, background: `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))` }}>
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div>
+                    <p className="font-black" style={{ fontSize: 25, color: TEXT, lineHeight: 1.12 }}>{title}</p>
+                    <p className="mt-2" style={{ fontSize: 14, color: `hsl(${color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                      {subtitle} · {scope}
+                    </p>
                   </div>
-                ))}
+                  <div className="rounded-2xl px-4 py-3 text-right shrink-0"
+                    style={{ background: `hsl(${color} / 0.1)`, border: `1px solid hsl(${color} / 0.18)` }}>
+                    <p className="font-black" style={{ fontSize: 38, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
+                    <p className="font-bold mt-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.08em" }}>{metricLabel}</p>
+                  </div>
+                </div>
+
+                <div className="rounded-xl px-4 py-3 mb-3"
+                  style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.12)` }}>
+                  <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                    Outcome
+                  </p>
+                  <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.28 }}>{outcome}</p>
+                </div>
+
+                <div className="flex flex-col gap-2.5">
+                  {points.map((p, i) => (
+                    <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
+                      style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? color : GREEN} / 0.035)` }}>
+                      <CheckCircle2 size={17} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} />
+                      <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.42 }}>{p}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="mt-4 rounded-xl px-6 py-4 flex items-center justify-between"
+        <div className="mt-5 rounded-xl px-6 py-4 flex items-center justify-between"
           style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
           <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>
             Early trials validated the prototype. The focus now is taking that architecture into AEC with intent.
@@ -1316,37 +1309,37 @@ function Slide09Partnership() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-12">
+      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
             Nemetschek GTM Mechanic
           </p>
-          <h2 className="font-black max-w-[1520px] mx-auto" style={{ fontSize: 64, color: TEXT, lineHeight: 1.02 }}>
+          <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
             A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
           </h2>
         </div>
 
-        <div className="flex-1 flex items-center">
-          <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-5 items-stretch w-full">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="grid grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)_72px_minmax(0,1fr)] gap-4 items-center w-full max-w-[1600px]">
             {ladder.map(({ phase, title, color, desc }, index) => (
               <div key={title} className="contents">
-                <div className="rounded-[32px] border px-8 py-8 flex flex-col min-h-[560px]"
+                <div className="rounded-[30px] border px-8 py-10 flex flex-col justify-center min-h-[470px]"
                   style={{ borderColor: `hsl(${color} / 0.2)`, background: `linear-gradient(180deg, hsl(${color} / 0.07), hsl(${color} / 0.03))` }}>
-                  <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-4 text-center">
                     <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 13, color: `hsl(${color})` }}>
                       {phase}
                     </p>
-                    <p className="font-black" style={{ fontSize: 40, color: TEXT, lineHeight: 1.02 }}>
+                    <p className="font-black" style={{ fontSize: 38, color: TEXT, lineHeight: 1.04 }}>
                       {title}
                     </p>
-                    <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.55 }}>
+                    <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>
                       {desc}
                     </p>
                   </div>
                 </div>
                 {index < ladder.length - 1 && (
                   <div className="flex items-center justify-center">
-                    <div className="w-20 h-[3px] rounded-full" style={{ background: `linear-gradient(90deg, hsl(${color} / 0.35), hsl(${ACCENT} / 0.75))` }} />
+                    <div className="w-16 h-[3px] rounded-full" style={{ background: `linear-gradient(90deg, hsl(${color} / 0.35), hsl(${ACCENT} / 0.75))` }} />
                   </div>
                 )}
               </div>
