@@ -1252,25 +1252,25 @@ function Slide09() {
         </div>
 
         <div className="mt-4 rounded-2xl border-2 p-5"
-          style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.05)` }}>
-          <div className="flex items-center gap-3 mb-3">
-            <div className="px-3 py-1 rounded-full font-black tracking-[0.18em] uppercase" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Nemetschek GTM mechanic</div>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>
-              A 24-month ladder from co-sell to embedded layer.
-            </p>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              { phase: "Months 0–6", title: "Co-Sell", color: GREEN, desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal." },
-              { phase: "Months 6–12", title: "Joint 30-Day Pilots", color: TEAL, desc: "Co-branded 'RFI Lifecycle Sprint' productized with Bluebeam. Generates AEC case studies + revenue share." },
-              { phase: "Months 12–24", title: "Embedded Instruction Layer", color: GOLD, desc: "LIZA becomes the governance & memory layer underneath one Nemetschek brand. Start with Bluebeam (RFIs), expand to Allplan (design intent)." },
-            ].map(({ phase, title, color, desc }) => (
-              <div key={title} className="rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
-                <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
-                <p className="font-bold mb-1" style={{ fontSize: 17, color: TEXT }}>{title}</p>
-                <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{desc}</p>
-              </div>
-            ))}
+          style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.04)` }}>
+          <div className="flex items-center justify-between gap-6">
+            <div>
+              <p className="font-black tracking-[0.18em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>
+                Strategic path
+              </p>
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
+                Expansion across the build lifecycle. Partnership path on the next slide.
+              </p>
+            </div>
+            <div className="rounded-xl px-5 py-4 shrink-0"
+              style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.18)` }}>
+              <p className="font-black" style={{ fontSize: 18, color: `hsl(${GREEN})`, lineHeight: 1.15 }}>
+                Capital + channel + product
+              </p>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>
+                The round works because the commercial journey is joint.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -1280,7 +1280,158 @@ function Slide09() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 09 — WHAT'S BUILT (Product is live)
+// SLIDE 09B — STRATEGIC PARTNERSHIP PATH
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide09Partnership() {
+  const ladder = [
+    {
+      phase: "Months 0–6",
+      title: "Co-Sell",
+      color: GREEN,
+      desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA proves the workflow while Nemetschek removes the trust barrier.",
+      output: "Enterprise access + first lighthouse pilots",
+    },
+    {
+      phase: "Months 6–12",
+      title: "Joint 30-Day Pilots",
+      color: TEAL,
+      desc: "Co-branded RFI Lifecycle Sprint. Shared delivery, shared proof, shared economics. The product becomes concrete inside live projects.",
+      output: "AEC case studies + repeatable pilot motion",
+    },
+    {
+      phase: "Months 12–24",
+      title: "Embedded Instruction Layer",
+      color: GOLD,
+      desc: "LIZA becomes the governance and memory layer underneath one Nemetschek brand. Bluebeam first for RFIs, then Allplan for design intent.",
+      output: "Strategic infrastructure inside the ecosystem",
+    },
+  ];
+
+  const reasons = [
+    "This is not funding a separate journey. It funds a joint commercial path neither side can unlock alone.",
+    "We bring the missing product layer: governed project memory, workflow logic, and fast iteration on real execution problems.",
+    "Nemetschek brings the enterprise wedge: trusted channels, customer access, and the right surface to embed into existing workflows.",
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
+        <div className="flex items-start justify-between gap-8 mb-8">
+          <div className="max-w-[1220px]">
+            <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
+              Strategic Partnership Path
+            </p>
+            <h2 className="font-black" style={{ fontSize: 56, color: TEXT, lineHeight: 1.04 }}>
+              This round funds a <span style={{ color: `hsl(${TEAL})` }}>joint journey</span>, not a separate one.
+            </h2>
+            <p className="mt-4" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1180 }}>
+              The real unlock is not just capital. It is capital plus distribution, pilots, and product embedding together. Without that, breaking into enterprise AEC accounts stays slow and founder-led.
+            </p>
+          </div>
+          <div className="w-[320px] rounded-[24px] p-5 shrink-0"
+            style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.18)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-3" style={{ fontSize: 12, color: `hsl(${ACCENT})` }}>
+              Investment logic
+            </p>
+            <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
+              Money funds the buildout.
+            </p>
+            <p className="font-bold mt-2" style={{ fontSize: 22, color: `hsl(${ACCENT})`, lineHeight: 1.2 }}>
+              Partnership funds the route to market.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-[0.9fr_2.1fr] gap-6 flex-1 min-h-0">
+          <div className="rounded-[26px] border p-6 flex flex-col"
+            style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-4" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
+              Why this matters
+            </p>
+            <div className="space-y-4">
+              {reasons.map((reason, index) => (
+                <div key={reason} className="rounded-xl px-4 py-4"
+                  style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? GREEN : TEAL} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
+                  <div className="flex items-start gap-3">
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                      style={{ background: `hsl(${GREEN} / 0.14)`, color: `hsl(${GREEN})` }}>
+                      <span className="font-black" style={{ fontSize: 14 }}>{index + 1}</span>
+                    </div>
+                    <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>{reason}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-auto rounded-xl px-4 py-4"
+              style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.14)` }}>
+              <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${WARM})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                The risk without the partnership
+              </p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+                Strong product, weak enterprise access. Too much time spent selling into trust-sensitive accounts from the outside.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-[26px] border p-6 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.03)` }}>
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <div>
+                <p className="font-black tracking-[0.16em] uppercase mb-2" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
+                  24-Month Ladder
+                </p>
+                <p className="font-bold" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
+                  From trusted introduction to embedded infrastructure.
+                </p>
+              </div>
+              <div className="rounded-xl px-4 py-3"
+                style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.18)` }}>
+                <p className="font-black" style={{ fontSize: 18, color: `hsl(${GOLD})`, lineHeight: 1.1 }}>
+                  One shared outcome
+                </p>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>
+                  Close the AEC execution gap inside the Nemetschek ecosystem.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 items-stretch flex-1">
+              {ladder.map(({ phase, title, color, desc, output }, index) => (
+                <div key={title} className="contents">
+                  <div className="rounded-2xl px-5 py-5 flex flex-col"
+                    style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
+                    <p className="font-black tracking-[0.16em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
+                    <p className="font-black mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{title}</p>
+                    <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
+                    <div className="mt-auto pt-4">
+                      <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.08)` }}>
+                        <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                          What this creates
+                        </p>
+                        <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{output}</p>
+                      </div>
+                    </div>
+                  </div>
+                  {index < ladder.length - 1 && (
+                    <div className="flex items-center justify-center">
+                      <ArrowRight size={34} style={{ color: `hsl(${ACCENT})` }} />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GOLD} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 10 — WHAT'S BUILT (Product is live)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide10() {
@@ -1761,11 +1912,12 @@ const SLIDES = [
   { id: 6, title: "The Context Layer", component: <Slide05 /> },
   { id: 7, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 8, title: "Expansion Path", component: <Slide09 /> },
-  { id: 9, title: "What's Built", component: <Slide10 /> },
-  { id: 10, title: "Business Model", component: <Slide11 /> },
-  { id: 11, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 12, title: "Team", component: <Slide12 /> },
-  { id: 13, title: "The Ask", component: <Slide13 /> },
+  { id: 9, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 10, title: "What's Built", component: <Slide10 /> },
+  { id: 11, title: "Business Model", component: <Slide11 /> },
+  { id: 12, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 13, title: "Team", component: <Slide12 /> },
+  { id: 14, title: "The Ask", component: <Slide13 /> },
   { id: 14, title: "Appendix", component: <SlideAppendixDivider /> },
   { id: 15, title: "Appendix: How It Works", component: <Slide07 /> },
   { id: 16, title: "Appendix: Architecture", component: <SlideArchitecture /> },
