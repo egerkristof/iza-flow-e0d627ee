@@ -1399,8 +1399,8 @@ function Slide09Partnership() {
 
             <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 items-stretch flex-1">
               {ladder.map(({ phase, title, color, desc, output }, index) => (
-                <>
-                  <div key={title} className="rounded-2xl px-5 py-5 flex flex-col"
+                <div key={title} className="contents">
+                  <div className="rounded-2xl px-5 py-5 flex flex-col"
                     style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.2)` }}>
                     <p className="font-black tracking-[0.16em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${color})` }}>{phase}</p>
                     <p className="font-black mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{title}</p>
@@ -1415,11 +1415,11 @@ function Slide09Partnership() {
                     </div>
                   </div>
                   {index < ladder.length - 1 && (
-                    <div key={`${title}-arrow`} className="flex items-center justify-center">
+                    <div className="flex items-center justify-center">
                       <ArrowRight size={34} style={{ color: `hsl(${ACCENT})` }} />
                     </div>
                   )}
-                </>
+                </div>
               ))}
             </div>
           </div>
@@ -1912,11 +1912,12 @@ const SLIDES = [
   { id: 6, title: "The Context Layer", component: <Slide05 /> },
   { id: 7, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 8, title: "Expansion Path", component: <Slide09 /> },
-  { id: 9, title: "What's Built", component: <Slide10 /> },
-  { id: 10, title: "Business Model", component: <Slide11 /> },
-  { id: 11, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 12, title: "Team", component: <Slide12 /> },
-  { id: 13, title: "The Ask", component: <Slide13 /> },
+  { id: 9, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 10, title: "What's Built", component: <Slide10 /> },
+  { id: 11, title: "Business Model", component: <Slide11 /> },
+  { id: 12, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 13, title: "Team", component: <Slide12 /> },
+  { id: 14, title: "The Ask", component: <Slide13 /> },
   { id: 14, title: "Appendix", component: <SlideAppendixDivider /> },
   { id: 15, title: "Appendix: How It Works", component: <Slide07 /> },
   { id: 16, title: "Appendix: Architecture", component: <SlideArchitecture /> },
