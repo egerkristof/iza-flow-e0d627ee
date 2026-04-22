@@ -1066,11 +1066,10 @@ function Slide08() {
           <div>
             <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
             <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
-              Same architecture. Same gap.{" "}
-              <span style={{ color: `hsl(${GREEN})` }}>Now applied to AEC.</span>
+              Prototype proven across workflows. <span style={{ color: `hsl(${GREEN})` }}>Now focused on AEC.</span>
             </h2>
-            <p className="mt-2" style={{ fontSize: 16, color: MUTED, maxWidth: 880 }}>
-              These are paid engagements outside AEC — proof the instruction-layer pattern generalizes. The same engine now ships an AEC-native knowledge pack with Nemetschek as the strategic anchor.
+            <p className="mt-2" style={{ fontSize: 16, color: MUTED, maxWidth: 920 }}>
+              We built the prototype to scale systemic intelligence through a governed knowledge layer. These early trials across multiple sectors proved the same context gap appears everywhere. The next step is to lean that architecture into AEC, where the pain is structural and the distribution path is strategic.
             </p>
           </div>
           <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
@@ -1121,7 +1120,7 @@ function Slide08() {
         <div className="mt-4 rounded-xl px-6 py-4 flex items-center justify-between"
           style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
           <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>
-            Three live proofs that the architecture works before the AEC wedge fully lands.
+            Early trials validated the prototype. The focus now is taking that architecture into AEC with intent.
           </p>
           <div className="flex gap-6">
             {[
