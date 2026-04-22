@@ -242,6 +242,104 @@ function Slide03Problem() {
   );
 }
 
+function Slide03WorkflowProof() {
+  const workflows = [
+    {
+      persona: "Sales Leader",
+      icon: <Target size={30} />,
+      color: ACCENT,
+      flow: ["Call notes", "CRM history", "MEDDIC criteria"],
+      output: "Account plan + deal strategy",
+      failure: "AI writes a polished plan, but misses the political blocker the VP already flagged. The deck looks good. The rep still walks into the wrong deal motion.",
+      impact: "Longer cycles. Lower win rate. Senior reviews stay manual.",
+    },
+    {
+      persona: "Marketing Lead",
+      icon: <Lightbulb size={30} />,
+      color: GREEN,
+      flow: ["ICP notes", "Positioning docs", "Campaign history"],
+      output: "Launch brief + campaign assets",
+      failure: "AI generates on-brand copy, but ignores the messaging trade-off leadership made for this segment. Teams ship volume, then rework for narrative alignment.",
+      impact: "More content. Slower launches. Brand drift across channels.",
+    },
+    {
+      persona: "Finance / Ops",
+      icon: <DollarSign size={30} />,
+      color: GOLD,
+      flow: ["Policies", "Approvals", "Exceptions log"],
+      output: "Decision memo + operational recommendation",
+      failure: "AI summarizes policy correctly, but misses the local exception everyone relies on. The answer looks compliant until someone senior catches it.",
+      impact: "Margin leakage. Governance risk. AI trust drops fast.",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
+        <Tag label="Where Investors See It First" color={ACCENT} />
+        <h2 className="font-bold mb-5" style={{ fontSize: 64, color: TEXT, lineHeight: 1.08 }}>
+          The same failure repeats across core functions.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Inputs exist. Judgment does not travel.</span>
+        </h2>
+
+        <p className="mb-8" style={{ fontSize: 24, color: MUTED, lineHeight: 1.5, maxWidth: 1280 }}>
+          Investors already know these workflows. The pattern is always the same: teams have records, templates, and AI tools, but the decision logic still lives in senior people and gets re-applied manually every time.
+        </p>
+
+        <div className="grid grid-cols-3 gap-7 flex-1 min-h-0">
+          {workflows.map(({ persona, icon, color, flow, output, failure, impact }) => (
+            <div
+              key={persona}
+              className="rounded-2xl border p-7 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.04)` }}
+            >
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>
+                  {icon}
+                </div>
+                <div>
+                  <p className="font-bold" style={{ fontSize: 30, color: TEXT }}>{persona}</p>
+                  <p style={{ fontSize: 16, color: `hsl(${color})`, letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 700 }}>Typical workflow</p>
+                </div>
+              </div>
+
+              <div className="rounded-xl px-5 py-4 mb-5" style={{ background: `hsl(${color} / 0.06)`, border: `1px solid hsl(${color} / 0.12)` }}>
+                <p className="font-bold mb-3" style={{ fontSize: 16, color: TEXT }}>Known inputs</p>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {flow.map((item) => (
+                    <span key={item} className="rounded-full px-3 py-1.5 font-semibold" style={{ fontSize: 14, color: TEXT, background: `hsl(${color} / 0.1)` }}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <p style={{ fontSize: 16, color: MUTED }}>
+                  <span className="font-bold" style={{ color: TEXT }}>AI output:</span> {output}
+                </p>
+              </div>
+
+              <p className="mb-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.48 }}>{failure}</p>
+
+              <div className="mt-auto rounded-xl px-5 py-4" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.14)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 14, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Business impact</p>
+                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>{impact}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-7 rounded-2xl border px-8 py-5 flex items-center gap-5" style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
+          <AlertTriangle size={30} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 23, color: MUTED, lineHeight: 1.45 }}>
+            <strong style={{ color: TEXT }}>This is not just a productivity leak.</strong> It compounds into slower decisions, senior bottlenecks, margin compression, and lower trust in AI across the whole organization.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={ACCENT} to={RED} />
+    </div>
+  );
+}
+
 // ─── Slide 04 — Market ───────────────────────────────────────────────────────
 
 function Slide04Market() {
@@ -774,26 +872,26 @@ function Slide10BusinessModel() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-10">
         <Tag label="Business Model" color={ACCENT} />
         <h2 className="font-bold mb-6" style={{ fontSize: 64, color: TEXT, lineHeight: 1.1 }}>
-          Infrastructure pricing. Not per-seat SaaS.<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>Land with one team. Expand org-wide.</span>
+          Hybrid now. Credits-led over time.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Base infrastructure plus metered AI execution.</span>
         </h2>
 
         <div className="grid grid-cols-3 gap-6 mb-6 flex-1 min-h-0">
           {[
             {
-              tier: "Team", price: "€60k/yr", seats: "Single team",
-              desc: "Core workbooks, protocol execution, knowledge bundles. One team adopts. Proves value. Others follow.", color: MUTED,
-              features: ["Unlimited workbooks", "Protocol execution", "Knowledge bundles", "Model-agnostic AI"],
+              tier: "Guided Kickstart", price: "€5k-15k", seats: "Entry wedge",
+              desc: "Fixed-fee onboarding sprint. We encode one critical workflow, prove ROI fast, and create the initial knowledge layer the customer keeps using.", color: MUTED,
+              features: ["One high-value workflow", "Expert capture + playbooks", "Measurable before/after proof", "Converts into annual platform base"],
             },
             {
-              tier: "Department", price: "€180k/yr", seats: "Multi-team",
-              desc: "Cross-team knowledge propagation. Smart ingestion. Drift detection. After-action synthesis.", color: ACCENT,
-              features: ["Everything in Team", "Cross-team knowledge graph", "Drift scoring + alerts", "After-action AI synthesis", "Document ingestion"],
+              tier: "Platform Base", price: "€60k-300k+/yr", seats: "Team to enterprise",
+              desc: "Annual infrastructure fee for the knowledge graph, governance, workbooks, and propagation layer. This is the durable system-of-intelligence contract.", color: ACCENT,
+              features: ["Knowledge graph + governance", "Protocol execution workspaces", "Cross-team propagation", "Enterprise controls + integrations"],
             },
             {
-              tier: "Enterprise", price: "€300k+/yr", seats: "Organisation-wide",
-              desc: "Full organizational OS. White-glove onboarding. Custom playbook library. SSO. Governance dashboards.", color: GOLD,
-              features: ["Everything in Department", "Custom playbook authoring", "SSO + SCIM", "Governance dashboards", "Dedicated CSM + SLA"],
+              tier: "AI Credits", price: "Usage-based", seats: "Scales with value",
+              desc: "Metered consumption for AI-heavy actions like extraction, research, and execution steps. Customers pay in proportion to realized throughput, not just seats.", color: GOLD,
+              features: ["Credits tie price to value", "Supports expensive model usage", "Expansion rises with workflow depth", "Natural upside as AI becomes core"],
             },
           ].map(({ tier, price, seats, desc, color, features }) => (
             <div key={tier} className="flex flex-col rounded-2xl border overflow-hidden"
@@ -817,8 +915,8 @@ function Slide10BusinessModel() {
 
         <div className="flex gap-6">
           {[
-            { label: "Switching Cost = Moat", desc: "The longer teams use LIZA, the deeper the knowledge graph. Moving away means losing institutional memory.", color: GREEN },
-            { label: "AI Usage Layer", desc: "+usage-based AI consumption above tier limits. Expands ARR naturally as adoption deepens.", color: ACCENT },
+            { label: "Why credits matter", desc: "AI cost is rising while customer value is usage-dependent. Credits let us align monetization with both model spend and business outcomes.", color: GREEN },
+            { label: "Why the base stays", desc: "The moat is still infrastructure. The longer teams run LIZA, the deeper the knowledge graph and the harder it is to replace.", color: ACCENT },
           ].map(({ label, desc, color }) => (
             <div key={label} className="flex-1 rounded-xl border px-6 py-5 flex items-center gap-5"
               style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
@@ -1332,21 +1430,22 @@ const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01Cover /> },
   { id: 2, title: "The Thesis", component: <Slide02Thesis /> },
   { id: 3, title: "The Problem", component: <Slide03Problem /> },
-  { id: 4, title: "Infrastructure Gap", component: <Slide04Market /> },
-  { id: 5, title: "The Solution", component: <Slide05Solution /> },
-  { id: 6, title: "How It Works", component: <Slide06Architecture /> },
-  { id: 7, title: "Enterprise Validation", component: <Slide07CaseStudy /> },
-  { id: 8, title: "Traction", component: <Slide08Traction /> },
-  { id: 9, title: "Category Map", component: <Slide09CategoryMap /> },
-  { id: 10, title: "Market Validation", component: <Slide10MarketValidation /> },
-  { id: 11, title: "Business Model", component: <Slide10BusinessModel /> },
-  { id: 12, title: "Go-To-Market", component: <Slide11GTM /> },
-  { id: 13, title: "Vertical Expansion", component: <Slide12Verticals /> },
-  { id: 14, title: "Team", component: <Slide12Team /> },
-  { id: 14, title: "Financials", component: <Slide13Financials /> },
-  { id: 15, title: "Use of Funds", component: <Slide14UseOfFunds /> },
-  { id: 16, title: "The Ask", component: <Slide15TheAsk /> },
-  { id: 17, title: "Closing", component: <Slide16Closing /> },
+  { id: 4, title: "Workflow Failures", component: <Slide03WorkflowProof /> },
+  { id: 5, title: "Infrastructure Gap", component: <Slide04Market /> },
+  { id: 6, title: "The Solution", component: <Slide05Solution /> },
+  { id: 7, title: "How It Works", component: <Slide06Architecture /> },
+  { id: 8, title: "Enterprise Validation", component: <Slide07CaseStudy /> },
+  { id: 9, title: "Traction", component: <Slide08Traction /> },
+  { id: 10, title: "Category Map", component: <Slide09CategoryMap /> },
+  { id: 11, title: "Market Validation", component: <Slide10MarketValidation /> },
+  { id: 12, title: "Business Model", component: <Slide10BusinessModel /> },
+  { id: 13, title: "Go-To-Market", component: <Slide11GTM /> },
+  { id: 14, title: "Vertical Expansion", component: <Slide12Verticals /> },
+  { id: 15, title: "Team", component: <Slide12Team /> },
+  { id: 16, title: "Financials", component: <Slide13Financials /> },
+  { id: 17, title: "Use of Funds", component: <Slide14UseOfFunds /> },
+  { id: 18, title: "The Ask", component: <Slide15TheAsk /> },
+  { id: 19, title: "Closing", component: <Slide16Closing /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
