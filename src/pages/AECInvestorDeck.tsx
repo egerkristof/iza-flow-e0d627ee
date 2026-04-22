@@ -1074,7 +1074,7 @@ function Slide08() {
             </p>
           </div>
           <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
-            <p className="font-black" style={{ fontSize: 32, color: `hsl(${GREEN})`, lineHeight: 1 }}>4</p>
+            <p className="font-black" style={{ fontSize: 32, color: `hsl(${GREEN})`, lineHeight: 1 }}>3</p>
             <p style={{ fontSize: 13, color: MUTED }}>Cross-industry proofs</p>
           </div>
         </div>
