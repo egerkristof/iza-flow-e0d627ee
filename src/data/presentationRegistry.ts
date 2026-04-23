@@ -6,6 +6,7 @@ import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
 import LinkedInImageCard from "@/pages/LinkedInImageCard";
 import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
+import LCVInvestorDeck from "@/pages/LCVInvestorDeck";
 import AuditOffer from "@/pages/offers/AuditOffer";
 import AECInvestorDeck from "@/pages/AECInvestorDeck";
 
@@ -33,6 +34,14 @@ export const presentationRoutes: PresentationRoute[] = [
     path: "/investor-aec",
     description: "AEC-focused variant for Nemetschek Group strategic round + partnership",
     component: AECInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-lcv",
+    title: "LCV Investor Deck",
+    path: "/investor-lcv",
+    description: "PE-focused investor variant for LCV Partners centered on audits, operational continuity, and post-merger integration",
+    component: LCVInvestorDeck,
     showInAdmin: true,
   },
   {
