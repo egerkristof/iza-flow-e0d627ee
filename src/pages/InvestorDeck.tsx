@@ -277,15 +277,11 @@ function Slide03WorkflowProof() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <Tag label="Where Investors See It First" color={ACCENT} />
+        <Tag label="Where Missing Context Shows Up" color={ACCENT} />
         <h2 className="font-bold mb-5" style={{ fontSize: 64, color: TEXT, lineHeight: 1.08 }}>
           The same failure repeats across core functions.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Inputs exist. Judgment does not travel.</span>
         </h2>
-
-        <p className="mb-8" style={{ fontSize: 24, color: MUTED, lineHeight: 1.5, maxWidth: 1280 }}>
-          Investors already know these workflows. The pattern is always the same: teams have records, templates, and AI tools, but the decision logic still lives in senior people and gets re-applied manually every time.
-        </p>
 
         <div className="grid grid-cols-3 gap-7 flex-1 min-h-0">
           {workflows.map(({ persona, icon, color, flow, output, failure, impact }) => (
@@ -336,6 +332,82 @@ function Slide03WorkflowProof() {
         </div>
       </div>
       <SlideBar from={ACCENT} to={RED} />
+    </div>
+  );
+}
+
+function Slide03Cost() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>
+          What Missing Context Costs
+        </p>
+        <h2 className="font-black mb-5" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+          AI output is cheap. <span style={{ color: `hsl(${GOLD})` }}>Rework is not.</span>
+        </h2>
+
+        <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
+          style={{ background: `hsl(${GOLD} / 0.05)`, border: `2px solid hsl(${GOLD} / 0.2)` }}>
+          <div className="flex flex-col justify-center shrink-0">
+            <p className="font-black" style={{ fontSize: 72, color: `hsl(${GOLD})`, lineHeight: 1 }}>€550K</p>
+            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>per year / 100 people</p>
+            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The context gap tax</p>
+          </div>
+          <div className="w-px shrink-0" style={{ background: `hsl(${GOLD} / 0.15)` }} />
+          <div className="flex-1 flex flex-col justify-center gap-3">
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${GOLD})` }} />
+              <div>
+                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+                  <span className="font-bold">40% of AI productivity gains are lost to rework</span>: employees fixing outputs AI got wrong
+                </p>
+                <p style={{ fontSize: 13, color: SUBTLE }}>Workday Global AI Impact Study, Jan 2026</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${GOLD})` }} />
+              <div>
+                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+                  <span className="font-bold">4.5 hours per week per employee</span> spent cleaning up AI mistakes. 58% of enterprise workers are affected
+                </p>
+                <p style={{ fontSize: 13, color: SUBTLE }}>Zapier AI Workslop Report, Jan 2026</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${GOLD})` }} />
+              <div>
+                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+                  <span className="font-bold">Only 14% of workers</span> achieve net-positive AI productivity once rework is accounted for
+                </p>
+                <p style={{ fontSize: 13, color: SUBTLE }}>Workday, 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 flex-1 min-h-0 mb-4">
+          {[
+            { title: "Margin erodes", body: "Senior people keep reviewing, correcting, and redoing outputs instead of scaling decisions." },
+            { title: "Execution slows", body: "AI adds volume, but handoffs and approvals stall because trust stays with a few experts." },
+            { title: "AI trust collapses", body: "Once outputs feel inconsistent, adoption drops and each team falls back to local workarounds." },
+          ].map((item) => (
+            <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
+              style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
+              <p className="font-bold mb-2" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border px-6 py-4" style={{ borderColor: `hsl(${GOLD} / 0.18)`, background: `hsl(${GOLD} / 0.04)` }}>
+          <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>
+            AI creates volume. The missing cost layer is the expert time required to correct, approve, and re-route that volume.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={ACCENT} />
     </div>
   );
 }
@@ -1430,22 +1502,23 @@ const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01Cover /> },
   { id: 2, title: "The Thesis", component: <Slide02Thesis /> },
   { id: 3, title: "The Problem", component: <Slide03Problem /> },
-  { id: 4, title: "Workflow Failures", component: <Slide03WorkflowProof /> },
-  { id: 5, title: "Infrastructure Gap", component: <Slide04Market /> },
-  { id: 6, title: "The Solution", component: <Slide05Solution /> },
-  { id: 7, title: "How It Works", component: <Slide06Architecture /> },
-  { id: 8, title: "Enterprise Validation", component: <Slide07CaseStudy /> },
-  { id: 9, title: "Traction", component: <Slide08Traction /> },
-  { id: 10, title: "Category Map", component: <Slide09CategoryMap /> },
-  { id: 11, title: "Market Validation", component: <Slide10MarketValidation /> },
-  { id: 12, title: "Business Model", component: <Slide10BusinessModel /> },
-  { id: 13, title: "Go-To-Market", component: <Slide11GTM /> },
-  { id: 14, title: "Vertical Expansion", component: <Slide12Verticals /> },
-  { id: 15, title: "Team", component: <Slide12Team /> },
-  { id: 16, title: "Financials", component: <Slide13Financials /> },
-  { id: 17, title: "Use of Funds", component: <Slide14UseOfFunds /> },
-  { id: 18, title: "The Ask", component: <Slide15TheAsk /> },
-  { id: 19, title: "Closing", component: <Slide16Closing /> },
+  { id: 4, title: "What Missing Context Costs", component: <Slide03Cost /> },
+  { id: 5, title: "Where Missing Context Shows Up", component: <Slide03WorkflowProof /> },
+  { id: 6, title: "Infrastructure Gap", component: <Slide04Market /> },
+  { id: 7, title: "The Solution", component: <Slide05Solution /> },
+  { id: 8, title: "How It Works", component: <Slide06Architecture /> },
+  { id: 9, title: "Enterprise Validation", component: <Slide07CaseStudy /> },
+  { id: 10, title: "Traction", component: <Slide08Traction /> },
+  { id: 11, title: "Category Map", component: <Slide09CategoryMap /> },
+  { id: 12, title: "Market Validation", component: <Slide10MarketValidation /> },
+  { id: 13, title: "Business Model", component: <Slide10BusinessModel /> },
+  { id: 14, title: "Go-To-Market", component: <Slide11GTM /> },
+  { id: 15, title: "Vertical Expansion", component: <Slide12Verticals /> },
+  { id: 16, title: "Team", component: <Slide12Team /> },
+  { id: 17, title: "Financials", component: <Slide13Financials /> },
+  { id: 18, title: "Use of Funds", component: <Slide14UseOfFunds /> },
+  { id: 19, title: "The Ask", component: <Slide15TheAsk /> },
+  { id: 20, title: "Closing", component: <Slide16Closing /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
