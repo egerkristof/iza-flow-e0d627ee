@@ -329,21 +329,26 @@ function Slide03() {
 }
 
 function Slide03Cost() {
-  const evidence = [
+  const benchmarkInputs = [
     {
-      stat: "40%",
-      title: "of AI time savings are lost to fixing low-quality output",
-      source: "Workday research, Jan 2026",
+      stat: "100",
+      title: "knowledge workers in the illustrative team",
+      source: "A simple benchmark cohort so buyers can scale the number up or down to their own org",
+    },
+    {
+      stat: "58 people",
+      title: "likely touched by AI cleanup each week",
+      source: "Zapier survey, Jan 2026: 58% of enterprise workers report spending time revising AI outputs",
     },
     {
       stat: "4.5 hrs",
-      title: "per worker per week spent cleaning up AI mistakes",
+      title: "weekly cleanup time per affected worker",
       source: "Zapier survey, Jan 2026",
     },
     {
-      stat: "14%",
-      title: "of workers stay net-positive after rework is accounted for",
-      source: "Workday research, Jan 2026",
+      stat: "€40/hr",
+      title: "conservative fully-loaded labor cost",
+      source: "Illustrative blended rate for expert review time, before AI usage charges are added",
     },
   ];
 
@@ -387,15 +392,25 @@ function Slide03Cost() {
             <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The "Context Gap Tax"</p>
           </div>
           <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
-          <div className="grid grid-cols-3 gap-4 flex-1">
-            {evidence.map((item) => (
+          <div className="flex-1 flex flex-col gap-4">
+            <div className="grid grid-cols-4 gap-4">
+            {benchmarkInputs.map((item) => (
               <div key={item.title} className="rounded-xl px-5 py-4"
                 style={{ background: `hsl(${WARM} / 0.06)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
                 <p className="font-black mb-2" style={{ fontSize: 34, color: `hsl(${WARM})`, lineHeight: 1 }}>{item.stat}</p>
-                <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>{item.title}</p>
-                <p className="mt-2" style={{ fontSize: 13, color: SUBTLE, lineHeight: 1.4 }}>{item.source}</p>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>{item.title}</p>
+                <p className="mt-2" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>{item.source}</p>
               </div>
             ))}
+            </div>
+            <div className="rounded-xl px-5 py-4" style={{ background: `hsl(${WARM} / 0.08)`, border: `1px solid hsl(${WARM} / 0.16)` }}>
+              <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>
+                Illustrative benchmark logic: <span style={{ color: `hsl(${WARM})` }}>100 people × 58% affected × 4.5 cleanup hours/week × €40/hour × 52 weeks = ~€543K/year</span>, rounded to <span style={{ color: `hsl(${WARM})` }}>€550K</span>.
+              </p>
+              <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>
+                This is not software spend. It is the annual labor cost of reviewing, correcting, and rerouting AI output when context does not travel with the work.
+              </p>
+            </div>
           </div>
         </div>
 
