@@ -529,17 +529,10 @@ function Slide03WorkflowProof() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${ACCENT})` }}>
-          Persona-Level Reality
-        </p>
         <h2 className="font-black mb-5" style={{ fontSize: 58, color: TEXT, lineHeight: 1.08 }}>
           The same failure repeats across core roles.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Artifacts exist. Judgment still lives in people.</span>
         </h2>
-
-        <p className="mb-7" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1320 }}>
-          This is where the context gap becomes operational reality: every role already has documents, records, and AI tooling, but the real decision standard still has to be reapplied by experienced humans.
-        </p>
 
         <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
           {workflows.map(({ persona, icon, color, flow, output, failure, impact }) => (
