@@ -444,28 +444,39 @@ function Slide03Cost() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 min-h-0">
-            {consequences.map((item) => (
-              <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
-                style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
-                <p style={{ fontSize: 14, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 700 }}>
-                  {item.title}
-                </p>
-                <p className="font-black mt-3 mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{item.kicker}</p>
-                <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${item.color} / 0.07)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
-                  <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>
-                    How plausibility kills
+          <div className="flex flex-col gap-4 min-h-0">
+            <div className="rounded-2xl px-5 py-4" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.14)` }}>
+              <p className="font-bold" style={{ fontSize: 15, color: `hsl(${ACCENT})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                What "plausible" means
+              </p>
+              <p className="mt-2 font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+                AI output looks right enough at first glance, but it is missing the domain-specific context, exception, or judgment that makes it actually correct.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 min-h-0 flex-1">
+              {consequences.map((item) => (
+                <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
+                  style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
+                  <p style={{ fontSize: 14, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 700 }}>
+                    {item.title}
                   </p>
-                  <p className="font-semibold mt-2" style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
-                    {item.plausibility}
-                  </p>
+                  <p className="font-black mt-3 mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{item.kicker}</p>
+                  <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${item.color} / 0.07)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
+                    <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>
+                      How plausibility kills
+                    </p>
+                    <p className="font-semibold mt-2" style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
+                      {item.plausibility}
+                    </p>
+                  </div>
+                  <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
+                  <div className="mt-auto pt-5">
+                    <div className="h-px w-full" style={{ background: `hsl(${item.color} / 0.12)` }} />
+                  </div>
                 </div>
-                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
-                <div className="mt-auto pt-5">
-                  <div className="h-px w-full" style={{ background: `hsl(${item.color} / 0.12)` }} />
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
