@@ -263,24 +263,21 @@ function Slide03() {
   ];
 
   const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
-  const benchmarks = [
+  const riskChain = [
     {
-      value: "5%+",
-      label: "of total project cost can be rework",
-      detail: "Industry-accepted benchmark for direct rework cost in construction.",
-      source: "FMI / PlanGrid construction rework studies",
+      title: "Wrong answer enters the workflow",
+      desc: "AI uses the visible documents, but misses the latest project decision, exception, or override.",
+      color: WARM,
     },
     {
-      value: "1%",
-      label: "annual productivity growth over two decades",
-      detail: "AEC has less room than most sectors to absorb avoidable AI rework.",
-      source: "McKinsey construction productivity research",
+      title: "Team has to catch and redo it",
+      desc: "PMs, architects, and coordinators spend senior time checking, correcting, and reissuing work.",
+      color: RED,
     },
     {
-      value: "Modeled",
-      label: "€550K internal benchmark per 100 knowledge workers",
-      detail: "Useful directional framing, but not presented here as AEC-specific proof.",
-      source: "LIZA operating model",
+      title: "The project pays for the miss",
+      desc: "That shows up as rework, schedule delay, margin erosion, liability exposure, or warranty disputes.",
+      color: GOLD,
     },
   ];
 
@@ -289,39 +286,35 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What That Costs in AEC
+          What the Memory Gap Costs in AEC
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          Same gap. Every project. Every stakeholder.
+          This is not an abstract AI problem. It hits project economics directly.
         </h2>
 
-        {/* Cost callout — LEAD with the number */}
         <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
           style={{ background: `hsl(${WARM} / 0.05)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
           <div className="flex flex-col justify-center shrink-0">
             <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>5%+</p>
-            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>of project cost at risk</p>
-            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>Direct rework benchmark in construction</p>
+            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>of project cost can become rework</p>
+            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>Industry benchmark used by AEC operators and investors</p>
           </div>
           <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
           <div className="flex-1 flex flex-col justify-center gap-3">
-            {benchmarks.map(({ value, label, detail, source }) => (
-              <div key={label} className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${WARM})` }} />
-                <div>
-                  <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                    <span className="font-bold">{value}</span> {label}
-                  </p>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>{detail}</p>
-                  <p style={{ fontSize: 13, color: SUBTLE }}>{source}</p>
-                </div>
-              </div>
-            ))}
+            <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.45 }}>
+              In AEC, when AI misses project-specific context, the downside is simple: <span className="font-bold">teams redo work, projects slow down, and margin gets eaten.</span>
+            </p>
+            <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
+              If direct rework is 5%+ of project cost, then on a <span className="font-bold" style={{ color: TEXT }}>€50M project</span> that is <span className="font-bold" style={{ color: TEXT }}>€2.5M+ at risk</span>. AI without project memory can amplify that problem instead of reducing it.
+            </p>
+            <p style={{ fontSize: 13, color: SUBTLE }}>
+              Source anchor: FMI / PlanGrid construction rework studies. Example math shown for investor clarity.
+            </p>
             <div className="grid grid-cols-3 gap-3 pt-2">
               {[
-                { label: "Margin", value: "erodes", color: RED },
-                { label: "Schedule", value: "slips", color: WARM },
-                { label: "AI trust", value: "collapses", color: GOLD },
+                { label: "Margin", value: "gets compressed", color: RED },
+                { label: "Schedule", value: "gets delayed", color: WARM },
+                { label: "Risk", value: "moves downstream", color: GOLD },
               ].map((item) => (
                 <div key={item.label} className="rounded-xl px-4 py-3 text-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `1px solid hsl(${item.color} / 0.14)` }}>
                   <p className="font-bold" style={{ fontSize: 12, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>{item.label}</p>
@@ -333,8 +326,17 @@ function Slide03() {
         </div>
         <div className="rounded-xl px-5 py-3 mb-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.14)` }}>
           <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>
-            The AEC-specific proof is rework and stalled productivity. The €550K figure remains an internal cross-industry model, not the primary evidence on this slide.
+            Investor framing: the risk is not that AI is imperfect. The risk is that imperfect AI operating inside high-value project workflows creates more rework exactly where margin is already thin.
           </p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          {riskChain.map(({ title, desc, color }) => (
+            <div key={title} className="rounded-xl px-5 py-4" style={{ background: `hsl(${color} / 0.05)`, border: `1px solid hsl(${color} / 0.14)` }}>
+              <p className="font-bold mb-2" style={{ fontSize: 14, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.08em" }}>{title}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
+            </div>
+          ))}
         </div>
 
         {/* 3 Industry rows — bigger */}
