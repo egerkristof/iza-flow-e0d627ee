@@ -497,11 +497,11 @@ function SlideWhyNow() {
       source: "Workday, Jan 2026",
     },
     {
-      metric: "0",
-      label: "platforms govern how AI applies expert knowledge",
-      insight: "Tools exist to store knowledge and generate output. Nothing connects the two with governance.",
+      metric: "Shift",
+      label: "from AI access to AI governance",
+      insight: "The market moved from asking whether teams use AI to asking how outputs stay consistent, traceable, and safe.",
       color: TEAL,
-      source: "LIZA market analysis, 2025",
+      source: "Observed across enterprise deployments and regulated workflows",
     },
   ];
 
@@ -883,13 +883,13 @@ function Slide06() {
     { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
     { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
     { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. No instruction layer underneath.", color: GOLD },
+    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
   ];
 
   const moatLayers = [
     { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
     { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Nemetschek Distribution", desc: "Embedded under Bluebeam, Allplan, Solibri. Channel access to GCs, A/E, and owners that no horizontal vendor has.", icon: <Network size={20} /> },
+    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Nemetschek ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -900,7 +900,7 @@ function Slide06() {
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           AEC AI tools read documents and predict risk.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>None of them encode your firm's judgment.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the project-memory layer that encodes your firm's judgment.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -937,7 +937,7 @@ function Slide06() {
               <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer underneath every AEC AI tool: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries (pharma, prof. services, cybersecurity audit).
+              The instruction layer every AEC AI stack will need: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into AEC.
             </p>
           </div>
         </div>
@@ -1126,6 +1126,19 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
+      title: "Graphisoft workflow exploration",
+      subtitle: "AEC signal",
+      scope: "Internal use-case discovery",
+      color: TEAL,
+      outcome: "Live access to real AEC workflow pain",
+      metric: "Active",
+      metricLabel: "Discussion",
+      points: [
+        "Exploring internal AEC workflow opportunities with a major ecosystem player",
+        "Useful credibility signal without overstating commercial deployment",
+      ],
+    },
+    {
       title: "Top-Tier Swiss Executive Search Firm",
       subtitle: "Design partnership",
       scope: "Candidate evaluation",
@@ -1178,7 +1191,7 @@ function Slide08() {
         </div>
 
         <div className="flex-1 flex items-center">
-          <div className="grid grid-cols-3 gap-5 w-full">
+          <div className="grid grid-cols-4 gap-5 w-full">
             {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
               <div key={title} className="rounded-[24px] border px-5 py-5 flex flex-col min-h-[560px] justify-center"
                 style={{ borderColor: `hsl(${color} / 0.18)`, background: `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))` }}>
@@ -1221,12 +1234,12 @@ function Slide08() {
         <div className="mt-5 rounded-xl px-6 py-4 flex items-center justify-between"
           style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
           <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>
-            Early trials validated the prototype. The focus now is taking that architecture into AEC with intent.
+            Early trials validated the prototype. In AEC, the proof point today is active workflow exploration, not claimed customer deployment.
           </p>
           <div className="flex gap-6">
             {[
-              { n: "3", l: "Featured proofs" },
-              { n: "3", l: "Industries" },
+              { n: "4", l: "Featured proofs" },
+              { n: "4", l: "Signals" },
               { n: "€0", l: "Paid acquisition" },
             ].map(({ n, l }) => (
               <div key={l} className="text-center min-w-[88px]">
@@ -1260,14 +1273,14 @@ function Slide09() {
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
       problem: "RFIs, submittals, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
       result: "Unified RFI & submittal lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
-      proof: "Sits underneath Bluebeam, Allplan, Solibri",
+      proof: "Target embedding path across Bluebeam, Allplan, and Solibri workflows",
     },
     {
       vertical: "Handover & Operations", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
       problem: "Closeout packages and as-builts diverge from owner standards. O&M knowledge evaporates after handover. Operators inherit fragmented data.",
       result: "Standards-aware closeout. Living O&M memory. Owner-grade handover artifacts, every time.",
-      proof: "Owner / FM extension path · Bluebeam ↔ Vectorworks bridge",
+      proof: "Owner / FM extension path once workflow integrations are in market",
     },
   ];
 
@@ -1298,6 +1311,9 @@ function Slide09() {
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
               The missing connective tissue underneath the AEC AI stack.
+            </p>
+            <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
+              Current signal: Graphisoft workflow exploration, not a commercial integration claim.
             </p>
           </div>
         </div>
@@ -1764,16 +1780,16 @@ function Slide12() {
 
         <h2 className="font-black mb-8" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
           15+ years in AI & data transformation.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>200+ enterprise engagements globally.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>200+ enterprise engagements globally, with AEC workflow exposure now being built deliberately.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
           <div className="flex-1 flex flex-col gap-5">
             <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>FOUNDING TEAM</p>
             {[
-              { name: "István Boscha", role: "Product & CEO", note: "Founder of Aliz.ai (Google Cloud Partner). 15+ years AI transformation globally.", photo: istvanPhoto, color: TEAL },
-              { name: "Kristóf Éger", role: "Enterprise GTM", note: "Category creation, executive positioning, AI-driven business strategy.", photo: kristofPhoto, color: SEAFOAM },
-              { name: "Zoltán Kauker", role: "AI Architecture", note: "Deep-tech AI/data engineering. Knowledge systems & scalable infrastructure.", photo: zoltanPhoto, color: MINT },
+              { name: "István Boscha", role: "Product & CEO", note: "Founder of Aliz.ai (Google Cloud Partner). 15+ years AI transformation globally, now directing the AEC product thesis and partner path.", photo: istvanPhoto, color: TEAL },
+              { name: "Kristóf Éger", role: "Enterprise GTM", note: "Category creation, executive positioning, AI-driven business strategy. Leading strategic narrative and enterprise access in AEC conversations.", photo: kristofPhoto, color: SEAFOAM },
+              { name: "Zoltán Kauker", role: "AI Architecture", note: "Deep-tech AI/data engineering. Knowledge systems, scalable infrastructure, and spec-aware execution architecture.", photo: zoltanPhoto, color: MINT },
             ].map((t) => (
               <div key={t.name} className="flex items-center gap-5 rounded-xl border p-5"
                 style={{ borderColor: `hsl(${t.color} / 0.2)`, background: `hsl(${t.color} / 0.03)` }}>
@@ -1816,6 +1832,7 @@ function Slide12() {
                 { stat: "200+", label: "Enterprise engagements", icon: <Users size={20} /> },
                 { stat: "8", label: "Countries", icon: <Globe size={20} /> },
                 { stat: "15+ yrs", label: "AI consulting", icon: <Briefcase size={20} /> },
+                  { stat: "AEC", label: "Workflow focus now", icon: <Building2 size={20} /> },
               ].map(({ stat, label, icon }) => (
                 <div key={label} className="text-center rounded-xl px-3 py-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
                   <div className="flex justify-center mb-2" style={{ color: `hsl(${TEAL})` }}>{icon}</div>
@@ -1825,7 +1842,7 @@ function Slide12() {
               ))}
             </div>
             {[
-              { title: "We lived this problem", desc: "Built AI practices at enterprise scale. Saw the expertise gap firsthand across industries, countries, and team sizes.", color: GREEN },
+              { title: "We lived this problem", desc: "Built AI practices at enterprise scale. Saw the expertise gap firsthand across industries, and are now translating that architecture into AEC workflows with domain-specific partners.", color: GREEN },
               { title: "Capital efficient & committed", desc: "15 months of self-funded development. Full product, marketing site, diagnostic tool, and enterprise pipeline — built on a fraction of what funded competitors raised. We ship more with less.", color: TEAL },
               { title: "Proprietary IP", desc: "AACE v3.1: the context specification. Intent-locking, knowledge injection, drift detection. Hard to replicate.", color: GREEN },
             ].map(({ title, desc, color }) => (
