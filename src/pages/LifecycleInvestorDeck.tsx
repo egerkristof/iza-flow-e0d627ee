@@ -404,21 +404,21 @@ function Slide03Cost() {
             style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
             <div>
               <p className="font-bold mb-2" style={{ fontSize: 16, color: `hsl(${RED})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                Why this is provable
+                Why this gets worse
               </p>
               <p className="font-black mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
-                The cost is not the prompt.
-                <br />
                 The cost is the correction loop.
+                <br />
+                Soon, the prompt costs more too.
               </p>
               <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
-                When AI runs without governed context, teams still need expert review, exception handling, and manual approvals. The apparent efficiency gain turns into hidden human cleanup.
+                AI providers are shifting from flat-fee experimentation to metered usage. As token-heavy, API-based workflows become standard, bad prompting and missing context stop being just a productivity drain and become a direct cost multiplier.
               </p>
             </div>
 
             <div className="rounded-xl px-5 py-4 mt-5" style={{ background: `hsl(${WARM} / 0.06)`, border: `1px solid hsl(${WARM} / 0.14)` }}>
               <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                AI creates volume. The missing cost layer is the expert time required to correct, approve, and re-route that volume.
+                The freeloading era disappears: every weak prompt, repeated retry, and ungoverned output drives both more human cleanup and more metered AI spend.
               </p>
             </div>
           </div>
