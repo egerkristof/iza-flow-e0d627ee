@@ -1508,8 +1508,7 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Platform base plus usage.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Built to align price with value.</span>
+          Platform base today. <span style={{ color: `hsl(${GREEN})` }}>AI credits over time.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1534,7 +1533,7 @@ function Slide11() {
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Customers pay for high-intensity actions like extraction, governed runs, and scaled execution.
-                This is where value tracks usage and protects margin as AI compute costs rise.
+                This is the long-term pricing engine: value-linked usage that scales with customer outcomes and protects margin as AI compute costs rise.
               </p>
             </div>
 
@@ -1573,8 +1572,8 @@ function Slide11() {
                 {[
                   "Today: guided kickstarts accelerate learning and onboarding",
                   "Near term: recurring platform base becomes the account anchor",
-                  "Strategic state: credit-led usage ties revenue to realized execution value",
-                  "Result: pricing compounds with adoption instead of capping at seat counts",
+                  "Strategic state: AI credits tie what customers pay directly to execution value created",
+                  "Result: pricing compounds with adoption instead of flattening into seat-based ceilings",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
