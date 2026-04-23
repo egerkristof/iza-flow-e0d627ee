@@ -336,19 +336,19 @@ function Slide03Cost() {
       source: "A simple benchmark cohort so buyers can scale the number up or down to their own org",
     },
     {
-      stat: "58 people",
-      title: "likely touched by AI cleanup each week",
-      source: "Zapier survey, Jan 2026: 58% of enterprise workers report spending time revising AI outputs",
+      stat: "58%",
+      title: "workers affected by AI cleanup weekly",
+      source: "Source: Zapier AI at Work Report, 2026",
     },
     {
       stat: "4.5 hrs",
       title: "weekly cleanup time per affected worker",
-      source: "Zapier survey, Jan 2026",
+      source: "Source: Zapier AI at Work Report, 2026",
     },
     {
       stat: "€40/hr",
       title: "conservative fully-loaded labor cost",
-      source: "Illustrative blended rate for expert review time, before AI usage charges are added",
+      source: "Illustrative blended labor rate",
     },
   ];
 
@@ -411,7 +411,7 @@ function Slide03Cost() {
                 Illustrative benchmark logic: <span style={{ color: `hsl(${WARM})` }}>100 people × 58% affected × 4.5 cleanup hours/week × €40/hour × 52 weeks = ~€543K/year</span>, rounded to <span style={{ color: `hsl(${WARM})` }}>€550K</span>.
               </p>
               <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>
-                This is not software spend. It is the annual labor cost of reviewing, correcting, and rerouting AI output when context does not travel with the work.
+                Sources for the benchmark inputs: Zapier AI at Work Report, 2026 for revision frequency and cleanup time; illustrative labor rate for loaded expert review cost.
               </p>
             </div>
           </div>
@@ -427,19 +427,19 @@ function Slide03Cost() {
               <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.12 }}>
                 The cost is the correction loop.
                 <br />
-                <span style={{ color: `hsl(${RED})` }}>Now the prompt costs more too.</span>
+                <span style={{ color: `hsl(${RED})` }}>Context is the optimization point.</span>
               </p>
               <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
-                AI providers are shifting from flat-fee experimentation to metered usage. Anthropic is already pushing teams toward usage-based economics. That means missing context is no longer just a productivity drain. It becomes a direct spend multiplier.
+                Prompt and model usage costs are rising as teams move into metered frontier AI. That means missing context is no longer just a productivity drain. It becomes a direct spend multiplier across retries, rework, and exception handling.
               </p>
             </div>
 
             <div className="rounded-xl px-5 py-4 mt-5" style={{ background: `hsl(${WARM} / 0.1)`, border: `1px solid hsl(${WARM} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.3 }}>
-                The freeloading era disappears.
+                Context is your only durable control surface.
               </p>
               <p className="mt-2 font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                Every weak prompt, repeated retry, and ungoverned output drives both more human cleanup and more metered AI spend.
+                Every weak prompt, repeated retry, and ungoverned output drives both more human cleanup and more metered AI spend. Better context is what improves quality and reduces unit cost at the same time.
               </p>
             </div>
           </div>
