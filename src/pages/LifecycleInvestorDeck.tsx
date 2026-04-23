@@ -330,10 +330,26 @@ function Slide03() {
 
 function Slide03Cost() {
   const benchmarkInputs = [
-    { stat: "100", title: "people in the benchmark team" },
-    { stat: "58%", title: "touch AI cleanup weekly" },
-    { stat: "4.5 hrs", title: "lost per affected person" },
-    { stat: "€40/hr", title: "blended review cost" },
+    {
+      stat: "100",
+      title: "people in the benchmark team",
+      source: "Illustrative benchmark cohort",
+    },
+    {
+      stat: "58%",
+      title: "touch AI cleanup weekly",
+      source: "Source: Zapier AI at Work Report, 2026",
+    },
+    {
+      stat: "4.5 hrs",
+      title: "lost per affected person",
+      source: "Source: Zapier AI at Work Report, 2026",
+    },
+    {
+      stat: "€40/hr",
+      title: "blended review cost",
+      source: "Illustrative blended labor rate",
+    },
   ];
 
   const consequences = [
@@ -388,6 +404,7 @@ function Slide03Cost() {
                   style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
                   <p className="font-black mb-2" style={{ fontSize: 32, color: `hsl(${WARM})`, lineHeight: 1 }}>{item.stat}</p>
                   <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{item.title}</p>
+                  <p className="mt-2" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.4 }}>{item.source}</p>
                 </div>
               ))}
             </div>
@@ -397,10 +414,10 @@ function Slide03Cost() {
               <AlertTriangle size={20} style={{ color: `hsl(${RED})`, flexShrink: 0, marginTop: 2 }} />
               <div>
                 <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  Investor read: this is not a software budget line. It is hidden operating expense.
+                  Prompts are getting more expensive. Context is the only real control point.
                 </p>
                 <p className="mt-1" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-                  As AI moves toward usage-based pricing, missing context compounds both human rework and metered model spend.
+                  As frontier AI shifts toward metered usage, every vague prompt, retry loop, and weak handoff compounds both human rework and model spend. Better context is the optimization layer you control.
                 </p>
               </div>
             </div>
