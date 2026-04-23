@@ -99,24 +99,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Seed Round
+            LIZA OS · LCV Partners
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Operating System for<br />
+          The operating layer for<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            AI-Native Organizations.
+            operational continuity.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          Your experts know what good looks like. AI doesn't.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>We make expert judgment run everywhere AI executes.</span>
+          When tacit operating knowledge lives in people, integrations stall and margins leak.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>We turn expert judgment into executable protocols across audits, integrations, and workflow transitions.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; €1.5M Seed &nbsp;·&nbsp; Early Revenue
+          Confidential &nbsp;·&nbsp; Strategic investor variant &nbsp;·&nbsp; LCV Partners
         </p>
       </div>
       <SlideBar />
@@ -488,40 +488,40 @@ function Slide03Cost() {
 function Slide03WorkflowProof() {
   const workflows = [
     {
-      persona: "Sales Manager",
-      icon: <Target size={30} />,
+      persona: "Plant Director",
+      icon: <Building2 size={30} />,
       color: ACCENT,
-      flow: ["Call notes", "CRM history", "MEDDIC criteria"],
-      before: "AI drafts a plausible account plan, but misses the hidden blocker in the buying committee and pushes the team into the wrong deal motion.",
-      after: "The system carries forward political context, deal history, and qualification standards so the next action reflects actual deal risk.",
-      critical: "Without context, pipeline looks healthy until the quarter slips.",
+      flow: ["Shift notes", "Maintenance history", "Escalation rules"],
+      before: "The incoming operator sees the plant documentation, but not the unwritten workarounds that actually keep uptime stable during handover.",
+      after: "The system carries forward site-specific exception handling, failure patterns, and operator judgment so continuity survives the transition.",
+      critical: "Without context, uptime looks stable until the first real exception hits.",
     },
     {
-      persona: "Engineering Lead",
+      persona: "Integration Lead",
       icon: <Cpu size={30} />,
       color: GREEN,
-      flow: ["System diagrams", "Incident history", "Code conventions"],
-      before: "AI generates a credible implementation path, but ignores the architecture constraint, failure pattern, or dependency trade-off the lead already knows.",
-      after: "The team executes against the real system constraints, known incident patterns, and engineering standards before code is shipped.",
-      critical: "Without context, velocity rises first and reliability breaks later.",
+      flow: ["Org maps", "SOP deltas", "Dependency constraints"],
+      before: "Two acquired teams appear to run the same process, but hidden approval logic and local exceptions break the rollout once systems are merged.",
+      after: "The integration team executes against the real operating differences, exception logic, and control points before workflows are unified.",
+      critical: "Without context, PMI looks on track until execution fractures on the ground.",
     },
     {
-      persona: "Finance Lead",
+      persona: "Audit Partner",
       icon: <DollarSign size={30} />,
       color: GOLD,
-      flow: ["Policies", "Approvals", "Exceptions log"],
-      before: "AI produces a clean recommendation, but misses the commercial exception, approval threshold, or exposure logic that changes the decision.",
-      after: "Recommendations reflect the real approval path, exception handling, and economic guardrails before anyone acts on the number.",
-      critical: "Without context, a plausible answer becomes a bad financial decision.",
+      flow: ["Control library", "Evidence trails", "Prior findings"],
+      before: "AI assembles a plausible audit pack, but misses the evidence sequence, control nuance, or historical exception that determines whether the file stands up.",
+      after: "The system preserves control logic, evidence order, and review standards so audit preparation compresses without losing defensibility.",
+      critical: "Without context, faster audit prep becomes fragile audit prep.",
     },
     {
-      persona: "Pharma Researcher",
+      persona: "Portfolio Operator",
       icon: <Shield size={30} />,
       color: RED,
-      flow: ["Study protocols", "Lab records", "Quality requirements"],
-      before: "AI summarizes the study plausibly, but misses the protocol edge case or regulated quality implication that determines whether the next step is safe.",
-      after: "The recommendation inherits protocol logic, quality thresholds, and prior deviations before research decisions move forward.",
-      critical: "Without context, plausibility can push regulated science in the wrong direction.",
+      flow: ["Board packs", "Operating KPIs", "Playbook updates"],
+      before: "The portfolio team gets dashboards and meeting notes, but not the operating judgment needed to intervene early across multiple companies.",
+      after: "The system turns local operating knowledge into reusable protocols that can be pushed across the portfolio with traceability.",
+      critical: "Without context, value creation stays dependent on a few people instead of becoming a repeatable operating model.",
     },
   ];
 
@@ -529,9 +529,9 @@ function Slide03WorkflowProof() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <h2 className="font-black mb-5" style={{ fontSize: 58, color: TEXT, lineHeight: 1.08 }}>
-          The same failure repeats across core roles.<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>Artifacts exist. Judgment still lives in people.</span>
+          <h2 className="font-black mb-5" style={{ fontSize: 58, color: TEXT, lineHeight: 1.08 }}>
+          The same continuity risk repeats across every acquisition.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Artifacts transfer. Operating judgment usually does not.</span>
         </h2>
 
         <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
