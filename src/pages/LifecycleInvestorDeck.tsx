@@ -1061,12 +1061,12 @@ function Slide06() {
         <div className="flex gap-5">
           {/* Market Size */}
           <div className="flex-1 rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Logic</p>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Signal</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$8.7B", desc: "2025 AI governance market estimate" },
-                { label: "SAM", value: "$1B+", desc: "Regulated, knowledge-intensive AI deployments where outputs need review, traceability, and domain context" },
-                { label: "SOM", value: "$300M+", desc: "Bottom-up entry wedge: ~10K target teams × ~$30K starting ACV" },
+                { label: "2025", value: "$8.7B", desc: "AI governance market estimate" },
+                { label: "Visible", value: "$70M+", desc: "Recent funding into adjacent context, memory, and governance layers on this slide" },
+                { label: "Why us", value: "Clear wedge", desc: "Start where AI outputs must be reviewable, traceable, and domain-correct" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1078,7 +1078,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Source logic: TAM anchored to 2025 AI governance market estimates. SAM narrows to high-stakes, knowledge-intensive deployments. SOM is a bottom-up wedge model, not a generic top-down software market claim.
+              Sources first: AI governance market estimates plus visible category funding. Conclusion: the strongest entry point is high-stakes teams where plausible AI is not acceptable.
             </p>
           </div>
 
