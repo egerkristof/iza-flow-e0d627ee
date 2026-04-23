@@ -589,32 +589,32 @@ function Slide03WorkflowProof() {
 function SlideWhyNow() {
   const signals = [
     {
-      metric: "85%",
-      label: "of enterprises adopted AI tools in 2025",
-      insight: "Adoption is done. The quality crisis just started.",
+      metric: "PMI",
+      label: "is where tacit knowledge loss becomes visible",
+      insight: "The integration plan exists. The operating know-how usually does not move with it.",
       color: WARM,
-      source: "McKinsey State of AI, 2025",
+      source: "Observed in every buy-and-build operating model",
     },
     {
-      metric: "40%",
-      label: "of AI productivity gains lost to rework",
-      insight: "The faster AI generates, the faster orgs lose control.",
+      metric: "18 days → 1 day",
+      label: "audit cycle compression already proven",
+      insight: "When operating knowledge is structured, diligence and audit workflows compress without losing traceability.",
       color: RED,
-      source: "Workday, Jan 2026",
+      source: "Cybersecurity audit engagement",
     },
     {
       metric: "Shift",
-      label: "from AI access to AI governance",
-      insight: "The market moved from asking whether teams use AI to asking how outputs stay consistent, traceable, and safe.",
+      label: "from software buyer to portfolio operator",
+      insight: "For firms like LCV, the question is not tool adoption. It is whether operating rigor can be transferred across assets fast enough to expand EBITDA.",
       color: TEAL,
-      source: "Observed across enterprise deployments and regulated workflows",
+      source: "The strategic lens for buy-and-build deployment",
     },
   ];
 
   const shifts = [
-    { shift: "AI tools became commodities", result: "Differentiation moved from 'which tool' to 'what knowledge runs through it'" },
-    { shift: "Regulators started asking 'how'", result: "EU AI Act, DORA, FDA AI guidance. Governance is now mandatory, not optional" },
-    { shift: "The senior talent bottleneck hit", result: "Companies can't hire enough experts. They need to scale the ones they have." },
+    { shift: "Buy-and-build depends on repeatable operating playbooks", result: "Every acquisition tests whether local know-how can be translated into portfolio-wide execution fast enough." },
+    { shift: "Operational continuity is now a value-creation lever", result: "If audits, transitions, and escalations can be standardized, portfolio EBITDA expands faster and with less integration drag." },
+    { shift: "AI only matters when it carries judgment", result: "Generic copilots accelerate activity. They do not preserve the unwritten knowledge that makes industrial operations actually work." },
   ];
 
   return (
@@ -623,9 +623,9 @@ function SlideWhyNow() {
       <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Why Now</p>
 
-        <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.08 }}>
-          AI adoption is done.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>The governance crisis just started.</span>
+          <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.08 }}>
+          In buy-and-build, value leaks when operating judgment does not transfer.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>That is the opening for LIZA.</span>
         </h2>
 
         {/* Three signal cards — centered content, no flex-1 stretch */}
@@ -1265,16 +1265,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Global AEC Software Company",
-      subtitle: "Paid engagement",
-      scope: "R&D, HR & Engineering",
+      title: "Global AEC Software Group",
+      subtitle: "Design partnership",
+      scope: "Post-merger workflow governance",
       color: TEAL,
-      outcome: "CTO-sponsored, multi-department rollout",
-      metric: "3 depts",
-      metricLabel: "Active",
+      outcome: "Managing workflow continuity across acquired operating units",
+      metric: "PMI",
+      metricLabel: "Live use case",
       points: [
-        "Encoding artifact workflows across R&D, HR, and Engineering",
-        "Working directly with the CTO on organizational rollout",
+        "Working with enterprise leadership on how standards propagate after acquisition",
+        "The same operating model LCV needs across portfolio integrations",
       ],
     },
     {
@@ -1305,10 +1305,10 @@ function Slide08() {
     },
     {
       title: "Cybersecurity Audit Firm",
-      subtitle: "Automation engagement",
+      subtitle: "Audit automation engagement",
       scope: "800+ audit questions",
       color: ACCENT,
-      outcome: "Audit cycle: 18 days → 1 day",
+      outcome: "Audit cycle: 18 days → 1 day with full traceability",
       metric: "95%",
       metricLabel: "Reduction",
       points: [
@@ -1325,9 +1325,9 @@ function Slide08() {
         <div className="flex items-end justify-between mb-6">
           <div>
             <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Early Validation</p>
-            <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
-              Paid engagements.{" "}
-              <span style={{ color: `hsl(${GREEN})` }}>Measurable outcomes.</span>
+             <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
+               Proof in the exact motions LCV cares about.{" "}
+               <span style={{ color: `hsl(${GREEN})` }}>Audit, continuity, rollout.</span>
             </h2>
           </div>
           <div className="rounded-xl px-5 py-3 text-right" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.2)` }}>
@@ -1397,25 +1397,25 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Professional Services", status: "Deployed", color: GREEN,
+      vertical: "Audit & Diligence", status: "Deployed", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Senior judgment locked in individual heads. AI makes juniors faster but not better.",
-      result: "75% faster proposals. 25% deal velocity increase. Multi-team rollout live.",
-      proof: "Consultancy & digital agency. Active",
+      problem: "Audit quality depends on hidden reviewer logic, prior findings, and evidence sequencing that generic AI cannot carry forward.",
+      result: "Audit workflows compress dramatically when evidence standards, question logic, and review patterns are encoded.",
+      proof: "18 days to 1 day in live audit workflow",
     },
     {
-      vertical: "Application Lifecycle Mgmt", status: "Deployed", color: TEAL,
+      vertical: "Post-Merger Integration", status: "Strategic wedge", color: TEAL,
       icon: <Cpu size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "Software & engineering workflows rely on tribal knowledge. AI outputs lack organizational context.",
-      result: "Artifact workflows governed across R&D, HR, and Engineering. CTO-sponsored.",
-      proof: "Global AEC software company. Paid engagement",
+      problem: "Acquired teams look aligned on paper while critical operating exceptions remain trapped in people, local documents, and unwritten handoffs.",
+      result: "LIZA captures local operating judgment as executable protocols so the build phase scales across acquired entities.",
+      proof: "Global AEC software group design partnership",
     },
     {
-      vertical: "Pharma & Life Sciences", status: "Expanding", color: GOLD,
+      vertical: "Industrial Operations", status: "Target fit", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "GxP compliance demands traceable expertise. AI without governance is a regulatory liability.",
-      result: "Audit prep from weeks to hours. Full provenance. Every AI output traceable.",
-      proof: "Cybersecurity audit validated · Pharma next",
+      problem: "Aging operators hold the real knowledge on uptime, exceptions, vendor workarounds, and escalation logic in fragmented heavy-industry environments.",
+      result: "The same context engine can preserve operating continuity across manufacturing, utilities, transport, and data centre assets.",
+      proof: "Direct match to LCV's portfolio operating model",
     },
   ];
 
@@ -1437,7 +1437,7 @@ function Slide09() {
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
             Same engine.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every function where judgment matters.</span>
+            <span style={{ color: `hsl(${GREEN})` }}>Three portfolio value-creation motions.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1445,7 +1445,7 @@ function Slide09() {
               Pattern
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              One engine governs every workflow where standards meet AI execution.
+               One engine governs every workflow where tacit operating knowledge must survive scale, diligence, or integration.
             </p>
           </div>
         </div>
