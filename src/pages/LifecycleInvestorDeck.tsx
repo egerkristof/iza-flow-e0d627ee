@@ -355,20 +355,23 @@ function Slide03Cost() {
   const consequences = [
     {
       title: "Life Sciences",
-      kicker: "Safety risk",
-      body: "Wrong protocol interpretation or incomplete quality context creates deviation risk, slower release cycles, and more QA review loops.",
+      kicker: "Plausible can be deadly",
+      plausibility: "The output can sound scientifically reasonable while missing the protocol nuance that determines whether a treatment is safe, valid, or releaseable.",
+      body: "That means more QA loops, slower release decisions, and real patient, safety, and compliance exposure.",
       color: RED,
     },
     {
       title: "Professional Services",
-      kicker: "Margin leakage",
-      body: "AI drafts faster, but partners still have to reframe deliverables, correct scope logic, and protect client trust before anything ships.",
+      kicker: "Plausible makes expertise generic",
+      plausibility: "If the output is only broadly convincing, it carries none of the domain-specific judgment clients actually pay for. It sounds smart, but it is not differentiated expertise.",
+      body: "That turns billable expert value into rework, weakens trust, and makes premium advisory work look interchangeable with commodity AI.",
       color: ACCENT,
     },
     {
       title: "Financial Services",
-      kicker: "Decision risk",
-      body: "Outputs can look compliant while missing the firm-specific exception, approval path, or risk posture that actually governs the decision.",
+      kicker: "Plausible is false precision",
+      plausibility: "In finance, a plausible answer is not enough. The number, exposure, and exception path have to be correct. A confident-looking output can still be materially wrong.",
+      body: "That creates mispriced decisions, broken approvals, governance risk, and fast erosion of trust in AI-assisted analysis.",
       color: GOLD,
     },
   ];
@@ -448,10 +451,10 @@ function Slide03Cost() {
                 <p className="font-black mt-3 mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{item.kicker}</p>
                 <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${item.color} / 0.07)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
                   <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>
-                    Context gap killer
+                    How plausibility kills
                   </p>
                   <p className="font-semibold mt-2" style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
-                    Outputs look plausible before the domain-specific exception is caught.
+                    {item.plausibility}
                   </p>
                 </div>
                 <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
