@@ -231,159 +231,181 @@ function Slide02() {
 // SLIDE 03 — WHAT THAT COSTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide03() {
-  const industries = [
-    {
-      name: "General Contractor",
-      icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
-      accent: RED,
-      records: ["Specs", "Submittals", "RFIs", "Drawings"],
-      gap: "AI drafts an RFI response from general construction knowledge. But this spec section was modified in Addendum 3, and the field condition was already resolved by a parallel RFI two weeks ago. A senior PM knows that. The AI doesn't, because nobody encoded the project memory.",
-      outputs: ["RFI responses", "Submittal logs"],
-      cost: "Rework. Schedule slip. Margin loss.",
-    },
-    {
-      name: "Architecture / Engineering",
-      icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
-      accent: WARM,
-      records: ["Design intent", "Code references", "Spec sections"],
-      gap: "AI produces a code-compliant detail based on general references. But the project sits under a local amendment to IBC 2021 that the principal-in-charge negotiated with the AHJ last month. The AI delivers textbook code. The principal's judgment never made it into the model.",
-      outputs: ["Drawing reviews", "Spec markups"],
-      cost: "Liability exposure. Redesign cycles.",
-    },
-    {
-      name: "Owner / Developer",
-      icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
-      accent: GOLD,
-      records: ["Standards", "As-builts", "O&M manuals"],
-      gap: "AI summarises a project handover from the document set. But this owner's facility standards override 30% of the spec, and three change orders modified the as-built without updating the model. Two project managers querying the same AI get two different answers because the standard isn't encoded anywhere queryable.",
-      outputs: ["Closeout packages", "Handover docs"],
-      cost: "Operational risk. Warranty disputes.",
-    },
-  ];
+const AEC_GAP_CASES = [
+  {
+    name: "General Contractor",
+    icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
+    accent: RED,
+    records: ["Specs", "Submittals", "RFIs", "Drawings"],
+    output: "RFI responses · Submittal logs",
+    gap: "AI drafts from the visible documents, but misses the addendum change, field condition, or precedent the senior PM already knows.",
+    cost: "Rework. Schedule slip. Margin loss.",
+  },
+  {
+    name: "Architecture / Engineering",
+    icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
+    accent: WARM,
+    records: ["Design intent", "Code references", "Spec sections"],
+    output: "Drawing reviews · Spec markups",
+    gap: "AI gives a textbook-compliant answer, but not the project-specific interpretation already aligned with the AHJ or principal-in-charge.",
+    cost: "Liability exposure. Redesign cycles.",
+  },
+  {
+    name: "Owner / Developer",
+    icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
+    accent: GOLD,
+    records: ["Standards", "As-builts", "O&M manuals"],
+    output: "Closeout packages · Handover docs",
+    gap: "AI summarizes documents, but misses owner overrides, field changes, and standards that never became one queryable memory layer.",
+    cost: "Operational risk. Warranty disputes.",
+  },
+];
 
+const AEC_COST_BENCHMARKS = [
+  {
+    value: "$177.5B",
+    label: "annual labor cost lost to rework, conflict resolution, and searching for data",
+    source: "FMI / PlanGrid, Construction Disconnected, 2018",
+  },
+  {
+    value: "52%",
+    label: "of rework tied to poor project data and miscommunication",
+    source: "FMI / PlanGrid, 2018",
+  },
+  {
+    value: "5%",
+    label: "direct rework benchmark often used on project economics",
+    source: "Industry benchmark cited across FMI / PlanGrid context",
+  },
+];
+
+function Slide03() {
   const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
-  const benchmarks = [
-    {
-      value: "$177.5B",
-      label: "annual labor cost lost to rework, conflict resolution, and searching for data",
-      detail: "FMI / PlanGrid's 'Construction Disconnected' report frames the problem as a systems and information-flow failure, not just isolated mistakes.",
-      source: "FMI / PlanGrid, Construction Disconnected, 2018",
-    },
-    {
-      value: "52%",
-      label: "of rework tied to poor project data and miscommunication",
-      detail: "This is the part most relevant to AI: missing context, outdated information, and fragmented communication are exactly what make fast AI outputs dangerous.",
-      source: "FMI / PlanGrid, 2018",
-    },
-    {
-      value: "14+ hrs",
-      label: "lost per worker each week on non-optimal work, including 4 hours on rework",
-      detail: "The cost is not just the correction itself. Senior people spend time checking, clarifying, and reissuing work that should have been right the first time.",
-      source: "FMI / PlanGrid, 2018",
-    },
-  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs in AEC
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
+          Where Missing Context Shows Up in AEC
         </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          In AEC, missing context turns into rework, delay, and margin loss.
+        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
+          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is expert judgment.</span>
         </h2>
 
-        <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
-          style={{ background: `hsl(${WARM} / 0.05)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
-          <div className="flex flex-col justify-center shrink-0">
-            <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>52%</p>
-            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>of rework tied to bad data + bad communication</p>
-            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The part AI can amplify if it runs without project memory</p>
-          </div>
-          <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
-          <div className="flex-1 flex flex-col justify-center gap-3">
-            <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.45 }}>
-              FMI / PlanGrid found that a large share of construction rework is not random. <span className="font-bold">It comes from poor project information and poor communication.</span>
-            </p>
-            <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              That is why this matters for AI. If AI drafts an RFI response, spec review, submittal note, or handover summary <span className="font-bold" style={{ color: TEXT }}>without the latest addendum, owner override, field decision, or design interpretation</span>, it introduces the same failure mode at higher speed.
-            </p>
-            <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              Teams still have to catch it, correct it, and reissue it. That is why the 5% direct rework benchmark matters: on a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, that is roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct rework cost</span>, before supervision, overhead, and downstream delay.
-            </p>
-            <div className="grid grid-cols-3 gap-3 pt-1">
-              {benchmarks.map(({ value, label, detail, source }) => (
-                <div key={label} className="rounded-xl px-4 py-3" style={{ background: `hsl(${WARM} / 0.04)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
-                  <p className="font-black" style={{ fontSize: 28, color: `hsl(${WARM})`, lineHeight: 1 }}>{value}</p>
-                  <p className="font-bold mt-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{label}</p>
-                  <p className="mt-2" style={{ fontSize: 12, color: MUTED, lineHeight: 1.45 }}>{detail}</p>
-                  <p className="mt-2" style={{ fontSize: 11, color: SUBTLE }}>{source}</p>
-                </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-3 gap-3 pt-2">
-              {[
-                { label: "Margin", value: "gets compressed", color: RED },
-                { label: "Schedule", value: "gets delayed", color: WARM },
-                { label: "Risk", value: "moves downstream", color: GOLD },
-              ].map((item) => (
-                <div key={item.label} className="rounded-xl px-4 py-3 text-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `1px solid hsl(${item.color} / 0.14)` }}>
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>{item.label}</p>
-                  <p className="font-black mt-1" style={{ fontSize: 22, color: TEXT }}>{item.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* 3 Industry rows — bigger */}
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-4">
-          {industries.map((ind) => (
-            <div key={ind.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border"
-              style={{ borderColor: `hsl(${ind.accent} / 0.15)` }}>
-              <div className="w-[260px] shrink-0 px-6 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
+          {AEC_GAP_CASES.map((item) => (
+            <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
+              <div className="w-[280px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-2 mb-2">
                   <Database size={16} style={{ color: `hsl(${TEAL})` }} />
                   <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {ind.records.map(r => (
-                    <span key={r} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{r}</span>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {item.records.map((record) => (
+                    <span key={record} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{record}</span>
                   ))}
                 </div>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}><span className="font-bold" style={{ color: TEXT }}>Typical AI output:</span> {item.output}</p>
               </div>
-              <div className="flex-1 px-7 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
+
+              <div className="flex-1 px-7 py-4 flex flex-col justify-center" style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
                 <div className="flex items-center gap-2 mb-2">
-                  {ind.icon}
-                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{ind.name}</p>
+                  {item.icon}
+                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{item.name}</p>
                   <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
                     <AlertTriangle size={12} style={{ color: `hsl(${WARM})` }} />
                     <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
                   </div>
                 </div>
-                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
+                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.5 }}>{item.gap}</p>
               </div>
-              <div className="w-[200px] shrink-0 px-6 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${RED} / 0.04)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The cost</p>
-                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.35 }}>{ind.cost}</p>
+
+              <div className="w-[210px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.04)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
+                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.35 }}>{item.cost}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Also applies strip — bigger */}
         <div className="flex items-center gap-4 px-2">
           <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
           <div className="flex flex-wrap gap-2.5">
-            {alsoApplies.map(a => (
-              <span key={a} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{a}</span>
+            {alsoApplies.map((item) => (
+              <span key={item} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
             ))}
           </div>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={WARM} />
+    </div>
+  );
+}
+
+function Slide04Cost() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
+          What Missing Context Costs in AEC
+        </p>
+        <h2 className="font-black mb-6" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
+        </h2>
+
+        <div className="grid grid-cols-[360px_1fr] gap-6 mb-6">
+          <div className="rounded-[28px] border px-8 py-8" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
+            <p className="font-black" style={{ fontSize: 88, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
+            <p className="font-bold mt-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>
+              of rework is tied to poor project data and miscommunication
+            </p>
+            <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
+              This is the part AI can amplify if it runs without the latest addendum, field decision, owner standard, or design interpretation.
+            </p>
+            <p className="mt-4" style={{ fontSize: 12, color: SUBTLE }}>
+              FMI / PlanGrid, Construction Disconnected, 2018
+            </p>
+          </div>
+
+          <div className="rounded-[28px] border px-8 py-7" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <div className="grid grid-cols-3 gap-4 mb-5">
+              {AEC_COST_BENCHMARKS.map((item) => (
+                <div key={item.label} className="rounded-xl px-4 py-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
+                  <p className="font-black" style={{ fontSize: 32, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
+                  <p className="font-bold mt-2" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{item.label}</p>
+                  <p className="mt-2" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.4 }}>{item.source}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-2xl px-6 py-5" style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
+              <p className="font-bold mb-2" style={{ fontSize: 16, color: `hsl(${WARM})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                Why this matters for AI
+              </p>
+              <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.5 }}>
+                If AI produces a plausible answer inside an RFI, spec review, submittal, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
+              </p>
+              <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
+                On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream delay.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            { label: "Margin", value: "compressed", desc: "Senior time is spent fixing work instead of moving the project forward.", color: RED },
+            { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time.", color: WARM },
+            { label: "Risk", value: "pushed downstream", desc: "Errors move into construction, handover, claims, and warranty exposure.", color: GOLD },
+          ].map((item) => (
+            <div key={item.label} className="rounded-2xl px-5 py-5" style={{ background: `hsl(${item.color} / 0.05)`, border: `1px solid hsl(${item.color} / 0.14)` }}>
+              <p className="font-bold" style={{ fontSize: 12, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>{item.label}</p>
+              <p className="font-black mt-2" style={{ fontSize: 26, color: TEXT }}>{item.value}</p>
+              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{item.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
       <SlideBar from={WARM} to={TEAL} />
@@ -1862,21 +1884,22 @@ function SlideAppendixDivider() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "What That Costs in AEC", component: <Slide03 /> },
-  { id: 4, title: "Early Validation", component: <Slide08 /> },
-  { id: 5, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 6, title: "The Context Layer", component: <Slide05 /> },
-  { id: 7, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 8, title: "Expansion Path", component: <Slide09 /> },
-  { id: 9, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
-  { id: 10, title: "What's Built", component: <Slide10 /> },
-  { id: 11, title: "Business Model", component: <Slide11 /> },
-  { id: 12, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 13, title: "Team", component: <Slide12 /> },
-  { id: 14, title: "The Ask", component: <Slide13 /> },
-  { id: 15, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 16, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 17, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 3, title: "Where Missing Context Shows Up in AEC", component: <Slide03 /> },
+  { id: 4, title: "What Missing Context Costs in AEC", component: <Slide04Cost /> },
+  { id: 5, title: "Early Validation", component: <Slide08 /> },
+  { id: 6, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 7, title: "The Context Layer", component: <Slide05 /> },
+  { id: 8, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 9, title: "Expansion Path", component: <Slide09 /> },
+  { id: 10, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 11, title: "What's Built", component: <Slide10 /> },
+  { id: 12, title: "Business Model", component: <Slide11 /> },
+  { id: 13, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 14, title: "Team", component: <Slide12 /> },
+  { id: 15, title: "The Ask", component: <Slide13 /> },
+  { id: 16, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 17, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 18, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
