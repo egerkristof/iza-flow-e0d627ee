@@ -1704,87 +1704,62 @@ function SlideExecutionChallenge() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide12() {
+  const founders = [
+    { name: "István Boscha", role: "Product Vision & Capital-Efficient CEO", bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years in AI transformation globally.", photo: istvanPhoto, initials: "IB", color: ACCENT },
+    { name: "Kristóf Éger", role: "Enterprise Narrative & Go-to-Market", bio: "AI-driven business strategist, embedding AI into decision-making workflows.", photo: kristofPhoto, initials: "KÉ", color: GREEN },
+    { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
+  ];
+
+  const advisors = [
+    { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
+    { name: "Enterprise Advisor", role: "VP Product Management, Global AEC Software Company (€6B Group)", bio: "Senior product leader in the AEC space. 15+ years across desktop, cloud, mobile, AI, and data-driven product strategy in global enterprise software." },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-20 pb-16">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Team</p>
-
-        <h2 className="font-black mb-8" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          15+ years in AI & data transformation.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>200+ enterprise engagements globally, with AEC workflow exposure now being built deliberately.</span>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <Tag label="Team" color={ACCENT} />
+        <h2 className="font-bold mb-6" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          Built by practitioners.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Validated by enterprise leaders.</span>
         </h2>
 
-        <div className="flex gap-8 flex-1 min-h-0">
-          <div className="flex-1 flex flex-col gap-5">
-            <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>FOUNDING TEAM</p>
-            {[
-              { name: "István Boscha", role: "Product & CEO", note: "Founder of Aliz.ai (Google Cloud Partner). 15+ years AI transformation globally, now directing the AEC product thesis and partner path.", photo: istvanPhoto, color: TEAL },
-              { name: "Kristóf Éger", role: "Enterprise GTM", note: "Category creation, executive positioning, AI-driven business strategy. Leading strategic narrative and enterprise access in AEC conversations.", photo: kristofPhoto, color: SEAFOAM },
-              { name: "Zoltán Kauker", role: "AI Architecture", note: "Deep-tech AI/data engineering. Knowledge systems, scalable infrastructure, and spec-aware execution architecture.", photo: zoltanPhoto, color: MINT },
-            ].map((t) => (
-              <div key={t.name} className="flex items-center gap-5 rounded-xl border p-5"
-                style={{ borderColor: `hsl(${t.color} / 0.2)`, background: `hsl(${t.color} / 0.03)` }}>
-                <img src={t.photo} alt={t.name} className="w-16 h-16 rounded-full object-cover" style={{ border: `2px solid hsl(${t.color} / 0.3)` }} />
+        <p className="font-semibold mb-5" style={{ fontSize: 22, color: `hsl(${ACCENT})`, letterSpacing: "0.15em", textTransform: "uppercase" }}>Founding Team</p>
+        <div className="grid grid-cols-3 gap-7 mb-8">
+          {founders.map((f) => (
+            <div key={f.name} className="flex flex-col gap-4 rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${f.color} / 0.2)`, background: `hsl(${f.color} / 0.04)` }}>
+              <div className="flex items-center gap-4">
+                {f.photo ? (
+                  <img src={f.photo} alt={f.name} className="w-16 h-16 rounded-full object-cover shrink-0"
+                    style={{ border: `2px solid hsl(${f.color} / 0.4)` }} />
+                ) : (
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center font-black text-xl shrink-0"
+                    style={{ background: `hsl(${f.color} / 0.15)`, color: `hsl(${f.color})`, border: `2px solid hsl(${f.color} / 0.4)` }}>
+                    {f.initials}
+                  </div>
+                )}
                 <div>
-                  <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{t.name}</p>
-                  <p style={{ fontSize: 16, color: `hsl(${t.color})` }}>{t.role}</p>
-                  <p style={{ fontSize: 15, color: MUTED }}>{t.note}</p>
+                  <p className="font-bold" style={{ fontSize: 26, color: TEXT }}>{f.name}</p>
+                  <p style={{ fontSize: 18, color: `hsl(${f.color})` }}>{f.role}</p>
                 </div>
               </div>
-            ))}
-            <div className="rounded-xl border p-5 mt-auto"
-              style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.04)` }}>
-              <p className="font-bold mb-3" style={{ fontSize: 16, color: `hsl(${GOLD})`, letterSpacing: "0.12em", textTransform: "uppercase" }}>Advisory Board</p>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0"
-                    style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})`, fontSize: 14 }}>TR</div>
-                  <div>
-                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Tom Ray</p>
-                    <p style={{ fontSize: 14, color: MUTED }}>Chairman, Aliz.ai · Founding CEO, EdgeCore Data Centers</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0"
-                    style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})`, fontSize: 14 }}>VP</div>
-                  <div>
-                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Enterprise VP Product Advisor</p>
-                    <p style={{ fontSize: 14, color: MUTED }}>Enterprise software · 15+ years in Product</p>
-                  </div>
-                </div>
-              </div>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{f.bio}</p>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="w-[420px] flex flex-col gap-5">
-            <p className="font-semibold" style={{ fontSize: 18, color: `hsl(${GREEN})`, letterSpacing: "0.15em" }}>WHY US</p>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { stat: "200+", label: "Enterprise engagements", icon: <Users size={20} /> },
-                { stat: "8", label: "Countries", icon: <Globe size={20} /> },
-                { stat: "15+ yrs", label: "AI consulting", icon: <Briefcase size={20} /> },
-                  { stat: "AEC", label: "Workflow focus now", icon: <Building2 size={20} /> },
-              ].map(({ stat, label, icon }) => (
-                <div key={label} className="text-center rounded-xl px-3 py-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
-                  <div className="flex justify-center mb-2" style={{ color: `hsl(${TEAL})` }}>{icon}</div>
-                  <p className="font-black" style={{ fontSize: 30, color: TEXT }}>{stat}</p>
-                  <p style={{ fontSize: 13, color: MUTED }}>{label}</p>
-                </div>
-              ))}
+        <p className="font-semibold mb-5" style={{ fontSize: 22, color: `hsl(${GOLD})`, letterSpacing: "0.15em", textTransform: "uppercase" }}>Strategic Advisory Board</p>
+        <div className="grid grid-cols-2 gap-7">
+          {advisors.map((a) => (
+            <div key={a.name} className="rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${GOLD} / 0.18)`, background: `hsl(${GOLD} / 0.04)` }}>
+              <p className="font-bold" style={{ fontSize: 28, color: TEXT }}>{a.name}</p>
+              <p className="mb-3" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>{a.role}</p>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{a.bio}</p>
             </div>
-            {[
-              { title: "We lived this problem", desc: "Built AI practices at enterprise scale. Saw the expertise gap firsthand across industries, and are now translating that architecture into AEC workflows with domain-specific partners.", color: GREEN },
-              { title: "Capital efficient & committed", desc: "15 months of self-funded development. Full product, marketing site, diagnostic tool, and enterprise pipeline — built on a fraction of what funded competitors raised. We ship more with less.", color: TEAL },
-              { title: "Proprietary IP", desc: "AACE v3.1: the context specification. Intent-locking, knowledge injection, drift detection. Hard to replicate.", color: GREEN },
-            ].map(({ title, desc, color }) => (
-              <div key={title} className="rounded-xl border p-4"
-                style={{ borderColor: `hsl(${color} / 0.15)`, background: `hsl(${color} / 0.03)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 17, color: `hsl(${color})` }}>{title}</p>
-                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
       <SlideBar />
