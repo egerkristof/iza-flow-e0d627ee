@@ -456,31 +456,40 @@ function Slide03Cost() {
 function Slide03WorkflowProof() {
   const workflows = [
     {
-      persona: "Sales Leader",
+      persona: "Sales Manager",
       icon: <Target size={30} />,
       color: ACCENT,
       flow: ["Call notes", "CRM history", "MEDDIC criteria"],
       output: "Account plan + deal strategy",
-      failure: "AI writes a polished plan, but misses the political blocker the VP already flagged. The output looks good. The team still walks into the wrong deal motion.",
-      impact: "Longer cycles. Lower win rate. Senior deal reviews stay manual.",
+      failure: "AI writes a polished plan, but misses the buying committee blocker and deal nuance already visible to the manager. The output looks complete. The judgment still has to be manually reapplied.",
+      impact: "Longer cycles. Lower win rates. Senior deal reviews stay manual.",
     },
     {
-      persona: "Marketing Lead",
-      icon: <Lightbulb size={30} />,
+      persona: "Engineering Lead",
+      icon: <Cpu size={30} />,
       color: GREEN,
-      flow: ["ICP notes", "Positioning docs", "Campaign history"],
-      output: "Launch brief + campaign assets",
-      failure: "AI generates on-brand copy, but ignores the messaging trade-off leadership made for this segment. Teams ship volume, then rework for narrative alignment.",
-      impact: "More content. Slower launches. Brand drift across channels.",
+      flow: ["System diagrams", "Incident history", "Code conventions"],
+      output: "Implementation plan + code suggestions",
+      failure: "AI proposes a valid-looking solution, but ignores the architecture constraint or known failure pattern the lead already knows. The code can be generated fast, yet still requires expert redesign.",
+      impact: "Rework in sprint cycles. Slower delivery. More review overhead.",
     },
     {
-      persona: "Finance / Ops",
+      persona: "Finance Lead",
       icon: <DollarSign size={30} />,
       color: GOLD,
       flow: ["Policies", "Approvals", "Exceptions log"],
       output: "Decision memo + operational recommendation",
-      failure: "AI summarizes policy correctly, but misses the local exception everyone relies on. The answer looks compliant until someone senior catches it.",
+      failure: "AI summarizes policy correctly, but misses the commercial exception, escalation path, or approval threshold the finance lead applies in practice. The answer reads clean until someone senior catches the miss.",
       impact: "Margin leakage. Governance risk. AI trust drops fast.",
+    },
+    {
+      persona: "Pharma Researcher",
+      icon: <Shield size={30} />,
+      color: RED,
+      flow: ["Study protocols", "Lab records", "Quality requirements"],
+      output: "Experiment summary + next-step recommendation",
+      failure: "AI can summarize the experiment, but it cannot infer the regulated context, protocol edge case, or quality implication the researcher checks instinctively before acting.",
+      impact: "More review loops. Slower release decisions. Higher compliance exposure.",
     },
   ];
 
@@ -489,18 +498,18 @@ function Slide03WorkflowProof() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${ACCENT})` }}>
-          Where Investors See It First
+          Persona-Level Reality
         </p>
         <h2 className="font-black mb-5" style={{ fontSize: 58, color: TEXT, lineHeight: 1.08 }}>
-          The same failure repeats across core functions.<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>Inputs exist. Judgment does not travel.</span>
+          The same failure repeats across core roles.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Artifacts exist. Judgment still lives in people.</span>
         </h2>
 
         <p className="mb-7" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1320 }}>
-          Investors already know these workflows. The pattern is always the same: teams have records, templates, and AI tools, but the decision logic still lives in senior people and gets manually re-applied every time.
+          This is where the context gap becomes operational reality: every role already has documents, records, and AI tooling, but the real decision standard still has to be reapplied by experienced humans.
         </p>
 
-        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
+        <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
           {workflows.map(({ persona, icon, color, flow, output, failure, impact }) => (
             <div
               key={persona}
@@ -1937,19 +1946,20 @@ const SLIDES = [
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
   { id: 3, title: "Where Missing Context Shows Up", component: <Slide03 /> },
   { id: 4, title: "What Missing Context Costs", component: <Slide03Cost /> },
-  { id: 5, title: "Early Validation", component: <Slide08 /> },
-  { id: 6, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 7, title: "The Context Layer", component: <Slide05 /> },
-  { id: 8, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 9, title: "Expansion Path", component: <Slide09 /> },
-  { id: 10, title: "What's Built", component: <Slide10 /> },
-  { id: 11, title: "Business Model", component: <Slide11 /> },
-  { id: 12, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 13, title: "Team", component: <Slide12 /> },
-  { id: 14, title: "The Ask", component: <Slide13 /> },
-  { id: 15, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 16, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 17, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 5, title: "Persona-Level Reality", component: <Slide03WorkflowProof /> },
+  { id: 6, title: "Early Validation", component: <Slide08 /> },
+  { id: 7, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 8, title: "The Context Layer", component: <Slide05 /> },
+  { id: 9, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 10, title: "Expansion Path", component: <Slide09 /> },
+  { id: 11, title: "What's Built", component: <Slide10 /> },
+  { id: 12, title: "Business Model", component: <Slide11 /> },
+  { id: 13, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 14, title: "Team", component: <Slide12 /> },
+  { id: 15, title: "The Ask", component: <Slide13 /> },
+  { id: 16, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 17, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 18, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
