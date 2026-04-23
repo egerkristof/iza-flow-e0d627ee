@@ -263,33 +263,16 @@ function Slide03() {
   ];
 
   const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
-  const riskChain = [
-    {
-      title: "Wrong answer enters the workflow",
-      desc: "AI uses the visible documents, but misses the latest project decision, exception, or override.",
-      color: WARM,
-    },
-    {
-      title: "Team has to catch and redo it",
-      desc: "PMs, architects, and coordinators spend senior time checking, correcting, and reissuing work.",
-      color: RED,
-    },
-    {
-      title: "The project pays for the miss",
-      desc: "That shows up as rework, schedule delay, margin erosion, liability exposure, or warranty disputes.",
-      color: GOLD,
-    },
-  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What the Memory Gap Costs in AEC
+          What Missing Context Costs in AEC
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          This is not an abstract AI problem. It hits project economics directly.
+          When AI misses project-specific judgment, the cost shows up as rework on the project.
         </h2>
 
         <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
@@ -297,18 +280,21 @@ function Slide03() {
           <div className="flex flex-col justify-center shrink-0">
             <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>5%+</p>
             <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>of project cost can become rework</p>
-            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>Industry benchmark used by AEC operators and investors</p>
+            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>FMI / PlanGrid benchmark for direct construction rework</p>
           </div>
           <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
           <div className="flex-1 flex flex-col justify-center gap-3">
             <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.45 }}>
-              In AEC, when AI misses project-specific context, the downside is simple: <span className="font-bold">teams redo work, projects slow down, and margin gets eaten.</span>
+              FMI and PlanGrid report that <span className="font-bold">direct rework can exceed 5% of total project cost</span> in construction. That means money already spent doing work that has to be corrected and done again.
             </p>
             <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              If direct rework is 5%+ of project cost, then on a <span className="font-bold" style={{ color: TEXT }}>€50M project</span> that is <span className="font-bold" style={{ color: TEXT }}>€2.5M+ at risk</span>. AI without project memory can amplify that problem instead of reducing it.
+              AI is relevant here because it can introduce the same failure mode at higher speed: a plausible draft enters an RFI, spec review, submittal, or handover workflow <span className="font-bold" style={{ color: TEXT }}>without the latest project decision, exception, or owner standard.</span>
+            </p>
+            <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
+              The team still has to catch it, correct it, and reissue it. On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, 5% rework is <span className="font-bold" style={{ color: TEXT }}>€2.5M</span>. AI does not need to create all of that to matter. It only needs to add more bad information into already expensive workflows.
             </p>
             <p style={{ fontSize: 13, color: SUBTLE }}>
-              Source anchor: FMI / PlanGrid construction rework studies. Example math shown for investor clarity.
+              Context: FMI / PlanGrid construction rework studies. AI link: LIZA view of how missing project memory creates new avoidable rework.
             </p>
             <div className="grid grid-cols-3 gap-3 pt-2">
               {[
@@ -323,20 +309,6 @@ function Slide03() {
               ))}
             </div>
           </div>
-        </div>
-        <div className="rounded-xl px-5 py-3 mb-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.14)` }}>
-          <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>
-            Investor framing: the risk is not that AI is imperfect. The risk is that imperfect AI operating inside high-value project workflows creates more rework exactly where margin is already thin.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-3 gap-3 mb-4">
-          {riskChain.map(({ title, desc, color }) => (
-            <div key={title} className="rounded-xl px-5 py-4" style={{ background: `hsl(${color} / 0.05)`, border: `1px solid hsl(${color} / 0.14)` }}>
-              <p className="font-bold mb-2" style={{ fontSize: 14, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.08em" }}>{title}</p>
-              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
-            </div>
-          ))}
         </div>
 
         {/* 3 Industry rows — bigger */}
@@ -388,107 +360,6 @@ function Slide03() {
         </div>
       </div>
       <SlideBar from={WARM} to={TEAL} />
-    </div>
-  );
-}
-
-function Slide03WorkflowProof() {
-  const workflows = [
-    {
-      persona: "General Contractor",
-      icon: <Shield size={28} />,
-      color: RED,
-      inputs: ["Specs", "Addenda", "Open RFIs"],
-      output: "RFI response draft",
-      failure: "AI answers from generic construction logic, but misses the exact addendum change and the field resolution already known by the senior PM.",
-      impact: "Rework, delay, margin loss.",
-    },
-    {
-      persona: "Architect / Engineer",
-      icon: <Briefcase size={28} />,
-      color: WARM,
-      inputs: ["Design intent", "Code refs", "AHJ decisions"],
-      output: "Detail or spec markup",
-      failure: "AI gives a textbook-compliant answer, but not the project-specific interpretation the principal already aligned with the authority having jurisdiction.",
-      impact: "Redesign cycles, liability exposure.",
-    },
-    {
-      persona: "Owner / Developer",
-      icon: <Building2 size={28} />,
-      color: GOLD,
-      inputs: ["Owner standards", "As-builts", "Change orders"],
-      output: "Handover summary",
-      failure: "AI summarizes the documents, but misses the owner's standard overrides and the field changes that never made it back into one authoritative memory layer.",
-      impact: "Operational risk, warranty disputes.",
-    },
-  ];
-
-  return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-          Where the Memory Gap Shows Up in AEC
-        </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 54, color: TEXT, lineHeight: 1.08 }}>
-          The issue is not access to documents.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>It is that project judgment never becomes live memory AI can follow.</span>
-        </h2>
-        <p className="mb-7" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5, maxWidth: 1280 }}>
-          Across contractors, designers, and owners, the same thing breaks: the artifacts exist, the AI produces an output, but the exceptions, overrides, precedent, and evolving project decisions sit in people's heads or scattered tools.
-        </p>
-
-        <div className="rounded-2xl px-6 py-4 mb-6" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.14)` }}>
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              { title: "Artifacts exist", desc: "Specs, addenda, owner standards, AHJ decisions, RFIs, as-builts" },
-              { title: "AI generates", desc: "RFI drafts, detail markups, handover summaries, project answers" },
-              { title: "Memory is missing", desc: "No live layer carries precedent, exceptions, and project-specific judgment" },
-            ].map(({ title, desc }) => (
-              <div key={title} className="rounded-xl px-4 py-4" style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? TEAL : GREEN} / 0.035)` }}>
-                <p className="font-bold mb-1.5" style={{ fontSize: 13, color: `hsl(${TEAL})`, textTransform: "uppercase", letterSpacing: "0.1em" }}>{title}</p>
-                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
-          {workflows.map(({ persona, icon, color, inputs, output, failure, impact }) => (
-            <div key={persona} className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.04)` }}>
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>
-                  {icon}
-                </div>
-                <div>
-                  <p className="font-bold" style={{ fontSize: 28, color: TEXT }}>{persona}</p>
-                  <p style={{ fontSize: 14, color: `hsl(${color})`, letterSpacing: "0.09em", textTransform: "uppercase", fontWeight: 700 }}>Typical AI workflow</p>
-                </div>
-              </div>
-
-              <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
-                <p className="font-bold mb-3" style={{ fontSize: 15, color: TEXT }}>Known artifacts</p>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {inputs.map((item) => (
-                    <span key={item} className="rounded-full px-3 py-1.5 font-semibold" style={{ fontSize: 13, color: TEXT, background: `hsl(${color} / 0.1)` }}>
-                      {item}
-                    </span>
-                  ))}
-                </div>
-                <p style={{ fontSize: 15, color: MUTED }}><span className="font-bold" style={{ color: TEXT }}>AI output:</span> {output}</p>
-              </div>
-
-              <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.46 }}>{failure}</p>
-
-              <div className="mt-auto rounded-xl px-4 py-4" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.14)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
-                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>{impact}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <SlideBar from={TEAL} to={WARM} />
     </div>
   );
 }
