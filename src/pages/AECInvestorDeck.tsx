@@ -1719,7 +1719,7 @@ function Slide12() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
-        <Tag label="Team" color={ACCENT} />
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>Team</p>
         <h2 className="font-bold mb-6" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
           Built by practitioners.<br />
           <span style={{ color: `hsl(${ACCENT})` }}>Validated by enterprise leaders.</span>
