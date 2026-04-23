@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Download, Loader2, FileText, Presentation, ExternalLink, ChevronDown } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { buildGoogleSlidesImportUrl, writeGoogleSlidesPopup } from "@/lib/google-slides-popup";
+import { writeGoogleSlidesPopup } from "@/lib/google-slides-popup";
 
 type ExportFormat = "pdf" | "pptx" | "gslides";
 
@@ -23,7 +22,9 @@ async function captureSlides(exportRef: React.RefObject<HTMLDivElement>) {
   const html2canvas = (await import("html2canvas")).default;
   const container = exportRef.current;
   if (!container) return [];
-  const slideEls = Array.from(container.querySelectorAll<HTMLElement>(":scope > div"));
+  const slideEls = Array.from(container.children).filter(
+    (child): child is HTMLDivElement => child instanceof HTMLDivElement,
+  );
   const canvases: HTMLCanvasElement[] = [];
 
   for (const el of slideEls) {
@@ -39,11 +40,30 @@ async function captureSlides(exportRef: React.RefObject<HTMLDivElement>) {
         span.style.cssText = "color: hsl(200 90% 42%); font: inherit;";
       }
     });
-    const canvas = await html2canvas(el, { width: 1920, height: 1080, scale: 2, useCORS: true, backgroundColor: null });
+    const canvas = await html2canvas(el, {
+      width: 1920,
+      height: 1080,
+      windowWidth: 1920,
+      windowHeight: 1080,
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
     affected.forEach((span, j) => { span.style.cssText = origStyles[j]; });
     canvases.push(canvas);
   }
   return canvases;
+}
+
+function downloadBlob(blob: Blob, fileName: string) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 async function exportPdf(exportRef: React.RefObject<HTMLDivElement>, fileName: string) {
@@ -65,7 +85,8 @@ async function exportPdf(exportRef: React.RefObject<HTMLDivElement>, fileName: s
     if (i > 0) pdf.addPage("a4", "landscape");
     pdf.addImage(canvases[i].toDataURL("image/jpeg", 0.95), "JPEG", offsetX, offsetY, finalW, finalH);
   }
-  pdf.save(`${fileName}.pdf`);
+  const blob = pdf.output("blob");
+  downloadBlob(blob, `${fileName}.pdf`);
 }
 
 async function exportPptx(exportRef: React.RefObject<HTMLDivElement>, fileName: string) {
@@ -168,6 +189,14 @@ export function ExportMenu({ exportRef, fileName, variant = "desktop", iconColor
         case "pdf": await exportPdf(exportRef, fileName); break;
         case "pptx": await exportPptx(exportRef, fileName); break;
         case "gslides": await exportGoogleSlides(exportRef, fileName, popupWindow); break;
+      }
+    } catch (error) {
+      console.error(`Export failed for ${format}`, error);
+      if (popupWindow && !popupWindow.closed) {
+        writeGoogleSlidesPopup(popupWindow, {
+          title: "Export failed",
+          message: "The deck could not be exported on this device. Please try again, or switch to another browser/network.",
+        });
       }
     } finally {
       setExporting(false);
