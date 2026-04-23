@@ -1072,19 +1072,19 @@ function Slide06() {
           </div>
         </div>
 
-        {/* Bottom: Market + 3 Moat columns */}
+          {/* Bottom: Market + 3 moat columns */}
         <div className="grid grid-cols-[0.95fr_1fr_1fr_1fr] gap-5 items-stretch">
           {/* Market Size */}
           <div className="rounded-2xl border p-5 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
             <p className="font-bold tracking-[0.15em] uppercase mb-2" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Definition</p>
             <p className="mb-4 font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>
-              Anchor to the closest credible market, then define the precise wedge.
+                For LCV, the wedge is not generic AI software spend. It is portfolio operating leverage.
             </p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
-                { label: "Where we enter", value: "High-stakes knowledge work", desc: "We start in life sciences, professional services, and financial services, where plausible AI is operationally unacceptable." },
-                { label: "What LIZA is", value: "The context governance layer", desc: "We make AI outputs reviewable, traceable, and domain-correct by carrying forward expert judgment." },
+                  { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable market remains AI governance. It is the clean external anchor, not the whole strategic story." },
+                  { label: "LCV entry point", value: "Portfolio operations", desc: "Deploy where audit compression, operating continuity, and PMI speed directly influence EBITDA expansion." },
+                  { label: "What LIZA is", value: "The execution governance layer", desc: "We make operating judgment portable, traceable, and reusable across assets so the build phase scales." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
@@ -1096,7 +1096,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Credible framing: anchor to AI governance as the sourceable market, then define LIZA more precisely as the context governance layer within that market.
+                Credible framing: anchor to AI governance for market credibility, then position LIZA as the execution governance layer for buy-and-build portfolios.
             </p>
           </div>
 
@@ -1617,7 +1617,7 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Platform base today. <span style={{ color: `hsl(${GREEN})` }}>AI credits over time.</span>
+          Strategic account land. <span style={{ color: `hsl(${GREEN})` }}>Portfolio rollout expand.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1627,32 +1627,32 @@ function Slide11() {
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
                 <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Platform Base</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Per operating company</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Recurring access to the knowledge graph, workbooks, governance, permissions, and orchestration layer.
-                This is the durable system of record for how organizational judgment runs.
+                Recurring infrastructure fee for the governance layer inside one operating company or business unit.
+                Once embedded in core workflows, it becomes the durable operating memory for that asset.
               </p>
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>AI Credits</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Usage-based execution</span>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Execution Usage</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Audit, workflow, and run volume</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Customers pay for high-intensity actions like extraction, governed runs, and scaled execution.
-                This is the long-term pricing engine: value-linked usage that scales with customer outcomes and protects margin as AI compute costs rise.
+                Usage scales with governed executions such as audits, workflow runs, extraction, and portfolio-wide rollouts.
+                The more LCV standardizes across assets, the more usage compounds with measurable operating value.
               </p>
             </div>
 
             <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
               <div className="flex items-baseline gap-3 mb-2">
-                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Guided Kickstart</p>
-                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>Fixed-fee onboarding</span>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Strategic Deployment</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>Fixed-fee first rollout</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Transitional entry offer to stand up the first workflows fast, prove ROI, and convert accounts into recurring platform plus credits customers.
+                The first deployment proves EBITDA logic in one workflow, one site, or one portfolio company before broader rollout.
               </p>
             </div>
           </div>
@@ -1662,10 +1662,10 @@ function Slide11() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "Sticky base", value: "High", desc: "Infrastructure sits inside core workflows" },
-                { label: "Usage upside", value: "Direct", desc: "Revenue scales with execution volume" },
-                { label: "Margin logic", value: "Better", desc: "Credits absorb rising AI compute cost" },
-                { label: "Expansion", value: ">120%", desc: "More teams, more workflows, more usage" },
+                { label: "Stickiness", value: "High", desc: "Lives inside core operating workflows" },
+                { label: "Portfolio upside", value: "Direct", desc: "Each new asset expands contract value" },
+                { label: "Proof path", value: "Fast", desc: "One workflow can prove the model quickly" },
+                { label: "Expansion", value: "Multi-asset", desc: "Land one company, expand across the portfolio" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
                   <p className="font-black" style={{ fontSize: 36, color: TEXT }}>{value}</p>
@@ -1679,10 +1679,10 @@ function Slide11() {
               <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Pricing transition</p>
               <div className="flex flex-col gap-2">
                 {[
-                  "Today: guided kickstarts accelerate learning and onboarding",
-                  "Near term: recurring platform base becomes the account anchor",
-                  "Strategic state: AI credits tie what customers pay directly to execution value created",
-                  "Result: pricing compounds with adoption instead of flattening into seat-based ceilings",
+                  "Start with one strategic deployment in a high-friction audit or integration workflow",
+                  "Convert that proof into recurring platform infrastructure for the operating company",
+                  "Expand usage as more governed workflows and business units come online",
+                  "Use portfolio rollout economics to turn one customer into a strategic channel",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
@@ -1707,39 +1707,39 @@ function SlideExecutionChallenge() {
   const phases = [
     {
       week: "Week 1",
-      title: "Extract",
+      title: "Capture",
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Client selects one high-value process (e.g. proposal writing, deal qualification)",
-        "Platform guides structured knowledge capture from 2-3 senior experts",
-        "LIZA auto-generates executable playbooks from the input",
+        "Pick one integration-critical workflow such as audit prep, escalation handling, or site transition",
+        "Capture tacit operating logic from the people who currently keep the process stable",
+        "LIZA converts that knowledge into governed, executable protocols",
       ],
-      output: "3-5 executable playbooks ready",
+      output: "First critical workflow encoded",
     },
     {
       week: "Week 2-3",
-      title: "Execute",
+      title: "Run",
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Team members self-serve: run playbooks with AI guidance",
-        "Real work, real clients, real outputs",
-        "Platform tracks drift and captures feedback automatically",
+        "Operators use the protocol in live audit, diligence, or transition work",
+        "Execution stays traceable while throughput increases",
+        "The system tracks drift, gaps, and exception patterns automatically",
       ],
-      output: "Measurable quality comparison: before vs. after",
+      output: "Live proof under real operating conditions",
     },
     {
       week: "Week 4",
-      title: "Prove",
+      title: "Expand",
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: time saved, quality delta, rework reduction",
-        "Knowledge graph self-improves from execution feedback",
-        "Business case for full self-serve deployment with real numbers",
+        "Review measurable compression in prep time, rework, and continuity risk",
+        "Turn the workflow into a repeatable operating asset",
+        "Decide whether to deploy the same model across additional assets or workflows",
       ],
-      output: "ROI proven. Expansion decision with data.",
+      output: "Portfolio rollout decision with evidence.",
     },
   ];
 
@@ -1747,11 +1747,11 @@ function SlideExecutionChallenge() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-12 pb-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Strategic Deployment Motion</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          Self-serve by design.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Co-built with our first enterprise cohort.</span>
+          Start narrow. Prove continuity. Then roll across the portfolio.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Exactly how a PE-backed deployment should work.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -1791,10 +1791,10 @@ function SlideExecutionChallenge() {
         {/* Bottom metrics */}
         <div className="mt-6 grid grid-cols-4 gap-5">
           {[
-            { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
-            { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
-            { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Go / no-go", label: "Decision point", sub: "Expand only if ROI is proven" },
+              { metric: "1 workflow", label: "Starting scope", sub: "Narrow and critical" },
+              { metric: "30 days", label: "Time to proof", sub: "Fast enough for operators" },
+              { metric: "1 asset → many", label: "Expansion path", sub: "Portfolio replication" },
+              { metric: "Go / scale", label: "Decision point", sub: "Expand only with hard evidence" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
