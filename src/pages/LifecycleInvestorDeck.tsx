@@ -1061,12 +1061,12 @@ function Slide06() {
         <div className="flex gap-5">
           {/* Market Size */}
           <div className="flex-1 rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Signal</p>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Definition</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "2025", value: "$8.7B", desc: "AI governance market estimate" },
-                { label: "Visible", value: "$70M+", desc: "Recent funding into adjacent context, memory, and governance layers on this slide" },
-                { label: "Why us", value: "Clear wedge", desc: "Start where AI outputs must be reviewable, traceable, and domain-correct" },
+                { label: "Closest market", value: "$8.7B", desc: "2025 AI governance market estimate. This is the nearest sourceable category." },
+                { label: "Entry wedge", value: "High-stakes teams", desc: "Life sciences, professional services, and financial services where plausible AI is not acceptable." },
+                { label: "What we are", value: "Context governance", desc: "A layer that makes AI outputs reviewable, traceable, and domain-correct." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1078,7 +1078,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Sources first: AI governance market estimates plus visible category funding. Conclusion: the strongest entry point is high-stakes teams where plausible AI is not acceptable.
+              We are not claiming the whole AI software market. We are entering through the sourceable AI governance category, then expanding via the context layer inside high-stakes knowledge work.
             </p>
           </div>
 
