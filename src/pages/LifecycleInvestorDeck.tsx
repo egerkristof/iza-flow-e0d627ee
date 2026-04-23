@@ -424,19 +424,22 @@ function Slide03Cost() {
               <p className="font-bold mb-2" style={{ fontSize: 16, color: `hsl(${RED})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 Why this gets worse
               </p>
-              <p className="font-black mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
+              <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.12 }}>
                 The cost is the correction loop.
                 <br />
-                Soon, the prompt costs more too.
+                <span style={{ color: `hsl(${RED})` }}>Now the prompt costs more too.</span>
               </p>
               <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
-                AI providers are shifting from flat-fee experimentation to metered usage. As token-heavy, API-based workflows become standard, bad prompting and missing context stop being just a productivity drain and become a direct cost multiplier.
+                AI providers are shifting from flat-fee experimentation to metered usage. Anthropic is already pushing teams toward usage-based economics. That means missing context is no longer just a productivity drain. It becomes a direct spend multiplier.
               </p>
             </div>
 
-            <div className="rounded-xl px-5 py-4 mt-5" style={{ background: `hsl(${WARM} / 0.06)`, border: `1px solid hsl(${WARM} / 0.14)` }}>
-              <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                The freeloading era disappears: every weak prompt, repeated retry, and ungoverned output drives both more human cleanup and more metered AI spend.
+            <div className="rounded-xl px-5 py-4 mt-5" style={{ background: `hsl(${WARM} / 0.1)`, border: `1px solid hsl(${WARM} / 0.18)` }}>
+              <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.3 }}>
+                The freeloading era disappears.
+              </p>
+              <p className="mt-2 font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+                Every weak prompt, repeated retry, and ungoverned output drives both more human cleanup and more metered AI spend.
               </p>
             </div>
           </div>
