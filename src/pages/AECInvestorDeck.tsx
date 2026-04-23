@@ -546,6 +546,11 @@ function Slide05() {
           {/* CENTER — LIZA OS */}
           <div className="flex-1 rounded-2xl p-8 flex flex-col items-center justify-center"
             style={{ background: `hsl(${TEAL} / 0.05)`, border: `3px solid hsl(${TEAL} / 0.3)`, boxShadow: `0 0 80px hsl(${TEAL} / 0.08)` }}>
+            <div className="mb-4 flex items-center gap-2 px-4 py-2 rounded-full"
+              style={{ background: `hsl(${GOLD} / 0.12)`, border: `1px solid hsl(${GOLD} / 0.28)` }}>
+              <Shield size={14} style={{ color: `hsl(${GOLD})` }} />
+              <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Your knowledge stays portable</p>
+            </div>
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4"
               style={{ background: `hsl(${TEAL} / 0.15)` }}>
               <Brain size={34} style={{ color: `hsl(${TEAL})` }} />
@@ -580,6 +585,10 @@ function Slide05() {
                 Continuous loop: your organization gets smarter with every execution
               </p>
             </div>
+
+            <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 520, lineHeight: 1.45 }}>
+              The reasoning engine runs on LIZA. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Your standards, exceptions, and institutional memory remain your asset.</span>
+            </p>
           </div>
 
           {/* Arrow out */}
