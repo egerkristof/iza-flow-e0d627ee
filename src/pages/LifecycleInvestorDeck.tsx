@@ -268,14 +268,78 @@ function Slide03() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What That Costs
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>
+          Where Missing Context Shows Up
         </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          Same gap. Every industry.
+        <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
+          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${ACCENT})` }}>The missing piece is expert judgment.</span>
         </h2>
 
-        {/* Cost callout — LEAD with the number */}
+        <div className="flex flex-col gap-3 flex-1 min-h-0 mb-4">
+          {industries.map((ind) => (
+            <div key={ind.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border"
+              style={{ borderColor: `hsl(${ind.accent} / 0.15)` }}>
+              <div className="w-[260px] shrink-0 px-6 py-4 flex flex-col justify-center"
+                style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <Database size={16} style={{ color: `hsl(${TEAL})` }} />
+                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {ind.records.map(r => (
+                    <span key={r} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{r}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex-1 px-7 py-4 flex flex-col justify-center"
+                style={{ background: `hsl(${ACCENT} / 0.05)`, borderRight: `1.5px solid hsl(${ACCENT} / 0.1)`, borderLeft: `1.5px solid hsl(${ACCENT} / 0.1)` }}>
+                <div className="flex items-center gap-2 mb-2">
+                  {ind.icon}
+                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{ind.name}</p>
+                  <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${ACCENT} / 0.1)` }}>
+                    <AlertTriangle size={12} style={{ color: `hsl(${ACCENT})` }} />
+                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>THE GAP</span>
+                  </div>
+                </div>
+                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
+              </div>
+              <div className="w-[200px] shrink-0 px-6 py-4 flex flex-col justify-center"
+                style={{ background: `hsl(${RED} / 0.04)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
+                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.35 }}>{ind.cost}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-4 px-2">
+          <div className="flex items-center gap-4">
+            <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
+            <div className="flex flex-wrap gap-2.5">
+              {alsoApplies.map(a => (
+                <span key={a} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{a}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={ACCENT} to={RED} />
+    </div>
+  );
+}
+
+function Slide03Cost() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
+          What Missing Context Costs
+        </p>
+        <h2 className="font-black mb-5" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+          AI output is cheap. <span style={{ color: `hsl(${WARM})` }}>Rework is not.</span>
+        </h2>
+
         <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
           style={{ background: `hsl(${WARM} / 0.05)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
           <div className="flex flex-col justify-center shrink-0">
@@ -315,71 +379,24 @@ function Slide03() {
           </div>
         </div>
 
-        {/* 3 Industry rows — bigger */}
-        <div className="flex flex-col gap-3 flex-1 min-h-0 mb-4">
-          {industries.map((ind) => (
-            <div key={ind.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border"
-              style={{ borderColor: `hsl(${ind.accent} / 0.15)` }}>
-              <div className="w-[260px] shrink-0 px-6 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Database size={16} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {ind.records.map(r => (
-                    <span key={r} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{r}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="flex-1 px-7 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  {ind.icon}
-                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{ind.name}</p>
-                  <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                    <AlertTriangle size={12} style={{ color: `hsl(${WARM})` }} />
-                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
-                  </div>
-                </div>
-                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
-              </div>
-              <div className="w-[200px] shrink-0 px-6 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${RED} / 0.04)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The cost</p>
-                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.35 }}>{ind.cost}</p>
-              </div>
+        <div className="grid grid-cols-3 gap-4 flex-1 min-h-0 mb-4">
+          {[
+            { title: "Margin erodes", body: "Senior people keep reviewing, correcting, and redoing outputs instead of scaling decisions." },
+            { title: "Execution slows", body: "AI adds volume, but handoffs and approvals stall because trust stays with a few experts." },
+            { title: "AI trust collapses", body: "Once outputs feel inconsistent, adoption drops and each team falls back to local workarounds." },
+          ].map((item) => (
+            <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
+              style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
+              <p className="font-bold mb-2" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-[1.2fr_0.9fr] gap-4 items-stretch px-2">
-          <div className="flex items-center gap-4">
-            <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
-            <div className="flex flex-wrap gap-2.5">
-              {alsoApplies.map(a => (
-                <span key={a} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{a}</span>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
-            <p className="font-bold mb-2" style={{ fontSize: 13, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-              Second-order impact
-            </p>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { title: "Margin erodes", body: "Senior people keep reviewing, correcting, and redoing outputs instead of scaling decisions." },
-                { title: "Execution slows", body: "AI adds volume, but handoffs and approvals stall because trust stays with a few experts." },
-                { title: "AI trust collapses", body: "Once outputs feel inconsistent, adoption drops and each team falls back to local workarounds." },
-              ].map((item) => (
-                <div key={item.title} className="rounded-xl px-3 py-3" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.1)` }}>
-                  <p className="font-bold mb-1" style={{ fontSize: 14, color: TEXT }}>{item.title}</p>
-                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="rounded-2xl border px-6 py-4" style={{ borderColor: `hsl(${WARM} / 0.18)`, background: `hsl(${WARM} / 0.04)` }}>
+          <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>
+            AI creates volume. The missing cost layer is the expert time required to correct, approve, and re-route that volume.
+          </p>
         </div>
       </div>
       <SlideBar from={WARM} to={TEAL} />
