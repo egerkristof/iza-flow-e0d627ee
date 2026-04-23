@@ -1050,8 +1050,9 @@ function Slide08() {
       metricLabel: "Discussion",
       points: [
         "Exploring internal AEC workflow opportunities with a major ecosystem player",
-        "Useful credibility signal without overstating commercial deployment",
+        "Direct signal that the AEC workflow problem is real and strategically relevant",
       ],
+      featured: true,
     },
     {
       title: "Top-Tier Swiss Executive Search Firm",
@@ -1091,6 +1092,7 @@ function Slide08() {
         "800+ audit questions processed through governed execution",
         "Full compliance traceability maintained throughout",
       ],
+      featured: false,
     },
   ];
 
@@ -1107,9 +1109,18 @@ function Slide08() {
 
         <div className="flex-1 flex items-center">
           <div className="grid grid-cols-4 gap-5 w-full">
-            {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
-              <div key={title} className="rounded-[24px] border px-5 py-5 flex flex-col min-h-[560px] justify-center"
-                style={{ borderColor: `hsl(${color} / 0.18)`, background: `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))` }}>
+            {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points, featured }) => (
+              <div
+                key={title}
+                className="rounded-[24px] border px-5 py-5 flex flex-col min-h-[560px] justify-center"
+                style={{
+                  borderColor: `hsl(${color} / ${featured ? 0.3 : 0.18})`,
+                  background: featured
+                    ? `linear-gradient(180deg, hsl(${color} / 0.11), hsl(${color} / 0.04))`
+                    : `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))`,
+                  boxShadow: featured ? `0 0 0 2px hsl(${color} / 0.08)` : "none",
+                }}
+              >
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div>
                     <p className="font-black" style={{ fontSize: 25, color: TEXT, lineHeight: 1.12 }}>{title}</p>
@@ -1146,24 +1157,6 @@ function Slide08() {
           </div>
         </div>
 
-        <div className="mt-5 rounded-xl px-6 py-4 flex items-center justify-between"
-          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
-          <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>
-            Early trials validated the prototype. In AEC, the proof point today is active workflow exploration, not claimed customer deployment.
-          </p>
-          <div className="flex gap-6">
-            {[
-              { n: "4", l: "Featured proofs" },
-              { n: "4", l: "Signals" },
-              { n: "€0", l: "Paid acquisition" },
-            ].map(({ n, l }) => (
-              <div key={l} className="text-center min-w-[88px]">
-                <p className="font-black" style={{ fontSize: 24, color: `hsl(${GREEN})`, lineHeight: 1 }}>{n}</p>
-                <p style={{ fontSize: 11, color: MUTED, letterSpacing: "0.06em", textTransform: "uppercase" }}>{l}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
     </div>
