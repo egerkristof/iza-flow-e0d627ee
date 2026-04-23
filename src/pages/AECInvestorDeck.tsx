@@ -426,15 +426,30 @@ function Slide03WorkflowProof() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-          Where the Pattern Shows Up
+          Where the Memory Gap Shows Up in AEC
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 54, color: TEXT, lineHeight: 1.08 }}>
-          Same project memory gap.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Three stakeholders investors instantly understand.</span>
+          The issue is not access to documents.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>It is that project judgment never becomes live memory AI can follow.</span>
         </h2>
         <p className="mb-7" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5, maxWidth: 1280 }}>
-          The problem is not document access. It is that project-specific judgment, exceptions, and evolving decisions never become a live system that AI can actually follow.
+          Across contractors, designers, and owners, the same thing breaks: the artifacts exist, the AI produces an output, but the exceptions, overrides, precedent, and evolving project decisions sit in people's heads or scattered tools.
         </p>
+
+        <div className="rounded-2xl px-6 py-4 mb-6" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.14)` }}>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { title: "Artifacts exist", desc: "Specs, addenda, owner standards, AHJ decisions, RFIs, as-builts" },
+              { title: "AI generates", desc: "RFI drafts, detail markups, handover summaries, project answers" },
+              { title: "Memory is missing", desc: "No live layer carries precedent, exceptions, and project-specific judgment" },
+            ].map(({ title, desc }) => (
+              <div key={title} className="rounded-xl px-4 py-4" style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? TEAL : GREEN} / 0.035)` }}>
+                <p className="font-bold mb-1.5" style={{ fontSize: 13, color: `hsl(${TEAL})`, textTransform: "uppercase", letterSpacing: "0.1em" }}>{title}</p>
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
           {workflows.map(({ persona, icon, color, inputs, output, failure, impact }) => (
@@ -464,7 +479,7 @@ function Slide03WorkflowProof() {
               <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.46 }}>{failure}</p>
 
               <div className="mt-auto rounded-xl px-4 py-4" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.14)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Business consequence</p>
+                <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
                 <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>{impact}</p>
               </div>
             </div>
@@ -1954,8 +1969,8 @@ function SlideAppendixDivider() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "What That Costs", component: <Slide03 /> },
-  { id: 4, title: "Stakeholder Workflows", component: <Slide03WorkflowProof /> },
+  { id: 3, title: "Where the Memory Gap Shows Up", component: <Slide03WorkflowProof /> },
+  { id: 4, title: "What That Costs in AEC", component: <Slide03 /> },
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
