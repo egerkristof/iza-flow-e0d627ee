@@ -492,36 +492,36 @@ function Slide03WorkflowProof() {
       icon: <Target size={30} />,
       color: ACCENT,
       flow: ["Call notes", "CRM history", "MEDDIC criteria"],
-      output: "Account plan + deal strategy",
-      failure: "AI writes a polished plan, but misses the buying committee blocker and deal nuance already visible to the manager. The output looks complete. The judgment still has to be manually reapplied.",
-      impact: "Longer cycles. Lower win rates. Senior deal reviews stay manual.",
+      before: "AI drafts a plausible account plan, but misses the hidden blocker in the buying committee and pushes the team into the wrong deal motion.",
+      after: "The system carries forward political context, deal history, and qualification standards so the next action reflects actual deal risk.",
+      critical: "Without context, pipeline looks healthy until the quarter slips.",
     },
     {
       persona: "Engineering Lead",
       icon: <Cpu size={30} />,
       color: GREEN,
       flow: ["System diagrams", "Incident history", "Code conventions"],
-      output: "Implementation plan + code suggestions",
-      failure: "AI proposes a valid-looking solution, but ignores the architecture constraint or known failure pattern the lead already knows. The code can be generated fast, yet still requires expert redesign.",
-      impact: "Rework in sprint cycles. Slower delivery. More review overhead.",
+      before: "AI generates a credible implementation path, but ignores the architecture constraint, failure pattern, or dependency trade-off the lead already knows.",
+      after: "The team executes against the real system constraints, known incident patterns, and engineering standards before code is shipped.",
+      critical: "Without context, velocity rises first and reliability breaks later.",
     },
     {
       persona: "Finance Lead",
       icon: <DollarSign size={30} />,
       color: GOLD,
       flow: ["Policies", "Approvals", "Exceptions log"],
-      output: "Decision memo + operational recommendation",
-      failure: "AI summarizes policy correctly, but misses the commercial exception, escalation path, or approval threshold the finance lead applies in practice. The answer reads clean until someone senior catches the miss.",
-      impact: "Margin leakage. Governance risk. AI trust drops fast.",
+      before: "AI produces a clean recommendation, but misses the commercial exception, approval threshold, or exposure logic that changes the decision.",
+      after: "Recommendations reflect the real approval path, exception handling, and economic guardrails before anyone acts on the number.",
+      critical: "Without context, a plausible answer becomes a bad financial decision.",
     },
     {
       persona: "Pharma Researcher",
       icon: <Shield size={30} />,
       color: RED,
       flow: ["Study protocols", "Lab records", "Quality requirements"],
-      output: "Experiment summary + next-step recommendation",
-      failure: "AI can summarize the experiment, but it cannot infer the regulated context, protocol edge case, or quality implication the researcher checks instinctively before acting.",
-      impact: "More review loops. Slower release decisions. Higher compliance exposure.",
+      before: "AI summarizes the study plausibly, but misses the protocol edge case or regulated quality implication that determines whether the next step is safe.",
+      after: "The recommendation inherits protocol logic, quality thresholds, and prior deviations before research decisions move forward.",
+      critical: "Without context, plausibility can push regulated science in the wrong direction.",
     },
   ];
 
@@ -535,7 +535,7 @@ function Slide03WorkflowProof() {
         </h2>
 
         <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
-          {workflows.map(({ persona, icon, color, flow, output, failure, impact }) => (
+          {workflows.map(({ persona, icon, color, flow, before, after, critical }) => (
             <div
               key={persona}
               className="rounded-2xl border p-6 flex flex-col"
@@ -560,16 +560,18 @@ function Slide03WorkflowProof() {
                     </span>
                   ))}
                 </div>
-                <p style={{ fontSize: 16, color: MUTED }}>
-                  <span className="font-bold" style={{ color: TEXT }}>AI output:</span> {output}
-                </p>
               </div>
 
-              <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.48 }}>{failure}</p>
+              <div className="grid grid-cols-[88px_1fr] gap-x-3 gap-y-3 mb-4 items-start">
+                <p className="font-black" style={{ fontSize: 14, color: `hsl(${RED})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>Before</p>
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{before}</p>
+                <p className="font-black" style={{ fontSize: 14, color: `hsl(${GREEN})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>After</p>
+                <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>{after}</p>
+              </div>
 
               <div className="mt-auto rounded-xl px-5 py-4" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.14)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Business impact</p>
-                <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{impact}</p>
+                <p className="font-bold mb-1" style={{ fontSize: 13, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Why this is critical</p>
+                <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{critical}</p>
               </div>
             </div>
           ))}
