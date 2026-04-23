@@ -576,11 +576,11 @@ function SlideWhyNow() {
       source: "Workday, Jan 2026",
     },
     {
-      metric: "0",
-      label: "platforms govern how AI applies expert knowledge",
-      insight: "Tools exist to store knowledge and generate output. Nothing connects the two with governance.",
+      metric: "Shift",
+      label: "from AI access to AI governance",
+      insight: "The market moved from asking whether teams use AI to asking how outputs stay consistent, traceable, and safe.",
       color: TEAL,
-      source: "LIZA market analysis, 2025",
+      source: "Observed across enterprise deployments and regulated workflows",
     },
   ];
 
