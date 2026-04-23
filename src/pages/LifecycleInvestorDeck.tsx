@@ -1886,8 +1886,8 @@ function SlideAppendixDivider() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "What That Costs", component: <Slide03 /> },
-  { id: 4, title: "Workflow Failures", component: <Slide03WorkflowProof /> },
+  { id: 3, title: "Where Missing Context Shows Up", component: <Slide03 /> },
+  { id: 4, title: "What Missing Context Costs", component: <Slide03Cost /> },
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
