@@ -356,22 +356,22 @@ function Slide03Cost() {
     {
       title: "Life Sciences",
       kicker: "Plausible can be deadly",
-      plausibility: "The output can sound scientifically reasonable while missing the protocol nuance that determines whether a treatment is safe, valid, or releaseable.",
-      body: "That means more QA loops, slower release decisions, and real patient, safety, and compliance exposure.",
+      plausibility: "Scientifically credible is not enough if the output misses the protocol nuance that determines safety or releaseability.",
+      body: "Result: more QA loops, slower release, real safety and compliance risk.",
       color: RED,
     },
     {
       title: "Professional Services",
       kicker: "Plausible makes expertise generic",
-      plausibility: "If the output is only broadly convincing, it carries none of the domain-specific judgment clients actually pay for. It sounds smart, but it is not differentiated expertise.",
-      body: "That turns billable expert value into rework, weakens trust, and makes premium advisory work look interchangeable with commodity AI.",
+      plausibility: "Convincing output is worthless if it lacks the domain judgment clients are paying for.",
+      body: "Result: expert value turns into rework and premium advisory starts to look like commodity AI.",
       color: ACCENT,
     },
     {
       title: "Financial Services",
       kicker: "Plausible is false precision",
-      plausibility: "In finance, a plausible answer is not enough. The number, exposure, and exception path have to be correct. A confident-looking output can still be materially wrong.",
-      body: "That creates mispriced decisions, broken approvals, governance risk, and fast erosion of trust in AI-assisted analysis.",
+      plausibility: "In finance, the number, exposure, and exception path must be correct. A confident answer can still be materially wrong.",
+      body: "Result: mispriced decisions, broken approvals, governance risk, and fast loss of trust.",
       color: GOLD,
     },
   ];
