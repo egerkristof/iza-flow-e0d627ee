@@ -263,6 +263,26 @@ function Slide03() {
   ];
 
   const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
+  const benchmarks = [
+    {
+      value: "5%+",
+      label: "of total project cost can be rework",
+      detail: "Industry-accepted benchmark for direct rework cost in construction.",
+      source: "FMI / PlanGrid construction rework studies",
+    },
+    {
+      value: "1%",
+      label: "annual productivity growth over two decades",
+      detail: "AEC has less room than most sectors to absorb avoidable AI rework.",
+      source: "McKinsey construction productivity research",
+    },
+    {
+      value: "Modeled",
+      label: "€550K internal benchmark per 100 knowledge workers",
+      detail: "Useful directional framing, but not presented here as AEC-specific proof.",
+      source: "LIZA operating model",
+    },
+  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -279,39 +299,24 @@ function Slide03() {
         <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
           style={{ background: `hsl(${WARM} / 0.05)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
           <div className="flex flex-col justify-center shrink-0">
-            <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
-            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>per year / 100 people</p>
-            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The "Context Gap Tax"</p>
+            <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>5%+</p>
+            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>of project cost at risk</p>
+            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>Direct rework benchmark in construction</p>
           </div>
           <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
           <div className="flex-1 flex flex-col justify-center gap-3">
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${WARM})` }} />
-              <div>
-                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">40% of AI productivity gains lost to rework</span>: employees fixing outputs AI got wrong
-                </p>
-                <p style={{ fontSize: 13, color: SUBTLE }}>Workday Global AI Impact Study, Jan 2026</p>
+            {benchmarks.map(({ value, label, detail, source }) => (
+              <div key={label} className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${WARM})` }} />
+                <div>
+                  <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+                    <span className="font-bold">{value}</span> {label}
+                  </p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>{detail}</p>
+                  <p style={{ fontSize: 13, color: SUBTLE }}>{source}</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${WARM})` }} />
-              <div>
-                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">4.5 hours/week per employee</span> cleaning up AI mistakes. 58% of enterprise workers affected
-                </p>
-                <p style={{ fontSize: 13, color: SUBTLE }}>Zapier AI Workslop Report, Jan 2026</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${WARM})` }} />
-              <div>
-                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">Only 14% of workers</span> achieve net-positive AI productivity once rework is accounted for
-                </p>
-                <p style={{ fontSize: 13, color: SUBTLE }}>Workday, 2026</p>
-              </div>
-            </div>
+            ))}
             <div className="grid grid-cols-3 gap-3 pt-2">
               {[
                 { label: "Margin", value: "erodes", color: RED },
@@ -325,6 +330,11 @@ function Slide03() {
               ))}
             </div>
           </div>
+        </div>
+        <div className="rounded-xl px-5 py-3 mb-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.14)` }}>
+          <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>
+            The AEC-specific proof is rework and stalled productivity. The €550K figure remains an internal cross-industry model, not the primary evidence on this slide.
+          </p>
         </div>
 
         {/* 3 Industry rows — bigger */}
