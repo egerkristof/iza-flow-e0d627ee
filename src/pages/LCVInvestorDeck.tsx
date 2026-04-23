@@ -332,22 +332,22 @@ function Slide03Cost() {
   const benchmarkInputs = [
     {
       stat: "100",
-      title: "knowledge workers in the illustrative team",
-      source: "A simple benchmark cohort so buyers can scale the number up or down to their own org",
+      title: "people in the benchmark team",
+      source: "Illustrative benchmark cohort",
     },
     {
       stat: "58%",
-      title: "workers affected by AI cleanup weekly",
+      title: "touch AI cleanup weekly",
       source: "Source: Zapier AI at Work Report, 2026",
     },
     {
       stat: "4.5 hrs",
-      title: "weekly cleanup time per affected worker",
+      title: "lost per affected person",
       source: "Source: Zapier AI at Work Report, 2026",
     },
     {
       stat: "€40/hr",
-      title: "conservative fully-loaded labor cost",
+      title: "blended review cost",
       source: "Illustrative blended labor rate",
     },
   ];
@@ -355,23 +355,23 @@ function Slide03Cost() {
   const consequences = [
     {
       title: "Life Sciences",
-      kicker: "Plausible can be deadly",
-      plausibility: "Scientifically credible is not enough if the output misses the protocol nuance that determines safety or releaseability.",
-      body: "Result: more QA loops, slower release, real safety and compliance risk.",
+      kicker: "Safety and release risk",
+      body: "Plausible output still fails if it misses the protocol nuance that determines whether work is safe or releasable.",
+      result: "More QA loops. Slower release. Real compliance exposure.",
       color: RED,
     },
     {
       title: "Professional Services",
-      kicker: "Plausible makes expertise generic",
-      plausibility: "Convincing output is worthless if it lacks the domain judgment clients are paying for.",
-      body: "Result: expert value turns into rework and premium advisory starts to look like commodity AI.",
+      kicker: "Margin erosion",
+      body: "Output can look convincing and still miss the judgment clients actually pay for.",
+      result: "Senior experts spend time correcting AI instead of scaling expertise.",
       color: ACCENT,
     },
     {
       title: "Financial Services",
-      kicker: "Plausible is false precision",
-      plausibility: "In finance, the number, exposure, and exception path must be correct. A confident answer can still be materially wrong.",
-      body: "Result: mispriced decisions, broken approvals, governance risk, and fast loss of trust.",
+      kicker: "Governance risk",
+      body: "A clean answer is still wrong if the exception path, approval logic, or exposure context is missing.",
+      result: "Mispriced decisions. Broken approvals. Fast loss of trust.",
       color: GOLD,
     },
   ];
@@ -379,105 +379,73 @@ function Slide03Cost() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+      <div className="relative z-10 flex flex-col h-full px-24 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           What Missing Context Costs
         </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-5" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           AI output is cheap. <span style={{ color: `hsl(${WARM})` }}>Rework is not.</span>
         </h2>
 
-        <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-4"
-          style={{ background: `hsl(${WARM} / 0.05)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
-          <div className="flex flex-col justify-center shrink-0">
-            <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
-            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>per year / 100 people</p>
-            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The "Context Gap Tax"</p>
+        <div className="grid grid-cols-[0.9fr_1.5fr] gap-5 mb-5">
+          <div className="rounded-2xl px-8 py-7 flex flex-col justify-center"
+            style={{ background: `hsl(${WARM} / 0.06)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
+            <p className="font-black" style={{ fontSize: 76, color: `hsl(${WARM})`, lineHeight: 1 }}>€550K</p>
+            <p className="font-bold mt-2" style={{ fontSize: 22, color: TEXT }}>per year / 100 people</p>
+            <p className="mt-1" style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>
+              The annual labor cost of reviewing, correcting, and rerouting AI output when context does not travel with the work.
+            </p>
           </div>
-          <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
-          <div className="flex-1 flex flex-col gap-4">
+
+          <div className="flex flex-col gap-4">
             <div className="grid grid-cols-4 gap-4">
-            {benchmarkInputs.map((item) => (
-              <div key={item.title} className="rounded-xl px-5 py-4"
-                style={{ background: `hsl(${WARM} / 0.06)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
-                <p className="font-black mb-2" style={{ fontSize: 34, color: `hsl(${WARM})`, lineHeight: 1 }}>{item.stat}</p>
-                <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>{item.title}</p>
-                <p className="mt-2" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>{item.source}</p>
-              </div>
-            ))}
+              {benchmarkInputs.map((item) => (
+                <div key={item.title} className="rounded-xl px-4 py-4"
+                  style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
+                  <p className="font-black mb-2" style={{ fontSize: 32, color: `hsl(${WARM})`, lineHeight: 1 }}>{item.stat}</p>
+                  <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{item.title}</p>
+                  <p className="mt-2" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.4 }}>{item.source}</p>
+                </div>
+              ))}
             </div>
-            <div className="rounded-xl px-5 py-4" style={{ background: `hsl(${WARM} / 0.08)`, border: `1px solid hsl(${WARM} / 0.16)` }}>
-              <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>
-                Illustrative benchmark logic: <span style={{ color: `hsl(${WARM})` }}>100 people × 58% affected × 4.5 cleanup hours/week × €40/hour × 52 weeks = ~€543K/year</span>, rounded to <span style={{ color: `hsl(${WARM})` }}>€550K</span>.
-              </p>
-              <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>
-                Sources for the benchmark inputs: Zapier AI at Work Report, 2026 for revision frequency and cleanup time; illustrative labor rate for loaded expert review cost.
-              </p>
+            <div className="rounded-xl px-5 py-4 flex items-start gap-4"
+              style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.14)` }}>
+              <AlertTriangle size={20} style={{ color: `hsl(${RED})`, flexShrink: 0, marginTop: 2 }} />
+              <div>
+                <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+                  Prompts are getting more expensive. Context is the only real control point.
+                </p>
+                <p className="mt-1" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
+                  As frontier AI shifts toward metered usage, every vague prompt, retry loop, and weak handoff compounds both human rework and model spend. Better context is the optimization layer you control.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-[1.1fr_1.9fr] gap-4 flex-1 min-h-0 mb-4">
-          <div className="rounded-2xl border px-6 py-6 flex flex-col justify-between"
-            style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
-            <div>
-              <p className="font-bold mb-2" style={{ fontSize: 16, color: `hsl(${RED})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                Why this gets worse
-              </p>
-              <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.12 }}>
-                The cost is the correction loop.
-                <br />
-                <span style={{ color: `hsl(${RED})` }}>Context is the optimization point.</span>
-              </p>
-              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
-                Prompt and model usage costs are rising as teams move into metered frontier AI. That means missing context is no longer just a productivity drain. It becomes a direct spend multiplier across retries, rework, and exception handling.
-              </p>
-            </div>
+        <div className="rounded-2xl px-6 py-5 mb-4" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.14)` }}>
+          <p className="font-bold" style={{ fontSize: 15, color: `hsl(${ACCENT})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            What "plausible" means
+          </p>
+          <p className="mt-2 font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.45 }}>
+            AI output looks right enough at first glance, but misses the domain-specific context, exception, or judgment that makes it actually correct.
+          </p>
+        </div>
 
-            <div className="rounded-xl px-5 py-4 mt-5" style={{ background: `hsl(${WARM} / 0.1)`, border: `1px solid hsl(${WARM} / 0.18)` }}>
-              <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.3 }}>
-                Context is your only durable control surface.
+        <div className="grid grid-cols-3 gap-4 flex-1 min-h-0">
+          {consequences.map((item) => (
+            <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
+              style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
+              <p style={{ fontSize: 14, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 700 }}>
+                {item.title}
               </p>
-              <p className="mt-2 font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                Every weak prompt, repeated retry, and ungoverned output drives both more human cleanup and more metered AI spend. Better context is what improves quality and reduces unit cost at the same time.
-              </p>
+              <p className="font-black mt-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>{item.kicker}</p>
+              <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
+              <div className="mt-auto rounded-xl px-4 py-4" style={{ background: `hsl(${item.color} / 0.08)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>{item.result}</p>
+              </div>
             </div>
-          </div>
-
-          <div className="flex flex-col gap-4 min-h-0">
-            <div className="rounded-2xl px-5 py-4" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.14)` }}>
-              <p className="font-bold" style={{ fontSize: 15, color: `hsl(${ACCENT})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                What "plausible" means
-              </p>
-              <p className="mt-2 font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
-                AI output looks right enough at first glance, but it is missing the domain-specific context, exception, or judgment that makes it actually correct.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 min-h-0 flex-1">
-              {consequences.map((item) => (
-                <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
-                  style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
-                  <p style={{ fontSize: 14, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 700 }}>
-                    {item.title}
-                  </p>
-                  <p className="font-black mt-3 mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{item.kicker}</p>
-                  <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${item.color} / 0.07)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
-                    <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>
-                      How plausibility kills
-                    </p>
-                    <p className="font-semibold mt-2" style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
-                      {item.plausibility}
-                    </p>
-                  </div>
-                  <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
-                  <div className="mt-auto pt-5">
-                    <div className="h-px w-full" style={{ background: `hsl(${item.color} / 0.12)` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       <SlideBar from={WARM} to={TEAL} />
