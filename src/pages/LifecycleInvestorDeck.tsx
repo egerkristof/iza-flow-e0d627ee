@@ -1001,9 +1001,24 @@ function Slide06() {
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine. Intent-locking, knowledge injection, drift detection. Hard to replicate.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Blueprint", desc: "Every customer's knowledge graph deepens with usage. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Cross-team Network Effect", desc: "Standards propagate across teams. Value multiplies with each department onboarded.", icon: <Network size={20} /> },
+    {
+      layer: "AACE v3.1 Specification",
+      desc: "Intent-locking, knowledge injection, and drift detection built into one context engine.",
+      proof: "Hard to copy because the logic sits in the operating model, not a prompt library.",
+      icon: <Cpu size={20} />,
+    },
+    {
+      layer: "Compounding Blueprint",
+      desc: "Every customer deployment deepens the knowledge graph and sharpens the governed context layer.",
+      proof: "Value increases with usage because judgment becomes more reusable over time.",
+      icon: <Layers size={20} />,
+    },
+    {
+      layer: "Cross-team Network Effect",
+      desc: "Standards propagate across teams, so every new department increases consistency and system value.",
+      proof: "The more workflows onboarded, the harder it becomes to rip the layer back out.",
+      icon: <Network size={20} />,
+    },
   ];
 
   return (
@@ -1058,10 +1073,13 @@ function Slide06() {
         </div>
 
         {/* Bottom: Market + 3 Moat columns */}
-        <div className="flex gap-5">
+        <div className="grid grid-cols-[0.95fr_1fr_1fr_1fr] gap-5 items-stretch">
           {/* Market Size */}
-          <div className="flex-1 rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Definition</p>
+          <div className="rounded-2xl border p-5 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-2" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Definition</p>
+            <p className="mb-4 font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>
+              Anchor to the closest credible market, then define the precise wedge.
+            </p>
             <div className="flex flex-col gap-2.5">
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
@@ -1069,28 +1087,31 @@ function Slide06() {
                 { label: "What LIZA is", value: "The context governance layer", desc: "We make AI outputs reviewable, traceable, and domain-correct by carrying forward expert judgment." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-                  <div className="flex items-baseline gap-3 mb-0.5">
+                  <div className="flex items-baseline gap-3 mb-1">
                     <span className="font-black" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
-                    <span className="font-black" style={{ fontSize: 34, color: TEXT }}>{value}</span>
+                    <span className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{value}</span>
                   </div>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>{desc}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>{desc}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-3" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
+            <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
               Credible framing: anchor to AI governance as the sourceable market, then define LIZA more precisely as the context governance layer within that market.
             </p>
           </div>
 
           {/* Defensibility — 3 moat layers */}
-          {moatLayers.map(({ layer, desc, icon }) => (
-            <div key={layer} className="flex-1 rounded-2xl border p-5 flex flex-col justify-center"
+          {moatLayers.map(({ layer, desc, proof, icon }) => (
+            <div key={layer} className="rounded-2xl border p-5 flex flex-col"
               style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3" style={{ background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>
                 {icon}
               </div>
-              <p className="font-black mb-2" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>{layer}</p>
-              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
+              <p className="font-black mb-2" style={{ fontSize: 21, color: `hsl(${GOLD})`, lineHeight: 1.2 }}>{layer}</p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{desc}</p>
+              <div className="mt-4 rounded-xl px-4 py-3" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.14)` }}>
+                <p className="font-semibold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{proof}</p>
+              </div>
             </div>
           ))}
         </div>
