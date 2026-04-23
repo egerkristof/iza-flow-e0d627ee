@@ -1050,8 +1050,9 @@ function Slide08() {
       metricLabel: "Discussion",
       points: [
         "Exploring internal AEC workflow opportunities with a major ecosystem player",
-        "Useful credibility signal without overstating commercial deployment",
+        "Direct signal that the AEC workflow problem is real and strategically relevant",
       ],
+      featured: true,
     },
     {
       title: "Top-Tier Swiss Executive Search Firm",
@@ -1091,6 +1092,7 @@ function Slide08() {
         "800+ audit questions processed through governed execution",
         "Full compliance traceability maintained throughout",
       ],
+      featured: false,
     },
   ];
 
@@ -1107,9 +1109,10 @@ function Slide08() {
 
         <div className="flex-1 flex items-center">
           <div className="grid grid-cols-4 gap-5 w-full">
-            {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points }) => (
+            {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points, featured }) => (
               <div key={title} className="rounded-[24px] border px-5 py-5 flex flex-col min-h-[560px] justify-center"
-                style={{ borderColor: `hsl(${color} / 0.18)`, background: `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))` }}>
+                style={{
+                  borderColor: `hsl(${color} / ${featured ?
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div>
                     <p className="font-black" style={{ fontSize: 25, color: TEXT, lineHeight: 1.12 }}>{title}</p>
