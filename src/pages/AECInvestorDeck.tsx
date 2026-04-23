@@ -264,18 +264,18 @@ const AEC_GAP_CASES = [
 const AEC_COST_BENCHMARKS = [
   {
     value: "$177.5B",
-    label: "annual labor cost lost to rework, conflict resolution, and searching for data",
-    source: "FMI / PlanGrid, Construction Disconnected, 2018",
+    label: "estimated annual labor cost impact in the U.S. construction industry from rework, conflict resolution, and searching for project data",
+    source: "FMI / PlanGrid, Construction Disconnected, U.S., 2018",
   },
   {
-    value: "52%",
-    label: "of rework tied to poor project data and miscommunication",
-    source: "FMI / PlanGrid, 2018",
+    value: "14+ hrs",
+    label: "lost per worker per week on non-optimal activities, including about 4 hours tied specifically to rework",
+    source: "FMI / PlanGrid, U.S., 2018",
   },
   {
-    value: "5%",
-    label: "direct rework benchmark often used on project economics",
-    source: "Industry benchmark cited across FMI / PlanGrid context",
+    value: "5–15%",
+    label: "common rework range cited across industry benchmarks, depending on project complexity and delivery conditions",
+    source: "CII / McKinsey / industry benchmark range",
   },
 ];
 
@@ -285,55 +285,57 @@ function Slide03() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-6">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
           Where Missing Context Shows Up in AEC
         </p>
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.06 }}>
           The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is expert judgment.</span>
         </h2>
 
-        <div className="flex flex-col gap-3 flex-1 min-h-0 mb-4">
+        <div className="flex flex-col gap-4 flex-1 min-h-0 mb-3">
           {AEC_GAP_CASES.map((item) => (
             <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
-              <div className="w-[280px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Database size={16} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
+              <div className="w-[300px] shrink-0 px-7 py-5 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <Database size={18} style={{ color: `hsl(${TEAL})` }} />
+                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
                 </div>
-                <div className="flex flex-wrap gap-1.5 mb-3">
+                <div className="flex flex-wrap gap-2 mb-3">
                   {item.records.map((record) => (
-                    <span key={record} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{record}</span>
+                    <span key={record} className="rounded-full px-3.5 py-1.5 font-semibold" style={{ fontSize: 15, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{record}</span>
                   ))}
                 </div>
-                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}><span className="font-bold" style={{ color: TEXT }}>Typical AI output:</span> {item.output}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}><span className="font-bold" style={{ color: TEXT }}>Typical AI output:</span> {item.output}</p>
               </div>
 
-              <div className="flex-1 px-7 py-4 flex flex-col justify-center" style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  {item.icon}
-                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{item.name}</p>
-                  <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                    <AlertTriangle size={12} style={{ color: `hsl(${WARM})` }} />
-                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
+              <div className="flex-1 px-8 py-5 flex flex-col justify-center" style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: `hsl(${item.accent} / 0.12)` }}>
+                    {item.icon}
+                  </div>
+                  <p className="font-black" style={{ fontSize: 25, color: TEXT }}>{item.name}</p>
+                  <div className="ml-auto flex items-center gap-2 px-4 py-1.5 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
+                    <AlertTriangle size={15} style={{ color: `hsl(${WARM})` }} />
+                    <span className="font-bold" style={{ fontSize: 12, color: `hsl(${WARM})` }}>THE GAP</span>
                   </div>
                 </div>
-                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.5 }}>{item.gap}</p>
+                <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.48 }}>{item.gap}</p>
               </div>
 
-              <div className="w-[210px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.04)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
-                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.35 }}>{item.cost}</p>
+              <div className="w-[230px] shrink-0 px-6 py-5 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.04)` }}>
+                <p className="font-bold mb-1.5" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
+                <p className="font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, lineHeight: 1.35 }}>{item.cost}</p>
               </div>
             </div>
           ))}
         </div>
 
         <div className="flex items-center gap-4 px-2">
-          <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
+          <p className="font-bold shrink-0" style={{ fontSize: 17, color: MUTED }}>Same pattern in:</p>
           <div className="flex flex-wrap gap-2.5">
             {alsoApplies.map((item) => (
-              <span key={item} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
+              <span key={item} className="rounded-full px-4 py-2 font-semibold border" style={{ fontSize: 16, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
             ))}
           </div>
         </div>
@@ -347,63 +349,63 @@ function Slide04Cost() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
+      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           What Missing Context Costs in AEC
         </p>
-        <h2 className="font-black mb-6" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.06 }}>
           Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
         </h2>
 
-        <div className="grid grid-cols-[360px_1fr] gap-6 mb-6">
+        <div className="grid grid-cols-[390px_1fr] gap-6 mb-5">
           <div className="rounded-[28px] border px-8 py-8" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
             <p className="font-black" style={{ fontSize: 88, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
-            <p className="font-bold mt-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>
+            <p className="font-bold mt-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.2 }}>
               of rework is tied to poor project data and miscommunication
             </p>
-            <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.55 }}>
               This is the part AI can amplify if it runs without the latest addendum, field decision, owner standard, or design interpretation.
             </p>
-            <p className="mt-4" style={{ fontSize: 12, color: SUBTLE }}>
-              FMI / PlanGrid, Construction Disconnected, 2018
+            <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
+              FMI / PlanGrid, Construction Disconnected, U.S. construction industry, 2018
             </p>
           </div>
 
           <div className="rounded-[28px] border px-8 py-7" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
             <div className="grid grid-cols-3 gap-4 mb-5">
               {AEC_COST_BENCHMARKS.map((item) => (
-                <div key={item.label} className="rounded-xl px-4 py-4" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
-                  <p className="font-black" style={{ fontSize: 32, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
-                  <p className="font-bold mt-2" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{item.label}</p>
-                  <p className="mt-2" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.4 }}>{item.source}</p>
+                <div key={item.label} className="rounded-xl px-4 py-5 min-h-[190px]" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
+                  <p className="font-black" style={{ fontSize: 34, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
+                  <p className="font-bold mt-2" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{item.label}</p>
+                  <p className="mt-2" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.45 }}>{item.source}</p>
                 </div>
               ))}
             </div>
 
-            <div className="rounded-2xl px-6 py-5" style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
+            <div className="rounded-2xl px-6 py-6" style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
               <p className="font-bold mb-2" style={{ fontSize: 16, color: `hsl(${WARM})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 Why this matters for AI
               </p>
-              <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.5 }}>
+              <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
                 If AI produces a plausible answer inside an RFI, spec review, submittal, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
               </p>
-              <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
+              <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.55 }}>
                 On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream delay.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 flex-1">
           {[
             { label: "Margin", value: "compressed", desc: "Senior time is spent fixing work instead of moving the project forward.", color: RED },
             { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time.", color: WARM },
             { label: "Risk", value: "pushed downstream", desc: "Errors move into construction, handover, claims, and warranty exposure.", color: GOLD },
           ].map((item) => (
-            <div key={item.label} className="rounded-2xl px-5 py-5" style={{ background: `hsl(${item.color} / 0.05)`, border: `1px solid hsl(${item.color} / 0.14)` }}>
+            <div key={item.label} className="rounded-2xl px-5 py-6 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.05)`, border: `1px solid hsl(${item.color} / 0.14)` }}>
               <p className="font-bold" style={{ fontSize: 12, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>{item.label}</p>
-              <p className="font-black mt-2" style={{ fontSize: 26, color: TEXT }}>{item.value}</p>
-              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{item.desc}</p>
+              <p className="font-black mt-2" style={{ fontSize: 28, color: TEXT }}>{item.value}</p>
+              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{item.desc}</p>
             </div>
           ))}
         </div>
