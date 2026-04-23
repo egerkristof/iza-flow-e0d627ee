@@ -337,6 +337,45 @@ function Slide03WorkflowProof() {
 }
 
 function Slide03Cost() {
+  const evidence = [
+    {
+      stat: "40%",
+      title: "of AI time savings are lost to fixing low-quality output",
+      source: "Workday research, Jan 2026",
+    },
+    {
+      stat: "4.5 hrs",
+      title: "per worker per week spent cleaning up AI mistakes",
+      source: "Zapier survey, Jan 2026",
+    },
+    {
+      stat: "14%",
+      title: "of workers stay net-positive after rework is accounted for",
+      source: "Workday research, Jan 2026",
+    },
+  ];
+
+  const consequences = [
+    {
+      title: "Life Sciences",
+      kicker: "Safety risk",
+      body: "Wrong protocol interpretation or incomplete quality context creates deviation risk, slower release cycles, and more QA review loops.",
+      color: RED,
+    },
+    {
+      title: "Professional Services",
+      kicker: "Margin leakage",
+      body: "AI drafts faster, but partners still have to reframe deliverables, correct scope logic, and protect client trust before anything ships.",
+      color: ACCENT,
+    },
+    {
+      title: "Financial Services",
+      kicker: "Decision risk",
+      body: "Outputs can look compliant while missing the firm-specific exception, approval path, or risk posture that actually governs the decision.",
+      color: GOLD,
+    },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
@@ -344,11 +383,11 @@ function Slide03Cost() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>
           What Missing Context Costs
         </p>
-        <h2 className="font-black mb-5" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+        <h2 className="font-black mb-4" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           AI output is cheap. <span style={{ color: `hsl(${GOLD})` }}>Rework is not.</span>
         </h2>
 
-        <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
+        <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-4"
           style={{ background: `hsl(${GOLD} / 0.05)`, border: `2px solid hsl(${GOLD} / 0.2)` }}>
           <div className="flex flex-col justify-center shrink-0">
             <p className="font-black" style={{ fontSize: 72, color: `hsl(${GOLD})`, lineHeight: 1 }}>€550K</p>
@@ -356,55 +395,61 @@ function Slide03Cost() {
             <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The context gap tax</p>
           </div>
           <div className="w-px shrink-0" style={{ background: `hsl(${GOLD} / 0.15)` }} />
-          <div className="flex-1 flex flex-col justify-center gap-3">
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${GOLD})` }} />
-              <div>
-                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">40% of AI productivity gains are lost to rework</span>: employees fixing outputs AI got wrong
-                </p>
-                <p style={{ fontSize: 13, color: SUBTLE }}>Workday Global AI Impact Study, Jan 2026</p>
+          <div className="grid grid-cols-3 gap-4 flex-1">
+            {evidence.map((item) => (
+              <div key={item.title} className="rounded-xl px-5 py-4"
+                style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.12)` }}>
+                <p className="font-black mb-2" style={{ fontSize: 34, color: `hsl(${GOLD})`, lineHeight: 1 }}>{item.stat}</p>
+                <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>{item.title}</p>
+                <p className="mt-2" style={{ fontSize: 13, color: SUBTLE, lineHeight: 1.4 }}>{item.source}</p>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${GOLD})` }} />
-              <div>
-                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">4.5 hours per week per employee</span> spent cleaning up AI mistakes. 58% of enterprise workers are affected
-                </p>
-                <p style={{ fontSize: 13, color: SUBTLE }}>Zapier AI Workslop Report, Jan 2026</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0" style={{ background: `hsl(${GOLD})` }} />
-              <div>
-                <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                  <span className="font-bold">Only 14% of workers</span> achieve net-positive AI productivity once rework is accounted for
-                </p>
-                <p style={{ fontSize: 13, color: SUBTLE }}>Workday, 2026</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 flex-1 min-h-0 mb-4">
-          {[
-            { title: "Margin erodes", body: "Senior people keep reviewing, correcting, and redoing outputs instead of scaling decisions." },
-            { title: "Execution slows", body: "AI adds volume, but handoffs and approvals stall because trust stays with a few experts." },
-            { title: "AI trust collapses", body: "Once outputs feel inconsistent, adoption drops and each team falls back to local workarounds." },
-          ].map((item) => (
-            <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
-              style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
-              <p className="font-bold mb-2" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
-              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
+        <div className="grid grid-cols-[1.1fr_1.9fr] gap-4 flex-1 min-h-0 mb-4">
+          <div className="rounded-2xl border px-6 py-6 flex flex-col justify-between"
+            style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.04)` }}>
+            <div>
+              <p className="font-bold mb-2" style={{ fontSize: 16, color: `hsl(${RED})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                Why this is provable
+              </p>
+              <p className="font-black mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
+                The cost is not the prompt.
+                <br />
+                The cost is the correction loop.
+              </p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>
+                When AI runs without governed context, teams still need expert review, exception handling, and manual approvals. The apparent efficiency gain turns into hidden human cleanup.
+              </p>
             </div>
-          ))}
-        </div>
 
-        <div className="rounded-2xl border px-6 py-4" style={{ borderColor: `hsl(${GOLD} / 0.18)`, background: `hsl(${GOLD} / 0.04)` }}>
-          <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>
-            AI creates volume. The missing cost layer is the expert time required to correct, approve, and re-route that volume.
-          </p>
+            <div className="rounded-xl px-5 py-4 mt-5" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.14)` }}>
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+                AI creates volume. The missing cost layer is the expert time required to correct, approve, and re-route that volume.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 min-h-0">
+            {consequences.map((item) => (
+              <div key={item.title} className="rounded-2xl border px-5 py-5 flex flex-col"
+                style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
+                <p style={{ fontSize: 14, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 700 }}>
+                  {item.title}
+                </p>
+                <p className="font-black mt-3 mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{item.kicker}</p>
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
+                <div className="mt-auto pt-5">
+                  <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${item.color} / 0.07)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
+                    <p className="font-semibold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>
+                      Context gap killer: outputs look plausible before the domain-specific exception is caught.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar from={GOLD} to={ACCENT} />
