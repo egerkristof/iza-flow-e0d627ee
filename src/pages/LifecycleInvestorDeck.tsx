@@ -1064,9 +1064,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Definition</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "Closest market", value: "$8.7B", desc: "2025 AI governance market estimate. This is the nearest sourceable category." },
-                { label: "Entry wedge", value: "High-stakes teams", desc: "Life sciences, professional services, and financial services where plausible AI is not acceptable." },
-                { label: "What we are", value: "Context governance", desc: "A layer that makes AI outputs reviewable, traceable, and domain-correct." },
+                { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
+                { label: "Where we enter", value: "High-stakes knowledge work", desc: "We start in life sciences, professional services, and financial services, where plausible AI is operationally unacceptable." },
+                { label: "What LIZA is", value: "The context governance layer", desc: "We make AI outputs reviewable, traceable, and domain-correct by carrying forward expert judgment." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1078,7 +1078,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              We are not claiming the whole AI software market. We are entering through the sourceable AI governance category, then expanding via the context layer inside high-stakes knowledge work.
+              Credible framing: anchor to AI governance as the sourceable market, then define LIZA more precisely as the context governance layer within that market.
             </p>
           </div>
 
