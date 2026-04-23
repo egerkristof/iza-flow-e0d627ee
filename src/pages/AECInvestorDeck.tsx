@@ -865,7 +865,7 @@ function Slide06() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€3M Strategic Round</p>
               </div>
             </div>
           </div>
@@ -1502,8 +1502,8 @@ function Slide11() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Guided entry. Infrastructure base. Credit upside.{" "}
+          <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+            Guided entry. Self-serve product. Credit upside.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>The durable model is usage-aligned.</span>
         </h2>
 
@@ -1518,7 +1518,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                The current pricing is transitional. Long term, customers pay for the knowledge graph, governance layer, and workflow infrastructure that stays embedded in the firm.
+                The base fee anchors the knowledge graph, governance layer, and workflow infrastructure inside the account. The next investment phase turns that infrastructure into a repeatable self-serve product surface.
               </p>
             </div>
 
@@ -1528,7 +1528,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Metered usage</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Extraction, research, and execution-heavy workflows should be billed on credit consumption. That aligns pricing with both customer value and rising AI inference cost.
+                Extraction, research, and execution-heavy workflows should be billed on credit consumption. That aligns pricing with customer value while protecting margin as AI inference cost keeps rising.
               </p>
             </div>
 
@@ -1538,7 +1538,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                The wedge remains a low-friction pilot. We codify one workflow, prove ROI, then convert to platform base plus usage.
+                The wedge remains a low-friction pilot. We codify one workflow, prove ROI, then productize the experience into self-serve rollout plus platform base and usage.
               </p>
             </div>
           </div>
@@ -1568,6 +1568,7 @@ function Slide11() {
                 {[
                   "Diagnostic identifies workflow pain and creates urgency",
                   "Guided kickstart proves one workflow with minimal adoption friction",
+                  "Self-serve UX turns expert workflows into repeatable product usage",
                   "Platform base anchors the knowledge system inside the account",
                   "Credits scale revenue as AI execution becomes mission-critical",
                 ].map((step, i) => (
