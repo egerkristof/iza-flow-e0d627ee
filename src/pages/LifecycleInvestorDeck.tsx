@@ -970,7 +970,7 @@ function Slide06() {
     { name: "Edra", funding: "$30M", round: "Series A · 2024", what: "Process mining → executable SOPs for AI agents", color: GREEN },
     { name: "Mem0.ai", funding: "$24M", round: "Series A · 2024", what: "AI memory layer. Persistent context across sessions", color: SEAFOAM },
     { name: "Interloom", funding: "$16.5M", round: "Series A · 2023", what: "Tacit knowledge capture for operations teams", color: BLUE },
-    { name: "Paradox.ai", funding: "~$3.8M", round: "Seed · 2024", what: "Knowledge governance for regulated industries", color: GOLD },
+    { name: "Paradox.ai", funding: "Undisclosed", round: "Speedinvest-backed · 2025", what: "Organizational intelligence and alignment layer", color: GOLD },
   ];
 
   const moatLayers = [
@@ -986,7 +986,7 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          $70M+ recently invested around the edges.{" "}
+          $70M+ recently funded in adjacent layers.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
         </h2>
 
@@ -1034,12 +1034,12 @@ function Slide06() {
         <div className="flex gap-5">
           {/* Market Size */}
           <div className="flex-1 rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Logic</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$28B", desc: "AI governance + knowledge infrastructure" },
-                { label: "SAM", value: "$8.5B", desc: "Knowledge-intensive orgs in target verticals" },
-                { label: "SOM", value: "$340M", desc: "EU prof services, pharma, regulated" },
+                { label: "TAM", value: "$8.7B", desc: "2025 AI governance market estimate" },
+                { label: "SAM", value: "$1B+", desc: "Regulated, knowledge-intensive AI deployments where outputs need review, traceability, and domain context" },
+                { label: "SOM", value: "$300M+", desc: "Bottom-up entry wedge: ~10K target teams × ~$30K starting ACV" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1050,6 +1050,9 @@ function Slide06() {
                 </div>
               ))}
             </div>
+            <p className="mt-3" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
+              Source logic: TAM anchored to 2025 AI governance market estimates. SAM narrows to high-stakes, knowledge-intensive deployments. SOM is a bottom-up wedge model, not a generic top-down software market claim.
+            </p>
           </div>
 
           {/* Defensibility — 3 moat layers */}
