@@ -431,13 +431,17 @@ function Slide03Cost() {
                   {item.title}
                 </p>
                 <p className="font-black mt-3 mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{item.kicker}</p>
+                <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${item.color} / 0.07)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
+                  <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>
+                    Context gap killer
+                  </p>
+                  <p className="font-semibold mt-2" style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
+                    Outputs look plausible before the domain-specific exception is caught.
+                  </p>
+                </div>
                 <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{item.body}</p>
                 <div className="mt-auto pt-5">
-                  <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${item.color} / 0.07)`, border: `1px solid hsl(${item.color} / 0.12)` }}>
-                    <p className="font-semibold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>
-                      Context gap killer: outputs look plausible before the domain-specific exception is caught.
-                    </p>
-                  </div>
+                  <div className="h-px w-full" style={{ background: `hsl(${item.color} / 0.12)` }} />
                 </div>
               </div>
             ))}
