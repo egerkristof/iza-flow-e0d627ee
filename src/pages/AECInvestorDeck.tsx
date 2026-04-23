@@ -263,6 +263,26 @@ function Slide03() {
   ];
 
   const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
+  const benchmarks = [
+    {
+      value: "$177.5B",
+      label: "annual labor cost lost to rework, conflict resolution, and searching for data",
+      detail: "FMI / PlanGrid's 'Construction Disconnected' report frames the problem as a systems and information-flow failure, not just isolated mistakes.",
+      source: "FMI / PlanGrid, Construction Disconnected, 2018",
+    },
+    {
+      value: "52%",
+      label: "of rework tied to poor project data and miscommunication",
+      detail: "This is the part most relevant to AI: missing context, outdated information, and fragmented communication are exactly what make fast AI outputs dangerous.",
+      source: "FMI / PlanGrid, 2018",
+    },
+    {
+      value: "14+ hrs",
+      label: "lost per worker each week on non-optimal work, including 4 hours on rework",
+      detail: "The cost is not just the correction itself. Senior people spend time checking, clarifying, and reissuing work that should have been right the first time.",
+      source: "FMI / PlanGrid, 2018",
+    },
+  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -272,30 +292,37 @@ function Slide03() {
           What Missing Context Costs in AEC
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08 }}>
-          When AI misses project-specific judgment, the cost shows up as rework on the project.
+          In AEC, missing context turns into rework, delay, and margin loss.
         </h2>
 
         <div className="rounded-2xl px-8 py-6 flex items-stretch gap-8 mb-5"
           style={{ background: `hsl(${WARM} / 0.05)`, border: `2px solid hsl(${WARM} / 0.2)` }}>
           <div className="flex flex-col justify-center shrink-0">
-            <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>5%+</p>
-            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>of project cost can become rework</p>
-            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>FMI / PlanGrid benchmark for direct construction rework</p>
+            <p className="font-black" style={{ fontSize: 72, color: `hsl(${WARM})`, lineHeight: 1 }}>52%</p>
+            <p className="font-bold mt-1" style={{ fontSize: 20, color: TEXT }}>of rework tied to bad data + bad communication</p>
+            <p className="mt-0.5" style={{ fontSize: 15, color: MUTED }}>The part AI can amplify if it runs without project memory</p>
           </div>
           <div className="w-px shrink-0" style={{ background: `hsl(${WARM} / 0.15)` }} />
           <div className="flex-1 flex flex-col justify-center gap-3">
             <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.45 }}>
-              FMI and PlanGrid report that <span className="font-bold">direct rework can exceed 5% of total project cost</span> in construction. That means money already spent doing work that has to be corrected and done again.
+              FMI / PlanGrid found that a large share of construction rework is not random. <span className="font-bold">It comes from poor project information and poor communication.</span>
             </p>
             <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              AI is relevant here because it can introduce the same failure mode at higher speed: a plausible draft enters an RFI, spec review, submittal, or handover workflow <span className="font-bold" style={{ color: TEXT }}>without the latest project decision, exception, or owner standard.</span>
+              That is why this matters for AI. If AI drafts an RFI response, spec review, submittal note, or handover summary <span className="font-bold" style={{ color: TEXT }}>without the latest addendum, owner override, field decision, or design interpretation</span>, it introduces the same failure mode at higher speed.
             </p>
             <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              The team still has to catch it, correct it, and reissue it. On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, 5% rework is <span className="font-bold" style={{ color: TEXT }}>€2.5M</span>. AI does not need to create all of that to matter. It only needs to add more bad information into already expensive workflows.
+              Teams still have to catch it, correct it, and reissue it. That is why the 5% direct rework benchmark matters: on a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, that is roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct rework cost</span>, before supervision, overhead, and downstream delay.
             </p>
-            <p style={{ fontSize: 13, color: SUBTLE }}>
-              Context: FMI / PlanGrid construction rework studies. AI link: LIZA view of how missing project memory creates new avoidable rework.
-            </p>
+            <div className="grid grid-cols-3 gap-3 pt-1">
+              {benchmarks.map(({ value, label, detail, source }) => (
+                <div key={label} className="rounded-xl px-4 py-3" style={{ background: `hsl(${WARM} / 0.04)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
+                  <p className="font-black" style={{ fontSize: 28, color: `hsl(${WARM})`, lineHeight: 1 }}>{value}</p>
+                  <p className="font-bold mt-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{label}</p>
+                  <p className="mt-2" style={{ fontSize: 12, color: MUTED, lineHeight: 1.45 }}>{detail}</p>
+                  <p className="mt-2" style={{ fontSize: 11, color: SUBTLE }}>{source}</p>
+                </div>
+              ))}
+            </div>
             <div className="grid grid-cols-3 gap-3 pt-2">
               {[
                 { label: "Margin", value: "gets compressed", color: RED },
