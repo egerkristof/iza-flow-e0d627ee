@@ -865,7 +865,7 @@ function Slide06() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€3M Strategic Round</p>
               </div>
             </div>
           </div>
@@ -1502,8 +1502,8 @@ function Slide11() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Guided entry. Infrastructure base. Credit upside.{" "}
+          <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+            Guided entry. Self-serve product. Credit upside.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>The durable model is usage-aligned.</span>
         </h2>
 
@@ -1518,7 +1518,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                The current pricing is transitional. Long term, customers pay for the knowledge graph, governance layer, and workflow infrastructure that stays embedded in the firm.
+                The base fee anchors the knowledge graph, governance layer, and workflow infrastructure inside the account. The next investment phase turns that infrastructure into a repeatable self-serve product surface.
               </p>
             </div>
 
@@ -1528,7 +1528,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Metered usage</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Extraction, research, and execution-heavy workflows should be billed on credit consumption. That aligns pricing with both customer value and rising AI inference cost.
+                Extraction, research, and execution-heavy workflows should be billed on credit consumption. That aligns pricing with customer value while protecting margin as AI inference cost keeps rising.
               </p>
             </div>
 
@@ -1538,7 +1538,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                The wedge remains a low-friction pilot. We codify one workflow, prove ROI, then convert to platform base plus usage.
+                The wedge remains a low-friction pilot. We codify one workflow, prove ROI, then productize the experience into self-serve rollout plus platform base and usage.
               </p>
             </div>
           </div>
@@ -1568,6 +1568,7 @@ function Slide11() {
                 {[
                   "Diagnostic identifies workflow pain and creates urgency",
                   "Guided kickstart proves one workflow with minimal adoption friction",
+                  "Self-serve UX turns expert workflows into repeatable product usage",
                   "Platform base anchors the knowledge system inside the account",
                   "Credits scale revenue as AI execution becomes mission-critical",
                 ].map((step, i) => (
@@ -1637,8 +1638,8 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          Self-serve by design.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Co-built with our first enterprise cohort.</span>
+          Services-led entry. Self-serve destination.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -1684,7 +1685,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Go / no-go", label: "Decision point", sub: "Expand only if ROI is proven" },
+            { metric: "Self-serve", label: "Product direction", sub: "Rollout path after proof" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -1768,7 +1769,7 @@ function Slide12() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 12 — THE ASK (€1.5M + milestones + use of funds)
+// SLIDE 12 — THE ASK (€3M + milestones + use of funds)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide13() {
@@ -1781,19 +1782,19 @@ function Slide13() {
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€1.5–2M</h2>
+          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; AEC beachhead build-out
+            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + AEC beachhead build-out
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "AEC Pilots", pct: "40%", amt: "€600–800K", desc: "10–15 GC + A/E pilots", color: ACCENT },
-            { label: "Integrations", pct: "30%", amt: "€450–600K", desc: "Bluebeam, Allplan, BIM bridges", color: GREEN },
-            { label: "AEC GTM", pct: "20%", amt: "€300–400K", desc: "Vertical case studies + channels", color: GOLD },
-            { label: "Operations", pct: "10%", amt: "€150–200K", desc: "Legal, IP, compliance", color: MUTED },
+            { label: "Product UX + Self-Serve", pct: "35%", amt: "€1.05M", desc: "Workflow UX, onboarding, admin surfaces, product design", color: ACCENT },
+            { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
+            { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Bluebeam, Allplan, BIM bridges, lighthouse deployments", color: GOLD },
+            { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -1807,9 +1808,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "Bluebeam pilot live", milestone: "First GC integration. RFI lifecycle reference customer.", color: TEAL },
-            { month: "Month 7-12", target: "€500K-800K ARR", milestone: "5–8 AEC accounts. Allplan / Solibri integration in market.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.2-1.8M ARR", milestone: "12+ AEC customers. Acquisition / Series A optionality.", color: MINT },
+            { month: "Month 1-6", target: "Self-serve core live", milestone: "Workflow UX, onboarding, and credit-metering foundation in market with first lighthouse deployments.", color: TEAL },
+            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Bluebeam / Allplan integration path live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and AEC customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -1824,7 +1825,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             Project memory is the layer the AEC AI stack is missing.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>Build it together. Own the layer underneath everything.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>This round makes it self-serve, usage-priced, and scalable underneath every workflow.</strong>
           </p>
         </div>
 
