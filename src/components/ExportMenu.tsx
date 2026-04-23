@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { writeGoogleSlidesPopup } from "@/lib/google-slides-popup";
 
+const STATIC_EXPORT_CACHE = new Map<string, Promise<boolean>>();
+
 type ExportFormat = "pdf" | "pptx" | "gslides";
 
 interface ExportMenuProps {
@@ -64,6 +66,41 @@ function downloadBlob(blob: Blob, fileName: string) {
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function downloadFileUrl(url: string, fileName: string) {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  link.rel = "noopener noreferrer";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+function getStaticExportUrl(fileName: string, format: Exclude<ExportFormat, "gslides">) {
+  return `/downloads/${encodeURIComponent(fileName)}.${format}`;
+}
+
+function probeStaticExport(fileName: string, format: Exclude<ExportFormat, "gslides">) {
+  const url = getStaticExportUrl(fileName, format);
+  const cached = STATIC_EXPORT_CACHE.get(url);
+  if (cached) return cached;
+
+  const request = fetch(url, { method: "HEAD" })
+    .then((response) => response.ok)
+    .catch(() => false);
+
+  STATIC_EXPORT_CACHE.set(url, request);
+  return request;
+}
+
+async function tryStaticExport(fileName: string, format: Exclude<ExportFormat, "gslides">) {
+  const available = await probeStaticExport(fileName, format);
+  if (!available) return false;
+
+  downloadFileUrl(getStaticExportUrl(fileName, format), `${fileName}.${format}`);
+  return true;
 }
 
 async function exportPdf(exportRef: React.RefObject<HTMLDivElement>, fileName: string) {
@@ -169,6 +206,14 @@ export function ExportMenu({ exportRef, fileName, variant = "desktop", iconColor
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    void Promise.all([
+      probeStaticExport(fileName, "pdf"),
+      probeStaticExport(fileName, "pptx"),
+    ]);
+  }, [fileName, open]);
+
   const handleExport = async (format: ExportFormat) => {
     const popupWindow = format === "gslides" ? window.open("", "_blank") : null;
     if (popupWindow) {
@@ -181,10 +226,15 @@ export function ExportMenu({ exportRef, fileName, variant = "desktop", iconColor
     setExporting(true);
     setActiveFormat(format);
     setOpen(false);
-    await new Promise(r => setTimeout(r, 200));
-    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(undefined))));
-    await new Promise(r => setTimeout(r, 300));
+
     try {
+      if (format === "pdf" || format === "pptx") {
+        const servedStatically = await tryStaticExport(fileName, format);
+        if (servedStatically) return;
+      }
+
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(undefined))));
+
       switch (format) {
         case "pdf": await exportPdf(exportRef, fileName); break;
         case "pptx": await exportPptx(exportRef, fileName); break;
