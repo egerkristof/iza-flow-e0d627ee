@@ -595,8 +595,8 @@ function Slide05() {
               </p>
             </div>
 
-            <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 520, lineHeight: 1.45 }}>
-              The reasoning engine runs on LIZA. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Your standards, exceptions, and institutional memory remain your asset.</span>
+            <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the AEC operating experience.</span>
             </p>
           </div>
 
@@ -628,7 +628,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Govern every execution.</span>
+            Horizontal infrastructure plus vertical UX. <span style={{ color: `hsl(${TEAL})` }}>That is how the loop becomes an industry standard.</span>
           </p>
         </div>
       </div>
