@@ -1052,8 +1052,8 @@ function Slide06() {
             <div className="flex flex-col gap-2.5">
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
-                { label: "Where we enter", value: "High-stakes knowledge work", desc: "We start in life sciences, professional services, and financial services, where plausible AI is operationally unacceptable." },
-                { label: "What LIZA is", value: "The context governance layer", desc: "We make AI outputs reviewable, traceable, and domain-correct by carrying forward expert judgment." },
+                { label: "Where we enter", value: "Vertical execution", desc: "We start in professional services, life sciences, and AEC, where plausible AI creates expensive rework." },
+                { label: "What LIZA is", value: "Horizontal knowledge infrastructure", desc: "We turn expert judgment into reusable execution layers for each vertical workflow." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
@@ -1065,7 +1065,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Credible framing: anchor to AI governance as the sourceable market, then define LIZA more precisely as the context governance layer within that market.
+              Credible framing: anchor to AI governance as the sourceable market, then define LIZA as the horizontal knowledge infrastructure that powers vertical execution.
             </p>
           </div>
 
