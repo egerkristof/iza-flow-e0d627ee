@@ -1206,9 +1206,12 @@ function Slide08() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
-          <h2 className="font-black max-w-[1420px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            Prototype proven across workflows. <span style={{ color: `hsl(${GREEN})` }}>Now focused on AEC.</span>
+          <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+            The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
+          <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. AEC is where the experience now needs to become native.
+          </p>
         </div>
 
         <div className="flex-1 flex items-center">
