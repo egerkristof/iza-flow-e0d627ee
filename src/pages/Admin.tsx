@@ -777,20 +777,30 @@ export default function AdminPage() {
             <div className="space-y-6">
               <div>
                 <h1 className="text-xl font-bold text-foreground">Presentations</h1>
-                <p className="text-sm text-muted-foreground">This list is auto-generated from the shared presentation registry, so new decks appear here automatically.</p>
+                <p className="text-sm text-muted-foreground">Each deck is stored as source code in GitHub. Use the app route to view it, or the source path to find the editable presentation content.</p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 {adminPresentationItems.map((deck) => (
-                  <Card key={deck.path} className="group cursor-pointer transition-colors hover:border-primary/40" onClick={() => window.open(deck.path, "_blank", "noopener,noreferrer")}>
+                  <Card key={deck.path} className="group transition-colors hover:border-primary/40">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-sm font-semibold">{deck.title}</CardTitle>
-                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                        <Button variant="ghost" size="sm" className="h-7 gap-1 px-2 text-xs" onClick={() => window.open(deck.path, "_blank", "noopener,noreferrer")}>
+                          Open
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </Button>
                       </div>
                       <CardDescription className="text-xs">{deck.description}</CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0">
-                      <code className="font-mono text-[11px] text-muted-foreground/60">{deck.path}</code>
+                    <CardContent className="space-y-2 pt-0 text-xs">
+                      <div>
+                        <p className="font-medium text-muted-foreground">App route</p>
+                        <code className="font-mono text-[11px] text-muted-foreground/70">{deck.path}</code>
+                      </div>
+                      <div>
+                        <p className="font-medium text-muted-foreground">GitHub source</p>
+                        <code className="break-all font-mono text-[11px] text-foreground">{deck.sourcePath}</code>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
