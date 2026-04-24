@@ -997,8 +997,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          $70M+ recently funded in adjacent layers.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
+          Competitors are building knowledge layers.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Execution is still unsolved.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1031,12 +1031,12 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others mine, remember, or capture.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA operationalizes.</span>
+              Others help AI find knowledge.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA makes knowledge act.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The only platform that makes organizational judgment queryable, versionable, and executable.
-              Other tools give AI your documents. We give AI your judgment.
+              The only platform that makes organizational judgment queryable, versionable, executable, and usable inside domain-specific work.
+              Other tools give AI your documents. We give AI your operating logic.
             </p>
           </div>
         </div>
@@ -1053,7 +1053,7 @@ function Slide06() {
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
                 { label: "Where we enter", value: "Vertical execution", desc: "We start in professional services, life sciences, and AEC, where plausible AI creates expensive rework." },
-                { label: "What LIZA is", value: "Horizontal knowledge infrastructure", desc: "We turn expert judgment into reusable execution layers for each vertical workflow." },
+                { label: "What LIZA is", value: "Execution interface", desc: "We turn expert judgment into governed action through vertical CX layers." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
@@ -1065,7 +1065,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Credible framing: anchor to AI governance as the sourceable market, then define LIZA as the horizontal knowledge infrastructure that powers vertical execution.
+              Credible framing: anchor to AI governance as the sourceable market, then define LIZA as the execution interface that activates vertical work.
             </p>
           </div>
 
@@ -1086,6 +1086,56 @@ function Slide06() {
         </div>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
+    </div>
+  );
+}
+
+function Slide06Shift() {
+  const layers = [
+    { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE },
+    { layer: "Knowledge Layer", role: "Retrieve and summarize", examples: "Glean, Guru, RAG tools, copilots", color: GOLD },
+    { layer: "LIZA OS", role: "Encode operating logic", examples: "Context graph, protocols, governance", color: TEAL },
+    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>Strategic Shift</p>
+        <h2 className="font-black mb-5" style={{ fontSize: 54, color: TEXT, lineHeight: 1.05 }}>
+          The next category is not finding knowledge.{' '}
+          <span style={{ color: `hsl(${TEAL})` }}>It is turning knowledge into governed action.</span>
+        </h2>
+
+        <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
+          {layers.map(({ layer, role, examples, color }, i) => (
+            <div key={layer} className="rounded-2xl border p-6 flex flex-col justify-between"
+              style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.04)` }}>
+              <div>
+                <p className="font-black mb-4" style={{ fontSize: 52, color: `hsl(${color} / 0.18)`, lineHeight: 1 }}>0{i + 1}</p>
+                <p className="font-black mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.12 }}>{layer}</p>
+                <p className="font-bold mb-5" style={{ fontSize: 20, color: `hsl(${color})`, lineHeight: 1.25 }}>{role}</p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{examples}</p>
+              </div>
+              <div className="mt-8 rounded-xl px-4 py-4" style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.14)` }}>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
+                  {i < 2 ? "Market focus today" : i === 2 ? "Core seed investment" : "Expansion surface"}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <Workflow size={24} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
+            This round funds the horizontal core. Vertical experience layers become the repeatable expansion model through internal productization, partners, and selected joint ventures.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
     </div>
   );
 }
@@ -1369,22 +1419,22 @@ function Slide09() {
       vertical: "Professional Services", status: "Beachhead", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Delivery expertise is trapped in senior operators. AI makes juniors faster but not reliably better.",
-      result: "Reusable delivery playbooks, client context, proposal logic, and advisory standards.",
+      result: "Client delivery CX layer for proposals, workshops, research, and advisory artifacts.",
       proof: "Paid proof. Consultancy and digital agency active.",
     },
     {
       vertical: "Pharma & Life Sciences", status: "Regulated wedge", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
       problem: "GxP execution depends on traceable protocol nuance. Generic AI creates audit and safety risk.",
-      result: "Lifecycle governance, validation logic, deviation handling, and audit-ready execution.",
+      result: "Regulated lifecycle CX layer for validation, deviations, quality review, and audit-ready execution.",
       proof: "Audit use case validated. Pharma next.",
     },
     {
       vertical: "AEC", status: "Strategic vertical", color: TEAL,
       icon: <Building2 size={24} style={{ color: `hsl(${TEAL})` }} />,
       problem: "Project memory fragments across RFIs, submittals, specs, drawings, and handover.",
-      result: "Project memory layer for document review, RFI response, coordination, and handover.",
-      proof: "Nemetschek conversation. Vertical deck live.",
+      result: "AEC project CX layer for RFIs, submittals, drawing revisions, coordination, and handover.",
+      proof: "Strategic AEC conversation. Vertical deck live.",
     },
   ];
 
@@ -1397,7 +1447,7 @@ function Slide09() {
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
             Horizontal core.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Vertical execution layers.</span>
+            <span style={{ color: `hsl(${GREEN})` }}>Vertical CX layers.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1405,7 +1455,7 @@ function Slide09() {
               Pattern
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              Same infrastructure. Industry-specific inputs, outputs, personas, and protocols.
+              Same infrastructure. Domain-specific interface, workflows, outputs, personas, and protocols.
             </p>
           </div>
         </div>
@@ -1479,8 +1529,8 @@ function Slide09() {
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 16, color: MUTED }}>
-            <strong style={{ color: TEXT }}>One horizontal engine. Vertical execution packs on top.</strong>{" "}
-            Each vertical adds reusable protocols, richer knowledge graphs, and more credit-based execution volume.
+            <strong style={{ color: TEXT }}>One horizontal engine. Vertical CX layers on top.</strong>{" "}
+            Each vertical can be built internally, with partners, or through selected joint ventures while the core remains LIZA OS.
           </p>
         </div>
       </div>
@@ -1584,7 +1634,7 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Core platform base. <span style={{ color: `hsl(${GREEN})` }}>Vertical usage scales revenue.</span>
+          Core infrastructure base. <span style={{ color: `hsl(${GREEN})` }}>Vertical CX scales usage.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1598,7 +1648,7 @@ function Slide11() {
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Recurring access to the knowledge graph, workbooks, governance, permissions, and orchestration layer.
-                This is the durable system of record for how organizational judgment runs.
+                This is the durable horizontal core investors fund in the seed round.
               </p>
             </div>
 
@@ -1608,8 +1658,8 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Usage-based execution</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Customers pay for high-intensity actions like extraction, governed runs, and scaled execution.
-                Vertical workflows create repeated extraction, review, simulation, and artifact generation events that compound usage.
+                Customers pay for high-intensity actions like extraction, governed runs, simulations, and artifact generation.
+                Vertical CX layers create repeated review, execution, and reporting events that compound usage.
               </p>
             </div>
 
@@ -1620,6 +1670,7 @@ function Slide11() {
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Transitional entry offer to stand up the first workflows fast, prove ROI, and convert accounts into recurring platform plus credits customers.
+                Partners and selected JVs can accelerate domain-specific experience layers without fragmenting the core platform.
               </p>
             </div>
           </div>
@@ -1648,7 +1699,7 @@ function Slide11() {
                 {[
                   "Today: guided kickstarts accelerate learning and onboarding",
                   "Near term: recurring platform base becomes the account anchor",
-                  "Strategic state: vertical protocol packs drive repeatable credit-based execution",
+                  "Strategic state: vertical CX and protocol packs drive repeatable credit-based execution",
                   "Result: pricing compounds with adoption instead of flattening into seat-based ceilings",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -1891,9 +1942,9 @@ function Slide13() {
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "Customer Acq.", pct: "40%", amt: "€600K", desc: "15-20 paying pilots", color: ACCENT },
-            { label: "Product", pct: "30%", amt: "€450K", desc: "Production hardening", color: GREEN },
-            { label: "GTM", pct: "20%", amt: "€300K", desc: "Case studies + channels", color: GOLD },
+            { label: "Core Infrastructure", pct: "40%", amt: "€600K", desc: "Knowledge graph, governance, scale", color: ACCENT },
+            { label: "Vertical CX", pct: "25%", amt: "€375K", desc: "Protocol packs and domain workflows", color: GREEN },
+            { label: "GTM", pct: "25%", amt: "€375K", desc: "Cohort, partners, case studies", color: GOLD },
             { label: "Operations", pct: "10%", amt: "€150K", desc: "Legal, IP, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -1908,9 +1959,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "€200-400K ARR", milestone: "5-8 paying customers. First case studies.", color: TEAL },
-            { month: "Month 7-12", target: "€600K-1M ARR", milestone: "Self-serve onboarding, billing, and first vertical packs live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1-1.5M ARR", milestone: "25+ customers across professional services, pharma, and AEC. Series A readiness.", color: MINT },
+            { month: "Month 1-6", target: "Core hardened", milestone: "Knowledge graph, governance, billing, and first self-serve flows production-ready.", color: TEAL },
+            { month: "Month 7-12", target: "3 vertical layers", milestone: "Professional Services, Pharma, and AEC protocol packs live with partner pathways.", color: SEAFOAM },
+            { month: "Month 13-18", target: "Series A ready", milestone: "Usage engine proven across vertical CX layers with repeatable expansion economics.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -1924,8 +1975,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            We built the horizontal knowledge infrastructure.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into scalable vertical execution.</strong>
+            This round funds the horizontal core.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>Vertical CX layers become the expansion model.</strong>
           </p>
         </div>
 
@@ -1969,15 +2020,16 @@ const SLIDES = [
   { id: 7, title: "Why Now", component: <SlideWhyNow /> },
   { id: 8, title: "The Context Layer", component: <Slide05 /> },
   { id: 9, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 10, title: "Expansion Path", component: <Slide09 /> },
-  { id: 11, title: "What's Built", component: <Slide10 /> },
-  { id: 12, title: "Business Model", component: <Slide11 /> },
-  { id: 13, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 14, title: "Team", component: <Slide12 /> },
-  { id: 15, title: "The Ask", component: <Slide13 /> },
-  { id: 16, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 17, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 18, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 10, title: "Strategic Shift", component: <Slide06Shift /> },
+  { id: 11, title: "Expansion Path", component: <Slide09 /> },
+  { id: 12, title: "What's Built", component: <Slide10 /> },
+  { id: 13, title: "Business Model", component: <Slide11 /> },
+  { id: 14, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 15, title: "Team", component: <Slide12 /> },
+  { id: 16, title: "The Ask", component: <Slide13 /> },
+  { id: 17, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 18, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 19, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
