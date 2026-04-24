@@ -3,7 +3,7 @@ import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
-  AlertTriangle, Check, CheckCircle2, DollarSign,
+  AlertTriangle, Check, CheckCircle2,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
 } from "lucide-react";
@@ -252,17 +252,17 @@ function Slide03() {
       cost: "Margin erosion. Client escalation.",
     },
     {
-      name: "Financial Services",
-      icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
+      name: "AEC",
+      icon: <Building2 size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
-      records: ["Risk policies", "Case files", "Compliance docs"],
-      gap: "AI struggles to price risk beyond historical averages. But this client's exposure profile shifted after a recent acquisition. Two analysts using the same AI arrive at different outputs because neither has encoded the firm's evolving risk posture.",
-      outputs: ["Risk assessments", "Advisory reports"],
-      cost: "Regulatory exposure. Inconsistent pricing.",
+      records: ["RFIs", "Submittals", "Specs"],
+      gap: "AI drafts a clean response to an RFI, but misses the project-specific spec amendment, drawing revision, or owner standard that changes the answer. The project manager knows the exception. The AI does not, because project memory was never encoded.",
+      outputs: ["RFI responses", "Review packages"],
+      cost: "Rework. Claims exposure. Project delay.",
     },
   ];
 
-  const alsoApplies = ["Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops", "Marketing"];
+  const alsoApplies = ["Financial Services", "Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -368,10 +368,10 @@ function Slide03Cost() {
       color: ACCENT,
     },
     {
-      title: "Financial Services",
-      kicker: "Governance risk",
-      body: "A clean answer is still wrong if the exception path, approval logic, or exposure context is missing.",
-      result: "Mispriced decisions. Broken approvals. Fast loss of trust.",
+      title: "AEC",
+      kicker: "Project delay",
+      body: "A clean response is still wrong if it misses the spec amendment, drawing revision, or owner requirement that governs the project.",
+      result: "Rework, claims exposure, and expensive coordination loops.",
       color: GOLD,
     },
   ];
@@ -475,13 +475,13 @@ function Slide03WorkflowProof() {
       critical: "Without context, velocity rises first and reliability breaks later.",
     },
     {
-      persona: "Finance Lead",
-      icon: <DollarSign size={30} />,
+      persona: "Project Manager",
+      icon: <Building2 size={30} />,
       color: GOLD,
-      flow: ["Policies", "Approvals", "Exceptions log"],
-      before: "AI produces a clean recommendation, but misses the commercial exception, approval threshold, or exposure logic that changes the decision.",
-      after: "Recommendations reflect the real approval path, exception handling, and economic guardrails before anyone acts on the number.",
-      critical: "Without context, a plausible answer becomes a bad financial decision.",
+      flow: ["RFIs", "Submittals", "Spec revisions"],
+      before: "AI drafts a plausible project response, but misses the drawing revision, submittal condition, or owner standard that changes what is actually buildable.",
+      after: "The response inherits project memory, approvals, and known exceptions before it reaches the field or client.",
+      critical: "Without context, a plausible answer becomes rework on site.",
     },
     {
       persona: "Pharma Researcher",
@@ -647,7 +647,7 @@ function Slide05() {
           The Context Layer
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The missing category is a <span style={{ color: `hsl(${TEAL})` }}>system of intelligence.</span>
+          We built the horizontal layer. <span style={{ color: `hsl(${TEAL})` }}>Vertical execution runs on top.</span>
         </h2>
 
         {/* Three-column flow */}
@@ -692,7 +692,7 @@ function Slide05() {
               <Brain size={34} style={{ color: `hsl(${TEAL})` }} />
             </div>
             <p className="font-black mb-1" style={{ fontSize: 32, color: `hsl(${TEAL})` }}>LIZA OS</p>
-            <p className="font-semibold mb-6" style={{ fontSize: 16, color: MUTED }}>The Context Layer</p>
+            <p className="font-semibold mb-6" style={{ fontSize: 16, color: MUTED }}>Horizontal knowledge infrastructure</p>
 
             {/* Compact loop */}
             <div className="flex items-center gap-3">
@@ -734,10 +734,10 @@ function Slide05() {
           {/* RIGHT — Governed Output */}
           <div className="w-[340px] shrink-0 flex flex-col gap-4">
             <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What AI produces</p>
-            {[
-              { icon: <Zap size={24} />, title: "Governed Output", sub: "Proposals, reports, workflows" },
-              { icon: <Shield size={24} />, title: "Traceable Decisions", sub: "Audit trail, version history" },
-            ].map((item) => (
+              {[
+                { icon: <Zap size={24} />, title: "Vertical Execution", sub: "Proposals, RFIs, reports" },
+                { icon: <Shield size={24} />, title: "Traceable Decisions", sub: "Audit trail, version history" },
+              ].map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
@@ -757,7 +757,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Govern every execution.</span>
+            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Package it into vertical execution layers.</span>
           </p>
         </div>
       </div>
@@ -1052,8 +1052,8 @@ function Slide06() {
             <div className="flex flex-col gap-2.5">
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
-                { label: "Where we enter", value: "High-stakes knowledge work", desc: "We start in life sciences, professional services, and financial services, where plausible AI is operationally unacceptable." },
-                { label: "What LIZA is", value: "The context governance layer", desc: "We make AI outputs reviewable, traceable, and domain-correct by carrying forward expert judgment." },
+                { label: "Where we enter", value: "Vertical execution", desc: "We start in professional services, life sciences, and AEC, where plausible AI creates expensive rework." },
+                { label: "What LIZA is", value: "Horizontal knowledge infrastructure", desc: "We turn expert judgment into reusable execution layers for each vertical workflow." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
@@ -1065,7 +1065,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Credible framing: anchor to AI governance as the sourceable market, then define LIZA more precisely as the context governance layer within that market.
+              Credible framing: anchor to AI governance as the sourceable market, then define LIZA as the horizontal knowledge infrastructure that powers vertical execution.
             </p>
           </div>
 
@@ -1366,35 +1366,26 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Professional Services", status: "Deployed", color: GREEN,
+      vertical: "Professional Services", status: "Beachhead", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Senior judgment locked in individual heads. AI makes juniors faster but not better.",
-      result: "75% faster proposals. 25% deal velocity increase. Multi-team rollout live.",
-      proof: "Consultancy & digital agency. Active",
+      problem: "Delivery expertise is trapped in senior operators. AI makes juniors faster but not reliably better.",
+      result: "Reusable delivery playbooks, client context, proposal logic, and advisory standards.",
+      proof: "Paid proof. Consultancy and digital agency active.",
     },
     {
-      vertical: "Application Lifecycle Mgmt", status: "Deployed", color: TEAL,
-      icon: <Cpu size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "Software & engineering workflows rely on tribal knowledge. AI outputs lack organizational context.",
-      result: "Artifact workflows governed across R&D, HR, and Engineering. CTO-sponsored.",
-      proof: "Global AEC software company. Paid engagement",
-    },
-    {
-      vertical: "Pharma & Life Sciences", status: "Expanding", color: GOLD,
+      vertical: "Pharma & Life Sciences", status: "Regulated wedge", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "GxP compliance demands traceable expertise. AI without governance is a regulatory liability.",
-      result: "Audit prep from weeks to hours. Full provenance. Every AI output traceable.",
-      proof: "Cybersecurity audit validated · Pharma next",
+      problem: "GxP execution depends on traceable protocol nuance. Generic AI creates audit and safety risk.",
+      result: "Lifecycle governance, validation logic, deviation handling, and audit-ready execution.",
+      proof: "Audit use case validated. Pharma next.",
     },
-  ];
-
-  const expandInto = [
-    { name: "Legal & Compliance", col: "215 25% 50%" },
-    { name: "Engineering & Architecture", col: TEAL },
-    { name: "Sales & Revenue Ops", col: GREEN },
-    { name: "Marketing & Positioning", col: "330 70% 55%" },
-    { name: "Supply Chain & Procurement", col: GOLD },
-    { name: "HR & People Operations", col: ACCENT },
+    {
+      vertical: "AEC", status: "Strategic vertical", color: TEAL,
+      icon: <Building2 size={24} style={{ color: `hsl(${TEAL})` }} />,
+      problem: "Project memory fragments across RFIs, submittals, specs, drawings, and handover.",
+      result: "Project memory layer for document review, RFI response, coordination, and handover.",
+      proof: "Nemetschek conversation. Vertical deck live.",
+    },
   ];
 
   return (
@@ -1405,8 +1396,8 @@ function Slide09() {
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            Same engine.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every function where judgment matters.</span>
+            Horizontal core.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Vertical execution layers.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1414,7 +1405,7 @@ function Slide09() {
               Pattern
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              One engine governs every workflow where standards meet AI execution.
+              Same infrastructure. Industry-specific inputs, outputs, personas, and protocols.
             </p>
           </div>
         </div>
@@ -1463,10 +1454,17 @@ function Slide09() {
           <div className="rounded-[26px] border p-5 flex flex-col"
             style={{ borderColor: `hsl(${ACCENT} / 0.14)`, background: `hsl(${ACCENT} / 0.03)` }}>
             <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 12, color: MUTED }}>
-              The pattern applies to every function
+              What changes by vertical
             </p>
             <div className="grid gap-3">
-              {expandInto.map(({ name, col }) => (
+              {[
+                { name: "Input documents", col: TEAL },
+                { name: "Output artifacts", col: GREEN },
+                { name: "Personas", col: GOLD },
+                { name: "Review flows", col: ACCENT },
+                { name: "Compliance language", col: WARM },
+                { name: "Protocol libraries", col: SEAFOAM },
+              ].map(({ name, col }) => (
                 <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-3.5"
                   style={{ background: `hsl(${col} / 0.05)`, border: `1px solid hsl(${col} / 0.15)` }}>
                   <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: `hsl(${col})` }} />
@@ -1481,8 +1479,8 @@ function Slide09() {
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 16, color: MUTED }}>
-            <strong style={{ color: TEXT }}>One core engine. Industry-specific expertise packs.</strong>{" "}
-            Each vertical deepens the moat. Capital-efficient expansion from a single codebase.
+            <strong style={{ color: TEXT }}>One horizontal engine. Vertical execution packs on top.</strong>{" "}
+            Each vertical adds reusable protocols, richer knowledge graphs, and more credit-based execution volume.
           </p>
         </div>
       </div>
@@ -1586,7 +1584,7 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Platform base today. <span style={{ color: `hsl(${GREEN})` }}>AI credits over time.</span>
+          Core platform base. <span style={{ color: `hsl(${GREEN})` }}>Vertical usage scales revenue.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1611,7 +1609,7 @@ function Slide11() {
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Customers pay for high-intensity actions like extraction, governed runs, and scaled execution.
-                This is the long-term pricing engine: value-linked usage that scales with customer outcomes and protects margin as AI compute costs rise.
+                Vertical workflows create repeated extraction, review, simulation, and artifact generation events that compound usage.
               </p>
             </div>
 
@@ -1650,7 +1648,7 @@ function Slide11() {
                 {[
                   "Today: guided kickstarts accelerate learning and onboarding",
                   "Near term: recurring platform base becomes the account anchor",
-                  "Strategic state: AI credits tie what customers pay directly to execution value created",
+                  "Strategic state: vertical protocol packs drive repeatable credit-based execution",
                   "Result: pricing compounds with adoption instead of flattening into seat-based ceilings",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -1911,8 +1909,8 @@ function Slide13() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
             { month: "Month 1-6", target: "€200-400K ARR", milestone: "5-8 paying customers. First case studies.", color: TEAL },
-            { month: "Month 7-12", target: "€600K-1M ARR", milestone: "15+ customers, 3+ verticals. NRR >120%.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1-1.5M ARR", milestone: "25+ customers. Series A raise.", color: MINT },
+            { month: "Month 7-12", target: "€600K-1M ARR", milestone: "Self-serve onboarding, billing, and first vertical packs live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1-1.5M ARR", milestone: "25+ customers across professional services, pharma, and AEC. Series A readiness.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -1926,8 +1924,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            Your organization's collective intelligence is your competitive advantage.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>We make it run the company.</strong>
+            We built the horizontal knowledge infrastructure.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into scalable vertical execution.</strong>
           </p>
         </div>
 
