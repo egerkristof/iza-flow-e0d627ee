@@ -252,7 +252,7 @@ function Slide03() {
       cost: "Margin erosion. Client escalation.",
     },
     {
-      name: "AEC",
+      name: "AEC (Architecture, Engineering & Construction)",
       icon: <Building2 size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
       records: ["RFIs", "Submittals", "Specs"],
@@ -1430,7 +1430,7 @@ function Slide09() {
       proof: "Audit use case validated. Pharma next.",
     },
     {
-      vertical: "AEC", status: "Strategic vertical", color: TEAL,
+      vertical: "AEC", status: "Architecture, Engineering & Construction", color: TEAL,
       icon: <Building2 size={24} style={{ color: `hsl(${TEAL})` }} />,
       problem: "Project memory fragments across RFIs, submittals, specs, drawings, and handover.",
       result: "AEC project CX layer for RFIs, submittals, drawing revisions, coordination, and handover.",
