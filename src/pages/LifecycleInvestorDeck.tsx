@@ -1388,15 +1388,6 @@ function Slide09() {
     },
   ];
 
-  const expandInto = [
-    { name: "Legal & Compliance", col: "215 25% 50%" },
-    { name: "Engineering & Architecture", col: TEAL },
-    { name: "Sales & Revenue Ops", col: GREEN },
-    { name: "Marketing & Positioning", col: "330 70% 55%" },
-    { name: "Supply Chain & Procurement", col: GOLD },
-    { name: "HR & People Operations", col: ACCENT },
-  ];
-
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
