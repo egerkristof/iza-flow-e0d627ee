@@ -650,71 +650,6 @@ function Slide05() {
   );
 }
 
-function SlideCategoryDefinition() {
-  const beforeAfter = [
-    { before: "Software is organized around use cases", after: "AI execution is organized around reusable knowledge loops", color: TEAL },
-    { before: "Teams buy point tools for RFIs, specs, submittals, and handover", after: "Teams need one project memory layer that governs every AI workflow", color: GOLD },
-    { before: "Documents are the source of truth", after: "Versioned judgment becomes the operating layer", color: GREEN },
-  ];
-
-  return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>Category Definition</p>
-        <h2 className="font-black mb-5" style={{ fontSize: 54, color: TEXT, lineHeight: 1.05 }}>
-          The category is not AEC AI software. <span style={{ color: `hsl(${TEAL})` }}>It is the AEC-native knowledge loop.</span>
-        </h2>
-
-        <div className="grid grid-cols-[0.95fr_1.05fr] gap-7 flex-1 min-h-0">
-          <div className="rounded-[28px] border p-7 flex flex-col justify-center" style={{ borderColor: `hsl(${TEAL} / 0.24)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <p className="font-black tracking-[0.16em] uppercase mb-5" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>What we are defining</p>
-            <p className="font-black mb-5" style={{ fontSize: 40, color: TEXT, lineHeight: 1.08 }}>
-              A governed context infrastructure that makes expert AEC judgment executable by AI.
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "Project memory", desc: "RFIs, addenda, decisions, exceptions" },
-                { label: "Governance", desc: "Standards, approvals, drift, traceability" },
-                { label: "Execution", desc: "AI applies context inside live workflows" },
-                { label: "Learning", desc: "Feedback updates the shared operating layer" },
-              ].map((item) => (
-                <div key={item.label} className="rounded-xl px-4 py-4" style={{ background: `hsl(${TEAL} / 0.07)`, border: `1px solid hsl(${TEAL} / 0.14)` }}>
-                  <p className="font-black" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>{item.label}</p>
-                  <p className="mt-1" style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-center gap-4">
-            {beforeAfter.map((row) => (
-              <div key={row.before} className="grid grid-cols-[1fr_56px_1.15fr] gap-4 items-stretch">
-                <div className="rounded-2xl px-5 py-5 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.035)`, border: `1px solid hsl(${RED} / 0.12)` }}>
-                  <p className="font-bold tracking-[0.12em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${RED})` }}>Before</p>
-                  <p className="font-bold" style={{ fontSize: 19, color: MUTED, lineHeight: 1.28 }}>{row.before}</p>
-                </div>
-                <div className="flex items-center justify-center"><ArrowRight size={28} style={{ color: `hsl(${row.color})` }} /></div>
-                <div className="rounded-2xl px-6 py-5 flex flex-col justify-center" style={{ background: `hsl(${row.color} / 0.07)`, border: `1.5px solid hsl(${row.color} / 0.22)` }}>
-                  <p className="font-bold tracking-[0.12em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${row.color})` }}>After</p>
-                  <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.22 }}>{row.after}</p>
-                </div>
-              </div>
-            ))}
-
-            <div className="mt-2 rounded-2xl px-7 py-5" style={{ background: `hsl(${GOLD} / 0.07)`, border: `1.5px solid hsl(${GOLD} / 0.24)` }}>
-              <p className="font-bold" style={{ fontSize: 23, color: TEXT, lineHeight: 1.35 }}>
-                This resolves the use-case objection: the core is horizontal infrastructure, but the adoption surface must be native to AEC roles, language, and project workflows.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <SlideBar from={TEAL} to={GOLD} />
-    </div>
-  );
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 05B — ARCHITECTURE (Blueprint + Nervous System)
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -2028,19 +1963,18 @@ const SLIDES = [
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
-  { id: 8, title: "Category Definition", component: <SlideCategoryDefinition /> },
+  { id: 8, title: "Strategic Pivot", component: <SlideVerticalization /> },
   { id: 9, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 10, title: "Verticalization Thesis", component: <SlideVerticalization /> },
-  { id: 11, title: "Expansion Path", component: <Slide09 /> },
-  { id: 12, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
-  { id: 13, title: "What's Built", component: <Slide10 /> },
-  { id: 14, title: "Business Model", component: <Slide11 /> },
-  { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 16, title: "Team", component: <Slide12 /> },
-  { id: 17, title: "The Ask", component: <Slide13 /> },
-  { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 10, title: "Expansion Path", component: <Slide09 /> },
+  { id: 11, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 12, title: "What's Built", component: <Slide10 /> },
+  { id: 13, title: "Business Model", component: <Slide11 /> },
+  { id: 14, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 15, title: "Team", component: <Slide12 /> },
+  { id: 16, title: "The Ask", component: <Slide13 /> },
+  { id: 17, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 18, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 19, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
