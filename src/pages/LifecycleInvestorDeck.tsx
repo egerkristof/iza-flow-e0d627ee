@@ -639,25 +639,62 @@ function SlideWhyNow() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide05() {
+  const domainSurfaces = [
+    { icon: <Briefcase size={24} />, title: "Professional Services", sub: "Proposals, delivery workflows, advisory memos", color: WARM },
+    { icon: <Shield size={24} />, title: "Pharma", sub: "Deviation reports, validation packs, review gates", color: RED },
+    { icon: <Building2 size={24} />, title: "AEC", sub: "Architecture, Engineering & Construction: RFIs, submittals, drawing revisions", color: GOLD },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          The Context Layer
+          Horizontal Core · Vertical Experience
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          We built the horizontal layer. <span style={{ color: `hsl(${TEAL})` }}>Vertical execution runs on top.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through domain-native experiences.</span>
         </h2>
+
+        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
+          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>SOPs, policies, templates, CRM records, requirements, project memory</p>
+          </div>
+          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
+          <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>LIZA OS</p>
+            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The in-between operating layer that turns raw context into governed execution</p>
+          </div>
+          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
+          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows institutional memory, expert judgment, and domain standards</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-center mb-1 h-10">
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${BLUE} / 0.5)`, transform: "rotate(105deg)" }} />
+          </div>
+          <div />
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${TEAL} / 0.55)`, transform: "rotate(90deg)" }} />
+          </div>
+          <div />
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${GREEN} / 0.5)`, transform: "rotate(75deg)" }} />
+          </div>
+        </div>
 
         {/* Three-column flow */}
         <div className="flex-1 flex items-center gap-0">
           {/* LEFT — What companies feed AI */}
-          <div className="w-[340px] shrink-0 flex flex-col gap-4">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>What companies feed AI</p>
+          <div className="w-[360px] shrink-0 flex flex-col gap-4">
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>Horizontal infrastructure</p>
             {[
-              { icon: <Database size={24} />, title: "Documents & Data", sub: "SOPs, policies, CRM records" },
-              { icon: <Users size={24} />, title: "Templates & Prompts", sub: "Formats, checklists, scripts" },
+              { icon: <Database size={24} />, title: "Knowledge Graph", sub: "Standards, exceptions, decisions" },
+              { icon: <Cpu size={24} />, title: "Context Engine", sub: "Intent-locking, injection, drift" },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${BLUE} / 0.18)`, background: `hsl(${BLUE} / 0.04)` }}>
@@ -669,8 +706,8 @@ function Slide05() {
                 </div>
               </div>
             ))}
-            <p className="text-center font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${RED})` }}>
-              Missing: judgment, exceptions, standards
+            <p className="text-center font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${BLUE})` }}>
+              Built once. Portable across domains.
             </p>
           </div>
 
@@ -732,17 +769,13 @@ function Slide05() {
           </div>
 
           {/* RIGHT — Domain Experience Layers */}
-          <div className="w-[340px] shrink-0 flex flex-col gap-4">
+          <div className="w-[390px] shrink-0 flex flex-col gap-3">
             <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Domain Experience Layers</p>
-              {[
-                { icon: <Briefcase size={24} />, title: "Professional Services", sub: "Proposals, delivery, advisory memos" },
-                { icon: <Shield size={24} />, title: "Pharma", sub: "Deviations, validation packs, review" },
-                { icon: <Building2 size={24} />, title: "AEC", sub: "RFIs, submittals, drawing revisions" },
-              ].map((item) => (
+              {domainSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
-                style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
+                style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: `hsl(${GREEN} / 0.1)`, color: `hsl(${GREEN})` }}>{item.icon}</div>
+                  style={{ background: `hsl(${item.color} / 0.1)`, color: `hsl(${item.color})` }}>{item.icon}</div>
                 <div>
                   <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
                   <p style={{ fontSize: 14, color: MUTED }}>{item.sub}</p>
