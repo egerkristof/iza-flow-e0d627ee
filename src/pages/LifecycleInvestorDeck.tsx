@@ -1366,25 +1366,25 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Professional Services", status: "Deployed", color: GREEN,
+      vertical: "Professional Services", status: "Beachhead", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Senior judgment locked in individual heads. AI makes juniors faster but not better.",
-      result: "75% faster proposals. 25% deal velocity increase. Multi-team rollout live.",
-      proof: "Consultancy & digital agency. Active",
+      problem: "Delivery expertise is trapped in senior operators. AI makes juniors faster but not reliably better.",
+      result: "Reusable delivery playbooks, client context, proposal logic, and advisory standards.",
+      proof: "Paid proof. Consultancy and digital agency active.",
     },
     {
-      vertical: "Application Lifecycle Mgmt", status: "Deployed", color: TEAL,
-      icon: <Cpu size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "Software & engineering workflows rely on tribal knowledge. AI outputs lack organizational context.",
-      result: "Artifact workflows governed across R&D, HR, and Engineering. CTO-sponsored.",
-      proof: "Global AEC software company. Paid engagement",
-    },
-    {
-      vertical: "Pharma & Life Sciences", status: "Expanding", color: GOLD,
+      vertical: "Pharma & Life Sciences", status: "Regulated wedge", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "GxP compliance demands traceable expertise. AI without governance is a regulatory liability.",
-      result: "Audit prep from weeks to hours. Full provenance. Every AI output traceable.",
-      proof: "Cybersecurity audit validated · Pharma next",
+      problem: "GxP execution depends on traceable protocol nuance. Generic AI creates audit and safety risk.",
+      result: "Lifecycle governance, validation logic, deviation handling, and audit-ready execution.",
+      proof: "Audit use case validated. Pharma next.",
+    },
+    {
+      vertical: "AEC", status: "Strategic vertical", color: TEAL,
+      icon: <Building2 size={24} style={{ color: `hsl(${TEAL})` }} />,
+      problem: "Project memory fragments across RFIs, submittals, specs, drawings, and handover.",
+      result: "Project memory layer for document review, RFI response, coordination, and handover.",
+      proof: "Nemetschek conversation. Vertical deck live.",
     },
   ];
 
@@ -1405,8 +1405,8 @@ function Slide09() {
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            Same engine.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every function where judgment matters.</span>
+            Horizontal core.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Vertical execution layers.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1414,7 +1414,7 @@ function Slide09() {
               Pattern
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              One engine governs every workflow where standards meet AI execution.
+              Same infrastructure. Industry-specific inputs, outputs, personas, and protocols.
             </p>
           </div>
         </div>
