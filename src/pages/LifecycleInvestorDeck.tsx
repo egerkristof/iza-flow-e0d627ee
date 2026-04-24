@@ -1127,8 +1127,8 @@ function Slide06() {
 function Slide06Shift() {
   const layers = [
     { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE, width: "w-[280px]", height: "h-[66%]" },
-    { layer: "Data Layer", role: "Surface what to do", examples: "Glean, Guru, RAG tools, copilots", color: GOLD, width: "w-[330px]", height: "h-[76%]" },
-    { layer: "LIZA OS", role: "Encode how to do it", examples: "Knowledge layer, operating layer, governance", color: TEAL, width: "w-[405px]", height: "h-[88%]" },
+    { layer: "Data Layer", role: "Define the 'what to do'", examples: "Static process inputs, outputs, and end points", color: GOLD, width: "w-[330px]", height: "h-[76%]" },
+    { layer: "LIZA OS", role: "Encode how to do things", examples: "Fluid expertise in changing conditions and team settings", color: TEAL, width: "w-[405px]", height: "h-[88%]" },
     { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN, width: "flex-1", height: "h-full" },
   ];
 
@@ -1164,7 +1164,7 @@ function Slide06Shift() {
               </div>
               <div className="mt-6 rounded-xl px-4 py-4" style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.14)` }}>
                 <p className="font-bold" style={{ fontSize: i === 0 ? 14 : 16, color: TEXT, lineHeight: 1.35 }}>
-                  {i === 0 ? "Enterprise foundation" : i === 1 ? "Market focus today: what to do" : i === 2 ? "Core seed investment: how to do" : "Expansion surface"}
+                  {i === 0 ? "Enterprise foundation" : i === 1 ? "Today’s market maps starts and ends" : i === 2 ? "Core seed investment: dynamic know-how" : "Expansion surface"}
                 </p>
               </div>
             </div>
