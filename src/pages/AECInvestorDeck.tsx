@@ -526,7 +526,7 @@ function Slide05() {
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-4">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Documents, data, standards, decisions</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>RFIs, submittals, drawings, specs, addenda, owner standards, field decisions</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
