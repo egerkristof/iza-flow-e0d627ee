@@ -1070,11 +1070,6 @@ function SlideVerticalization() {
               </div>
             ))}
 
-            <div className="mt-3 rounded-2xl px-7 py-5" style={{ background: `hsl(${GOLD} / 0.07)`, border: `1.5px solid hsl(${GOLD} / 0.24)` }}>
-              <p className="font-bold" style={{ fontSize: 23, color: TEXT, lineHeight: 1.35 }}>
-                The ask to Nemetschek: help turn a proven horizontal context infrastructure into the AEC-native interface layer before generic AI tools capture that reasoning layer.
-              </p>
-            </div>
           </div>
         </div>
       </div>
