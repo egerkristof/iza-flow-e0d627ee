@@ -1127,8 +1127,8 @@ function Slide06() {
 function Slide06Shift() {
   const layers = [
     { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE },
-    { layer: "Knowledge Layer", role: "Retrieve and summarize", examples: "Glean, Guru, RAG tools, copilots", color: GOLD },
-    { layer: "LIZA OS", role: "Encode operating logic", examples: "Context graph, protocols, governance", color: TEAL },
+    { layer: "Data Layer", role: "Surface what to do", examples: "Glean, Guru, RAG tools, copilots", color: GOLD },
+    { layer: "LIZA OS", role: "Encode how to do it", examples: "Knowledge layer, operating layer, governance", color: TEAL },
     { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN },
   ];
 
@@ -1138,8 +1138,8 @@ function Slide06Shift() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>Strategic Shift</p>
         <h2 className="font-black mb-5" style={{ fontSize: 54, color: TEXT, lineHeight: 1.05 }}>
-          The next category is not finding knowledge.{' '}
-          <span style={{ color: `hsl(${TEAL})` }}>It is turning knowledge into governed action.</span>
+          The market is moving from data retrieval to operating logic.{' '}
+          <span style={{ color: `hsl(${TEAL})` }}>LIZA turns knowledge into governed action.</span>
         </h2>
 
         <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
@@ -1154,7 +1154,7 @@ function Slide06Shift() {
               </div>
               <div className="mt-8 rounded-xl px-4 py-4" style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.14)` }}>
                 <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
-                  {i < 2 ? "Market focus today" : i === 2 ? "Core seed investment" : "Expansion surface"}
+                  {i === 0 ? "Enterprise foundation" : i === 1 ? "Market focus today: what to do" : i === 2 ? "Core seed investment: how to do" : "Expansion surface"}
                 </p>
               </div>
             </div>
