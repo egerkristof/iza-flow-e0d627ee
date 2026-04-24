@@ -3,7 +3,7 @@ import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
-  AlertTriangle, Check, CheckCircle2, DollarSign,
+  AlertTriangle, Check, CheckCircle2,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
 } from "lucide-react";
@@ -252,17 +252,17 @@ function Slide03() {
       cost: "Margin erosion. Client escalation.",
     },
     {
-      name: "Financial Services",
-      icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
+      name: "AEC",
+      icon: <Building2 size={22} style={{ color: `hsl(${GOLD})` }} />,
       accent: GOLD,
-      records: ["Risk policies", "Case files", "Compliance docs"],
-      gap: "AI struggles to price risk beyond historical averages. But this client's exposure profile shifted after a recent acquisition. Two analysts using the same AI arrive at different outputs because neither has encoded the firm's evolving risk posture.",
-      outputs: ["Risk assessments", "Advisory reports"],
-      cost: "Regulatory exposure. Inconsistent pricing.",
+      records: ["RFIs", "Submittals", "Specs"],
+      gap: "AI drafts a clean response to an RFI, but misses the project-specific spec amendment, drawing revision, or owner standard that changes the answer. The project manager knows the exception. The AI does not, because project memory was never encoded.",
+      outputs: ["RFI responses", "Review packages"],
+      cost: "Rework. Claims exposure. Project delay.",
     },
   ];
 
-  const alsoApplies = ["Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops", "Marketing"];
+  const alsoApplies = ["Financial Services", "Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
