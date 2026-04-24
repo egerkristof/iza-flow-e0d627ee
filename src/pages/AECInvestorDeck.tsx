@@ -1024,9 +1024,9 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "One-off AI use cases", now: "A governed knowledge loop that powers many workflows", color: TEAL },
-    { old: "Generic productivity software", now: "Industry-native execution surfaces for AEC teams", color: GOLD },
-    { old: "Prompt libraries and templates", now: "Versioned project memory that updates after every execution", color: GREEN },
+    { old: "Customers ask for one use case because software has trained them to buy point solutions", now: "LIZA creates one governed knowledge loop that can power many AEC workflows", color: TEAL },
+    { old: "Generic AI tools ignore how project managers, BIM leads, estimators, and principals actually work", now: "The experience becomes native to AEC roles, language, decisions, and handoffs", color: GOLD },
+    { old: "Prompts and templates stay static, so every team has to remember what changed", now: "Project memory is versioned, updated, and reused after every execution", color: GREEN },
   ];
 
   return (
@@ -1058,14 +1058,19 @@ function SlideVerticalization() {
           </div>
 
           <div className="flex flex-col gap-4 justify-center">
+            <div className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-center">
+              <p className="font-black tracking-[0.18em] uppercase text-center" style={{ fontSize: 13, color: `hsl(${RED})` }}>Old software logic</p>
+              <div />
+              <p className="font-black tracking-[0.18em] uppercase text-center" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>New category logic</p>
+            </div>
             {rows.map((row) => (
               <div key={row.old} className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-stretch">
                 <div className="rounded-2xl px-5 py-5 flex items-center" style={{ background: `hsl(${RED} / 0.035)`, border: `1px solid hsl(${RED} / 0.12)` }}>
-                  <p className="font-bold" style={{ fontSize: 20, color: MUTED, lineHeight: 1.25 }}>{row.old}</p>
+                  <p className="font-bold" style={{ fontSize: 18, color: MUTED, lineHeight: 1.28 }}>{row.old}</p>
                 </div>
                 <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${row.color})` }} /></div>
                 <div className="rounded-2xl px-6 py-5 flex items-center" style={{ background: `hsl(${row.color} / 0.07)`, border: `1.5px solid hsl(${row.color} / 0.2)` }}>
-                  <p className="font-black" style={{ fontSize: 23, color: TEXT, lineHeight: 1.22 }}>{row.now}</p>
+                  <p className="font-black" style={{ fontSize: 21, color: TEXT, lineHeight: 1.24 }}>{row.now}</p>
                 </div>
               </div>
             ))}
