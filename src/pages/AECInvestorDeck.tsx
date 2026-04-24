@@ -503,25 +503,34 @@ function SlideWhyNow() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide05() {
+  const verticalSurfaces = [
+    { title: "AEC roles", items: "PM, estimator, BIM lead, principal", color: TEAL },
+    { title: "AEC workflows", items: "RFI, submittal, spec review, handover", color: GOLD },
+    { title: "AEC language", items: "Addenda, AHJ, owner standards, field decisions", color: GREEN },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          The Context Layer
+          Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The missing category is a <span style={{ color: `hsl(${TEAL})` }}>system of intelligence.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an AEC-native experience.</span>
         </h2>
+        <p className="mb-4" style={{ fontSize: 19, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
+          Customers asking "which use case?" are describing the old software model. The new category is a knowledge loop that must feel specific to the humans, workflows, and language of the industry.
+        </p>
 
         {/* Three-column flow */}
         <div className="flex-1 flex items-center gap-0">
           {/* LEFT — What companies feed AI */}
-          <div className="w-[340px] shrink-0 flex flex-col gap-4">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>What companies feed AI</p>
+          <div className="w-[360px] shrink-0 flex flex-col gap-4">
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>Horizontal infrastructure</p>
             {[
-              { icon: <Database size={24} />, title: "Documents & Data", sub: "SOPs, policies, CRM records" },
-              { icon: <Users size={24} />, title: "Templates & Prompts", sub: "Formats, checklists, scripts" },
+              { icon: <Database size={24} />, title: "Knowledge Graph", sub: "Standards, exceptions, decisions" },
+              { icon: <Cpu size={24} />, title: "Context Engine", sub: "Intent-locking, injection, drift" },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${BLUE} / 0.18)`, background: `hsl(${BLUE} / 0.04)` }}>
@@ -533,8 +542,8 @@ function Slide05() {
                 </div>
               </div>
             ))}
-            <p className="text-center font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${RED})` }}>
-              Missing: judgment, exceptions, standards
+            <p className="text-center font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${BLUE})` }}>
+              Built once. Portable across domains.
             </p>
           </div>
 
@@ -597,24 +606,21 @@ function Slide05() {
           </div>
 
           {/* RIGHT — Governed Output */}
-          <div className="w-[340px] shrink-0 flex flex-col gap-4">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What AI produces</p>
-            {[
-              { icon: <Zap size={24} />, title: "Governed Output", sub: "Proposals, reports, workflows" },
-              { icon: <Shield size={24} />, title: "Traceable Decisions", sub: "Audit trail, version history" },
-            ].map((item) => (
+          <div className="w-[390px] shrink-0 flex flex-col gap-3">
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>AEC-native experience</p>
+            {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
-                style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
+                style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: `hsl(${GREEN} / 0.1)`, color: `hsl(${GREEN})` }}>{item.icon}</div>
+                  style={{ background: `hsl(${item.color} / 0.1)`, color: `hsl(${item.color})` }}><Workflow size={24} /></div>
                 <div>
                   <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
-                  <p style={{ fontSize: 14, color: MUTED }}>{item.sub}</p>
+                  <p style={{ fontSize: 14, color: MUTED }}>{item.items}</p>
                 </div>
               </div>
             ))}
             <p className="text-center font-bold mt-1" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>
-              Consistent. Traceable. Expert-quality.
+              Specific enough for adoption. General enough to scale.
             </p>
           </div>
         </div>
