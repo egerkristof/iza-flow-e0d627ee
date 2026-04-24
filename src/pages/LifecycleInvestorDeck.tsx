@@ -1006,20 +1006,20 @@ function Slide06() {
   const moatLayers = [
     {
       layer: "AACE v3.1 Specification",
-      desc: "Intent-locking, knowledge injection, and drift detection built into one context engine.",
-      proof: "Hard to copy because the logic sits in the operating model, not a prompt library.",
+      desc: "Encode, govern, execute, and evolve as one repeatable system for human knowledge.",
+      proof: "The spec makes expert judgment operational, not just searchable.",
       icon: <Cpu size={20} />,
     },
     {
-      layer: "Compounding Blueprint",
-      desc: "Every customer deployment deepens the knowledge graph and sharpens the governed context layer.",
-      proof: "Value increases with usage because judgment becomes more reusable over time.",
-      icon: <Layers size={20} />,
+      layer: "Human Experience Layer",
+      desc: "Industry workflows designed around how experts actually decide, coach, review, and execute.",
+      proof: "Built from business model innovation, workflow orientation, and executive coaching expertise.",
+      icon: <Users size={20} />,
     },
     {
       layer: "Cross-team Network Effect",
-      desc: "Standards propagate across teams, so every new department increases consistency and system value.",
-      proof: "The more workflows onboarded, the harder it becomes to rip the layer back out.",
+      desc: "Every team execution feeds the shared blueprint, improving standards across departments.",
+      proof: "The loop compounds as more teams encode, reuse, and improve operating knowledge.",
       icon: <Network size={20} />,
     },
   ];
@@ -1031,8 +1031,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Competitors are building knowledge layers.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Execution is still unsolved.</span>
+          Competitors retrieve knowledge.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>LIZA designs the industry human experience around it.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1066,11 +1066,11 @@ function Slide06() {
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
               Others help AI find knowledge.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA makes knowledge act.</span>
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA turns human knowledge into an operating experience.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The only platform that makes organizational judgment queryable, versionable, executable, and usable inside domain-specific work.
-              Other tools give AI your documents. We give AI your operating logic.
+              We focus on the human layer of encode, govern, execute, and evolve: the way experts decide, coach, review, and improve work inside each industry.
+              Other tools give AI your data. We give AI your operating logic.
             </p>
           </div>
         </div>
@@ -1087,7 +1087,7 @@ function Slide06() {
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
                 { label: "Where we enter", value: "Vertical execution", desc: "We start in professional services, life sciences, and AEC, where plausible AI creates expensive rework." },
-                { label: "What LIZA is", value: "Execution interface", desc: "We turn expert judgment into governed action through vertical CX layers." },
+                { label: "What LIZA is", value: "Human CX", desc: "We turn expert judgment into governed action through industry experience layers." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
