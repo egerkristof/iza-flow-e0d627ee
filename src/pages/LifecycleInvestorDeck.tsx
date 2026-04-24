@@ -1142,7 +1142,25 @@ function Slide06Shift() {
           <span style={{ color: `hsl(${TEAL})` }}>LIZA turns knowledge into governed action.</span>
         </h2>
 
-        <div className="flex items-center gap-5 flex-1 min-h-0">
+        <div className="relative flex items-center gap-5 flex-1 min-h-0">
+          <div className="absolute z-30 left-[900px] top-[54%] -translate-y-1/2 w-[350px] rounded-2xl border px-6 py-5"
+            style={{
+              borderColor: `hsl(${TEAL} / 0.34)`,
+              background: `linear-gradient(135deg, hsl(${TEAL} / 0.96), hsl(${GREEN} / 0.9))`,
+              boxShadow: `0 26px 70px hsl(${TEAL} / 0.24)`,
+            }}>
+            <div className="absolute -left-14 top-1/2 h-px w-14" style={{ background: `hsl(${TEAL} / 0.55)` }} />
+            <div className="absolute -right-14 top-1/2 h-px w-14" style={{ background: `hsl(${GREEN} / 0.55)` }} />
+            <p className="font-black tracking-[0.16em] uppercase mb-2" style={{ fontSize: 13, color: BG }}>
+              Current investment focus
+            </p>
+            <p className="font-black" style={{ fontSize: 22, color: BG, lineHeight: 1.18 }}>
+              Where encoded know-how becomes vertical human experience.
+            </p>
+            <p className="mt-2 font-semibold" style={{ fontSize: 14, color: `hsl(0 0% 100% / 0.82)`, lineHeight: 1.35 }}>
+              Product effort sits in the bridge between LIZA OS and repeatable industry execution.
+            </p>
+          </div>
           {layers.map(({ layer, role, examples, color, width, height }, i) => (
             <div key={layer} className={cn(
               "relative rounded-2xl border p-6 flex flex-col justify-between shrink-0",
