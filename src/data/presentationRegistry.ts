@@ -1,5 +1,4 @@
 import type { ComponentType } from "react";
-import InvestorDeck from "@/pages/InvestorDeck";
 import SeedInvestorDeck from "@/pages/SeedInvestorDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
@@ -46,15 +45,6 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/LCVInvestorDeck.tsx",
     description: "PE-focused investor variant for LCV Partners centered on audits, operational continuity, and post-merger integration",
     component: LCVInvestorDeck,
-    showInAdmin: true,
-  },
-  {
-    id: "investor-archive",
-    title: "Investor Deck (Archive)",
-    path: "/investor-archive",
-    sourcePath: "src/pages/InvestorDeck.tsx",
-    description: "Previous investor deck version",
-    component: InvestorDeck,
     showInAdmin: true,
   },
   {
