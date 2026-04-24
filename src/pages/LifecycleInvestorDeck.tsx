@@ -1909,8 +1909,8 @@ function Slide13() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
             { month: "Month 1-6", target: "€200-400K ARR", milestone: "5-8 paying customers. First case studies.", color: TEAL },
-            { month: "Month 7-12", target: "€600K-1M ARR", milestone: "15+ customers, 3+ verticals. NRR >120%.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1-1.5M ARR", milestone: "25+ customers. Series A raise.", color: MINT },
+            { month: "Month 7-12", target: "€600K-1M ARR", milestone: "Self-serve onboarding, billing, and first vertical packs live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1-1.5M ARR", milestone: "25+ customers across professional services, pharma, and AEC. Series A readiness.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -1924,8 +1924,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            Your organization's collective intelligence is your competitive advantage.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>We make it run the company.</strong>
+            We built the horizontal knowledge infrastructure.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into scalable vertical execution.</strong>
           </p>
         </div>
 
