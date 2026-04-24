@@ -930,9 +930,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$15B", desc: "Global AEC software market (2025, ARC Advisory)" },
-                { label: "SAM", value: "$4.2B", desc: "AI + governance layer for AEC project workflows" },
-                { label: "SOM", value: "$280M", desc: "EU/NA mid-to-large GCs, A/E firms, developers" },
+                { label: "TAM", value: "$16.4B", desc: "Construction management software by 2033" },
+                { label: "SAM", value: "$3-4B", desc: "AI control layer across project execution, review, compliance" },
+                { label: "SOM", value: "$250-300M", desc: "EU/NA enterprise wedge: GCs, A/E firms, owners" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -943,6 +943,9 @@ function Slide06() {
                 </div>
               ))}
             </div>
+            <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
+              Sources: Grand View Research, Construction Management Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, BIM Market, 2025-2030: $15.42B by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
+            </p>
           </div>
 
           {/* Defensibility — 3 moat layers */}
