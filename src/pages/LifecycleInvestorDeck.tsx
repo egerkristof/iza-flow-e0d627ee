@@ -1463,10 +1463,17 @@ function Slide09() {
           <div className="rounded-[26px] border p-5 flex flex-col"
             style={{ borderColor: `hsl(${ACCENT} / 0.14)`, background: `hsl(${ACCENT} / 0.03)` }}>
             <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 12, color: MUTED }}>
-              The pattern applies to every function
+              What changes by vertical
             </p>
             <div className="grid gap-3">
-              {expandInto.map(({ name, col }) => (
+              {[
+                { name: "Input documents", col: TEAL },
+                { name: "Output artifacts", col: GREEN },
+                { name: "Personas", col: GOLD },
+                { name: "Review flows", col: ACCENT },
+                { name: "Compliance language", col: WARM },
+                { name: "Protocol libraries", col: SEAFOAM },
+              ].map(({ name, col }) => (
                 <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-3.5"
                   style={{ background: `hsl(${col} / 0.05)`, border: `1px solid hsl(${col} / 0.15)` }}>
                   <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: `hsl(${col})` }} />
@@ -1481,8 +1488,8 @@ function Slide09() {
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 16, color: MUTED }}>
-            <strong style={{ color: TEXT }}>One core engine. Industry-specific expertise packs.</strong>{" "}
-            Each vertical deepens the moat. Capital-efficient expansion from a single codebase.
+            <strong style={{ color: TEXT }}>One horizontal engine. Vertical execution packs on top.</strong>{" "}
+            Each vertical adds reusable protocols, richer knowledge graphs, and more credit-based execution volume.
           </p>
         </div>
       </div>
