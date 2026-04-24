@@ -1942,9 +1942,9 @@ function Slide13() {
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "Customer Acq.", pct: "40%", amt: "€600K", desc: "15-20 paying pilots", color: ACCENT },
-            { label: "Product", pct: "30%", amt: "€450K", desc: "Production hardening", color: GREEN },
-            { label: "GTM", pct: "20%", amt: "€300K", desc: "Case studies + channels", color: GOLD },
+            { label: "Core Infrastructure", pct: "40%", amt: "€600K", desc: "Knowledge graph, governance, scale", color: ACCENT },
+            { label: "Vertical CX", pct: "25%", amt: "€375K", desc: "Protocol packs and domain workflows", color: GREEN },
+            { label: "GTM", pct: "25%", amt: "€375K", desc: "Cohort, partners, case studies", color: GOLD },
             { label: "Operations", pct: "10%", amt: "€150K", desc: "Legal, IP, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -1959,9 +1959,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "€200-400K ARR", milestone: "5-8 paying customers. First case studies.", color: TEAL },
-            { month: "Month 7-12", target: "€600K-1M ARR", milestone: "Self-serve onboarding, billing, and first vertical packs live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1-1.5M ARR", milestone: "25+ customers across professional services, pharma, and AEC. Series A readiness.", color: MINT },
+            { month: "Month 1-6", target: "Core hardened", milestone: "Knowledge graph, governance, billing, and first self-serve flows production-ready.", color: TEAL },
+            { month: "Month 7-12", target: "3 vertical layers", milestone: "Professional Services, Pharma, and AEC protocol packs live with partner pathways.", color: SEAFOAM },
+            { month: "Month 13-18", target: "Series A ready", milestone: "Usage engine proven across vertical CX layers with repeatable expansion economics.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -1975,8 +1975,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            We built the horizontal knowledge infrastructure.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into scalable vertical execution.</strong>
+            This round funds the horizontal core.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>Vertical CX layers become the expansion model.</strong>
           </p>
         </div>
 
