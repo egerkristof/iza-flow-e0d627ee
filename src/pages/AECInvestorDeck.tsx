@@ -396,16 +396,16 @@ function Slide04Cost() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 flex-1 min-h-0">
+        <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Margin", value: "compressed", desc: "Senior time is spent fixing work instead of moving the project forward.", color: RED },
-            { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time.", color: WARM },
-            { label: "Risk", value: "pushed downstream", desc: "Errors move into construction, handover, claims, and warranty exposure.", color: GOLD },
+            { label: "Margin", value: "compressed", desc: "Senior time is spent fixing AI-assisted work instead of moving the project forward.", color: RED },
+            { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time across RFIs, submittals, and approvals.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, leaders limit adoption because every output creates quality, liability, and control risk.", color: GOLD },
           ].map((item) => (
-            <div key={item.label} className="rounded-2xl px-5 py-5 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.05)`, border: `1px solid hsl(${item.color} / 0.14)` }}>
-              <p className="font-bold" style={{ fontSize: 12, color: `hsl(${item.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>{item.label}</p>
-              <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.1 }}>{item.value}</p>
-              <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{item.desc}</p>
+            <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
+              <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
+              <p className="font-black mt-3" style={{ fontSize: 34, color: TEXT, lineHeight: 1.04 }}>{item.value}</p>
+              <p className="mt-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.42 }}>{item.desc}</p>
             </div>
           ))}
         </div>
