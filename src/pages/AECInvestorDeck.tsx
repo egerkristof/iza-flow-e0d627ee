@@ -519,10 +519,6 @@ function Slide05() {
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an AEC-native experience.</span>
         </h2>
-        <p className="mb-3" style={{ fontSize: 18, color: MUTED, maxWidth: 1320, lineHeight: 1.42 }}>
-          Customers asking "which use case?" are describing the old software model. The new category is a knowledge loop that must feel specific to the humans, workflows, and language of the industry.
-        </p>
-
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-4">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
