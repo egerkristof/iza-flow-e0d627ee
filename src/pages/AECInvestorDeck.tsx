@@ -937,6 +937,71 @@ function Slide06() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 08B — STRATEGIC PIVOT
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideVerticalization() {
+  const rows = [
+    { old: "One-off AI use cases", now: "A governed knowledge loop that powers many workflows", color: TEAL },
+    { old: "Generic productivity software", now: "Industry-native execution surfaces for AEC teams", color: GOLD },
+    { old: "Prompt libraries and templates", now: "Versioned project memory that updates after every execution", color: GREEN },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
+        <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
+          LIZA is not selling another AEC use case. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+        </h2>
+
+        <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
+          <div className="rounded-[28px] border p-7 flex flex-col justify-center" style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-6" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>The loop at the core</p>
+            {[
+              { label: "Define", desc: "Experts encode standards, exceptions, decision logic", icon: <BookOpen size={22} /> },
+              { label: "Execute", desc: "AI applies that context inside live workflows", icon: <Zap size={22} /> },
+              { label: "Capture", desc: "Feedback, drift, and project learning are structured", icon: <Eye size={22} /> },
+              { label: "Update", desc: "Project memory improves and propagates", icon: <RefreshCw size={22} /> },
+            ].map((item, i) => (
+              <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
+                <div>
+                  <p className="font-black" style={{ fontSize: 24, color: TEXT }}>{i + 1}. {item.label}</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.35 }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-4 justify-center">
+            {rows.map((row) => (
+              <div key={row.old} className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-stretch">
+                <div className="rounded-2xl px-5 py-5 flex items-center" style={{ background: `hsl(${RED} / 0.035)`, border: `1px solid hsl(${RED} / 0.12)` }}>
+                  <p className="font-bold" style={{ fontSize: 20, color: MUTED, lineHeight: 1.25 }}>{row.old}</p>
+                </div>
+                <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${row.color})` }} /></div>
+                <div className="rounded-2xl px-6 py-5 flex items-center" style={{ background: `hsl(${row.color} / 0.07)`, border: `1.5px solid hsl(${row.color} / 0.2)` }}>
+                  <p className="font-black" style={{ fontSize: 23, color: TEXT, lineHeight: 1.22 }}>{row.now}</p>
+                </div>
+              </div>
+            ))}
+
+            <div className="mt-3 rounded-2xl px-7 py-5" style={{ background: `hsl(${GOLD} / 0.07)`, border: `1.5px solid hsl(${GOLD} / 0.24)` }}>
+              <p className="font-bold" style={{ fontSize: 23, color: TEXT, lineHeight: 1.35 }}>
+                The ask to Nemetschek: help turn a proven horizontal context infrastructure into the AEC-native interface layer before generic AI tools capture that reasoning layer.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 07 — HOW IT WORKS (Horizontal flow, diagram-style, no screenshots)
 // ═══════════════════════════════════════════════════════════════════════════════
 
