@@ -1021,7 +1021,7 @@ function SlideVerticalization() {
             <div className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-center">
               <p className="font-black tracking-[0.18em] uppercase text-center" style={{ fontSize: 13, color: `hsl(${RED})` }}>Old software logic</p>
               <div />
-              <p className="font-black tracking-[0.18em] uppercase text-center" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>New category logic</p>
+              <p className="font-black tracking-[0.18em] uppercase text-center" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>AI-native logic</p>
             </div>
             {rows.map((row) => (
               <div key={row.old} className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-stretch">
