@@ -519,9 +519,26 @@ function Slide05() {
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an AEC-native experience.</span>
         </h2>
-        <p className="mb-4" style={{ fontSize: 19, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
+        <p className="mb-3" style={{ fontSize: 18, color: MUTED, maxWidth: 1320, lineHeight: 1.42 }}>
           Customers asking "which use case?" are describing the old software model. The new category is a knowledge loop that must feel specific to the humans, workflows, and language of the industry.
         </p>
+
+        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-4">
+          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Documents, data, standards, decisions</p>
+          </div>
+          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
+          <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>LIZA OS</p>
+            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The in-between operating layer that turns raw context into governed execution</p>
+          </div>
+          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
+          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows project memory and firm judgment</p>
+          </div>
+        </div>
 
         {/* Three-column flow */}
         <div className="flex-1 flex items-center gap-0">
