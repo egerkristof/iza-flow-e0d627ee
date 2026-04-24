@@ -104,15 +104,15 @@ function Slide01() {
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Project Memory Layer for<br />
+          The AEC-Native Knowledge Loop<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            AI-Native Construction.
+            for AI Execution.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          Your project teams know what good looks like. AI doesn't.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>We make project judgment run everywhere AI executes — across every spec, RFI, and submittal.</span>
+          The horizontal context infrastructure is built. The strategic opportunity is to make the experience native to how AEC teams actually work.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Define standards. Execute with AI. Capture feedback. Update project memory.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
@@ -503,25 +503,34 @@ function SlideWhyNow() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide05() {
+  const verticalSurfaces = [
+    { title: "AEC roles", items: "PM, estimator, BIM lead, principal", color: TEAL },
+    { title: "AEC workflows", items: "RFI, submittal, spec review, handover", color: GOLD },
+    { title: "AEC language", items: "Addenda, AHJ, owner standards, field decisions", color: GREEN },
+  ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          The Context Layer
+          Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The missing category is a <span style={{ color: `hsl(${TEAL})` }}>system of intelligence.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an AEC-native experience.</span>
         </h2>
+        <p className="mb-4" style={{ fontSize: 19, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
+          Customers asking "which use case?" are describing the old software model. The new category is a knowledge loop that must feel specific to the humans, workflows, and language of the industry.
+        </p>
 
         {/* Three-column flow */}
         <div className="flex-1 flex items-center gap-0">
           {/* LEFT — What companies feed AI */}
-          <div className="w-[340px] shrink-0 flex flex-col gap-4">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>What companies feed AI</p>
+          <div className="w-[360px] shrink-0 flex flex-col gap-4">
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>Horizontal infrastructure</p>
             {[
-              { icon: <Database size={24} />, title: "Documents & Data", sub: "SOPs, policies, CRM records" },
-              { icon: <Users size={24} />, title: "Templates & Prompts", sub: "Formats, checklists, scripts" },
+              { icon: <Database size={24} />, title: "Knowledge Graph", sub: "Standards, exceptions, decisions" },
+              { icon: <Cpu size={24} />, title: "Context Engine", sub: "Intent-locking, injection, drift" },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${BLUE} / 0.18)`, background: `hsl(${BLUE} / 0.04)` }}>
@@ -533,8 +542,8 @@ function Slide05() {
                 </div>
               </div>
             ))}
-            <p className="text-center font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${RED})` }}>
-              Missing: judgment, exceptions, standards
+            <p className="text-center font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${BLUE})` }}>
+              Built once. Portable across domains.
             </p>
           </div>
 
@@ -586,8 +595,8 @@ function Slide05() {
               </p>
             </div>
 
-            <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 520, lineHeight: 1.45 }}>
-              The reasoning engine runs on LIZA. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Your standards, exceptions, and institutional memory remain your asset.</span>
+            <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the AEC operating experience.</span>
             </p>
           </div>
 
@@ -597,24 +606,21 @@ function Slide05() {
           </div>
 
           {/* RIGHT — Governed Output */}
-          <div className="w-[340px] shrink-0 flex flex-col gap-4">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What AI produces</p>
-            {[
-              { icon: <Zap size={24} />, title: "Governed Output", sub: "Proposals, reports, workflows" },
-              { icon: <Shield size={24} />, title: "Traceable Decisions", sub: "Audit trail, version history" },
-            ].map((item) => (
+          <div className="w-[390px] shrink-0 flex flex-col gap-3">
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>AEC-native experience</p>
+            {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
-                style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
+                style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: `hsl(${GREEN} / 0.1)`, color: `hsl(${GREEN})` }}>{item.icon}</div>
+                  style={{ background: `hsl(${item.color} / 0.1)`, color: `hsl(${item.color})` }}><Workflow size={24} /></div>
                 <div>
                   <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
-                  <p style={{ fontSize: 14, color: MUTED }}>{item.sub}</p>
+                  <p style={{ fontSize: 14, color: MUTED }}>{item.items}</p>
                 </div>
               </div>
             ))}
             <p className="text-center font-bold mt-1" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>
-              Consistent. Traceable. Expert-quality.
+              Specific enough for adoption. General enough to scale.
             </p>
           </div>
         </div>
@@ -622,7 +628,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Govern every execution.</span>
+            Horizontal infrastructure plus vertical UX. <span style={{ color: `hsl(${TEAL})` }}>That is how the loop becomes an industry standard.</span>
           </p>
         </div>
       </div>
@@ -931,6 +937,71 @@ function Slide06() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 08B — STRATEGIC PIVOT
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideVerticalization() {
+  const rows = [
+    { old: "One-off AI use cases", now: "A governed knowledge loop that powers many workflows", color: TEAL },
+    { old: "Generic productivity software", now: "Industry-native execution surfaces for AEC teams", color: GOLD },
+    { old: "Prompt libraries and templates", now: "Versioned project memory that updates after every execution", color: GREEN },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
+        <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
+          LIZA is not selling another AEC use case. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+        </h2>
+
+        <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
+          <div className="rounded-[28px] border p-7 flex flex-col justify-center" style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-6" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>The loop at the core</p>
+            {[
+              { label: "Define", desc: "Experts encode standards, exceptions, decision logic", icon: <BookOpen size={22} /> },
+              { label: "Execute", desc: "AI applies that context inside live workflows", icon: <Zap size={22} /> },
+              { label: "Capture", desc: "Feedback, drift, and project learning are structured", icon: <Eye size={22} /> },
+              { label: "Update", desc: "Project memory improves and propagates", icon: <RefreshCw size={22} /> },
+            ].map((item, i) => (
+              <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
+                <div>
+                  <p className="font-black" style={{ fontSize: 24, color: TEXT }}>{i + 1}. {item.label}</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.35 }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-4 justify-center">
+            {rows.map((row) => (
+              <div key={row.old} className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-stretch">
+                <div className="rounded-2xl px-5 py-5 flex items-center" style={{ background: `hsl(${RED} / 0.035)`, border: `1px solid hsl(${RED} / 0.12)` }}>
+                  <p className="font-bold" style={{ fontSize: 20, color: MUTED, lineHeight: 1.25 }}>{row.old}</p>
+                </div>
+                <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${row.color})` }} /></div>
+                <div className="rounded-2xl px-6 py-5 flex items-center" style={{ background: `hsl(${row.color} / 0.07)`, border: `1.5px solid hsl(${row.color} / 0.2)` }}>
+                  <p className="font-black" style={{ fontSize: 23, color: TEXT, lineHeight: 1.22 }}>{row.now}</p>
+                </div>
+              </div>
+            ))}
+
+            <div className="mt-3 rounded-2xl px-7 py-5" style={{ background: `hsl(${GOLD} / 0.07)`, border: `1.5px solid hsl(${GOLD} / 0.24)` }}>
+              <p className="font-bold" style={{ fontSize: 23, color: TEXT, lineHeight: 1.35 }}>
+                The ask to Nemetschek: help turn a proven horizontal context infrastructure into the AEC-native interface layer before generic AI tools capture that reasoning layer.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 07 — HOW IT WORKS (Horizontal flow, diagram-style, no screenshots)
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -1135,9 +1206,12 @@ function Slide08() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
-          <h2 className="font-black max-w-[1420px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            Prototype proven across workflows. <span style={{ color: `hsl(${GREEN})` }}>Now focused on AEC.</span>
+          <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+            The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
+          <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. AEC is where the experience now needs to become native.
+          </p>
         </div>
 
         <div className="flex-1 flex items-center">
@@ -1646,8 +1720,8 @@ function SlideExecutionChallenge() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          Services-led entry. Self-serve destination.{" "}
+          <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+          The wedge is one workflow. The product is the AEC-native knowledge loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -1694,7 +1768,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Self-serve", label: "Product direction", sub: "Rollout path after proof" },
+            { metric: "AEC-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -1800,7 +1874,7 @@ function Slide13() {
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "Product UX + Self-Serve", pct: "35%", amt: "€1.05M", desc: "Workflow UX, onboarding, admin surfaces, product design", color: ACCENT },
+            { label: "AEC-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
             { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Bluebeam, Allplan, BIM bridges, lighthouse deployments", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
@@ -1817,7 +1891,7 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "Self-serve core live", milestone: "Workflow UX, onboarding, and credit-metering foundation in market with first lighthouse deployments.", color: TEAL },
+            { month: "Month 1-6", target: "AEC-native UX live", milestone: "RFI, submittal, and spec-review surfaces in market with first lighthouse deployments.", color: TEAL },
             { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Bluebeam / Allplan integration path live.", color: SEAFOAM },
             { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and AEC customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
@@ -1833,8 +1907,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            Project memory is the layer the AEC AI stack is missing.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round makes it self-serve, usage-priced, and scalable underneath every workflow.</strong>
+            LIZA has built the horizontal knowledge loop.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the AEC-native control layer for every AI workflow.</strong>
           </p>
         </div>
 
@@ -1877,16 +1951,17 @@ const SLIDES = [
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
   { id: 8, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 9, title: "Expansion Path", component: <Slide09 /> },
-  { id: 10, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
-  { id: 11, title: "What's Built", component: <Slide10 /> },
-  { id: 12, title: "Business Model", component: <Slide11 /> },
-  { id: 13, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 14, title: "Team", component: <Slide12 /> },
-  { id: 15, title: "The Ask", component: <Slide13 /> },
-  { id: 16, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 17, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 18, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 9, title: "Verticalization Thesis", component: <SlideVerticalization /> },
+  { id: 10, title: "Expansion Path", component: <Slide09 /> },
+  { id: 11, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 12, title: "What's Built", component: <Slide10 /> },
+  { id: 13, title: "Business Model", component: <Slide11 /> },
+  { id: 14, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 15, title: "Team", component: <Slide12 /> },
+  { id: 16, title: "The Ask", component: <Slide13 /> },
+  { id: 17, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 18, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 19, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
