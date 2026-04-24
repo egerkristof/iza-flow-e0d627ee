@@ -1126,10 +1126,10 @@ function Slide06() {
 
 function Slide06Shift() {
   const layers = [
-    { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE },
-    { layer: "Data Layer", role: "Surface what to do", examples: "Glean, Guru, RAG tools, copilots", color: GOLD },
-    { layer: "LIZA OS", role: "Encode how to do it", examples: "Knowledge layer, operating layer, governance", color: TEAL },
-    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN },
+    { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE, width: "w-[280px]", height: "h-[66%]" },
+    { layer: "Data Layer", role: "Surface what to do", examples: "Glean, Guru, RAG tools, copilots", color: GOLD, width: "w-[330px]", height: "h-[76%]" },
+    { layer: "LIZA OS", role: "Encode how to do it", examples: "Knowledge layer, operating layer, governance", color: TEAL, width: "w-[405px]", height: "h-[88%]" },
+    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN, width: "flex-1", height: "h-full" },
   ];
 
   return (
@@ -1142,18 +1142,18 @@ function Slide06Shift() {
           <span style={{ color: `hsl(${TEAL})` }}>LIZA turns knowledge into governed action.</span>
         </h2>
 
-        <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
-          {layers.map(({ layer, role, examples, color }, i) => (
-            <div key={layer} className="rounded-2xl border p-6 flex flex-col justify-between"
+        <div className="flex items-center gap-5 flex-1 min-h-0">
+          {layers.map(({ layer, role, examples, color, width, height }, i) => (
+            <div key={layer} className={cn("rounded-2xl border p-6 flex flex-col justify-between shrink-0", width, height)}
               style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.04)` }}>
               <div>
-                <p className="font-black mb-4" style={{ fontSize: 52, color: `hsl(${color} / 0.18)`, lineHeight: 1 }}>0{i + 1}</p>
-                <p className="font-black mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.12 }}>{layer}</p>
-                <p className="font-bold mb-5" style={{ fontSize: 20, color: `hsl(${color})`, lineHeight: 1.25 }}>{role}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{examples}</p>
+                <p className="font-black mb-3" style={{ fontSize: i === 0 ? 42 : 52, color: `hsl(${color} / 0.18)`, lineHeight: 1 }}>0{i + 1}</p>
+                <p className="font-black mb-3" style={{ fontSize: i === 0 ? 24 : 28, color: TEXT, lineHeight: 1.12 }}>{layer}</p>
+                <p className="font-bold mb-4" style={{ fontSize: i === 0 ? 18 : 20, color: `hsl(${color})`, lineHeight: 1.25 }}>{role}</p>
+                <p style={{ fontSize: i === 0 ? 15 : 17, color: MUTED, lineHeight: 1.45 }}>{examples}</p>
               </div>
-              <div className="mt-8 rounded-xl px-4 py-4" style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.14)` }}>
-                <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
+              <div className="mt-6 rounded-xl px-4 py-4" style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.14)` }}>
+                <p className="font-bold" style={{ fontSize: i === 0 ? 14 : 16, color: TEXT, lineHeight: 1.35 }}>
                   {i === 0 ? "Enterprise foundation" : i === 1 ? "Market focus today: what to do" : i === 2 ? "Core seed investment: how to do" : "Expansion surface"}
                 </p>
               </div>
