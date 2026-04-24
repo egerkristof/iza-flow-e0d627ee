@@ -1634,7 +1634,7 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Core platform base. <span style={{ color: `hsl(${GREEN})` }}>Vertical usage scales revenue.</span>
+          Core infrastructure base. <span style={{ color: `hsl(${GREEN})` }}>Vertical CX scales usage.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1648,7 +1648,7 @@ function Slide11() {
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Recurring access to the knowledge graph, workbooks, governance, permissions, and orchestration layer.
-                This is the durable system of record for how organizational judgment runs.
+                This is the durable horizontal core investors fund in the seed round.
               </p>
             </div>
 
@@ -1658,8 +1658,8 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Usage-based execution</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Customers pay for high-intensity actions like extraction, governed runs, and scaled execution.
-                Vertical workflows create repeated extraction, review, simulation, and artifact generation events that compound usage.
+                Customers pay for high-intensity actions like extraction, governed runs, simulations, and artifact generation.
+                Vertical CX layers create repeated review, execution, and reporting events that compound usage.
               </p>
             </div>
 
@@ -1670,6 +1670,7 @@ function Slide11() {
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Transitional entry offer to stand up the first workflows fast, prove ROI, and convert accounts into recurring platform plus credits customers.
+                Partners and selected JVs can accelerate domain-specific experience layers without fragmenting the core platform.
               </p>
             </div>
           </div>
@@ -1698,7 +1699,7 @@ function Slide11() {
                 {[
                   "Today: guided kickstarts accelerate learning and onboarding",
                   "Near term: recurring platform base becomes the account anchor",
-                  "Strategic state: vertical protocol packs drive repeatable credit-based execution",
+                  "Strategic state: vertical CX and protocol packs drive repeatable credit-based execution",
                   "Result: pricing compounds with adoption instead of flattening into seat-based ceilings",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
