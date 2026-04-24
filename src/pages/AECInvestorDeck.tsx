@@ -1874,7 +1874,7 @@ function Slide13() {
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "Product UX + Self-Serve", pct: "35%", amt: "€1.05M", desc: "Workflow UX, onboarding, admin surfaces, product design", color: ACCENT },
+            { label: "AEC-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
             { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Bluebeam, Allplan, BIM bridges, lighthouse deployments", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
@@ -1891,7 +1891,7 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "Self-serve core live", milestone: "Workflow UX, onboarding, and credit-metering foundation in market with first lighthouse deployments.", color: TEAL },
+            { month: "Month 1-6", target: "AEC-native UX live", milestone: "RFI, submittal, and spec-review surfaces in market with first lighthouse deployments.", color: TEAL },
             { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Bluebeam / Allplan integration path live.", color: SEAFOAM },
             { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and AEC customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
@@ -1907,8 +1907,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            Project memory is the layer the AEC AI stack is missing.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round makes it self-serve, usage-priced, and scalable underneath every workflow.</strong>
+            LIZA has built the horizontal knowledge loop.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the AEC-native control layer for every AI workflow.</strong>
           </p>
         </div>
 
