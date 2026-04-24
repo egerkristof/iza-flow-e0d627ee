@@ -519,7 +519,7 @@ function Slide05() {
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an AEC-native experience.</span>
         </h2>
-        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-4">
+        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
             <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>RFIs, submittals, drawings, specs, addenda, owner standards, field decisions</p>
@@ -533,6 +533,20 @@ function Slide05() {
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
             <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows project memory and firm judgment</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-center mb-1 h-10">
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${BLUE} / 0.5)`, transform: "rotate(105deg)" }} />
+          </div>
+          <div />
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${TEAL} / 0.55)`, transform: "rotate(90deg)" }} />
+          </div>
+          <div />
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${GREEN} / 0.5)`, transform: "rotate(75deg)" }} />
           </div>
         </div>
 
