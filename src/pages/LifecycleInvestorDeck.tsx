@@ -1144,8 +1144,18 @@ function Slide06Shift() {
 
         <div className="flex items-center gap-5 flex-1 min-h-0">
           {layers.map(({ layer, role, examples, color, width, height }, i) => (
-            <div key={layer} className={cn("rounded-2xl border p-6 flex flex-col justify-between shrink-0", width, height)}
-              style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.04)` }}>
+            <div key={layer} className={cn(
+              "relative rounded-2xl border p-6 flex flex-col justify-between shrink-0",
+              width,
+              height,
+              i === 2 && "z-20",
+              i === 3 && "-ml-12 z-10 pl-14"
+            )}
+              style={{
+                borderColor: `hsl(${color} / ${i === 3 ? 0.28 : 0.22})`,
+                background: `hsl(${color} / 0.04)`,
+                boxShadow: i >= 2 ? `0 22px 60px hsl(${color} / 0.10)` : undefined,
+              }}>
               <div>
                 <p className="font-black mb-3" style={{ fontSize: i === 0 ? 42 : 52, color: `hsl(${color} / 0.18)`, lineHeight: 1 }}>0{i + 1}</p>
                 <p className="font-black mb-3" style={{ fontSize: i === 0 ? 24 : 28, color: TEXT, lineHeight: 1.12 }}>{layer}</p>
