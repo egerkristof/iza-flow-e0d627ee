@@ -1090,6 +1090,56 @@ function Slide06() {
   );
 }
 
+function Slide06Shift() {
+  const layers = [
+    { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE },
+    { layer: "Knowledge Layer", role: "Retrieve and summarize", examples: "Glean, Guru, RAG tools, copilots", color: GOLD },
+    { layer: "LIZA OS", role: "Encode operating logic", examples: "Context graph, protocols, governance", color: TEAL },
+    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>Strategic Shift</p>
+        <h2 className="font-black mb-5" style={{ fontSize: 54, color: TEXT, lineHeight: 1.05 }}>
+          The next category is not finding knowledge.{' '}
+          <span style={{ color: `hsl(${TEAL})` }}>It is turning knowledge into governed action.</span>
+        </h2>
+
+        <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
+          {layers.map(({ layer, role, examples, color }, i) => (
+            <div key={layer} className="rounded-2xl border p-6 flex flex-col justify-between"
+              style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.04)` }}>
+              <div>
+                <p className="font-black mb-4" style={{ fontSize: 52, color: `hsl(${color} / 0.18)`, lineHeight: 1 }}>0{i + 1}</p>
+                <p className="font-black mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.12 }}>{layer}</p>
+                <p className="font-bold mb-5" style={{ fontSize: 20, color: `hsl(${color})`, lineHeight: 1.25 }}>{role}</p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{examples}</p>
+              </div>
+              <div className="mt-8 rounded-xl px-4 py-4" style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.14)` }}>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
+                  {i < 2 ? "Market focus today" : i === 2 ? "Core seed investment" : "Expansion surface"}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <Workflow size={24} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
+            This round funds the horizontal core. Vertical experience layers become the repeatable expansion model through internal productization, partners, and selected joint ventures.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 07 — HOW IT WORKS (Horizontal flow, diagram-style, no screenshots)
 // ═══════════════════════════════════════════════════════════════════════════════
