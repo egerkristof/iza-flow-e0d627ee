@@ -1720,8 +1720,8 @@ function SlideExecutionChallenge() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          Services-led entry. Self-serve destination.{" "}
+          <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+          The wedge is one workflow. The product is the AEC-native knowledge loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -1768,7 +1768,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Self-serve", label: "Product direction", sub: "Rollout path after proof" },
+            { metric: "AEC-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
