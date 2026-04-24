@@ -104,15 +104,15 @@ function Slide01() {
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Project Memory Layer for<br />
+          The AEC-Native Knowledge Loop<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            AI-Native Construction.
+            for AI Execution.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          Your project teams know what good looks like. AI doesn't.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>We make project judgment run everywhere AI executes — across every spec, RFI, and submittal.</span>
+          The horizontal context infrastructure is built. The strategic opportunity is to make the experience native to how AEC teams actually work.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Define standards. Execute with AI. Capture feedback. Update project memory.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
