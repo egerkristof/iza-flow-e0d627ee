@@ -647,7 +647,7 @@ function Slide05() {
           The Context Layer
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The missing category is a <span style={{ color: `hsl(${TEAL})` }}>system of intelligence.</span>
+          We built the horizontal layer. <span style={{ color: `hsl(${TEAL})` }}>Vertical execution runs on top.</span>
         </h2>
 
         {/* Three-column flow */}
@@ -692,7 +692,7 @@ function Slide05() {
               <Brain size={34} style={{ color: `hsl(${TEAL})` }} />
             </div>
             <p className="font-black mb-1" style={{ fontSize: 32, color: `hsl(${TEAL})` }}>LIZA OS</p>
-            <p className="font-semibold mb-6" style={{ fontSize: 16, color: MUTED }}>The Context Layer</p>
+            <p className="font-semibold mb-6" style={{ fontSize: 16, color: MUTED }}>Horizontal knowledge infrastructure</p>
 
             {/* Compact loop */}
             <div className="flex items-center gap-3">
@@ -734,10 +734,10 @@ function Slide05() {
           {/* RIGHT — Governed Output */}
           <div className="w-[340px] shrink-0 flex flex-col gap-4">
             <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What AI produces</p>
-            {[
-              { icon: <Zap size={24} />, title: "Governed Output", sub: "Proposals, reports, workflows" },
-              { icon: <Shield size={24} />, title: "Traceable Decisions", sub: "Audit trail, version history" },
-            ].map((item) => (
+              {[
+                { icon: <Zap size={24} />, title: "Vertical Execution", sub: "Proposals, RFIs, reports" },
+                { icon: <Shield size={24} />, title: "Traceable Decisions", sub: "Audit trail, version history" },
+              ].map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
@@ -757,7 +757,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Govern every execution.</span>
+            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Package it into vertical execution layers.</span>
           </p>
         </div>
       </div>
