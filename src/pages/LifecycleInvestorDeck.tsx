@@ -1419,22 +1419,22 @@ function Slide09() {
       vertical: "Professional Services", status: "Beachhead", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Delivery expertise is trapped in senior operators. AI makes juniors faster but not reliably better.",
-      result: "Reusable delivery playbooks, client context, proposal logic, and advisory standards.",
+      result: "Client delivery CX layer for proposals, workshops, research, and advisory artifacts.",
       proof: "Paid proof. Consultancy and digital agency active.",
     },
     {
       vertical: "Pharma & Life Sciences", status: "Regulated wedge", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
       problem: "GxP execution depends on traceable protocol nuance. Generic AI creates audit and safety risk.",
-      result: "Lifecycle governance, validation logic, deviation handling, and audit-ready execution.",
+      result: "Regulated lifecycle CX layer for validation, deviations, quality review, and audit-ready execution.",
       proof: "Audit use case validated. Pharma next.",
     },
     {
       vertical: "AEC", status: "Strategic vertical", color: TEAL,
       icon: <Building2 size={24} style={{ color: `hsl(${TEAL})` }} />,
       problem: "Project memory fragments across RFIs, submittals, specs, drawings, and handover.",
-      result: "Project memory layer for document review, RFI response, coordination, and handover.",
-      proof: "Nemetschek conversation. Vertical deck live.",
+      result: "AEC project CX layer for RFIs, submittals, drawing revisions, coordination, and handover.",
+      proof: "Strategic AEC conversation. Vertical deck live.",
     },
   ];
 
@@ -1447,7 +1447,7 @@ function Slide09() {
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
             Horizontal core.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Vertical execution layers.</span>
+            <span style={{ color: `hsl(${GREEN})` }}>Vertical CX layers.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1455,7 +1455,7 @@ function Slide09() {
               Pattern
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              Same infrastructure. Industry-specific inputs, outputs, personas, and protocols.
+              Same infrastructure. Domain-specific interface, workflows, outputs, personas, and protocols.
             </p>
           </div>
         </div>
@@ -1529,8 +1529,8 @@ function Slide09() {
           style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
           <TrendingUp size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p style={{ fontSize: 16, color: MUTED }}>
-            <strong style={{ color: TEXT }}>One horizontal engine. Vertical execution packs on top.</strong>{" "}
-            Each vertical adds reusable protocols, richer knowledge graphs, and more credit-based execution volume.
+            <strong style={{ color: TEXT }}>One horizontal engine. Vertical CX layers on top.</strong>{" "}
+            Each vertical can be built internally, with partners, or through selected joint ventures while the core remains LIZA OS.
           </p>
         </div>
       </div>
