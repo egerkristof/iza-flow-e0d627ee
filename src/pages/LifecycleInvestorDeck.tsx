@@ -1584,7 +1584,7 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
         <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Platform base today. <span style={{ color: `hsl(${GREEN})` }}>AI credits over time.</span>
+          Core platform base. <span style={{ color: `hsl(${GREEN})` }}>Vertical usage scales revenue.</span>
         </h2>
 
         <div className="flex gap-8 flex-1 min-h-0">
@@ -1609,7 +1609,7 @@ function Slide11() {
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 Customers pay for high-intensity actions like extraction, governed runs, and scaled execution.
-                This is the long-term pricing engine: value-linked usage that scales with customer outcomes and protects margin as AI compute costs rise.
+                Vertical workflows create repeated extraction, review, simulation, and artifact generation events that compound usage.
               </p>
             </div>
 
@@ -1648,7 +1648,7 @@ function Slide11() {
                 {[
                   "Today: guided kickstarts accelerate learning and onboarding",
                   "Near term: recurring platform base becomes the account anchor",
-                  "Strategic state: AI credits tie what customers pay directly to execution value created",
+                  "Strategic state: vertical protocol packs drive repeatable credit-based execution",
                   "Result: pricing compounds with adoption instead of flattening into seat-based ceilings",
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
