@@ -997,8 +997,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          $70M+ recently funded in adjacent layers.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one owns the center.</span>
+          Competitors are building knowledge layers.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Execution is still unsolved.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1031,12 +1031,12 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others mine, remember, or capture.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA operationalizes.</span>
+              Others help AI find knowledge.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA makes knowledge act.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The only platform that makes organizational judgment queryable, versionable, and executable.
-              Other tools give AI your documents. We give AI your judgment.
+              The only platform that makes organizational judgment queryable, versionable, executable, and usable inside domain-specific work.
+              Other tools give AI your documents. We give AI your operating logic.
             </p>
           </div>
         </div>
@@ -1053,7 +1053,7 @@ function Slide06() {
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
                 { label: "Where we enter", value: "Vertical execution", desc: "We start in professional services, life sciences, and AEC, where plausible AI creates expensive rework." },
-                { label: "What LIZA is", value: "Horizontal knowledge infrastructure", desc: "We turn expert judgment into reusable execution layers for each vertical workflow." },
+                { label: "What LIZA is", value: "Execution interface", desc: "We turn expert judgment into governed action through vertical CX layers." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
@@ -1065,7 +1065,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Credible framing: anchor to AI governance as the sourceable market, then define LIZA as the horizontal knowledge infrastructure that powers vertical execution.
+              Credible framing: anchor to AI governance as the sourceable market, then define LIZA as the execution interface that activates vertical work.
             </p>
           </div>
 
