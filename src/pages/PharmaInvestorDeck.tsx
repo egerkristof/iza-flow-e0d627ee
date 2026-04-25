@@ -130,8 +130,8 @@ function Slide01() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["SOPs", "Policies", "Templates", "Requirements", "Data", "Records"];
-  const outputs = ["Reports", "Proposals", "Decisions", "Deliverables", "Actions", "Answers"];
+  const inputs = ["SOPs", "Protocols", "Batch records", "Validation specs", "Annex/ICH refs", "Trial data"];
+  const outputs = ["Deviation reports", "CSRs", "Submissions", "CAPAs", "PV narratives", "Audit responses"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
