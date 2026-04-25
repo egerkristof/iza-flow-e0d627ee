@@ -1191,16 +1191,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Graphisoft workflow exploration",
-      subtitle: "AEC signal",
-      scope: "Internal use-case discovery",
+      title: "GxP-Adjacent QA Pilot",
+      subtitle: "Pharma signal",
+      scope: "Quality workflow discovery",
       color: TEAL,
-      outcome: "Live access to real AEC workflow pain",
+      outcome: "Live access to real GxP workflow pain",
       metric: "Active",
-      metricLabel: "Discussion",
+      metricLabel: "Engagement",
       points: [
-        "Exploring internal AEC workflow opportunities with a major ecosystem player",
-        "Direct signal that the AEC workflow problem is real and strategically relevant",
+        "Active engagement with a regulated quality team on deviation and CAPA workflows",
+        "Direct signal that the GxP knowledge loss problem is real and commercially urgent",
       ],
       featured: true,
     },
@@ -1239,8 +1239,8 @@ function Slide08() {
       metric: "95%",
       metricLabel: "Reduction",
       points: [
-        "800+ audit questions processed through governed execution",
-        "Full compliance traceability maintained throughout",
+        "800+ audit questions processed through governed, traceable execution",
+        "The same audit-grade pattern that GMP, GCP, and PV teams require",
       ],
       featured: false,
     },
@@ -1251,12 +1251,12 @@ function Slide08() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <div className="mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Regulated Work</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. AEC is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Life sciences is where the experience now needs to become native — under validated, audit-grade conditions.
           </p>
         </div>
 
