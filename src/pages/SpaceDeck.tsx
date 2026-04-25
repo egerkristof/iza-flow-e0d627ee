@@ -117,7 +117,7 @@ function Slide01() {
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Prepared for RemRed &nbsp;·&nbsp; Pilot + Strategic Partnership Conversation
+          Confidential &nbsp;·&nbsp; Prepared for NewSpace primes &amp; satellite integrators &nbsp;·&nbsp; Pilot + Strategic Partnership Conversation
         </p>
       </div>
       <SlideBar />
@@ -149,7 +149,7 @@ function SlideShape() {
           One OS. <span style={{ color: `hsl(${TEAL})` }}>Space is the next spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about RemRed and the European space industry — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
+          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about the European space industry — NewSpace primes, satellite integrators, and MAIT-heavy programs — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
         </p>
 
         {/* Diagram */}
@@ -471,7 +471,7 @@ function Slide04Cost() {
               This is what AI amplifies if it runs without the latest ECSS tailoring, prior anomaly history, FRACAS precedent, or chief-engineer judgment.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Qualitative pattern from AS9100 industry benchmarks &amp; aerospace FRACAS literature; not RemRed data
+              Qualitative pattern from AS9100 industry benchmarks &amp; aerospace FRACAS literature; industry-level, not customer data
             </p>
           </div>
 
@@ -727,7 +727,7 @@ function Slide05() {
             </div>
 
           <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A RemRed pilot makes it a space-native operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A space-prime pilot makes it a mission-native operating experience.</span>
             </p>
           </div>
 
@@ -1356,10 +1356,10 @@ function Slide08() {
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Horizontal Proof · Vertical Gap</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into space — with RemRed.</span>
+            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into space — with a lighthouse NewSpace partner.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for space is one mission-grade lighthouse partner — a NewSpace prime or integrator — to make this experience native under ECSS, AS9100, and audit-grade conditions. RemRed is the partner we want to build it with.
+            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for space is one mission-grade lighthouse partner — a NewSpace prime or integrator — to make this experience native under ECSS, AS9100, and audit-grade conditions.
           </p>
         </div>
 
@@ -1477,7 +1477,7 @@ function Slide09() {
               The missing connective tissue underneath the aerospace AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: AEC vertical proven across 3 departments; pharma vertical conversation underway. Space lighthouse partner being recruited — RemRed is the conversation we are having.
+              Current signal: AEC vertical proven across 3 departments; pharma vertical conversation underway. Space lighthouse partner being recruited — this conversation is one of the active threads.
             </p>
           </div>
         </div>
@@ -1578,19 +1578,19 @@ function Slide09Partnership() {
       phase: "Month 1",
       title: "30-Day MAIT Pilot",
       color: GREEN,
-      desc: "Co-design pilot with one RemRed MAIT or systems-engineering team. We codify one workflow (NCR closeout, AIT procedure handoff, or design-note review) and ship a measurable delta. Low commitment, fast signal.",
+      desc: "Co-design pilot with one of your MAIT or systems-engineering teams. We codify one workflow (NCR closeout, AIT procedure handoff, or design-note review) and ship a measurable delta. Low commitment, fast signal.",
     },
     {
       phase: "Months 2-6",
       title: "Mission Memory Layer",
       color: TEAL,
-      desc: "Expand to RemRed's second satellite program: encode chief-engineer judgment, codify recurring AIT and FRACAS patterns, and build the mission memory layer that survives expert turnover.",
+      desc: "Expand to a second satellite program: encode chief-engineer judgment, codify recurring AIT and FRACAS patterns, and build the mission memory layer that survives expert turnover.",
     },
     {
       phase: "Months 6-18",
       title: "Sovereign-Space Standard Layer",
       color: GOLD,
-      desc: "LIZA OS + RemRed jointly establish a European mission-knowledge layer. Optional strategic stake. Pathway to a 4iG-aligned sovereign-space capability adopted by partners across the European NewSpace ecosystem.",
+      desc: "LIZA OS + a lighthouse partner jointly establish a European mission-knowledge layer. Optional strategic stake. Pathway to a sovereign-space capability adopted by partners across the European NewSpace ecosystem.",
     },
   ];
 
@@ -1600,7 +1600,7 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Space Partnership Mechanic · RemRed-Specific
+            Space Partnership Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
             An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>sovereign-space layer</span>.
@@ -1831,9 +1831,9 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "RemRed selects one high-value workflow (e.g. NCR closeout, AIT procedure handoff, design-note review, FRACAS rollup)",
+        "Your team selects one high-value workflow (e.g. NCR closeout, AIT procedure handoff, design-note review, FRACAS rollup)",
         "Platform guides structured capture from 2-3 senior chief engineers, AIT leads, or PA/QA experts",
-        "LIZA auto-generates ECSS-aware playbooks grounded in RemRed's procedures, prior anomalies, and review feedback",
+        "LIZA auto-generates ECSS-aware playbooks grounded in your procedures, prior anomalies, and review feedback",
       ],
       output: "3-5 mission-grade playbooks ready",
     },
@@ -1871,7 +1871,7 @@ function SlideExecutionChallenge() {
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
           The wedge is one workflow. The product is the mission-native knowledge loop.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Co-built with RemRed.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a NewSpace lighthouse partner.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -2008,9 +2008,9 @@ function Slide13() {
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "30-Day MAIT Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one RemRed workflow end-to-end. Measurable delta in 30 days. No long commitment.", color: ACCENT },
+            { label: "30-Day MAIT Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one mission-critical workflow end-to-end. Measurable delta in 30 days. No long commitment.", color: ACCENT },
             { label: "Mission Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across programs. Platform base anchors mission memory; credits scale with execution.", color: GREEN },
-            { label: "Sovereign-Space Layer", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: RemRed (4iG-aligned) takes a strategic position in the space vertical of LIZA OS.", color: GOLD },
+            { label: "Sovereign-Space Layer", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse NewSpace partner takes a strategic position in the space vertical of LIZA OS.", color: GOLD },
             { label: "European NewSpace", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across European primes, integrators, and national programs.", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -2025,9 +2025,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1", target: "30-day pilot live", milestone: "One RemRed workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a chief engineer.", color: TEAL },
-            { month: "Months 2-6", target: "Mission memory layer", milestone: "Expansion to a second RemRed program. Mission memory captured. Onboarding time for new engineers measurably down.", color: SEAFOAM },
-            { month: "Months 6-18", target: "Sovereign-space layer", milestone: "Joint case study with RemRed. Strategic-stake conversation opens (optional). Doors open to other European NewSpace primes.", color: MINT },
+            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a chief engineer.", color: TEAL },
+            { month: "Months 2-6", target: "Mission memory layer", milestone: "Expansion to a second program. Mission memory captured. Onboarding time for new engineers measurably down.", color: SEAFOAM },
+            { month: "Months 6-18", target: "Sovereign-space layer", milestone: "Joint case study with the lighthouse partner. Strategic-stake conversation opens (optional). Doors open to other European NewSpace primes.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2042,7 +2042,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>RemRed can become the partner that turns it into the mission-grade control layer for European space.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse NewSpace partner can turn it into the mission-grade control layer for European space.</strong>
           </p>
         </div>
 
@@ -2101,7 +2101,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function RemRedInvestorDeck() {
+export default function SpaceDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2216,7 +2216,7 @@ export default function RemRedInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-RemRed-Space-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Space-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -2263,7 +2263,7 @@ export default function RemRedInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · RemRed Strategic Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Space Strategic Deck</h2>
           <div className="flex items-center gap-3">
             <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pharma-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
