@@ -9,7 +9,7 @@ import LCVInvestorDeck from "@/pages/LCVInvestorDeck";
 import AuditOffer from "@/pages/offers/AuditOffer";
 import AECInvestorDeck from "@/pages/AECInvestorDeck";
 import PharmaInvestorDeck from "@/pages/PharmaInvestorDeck";
-import RemRedInvestorDeck from "@/pages/RemRedInvestorDeck";
+import SpaceDeck from "@/pages/SpaceDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -50,12 +50,12 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
-    id: "investor-remred",
-    title: "RemRed Strategic Deck (Space)",
-    path: "/investor-remred",
-    sourcePath: "src/pages/RemRedInvestorDeck.tsx",
-    description: "Space-vertical strategic deck for RemRed (Hungarian NewSpace, 4iG-aligned). Pilot-first, sovereign-space framing.",
-    component: RemRedInvestorDeck,
+    id: "space",
+    title: "Space Strategic Deck",
+    path: "/space",
+    sourcePath: "src/pages/SpaceDeck.tsx",
+    description: "Space-vertical strategic deck for NewSpace primes and satellite integrators. Pilot-first, sovereign-space framing.",
+    component: SpaceDeck,
     showInAdmin: true,
   },
   {
