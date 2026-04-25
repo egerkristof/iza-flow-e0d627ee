@@ -1728,11 +1728,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "GC or A/E selects one high-value workflow (e.g. RFI response, submittal review, spec compliance)",
-        "Platform guides structured capture from 2-3 senior PMs / principals",
-        "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
+        "Sponsor selects one high-value workflow (e.g. deviation triage, CAPA drafting, CSR section authoring)",
+        "Platform guides structured capture from 2-3 senior QA, medical writers, or reg affairs leads",
+        "LIZA auto-generates GxP-aware playbooks grounded in the site's SOPs, prior deviations, and agency feedback",
       ],
-      output: "3-5 project-aware playbooks ready",
+      output: "3-5 GxP-aware playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1740,11 +1740,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Project team self-serves: run playbooks against live RFIs, submittals, and spec questions",
-        "Real projects, real owners, real deliverables",
+        "Quality / clinical team self-serves: run playbooks against live deviations, CAPAs, and CSR sections",
+        "Real batches, real studies, real audit-grade deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior PM vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: senior reviewer vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1752,11 +1752,11 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per RFI, rework avoided, schedule risk reduced",
-        "Project memory self-improves from every execution",
-        "Business case for firm-wide rollout with real project numbers",
+        "Automated review: hours saved per deviation, rework avoided, audit-finding risk reduced",
+        "GxP memory self-improves from every execution; full traceability preserved",
+        "Business case for site-wide and study-wide rollout with real numbers",
       ],
-      output: "ROI proven. Expansion decision with data.",
+      output: "ROI proven. Expansion decision with audit-grade data.",
     },
   ];
 
@@ -1767,7 +1767,7 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the AEC-native knowledge loop.{" "}
+          The wedge is one workflow. The product is the GxP-native knowledge loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -1814,7 +1814,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "AEC-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
+            { metric: "GxP-native", label: "Product direction", sub: "Role, workflow, and validated audit fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
