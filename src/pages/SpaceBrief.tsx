@@ -130,21 +130,65 @@ export default function SpaceBrief() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.15 }}
-          className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-3xl"
+          className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-2xl"
         >
-          Senior engineers retire. Standards drift between programs.
-          AI tools can speed up the work — but they don't know your standards,
-          your mission history, or the calls your chief engineer would have made.
+          Engineers retire. AI doesn't know your standards.
         </motion.p>
+
+        {/* Visual: knowledge leaving the org */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="mt-10 sm:mt-12 grid grid-cols-3 items-center gap-2 sm:gap-6 max-w-3xl"
+        >
+          {/* Senior engineer */}
+          <div className="flex flex-col items-center text-center">
+            <div
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center border-2"
+              style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)` }}
+            >
+              <Brain className="w-7 h-7 sm:w-9 sm:h-9" style={{ color: `hsl(${TEAL})` }} />
+            </div>
+            <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-foreground">
+              Mission know-how
+            </p>
+          </div>
+
+          {/* Arrow + leaving */}
+          <div className="flex flex-col items-center text-center">
+            <div className="flex items-center w-full justify-center gap-1">
+              <span className="h-px flex-1 bg-border" />
+              <UserMinus className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground" />
+              <span className="h-px flex-1 bg-border" />
+            </div>
+            <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-muted-foreground">
+              Walks out the door
+            </p>
+          </div>
+
+          {/* Empty room / risk */}
+          <div className="flex flex-col items-center text-center">
+            <div
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center border-2 border-dashed"
+              style={{ borderColor: "hsl(15 85% 55% / 0.4)", background: "hsl(15 85% 55% / 0.04)" }}
+            >
+              <AlertTriangle className="w-7 h-7 sm:w-9 sm:h-9" style={{ color: "hsl(15 85% 55%)" }} />
+            </div>
+            <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(15 85% 55%)" }}>
+              Next mission at risk
+            </p>
+          </div>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mt-5 text-base sm:text-xl font-bold"
+          transition={{ delay: 0.35 }}
+          className="mt-10 sm:mt-12 text-base sm:text-xl font-bold max-w-2xl"
           style={{ color: `hsl(${TEAL})` }}
         >
-          LIZA OS captures your mission knowledge and uses it to govern every AI output.
+          LIZA OS captures that knowledge and governs every AI output against it.
         </motion.p>
 
         {/* Vertical problem evidence — three cards */}
@@ -186,18 +230,57 @@ export default function SpaceBrief() {
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
             How LIZA OS works
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            {loop.map((s, i) => (
-              <div key={s.step} className="rounded-xl border border-border p-4 sm:p-5">
-                <p className="text-xs font-bold mb-1" style={{ color: `hsl(${TEAL})` }}>
-                  0{i + 1}
-                </p>
-                <p className="font-bold text-base sm:text-lg">{s.step}</p>
-                <p className="mt-1 text-xs sm:text-sm text-muted-foreground leading-snug">
-                  {s.desc}
-                </p>
-              </div>
-            ))}
+
+          {/* Flow diagram with connectors */}
+          <div className="relative">
+            {/* Desktop horizontal connector line */}
+            <div
+              className="hidden sm:block absolute top-8 left-[12.5%] right-[12.5%] h-px"
+              style={{ background: `hsl(${TEAL} / 0.25)` }}
+              aria-hidden
+            />
+            <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-y-8 gap-x-3 sm:gap-x-4">
+              {loop.map((s, i) => {
+                const Icon = s.Icon;
+                return (
+                  <motion.div
+                    key={s.step}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.05 * i }}
+                    className="flex flex-col items-center text-center"
+                  >
+                    {/* Icon node */}
+                    <div
+                      className="relative w-16 h-16 sm:w-16 sm:h-16 rounded-full flex items-center justify-center border-2 bg-white"
+                      style={{ borderColor: `hsl(${TEAL})`, color: `hsl(${TEAL})` }}
+                    >
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
+                      <span
+                        className="absolute -top-2 -right-2 text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center text-white"
+                        style={{ background: `hsl(${TEAL})` }}
+                      >
+                        {i + 1}
+                      </span>
+                    </div>
+                    <p className="mt-3 font-black text-base sm:text-lg tracking-tight">{s.step}</p>
+                    <p className="mt-1 text-xs sm:text-sm font-semibold" style={{ color: `hsl(${TEAL})` }}>
+                      {s.short}
+                    </p>
+                    <p className="mt-1.5 text-xs sm:text-[13px] text-muted-foreground leading-snug max-w-[180px]">
+                      {s.desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Loop-back arrow on desktop */}
+            <div className="hidden sm:flex items-center justify-center mt-8 gap-2 text-[11px] font-bold tracking-widest uppercase text-muted-foreground">
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Each cycle makes the next mission smarter</span>
+            </div>
           </div>
         </section>
 
