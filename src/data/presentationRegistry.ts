@@ -9,6 +9,7 @@ import LCVInvestorDeck from "@/pages/LCVInvestorDeck";
 import AuditOffer from "@/pages/offers/AuditOffer";
 import AECInvestorDeck from "@/pages/AECInvestorDeck";
 import PharmaInvestorDeck from "@/pages/PharmaInvestorDeck";
+import RemRedInvestorDeck from "@/pages/RemRedInvestorDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -46,6 +47,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/PharmaInvestorDeck.tsx",
     description: "Life sciences variant for pharma sponsors and CROs centered on GxP-native deviation, CAPA, and CSR memory",
     component: PharmaInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-remred",
+    title: "RemRed Strategic Deck (Space)",
+    path: "/investor-remred",
+    sourcePath: "src/pages/RemRedInvestorDeck.tsx",
+    description: "Space-vertical strategic deck for RemRed (Hungarian NewSpace, 4iG-aligned). Pilot-first, sovereign-space framing.",
+    component: RemRedInvestorDeck,
     showInAdmin: true,
   },
   {
