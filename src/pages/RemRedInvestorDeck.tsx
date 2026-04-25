@@ -100,24 +100,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Life Sciences · Strategic Round
+            LIZA OS · Space · Strategic Conversation
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Trial &amp; Submission Memory Layer<br />
+          The Mission Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Pharma.
+            for AI-Native Space.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns SOPs, protocols, and expert judgment into the governed operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · Life Sciences Beachhead</span>
+          LIZA OS turns ECSS procedures, MAIT records, and senior engineering judgment into the governed operating layer between AI inputs and AI outputs.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Customer Pilot · Strategic Partnership · Sovereign-Space Layer</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; Life Sciences Beachhead
+          Confidential &nbsp;·&nbsp; Prepared for RemRed &nbsp;·&nbsp; Pilot + Strategic Partnership Conversation
         </p>
       </div>
       <SlideBar />
@@ -131,9 +131,9 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "Pharma", sub: "GxP · Deviations · CSRs", active: true, color: TEAL },
-    { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: BLUE },
-    { label: "GTM", sub: "Sales · CS · Onboarding", active: false, color: MUTED },
+    { label: "Space", sub: "ECSS · MAIT · Mission Memory", active: true, color: TEAL },
+    { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
+    { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
     { label: "Prof. Services", sub: "Delivery · Methods", active: false, color: MUTED },
   ];
   return (
@@ -142,14 +142,14 @@ function SlideShape() {
       <div className="relative z-10 h-full flex flex-col">
         <div className="flex items-center gap-3 mb-5">
           <div className="px-3 py-1 rounded-md text-xs font-bold tracking-[0.2em]" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
-            02 · THE SHAPE OF THE COMPANY
+            12 · THE SHAPE OF THE COMPANY
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>Pharma is the spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Space is the next spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. You are investing in pharma specifically — and benefiting from platform leverage already shipping into AEC, GTM, and professional services.
+          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about RemRed and the European space industry — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
         </p>
 
         {/* Diagram */}
@@ -164,7 +164,7 @@ function SlideShape() {
                 {v.active && (
                   <div className="absolute -top-3 left-4 px-2 py-0.5 rounded text-xs font-bold tracking-[0.2em]"
                     style={{ background: `hsl(${v.color})`, color: "white" }}>
-                    YOUR ROUND
+                    TODAY'S CONVERSATION
                   </div>
                 )}
                 <div className="font-black mb-1" style={{ fontSize: 28, color: v.active ? `hsl(${v.color})` : TEXT }}>{v.label}</div>
@@ -206,19 +206,19 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              The pharma vertical thesis. Category leadership in GxP execution.
+              A space-native operating layer for ECSS, MAIT, and mission memory — codifying expertise faster than retirements drain it.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${BLUE})` }}>WHAT COMPOUNDS</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Platform investment from other verticals lowers your CAC and accelerates roadmap.
+              Investment from adjacent verticals (AEC, Pharma) accelerates the platform; you inherit a hardened core, not a v1.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Standard equity + pharma board observer + commercial visibility on the vertical roadmap.
+              Phase 1: 30-day MAIT-memory pilot. Phase 2: strategic partnership and optional sovereign-space stake.
             </div>
           </div>
         </div>
@@ -233,8 +233,8 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["SOPs", "Protocols", "Batch records", "Validation specs", "Annex/ICH refs", "Trial data"];
-  const outputs = ["Deviation reports", "CSRs", "Submissions", "CAPAs", "PV narratives", "Audit responses"];
+  const inputs = ["ECSS procedures", "AIT plans", "NCR / FRACAS", "MGSE / EGSE specs", "Heritage designs", "Anomaly logs"];
+  const outputs = ["NCR write-ups", "Test reports", "Review packages", "RID responses", "Anomaly RCAs", "Audit responses"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -335,70 +335,70 @@ function Slide02() {
 // SLIDE 03 — WHAT THAT COSTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const PHARMA_GAP_CASES = [
+const SPACE_GAP_CASES = [
   {
-    name: "Sponsor / BioPharma",
+    name: "Spacecraft Prime / Integrator",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
-    records: ["Protocols", "Investigator brochures", "Submission modules"],
-    output: "Protocol drafts · CTD module narratives",
-    gap: "AI drafts from the visible documents, but misses the protocol amendment, prior agency feedback, or therapeutic-area precedent the senior medical writer already knows.",
-    cost: "Submission delay. RTF risk. Approval slip.",
+    records: ["ECSS-Q-ST-10", "Mission requirements", "Heritage designs"],
+    output: "Design notes · Trade-study drafts",
+    gap: "AI drafts from visible docs, but misses the heritage trade-off, last-mission anomaly, or chief engineer's rule-of-thumb the retiring expert never wrote down.",
+    cost: "Design rework. Late MRR finding. Schedule slip.",
   },
   {
-    name: "CRO / Clinical Operations",
+    name: "MAIT Engineering Team",
     icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["ICH-GCP refs", "Site SOPs", "Monitoring plans"],
-    output: "Monitoring reports · Query responses",
-    gap: "AI gives an ICH-GCP-compliant answer, but not the sponsor-specific interpretation already aligned with the medical monitor and prior protocol deviations.",
-    cost: "Data integrity findings. Audit observations.",
+    records: ["ECSS-Q-ST-70", "AIT procedures", "EGSE configs"],
+    output: "Test procedures · NCR drafts",
+    gap: "AI gives an ECSS-compliant answer, but not the cleanroom-specific interpretation aligned with the AIT lead and prior deviation history.",
+    cost: "Repeated AIT anomalies. Lost cleanroom hours.",
   },
   {
-    name: "GMP Manufacturing & QA",
+    name: "Quality Assurance & Product Assurance",
     icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
     accent: GOLD,
-    records: ["SOPs", "Batch records", "Validation reports"],
-    output: "Deviation reports · CAPA records",
-    gap: "AI summarises the deviation, but misses the Annex 1 nuance, the batch-specific exception, and the prior CAPA pattern that determines whether the lot is releasable.",
-    cost: "Batch reject. 483 observation. Recall risk.",
+    records: ["AS9100 SOPs", "FRACAS records", "NCR archives"],
+    output: "NCR closeouts · CAPA records",
+    gap: "AI summarises the non-conformance, but misses the radiation-tolerance nuance, the batch-specific exception, and the prior FRACAS pattern that determines whether the unit is flight-worthy.",
+    cost: "Unit reject. Audit finding. Mission risk.",
   },
 ];
 
-const PHARMA_COST_BENCHMARKS = [
+const SPACE_COST_BENCHMARKS = [
   {
-    value: "$2.6B",
-    label: "average capitalized R&D cost to bring a single new prescription drug to market, including failures and time costs",
-    source: "Tufts Center for the Study of Drug Development, 2016 (DiMasi et al.)",
+    value: "30-40 yrs",
+    label: "of mission heritage and chief-engineer judgment locked in retiring NASA, ESA, and Hungarian aerospace experts — most of it never codified in a queryable form",
+    source: "NASA APPEL & ESA Knowledge Management studies, 2018-2024",
   },
   {
-    value: "~10%",
-    label: "of drug candidates entering Phase I clinical trials are eventually approved; ~90% of late-stage failures are tied to efficacy, safety, or operational execution",
-    source: "Wong, Siah, Lo (Biostatistics, 2019); BIO/Informa Pharma Intelligence",
+    value: "~50%",
+    label: "of small-satellite and CubeSat missions experience partial or total failure within their first year — most root causes trace to known precedent that did not propagate",
+    source: "Aerospace Corporation small-satellite reliability studies, 2020-2023",
   },
   {
     value: "30–40%",
-    label: "of pharma quality events involve repeat deviations or known root causes, indicating CAPA knowledge does not propagate across batches and sites",
-    source: "ISPE & PDA quality metrics benchmarks",
+    label: "of aerospace non-conformances repeat known root causes across programs and sites, indicating FRACAS knowledge does not propagate batch-to-batch",
+    source: "AS9100 industry benchmarks; aerospace FRACAS literature",
   },
 ];
 
 function Slide03() {
-  const alsoApplies = ["Pharmacovigilance", "Regulatory affairs", "Medical affairs", "Clinical data mgmt", "Supply chain & cold chain", "Medical devices"];
+  const alsoApplies = ["Mission operations", "Ground segment", "Launch services", "Payload integration", "EEE parts management", "Regulatory & licensing"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in Life Sciences
+          Where Missing Context Shows Up in Space
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is expert judgment.</span>
+          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is mission-grade engineering judgment.</span>
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
-          {PHARMA_GAP_CASES.map((item) => (
+          {SPACE_GAP_CASES.map((item) => (
             <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
               <div className="w-[290px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-2 mb-2">
@@ -455,29 +455,29 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs in Life Sciences
+          What Missing Context Costs in Space
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it delays trials, blocks releases, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable regulatory exposure.</span>
+          Missing context becomes expensive because it delays integration, blocks reviews, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable mission risk.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>$1.3M</p>
+            <p className="font-black" style={{ fontSize: 64, color: `hsl(${WARM})`, lineHeight: 0.95 }}>weeks</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              average daily cost of a delayed Phase III trial
+              of slip per repeated AIT anomaly that loses its precedent
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest protocol amendment, prior agency feedback, deviation precedent, or sponsor standard.
+              This is what AI amplifies if it runs without the latest ECSS tailoring, prior anomaly history, FRACAS precedent, or chief-engineer judgment.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Tufts CSDD &amp; Cutting Edge Information benchmarks, oncology Phase III median
+              Qualitative pattern from AS9100 industry benchmarks &amp; aerospace FRACAS literature; not RemRed data
             </p>
           </div>
 
           <div className="rounded-[28px] border px-7 py-6" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
             <div className="grid grid-cols-3 gap-3 mb-4">
-              {PHARMA_COST_BENCHMARKS.map((item) => (
+              {SPACE_COST_BENCHMARKS.map((item) => (
                 <div key={item.label} className="rounded-xl px-4 py-4 min-h-[172px]" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
                   <p className="font-black" style={{ fontSize: 31, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
                   <p className="font-bold mt-2" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{item.label}</p>
@@ -491,10 +491,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside a deviation, CAPA, protocol amendment, CSR section, or PV narrative <span className="font-bold">without the full GxP context</span>, QA still has to catch it, correct it, and re-route it through review.
+                If AI produces a plausible answer inside an NCR, FRACAS entry, AIT procedure, or design note <span className="font-bold">without the full ECSS and mission context</span>, the chief engineer still has to catch it, correct it, and re-route it through review.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>$300M Phase III program</span>, a 30-day avoidable delay implies roughly <span className="font-bold" style={{ color: TEXT }}>$40M of NPV at risk</span> before considering peak-sales erosion from a later launch.
+                On a flagship satellite program, a launch slip caused by an AIT anomaly typically translates into <span className="font-bold" style={{ color: TEXT }}>months of cleanroom and team cost</span>, plus knock-on effects on launch slot allocation and customer commitments.
               </p>
             </div>
           </div>
@@ -502,9 +502,9 @@ function Slide04Cost() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Time-to-approval", value: "delayed", desc: "Senior writers and QA spend cycles fixing AI-assisted work instead of moving the submission and the release forward.", color: RED },
-            { label: "Compliance", value: "exposed", desc: "Wrong outputs create deviation loops, re-validation cycles, and 483 / Form 1572 risk across trials, batches, and PV cases.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without GxP governance, QA leaders limit adoption because every output creates regulatory, patient safety, and product release risk.", color: GOLD },
+            { label: "Time-to-launch", value: "delayed", desc: "Chief engineers and AIT leads spend cycles fixing AI-assisted work instead of moving the integration and the launch readiness forward.", color: RED },
+            { label: "Compliance", value: "exposed", desc: "Wrong outputs create non-conformance loops, re-test cycles, and ECSS / AS9100 audit risk across programs, units, and missions.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without mission-grade governance, PA/QA leaders limit adoption because every output creates flight-worthiness and mission-risk exposure.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
@@ -541,17 +541,17 @@ function SlideWhyNow() {
     },
     {
       metric: "Jan '25",
-      label: "FDA AI/ML draft guidance for drug & biological products",
-      insight: "Regulators now expect lifecycle governance, traceability, and credibility evidence for every AI-assisted output.",
+      label: "EU sovereign-space push + ESA AI guidance maturing",
+      insight: "ESA, EUSPA, and national agencies now expect lifecycle traceability and governance for AI-assisted engineering outputs.",
       color: TEAL,
-      source: "FDA CDER/CBER draft guidance, Jan 2025; EMA reflection paper, Sep 2024",
+      source: "ESA AI/ML reflection notes; EU Space Strategy for Security & Defence, 2024",
     },
   ];
 
   const shifts = [
-    { shift: "GenAI moved into GxP workflows", result: "Sponsors and CMOs piloted LLMs in deviations, CSRs, PV narratives. The audit trail did not follow." },
-    { shift: "Regulators now ask 'how was this output governed?'", result: "FDA AI/ML guidance, EMA reflection paper, ICH E6(R3), and EU AI Act all require lifecycle traceability for AI-assisted GxP work." },
-    { shift: "The senior QA & medical writing bottleneck hit", result: "Approvals are senior-talent-bound. Every hour a reviewer spends correcting AI is an hour not spent moving the molecule forward." },
+    { shift: "GenAI moved into space engineering workflows", result: "Primes and integrators piloted LLMs inside NCRs, AIT procedures, and design notes. The audit trail did not follow." },
+    { shift: "Reviewers now ask 'how was this output governed?'", result: "ESA, EUSPA, and customer reviewers expect lifecycle traceability for AI-assisted ECSS, MAIT, and mission-assurance work." },
+    { shift: "Senior aerospace experts are retiring faster than they are replaced", result: "MRRs and CDRs are senior-talent-bound. Every hour a chief engineer spends correcting AI is an hour not spent moving the mission forward." },
   ];
 
   return (
@@ -608,9 +608,9 @@ function SlideWhyNow() {
 
 function Slide05() {
   const verticalSurfaces = [
-    { title: "Pharma roles", items: "Medical writer, QA lead, reg affairs, PV scientist", color: TEAL },
-    { title: "GxP workflows", items: "Deviation, CAPA, CSR section, PV narrative, submission", color: GOLD },
-    { title: "Pharma language", items: "Annex 1/11, ICH E6(R3), 21 CFR Part 11, ALCOA+, MedDRA", color: GREEN },
+    { title: "Space roles", items: "Chief engineer, AIT lead, PA/QA, mission systems engineer", color: TEAL },
+    { title: "Space workflows", items: "NCR, FRACAS, AIT procedure, design note, review package", color: GOLD },
+    { title: "Space language", items: "ECSS-Q-ST-10/70, AS9100, MGSE/EGSE, MRR/CDR, FRACAS", color: GREEN },
   ];
 
   return (
@@ -621,12 +621,12 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a GxP-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a space-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Protocols, SOPs, batch records, validation specs, Annex/ICH refs, prior agency feedback</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>ECSS procedures, MAIT plans, NCR/FRACAS records, EGSE configs, mission heritage, prior review feedback</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
@@ -636,7 +636,7 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows trial memory, validated SOPs, and QA judgment</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows mission memory, validated procedures, and chief-engineer judgment</p>
           </div>
         </div>
 
@@ -727,7 +727,7 @@ function Slide05() {
             </div>
 
           <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the GxP operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A RemRed pilot makes it a space-native operating experience.</span>
             </p>
           </div>
 
@@ -738,7 +738,7 @@ function Slide05() {
 
           {/* RIGHT — Governed Output */}
           <div className="w-[390px] shrink-0 flex flex-col gap-3">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>GxP-native experience</p>
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Space-native experience</p>
             {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
@@ -774,11 +774,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
-    { name: "Bluebeam / Newforma", layer: "RFI & Markup", color: BLUE },
-    { name: "Revit / Allplan", layer: "Design / BIM", color: BLUE },
-    { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
-    { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
+    { name: "Polarion / DOORS", layer: "Requirements", color: BLUE },
+    { name: "Teamcenter / Windchill", layer: "PLM", color: BLUE },
+    { name: "Catia / NX", layer: "Design / CAD", color: BLUE },
+    { name: "Valispace / 3DEXPERIENCE", layer: "Systems Eng", color: BLUE },
+    { name: "Jama / Codebeamer", layer: "Verification", color: BLUE },
   ];
 
   return (
@@ -965,16 +965,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Veeva Vault AI", funding: "Public", round: "Veeva · 2024", what: "AI features layered onto eTMF, QualityDocs, RIM. System of record, not a governed reasoning layer.", color: GREEN },
-    { name: "Saama / Tempus AI", funding: "$430M / Public", round: "Clinical AI · 2024", what: "Clinical data review and trial analytics. Reads study data, doesn't encode sponsor judgment.", color: SEAFOAM },
-    { name: "MasterControl AI / TrackWise", funding: "Public / Honeywell", round: "eQMS incumbents", what: "Workflow + document AI inside the QMS. No cross-site deviation memory or CAPA precedent loop.", color: BLUE },
-    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every pharma pilot", what: "General reasoning. No GMP context, no SOP grounding, no validated audit trail.", color: GOLD },
+    { name: "Siemens Teamcenter / 3DEXPERIENCE AI", funding: "Public", round: "PLM incumbents · 2024", what: "AI features layered onto PLM. System of record for parts and BOMs, not a reasoning layer for engineering judgment.", color: GREEN },
+    { name: "Palantir Foundry / Skywise", funding: "Public", round: "Aerospace data ops", what: "Data integration and analytics across programs. Reads telemetry and BOMs; doesn't encode chief-engineer judgment.", color: SEAFOAM },
+    { name: "Valispace / Codebeamer / Jama AI", funding: "VC-backed / PTC", round: "Systems-eng tools", what: "Workflow + document AI inside requirements and verification. No cross-mission FRACAS memory or design-precedent loop.", color: BLUE },
+    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every aerospace pilot", what: "General reasoning. No ECSS context, no mission-heritage grounding, no audit-grade trail.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, GxP-aware injection, drift detection. The plumbing every regulated AI workflow will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding GxP Memory", desc: "Deviation precedent, CAPA outcomes, validated SOPs, agency feedback — graph deepens batch-by-batch and study-by-study. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Validated Audit Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for 21 CFR Part 11 / Annex 11 era AI.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, ECSS-aware injection, drift detection. The plumbing every mission-grade AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Mission Memory", desc: "FRACAS precedent, NCR outcomes, validated procedures, review feedback — graph deepens unit-by-unit and mission-by-mission. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Audit-Grade Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for ECSS / AS9100 era AI.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -984,8 +984,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Pharma AI tools surface data and draft documents.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the GxP memory layer that encodes your sponsor's judgment.</span>
+          Aerospace AI tools surface data and draft documents.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the mission memory layer that encodes your chief engineer's judgment.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1011,18 +1011,18 @@ function Slide06() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€3M Strategic Round</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Customer Pilot + Strategic Path</p>
               </div>
             </div>
           </div>
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read documents and dashboards.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your quality and clinical leaders decide.</span>
+              Others read PLM data and dashboards.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your chief engineers and AIT leads decide.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every pharma AI stack will need: SOP nuance, deviation precedent, agency feedback, sponsor standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being focused into life sciences.
+              The instruction layer every aerospace AI stack will need: ECSS tailoring, FRACAS precedent, review feedback, mission-specific standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being applied to space.
             </p>
           </div>
         </div>
@@ -1034,9 +1034,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$15B+", desc: "Life sciences R&D + quality software by 2030 (eTMF, eQMS, RIM, PV)" },
-                { label: "SAM", value: "$3-4B", desc: "AI governance layer across clinical, quality, regulatory, PV" },
-                { label: "SOM", value: "$200-300M", desc: "EU/US sponsor wedge: mid/large pharma + biotech + CRO" },
+                { label: "TAM", value: "$8B+", desc: "Aerospace engineering & MAIT software by 2030 (PLM, requirements, AIT, mission ops)" },
+                { label: "SAM", value: "$1.5-2B", desc: "AI governance layer across systems engineering, MAIT, FRACAS, mission assurance" },
+                { label: "SOM", value: "$80-120M", desc: "EU sovereign-space wedge: NewSpace primes + integrators + national programs" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1048,7 +1048,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Grand View Research, Life Sciences Software Market, 2024-2030. MarketsandMarkets, eClinical / eTMF / eQMS markets, 2024-2030. SAM/SOM are LIZA OS estimates based on the AI governance and reasoning layer inside these markets.
+              Sources: Frost & Sullivan / MarketsandMarkets, Aerospace PLM and engineering software, 2024-2030; ESA & EUSPA market reports. SAM/SOM are LIZA OS estimates based on the AI governance and reasoning layer inside these markets.
             </p>
           </div>
 
@@ -1076,9 +1076,9 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Customers ask for one use case because eTMF/LIMS/eQMS trained them to buy point solutions", now: "LIZA creates one governed GxP knowledge loop that powers deviation, CAPA, CSR, and PV workflows together", color: TEAL },
-    { old: "Generic AI tools ignore how QA, medical writers, reg affairs, and PV scientists actually work", now: "The experience becomes native to pharma roles, ICH/Annex language, and validated handoffs", color: GOLD },
-    { old: "Prompts and templates stay static, so every site and study has to remember what changed", now: "Trial and quality memory is versioned, validated, and reused after every execution", color: GREEN },
+    { old: "Teams ask for one use case because PLM/requirements/test tools trained them to buy point solutions", now: "LIZA creates one governed mission knowledge loop that powers NCRs, FRACAS, AIT procedures, and design notes together", color: TEAL },
+    { old: "Generic AI tools ignore how chief engineers, AIT leads, and PA/QA actually work", now: "The experience becomes native to space roles, ECSS language, and review-gate handoffs", color: GOLD },
+    { old: "Prompts and templates stay static, so every program and unit has to remember what changed", now: "Mission and quality memory is versioned, validated, and reused after every execution", color: GREEN },
   ];
 
   return (
@@ -1087,7 +1087,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another GxP point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+          LIZA is not selling another aerospace point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
@@ -1356,10 +1356,10 @@ function Slide08() {
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Horizontal Proof · Vertical Gap</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we vertically integrate into pharma.</span>
+            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into space — with RemRed.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone is one GxP-native lighthouse partner — sponsor, CRO, or CMO — to make this experience native under validated, audit-grade conditions. Active conversations underway; first design partner is the immediate ask.
+            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for space is one mission-grade lighthouse partner — a NewSpace prime or integrator — to make this experience native under ECSS, AS9100, and audit-grade conditions. RemRed is the partner we want to build it with.
           </p>
         </div>
 
@@ -1426,47 +1426,47 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Discovery & Trials", status: "Wedge", color: GREEN,
+      vertical: "Design & Systems Engineering", status: "Expansion", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Medical writers redo CSR sections because protocol amendments and prior agency feedback don't propagate. AI drafts from generic literature, not your therapeutic-area precedent.",
-      result: "Protocol-aware writing. Submission memory across studies. Faster, sharper CTD modules.",
-      proof: "Adjacent to Veeva Vault Clinical, Saama, and Tempus AI workflows",
+      problem: "Engineers redo trade studies and design notes because heritage decisions and prior review feedback don't propagate. AI drafts from generic literature, not your mission-line precedent.",
+      result: "Heritage-aware design. Mission memory across programs. Faster, sharper review packages.",
+      proof: "Adjacent to Polarion, DOORS, Valispace, and Jama workflows",
     },
     {
-      vertical: "Manufacturing & Release", status: "Anchor", color: TEAL,
+      vertical: "MAIT — Manufacture, Assembly, Integration & Test", status: "Wedge", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "Deviations, CAPAs, and batch records live in disconnected eQMS/LIMS instances. AI can't reason across them. CAPA knowledge dies between sites.",
-      result: "Unified deviation & CAPA lifecycle. Every AI response grounded in this batch's SOPs, Annex 1 nuance, and prior deviation precedent.",
-      proof: "Target embedding path across Veeva Vault Quality, MasterControl, and TrackWise workflows",
+      problem: "NCRs, FRACAS entries, and AIT procedures live in disconnected PLM/MES tools. AI can't reason across them. Anomaly knowledge dies between programs and cleanrooms.",
+      result: "Unified NCR & FRACAS lifecycle. Every AI response grounded in this unit's procedures, ECSS tailoring, and prior anomaly precedent.",
+      proof: "Target embedding path across Teamcenter, Windchill, and aerospace MES workflows",
     },
     {
-      vertical: "Pharmacovigilance & Post-Market", status: "Expansion", color: GOLD,
+      vertical: "Mission Operations & In-Orbit", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "PV narratives and PSURs diverge from sponsor standards. Signal knowledge evaporates between case waves. Safety teams inherit fragmented data.",
-      result: "MedDRA-aware narratives. Living signal memory. Audit-grade PV artifacts, every cycle.",
-      proof: "PV / RWE extension path once quality and clinical integrations are in market",
+      problem: "Anomaly reports and lessons-learned diverge from program standards. Operational knowledge evaporates between mission phases. New ops teams inherit fragmented data.",
+      result: "ECSS-aware anomaly handling. Living mission memory. Audit-grade ops artifacts, every cycle.",
+      proof: "Mission ops / ground-segment extension path once MAIT and design integrations are in place",
     },
   ];
 
   const expandInto = [
-    { name: "Regulatory submissions (CTD/eCTD)", col: TEAL },
-    { name: "GxP audit readiness & 483 response", col: "215 25% 50%" },
-    { name: "Method validation & CSV/CSA", col: GOLD },
-    { name: "Clinical data review & queries", col: GREEN },
-    { name: "Supply chain & cold-chain QA", col: ACCENT },
-    { name: "Medical devices (ISO 13485 / MDR)", col: "330 70% 55%" },
+    { name: "ECSS / AS9100 audit readiness", col: TEAL },
+    { name: "Anomaly review boards (ARB) prep", col: "215 25% 50%" },
+    { name: "EEE parts & radiation justification", col: GOLD },
+    { name: "Launch campaign coordination", col: GREEN },
+    { name: "Ground segment & mission ops handover", col: ACCENT },
+    { name: "Regulatory & licensing (ITU, ITAR)", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Life Sciences Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Space Lifecycle Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            One trial &amp; quality memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the molecule.</span>
+            One mission &amp; quality memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the mission.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1474,10 +1474,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the pharma AI stack.
+              The missing connective tissue underneath the aerospace AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: AEC vertical proven across 3 departments. Pharma lighthouse partner being recruited — not a Veeva integration claim.
+              Current signal: AEC vertical proven across 3 departments; pharma vertical conversation underway. Space lighthouse partner being recruited — RemRed is the conversation we are having.
             </p>
           </div>
         </div>
@@ -1575,22 +1575,22 @@ function Slide09() {
 function Slide09Partnership() {
   const ladder = [
     {
-      phase: "Months 0-6",
-      title: "Co-Sell",
+      phase: "Month 1",
+      title: "30-Day MAIT Pilot",
       color: GREEN,
-      desc: "Warm intros into mid/large pharma quality and clinical ops accounts. LIZA sits alongside Veeva, MasterControl, and TrackWise; partners open doors. Low commitment, fast signal.",
+      desc: "Co-design pilot with one RemRed MAIT or systems-engineering team. We codify one workflow (NCR closeout, AIT procedure handoff, or design-note review) and ship a measurable delta. Low commitment, fast signal.",
     },
     {
-      phase: "Months 6-12",
-      title: "Joint 30-Day Pilots",
+      phase: "Months 2-6",
+      title: "Mission Memory Layer",
       color: TEAL,
-      desc: "Co-branded Deviation & CAPA Lifecycle Sprint productized with a system-of-record partner. Generates GxP case studies plus revenue share.",
+      desc: "Expand to RemRed's second satellite program: encode chief-engineer judgment, codify recurring AIT and FRACAS patterns, and build the mission memory layer that survives expert turnover.",
     },
     {
-      phase: "Months 12-24",
-      title: "Embedded Instruction Layer",
+      phase: "Months 6-18",
+      title: "Sovereign-Space Standard Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one major life sciences platform. Start with eQMS for deviations and CAPAs, then expand to clinical for protocol amendments and CSR memory.",
+      desc: "LIZA OS + RemRed jointly establish a European mission-knowledge layer. Optional strategic stake. Pathway to a 4iG-aligned sovereign-space capability adopted by partners across the European NewSpace ecosystem.",
     },
   ];
 
@@ -1600,10 +1600,10 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Pharma Ecosystem GTM Mechanic
+            Space Partnership Mechanic · RemRed-Specific
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
-            A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
+            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>sovereign-space layer</span>.
           </h2>
         </div>
 
@@ -1735,7 +1735,7 @@ function Slide11() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-            Guided entry. Self-serve product. Credit upside.{" "}
+            Guided pilot. Self-serve product. Credit upside.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>The durable model is usage-aligned.</span>
         </h2>
 
@@ -1831,11 +1831,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Sponsor selects one high-value workflow (e.g. deviation triage, CAPA drafting, CSR section authoring)",
-        "Platform guides structured capture from 2-3 senior QA, medical writers, or reg affairs leads",
-        "LIZA auto-generates GxP-aware playbooks grounded in the site's SOPs, prior deviations, and agency feedback",
+        "RemRed selects one high-value workflow (e.g. NCR closeout, AIT procedure handoff, design-note review, FRACAS rollup)",
+        "Platform guides structured capture from 2-3 senior chief engineers, AIT leads, or PA/QA experts",
+        "LIZA auto-generates ECSS-aware playbooks grounded in RemRed's procedures, prior anomalies, and review feedback",
       ],
-      output: "3-5 GxP-aware playbooks ready",
+      output: "3-5 mission-grade playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1843,11 +1843,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Quality / clinical team self-serves: run playbooks against live deviations, CAPAs, and CSR sections",
-        "Real batches, real studies, real audit-grade deliverables",
+        "MAIT / engineering team self-serves: run playbooks against live NCRs, AIT procedures, and design notes",
+        "Real units, real missions, real audit-grade deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior reviewer vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: chief engineer vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1855,9 +1855,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per deviation, rework avoided, audit-finding risk reduced",
-        "GxP memory self-improves from every execution; full traceability preserved",
-        "Business case for site-wide and study-wide rollout with real numbers",
+        "Automated review: hours saved per NCR, rework avoided, audit-finding risk reduced",
+        "Mission memory self-improves from every execution; full traceability preserved",
+        "Business case for program-wide and site-wide rollout with real numbers",
       ],
       output: "ROI proven. Expansion decision with audit-grade data.",
     },
@@ -1870,8 +1870,8 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the GxP-native knowledge loop.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
+          The wedge is one workflow. The product is the mission-native knowledge loop.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with RemRed.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -1917,7 +1917,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "GxP-native", label: "Product direction", sub: "Role, workflow, and validated audit fit" },
+            { metric: "Mission-native", label: "Product direction", sub: "Role, workflow, and ECSS / AS9100 audit fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -1945,8 +1945,8 @@ function Slide12() {
 
   const advisors = [
     { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Pharma Quality Advisor", role: "Senior QA / Regulatory Leader, Top-20 Pharma", bio: "Engagement underway with a senior quality and regulatory leader to anchor GxP fit, validation strategy, and sponsor-side adoption patterns." },
-    { name: "Clinical Operations Advisor", role: "Head of Clinical Operations, Mid/Large Sponsor", bio: "Pipeline conversation to anchor protocol amendment, CSR authoring, and trial memory workflows in real sponsor reality." },
+    { name: "Space Mission Assurance Advisor", role: "Senior PA/QA Leader, ESA / NewSpace Lineage", bio: "Engagement underway with a senior mission-assurance leader to anchor ECSS / AS9100 fit, validation strategy, and prime-side adoption patterns." },
+    { name: "Systems Engineering Advisor", role: "Chief / Lead Systems Engineer, Satellite Programs", bio: "Pipeline conversation to anchor MAIT, NCR/FRACAS, and design-review workflows in real mission reality." },
   ];
 
   return (
@@ -2014,20 +2014,20 @@ function Slide13() {
 
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
+          <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>Pilot first.<br/><span style={{ color: `hsl(${TEAL})` }}>Strategic stake optional.</span></h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + life sciences beachhead build-out
+            Door 1: 30-day MAIT pilot &nbsp;·&nbsp; Door 2: strategic stake in the space vertical &nbsp;·&nbsp; Sequence: customer first, capital later if it fits
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "GxP-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, validated UI, onboarding, product design", color: ACCENT },
-            { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "Pharma Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Veeva / eQMS bridges, validation packages, lighthouse deployments", color: GOLD },
-            { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
+            { label: "30-Day MAIT Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one RemRed workflow end-to-end. Measurable delta in 30 days. No long commitment.", color: ACCENT },
+            { label: "Mission Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across programs. Platform base anchors mission memory; credits scale with execution.", color: GREEN },
+            { label: "Sovereign-Space Layer", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: RemRed (4iG-aligned) takes a strategic position in the space vertical of LIZA OS.", color: GOLD },
+            { label: "European NewSpace", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across European primes, integrators, and national programs.", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -2041,9 +2041,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "GxP-native UX live", milestone: "Deviation, CAPA, and CSR-section surfaces in market with first lighthouse sponsor deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Pharma pilots convert to platform base plus credits. Veeva / eQMS integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and life sciences customers on a repeatable self-serve expansion path.", color: MINT },
+            { month: "Month 1", target: "30-day pilot live", milestone: "One RemRed workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a chief engineer.", color: TEAL },
+            { month: "Months 2-6", target: "Mission memory layer", milestone: "Expansion to a second RemRed program. Mission memory captured. Onboarding time for new engineers measurably down.", color: SEAFOAM },
+            { month: "Months 6-18", target: "Sovereign-space layer", milestone: "Joint case study with RemRed. Strategic-stake conversation opens (optional). Doors open to other European NewSpace primes.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2058,7 +2058,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the GxP-native control layer for every regulated AI workflow.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>RemRed can become the partner that turns it into the mission-grade control layer for European space.</strong>
           </p>
         </div>
 
@@ -2095,8 +2095,8 @@ function SlideAppendixDivider() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "Where Missing Context Shows Up in Pharma", component: <Slide03 /> },
-  { id: 4, title: "What Missing Context Costs in Pharma", component: <Slide04Cost /> },
+  { id: 3, title: "Where Missing Context Shows Up in Space", component: <Slide03 /> },
+  { id: 4, title: "What Missing Context Costs in Space", component: <Slide04Cost /> },
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
@@ -2109,7 +2109,7 @@ const SLIDES = [
   { id: 14, title: "Business Model", component: <Slide11 /> },
   { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
   { id: 16, title: "Team", component: <Slide12 /> },
-  { id: 17, title: "The Ask", component: <Slide13 /> },
+  { id: 17, title: "Two-Door Partnership Path", component: <Slide13 /> },
   { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
   { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
   { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
@@ -2117,7 +2117,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function PharmaInvestorDeck() {
+export default function RemRedInvestorDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2232,7 +2232,7 @@ export default function PharmaInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pharma-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-RemRed-Space-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -2279,7 +2279,7 @@ export default function PharmaInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Pharma Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · RemRed Strategic Deck</h2>
           <div className="flex items-center gap-3">
             <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pharma-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
