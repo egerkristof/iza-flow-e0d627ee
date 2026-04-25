@@ -30,23 +30,23 @@ const MINT = "160 96% 39%";
 const verticalProblems = [
   {
     stat: "30–40 yrs",
-    label: "Undocumented expertise",
+    label: "Heritage at risk",
     detail:
-      "Decades of mission judgment lives in senior engineers' heads — never written down in a form anyone else can use. When they retire, it's gone.",
+      "Decades of mission heritage and chief-engineer judgment sit in retiring NASA, ESA, and European aerospace experts. Most of it is never codified in a form anyone else can use.",
     source: "LIZA OS field engagements",
   },
   {
     stat: "6–12 mo",
-    label: "Onboarding time",
+    label: "Onboarding drag",
     detail:
-      "New engineers need months — sometimes a full year — to become productive on a mission, because there's no single place that holds the standards, history, and decisions.",
+      "New mission engineers take 6–12 months to become productive. Standards, history, and prior decisions live across people and folders — not in one governed place.",
     source: "Aerospace HR benchmarks",
   },
   {
     stat: "30–40%",
-    label: "Best practice doesn't scale",
+    label: "Lessons don't propagate",
     detail:
-      "Of quality issues repeat across programs. What one team learned never reaches the next — so the same mistake gets paid for twice.",
+      "Of aerospace non-conformances repeat known root causes across programs. What one team learned doesn't reach the next, and the same mistake gets paid for twice.",
     source: "Aerospace quality benchmarks",
   },
 ];
@@ -54,8 +54,8 @@ const verticalProblems = [
 const loop = [
   {
     step: "Capture",
-    short: "Define the expertise.",
-    desc: "Turn standards, decisions, and senior judgment into clear written rules — once.",
+    short: "Codify mission heritage.",
+    desc: "Turn standards, prior decisions, and senior judgment into executable rules — once, then reused.",
     Icon: BookOpen,
   },
   {
@@ -66,8 +66,8 @@ const loop = [
   },
   {
     step: "Apply",
-    short: "Everyone ramps faster.",
-    desc: "New and senior engineers run trade studies, reviews, and docs inside your rules.",
+    short: "Engineers ramp and run faster.",
+    desc: "New hires onboard against the same rules. Trade studies, reviews, and docs run inside your standards — not around them.",
     Icon: Rocket,
   },
   {
@@ -120,10 +120,10 @@ export default function SpaceBrief() {
           transition={{ delay: 0.05 }}
           className="font-black tracking-tight leading-[1.02] text-[40px] sm:text-7xl lg:text-8xl max-w-5xl"
         >
-          Space programs run<br className="hidden sm:block" />
-          <span> </span>on expertise.<br />
-          Most of it is{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>never written down.</span>
+          Space programs don't fail<br className="hidden sm:block" />
+          <span> </span>on physics.<br />
+          They fail on{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>knowledge that was never codified.</span>
         </motion.h1>
 
         <motion.p
@@ -132,10 +132,10 @@ export default function SpaceBrief() {
           transition={{ delay: 0.15 }}
           className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-2xl"
         >
-          Knowledge stays in senior heads. Onboarding drags on. AI doesn't know your standards.
+          Mission heritage retires. Standards drift between programs. AI doesn't know either.
         </motion.p>
 
-        {/* Visual: the lifecycle gap — three symptoms of undefined expertise */}
+        {/* Visual: the lifecycle gap — three symptoms of uncodified mission knowledge */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -143,9 +143,9 @@ export default function SpaceBrief() {
           className="mt-10 sm:mt-12 grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl"
         >
           {[
-            { Icon: FileQuestion, label: "Never defined", sub: "Lives in senior heads" },
-            { Icon: Clock, label: "Slow onboarding", sub: "6–12 months to ramp" },
-            { Icon: TrendingUp, label: "Doesn't scale", sub: "One team's wins stay there" },
+            { Icon: FileQuestion, label: "Not codified", sub: "Lives in senior heads" },
+            { Icon: Clock, label: "Slow to onboard", sub: "6–12 months to ramp" },
+            { Icon: TrendingUp, label: "Doesn't propagate", sub: "Lessons stay in one team" },
           ].map((item) => {
             const Icon = item.Icon;
             return (
@@ -174,7 +174,7 @@ export default function SpaceBrief() {
           className="mt-10 sm:mt-12 text-base sm:text-xl font-bold max-w-2xl"
           style={{ color: `hsl(${TEAL})` }}
         >
-          LIZA OS makes mission expertise an operating asset — defined, scalable, and governed across every AI output.
+          LIZA OS is the Mission Memory Layer — codifies mission knowledge, ramps engineers faster, and governs every AI output against your standards.
         </motion.p>
 
         {/* Vertical problem evidence — three cards */}
