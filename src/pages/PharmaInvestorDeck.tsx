@@ -232,7 +232,7 @@ function Slide02() {
 // SLIDE 03 — WHAT THAT COSTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const AEC_GAP_CASES = [
+const PHARMA_GAP_CASES = [
   {
     name: "Sponsor / BioPharma",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
@@ -262,7 +262,7 @@ const AEC_GAP_CASES = [
   },
 ];
 
-const AEC_COST_BENCHMARKS = [
+const PHARMA_COST_BENCHMARKS = [
   {
     value: "$2.6B",
     label: "average capitalized R&D cost to bring a single new prescription drug to market, including failures and time costs",
@@ -295,7 +295,7 @@ function Slide03() {
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
-          {AEC_GAP_CASES.map((item) => (
+          {PHARMA_GAP_CASES.map((item) => (
             <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
               <div className="w-[290px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-2 mb-2">
@@ -374,7 +374,7 @@ function Slide04Cost() {
 
           <div className="rounded-[28px] border px-7 py-6" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
             <div className="grid grid-cols-3 gap-3 mb-4">
-              {AEC_COST_BENCHMARKS.map((item) => (
+              {PHARMA_COST_BENCHMARKS.map((item) => (
                 <div key={item.label} className="rounded-xl px-4 py-4 min-h-[172px]" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
                   <p className="font-black" style={{ fontSize: 31, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
                   <p className="font-bold mt-2" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{item.label}</p>
@@ -2128,7 +2128,7 @@ export default function PharmaInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pharma-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
