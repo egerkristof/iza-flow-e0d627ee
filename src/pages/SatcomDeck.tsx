@@ -1077,9 +1077,9 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Teams ask for one use case because PLM/requirements/test tools trained them to buy point solutions", now: "LIZA creates one governed mission knowledge loop that powers NCRs, FRACAS, AIT procedures, and design notes together", color: TEAL },
-    { old: "Generic AI tools ignore how chief engineers, AIT leads, and PA/QA actually work", now: "The experience becomes native to space roles, ECSS language, and review-gate handoffs", color: GOLD },
-    { old: "Prompts and templates stay static, so every program and unit has to remember what changed", now: "Mission and quality memory is versioned, validated, and reused after every execution", color: GREEN },
+    { old: "Teams buy one use case because C2, OSS/BSS, and CRM tools trained them to buy point solutions", now: "LIZA creates one governed operator knowledge loop that powers anomaly response, vendor acceptance, ITU filings, and SLA reporting together", color: TEAL },
+    { old: "Generic AI tools ignore how senior controllers, procurement leads, and ITU specialists actually work", now: "The experience becomes native to operator roles, SLA / ITU language, and fleet-handover gates", color: GOLD },
+    { old: "Anomaly notes and vendor lessons stay static, so every satellite and contract cycle relearns from zero", now: "Fleet, procurement, and regulatory memory is versioned, validated, and reused after every execution", color: GREEN },
   ];
 
   return (
@@ -1088,7 +1088,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another aerospace point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+          LIZA is not selling another satcom point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop for operators.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
@@ -1106,14 +1106,14 @@ function SlideVerticalization() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 30, color: `hsl(${TEAL})`, lineHeight: 1 }}>The same operating loop</p>
-                <p className="font-semibold mt-1" style={{ fontSize: 16, color: MUTED }}>Now explained as the strategic pivot from software use cases to reusable project memory.</p>
+                <p className="font-semibold mt-1" style={{ fontSize: 16, color: MUTED }}>Now explained as the strategic pivot from satcom point software to reusable operator memory across fleet, procurement, and regulatory.</p>
               </div>
             </div>
             {[
               { label: "Define", desc: "Experts encode standards, exceptions, decision logic", icon: <BookOpen size={22} /> },
               { label: "Execute", desc: "AI applies that context inside live workflows", icon: <Zap size={22} /> },
-              { label: "Capture", desc: "Feedback, drift, and project learning are structured", icon: <Eye size={22} /> },
-              { label: "Update", desc: "Project memory improves and propagates", icon: <RefreshCw size={22} /> },
+              { label: "Capture", desc: "Anomaly outcomes, vendor lessons, regulatory feedback are structured", icon: <Eye size={22} /> },
+              { label: "Update", desc: "Operator memory improves and propagates across the fleet", icon: <RefreshCw size={22} /> },
             ].map((item, i) => (
               <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
