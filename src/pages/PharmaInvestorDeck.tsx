@@ -862,16 +862,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
-    { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
-    { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
+    { name: "Veeva Vault AI", funding: "Public", round: "Veeva · 2024", what: "AI features layered onto eTMF, QualityDocs, RIM. System of record, not a governed reasoning layer.", color: GREEN },
+    { name: "Saama / Tempus AI", funding: "$430M / Public", round: "Clinical AI · 2024", what: "Clinical data review and trial analytics. Reads study data, doesn't encode sponsor judgment.", color: SEAFOAM },
+    { name: "MasterControl AI / TrackWise", funding: "Public / Honeywell", round: "eQMS incumbents", what: "Workflow + document AI inside the QMS. No cross-site deviation memory or CAPA precedent loop.", color: BLUE },
+    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every pharma pilot", what: "General reasoning. No GMP context, no SOP grounding, no validated audit trail.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Nemetschek ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, GxP-aware injection, drift detection. The plumbing every regulated AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding GxP Memory", desc: "Deviation precedent, CAPA outcomes, validated SOPs, agency feedback — graph deepens batch-by-batch and study-by-study. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Validated Audit Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for 21 CFR Part 11 / Annex 11 era AI.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -881,8 +881,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          AEC AI tools read documents and predict risk.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the project-memory layer that encodes your firm's judgment.</span>
+          Pharma AI tools surface data and draft documents.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the GxP memory layer that encodes your sponsor's judgment.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -915,11 +915,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read drawings and contracts.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
+              Others read documents and dashboards.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your quality and clinical leaders decide.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every AEC AI stack will need: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into AEC.
+              The instruction layer every pharma AI stack will need: SOP nuance, deviation precedent, agency feedback, sponsor standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being focused into life sciences.
             </p>
           </div>
         </div>
@@ -931,9 +931,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$16.4B", desc: "Construction management software by 2033" },
-                { label: "SAM", value: "$3-4B", desc: "AI control layer across project execution, review, compliance" },
-                { label: "SOM", value: "$250-300M", desc: "EU/NA enterprise wedge: GCs, A/E firms, owners" },
+                { label: "TAM", value: "$15B+", desc: "Life sciences R&D + quality software by 2030 (eTMF, eQMS, RIM, PV)" },
+                { label: "SAM", value: "$3-4B", desc: "AI governance layer across clinical, quality, regulatory, PV" },
+                { label: "SOM", value: "$200-300M", desc: "EU/US sponsor wedge: mid/large pharma + biotech + CRO" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -945,7 +945,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Grand View Research, Construction Management Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, BIM Market, 2025-2030: $15.42B by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
+              Sources: Grand View Research, Life Sciences Software Market, 2024-2030. MarketsandMarkets, eClinical / eTMF / eQMS markets, 2024-2030. SAM/SOM are LIZA OS estimates based on the AI governance and reasoning layer inside these markets.
             </p>
           </div>
 
