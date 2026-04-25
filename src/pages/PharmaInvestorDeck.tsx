@@ -264,19 +264,19 @@ const AEC_GAP_CASES = [
 
 const AEC_COST_BENCHMARKS = [
   {
-    value: "$177.5B",
-    label: "estimated annual labor cost impact in the U.S. construction industry from rework, conflict resolution, and searching for project data",
-    source: "FMI / PlanGrid, Construction Disconnected, U.S., 2018",
+    value: "$2.6B",
+    label: "average capitalized R&D cost to bring a single new prescription drug to market, including failures and time costs",
+    source: "Tufts Center for the Study of Drug Development, 2016 (DiMasi et al.)",
   },
   {
-    value: "14+ hrs",
-    label: "lost per worker per week on non-optimal activities, including about 4 hours tied specifically to rework",
-    source: "FMI / PlanGrid, U.S., 2018",
+    value: "~10%",
+    label: "of drug candidates entering Phase I clinical trials are eventually approved; ~90% of late-stage failures are tied to efficacy, safety, or operational execution",
+    source: "Wong, Siah, Lo (Biostatistics, 2019); BIO/Informa Pharma Intelligence",
   },
   {
-    value: "5–15%",
-    label: "common rework range cited across industry benchmarks, depending on project complexity and delivery conditions",
-    source: "CII / McKinsey / industry benchmark range",
+    value: "30–40%",
+    label: "of pharma quality events involve repeat deviations or known root causes, indicating CAPA knowledge does not propagate across batches and sites",
+    source: "ISPE & PDA quality metrics benchmarks",
   },
 ];
 
