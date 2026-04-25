@@ -1832,11 +1832,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Your team selects one high-value workflow (e.g. NCR closeout, AIT procedure handoff, design-note review, FRACAS rollup)",
-        "Platform guides structured capture from 2-3 senior chief engineers, AIT leads, or PA/QA experts",
-        "LIZA auto-generates ECSS-aware playbooks grounded in your procedures, prior anomalies, and review feedback",
+        "Your team selects one high-value workflow (e.g. anomaly response, station-keeping handover, vendor acceptance, ITU filing prep)",
+        "Platform guides structured capture from 2-3 senior fleet-ops controllers, procurement leads, or ITU/spectrum specialists",
+        "LIZA auto-generates SLA- and ITU-aware playbooks grounded in your SOPs, prior anomalies, and regulatory precedent",
       ],
-      output: "3-5 mission-grade playbooks ready",
+      output: "3-5 operator-grade playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1844,11 +1844,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "MAIT / engineering team self-serves: run playbooks against live NCRs, AIT procedures, and design notes",
-        "Real units, real missions, real audit-grade deliverables",
+        "Fleet-ops / procurement team self-serves: run playbooks against live anomalies, handovers, and vendor reviews",
+        "Real satellites, real contracts, real audit-grade deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: chief engineer vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: senior controller vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1856,9 +1856,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per NCR, rework avoided, audit-finding risk reduced",
-        "Mission memory self-improves from every execution; full traceability preserved",
-        "Business case for program-wide and site-wide rollout with real numbers",
+        "Automated review: hours saved per anomaly, SLA risk reduced, regulatory exposure cut",
+        "Operator memory self-improves from every execution; full traceability preserved",
+        "Business case for fleet-wide and contract-cycle rollout with real numbers",
       ],
       output: "ROI proven. Expansion decision with audit-grade data.",
     },
@@ -1871,8 +1871,8 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the mission-native knowledge loop.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a NewSpace lighthouse partner.</span>
+          The wedge is one workflow. The product is the operator-native knowledge loop.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a lighthouse satellite operator.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -1918,7 +1918,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Mission-native", label: "Product direction", sub: "Role, workflow, and ECSS / AS9100 audit fit" },
+            { metric: "Operator-native", label: "Product direction", sub: "Role, workflow, and ITU / SLA / gov-defense audit fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
