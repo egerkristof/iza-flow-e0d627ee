@@ -100,24 +100,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · AEC · Strategic Round
+            LIZA OS · Life Sciences · Strategic Round
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Project Memory Layer<br />
+          The Trial &amp; Submission Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Construction.
+            for AI-Native Pharma.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns project standards, decisions, and expert judgment into the operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · AEC Beachhead</span>
+          LIZA OS turns SOPs, protocols, and expert judgment into the governed operating layer between AI inputs and AI outputs.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · Life Sciences Beachhead</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; AEC Beachhead
+          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; Life Sciences Beachhead
         </p>
       </div>
       <SlideBar />
