@@ -57,8 +57,9 @@ const GRID_LINE = "hsl(215 15% 75%)";
 const CHROME_BG = "hsl(220 15% 97%)";
 const CHROME_BORDER = "hsl(220 12% 90%)";
 
-const TEAL = "174 97% 28%";
-const MINT = "160 96% 39%";
+// Satcom-operator palette: cyan/teal axis distinct from /space (builder green-teal)
+const TEAL = "200 95% 38%";
+const MINT = "180 90% 42%";
 const WARM = "15 85% 55%";
 const RED = "0 72% 50%";
 const GREEN = "155 72% 38%";
