@@ -61,10 +61,10 @@ export const presentationRoutes: PresentationRoute[] = [
   },
   {
     id: "space-brief",
-    title: "Space One-Pager (Mobile Brief)",
+    title: "Space Brief (Mobile + Desktop)",
     path: "/space-brief",
     sourcePath: "src/pages/SpaceBrief.tsx",
-    description: "Mobile-first one-page summary of the Space deck. CEO-friendly 30-second read with CTA to the full deck and PDF download.",
+    description: "Responsive short-form brief of the Space deck. Leads with sector-specific cost overruns and heritage-knowledge loss, reframes AI as a horizontal layer on a vertical knowledge problem. Single CTA to the full deck.",
     component: SpaceBrief,
     showInAdmin: true,
   },
