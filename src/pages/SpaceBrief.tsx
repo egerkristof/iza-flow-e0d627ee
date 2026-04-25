@@ -103,9 +103,8 @@ export default function SpaceBrief() {
           transition={{ delay: 0.15 }}
           className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-3xl"
         >
-          Mission heritage retires. Standards drift between programs. Reviews slip.
-          AI is a horizontal accelerant — and without a governed knowledge layer
-          underneath, it accelerates the wrong thing.
+          Mission heritage retires. Standards drift. AI is a horizontal layer.
+          The vertical problem is the knowledge underneath it.
         </motion.p>
 
         <motion.p
@@ -152,48 +151,6 @@ export default function SpaceBrief() {
           </div>
         </section>
 
-        {/* Reframe: AI is horizontal, knowledge is vertical */}
-        <section className="mt-14 sm:mt-20 grid gap-4 sm:grid-cols-5">
-          <div className="sm:col-span-2 rounded-2xl bg-muted/50 p-6 sm:p-8">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground mb-3">
-              The reframe
-            </p>
-            <p className="font-black text-2xl sm:text-3xl leading-tight tracking-tight">
-              AI is horizontal.<br />
-              Mission knowledge is{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>vertical.</span>
-            </p>
-          </div>
-
-          <div className="sm:col-span-3 rounded-2xl border border-border p-6 sm:p-8 grid sm:grid-cols-2 gap-6">
-            <div>
-              <p className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/80 mb-2">
-                Today
-              </p>
-              <p className="font-bold text-base sm:text-lg">Best-effort copilots</p>
-              <p className="mt-2 text-sm text-muted-foreground leading-snug">
-                Generic AI guesses at standards. Engineers re-do reviews. Heritage
-                is locked in heads. Rework soars on every mission.
-              </p>
-            </div>
-            <div>
-              <p
-                className="text-[10px] font-bold tracking-widest uppercase mb-2"
-                style={{ color: `hsl(${TEAL})` }}
-              >
-                With LIZA OS
-              </p>
-              <p className="font-bold text-base sm:text-lg" style={{ color: `hsl(${TEAL})` }}>
-                Governed Mission Memory
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground leading-snug">
-                Standards are encoded. AI executes only inside them. Heritage
-                compounds across programs instead of evaporating.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Loop */}
         <section className="mt-14 sm:mt-20">
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
@@ -208,24 +165,6 @@ export default function SpaceBrief() {
                 <p className="font-bold text-base sm:text-lg">{s.step}</p>
                 <p className="mt-1 text-xs sm:text-sm text-muted-foreground leading-snug">
                   {s.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Proof points */}
-        <section className="mt-14 sm:mt-20">
-          <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
-            Why It Works
-          </p>
-          <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
-            {proofs.map((p) => (
-              <div key={p.label}>
-                <div className="w-6 h-0.5 mb-3" style={{ background: `hsl(${TEAL})` }} />
-                <p className="font-bold text-sm tracking-wide uppercase">{p.label}</p>
-                <p className="mt-2 text-sm sm:text-[15px] text-muted-foreground leading-relaxed">
-                  {p.claim}
                 </p>
               </div>
             ))}
