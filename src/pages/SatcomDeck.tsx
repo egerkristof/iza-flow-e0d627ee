@@ -609,9 +609,9 @@ function SlideWhyNow() {
 
 function Slide05() {
   const verticalSurfaces = [
-    { title: "Space roles", items: "Chief engineer, AIT lead, PA/QA, mission systems engineer", color: TEAL },
-    { title: "Space workflows", items: "NCR, FRACAS, AIT procedure, design note, review package", color: GOLD },
-    { title: "Space language", items: "ECSS-Q-ST-10/70, AS9100, MGSE/EGSE, MRR/CDR, FRACAS", color: GREEN },
+    { title: "Operator roles", items: "Fleet ops engineer, satellite controller, procurement lead, ITU/spectrum officer", color: TEAL },
+    { title: "Operator workflows", items: "Anomaly response, station-keeping handover, vendor acceptance, ITU filing, SLA report", color: GOLD },
+    { title: "Operator language", items: "ITU-R, ETSI EN 301 / 302, SLA frameworks, transponder plans, EOL & relocation playbooks", color: GREEN },
   ];
 
   return (
@@ -622,12 +622,12 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a space-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an operator-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>ECSS procedures, MAIT plans, NCR/FRACAS records, EGSE configs, mission heritage, prior review feedback</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Anomaly playbooks, station-keeping SOPs, vendor SOWs, ITU filings, SLA frameworks, fleet ops logs, procurement precedent</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
@@ -637,7 +637,7 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows mission memory, validated procedures, and chief-engineer judgment</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows fleet memory, validated SOPs, vendor contract precedent, and senior-controller judgment</p>
           </div>
         </div>
 
@@ -728,7 +728,7 @@ function Slide05() {
             </div>
 
           <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A space-prime pilot makes it a mission-native operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A satcom-operator pilot makes it a fleet-native operating experience.</span>
             </p>
           </div>
 
@@ -739,7 +739,7 @@ function Slide05() {
 
           {/* RIGHT — Governed Output */}
           <div className="w-[390px] shrink-0 flex flex-col gap-3">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Space-native experience</p>
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Operator-native experience</p>
             {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
