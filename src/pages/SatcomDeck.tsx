@@ -775,11 +775,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Polarion / DOORS", layer: "Requirements", color: BLUE },
-    { name: "Teamcenter / Windchill", layer: "PLM", color: BLUE },
-    { name: "Catia / NX", layer: "Design / CAD", color: BLUE },
-    { name: "Valispace / 3DEXPERIENCE", layer: "Systems Eng", color: BLUE },
-    { name: "Jama / Codebeamer", layer: "Verification", color: BLUE },
+    { name: "Kratos OpenSpace / EPOCH", layer: "Fleet C2 / SOCC", color: BLUE },
+    { name: "SpaceLogistics / SES Adaptive", layer: "Mission planning", color: BLUE },
+    { name: "Salesforce / SAP", layer: "CRM / ERP", color: BLUE },
+    { name: "OSS/BSS stack", layer: "Service ops & billing", color: BLUE },
+    { name: "ITU SNS / Spectrum DBs", layer: "Regulatory & filings", color: BLUE },
   ];
 
   return (
