@@ -973,9 +973,9 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Customers ask for one use case because software has trained them to buy point solutions", now: "LIZA creates one governed knowledge loop that can power many AEC workflows", color: TEAL },
-    { old: "Generic AI tools ignore how project managers, BIM leads, estimators, and principals actually work", now: "The experience becomes native to AEC roles, language, decisions, and handoffs", color: GOLD },
-    { old: "Prompts and templates stay static, so every team has to remember what changed", now: "Project memory is versioned, updated, and reused after every execution", color: GREEN },
+    { old: "Customers ask for one use case because eTMF/LIMS/eQMS trained them to buy point solutions", now: "LIZA creates one governed GxP knowledge loop that powers deviation, CAPA, CSR, and PV workflows together", color: TEAL },
+    { old: "Generic AI tools ignore how QA, medical writers, reg affairs, and PV scientists actually work", now: "The experience becomes native to pharma roles, ICH/Annex language, and validated handoffs", color: GOLD },
+    { old: "Prompts and templates stay static, so every site and study has to remember what changed", now: "Trial and quality memory is versioned, validated, and reused after every execution", color: GREEN },
   ];
 
   return (
@@ -984,7 +984,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another AEC use case. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+          LIZA is not selling another GxP point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
