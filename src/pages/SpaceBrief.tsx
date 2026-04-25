@@ -120,10 +120,10 @@ export default function SpaceBrief() {
           transition={{ delay: 0.05 }}
           className="font-black tracking-tight leading-[1.02] text-[40px] sm:text-7xl lg:text-8xl max-w-5xl"
         >
-          Space programs run<br className="hidden sm:block" />
-          <span> </span>on expertise.<br />
-          Most of it is{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>never written down.</span>
+          Space programs don't fail<br className="hidden sm:block" />
+          <span> </span>on physics.<br />
+          They fail on{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>knowledge that was never codified.</span>
         </motion.h1>
 
         <motion.p
@@ -132,10 +132,10 @@ export default function SpaceBrief() {
           transition={{ delay: 0.15 }}
           className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-2xl"
         >
-          Knowledge stays in senior heads. Onboarding drags on. AI doesn't know your standards.
+          Mission heritage retires. Standards drift between programs. AI doesn't know either.
         </motion.p>
 
-        {/* Visual: the lifecycle gap — three symptoms of undefined expertise */}
+        {/* Visual: the lifecycle gap — three symptoms of uncodified mission knowledge */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -143,9 +143,9 @@ export default function SpaceBrief() {
           className="mt-10 sm:mt-12 grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl"
         >
           {[
-            { Icon: FileQuestion, label: "Never defined", sub: "Lives in senior heads" },
-            { Icon: Clock, label: "Slow onboarding", sub: "6–12 months to ramp" },
-            { Icon: TrendingUp, label: "Doesn't scale", sub: "One team's wins stay there" },
+            { Icon: FileQuestion, label: "Not codified", sub: "Lives in senior heads" },
+            { Icon: Clock, label: "Slow to onboard", sub: "6–12 months to ramp" },
+            { Icon: TrendingUp, label: "Doesn't propagate", sub: "Lessons stay in one team" },
           ].map((item) => {
             const Icon = item.Icon;
             return (
@@ -174,7 +174,7 @@ export default function SpaceBrief() {
           className="mt-10 sm:mt-12 text-base sm:text-xl font-bold max-w-2xl"
           style={{ color: `hsl(${TEAL})` }}
         >
-          LIZA OS makes mission expertise an operating asset — defined, scalable, and governed across every AI output.
+          LIZA OS is the Mission Memory Layer — codifies mission knowledge, ramps engineers faster, and governs every AI output against your standards.
         </motion.p>
 
         {/* Vertical problem evidence — three cards */}
