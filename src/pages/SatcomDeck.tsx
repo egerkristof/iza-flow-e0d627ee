@@ -132,10 +132,10 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "Space", sub: "ECSS · MAIT · Mission Memory", active: true, color: TEAL },
+    { label: "Satcom Operators", sub: "Fleet ops · Procurement · ITU & SLAs", active: true, color: TEAL },
+    { label: "Space (Builders)", sub: "ECSS · MAIT · Mission Memory", active: false, color: MUTED },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
     { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
-    { label: "Prof. Services", sub: "Delivery · Methods", active: false, color: MUTED },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -147,10 +147,10 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>Space is the next spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Satcom operators are the next spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about the European space industry — NewSpace primes, satellite integrators, and MAIT-heavy programs — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
+          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about satellite operators — fleets, procurement organizations, and regulatory teams that fly the bird for 15 years — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
         </p>
 
         {/* Diagram */}
@@ -207,19 +207,19 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              A space-native operating layer for ECSS, MAIT, and mission memory — codifying expertise faster than retirements drain it.
+              An operator-native memory layer for fleet ops, procurement governance, and ITU/SLA continuity — codifying expertise faster than retirements drain it.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${BLUE})` }}>WHAT COMPOUNDS</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Investment from adjacent verticals (AEC, Pharma) accelerates the platform; you inherit a hardened core, not a v1.
+              Investment from adjacent verticals (AEC, Pharma, Space builders) accelerates the platform; you inherit a hardened core, not a v1.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Phase 1: 30-day MAIT-memory pilot. Phase 2: strategic partnership and optional sovereign-space stake.
+              Phase 1: 30-day operator-memory pilot. Phase 2: open-canvas partnership and optional sovereign-satcom stake.
             </div>
           </div>
         </div>
