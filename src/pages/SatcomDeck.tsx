@@ -2002,17 +2002,17 @@ function Slide13() {
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
           <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>Pilot first.<br/><span style={{ color: `hsl(${TEAL})` }}>Strategic stake optional.</span></h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Door 1: 30-day MAIT pilot &nbsp;·&nbsp; Door 2: strategic stake in the space vertical &nbsp;·&nbsp; Sequence: customer first, capital later if it fits
+            Door 1: 30-day operator pilot &nbsp;·&nbsp; Door 2: co-define the operator standard (open canvas) &nbsp;·&nbsp; Sequence: customer first, strategic stake later if it fits
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "30-Day MAIT Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one mission-critical workflow end-to-end. Measurable delta in 30 days. No long commitment.", color: ACCENT },
-            { label: "Mission Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across programs. Platform base anchors mission memory; credits scale with execution.", color: GREEN },
-            { label: "Sovereign-Space Layer", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse NewSpace partner takes a strategic position in the space vertical of LIZA OS.", color: GOLD },
-            { label: "European NewSpace", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across European primes, integrators, and national programs.", color: MUTED },
+            { label: "30-Day Operator Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one operator-critical workflow end-to-end (anomaly, handover, vendor acceptance, or ITU filing). Measurable delta in 30 days. No long commitment.", color: ACCENT },
+            { label: "Operator Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across the fleet and contract cycle. Platform base anchors operator memory; credits scale with execution.", color: GREEN },
+            { label: "Operator Standard · Open Canvas", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse operator co-defines the operator-knowledge standard and takes a strategic position in the satcom vertical of LIZA OS.", color: GOLD },
+            { label: "European Sovereign Satcom", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across regional operators, gov / defense customers, and national programs.", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -2026,9 +2026,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a chief engineer.", color: TEAL },
-            { month: "Months 2-6", target: "Mission memory layer", milestone: "Expansion to a second program. Mission memory captured. Onboarding time for new engineers measurably down.", color: SEAFOAM },
-            { month: "Months 6-18", target: "Sovereign-space layer", milestone: "Joint case study with the lighthouse partner. Strategic-stake conversation opens (optional). Doors open to other European NewSpace primes.", color: MINT },
+            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a senior fleet-ops or procurement lead.", color: TEAL },
+            { month: "Months 2-6", target: "Operator memory layer", milestone: "Expansion to a second satellite or contract cycle. Operator memory captured. Onboarding time for new controllers and procurement staff measurably down.", color: SEAFOAM },
+            { month: "Months 6-18", target: "Operator standard live", milestone: "Joint case study with the lighthouse operator. Open-canvas / strategic-stake conversation opens (optional). Doors open to other operators and gov / defense customers.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2043,7 +2043,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse NewSpace partner can turn it into the mission-grade control layer for European space.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse satellite operator can turn it into the operator-grade control layer for European satcom.</strong>
           </p>
         </div>
 
