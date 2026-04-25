@@ -1577,21 +1577,21 @@ function Slide09Partnership() {
   const ladder = [
     {
       phase: "Month 1",
-      title: "30-Day MAIT Pilot",
+      title: "30-Day Operator Pilot",
       color: GREEN,
-      desc: "Co-design pilot with one of your MAIT or systems-engineering teams. We codify one workflow (NCR closeout, AIT procedure handoff, or design-note review) and ship a measurable delta. Low commitment, fast signal.",
+      desc: "Co-design pilot with one of your fleet-ops, procurement, or regulatory teams. We codify one workflow (anomaly response, station-keeping handover, or vendor-acceptance review) and ship a measurable delta. Low commitment, fast signal.",
     },
     {
       phase: "Months 2-6",
-      title: "Mission Memory Layer",
+      title: "Operator Memory Layer",
       color: TEAL,
-      desc: "Expand to a second satellite program: encode chief-engineer judgment, codify recurring AIT and FRACAS patterns, and build the mission memory layer that survives expert turnover.",
+      desc: "Expand to a second satellite or contract cycle: encode senior-controller and procurement judgment, codify recurring anomaly and ITU patterns, and build the operator memory layer that survives senior-staff turnover.",
     },
     {
       phase: "Months 6-18",
-      title: "Sovereign-Space Standard Layer",
+      title: "Operator Standard · Open Canvas",
       color: GOLD,
-      desc: "LIZA OS + a lighthouse partner jointly establish a European mission-knowledge layer. Optional strategic stake. Pathway to a sovereign-space capability adopted by partners across the European NewSpace ecosystem.",
+      desc: "LIZA OS + a lighthouse operator jointly define the operator-knowledge standard for the category. Optional strategic stake. Pathway to a sovereign-satcom reference architecture adopted by other operators and gov / defense customers.",
     },
   ];
 
@@ -1601,10 +1601,10 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Space Partnership Mechanic
+            Operator Partnership Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
-            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>sovereign-space layer</span>.
+            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>operator standard</span>.
           </h2>
         </div>
 
