@@ -336,70 +336,70 @@ function Slide02() {
 // SLIDE 03 — WHAT THAT COSTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const SPACE_GAP_CASES = [
+const SATCOM_GAP_CASES = [
   {
-    name: "Spacecraft Prime / Integrator",
+    name: "Fleet Operations Engineering",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
-    records: ["ECSS-Q-ST-10", "Mission requirements", "Heritage designs"],
-    output: "Design notes · Trade-study drafts",
-    gap: "AI drafts from visible docs, but misses the heritage trade-off, last-mission anomaly, or chief engineer's rule-of-thumb the retiring expert never wrote down.",
-    cost: "Design rework. Late MRR finding. Schedule slip.",
+    records: ["Anomaly playbooks", "Station-keeping SOPs", "Per-satellite quirks"],
+    output: "Anomaly response drafts · Maneuver plans",
+    gap: "AI drafts from visible procedures, but misses the per-bird quirk, the workaround the senior ops engineer found three years ago, and the precedent from the last similar event on this fleet.",
+    cost: "Slow recovery. SLA penalty. Ground-segment overtime.",
   },
   {
-    name: "MAIT Engineering Team",
+    name: "Procurement & Vendor Governance",
     icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["ECSS-Q-ST-70", "AIT procedures", "EGSE configs"],
-    output: "Test procedures · NCR drafts",
-    gap: "AI gives an ECSS-compliant answer, but not the cleanroom-specific interpretation aligned with the AIT lead and prior deviation history.",
-    cost: "Repeated AIT anomalies. Lost cleanroom hours.",
+    records: ["RFP / SOW history", "Acceptance criteria", "Prior prime trade-offs"],
+    output: "Spec reviews · Vendor scorecards",
+    gap: "AI summarises the SOW, but misses what your last prime over-promised, which clauses your lawyers always insist on, and which acceptance tests caught real problems on the previous bus.",
+    cost: "Weak contract. Late acceptance finding. Cycle repeated.",
   },
   {
-    name: "Quality Assurance & Product Assurance",
+    name: "Regulatory · Spectrum · ITU",
     icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
     accent: GOLD,
-    records: ["AS9100 SOPs", "FRACAS records", "NCR archives"],
-    output: "NCR closeouts · CAPA records",
-    gap: "AI summarises the non-conformance, but misses the radiation-tolerance nuance, the batch-specific exception, and the prior FRACAS pattern that determines whether the unit is flight-worthy.",
-    cost: "Unit reject. Audit finding. Mission risk.",
+    records: ["ITU filings", "Coordination history", "National regulator precedent"],
+    output: "Filing drafts · Coordination responses",
+    gap: "AI generates a plausible filing, but misses the slot-coordination nuance, the bilateral precedent with a neighbouring administration, and the carve-outs your spectrum specialist negotiated last cycle.",
+    cost: "Filing rejected. Slot delay. Service launch slip.",
   },
 ];
 
-const SPACE_COST_BENCHMARKS = [
+const SATCOM_COST_BENCHMARKS = [
   {
-    value: "30-40 yrs",
-    label: "of mission heritage and chief-engineer judgment locked in retiring NASA, ESA, and Hungarian aerospace experts — most of it never codified in a queryable form",
-    source: "NASA APPEL & ESA Knowledge Management studies, 2018-2024",
+    value: "15–20 yrs",
+    label: "of fleet memory locked in the senior ops engineers who know each satellite's drift, anomalies, and workarounds — and retire with the bird",
+    source: "Satcom operator field engagements; ITU/SES/Eutelsat industry context, 2022-2024",
   },
   {
-    value: "~50%",
-    label: "of small-satellite and CubeSat missions experience partial or total failure within their first year — most root causes trace to known precedent that did not propagate",
-    source: "Aerospace Corporation small-satellite reliability studies, 2020-2023",
+    value: "6–18 mo",
+    label: "to ramp a new ops engineer, contract manager, or spectrum specialist to fluency on an operating fleet — because the playbooks live in heads, not in queryable systems",
+    source: "Satcom operator onboarding benchmarks; industry HR studies",
   },
   {
-    value: "30–40%",
-    label: "of aerospace non-conformances repeat known root causes across programs and sites, indicating FRACAS knowledge does not propagate batch-to-batch",
-    source: "AS9100 industry benchmarks; aerospace FRACAS literature",
+    value: "$M / hr",
+    label: "of SLA exposure on broadcast, government, and IFC contracts — anomaly response time converts directly into revenue, penalties, and contract risk",
+    source: "Industry SLA frameworks; satcom commercial benchmarks",
   },
 ];
 
 function Slide03() {
-  const alsoApplies = ["Mission operations", "Ground segment", "Launch services", "Payload integration", "EEE parts management", "Regulatory & licensing"];
+  const alsoApplies = ["Ground segment", "Mission planning", "Customer onboarding", "Service desk / NOC", "Insurance & risk", "Replacement procurement"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in Space
+          Where Missing Context Shows Up in a Satcom Operator
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is mission-grade engineering judgment.</span>
+          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is operator-grade fleet, procurement, and regulatory judgment.</span>
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
-          {SPACE_GAP_CASES.map((item) => (
+          {SATCOM_GAP_CASES.map((item) => (
             <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
               <div className="w-[290px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-2 mb-2">
