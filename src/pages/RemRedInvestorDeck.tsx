@@ -1943,11 +1943,6 @@ function Slide12() {
     { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
   ];
 
-  const advisors = [
-    { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Space Mission Assurance Advisor", role: "Senior PA/QA Leader, ESA / NewSpace Lineage", bio: "Engagement underway with a senior mission-assurance leader to anchor ECSS / AS9100 fit, validation strategy, and prime-side adoption patterns." },
-    { name: "Systems Engineering Advisor", role: "Chief / Lead Systems Engineer, Satellite Programs", bio: "Pipeline conversation to anchor MAIT, NCR/FRACAS, and design-review workflows in real mission reality." },
-  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -1984,17 +1979,6 @@ function Slide12() {
           ))}
         </div>
 
-        <p className="font-semibold mb-5" style={{ fontSize: 22, color: `hsl(${GOLD})`, letterSpacing: "0.15em", textTransform: "uppercase" }}>Strategic Advisory Board</p>
-        <div className="grid grid-cols-2 gap-7">
-          {advisors.map((a) => (
-            <div key={a.name} className="rounded-2xl border p-7"
-              style={{ borderColor: `hsl(${GOLD} / 0.18)`, background: `hsl(${GOLD} / 0.04)` }}>
-              <p className="font-bold" style={{ fontSize: 28, color: TEXT }}>{a.name}</p>
-              <p className="mb-3" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>{a.role}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{a.bio}</p>
-            </div>
-          ))}
-        </div>
       </div>
       <SlideBar />
     </div>
