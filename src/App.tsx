@@ -43,7 +43,6 @@ import PrivacyPage from "./pages/marketing/Privacy";
 import TermsPage from "./pages/marketing/Terms";
 import CalculatorPage from "./pages/marketing/Calculator";
 import AuditLandingPage from "./pages/marketing/AuditLanding";
-import SpaceBriefPage from "./pages/SpaceBrief";
 
 const queryClient = new QueryClient();
 
@@ -131,7 +130,6 @@ const App = () => (
               const Component = presentation.component;
               return <Route key={presentation.id} path={presentation.path} element={<Component />} />;
             })}
-            <Route path="/space-brief" element={<SpaceBriefPage />} />
 
             {/* App */}
             <Route path="/app" element={<ProtectedRoute><Index /></ProtectedRoute>} />
