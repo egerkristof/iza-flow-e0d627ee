@@ -541,18 +541,18 @@ function SlideWhyNow() {
       source: "Workday, Jan 2026",
     },
     {
-      metric: "Jan '25",
-      label: "EU sovereign-space push + ESA AI guidance maturing",
-      insight: "ESA, EUSPA, and national agencies now expect lifecycle traceability and governance for AI-assisted engineering outputs.",
+      metric: "Now",
+      label: "Sovereign-satcom push + GEO replacement cycle accelerating",
+      insight: "Operators are renewing fleets, signing multi-orbit deals, and expected by regulators and customers to govern AI-assisted ops, filings, and SLA reports.",
       color: TEAL,
-      source: "ESA AI/ML reflection notes; EU Space Strategy for Security & Defence, 2024",
+      source: "ITU/EU sovereign-satcom policy context; operator replacement-cycle benchmarks, 2024",
     },
   ];
 
   const shifts = [
-    { shift: "GenAI moved into space engineering workflows", result: "Primes and integrators piloted LLMs inside NCRs, AIT procedures, and design notes. The audit trail did not follow." },
-    { shift: "Reviewers now ask 'how was this output governed?'", result: "ESA, EUSPA, and customer reviewers expect lifecycle traceability for AI-assisted ECSS, MAIT, and mission-assurance work." },
-    { shift: "Senior aerospace experts are retiring faster than they are replaced", result: "MRRs and CDRs are senior-talent-bound. Every hour a chief engineer spends correcting AI is an hour not spent moving the mission forward." },
+    { shift: "GenAI moved into satcom operations workflows", result: "Operators piloted LLMs inside anomaly response, vendor reviews, and ITU filings. The audit trail did not follow." },
+    { shift: "Customers and regulators ask 'how was this output governed?'", result: "Broadcast, IFC, government, and defense customers — plus ITU and national regulators — expect traceability for AI-assisted operator outputs." },
+    { shift: "Senior fleet engineers are retiring faster than they are replaced", result: "Fleet handovers and procurement cycles are senior-talent-bound. Every hour a senior ops engineer spends correcting AI is an hour not spent protecting the SLA." },
   ];
 
   return (
