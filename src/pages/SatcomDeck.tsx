@@ -101,24 +101,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Space · Strategic Conversation
+            LIZA OS · Satcom Operators · Strategic Conversation
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Mission Memory Layer<br />
+          The Operator Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Space.
+            for AI-Native Satcom.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns ECSS procedures, MAIT records, and senior engineering judgment into the governed operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Customer Pilot · Strategic Partnership · Sovereign-Space Layer</span>
+          LIZA OS turns anomaly playbooks, vendor SOWs, and senior fleet judgment into the governed operating layer between AI inputs and AI outputs.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Customer Pilot · Open-Canvas Partnership · Sovereign-Satcom Layer</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Prepared for NewSpace primes &amp; satellite integrators &nbsp;·&nbsp; Pilot + Strategic Partnership Conversation
+          Confidential &nbsp;·&nbsp; Prepared for satellite operators (Hispasat · SES · Eutelsat · Inmarsat-class) &nbsp;·&nbsp; Pilot + Open-Canvas Partnership Conversation
         </p>
       </div>
       <SlideBar />
