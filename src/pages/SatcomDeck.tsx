@@ -234,8 +234,8 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["ECSS procedures", "AIT plans", "NCR / FRACAS", "MGSE / EGSE specs", "Heritage designs", "Anomaly logs"];
-  const outputs = ["NCR write-ups", "Test reports", "Review packages", "RID responses", "Anomaly RCAs", "Audit responses"];
+  const inputs = ["Anomaly playbooks", "Station-keeping SOPs", "Vendor SOWs", "ITU filings", "SLA frameworks", "Fleet ops logs"];
+  const outputs = ["Anomaly responses", "Procurement reviews", "Acceptance reports", "Filing drafts", "SLA reports", "Handover packages"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -271,7 +271,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. It sits in files no model can reason over.
+              But none of it is queryable by AI. It sits in files, ticket systems, and senior-engineer heads no model can reason over.
             </p>
           </div>
 
