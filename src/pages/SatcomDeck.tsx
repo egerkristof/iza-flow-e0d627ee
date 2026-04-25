@@ -609,9 +609,9 @@ function SlideWhyNow() {
 
 function Slide05() {
   const verticalSurfaces = [
-    { title: "Space roles", items: "Chief engineer, AIT lead, PA/QA, mission systems engineer", color: TEAL },
-    { title: "Space workflows", items: "NCR, FRACAS, AIT procedure, design note, review package", color: GOLD },
-    { title: "Space language", items: "ECSS-Q-ST-10/70, AS9100, MGSE/EGSE, MRR/CDR, FRACAS", color: GREEN },
+    { title: "Operator roles", items: "Fleet ops engineer, satellite controller, procurement lead, ITU/spectrum officer", color: TEAL },
+    { title: "Operator workflows", items: "Anomaly response, station-keeping handover, vendor acceptance, ITU filing, SLA report", color: GOLD },
+    { title: "Operator language", items: "ITU-R, ETSI EN 301 / 302, SLA frameworks, transponder plans, EOL & relocation playbooks", color: GREEN },
   ];
 
   return (
@@ -622,12 +622,12 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a space-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an operator-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>ECSS procedures, MAIT plans, NCR/FRACAS records, EGSE configs, mission heritage, prior review feedback</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Anomaly playbooks, station-keeping SOPs, vendor SOWs, ITU filings, SLA frameworks, fleet ops logs, procurement precedent</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
@@ -637,7 +637,7 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows mission memory, validated procedures, and chief-engineer judgment</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows fleet memory, validated SOPs, vendor contract precedent, and senior-controller judgment</p>
           </div>
         </div>
 
@@ -728,7 +728,7 @@ function Slide05() {
             </div>
 
           <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A space-prime pilot makes it a mission-native operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A satcom-operator pilot makes it a fleet-native operating experience.</span>
             </p>
           </div>
 
@@ -739,7 +739,7 @@ function Slide05() {
 
           {/* RIGHT — Governed Output */}
           <div className="w-[390px] shrink-0 flex flex-col gap-3">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Space-native experience</p>
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Operator-native experience</p>
             {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
@@ -775,11 +775,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Polarion / DOORS", layer: "Requirements", color: BLUE },
-    { name: "Teamcenter / Windchill", layer: "PLM", color: BLUE },
-    { name: "Catia / NX", layer: "Design / CAD", color: BLUE },
-    { name: "Valispace / 3DEXPERIENCE", layer: "Systems Eng", color: BLUE },
-    { name: "Jama / Codebeamer", layer: "Verification", color: BLUE },
+    { name: "Kratos OpenSpace / EPOCH", layer: "Fleet C2 / SOCC", color: BLUE },
+    { name: "SpaceLogistics / SES Adaptive", layer: "Mission planning", color: BLUE },
+    { name: "Salesforce / SAP", layer: "CRM / ERP", color: BLUE },
+    { name: "OSS/BSS stack", layer: "Service ops & billing", color: BLUE },
+    { name: "ITU SNS / Spectrum DBs", layer: "Regulatory & filings", color: BLUE },
   ];
 
   return (
@@ -966,16 +966,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Siemens Teamcenter / 3DEXPERIENCE AI", funding: "Public", round: "PLM incumbents · 2024", what: "AI features layered onto PLM. System of record for parts and BOMs, not a reasoning layer for engineering judgment.", color: GREEN },
-    { name: "Palantir Foundry / Skywise", funding: "Public", round: "Aerospace data ops", what: "Data integration and analytics across programs. Reads telemetry and BOMs; doesn't encode chief-engineer judgment.", color: SEAFOAM },
-    { name: "Valispace / Codebeamer / Jama AI", funding: "VC-backed / PTC", round: "Systems-eng tools", what: "Workflow + document AI inside requirements and verification. No cross-mission FRACAS memory or design-precedent loop.", color: BLUE },
-    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every aerospace pilot", what: "General reasoning. No ECSS context, no mission-heritage grounding, no audit-grade trail.", color: GOLD },
+    { name: "Kratos / SES Adaptive / GS-class C2", funding: "Public / strategic", round: "Fleet C2 incumbents", what: "AI features layered onto SOCC and ground segment. System of record for telemetry and commanding, not a reasoning layer for operator judgment.", color: GREEN },
+    { name: "Palantir Foundry / Skywise-class", funding: "Public", round: "Operator data ops", what: "Data integration and analytics across the fleet. Reads telemetry and contracts; doesn't encode senior-controller, procurement, or regulatory judgment.", color: SEAFOAM },
+    { name: "Salesforce / SAP / OSS-BSS AI", funding: "Public", round: "CRM / ERP / service ops", what: "Workflow + document AI inside customer, billing, and service systems. No cross-fleet anomaly memory or vendor-precedent loop.", color: BLUE },
+    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every operator pilot", what: "General reasoning. No ITU/SLA context, no fleet-heritage grounding, no audit-grade trail for regulators or customers.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, ECSS-aware injection, drift detection. The plumbing every mission-grade AI workflow will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Mission Memory", desc: "FRACAS precedent, NCR outcomes, validated procedures, review feedback — graph deepens unit-by-unit and mission-by-mission. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Audit-Grade Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for ECSS / AS9100 era AI.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, ITU/SLA-aware injection, drift detection. The plumbing every operator-grade AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Fleet Memory", desc: "Anomaly precedent, vendor outcomes, validated SOPs, regulatory feedback — graph deepens satellite-by-satellite and contract-by-contract. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Audit-Grade Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for SLA-, ITU-, and gov-defense-grade AI.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -985,8 +985,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Aerospace AI tools surface data and draft documents.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the mission memory layer that encodes your chief engineer's judgment.</span>
+          Satcom AI tools surface telemetry and draft reports.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the operator memory layer that encodes how your senior controllers, procurement leads, and regulatory team actually decide.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1019,11 +1019,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read PLM data and dashboards.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your chief engineers and AIT leads decide.</span>
+              Others read telemetry and dashboards.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your senior controllers, procurement leads, and ITU specialists decide.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every aerospace AI stack will need: ECSS tailoring, FRACAS precedent, review feedback, mission-specific standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being applied to space.
+              The instruction layer every satcom AI stack will need: SLA tailoring, anomaly precedent, vendor and regulatory feedback, operator-specific standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being applied to satellite operators.
             </p>
           </div>
         </div>
@@ -1035,9 +1035,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$8B+", desc: "Aerospace engineering & MAIT software by 2030 (PLM, requirements, AIT, mission ops)" },
-                { label: "SAM", value: "$1.5-2B", desc: "AI governance layer across systems engineering, MAIT, FRACAS, mission assurance" },
-                { label: "SOM", value: "$80-120M", desc: "EU sovereign-space wedge: NewSpace primes + integrators + national programs" },
+                { label: "TAM", value: "$10B+", desc: "Satcom operator software & services by 2030 (fleet C2, OSS/BSS, planning, regulatory, CRM/ERP for operators)" },
+                { label: "SAM", value: "$2-3B", desc: "AI governance layer across fleet ops, procurement, ITU/spectrum, SLAs, and service operations" },
+                { label: "SOM", value: "$80-150M", desc: "EU sovereign-satcom wedge: regional operators + government / defense customers + IFC and broadcast SLAs" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1049,7 +1049,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Frost & Sullivan / MarketsandMarkets, Aerospace PLM and engineering software, 2024-2030; ESA & EUSPA market reports. SAM/SOM are LIZA OS estimates based on the AI governance and reasoning layer inside these markets.
+              Sources: Euroconsult & NSR satellite-operator software / services reports 2024-2030; ITU & EUSPA market reports. SAM/SOM are LIZA OS estimates of the AI governance and reasoning layer inside these markets.
             </p>
           </div>
 
@@ -1077,9 +1077,9 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Teams ask for one use case because PLM/requirements/test tools trained them to buy point solutions", now: "LIZA creates one governed mission knowledge loop that powers NCRs, FRACAS, AIT procedures, and design notes together", color: TEAL },
-    { old: "Generic AI tools ignore how chief engineers, AIT leads, and PA/QA actually work", now: "The experience becomes native to space roles, ECSS language, and review-gate handoffs", color: GOLD },
-    { old: "Prompts and templates stay static, so every program and unit has to remember what changed", now: "Mission and quality memory is versioned, validated, and reused after every execution", color: GREEN },
+    { old: "Teams buy one use case because C2, OSS/BSS, and CRM tools trained them to buy point solutions", now: "LIZA creates one governed operator knowledge loop that powers anomaly response, vendor acceptance, ITU filings, and SLA reporting together", color: TEAL },
+    { old: "Generic AI tools ignore how senior controllers, procurement leads, and ITU specialists actually work", now: "The experience becomes native to operator roles, SLA / ITU language, and fleet-handover gates", color: GOLD },
+    { old: "Anomaly notes and vendor lessons stay static, so every satellite and contract cycle relearns from zero", now: "Fleet, procurement, and regulatory memory is versioned, validated, and reused after every execution", color: GREEN },
   ];
 
   return (
@@ -1088,7 +1088,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another aerospace point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+          LIZA is not selling another satcom point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop for operators.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
@@ -1106,14 +1106,14 @@ function SlideVerticalization() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 30, color: `hsl(${TEAL})`, lineHeight: 1 }}>The same operating loop</p>
-                <p className="font-semibold mt-1" style={{ fontSize: 16, color: MUTED }}>Now explained as the strategic pivot from software use cases to reusable project memory.</p>
+                <p className="font-semibold mt-1" style={{ fontSize: 16, color: MUTED }}>Now explained as the strategic pivot from satcom point software to reusable operator memory across fleet, procurement, and regulatory.</p>
               </div>
             </div>
             {[
               { label: "Define", desc: "Experts encode standards, exceptions, decision logic", icon: <BookOpen size={22} /> },
               { label: "Execute", desc: "AI applies that context inside live workflows", icon: <Zap size={22} /> },
-              { label: "Capture", desc: "Feedback, drift, and project learning are structured", icon: <Eye size={22} /> },
-              { label: "Update", desc: "Project memory improves and propagates", icon: <RefreshCw size={22} /> },
+              { label: "Capture", desc: "Anomaly outcomes, vendor lessons, regulatory feedback are structured", icon: <Eye size={22} /> },
+              { label: "Update", desc: "Operator memory improves and propagates across the fleet", icon: <RefreshCw size={22} /> },
             ].map((item, i) => (
               <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
@@ -1357,10 +1357,10 @@ function Slide08() {
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Horizontal Proof · Vertical Gap</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into space — with a lighthouse NewSpace partner.</span>
+            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into satcom — with a lighthouse satellite operator.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for space is one mission-grade lighthouse partner — a NewSpace prime or integrator — to make this experience native under ECSS, AS9100, and audit-grade conditions.
+            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for satcom is one operator-grade lighthouse partner — a satellite operator like Hispasat, SES, Eutelsat, or Inmarsat-class — to make this experience native under ITU, SLA, and gov/defense audit conditions.
           </p>
         </div>
 
@@ -1427,47 +1427,47 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Design & Systems Engineering", status: "Expansion", color: GREEN,
+      vertical: "Procurement & Vendor Governance", status: "Expansion", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Engineers redo trade studies and design notes because heritage decisions and prior review feedback don't propagate. AI drafts from generic literature, not your mission-line precedent.",
-      result: "Heritage-aware design. Mission memory across programs. Faster, sharper review packages.",
-      proof: "Adjacent to Polarion, DOORS, Valispace, and Jama workflows",
+      problem: "Replacement satellites are bought every 7-10 years and the people who managed the last contract are rarely the ones running the next. Vendor SOWs, acceptance reviews, and prime-management lessons live in a few senior heads.",
+      result: "Procurement memory across cycles. Faster, sharper vendor reviews. Acceptance criteria that compound contract-by-contract.",
+      proof: "Adjacent to ERP, contract-management, and prime-vendor governance workflows",
     },
     {
-      vertical: "MAIT — Manufacture, Assembly, Integration & Test", status: "Wedge", color: TEAL,
+      vertical: "Fleet Operations & Anomaly Response", status: "Wedge", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "NCRs, FRACAS entries, and AIT procedures live in disconnected PLM/MES tools. AI can't reason across them. Anomaly knowledge dies between programs and cleanrooms.",
-      result: "Unified NCR & FRACAS lifecycle. Every AI response grounded in this unit's procedures, ECSS tailoring, and prior anomaly precedent.",
-      proof: "Target embedding path across Teamcenter, Windchill, and aerospace MES workflows",
+      problem: "Anomaly playbooks, station-keeping handovers, and EOL plans live in disconnected SOCC tools and senior-controller heads. AI can't reason across them. Operational knowledge dies when a satellite is retired or an engineer leaves.",
+      result: "Unified anomaly & station-keeping lifecycle. Every AI response grounded in this satellite's quirks, your SOPs, and prior anomaly precedent.",
+      proof: "Target embedding path across Kratos, SES Adaptive, and SOCC / ground-segment workflows",
     },
     {
-      vertical: "Mission Operations & In-Orbit", status: "Expansion", color: GOLD,
+      vertical: "Regulatory, ITU & SLA Continuity", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "Anomaly reports and lessons-learned diverge from program standards. Operational knowledge evaporates between mission phases. New ops teams inherit fragmented data.",
-      result: "ECSS-aware anomaly handling. Living mission memory. Audit-grade ops artifacts, every cycle.",
-      proof: "Mission ops / ground-segment extension path once MAIT and design integrations are in place",
+      problem: "ITU filings, coordination history, and SLA frameworks diverge from operator standards. Spectrum precedent evaporates between filings. New regulatory and service-ops staff inherit fragmented data.",
+      result: "ITU-aware filings. Living regulatory and SLA memory. Audit-grade artifacts for regulators, broadcasters, and gov / defense customers, every cycle.",
+      proof: "Regulatory & service-ops extension path once fleet ops and procurement integrations are in place",
     },
   ];
 
   const expandInto = [
-    { name: "ECSS / AS9100 audit readiness", col: TEAL },
-    { name: "Anomaly review boards (ARB) prep", col: "215 25% 50%" },
-    { name: "EEE parts & radiation justification", col: GOLD },
-    { name: "Launch campaign coordination", col: GREEN },
-    { name: "Ground segment & mission ops handover", col: ACCENT },
-    { name: "Regulatory & licensing (ITU, ITAR)", col: "330 70% 55%" },
+    { name: "ITU filings & spectrum coordination", col: TEAL },
+    { name: "Anomaly review boards & RCA prep", col: "215 25% 50%" },
+    { name: "Replacement-satellite procurement", col: GOLD },
+    { name: "Launch & LEOP coordination", col: GREEN },
+    { name: "SLA reporting & service-ops handover", col: ACCENT },
+    { name: "Gov / defense & sovereignty workflows", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Space Lifecycle Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Operator Lifecycle Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            One mission &amp; quality memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the mission.</span>
+            One operator memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the fleet lifecycle.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1475,10 +1475,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the aerospace AI stack.
+              The missing connective tissue underneath the satcom-operator AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: AEC vertical proven across 3 departments; pharma vertical conversation underway. Space lighthouse partner being recruited — this conversation is one of the active threads.
+              Current signal: AEC vertical proven across 3 departments; pharma and space-builder verticals in conversation. Satcom-operator lighthouse partner being recruited — this conversation is one of the active threads.
             </p>
           </div>
         </div>
@@ -1549,7 +1549,7 @@ function Slide09() {
                 Strategic path
               </p>
               <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Expansion across the molecule lifecycle. Partnership path on the next slide.
+                Expansion across the fleet & contract lifecycle. Partnership path on the next slide.
               </p>
             </div>
             <div className="rounded-xl px-5 py-4 shrink-0"
@@ -1577,21 +1577,21 @@ function Slide09Partnership() {
   const ladder = [
     {
       phase: "Month 1",
-      title: "30-Day MAIT Pilot",
+      title: "30-Day Operator Pilot",
       color: GREEN,
-      desc: "Co-design pilot with one of your MAIT or systems-engineering teams. We codify one workflow (NCR closeout, AIT procedure handoff, or design-note review) and ship a measurable delta. Low commitment, fast signal.",
+      desc: "Co-design pilot with one of your fleet-ops, procurement, or regulatory teams. We codify one workflow (anomaly response, station-keeping handover, or vendor-acceptance review) and ship a measurable delta. Low commitment, fast signal.",
     },
     {
       phase: "Months 2-6",
-      title: "Mission Memory Layer",
+      title: "Operator Memory Layer",
       color: TEAL,
-      desc: "Expand to a second satellite program: encode chief-engineer judgment, codify recurring AIT and FRACAS patterns, and build the mission memory layer that survives expert turnover.",
+      desc: "Expand to a second satellite or contract cycle: encode senior-controller and procurement judgment, codify recurring anomaly and ITU patterns, and build the operator memory layer that survives senior-staff turnover.",
     },
     {
       phase: "Months 6-18",
-      title: "Sovereign-Space Standard Layer",
+      title: "Operator Standard · Open Canvas",
       color: GOLD,
-      desc: "LIZA OS + a lighthouse partner jointly establish a European mission-knowledge layer. Optional strategic stake. Pathway to a sovereign-space capability adopted by partners across the European NewSpace ecosystem.",
+      desc: "LIZA OS + a lighthouse operator jointly define the operator-knowledge standard for the category. Optional strategic stake. Pathway to a sovereign-satcom reference architecture adopted by other operators and gov / defense customers.",
     },
   ];
 
@@ -1601,10 +1601,10 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Space Partnership Mechanic
+            Operator Partnership Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
-            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>sovereign-space layer</span>.
+            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>operator standard</span>.
           </h2>
         </div>
 
@@ -1832,11 +1832,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Your team selects one high-value workflow (e.g. NCR closeout, AIT procedure handoff, design-note review, FRACAS rollup)",
-        "Platform guides structured capture from 2-3 senior chief engineers, AIT leads, or PA/QA experts",
-        "LIZA auto-generates ECSS-aware playbooks grounded in your procedures, prior anomalies, and review feedback",
+        "Your team selects one high-value workflow (e.g. anomaly response, station-keeping handover, vendor acceptance, ITU filing prep)",
+        "Platform guides structured capture from 2-3 senior fleet-ops controllers, procurement leads, or ITU/spectrum specialists",
+        "LIZA auto-generates SLA- and ITU-aware playbooks grounded in your SOPs, prior anomalies, and regulatory precedent",
       ],
-      output: "3-5 mission-grade playbooks ready",
+      output: "3-5 operator-grade playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1844,11 +1844,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "MAIT / engineering team self-serves: run playbooks against live NCRs, AIT procedures, and design notes",
-        "Real units, real missions, real audit-grade deliverables",
+        "Fleet-ops / procurement team self-serves: run playbooks against live anomalies, handovers, and vendor reviews",
+        "Real satellites, real contracts, real audit-grade deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: chief engineer vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: senior controller vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1856,9 +1856,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per NCR, rework avoided, audit-finding risk reduced",
-        "Mission memory self-improves from every execution; full traceability preserved",
-        "Business case for program-wide and site-wide rollout with real numbers",
+        "Automated review: hours saved per anomaly, SLA risk reduced, regulatory exposure cut",
+        "Operator memory self-improves from every execution; full traceability preserved",
+        "Business case for fleet-wide and contract-cycle rollout with real numbers",
       ],
       output: "ROI proven. Expansion decision with audit-grade data.",
     },
@@ -1871,8 +1871,8 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the mission-native knowledge loop.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a NewSpace lighthouse partner.</span>
+          The wedge is one workflow. The product is the operator-native knowledge loop.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a lighthouse satellite operator.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -1918,7 +1918,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Mission-native", label: "Product direction", sub: "Role, workflow, and ECSS / AS9100 audit fit" },
+            { metric: "Operator-native", label: "Product direction", sub: "Role, workflow, and ITU / SLA / gov-defense audit fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -2002,17 +2002,17 @@ function Slide13() {
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
           <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>Pilot first.<br/><span style={{ color: `hsl(${TEAL})` }}>Strategic stake optional.</span></h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Door 1: 30-day MAIT pilot &nbsp;·&nbsp; Door 2: strategic stake in the space vertical &nbsp;·&nbsp; Sequence: customer first, capital later if it fits
+            Door 1: 30-day operator pilot &nbsp;·&nbsp; Door 2: co-define the operator standard (open canvas) &nbsp;·&nbsp; Sequence: customer first, strategic stake later if it fits
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "30-Day MAIT Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one mission-critical workflow end-to-end. Measurable delta in 30 days. No long commitment.", color: ACCENT },
-            { label: "Mission Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across programs. Platform base anchors mission memory; credits scale with execution.", color: GREEN },
-            { label: "Sovereign-Space Layer", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse NewSpace partner takes a strategic position in the space vertical of LIZA OS.", color: GOLD },
-            { label: "European NewSpace", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across European primes, integrators, and national programs.", color: MUTED },
+            { label: "30-Day Operator Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one operator-critical workflow end-to-end (anomaly, handover, vendor acceptance, or ITU filing). Measurable delta in 30 days. No long commitment.", color: ACCENT },
+            { label: "Operator Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across the fleet and contract cycle. Platform base anchors operator memory; credits scale with execution.", color: GREEN },
+            { label: "Operator Standard · Open Canvas", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse operator co-defines the operator-knowledge standard and takes a strategic position in the satcom vertical of LIZA OS.", color: GOLD },
+            { label: "European Sovereign Satcom", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across regional operators, gov / defense customers, and national programs.", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -2026,9 +2026,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a chief engineer.", color: TEAL },
-            { month: "Months 2-6", target: "Mission memory layer", milestone: "Expansion to a second program. Mission memory captured. Onboarding time for new engineers measurably down.", color: SEAFOAM },
-            { month: "Months 6-18", target: "Sovereign-space layer", milestone: "Joint case study with the lighthouse partner. Strategic-stake conversation opens (optional). Doors open to other European NewSpace primes.", color: MINT },
+            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a senior fleet-ops or procurement lead.", color: TEAL },
+            { month: "Months 2-6", target: "Operator memory layer", milestone: "Expansion to a second satellite or contract cycle. Operator memory captured. Onboarding time for new controllers and procurement staff measurably down.", color: SEAFOAM },
+            { month: "Months 6-18", target: "Operator standard live", milestone: "Joint case study with the lighthouse operator. Open-canvas / strategic-stake conversation opens (optional). Doors open to other operators and gov / defense customers.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2043,7 +2043,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse NewSpace partner can turn it into the mission-grade control layer for European space.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse satellite operator can turn it into the operator-grade control layer for European satcom.</strong>
           </p>
         </div>
 
