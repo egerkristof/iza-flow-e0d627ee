@@ -1191,16 +1191,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "GxP-Adjacent QA Pilot",
-      subtitle: "Pharma signal",
-      scope: "Quality workflow discovery",
+      title: "AEC Industry Vertical",
+      subtitle: "Horizontal proof across departments",
+      scope: "GC/PM · A&E · Owner",
       color: TEAL,
-      outcome: "Live access to real GxP workflow pain",
-      metric: "Active",
-      metricLabel: "Engagement",
+      outcome: "Same loop validated across 3 departments of one regulated industry",
+      metric: "3 / 3",
+      metricLabel: "Departments",
       points: [
-        "Active engagement with a regulated quality team on deviation and CAPA workflows",
-        "Direct signal that the GxP knowledge loss problem is real and commercially urgent",
+        "Project memory loop proven across General Contractor, Architecture/Engineering, and Owner/Developer workflows",
+        "Strategic distribution path opened through the Nemetschek ecosystem (Bluebeam, Allplan, Graphisoft)",
       ],
       featured: true,
     },
@@ -1251,12 +1251,12 @@ function Slide08() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <div className="mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Regulated Work</p>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Horizontal Proof · Vertical Gap</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
+            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we vertically integrate into pharma.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Life sciences is where the experience now needs to become native — under validated, audit-grade conditions.
+            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone is one GxP-native lighthouse partner — sponsor, CRO, or CMO — to make this experience native under validated, audit-grade conditions. Active conversations underway; first design partner is the immediate ask.
           </p>
         </div>
 
