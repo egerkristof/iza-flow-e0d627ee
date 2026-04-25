@@ -20,25 +20,25 @@ const MINT = "160 96% 39%";
 
 const verticalProblems = [
   {
-    stat: "$3.5B",
-    label: "Cost overruns",
+    stat: "30–40 yrs",
+    label: "Heritage at risk",
     detail:
-      "NASA's major project portfolio absorbed $3.5B in cost growth in a single year. Schedule slips average 14+ months.",
-    source: "GAO-22-105212",
-  },
-  {
-    stat: "7.1%",
-    label: "Annual attrition",
-    detail:
-      "Senior mission engineers are retiring or leaving faster than their judgment can be transferred. Recruitment now takes 10+ weeks.",
-    source: "SatNews 2026",
-  },
-  {
-    stat: "1 of 1",
-    label: "Heritage missions",
-    detail:
-      "Every mission ships once. The judgment that made it work — trade studies, anomaly calls, deviation rationale — usually leaves with the people.",
+      "Mission heritage and chief-engineer judgment locked in retiring NASA, ESA, and European aerospace experts. Most of it never codified in a queryable form.",
     source: "LIZA OS field engagements",
+  },
+  {
+    stat: "~50%",
+    label: "Smallsat failures",
+    detail:
+      "Of small-satellite and CubeSat missions experience partial or total failure within their first year. Most root causes trace to known precedent that did not propagate.",
+    source: "Industry studies, 2023–24",
+  },
+  {
+    stat: "30–40%",
+    label: "Repeat NCRs",
+    detail:
+      "Of aerospace non-conformances repeat known root causes across programs and sites. FRACAS knowledge does not propagate batch-to-batch.",
+    source: "Aerospace quality benchmarks",
   },
 ];
 
