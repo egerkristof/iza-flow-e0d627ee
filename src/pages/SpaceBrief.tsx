@@ -120,10 +120,10 @@ export default function SpaceBrief() {
           transition={{ delay: 0.05 }}
           className="font-black tracking-tight leading-[1.02] text-[40px] sm:text-7xl lg:text-8xl max-w-5xl"
         >
-          Space programs don't fail<br className="hidden sm:block" />
-          <span> </span>on physics.<br />
-          They fail on{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>knowledge that walked out.</span>
+          Space programs run<br className="hidden sm:block" />
+          <span> </span>on expertise.<br />
+          Most of it is{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>never written down.</span>
         </motion.h1>
 
         <motion.p
@@ -132,53 +132,39 @@ export default function SpaceBrief() {
           transition={{ delay: 0.15 }}
           className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-2xl"
         >
-          Engineers retire. AI doesn't know your standards.
+          Knowledge stays in senior heads. Onboarding drags on. AI doesn't know your standards.
         </motion.p>
 
-        {/* Visual: knowledge leaving the org */}
+        {/* Visual: the lifecycle gap — three symptoms of undefined expertise */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="mt-10 sm:mt-12 grid grid-cols-3 items-center gap-2 sm:gap-6 max-w-3xl"
+          className="mt-10 sm:mt-12 grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl"
         >
-          {/* Senior engineer */}
-          <div className="flex flex-col items-center text-center">
-            <div
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center border-2"
-              style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)` }}
-            >
-              <Brain className="w-7 h-7 sm:w-9 sm:h-9" style={{ color: `hsl(${TEAL})` }} />
-            </div>
-            <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-foreground">
-              Mission know-how
-            </p>
-          </div>
-
-          {/* Arrow + leaving */}
-          <div className="flex flex-col items-center text-center">
-            <div className="flex items-center w-full justify-center gap-1">
-              <span className="h-px flex-1 bg-border" />
-              <UserMinus className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground" />
-              <span className="h-px flex-1 bg-border" />
-            </div>
-            <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-muted-foreground">
-              Walks out the door
-            </p>
-          </div>
-
-          {/* Empty room / risk */}
-          <div className="flex flex-col items-center text-center">
-            <div
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center border-2 border-dashed"
-              style={{ borderColor: "hsl(15 85% 55% / 0.4)", background: "hsl(15 85% 55% / 0.04)" }}
-            >
-              <AlertTriangle className="w-7 h-7 sm:w-9 sm:h-9" style={{ color: "hsl(15 85% 55%)" }} />
-            </div>
-            <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase" style={{ color: "hsl(15 85% 55%)" }}>
-              Next mission at risk
-            </p>
-          </div>
+          {[
+            { Icon: FileQuestion, label: "Never defined", sub: "Lives in senior heads" },
+            { Icon: Clock, label: "Slow onboarding", sub: "6–12 months to ramp" },
+            { Icon: TrendingUp, label: "Doesn't scale", sub: "One team's wins stay there" },
+          ].map((item) => {
+            const Icon = item.Icon;
+            return (
+              <div key={item.label} className="flex flex-col items-center text-center">
+                <div
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center border-2"
+                  style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)` }}
+                >
+                  <Icon className="w-7 h-7 sm:w-9 sm:h-9" style={{ color: `hsl(${TEAL})` }} />
+                </div>
+                <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-foreground">
+                  {item.label}
+                </p>
+                <p className="mt-1 text-[10px] sm:text-xs text-muted-foreground leading-snug max-w-[140px]">
+                  {item.sub}
+                </p>
+              </div>
+            );
+          })}
         </motion.div>
 
         <motion.p
@@ -188,7 +174,7 @@ export default function SpaceBrief() {
           className="mt-10 sm:mt-12 text-base sm:text-xl font-bold max-w-2xl"
           style={{ color: `hsl(${TEAL})` }}
         >
-          LIZA OS captures that knowledge and governs every AI output against it.
+          LIZA OS makes mission expertise an operating asset — defined, scalable, and governed across every AI output.
         </motion.p>
 
         {/* Vertical problem evidence — three cards */}
