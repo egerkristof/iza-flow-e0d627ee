@@ -129,8 +129,6 @@ function Slide01() {
 // SLIDE 02 — THE CONTEXT GAP
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide02() {
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE SHAPE — THE SHAPE OF THE COMPANY (Pharma framing)
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -238,7 +236,7 @@ function SlideShape() {
 // SLIDE 02 — THE CONTEXT GAP
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Slide02_orig() {
+function Slide02() {
   const inputs = ["SOPs", "Protocols", "Batch records", "Validation specs", "Annex/ICH refs", "Trial data"];
   const outputs = ["Deviation reports", "CSRs", "Submissions", "CAPAs", "PV narratives", "Audit responses"];
 
