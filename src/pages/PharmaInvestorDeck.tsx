@@ -1374,7 +1374,7 @@ function Slide09() {
               The missing connective tissue underneath the pharma AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: GxP-adjacent QA pilot live, not a Veeva integration claim.
+              Current signal: AEC vertical proven across 3 departments. Pharma lighthouse partner being recruited — not a Veeva integration claim.
             </p>
           </div>
         </div>
