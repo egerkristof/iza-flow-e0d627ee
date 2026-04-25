@@ -49,34 +49,27 @@ const loop = [
   { step: "Evolve", desc: "Each build refines the standard. Knowledge compounds." },
 ];
 
-const proofs = [
-  {
-    label: "Standards Lock",
-    claim: "Encodes ECSS, MAIT, and program-specific procedures as automated gates.",
-  },
-  {
-    label: "Heritage Capture",
-    claim: "Bottles senior judgment before it walks out the door. Repeatable across missions.",
-  },
-  {
-    label: "Governed AI",
-    claim: "AI accelerates execution without inventing physics or skipping reviews.",
-  },
-];
-
 export default function SpaceBrief() {
   return (
     <div className="min-h-screen bg-white text-foreground">
       {/* Top bar */}
       <header className="sticky top-0 z-20 backdrop-blur bg-white/80 border-b border-border">
-        <div className="mx-auto max-w-5xl px-5 sm:px-8 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="block w-7 h-1 rounded-full" style={{ background: `hsl(${TEAL})` }} />
+        <div className="mx-auto max-w-5xl px-5 sm:px-8 py-3 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="block w-7 h-1 rounded-full shrink-0" style={{ background: `hsl(${TEAL})` }} />
             <span className="font-bold tracking-tight text-sm">LIZA OS</span>
+            <span className="hidden sm:inline text-[11px] tracking-widest uppercase text-muted-foreground ml-3">
+              Space · Brief
+            </span>
           </div>
-          <span className="text-[11px] tracking-widest uppercase text-muted-foreground">
-            Space · Brief
-          </span>
+          <Link
+            to="/space"
+            className="group inline-flex items-center gap-1.5 rounded-full px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all hover:opacity-90"
+            style={{ background: `hsl(${TEAL})`, color: "white" }}
+          >
+            <span>View full deck</span>
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
       </header>
 
