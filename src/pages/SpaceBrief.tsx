@@ -23,30 +23,30 @@ const verticalProblems = [
     stat: "30–40 yrs",
     label: "Heritage at risk",
     detail:
-      "Mission heritage and chief-engineer judgment locked in retiring NASA, ESA, and European aerospace experts. Most of it never codified in a queryable form.",
+      "Decades of mission know-how sit inside the heads of retiring NASA, ESA, and European aerospace engineers. When they leave, the judgment leaves with them.",
     source: "LIZA OS field engagements",
   },
   {
     stat: "~50%",
     label: "Smallsat failures",
     detail:
-      "Of small-satellite and CubeSat missions experience partial or total failure within their first year. Most root causes trace to known precedent that did not propagate.",
+      "Roughly half of small-satellite missions fail in their first year. Most causes are already known on a previous mission, but the lesson never reaches the next team.",
     source: "Industry studies, 2023–24",
   },
   {
     stat: "30–40%",
-    label: "Repeat NCRs",
+    label: "Repeat defects",
     detail:
-      "Of aerospace non-conformances repeat known root causes across programs and sites. FRACAS knowledge does not propagate batch-to-batch.",
+      "Of aerospace quality issues repeat across programs and sites. The same mistake gets paid for twice because lessons learned don't travel between projects.",
     source: "Aerospace quality benchmarks",
   },
 ];
 
 const loop = [
-  { step: "Encode", desc: "Capture mission heritage as executable standards." },
-  { step: "Govern", desc: "Gate every AI output against ECSS, MAIT, and program rules." },
-  { step: "Execute", desc: "Run trade studies and reviews inside governed bounds." },
-  { step: "Evolve", desc: "Each build refines the standard. Knowledge compounds." },
+  { step: "Capture", desc: "Turn senior engineers' know-how into clear, written rules — before they retire." },
+  { step: "Enforce", desc: "Every AI answer is checked against your standards (ECSS, AS9100, program rules) before it reaches an engineer." },
+  { step: "Apply", desc: "Engineers use AI for trade studies, reviews, and documentation — inside your rules, not around them." },
+  { step: "Improve", desc: "Every mission feeds new lessons back into the rules. The next mission starts smarter." },
 ];
 
 export default function SpaceBrief() {
@@ -81,7 +81,7 @@ export default function SpaceBrief() {
           className="text-[11px] sm:text-xs font-bold tracking-[0.25em] uppercase mb-5"
           style={{ color: `hsl(${TEAL})` }}
         >
-          Mission Memory for Space
+          For Space Programs · 2-Minute Brief
         </motion.p>
 
         {/* Hero — vertical-first framing */}
@@ -103,8 +103,9 @@ export default function SpaceBrief() {
           transition={{ delay: 0.15 }}
           className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-3xl"
         >
-          Mission heritage retires. Standards drift. AI is a horizontal layer.
-          The vertical problem is the knowledge underneath it.
+          Senior engineers retire. Standards drift between programs.
+          AI tools can speed up the work — but they don't know your standards,
+          your mission history, or the calls your chief engineer would have made.
         </motion.p>
 
         <motion.p
@@ -114,13 +115,13 @@ export default function SpaceBrief() {
           className="mt-5 text-base sm:text-xl font-bold"
           style={{ color: `hsl(${TEAL})` }}
         >
-          LIZA OS is the Mission Memory Layer for AI-Native Space.
+          LIZA OS captures your mission knowledge and uses it to govern every AI output.
         </motion.p>
 
         {/* Vertical problem evidence — three cards */}
         <section className="mt-14 sm:mt-20">
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
-            What it costs the sector
+            Why this matters now
           </p>
           <div className="grid gap-4 sm:grid-cols-3">
             {verticalProblems.map((p, i) => (
@@ -154,7 +155,7 @@ export default function SpaceBrief() {
         {/* Loop */}
         <section className="mt-14 sm:mt-20">
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
-            The Loop
+            How LIZA OS works
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             {loop.map((s, i) => (
@@ -180,21 +181,22 @@ export default function SpaceBrief() {
             className="text-[11px] font-bold tracking-widest uppercase mb-2"
             style={{ color: `hsl(${TEAL})` }}
           >
-            30-Day MAIT Pilot
+            30-Day Pilot
           </p>
           <p className="font-black text-2xl sm:text-4xl tracking-tight">
-            Codify · Govern · Prove
+            One workflow. 30 days. Proven savings.
           </p>
           <p className="mt-3 text-sm sm:text-lg text-muted-foreground leading-snug max-w-2xl">
-            One mission thread, encoded against your standards. Quantified rework
-            reduction. A governed audit trail you can show the customer.
+            We pick one critical workflow on one of your missions, encode it against your
+            standards, and measure the rework hours saved. You get a clear before-and-after,
+            and an audit trail you can show your customer.
           </p>
         </section>
 
         {/* Ask */}
         <section className="mt-14 sm:mt-20">
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
-            The Ask
+            Two ways to start
           </p>
           <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="rounded-2xl bg-foreground text-background p-6 sm:p-8">
@@ -202,11 +204,12 @@ export default function SpaceBrief() {
                 className="text-[10px] font-bold tracking-widest uppercase mb-2"
                 style={{ color: `hsl(${MINT})` }}
               >
-                Door 1
+                Option A
               </p>
-              <p className="font-bold text-lg sm:text-xl">Pilot Customer</p>
+              <p className="font-bold text-lg sm:text-xl">Run a 30-day pilot</p>
               <p className="mt-2 text-sm sm:text-base opacity-80 leading-snug">
-                Run one MAIT thread with LIZA OS. Pay only if proven.
+                One workflow on one mission. Fixed scope, fixed price.
+                You only continue if the savings are real.
               </p>
             </div>
             <div
@@ -214,11 +217,12 @@ export default function SpaceBrief() {
               style={{ background: `hsl(${TEAL})` }}
             >
               <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-white/70">
-                Door 2
+                Option B
               </p>
-              <p className="font-bold text-lg sm:text-xl">Sovereign Partner</p>
+              <p className="font-bold text-lg sm:text-xl">Become a strategic partner</p>
               <p className="mt-2 text-sm sm:text-base text-white/85 leading-snug">
-                Take a strategic stake. Anchor governance for national missions.
+                Co-develop the space version of LIZA OS with us. Take an equity
+                position and anchor it for your national and European missions.
               </p>
             </div>
           </div>
@@ -231,14 +235,14 @@ export default function SpaceBrief() {
             className="group flex items-center justify-between gap-4 rounded-2xl px-6 sm:px-8 py-5 sm:py-7 font-bold text-lg sm:text-2xl transition-all hover:opacity-95 hover:translate-y-[-1px]"
             style={{ background: `hsl(${TEAL})`, color: "white" }}
           >
-            <span>View the full deck</span>
+            <span>See the full deck</span>
             <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:translate-x-1" />
           </Link>
         </section>
 
         {/* Footer */}
         <footer className="mt-16 pt-6 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
-          <span className="font-bold text-foreground">Governed AI for Space Missions</span>
+          <span className="font-bold text-foreground">LIZA OS · Mission knowledge, governed.</span>
           <span>lizaos.ai/space-brief</span>
         </footer>
       </main>
