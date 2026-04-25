@@ -1357,10 +1357,10 @@ function Slide08() {
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Horizontal Proof · Vertical Gap</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into space — with a lighthouse NewSpace partner.</span>
+            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into satcom — with a lighthouse satellite operator.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for space is one mission-grade lighthouse partner — a NewSpace prime or integrator — to make this experience native under ECSS, AS9100, and audit-grade conditions.
+            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for satcom is one operator-grade lighthouse partner — a satellite operator like Hispasat, SES, Eutelsat, or Inmarsat-class — to make this experience native under ITU, SLA, and gov/defense audit conditions.
           </p>
         </div>
 
