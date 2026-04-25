@@ -6,6 +6,7 @@ import {
   AlertTriangle, Check, CheckCircle2, DollarSign,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
+  Pill, FlaskConical, Microscope, FileCheck, HeartPulse, Factory,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
