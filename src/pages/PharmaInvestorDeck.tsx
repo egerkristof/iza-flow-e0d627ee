@@ -1475,19 +1475,19 @@ function Slide09Partnership() {
       phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal.",
+      desc: "Warm intros into mid/large pharma quality and clinical ops accounts. LIZA sits alongside Veeva, MasterControl, and TrackWise; partners open doors. Low commitment, fast signal.",
     },
     {
       phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded RFI Lifecycle Sprint productized with Bluebeam. Generates AEC case studies plus revenue share.",
+      desc: "Co-branded Deviation & CAPA Lifecycle Sprint productized with a system-of-record partner. Generates GxP case studies plus revenue share.",
     },
     {
       phase: "Months 12-24",
       title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one Nemetschek brand. Start with Bluebeam for RFIs, then expand to Allplan for design intent.",
+      desc: "LIZA becomes the governance and memory layer underneath one major life sciences platform. Start with eQMS for deviations and CAPAs, then expand to clinical for protocol amendments and CSR memory.",
     },
   ];
 
@@ -1497,7 +1497,7 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Nemetschek GTM Mechanic
+            Pharma Ecosystem GTM Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
             A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
