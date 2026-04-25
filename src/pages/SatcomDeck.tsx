@@ -456,23 +456,23 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs in Space
+          What Missing Context Costs a Satcom Operator
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it delays integration, blocks reviews, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable mission risk.</span>
+          Missing context becomes expensive because it slows anomaly response, weakens procurement, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable SLA, regulatory, and continuity risk.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-black" style={{ fontSize: 64, color: `hsl(${WARM})`, lineHeight: 0.95 }}>weeks</p>
+            <p className="font-black" style={{ fontSize: 64, color: `hsl(${WARM})`, lineHeight: 0.95 }}>hours</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of slip per repeated AIT anomaly that loses its precedent
+              of SLA exposure per anomaly that loses its precedent on a flagship satellite
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is what AI amplifies if it runs without the latest ECSS tailoring, prior anomaly history, FRACAS precedent, or chief-engineer judgment.
+              This is what AI amplifies if it runs without the latest fleet anomaly history, per-bird quirks, vendor SOW context, or senior ops judgment.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Qualitative pattern from AS9100 industry benchmarks &amp; aerospace FRACAS literature; industry-level, not customer data
+              Qualitative pattern from satcom SLA frameworks &amp; operator field engagements; industry-level, not customer data
             </p>
           </div>
 
@@ -492,10 +492,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an NCR, FRACAS entry, AIT procedure, or design note <span className="font-bold">without the full ECSS and mission context</span>, the chief engineer still has to catch it, correct it, and re-route it through review.
+                If AI produces a plausible answer inside an anomaly response, vendor review, ITU filing, or SLA report <span className="font-bold">without the full operator and fleet context</span>, the senior ops engineer or contract lead still has to catch it, correct it, and re-route it through approval.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a flagship satellite program, a launch slip caused by an AIT anomaly typically translates into <span className="font-bold" style={{ color: TEXT }}>months of cleanroom and team cost</span>, plus knock-on effects on launch slot allocation and customer commitments.
+                On a flagship operating fleet, an anomaly handled slowly or a vendor clause missed translates into <span className="font-bold" style={{ color: TEXT }}>direct SLA penalties, lost broadcast/IFC revenue</span>, and knock-on effects on customer renewals and replacement procurement.
               </p>
             </div>
           </div>
@@ -503,9 +503,9 @@ function Slide04Cost() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Time-to-launch", value: "delayed", desc: "Chief engineers and AIT leads spend cycles fixing AI-assisted work instead of moving the integration and the launch readiness forward.", color: RED },
-            { label: "Compliance", value: "exposed", desc: "Wrong outputs create non-conformance loops, re-test cycles, and ECSS / AS9100 audit risk across programs, units, and missions.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without mission-grade governance, PA/QA leaders limit adoption because every output creates flight-worthiness and mission-risk exposure.", color: GOLD },
+            { label: "Service continuity", value: "exposed", desc: "Senior ops engineers and contract leads spend cycles fixing AI-assisted work instead of resolving anomalies, closing tickets, and protecting SLAs.", color: RED },
+            { label: "Procurement & regulatory", value: "exposed", desc: "Wrong outputs in vendor reviews, ITU filings, or SLA reports create rework loops, audit risk, and weakened position with primes and regulators.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without operator-grade governance, the CTO and General Counsel limit adoption because every output creates SLA, regulatory, and customer exposure.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
