@@ -1,5 +1,14 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Shield,
+  Rocket,
+  RefreshCw,
+  UserMinus,
+  Brain,
+  AlertTriangle,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 /**
@@ -43,10 +52,30 @@ const verticalProblems = [
 ];
 
 const loop = [
-  { step: "Capture", desc: "Turn senior engineers' know-how into clear, written rules — before they retire." },
-  { step: "Enforce", desc: "Every AI answer is checked against your standards (ECSS, AS9100, program rules) before it reaches an engineer." },
-  { step: "Apply", desc: "Engineers use AI for trade studies, reviews, and documentation — inside your rules, not around them." },
-  { step: "Improve", desc: "Every mission feeds new lessons back into the rules. The next mission starts smarter." },
+  {
+    step: "Capture",
+    short: "Bottle the know-how.",
+    desc: "Turn senior engineers' judgment into clear, written rules — before they retire.",
+    Icon: BookOpen,
+  },
+  {
+    step: "Enforce",
+    short: "Check every AI output.",
+    desc: "AI answers are gated against ECSS, AS9100, and program rules.",
+    Icon: Shield,
+  },
+  {
+    step: "Apply",
+    short: "Engineers move faster.",
+    desc: "Trade studies, reviews, and docs run inside your rules — not around them.",
+    Icon: Rocket,
+  },
+  {
+    step: "Improve",
+    short: "Lessons compound.",
+    desc: "Every mission feeds new learnings back. The next one starts smarter.",
+    Icon: RefreshCw,
+  },
 ];
 
 export default function SpaceBrief() {
