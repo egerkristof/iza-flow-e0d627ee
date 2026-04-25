@@ -5,9 +5,9 @@ import {
   Shield,
   Rocket,
   RefreshCw,
-  UserMinus,
-  Brain,
-  AlertTriangle,
+  FileQuestion,
+  Clock,
+  TrendingUp,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -30,23 +30,23 @@ const MINT = "160 96% 39%";
 const verticalProblems = [
   {
     stat: "30–40 yrs",
-    label: "Heritage at risk",
+    label: "Undocumented expertise",
     detail:
-      "Decades of mission know-how sit inside the heads of retiring NASA, ESA, and European aerospace engineers. When they leave, the judgment leaves with them.",
+      "Decades of mission judgment lives in senior engineers' heads — never written down in a form anyone else can use. When they retire, it's gone.",
     source: "LIZA OS field engagements",
   },
   {
-    stat: "~50%",
-    label: "Smallsat failures",
+    stat: "6–12 mo",
+    label: "Onboarding time",
     detail:
-      "Roughly half of small-satellite missions fail in their first year. Most causes are already known on a previous mission, but the lesson never reaches the next team.",
-    source: "Industry studies, 2023–24",
+      "New engineers need months — sometimes a full year — to become productive on a mission, because there's no single place that holds the standards, history, and decisions.",
+    source: "Aerospace HR benchmarks",
   },
   {
     stat: "30–40%",
-    label: "Repeat defects",
+    label: "Best practice doesn't scale",
     detail:
-      "Of aerospace quality issues repeat across programs and sites. The same mistake gets paid for twice because lessons learned don't travel between projects.",
+      "Of quality issues repeat across programs. What one team learned never reaches the next — so the same mistake gets paid for twice.",
     source: "Aerospace quality benchmarks",
   },
 ];
