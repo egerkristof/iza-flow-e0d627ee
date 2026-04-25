@@ -10,6 +10,7 @@ import AuditOffer from "@/pages/offers/AuditOffer";
 import AECInvestorDeck from "@/pages/AECInvestorDeck";
 import PharmaInvestorDeck from "@/pages/PharmaInvestorDeck";
 import SpaceDeck from "@/pages/SpaceDeck";
+import SpaceBrief from "@/pages/SpaceBrief";
 
 export type PresentationRoute = {
   id: string;
@@ -56,6 +57,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/SpaceDeck.tsx",
     description: "Space-vertical strategic deck for NewSpace primes and satellite integrators. Pilot-first, sovereign-space framing.",
     component: SpaceDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "space-brief",
+    title: "Space One-Pager (Mobile Brief)",
+    path: "/space-brief",
+    sourcePath: "src/pages/SpaceBrief.tsx",
+    description: "Mobile-first one-page summary of the Space deck. CEO-friendly 30-second read with CTA to the full deck and PDF download.",
+    component: SpaceBrief,
     showInAdmin: true,
   },
   {
