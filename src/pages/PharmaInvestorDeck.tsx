@@ -1323,47 +1323,47 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Preconstruction", status: "Wedge", color: GREEN,
+      vertical: "Discovery & Trials", status: "Wedge", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
-      result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
-      proof: "Adjacent to Document Crunch & Handoff (Nemetschek portfolio)",
+      problem: "Medical writers redo CSR sections because protocol amendments and prior agency feedback don't propagate. AI drafts from generic literature, not your therapeutic-area precedent.",
+      result: "Protocol-aware writing. Submission memory across studies. Faster, sharper CTD modules.",
+      proof: "Adjacent to Veeva Vault Clinical, Saama, and Tempus AI workflows",
     },
     {
-      vertical: "Construction Execution", status: "Anchor", color: TEAL,
+      vertical: "Manufacturing & Release", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "RFIs, submittals, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
-      result: "Unified RFI & submittal lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
-      proof: "Target embedding path across Bluebeam, Allplan, and Solibri workflows",
+      problem: "Deviations, CAPAs, and batch records live in disconnected eQMS/LIMS instances. AI can't reason across them. CAPA knowledge dies between sites.",
+      result: "Unified deviation & CAPA lifecycle. Every AI response grounded in this batch's SOPs, Annex 1 nuance, and prior deviation precedent.",
+      proof: "Target embedding path across Veeva Vault Quality, MasterControl, and TrackWise workflows",
     },
     {
-      vertical: "Handover & Operations", status: "Expansion", color: GOLD,
+      vertical: "Pharmacovigilance & Post-Market", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "Closeout packages and as-builts diverge from owner standards. O&M knowledge evaporates after handover. Operators inherit fragmented data.",
-      result: "Standards-aware closeout. Living O&M memory. Owner-grade handover artifacts, every time.",
-      proof: "Owner / FM extension path once workflow integrations are in market",
+      problem: "PV narratives and PSURs diverge from sponsor standards. Signal knowledge evaporates between case waves. Safety teams inherit fragmented data.",
+      result: "MedDRA-aware narratives. Living signal memory. Audit-grade PV artifacts, every cycle.",
+      proof: "PV / RWE extension path once quality and clinical integrations are in market",
     },
   ];
 
   const expandInto = [
-    { name: "BIM coordination & clash review", col: TEAL },
-    { name: "Spec & code compliance", col: "215 25% 50%" },
-    { name: "Cost estimating & change orders", col: GOLD },
-    { name: "Safety & QA/QC inspections", col: GREEN },
-    { name: "Subcontractor management", col: ACCENT },
-    { name: "Facility management & lifecycle", col: "330 70% 55%" },
+    { name: "Regulatory submissions (CTD/eCTD)", col: TEAL },
+    { name: "GxP audit readiness & 483 response", col: "215 25% 50%" },
+    { name: "Method validation & CSV/CSA", col: GOLD },
+    { name: "Clinical data review & queries", col: GREEN },
+    { name: "Supply chain & cold-chain QA", col: ACCENT },
+    { name: "Medical devices (ISO 13485 / MDR)", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>AEC Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Life Sciences Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            One project memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the build.</span>
+            One trial &amp; quality memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the molecule.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1371,10 +1371,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the AEC AI stack.
+              The missing connective tissue underneath the pharma AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: Graphisoft workflow exploration, not a commercial integration claim.
+              Current signal: GxP-adjacent QA pilot live, not a Veeva integration claim.
             </p>
           </div>
         </div>
@@ -1445,7 +1445,7 @@ function Slide09() {
                 Strategic path
               </p>
               <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Expansion across the build lifecycle. Partnership path on the next slide.
+                Expansion across the molecule lifecycle. Partnership path on the next slide.
               </p>
             </div>
             <div className="rounded-xl px-5 py-4 shrink-0"
