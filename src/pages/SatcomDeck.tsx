@@ -1427,47 +1427,47 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Design & Systems Engineering", status: "Expansion", color: GREEN,
+      vertical: "Procurement & Vendor Governance", status: "Expansion", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Engineers redo trade studies and design notes because heritage decisions and prior review feedback don't propagate. AI drafts from generic literature, not your mission-line precedent.",
-      result: "Heritage-aware design. Mission memory across programs. Faster, sharper review packages.",
-      proof: "Adjacent to Polarion, DOORS, Valispace, and Jama workflows",
+      problem: "Replacement satellites are bought every 7-10 years and the people who managed the last contract are rarely the ones running the next. Vendor SOWs, acceptance reviews, and prime-management lessons live in a few senior heads.",
+      result: "Procurement memory across cycles. Faster, sharper vendor reviews. Acceptance criteria that compound contract-by-contract.",
+      proof: "Adjacent to ERP, contract-management, and prime-vendor governance workflows",
     },
     {
-      vertical: "MAIT — Manufacture, Assembly, Integration & Test", status: "Wedge", color: TEAL,
+      vertical: "Fleet Operations & Anomaly Response", status: "Wedge", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "NCRs, FRACAS entries, and AIT procedures live in disconnected PLM/MES tools. AI can't reason across them. Anomaly knowledge dies between programs and cleanrooms.",
-      result: "Unified NCR & FRACAS lifecycle. Every AI response grounded in this unit's procedures, ECSS tailoring, and prior anomaly precedent.",
-      proof: "Target embedding path across Teamcenter, Windchill, and aerospace MES workflows",
+      problem: "Anomaly playbooks, station-keeping handovers, and EOL plans live in disconnected SOCC tools and senior-controller heads. AI can't reason across them. Operational knowledge dies when a satellite is retired or an engineer leaves.",
+      result: "Unified anomaly & station-keeping lifecycle. Every AI response grounded in this satellite's quirks, your SOPs, and prior anomaly precedent.",
+      proof: "Target embedding path across Kratos, SES Adaptive, and SOCC / ground-segment workflows",
     },
     {
-      vertical: "Mission Operations & In-Orbit", status: "Expansion", color: GOLD,
+      vertical: "Regulatory, ITU & SLA Continuity", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "Anomaly reports and lessons-learned diverge from program standards. Operational knowledge evaporates between mission phases. New ops teams inherit fragmented data.",
-      result: "ECSS-aware anomaly handling. Living mission memory. Audit-grade ops artifacts, every cycle.",
-      proof: "Mission ops / ground-segment extension path once MAIT and design integrations are in place",
+      problem: "ITU filings, coordination history, and SLA frameworks diverge from operator standards. Spectrum precedent evaporates between filings. New regulatory and service-ops staff inherit fragmented data.",
+      result: "ITU-aware filings. Living regulatory and SLA memory. Audit-grade artifacts for regulators, broadcasters, and gov / defense customers, every cycle.",
+      proof: "Regulatory & service-ops extension path once fleet ops and procurement integrations are in place",
     },
   ];
 
   const expandInto = [
-    { name: "ECSS / AS9100 audit readiness", col: TEAL },
-    { name: "Anomaly review boards (ARB) prep", col: "215 25% 50%" },
-    { name: "EEE parts & radiation justification", col: GOLD },
-    { name: "Launch campaign coordination", col: GREEN },
-    { name: "Ground segment & mission ops handover", col: ACCENT },
-    { name: "Regulatory & licensing (ITU, ITAR)", col: "330 70% 55%" },
+    { name: "ITU filings & spectrum coordination", col: TEAL },
+    { name: "Anomaly review boards & RCA prep", col: "215 25% 50%" },
+    { name: "Replacement-satellite procurement", col: GOLD },
+    { name: "Launch & LEOP coordination", col: GREEN },
+    { name: "SLA reporting & service-ops handover", col: ACCENT },
+    { name: "Gov / defense & sovereignty workflows", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Space Lifecycle Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Operator Lifecycle Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            One mission &amp; quality memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the mission.</span>
+            One operator memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the fleet lifecycle.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1475,10 +1475,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the aerospace AI stack.
+              The missing connective tissue underneath the satcom-operator AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: AEC vertical proven across 3 departments; pharma vertical conversation underway. Space lighthouse partner being recruited — this conversation is one of the active threads.
+              Current signal: AEC vertical proven across 3 departments; pharma and space-builder verticals in conversation. Satcom-operator lighthouse partner being recruited — this conversation is one of the active threads.
             </p>
           </div>
         </div>
@@ -1549,7 +1549,7 @@ function Slide09() {
                 Strategic path
               </p>
               <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Expansion across the molecule lifecycle. Partnership path on the next slide.
+                Expansion across the fleet & contract lifecycle. Partnership path on the next slide.
               </p>
             </div>
             <div className="rounded-xl px-5 py-4 shrink-0"
