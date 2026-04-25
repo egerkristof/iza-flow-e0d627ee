@@ -352,23 +352,23 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs in AEC
+          What Missing Context Costs in Life Sciences
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
+          Missing context becomes expensive because it delays trials, blocks releases, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable regulatory exposure.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
+            <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>$1.3M</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of rework is tied to poor project data and miscommunication
+              average daily cost of a delayed Phase III trial
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest addendum, field decision, owner standard, or design interpretation.
+              This is the part AI can amplify if it runs without the latest protocol amendment, prior agency feedback, deviation precedent, or sponsor standard.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              FMI / PlanGrid, Construction Disconnected, U.S. construction industry, 2018
+              Tufts CSDD &amp; Cutting Edge Information benchmarks, oncology Phase III median
             </p>
           </div>
 
@@ -388,10 +388,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an RFI, spec review, submittal, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
+                If AI produces a plausible answer inside a deviation, CAPA, protocol amendment, CSR section, or PV narrative <span className="font-bold">without the full GxP context</span>, QA still has to catch it, correct it, and re-route it through review.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream delay.
+                On a <span className="font-bold" style={{ color: TEXT }}>$300M Phase III program</span>, a 30-day avoidable delay implies roughly <span className="font-bold" style={{ color: TEXT }}>$40M of NPV at risk</span> before considering peak-sales erosion from a later launch.
               </p>
             </div>
           </div>
@@ -399,9 +399,9 @@ function Slide04Cost() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Margin", value: "compressed", desc: "Senior time is spent fixing AI-assisted work instead of moving the project forward.", color: RED },
-            { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time across RFIs, submittals, and approvals.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, leaders limit adoption because every output creates quality, liability, and control risk.", color: GOLD },
+            { label: "Time-to-approval", value: "delayed", desc: "Senior writers and QA spend cycles fixing AI-assisted work instead of moving the submission and the release forward.", color: RED },
+            { label: "Compliance", value: "exposed", desc: "Wrong outputs create deviation loops, re-validation cycles, and 483 / Form 1572 risk across trials, batches, and PV cases.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without GxP governance, QA leaders limit adoption because every output creates regulatory, patient safety, and product release risk.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
