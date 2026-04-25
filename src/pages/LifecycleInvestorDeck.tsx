@@ -125,6 +125,109 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Horizontal framing)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideShape() {
+  const verticals = [
+    { label: "AEC", sub: "Live · Nemetschek path", color: TEAL, status: "LIVE" },
+    { label: "Pharma", sub: "Lighthouse recruiting", color: BLUE, status: "NEXT" },
+    { label: "GTM", sub: "Horizontal validation", color: MINT, status: "LIVE" },
+    { label: "Prof. Services", sub: "Reference deployment", color: GOLD, status: "LIVE" },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="px-3 py-1 rounded-md text-xs font-bold tracking-[0.2em]" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
+            02 · THE SHAPE OF THE COMPANY
+          </div>
+        </div>
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Verticals as proof of compounding.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          We build a single context layer and deploy it vertical-by-vertical. Each vertical funds the platform; the platform compounds across all of them. The horizontal round funds the OS underneath.
+        </p>
+
+        {/* Horizontal platform bar — leading position */}
+        <div className="rounded-xl p-7 border-2 mb-2" style={{
+          background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`,
+          borderColor: `hsl(${TEAL})`,
+        }}>
+          <div className="flex items-center justify-between gap-8">
+            <div>
+              <div className="px-2 py-0.5 rounded text-xs font-bold tracking-[0.2em] inline-block mb-2"
+                style={{ background: "rgba(255,255,255,0.25)", color: "white" }}>
+                YOUR ROUND
+              </div>
+              <div className="font-black" style={{ fontSize: 32, color: "white" }}>LIZA OS · The Context Layer</div>
+              <div style={{ fontSize: 18, color: "rgba(255,255,255,0.85)", marginTop: 4 }}>
+                Knowledge ingestion · Governance · Execution loop · Audit trail
+              </div>
+            </div>
+            <div className="flex gap-3">
+              {["Ingest", "Govern", "Execute", "Audit"].map(p => (
+                <div key={p} className="px-3 py-1.5 rounded-md font-bold" style={{
+                  background: "rgba(255,255,255,0.18)", color: "white", fontSize: 16
+                }}>{p}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Connector */}
+        <div className="flex justify-center my-2" style={{ color: SUBTLE }}>
+          <div className="text-3xl leading-none">▴ ▴ ▴ ▴</div>
+        </div>
+
+        {/* Vertical pillars */}
+        <div className="grid grid-cols-4 gap-6 flex-1">
+          {verticals.map(v => (
+            <div key={v.label} className="rounded-xl border-2 p-6 flex flex-col" style={{
+              borderColor: CHROME_BORDER,
+              background: CARD_ALT,
+            }}>
+              <div className="flex items-center justify-between mb-2">
+                <div className="font-black" style={{ fontSize: 24, color: TEXT }}>{v.label}</div>
+                <div className="px-2 py-0.5 rounded text-[10px] font-bold tracking-[0.18em]" style={{
+                  background: `hsl(${v.color} / 0.12)`, color: `hsl(${v.color})`
+                }}>{v.status}</div>
+              </div>
+              <div style={{ fontSize: 15, color: MUTED }}>{v.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Investor message */}
+        <div className="grid grid-cols-3 gap-4 mt-8">
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              The horizontal context layer. The OS that compounds across every vertical we land.
+            </div>
+          </div>
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${BLUE})` }}>WHAT FUNDS IT</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Vertical investors and strategic partners co-fund deployment, sharing CAC and signal.
+            </div>
+          </div>
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Vertical investors take standard equity in the parent. No IP carve-outs. Multiple at the OS.
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 02 — THE CONTEXT GAP
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -2074,24 +2177,25 @@ function SlideAppendixDivider() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "Where Missing Context Shows Up", component: <Slide03 /> },
-  { id: 4, title: "What Missing Context Costs", component: <Slide03Cost /> },
-  { id: 5, title: "Persona-Level Reality", component: <Slide03WorkflowProof /> },
-  { id: 6, title: "Early Validation", component: <Slide08 /> },
-  { id: 7, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 8, title: "The Context Layer", component: <Slide05 /> },
-  { id: 9, title: "Strategic Shift", component: <Slide06Shift /> },
-  { id: 10, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 11, title: "Expansion Path", component: <Slide09 /> },
-  { id: 12, title: "What's Built", component: <Slide10 /> },
-  { id: 13, title: "Business Model", component: <Slide11 /> },
-  { id: 14, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 15, title: "Team", component: <Slide12 /> },
-  { id: 16, title: "The Ask", component: <Slide13 /> },
-  { id: 17, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 18, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 19, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 2, title: "Shape of the Company", component: <SlideShape /> },
+  { id: 3, title: "The Context Gap", component: <Slide02 /> },
+  { id: 4, title: "Where Missing Context Shows Up", component: <Slide03 /> },
+  { id: 5, title: "What Missing Context Costs", component: <Slide03Cost /> },
+  { id: 6, title: "Persona-Level Reality", component: <Slide03WorkflowProof /> },
+  { id: 7, title: "Early Validation", component: <Slide08 /> },
+  { id: 8, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 9, title: "The Context Layer", component: <Slide05 /> },
+  { id: 10, title: "Strategic Shift", component: <Slide06Shift /> },
+  { id: 11, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 12, title: "Expansion Path", component: <Slide09 /> },
+  { id: 13, title: "What's Built", component: <Slide10 /> },
+  { id: 14, title: "Business Model", component: <Slide11 /> },
+  { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 16, title: "Team", component: <Slide12 /> },
+  { id: 17, title: "The Ask", component: <Slide13 /> },
+  { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────

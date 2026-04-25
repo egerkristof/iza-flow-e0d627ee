@@ -126,6 +126,109 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Pharma framing)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideShape() {
+  const verticals = [
+    { label: "Pharma", sub: "GxP · Deviations · CSRs", active: true, color: TEAL },
+    { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: BLUE },
+    { label: "GTM", sub: "Sales · CS · Onboarding", active: false, color: MUTED },
+    { label: "Prof. Services", sub: "Delivery · Methods", active: false, color: MUTED },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="px-3 py-1 rounded-md text-xs font-bold tracking-[0.2em]" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
+            02 · THE SHAPE OF THE COMPANY
+          </div>
+        </div>
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Pharma is the spear.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          We build a single context layer and deploy it vertical-by-vertical. You are investing in pharma specifically — and benefiting from platform leverage already shipping into AEC, GTM, and professional services.
+        </p>
+
+        {/* Diagram */}
+        <div className="flex-1 flex flex-col justify-center">
+          {/* Vertical pillars */}
+          <div className="grid grid-cols-4 gap-6 mb-0">
+            {verticals.map(v => (
+              <div key={v.label} className="rounded-xl border-2 p-6 relative" style={{
+                borderColor: v.active ? `hsl(${v.color})` : CHROME_BORDER,
+                background: v.active ? `hsl(${v.color} / 0.06)` : CARD_ALT,
+              }}>
+                {v.active && (
+                  <div className="absolute -top-3 left-4 px-2 py-0.5 rounded text-xs font-bold tracking-[0.2em]"
+                    style={{ background: `hsl(${v.color})`, color: "white" }}>
+                    YOUR ROUND
+                  </div>
+                )}
+                <div className="font-black mb-1" style={{ fontSize: 28, color: v.active ? `hsl(${v.color})` : TEXT }}>{v.label}</div>
+                <div style={{ fontSize: 16, color: MUTED }}>{v.sub}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Connector */}
+          <div className="flex justify-center my-2" style={{ color: SUBTLE }}>
+            <div className="text-3xl leading-none">▾ ▾ ▾ ▾</div>
+          </div>
+
+          {/* Horizontal platform bar */}
+          <div className="rounded-xl p-7 border-2" style={{
+            background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`,
+            borderColor: `hsl(${TEAL})`,
+          }}>
+            <div className="flex items-center justify-between gap-8">
+              <div>
+                <div className="font-black" style={{ fontSize: 32, color: "white" }}>LIZA OS · The Context Layer</div>
+                <div style={{ fontSize: 18, color: "rgba(255,255,255,0.85)", marginTop: 4 }}>
+                  Knowledge ingestion · Governance · Execution loop · Audit trail
+                </div>
+              </div>
+              <div className="flex gap-3">
+                {["Ingest", "Govern", "Execute", "Audit"].map(p => (
+                  <div key={p} className="px-3 py-1.5 rounded-md font-bold" style={{
+                    background: "rgba(255,255,255,0.18)", color: "white", fontSize: 16
+                  }}>{p}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Investor message */}
+        <div className="grid grid-cols-3 gap-4 mt-8">
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              The pharma vertical thesis. Category leadership in GxP execution.
+            </div>
+          </div>
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${BLUE})` }}>WHAT COMPOUNDS</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Platform investment from other verticals lowers your CAC and accelerates roadmap.
+            </div>
+          </div>
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Standard equity + pharma board observer + commercial visibility on the vertical roadmap.
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE 02 — THE CONTEXT GAP
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -1991,24 +2094,25 @@ function SlideAppendixDivider() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "Where Missing Context Shows Up in Pharma", component: <Slide03 /> },
-  { id: 4, title: "What Missing Context Costs in Pharma", component: <Slide04Cost /> },
-  { id: 5, title: "Early Validation", component: <Slide08 /> },
-  { id: 6, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 7, title: "The Context Layer", component: <Slide05 /> },
-  { id: 8, title: "Strategic Pivot", component: <SlideVerticalization /> },
-  { id: 9, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 10, title: "Expansion Path", component: <Slide09 /> },
-  { id: 11, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
-  { id: 12, title: "What's Built", component: <Slide10 /> },
-  { id: 13, title: "Business Model", component: <Slide11 /> },
-  { id: 14, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 15, title: "Team", component: <Slide12 /> },
-  { id: 16, title: "The Ask", component: <Slide13 /> },
-  { id: 17, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 18, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 19, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 2, title: "Shape of the Company", component: <SlideShape /> },
+  { id: 3, title: "The Context Gap", component: <Slide02 /> },
+  { id: 4, title: "Where Missing Context Shows Up in Pharma", component: <Slide03 /> },
+  { id: 5, title: "What Missing Context Costs in Pharma", component: <Slide04Cost /> },
+  { id: 6, title: "Early Validation", component: <Slide08 /> },
+  { id: 7, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 8, title: "The Context Layer", component: <Slide05 /> },
+  { id: 9, title: "Strategic Pivot", component: <SlideVerticalization /> },
+  { id: 10, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 11, title: "Expansion Path", component: <Slide09 /> },
+  { id: 12, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 13, title: "What's Built", component: <Slide10 /> },
+  { id: 14, title: "Business Model", component: <Slide11 /> },
+  { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 16, title: "Team", component: <Slide12 /> },
+  { id: 17, title: "The Ask", component: <Slide13 /> },
+  { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
