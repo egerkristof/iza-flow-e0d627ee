@@ -8,6 +8,7 @@ import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
 import LCVInvestorDeck from "@/pages/LCVInvestorDeck";
 import AuditOffer from "@/pages/offers/AuditOffer";
 import AECInvestorDeck from "@/pages/AECInvestorDeck";
+import PharmaInvestorDeck from "@/pages/PharmaInvestorDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -36,6 +37,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/AECInvestorDeck.tsx",
     description: "AEC-focused variant for Nemetschek Group strategic round + partnership",
     component: AECInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-pharma",
+    title: "Pharma Investor Deck",
+    path: "/investor-pharma",
+    sourcePath: "src/pages/PharmaInvestorDeck.tsx",
+    description: "Life sciences variant for pharma sponsors and CROs centered on GxP-native deviation, CAPA, and CSR memory",
+    component: PharmaInvestorDeck,
     showInAdmin: true,
   },
   {

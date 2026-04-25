@@ -232,7 +232,7 @@ function Slide02() {
 // SLIDE 03 — WHAT THAT COSTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const AEC_GAP_CASES = [
+const PHARMA_GAP_CASES = [
   {
     name: "Sponsor / BioPharma",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
@@ -262,7 +262,7 @@ const AEC_GAP_CASES = [
   },
 ];
 
-const AEC_COST_BENCHMARKS = [
+const PHARMA_COST_BENCHMARKS = [
   {
     value: "$2.6B",
     label: "average capitalized R&D cost to bring a single new prescription drug to market, including failures and time costs",
@@ -295,7 +295,7 @@ function Slide03() {
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
-          {AEC_GAP_CASES.map((item) => (
+          {PHARMA_GAP_CASES.map((item) => (
             <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
               <div className="w-[290px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-2 mb-2">
@@ -374,7 +374,7 @@ function Slide04Cost() {
 
           <div className="rounded-[28px] border px-7 py-6" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
             <div className="grid grid-cols-3 gap-3 mb-4">
-              {AEC_COST_BENCHMARKS.map((item) => (
+              {PHARMA_COST_BENCHMARKS.map((item) => (
                 <div key={item.label} className="rounded-xl px-4 py-4 min-h-[172px]" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
                   <p className="font-black" style={{ fontSize: 31, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
                   <p className="font-bold mt-2" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{item.label}</p>
@@ -862,16 +862,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
-    { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
-    { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
+    { name: "Veeva Vault AI", funding: "Public", round: "Veeva · 2024", what: "AI features layered onto eTMF, QualityDocs, RIM. System of record, not a governed reasoning layer.", color: GREEN },
+    { name: "Saama / Tempus AI", funding: "$430M / Public", round: "Clinical AI · 2024", what: "Clinical data review and trial analytics. Reads study data, doesn't encode sponsor judgment.", color: SEAFOAM },
+    { name: "MasterControl AI / TrackWise", funding: "Public / Honeywell", round: "eQMS incumbents", what: "Workflow + document AI inside the QMS. No cross-site deviation memory or CAPA precedent loop.", color: BLUE },
+    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every pharma pilot", what: "General reasoning. No GMP context, no SOP grounding, no validated audit trail.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Nemetschek ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, GxP-aware injection, drift detection. The plumbing every regulated AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding GxP Memory", desc: "Deviation precedent, CAPA outcomes, validated SOPs, agency feedback — graph deepens batch-by-batch and study-by-study. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Validated Audit Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for 21 CFR Part 11 / Annex 11 era AI.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -881,8 +881,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          AEC AI tools read documents and predict risk.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the project-memory layer that encodes your firm's judgment.</span>
+          Pharma AI tools surface data and draft documents.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the GxP memory layer that encodes your sponsor's judgment.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -915,11 +915,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read drawings and contracts.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
+              Others read documents and dashboards.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your quality and clinical leaders decide.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every AEC AI stack will need: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into AEC.
+              The instruction layer every pharma AI stack will need: SOP nuance, deviation precedent, agency feedback, sponsor standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being focused into life sciences.
             </p>
           </div>
         </div>
@@ -931,9 +931,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$16.4B", desc: "Construction management software by 2033" },
-                { label: "SAM", value: "$3-4B", desc: "AI control layer across project execution, review, compliance" },
-                { label: "SOM", value: "$250-300M", desc: "EU/NA enterprise wedge: GCs, A/E firms, owners" },
+                { label: "TAM", value: "$15B+", desc: "Life sciences R&D + quality software by 2030 (eTMF, eQMS, RIM, PV)" },
+                { label: "SAM", value: "$3-4B", desc: "AI governance layer across clinical, quality, regulatory, PV" },
+                { label: "SOM", value: "$200-300M", desc: "EU/US sponsor wedge: mid/large pharma + biotech + CRO" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -945,7 +945,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Grand View Research, Construction Management Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, BIM Market, 2025-2030: $15.42B by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
+              Sources: Grand View Research, Life Sciences Software Market, 2024-2030. MarketsandMarkets, eClinical / eTMF / eQMS markets, 2024-2030. SAM/SOM are LIZA OS estimates based on the AI governance and reasoning layer inside these markets.
             </p>
           </div>
 
@@ -1191,16 +1191,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Graphisoft workflow exploration",
-      subtitle: "AEC signal",
-      scope: "Internal use-case discovery",
+      title: "GxP-Adjacent QA Pilot",
+      subtitle: "Pharma signal",
+      scope: "Quality workflow discovery",
       color: TEAL,
-      outcome: "Live access to real AEC workflow pain",
+      outcome: "Live access to real GxP workflow pain",
       metric: "Active",
-      metricLabel: "Discussion",
+      metricLabel: "Engagement",
       points: [
-        "Exploring internal AEC workflow opportunities with a major ecosystem player",
-        "Direct signal that the AEC workflow problem is real and strategically relevant",
+        "Active engagement with a regulated quality team on deviation and CAPA workflows",
+        "Direct signal that the GxP knowledge loss problem is real and commercially urgent",
       ],
       featured: true,
     },
@@ -1239,8 +1239,8 @@ function Slide08() {
       metric: "95%",
       metricLabel: "Reduction",
       points: [
-        "800+ audit questions processed through governed execution",
-        "Full compliance traceability maintained throughout",
+        "800+ audit questions processed through governed, traceable execution",
+        "The same audit-grade pattern that GMP, GCP, and PV teams require",
       ],
       featured: false,
     },
@@ -1251,12 +1251,12 @@ function Slide08() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <div className="mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Regulated Work</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. AEC is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Life sciences is where the experience now needs to become native — under validated, audit-grade conditions.
           </p>
         </div>
 
@@ -1475,19 +1475,19 @@ function Slide09Partnership() {
       phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal.",
+      desc: "Warm intros into mid/large pharma quality and clinical ops accounts. LIZA sits alongside Veeva, MasterControl, and TrackWise; partners open doors. Low commitment, fast signal.",
     },
     {
       phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded RFI Lifecycle Sprint productized with Bluebeam. Generates AEC case studies plus revenue share.",
+      desc: "Co-branded Deviation & CAPA Lifecycle Sprint productized with a system-of-record partner. Generates GxP case studies plus revenue share.",
     },
     {
       phase: "Months 12-24",
       title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one Nemetschek brand. Start with Bluebeam for RFIs, then expand to Allplan for design intent.",
+      desc: "LIZA becomes the governance and memory layer underneath one major life sciences platform. Start with eQMS for deviations and CAPAs, then expand to clinical for protocol amendments and CSR memory.",
     },
   ];
 
@@ -1497,7 +1497,7 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Nemetschek GTM Mechanic
+            Pharma Ecosystem GTM Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
             A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
@@ -1728,11 +1728,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "GC or A/E selects one high-value workflow (e.g. RFI response, submittal review, spec compliance)",
-        "Platform guides structured capture from 2-3 senior PMs / principals",
-        "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
+        "Sponsor selects one high-value workflow (e.g. deviation triage, CAPA drafting, CSR section authoring)",
+        "Platform guides structured capture from 2-3 senior QA, medical writers, or reg affairs leads",
+        "LIZA auto-generates GxP-aware playbooks grounded in the site's SOPs, prior deviations, and agency feedback",
       ],
-      output: "3-5 project-aware playbooks ready",
+      output: "3-5 GxP-aware playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1740,11 +1740,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Project team self-serves: run playbooks against live RFIs, submittals, and spec questions",
-        "Real projects, real owners, real deliverables",
+        "Quality / clinical team self-serves: run playbooks against live deviations, CAPAs, and CSR sections",
+        "Real batches, real studies, real audit-grade deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior PM vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: senior reviewer vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1752,11 +1752,11 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per RFI, rework avoided, schedule risk reduced",
-        "Project memory self-improves from every execution",
-        "Business case for firm-wide rollout with real project numbers",
+        "Automated review: hours saved per deviation, rework avoided, audit-finding risk reduced",
+        "GxP memory self-improves from every execution; full traceability preserved",
+        "Business case for site-wide and study-wide rollout with real numbers",
       ],
-      output: "ROI proven. Expansion decision with data.",
+      output: "ROI proven. Expansion decision with audit-grade data.",
     },
   ];
 
@@ -1767,7 +1767,7 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the AEC-native knowledge loop.{" "}
+          The wedge is one workflow. The product is the GxP-native knowledge loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -1814,7 +1814,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "AEC-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
+            { metric: "GxP-native", label: "Product direction", sub: "Role, workflow, and validated audit fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -1842,7 +1842,8 @@ function Slide12() {
 
   const advisors = [
     { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Enterprise Advisor", role: "VP Product Management, Global AEC Software Company (€6B Group)", bio: "Senior product leader in the AEC space. 15+ years across desktop, cloud, mobile, AI, and data-driven product strategy in global enterprise software." },
+    { name: "Pharma Quality Advisor", role: "Senior QA / Regulatory Leader, Top-20 Pharma", bio: "Engagement underway with a senior quality and regulatory leader to anchor GxP fit, validation strategy, and sponsor-side adoption patterns." },
+    { name: "Clinical Operations Advisor", role: "Head of Clinical Operations, Mid/Large Sponsor", bio: "Pipeline conversation to anchor protocol amendment, CSR authoring, and trial memory workflows in real sponsor reality." },
   ];
 
   return (
@@ -1913,16 +1914,16 @@ function Slide13() {
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
           <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + AEC beachhead build-out
+            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + life sciences beachhead build-out
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "AEC-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
+            { label: "GxP-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, validated UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Bluebeam, Allplan, BIM bridges, lighthouse deployments", color: GOLD },
+            { label: "Pharma Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Veeva / eQMS bridges, validation packages, lighthouse deployments", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -1937,9 +1938,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "AEC-native UX live", milestone: "RFI, submittal, and spec-review surfaces in market with first lighthouse deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Bluebeam / Allplan integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and AEC customers on a repeatable self-serve expansion path.", color: MINT },
+            { month: "Month 1-6", target: "GxP-native UX live", milestone: "Deviation, CAPA, and CSR-section surfaces in market with first lighthouse sponsor deployments.", color: TEAL },
+            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Pharma pilots convert to platform base plus credits. Veeva / eQMS integration path live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and life sciences customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -1954,7 +1955,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the AEC-native control layer for every AI workflow.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the GxP-native control layer for every regulated AI workflow.</strong>
           </p>
         </div>
 
@@ -1991,8 +1992,8 @@ function SlideAppendixDivider() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "Where Missing Context Shows Up in AEC", component: <Slide03 /> },
-  { id: 4, title: "What Missing Context Costs in AEC", component: <Slide04Cost /> },
+  { id: 3, title: "Where Missing Context Shows Up in Pharma", component: <Slide03 /> },
+  { id: 4, title: "What Missing Context Costs in Pharma", component: <Slide04Cost /> },
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
@@ -2012,7 +2013,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function AECInvestorDeck() {
+export default function PharmaInvestorDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2127,7 +2128,7 @@ export default function AECInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pharma-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -2174,9 +2175,9 @@ export default function AECInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · AEC Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Pharma Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pharma-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -2212,13 +2213,13 @@ export default function AECInvestorDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · AEC Investor Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · Pharma Investor Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Pharma-Investor-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
