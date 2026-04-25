@@ -437,18 +437,18 @@ function SlideWhyNow() {
       source: "Workday, Jan 2026",
     },
     {
-      metric: "Shift",
-      label: "from AI access to AI governance",
-      insight: "The market moved from asking whether teams use AI to asking how outputs stay consistent, traceable, and safe.",
+      metric: "Jan '25",
+      label: "FDA AI/ML draft guidance for drug & biological products",
+      insight: "Regulators now expect lifecycle governance, traceability, and credibility evidence for every AI-assisted output.",
       color: TEAL,
-      source: "Observed across enterprise deployments and regulated workflows",
+      source: "FDA CDER/CBER draft guidance, Jan 2025; EMA reflection paper, Sep 2024",
     },
   ];
 
   const shifts = [
-    { shift: "AI tools became commodities", result: "Differentiation moved from 'which tool' to 'what knowledge runs through it'" },
-    { shift: "Regulators started asking 'how'", result: "EU AI Act, DORA, FDA AI guidance. Governance is now mandatory, not optional" },
-    { shift: "The senior talent bottleneck hit", result: "Companies can't hire enough experts. They need to scale the ones they have." },
+    { shift: "GenAI moved into GxP workflows", result: "Sponsors and CMOs piloted LLMs in deviations, CSRs, PV narratives. The audit trail did not follow." },
+    { shift: "Regulators now ask 'how was this output governed?'", result: "FDA AI/ML guidance, EMA reflection paper, ICH E6(R3), and EU AI Act all require lifecycle traceability for AI-assisted GxP work." },
+    { shift: "The senior QA & medical writing bottleneck hit", result: "Approvals are senior-talent-bound. Every hour a reviewer spends correcting AI is an hour not spent moving the molecule forward." },
   ];
 
   return (
