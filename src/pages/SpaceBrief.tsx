@@ -30,23 +30,23 @@ const MINT = "160 96% 39%";
 const verticalProblems = [
   {
     stat: "30–40 yrs",
-    label: "Undocumented expertise",
+    label: "Heritage at risk",
     detail:
-      "Decades of mission judgment lives in senior engineers' heads — never written down in a form anyone else can use. When they retire, it's gone.",
+      "Decades of mission heritage and chief-engineer judgment sit in retiring NASA, ESA, and European aerospace experts. Most of it is never codified in a form anyone else can use.",
     source: "LIZA OS field engagements",
   },
   {
     stat: "6–12 mo",
-    label: "Onboarding time",
+    label: "Onboarding drag",
     detail:
-      "New engineers need months — sometimes a full year — to become productive on a mission, because there's no single place that holds the standards, history, and decisions.",
+      "New mission engineers take 6–12 months to become productive. Standards, history, and prior decisions live across people and folders — not in one governed place.",
     source: "Aerospace HR benchmarks",
   },
   {
     stat: "30–40%",
-    label: "Best practice doesn't scale",
+    label: "Lessons don't propagate",
     detail:
-      "Of quality issues repeat across programs. What one team learned never reaches the next — so the same mistake gets paid for twice.",
+      "Of aerospace non-conformances repeat known root causes across programs. What one team learned doesn't reach the next, and the same mistake gets paid for twice.",
     source: "Aerospace quality benchmarks",
   },
 ];
