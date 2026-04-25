@@ -54,8 +54,8 @@ const verticalProblems = [
 const loop = [
   {
     step: "Capture",
-    short: "Define the expertise.",
-    desc: "Turn standards, decisions, and senior judgment into clear written rules — once.",
+    short: "Codify mission heritage.",
+    desc: "Turn standards, prior decisions, and senior judgment into executable rules — once, then reused.",
     Icon: BookOpen,
   },
   {
@@ -66,8 +66,8 @@ const loop = [
   },
   {
     step: "Apply",
-    short: "Everyone ramps faster.",
-    desc: "New and senior engineers run trade studies, reviews, and docs inside your rules.",
+    short: "Engineers ramp and run faster.",
+    desc: "New hires onboard against the same rules. Trade studies, reviews, and docs run inside your standards — not around them.",
     Icon: Rocket,
   },
   {
