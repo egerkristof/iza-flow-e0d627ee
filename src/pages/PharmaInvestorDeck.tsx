@@ -1842,7 +1842,8 @@ function Slide12() {
 
   const advisors = [
     { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Enterprise Advisor", role: "VP Product Management, Global AEC Software Company (€6B Group)", bio: "Senior product leader in the AEC space. 15+ years across desktop, cloud, mobile, AI, and data-driven product strategy in global enterprise software." },
+    { name: "Pharma Quality Advisor", role: "Senior QA / Regulatory Leader, Top-20 Pharma", bio: "Engagement underway with a senior quality and regulatory leader to anchor GxP fit, validation strategy, and sponsor-side adoption patterns." },
+    { name: "Clinical Operations Advisor", role: "Head of Clinical Operations, Mid/Large Sponsor", bio: "Pipeline conversation to anchor protocol amendment, CSR authoring, and trial memory workflows in real sponsor reality." },
   ];
 
   return (
