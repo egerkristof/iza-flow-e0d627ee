@@ -2,11 +2,14 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
-  ArrowRight, BookOpen, Network, RefreshCw,
-  AlertTriangle, Check, Shield, Database, Satellite, Radio, Globe,
-  Briefcase, Layers, Workflow, Award, Brain, Clock, FileText, Users,
+  ArrowRight, BookOpen, Network, Zap, RefreshCw,
+  AlertTriangle, Check, CheckCircle2, DollarSign,
+  Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
+  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
+  Pill, FlaskConical, Microscope, FileCheck, HeartPulse, Factory,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
@@ -43,7 +46,7 @@ function ScaledSlide({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ─── Palette (cyan/teal axis distinct from /space) ───────────────────────────
+// ─── Palette ─────────────────────────────────────────────────────────────────
 
 const BG = "hsl(0 0% 100%)";
 const TEXT = "hsl(222 20% 10%)";
@@ -51,15 +54,19 @@ const MUTED = "hsl(215 15% 42%)";
 const SUBTLE = "hsl(215 10% 56%)";
 const CARD_ALT = "hsl(220 15% 97%)";
 const GRID_LINE = "hsl(215 15% 75%)";
+const CHROME_BG = "hsl(220 15% 97%)";
 const CHROME_BORDER = "hsl(220 12% 90%)";
 
-const TEAL = "200 95% 38%";    // satcom-cyan (deck primary)
-const MINT = "180 90% 42%";    // accent
+// Satcom-operator palette: cyan/teal axis distinct from /space (builder green-teal)
+const TEAL = "200 95% 38%";
+const MINT = "180 90% 42%";
 const WARM = "15 85% 55%";
 const RED = "0 72% 50%";
 const GREEN = "155 72% 38%";
 const BLUE = "220 80% 50%";
+const SEAFOAM = "170 100% 33%";
 const GOLD = "45 95% 42%";
+const ACCENT = "200 90% 42%";
 
 function SlideGrid() {
   return (
@@ -69,6 +76,7 @@ function SlideGrid() {
     }} />
   );
 }
+
 
 function SlideBar({ from = TEAL, to = MINT }: { from?: string; to?: string }) {
   return (
@@ -97,20 +105,20 @@ function Slide01() {
           </span>
         </div>
 
-        <h1 className="font-black mb-6" style={{ fontSize: 78, lineHeight: 1.05, color: TEXT }}>
+        <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
           The Operator Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Satellite Fleets.
+            for AI-Native Satcom.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns fleet operations playbooks, procurement governance, and spectrum precedent into the governed layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Customer Pilot · Co-Define the Standard · Reference Architecture</span>
+          LIZA OS turns anomaly playbooks, vendor SOWs, and senior fleet judgment into the governed operating layer between AI inputs and AI outputs.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Customer Pilot · Open-Canvas Partnership · Sovereign-Satcom Layer</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; For satellite operators &amp; fleet groups &nbsp;·&nbsp; Pilot + Open-Canvas Partnership
+          Confidential &nbsp;·&nbsp; Prepared for satellite operators (Hispasat · SES · Eutelsat · Inmarsat-class) &nbsp;·&nbsp; Pilot + Open-Canvas Partnership Conversation
         </p>
       </div>
       <SlideBar />
@@ -119,12 +127,115 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 02 — THE CONTEXT GAP (operator framing)
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Pharma framing)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideShape() {
+  const verticals = [
+    { label: "Satcom Operators", sub: "Fleet ops · Procurement · ITU & SLAs", active: true, color: TEAL },
+    { label: "Space (Builders)", sub: "ECSS · MAIT · Mission Memory", active: false, color: MUTED },
+    { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
+    { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="px-3 py-1 rounded-md text-xs font-bold tracking-[0.2em]" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
+            12 · THE SHAPE OF THE COMPANY
+          </div>
+        </div>
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Satcom operators are the next spear.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about satellite operators — fleets, procurement organizations, and regulatory teams that fly the bird for 15 years — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
+        </p>
+
+        {/* Diagram */}
+        <div className="flex-1 flex flex-col justify-center">
+          {/* Vertical pillars */}
+          <div className="grid grid-cols-4 gap-6 mb-0">
+            {verticals.map(v => (
+              <div key={v.label} className="rounded-xl border-2 p-6 relative" style={{
+                borderColor: v.active ? `hsl(${v.color})` : CHROME_BORDER,
+                background: v.active ? `hsl(${v.color} / 0.06)` : CARD_ALT,
+              }}>
+                {v.active && (
+                  <div className="absolute -top-3 left-4 px-2 py-0.5 rounded text-xs font-bold tracking-[0.2em]"
+                    style={{ background: `hsl(${v.color})`, color: "white" }}>
+                    TODAY'S CONVERSATION
+                  </div>
+                )}
+                <div className="font-black mb-1" style={{ fontSize: 28, color: v.active ? `hsl(${v.color})` : TEXT }}>{v.label}</div>
+                <div style={{ fontSize: 16, color: MUTED }}>{v.sub}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Connector */}
+          <div className="flex justify-center my-2" style={{ color: SUBTLE }}>
+            <div className="text-3xl leading-none">▾ ▾ ▾ ▾</div>
+          </div>
+
+          {/* Horizontal platform bar */}
+          <div className="rounded-xl p-7 border-2" style={{
+            background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`,
+            borderColor: `hsl(${TEAL})`,
+          }}>
+            <div className="flex items-center justify-between gap-8">
+              <div>
+                <div className="font-black" style={{ fontSize: 32, color: "white" }}>LIZA OS · The Context Layer</div>
+                <div style={{ fontSize: 18, color: "rgba(255,255,255,0.85)", marginTop: 4 }}>
+                  Knowledge ingestion · Governance · Execution loop · Audit trail
+                </div>
+              </div>
+              <div className="flex gap-3">
+                {["Ingest", "Govern", "Execute", "Audit"].map(p => (
+                  <div key={p} className="px-3 py-1.5 rounded-md font-bold" style={{
+                    background: "rgba(255,255,255,0.18)", color: "white", fontSize: 16
+                  }}>{p}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Investor message */}
+        <div className="grid grid-cols-3 gap-4 mt-8">
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              An operator-native memory layer for fleet ops, procurement governance, and ITU/SLA continuity — codifying expertise faster than retirements drain it.
+            </div>
+          </div>
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${BLUE})` }}>WHAT COMPOUNDS</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Investment from adjacent verticals (AEC, Pharma, Space builders) accelerates the platform; you inherit a hardened core, not a v1.
+            </div>
+          </div>
+          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
+            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Phase 1: 30-day operator-memory pilot. Phase 2: open-canvas partnership and optional sovereign-satcom stake.
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 02 — THE CONTEXT GAP
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["Anomaly playbooks", "Station-keeping SOPs", "ITU filings", "Vendor SOWs", "SLA frameworks", "EOL plans"];
-  const outputs = ["Anomaly RCAs", "Procurement reviews", "Regulatory responses", "Acceptance reports", "Customer briefs", "Audit responses"];
+  const inputs = ["Anomaly playbooks", "Station-keeping SOPs", "Vendor SOWs", "ITU filings", "SLA frameworks", "Fleet ops logs"];
+  const outputs = ["Anomaly responses", "Procurement reviews", "Acceptance reports", "Filing drafts", "SLA reports", "Handover packages"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -135,15 +246,18 @@ function Slide02() {
         </p>
 
         <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
-          Operators have inputs. AI generates outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your fleet's standards.</span>
+          Companies have inputs. AI generates outputs.<br />
+          <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your standards.</span>
         </h2>
 
+        {/* Three columns: Inputs → THE GAP → Outputs */}
         <div className="flex items-stretch gap-0 flex-1 min-h-0 max-h-[420px]">
+
+          {/* LEFT — Input Artifacts */}
           <div className="flex-1 rounded-l-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)`, borderRight: "none" }}>
             <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Input Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What operators feed AI today</p>
+            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What companies feed AI today</p>
             <div className="flex flex-wrap gap-3">
               {inputs.map(item => (
                 <span key={item} className="rounded-full px-5 py-2.5 font-bold"
@@ -157,12 +271,14 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. It sits in OCC binders, vendor folders, and senior heads.
+              But none of it is queryable by AI. It sits in files, ticket systems, and senior-engineer heads no model can reason over.
             </p>
           </div>
 
+          {/* CENTER — THE GAP (deliberately stark) */}
           <div className="w-[340px] shrink-0 border-y-2 flex flex-col items-center justify-center relative"
             style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.04)` }}>
+            {/* Dashed vertical lines suggesting disconnection */}
             <div className="absolute left-0 top-8 bottom-8 w-px" style={{ borderLeft: `2px dashed hsl(${WARM} / 0.2)` }} />
             <div className="absolute right-0 top-8 bottom-8 w-px" style={{ borderRight: `2px dashed hsl(${WARM} / 0.2)` }} />
 
@@ -171,16 +287,17 @@ function Slide02() {
               <span className="font-black" style={{ fontSize: 44, color: `hsl(${WARM})` }}>?</span>
             </div>
             <p className="font-black text-center mb-2" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-              No Operator<br />Memory Layer
+              No System of<br />Intelligence
             </p>
             <p className="text-center px-5" style={{ fontSize: 15, color: MUTED, lineHeight: 1.55 }}>
-              AI can draft fast, but it can't apply your fleet's anomaly history, vendor scars, or regulatory commitments.
+              AI can generate fast, but it can't apply your expertise, your judgment, or your standards.
             </p>
             <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: TEXT }}>
-              The result: senior ops engineers redo AI's work instead of scaling their own.
+              The result: experts redo AI's work instead of scaling their own.
             </p>
           </div>
 
+          {/* RIGHT — Output Artifacts */}
           <div className="flex-1 rounded-r-2xl border-2 p-8 flex flex-col justify-center"
             style={{ borderColor: `hsl(${GREEN} / 0.3)`, background: `hsl(${GREEN} / 0.06)`, borderLeft: "none" }}>
             <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Output Artifacts</p>
@@ -198,11 +315,12 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But without your fleet's standards, every output is generic — the average operator, not yours.
+              But without your standards, every output is generic: the average, not the expert.
             </p>
           </div>
         </div>
 
+        {/* Bottom punchline */}
         <div className="mt-8 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
           <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
             Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
@@ -215,41 +333,59 @@ function Slide02() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 03 — WHERE IT SHOWS UP IN A SATCOM OPERATOR
+// SLIDE 03 — WHAT THAT COSTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const SATCOM_GAP_CASES = [
   {
-    name: "Anomaly response",
-    icon: <AlertTriangle size={20} style={{ color: `hsl(${WARM})` }} />,
+    name: "Fleet Operations Engineering",
+    icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
+    accent: RED,
+    records: ["Anomaly playbooks", "Station-keeping SOPs", "Per-satellite quirks"],
+    output: "Anomaly response drafts · Maneuver plans",
+    gap: "AI drafts from visible procedures, but misses the per-bird quirk, the workaround the senior ops engineer found three years ago, and the precedent from the last similar event on this fleet.",
+    cost: "Slow recovery. SLA penalty. Ground-segment overtime.",
+  },
+  {
+    name: "Procurement & Vendor Governance",
+    icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["Telemetry alerts", "Past RCAs", "Workaround logs"],
-    output: "RCA draft, customer comms, mitigation plan",
-    gap: "AI doesn't know which anomaly is normal for this satellite, which is precedent for an EOL risk, or which one will be on the regulator's desk by morning.",
-    cost: "Minutes-to-recovery dictate SLA penalties and contract retention.",
+    records: ["RFP / SOW history", "Acceptance criteria", "Prior prime trade-offs"],
+    output: "Spec reviews · Vendor scorecards",
+    gap: "AI summarises the SOW, but misses what your last prime over-promised, which clauses your lawyers always insist on, and which acceptance tests caught real problems on the previous bus.",
+    cost: "Weak contract. Late acceptance finding. Cycle repeated.",
   },
   {
-    name: "Procurement & acceptance",
-    icon: <Briefcase size={20} style={{ color: `hsl(${BLUE})` }} />,
-    accent: BLUE,
-    records: ["Vendor SOWs", "Acceptance test plans", "Past CDR/PDR notes"],
-    output: "Review checklists, deviation calls, change-order responses",
-    gap: "AI doesn't know which clause your last prime tried to walk back, which acceptance criteria gave you trouble in orbit, or what your sign-off authority demands.",
-    cost: "Repeat procurement mistakes carried for the next 15 years.",
+    name: "Regulatory · Spectrum · ITU",
+    icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
+    accent: GOLD,
+    records: ["ITU filings", "Coordination history", "National regulator precedent"],
+    output: "Filing drafts · Coordination responses",
+    gap: "AI generates a plausible filing, but misses the slot-coordination nuance, the bilateral precedent with a neighbouring administration, and the carve-outs your spectrum specialist negotiated last cycle.",
+    cost: "Filing rejected. Slot delay. Service launch slip.",
+  },
+];
+
+const SATCOM_COST_BENCHMARKS = [
+  {
+    value: "15–20 yrs",
+    label: "of fleet memory locked in the senior ops engineers who know each satellite's drift, anomalies, and workarounds — and retire with the bird",
+    source: "Satcom operator field engagements; ITU/SES/Eutelsat industry context, 2022-2024",
   },
   {
-    name: "Regulatory & spectrum",
-    icon: <Radio size={20} style={{ color: `hsl(${GREEN})` }} />,
-    accent: GREEN,
-    records: ["ITU filings", "Coordination agreements", "National licenses"],
-    output: "Filing drafts, coordination responses, license renewals",
-    gap: "AI doesn't know your filing precedent, which administrations push back hardest, or which slot has live coordination disputes you're managing.",
-    cost: "Missed coordination windows and protected status that quietly degrades.",
+    value: "6–18 mo",
+    label: "to ramp a new ops engineer, contract manager, or spectrum specialist to fluency on an operating fleet — because the playbooks live in heads, not in queryable systems",
+    source: "Satcom operator onboarding benchmarks; industry HR studies",
+  },
+  {
+    value: "$M / hr",
+    label: "of SLA exposure on broadcast, government, and IFC contracts — anomaly response time converts directly into revenue, penalties, and contract risk",
+    source: "Industry SLA frameworks; satcom commercial benchmarks",
   },
 ];
 
 function Slide03() {
-  const alsoApplies = ["Mission planning", "Fleet handover", "Customer SLA", "EOL & deorbit", "Cyber & sovereignty", "Insurance & claims"];
+  const alsoApplies = ["Ground segment", "Mission planning", "Customer onboarding", "Service desk / NOC", "Insurance & risk", "Replacement procurement"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -258,8 +394,8 @@ function Slide03() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
           Where Missing Context Shows Up in a Satcom Operator
         </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 46, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
-          The artifacts exist. AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is operator-grade judgment.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
+          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is operator-grade fleet, procurement, and regulatory judgment.</span>
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
@@ -292,9 +428,9 @@ function Slide03() {
                 <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.42 }}>{item.gap}</p>
               </div>
 
-              <div className="w-[230px] shrink-0 px-5 py-4 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.04)` }}>
+              <div className="w-[220px] shrink-0 px-5 py-4 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.04)` }}>
                 <p className="font-bold mb-1.5" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
-                <p className="font-bold" style={{ fontSize: 17, color: `hsl(${RED})`, lineHeight: 1.32 }}>{item.cost}</p>
+                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.32 }}>{item.cost}</p>
               </div>
             </div>
           ))}
@@ -314,45 +450,35 @@ function Slide03() {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 04 — WHAT MISSING CONTEXT COSTS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-function Slide04() {
-  const benchmarks = [
-    { value: "15–20 yrs", label: "Each satellite's operating memory", source: "Typical GEO design life and operator history" },
-    { value: "6–18 mo", label: "Onboarding new ops engineers", source: "Operator HR benchmarks" },
-    { value: "$M / hr", label: "SLA exposure per outage minute", source: "Broadcast & gov-satcom SLA frameworks" },
-  ];
-
+function Slide04Cost() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs an Operator
+          What Missing Context Costs a Satcom Operator
         </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 46, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it slows recovery, weakens vendor leverage, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable service risk.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
+          Missing context becomes expensive because it slows anomaly response, weakens procurement, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable SLA, regulatory, and continuity risk.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-black" style={{ fontSize: 60, color: `hsl(${WARM})`, lineHeight: 0.95 }}>minutes</p>
-            <p className="font-bold mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.18 }}>
-              of recovery slip per anomaly that loses its precedent
+            <p className="font-black" style={{ fontSize: 64, color: `hsl(${WARM})`, lineHeight: 0.95 }}>hours</p>
+            <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
+              of SLA exposure per anomaly that loses its precedent on a flagship satellite
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is what AI amplifies if it runs without your fleet's anomaly history, station-keeping context, or operations procedures.
+              This is what AI amplifies if it runs without the latest fleet anomaly history, per-bird quirks, vendor SOW context, or senior ops judgment.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Pattern from satcom operations literature; industry-level, not customer data
+              Qualitative pattern from satcom SLA frameworks &amp; operator field engagements; industry-level, not customer data
             </p>
           </div>
 
           <div className="rounded-[28px] border px-7 py-6" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
             <div className="grid grid-cols-3 gap-3 mb-4">
-              {benchmarks.map((item) => (
+              {SATCOM_COST_BENCHMARKS.map((item) => (
                 <div key={item.label} className="rounded-xl px-4 py-4 min-h-[172px]" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
                   <p className="font-black" style={{ fontSize: 31, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
                   <p className="font-bold mt-2" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{item.label}</p>
@@ -366,10 +492,10 @@ function Slide04() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an anomaly RCA, vendor review, or ITU filing <span className="font-bold">without your operator context</span>, the senior ops engineer still has to catch it, correct it, and re-route it through review.
+                If AI produces a plausible answer inside an anomaly response, vendor review, ITU filing, or SLA report <span className="font-bold">without the full operator and fleet context</span>, the senior ops engineer or contract lead still has to catch it, correct it, and re-route it through approval.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a service-critical satellite, recovery slip translates directly into <span className="font-bold" style={{ color: TEXT }}>SLA penalties, customer-trust erosion</span>, and regulatory exposure across the affected coverage.
+                On a flagship operating fleet, an anomaly handled slowly or a vendor clause missed translates into <span className="font-bold" style={{ color: TEXT }}>direct SLA penalties, lost broadcast/IFC revenue</span>, and knock-on effects on customer renewals and replacement procurement.
               </p>
             </div>
           </div>
@@ -377,14 +503,14 @@ function Slide04() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Service continuity", value: "weakened", desc: "Senior ops spend cycles fixing AI-assisted work instead of compressing recovery and protecting SLAs.", color: RED },
-            { label: "Vendor leverage", value: "lost", desc: "Without procurement memory, the next contract repeats the last contract's mistakes — for another 15 years.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without operator-grade governance, ops directors limit adoption because every output creates customer-facing risk.", color: GOLD },
+            { label: "Service continuity", value: "exposed", desc: "Senior ops engineers and contract leads spend cycles fixing AI-assisted work instead of resolving anomalies, closing tickets, and protecting SLAs.", color: RED },
+            { label: "Procurement & regulatory", value: "exposed", desc: "Wrong outputs in vendor reviews, ITU filings, or SLA reports create rework loops, audit risk, and weakened position with primes and regulators.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without operator-grade governance, the CTO and General Counsel limit adoption because every output creates SLA, regulatory, and customer exposure.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
-              <p className="font-black mt-3" style={{ fontSize: 32, color: TEXT, lineHeight: 1.04 }}>{item.value}</p>
-              <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.42 }}>{item.desc}</p>
+              <p className="font-black mt-3" style={{ fontSize: 34, color: TEXT, lineHeight: 1.04 }}>{item.value}</p>
+              <p className="mt-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.42 }}>{item.desc}</p>
             </div>
           ))}
         </div>
@@ -395,204 +521,1202 @@ function Slide04() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 05 — WHY NOW
+// SLIDE 03B — WHY NOW
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideWhyNow() {
-  const drivers = [
-    { Icon: Users, title: "Generational handover", desc: "Ops engineers, contract managers, and spectrum specialists with 20+ years of fleet memory are exiting in the next 5 years." },
-    { Icon: Satellite, title: "Fleet renewal cycles", desc: "GEO operators are entering replacement procurement cycles for satellites bought before any of the current AI tools existed." },
-    { Icon: Globe, title: "LEO + sovereignty pressure", desc: "Mega-constellations, dual-use mandates, and sovereignty requirements are reshaping how operators must govern operations and vendors." },
-    { Icon: Brain, title: "AI is already in the building", desc: "Ops, procurement, and regulatory teams are already pasting into ChatGPT. Without governance, that becomes an audit and SLA problem." },
+  const signals = [
+    {
+      metric: "85%",
+      label: "of enterprises adopted AI tools in 2025",
+      insight: "Adoption is done. The quality crisis just started.",
+      color: WARM,
+      source: "McKinsey State of AI, 2025",
+    },
+    {
+      metric: "40%",
+      label: "of AI productivity gains lost to rework",
+      insight: "The faster AI generates, the faster orgs lose control.",
+      color: RED,
+      source: "Workday, Jan 2026",
+    },
+    {
+      metric: "Now",
+      label: "Sovereign-satcom push + GEO replacement cycle accelerating",
+      insight: "Operators are renewing fleets, signing multi-orbit deals, and expected by regulators and customers to govern AI-assisted ops, filings, and SLA reports.",
+      color: TEAL,
+      source: "ITU/EU sovereign-satcom policy context; operator replacement-cycle benchmarks, 2024",
+    },
+  ];
+
+  const shifts = [
+    { shift: "GenAI moved into satcom operations workflows", result: "Operators piloted LLMs inside anomaly response, vendor reviews, and ITU filings. The audit trail did not follow." },
+    { shift: "Customers and regulators ask 'how was this output governed?'", result: "Broadcast, IFC, government, and defense customers — plus ITU and national regulators — expect traceability for AI-assisted operator outputs." },
+    { shift: "Senior fleet engineers are retiring faster than they are replaced", result: "Fleet handovers and procurement cycles are senior-talent-bound. Every hour a senior ops engineer spends correcting AI is an hour not spent protecting the SLA." },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>Why Now</p>
+
+        <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.08 }}>
+          AI adoption is done.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>The governance crisis just started.</span>
+        </h2>
+
+        {/* Three signal cards — centered content, no flex-1 stretch */}
+        <div className="flex gap-6 mb-6">
+          {signals.map(({ metric, label, insight, color, source }) => (
+            <div key={label} className="flex-1 rounded-2xl border p-7 flex flex-col items-center text-center"
+              style={{ borderColor: `hsl(${color} / 0.25)`, background: `hsl(${color} / 0.06)` }}>
+              <p className="font-black" style={{ fontSize: 72, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
+              <p className="font-bold mt-3 mb-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.3 }}>{label}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{insight}</p>
+              <p className="mt-3" style={{ fontSize: 13, color: SUBTLE }}>{source}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Three structural shifts — more prominent */}
+        <div className="rounded-2xl border p-7" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <p className="font-bold tracking-[0.15em] uppercase mb-5" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Three structural shifts converging</p>
+          <div className="flex gap-6">
+            {shifts.map(({ shift, result }, i) => (
+              <div key={i} className="flex-1 rounded-xl p-5 flex items-start gap-4"
+                style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+                <span className="font-black shrink-0 mt-0.5" style={{ fontSize: 32, color: `hsl(${TEAL} / 0.4)` }}>{i + 1}</span>
+                <div>
+                  <p className="font-bold mb-1.5" style={{ fontSize: 20, color: TEXT }}>{shift}</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{result}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={MINT} />
+    </div>
+  );
+}
+
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 04 — THE CONTEXT LAYER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide05() {
+  const verticalSurfaces = [
+    { title: "Space roles", items: "Chief engineer, AIT lead, PA/QA, mission systems engineer", color: TEAL },
+    { title: "Space workflows", items: "NCR, FRACAS, AIT procedure, design note, review package", color: GOLD },
+    { title: "Space language", items: "ECSS-Q-ST-10/70, AS9100, MGSE/EGSE, MRR/CDR, FRACAS", color: GREEN },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
+          Horizontal Core · Vertical Surface
+        </p>
+        <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a space-native experience.</span>
+        </h2>
+        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
+          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>ECSS procedures, MAIT plans, NCR/FRACAS records, EGSE configs, mission heritage, prior review feedback</p>
+          </div>
+          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
+          <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>LIZA OS</p>
+            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The in-between operating layer that turns raw context into governed execution</p>
+          </div>
+          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
+          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
+            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows mission memory, validated procedures, and chief-engineer judgment</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-center mb-1 h-10">
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${BLUE} / 0.5)`, transform: "rotate(105deg)" }} />
+          </div>
+          <div />
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${TEAL} / 0.55)`, transform: "rotate(90deg)" }} />
+          </div>
+          <div />
+          <div className="flex justify-center">
+            <ArrowRight size={30} style={{ color: `hsl(${GREEN} / 0.5)`, transform: "rotate(75deg)" }} />
+          </div>
+        </div>
+
+        {/* Three-column flow */}
+        <div className="flex-1 flex items-center gap-0">
+          {/* LEFT — What companies feed AI */}
+          <div className="w-[360px] shrink-0 flex flex-col gap-4">
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${BLUE})` }}>Horizontal infrastructure</p>
+            {[
+              { icon: <Database size={24} />, title: "Knowledge Graph", sub: "Standards, exceptions, decisions" },
+              { icon: <Cpu size={24} />, title: "Context Engine", sub: "Intent-locking, injection, drift" },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
+                style={{ borderColor: `hsl(${BLUE} / 0.18)`, background: `hsl(${BLUE} / 0.04)` }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: `hsl(${BLUE} / 0.1)`, color: `hsl(${BLUE})` }}>{item.icon}</div>
+                <div>
+                  <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
+                  <p style={{ fontSize: 14, color: MUTED }}>{item.sub}</p>
+                </div>
+              </div>
+            ))}
+            <p className="text-center font-semibold mt-1" style={{ fontSize: 14, color: `hsl(${BLUE})` }}>
+              Built once. Portable across domains.
+            </p>
+          </div>
+
+          {/* Arrow in */}
+          <div className="shrink-0 flex items-center justify-center px-5">
+            <ArrowRight size={32} style={{ color: `hsl(${TEAL} / 0.35)` }} />
+          </div>
+
+          {/* CENTER — LIZA OS */}
+          <div className="flex-1 rounded-2xl p-8 flex flex-col items-center justify-center"
+            style={{ background: `hsl(${TEAL} / 0.05)`, border: `3px solid hsl(${TEAL} / 0.3)`, boxShadow: `0 0 80px hsl(${TEAL} / 0.08)` }}>
+            <div className="mb-4 flex items-center gap-2 px-4 py-2 rounded-full"
+              style={{ background: `hsl(${GOLD} / 0.12)`, border: `1px solid hsl(${GOLD} / 0.28)` }}>
+              <Shield size={14} style={{ color: `hsl(${GOLD})` }} />
+              <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Your knowledge stays portable</p>
+            </div>
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4"
+              style={{ background: `hsl(${TEAL} / 0.15)` }}>
+              <Brain size={34} style={{ color: `hsl(${TEAL})` }} />
+            </div>
+            <p className="font-black mb-1" style={{ fontSize: 32, color: `hsl(${TEAL})` }}>LIZA OS</p>
+            <p className="font-semibold mb-6" style={{ fontSize: 16, color: MUTED }}>The Context Layer</p>
+
+            {/* Compact loop */}
+            <div className="flex items-center gap-3">
+              {[
+                { label: "Encode", icon: <BookOpen size={18} /> },
+                { label: "Govern", icon: <Shield size={18} /> },
+                { label: "Execute", icon: <Zap size={18} /> },
+                { label: "Evolve", icon: <RefreshCw size={18} /> },
+              ].map((step, i) => (
+                <div key={step.label} className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl"
+                    style={{ background: `hsl(${TEAL} / 0.1)` }}>
+                    <span style={{ color: `hsl(${MINT})` }}>{step.icon}</span>
+                    <span className="font-bold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>{step.label}</span>
+                  </div>
+                  {i < 3 && <ArrowRight size={14} style={{ color: `hsl(${TEAL} / 0.3)` }} />}
+                </div>
+              ))}
+            </div>
+
+            {/* Loop-back indicator */}
+            <div className="flex items-center gap-2 mt-4 px-4 py-2 rounded-lg"
+              style={{ background: `hsl(${MINT} / 0.06)`, border: `1px dashed hsl(${MINT} / 0.25)` }}>
+              <RefreshCw size={13} style={{ color: `hsl(${MINT})` }} />
+              <p className="font-semibold" style={{ fontSize: 13, color: `hsl(${MINT})` }}>
+                Continuous loop: your organization gets smarter with every execution
+              </p>
+            </div>
+
+          <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>A space-prime pilot makes it a mission-native operating experience.</span>
+            </p>
+          </div>
+
+          {/* Arrow out */}
+          <div className="shrink-0 flex items-center justify-center px-5">
+            <ArrowRight size={32} style={{ color: `hsl(${TEAL} / 0.35)` }} />
+          </div>
+
+          {/* RIGHT — Governed Output */}
+          <div className="w-[390px] shrink-0 flex flex-col gap-3">
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Space-native experience</p>
+            {verticalSurfaces.map((item) => (
+              <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
+                style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: `hsl(${item.color} / 0.1)`, color: `hsl(${item.color})` }}><Workflow size={24} /></div>
+                <div>
+                  <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>{item.title}</p>
+                  <p style={{ fontSize: 14, color: MUTED }}>{item.items}</p>
+                </div>
+              </div>
+            ))}
+            <p className="text-center font-bold mt-1" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>
+              Specific enough for adoption. General enough to scale.
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom tagline */}
+        <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
+          <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
+            Horizontal infrastructure plus vertical UX. <span style={{ color: `hsl(${TEAL})` }}>That is how the loop becomes an industry standard.</span>
+          </p>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 05B — ARCHITECTURE (Blueprint + Nervous System)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideArchitecture() {
+  const existingSystems = [
+    { name: "Polarion / DOORS", layer: "Requirements", color: BLUE },
+    { name: "Teamcenter / Windchill", layer: "PLM", color: BLUE },
+    { name: "Catia / NX", layer: "Design / CAD", color: BLUE },
+    { name: "Valispace / 3DEXPERIENCE", layer: "Systems Eng", color: BLUE },
+    { name: "Jama / Codebeamer", layer: "Verification", color: BLUE },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>Architecture</p>
+
+        <h2 className="font-black mb-2" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05 }}>
+          We build your organization's <span style={{ color: `hsl(${GOLD})` }}>Blueprint.</span>{" "}
+          <span style={{ color: MUTED }}>It stays yours.</span>
+        </h2>
+        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1200 }}>
+          LIZA extracts your collective intelligence into a versioned, portable asset: your Blueprint.
+          Our platform provides the reasoning engine. Your IP never leaves.
+        </p>
+
+        <div className="flex-1 flex flex-col gap-3 justify-center">
+          {/* Layer 3: Output Artifacts */}
+          <div className="rounded-2xl border px-8 py-4 text-center"
+            style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output Artifacts</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Any LLM · Any Workflow · Any Team. All governed by your expertise</p>
+          </div>
+
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center">
+              <div className="w-0.5 h-2.5" style={{ background: `hsl(${TEAL} / 0.3)` }} />
+              <div className="w-3 h-3 rotate-45 -mt-1.5" style={{ borderRight: `2px solid hsl(${TEAL})`, borderBottom: `2px solid hsl(${TEAL})` }} />
+            </div>
+          </div>
+
+          {/* Layer 2: LIZA OS — Blueprint + Nervous System TOGETHER */}
+          <div className="rounded-3xl p-5 relative"
+            style={{ background: `hsl(${TEAL} / 0.03)`, border: `3px solid hsl(${TEAL} / 0.3)`,
+              boxShadow: `0 0 80px hsl(${TEAL} / 0.06)` }}>
+            {/* LIZA OS header — makes it unmistakable */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                  <Brain size={26} style={{ color: `hsl(${TEAL})` }} />
+                </div>
+                <div>
+                  <p className="font-black" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>LIZA OS</p>
+                  <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>The Context Layer</p>
+                </div>
+              </div>
+              <div className="px-4 py-2 rounded-full" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.2)` }}>
+                <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Blueprint + Nervous System = LIZA OS</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              {/* Blueprint — YOUR IP */}
+              <div className="flex-[3] rounded-2xl p-5 relative overflow-hidden"
+                style={{ background: `hsl(${GOLD} / 0.06)`, border: `2px solid hsl(${GOLD} / 0.35)` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `hsl(${GOLD} / 0.15)` }}>
+                      <Layers size={24} style={{ color: `hsl(${GOLD})` }} />
+                    </div>
+                    <div>
+                      <p className="font-black" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>Your Blueprint</p>
+                      <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Your organization's IP</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: `hsl(${GOLD} / 0.12)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+                    <Shield size={12} style={{ color: `hsl(${GOLD})` }} />
+                    <p className="font-bold" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>PORTABLE · SOVEREIGN</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-[140px] shrink-0 rounded-xl flex flex-col items-center justify-center p-2"
+                    style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px dashed hsl(${GOLD} / 0.25)` }}>
+                    <svg width="120" height="85" viewBox="0 0 140 100">
+                      <line x1="70" y1="15" x2="25" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="70" y1="15" x2="115" y2="50" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="25" y1="50" x2="50" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="115" y1="50" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <line x1="50" y1="85" x2="90" y2="85" stroke={`hsl(${GOLD})`} strokeWidth="1.5" opacity="0.3" />
+                      <circle cx="70" cy="15" r="7" fill={`hsl(${GOLD})`} fillOpacity="0.2" stroke={`hsl(${GOLD})`} strokeWidth="2" />
+                      <circle cx="25" cy="50" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                      <circle cx="115" cy="50" r="5" fill={`hsl(${GOLD})`} fillOpacity="0.15" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                      <circle cx="50" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                      <circle cx="90" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
+                    </svg>
+                    <p className="font-black" style={{ fontSize: 10, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>KNOWLEDGE GRAPH</p>
+                  </div>
+                  <div className="flex-1 grid grid-cols-2 gap-1.5">
+                    {[
+                      { label: "Standards & SOPs", desc: "Versioned, governed" },
+                      { label: "Expert Judgment", desc: "Encoded as rules" },
+                      { label: "Decision Exceptions", desc: "Context-specific" },
+                      { label: "Accumulated Memory", desc: "Grows with usage" },
+                    ].map(item => (
+                      <div key={item.label} className="rounded-lg px-2.5 py-1.5" style={{ background: `hsl(${GOLD} / 0.08)` }}>
+                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>{item.label}</p>
+                        <p style={{ fontSize: 10, color: MUTED }}>{item.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bidirectional connector */}
+              <div className="shrink-0 flex flex-col items-center justify-center gap-1 px-1">
+                <RefreshCw size={16} style={{ color: `hsl(${TEAL} / 0.4)` }} />
+                <div className="w-px flex-1" style={{ background: `hsl(${TEAL} / 0.2)` }} />
+                <RefreshCw size={16} style={{ color: `hsl(${TEAL} / 0.4)` }} />
+              </div>
+
+              {/* Nervous System */}
+              <div className="flex-[2] rounded-2xl p-4 relative"
+                style={{ background: `hsl(${TEAL} / 0.06)`, border: `2px solid hsl(${TEAL} / 0.25)` }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                    <Cpu size={20} style={{ color: `hsl(${TEAL})` }} />
+                  </div>
+                  <div>
+                    <p className="font-black" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Nervous System</p>
+                    <p style={{ fontSize: 11, color: MUTED }}>Reasoning & orchestration</p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  {[
+                    { label: "Protocol Engine", desc: "Playbooks → guided workflows" },
+                    { label: "Drift Detection", desc: "Flags deviations from standards" },
+                    { label: "Propagation", desc: "One update cascades everywhere" },
+                    { label: "Feedback Loop", desc: "Every execution teaches the system" },
+                  ].map(item => (
+                    <div key={item.label} className="rounded-lg px-3 py-1.5" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>{item.label}</p>
+                        <span style={{ fontSize: 10, color: MUTED }}>— {item.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center">
+              <div className="w-0.5 h-2.5" style={{ background: `hsl(${BLUE} / 0.3)` }} />
+              <div className="w-3 h-3 rotate-45 -mt-1.5" style={{ borderRight: `2px solid hsl(${BLUE})`, borderBottom: `2px solid hsl(${BLUE})` }} />
+            </div>
+          </div>
+
+          {/* Layer 1: Existing Systems */}
+          <div className="rounded-2xl border px-8 py-4"
+            style={{ borderColor: `hsl(${BLUE} / 0.15)`, background: `hsl(${BLUE} / 0.03)` }}>
+            <p className="font-black tracking-[0.15em] uppercase mb-2.5" style={{ fontSize: 12, color: `hsl(${BLUE})` }}>
+              Your Existing Systems · Input Artifacts · Unchanged
+            </p>
+            <div className="flex gap-3">
+              {existingSystems.map(s => (
+                <div key={s.name} className="flex-1 rounded-lg px-4 py-2 text-center"
+                  style={{ background: `hsl(${BLUE} / 0.06)`, border: `1px solid hsl(${BLUE} / 0.12)` }}>
+                  <p className="font-bold" style={{ fontSize: 13, color: TEXT }}>{s.name}</p>
+                  <p style={{ fontSize: 11, color: MUTED }}>{s.layer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-3 rounded-xl px-8 py-3 text-center"
+          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.2)` }}>
+          <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>
+            No rip-and-replace. LIZA builds your Blueprint from your existing systems.{" "}
+            <span style={{ color: `hsl(${GOLD})` }}>Your intelligence, your asset. Zero lock-in.</span>
+          </p>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 06 — CATEGORY VALIDATION + MOAT
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide06() {
+  const players = [
+    { name: "Siemens Teamcenter / 3DEXPERIENCE AI", funding: "Public", round: "PLM incumbents · 2024", what: "AI features layered onto PLM. System of record for parts and BOMs, not a reasoning layer for engineering judgment.", color: GREEN },
+    { name: "Palantir Foundry / Skywise", funding: "Public", round: "Aerospace data ops", what: "Data integration and analytics across programs. Reads telemetry and BOMs; doesn't encode chief-engineer judgment.", color: SEAFOAM },
+    { name: "Valispace / Codebeamer / Jama AI", funding: "VC-backed / PTC", round: "Systems-eng tools", what: "Workflow + document AI inside requirements and verification. No cross-mission FRACAS memory or design-precedent loop.", color: BLUE },
+    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every aerospace pilot", what: "General reasoning. No ECSS context, no mission-heritage grounding, no audit-grade trail.", color: GOLD },
+  ];
+
+  const moatLayers = [
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, ECSS-aware injection, drift detection. The plumbing every mission-grade AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Mission Memory", desc: "FRACAS precedent, NCR outcomes, validated procedures, review feedback — graph deepens unit-by-unit and mission-by-mission. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Audit-Grade Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for ECSS / AS9100 era AI.", icon: <Network size={20} /> },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
+
+        <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+          Aerospace AI tools surface data and draft documents.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the mission memory layer that encodes your chief engineer's judgment.</span>
+        </h2>
+
+        {/* Top: 4 competitor cards */}
+        <div className="flex gap-4 mb-5">
+          {players.map(({ name, funding, round, what, color }) => (
+            <div key={name} className="flex-1 rounded-xl border px-5 py-4"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
+              <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>{name}</p>
+              <p className="font-black" style={{ fontSize: 16, color: `hsl(${color})` }}>{funding}</p>
+              <p className="mb-2" style={{ fontSize: 13, color: SUBTLE }}>{round}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{what}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* LIZA OS — big differentiation box */}
+        <div className="rounded-2xl border-2 px-8 py-5 mb-5 flex items-center gap-6"
+          style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)`, boxShadow: `0 0 60px hsl(${TEAL} / 0.06)` }}>
+          <div className="shrink-0">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                <Brain size={26} style={{ color: `hsl(${TEAL})` }} />
+              </div>
+              <div>
+                <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Customer Pilot + Strategic Path</p>
+              </div>
+            </div>
+          </div>
+          <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
+          <div className="flex-1">
+            <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
+              Others read PLM data and dashboards.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your chief engineers and AIT leads decide.</span>
+            </p>
+            <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
+              The instruction layer every aerospace AI stack will need: ECSS tailoring, FRACAS precedent, review feedback, mission-specific standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being applied to space.
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom: Market + 3 Moat columns */}
+        <div className="flex gap-5">
+          {/* Market Size */}
+          <div className="flex-1 rounded-2xl border p-5" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
+            <div className="flex flex-col gap-2.5">
+              {[
+                { label: "TAM", value: "$8B+", desc: "Aerospace engineering & MAIT software by 2030 (PLM, requirements, AIT, mission ops)" },
+                { label: "SAM", value: "$1.5-2B", desc: "AI governance layer across systems engineering, MAIT, FRACAS, mission assurance" },
+                { label: "SOM", value: "$80-120M", desc: "EU sovereign-space wedge: NewSpace primes + integrators + national programs" },
+              ].map(({ label, value, desc }) => (
+                <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                  <div className="flex items-baseline gap-3 mb-0.5">
+                    <span className="font-black" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.15em" }}>{label}</span>
+                    <span className="font-black" style={{ fontSize: 34, color: TEXT }}>{value}</span>
+                  </div>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>{desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
+              Sources: Frost & Sullivan / MarketsandMarkets, Aerospace PLM and engineering software, 2024-2030; ESA & EUSPA market reports. SAM/SOM are LIZA OS estimates based on the AI governance and reasoning layer inside these markets.
+            </p>
+          </div>
+
+          {/* Defensibility — 3 moat layers */}
+          {moatLayers.map(({ layer, desc, icon }) => (
+            <div key={layer} className="flex-1 rounded-2xl border p-5 flex flex-col justify-center"
+              style={{ borderColor: `hsl(${GOLD} / 0.25)`, background: `hsl(${GOLD} / 0.06)` }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3" style={{ background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>
+                {icon}
+              </div>
+              <p className="font-black mb-2" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>{layer}</p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 08B — STRATEGIC PIVOT
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideVerticalization() {
+  const rows = [
+    { old: "Teams ask for one use case because PLM/requirements/test tools trained them to buy point solutions", now: "LIZA creates one governed mission knowledge loop that powers NCRs, FRACAS, AIT procedures, and design notes together", color: TEAL },
+    { old: "Generic AI tools ignore how chief engineers, AIT leads, and PA/QA actually work", now: "The experience becomes native to space roles, ECSS language, and review-gate handoffs", color: GOLD },
+    { old: "Prompts and templates stay static, so every program and unit has to remember what changed", now: "Mission and quality memory is versioned, validated, and reused after every execution", color: GREEN },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
+        <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
+          LIZA is not selling another aerospace point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+        </h2>
+
+        <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
+          <div className="rounded-[28px] border p-7 flex flex-col justify-center" style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.05)`, boxShadow: `0 0 70px hsl(${TEAL} / 0.06)` }}>
+            <div className="flex items-center justify-between mb-5">
+              <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>LIZA OS · Context Layer</p>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: `hsl(${GOLD} / 0.12)`, border: `1px solid hsl(${GOLD} / 0.28)` }}>
+                <Shield size={14} style={{ color: `hsl(${GOLD})` }} />
+                <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Your knowledge stays portable</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 mb-5 pb-5" style={{ borderBottom: `1px solid hsl(${TEAL} / 0.14)` }}>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.15)` }}>
+                <Brain size={34} style={{ color: `hsl(${TEAL})` }} />
+              </div>
+              <div>
+                <p className="font-black" style={{ fontSize: 30, color: `hsl(${TEAL})`, lineHeight: 1 }}>The same operating loop</p>
+                <p className="font-semibold mt-1" style={{ fontSize: 16, color: MUTED }}>Now explained as the strategic pivot from software use cases to reusable project memory.</p>
+              </div>
+            </div>
+            {[
+              { label: "Define", desc: "Experts encode standards, exceptions, decision logic", icon: <BookOpen size={22} /> },
+              { label: "Execute", desc: "AI applies that context inside live workflows", icon: <Zap size={22} /> },
+              { label: "Capture", desc: "Feedback, drift, and project learning are structured", icon: <Eye size={22} /> },
+              { label: "Update", desc: "Project memory improves and propagates", icon: <RefreshCw size={22} /> },
+            ].map((item, i) => (
+              <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
+                <div>
+                  <p className="font-black" style={{ fontSize: 24, color: TEXT }}>{i + 1}. {item.label}</p>
+                  <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.35 }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-4 justify-center">
+            <div className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-center">
+              <p className="font-black tracking-[0.18em] uppercase text-center" style={{ fontSize: 13, color: `hsl(${RED})` }}>Old software logic</p>
+              <div />
+              <p className="font-black tracking-[0.18em] uppercase text-center" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>AI-native logic</p>
+            </div>
+            {rows.map((row) => (
+              <div key={row.old} className="grid grid-cols-[1fr_52px_1.2fr] gap-4 items-stretch">
+                <div className="rounded-2xl px-5 py-5 flex items-center" style={{ background: `hsl(${RED} / 0.035)`, border: `1px solid hsl(${RED} / 0.12)` }}>
+                  <p className="font-bold" style={{ fontSize: 18, color: MUTED, lineHeight: 1.28 }}>{row.old}</p>
+                </div>
+                <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${row.color})` }} /></div>
+                <div className="rounded-2xl px-6 py-5 flex items-center" style={{ background: `hsl(${row.color} / 0.07)`, border: `1.5px solid hsl(${row.color} / 0.2)` }}>
+                  <p className="font-black" style={{ fontSize: 21, color: TEXT, lineHeight: 1.24 }}>{row.now}</p>
+                </div>
+              </div>
+            ))}
+
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 07 — HOW IT WORKS (Horizontal flow, diagram-style, no screenshots)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide07() {
+  const steps = [
+    {
+      num: "01", title: "Encode", icon: <BookOpen size={28} />,
+      desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
+      flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
+      output: "Versioned playbooks ready",
+      color: GOLD,
+    },
+    {
+      num: "02", title: "Govern", icon: <Shield size={28} />,
+      desc: "The AACE framework auto-structures knowledge into governed bundles by capability, scope, and domain.",
+      flow: ["Auto-classify by capability", "Set scope & ownership", "Version & publish"],
+      output: "Governed knowledge graph",
+      color: TEAL,
+    },
+    {
+      num: "03", title: "Execute", icon: <Zap size={28} />,
+      desc: "Any team member runs AI with full organizational intelligence. Same quality, every time.",
+      flow: ["Select protocol", "AI applies your rules", "Output is governed"],
+      output: "Expert-quality output",
+      color: GREEN,
+    },
+    {
+      num: "04", title: "Evolve", icon: <RefreshCw size={28} />,
+      desc: "Every execution feeds back. Drift is detected. Standards improve automatically.",
+      flow: ["Track deviations", "Surface patterns", "Update playbooks"],
+      output: "Standards auto-improve",
+      color: MINT,
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>How LIZA OS Works</p>
+
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+          Four steps.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>One compounding loop.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1000 }}>
+          Each cycle compounds your organization's collective intelligence.
+        </p>
+
+        {/* Horizontal flow */}
+        <div className="flex-1 flex items-stretch gap-0">
+          {steps.map((s, i) => (
+            <div key={s.num} className="flex-1 flex items-stretch">
+              <div className="flex-1 rounded-2xl border flex flex-col p-5"
+                style={{ borderColor: `hsl(${s.color} / 0.2)`, background: `hsl(${s.color} / 0.03)` }}>
+                {/* Step header */}
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ background: `hsl(${s.color} / 0.12)`, color: `hsl(${s.color})` }}>
+                    {s.icon}
+                  </div>
+                  <div>
+                    <p className="font-black tracking-[0.2em]" style={{ fontSize: 12, color: `hsl(${s.color})` }}>STEP {s.num}</p>
+                    <p className="font-black" style={{ fontSize: 24, color: TEXT }}>{s.title}</p>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="mb-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{s.desc}</p>
+
+                {/* Mini diagram */}
+                <div className="flex-1 flex flex-col items-center justify-center px-2 py-3">
+                  <svg width="100%" height="100%" viewBox="0 0 300 220" style={{ maxWidth: 300, maxHeight: 220 }}>
+                    {/* Flow nodes */}
+                    {s.flow.map((f, j) => {
+                      const y = 20 + j * 75;
+                      return (
+                        <g key={j}>
+                          {/* Connector line from previous */}
+                          {j > 0 && (
+                            <line x1="150" y1={y - 40} x2="150" y2={y - 4}
+                              stroke={`hsl(${s.color})`} strokeWidth="2" strokeDasharray="4 3" opacity="0.35" />
+                          )}
+                          {j > 0 && (
+                            <polygon points={`145,${y - 6} 155,${y - 6} 150,${y}`}
+                              fill={`hsl(${s.color})`} opacity="0.5" />
+                          )}
+                          {/* Node */}
+                          <rect x="30" y={y} width="240" height="36" rx="10"
+                            fill={`hsl(${s.color})`} fillOpacity="0.08"
+                            stroke={`hsl(${s.color})`} strokeOpacity="0.3" strokeWidth="1.5" />
+                          {/* Number badge */}
+                          <circle cx="52" cy={y + 18} r="10"
+                            fill={`hsl(${s.color})`} fillOpacity="0.18" />
+                          <text x="52" y={y + 22} textAnchor="middle"
+                            fill={`hsl(${s.color})`} fontSize="11" fontWeight="800">{j + 1}</text>
+                          {/* Label */}
+                          <text x="72" y={y + 22} fill={TEXT} fontSize="14" fontWeight="600">{f}</text>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+
+                {/* Output */}
+                <div className="mt-2 px-3 py-2.5 rounded-lg flex items-center gap-2"
+                  style={{ background: `hsl(${s.color} / 0.1)`, border: `1px solid hsl(${s.color} / 0.2)` }}>
+                  <CheckCircle2 size={14} style={{ color: `hsl(${s.color})` }} />
+                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${s.color})` }}>{s.output}</p>
+                </div>
+              </div>
+
+              {/* Connector arrow */}
+              {i < 3 && (
+                <div className="flex items-center px-2">
+                  <ArrowRight size={18} style={{ color: `hsl(${TEAL} / 0.3)` }} />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Loop indicator */}
+        <div className="mt-4 flex items-center justify-center gap-3 px-6 py-3 rounded-xl mx-auto"
+          style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px dashed hsl(${TEAL} / 0.25)` }}>
+          <RefreshCw size={16} style={{ color: `hsl(${TEAL})` }} />
+          <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
+            Step 4 feeds back into Step 1. Your playbooks sharpen with every cycle
+          </p>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 07 — PROOF (Validation with outcome metrics)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide08() {
+  const cases = [
+    {
+      title: "AEC Industry Vertical",
+      subtitle: "Horizontal proof across departments",
+      scope: "GC/PM · A&E · Owner",
+      color: TEAL,
+      outcome: "Same loop validated across 3 departments of one regulated industry",
+      metric: "3 / 3",
+      metricLabel: "Departments",
+      points: [
+        "Project memory loop proven across General Contractor, Architecture/Engineering, and Owner/Developer workflows",
+        "Strategic distribution path opened through the Nemetschek ecosystem (Bluebeam, Allplan, Graphisoft)",
+      ],
+      featured: true,
+    },
+    {
+      title: "Top-Tier Swiss Executive Search Firm",
+      subtitle: "Design partnership",
+      scope: "Candidate evaluation",
+      color: GREEN,
+      outcome: "3-day senior task → 30 minutes",
+      metric: "60×",
+      metricLabel: "Faster",
+      points: [
+        "Encoded senior partner's C-level candidate evaluation judgment",
+        "Maintained senior-level quality with junior staff execution",
+      ],
+    },
+    {
+      title: "Professional Services Consultancy",
+      subtitle: "Multi-team deployment",
+      scope: "Sales, PM & Marketing",
+      color: GOLD,
+      outcome: "75% faster proposal creation",
+      metric: "75%",
+      metricLabel: "Faster",
+      points: [
+        "Codified workflows across sales, project management & marketing",
+        "25% improvement in deal velocity across the team",
+      ],
+    },
+    {
+      title: "Cybersecurity Audit Firm",
+      subtitle: "Automation engagement",
+      scope: "800+ audit questions",
+      color: ACCENT,
+      outcome: "Audit cycle: 18 days → 1 day",
+      metric: "95%",
+      metricLabel: "Reduction",
+      points: [
+        "800+ audit questions processed through governed, traceable execution",
+        "The same audit-grade pattern that GMP, GCP, and PV teams require",
+      ],
+      featured: false,
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <div className="mb-8">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Horizontal Proof · Vertical Gap</p>
+          <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into space — with a lighthouse NewSpace partner.</span>
+          </h2>
+          <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
+            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for space is one mission-grade lighthouse partner — a NewSpace prime or integrator — to make this experience native under ECSS, AS9100, and audit-grade conditions.
+          </p>
+        </div>
+
+        <div className="flex-1 flex items-center">
+          <div className="grid grid-cols-4 gap-5 w-full">
+            {cases.map(({ title, subtitle, scope, color, outcome, metric, metricLabel, points, featured }) => (
+              <div
+                key={title}
+                className="rounded-[24px] border px-5 py-5 flex flex-col min-h-[560px] justify-center"
+                style={{
+                  borderColor: `hsl(${color} / ${featured ? 0.3 : 0.18})`,
+                  background: featured
+                    ? `linear-gradient(180deg, hsl(${color} / 0.11), hsl(${color} / 0.04))`
+                    : `linear-gradient(180deg, hsl(${color} / 0.05), hsl(${color} / 0.02))`,
+                  boxShadow: featured ? `0 0 0 2px hsl(${color} / 0.08)` : "none",
+                }}
+              >
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div>
+                    <p className="font-black" style={{ fontSize: 25, color: TEXT, lineHeight: 1.12 }}>{title}</p>
+                    <p className="mt-2" style={{ fontSize: 14, color: `hsl(${color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                      {subtitle} · {scope}
+                    </p>
+                  </div>
+                  <div className="rounded-2xl px-4 py-3 text-right shrink-0"
+                    style={{ background: `hsl(${color} / 0.1)`, border: `1px solid hsl(${color} / 0.18)` }}>
+                    <p className="font-black" style={{ fontSize: 38, color: `hsl(${color})`, lineHeight: 1 }}>{metric}</p>
+                    <p className="font-bold mt-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.08em" }}>{metricLabel}</p>
+                  </div>
+                </div>
+
+                <div className="rounded-xl px-4 py-3 mb-3"
+                  style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.12)` }}>
+                  <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                    Outcome
+                  </p>
+                  <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.28 }}>{outcome}</p>
+                </div>
+
+                <div className="flex flex-col gap-2.5">
+                  {points.map((p, i) => (
+                    <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
+                      style={{ background: `hsl(${BG === "hsl(0 0% 100%)" ? color : GREEN} / 0.035)` }}>
+                      <CheckCircle2 size={17} className="shrink-0 mt-0.5" style={{ color: `hsl(${color})` }} />
+                      <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.42 }}>{p}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+      <SlideBar from={GREEN} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 08 — VERTICALS (Expansion path — industries + functions)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide09() {
+  const beachheads = [
+    {
+      vertical: "Design & Systems Engineering", status: "Expansion", color: GREEN,
+      icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
+      problem: "Engineers redo trade studies and design notes because heritage decisions and prior review feedback don't propagate. AI drafts from generic literature, not your mission-line precedent.",
+      result: "Heritage-aware design. Mission memory across programs. Faster, sharper review packages.",
+      proof: "Adjacent to Polarion, DOORS, Valispace, and Jama workflows",
+    },
+    {
+      vertical: "MAIT — Manufacture, Assembly, Integration & Test", status: "Wedge", color: TEAL,
+      icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
+      problem: "NCRs, FRACAS entries, and AIT procedures live in disconnected PLM/MES tools. AI can't reason across them. Anomaly knowledge dies between programs and cleanrooms.",
+      result: "Unified NCR & FRACAS lifecycle. Every AI response grounded in this unit's procedures, ECSS tailoring, and prior anomaly precedent.",
+      proof: "Target embedding path across Teamcenter, Windchill, and aerospace MES workflows",
+    },
+    {
+      vertical: "Mission Operations & In-Orbit", status: "Expansion", color: GOLD,
+      icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
+      problem: "Anomaly reports and lessons-learned diverge from program standards. Operational knowledge evaporates between mission phases. New ops teams inherit fragmented data.",
+      result: "ECSS-aware anomaly handling. Living mission memory. Audit-grade ops artifacts, every cycle.",
+      proof: "Mission ops / ground-segment extension path once MAIT and design integrations are in place",
+    },
+  ];
+
+  const expandInto = [
+    { name: "ECSS / AS9100 audit readiness", col: TEAL },
+    { name: "Anomaly review boards (ARB) prep", col: "215 25% 50%" },
+    { name: "EEE parts & radiation justification", col: GOLD },
+    { name: "Launch campaign coordination", col: GREEN },
+    { name: "Ground segment & mission ops handover", col: ACCENT },
+    { name: "Regulatory & licensing (ITU, ITAR)", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Why Now
-        </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Four forces are converging on the satcom operator at the same time.
-        </h2>
-        <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }} className="mb-10">
-          Each one is solvable. The first operator to codify across all four owns the reference architecture for the category.
-        </p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Space Lifecycle Expansion Path</p>
 
-        <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
-          {drivers.map((d) => {
-            const Icon = d.Icon;
-            return (
-              <div key={d.title} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.12)` }}>
-                    <Icon size={28} style={{ color: `hsl(${TEAL})` }} />
+        <div className="mb-6 flex items-start justify-between gap-8">
+          <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
+            One mission &amp; quality memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the mission.</span>
+          </h2>
+          <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
+            style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-2" style={{ fontSize: 11, color: MUTED }}>
+              The thesis
+            </p>
+            <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
+              The missing connective tissue underneath the aerospace AI stack.
+            </p>
+            <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
+              Current signal: AEC vertical proven across 3 departments; pharma vertical conversation underway. Space lighthouse partner being recruited — this conversation is one of the active threads.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-[1fr_1fr_1fr_0.92fr] gap-5 flex-1">
+          {beachheads.map(({ vertical, status, color, icon, problem, result, proof }) => (
+            <div key={vertical} className="rounded-[26px] border p-6 flex flex-col"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.03)` }}>
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1">{icon}</div>
+                  <div>
+                    <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.1 }}>{vertical}</p>
                   </div>
-                  <p className="font-black" style={{ fontSize: 28, color: TEXT }}>{d.title}</p>
                 </div>
-                <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>{d.desc}</p>
+                <span className="px-3 py-1 rounded-full font-bold shrink-0" style={{ fontSize: 11, background: `hsl(${color} / 0.12)`, color: `hsl(${color})` }}>{status}</span>
               </div>
-            );
-          })}
-        </div>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 06 — THE CONTEXT LAYER (the product picture)
-// ═══════════════════════════════════════════════════════════════════════════════
-
-function Slide05() {
-  return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          The Context Layer
-        </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          LIZA OS sits between your inputs and AI's outputs — and applies your fleet's standards.
-        </h2>
-        <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }} className="mb-8">
-          A governed operating layer that ingests operator knowledge, enforces it on every AI output, and improves with each cycle.
-        </p>
-
-        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
-          {[
-            { Icon: BookOpen, title: "Ingest", body: "Anomaly playbooks, SOPs, vendor SOWs, ITU filings, OCC procedures — captured as governed, queryable rules." },
-            { Icon: Shield, title: "Govern", body: "Every AI output is gated against your operations standards, contractual commitments, and regulatory precedent before it reaches an engineer." },
-            { Icon: RefreshCw, title: "Improve", body: "Each anomaly, procurement cycle, and filing feeds the layer. The next event starts smarter, not from zero." },
-          ].map((b) => {
-            const Icon = b.Icon;
-            return (
-              <div key={b.title} className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.04)` }}>
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style={{ background: `hsl(${TEAL})`, color: "white" }}>
-                  <Icon size={30} />
+              <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${WARM} / 0.05)`, border: `1px solid hsl(${WARM} / 0.12)` }}>
+                <div className="flex items-start gap-2">
+                  <AlertTriangle size={16} style={{ color: `hsl(${WARM})`, flexShrink: 0, marginTop: 3 }} />
+                  <div>
+                    <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${WARM})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>Where we start</p>
+                    <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{problem}</p>
+                  </div>
                 </div>
-                <p className="font-black mb-3" style={{ fontSize: 32, color: TEXT }}>{b.title}</p>
-                <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{b.body}</p>
               </div>
-            );
-          })}
+
+              <div className="rounded-xl px-4 py-4 mb-4" style={{ background: `hsl(${color} / 0.07)`, border: `1px solid hsl(${color} / 0.16)` }}>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 size={16} style={{ color: `hsl(${color})`, flexShrink: 0, marginTop: 3 }} />
+                  <div>
+                    <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${color})`, textTransform: "uppercase", letterSpacing: "0.12em" }}>What we unlock</p>
+                    <p className="font-semibold" style={{ fontSize: 17, color: `hsl(${color})`, lineHeight: 1.35 }}>{result}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto rounded-xl px-4 py-3" style={{ background: `hsl(${color} / 0.05)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 11, color: MUTED, textTransform: "uppercase", letterSpacing: "0.14em" }}>Proof</p>
+                <p style={{ fontSize: 13, color: MUTED, fontStyle: "italic", lineHeight: 1.35 }}>{proof}</p>
+              </div>
+            </div>
+          ))}
+
+          <div className="rounded-[26px] border p-5 flex flex-col"
+            style={{ borderColor: `hsl(${ACCENT} / 0.14)`, background: `hsl(${ACCENT} / 0.03)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-4" style={{ fontSize: 12, color: MUTED }}>
+              The pattern applies to every function
+            </p>
+            <div className="grid gap-3">
+              {expandInto.map(({ name, col }) => (
+                <div key={name} className="flex items-center gap-3 rounded-xl px-4 py-3.5"
+                  style={{ background: `hsl(${col} / 0.05)`, border: `1px solid hsl(${col} / 0.15)` }}>
+                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: `hsl(${col})` }} />
+                  <p className="font-semibold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="mt-8 rounded-2xl px-8 py-5 flex items-center gap-5" style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))` }}>
-          <Network size={32} color="white" />
-          <p className="font-bold" style={{ fontSize: 22, color: "white", lineHeight: 1.4 }}>
-            The result: AI that operates inside your operator standards — not around them.
-          </p>
+        <div className="mt-4 rounded-2xl border-2 p-5"
+          style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.04)` }}>
+          <div className="flex items-center justify-between gap-6">
+            <div>
+              <p className="font-black tracking-[0.18em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>
+                Strategic path
+              </p>
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
+                Expansion across the molecule lifecycle. Partnership path on the next slide.
+              </p>
+            </div>
+            <div className="rounded-xl px-5 py-4 shrink-0"
+              style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.18)` }}>
+              <p className="font-black" style={{ fontSize: 18, color: `hsl(${GREEN})`, lineHeight: 1.15 }}>
+                Capital + channel + product
+              </p>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>
+                The round works because the commercial journey is joint.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <SlideBar />
+      <SlideBar from={GREEN} to={GOLD} />
     </div>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 07 — OPEN CANVAS (signature operator slide)
+// SLIDE 09B — STRATEGIC PARTNERSHIP PATH
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function SlideOpenCanvas() {
-  return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="px-3 py-1 rounded-md font-bold tracking-[0.2em]" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
-            07 · OPEN CANVAS
-          </div>
-        </div>
-        <h2 className="font-black mb-4" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          There is no defined standard for operator memory.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>The first operator to codify it owns the reference.</span>
-        </h2>
-        <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }} className="mb-8">
-          ECSS exists for builders. ITIL exists for IT. There is no governed knowledge standard for satellite fleet operations, procurement, or spectrum. Whoever steps in first defines it.
-        </p>
-
-        <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
-          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${BLUE} / 0.25)`, background: `hsl(${BLUE} / 0.04)` }}>
-            <p className="font-black tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${BLUE})`, textTransform: "uppercase" }}>What exists today</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>Standards for builders</p>
-            <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>
-              ECSS, AS9100, MIL specs — designed around how a satellite is built and qualified, not how it is flown for 15 years afterwards.
-            </p>
-          </div>
-          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-black tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${WARM})`, textTransform: "uppercase" }}>What's missing</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>An operator standard</p>
-            <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>
-              Each operator codifies its own playbooks, in its own folders, lost on retirement. There is no governed layer the category shares.
-            </p>
-          </div>
-          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.08)` }}>
-            <p className="font-black tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${TEAL})`, textTransform: "uppercase" }}>What we're proposing</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>Define it together</p>
-            <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>
-              We co-build the operator memory standard with the first operator who steps in. They anchor it for their fleet and own a strategic position in the category as it forms.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-8 rounded-2xl px-8 py-5" style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))` }}>
-          <p className="font-bold text-center" style={{ fontSize: 24, color: "white", lineHeight: 1.4 }}>
-            The first operator becomes the reference customer for every operator that follows.
-          </p>
-        </div>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 08 — HOW IT WORKS (4-step loop)
-// ═══════════════════════════════════════════════════════════════════════════════
-
-function Slide07() {
-  const steps = [
-    { n: 1, title: "Codify", desc: "Capture anomaly playbooks, SOPs, vendor SOWs, ITU precedent, and senior judgment as governed rules.", Icon: BookOpen },
-    { n: 2, title: "Govern", desc: "Every AI draft — RCA, vendor review, filing, customer comm — checked against your operator standards.", Icon: Shield },
-    { n: 3, title: "Apply", desc: "Ops engineers, contract managers, and analysts work inside the same governed standard. Onboarding compresses.", Icon: Workflow },
-    { n: 4, title: "Improve", desc: "Each event, contract, and filing feeds new learning back. The next satellite, vendor, and slot starts smarter.", Icon: RefreshCw },
+function Slide09Partnership() {
+  const ladder = [
+    {
+      phase: "Month 1",
+      title: "30-Day MAIT Pilot",
+      color: GREEN,
+      desc: "Co-design pilot with one of your MAIT or systems-engineering teams. We codify one workflow (NCR closeout, AIT procedure handoff, or design-note review) and ship a measurable delta. Low commitment, fast signal.",
+    },
+    {
+      phase: "Months 2-6",
+      title: "Mission Memory Layer",
+      color: TEAL,
+      desc: "Expand to a second satellite program: encode chief-engineer judgment, codify recurring AIT and FRACAS patterns, and build the mission memory layer that survives expert turnover.",
+    },
+    {
+      phase: "Months 6-18",
+      title: "Sovereign-Space Standard Layer",
+      color: GOLD,
+      desc: "LIZA OS + a lighthouse partner jointly establish a European mission-knowledge layer. Optional strategic stake. Pathway to a sovereign-space capability adopted by partners across the European NewSpace ecosystem.",
+    },
   ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          How LIZA OS Works
-        </p>
-        <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
-          A four-step loop that compounds every cycle.
-        </h2>
-
-        <div className="relative flex-1 min-h-0">
-          <div className="absolute top-[60px] left-[8%] right-[8%] h-px" style={{ background: `hsl(${TEAL} / 0.3)` }} />
-          <div className="relative grid grid-cols-4 gap-8">
-            {steps.map((s) => {
-              const Icon = s.Icon;
-              return (
-                <div key={s.n} className="flex flex-col items-center text-center">
-                  <div className="relative w-[120px] h-[120px] rounded-full flex items-center justify-center border-2 bg-white" style={{ borderColor: `hsl(${TEAL})`, color: `hsl(${TEAL})` }}>
-                    <Icon size={48} />
-                    <span className="absolute -top-3 -right-3 w-12 h-12 rounded-full flex items-center justify-center text-white font-black" style={{ background: `hsl(${TEAL})`, fontSize: 22 }}>{s.n}</span>
-                  </div>
-                  <p className="mt-6 font-black" style={{ fontSize: 32, color: TEXT }}>{s.title}</p>
-                  <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45, maxWidth: 280 }}>{s.desc}</p>
-                </div>
-              );
-            })}
-          </div>
+        <div className="mb-10 text-center">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
+            Space Partnership Mechanic
+          </p>
+          <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
+            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>sovereign-space layer</span>.
+          </h2>
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-3" style={{ color: MUTED }}>
-          <RefreshCw size={20} />
-          <p className="font-bold tracking-[0.2em] uppercase" style={{ fontSize: 16 }}>Each cycle makes the next anomaly, contract, and filing smarter</p>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="grid grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)_72px_minmax(0,1fr)] gap-4 items-center w-full max-w-[1600px]">
+            {ladder.map(({ phase, title, color, desc }, index) => (
+              <div key={title} className="contents">
+                <div className="rounded-[30px] border px-8 py-10 flex flex-col justify-center min-h-[470px]"
+                  style={{ borderColor: `hsl(${color} / 0.2)`, background: `linear-gradient(180deg, hsl(${color} / 0.07), hsl(${color} / 0.03))` }}>
+                  <div className="flex flex-col gap-4 text-center">
+                    <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 13, color: `hsl(${color})` }}>
+                      {phase}
+                    </p>
+                    <p className="font-black" style={{ fontSize: 38, color: TEXT, lineHeight: 1.04 }}>
+                      {title}
+                    </p>
+                    <p style={{ fontSize: 21, color: MUTED, lineHeight: 1.5 }}>
+                      {desc}
+                    </p>
+                  </div>
+                </div>
+                {index < ladder.length - 1 && (
+                  <div className="flex items-center justify-center">
+                    <div className="w-16 h-[3px] rounded-full" style={{ background: `linear-gradient(90deg, hsl(${color} / 0.35), hsl(${ACCENT} / 0.75))` }} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GOLD} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 10 — WHAT'S BUILT (Product is live)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function Slide10() {
+  const features = [
+    {
+      layer: "Knowledge Graph", color: ACCENT,
+      icon: <Layers size={28} />,
+      desc: "Living organizational memory. Versioned, auditable, propagated.",
+      screenshot: "/images/product-define-enforce.png",
+    },
+    {
+      layer: "Protocol Workbooks", color: GOLD,
+      icon: <Target size={28} />,
+      desc: "Model-agnostic AI execution. Group collaboration in one workspace.",
+      screenshot: "/images/product-execute-protocol.png",
+    },
+    {
+      layer: "Context Engine (AACE v3.1)", color: GREEN,
+      icon: <Workflow size={28} />,
+      desc: "Proprietary spec. Intent-locking, knowledge injection. The IP moat.",
+      screenshot: "/images/product-mission-control.png",
+    },
+    {
+      layer: "Governance Loop", color: ACCENT,
+      icon: <Eye size={28} />,
+      desc: "Drift detection, compliance scoring, after-action synthesis.",
+      screenshot: "/images/product-oversight.png",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>Product Status</p>
+        <h2 className="font-bold mb-6" style={{ fontSize: 56, color: TEXT, lineHeight: 1.1 }}>
+          The infrastructure is live.{" "}
+          <span style={{ color: `hsl(${ACCENT})` }}>Not a prototype.</span>
+        </h2>
+
+        <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
+          {features.map(({ layer, color, icon, desc, screenshot }) => (
+            <div key={layer} className="flex flex-col rounded-2xl border overflow-hidden"
+              style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.03)` }}>
+              {/* Product screenshot */}
+              <div className="h-[200px] overflow-hidden" style={{ borderBottom: `1px solid hsl(${color} / 0.12)` }}>
+                <img src={screenshot} alt={layer} className="w-full h-full object-cover object-top" loading="lazy" />
+              </div>
+              <div className="flex gap-4 p-5 flex-1">
+                <div className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: `hsl(${color} / 0.1)`, color: `hsl(${color})` }}>{icon}</div>
+                <div>
+                  <p className="font-bold mb-1" style={{ fontSize: 20, color: TEXT }}>{layer}</p>
+                  <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-5 mt-4">
+          {[
+            { label: "AI Standards Diagnostic", desc: "Live lead-gen tool. Teams self-assess AI maturity.", color: GOLD },
+            { label: "Full Marketing Site", desc: "Positioning, 7 use cases, industries live at lizaos.ai.", color: ACCENT },
+          ].map(({ label, desc, color }) => (
+            <div key={label} className="flex-1 rounded-xl border px-5 py-3 flex items-center gap-3"
+              style={{ borderColor: `hsl(${color} / 0.18)`, background: `hsl(${color} / 0.04)` }}>
+              <Lightbulb size={22} style={{ color: `hsl(${color})`, flexShrink: 0 }} />
+              <div>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>{label}</p>
+                <p style={{ fontSize: 14, color: MUTED }}>{desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <SlideBar />
@@ -601,150 +1725,210 @@ function Slide07() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 09 — STRATEGIC PIVOT (vertical leverage)
+// SLIDE 10 — BUSINESS MODEL
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function SlideVerticalization() {
-  const verticals = [
-    { label: "Satcom Operators", sub: "Fleet · Procurement · Spectrum", active: true, color: TEAL },
-    { label: "Space Builders", sub: "ECSS · MAIT · Mission Memory", active: false, color: MUTED },
-    { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
-    { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
-  ];
+function Slide11() {
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 h-full flex flex-col">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="px-3 py-1 rounded-md font-bold tracking-[0.2em]" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
-            09 · SHAPE OF THE COMPANY
-          </div>
-        </div>
-        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>Satcom operators are the next spear.</span>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Business Model</p>
+
+          <h2 className="font-black mb-6" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+            Guided pilot. Self-serve product. Credit upside.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>The durable model is usage-aligned.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about satellite fleet operators — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
-        </p>
 
-        <div className="flex-1 flex flex-col justify-center">
-          <div className="grid grid-cols-4 gap-6 mb-0">
-            {verticals.map(v => (
-              <div key={v.label} className="rounded-xl border-2 p-6 relative" style={{
-                borderColor: v.active ? `hsl(${v.color})` : CHROME_BORDER,
-                background: v.active ? `hsl(${v.color} / 0.06)` : CARD_ALT,
-              }}>
-                {v.active && (
-                  <div className="absolute -top-3 left-4 px-2 py-0.5 rounded font-bold tracking-[0.2em]"
-                    style={{ fontSize: 12, background: `hsl(${v.color})`, color: "white" }}>
-                    TODAY'S CONVERSATION
-                  </div>
-                )}
-                <div className="font-black mb-1" style={{ fontSize: 26, color: v.active ? `hsl(${v.color})` : TEXT }}>{v.label}</div>
-                <div style={{ fontSize: 16, color: MUTED }}>{v.sub}</div>
+        <div className="flex gap-8 flex-1 min-h-0">
+          {/* Pricing */}
+            <div className="flex-1 flex flex-col gap-4">
+            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Revenue Streams</p>
+
+            <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.2)`, background: `hsl(${TEAL} / 0.06)` }}>
+              <div className="flex items-baseline gap-3 mb-2">
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Platform Base</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
               </div>
-            ))}
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+                The base fee anchors the knowledge graph, governance layer, and workflow infrastructure inside the account. The next investment phase turns that infrastructure into a repeatable self-serve product surface.
+              </p>
+            </div>
+
+            <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.06)` }}>
+              <div className="flex items-baseline gap-3 mb-2">
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>AI Credits</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Metered usage</span>
+              </div>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+                Extraction, research, and execution-heavy workflows should be billed on credit consumption. That aligns pricing with customer value while protecting margin as AI inference cost keeps rising.
+              </p>
+            </div>
+
+            <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.2)`, background: `hsl(${GOLD} / 0.06)` }}>
+              <div className="flex items-baseline gap-3 mb-2">
+                <p className="font-black" style={{ fontSize: 28, color: TEXT }}>Guided Kickstart</p>
+                <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>€5,000–15,000</span>
+              </div>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+                The wedge remains a low-friction pilot. We codify one workflow, prove ROI, then productize the experience into self-serve rollout plus platform base and usage.
+              </p>
+            </div>
           </div>
 
-          <div className="flex justify-center my-2" style={{ color: SUBTLE }}>
-            <div className="text-3xl leading-none">▾ ▾ ▾ ▾</div>
-          </div>
+          {/* Unit economics */}
+          <div className="w-[420px] flex flex-col gap-4">
+            <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Early Signals → Target Economics</p>
 
-          <div className="rounded-xl p-7 border-2" style={{
-            background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`,
-            borderColor: `hsl(${TEAL})`,
-          }}>
-            <div className="flex items-center justify-between gap-8">
-              <div>
-                <div className="font-black" style={{ fontSize: 32, color: "white" }}>LIZA OS · The Context Layer</div>
-                <div style={{ fontSize: 18, color: "rgba(255,255,255,0.85)", marginTop: 4 }}>
-                  Knowledge ingestion · Governance · Execution loop · Audit trail
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { label: "ACV", value: "€18K", desc: "Current blended value" },
+                { label: "CAC", value: "€3K", desc: "Diagnostic-to-pilot funnel" },
+                { label: "LTV:CAC", value: "6:1", desc: "Target at steady state" },
+                { label: "NRR", value: ">120%", desc: "Expansion via base + credits" },
+              ].map(({ label, value, desc }) => (
+                <div key={label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+                  <p className="font-black" style={{ fontSize: 36, color: TEXT }}>{value}</p>
+                  <p className="font-bold mt-1" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>{label}</p>
+                  <p style={{ fontSize: 13, color: MUTED }}>{desc}</p>
                 </div>
-              </div>
-              <div className="flex gap-3">
-                {["Ingest", "Govern", "Execute", "Audit"].map(p => (
-                  <div key={p} className="px-3 py-1.5 rounded-md font-bold" style={{
-                    background: "rgba(255,255,255,0.18)", color: "white", fontSize: 16
-                  }}>{p}</div>
+              ))}
+            </div>
+
+            <div className="rounded-xl border p-5 flex-1" style={{ borderColor: `hsl(${ACCENT} / 0.2)`, background: `hsl(${ACCENT} / 0.06)` }}>
+              <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Revenue Logic</p>
+              <div className="flex flex-col gap-2">
+                {[
+                  "Diagnostic identifies workflow pain and creates urgency",
+                  "Guided kickstart proves one workflow with minimal adoption friction",
+                  "Self-serve UX turns expert workflows into repeatable product usage",
+                  "Platform base anchors the knowledge system inside the account",
+                  "Credits scale revenue as AI execution becomes mission-critical",
+                ].map((step, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="font-black" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{i + 1}.</span>
+                    <span style={{ fontSize: 15, color: MUTED }}>{step}</span>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
-
-        <div className="grid grid-cols-3 gap-4 mt-8">
-          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <div className="font-bold tracking-[0.2em] mb-1.5" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
-            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              An operator-native layer for fleet ops, procurement, and spectrum — codifying expertise faster than retirements drain it.
-            </div>
-          </div>
-          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <div className="font-bold tracking-[0.2em] mb-1.5" style={{ fontSize: 12, color: `hsl(${BLUE})` }}>WHAT COMPOUNDS</div>
-            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Investment from adjacent verticals (AEC, Pharma, Space builders) accelerates the platform; you inherit a hardened core, not a v1.
-            </div>
-          </div>
-          <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <div className="font-bold tracking-[0.2em] mb-1.5" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
-            <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Phase 1: 30-day operator-memory pilot. Phase 2: open-canvas partnership and reference-architecture position.
-            </div>
-          </div>
-        </div>
       </div>
-      <SlideBar />
+      <SlideBar from={GREEN} to={TEAL} />
     </div>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 10 — 30-DAY EXECUTION CHALLENGE
+// SLIDE 11B — 30-DAY EXECUTION CHALLENGE (GTM Wedge)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideExecutionChallenge() {
   const phases = [
-    { week: "Week 1", title: "Scope & ingest", desc: "Pick one workflow — anomaly response, vendor acceptance, or filing review. Ingest the artifacts and senior judgment behind it." },
-    { week: "Week 2", title: "Codify & govern", desc: "Turn the workflow into governed rules. Wire AI drafts through the gate. Senior engineer signs off the standard." },
-    { week: "Week 3", title: "Run live", desc: "Real ops engineers use it on real work. We measure hours saved, errors caught, and onboarding compression." },
-    { week: "Week 4", title: "Decide", desc: "Clear before-and-after. Audit trail. You decide whether to extend to the next workflow or move to open-canvas partnership." },
+    {
+      week: "Week 1",
+      title: "Extract",
+      icon: <BookOpen size={24} />,
+      color: TEAL,
+      actions: [
+        "Your team selects one high-value workflow (e.g. NCR closeout, AIT procedure handoff, design-note review, FRACAS rollup)",
+        "Platform guides structured capture from 2-3 senior chief engineers, AIT leads, or PA/QA experts",
+        "LIZA auto-generates ECSS-aware playbooks grounded in your procedures, prior anomalies, and review feedback",
+      ],
+      output: "3-5 mission-grade playbooks ready",
+    },
+    {
+      week: "Week 2-3",
+      title: "Execute",
+      icon: <Zap size={24} />,
+      color: SEAFOAM,
+      actions: [
+        "MAIT / engineering team self-serves: run playbooks against live NCRs, AIT procedures, and design notes",
+        "Real units, real missions, real audit-grade deliverables",
+        "Platform tracks drift and captures feedback automatically",
+      ],
+      output: "Measurable quality delta: chief engineer vs. AI-with-LIZA vs. AI-alone",
+    },
+    {
+      week: "Week 4",
+      title: "Prove",
+      icon: <TrendingUp size={24} />,
+      color: GREEN,
+      actions: [
+        "Automated review: hours saved per NCR, rework avoided, audit-finding risk reduced",
+        "Mission memory self-improves from every execution; full traceability preserved",
+        "Business case for program-wide and site-wide rollout with real numbers",
+      ],
+      output: "ROI proven. Expansion decision with audit-grade data.",
+    },
   ];
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="px-3 py-1 rounded-md font-bold tracking-[0.2em]" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
-            10 · 30-DAY CHALLENGE
-          </div>
-        </div>
-        <h2 className="font-black mb-3" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          One workflow. One satellite. <span style={{ color: `hsl(${TEAL})` }}>30 days.</span>
-        </h2>
-        <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }} className="mb-10">
-          Fixed scope, fixed price. You only continue if the savings are real.
-        </p>
+      <div className="relative z-10 flex flex-col h-full px-28 pt-12 pb-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
-        <div className="grid grid-cols-4 gap-4 flex-1 min-h-0">
-          {phases.map((p, i) => (
-            <div key={p.week} className="rounded-2xl border-2 p-6 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: i === phases.length - 1 ? `hsl(${TEAL} / 0.08)` : `hsl(${TEAL} / 0.03)` }}>
-              <p className="font-black tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${TEAL})`, textTransform: "uppercase" }}>{p.week}</p>
-              <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>{p.title}</p>
-              <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{p.desc}</p>
+          <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
+          The wedge is one workflow. The product is the mission-native knowledge loop.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a NewSpace lighthouse partner.</span>
+        </h2>
+
+        <div className="flex gap-6 flex-1 min-h-0">
+          {phases.map((p) => (
+            <div key={p.week} className="flex-1 rounded-[26px] border flex flex-col overflow-hidden"
+              style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `linear-gradient(180deg, hsl(${p.color} / 0.05), hsl(${p.color} / 0.025))` }}>
+              <div className="px-7 py-6 flex items-center gap-4" style={{ borderBottom: `1px solid hsl(${p.color} / 0.15)` }}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
+                  style={{ background: `hsl(${p.color} / 0.12)`, color: `hsl(${p.color})` }}>
+                  {p.icon}
+                </div>
+                <div>
+                  <p className="font-bold tracking-[0.15em] uppercase" style={{ fontSize: 14, color: `hsl(${p.color})` }}>{p.week}</p>
+                  <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.05 }}>{p.title}</p>
+                </div>
+              </div>
+
+              <div className="flex-1 px-7 py-6 flex flex-col gap-4 justify-between">
+                {p.actions.map((a, j) => (
+                  <div key={j} className="flex items-start gap-3 rounded-xl px-4 py-4 flex-1"
+                    style={{ background: `hsl(${p.color} / 0.055)`, border: `1px solid hsl(${p.color} / 0.1)` }}>
+                    <span className="font-bold shrink-0 mt-0.5" style={{ fontSize: 18, color: `hsl(${p.color})` }}>→</span>
+                    <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{a}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="px-7 py-5" style={{ background: `hsl(${p.color} / 0.07)`, borderTop: `1px solid hsl(${p.color} / 0.12)` }}>
+                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${p.color})`, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                  Output
+                </p>
+                <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>
+                  {p.output}
+                </p>
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-8 rounded-2xl px-8 py-6 flex items-center justify-between gap-6" style={{ background: `hsl(${TEAL} / 0.06)`, border: `2px solid hsl(${TEAL} / 0.2)` }}>
-          <div>
-            <p className="font-bold tracking-[0.2em] uppercase mb-2" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>What you walk away with</p>
-            <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.3 }}>
-              A governed workflow, an audit trail, hours-saved data, and a clear path to extend across the fleet.
-            </p>
-          </div>
+        {/* Bottom metrics */}
+        <div className="mt-6 grid grid-cols-4 gap-5">
+          {[
+            { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
+            { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
+            { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
+            { metric: "Mission-native", label: "Product direction", sub: "Role, workflow, and ECSS / AS9100 audit fit" },
+          ].map(m => (
+            <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
+              <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
+              <p className="font-bold mt-1" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>{m.label}</p>
+              <p style={{ fontSize: 14, color: MUTED }}>{m.sub}</p>
+            </div>
+          ))}
         </div>
       </div>
-      <SlideBar />
+      <SlideBar from={GREEN} to={TEAL} />
     </div>
   );
 }
@@ -754,34 +1938,48 @@ function SlideExecutionChallenge() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide12() {
-  const team = [
-    { photo: kristofPhoto, name: "Kristóf Eger", role: "Founder · CEO", bio: "15+ years building enterprise AI and data infrastructure. Former Aliz." },
-    { photo: istvanPhoto, name: "István Boscha", role: "Co-Founder · Architecture", bio: "Engineering leadership across regulated and infrastructure software." },
-    { photo: zoltanPhoto, name: "Zoltán Kauker", role: "Co-Founder · Delivery", bio: "Delivery and customer leadership across enterprise transformation programs." },
+  const founders = [
+    { name: "István Boscha", role: "Product Vision & Capital-Efficient CEO", bio: "Founder of Aliz.ai, a Google Cloud Professional Services Partner. 15 years in AI transformation globally.", photo: istvanPhoto, initials: "IB", color: ACCENT },
+    { name: "Kristóf Éger", role: "Enterprise Narrative & Go-to-Market", bio: "AI-driven business strategist, embedding AI into decision-making workflows.", photo: kristofPhoto, initials: "KÉ", color: GREEN },
+    { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
   ];
+
+
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-14">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Team
-        </p>
-        <h2 className="font-black mb-10" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          The team behind LIZA OS.
+      <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>Team</p>
+        <h2 className="font-bold mb-6" style={{ fontSize: 68, color: TEXT, lineHeight: 1.1 }}>
+          Built by practitioners.<br />
+          <span style={{ color: `hsl(${ACCENT})` }}>Validated by enterprise leaders.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
-          {team.map((m) => (
-            <div key={m.name} className="rounded-2xl border p-7 flex flex-col items-start" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-              <div className="w-32 h-32 rounded-full overflow-hidden mb-5" style={{ border: `3px solid hsl(${TEAL} / 0.3)` }}>
-                <img src={m.photo} alt={m.name} className="w-full h-full object-cover" />
+        <p className="font-semibold mb-5" style={{ fontSize: 22, color: `hsl(${ACCENT})`, letterSpacing: "0.15em", textTransform: "uppercase" }}>Founding Team</p>
+        <div className="grid grid-cols-3 gap-7 mb-8">
+          {founders.map((f) => (
+            <div key={f.name} className="flex flex-col gap-4 rounded-2xl border p-7"
+              style={{ borderColor: `hsl(${f.color} / 0.2)`, background: `hsl(${f.color} / 0.04)` }}>
+              <div className="flex items-center gap-4">
+                {f.photo ? (
+                  <img src={f.photo} alt={f.name} className="w-16 h-16 rounded-full object-cover shrink-0"
+                    style={{ border: `2px solid hsl(${f.color} / 0.4)` }} />
+                ) : (
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center font-black text-xl shrink-0"
+                    style={{ background: `hsl(${f.color} / 0.15)`, color: `hsl(${f.color})`, border: `2px solid hsl(${f.color} / 0.4)` }}>
+                    {f.initials}
+                  </div>
+                )}
+                <div>
+                  <p className="font-bold" style={{ fontSize: 26, color: TEXT }}>{f.name}</p>
+                  <p style={{ fontSize: 18, color: `hsl(${f.color})` }}>{f.role}</p>
+                </div>
               </div>
-              <p className="font-black" style={{ fontSize: 30, color: TEXT }}>{m.name}</p>
-              <p className="font-bold mt-1" style={{ fontSize: 17, color: `hsl(${TEAL})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>{m.role}</p>
-              <p className="mt-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{m.bio}</p>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{f.bio}</p>
             </div>
           ))}
         </div>
+
       </div>
       <SlideBar />
     </div>
@@ -789,50 +1987,90 @@ function Slide12() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 12 — TWO-DOOR ASK
+// SLIDE 12 — THE ASK (€3M + milestones + use of funds)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide13() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full w-full px-24 pt-14 pb-14">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          The Ask
-        </p>
-        <h2 className="font-black mb-10" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          Two doors. <span style={{ color: `hsl(${TEAL})` }}>Pick the one that fits.</span>
-        </h2>
+      <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06]"
+        style={{ background: `radial-gradient(circle, hsl(${MINT}), transparent 70%)` }} />
 
-        <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
-          <div className="rounded-2xl p-10 flex flex-col" style={{ background: TEXT, color: BG }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${MINT})` }}>Door A</p>
-            <p className="font-black mb-4" style={{ fontSize: 38, lineHeight: 1.1 }}>30-Day Pilot</p>
-            <p className="opacity-85" style={{ fontSize: 19, lineHeight: 1.5 }}>
-              One workflow on one satellite. Fixed scope, fixed price. We codify it, run it live, and hand you the data and audit trail. You decide whether to extend.
-            </p>
-            <div className="mt-auto pt-6 border-t border-white/15">
-              <p className="opacity-70" style={{ fontSize: 14 }}>Best fit: ops director or CIO who wants proof before scope.</p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl p-10 flex flex-col text-white" style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))` }}>
-            <p className="font-bold tracking-[0.2em] uppercase mb-3" style={{ fontSize: 14, color: "rgba(255,255,255,0.85)" }}>Door B</p>
-            <p className="font-black mb-4" style={{ fontSize: 38, lineHeight: 1.1 }}>Open-Canvas Partnership</p>
-            <p style={{ fontSize: 19, lineHeight: 1.5 }}>
-              Co-define the operator memory standard with us. Anchor it for your fleet, take a strategic position, and own a reference architecture the rest of the category will follow.
-            </p>
-            <div className="mt-auto pt-6 border-t border-white/30">
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.85)" }}>Best fit: strategic ownership, partnership, or sovereign-satcom mandate.</p>
-            </div>
-          </div>
+      <div className="relative z-10 w-full px-28">
+        <div className="text-center mb-8">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
+          <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>Pilot first.<br/><span style={{ color: `hsl(${TEAL})` }}>Strategic stake optional.</span></h2>
+          <p style={{ fontSize: 24, color: MUTED }}>
+            Door 1: 30-day MAIT pilot &nbsp;·&nbsp; Door 2: strategic stake in the space vertical &nbsp;·&nbsp; Sequence: customer first, capital later if it fits
+          </p>
         </div>
 
-        <p className="text-center mt-10" style={{ fontSize: 18, color: SUBTLE }}>
+        {/* Use of funds */}
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          {[
+            { label: "30-Day MAIT Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one mission-critical workflow end-to-end. Measurable delta in 30 days. No long commitment.", color: ACCENT },
+            { label: "Mission Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across programs. Platform base anchors mission memory; credits scale with execution.", color: GREEN },
+            { label: "Sovereign-Space Layer", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse NewSpace partner takes a strategic position in the space vertical of LIZA OS.", color: GOLD },
+            { label: "European NewSpace", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across European primes, integrators, and national programs.", color: MUTED },
+          ].map(({ label, pct, amt, desc, color }) => (
+            <div key={label} className="rounded-xl border px-5 py-4 text-center"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
+              <p className="font-black" style={{ fontSize: 32, color: TEXT }}>{pct}</p>
+              <p className="font-bold" style={{ fontSize: 16, color: `hsl(${color})` }}>{label}</p>
+              <p style={{ fontSize: 14, color: MUTED }}>{amt}: {desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Milestones */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {[
+            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a chief engineer.", color: TEAL },
+            { month: "Months 2-6", target: "Mission memory layer", milestone: "Expansion to a second program. Mission memory captured. Onboarding time for new engineers measurably down.", color: SEAFOAM },
+            { month: "Months 6-18", target: "Sovereign-space layer", milestone: "Joint case study with the lighthouse partner. Strategic-stake conversation opens (optional). Doors open to other European NewSpace primes.", color: MINT },
+          ].map(({ month, target, milestone, color }) => (
+            <div key={month} className="rounded-xl border px-5 py-4"
+              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
+              <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{month}</p>
+              <p className="font-black mt-1" style={{ fontSize: 28, color: TEXT }}>{target}</p>
+              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{milestone}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
+            LIZA has built the horizontal knowledge loop.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse NewSpace partner can turn it into the mission-grade control layer for European space.</strong>
+          </p>
+        </div>
+
+        <p className="mt-5 text-center" style={{ fontSize: 18, color: SUBTLE }}>
           lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential
         </p>
       </div>
       <SlideBar from={MINT} to={TEAL} />
+    </div>
+  );
+}
+
+function SlideAppendixDivider() {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 text-center">
+        <p className="font-semibold tracking-[0.3em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL} / 0.6)` }}>
+          LIZA OS
+        </p>
+        <h1 className="font-black" style={{ fontSize: 80, color: TEXT, lineHeight: 1.1 }}>
+          Appendix
+        </h1>
+        <p className="mt-4" style={{ fontSize: 22, color: SUBTLE }}>
+          Supporting detail &amp; technical depth
+        </p>
+      </div>
     </div>
   );
 }
@@ -842,21 +2080,29 @@ function Slide13() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "Where Missing Context Shows Up", component: <Slide03 /> },
-  { id: 4, title: "What Missing Context Costs", component: <Slide04 /> },
-  { id: 5, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 6, title: "The Context Layer", component: <Slide05 /> },
-  { id: 7, title: "Open Canvas", component: <SlideOpenCanvas /> },
-  { id: 8, title: "How LIZA OS Works", component: <Slide07 /> },
-  { id: 9, title: "Shape of the Company", component: <SlideVerticalization /> },
-  { id: 10, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 11, title: "Team", component: <Slide12 /> },
-  { id: 12, title: "Two-Door Ask", component: <Slide13 /> },
+  { id: 3, title: "Where Missing Context Shows Up in Space", component: <Slide03 /> },
+  { id: 4, title: "What Missing Context Costs in Space", component: <Slide04Cost /> },
+  { id: 5, title: "Early Validation", component: <Slide08 /> },
+  { id: 6, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 7, title: "The Context Layer", component: <Slide05 /> },
+  { id: 8, title: "Strategic Pivot", component: <SlideVerticalization /> },
+  { id: 9, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 10, title: "Expansion Path", component: <Slide09 /> },
+  { id: 11, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
+  { id: 12, title: "Shape of the Company", component: <SlideShape /> },
+  { id: 13, title: "What's Built", component: <Slide10 /> },
+  { id: 14, title: "Business Model", component: <Slide11 /> },
+  { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 16, title: "Team", component: <Slide12 /> },
+  { id: 17, title: "Two-Door Partnership Path", component: <Slide13 /> },
+  { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function SatcomDeck() {
+export default function SpaceDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -990,100 +2236,112 @@ export default function SatcomDeck() {
         {showNav && (
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-3 rounded-full shadow-lg"
             style={{ background: "hsl(0 0% 100% / 0.95)", border: `1px solid ${CHROME_BORDER}` }}>
-            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg disabled:opacity-20">
+            <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg disabled:opacity-20" style={{ background: showNav ? "transparent" : undefined }}>
               <ChevronLeft size={20} style={{ color: TEXT }} />
             </button>
             <span className="font-mono text-sm min-w-[60px] text-center" style={{ color: MUTED }}>
               {current + 1} / {SLIDES.length}
             </span>
-            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg disabled:opacity-20">
+            <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg disabled:opacity-20" style={{ background: showNav ? "transparent" : undefined }}>
               <ChevronRight size={20} style={{ color: TEXT }} />
             </button>
             <div className="w-px h-5" style={{ background: CHROME_BORDER }} />
-            <button onClick={() => document.exitFullscreen?.()} className="p-2 rounded-lg">
-              <X size={20} style={{ color: TEXT }} />
+            <button onClick={() => document.exitFullscreen?.()} className="p-2 rounded-lg" style={{ background: showNav ? "transparent" : undefined }}>
+              <X size={18} style={{ color: MUTED }} />
             </button>
           </div>
         )}
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
+          {SLIDES.map(s => (
+            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>{s.component}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (showGrid) {
+    return (
+      <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
+        <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Satcom Operator Strategic Deck</h2>
+          <div className="flex items-center gap-3">
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Satcom-Deck" slideCount={SLIDES.length} />
+            <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
+              <X size={16} className="mr-1.5" /> Close
+            </Button>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 xl:grid-cols-4 gap-5 p-6">
+          {SLIDES.map((s, i) => (
+            <button key={s.id} onClick={() => goTo(i)}
+              className={cn("rounded-xl overflow-hidden border-2 transition-all hover:shadow-lg text-left",
+                i === current ? "ring-2 ring-offset-2" : "")}
+              style={{ borderColor: i === current ? `hsl(${TEAL})` : CHROME_BORDER, aspectRatio: "16/9" }}>
+              <div className="w-full h-full relative">
+                <ScaledSlide>{s.component}</ScaledSlide>
+                <div className="absolute bottom-0 left-0 right-0 px-3 py-2" style={{ background: "hsl(0 0% 100% / 0.9)" }}>
+                  <p className="font-semibold truncate" style={{ fontSize: 13, color: TEXT }}>
+                    {i + 1}. {s.title}
+                  </p>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+        <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
+          {SLIDES.map(s => (
+            <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>{s.component}</div>
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: CARD_ALT }}>
-      {/* Top bar */}
-      <header className="flex items-center justify-between px-6 py-3 border-b" style={{ background: BG, borderColor: CHROME_BORDER }}>
-        <div className="flex items-center gap-3">
-          <span className="block w-7 h-1 rounded-full" style={{ background: `hsl(${TEAL})` }} />
-          <span className="font-bold tracking-tight" style={{ color: TEXT }}>LIZA OS</span>
-          <span className="text-xs tracking-widest uppercase" style={{ color: MUTED }}>Satcom · Strategic Deck</span>
+    <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
+      <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
+        <div className="flex items-center gap-4">
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · Satcom Operator Strategic Deck</span>
+          <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
+            {current + 1} / {SLIDES.length}
+          </span>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => setShowGrid(v => !v)} className="px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-semibold border" style={{ borderColor: CHROME_BORDER, color: TEXT }}>
-            <Grid3x3 size={16} /> Grid
-          </button>
-          <button onClick={enterFullscreen} className="px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-semibold text-white" style={{ background: `hsl(${TEAL})` }}>
-            <Maximize2 size={16} /> Present
-          </button>
           <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Satcom-Deck" slideCount={SLIDES.length} />
+          <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
+            <Grid3x3 size={16} className="mr-1.5" /> Grid
+          </Button>
+          <Button variant="ghost" size="sm" onClick={enterFullscreen}>
+            <Maximize2 size={16} className="mr-1.5" /> Present
+          </Button>
         </div>
-      </header>
-
-      {/* Body */}
-      <div className="flex-1 flex">
-        {/* Sidebar thumbnails */}
-        <aside className="w-[280px] shrink-0 border-r overflow-y-auto" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <div className="p-3 flex flex-col gap-2">
-            {SLIDES.map((s, i) => (
-              <button key={s.id} onClick={() => goTo(i)}
-                className={cn("rounded-lg border-2 overflow-hidden text-left transition-all", i === current ? "" : "hover:opacity-80")}
-                style={{ borderColor: i === current ? `hsl(${TEAL})` : CHROME_BORDER }}>
-                <div className="aspect-[16/9] relative" style={{ background: BG }}>
-                  <ScaledSlide>{s.component}</ScaledSlide>
-                </div>
-                <div className="px-2 py-1.5 flex items-center gap-2 text-xs" style={{ color: MUTED }}>
-                  <span className="font-mono">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="font-semibold truncate" style={{ color: TEXT }}>{s.title}</span>
-                </div>
-              </button>
-            ))}
-          </div>
-        </aside>
-
-        {/* Main canvas */}
-        <main className="flex-1 flex items-center justify-center p-6 relative">
-          {showGrid ? (
-            <div className="grid grid-cols-3 gap-4 w-full max-h-full overflow-y-auto p-2">
-              {SLIDES.map((s, i) => (
-                <button key={s.id} onClick={() => goTo(i)} className="rounded-xl border-2 overflow-hidden text-left" style={{ borderColor: i === current ? `hsl(${TEAL})` : CHROME_BORDER, background: BG }}>
-                  <div className="aspect-[16/9] relative">
-                    <ScaledSlide>{s.component}</ScaledSlide>
-                  </div>
-                  <div className="px-3 py-2 flex items-center gap-2" style={{ color: MUTED }}>
-                    <span className="font-mono text-xs">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="font-semibold text-sm truncate" style={{ color: TEXT }}>{s.title}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <div className="w-full h-full max-w-[1600px] aspect-[16/9] rounded-2xl shadow-2xl overflow-hidden" style={{ background: BG }}>
-              <ScaledSlide>{slide.component}</ScaledSlide>
-            </div>
-          )}
-
-          {/* Nav pills */}
-          {!showGrid && (
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full shadow-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-              <button onClick={prev} disabled={current === 0} className="p-2 rounded-lg disabled:opacity-20"><ChevronLeft size={18} style={{ color: TEXT }} /></button>
-              <span className="font-mono text-sm min-w-[55px] text-center" style={{ color: MUTED }}>{current + 1} / {SLIDES.length}</span>
-              <button onClick={next} disabled={current === SLIDES.length - 1} className="p-2 rounded-lg disabled:opacity-20"><ChevronRight size={18} style={{ color: TEXT }} /></button>
-            </div>
-          )}
-        </main>
       </div>
 
-      {/* Hidden export render */}
+      <div className="flex-1 flex items-center justify-center p-8 relative">
+        <button onClick={prev} disabled={current === 0}
+          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full disabled:opacity-10 hover:bg-white/80 transition-opacity z-10">
+          <ChevronLeft size={24} style={{ color: MUTED }} />
+        </button>
+
+        <div className="w-full h-full max-w-[1200px] rounded-xl overflow-hidden shadow-lg border" style={{ borderColor: CHROME_BORDER, aspectRatio: "16/9" }}>
+          <ScaledSlide>{slide.component}</ScaledSlide>
+        </div>
+
+        <button onClick={next} disabled={current === SLIDES.length - 1}
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full disabled:opacity-10 hover:bg-white/80 transition-opacity z-10">
+          <ChevronRight size={24} style={{ color: MUTED }} />
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center gap-1.5 pb-4">
+        {SLIDES.map((_, i) => (
+          <button key={i} onClick={() => goTo(i)}
+            className="w-2.5 h-2.5 rounded-full transition-all"
+            style={{ background: i === current ? `hsl(${TEAL})` : `hsl(215 10% 80%)` }} />
+        ))}
+      </div>
+
       <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
         {SLIDES.map(s => (
           <div key={s.id} style={{ width: 1920, height: 1080, overflow: 'hidden', position: 'relative' }}>{s.component}</div>
