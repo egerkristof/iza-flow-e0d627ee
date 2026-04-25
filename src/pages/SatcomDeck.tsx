@@ -966,16 +966,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Siemens Teamcenter / 3DEXPERIENCE AI", funding: "Public", round: "PLM incumbents · 2024", what: "AI features layered onto PLM. System of record for parts and BOMs, not a reasoning layer for engineering judgment.", color: GREEN },
-    { name: "Palantir Foundry / Skywise", funding: "Public", round: "Aerospace data ops", what: "Data integration and analytics across programs. Reads telemetry and BOMs; doesn't encode chief-engineer judgment.", color: SEAFOAM },
-    { name: "Valispace / Codebeamer / Jama AI", funding: "VC-backed / PTC", round: "Systems-eng tools", what: "Workflow + document AI inside requirements and verification. No cross-mission FRACAS memory or design-precedent loop.", color: BLUE },
-    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every aerospace pilot", what: "General reasoning. No ECSS context, no mission-heritage grounding, no audit-grade trail.", color: GOLD },
+    { name: "Kratos / SES Adaptive / GS-class C2", funding: "Public / strategic", round: "Fleet C2 incumbents", what: "AI features layered onto SOCC and ground segment. System of record for telemetry and commanding, not a reasoning layer for operator judgment.", color: GREEN },
+    { name: "Palantir Foundry / Skywise-class", funding: "Public", round: "Operator data ops", what: "Data integration and analytics across the fleet. Reads telemetry and contracts; doesn't encode senior-controller, procurement, or regulatory judgment.", color: SEAFOAM },
+    { name: "Salesforce / SAP / OSS-BSS AI", funding: "Public", round: "CRM / ERP / service ops", what: "Workflow + document AI inside customer, billing, and service systems. No cross-fleet anomaly memory or vendor-precedent loop.", color: BLUE },
+    { name: "Generic LLM stacks (OpenAI / Anthropic)", funding: "Mega-cap", round: "In every operator pilot", what: "General reasoning. No ITU/SLA context, no fleet-heritage grounding, no audit-grade trail for regulators or customers.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, ECSS-aware injection, drift detection. The plumbing every mission-grade AI workflow will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Mission Memory", desc: "FRACAS precedent, NCR outcomes, validated procedures, review feedback — graph deepens unit-by-unit and mission-by-mission. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Audit-Grade Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for ECSS / AS9100 era AI.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, ITU/SLA-aware injection, drift detection. The plumbing every operator-grade AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Fleet Memory", desc: "Anomaly precedent, vendor outcomes, validated SOPs, regulatory feedback — graph deepens satellite-by-satellite and contract-by-contract. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Audit-Grade Trail by Design", desc: "Every AI output is versioned, traceable, and tied to the source instruction. The default substrate for SLA-, ITU-, and gov-defense-grade AI.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -985,8 +985,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Aerospace AI tools surface data and draft documents.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the mission memory layer that encodes your chief engineer's judgment.</span>
+          Satcom AI tools surface telemetry and draft reports.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the operator memory layer that encodes how your senior controllers, procurement leads, and regulatory team actually decide.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1019,11 +1019,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read PLM data and dashboards.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your chief engineers and AIT leads decide.</span>
+              Others read telemetry and dashboards.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your senior controllers, procurement leads, and ITU specialists decide.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every aerospace AI stack will need: ECSS tailoring, FRACAS precedent, review feedback, mission-specific standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being applied to space.
+              The instruction layer every satcom AI stack will need: SLA tailoring, anomaly precedent, vendor and regulatory feedback, operator-specific standards — versioned, validated, and queryable. Same architecture validated across regulated industries, now being applied to satellite operators.
             </p>
           </div>
         </div>
@@ -1035,9 +1035,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$8B+", desc: "Aerospace engineering & MAIT software by 2030 (PLM, requirements, AIT, mission ops)" },
-                { label: "SAM", value: "$1.5-2B", desc: "AI governance layer across systems engineering, MAIT, FRACAS, mission assurance" },
-                { label: "SOM", value: "$80-120M", desc: "EU sovereign-space wedge: NewSpace primes + integrators + national programs" },
+                { label: "TAM", value: "$10B+", desc: "Satcom operator software & services by 2030 (fleet C2, OSS/BSS, planning, regulatory, CRM/ERP for operators)" },
+                { label: "SAM", value: "$2-3B", desc: "AI governance layer across fleet ops, procurement, ITU/spectrum, SLAs, and service operations" },
+                { label: "SOM", value: "$80-150M", desc: "EU sovereign-satcom wedge: regional operators + government / defense customers + IFC and broadcast SLAs" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1049,7 +1049,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Frost & Sullivan / MarketsandMarkets, Aerospace PLM and engineering software, 2024-2030; ESA & EUSPA market reports. SAM/SOM are LIZA OS estimates based on the AI governance and reasoning layer inside these markets.
+              Sources: Euroconsult & NSR satellite-operator software / services reports 2024-2030; ITU & EUSPA market reports. SAM/SOM are LIZA OS estimates of the AI governance and reasoning layer inside these markets.
             </p>
           </div>
 
