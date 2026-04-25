@@ -11,6 +11,8 @@ import AECInvestorDeck from "@/pages/AECInvestorDeck";
 import PharmaInvestorDeck from "@/pages/PharmaInvestorDeck";
 import SpaceDeck from "@/pages/SpaceDeck";
 import SpaceBrief from "@/pages/SpaceBrief";
+import SatcomDeck from "@/pages/SatcomDeck";
+import SatcomBrief from "@/pages/SatcomBrief";
 
 export type PresentationRoute = {
   id: string;
@@ -66,6 +68,24 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/SpaceBrief.tsx",
     description: "Responsive short-form brief of the Space deck. Leads with sector-specific cost overruns and heritage-knowledge loss, reframes AI as a horizontal layer on a vertical knowledge problem. Single CTA to the full deck.",
     component: SpaceBrief,
+    showInAdmin: true,
+  },
+  {
+    id: "satcom",
+    title: "Satcom Operator Strategic Deck",
+    path: "/satcom",
+    sourcePath: "src/pages/SatcomDeck.tsx",
+    description: "Satellite-operator variant of the Space deck. Reframes the Mission Memory Layer as the Operator Memory Layer for fleet operations, procurement governance, and spectrum continuity. Open-canvas / first-customer angle for operators like Hispasat, SES, Eutelsat, Inmarsat.",
+    component: SatcomDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "satcom-brief",
+    title: "Satcom Brief (Mobile + Desktop)",
+    path: "/satcom-brief",
+    sourcePath: "src/pages/SatcomBrief.tsx",
+    description: "Responsive short-form brief of the Satcom deck. Leads with operator-specific risks (fleet memory, procurement learning loop, SLA exposure) and the open-canvas hook. Single CTA to the full deck.",
+    component: SatcomBrief,
     showInAdmin: true,
   },
   {
