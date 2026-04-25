@@ -54,8 +54,8 @@ const verticalProblems = [
 const loop = [
   {
     step: "Capture",
-    short: "Bottle the know-how.",
-    desc: "Turn senior engineers' judgment into clear, written rules — before they retire.",
+    short: "Define the expertise.",
+    desc: "Turn standards, decisions, and senior judgment into clear written rules — once.",
     Icon: BookOpen,
   },
   {
@@ -66,8 +66,8 @@ const loop = [
   },
   {
     step: "Apply",
-    short: "Engineers move faster.",
-    desc: "Trade studies, reviews, and docs run inside your rules — not around them.",
+    short: "Everyone ramps faster.",
+    desc: "New and senior engineers run trade studies, reviews, and docs inside your rules.",
     Icon: Rocket,
   },
   {
