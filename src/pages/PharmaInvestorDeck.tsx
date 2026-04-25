@@ -281,14 +281,14 @@ const AEC_COST_BENCHMARKS = [
 ];
 
 function Slide03() {
-  const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
+  const alsoApplies = ["Pharmacovigilance", "Regulatory affairs", "Medical affairs", "Clinical data mgmt", "Supply chain & cold chain", "Medical devices"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in AEC
+          Where Missing Context Shows Up in Life Sciences
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
           The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is expert judgment.</span>
