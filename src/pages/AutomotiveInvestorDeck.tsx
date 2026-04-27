@@ -1288,16 +1288,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Retail-banking marketing leader",
-      subtitle: "Banking signal",
-      scope: "Marketing + compliance discovery",
+      title: "Tier-1 automotive R&D leader (Budapest)",
+      subtitle: "Automotive signal",
+      scope: "R&D + onboarding discovery",
       color: TEAL,
-      outcome: "Live access to real retail-banking marketing pain",
+      outcome: "Live access to real cross-border R&D ramp pain",
       metric: "Active",
       metricLabel: "Discussion",
       points: [
-        "Active conversation with the marketing leadership of a major CEE retail bank",
-        "Direct signal that the brand &amp; compliance memory problem is real and strategically relevant",
+        "Active conversation with the R&D leadership of a CEE Tier-1 automotive R&D site (VIE Technology Europe, Budapest)",
+        "Direct signal that the cross-border engineering-memory and onboarding problem is real and strategically relevant",
       ],
       featured: true,
     },
@@ -1353,7 +1353,7 @@ function Slide08() {
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Retail banking marketing is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Cross-border automotive R&amp;D is where the experience now needs to become native.
           </p>
         </div>
 
@@ -1420,47 +1420,47 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Marketing &amp; Brand", status: "Wedge", color: GREEN,
+      vertical: "Engineering Onboarding & Knowledge Transfer", status: "Wedge", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Marketing redoes briefs and landing pages because brand, product, and compliance changes do not propagate. AI drafts from the public site, not from prior approvals.",
-      result: "Brand-aware briefs. Reusable campaign memory. Faster, sharper launches.",
-      proof: "Initial entry point with retail-banking marketing leaders (e.g. OTP-style ICP)",
+      problem: "Budapest re-derives chassis-control IP because HQ design intent and program lessons do not propagate. New hires take 9–12 months to ramp; AI drafts from public datasheets, not from VIE&apos;s actual prior decisions.",
+      result: "Onboarding playbooks grounded in HQ judgment. Reusable engineering memory. Ramp time cut from quarters to weeks.",
+      proof: "Initial entry point with Tier-1 R&amp;D directors at greenfield CEE sites (e.g. VIE Technology Europe)",
     },
     {
-      vertical: "Compliance &amp; Customer Comms", status: "Anchor", color: TEAL,
+      vertical: "Design Reviews & Functional Safety", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "Disclosures, KYC adjudications, and complaint replies live in disconnected tools. AI cannot reason across them. Decision memory dies between teams.",
-      result: "Unified disclosure, KYC, and complaint lifecycle. Every AI response grounded in this bank&apos;s prior approvals and policy interpretations.",
-      proof: "Target embedding path across CMS, marketing cloud, and GRC suites",
+      problem: "Design specs, FMEDA, and change requests live in disconnected ALM/PLM tools across sites. AI cannot reason across them. Decision rationale dies between programs.",
+      result: "Unified design-review and FuSa lifecycle. Every AI response grounded in VIE&apos;s prior FMEDA, safety cases, and HQ-approved patterns.",
+      proof: "Target embedding path across Polarion, DOORS, Ansys medini, and Teamcenter",
     },
     {
-      vertical: "Underwriting, Audit &amp; Reporting", status: "Expansion", color: GOLD,
+      vertical: "Manufacturing Transfer, Audit & OEM Reporting", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "Credit memos, audit responses, and regulator filings diverge from internal standards. Decision rationale evaporates after sign-off. Auditors inherit fragmented narrative.",
-      result: "Standards-aware memos. Living audit memory. Regulator-grade artifacts, every time.",
-      proof: "Risk &amp; audit extension path once marketing &amp; compliance loop is in production",
+      problem: "Manufacturing readiness packs, ASPICE audits, and OEM homologation submissions diverge from internal standards. Design rationale evaporates after SOP. Auditors and OEMs inherit fragmented narrative.",
+      result: "Standards-aware engineering packs. Living audit memory. OEM-grade artifacts, every time.",
+      proof: "Manufacturing &amp; OEM-reporting extension path once R&amp;D and FuSa loop is in production",
     },
   ];
 
   const expandInto = [
-    { name: "Wealth &amp; advisory communications", col: TEAL },
-    { name: "AML / fraud narrative reviews", col: "215 25% 50%" },
-    { name: "Credit &amp; risk memo drafting", col: GOLD },
-    { name: "Regulator filings &amp; ESG reporting", col: GREEN },
-    { name: "Branch &amp; contact-center playbooks", col: ACCENT },
-    { name: "Internal training &amp; onboarding", col: "330 70% 55%" },
+    { name: "EMB & wheel-hub motor knowledge codification", col: TEAL },
+    { name: "Cybersecurity (UNECE R155/R156) artifacts", col: "215 25% 50%" },
+    { name: "OEM RFQ & tender response memory", col: GOLD },
+    { name: "Manufacturing & supplier-quality reporting", col: GREEN },
+    { name: "Field-learning & service feedback loop", col: ACCENT },
+    { name: "Cross-program reuse & global R&D onboarding", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Banking Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Automotive R&D Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            One brand &amp; compliance memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every customer-facing surface.</span>
+            One engineering memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every R&amp;D site, every program.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1471,7 +1471,7 @@ function Slide09() {
               The missing connective tissue underneath the banking AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: live conversations with retail-banking marketing leadership, not a closed contract claim.
+              Current signal: live conversations with Tier-1 R&amp;D leadership at CEE greenfield sites, not a closed contract claim.
             </p>
           </div>
         </div>
@@ -1542,7 +1542,7 @@ function Slide09() {
                 Strategic path
               </p>
               <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Expansion across the bank lifecycle. Partnership path on the next slide.
+                Expansion across the R&amp;D and program lifecycle. Partnership path on the next slide.
               </p>
             </div>
             <div className="rounded-xl px-5 py-4 shrink-0"
@@ -1570,21 +1570,21 @@ function Slide09Partnership() {
   const ladder = [
     {
       phase: "Months 0-3",
-      title: "Marketing Pilot",
+      title: "Onboarding Pilot",
       color: GREEN,
-      desc: "30-day pilot with the bank&apos;s marketing &amp; compliance team on one workflow (e.g. campaign brief, landing page, disclosure). Low commitment, fast signal.",
+      desc: "30-day pilot with the R&amp;D site's onboarding & senior-engineer team on one knowledge-transfer workflow (chassis-control IP block, EMB onboarding playbook, or HQ design-rationale capture). Low commitment, fast signal.",
     },
     {
       phase: "Months 3-12",
-      title: "Marketing Memory Layer",
+      title: "R&D Memory Layer",
       color: TEAL,
-      desc: "LIZA becomes the brand &amp; compliance memory layer for the marketing organization. Reusable across campaigns, geographies, and product lines.",
+      desc: "LIZA becomes the engineering memory layer for the R&amp;D site. Reusable across programs, components, and HQ↔Budapest handoffs.",
     },
     {
       phase: "Months 12-24",
-      title: "Bank-Wide Memory Layer",
+      title: "Global R&D Memory Layer",
       color: GOLD,
-      desc: "Expand from marketing into compliance, KYC, complaints, and underwriting. LIZA becomes the bank&apos;s instruction layer underneath every AI workflow. Optional strategic stake unlocks CEE reference-architecture rights.",
+      desc: "Expand from onboarding into design reviews, FMEDA, FuSa, and manufacturing transfer. LIZA becomes the instruction layer underneath every AI workflow across Diankou, Beijing, Shanghai, and Budapest. Optional strategic stake unlocks cross-border reference-architecture rights.",
     },
   ];
 
@@ -1594,10 +1594,10 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Banking GTM Mechanic
+            Automotive R&D GTM Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
-            A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>marketing pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>bank-wide memory layer</span>.
+            A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>onboarding pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>global R&amp;D memory layer</span>.
           </h2>
         </div>
 
@@ -1698,7 +1698,7 @@ function Slide10() {
 
         <div className="flex gap-5 mt-4">
           {[
-            { label: "AI Standards Diagnostic", desc: "Live tool. Marketing &amp; compliance teams self-assess AI maturity.", color: GOLD },
+            { label: "AI Standards Diagnostic", desc: "Live tool. R&D and FuSa teams self-assess AI maturity.", color: GOLD },
             { label: "Full Marketing Site", desc: "Positioning, 7 use cases, industries live at lizaos.ai.", color: ACCENT },
           ].map(({ label, desc, color }) => (
             <div key={label} className="flex-1 rounded-xl border px-5 py-3 flex items-center gap-3"
@@ -1792,9 +1792,9 @@ function Slide11() {
               <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Revenue Logic</p>
               <div className="flex flex-col gap-2">
                 {[
-                  "Diagnostic identifies marketing &amp; compliance rework and creates urgency",
-                  "Marketing pilot proves one workflow (brief, page, disclosure) with minimal adoption friction",
-                  "Self-serve UX turns brand &amp; compliance workflows into repeatable product usage",
+                  "Diagnostic identifies cross-border ramp and engineering-rework cost and creates urgency",
+                  "Onboarding pilot proves one knowledge-transfer workflow with minimal adoption friction",
+                  "Self-serve UX turns engineering & FuSa workflows into repeatable product usage",
                   "Platform base anchors the knowledge system inside the account",
                   "Credits scale revenue as AI execution becomes mission-critical",
                 ].map((step, i) => (
@@ -1825,11 +1825,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Bank selects one high-value marketing workflow (e.g. campaign brief, landing page, disclosure copy)",
-        "Platform guides structured capture from 2-3 senior brand, product, and compliance leads",
-        "LIZA auto-generates brand &amp; compliance-aware playbooks grounded in this bank&apos;s prior approvals",
+        "R&D site selects one high-value knowledge-transfer workflow (e.g. EMB onboarding playbook, chassis-control IP block, or HQ design-rationale capture)",
+        "Platform guides structured capture from 2-3 senior chassis-control engineers in Diankou/Beijing/Shanghai",
+        "LIZA auto-generates onboarding & design playbooks grounded in VIE&apos;s prior programs and HQ judgment",
       ],
-      output: "3-5 brand &amp; compliance-aware playbooks ready",
+      output: "3-5 engineering onboarding & design-rationale playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1837,11 +1837,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Marketing team self-serves: run playbooks against live campaign briefs, pages, and disclosures",
-        "Real campaigns, real reviewers, real customer-facing copy",
+        "Budapest engineers self-serve: run playbooks against live ramp plans, design briefs, and FMEDA tasks",
+        "Real programs, real reviewers, real engineering artifacts",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior reviewer vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: senior HQ engineer vs. AI-with-LIZA vs. AI-alone vs. junior hire alone",
     },
     {
       week: "Week 4",
@@ -1849,9 +1849,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per campaign, rework avoided, time-to-market reduced",
-        "Brand &amp; compliance memory self-improves from every approval",
-        "Business case for bank-wide rollout with real marketing &amp; compliance numbers",
+        "Automated review: ramp days saved per new hire, design rework avoided, HQ-engineer time freed",
+        "Engineering memory self-improves from every design review and FMEDA edit",
+        "Business case for site-wide and HQ-wide rollout with real R&D and FuSa numbers",
       ],
       output: "ROI proven. Expansion decision with data.",
     },
@@ -1864,7 +1864,7 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the retail-banking-native memory loop.{" "}
+          The wedge is one workflow. The product is the automotive-R&amp;D-native memory loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -1911,7 +1911,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Banking-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
+            { metric: "R&D-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -2012,7 +2012,7 @@ function Slide13() {
             Become a customer first. <span style={{ color: `hsl(${TEAL})` }}>Invest if you want to own the category with us.</span>
           </h2>
           <p style={{ fontSize: 22, color: MUTED, maxWidth: 1280, marginInline: "auto", lineHeight: 1.45 }}>
-            Pilot the marketing memory layer in 30 days. If it earns its place inside your campaign and compliance workflow, you choose whether to take a strategic stake in the company that shipped it.
+            Pilot the engineering memory layer in 30 days. If it earns its place inside your onboarding and design workflow, you choose whether to take a strategic stake in the company that shipped it.
           </p>
         </div>
 
@@ -2027,13 +2027,13 @@ function Slide13() {
             </div>
             <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Become a customer.</p>
             <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-              Run a 30-day marketing pilot on one workflow you already own — campaign briefs, landing pages, or disclosures. We codify the brand, product, and compliance judgment that lives in your senior marketing and legal leads, then prove it inside your environment.
+              Run a 30-day onboarding pilot on one workflow you already own — chassis-control IP transfer, EMB onboarding playbook, or HQ design-rationale capture. We codify the engineering judgment that lives in your senior chassis and FuSa engineers in Diankou/Beijing/Shanghai, then prove it inside your Budapest team.
             </p>
             <div className="grid grid-cols-1 gap-2 mt-auto">
               {[
-                { k: "30 days", v: "Pilot one marketing workflow with your team's brand and compliance judgment encoded." },
-                { k: "Quarter 2", v: "Convert to the marketing memory layer across briefs, landing pages, and disclosures." },
-                { k: "Year 1", v: "Standard memory layer across markets, segments, and regulated channels." },
+                { k: "30 days", v: "Pilot one knowledge-transfer workflow with HQ engineering judgment encoded." },
+                { k: "Quarter 2", v: "Convert to the R&D memory layer across onboarding, design reviews, and FMEDA." },
+                { k: "Year 1", v: "Standard memory layer across Budapest, Diankou, Beijing, Shanghai — and the next R&D site." },
               ].map(({ k, v }) => (
                 <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2.5"
                   style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -2053,13 +2053,13 @@ function Slide13() {
             </div>
             <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Take a strategic stake.</p>
             <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-              €3M strategic minority alongside the customer relationship. 18-month runway to harden the marketing memory layer, ship usage-priced rollout, and build the retail-banking beachhead across CEE with you on the inside.
+              €3M strategic minority alongside the customer relationship. 18-month runway to harden the engineering memory layer, ship usage-priced rollout, and build the cross-border automotive R&amp;D beachhead with you on the inside.
             </p>
             <div className="grid grid-cols-2 gap-2 mb-3">
               {[
-                { pct: "35%", label: "Banking-Native Product UX", color: ACCENT },
+                { pct: "35%", label: "R&D-Native Product UX", color: ACCENT },
                 { pct: "25%", label: "Usage + Billing Infra", color: GREEN },
-                { pct: "25%", label: "Integrations + Pilots", color: GOLD },
+                { pct: "25%", label: "ALM/PLM Integrations + Pilots", color: GOLD },
                 { pct: "15%", label: "GTM + Operations", color: MUTED },
               ].map(({ pct, label, color }) => (
                 <div key={label} className="rounded-lg border px-3 py-2 text-center"
@@ -2071,9 +2071,9 @@ function Slide13() {
             </div>
             <div className="grid grid-cols-1 gap-2 mt-auto">
               {[
-                { k: "Month 6", v: "Banking-native UX live with first lighthouse retail-bank deployments." },
-                { k: "Month 12", v: "Usage-priced rollout. CMS / marketing-cloud / GRC integration path in market." },
-                { k: "Month 18", v: "€1.5–2.5M ARR. 8–12 retail-banking customers on the marketing memory layer." },
+                { k: "Month 6", v: "R&D-native UX live with first lighthouse Tier-1 deployment (VIE Budapest + HQ link)." },
+                { k: "Month 12", v: "Usage-priced rollout. Polarion / DOORS / medini / Teamcenter integration path in market." },
+                { k: "Month 18", v: "€1.5–2.5M ARR. 6–10 Tier-1 R&D customers on the engineering memory layer." },
               ].map(({ k, v }) => (
                 <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2"
                   style={{ background: `hsl(${GOLD} / 0.04)`, border: `1px solid hsl(${GOLD} / 0.14)` }}>
@@ -2089,7 +2089,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
             Pilot first. Investment is not a prerequisite —{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>it's the natural second step once the marketing memory layer earns its place inside your retail-banking operations.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>it's the natural second step once the marketing memory layer earns its place inside your automotive-R&D operations.</strong>
           </p>
         </div>
 
