@@ -139,7 +139,7 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Pharma Brief (Mobile + Desktop)",
     path: "/pharma-brief",
     sourcePath: "src/pages/PharmaBrief.tsx",
-    description: "Responsive short-form brief of the Pharma Pitch Deck. Leads with sector-specific cost of uncodified GxP judgment (repeat deviations, $2.6B per drug, 10% Phase I→approval) and reframes AI as a horizontal layer on a vertical knowledge problem. Single CTA to /pharma-pitch.",
+    description: "Responsive short-form brief that funnels into the Pharma Investor Deck. Leads with sector-specific cost of uncodified GxP judgment (repeat deviations, $2.6B per drug, 10% Phase I→approval) and reframes AI as a horizontal layer on a vertical knowledge problem. Single CTA to /investor-pharma.",
     component: PharmaBrief,
     showInAdmin: true,
   },
