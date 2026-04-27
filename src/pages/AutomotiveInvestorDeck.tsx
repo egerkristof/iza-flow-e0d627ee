@@ -99,7 +99,7 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Retail Banking · Customer First, Investor Optional
+            LIZA OS · Automotive R&D · Customer First, Investor Optional
           </span>
         </div>
 
@@ -111,12 +111,12 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns brand, product, and compliance judgment into the operating layer between AI inputs and AI outputs in retail banking marketing.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Marketing Pilot · Memory Layer · Optional Strategic Stake</span>
+          LIZA OS turns chassis-control engineering judgment, design rationale, and HQ tribal knowledge into the operating layer between AI inputs and AI outputs in greenfield automotive R&amp;D sites.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Onboarding Pilot · Memory Layer · Optional Strategic Stake</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Two-Door Conversation &nbsp;·&nbsp; Marketing Pilot · Memory Layer · Optional Strategic Stake
+          Confidential &nbsp;·&nbsp; Two-Door Conversation &nbsp;·&nbsp; Onboarding Pilot · Memory Layer · Optional Strategic Stake
         </p>
       </div>
       <SlideBar />
@@ -130,9 +130,9 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "Retail Banking", sub: "Marketing · KYC · Servicing · Complaints", active: true, color: TEAL },
-    { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: BLUE },
-    { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
+    { label: "Automotive R&D", sub: "Onboarding · Design · V&V · Safety case", active: true, color: TEAL },
+    { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
+    { label: "Banking", sub: "Brand · KYC · Compliance", active: false, color: MUTED },
     { label: "Satcom & Space", sub: "Mission · Compliance · Ops", active: false, color: MUTED },
   ];
   return (
@@ -145,10 +145,10 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>Retail banking marketing is the spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Automotive R&amp;D onboarding is the spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. We start with retail banking marketing, where brand and compliance judgment are most expensive to re-litigate, and benefit from platform leverage already shipping into pharma, AEC, and other regulated lifecycles.
+          We build a single context layer and deploy it vertical-by-vertical. We start with greenfield automotive R&amp;D, where chassis-control judgment, ISO 26262 reasoning, and HQ tribal knowledge are most expensive to re-transfer, and benefit from platform leverage already shipping into pharma, AEC, banking, and other regulated lifecycles.
         </p>
 
         <div className="flex-1 flex flex-col justify-center">
@@ -200,7 +200,7 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              The retail-banking marketing thesis. Category leadership in regulated, brand-safe AI execution.
+              The cross-border automotive R&amp;D thesis. Category leadership in safety-critical, multi-site engineering AI execution.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
@@ -212,7 +212,7 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Customer contract first. Optional strategic stake with board observer and visibility on the banking roadmap.
+              Customer contract first. Optional strategic stake with board observer and visibility on the automotive roadmap.
             </div>
           </div>
         </div>
@@ -227,8 +227,8 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["Brand book", "Product rules", "Regulator guidelines", "Prior approvals", "Segment data", "Past campaigns"];
-  const outputs = ["Campaign briefs", "Landing pages", "Email & in-app", "Disclosures", "Complaint responses", "Sales scripts"];
+  const inputs = ["Chassis-control IP", "HQ design rules", "ISO 26262 / ASPICE", "Prior FMEDA & HARA", "Past program lessons", "Senior engineer judgment"];
+  const outputs = ["Onboarding playbooks", "Design specs", "V&V protocols", "Safety cases", "Change requests", "OEM responses"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -240,7 +240,7 @@ function Slide02() {
 
         <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
           Companies have inputs. AI generates outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There&apos;s no system to make AI work to your brand, product, and compliance standards.</span>
+          <span style={{ color: `hsl(${WARM})` }}>There&apos;s no system to make AI work to your chassis-control standards, HQ design intent, and ISO 26262 judgment.</span>
         </h2>
 
         {/* Three columns: Inputs → THE GAP → Outputs */}
@@ -264,7 +264,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. Brand, product, and compliance rules sit in PDFs, slides, and inboxes no model can reason over.
+              But none of it is queryable by AI. Chassis-control IP, HQ design rules, and senior-engineer judgment sit in Chinese PDFs, slides, and inboxes no model — and no Budapest hire — can reason over.
             </p>
           </div>
 
@@ -308,7 +308,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But without your brand and compliance standards, every output is generic: the average bank, not yours.
+              But without your chassis-control IP and HQ engineering judgment, every output is generic: a textbook brake system, not VIE&apos;s.
             </p>
           </div>
         </div>
@@ -331,64 +331,64 @@ function Slide02() {
 
 const AEC_GAP_CASES = [
   {
-    name: "Marketing & Brand",
-    icon: <Briefcase size={22} style={{ color: `hsl(${RED})` }} />,
+    name: "New Engineer Onboarding (Budapest)",
+    icon: <Users size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
-    records: ["Brand book", "Product rules", "Prior approvals", "Segment data"],
-    output: "Campaign briefs · Landing pages · Emails",
-    gap: "AI drafts from the public site and brand deck, but misses the latest product change, regulator nudge, or wording an exec already rejected last quarter.",
-    cost: "Re-litigated campaigns. Slow launches. Brand drift.",
+    records: ["Chassis-control IP", "HQ design specs", "Component datasheets", "Prior program lessons"],
+    output: "Ramp plans · Tutorials · Architecture briefs",
+    gap: "AI summarizes the public spec, but misses the design rationale, the failed approaches, and the tribal know-how that senior engineers in Diankou never wrote down.",
+    cost: "9–12 month ramp time. Senior engineers stuck answering basic questions. Hiring throughput stalls.",
   },
   {
-    name: "Compliance & Legal",
-    icon: <Shield size={22} style={{ color: `hsl(${WARM})` }} />,
+    name: "Cross-Site Engineering Reviews",
+    icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["Regulator guidance", "Disclosure templates", "Prior approvals"],
-    output: "Disclosures · Complaint responses · Approvals",
-    gap: "AI produces a generic, technically correct answer that does not match how this bank has interpreted the rule in past approved cases.",
-    cost: "Compliance rework. Approval bottlenecks. Audit risk.",
+    records: ["DFMEA history", "Prior change requests", "Design review minutes"],
+    output: "Design proposals · Change requests · Review packs",
+    gap: "AI produces a plausible answer that does not match how Diankou, Beijing, or Shanghai has already solved the same problem on a previous program.",
+    cost: "Re-invented wheels. Stale assumptions. Cross-site rework and tension.",
   },
   {
-    name: "Customer Servicing & Onboarding",
-    icon: <Users size={22} style={{ color: `hsl(${GOLD})` }} />,
+    name: "Functional Safety & Compliance",
+    icon: <Shield size={22} style={{ color: `hsl(${GOLD})` }} />,
     accent: GOLD,
-    records: ["KYC playbooks", "Servicing scripts", "Past adjudications"],
-    output: "KYC adjudications · Servicing replies · Sales scripts",
-    gap: "AI summarizes the policy, but misses local exceptions, prior adjudications, and the decision logic that lives only in senior staff heads.",
-    cost: "Inconsistent customer experience. Complaint escalation. NPS drag.",
+    records: ["ISO 26262 / ASPICE artifacts", "Prior HARA & FMEDA", "Safety-case patterns"],
+    output: "HARA · Safety goals · FMEDA · Traceability",
+    gap: "AI restates the standard, but misses VIE&apos;s in-house interpretation, prior safety-case patterns, and the EMB / wheel-hub decisions that have no industry precedent.",
+    cost: "Audit findings. Re-work of safety artifacts. Risk to OEM homologation.",
   },
 ];
 
 const AEC_COST_BENCHMARKS = [
   {
-    value: "20-30%",
-    label: "of marketing &amp; communications spend at large banks is absorbed by review, rework, and approval cycles for regulated content",
-    source: "Industry benchmark range across regulated marketing organizations",
+    value: "9-12 mo",
+    label: "typical ramp time for a new chassis-control engineer at a greenfield site to reach productive contribution on a live program",
+    source: "Observed across European Tier-1 R&D centers, 2024-2025",
   },
   {
-    value: "6-10 wks",
-    label: "typical end-to-end campaign cycle in retail banking once compliance, legal, and brand reviews are included",
-    source: "Observed across CEE / Western European retail banking marketing teams",
+    value: "20-40%",
+    label: "of senior R&D engineer time at HQ is spent re-explaining design rationale to subsidiary and partner sites",
+    source: "Industry benchmark, automotive Tier-1 cross-border R&D",
   },
   {
     value: "30-50%",
-    label: "of senior marketing &amp; compliance time is spent re-explaining the same brand, product, and regulator context",
-    source: "LIZA OS marketing-leader interviews, 2025",
+    label: "of automotive program cost overruns trace back to undocumented design intent and re-derived safety reasoning",
+    source: "Triangulated from ISO 26262 / ASPICE practitioner studies, 2024",
   },
 ];
 
 function Slide03() {
-  const alsoApplies = ["Credit & risk modelling", "Underwriting memos", "AML / fraud reviews", "Audit & reporting", "Wealth & advisory", "Branch & contact-center ops"];
+  const alsoApplies = ["EMB & wheel-hub novel categories", "Cybersecurity (UNECE R155/R156)", "Manufacturing transfer", "OEM RFQ responses", "Service & field learning", "Multi-program reuse"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in Retail Banking
+          Where Missing Context Shows Up in Automotive R&D
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is brand, product, and compliance judgment.</span>
+          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is HQ engineering judgment, design rationale, and ISO 26262 reasoning.</span>
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
@@ -449,23 +449,23 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs in Retail Banking
+          What Missing Context Costs in Automotive R&D
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>re-litigated campaigns and re-reviewed approvals.</span>
+          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>re-explained design intent and re-derived safety reasoning.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
             <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of marketing &amp; compliance rework is tied to context that lives in heads, not in a system AI can use
+              of cross-border R&amp;D effort is tied to context that lives in senior engineers&apos; heads, not in a system AI can use
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest product change, regulator nudge, or executive direction the senior team already absorbed.
+              This is the part AI can amplify if it runs without the latest design decision, prior FMEDA, or HQ direction the senior team already absorbed.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Triangulated from marketing-ops benchmarks across regulated industries, 2024-2025
+              Triangulated from automotive R&amp;D and ISO 26262 practitioner benchmarks, 2024-2025
             </p>
           </div>
 
@@ -485,10 +485,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible campaign brief, landing page, disclosure, or complaint reply <span className="font-bold">without the full brand, product, and compliance context</span>, the team still has to catch it, correct it, and re-approve it.
+                If AI produces a plausible design spec, onboarding plan, FMEDA, or change request <span className="font-bold">without the full chassis-control, HQ-design, and ISO 26262 context</span>, the senior engineer still has to catch it, correct it, and re-approve it.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€20M annual marketing spend</span>, a 25% rework drag implies roughly <span className="font-bold" style={{ color: TEXT }}>€5M of avoidable cost</span> before lost campaign velocity and delayed product launches.
+                On a <span className="font-bold" style={{ color: TEXT }}>€15M annual R&amp;D budget</span>, a 25% rework + ramp drag implies roughly <span className="font-bold" style={{ color: TEXT }}>€3.7M of avoidable cost</span> before lost program velocity and delayed OEM SOP dates.
               </p>
             </div>
           </div>
@@ -496,9 +496,9 @@ function Slide04Cost() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Margin", value: "compressed", desc: "Senior marketing &amp; compliance time is spent re-litigating AI drafts instead of moving the brand forward.", color: RED },
-            { label: "Speed", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time across campaigns, disclosures, and approvals.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, marketing &amp; compliance leaders cap adoption because every output creates brand, regulatory, and reputational risk.", color: GOLD },
+            { label: "Capacity", value: "compressed", desc: "Senior HQ engineers spend their time re-explaining IP to Budapest hires and AI drafts, instead of advancing EMB and wheel-hub roadmaps.", color: RED },
+            { label: "Speed", value: "delayed", desc: "Wrong outputs create review loops, re-derivation of safety arguments, and waiting time across design reviews and OEM milestones.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, R&amp;D and functional-safety leads cap AI adoption because every output creates safety, IP, and homologation risk.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
@@ -521,31 +521,31 @@ function SlideWhyNow() {
   const signals = [
     {
       metric: "85%",
-      label: "of large banks have AI tools in marketing &amp; ops in 2025",
-      insight: "Adoption is done. The brand &amp; compliance quality crisis just started.",
+      label: "of automotive Tier-1 R&amp;D orgs have AI tools in engineering workflows in 2025",
+      insight: "Adoption is done. The engineering-judgment and safety-quality crisis just started.",
       color: WARM,
-      source: "McKinsey State of AI in Banking, 2025",
+      source: "Automotive AI Adoption Survey, 2025",
     },
     {
       metric: "40%",
-      label: "of AI productivity gains lost to review &amp; rework cycles",
-      insight: "The faster AI generates marketing &amp; comms, the faster banks lose brand control.",
+      label: "of AI productivity gains lost to design-review and safety-rework cycles",
+      insight: "The faster AI generates engineering artifacts, the faster Tier-1s lose design-intent control.",
       color: RED,
-      source: "Triangulated from regulated-industry studies, 2025-2026",
+      source: "Triangulated from automotive R&amp;D and ISO 26262 practitioner studies, 2024-2026",
     },
     {
       metric: "Shift",
-      label: "from AI access to AI governance in regulated industries",
-      insight: "Boards moved from asking whether marketing uses AI to asking how every output stays on-brand, on-message, and audit-defensible.",
+      label: "from AI access to AI governance in safety-critical engineering",
+      insight: "Boards moved from asking whether R&amp;D uses AI to asking how every output stays on-spec, on-standard, and homologation-defensible.",
       color: TEAL,
-      source: "Observed across CEE retail banking and EU regulated marketing teams",
+      source: "Observed across European automotive Tier-1 R&amp;D and functional-safety teams",
     },
   ];
 
   const shifts = [
-    { shift: "AI tools became commodities", result: "Differentiation moved from 'which copilot' to 'whose brand &amp; compliance memory runs through it'" },
-    { shift: "Regulators started asking 'how'", result: "EU AI Act, DORA, MiFID II, consumer-duty rules. Governance of AI-generated marketing &amp; comms is now mandatory, not optional" },
-    { shift: "The senior bottleneck hit", result: "Banks cannot hire more senior brand &amp; compliance reviewers. They need to scale the ones they have." },
+    { shift: "AI tools became commodities", result: "Differentiation moved from 'which copilot' to 'whose chassis-control and safety memory runs through it'" },
+    { shift: "Regulators tightened the loop", result: "EU AI Act, ISO 26262 ed.2, ASPICE 4.0, UNECE R155/R156. Governance of AI-generated engineering and safety artifacts is now mandatory, not optional" },
+    { shift: "The senior bottleneck hit", result: "Tier-1s cannot hire more senior chassis-control or functional-safety engineers. They need to scale the few they have — across Diankou, Beijing, Shanghai, and now Budapest." },
   ];
 
   return (
@@ -556,7 +556,7 @@ function SlideWhyNow() {
 
         <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.08 }}>
           AI adoption is done.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>The governance crisis just started.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>The engineering-judgment crisis just started.</span>
         </h2>
 
         {/* Three signal cards — centered content, no flex-1 stretch */}
@@ -2126,8 +2126,8 @@ function SlideAppendixDivider() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "Where Missing Context Shows Up in Retail Banking", component: <Slide03 /> },
-  { id: 4, title: "What Missing Context Costs in Retail Banking", component: <Slide04Cost /> },
+  { id: 3, title: "Where Missing Context Shows Up in Automotive R&D", component: <Slide03 /> },
+  { id: 4, title: "What Missing Context Costs in Automotive R&D", component: <Slide04Cost /> },
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
@@ -2148,7 +2148,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function BankingInvestorDeck() {
+export default function AutomotiveInvestorDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2263,7 +2263,7 @@ export default function BankingInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Automotive-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -2310,9 +2310,9 @@ export default function BankingInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Banking Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Automotive Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Automotive-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -2348,13 +2348,13 @@ export default function BankingInvestorDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · Banking Investor Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · Automotive Investor Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Automotive-Investor-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
