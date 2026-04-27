@@ -1943,12 +1943,6 @@ function Slide12() {
     { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
   ];
 
-  const advisors = [
-    { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Pharma Quality Advisor", role: "Senior QA / Regulatory Leader, Top-20 Pharma", bio: "Engagement underway with a senior quality and regulatory leader to anchor GxP fit, validation strategy, and sponsor-side adoption patterns." },
-    { name: "Clinical Operations Advisor", role: "Head of Clinical Operations, Mid/Large Sponsor", bio: "Pipeline conversation to anchor protocol amendment, CSR authoring, and trial memory workflows in real sponsor reality." },
-  ];
-
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
