@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Pill, Building2, Briefcase, ArrowRight, Lock, Megaphone,
   TrendingUp, Users, Target, Handshake, GraduationCap, Radio,
+  Rocket, Satellite,
 } from "lucide-react";
 import { SectionTag } from "@/components/marketing/home/shared";
 
@@ -15,6 +16,36 @@ const REGULATED_INDUSTRIES = [
     description:
       "From R&D through post-market surveillance, from lab governance to food safety: govern AI across GxP and ISO-regulated processes without losing speed or traceability.",
     tags: ["GMP", "ISO 17025", "GLP", "GAMP 5", "21 CFR Part 11"],
+    available: true,
+  },
+  {
+    slug: "aec",
+    icon: <Building2 className="w-6 h-6" />,
+    title: "Architecture, Engineering & Construction",
+    lifecycle: "Built-Environment Project Lifecycle",
+    description:
+      "RFIs, submittals, owner standards, and BIM context governed across project delivery. Stop paying for the same rework twice.",
+    tags: ["ISO 19650", "BIM", "RFI", "Submittals"],
+    available: true,
+  },
+  {
+    slug: "space",
+    icon: <Rocket className="w-6 h-6" />,
+    title: "Space Engineering & Mission Operations",
+    lifecycle: "Mission Lifecycle Management",
+    description:
+      "Capture chief-engineer judgment and mission heritage before it retires. Govern AI across trade studies, reviews, and AIT.",
+    tags: ["ECSS", "AS9100", "PDR/CDR", "Heritage"],
+    available: true,
+  },
+  {
+    slug: "satcom",
+    icon: <Satellite className="w-6 h-6" />,
+    title: "Satellite Operators & Fleet Operations",
+    lifecycle: "Operator & Fleet Lifecycle",
+    description:
+      "15-year fleet memory, procurement governance, and spectrum continuity. The operator memory layer for satcom.",
+    tags: ["ITU-R", "FCC Part 25", "SLA", "LEOP"],
     available: true,
   },
   {
