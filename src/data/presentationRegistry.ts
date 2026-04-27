@@ -14,6 +14,7 @@ import SpaceBrief from "@/pages/SpaceBrief";
 import SatcomDeck from "@/pages/SatcomDeck";
 import SatcomBrief from "@/pages/SatcomBrief";
 import PharmaBrief from "@/pages/PharmaBrief";
+import BankingInvestorDeck from "@/pages/BankingInvestorDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -51,6 +52,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/PharmaInvestorDeck.tsx",
     description: "Life sciences deck for pharma sponsors, CROs, and CMOs. Open-canvas / first-customer framing: become a customer with a 30-day GxP pilot on deviations, CAPA, or CSR sections, then optionally take a strategic stake (€3M strategic minority) to co-define the GxP memory layer. Mirrors the satcom deck's two-door mechanic.",
     component: PharmaInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-banking",
+    title: "Banking Investor Deck",
+    path: "/investor-banking",
+    sourcePath: "src/pages/BankingInvestorDeck.tsx",
+    description: "Retail-banking lifecycle deck. Marketing wedge framing for retail-bank marketing leaders (e.g. OTP). 30-day pilot on a marketing workflow → expansion to KYC, complaints, credit, group governance. Two-door CTA: become a customer first, optional strategic stake to co-define the CEE banking reference architecture.",
+    component: BankingInvestorDeck,
     showInAdmin: true,
   },
   {
