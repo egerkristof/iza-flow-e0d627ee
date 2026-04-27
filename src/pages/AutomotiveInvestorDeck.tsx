@@ -264,7 +264,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. Chassis-control IP, HQ design rules, and senior-engineer judgment sit in Chinese PDFs, slides, and inboxes no model — and no Budapest hire — can reason over.
+              But none of it is queryable by AI. Chassis-control IP, HQ design rules, and senior-engineer judgment sit in HQ-language PDFs, slides, and inboxes no model — and no new engineering hire — can reason over.
             </p>
           </div>
 
@@ -308,7 +308,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But without your chassis-control IP and HQ engineering judgment, every output is generic: a textbook brake system, not VIE&apos;s.
+              But without your chassis-control IP and HQ engineering judgment, every output is generic: a textbook brake system, not your.
             </p>
           </div>
         </div>
@@ -331,12 +331,12 @@ function Slide02() {
 
 const AEC_GAP_CASES = [
   {
-    name: "New Engineer Onboarding (Budapest)",
+    name: "New Engineer Onboarding (Greenfield Site)",
     icon: <Users size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
     records: ["Chassis-control IP", "HQ design specs", "Component datasheets", "Prior program lessons"],
     output: "Ramp plans · Tutorials · Architecture briefs",
-    gap: "AI summarizes the public spec, but misses the design rationale, the failed approaches, and the tribal know-how that senior engineers in Diankou never wrote down.",
+    gap: "AI summarizes the public spec, but misses the design rationale, the failed approaches, and the tribal know-how that senior engineers at HQ never wrote down.",
     cost: "9–12 month ramp time. Senior engineers stuck answering basic questions. Hiring throughput stalls.",
   },
   {
@@ -345,7 +345,7 @@ const AEC_GAP_CASES = [
     accent: WARM,
     records: ["DFMEA history", "Prior change requests", "Design review minutes"],
     output: "Design proposals · Change requests · Review packs",
-    gap: "AI produces a plausible answer that does not match how Diankou, Beijing, or Shanghai has already solved the same problem on a previous program.",
+    gap: "AI produces a plausible answer that does not match how another R&D site has already solved the same problem on a previous program.",
     cost: "Re-invented wheels. Stale assumptions. Cross-site rework and tension.",
   },
   {
@@ -354,7 +354,7 @@ const AEC_GAP_CASES = [
     accent: GOLD,
     records: ["ISO 26262 / ASPICE artifacts", "Prior HARA & FMEDA", "Safety-case patterns"],
     output: "HARA · Safety goals · FMEDA · Traceability",
-    gap: "AI restates the standard, but misses VIE&apos;s in-house interpretation, prior safety-case patterns, and the EMB / wheel-hub decisions that have no industry precedent.",
+    gap: "AI restates the standard, but misses your in-house interpretation, prior safety-case patterns, and the EMB / wheel-hub decisions that have no industry precedent.",
     cost: "Audit findings. Re-work of safety artifacts. Risk to OEM homologation.",
   },
 ];
@@ -496,7 +496,7 @@ function Slide04Cost() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Capacity", value: "compressed", desc: "Senior HQ engineers spend their time re-explaining IP to Budapest hires and AI drafts, instead of advancing EMB and wheel-hub roadmaps.", color: RED },
+            { label: "Capacity", value: "compressed", desc: "Senior HQ engineers spend their time re-explaining IP to new engineering hires and AI drafts, instead of advancing EMB and wheel-hub roadmaps.", color: RED },
             { label: "Speed", value: "delayed", desc: "Wrong outputs create review loops, re-derivation of safety arguments, and waiting time across design reviews and OEM milestones.", color: WARM },
             { label: "AI usage", value: "cannot scale safely", desc: "Without governance, R&amp;D and functional-safety leads cap AI adoption because every output creates safety, IP, and homologation risk.", color: GOLD },
           ].map((item) => (
@@ -545,7 +545,7 @@ function SlideWhyNow() {
   const shifts = [
     { shift: "AI tools became commodities", result: "Differentiation moved from 'which copilot' to 'whose chassis-control and safety memory runs through it'" },
     { shift: "Regulators tightened the loop", result: "EU AI Act, ISO 26262 ed.2, ASPICE 4.0, UNECE R155/R156. Governance of AI-generated engineering and safety artifacts is now mandatory, not optional" },
-    { shift: "The senior bottleneck hit", result: "Tier-1s cannot hire more senior chassis-control or functional-safety engineers. They need to scale the few they have — across Diankou, Beijing, Shanghai, and now Budapest." },
+    { shift: "The senior bottleneck hit", result: "Tier-1s cannot hire more senior chassis-control or functional-safety engineers. They need to scale the few they have — across HQ and every new R&D site they stand up." },
   ];
 
   return (
@@ -968,7 +968,7 @@ function Slide06() {
   const moatLayers = [
     { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, design- and standard-aware injection, drift detection. The plumbing every automotive R&amp;D AI workflow will need.", icon: <Cpu size={20} /> },
     { layer: "Compounding Engineering Memory", desc: "Approved designs, FMEDA patterns, ISO 26262 interpretations, novel-component decisions (EMB, wheel-hub) — graph deepens program-by-program. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Reference-Customer Path", desc: "First Tier-1 R&amp;D site becomes the cross-border-engineering reference architecture. Active conversations with VIE Technology Europe (Budapest) and peers create a credible route to embedding across CEE automotive R&amp;D.", icon: <Network size={20} /> },
+    { layer: "Reference-Customer Path", desc: "First Tier-1 R&amp;D site becomes the cross-border-engineering reference architecture. Active conversations with Tier-1 R&D leaders at greenfield sites create a credible route to embedding across CEE automotive R&amp;D.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -1106,7 +1106,7 @@ function SlideVerticalization() {
               { label: "Define", desc: "Senior HQ engineers and FuSa leads encode chassis-control IP, design rationale, and ISO 26262 reasoning", icon: <BookOpen size={22} /> },
               { label: "Execute", desc: "AI applies that context inside live onboarding, design briefs, FMEDA, and change requests", icon: <Zap size={22} /> },
               { label: "Capture", desc: "Design-review decisions, FMEDA edits, and homologation feedback are structured back into memory", icon: <Eye size={22} /> },
-              { label: "Update", desc: "Engineering memory improves and propagates across Diankou, Beijing, Shanghai, and Budapest", icon: <RefreshCw size={22} /> },
+              { label: "Update", desc: "Engineering memory improves and propagates across HQ and regional R&D sites", icon: <RefreshCw size={22} /> },
             ].map((item, i) => (
               <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
@@ -1288,7 +1288,7 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Tier-1 automotive R&D leader (Budapest)",
+      title: "Tier-1 automotive R&D leader (greenfield site)",
       subtitle: "Automotive signal",
       scope: "R&D + onboarding discovery",
       color: TEAL,
@@ -1296,7 +1296,7 @@ function Slide08() {
       metric: "Active",
       metricLabel: "Discussion",
       points: [
-        "Active conversation with the R&D leadership of a CEE Tier-1 automotive R&D site (VIE Technology Europe, Budapest)",
+        "Active conversation with the R&D leadership of a CEE Tier-1 automotive R&D site (a greenfield Tier-1 R&D site)",
         "Direct signal that the cross-border engineering-memory and onboarding problem is real and strategically relevant",
       ],
       featured: true,
@@ -1422,15 +1422,15 @@ function Slide09() {
     {
       vertical: "Engineering Onboarding & Knowledge Transfer", status: "Wedge", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Budapest re-derives chassis-control IP because HQ design intent and program lessons do not propagate. New hires take 9–12 months to ramp; AI drafts from public datasheets, not from VIE&apos;s actual prior decisions.",
+      problem: "the new site re-derives chassis-control IP because HQ design intent and program lessons do not propagate. New hires take 9-12 months to ramp; AI drafts from public datasheets, not from your actual prior decisions.",
       result: "Onboarding playbooks grounded in HQ judgment. Reusable engineering memory. Ramp time cut from quarters to weeks.",
-      proof: "Initial entry point with Tier-1 R&amp;D directors at greenfield CEE sites (e.g. VIE Technology Europe)",
+      proof: "Initial entry point with Tier-1 R&amp;D directors at greenfield Tier-1 sites (e.g. a greenfield Tier-1 R&D site)",
     },
     {
       vertical: "Design Reviews & Functional Safety", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
       problem: "Design specs, FMEDA, and change requests live in disconnected ALM/PLM tools across sites. AI cannot reason across them. Decision rationale dies between programs.",
-      result: "Unified design-review and FuSa lifecycle. Every AI response grounded in VIE&apos;s prior FMEDA, safety cases, and HQ-approved patterns.",
+      result: "Unified design-review and FuSa lifecycle. Every AI response grounded in your prior FMEDA, safety cases, and HQ-approved patterns.",
       proof: "Target embedding path across Polarion, DOORS, Ansys medini, and Teamcenter",
     },
     {
@@ -1578,13 +1578,13 @@ function Slide09Partnership() {
       phase: "Months 3-12",
       title: "R&D Memory Layer",
       color: TEAL,
-      desc: "LIZA becomes the engineering memory layer for the R&amp;D site. Reusable across programs, components, and HQ↔Budapest handoffs.",
+      desc: "LIZA becomes the engineering memory layer for the R&amp;D site. Reusable across programs, components, and HQ↔site handoffs.",
     },
     {
       phase: "Months 12-24",
       title: "Global R&D Memory Layer",
       color: GOLD,
-      desc: "Expand from onboarding into design reviews, FMEDA, FuSa, and manufacturing transfer. LIZA becomes the instruction layer underneath every AI workflow across Diankou, Beijing, Shanghai, and Budapest. Optional strategic stake unlocks cross-border reference-architecture rights.",
+      desc: "Expand from onboarding into design reviews, FMEDA, FuSa, and manufacturing transfer. LIZA becomes the instruction layer underneath every AI workflow across HQ and regional R&D sites. Optional strategic stake unlocks cross-border reference-architecture rights.",
     },
   ];
 
@@ -1826,8 +1826,8 @@ function SlideExecutionChallenge() {
       color: TEAL,
       actions: [
         "R&D site selects one high-value knowledge-transfer workflow (e.g. EMB onboarding playbook, chassis-control IP block, or HQ design-rationale capture)",
-        "Platform guides structured capture from 2-3 senior chassis-control engineers in Diankou/Beijing/Shanghai",
-        "LIZA auto-generates onboarding & design playbooks grounded in VIE&apos;s prior programs and HQ judgment",
+        "Platform guides structured capture from 2-3 senior chassis-control engineers in HQ",
+        "LIZA auto-generates onboarding & design playbooks grounded in your prior programs and HQ judgment",
       ],
       output: "3-5 engineering onboarding & design-rationale playbooks ready",
     },
@@ -1837,7 +1837,7 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Budapest engineers self-serve: run playbooks against live ramp plans, design briefs, and FMEDA tasks",
+        "new R&D engineers self-serve: run playbooks against live ramp plans, design briefs, and FMEDA tasks",
         "Real programs, real reviewers, real engineering artifacts",
         "Platform tracks drift and captures feedback automatically",
       ],
@@ -2027,13 +2027,13 @@ function Slide13() {
             </div>
             <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Become a customer.</p>
             <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-              Run a 30-day onboarding pilot on one workflow you already own — chassis-control IP transfer, EMB onboarding playbook, or HQ design-rationale capture. We codify the engineering judgment that lives in your senior chassis and FuSa engineers in Diankou/Beijing/Shanghai, then prove it inside your Budapest team.
+              Run a 30-day onboarding pilot on one workflow you already own — chassis-control IP transfer, EMB onboarding playbook, or HQ design-rationale capture. We codify the engineering judgment that lives in your senior chassis and FuSa engineers in HQ, then prove it inside your new R&D team.
             </p>
             <div className="grid grid-cols-1 gap-2 mt-auto">
               {[
                 { k: "30 days", v: "Pilot one knowledge-transfer workflow with HQ engineering judgment encoded." },
                 { k: "Quarter 2", v: "Convert to the R&D memory layer across onboarding, design reviews, and FMEDA." },
-                { k: "Year 1", v: "Standard memory layer across Budapest, Diankou, Beijing, Shanghai — and the next R&D site." },
+                { k: "Year 1", v: "Standard memory layer across HQ and every regional R&D site, including the next site you stand up." },
               ].map(({ k, v }) => (
                 <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2.5"
                   style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -2071,7 +2071,7 @@ function Slide13() {
             </div>
             <div className="grid grid-cols-1 gap-2 mt-auto">
               {[
-                { k: "Month 6", v: "R&D-native UX live with first lighthouse Tier-1 deployment (VIE Budapest + HQ link)." },
+                { k: "Month 6", v: "R&D-native UX live with first lighthouse Tier-1 deployment (lighthouse Tier-1 site + HQ link)." },
                 { k: "Month 12", v: "Usage-priced rollout. Polarion / DOORS / medini / Teamcenter integration path in market." },
                 { k: "Month 18", v: "€1.5–2.5M ARR. 6–10 Tier-1 R&D customers on the engineering memory layer." },
               ].map(({ k, v }) => (
