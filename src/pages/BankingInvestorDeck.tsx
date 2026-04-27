@@ -52,8 +52,6 @@ const TEAL = "190 85% 32%";
 const GOLD = "38 92% 50%";
 const WARM = "15 85% 55%";
 const GREEN = "155 72% 38%";
-const BLUE = "220 80% 50%";
-const RED = "0 72% 50%";
 
 function SlideGrid() {
   return (
@@ -924,6 +922,3 @@ export default function BankingInvestorDeck() {
     </div>
   );
 }
-
-/* unused-import sentinel kept for future visual extensions */
-void BLUE; void RED;
