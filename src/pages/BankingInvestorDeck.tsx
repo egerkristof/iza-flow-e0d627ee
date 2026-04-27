@@ -125,7 +125,7 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE SHAPE — THE SHAPE OF THE COMPANY (AEC framing)
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Banking framing)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideShape() {
@@ -2007,51 +2007,89 @@ function Slide13() {
 
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
-          <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + retail-banking beachhead build-out
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
+          <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>
+            Become a customer first. <span style={{ color: `hsl(${TEAL})` }}>Invest if you want to own the category with us.</span>
+          </h2>
+          <p style={{ fontSize: 22, color: MUTED, maxWidth: 1280, marginInline: "auto", lineHeight: 1.45 }}>
+            Pilot the marketing memory layer in 30 days. If it earns its place inside your campaign and compliance workflow, you choose whether to take a strategic stake in the company that shipped it.
           </p>
         </div>
 
-        {/* Use of funds */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
-          {[
-            { label: "Banking-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Marketing, compliance, and review workflows; UI, onboarding, product design", color: ACCENT },
-            { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "Banking Integrations + Pilots", pct: "25%", amt: "€750K", desc: "CMS, marketing cloud, and GRC bridges; lighthouse retail-banking deployments", color: GOLD },
-            { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Banking case studies, CEE channel motion, legal, compliance", color: MUTED },
-          ].map(({ label, pct, amt, desc, color }) => (
-            <div key={label} className="rounded-xl border px-5 py-4 text-center"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-              <p className="font-black" style={{ fontSize: 32, color: TEXT }}>{pct}</p>
-              <p className="font-bold" style={{ fontSize: 16, color: `hsl(${color})` }}>{label}</p>
-              <p style={{ fontSize: 14, color: MUTED }}>{amt}: {desc}</p>
+        {/* Two doors */}
+        <div className="grid grid-cols-2 gap-6 mb-6">
+          {/* DOOR 1 — Customer */}
+          <div className="rounded-2xl border-2 p-7 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <div className="flex items-center justify-between mb-3">
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Door 1 · Recommended</p>
+              <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Start here</span>
             </div>
-          ))}
-        </div>
+            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Become a customer.</p>
+            <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+              Run a 30-day marketing pilot on one workflow you already own — campaign briefs, landing pages, or disclosures. We codify the brand, product, and compliance judgment that lives in your senior marketing and legal leads, then prove it inside your environment.
+            </p>
+            <div className="grid grid-cols-1 gap-2 mt-auto">
+              {[
+                { k: "30 days", v: "Pilot one marketing workflow with your team's brand and compliance judgment encoded." },
+                { k: "Quarter 2", v: "Convert to the marketing memory layer across briefs, landing pages, and disclosures." },
+                { k: "Year 1", v: "Standard memory layer across markets, segments, and regulated channels." },
+              ].map(({ k, v }) => (
+                <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2.5"
+                  style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${TEAL})`, minWidth: 78 }}>{k}</span>
+                  <span style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Milestones */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          {[
-            { month: "Month 1-6", target: "Banking-native UX live", milestone: "Campaign brief, landing page, and disclosure surfaces in market with first lighthouse retail-bank pilots.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Banking pilots convert to platform base plus credits. CMS / marketing-cloud / GRC integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "8-12 retail-banking customers on a repeatable self-serve expansion path across CEE.", color: MINT },
-          ].map(({ month, target, milestone, color }) => (
-            <div key={month} className="rounded-xl border px-5 py-4"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
-              <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{month}</p>
-              <p className="font-black mt-1" style={{ fontSize: 28, color: TEXT }}>{target}</p>
-              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{milestone}</p>
+          {/* DOOR 2 — Strategic stake */}
+          <div className="rounded-2xl border-2 p-7 flex flex-col"
+            style={{ borderColor: `hsl(${GOLD} / 0.32)`, background: `hsl(${GOLD} / 0.05)` }}>
+            <div className="flex items-center justify-between mb-3">
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Door 2 · Optional</p>
+              <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>If we earn it</span>
             </div>
-          ))}
+            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Take a strategic stake.</p>
+            <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+              €3M strategic minority alongside the customer relationship. 18-month runway to harden the marketing memory layer, ship usage-priced rollout, and build the retail-banking beachhead across CEE with you on the inside.
+            </p>
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              {[
+                { pct: "35%", label: "Banking-Native Product UX", color: ACCENT },
+                { pct: "25%", label: "Usage + Billing Infra", color: GREEN },
+                { pct: "25%", label: "Integrations + Pilots", color: GOLD },
+                { pct: "15%", label: "GTM + Operations", color: MUTED },
+              ].map(({ pct, label, color }) => (
+                <div key={label} className="rounded-lg border px-3 py-2 text-center"
+                  style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
+                  <p className="font-black" style={{ fontSize: 18, color: TEXT, lineHeight: 1 }}>{pct}</p>
+                  <p className="font-bold mt-0.5" style={{ fontSize: 11, color: `hsl(${color})` }}>{label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 gap-2 mt-auto">
+              {[
+                { k: "Month 6", v: "Banking-native UX live with first lighthouse retail-bank deployments." },
+                { k: "Month 12", v: "Usage-priced rollout. CMS / marketing-cloud / GRC integration path in market." },
+                { k: "Month 18", v: "€1.5–2.5M ARR. 8–12 retail-banking customers on the marketing memory layer." },
+              ].map(({ k, v }) => (
+                <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2"
+                  style={{ background: `hsl(${GOLD} / 0.04)`, border: `1px solid hsl(${GOLD} / 0.14)` }}>
+                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${GOLD})`, minWidth: 78 }}>{k}</span>
+                  <span style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the retail-banking-native control layer for every AI workflow.</strong>
+          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
+            Pilot first. Investment is not a prerequisite —{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>it's the natural second step once the marketing memory layer earns its place inside your retail-banking operations.</strong>
           </p>
         </div>
 
@@ -2274,7 +2312,7 @@ export default function BankingInvestorDeck() {
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Banking Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -2310,13 +2348,13 @@ export default function BankingInvestorDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · AEC Investor Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · Banking Investor Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
