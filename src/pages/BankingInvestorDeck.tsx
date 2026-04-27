@@ -962,7 +962,7 @@ function Slide06() {
     { name: "Jasper / Writer for Banking", funding: "Public / $200M+", round: "Series C · 2024", what: "Brand-tuned content AI. Generates fast, but does not encode this bank&apos;s prior approvals or compliance interpretations.", color: GREEN },
     { name: "Adobe GenStudio", funding: "Public", round: "Adobe · 2024", what: "Generative campaign factory. Strong production, but treats brand &amp; compliance as a static prompt, not a living memory layer.", color: SEAFOAM },
     { name: "Saifr / Hadrius", funding: "$10-30M", round: "Compliance AI · 2024", what: "Reviews marketing copy against regulation. Document-level checks, not the bank&apos;s own decision memory.", color: BLUE },
-    { name: "In-house "AI for Bank" stacks", funding: "Internal", round: "Most CEE/EU banks", what: "Custom RAG over policies and brand docs. Useful, but no governed memory layer that learns from every approval and reuse.", color: GOLD },
+    { name: "In-house \"AI for Bank\" stacks", funding: "Internal", round: "Most CEE/EU banks", what: "Custom RAG over policies and brand docs. Useful, but no governed memory layer that learns from every approval and reuse.", color: GOLD },
   ];
 
   const moatLayers = [
