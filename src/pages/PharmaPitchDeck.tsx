@@ -1286,20 +1286,23 @@ function Act3_Summary() {
               style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
               <Pill size={24} style={{ color: `hsl(${ACCENT})` }} />
             </div>
-            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>LIZA OS FOR REGULATED LIFECYCLES</span>
+            <span className="font-bold tracking-[0.15em]" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>TWO-DOOR CONVERSATION</span>
           </div>
 
           <h2 className="font-black mb-8" style={{ fontSize: 52, color: "hsl(0 0% 100%)", lineHeight: 1.05 }}>
-            The operating system
-            <br />for regulated lifecycle
-            <br /><span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>management.</span>
+            Pilot first.
+            <br /><span style={{ background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Strategic stake optional.</span>
           </h2>
+
+          <p className="mb-8" style={{ fontSize: 18, color: `hsl(0 0% 100% / 0.7)`, lineHeight: 1.5, maxWidth: 720 }}>
+            Door 1: a 30-day GxP pilot on one workflow. &nbsp;·&nbsp; Door 2: co-define the GxP memory standard (open canvas). &nbsp;·&nbsp; Sequence: customer first, strategic stake later only if it fits.
+          </p>
 
           <div className="space-y-3 mb-8">
             {[
-              { num: "1", t: "The standards gap is real, and widening", d: "Inconsistent execution costs billions. AI without governance makes it worse." },
-              { num: "2", t: "Audit is the fastest proof point", d: "18 days to 1.5 hours. 84% first-pass accuracy. Measurable from day one." },
-              { num: "3", t: "The platform compounds across the lifecycle", d: "Same architecture handles any judgment-heavy GxP process. Every domain encoded makes the system smarter." },
+              { num: "1", t: "Door 1 · Become a customer", d: "30-day pilot on one workflow — deviation, CAPA, CSR section, or PV narrative. Fixed scope, fixed price. You only continue if the savings are real." },
+              { num: "2", t: "Door 2 · Become a design partner", d: "Co-develop the GxP-native version of LIZA OS with us. Anchor the GxP memory standard for your sponsor, CRO, or CMO operations. Optional strategic stake." },
+              { num: "3", t: "The sequence", d: "Customer first. The pilot proves the architecture. Only then — if it fits — does the stake / standard conversation open. Low risk to start. Big optionality if it works." },
             ].map(item => (
               <div key={item.num} className="flex items-start gap-4 rounded-xl p-4"
                 style={{ background: `hsl(0 0% 100% / 0.05)`, border: `1px solid hsl(0 0% 100% / 0.08)` }}>
@@ -1319,24 +1322,24 @@ function Act3_Summary() {
             <a href={CAL_URL} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 rounded-full font-bold transition-transform hover:scale-[1.03]"
               style={{ fontSize: 20, height: 58, background: `linear-gradient(135deg, hsl(${ACCENT}), hsl(${TEAL}))`, color: "hsl(0 0% 100%)" }}>
-              Book a 20-Min Call <ArrowRight size={20} />
+              Open Door 1 · Book a Pilot Call <ArrowRight size={20} />
             </a>
             <a href="/diagnostic" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 rounded-full font-bold border-2 transition-transform hover:scale-[1.03]"
               style={{ fontSize: 20, height: 58, borderColor: `hsl(0 0% 100% / 0.25)`, color: `hsl(0 0% 100% / 0.9)` }}>
-              Take the Self-Diagnostic
+              Door 2 · Design Partner Brief
             </a>
           </div>
         </div>
 
         <div className="w-[380px] flex-shrink-0 rounded-2xl p-7" style={{ background: `hsl(0 0% 100% / 0.06)`, border: `1px solid hsl(0 0% 100% / 0.1)` }}>
-          <p className="font-extrabold mb-5" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>90-day pilot path</p>
+          <p className="font-extrabold mb-5" style={{ fontSize: 20, color: `hsl(${ACCENT})` }}>18-month design-partner path</p>
           <div className="space-y-4">
             {[
-              { num: "1", label: "Week 1-2: Live audit pilot", desc: "One real audit with your documents and questions. Success criteria: ≥80% reviewer acceptance." },
-              { num: "2", label: "Week 3-4: Readiness baseline", desc: "Knowledge graph scoring against your audit scope. Gap prioritisation and evidence aging." },
-              { num: "3", label: "Week 5-8: Encode 3 protocols", desc: "Top high-variance protocols with gate enforcement. Validation support included." },
-              { num: "4", label: "Week 9-12: Measure outcomes", desc: "70%+ doc search reduction. Zero critical errors. Readiness score improvement tracked." },
+              { num: "1", label: "Month 1 · 30-day pilot live", desc: "One workflow codified end-to-end. Measurable hours saved and quality delta delivered to a senior QA, clinical, or PV lead." },
+              { num: "2", label: "Months 2-6 · GxP memory layer", desc: "Expansion to a second site, study, or product family. GxP memory captured. Onboarding time for new monitors and writers measurably down." },
+              { num: "3", label: "Months 6-18 · GxP standard live", desc: "Joint case study with the lighthouse partner. Open-canvas / strategic-stake conversation opens (optional). Doors open to other sponsors, CROs, and CMOs." },
+              { num: "4", label: "Sequence", desc: "Customer first. Pilot proves the value before any stake is on the table. Big optionality, low entry risk." },
             ].map(step => (
               <div key={step.num} className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
