@@ -100,7 +100,7 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Life Sciences · Strategic Round
+            LIZA OS · Life Sciences · Customer First, Investor Optional
           </span>
         </div>
 
@@ -112,12 +112,12 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns SOPs, protocols, and expert judgment into the governed operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · Life Sciences Beachhead</span>
+          No one has shipped the GxP memory layer yet. The first sponsor, CRO, or CMO to codify it with us defines the standard the rest of the industry adopts.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Become a customer first. Take a strategic stake if you want to own the category with us.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; Life Sciences Beachhead
+          Confidential &nbsp;·&nbsp; Two-Door Conversation &nbsp;·&nbsp; Pilot · Memory Layer · Optional Strategic Stake
         </p>
       </div>
       <SlideBar />
@@ -2002,7 +2002,7 @@ function Slide12() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 12 — THE ASK (€3M + milestones + use of funds)
+// SLIDE 13 — TWO-DOOR CONVERSATION (Customer first · Strategic stake optional)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide13() {
@@ -2014,51 +2014,89 @@ function Slide13() {
 
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
-          <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + life sciences beachhead build-out
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
+          <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>
+            Become a customer first. <span style={{ color: `hsl(${TEAL})` }}>Invest if you want to own the category with us.</span>
+          </h2>
+          <p style={{ fontSize: 22, color: MUTED, maxWidth: 1280, marginInline: "auto", lineHeight: 1.45 }}>
+            Pilot the GxP memory layer in 30 days. If it earns its place inside your operations, you choose whether to take a strategic stake in the company that shipped it.
           </p>
         </div>
 
-        {/* Use of funds */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
-          {[
-            { label: "GxP-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, validated UI, onboarding, product design", color: ACCENT },
-            { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "Pharma Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Veeva / eQMS bridges, validation packages, lighthouse deployments", color: GOLD },
-            { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
-          ].map(({ label, pct, amt, desc, color }) => (
-            <div key={label} className="rounded-xl border px-5 py-4 text-center"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-              <p className="font-black" style={{ fontSize: 32, color: TEXT }}>{pct}</p>
-              <p className="font-bold" style={{ fontSize: 16, color: `hsl(${color})` }}>{label}</p>
-              <p style={{ fontSize: 14, color: MUTED }}>{amt}: {desc}</p>
+        {/* Two doors */}
+        <div className="grid grid-cols-2 gap-6 mb-6">
+          {/* DOOR 1 — Customer */}
+          <div className="rounded-2xl border-2 p-7 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <div className="flex items-center justify-between mb-3">
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Door 1 · Recommended</p>
+              <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Start here</span>
             </div>
-          ))}
-        </div>
+            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Become a customer.</p>
+            <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+              Run a 30-day GxP pilot on one workflow you already own — deviations, CAPA, or a CSR section. We codify the judgment that lives in your QA and medical writing leads, then prove it inside your environment.
+            </p>
+            <div className="grid grid-cols-1 gap-2 mt-auto">
+              {[
+                { k: "30 days", v: "Pilot one GxP workflow with your team's judgment encoded." },
+                { k: "Quarter 2", v: "Convert to the GxP memory layer across deviations, CAPA, and CSR." },
+                { k: "Year 1", v: "Standard memory layer across sites, sponsors, or programs." },
+              ].map(({ k, v }) => (
+                <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2.5"
+                  style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${TEAL})`, minWidth: 78 }}>{k}</span>
+                  <span style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Milestones */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          {[
-            { month: "Month 1-6", target: "GxP-native UX live", milestone: "Deviation, CAPA, and CSR-section surfaces in market with first lighthouse sponsor deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Pharma pilots convert to platform base plus credits. Veeva / eQMS integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and life sciences customers on a repeatable self-serve expansion path.", color: MINT },
-          ].map(({ month, target, milestone, color }) => (
-            <div key={month} className="rounded-xl border px-5 py-4"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
-              <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{month}</p>
-              <p className="font-black mt-1" style={{ fontSize: 28, color: TEXT }}>{target}</p>
-              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{milestone}</p>
+          {/* DOOR 2 — Strategic stake */}
+          <div className="rounded-2xl border-2 p-7 flex flex-col"
+            style={{ borderColor: `hsl(${GOLD} / 0.32)`, background: `hsl(${GOLD} / 0.05)` }}>
+            <div className="flex items-center justify-between mb-3">
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Door 2 · Optional</p>
+              <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>If we earn it</span>
             </div>
-          ))}
+            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Take a strategic stake.</p>
+            <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
+              €3M strategic minority alongside the customer relationship. 18-month runway to harden the GxP memory layer, ship usage-priced rollout, and build the life sciences beachhead with you on the inside.
+            </p>
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              {[
+                { pct: "35%", label: "GxP-Native Product UX", color: ACCENT },
+                { pct: "25%", label: "Usage + Billing Infra", color: GREEN },
+                { pct: "25%", label: "Integrations + Pilots", color: GOLD },
+                { pct: "15%", label: "GTM + Operations", color: MUTED },
+              ].map(({ pct, label, color }) => (
+                <div key={label} className="rounded-lg border px-3 py-2 text-center"
+                  style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
+                  <p className="font-black" style={{ fontSize: 18, color: TEXT, lineHeight: 1 }}>{pct}</p>
+                  <p className="font-bold mt-0.5" style={{ fontSize: 11, color: `hsl(${color})` }}>{label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 gap-2 mt-auto">
+              {[
+                { k: "Month 6", v: "GxP-native UX live with first lighthouse sponsor deployments." },
+                { k: "Month 12", v: "Usage-priced rollout. Veeva / eQMS integration path in market." },
+                { k: "Month 18", v: "€1.5–2.5M ARR. 12+ design partners on the GxP memory layer." },
+              ].map(({ k, v }) => (
+                <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2"
+                  style={{ background: `hsl(${GOLD} / 0.04)`, border: `1px solid hsl(${GOLD} / 0.14)` }}>
+                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${GOLD})`, minWidth: 78 }}>{k}</span>
+                  <span style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the GxP-native control layer for every regulated AI workflow.</strong>
+          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
+            Pilot first. Investment is not a prerequisite —{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>it's the natural second step once the GxP memory layer earns its place inside your operations.</strong>
           </p>
         </div>
 
@@ -2109,7 +2147,7 @@ const SLIDES = [
   { id: 14, title: "Business Model", component: <Slide11 /> },
   { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
   { id: 16, title: "Team", component: <Slide12 /> },
-  { id: 17, title: "The Ask", component: <Slide13 /> },
+  { id: 17, title: "Two-Door Conversation", component: <Slide13 /> },
   { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
   { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
   { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },

@@ -49,7 +49,7 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Pharma Investor Deck",
     path: "/investor-pharma",
     sourcePath: "src/pages/PharmaInvestorDeck.tsx",
-    description: "Life sciences variant for pharma sponsors and CROs centered on GxP-native deviation, CAPA, and CSR memory",
+    description: "Life sciences deck for pharma sponsors, CROs, and CMOs. Open-canvas / first-customer framing: become a customer with a 30-day GxP pilot on deviations, CAPA, or CSR sections, then optionally take a strategic stake (€3M strategic minority) to co-define the GxP memory layer. Mirrors the satcom deck's two-door mechanic.",
     component: PharmaInvestorDeck,
     showInAdmin: true,
   },
