@@ -1943,12 +1943,6 @@ function Slide12() {
     { name: "Zoltán Kauker", role: "Scalable AI Architecture & Enterprise Security", bio: "Deep-tech AI and data engineering expert, leading AI-driven decision systems.", photo: zoltanPhoto, initials: "ZK", color: GOLD },
   ];
 
-  const advisors = [
-    { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Pharma Quality Advisor", role: "Senior QA / Regulatory Leader, Top-20 Pharma", bio: "Engagement underway with a senior quality and regulatory leader to anchor GxP fit, validation strategy, and sponsor-side adoption patterns." },
-    { name: "Clinical Operations Advisor", role: "Head of Clinical Operations, Mid/Large Sponsor", bio: "Pipeline conversation to anchor protocol amendment, CSR authoring, and trial memory workflows in real sponsor reality." },
-  ];
-
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
@@ -1980,18 +1974,6 @@ function Slide12() {
                 </div>
               </div>
               <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{f.bio}</p>
-            </div>
-          ))}
-        </div>
-
-        <p className="font-semibold mb-5" style={{ fontSize: 22, color: `hsl(${GOLD})`, letterSpacing: "0.15em", textTransform: "uppercase" }}>Strategic Advisory Board</p>
-        <div className="grid grid-cols-2 gap-7">
-          {advisors.map((a) => (
-            <div key={a.name} className="rounded-2xl border p-7"
-              style={{ borderColor: `hsl(${GOLD} / 0.18)`, background: `hsl(${GOLD} / 0.04)` }}>
-              <p className="font-bold" style={{ fontSize: 28, color: TEXT }}>{a.name}</p>
-              <p className="mb-3" style={{ fontSize: 20, color: `hsl(${GOLD})` }}>{a.role}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{a.bio}</p>
             </div>
           ))}
         </div>
