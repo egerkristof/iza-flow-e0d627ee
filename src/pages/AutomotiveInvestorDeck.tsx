@@ -459,13 +459,13 @@ function Slide04Cost() {
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
             <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of cross-border R&amp;D effort is tied to context that lives in senior engineers&apos; heads, not in a system AI can use
+              of cross-border R&D effort is tied to context that lives in senior engineers&apos; heads, not in a system AI can use
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
               This is the part AI can amplify if it runs without the latest design decision, prior FMEDA, or HQ direction the senior team already absorbed.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Triangulated from automotive R&amp;D and ISO 26262 practitioner benchmarks, 2024-2025
+              Triangulated from automotive R&D and ISO 26262 practitioner benchmarks, 2024-2025
             </p>
           </div>
 
@@ -488,7 +488,7 @@ function Slide04Cost() {
                 If AI produces a plausible design spec, onboarding plan, FMEDA, or change request <span className="font-bold">without the full chassis-control, HQ-design, and ISO 26262 context</span>, the senior engineer still has to catch it, correct it, and re-approve it.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€15M annual R&amp;D budget</span>, a 25% rework + ramp drag implies roughly <span className="font-bold" style={{ color: TEXT }}>€3.7M of avoidable cost</span> before lost program velocity and delayed OEM SOP dates.
+                On a <span className="font-bold" style={{ color: TEXT }}>€15M annual R&D budget</span>, a 25% rework + ramp drag implies roughly <span className="font-bold" style={{ color: TEXT }}>€3.7M of avoidable cost</span> before lost program velocity and delayed OEM SOP dates.
               </p>
             </div>
           </div>
@@ -498,7 +498,7 @@ function Slide04Cost() {
           {[
             { label: "Capacity", value: "compressed", desc: "Senior HQ engineers spend their time re-explaining IP to new engineering hires and AI drafts, instead of advancing EMB and wheel-hub roadmaps.", color: RED },
             { label: "Speed", value: "delayed", desc: "Wrong outputs create review loops, re-derivation of safety arguments, and waiting time across design reviews and OEM milestones.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, R&amp;D and functional-safety leads cap AI adoption because every output creates safety, IP, and homologation risk.", color: GOLD },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, R&D and functional-safety leads cap AI adoption because every output creates safety, IP, and homologation risk.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
@@ -521,7 +521,7 @@ function SlideWhyNow() {
   const signals = [
     {
       metric: "85%",
-      label: "of automotive Tier-1 R&amp;D orgs have AI tools in engineering workflows in 2025",
+      label: "of automotive Tier-1 R&D orgs have AI tools in engineering workflows in 2025",
       insight: "Adoption is done. The engineering-judgment and safety-quality crisis just started.",
       color: WARM,
       source: "Automotive AI Adoption Survey, 2025",
@@ -531,14 +531,14 @@ function SlideWhyNow() {
       label: "of AI productivity gains lost to design-review and safety-rework cycles",
       insight: "The faster AI generates engineering artifacts, the faster Tier-1s lose design-intent control.",
       color: RED,
-      source: "Triangulated from automotive R&amp;D and ISO 26262 practitioner studies, 2024-2026",
+      source: "Triangulated from automotive R&D and ISO 26262 practitioner studies, 2024-2026",
     },
     {
       metric: "Shift",
       label: "from AI access to AI governance in safety-critical engineering",
-      insight: "Boards moved from asking whether R&amp;D uses AI to asking how every output stays on-spec, on-standard, and homologation-defensible.",
+      insight: "Boards moved from asking whether R&D uses AI to asking how every output stays on-spec, on-standard, and homologation-defensible.",
       color: TEAL,
-      source: "Observed across European automotive Tier-1 R&amp;D and functional-safety teams",
+      source: "Observed across European automotive Tier-1 R&D and functional-safety teams",
     },
   ];
 
@@ -615,7 +615,7 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an automotive-R&amp;D-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an automotive-R&D-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
@@ -721,7 +721,7 @@ function Slide05() {
             </div>
 
             <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>The first Tier-1 R&amp;D site turns it into the automotive-native operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>The first Tier-1 R&D site turns it into the automotive-native operating experience.</span>
             </p>
           </div>
 
@@ -732,7 +732,7 @@ function Slide05() {
 
           {/* RIGHT — Governed Output */}
           <div className="w-[390px] shrink-0 flex flex-col gap-3">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Automotive-R&amp;D-native experience</p>
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Automotive-R&D-native experience</p>
             {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
@@ -753,7 +753,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Horizontal infrastructure plus vertical UX. <span style={{ color: `hsl(${TEAL})` }}>That is how the loop becomes an automotive R&amp;D standard.</span>
+            Horizontal infrastructure plus vertical UX. <span style={{ color: `hsl(${TEAL})` }}>That is how the loop becomes an automotive R&D standard.</span>
           </p>
         </div>
       </div>
@@ -768,11 +768,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Siemens Polarion / Codebeamer", layer: "ALM &amp; Requirements", color: BLUE },
-    { name: "DOORS / Jama", layer: "Requirements &amp; Trace", color: BLUE },
-    { name: "Ansys medini / Isograph", layer: "FuSa &amp; FMEDA", color: BLUE },
-    { name: "PLM (Teamcenter / 3DX)", layer: "Design &amp; BOM", color: BLUE },
-    { name: "ASPICE / QMS suite", layer: "Process &amp; Audit", color: BLUE },
+    { name: "Siemens Polarion / Codebeamer", layer: "ALM & Requirements", color: BLUE },
+    { name: "DOORS / Jama", layer: "Requirements & Trace", color: BLUE },
+    { name: "Ansys medini / Isograph", layer: "FuSa & FMEDA", color: BLUE },
+    { name: "PLM (Teamcenter / 3DX)", layer: "Design & BOM", color: BLUE },
+    { name: "ASPICE / QMS suite", layer: "Process & Audit", color: BLUE },
   ];
 
   return (
@@ -961,14 +961,14 @@ function Slide06() {
   const players = [
     { name: "Generic AI copilots in PLM", funding: "Embedded / large-cap", round: "Siemens / Dassault · 2024", what: "Workflow assistants inside ALM/PLM. Useful inside the tool, but blind to chassis-control IP, prior FMEDA, and HQ design intent.", color: GREEN },
     { name: "ISO 26262 automation tools", funding: "$10-50M", round: "Ansys medini / Kugler Maag", what: "Templated safety-case authoring. Strong on artifact format, but treats engineering judgment as a static prompt, not a living memory layer.", color: SEAFOAM },
-    { name: "RAG over engineering docs", funding: "$10-30M", round: "Engineering-AI · 2024", what: "Document Q&amp;A over PLM and standards. Surface-level retrieval, not the OEM&apos;s own decision memory or design rationale.", color: BLUE },
-    { name: "In-house \"AI for R&amp;D\" stacks", funding: "Internal", round: "Most large Tier-1s", what: "Custom RAG over standards and program docs. Useful, but no governed memory layer that learns from every design decision and review.", color: GOLD },
+    { name: "RAG over engineering docs", funding: "$10-30M", round: "Engineering-AI · 2024", what: "Document Q&A over PLM and standards. Surface-level retrieval, not the OEM&apos;s own decision memory or design rationale.", color: BLUE },
+    { name: "In-house \"AI for R&D\" stacks", funding: "Internal", round: "Most large Tier-1s", what: "Custom RAG over standards and program docs. Useful, but no governed memory layer that learns from every design decision and review.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, design- and standard-aware injection, drift detection. The plumbing every automotive R&amp;D AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, design- and standard-aware injection, drift detection. The plumbing every automotive R&D AI workflow will need.", icon: <Cpu size={20} /> },
     { layer: "Compounding Engineering Memory", desc: "Approved designs, FMEDA patterns, ISO 26262 interpretations, novel-component decisions (EMB, wheel-hub) — graph deepens program-by-program. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Reference-Customer Path", desc: "First Tier-1 R&amp;D site becomes the cross-border-engineering reference architecture. Active conversations with Tier-1 R&D leaders at greenfield sites create a credible route to embedding across cross-border automotive R&amp;D.", icon: <Network size={20} /> },
+    { layer: "Reference-Customer Path", desc: "First Tier-1 R&D site becomes the cross-border-engineering reference architecture. Active conversations with Tier-1 R&D leaders at greenfield sites create a credible route to embedding across cross-border automotive R&D.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -1016,7 +1016,7 @@ function Slide06() {
               <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your engineering org decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every automotive R&amp;D AI stack will need: design rationale, prior FMEDA, ISO 26262 interpretations, novel-component decisions — versioned and queryable. Same architecture validated across regulated industries, now being focused into cross-border automotive R&amp;D.
+              The instruction layer every automotive R&D AI stack will need: design rationale, prior FMEDA, ISO 26262 interpretations, novel-component decisions — versioned and queryable. Same architecture validated across regulated industries, now being focused into cross-border automotive R&D.
             </p>
           </div>
         </div>
@@ -1028,9 +1028,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$60B+", desc: "Global automotive R&amp;D engineering software + services spend" },
+                { label: "TAM", value: "$60B+", desc: "Global automotive R&D engineering software + services spend" },
                 { label: "SAM", value: "$6-9B", desc: "AI control layer across engineering, FuSa, ALM, and cross-site collaboration" },
-                { label: "SOM", value: "$400-600M", desc: "EU + APAC Tier-1 R&amp;D wedge: top-150 chassis / EV / ADAS suppliers and their cross-border engineering centers" },
+                { label: "SOM", value: "$400-600M", desc: "EU + APAC Tier-1 R&D wedge: top-150 chassis / EV / ADAS suppliers and their cross-border engineering centers" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1042,7 +1042,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: ACEA &amp; Statista, automotive R&amp;D and engineering-software spend estimates, 2024-2025. ISO 26262 / ASPICE / EU AI Act compliance market sizing, 2025. SAM/SOM are LIZA OS estimates based on the engineering-judgment and cross-site collaboration layer inside these markets.
+              Sources: ACEA & Statista, automotive R&D and engineering-software spend estimates, 2024-2025. ISO 26262 / ASPICE / EU AI Act compliance market sizing, 2025. SAM/SOM are LIZA OS estimates based on the engineering-judgment and cross-site collaboration layer inside these markets.
             </p>
           </div>
 
@@ -1070,8 +1070,8 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Tier-1s buy point AI tools because vendors trained them to buy by use case", now: "LIZA creates one governed engineering-memory loop that powers every AI workflow across R&amp;D, FuSa, and program management", color: TEAL },
-    { old: "Generic AI tools ignore how chief engineers, FuSa leads, and chassis architects actually work", now: "The experience becomes native to automotive-R&amp;D roles, language, design reviews, and HQ↔site handoffs", color: GOLD },
+    { old: "Tier-1s buy point AI tools because vendors trained them to buy by use case", now: "LIZA creates one governed engineering-memory loop that powers every AI workflow across R&D, FuSa, and program management", color: TEAL },
+    { old: "Generic AI tools ignore how chief engineers, FuSa leads, and chassis architects actually work", now: "The experience becomes native to automotive-R&D roles, language, design reviews, and HQ↔site handoffs", color: GOLD },
     { old: "Prompts and design templates stay static, so every site has to remember what HQ decided on the last program", now: "Engineering memory is versioned, updated, and reused after every design review, FMEDA, and program closeout", color: GREEN },
   ];
 
@@ -1154,7 +1154,7 @@ function Slide07() {
       num: "01", title: "Encode", icon: <BookOpen size={28} />,
       desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
       flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
-      output: "Versioned engineering &amp; safety playbooks ready",
+      output: "Versioned engineering & safety playbooks ready",
       color: GOLD,
     },
     {
@@ -1353,7 +1353,7 @@ function Slide08() {
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Cross-border automotive R&amp;D is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Cross-border automotive R&D is where the experience now needs to become native.
           </p>
         </div>
 
@@ -1424,7 +1424,7 @@ function Slide09() {
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "the new site re-derives chassis-control IP because HQ design intent and program lessons do not propagate. New hires take 9-12 months to ramp; AI drafts from public datasheets, not from your actual prior decisions.",
       result: "Onboarding playbooks grounded in HQ judgment. Reusable engineering memory. Ramp time cut from quarters to weeks.",
-      proof: "Initial entry point with Tier-1 R&amp;D directors at greenfield Tier-1 sites (e.g. a greenfield Tier-1 R&D site)",
+      proof: "Initial entry point with Tier-1 R&D directors at greenfield Tier-1 sites (e.g. a greenfield Tier-1 R&D site)",
     },
     {
       vertical: "Design Reviews & Functional Safety", status: "Anchor", color: TEAL,
@@ -1438,7 +1438,7 @@ function Slide09() {
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
       problem: "Manufacturing readiness packs, ASPICE audits, and OEM homologation submissions diverge from internal standards. Design rationale evaporates after SOP. Auditors and OEMs inherit fragmented narrative.",
       result: "Standards-aware engineering packs. Living audit memory. OEM-grade artifacts, every time.",
-      proof: "Manufacturing &amp; OEM-reporting extension path once R&amp;D and FuSa loop is in production",
+      proof: "Manufacturing & OEM-reporting extension path once R&D and FuSa loop is in production",
     },
   ];
 
@@ -1460,7 +1460,7 @@ function Slide09() {
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
             One engineering memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every R&amp;D site, every program.</span>
+            <span style={{ color: `hsl(${GREEN})` }}>Every R&D site, every program.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1468,10 +1468,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the automotive R&amp;D AI stack.
+              The missing connective tissue underneath the automotive R&D AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: live conversations with Tier-1 R&amp;D leadership at greenfield sites, not a closed contract claim.
+              Current signal: live conversations with Tier-1 R&D leadership at greenfield sites, not a closed contract claim.
             </p>
           </div>
         </div>
@@ -1542,7 +1542,7 @@ function Slide09() {
                 Strategic path
               </p>
               <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Expansion across the R&amp;D and program lifecycle. Partnership path on the next slide.
+                Expansion across the R&D and program lifecycle. Partnership path on the next slide.
               </p>
             </div>
             <div className="rounded-xl px-5 py-4 shrink-0"
@@ -1572,13 +1572,13 @@ function Slide09Partnership() {
       phase: "Months 0-3",
       title: "Onboarding Pilot",
       color: GREEN,
-      desc: "30-day pilot with the R&amp;D site's onboarding & senior-engineer team on one knowledge-transfer workflow (chassis-control IP block, EMB onboarding playbook, or HQ design-rationale capture). Low commitment, fast signal.",
+      desc: "30-day pilot with the R&D site's onboarding & senior-engineer team on one knowledge-transfer workflow (chassis-control IP block, EMB onboarding playbook, or HQ design-rationale capture). Low commitment, fast signal.",
     },
     {
       phase: "Months 3-12",
       title: "R&D Memory Layer",
       color: TEAL,
-      desc: "LIZA becomes the engineering memory layer for the R&amp;D site. Reusable across programs, components, and HQ↔site handoffs.",
+      desc: "LIZA becomes the engineering memory layer for the R&D site. Reusable across programs, components, and HQ↔site handoffs.",
     },
     {
       phase: "Months 12-24",
@@ -1864,7 +1864,7 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the automotive-R&amp;D-native memory loop.{" "}
+          The wedge is one workflow. The product is the automotive-R&D-native memory loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -2053,7 +2053,7 @@ function Slide13() {
             </div>
             <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Take a strategic stake.</p>
             <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-              €3M strategic minority alongside the customer relationship. 18-month runway to harden the engineering memory layer, ship usage-priced rollout, and build the cross-border automotive R&amp;D beachhead with you on the inside.
+              €3M strategic minority alongside the customer relationship. 18-month runway to harden the engineering memory layer, ship usage-priced rollout, and build the cross-border automotive R&D beachhead with you on the inside.
             </p>
             <div className="grid grid-cols-2 gap-2 mb-3">
               {[
