@@ -2,8 +2,8 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { Link } from "react-router-dom";
 import {
   ArrowRight, Shield, Landmark, FileCheck, CheckCircle2,
-  Megaphone, Users, ScrollText, BarChart3, Network, Briefcase,
-  BookOpen, Eye, RefreshCw, Zap, AlertTriangle, Clock, FileText,
+  Megaphone, Users, ScrollText, BarChart3, Network,
+  BookOpen, Eye, RefreshCw, Zap, AlertTriangle, Clock,
   Banknote, ShieldCheck,
 } from "lucide-react";
 import { SectionTag, CAL_URL } from "@/components/marketing/home/shared";
@@ -344,6 +344,3 @@ export default function IndustryBankingPage() {
     </MarketingLayout>
   );
 }
-
-/* unused import sentinels for lint */
-void Briefcase; void FileText;
