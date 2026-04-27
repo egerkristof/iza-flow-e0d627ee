@@ -12,7 +12,7 @@ import {
 import { motion } from "framer-motion";
 
 /**
- * /pharma-brief — Responsive one-page summary of the Pharma Pitch Deck.
+ * /pharma-brief — Responsive one-page summary of the Pharma Investor Deck.
  * Mirrors /space-brief and /satcom-brief in tone and structure, but reframes
  * the narrative for regulated life sciences:
  *
@@ -24,7 +24,7 @@ import { motion } from "framer-motion";
  *   - LIZA OS is the GxP Memory Layer — encodes the judgment, governs the
  *     AI output, and turns every batch / study / case into reusable memory.
  *
- * Single CTA: View the full deck (/pharma-pitch).
+ * Single CTA: View the full deck (/investor-pharma).
  */
 
 const TEAL = "200 75% 36%";   // pharma blue, matches PharmaPitchDeck ACCENT
@@ -95,7 +95,7 @@ export default function PharmaBrief() {
             </span>
           </div>
           <Link
-            to="/pharma-pitch"
+            to="/investor-pharma"
             className="group inline-flex items-center gap-1.5 rounded-full px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all hover:opacity-90"
             style={{ background: `hsl(${TEAL})`, color: "white" }}
           >
@@ -326,7 +326,7 @@ export default function PharmaBrief() {
         {/* Single CTA — full deck */}
         <section className="mt-14 sm:mt-20">
           <Link
-            to="/pharma-pitch"
+            to="/investor-pharma"
             className="group flex items-center justify-between gap-4 rounded-2xl px-6 sm:px-8 py-5 sm:py-7 font-bold text-lg sm:text-2xl transition-all hover:opacity-95 hover:translate-y-[-1px]"
             style={{ background: `hsl(${TEAL})`, color: "white" }}
           >
