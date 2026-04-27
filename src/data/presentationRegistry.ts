@@ -130,7 +130,7 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Pharma Pitch Deck",
     path: "/pharma-pitch",
     sourcePath: "src/pages/PharmaPitchDeck.tsx",
-    description: "Medicine lifecycle management pitch for pharma",
+    description: "Medicine lifecycle pitch for pharma. Open-canvas / first-customer framing: become a customer with a 30-day GxP pilot, then optionally co-define the GxP memory standard as a design partner with a strategic stake. Mirrors the satcom deck's two-door mechanic.",
     component: PharmaPitchDeck,
     showInAdmin: true,
   },
