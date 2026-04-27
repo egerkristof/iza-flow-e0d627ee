@@ -1032,35 +1032,35 @@ function Act3_ExpansionMap() {
   return (
     <div className="w-full h-full flex relative" style={{ background: BG }}>
       <GridBg />
-      <ActBar activeAct={3} slideLabel="FROM AUDIT TO OPERATING MODEL" />
+      <ActBar activeAct={3} slideLabel="FROM PILOT TO GxP STANDARD" />
       <div className="relative z-10 flex h-full items-center px-[120px] gap-14 w-full pt-[90px]">
         <div className="flex-1">
           <h2 className="font-black mb-4" style={{ fontSize: 48, color: `hsl(${C})`, lineHeight: 1.05 }}>
-            From audit to
-            <br /><span style={{ color: `hsl(${CORAL})` }}>lifecycle operating model.</span>
+            An 18-month path from
+            <br /><span style={{ color: `hsl(${CORAL})` }}>30-day pilot to GxP standard.</span>
           </h2>
           <p className="mb-6" style={{ fontSize: 19, color: `hsl(${MUT})`, lineHeight: 1.55, maxWidth: 650 }}>
-            Audit is the entry point. The same architecture that runs audits handles any judgment-heavy process across the medicine lifecycle. Each step builds on the knowledge graph from the previous one.
+            Become a customer first. Then, if it fits, become the lighthouse partner who co-defines the GxP memory standard for the category — with an optional strategic stake in the pharma vertical of LIZA OS.
           </p>
 
           <div className="space-y-5">
             {[
               {
-                step: "Step 1", title: "Audit as Proof Point", timeline: "Month 1-3",
-                desc: "Continuous readiness scoring, audit execution engine, evidence gap detection. Prove the architecture on the most measurable GxP domain.",
-                outcomes: ["Readiness score by clause/site", "18 days → 1.5 hours", "84% first-pass accuracy"],
+                step: "Phase 1", title: "30-Day GxP Pilot", timeline: "Month 1",
+                desc: "Co-design pilot with one of your QA, clinical, or PV teams. We codify one workflow (deviation, CAPA loop, CSR section, or PV narrative) and ship a measurable delta. Low commitment, fast signal.",
+                outcomes: ["One workflow codified end-to-end", "Hours-saved & quality delta", "No long commitment"],
                 color: GOLD,
               },
               {
-                step: "Step 2", title: "Protocol Execution", timeline: "Month 3-6",
-                desc: "Encode top 3 high-variance protocols: Deviation/CAPA handling, eTMF QC checklists, vendor qualification. Gate-enforced, auditable.",
-                outcomes: ["25%+ deviation rate reduction target", "CAPA on-time closure", "Cross-site consistency"],
+                step: "Phase 2", title: "GxP Memory Layer", timeline: "Months 2-6",
+                desc: "Expand to a second site, study, or product family: encode senior QA and medical judgment, codify recurring deviation and agency-feedback patterns, and build the GxP memory layer that survives senior-staff turnover.",
+                outcomes: ["Cross-site CAPA memory", "Onboarding time down", "Audit-trail by default"],
                 color: ACCENT,
               },
               {
-                step: "Step 3", title: "Lifecycle Expansion", timeline: "Month 6-12",
-                desc: "PV ICSR triage and case QA. Clinical ops monitoring consistency. Regulatory submission readiness. Each domain's learning enriches the others.",
-                outcomes: ["PV case consistency", "Clinical monitoring adherence", "Knowledge compounding"],
+                step: "Phase 3", title: "GxP Standard · Open Canvas", timeline: "Months 6-18",
+                desc: "LIZA OS + a lighthouse sponsor / CRO / CMO jointly define the GxP-knowledge standard for the category. Optional strategic stake. Pathway to a reference architecture adopted by other regulated operators and inspected jurisdictions.",
+                outcomes: ["Joint case study", "Optional strategic stake", "Category reference architecture"],
                 color: CORAL,
               },
             ].map((s, i) => (
@@ -1091,15 +1091,15 @@ function Act3_ExpansionMap() {
         </div>
 
         <div className="w-[320px] flex-shrink-0 rounded-2xl p-6" style={{ background: `hsl(${DARK})` }}>
-          <p className="font-bold mb-4" style={{ fontSize: 18, color: `hsl(${CORAL})` }}>The compounding loop</p>
+          <p className="font-bold mb-4" style={{ fontSize: 18, color: `hsl(${CORAL})` }}>Why a lighthouse partner</p>
           <div className="space-y-3 mb-5">
             {[
-              "Audit execution identifies evidence gaps",
-              "Gaps become Directives in Context Bundles",
-              "Bundles deployed as Protocols across teams",
-              "Protocol executions capture new learning",
-              "Learning updates Bundles and Readiness scores",
-              "Next audit is faster, more accurate",
+              "GAMP / Annex 11 / Part 11 exist for systems — not for AI judgment",
+              "There is no governed knowledge standard for sponsor or QA reasoning",
+              "First codifier sets the reference architecture for the category",
+              "Optional strategic stake in the pharma vertical of LIZA OS",
+              "Joint case study opens doors across other sponsors and CROs",
+              "Customer-first sequence: pilot proves value before any stake conversation",
             ].map((s, i) => (
               <div key={s} className="flex items-start gap-2">
                 <span className="font-bold" style={{ fontSize: 12, color: `hsl(${CORAL})`, flexShrink: 0, marginTop: 2 }}>{i + 1}.</span>
@@ -1109,7 +1109,7 @@ function Act3_ExpansionMap() {
           </div>
           <div className="rounded-lg p-3" style={{ background: `hsl(${CORAL} / 0.15)`, border: `1px solid hsl(${CORAL} / 0.3)` }}>
             <p className="text-center font-semibold" style={{ fontSize: 13, color: `hsl(${CORAL})` }}>
-              Every domain you encode makes every other domain smarter
+              Customer first. Strategic stake later, only if it fits.
             </p>
           </div>
         </div>
