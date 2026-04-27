@@ -25,13 +25,13 @@ const LIFECYCLE = [
 const PAIN_POINTS = [
   {
     icon: <Clock className="w-5 h-5" />,
-    title: "9–12 months to ramp a new engineer",
-    desc: "Chassis-control, EMB and wheel-hub motor judgment lives in HQ veterans' heads. New Budapest hires re-derive the same design choices from scratch, slide decks, and Slack threads.",
+    title: "9-12 months to ramp a new engineer",
+    desc: "Chassis-control, EMB and wheel-hub motor judgment lives in HQ veterans' heads. New new engineering hires re-derive the same design choices from scratch, slide decks, and Slack threads.",
   },
   {
     icon: <AlertTriangle className="w-5 h-5" />,
     title: "HQ design intent gets lost in translation",
-    desc: "Why a tuning constant, a safety goal, or a supplier choice exists rarely survives the trip from Diankou to Budapest. Generic AI copilots fill the gap with plausible — and wrong — answers.",
+    desc: "Why a tuning constant, a safety goal, or a supplier choice exists rarely survives the trip from HQ to a new R&D site. Generic AI copilots fill the gap with plausible, wrong answers.",
   },
   {
     icon: <Eye className="w-5 h-5" />,
@@ -59,7 +59,7 @@ const HOW_IT_WORKS = [
     icon: <Zap className="w-5 h-5" />,
     step: "03",
     title: "Execute",
-    desc: "Budapest, Diankou, Beijing and Shanghai engineers work inside the same governed standard. Onboarding compresses from 9 months to weeks; design intent stops drifting between sites.",
+    desc: "HQ and regional R&D site engineers work inside the same governed standard. Onboarding compresses from 9-12 months to weeks; design intent stops drifting between sites.",
   },
   {
     icon: <RefreshCw className="w-5 h-5" />,
@@ -83,7 +83,7 @@ const ADJACENT_VERTICALS = [
   {
     icon: <Users className="w-5 h-5" />,
     title: "HQ → Europe Engineering Onboarding (entry wedge)",
-    desc: "Codify chassis-control IP and HQ design intent so Budapest hires reach productivity in weeks, not 9–12 months. The fastest-ROI surface in a greenfield R&D site.",
+    desc: "Codify chassis-control IP and HQ design intent so new engineering hires reach productivity in weeks, not 9-12 months. The fastest-ROI surface in a greenfield R&D site.",
     tags: ["Onboarding", "Chassis Control", "Knowledge Transfer"],
   },
   {
@@ -101,7 +101,7 @@ const ADJACENT_VERTICALS = [
   {
     icon: <Wrench className="w-5 h-5" />,
     title: "OEM RFQ & Supplier Memory",
-    desc: "What was promised, won, and lost across Tier-1 bids and supplier programs. Group-level memory across Diankou, Beijing, Shanghai, Budapest — one architecture, four sites.",
+    desc: "What was promised, won, and lost across Tier-1 bids and supplier programs. Group-level memory across HQ and regional R&D sites, Budapest — one architecture, four sites.",
     tags: ["RFQ", "Supplier", "Group Memory"],
   },
 ];
