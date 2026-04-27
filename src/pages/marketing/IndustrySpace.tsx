@@ -120,7 +120,7 @@ export default function IndustrySpacePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/space-brief"
+              to="/space"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -128,14 +128,16 @@ export default function IndustrySpacePage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              Read the brief <ArrowRight className="w-4 h-4" />
+              View the full deck <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link
-              to="/space"
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
             >
-              View the full deck
-            </Link>
+              Book a discovery call
+            </a>
           </div>
         </div>
       </section>
