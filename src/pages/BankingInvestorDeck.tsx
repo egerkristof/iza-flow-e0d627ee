@@ -99,24 +99,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · AEC · Strategic Round
+            LIZA OS · Retail Banking · Customer First, Investor Optional
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Project Memory Layer<br />
+          The Brand &amp; Compliance Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Construction.
+            for AI-Native Retail Banking.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns project standards, decisions, and expert judgment into the operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · AEC Beachhead</span>
+          LIZA OS turns brand, product, and compliance judgment into the operating layer between AI inputs and AI outputs in retail banking marketing.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Marketing Pilot · Memory Layer · Optional Strategic Stake</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; AEC Beachhead
+          Confidential &nbsp;·&nbsp; Two-Door Conversation &nbsp;·&nbsp; Marketing Pilot · Memory Layer · Optional Strategic Stake
         </p>
       </div>
       <SlideBar />
@@ -130,10 +130,10 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "AEC", sub: "RFI · Submittals · Handover", active: true, color: TEAL },
+    { label: "Retail Banking", sub: "Marketing · KYC · Servicing · Complaints", active: true, color: TEAL },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: BLUE },
-    { label: "GTM", sub: "Sales · CS · Onboarding", active: false, color: MUTED },
-    { label: "Prof. Services", sub: "Delivery · Methods", active: false, color: MUTED },
+    { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
+    { label: "Satcom & Space", sub: "Mission · Compliance · Ops", active: false, color: MUTED },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -145,10 +145,10 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>AEC is the spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Retail banking marketing is the spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. You are investing in AEC specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
+          We build a single context layer and deploy it vertical-by-vertical. We start with retail banking marketing, where brand and compliance judgment are most expensive to re-litigate, and benefit from platform leverage already shipping into pharma, AEC, and other regulated lifecycles.
         </p>
 
         <div className="flex-1 flex flex-col justify-center">
@@ -200,7 +200,7 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              The AEC vertical thesis. Category leadership in built-environment execution.
+              The retail-banking marketing thesis. Category leadership in regulated, brand-safe AI execution.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
@@ -212,7 +212,7 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Standard equity + AEC board observer + commercial visibility on the vertical roadmap.
+              Customer contract first. Optional strategic stake with board observer and visibility on the banking roadmap.
             </div>
           </div>
         </div>
@@ -227,8 +227,8 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["SOPs", "Policies", "Templates", "Requirements", "Data", "Records"];
-  const outputs = ["Reports", "Proposals", "Decisions", "Deliverables", "Actions", "Answers"];
+  const inputs = ["Brand book", "Product rules", "Regulator guidelines", "Prior approvals", "Segment data", "Past campaigns"];
+  const outputs = ["Campaign briefs", "Landing pages", "Email & in-app", "Disclosures", "Complaint responses", "Sales scripts"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -240,7 +240,7 @@ function Slide02() {
 
         <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
           Companies have inputs. AI generates outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your standards.</span>
+          <span style={{ color: `hsl(${WARM})` }}>There&apos;s no system to make AI work to your brand, product, and compliance standards.</span>
         </h2>
 
         {/* Three columns: Inputs → THE GAP → Outputs */}
@@ -264,7 +264,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. It sits in files no model can reason over.
+              But none of it is queryable by AI. Brand, product, and compliance rules sit in PDFs, slides, and inboxes no model can reason over.
             </p>
           </div>
 
@@ -308,7 +308,7 @@ function Slide02() {
               <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
             </div>
             <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But without your standards, every output is generic: the average, not the expert.
+              But without your brand and compliance standards, every output is generic: the average bank, not yours.
             </p>
           </div>
         </div>
@@ -331,64 +331,64 @@ function Slide02() {
 
 const AEC_GAP_CASES = [
   {
-    name: "General Contractor",
-    icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
+    name: "Marketing & Brand",
+    icon: <Briefcase size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
-    records: ["Specs", "Submittals", "RFIs", "Drawings"],
-    output: "RFI responses · Submittal logs",
-    gap: "AI drafts from the visible documents, but misses the addendum change, field condition, or precedent the senior PM already knows.",
-    cost: "Rework. Schedule slip. Margin loss.",
+    records: ["Brand book", "Product rules", "Prior approvals", "Segment data"],
+    output: "Campaign briefs · Landing pages · Emails",
+    gap: "AI drafts from the public site and brand deck, but misses the latest product change, regulator nudge, or wording an exec already rejected last quarter.",
+    cost: "Re-litigated campaigns. Slow launches. Brand drift.",
   },
   {
-    name: "Architecture / Engineering",
-    icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
+    name: "Compliance & Legal",
+    icon: <Shield size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["Design intent", "Code references", "Spec sections"],
-    output: "Drawing reviews · Spec markups",
-    gap: "AI gives a textbook-compliant answer, but not the project-specific interpretation already aligned with the AHJ or principal-in-charge.",
-    cost: "Liability exposure. Redesign cycles.",
+    records: ["Regulator guidance", "Disclosure templates", "Prior approvals"],
+    output: "Disclosures · Complaint responses · Approvals",
+    gap: "AI produces a generic, technically correct answer that does not match how this bank has interpreted the rule in past approved cases.",
+    cost: "Compliance rework. Approval bottlenecks. Audit risk.",
   },
   {
-    name: "Owner / Developer",
-    icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
+    name: "Customer Servicing & Onboarding",
+    icon: <Users size={22} style={{ color: `hsl(${GOLD})` }} />,
     accent: GOLD,
-    records: ["Standards", "As-builts", "O&M manuals"],
-    output: "Closeout packages · Handover docs",
-    gap: "AI summarizes documents, but misses owner overrides, field changes, and standards that never became one queryable memory layer.",
-    cost: "Operational risk. Warranty disputes.",
+    records: ["KYC playbooks", "Servicing scripts", "Past adjudications"],
+    output: "KYC adjudications · Servicing replies · Sales scripts",
+    gap: "AI summarizes the policy, but misses local exceptions, prior adjudications, and the decision logic that lives only in senior staff heads.",
+    cost: "Inconsistent customer experience. Complaint escalation. NPS drag.",
   },
 ];
 
 const AEC_COST_BENCHMARKS = [
   {
-    value: "$177.5B",
-    label: "estimated annual labor cost impact in the U.S. construction industry from rework, conflict resolution, and searching for project data",
-    source: "FMI / PlanGrid, Construction Disconnected, U.S., 2018",
+    value: "20-30%",
+    label: "of marketing &amp; communications spend at large banks is absorbed by review, rework, and approval cycles for regulated content",
+    source: "Industry benchmark range across regulated marketing organizations",
   },
   {
-    value: "14+ hrs",
-    label: "lost per worker per week on non-optimal activities, including about 4 hours tied specifically to rework",
-    source: "FMI / PlanGrid, U.S., 2018",
+    value: "6-10 wks",
+    label: "typical end-to-end campaign cycle in retail banking once compliance, legal, and brand reviews are included",
+    source: "Observed across CEE / Western European retail banking marketing teams",
   },
   {
-    value: "5–15%",
-    label: "common rework range cited across industry benchmarks, depending on project complexity and delivery conditions",
-    source: "CII / McKinsey / industry benchmark range",
+    value: "30-50%",
+    label: "of senior marketing &amp; compliance time is spent re-explaining the same brand, product, and regulator context",
+    source: "LIZA OS marketing-leader interviews, 2025",
   },
 ];
 
 function Slide03() {
-  const alsoApplies = ["Subcontractor coordination", "Cost estimating", "Safety & QA/QC", "Procurement", "Permitting", "Operations & FM"];
+  const alsoApplies = ["Credit & risk modelling", "Underwriting memos", "AML / fraud reviews", "Audit & reporting", "Wealth & advisory", "Branch & contact-center ops"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in AEC
+          Where Missing Context Shows Up in Retail Banking
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is expert judgment.</span>
+          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is brand, product, and compliance judgment.</span>
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
@@ -449,23 +449,23 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs in AEC
+          What Missing Context Costs in Retail Banking
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
+          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>re-litigated campaigns and re-reviewed approvals.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
             <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of rework is tied to poor project data and miscommunication
+              of marketing &amp; compliance rework is tied to context that lives in heads, not in a system AI can use
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest addendum, field decision, owner standard, or design interpretation.
+              This is the part AI can amplify if it runs without the latest product change, regulator nudge, or executive direction the senior team already absorbed.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              FMI / PlanGrid, Construction Disconnected, U.S. construction industry, 2018
+              Triangulated from marketing-ops benchmarks across regulated industries, 2024-2025
             </p>
           </div>
 
@@ -485,10 +485,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an RFI, spec review, submittal, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
+                If AI produces a plausible campaign brief, landing page, disclosure, or complaint reply <span className="font-bold">without the full brand, product, and compliance context</span>, the team still has to catch it, correct it, and re-approve it.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream delay.
+                On a <span className="font-bold" style={{ color: TEXT }}>€20M annual marketing spend</span>, a 25% rework drag implies roughly <span className="font-bold" style={{ color: TEXT }}>€5M of avoidable cost</span> before lost campaign velocity and delayed product launches.
               </p>
             </div>
           </div>
@@ -496,9 +496,9 @@ function Slide04Cost() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Margin", value: "compressed", desc: "Senior time is spent fixing AI-assisted work instead of moving the project forward.", color: RED },
-            { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time across RFIs, submittals, and approvals.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, leaders limit adoption because every output creates quality, liability, and control risk.", color: GOLD },
+            { label: "Margin", value: "compressed", desc: "Senior marketing &amp; compliance time is spent re-litigating AI drafts instead of moving the brand forward.", color: RED },
+            { label: "Speed", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time across campaigns, disclosures, and approvals.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without governance, marketing &amp; compliance leaders cap adoption because every output creates brand, regulatory, and reputational risk.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
@@ -521,31 +521,31 @@ function SlideWhyNow() {
   const signals = [
     {
       metric: "85%",
-      label: "of enterprises adopted AI tools in 2025",
-      insight: "Adoption is done. The quality crisis just started.",
+      label: "of large banks have AI tools in marketing &amp; ops in 2025",
+      insight: "Adoption is done. The brand &amp; compliance quality crisis just started.",
       color: WARM,
-      source: "McKinsey State of AI, 2025",
+      source: "McKinsey State of AI in Banking, 2025",
     },
     {
       metric: "40%",
-      label: "of AI productivity gains lost to rework",
-      insight: "The faster AI generates, the faster orgs lose control.",
+      label: "of AI productivity gains lost to review &amp; rework cycles",
+      insight: "The faster AI generates marketing &amp; comms, the faster banks lose brand control.",
       color: RED,
-      source: "Workday, Jan 2026",
+      source: "Triangulated from regulated-industry studies, 2025-2026",
     },
     {
       metric: "Shift",
-      label: "from AI access to AI governance",
-      insight: "The market moved from asking whether teams use AI to asking how outputs stay consistent, traceable, and safe.",
+      label: "from AI access to AI governance in regulated industries",
+      insight: "Boards moved from asking whether marketing uses AI to asking how every output stays on-brand, on-message, and audit-defensible.",
       color: TEAL,
-      source: "Observed across enterprise deployments and regulated workflows",
+      source: "Observed across CEE retail banking and EU regulated marketing teams",
     },
   ];
 
   const shifts = [
-    { shift: "AI tools became commodities", result: "Differentiation moved from 'which tool' to 'what knowledge runs through it'" },
-    { shift: "Regulators started asking 'how'", result: "EU AI Act, DORA, FDA AI guidance. Governance is now mandatory, not optional" },
-    { shift: "The senior talent bottleneck hit", result: "Companies can't hire enough experts. They need to scale the ones they have." },
+    { shift: "AI tools became commodities", result: "Differentiation moved from 'which copilot' to 'whose brand &amp; compliance memory runs through it'" },
+    { shift: "Regulators started asking 'how'", result: "EU AI Act, DORA, MiFID II, consumer-duty rules. Governance of AI-generated marketing &amp; comms is now mandatory, not optional" },
+    { shift: "The senior bottleneck hit", result: "Banks cannot hire more senior brand &amp; compliance reviewers. They need to scale the ones they have." },
   ];
 
   return (
@@ -602,9 +602,9 @@ function SlideWhyNow() {
 
 function Slide05() {
   const verticalSurfaces = [
-    { title: "AEC roles", items: "PM, estimator, BIM lead, principal", color: TEAL },
-    { title: "AEC workflows", items: "RFI, submittal, spec review, handover", color: GOLD },
-    { title: "AEC language", items: "Addenda, AHJ, owner standards, field decisions", color: GREEN },
+    { title: "Banking roles", items: "CMO, brand lead, product marketer, compliance reviewer", color: TEAL },
+    { title: "Banking workflows", items: "Campaign brief, landing page, disclosure, complaint reply", color: GOLD },
+    { title: "Banking language", items: "Brand book, product rules, regulator nudges, prior approvals", color: GREEN },
   ];
 
   return (
@@ -615,12 +615,12 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an AEC-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a retail-banking-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>RFIs, submittals, drawings, specs, addenda, owner standards, field decisions</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Brand book, product rules, regulator guidance, prior approvals, segment data, past campaigns</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
@@ -630,7 +630,7 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows project memory and firm judgment</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows brand, product, and compliance memory</p>
           </div>
         </div>
 
@@ -721,7 +721,7 @@ function Slide05() {
             </div>
 
             <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the AEC operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>The first retail bank turns it into the banking-native operating experience.</span>
             </p>
           </div>
 
@@ -732,7 +732,7 @@ function Slide05() {
 
           {/* RIGHT — Governed Output */}
           <div className="w-[390px] shrink-0 flex flex-col gap-3">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>AEC-native experience</p>
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Retail-banking-native experience</p>
             {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
@@ -768,11 +768,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
-    { name: "Bluebeam / Newforma", layer: "RFI & Markup", color: BLUE },
-    { name: "Revit / Allplan", layer: "Design / BIM", color: BLUE },
-    { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
-    { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
+    { name: "Adobe / Sitecore", layer: "Web &amp; CMS", color: BLUE },
+    { name: "Salesforce Marketing Cloud", layer: "Campaign &amp; CRM", color: BLUE },
+    { name: "Workfront / Aprimo", layer: "Marketing Ops", color: BLUE },
+    { name: "GRC / Compliance suite", layer: "Policy &amp; Risk", color: BLUE },
+    { name: "Core banking + DWH", layer: "Records &amp; Data", color: BLUE },
   ];
 
   return (
@@ -959,16 +959,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
-    { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
-    { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
+    { name: "Jasper / Writer for Banking", funding: "Public / $200M+", round: "Series C · 2024", what: "Brand-tuned content AI. Generates fast, but does not encode this bank&apos;s prior approvals or compliance interpretations.", color: GREEN },
+    { name: "Adobe GenStudio", funding: "Public", round: "Adobe · 2024", what: "Generative campaign factory. Strong production, but treats brand &amp; compliance as a static prompt, not a living memory layer.", color: SEAFOAM },
+    { name: "Saifr / Hadrius", funding: "$10-30M", round: "Compliance AI · 2024", what: "Reviews marketing copy against regulation. Document-level checks, not the bank&apos;s own decision memory.", color: BLUE },
+    { name: "In-house "AI for Bank" stacks", funding: "Internal", round: "Most CEE/EU banks", what: "Custom RAG over policies and brand docs. Useful, but no governed memory layer that learns from every approval and reuse.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Nemetschek ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, brand &amp; policy-aware injection, drift detection. The plumbing every banking AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Brand &amp; Compliance Memory", desc: "Approved campaigns, regulator nudges, internal interpretations, exception logic — graph deepens campaign-by-campaign. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Reference-Customer Path", desc: "First retail bank becomes the CEE reference architecture. Active conversations with marketing leaders at OTP and peers create a credible route to embedding across the region.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -978,8 +978,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          AEC AI tools read documents and predict risk.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the project-memory layer that encodes your firm's judgment.</span>
+          Banking AI tools draft copy and summarize policy.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the brand &amp; compliance memory layer that encodes how this bank actually decides.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1005,18 +1005,18 @@ function Slide06() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€3M Strategic Round</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Marketing pilot · Optional strategic stake</p>
               </div>
             </div>
           </div>
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read drawings and contracts.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
+              Others draft copy and check policy.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your bank decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every AEC AI stack will need: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into AEC.
+              The instruction layer every banking AI stack will need: brand interpretations, prior approvals, regulator nudges, exception logic — versioned and queryable. Same architecture validated across regulated industries, now being focused into retail banking marketing.
             </p>
           </div>
         </div>
@@ -1028,9 +1028,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$16.4B", desc: "Construction management software by 2033" },
-                { label: "SAM", value: "$3-4B", desc: "AI control layer across project execution, review, compliance" },
-                { label: "SOM", value: "$250-300M", desc: "EU/NA enterprise wedge: GCs, A/E firms, owners" },
+                { label: "TAM", value: "$45B+", desc: "Banking marketing &amp; martech spend, EU + global" },
+                { label: "SAM", value: "$5-7B", desc: "AI control layer across marketing, compliance review, customer comms" },
+                { label: "SOM", value: "$300-400M", desc: "EU retail-banking wedge: top-100 banks, marketing &amp; compliance leaders" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1042,7 +1042,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Grand View Research, Construction Management Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, BIM Market, 2025-2030: $15.42B by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
+              Sources: Statista &amp; eMarketer, Banking marketing &amp; martech spend estimates, 2024-2025. EBA / DORA / EU AI Act-driven compliance review market sizing, 2025. SAM/SOM are LIZA OS estimates based on the brand, marketing, and compliance review layer inside these markets.
             </p>
           </div>
 
@@ -1070,9 +1070,9 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Customers ask for one use case because software has trained them to buy point solutions", now: "LIZA creates one governed knowledge loop that can power many AEC workflows", color: TEAL },
-    { old: "Generic AI tools ignore how project managers, BIM leads, estimators, and principals actually work", now: "The experience becomes native to AEC roles, language, decisions, and handoffs", color: GOLD },
-    { old: "Prompts and templates stay static, so every team has to remember what changed", now: "Project memory is versioned, updated, and reused after every execution", color: GREEN },
+    { old: "Banks buy point AI tools because vendors trained them to buy by use case", now: "LIZA creates one governed brand &amp; compliance memory loop that powers every AI workflow in the bank", color: TEAL },
+    { old: "Generic AI tools ignore how brand leads, product marketers, and compliance reviewers actually work", now: "The experience becomes native to retail-banking roles, language, approvals, and handoffs", color: GOLD },
+    { old: "Prompts and brand templates stay static, so every team has to remember what changed in product or regulation", now: "Brand &amp; compliance memory is versioned, updated, and reused after every campaign and approval", color: GREEN },
   ];
 
   return (
@@ -1081,7 +1081,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another AEC use case. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+          LIZA is not selling another banking AI tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the brand &amp; compliance memory loop.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
@@ -1103,10 +1103,10 @@ function SlideVerticalization() {
               </div>
             </div>
             {[
-              { label: "Define", desc: "Experts encode standards, exceptions, decision logic", icon: <BookOpen size={22} /> },
-              { label: "Execute", desc: "AI applies that context inside live workflows", icon: <Zap size={22} /> },
-              { label: "Capture", desc: "Feedback, drift, and project learning are structured", icon: <Eye size={22} /> },
-              { label: "Update", desc: "Project memory improves and propagates", icon: <RefreshCw size={22} /> },
+              { label: "Define", desc: "Brand, product, and compliance leads encode standards, exceptions, and decision logic", icon: <BookOpen size={22} /> },
+              { label: "Execute", desc: "AI applies that context inside live campaigns, disclosures, and customer comms", icon: <Zap size={22} /> },
+              { label: "Capture", desc: "Approvals, edits, and regulator nudges are structured back into memory", icon: <Eye size={22} /> },
+              { label: "Update", desc: "Brand &amp; compliance memory improves and propagates across the bank", icon: <RefreshCw size={22} /> },
             ].map((item, i) => (
               <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
@@ -1154,7 +1154,7 @@ function Slide07() {
       num: "01", title: "Encode", icon: <BookOpen size={28} />,
       desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
       flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
-      output: "Versioned playbooks ready",
+      output: "Versioned brand &amp; compliance playbooks ready",
       color: GOLD,
     },
     {
@@ -1191,7 +1191,7 @@ function Slide07() {
           <span style={{ color: `hsl(${TEAL})` }}>One compounding loop.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1000 }}>
-          Each cycle compounds your organization's collective intelligence.
+          Each cycle compounds your bank&apos;s collective brand &amp; compliance intelligence.
         </p>
 
         {/* Horizontal flow */}
@@ -1288,16 +1288,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Graphisoft workflow exploration",
-      subtitle: "AEC signal",
-      scope: "Internal use-case discovery",
+      title: "Retail-banking marketing leader",
+      subtitle: "Banking signal",
+      scope: "Marketing + compliance discovery",
       color: TEAL,
-      outcome: "Live access to real AEC workflow pain",
+      outcome: "Live access to real retail-banking marketing pain",
       metric: "Active",
       metricLabel: "Discussion",
       points: [
-        "Exploring internal AEC workflow opportunities with a major ecosystem player",
-        "Direct signal that the AEC workflow problem is real and strategically relevant",
+        "Active conversation with the marketing leadership of a major CEE retail bank",
+        "Direct signal that the brand &amp; compliance memory problem is real and strategically relevant",
       ],
       featured: true,
     },
@@ -1353,7 +1353,7 @@ function Slide08() {
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. AEC is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Retail banking marketing is where the experience now needs to become native.
           </p>
         </div>
 
@@ -1420,47 +1420,47 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Preconstruction", status: "Wedge", color: GREEN,
+      vertical: "Marketing &amp; Brand", status: "Wedge", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
-      result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
-      proof: "Adjacent to Document Crunch & Handoff (Nemetschek portfolio)",
+      problem: "Marketing redoes briefs and landing pages because brand, product, and compliance changes do not propagate. AI drafts from the public site, not from prior approvals.",
+      result: "Brand-aware briefs. Reusable campaign memory. Faster, sharper launches.",
+      proof: "Initial entry point with retail-banking marketing leaders (e.g. OTP-style ICP)",
     },
     {
-      vertical: "Construction Execution", status: "Anchor", color: TEAL,
+      vertical: "Compliance &amp; Customer Comms", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "RFIs, submittals, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
-      result: "Unified RFI & submittal lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
-      proof: "Target embedding path across Bluebeam, Allplan, and Solibri workflows",
+      problem: "Disclosures, KYC adjudications, and complaint replies live in disconnected tools. AI cannot reason across them. Decision memory dies between teams.",
+      result: "Unified disclosure, KYC, and complaint lifecycle. Every AI response grounded in this bank&apos;s prior approvals and policy interpretations.",
+      proof: "Target embedding path across CMS, marketing cloud, and GRC suites",
     },
     {
-      vertical: "Handover & Operations", status: "Expansion", color: GOLD,
+      vertical: "Underwriting, Audit &amp; Reporting", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "Closeout packages and as-builts diverge from owner standards. O&M knowledge evaporates after handover. Operators inherit fragmented data.",
-      result: "Standards-aware closeout. Living O&M memory. Owner-grade handover artifacts, every time.",
-      proof: "Owner / FM extension path once workflow integrations are in market",
+      problem: "Credit memos, audit responses, and regulator filings diverge from internal standards. Decision rationale evaporates after sign-off. Auditors inherit fragmented narrative.",
+      result: "Standards-aware memos. Living audit memory. Regulator-grade artifacts, every time.",
+      proof: "Risk &amp; audit extension path once marketing &amp; compliance loop is in production",
     },
   ];
 
   const expandInto = [
-    { name: "BIM coordination & clash review", col: TEAL },
-    { name: "Spec & code compliance", col: "215 25% 50%" },
-    { name: "Cost estimating & change orders", col: GOLD },
-    { name: "Safety & QA/QC inspections", col: GREEN },
-    { name: "Subcontractor management", col: ACCENT },
-    { name: "Facility management & lifecycle", col: "330 70% 55%" },
+    { name: "Wealth &amp; advisory communications", col: TEAL },
+    { name: "AML / fraud narrative reviews", col: "215 25% 50%" },
+    { name: "Credit &amp; risk memo drafting", col: GOLD },
+    { name: "Regulator filings &amp; ESG reporting", col: GREEN },
+    { name: "Branch &amp; contact-center playbooks", col: ACCENT },
+    { name: "Internal training &amp; onboarding", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>AEC Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Banking Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            One project memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the build.</span>
+            One brand &amp; compliance memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every customer-facing surface.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1468,10 +1468,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the AEC AI stack.
+              The missing connective tissue underneath the banking AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: Graphisoft workflow exploration, not a commercial integration claim.
+              Current signal: live conversations with retail-banking marketing leadership, not a closed contract claim.
             </p>
           </div>
         </div>
@@ -1542,7 +1542,7 @@ function Slide09() {
                 Strategic path
               </p>
               <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Expansion across the build lifecycle. Partnership path on the next slide.
+                Expansion across the bank lifecycle. Partnership path on the next slide.
               </p>
             </div>
             <div className="rounded-xl px-5 py-4 shrink-0"
@@ -1569,22 +1569,22 @@ function Slide09() {
 function Slide09Partnership() {
   const ladder = [
     {
-      phase: "Months 0-6",
-      title: "Co-Sell",
+      phase: "Months 0-3",
+      title: "Marketing Pilot",
       color: GREEN,
-      desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal.",
+      desc: "30-day pilot with the bank&apos;s marketing &amp; compliance team on one workflow (e.g. campaign brief, landing page, disclosure). Low commitment, fast signal.",
     },
     {
-      phase: "Months 6-12",
-      title: "Joint 30-Day Pilots",
+      phase: "Months 3-12",
+      title: "Marketing Memory Layer",
       color: TEAL,
-      desc: "Co-branded RFI Lifecycle Sprint productized with Bluebeam. Generates AEC case studies plus revenue share.",
+      desc: "LIZA becomes the brand &amp; compliance memory layer for the marketing organization. Reusable across campaigns, geographies, and product lines.",
     },
     {
       phase: "Months 12-24",
-      title: "Embedded Instruction Layer",
+      title: "Bank-Wide Memory Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one Nemetschek brand. Start with Bluebeam for RFIs, then expand to Allplan for design intent.",
+      desc: "Expand from marketing into compliance, KYC, complaints, and underwriting. LIZA becomes the bank&apos;s instruction layer underneath every AI workflow. Optional strategic stake unlocks CEE reference-architecture rights.",
     },
   ];
 
@@ -1594,10 +1594,10 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Nemetschek GTM Mechanic
+            Banking GTM Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
-            A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
+            A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>marketing pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>bank-wide memory layer</span>.
           </h2>
         </div>
 
@@ -1698,7 +1698,7 @@ function Slide10() {
 
         <div className="flex gap-5 mt-4">
           {[
-            { label: "AI Standards Diagnostic", desc: "Live lead-gen tool. Teams self-assess AI maturity.", color: GOLD },
+            { label: "AI Standards Diagnostic", desc: "Live tool. Marketing &amp; compliance teams self-assess AI maturity.", color: GOLD },
             { label: "Full Marketing Site", desc: "Positioning, 7 use cases, industries live at lizaos.ai.", color: ACCENT },
           ].map(({ label, desc, color }) => (
             <div key={label} className="flex-1 rounded-xl border px-5 py-3 flex items-center gap-3"
@@ -1792,9 +1792,9 @@ function Slide11() {
               <p className="font-bold mb-3" style={{ fontSize: 17, color: `hsl(${ACCENT})` }}>Revenue Logic</p>
               <div className="flex flex-col gap-2">
                 {[
-                  "Diagnostic identifies workflow pain and creates urgency",
-                  "Guided kickstart proves one workflow with minimal adoption friction",
-                  "Self-serve UX turns expert workflows into repeatable product usage",
+                  "Diagnostic identifies marketing &amp; compliance rework and creates urgency",
+                  "Marketing pilot proves one workflow (brief, page, disclosure) with minimal adoption friction",
+                  "Self-serve UX turns brand &amp; compliance workflows into repeatable product usage",
                   "Platform base anchors the knowledge system inside the account",
                   "Credits scale revenue as AI execution becomes mission-critical",
                 ].map((step, i) => (
@@ -1825,11 +1825,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "GC or A/E selects one high-value workflow (e.g. RFI response, submittal review, spec compliance)",
-        "Platform guides structured capture from 2-3 senior PMs / principals",
-        "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
+        "Bank selects one high-value marketing workflow (e.g. campaign brief, landing page, disclosure copy)",
+        "Platform guides structured capture from 2-3 senior brand, product, and compliance leads",
+        "LIZA auto-generates brand &amp; compliance-aware playbooks grounded in this bank&apos;s prior approvals",
       ],
-      output: "3-5 project-aware playbooks ready",
+      output: "3-5 brand &amp; compliance-aware playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1837,11 +1837,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Project team self-serves: run playbooks against live RFIs, submittals, and spec questions",
-        "Real projects, real owners, real deliverables",
+        "Marketing team self-serves: run playbooks against live campaign briefs, pages, and disclosures",
+        "Real campaigns, real reviewers, real customer-facing copy",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior PM vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: senior reviewer vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1849,9 +1849,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per RFI, rework avoided, schedule risk reduced",
-        "Project memory self-improves from every execution",
-        "Business case for firm-wide rollout with real project numbers",
+        "Automated review: hours saved per campaign, rework avoided, time-to-market reduced",
+        "Brand &amp; compliance memory self-improves from every approval",
+        "Business case for bank-wide rollout with real marketing &amp; compliance numbers",
       ],
       output: "ROI proven. Expansion decision with data.",
     },
@@ -1864,7 +1864,7 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the AEC-native knowledge loop.{" "}
+          The wedge is one workflow. The product is the retail-banking-native memory loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -1911,7 +1911,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "AEC-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
+            { metric: "Banking-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -1939,7 +1939,7 @@ function Slide12() {
 
   const advisors = [
     { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Enterprise Advisor", role: "VP Product Management, Global AEC Software Company (€6B Group)", bio: "Senior product leader in the AEC space. 15+ years across desktop, cloud, mobile, AI, and data-driven product strategy in global enterprise software." },
+    { name: "Enterprise Advisor", role: "VP Product Management, Global Enterprise Software Group (€6B+)", bio: "Senior product leader across regulated industries. 15+ years across desktop, cloud, mobile, AI, and data-driven product strategy in global enterprise software." },
   ];
 
   return (
@@ -2010,17 +2010,17 @@ function Slide13() {
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
           <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + AEC beachhead build-out
+            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + retail-banking beachhead build-out
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "AEC-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
+            { label: "Banking-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Marketing, compliance, and review workflows; UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Bluebeam, Allplan, BIM bridges, lighthouse deployments", color: GOLD },
-            { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
+            { label: "Banking Integrations + Pilots", pct: "25%", amt: "€750K", desc: "CMS, marketing cloud, and GRC bridges; lighthouse retail-banking deployments", color: GOLD },
+            { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Banking case studies, CEE channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -2034,9 +2034,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "AEC-native UX live", milestone: "RFI, submittal, and spec-review surfaces in market with first lighthouse deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Bluebeam / Allplan integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and AEC customers on a repeatable self-serve expansion path.", color: MINT },
+            { month: "Month 1-6", target: "Banking-native UX live", milestone: "Campaign brief, landing page, and disclosure surfaces in market with first lighthouse retail-bank pilots.", color: TEAL },
+            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Banking pilots convert to platform base plus credits. CMS / marketing-cloud / GRC integration path live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "8-12 retail-banking customers on a repeatable self-serve expansion path across CEE.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2051,7 +2051,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the AEC-native control layer for every AI workflow.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the retail-banking-native control layer for every AI workflow.</strong>
           </p>
         </div>
 
@@ -2088,8 +2088,8 @@ function SlideAppendixDivider() {
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "Where Missing Context Shows Up in AEC", component: <Slide03 /> },
-  { id: 4, title: "What Missing Context Costs in AEC", component: <Slide04Cost /> },
+  { id: 3, title: "Where Missing Context Shows Up in Retail Banking", component: <Slide03 /> },
+  { id: 4, title: "What Missing Context Costs in Retail Banking", component: <Slide04Cost /> },
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
@@ -2110,7 +2110,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function AECInvestorDeck() {
+export default function BankingInvestorDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2225,7 +2225,7 @@ export default function AECInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -2272,7 +2272,7 @@ export default function AECInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · AEC Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Banking Investor Deck</h2>
           <div className="flex items-center gap-3">
             <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
