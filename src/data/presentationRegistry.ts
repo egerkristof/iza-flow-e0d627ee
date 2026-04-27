@@ -69,7 +69,7 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Automotive R&D Investor Deck (VIE)",
     path: "/investor-automotive",
     sourcePath: "src/pages/AutomotiveInvestorDeck.tsx",
-    description: "Automotive R&D variant for VIE Technology Europe (Budapest greenfield, Zhejiang VIE Group). Wedge: HQ → Europe engineering onboarding for chassis-control IP and ISO 26262 / ASPICE judgment. Two-door CTA: 30-day onboarding pilot → optional €3M strategic stake to co-define the cross-border engineering reference architecture across Diankou, Beijing, Shanghai, Budapest.",
+    description: "Generic automotive R&D vertical deck for cross-border Tier-1 R&D centers (HQ + greenfield sites). Wedge: HQ → site engineering onboarding for chassis-control IP and ISO 26262 / ASPICE judgment. Two-door CTA: 30-day onboarding pilot at one R&D team → optional €3M strategic stake to co-define the cross-border engineering reference architecture across HQ and regional R&D sites.",
     component: AutomotiveInvestorDeck,
     showInAdmin: true,
   },
