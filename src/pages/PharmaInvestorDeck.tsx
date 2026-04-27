@@ -100,7 +100,7 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Life Sciences · Strategic Round
+            LIZA OS · Life Sciences · Customer First, Investor Optional
           </span>
         </div>
 
@@ -112,12 +112,12 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns SOPs, protocols, and expert judgment into the governed operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · Life Sciences Beachhead</span>
+          No one has shipped the GxP memory layer yet. The first sponsor, CRO, or CMO to codify it with us defines the standard the rest of the industry adopts.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Become a customer first. Take a strategic stake if you want to own the category with us.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; Life Sciences Beachhead
+          Confidential &nbsp;·&nbsp; Two-Door Conversation &nbsp;·&nbsp; Pilot · Memory Layer · Optional Strategic Stake
         </p>
       </div>
       <SlideBar />
