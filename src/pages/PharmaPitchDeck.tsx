@@ -1398,7 +1398,7 @@ const SLIDES = [
   { id: "a3-expand",   title: "Expansion Map",             component: <Act3_ExpansionMap /> },
   { id: "a3-drift",    title: "Drift & Oversight",         component: <Act3_DriftOversight /> },
   { id: "a3-pattern",  title: "The Pattern Repeats",       component: <Act3_PatternRepeats /> },
-  { id: "a3-summary",  title: "Summary & CTA",            component: <Act3_Summary /> },
+  { id: "a3-summary",  title: "Two-Door Conversation",    component: <Act3_Summary /> },
 ];
 
 const CHROME_BG = "hsl(200 15% 97%)";
