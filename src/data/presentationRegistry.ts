@@ -15,6 +15,7 @@ import SatcomDeck from "@/pages/SatcomDeck";
 import SatcomBrief from "@/pages/SatcomBrief";
 import PharmaBrief from "@/pages/PharmaBrief";
 import BankingInvestorDeck from "@/pages/BankingInvestorDeck";
+import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -61,6 +62,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/BankingInvestorDeck.tsx",
     description: "Retail-banking lifecycle deck. Marketing wedge framing for retail-bank marketing leaders (e.g. OTP). 30-day pilot on a marketing workflow → expansion to KYC, complaints, credit, group governance. Two-door CTA: become a customer first, optional strategic stake to co-define the CEE banking reference architecture.",
     component: BankingInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-automotive",
+    title: "Automotive R&D Investor Deck (VIE)",
+    path: "/investor-automotive",
+    sourcePath: "src/pages/AutomotiveInvestorDeck.tsx",
+    description: "Automotive R&D variant for VIE Technology Europe (Budapest greenfield, Zhejiang VIE Group). Wedge: HQ → Europe engineering onboarding for chassis-control IP and ISO 26262 / ASPICE judgment. Two-door CTA: 30-day onboarding pilot → optional €3M strategic stake to co-define the cross-border engineering reference architecture across Diankou, Beijing, Shanghai, Budapest.",
+    component: AutomotiveInvestorDeck,
     showInAdmin: true,
   },
   {

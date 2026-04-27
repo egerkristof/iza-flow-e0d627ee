@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Pill, Building2, Briefcase, ArrowRight, Lock, Megaphone,
   TrendingUp, Users, Target, Handshake, GraduationCap, Radio,
-  Rocket, Satellite, Landmark,
+  Rocket, Satellite, Landmark, Car,
 } from "lucide-react";
 import { SectionTag } from "@/components/marketing/home/shared";
 
@@ -56,6 +56,16 @@ const REGULATED_INDUSTRIES = [
     description:
       "Brand voice, product rules, regulator wording, and segment judgment governed across every AI output. Starts at the marketing wedge, extends across KYC, complaints, credit, and group governance.",
     tags: ["EBA", "Consumer Duty", "DORA", "AML6"],
+    available: true,
+  },
+  {
+    slug: "automotive",
+    icon: <Car className="w-6 h-6" />,
+    title: "Automotive R&D & Functional Safety",
+    lifecycle: "Engineering V-Cycle · Cross-Border R&D",
+    description:
+      "Chassis-control IP, HQ design intent, and ISO 26262 / ASPICE judgment governed across cross-border engineering sites. Starts at HQ → Europe onboarding, extends across safety case, ASPICE, and group engineering memory.",
+    tags: ["ISO 26262", "ASPICE", "ISO 21434", "AUTOSAR"],
     available: true,
   },
 ];
