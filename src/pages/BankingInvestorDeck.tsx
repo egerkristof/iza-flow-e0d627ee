@@ -125,7 +125,7 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE SHAPE — THE SHAPE OF THE COMPANY (AEC framing)
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Banking framing)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideShape() {
