@@ -602,9 +602,9 @@ function SlideWhyNow() {
 
 function Slide05() {
   const verticalSurfaces = [
-    { title: "Banking roles", items: "CMO, brand lead, product marketer, compliance reviewer", color: TEAL },
-    { title: "Banking workflows", items: "Campaign brief, landing page, disclosure, complaint reply", color: GOLD },
-    { title: "Banking language", items: "Brand book, product rules, regulator nudges, prior approvals", color: GREEN },
+    { title: "Automotive R&D roles", items: "R&D director, chief engineer, FuSa lead, system architect, new hire", color: TEAL },
+    { title: "R&D workflows", items: "Onboarding plan, design brief, FMEDA, change request, review pack", color: GOLD },
+    { title: "Engineering language", items: "Chassis-control IP, ISO 26262 patterns, prior FMEDA, HQ judgment", color: GREEN },
   ];
 
   return (
@@ -615,12 +615,12 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a retail-banking-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an automotive-R&amp;D-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Brand book, product rules, regulator guidance, prior approvals, segment data, past campaigns</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Chassis-control IP, HQ design specs, ISO 26262 / ASPICE artifacts, prior FMEDA, program lessons, senior-engineer judgment</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
@@ -630,7 +630,7 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows brand, product, and compliance memory</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows chassis-control IP, design intent, and ISO 26262 reasoning</p>
           </div>
         </div>
 
@@ -721,7 +721,7 @@ function Slide05() {
             </div>
 
             <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>The first retail bank turns it into the banking-native operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>The first Tier-1 R&amp;D site turns it into the automotive-native operating experience.</span>
             </p>
           </div>
 
@@ -732,7 +732,7 @@ function Slide05() {
 
           {/* RIGHT — Governed Output */}
           <div className="w-[390px] shrink-0 flex flex-col gap-3">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Retail-banking-native experience</p>
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Automotive-R&amp;D-native experience</p>
             {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
@@ -753,7 +753,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Horizontal infrastructure plus vertical UX. <span style={{ color: `hsl(${TEAL})` }}>That is how the loop becomes an industry standard.</span>
+            Horizontal infrastructure plus vertical UX. <span style={{ color: `hsl(${TEAL})` }}>That is how the loop becomes an automotive R&amp;D standard.</span>
           </p>
         </div>
       </div>
@@ -768,11 +768,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Adobe / Sitecore", layer: "Web &amp; CMS", color: BLUE },
-    { name: "Salesforce Marketing Cloud", layer: "Campaign &amp; CRM", color: BLUE },
-    { name: "Workfront / Aprimo", layer: "Marketing Ops", color: BLUE },
-    { name: "GRC / Compliance suite", layer: "Policy &amp; Risk", color: BLUE },
-    { name: "Core banking + DWH", layer: "Records &amp; Data", color: BLUE },
+    { name: "Siemens Polarion / Codebeamer", layer: "ALM &amp; Requirements", color: BLUE },
+    { name: "DOORS / Jama", layer: "Requirements &amp; Trace", color: BLUE },
+    { name: "Ansys medini / Isograph", layer: "FuSa &amp; FMEDA", color: BLUE },
+    { name: "PLM (Teamcenter / 3DX)", layer: "Design &amp; BOM", color: BLUE },
+    { name: "ASPICE / QMS suite", layer: "Process &amp; Audit", color: BLUE },
   ];
 
   return (
@@ -959,16 +959,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Jasper / Writer for Banking", funding: "Public / $200M+", round: "Series C · 2024", what: "Brand-tuned content AI. Generates fast, but does not encode this bank&apos;s prior approvals or compliance interpretations.", color: GREEN },
-    { name: "Adobe GenStudio", funding: "Public", round: "Adobe · 2024", what: "Generative campaign factory. Strong production, but treats brand &amp; compliance as a static prompt, not a living memory layer.", color: SEAFOAM },
-    { name: "Saifr / Hadrius", funding: "$10-30M", round: "Compliance AI · 2024", what: "Reviews marketing copy against regulation. Document-level checks, not the bank&apos;s own decision memory.", color: BLUE },
-    { name: "In-house \"AI for Bank\" stacks", funding: "Internal", round: "Most CEE/EU banks", what: "Custom RAG over policies and brand docs. Useful, but no governed memory layer that learns from every approval and reuse.", color: GOLD },
+    { name: "Generic AI copilots in PLM", funding: "Embedded / large-cap", round: "Siemens / Dassault · 2024", what: "Workflow assistants inside ALM/PLM. Useful inside the tool, but blind to chassis-control IP, prior FMEDA, and HQ design intent.", color: GREEN },
+    { name: "ISO 26262 automation tools", funding: "$10-50M", round: "Ansys medini / Kugler Maag", what: "Templated safety-case authoring. Strong on artifact format, but treats engineering judgment as a static prompt, not a living memory layer.", color: SEAFOAM },
+    { name: "RAG over engineering docs", funding: "$10-30M", round: "Engineering-AI · 2024", what: "Document Q&amp;A over PLM and standards. Surface-level retrieval, not the OEM&apos;s own decision memory or design rationale.", color: BLUE },
+    { name: "In-house \"AI for R&amp;D\" stacks", funding: "Internal", round: "Most large Tier-1s", what: "Custom RAG over standards and program docs. Useful, but no governed memory layer that learns from every design decision and review.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, brand &amp; policy-aware injection, drift detection. The plumbing every banking AI workflow will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Brand &amp; Compliance Memory", desc: "Approved campaigns, regulator nudges, internal interpretations, exception logic — graph deepens campaign-by-campaign. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Reference-Customer Path", desc: "First retail bank becomes the CEE reference architecture. Active conversations with marketing leaders at OTP and peers create a credible route to embedding across the region.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, design- and standard-aware injection, drift detection. The plumbing every automotive R&amp;D AI workflow will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Engineering Memory", desc: "Approved designs, FMEDA patterns, ISO 26262 interpretations, novel-component decisions (EMB, wheel-hub) — graph deepens program-by-program. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Reference-Customer Path", desc: "First Tier-1 R&amp;D site becomes the cross-border-engineering reference architecture. Active conversations with VIE Technology Europe (Budapest) and peers create a credible route to embedding across CEE automotive R&amp;D.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -978,8 +978,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Banking AI tools draft copy and summarize policy.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the brand &amp; compliance memory layer that encodes how this bank actually decides.</span>
+          Automotive AI tools generate boilerplate and retrieve documents.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the engineering memory layer that encodes how this Tier-1 actually designs and decides.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1005,18 +1005,18 @@ function Slide06() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Marketing pilot · Optional strategic stake</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Onboarding pilot · Optional strategic stake</p>
               </div>
             </div>
           </div>
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others draft copy and check policy.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your bank decides.</span>
+              Others generate boilerplate and retrieve docs.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your engineering org decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every banking AI stack will need: brand interpretations, prior approvals, regulator nudges, exception logic — versioned and queryable. Same architecture validated across regulated industries, now being focused into retail banking marketing.
+              The instruction layer every automotive R&amp;D AI stack will need: design rationale, prior FMEDA, ISO 26262 interpretations, novel-component decisions — versioned and queryable. Same architecture validated across regulated industries, now being focused into cross-border automotive R&amp;D.
             </p>
           </div>
         </div>
@@ -1028,9 +1028,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$45B+", desc: "Banking marketing &amp; martech spend, EU + global" },
-                { label: "SAM", value: "$5-7B", desc: "AI control layer across marketing, compliance review, customer comms" },
-                { label: "SOM", value: "$300-400M", desc: "EU retail-banking wedge: top-100 banks, marketing &amp; compliance leaders" },
+                { label: "TAM", value: "$60B+", desc: "Global automotive R&amp;D engineering software + services spend" },
+                { label: "SAM", value: "$6-9B", desc: "AI control layer across engineering, FuSa, ALM, and cross-site collaboration" },
+                { label: "SOM", value: "$400-600M", desc: "EU + greenfield-Asia Tier-1 R&amp;D wedge: top-150 chassis / EV / ADAS suppliers and their CEE engineering centers" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1042,7 +1042,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Statista &amp; eMarketer, Banking marketing &amp; martech spend estimates, 2024-2025. EBA / DORA / EU AI Act-driven compliance review market sizing, 2025. SAM/SOM are LIZA OS estimates based on the brand, marketing, and compliance review layer inside these markets.
+              Sources: ACEA &amp; Statista, automotive R&amp;D and engineering-software spend estimates, 2024-2025. ISO 26262 / ASPICE / EU AI Act compliance market sizing, 2025. SAM/SOM are LIZA OS estimates based on the engineering-judgment and cross-site collaboration layer inside these markets.
             </p>
           </div>
 
@@ -1070,9 +1070,9 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Banks buy point AI tools because vendors trained them to buy by use case", now: "LIZA creates one governed brand &amp; compliance memory loop that powers every AI workflow in the bank", color: TEAL },
-    { old: "Generic AI tools ignore how brand leads, product marketers, and compliance reviewers actually work", now: "The experience becomes native to retail-banking roles, language, approvals, and handoffs", color: GOLD },
-    { old: "Prompts and brand templates stay static, so every team has to remember what changed in product or regulation", now: "Brand &amp; compliance memory is versioned, updated, and reused after every campaign and approval", color: GREEN },
+    { old: "Tier-1s buy point AI tools because vendors trained them to buy by use case", now: "LIZA creates one governed engineering-memory loop that powers every AI workflow across R&amp;D, FuSa, and program management", color: TEAL },
+    { old: "Generic AI tools ignore how chief engineers, FuSa leads, and chassis architects actually work", now: "The experience becomes native to automotive-R&amp;D roles, language, design reviews, and HQ↔site handoffs", color: GOLD },
+    { old: "Prompts and design templates stay static, so every site has to remember what HQ decided on the last program", now: "Engineering memory is versioned, updated, and reused after every design review, FMEDA, and program closeout", color: GREEN },
   ];
 
   return (
@@ -1081,7 +1081,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another banking AI tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the brand &amp; compliance memory loop.</span>
+          LIZA is not selling another engineering AI tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the cross-border engineering-memory loop.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
@@ -1103,10 +1103,10 @@ function SlideVerticalization() {
               </div>
             </div>
             {[
-              { label: "Define", desc: "Brand, product, and compliance leads encode standards, exceptions, and decision logic", icon: <BookOpen size={22} /> },
-              { label: "Execute", desc: "AI applies that context inside live campaigns, disclosures, and customer comms", icon: <Zap size={22} /> },
-              { label: "Capture", desc: "Approvals, edits, and regulator nudges are structured back into memory", icon: <Eye size={22} /> },
-              { label: "Update", desc: "Brand &amp; compliance memory improves and propagates across the bank", icon: <RefreshCw size={22} /> },
+              { label: "Define", desc: "Senior HQ engineers and FuSa leads encode chassis-control IP, design rationale, and ISO 26262 reasoning", icon: <BookOpen size={22} /> },
+              { label: "Execute", desc: "AI applies that context inside live onboarding, design briefs, FMEDA, and change requests", icon: <Zap size={22} /> },
+              { label: "Capture", desc: "Design-review decisions, FMEDA edits, and homologation feedback are structured back into memory", icon: <Eye size={22} /> },
+              { label: "Update", desc: "Engineering memory improves and propagates across Diankou, Beijing, Shanghai, and Budapest", icon: <RefreshCw size={22} /> },
             ].map((item, i) => (
               <div key={item.label} className="flex items-center gap-4 mb-4 last:mb-0">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>{item.icon}</div>
@@ -1154,7 +1154,7 @@ function Slide07() {
       num: "01", title: "Encode", icon: <BookOpen size={28} />,
       desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
       flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
-      output: "Versioned brand &amp; compliance playbooks ready",
+      output: "Versioned engineering &amp; safety playbooks ready",
       color: GOLD,
     },
     {
@@ -1191,7 +1191,7 @@ function Slide07() {
           <span style={{ color: `hsl(${TEAL})` }}>One compounding loop.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1000 }}>
-          Each cycle compounds your bank&apos;s collective brand &amp; compliance intelligence.
+          Each cycle compounds your R&amp;D org&apos;s collective engineering and safety intelligence.
         </p>
 
         {/* Horizontal flow */}
