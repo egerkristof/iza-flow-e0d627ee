@@ -13,6 +13,7 @@ import SpaceDeck from "@/pages/SpaceDeck";
 import SpaceBrief from "@/pages/SpaceBrief";
 import SatcomDeck from "@/pages/SatcomDeck";
 import SatcomBrief from "@/pages/SatcomBrief";
+import PharmaBrief from "@/pages/PharmaBrief";
 
 export type PresentationRoute = {
   id: string;
@@ -131,6 +132,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/PharmaPitchDeck.tsx",
     description: "Medicine lifecycle management pitch for pharma",
     component: PharmaPitchDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "pharma-brief",
+    title: "Pharma Brief (Mobile + Desktop)",
+    path: "/pharma-brief",
+    sourcePath: "src/pages/PharmaBrief.tsx",
+    description: "Responsive short-form brief of the Pharma Pitch Deck. Leads with sector-specific cost of uncodified GxP judgment (repeat deviations, $2.6B per drug, 10% Phase I→approval) and reframes AI as a horizontal layer on a vertical knowledge problem. Single CTA to /pharma-pitch.",
+    component: PharmaBrief,
     showInAdmin: true,
   },
   {
