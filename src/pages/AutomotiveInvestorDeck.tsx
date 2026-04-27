@@ -104,9 +104,9 @@ function Slide01() {
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Brand &amp; Compliance Memory Layer<br />
+          The Engineering Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Retail Banking.
+            for Cross-Border Automotive R&amp;D.
           </span>
         </h1>
 
@@ -125,7 +125,7 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Banking framing)
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Automotive framing)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideShape() {
@@ -968,7 +968,7 @@ function Slide06() {
   const moatLayers = [
     { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, design- and standard-aware injection, drift detection. The plumbing every automotive R&amp;D AI workflow will need.", icon: <Cpu size={20} /> },
     { layer: "Compounding Engineering Memory", desc: "Approved designs, FMEDA patterns, ISO 26262 interpretations, novel-component decisions (EMB, wheel-hub) — graph deepens program-by-program. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Reference-Customer Path", desc: "First Tier-1 R&amp;D site becomes the cross-border-engineering reference architecture. Active conversations with Tier-1 R&D leaders at greenfield sites create a credible route to embedding across CEE automotive R&amp;D.", icon: <Network size={20} /> },
+    { layer: "Reference-Customer Path", desc: "First Tier-1 R&amp;D site becomes the cross-border-engineering reference architecture. Active conversations with Tier-1 R&D leaders at greenfield sites create a credible route to embedding across cross-border automotive R&amp;D.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -1030,7 +1030,7 @@ function Slide06() {
               {[
                 { label: "TAM", value: "$60B+", desc: "Global automotive R&amp;D engineering software + services spend" },
                 { label: "SAM", value: "$6-9B", desc: "AI control layer across engineering, FuSa, ALM, and cross-site collaboration" },
-                { label: "SOM", value: "$400-600M", desc: "EU + greenfield-Asia Tier-1 R&amp;D wedge: top-150 chassis / EV / ADAS suppliers and their CEE engineering centers" },
+                { label: "SOM", value: "$400-600M", desc: "EU + APAC Tier-1 R&amp;D wedge: top-150 chassis / EV / ADAS suppliers and their cross-border engineering centers" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1296,7 +1296,7 @@ function Slide08() {
       metric: "Active",
       metricLabel: "Discussion",
       points: [
-        "Active conversation with the R&D leadership of a CEE Tier-1 automotive R&D site (a greenfield Tier-1 R&D site)",
+        "Active conversation with the R&D leadership of a Tier-1 automotive R&D greenfield site",
         "Direct signal that the cross-border engineering-memory and onboarding problem is real and strategically relevant",
       ],
       featured: true,
@@ -1468,10 +1468,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the banking AI stack.
+              The missing connective tissue underneath the automotive R&amp;D AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: live conversations with Tier-1 R&amp;D leadership at CEE greenfield sites, not a closed contract claim.
+              Current signal: live conversations with Tier-1 R&amp;D leadership at greenfield sites, not a closed contract claim.
             </p>
           </div>
         </div>
