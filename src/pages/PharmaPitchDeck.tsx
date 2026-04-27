@@ -1395,7 +1395,7 @@ const SLIDES = [
   { id: "a2-results",  title: "Proven Results",            component: <Act2_Results /> },
   // Act 3 - Operating Model (4 slides)
   { id: "act3-divider", title: "Act 3 · Become the Design Partner",  component: <SectionDivider actNum={3} title="Become the Design Partner" subtitle="Pilot first. Co-define the GxP memory standard. Optional strategic stake. Customer-first, anchored later." icon={<Pill size={36} />} color={CORAL} /> },
-  { id: "a3-expand",   title: "Expansion Map",             component: <Act3_ExpansionMap /> },
+  { id: "a3-expand",   title: "Pilot → GxP Standard",      component: <Act3_ExpansionMap /> },
   { id: "a3-drift",    title: "Drift & Oversight",         component: <Act3_DriftOversight /> },
   { id: "a3-pattern",  title: "The Pattern Repeats",       component: <Act3_PatternRepeats /> },
   { id: "a3-summary",  title: "Two-Door Conversation",    component: <Act3_Summary /> },
