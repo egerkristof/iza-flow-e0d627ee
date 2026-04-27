@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Pill, Building2, Briefcase, ArrowRight, Lock, Megaphone,
   TrendingUp, Users, Target, Handshake, GraduationCap, Radio,
-  Rocket, Satellite,
+  Rocket, Satellite, Landmark,
 } from "lucide-react";
 import { SectionTag } from "@/components/marketing/home/shared";
 
@@ -46,6 +46,16 @@ const REGULATED_INDUSTRIES = [
     description:
       "15-year fleet memory, procurement governance, and spectrum continuity. The operator memory layer for satcom.",
     tags: ["ITU-R", "FCC Part 25", "SLA", "LEOP"],
+    available: true,
+  },
+  {
+    slug: "banking",
+    icon: <Landmark className="w-6 h-6" />,
+    title: "Retail Banking & Financial Services",
+    lifecycle: "Brand · Conduct · Lifecycle",
+    description:
+      "Brand voice, product rules, regulator wording, and segment judgment governed across every AI output. Starts at the marketing wedge, extends across KYC, complaints, credit, and group governance.",
+    tags: ["EBA", "Consumer Duty", "DORA", "AML6"],
     available: true,
   },
 ];
