@@ -48,16 +48,6 @@ const REGULATED_INDUSTRIES = [
     tags: ["ITU-R", "FCC Part 25", "SLA", "LEOP"],
     available: true,
   },
-  {
-    slug: "financial-services",
-    icon: <Building2 className="w-6 h-6" />,
-    title: "Financial Services",
-    lifecycle: "Risk & Compliance Lifecycle",
-    description:
-      "Model validation, regulatory reporting, and audit readiness. AI execution governed by your compliance frameworks.",
-    tags: ["MaRisk", "DORA", "Basel III"],
-    available: false,
-  },
 ];
 
 const FUNCTIONAL_LIFECYCLES = [
