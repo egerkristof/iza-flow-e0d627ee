@@ -327,8 +327,9 @@ export default function SatcomBrief() {
               </p>
               <p className="font-bold text-lg sm:text-xl">Run a 30-day pilot</p>
               <p className="mt-2 text-sm sm:text-base opacity-80 leading-snug">
-                One operations workflow on one satellite. Fixed scope, fixed price.
-                You only continue if the savings are real.
+                Come on board as a customer. One operations workflow on one
+                satellite. Fixed scope, fixed price. You only continue if the
+                savings are real.
               </p>
             </div>
             <div
@@ -338,9 +339,11 @@ export default function SatcomBrief() {
               <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-white/70">
                 Option B
               </p>
-              <p className="font-bold text-lg sm:text-xl">Become the first operator</p>
+              <p className="font-bold text-lg sm:text-xl">Co-invest in the category</p>
               <p className="mt-2 text-sm sm:text-base text-white/85 leading-snug">
-                Co-define the operator memory standard with us. Anchor it for your fleet, take an equity position, and own a reference architecture the rest of the category will follow.
+                Build the operator memory standard with us. Anchor it for your
+                fleet, take an equity position, and own a reference
+                architecture the rest of the category will follow.
               </p>
             </div>
           </div>

@@ -306,8 +306,9 @@ export default function SpaceBrief() {
               </p>
               <p className="font-bold text-lg sm:text-xl">Run a 30-day pilot</p>
               <p className="mt-2 text-sm sm:text-base opacity-80 leading-snug">
-                One workflow on one mission. Fixed scope, fixed price.
-                You only continue if the savings are real.
+                Come on board as a customer. One workflow on one mission.
+                Fixed scope, fixed price. You only continue if the savings
+                are real.
               </p>
             </div>
             <div
@@ -317,10 +318,11 @@ export default function SpaceBrief() {
               <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-white/70">
                 Option B
               </p>
-              <p className="font-bold text-lg sm:text-xl">Become a strategic partner</p>
+              <p className="font-bold text-lg sm:text-xl">Co-invest in the category</p>
               <p className="mt-2 text-sm sm:text-base text-white/85 leading-snug">
-                Co-develop the space version of LIZA OS with us. Take an equity
-                position and anchor it for your national and European missions.
+                Build the space version of LIZA OS with us. Anchor it for your
+                national and European missions, take an equity position, and
+                own a reference architecture the rest of the sector will follow.
               </p>
             </div>
           </div>
