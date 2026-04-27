@@ -2147,7 +2147,7 @@ const SLIDES = [
   { id: 14, title: "Business Model", component: <Slide11 /> },
   { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
   { id: 16, title: "Team", component: <Slide12 /> },
-  { id: 17, title: "The Ask", component: <Slide13 /> },
+  { id: 17, title: "Two-Door Conversation", component: <Slide13 /> },
   { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
   { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
   { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
