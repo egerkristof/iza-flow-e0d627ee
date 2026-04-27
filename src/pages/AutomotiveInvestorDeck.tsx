@@ -336,7 +336,7 @@ const AEC_GAP_CASES = [
     accent: RED,
     records: ["Chassis-control IP", "HQ design specs", "Component datasheets", "Prior program lessons"],
     output: "Ramp plans · Tutorials · Architecture briefs",
-    gap: "AI summarizes the public spec, but misses the design rationale, the failed approaches, and the tribal know-how that senior engineers in Diankou never wrote down.",
+    gap: "AI summarizes the public spec, but misses the design rationale, the failed approaches, and the tribal know-how that senior engineers at HQ never wrote down.",
     cost: "9–12 month ramp time. Senior engineers stuck answering basic questions. Hiring throughput stalls.",
   },
   {
@@ -2033,7 +2033,7 @@ function Slide13() {
               {[
                 { k: "30 days", v: "Pilot one knowledge-transfer workflow with HQ engineering judgment encoded." },
                 { k: "Quarter 2", v: "Convert to the R&D memory layer across onboarding, design reviews, and FMEDA." },
-                { k: "Year 1", v: "Standard memory layer across Budapest, HQ and regional R&D sites — and the next R&D site." },
+                { k: "Year 1", v: "Standard memory layer across HQ and every regional R&D site, including the next site you stand up." },
               ].map(({ k, v }) => (
                 <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2.5"
                   style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>

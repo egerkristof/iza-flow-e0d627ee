@@ -101,7 +101,7 @@ const ADJACENT_VERTICALS = [
   {
     icon: <Wrench className="w-5 h-5" />,
     title: "OEM RFQ & Supplier Memory",
-    desc: "What was promised, won, and lost across Tier-1 bids and supplier programs. Group-level memory across HQ and regional R&D sites, Budapest — one architecture, four sites.",
+    desc: "What was promised, won, and lost across Tier-1 bids and supplier programs. Group-level memory across HQ and every regional R&D site. One architecture, every site.",
     tags: ["RFQ", "Supplier", "Group Memory"],
   },
 ];
@@ -315,8 +315,7 @@ export default function IndustryAutomotivePage() {
             Two doors into the Automotive R&D Memory Layer
           </h2>
           <p className="text-sm text-muted-foreground mb-8">
-            Option A — come on board as a customer with a 30-day onboarding pilot for a Budapest
-            engineering team on one chassis-control or functional-safety workflow. Option B —
+            Option A — come on board as a customer with a 30-day onboarding pilot for a single R&D team at one site on one chassis-control or functional-safety workflow. Option B —
             co-invest in the category and help define the cross-border engineering reference
             architecture across the four sites with us.
           </p>
