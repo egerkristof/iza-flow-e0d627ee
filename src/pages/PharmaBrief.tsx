@@ -304,8 +304,9 @@ export default function PharmaBrief() {
               </p>
               <p className="font-bold text-lg sm:text-xl">Run a 30-day pilot</p>
               <p className="mt-2 text-sm sm:text-base opacity-80 leading-snug">
-                One workflow on one site or one study. Fixed scope, fixed price.
-                You only continue if the savings are real.
+                Come on board as a customer. One GxP workflow on one site or
+                one study. Fixed scope, fixed price. You only continue if the
+                savings are real.
               </p>
             </div>
             <div
@@ -315,9 +316,11 @@ export default function PharmaBrief() {
               <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-white/70">
                 Option B
               </p>
-              <p className="font-bold text-lg sm:text-xl">Become a design partner</p>
+              <p className="font-bold text-lg sm:text-xl">Co-invest in the category</p>
               <p className="mt-2 text-sm sm:text-base text-white/85 leading-snug">
-                Co-develop the GxP-native version of LIZA OS with us. Anchor it as the memory layer for your sponsor, CRO, or CMO operations.
+                Build the GxP memory layer with us. Anchor it for your sponsor,
+                CRO, or CMO operations, take an equity position, and own a
+                reference architecture the rest of pharma will follow.
               </p>
             </div>
           </div>
