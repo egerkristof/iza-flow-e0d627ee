@@ -5,7 +5,7 @@ import {
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
   AlertTriangle, Check, CheckCircle2,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
-  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
+  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText, Car,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
@@ -346,13 +346,13 @@ function Slide03() {
       cost: "Safety risk. Audit failure.",
     },
     {
-      name: "Professional Services",
-      icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
+      name: "Automotive",
+      icon: <Car size={22} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
-      records: ["Methodologies", "Client briefs", "Proposals"],
-      gap: "AI produces a generic proposal based on publicly available best practices. But the client's CEO just changed strategy mid-engagement. A senior partner would reframe the entire approach. The AI delivers a textbook response because it has no access to the partner's instinct.",
-      outputs: ["Deliverables", "Advisory memos"],
-      cost: "Margin erosion. Client escalation.",
+      records: ["ECU specs", "Homologation files", "Supplier change notices"],
+      gap: "AI drafts a clean change report, but misses the variant-specific homologation constraint, supplier validation status, or platform reuse rule that determines whether the change is releasable. The release engineer knows the exception. The AI does not, because program memory was never encoded.",
+      outputs: ["Change reports", "Release packages"],
+      cost: "Recall risk. Launch delay.",
     },
     {
       name: "AEC (Architecture, Engineering & Construction)",
@@ -365,7 +365,7 @@ function Slide03() {
     },
   ];
 
-  const alsoApplies = ["Financial Services", "Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops"];
+  const alsoApplies = ["Space Engineering", "Financial Services", "Professional Services", "Sales & GTM", "Legal & Compliance", "Supply Chain"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -743,8 +743,8 @@ function SlideWhyNow() {
 
 function Slide05() {
   const domainSurfaces = [
-    { icon: <Briefcase size={24} />, title: "Professional Services", sub: "Proposals, delivery workflows, advisory memos", color: WARM },
-    { icon: <Shield size={24} />, title: "Pharma", sub: "Deviation reports, validation packs, review gates", color: RED },
+    { icon: <Car size={24} />, title: "Automotive", sub: "ECU specs, homologation files, supplier change notices", color: WARM },
+    { icon: <Shield size={24} />, title: "Life Sciences", sub: "Deviation reports, validation packs, review gates", color: RED },
     { icon: <Building2 size={24} />, title: "AEC", sub: "Architecture, Engineering & Construction: RFIs, submittals, drawing revisions", color: GOLD },
   ];
 
@@ -1189,7 +1189,7 @@ function Slide06() {
             <div className="flex flex-col gap-2.5">
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
-                { label: "Where we enter", value: "Vertical execution", desc: "We start in professional services, life sciences, and AEC, where plausible AI creates expensive rework." },
+                { label: "Where we enter", value: "Vertical execution", desc: "Targeted lifecycles in life sciences, AEC, automotive, and space engineering, where plausible AI creates expensive rework. Professional services functions (sales, marketing, delivery) are our generalist entry where we know the work best." },
                 { label: "What LIZA is", value: "Human CX", desc: "We turn expert judgment into governed action through industry experience layers." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
@@ -1232,7 +1232,7 @@ function Slide06Shift() {
     { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE, width: "w-[280px]", height: "h-[66%]" },
     { layer: "Data Layer", role: "Define the 'what to do'", examples: "Static process inputs, outputs, and end points", color: GOLD, width: "w-[330px]", height: "h-[76%]" },
     { layer: "LIZA OS", role: "Encode how to do things", examples: "Fluid expertise in changing conditions and team settings", color: TEAL, width: "w-[405px]", height: "h-[88%]" },
-    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN, width: "flex-1", height: "h-full" },
+    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Life Sciences, Automotive, Space Engineering", color: GREEN, width: "flex-1", height: "h-full" },
   ];
 
   return (
