@@ -743,8 +743,8 @@ function SlideWhyNow() {
 
 function Slide05() {
   const domainSurfaces = [
-    { icon: <Briefcase size={24} />, title: "Professional Services", sub: "Proposals, delivery workflows, advisory memos", color: WARM },
-    { icon: <Shield size={24} />, title: "Pharma", sub: "Deviation reports, validation packs, review gates", color: RED },
+    { icon: <Car size={24} />, title: "Automotive", sub: "ECU specs, homologation files, supplier change notices", color: WARM },
+    { icon: <Shield size={24} />, title: "Life Sciences", sub: "Deviation reports, validation packs, review gates", color: RED },
     { icon: <Building2 size={24} />, title: "AEC", sub: "Architecture, Engineering & Construction: RFIs, submittals, drawing revisions", color: GOLD },
   ];
 
@@ -1232,7 +1232,7 @@ function Slide06Shift() {
     { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE, width: "w-[280px]", height: "h-[66%]" },
     { layer: "Data Layer", role: "Define the 'what to do'", examples: "Static process inputs, outputs, and end points", color: GOLD, width: "w-[330px]", height: "h-[76%]" },
     { layer: "LIZA OS", role: "Encode how to do things", examples: "Fluid expertise in changing conditions and team settings", color: TEAL, width: "w-[405px]", height: "h-[88%]" },
-    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Pharma, Professional Services", color: GREEN, width: "flex-1", height: "h-full" },
+    { layer: "Vertical CX Layers", role: "Make work executable", examples: "AEC, Life Sciences, Automotive, Space Engineering", color: GREEN, width: "flex-1", height: "h-full" },
   ];
 
   return (
