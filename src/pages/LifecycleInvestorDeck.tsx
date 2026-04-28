@@ -5,7 +5,7 @@ import {
   ArrowRight, BookOpen, Network, Zap, RefreshCw,
   AlertTriangle, Check, CheckCircle2,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
-  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
+  Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText, Car,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
@@ -346,13 +346,14 @@ function Slide03() {
       cost: "Safety risk. Audit failure.",
     },
     {
-      name: "Professional Services",
-      icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
+    {
+      name: "Automotive",
+      icon: <Car size={22} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
-      records: ["Methodologies", "Client briefs", "Proposals"],
-      gap: "AI produces a generic proposal based on publicly available best practices. But the client's CEO just changed strategy mid-engagement. A senior partner would reframe the entire approach. The AI delivers a textbook response because it has no access to the partner's instinct.",
-      outputs: ["Deliverables", "Advisory memos"],
-      cost: "Margin erosion. Client escalation.",
+      records: ["ECU specs", "Homologation files", "Supplier change notices"],
+      gap: "AI drafts a clean change report, but misses the variant-specific homologation constraint, supplier validation status, or platform reuse rule that determines whether the change is releasable. The release engineer knows the exception. The AI does not, because program memory was never encoded.",
+      outputs: ["Change reports", "Release packages"],
+      cost: "Recall risk. Launch delay.",
     },
     {
       name: "AEC (Architecture, Engineering & Construction)",
@@ -365,7 +366,7 @@ function Slide03() {
     },
   ];
 
-  const alsoApplies = ["Financial Services", "Engineering", "Sales & GTM", "Legal & Compliance", "Supply Chain", "HR & People Ops"];
+  const alsoApplies = ["Space Engineering", "Financial Services", "Professional Services", "Sales & GTM", "Legal & Compliance", "Supply Chain"];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
