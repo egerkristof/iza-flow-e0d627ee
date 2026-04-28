@@ -1189,7 +1189,7 @@ function Slide06() {
             <div className="flex flex-col gap-2.5">
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
-                { label: "Where we enter", value: "Vertical execution", desc: "We start in professional services, life sciences, and AEC, where plausible AI creates expensive rework." },
+                { label: "Where we enter", value: "Vertical execution", desc: "Targeted lifecycles in life sciences, AEC, automotive, and space engineering, where plausible AI creates expensive rework. Professional services functions (sales, marketing, delivery) are our generalist entry where we know the work best." },
                 { label: "What LIZA is", value: "Human CX", desc: "We turn expert judgment into governed action through industry experience layers." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
