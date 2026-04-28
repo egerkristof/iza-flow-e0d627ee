@@ -346,7 +346,6 @@ function Slide03() {
       cost: "Safety risk. Audit failure.",
     },
     {
-    {
       name: "Automotive",
       icon: <Car size={22} style={{ color: `hsl(${WARM})` }} />,
       accent: WARM,
