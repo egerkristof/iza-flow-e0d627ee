@@ -233,23 +233,25 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  // Iceberg metaphor: visible artifact above waterline, vast unwritten knowledge below.
-  // The whole point is felt in one image.
+  // Iceberg in enterprise vocabulary.
+  // ABOVE waterline = formally defined, machine-readable.
+  // BELOW waterline = tacit operating knowledge, grouped into 4 buckets
+  // (no overlap, plenty of breathing room).
   const above = [
-    { x: 740, label: "Document" },
-    { x: 880, label: "Email" },
-    { x: 1020, label: "Slide" },
-    { x: 1160, label: "Ticket" },
+    { x: 720,  label: "Policies" },
+    { x: 870,  label: "Procedures" },
+    { x: 1050, label: "Specifications" },
+    { x: 1210, label: "Records" },
   ];
-  const below = [
-    "Why we priced it this way", "What changed last review", "Who this client really is",
-    "What we agreed Tuesday", "The exception we always make", "How the senior judges this",
-    "The line we always add", "The unwritten escalation rule", "Last quarter's deviation log",
-    "What legal flagged in March", "Tom's sign-off threshold", "The clause for EU accounts",
-    "Why we never use list price", "What Sarah reads on Monday", "The pattern in the last 3 calls",
-    "How we handle SLA misses", "What the CFO actually wants", "The framework only Maria knows",
-    "Why this region is different", "What we promised verbally", "The standard nobody documented",
-    "How we close out this segment", "What past audits flagged", "The rule that overrides the rule",
+  const buckets: { title: string; items: string[] }[] = [
+    { title: "Operating Standards",
+      items: ["How we actually price this segment", "The exceptions to the SOP", "Senior judgment calls"] },
+    { title: "Account & Client Memory",
+      items: ["How this client is run", "What was promised verbally", "Past disputes and resolutions"] },
+    { title: "Cross-Functional Decisions",
+      items: ["What changed in last review", "Sign-off thresholds and owners", "Open escalations and flags"] },
+    { title: "Regulatory & Legal Practice",
+      items: ["Region-specific clauses", "Audit findings still in scope", "Rules that override the rule"] },
   ];
 
   return (
@@ -265,7 +267,7 @@ function Slide02() {
           The Context Gap.
         </h2>
         <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
-          AI doesn&apos;t fail because the model is weak. It fails because <span style={{ color: TEXT, fontWeight: 700 }}>most of what it needs to work to your standards was never written down.</span>
+          AI doesn&apos;t fail because the model is weak. It fails because <span style={{ color: TEXT, fontWeight: 700 }}>most of how your enterprise actually operates was never formally defined.</span>
         </p>
       </div>
 
@@ -283,54 +285,74 @@ function Slide02() {
               <stop offset="100%" stopColor={`hsl(${WARM} / 0.32)`} />
             </linearGradient>
             <linearGradient id="icebergBot" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.32)`} />
-              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.55)`} />
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.28)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.50)`} />
             </linearGradient>
           </defs>
 
           {/* Water below waterline */}
           <rect x="0" y="220" width="1920" height="540" fill="url(#waterGrad)" />
 
-          {/* Waterline */}
+          {/* Waterline + enterprise-vocabulary labels */}
           <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
-          <text x="80" y="212" style={{ fontSize: 13, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT&apos;S WRITTEN DOWN</text>
-          <text x="80" y="244" style={{ fontSize: 13, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT LIVES IN PEOPLE</text>
+          <text x="80" y="206" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>FORMALLY DEFINED</text>
+          <text x="80" y="225" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Documented. Machine-readable. ~10% of how the enterprise runs.</text>
+          <text x="80" y="252" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>TACIT OPERATING KNOWLEDGE</text>
+          <text x="80" y="271" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Lives in people, calls, decisions. ~90% of how the work actually gets done.</text>
 
           {/* Iceberg — above waterline (small) */}
-          <polygon points="820,220 960,80 1100,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
-          {/* Iceberg — below waterline (massive) */}
-          <polygon points="820,220 600,720 1320,720 1100,220" fill="url(#icebergBot)" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.5" />
+          <polygon points="870,220 960,90 1050,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
+          {/* Iceberg — below waterline (massive — wider so buckets fit) */}
+          <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#icebergBot)" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.5" />
 
           {/* Above-water artifact labels */}
           {above.map((a, i) => (
             <g key={`a-${i}`}>
-              <rect x={a.x - 50} y={130 - (i % 2) * 14} width="100" height="26" rx="6"
-                fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1" />
-              <text x={a.x} y={148 - (i % 2) * 14} textAnchor="middle"
+              <rect x={a.x - 60} y={140 - (i % 2) * 14} width="120" height="28" rx="6"
+                fill={BG} stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1" />
+              <text x={a.x} y={159 - (i % 2) * 14} textAnchor="middle"
                 style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
             </g>
           ))}
-          <text x="960" y="56" textAnchor="middle"
-            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI IS GIVEN</text>
+          <text x="960" y="62" textAnchor="middle"
+            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI IS GIVEN TODAY</text>
 
-          {/* Below-water knowledge fragments — dense */}
-          {below.map((label, i) => {
-            const cols = 6;
-            const col = i % cols;
-            const row = Math.floor(i / cols);
-            const x = 660 + col * 110;
-            const y = 280 + row * 95;
+          {/* Below-water — 4 categorized buckets, 2x2, no overlap */}
+          {buckets.map((bucket, i) => {
+            const col = i % 2;
+            const row = Math.floor(i / 2);
+            const bw = 360, bh = 168;
+            const bx = 580 + col * 410;
+            const by = 305 + row * 195;
             return (
-              <g key={`b-${i}`}>
-                <rect x={x - 95} y={y - 18} width="190" height="36" rx="6"
-                  fill={`hsl(${TEAL} / 0.10)`} stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="0.8" />
-                <text x={x} y={y + 5} textAnchor="middle"
-                  style={{ fontSize: 12, fontWeight: 600, fill: TEXT }}>{label}</text>
+              <g key={`bk-${i}`}>
+                {/* Bucket panel */}
+                <rect x={bx} y={by} width={bw} height={bh} rx="10"
+                  fill={BG} stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="1.2" opacity="0.96" />
+                {/* Bucket title bar */}
+                <rect x={bx} y={by} width={bw} height="34" rx="10"
+                  fill={`hsl(${TEAL} / 0.18)`} />
+                <rect x={bx} y={by + 24} width={bw} height="10"
+                  fill={`hsl(${TEAL} / 0.18)`} />
+                <text x={bx + 18} y={by + 23}
+                  style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 1.5 }}>
+                  {bucket.title.toUpperCase()}
+                </text>
+                {/* Bucket items */}
+                {bucket.items.map((item, j) => (
+                  <g key={`it-${j}`}>
+                    <circle cx={bx + 24} cy={by + 64 + j * 32} r="3" fill={`hsl(${TEAL})`} />
+                    <text x={bx + 36} y={by + 68 + j * 32}
+                      style={{ fontSize: 14, fontWeight: 600, fill: TEXT }}>{item}</text>
+                  </g>
+                ))}
               </g>
             );
           })}
-          <text x="960" y="710" textAnchor="middle"
-            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT AI NEEDS, AND DOESN&apos;T HAVE</text>
+
+          {/* Bottom caption */}
+          <text x="960" y="725" textAnchor="middle"
+            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT AI NEEDS TO WORK TO YOUR STANDARDS</text>
         </svg>
       </div>
 
