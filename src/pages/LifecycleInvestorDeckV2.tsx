@@ -1496,13 +1496,10 @@ function SlidePeopleAsNodes() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
           The Shift
         </p>
-        <h2 className="font-black mb-3" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 56, color: TEXT, lineHeight: 1.04 }}>
           From documents, to static agents, to a{' '}
-          <span style={{ color: `hsl(${TEAL})` }}>living context infrastructure.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>living Organizational Intelligence.</span>
         </h2>
-        <p className="font-medium mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1600 }}>
-          Three eras of how organizations try to execute work. Each one moves the same five people, Bob, George, Maria, Anna and Tom, closer to a system where AI inherits how the company actually thinks.
-        </p>
 
         {/* 3-stage progression */}
         <div className="flex-1 min-h-0 grid grid-cols-3 gap-6">
@@ -1514,15 +1511,14 @@ function SlidePeopleAsNodes() {
               style={{ borderColor: `hsl(${RED} / 0.20)`, background: `hsl(${RED} / 0.06)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${RED})` }}>1</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${RED})` }}>Document Era</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Humans patch every gap</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${RED})` }}>Document Era</p>
             </div>
-            <div className="px-5 pt-4">
-              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Work lives in documents.
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
+                Work lives in documents. Execution lives in people.
               </p>
-              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                Between any two documents, what to do is undefined. Humans patch every gap from memory. AI cannot. Silos form. Nothing scales.
+              <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
+                Documents define <em>what</em>. Human intelligence defines <em>how to actually execute</em>. Nothing scales — and AI inherits none of it.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1565,15 +1561,14 @@ function SlidePeopleAsNodes() {
               style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.06)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})` }}>2</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Agent Era</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Statically defined, snapshot in time</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Agent Era</p>
             </div>
-            <div className="px-5 pt-4">
-              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Static agents wrap each role.
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
+                Agents are statically defined snapshots in time.
               </p>
-              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                You define Bob, George, Maria, Anna, Tom as agents. Useful in a snapshot. Frozen the moment the work changes. Re-prompt forever.
+              <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
+                Each role gets wrapped as an agent. Frozen the moment the work changes. Re-prompt forever.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1625,15 +1620,14 @@ function SlidePeopleAsNodes() {
               style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.08)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${GREEN})` }}>3</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Context Infrastructure</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Fluid, semantic, live</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Organizational Intelligence</p>
             </div>
-            <div className="px-5 pt-4">
-              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Context is the substrate.
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
+                The fluid, semantic knowledge of the company is the substrate.
               </p>
-              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                Drop the static agent. Define the fluid, semantic knowledge between people. Agents become downstream artifacts. AI inherits how the org thinks.
+              <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
+                Define how the org thinks. Agents become downstream artifacts. AI inherits judgment, exceptions, and intent — live.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1726,10 +1720,10 @@ function SlidePeopleAsNodes() {
 
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
-          style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-          <Sparkles size={22} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
-            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Context infrastructure keeps how the company thinks alive.</span>
+          style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
+          <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.4 }}>
+            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Organizational Intelligence keeps how the company thinks alive.</span>
           </p>
         </div>
       </div>
