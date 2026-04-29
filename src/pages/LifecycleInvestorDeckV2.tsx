@@ -512,19 +512,19 @@ function SlideContextGapExemplified() {
 
             {/* Body — annotated */}
             <div className="flex-1 px-9 py-6 flex flex-col"
-              style={{ fontSize: 18, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              <p className="mb-3.5">Hi Sarah,</p>
-              <p className="mb-3.5">
+              style={{ fontSize: 22, color: TEXT, lineHeight: 1.75, fontFamily: "Georgia, 'Times New Roman', serif" }}>
+              <p className="mb-5">Hi Sarah,</p>
+              <p className="mb-5">
                 Quick update on Atlas. Phase 2 is on track and the integration milestone
                 is expected{' '}
                 <Mark n={1}>next Friday</Mark>.
               </p>
-              <p className="mb-3.5">
+              <p className="mb-5">
                 <Mark n={2}>Open risks were reviewed this week — all manageable.</Mark>{' '}
                 Pricing follows the{' '}
                 <Mark n={3}>standard rate card</Mark>.
               </p>
-              <p className="mb-3.5">
+              <p className="mb-6">
                 <Mark n={4}>Let me know if you'd like to discuss.</Mark>
               </p>
               <p className="mt-auto" style={{ color: MUTED }}>Best,<br/>The Atlas Team</p>
