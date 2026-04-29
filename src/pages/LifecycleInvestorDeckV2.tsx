@@ -378,221 +378,242 @@ function Slide02() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideContextGapExemplified() {
-  // Three-column anatomy of one AI-drafted email:
-  //   LEFT   — the email itself (what the AI produced).
-  //   MIDDLE — what AI *did* have access to (the static, RAG-friendly systems
-  //            and documents — rate cards, CRM, contracts repo, templates).
-  //            This is the world today's AI tools live in.
-  //   RIGHT  — what AI *didn't* have: the live, contradictory, unwritten
-  //            signals that actually decide whether the email is correct.
-  // The point: the artifacts exist, the systems exist, the AI produces
-  // a clean output — and it's still wrong, because Organizational Intelligence
-  // is missing.
-  const emailLines = [
-    { t: "Subject: ", v: "Project Atlas — Weekly Update", bold: true },
-    { t: "From: ",    v: "atlas-team@company.com" },
-    { t: "To: ",      v: "Sarah Chen (Client Lead, NorthBank)" },
-    { sep: true },
-    { v: "Hi Sarah," },
-    { v: "" },
-    { v: "Quick update on Atlas. Phase 2 is on track and the integration milestone is expected next Friday." },
-    { v: "" },
-    { v: "Open risks were reviewed this week — all manageable. Pricing follows the standard rate card." },
-    { v: "" },
-    { v: "Let me know if you'd like to discuss." },
-    { v: "" },
-    { v: "Best," },
-    { v: "The Atlas Team" },
-  ];
+  // ───────────────────────────────────────────────────────────────────────────
+  // SHOW, DON'T TELL — Annotated email.
+  // The email is the hero of the slide. Specific phrases are flagged with
+  // numbered pins. The right column holds the corresponding margin notes —
+  // the unwritten / contradictory / just-changed reality each pin depends on.
+  // A small footer strip frames what AI *had* vs. what closes the gap.
+  // ───────────────────────────────────────────────────────────────────────────
 
-  // What AI *did* have — the legible, indexable, RAG-compatible sources.
-  // These are the systems every enterprise AI deployment can already plug into.
-  // The slide's argument is that this stack, by itself, is insufficient.
-  const had = [
-    { system: "Rate card",          source: "SharePoint / PDF",  detail: "Standard pricing, last refreshed Q1." },
-    { system: "CRM account record", source: "Salesforce",        detail: "Contacts, stage, ARR, last meeting note." },
-    { system: "Contracts repo",     source: "DocuSign / vault",  detail: "Signed MSAs, NDAs, framework agreements." },
-    { system: "Email templates",    source: "Marketing library", detail: "Approved tone, structure, sign-off." },
-    { system: "Project plan",       source: "Jira / MS Project", detail: "Milestones, owners, last status." },
-    { system: "Policy library",     source: "Compliance wiki",   detail: "SOPs, data-handling policies, code of conduct." },
-  ];
-
-  // What AI *didn't* have — the live, contradictory, person-specific
-  // signals that actually decide whether the email is correct. These are
-  // exactly the things RAG cannot resolve.
-  const missing = [
+  // Each annotation pin maps to a phrase in the email. The phrase is rendered
+  // inline with a warm underline + numbered superscript, and the right rail
+  // shows the matching note.
+  const annotations = [
     {
+      n: 1,
+      nature: "JUST CHANGED",
+      title: "Decided 40 minutes ago",
+      body: "Integration milestone moved to Nov 14 in Tuesday's steerco. No document captures it yet. The next index refresh is tonight.",
+    },
+    {
+      n: 2,
+      nature: "OPEN ISSUE",
+      title: "Live commercial dispute",
+      body: "Open since July. Tone must acknowledge it. Status changes weekly. Lives in a Slack thread, not the CRM.",
+    },
+    {
+      n: 3,
       nature: "CONTRADICTION",
-      tag: "PRICING",
       title: "Two pricing rules disagree",
       body: "Rate card says €X. The 2024 NorthBank framework says €Y. The framework wins — but RAG retrieves both with no way to pick.",
     },
     {
-      nature: "EXCEPTION",
-      tag: "SIGN-OFF",
-      title: "Account-specific override",
-      body: "Normal threshold is €50k. For NorthBank it's €25k after the 2023 incident. Lives in Tom's head, not in the SOP.",
-    },
-    {
-      nature: "JUST CHANGED",
-      tag: "TIMELINE",
-      title: "Decided 40 minutes ago",
-      body: "Integration milestone moved to Nov 14 in Tuesday's steerco. No document captures it yet. Next index refresh: tonight.",
-    },
-    {
+      n: 4,
       nature: "UNWRITTEN RULE",
-      tag: "CLIENT",
-      title: "How Sarah actually reads",
-      body: "Formal, Monday 7am, ignores anything ending in \"happy to discuss.\" Nobody writes this down. The team just knows.",
-    },
-    {
-      nature: "REGULATORY EXCEPTION",
-      tag: "COMPLIANCE",
-      title: "Clause that overrides the template",
-      body: "EU regulated-data accounts need a data-residency line in every update. Template doesn't include it. Legal said so verbally.",
-    },
-    {
-      nature: "OPEN ISSUE",
-      tag: "HISTORY",
-      title: "Live dispute, still unresolved",
-      body: "July 2024 commercial dispute still open. Tone has to acknowledge it. Status changes weekly. RAG will never know.",
+      title: "Sarah skips this line",
+      body: "Formal, Monday 7am. Ignores anything ending in \"happy to discuss.\" Nobody writes this down. The team just knows.",
     },
   ];
+
+  // Small superscript pin used inline with email text.
+  const Pin = ({ n }: { n: number }) => (
+    <sup
+      className="inline-flex items-center justify-center rounded-full font-black align-super ml-0.5"
+      style={{
+        width: 18, height: 18, fontSize: 11, lineHeight: 1,
+        background: `hsl(${WARM})`, color: BG,
+        boxShadow: `0 0 0 2px hsl(${WARM} / 0.18)`,
+        verticalAlign: "super",
+      }}
+    >{n}</sup>
+  );
+
+  // Underlined "this phrase is wrong because…" treatment.
+  const Mark = ({ children, n }: { children: React.ReactNode; n: number }) => (
+    <span style={{
+      background: `hsl(${WARM} / 0.14)`,
+      borderBottom: `2px solid hsl(${WARM})`,
+      padding: "0 2px",
+      borderRadius: 2,
+      color: TEXT,
+      fontWeight: 600,
+    }}>{children}<Pin n={n} /></span>
+  );
 
   return (
     <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-16 pt-9 pb-7">
         {/* Header */}
-        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 20, color: `hsl(${WARM})` }}>
-          The Context Gap, exemplified
-        </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 42, color: TEXT, lineHeight: 1.08 }}>
-          One email to NorthBank. <span style={{ color: `hsl(${TEAL})` }}>What AI had.</span>{' '}
-          <span style={{ color: `hsl(${WARM})` }}>What AI missed.</span>
-        </h2>
-
-        {/* Three-column anatomy */}
-        <div className="flex-1 min-h-0 grid gap-5" style={{ gridTemplateColumns: "4fr 4fr 5fr" }}>
-
-          {/* LEFT — the email, legible */}
-          <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
-            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="px-5 py-3 border-b flex items-center justify-between"
-              style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.08)` }}>
-              <div className="flex items-center gap-2">
-                <FileText size={18} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
-                  The email AI drafted
-                </p>
-              </div>
-            </div>
-
-            <div className="flex-1 px-6 py-5" style={{ fontSize: 14, color: TEXT, lineHeight: 1.55 }}>
-              {emailLines.map((l, i) => {
-                if (l.sep) return <div key={i} className="my-2.5" style={{ borderTop: `1px solid hsl(${TEAL} / 0.18)` }} />;
-                if (l.t) {
-                  return (
-                    <div key={i} style={{ fontSize: 12.5 }}>
-                      <span style={{ color: MUTED }}>{l.t}</span>
-                      <span style={{ fontWeight: l.bold ? 700 : 500 }}>{l.v}</span>
-                    </div>
-                  );
-                }
-                return <div key={i}>{l.v || "\u00A0"}</div>;
-              })}
-            </div>
-            <div className="px-5 py-2.5 border-t" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-              <p className="font-bold" style={{ fontSize: 12, color: MUTED }}>Looks fine. Reads fine. <span style={{ color: `hsl(${WARM})` }}>It is wrong.</span></p>
-            </div>
+        <div className="flex items-end justify-between mb-5">
+          <div>
+            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
+              The Context Gap, exemplified
+            </p>
+            <h2 className="font-black" style={{ fontSize: 46, color: TEXT, lineHeight: 1.05 }}>
+              The email AI drafted looks fine.{' '}
+              <span style={{ color: `hsl(${WARM})` }}>Every highlighted phrase is wrong.</span>
+            </h2>
           </div>
-
-          {/* MIDDLE — what AI *did* have (the RAG-friendly stack) */}
-          <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
-            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="flex items-center justify-between px-5 py-3 border-b"
-              style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.08)` }}>
-              <div className="flex items-center gap-2">
-                <Database size={18} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
-                  What AI had access to
-                </p>
-              </div>
-              <p className="font-bold" style={{ fontSize: 11, color: MUTED }}>Indexable. RAG-friendly.</p>
-            </div>
-            <div className="flex-1 p-3 flex flex-col gap-2">
-              {had.map((h, i) => (
-                <div key={i} className="rounded-lg px-3.5 py-2.5 flex flex-col"
-                  style={{ background: BG, border: `1px solid hsl(${TEAL} / 0.35)` }}>
-                  <div className="flex items-center justify-between mb-0.5">
-                    <p className="font-black" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.2 }}>{h.system}</p>
-                    <span className="font-bold tracking-[0.10em] uppercase rounded px-1.5 py-0.5"
-                      style={{ fontSize: 9, color: `hsl(${TEAL})`, background: `hsl(${TEAL} / 0.10)`, letterSpacing: 0.5 }}>
-                      {h.source}
-                    </span>
-                  </div>
-                  <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.35 }}>{h.detail}</p>
-                </div>
-              ))}
-            </div>
-            <div className="px-5 py-2.5 border-t" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-              <p className="font-bold" style={{ fontSize: 12, color: MUTED }}>This is the stack every AI tool plugs into today.</p>
-            </div>
-          </div>
-
-          {/* RIGHT — what AI *didn't* have */}
-          <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
-            style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
-            <div className="flex items-center justify-between px-5 py-3 border-b"
-              style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.08)` }}>
-              <div className="flex items-center gap-2">
-                <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 13, color: `hsl(${WARM})` }}>
-                  What AI didn&apos;t have
-                </p>
-              </div>
-              <p className="font-bold" style={{ fontSize: 11, color: MUTED }}>Live. Contradictory. Unwritten.</p>
-            </div>
-
-            <div className="flex-1 p-3 flex flex-col gap-2">
-              {missing.map((m, i) => (
-                <div key={i} className="rounded-lg px-3.5 py-2.5"
-                  style={{ background: BG, border: `1.5px solid hsl(${WARM} / 0.55)`,
-                    boxShadow: `0 2px 0 hsl(${WARM} / 0.10)` }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-black tracking-[0.12em] uppercase rounded px-1.5 py-0.5"
-                      style={{ fontSize: 9.5, color: BG, background: `hsl(${WARM})`, letterSpacing: 0.5 }}>
-                      {m.nature}
-                    </span>
-                    <span className="font-bold tracking-[0.10em] uppercase"
-                      style={{ fontSize: 9, color: MUTED, letterSpacing: 0.5 }}>
-                      {m.tag}
-                    </span>
-                    <span className="ml-auto inline-flex items-center gap-1"
-                      style={{ fontSize: 8.5, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
-                      <span className="w-1.5 h-1.5 rounded-full animate-pulse"
-                        style={{ background: `hsl(${WARM})` }} />
-                      LIVE
-                    </span>
-                  </div>
-                  <p className="font-black mb-0.5" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.2 }}>{m.title}</p>
-                  <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>{m.body}</p>
-                </div>
-              ))}
-            </div>
-            <div className="px-5 py-2.5 border-t" style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.06)` }}>
-              <p className="font-bold" style={{ fontSize: 12, color: MUTED }}>None of this lives in a document AI can index.</p>
-            </div>
+          <div className="hidden lg:flex items-center gap-2 shrink-0 ml-8 px-4 py-2 rounded-full"
+            style={{ border: `1.5px solid hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.06)` }}>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: `hsl(${WARM})` }} />
+            <span className="font-bold tracking-[0.18em] uppercase" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
+              Live signals · not in any document
+            </span>
           </div>
         </div>
 
-        {/* Bottom punchline */}
-        <div className="mt-4 rounded-xl px-8 py-4 text-center"
-          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>
-            Today&apos;s AI stack reads the middle column. The email is wrong because of the right column.{' '}
-            <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence is the layer that closes the gap.</span>
-          </p>
+        {/* Stage: email (hero) + margin notes */}
+        <div className="flex-1 min-h-0 grid gap-7" style={{ gridTemplateColumns: "7fr 5fr" }}>
+
+          {/* ─── EMAIL — the hero ─── */}
+          <div className="relative rounded-2xl flex flex-col overflow-hidden"
+            style={{
+              background: BG,
+              border: `1px solid hsl(${TEAL} / 0.20)`,
+              boxShadow: `0 18px 60px -24px hsl(222 30% 20% / 0.18), 0 2px 0 hsl(${TEAL} / 0.06)`,
+            }}>
+            {/* Mail chrome */}
+            <div className="px-7 py-3 flex items-center gap-2 border-b"
+              style={{ borderColor: `hsl(${TEAL} / 0.12)`, background: `hsl(${TEAL} / 0.03)` }}>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(0 70% 65%)" }} />
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(45 90% 60%)" }} />
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(140 50% 55%)" }} />
+              </div>
+              <div className="flex items-center gap-2 ml-3">
+                <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
+                <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${ACCENT})` }}>
+                  Drafted by AI · ready to send
+                </span>
+              </div>
+              <span className="ml-auto font-mono" style={{ fontSize: 10.5, color: MUTED }}>
+                09:41 · Mon
+              </span>
+            </div>
+
+            {/* Headers */}
+            <div className="px-9 pt-6 pb-3" style={{ borderBottom: `1px dashed hsl(${TEAL} / 0.18)` }}>
+              <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
+                <div><span style={{ color: MUTED, width: 64, display: "inline-block" }}>To</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Sarah Chen</span>
+                  <span style={{ color: MUTED }}> · Client Lead, NorthBank</span>
+                </div>
+                <div><span style={{ color: MUTED, width: 64, display: "inline-block" }}>From</span>
+                  <span style={{ color: TEXT }}>atlas-team@company.com</span>
+                </div>
+                <div className="mt-1"><span style={{ color: MUTED, width: 64, display: "inline-block" }}>Subject</span>
+                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Project Atlas — Weekly Update</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Body — annotated */}
+            <div className="flex-1 px-9 py-6 flex flex-col"
+              style={{ fontSize: 18, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
+              <p className="mb-3.5">Hi Sarah,</p>
+              <p className="mb-3.5">
+                Quick update on Atlas. Phase 2 is on track and the integration milestone
+                is expected{' '}
+                <Mark n={1}>next Friday</Mark>.
+              </p>
+              <p className="mb-3.5">
+                <Mark n={2}>Open risks were reviewed this week — all manageable.</Mark>{' '}
+                Pricing follows the{' '}
+                <Mark n={3}>standard rate card</Mark>.
+              </p>
+              <p className="mb-3.5">
+                <Mark n={4}>Let me know if you'd like to discuss.</Mark>
+              </p>
+              <p className="mt-auto" style={{ color: MUTED }}>Best,<br/>The Atlas Team</p>
+            </div>
+
+            {/* Verdict strip */}
+            <div className="px-9 py-3.5 flex items-center gap-3"
+              style={{ borderTop: `1px solid hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.06)` }}>
+              <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
+              <p className="font-black" style={{ fontSize: 15, color: TEXT }}>
+                Grammatically correct. Factually wrong. Relationally damaging.
+              </p>
+            </div>
+          </div>
+
+          {/* ─── MARGIN NOTES — the missing reality ─── */}
+          <div className="flex flex-col">
+            <div className="flex items-baseline justify-between mb-3">
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
+                What AI couldn&apos;t see
+              </p>
+              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>
+                Lives in heads, threads, hallway calls.
+              </p>
+            </div>
+
+            <div className="flex-1 flex flex-col gap-2.5">
+              {annotations.map((a) => (
+                <div key={a.n} className="relative rounded-xl px-4 py-3 flex gap-3"
+                  style={{
+                    background: BG,
+                    border: `1px solid hsl(${WARM} / 0.30)`,
+                    boxShadow: `0 1px 0 hsl(${WARM} / 0.08)`,
+                  }}>
+                  <div className="shrink-0 flex flex-col items-center" style={{ width: 28 }}>
+                    <span className="inline-flex items-center justify-center rounded-full font-black"
+                      style={{
+                        width: 26, height: 26, fontSize: 13,
+                        background: `hsl(${WARM})`, color: BG,
+                        boxShadow: `0 0 0 3px hsl(${WARM} / 0.15)`,
+                      }}>{a.n}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="font-black tracking-[0.14em] uppercase rounded-sm px-1.5 py-0.5"
+                        style={{ fontSize: 9.5, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)` }}>
+                        {a.nature}
+                      </span>
+                    </div>
+                    <p className="font-black mb-0.5" style={{ fontSize: 14.5, color: TEXT, lineHeight: 1.25 }}>
+                      {a.title}
+                    </p>
+                    <p style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.45 }}>{a.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer micro-strip: had vs. closes the gap */}
+            <div className="mt-3 grid grid-cols-2 gap-2.5">
+              <div className="rounded-lg px-3.5 py-2.5"
+                style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.20)` }}>
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <Database size={12} style={{ color: `hsl(${TEAL})` }} />
+                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 9.5, color: `hsl(${TEAL})` }}>
+                    What AI had
+                  </p>
+                </div>
+                <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
+                  Rate card. CRM record. Contracts. Templates. Project plan. Policy wiki.
+                </p>
+                <p className="mt-0.5 font-semibold" style={{ fontSize: 10.5, color: MUTED }}>
+                  Indexable. RAG-friendly. Insufficient.
+                </p>
+              </div>
+              <div className="rounded-lg px-3.5 py-2.5"
+                style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.30)` }}>
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <Sparkles size={12} style={{ color: `hsl(${ACCENT})` }} />
+                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 9.5, color: `hsl(${ACCENT})` }}>
+                    What closes the gap
+                  </p>
+                </div>
+                <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
+                  An <span style={{ fontWeight: 800 }}>Organizational Intelligence</span> layer that captures the live, unwritten signals — and resolves them at draft time.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <SlideBar from={WARM} to={TEAL} />
