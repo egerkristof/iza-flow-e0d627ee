@@ -6,7 +6,7 @@ import {
   AlertTriangle, Check, CheckCircle2,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText, Car,
-  User, GitBranch,
+  User, GitBranch, Sparkles,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
@@ -1237,32 +1237,44 @@ function Slide06Shift() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlidePeopleAsNodes() {
-  // Left side — old world
+  // LEFT — static artifacts (with faint ghost-people behind them)
   const oldArtifacts = [
-    { label: "Docs", x: 60, y: 40 },
-    { label: "Slides", x: 200, y: 30 },
-    { label: "CRM", x: 330, y: 90 },
-    { label: "Wiki", x: 100, y: 150 },
-    { label: "Email", x: 260, y: 170 },
-    { label: "Spreadsheets", x: 50, y: 250 },
-    { label: "Tickets", x: 220, y: 280 },
-    { label: "Chat logs", x: 340, y: 230 },
+    { label: "Docs",         x: 60,  y: 40 },
+    { label: "Slides",       x: 200, y: 30 },
+    { label: "CRM",          x: 330, y: 90 },
+    { label: "Wiki",         x: 100, y: 150 },
+    { label: "Email",        x: 260, y: 170 },
+    { label: "Spreadsheets", x: 50,  y: 250 },
+    { label: "Tickets",      x: 220, y: 280 },
+    { label: "Chat logs",    x: 340, y: 230 },
+  ];
+  // Ghost people behind the artifacts — the real source the system can't see
+  const ghostPeople = [
+    { x: 80,  y: 110 },
+    { x: 230, y: 90  },
+    { x: 360, y: 150 },
+    { x: 130, y: 230 },
+    { x: 300, y: 240 },
   ];
 
-  // Right side — new world: a network of people-nodes
-  // Layout: 1 senior at center, 6 people around, connections between them and to senior
-  const cx = 230, cy = 220;
-  const ring = [
-    { x: cx,        y: cy - 150, role: "PM" },
+  // RIGHT — network of person-nodes around a senior
+  const cx = 230, cy = 215;
+  // Hero node sits at top — fully labeled, teaches the vocabulary
+  const heroNode = { x: cx, y: cy - 150, role: "PM", hero: true };
+  const ringRest = [
     { x: cx + 140,  y: cy - 75,  role: "Sales" },
     { x: cx + 140,  y: cy + 75,  role: "Eng" },
     { x: cx,        y: cy + 150, role: "Ops" },
     { x: cx - 140,  y: cy + 75,  role: "Design" },
     { x: cx - 140,  y: cy - 75,  role: "Research" },
   ];
-
-  // Person-node sub-nodes (orbital chips around each node)
-  const subChips = ["how", "context", "artifacts"];
+  const ring = [heroNode, ...ringRest];
+  // Three layers every person-node carries
+  const heroLayers = [
+    { label: "HOW",       angle: -Math.PI / 2 },
+    { label: "CONTEXT",   angle:  Math.PI / 6 },
+    { label: "ARTIFACTS", angle:  (5 * Math.PI) / 6 },
+  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
@@ -1288,41 +1300,65 @@ function SlidePeopleAsNodes() {
                 style={{ fontSize: 13, color: `hsl(${RED})`, background: `hsl(${RED} / 0.10)`, border: `1px solid hsl(${RED} / 0.25)` }}>
                 Today
               </span>
-              <p className="font-bold" style={{ fontSize: 18, color: MUTED }}>Knowledge as static, siloed artifacts</p>
+              <p className="font-bold" style={{ fontSize: 18, color: MUTED }}>The system sees the artifacts. Not the people.</p>
             </div>
             <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
               Disconnected documents. Frozen workflows.
             </p>
             <p className="font-medium mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Expertise lives in heads and dead files. AI fills the gaps with plausible guesses.
+              People are still the source. The system can only read what they leave behind.
             </p>
 
-            {/* Floating disconnected artifacts */}
+            {/* Three-row contrast: Unit / Flow / AI */}
+            <div className="grid grid-cols-[88px_1fr] gap-x-3 gap-y-2 mb-4">
+              {[
+                { k: "UNIT",  v: "A document, a record, a slide" },
+                { k: "FLOW",  v: "Static snapshots. Frozen at save." },
+                { k: "AI",    v: "Reads dead text. Guesses the rest." },
+              ].map((row) => (
+                <div key={`r-${row.k}`} className="contents">
+                  <span className="font-black tracking-[0.14em] uppercase self-center"
+                    style={{ fontSize: 11, color: `hsl(${RED})` }}>{row.k}</span>
+                  <span className="font-semibold self-center"
+                    style={{ fontSize: 14, color: TEXT }}>{row.v}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Visual: artifacts on top, ghost-people behind them */}
             <div className="relative flex-1 rounded-xl overflow-hidden"
               style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <svg className="absolute inset-0" viewBox="0 0 420 320" preserveAspectRatio="xMidYMid meet">
+                {/* Ghost people behind — the real source the system can't see */}
+                {ghostPeople.map((g, i) => (
+                  <g key={`gp-${i}`} opacity={0.35}>
+                    <circle cx={g.x} cy={g.y - 6} r="9"
+                      fill="none" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.2" strokeDasharray="2 3" />
+                    <path d={`M ${g.x - 14} ${g.y + 22} Q ${g.x} ${g.y + 4} ${g.x + 14} ${g.y + 22}`}
+                      fill="none" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.2" strokeDasharray="2 3" />
+                  </g>
+                ))}
+                {/* Floating disconnected artifacts on top */}
                 {oldArtifacts.map((a, i) => (
                   <g key={i}>
                     <rect x={a.x} y={a.y} width="86" height="44" rx="8"
-                      fill={`hsl(${RED} / 0.06)`} stroke={`hsl(${RED} / 0.30)`} strokeWidth="1" />
+                      fill={`hsl(${RED} / 0.08)`} stroke={`hsl(${RED} / 0.32)`} strokeWidth="1" />
                     <text x={a.x + 43} y={a.y + 28} textAnchor="middle"
                       style={{ fontSize: 14, fontWeight: 700, fill: TEXT }}>{a.label}</text>
                   </g>
                 ))}
-                {/* dashed broken connection */}
-                <line x1="146" y1="62" x2="200" y2="55" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
+                {/* dashed broken connections between artifacts */}
+                <line x1="146" y1="62"  x2="200" y2="55"  stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
                 <line x1="343" y1="172" x2="386" y2="112" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
                 <line x1="186" y1="150" x2="260" y2="170" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
-              </svg>
-            </div>
 
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {["Tribal", "Stale", "Untraceable"].map((t) => (
-                <div key={t} className="rounded-lg px-3 py-2 text-center"
-                  style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.22)` }}>
-                  <p className="font-bold" style={{ fontSize: 15, color: TEXT }}>{t}</p>
-                </div>
-              ))}
+                {/* Caption strip */}
+                <g transform="translate(12, 302)">
+                  <text style={{ fontSize: 10, fontWeight: 700, fill: `hsl(${RED})`, letterSpacing: 0.6 }}>
+                    DASHED OUTLINES = THE PEOPLE THE SYSTEM CAN&apos;T SEE
+                  </text>
+                </g>
+              </svg>
             </div>
           </div>
 
@@ -1334,16 +1370,32 @@ function SlidePeopleAsNodes() {
                 style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})`, border: `1px solid hsl(${TEAL})` }}>
                 With LIZA
               </span>
-              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>People as live nodes in a knowledge graph</p>
+              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>The system sees the people. Artifacts are the trail.</p>
             </div>
             <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
               Each person is a node. The network is the org.
             </p>
             <p className="font-medium mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Execution and documentation merge. Each node encodes how that person works, learns, and decides — and updates as they act.
+              Execution and documentation merge. Every action a person takes updates their node.
             </p>
 
-            {/* People network */}
+            {/* Three-row contrast: Unit / Flow / AI */}
+            <div className="grid grid-cols-[88px_1fr] gap-x-3 gap-y-2 mb-4">
+              {[
+                { k: "UNIT", v: "A person-node carrying how, context, artifacts" },
+                { k: "FLOW", v: "Live signals. Updates as work happens." },
+                { k: "AI",   v: "Operates through the node, in the senior's standard." },
+              ].map((row) => (
+                <div key={`tr-${row.k}`} className="contents">
+                  <span className="font-black tracking-[0.14em] uppercase self-center"
+                    style={{ fontSize: 11, color: `hsl(${TEAL})` }}>{row.k}</span>
+                  <span className="font-semibold self-center"
+                    style={{ fontSize: 14, color: TEXT }}>{row.v}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* People network with hero node + AI halos */}
             <div className="relative flex-1 rounded-xl overflow-hidden"
               style={{ background: BG, border: `1px solid hsl(${TEAL} / 0.15)` }}>
               <svg className="absolute inset-0" viewBox="0 0 460 440" preserveAspectRatio="xMidYMid meet">
@@ -1351,6 +1403,10 @@ function SlidePeopleAsNodes() {
                   <radialGradient id="seniorGlow" cx="50%" cy="50%" r="50%">
                     <stop offset="0%" stopColor={`hsl(${TEAL} / 0.35)`} />
                     <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+                  </radialGradient>
+                  <radialGradient id="aiHalo" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={`hsl(${GREEN} / 0.30)`} />
+                    <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
                   </radialGradient>
                 </defs>
 
@@ -1368,67 +1424,75 @@ function SlidePeopleAsNodes() {
                     stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.6" />
                 ))}
 
-                {/* Senior glow */}
+                {/* Senior */}
                 <circle cx={cx} cy={cy} r="64" fill="url(#seniorGlow)" />
-                {/* Senior node */}
                 <circle cx={cx} cy={cy} r="34"
                   fill={`hsl(${TEAL})`} stroke={BG} strokeWidth="3" />
                 <text x={cx} y={cy + 5} textAnchor="middle"
                   style={{ fontSize: 13, fontWeight: 800, fill: BG, letterSpacing: 1 }}>SENIOR</text>
 
                 {/* Ring nodes */}
-                {ring.map((p, i) => (
-                  <g key={`n${i}`}>
-                    {/* sub-chips orbiting each node */}
-                    {subChips.map((s, j) => {
-                      const ang = (j * 2 * Math.PI) / subChips.length - Math.PI / 2;
-                      const sx = p.x + Math.cos(ang) * 32;
-                      const sy = p.y + Math.sin(ang) * 32;
-                      return (
-                        <circle key={j} cx={sx} cy={sy} r="4"
-                          fill={`hsl(${GREEN})`} opacity={0.85} />
-                      );
-                    })}
-                    <circle cx={p.x} cy={p.y} r="22"
-                      fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="2.5" />
-                    <text x={p.x} y={p.y + 4} textAnchor="middle"
-                      style={{ fontSize: 11, fontWeight: 800, fill: TEXT }}>{p.role}</text>
-                  </g>
-                ))}
+                {ring.map((p, i) => {
+                  const isHero = (p as any).hero;
+                  const r = isHero ? 30 : 20;
+                  return (
+                    <g key={`n${i}`}>
+                      {/* AI halo around every person-node */}
+                      <circle cx={p.x} cy={p.y} r={r + 18} fill="url(#aiHalo)" />
+                      <circle cx={p.x} cy={p.y} r={r}
+                        fill={BG} stroke={`hsl(${TEAL})`} strokeWidth={isHero ? 3 : 2} />
+                      <text x={p.x} y={p.y + 4} textAnchor="middle"
+                        style={{ fontSize: isHero ? 12 : 11, fontWeight: 800, fill: TEXT }}>{p.role}</text>
+                    </g>
+                  );
+                })}
 
-                {/* Legend */}
-                <g transform="translate(16, 410)">
-                  <circle cx="6" cy="0" r="5" fill={`hsl(${TEAL})`} />
-                  <text x="18" y="4" style={{ fontSize: 11, fontWeight: 600, fill: MUTED }}>person-node</text>
-                  <circle cx="138" cy="0" r="4" fill={`hsl(${GREEN})`} />
-                  <text x="148" y="4" style={{ fontSize: 11, fontWeight: 600, fill: MUTED }}>how · context · artifacts</text>
-                  <line x1="316" y1="0" x2="338" y2="0" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.6" />
-                  <text x="344" y="4" style={{ fontSize: 11, fontWeight: 600, fill: MUTED }}>live link</text>
+                {/* Hero node — labeled HOW · CONTEXT · ARTIFACTS chips */}
+                {heroLayers.map((layer, i) => {
+                  const dist = 64;
+                  const lx = heroNode.x + Math.cos(layer.angle) * dist;
+                  const ly = heroNode.y + Math.sin(layer.angle) * dist;
+                  const w = layer.label.length * 7 + 14;
+                  return (
+                    <g key={`hl-${i}`}>
+                      <line x1={heroNode.x} y1={heroNode.y} x2={lx} y2={ly}
+                        stroke={`hsl(${GREEN} / 0.55)`} strokeWidth="1.2" />
+                      <rect x={lx - w / 2} y={ly - 9} width={w} height="18" rx="9"
+                        fill={`hsl(${GREEN} / 0.14)`} stroke={`hsl(${GREEN})`} strokeWidth="1" />
+                      <text x={lx} y={ly + 4} textAnchor="middle"
+                        style={{ fontSize: 10, fontWeight: 800, fill: TEXT, letterSpacing: 0.8 }}>{layer.label}</text>
+                    </g>
+                  );
+                })}
+                {/* Hero callout */}
+                <text x={heroNode.x} y={heroNode.y - 78} textAnchor="middle"
+                  style={{ fontSize: 10, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 1 }}>
+                  EVERY NODE CARRIES THESE THREE LAYERS
+                </text>
+
+                {/* Footer caption — the punchline visible inside the picture */}
+                <g transform="translate(0, 410)">
+                  <rect x="14" y="-14" width="432" height="24" rx="6"
+                    fill={`hsl(${TEAL} / 0.10)`} stroke={`hsl(${TEAL} / 0.30)`} strokeWidth="1" />
+                  <text x="230" y="2" textAnchor="middle"
+                    style={{ fontSize: 11, fontWeight: 800, fill: TEXT, letterSpacing: 1 }}>
+                    EXECUTION AND DOCUMENTATION MERGE
+                  </text>
+                  <g transform="translate(28, -2)">
+                    <circle r="3" fill={`hsl(${GREEN})`} />
+                    <text x="8" y="3" style={{ fontSize: 9, fontWeight: 700, fill: MUTED }}>AI halo</text>
+                  </g>
                 </g>
               </svg>
-            </div>
-
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {[
-                { t: "Live", d: "Updates as work happens" },
-                { t: "Connected", d: "Network, not silos" },
-                { t: "Scalable", d: "1 senior → 1,000 people" },
-              ].map((c) => (
-                <div key={c.t} className="rounded-lg px-3 py-2"
-                  style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.22)` }}>
-                  <p className="font-black" style={{ fontSize: 15, color: TEXT }}>{c.t}</p>
-                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.3 }}>{c.d}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>
 
         <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
           style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.06)` }}>
-          <Network size={24} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+          <Sparkles size={24} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
           <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
-            The agent is the bottom rung. The real asset is a graph of person-nodes — your most senior way of working, made executable, observable, and continuously redesigned by the humans inside it.
+            On the left, AI reads the trail and guesses the worker. On the right, AI inherits how the worker thinks. The agent stops being a tool bolted on the side and becomes a property of the person-node.
           </p>
         </div>
       </div>
