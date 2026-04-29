@@ -6,6 +6,7 @@ import {
   AlertTriangle, Check, CheckCircle2,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText, Car,
+  User, GitBranch,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
@@ -1228,6 +1229,215 @@ function Slide06() {
 }
 
 function Slide06Shift() {
+  return _Slide06Shift();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE — PEOPLE AS NODES (Scale the Senior / Person-as-Node network)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlidePeopleAsNodes() {
+  // Left side — old world
+  const oldArtifacts = [
+    { label: "Docs", x: 60, y: 40 },
+    { label: "Slides", x: 200, y: 30 },
+    { label: "CRM", x: 330, y: 90 },
+    { label: "Wiki", x: 100, y: 150 },
+    { label: "Email", x: 260, y: 170 },
+    { label: "Spreadsheets", x: 50, y: 250 },
+    { label: "Tickets", x: 220, y: 280 },
+    { label: "Chat logs", x: 340, y: 230 },
+  ];
+
+  // Right side — new world: a network of people-nodes
+  // Layout: 1 senior at center, 6 people around, connections between them and to senior
+  const cx = 230, cy = 220;
+  const ring = [
+    { x: cx,        y: cy - 150, role: "PM" },
+    { x: cx + 140,  y: cy - 75,  role: "Sales" },
+    { x: cx + 140,  y: cy + 75,  role: "Eng" },
+    { x: cx,        y: cy + 150, role: "Ops" },
+    { x: cx - 140,  y: cy + 75,  role: "Design" },
+    { x: cx - 140,  y: cy - 75,  role: "Research" },
+  ];
+
+  // Person-node sub-nodes (orbital chips around each node)
+  const subChips = ["how", "context", "artifacts"];
+
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>
+          The Shift
+        </p>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, color: TEXT, lineHeight: 1.05 }}>
+          From siloed artifacts to a{' '}
+          <span style={{ color: `hsl(${TEAL})` }}>living network of people who execute.</span>
+        </h2>
+        <p className="font-medium mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
+          The unit of an AI-native organization is not a document, a workflow, or a single agent. It is a <span style={{ color: TEXT, fontWeight: 700 }}>person-node</span>: a continuously updated graph of how that person works, the context they hold, and the artifacts they produce. Connect those nodes and you have an organization that scales its most senior way of doing things.
+        </p>
+
+        <div className="flex-1 min-h-0 grid grid-cols-2 gap-10">
+          {/* LEFT — Today */}
+          <div className="relative rounded-2xl border p-7 flex flex-col"
+            style={{ borderColor: `hsl(${RED} / 0.22)`, background: `hsl(${RED} / 0.03)` }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-black tracking-[0.16em] uppercase px-3 py-1 rounded-full"
+                style={{ fontSize: 13, color: `hsl(${RED})`, background: `hsl(${RED} / 0.10)`, border: `1px solid hsl(${RED} / 0.25)` }}>
+                Today
+              </span>
+              <p className="font-bold" style={{ fontSize: 18, color: MUTED }}>Knowledge as static, siloed artifacts</p>
+            </div>
+            <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
+              Disconnected documents. Frozen workflows.
+            </p>
+            <p className="font-medium mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Expertise lives in heads and dead files. AI fills the gaps with plausible guesses.
+            </p>
+
+            {/* Floating disconnected artifacts */}
+            <div className="relative flex-1 rounded-xl overflow-hidden"
+              style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <svg className="absolute inset-0" viewBox="0 0 420 320" preserveAspectRatio="xMidYMid meet">
+                {oldArtifacts.map((a, i) => (
+                  <g key={i}>
+                    <rect x={a.x} y={a.y} width="86" height="44" rx="8"
+                      fill={`hsl(${RED} / 0.06)`} stroke={`hsl(${RED} / 0.30)`} strokeWidth="1" />
+                    <text x={a.x + 43} y={a.y + 28} textAnchor="middle"
+                      style={{ fontSize: 14, fontWeight: 700, fill: TEXT }}>{a.label}</text>
+                  </g>
+                ))}
+                {/* dashed broken connection */}
+                <line x1="146" y1="62" x2="200" y2="55" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
+                <line x1="343" y1="172" x2="386" y2="112" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
+                <line x1="186" y1="150" x2="260" y2="170" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
+              </svg>
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {["Tribal", "Stale", "Untraceable"].map((t) => (
+                <div key={t} className="rounded-lg px-3 py-2 text-center"
+                  style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.22)` }}>
+                  <p className="font-bold" style={{ fontSize: 15, color: TEXT }}>{t}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT — LIZA */}
+          <div className="relative rounded-2xl border p-7 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `linear-gradient(135deg, hsl(${TEAL} / 0.05), hsl(${GREEN} / 0.04))` }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-black tracking-[0.16em] uppercase px-3 py-1 rounded-full"
+                style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})`, border: `1px solid hsl(${TEAL})` }}>
+                With LIZA
+              </span>
+              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>People as live nodes in a knowledge graph</p>
+            </div>
+            <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
+              Each person is a node. The network is the org.
+            </p>
+            <p className="font-medium mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Execution and documentation merge. Each node encodes how that person works, learns, and decides — and updates as they act.
+            </p>
+
+            {/* People network */}
+            <div className="relative flex-1 rounded-xl overflow-hidden"
+              style={{ background: BG, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+              <svg className="absolute inset-0" viewBox="0 0 460 440" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <radialGradient id="seniorGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={`hsl(${TEAL} / 0.35)`} />
+                    <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+                  </radialGradient>
+                </defs>
+
+                {/* connections between ring members */}
+                {ring.map((p, i) => {
+                  const next = ring[(i + 1) % ring.length];
+                  return (
+                    <line key={`r${i}`} x1={p.x} y1={p.y} x2={next.x} y2={next.y}
+                      stroke={`hsl(${TEAL} / 0.28)`} strokeWidth="1.2" />
+                  );
+                })}
+                {/* connections to senior center */}
+                {ring.map((p, i) => (
+                  <line key={`c${i}`} x1={cx} y1={cy} x2={p.x} y2={p.y}
+                    stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.6" />
+                ))}
+
+                {/* Senior glow */}
+                <circle cx={cx} cy={cy} r="64" fill="url(#seniorGlow)" />
+                {/* Senior node */}
+                <circle cx={cx} cy={cy} r="34"
+                  fill={`hsl(${TEAL})`} stroke={BG} strokeWidth="3" />
+                <text x={cx} y={cy + 5} textAnchor="middle"
+                  style={{ fontSize: 13, fontWeight: 800, fill: BG, letterSpacing: 1 }}>SENIOR</text>
+
+                {/* Ring nodes */}
+                {ring.map((p, i) => (
+                  <g key={`n${i}`}>
+                    {/* sub-chips orbiting each node */}
+                    {subChips.map((s, j) => {
+                      const ang = (j * 2 * Math.PI) / subChips.length - Math.PI / 2;
+                      const sx = p.x + Math.cos(ang) * 32;
+                      const sy = p.y + Math.sin(ang) * 32;
+                      return (
+                        <circle key={j} cx={sx} cy={sy} r="4"
+                          fill={`hsl(${GREEN})`} opacity={0.85} />
+                      );
+                    })}
+                    <circle cx={p.x} cy={p.y} r="22"
+                      fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="2.5" />
+                    <text x={p.x} y={p.y + 4} textAnchor="middle"
+                      style={{ fontSize: 11, fontWeight: 800, fill: TEXT }}>{p.role}</text>
+                  </g>
+                ))}
+
+                {/* Legend */}
+                <g transform="translate(16, 410)">
+                  <circle cx="6" cy="0" r="5" fill={`hsl(${TEAL})`} />
+                  <text x="18" y="4" style={{ fontSize: 11, fontWeight: 600, fill: MUTED }}>person-node</text>
+                  <circle cx="138" cy="0" r="4" fill={`hsl(${GREEN})`} />
+                  <text x="148" y="4" style={{ fontSize: 11, fontWeight: 600, fill: MUTED }}>how · context · artifacts</text>
+                  <line x1="316" y1="0" x2="338" y2="0" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.6" />
+                  <text x="344" y="4" style={{ fontSize: 11, fontWeight: 600, fill: MUTED }}>live link</text>
+                </g>
+              </svg>
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {[
+                { t: "Live", d: "Updates as work happens" },
+                { t: "Connected", d: "Network, not silos" },
+                { t: "Scalable", d: "1 senior → 1,000 people" },
+              ].map((c) => (
+                <div key={c.t} className="rounded-lg px-3 py-2"
+                  style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.22)` }}>
+                  <p className="font-black" style={{ fontSize: 15, color: TEXT }}>{c.t}</p>
+                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.3 }}>{c.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <Network size={24} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
+            The agent is the bottom rung. The real asset is a graph of person-nodes — your most senior way of working, made executable, observable, and continuously redesigned by the humans inside it.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
+    </div>
+  );
+}
+
+function _Slide06Shift() {
   const layers = [
     { layer: "Systems of Record", role: "Store documents and data", examples: "CRM, ERP, Veeva, BIM, LIMS", color: BLUE, width: "w-[280px]", height: "h-[66%]" },
     { layer: "Data Layer", role: "Define the 'what to do'", examples: "Static process inputs, outputs, and end points", color: GOLD, width: "w-[330px]", height: "h-[76%]" },
@@ -2184,18 +2394,19 @@ const SLIDES = [
   { id: 6, title: "Early Validation", component: <Slide08 /> },
   { id: 7, title: "Why Now", component: <SlideWhyNow /> },
   { id: 8, title: "The Context Layer", component: <Slide05 /> },
-  { id: 9, title: "Strategic Shift", component: <Slide06Shift /> },
-  { id: 10, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 11, title: "Expansion Path", component: <Slide09 /> },
-  { id: 12, title: "Shape of the Company", component: <SlideShape /> },
-  { id: 13, title: "What's Built", component: <Slide10 /> },
-  { id: 14, title: "Business Model", component: <Slide11 /> },
-  { id: 15, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 16, title: "Team", component: <Slide12 /> },
-  { id: 17, title: "The Ask", component: <Slide13 /> },
-  { id: 18, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 19, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 9, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
+  { id: 10, title: "Strategic Shift", component: <Slide06Shift /> },
+  { id: 11, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 12, title: "Expansion Path", component: <Slide09 /> },
+  { id: 13, title: "Shape of the Company", component: <SlideShape /> },
+  { id: 14, title: "What's Built", component: <Slide10 /> },
+  { id: 15, title: "Business Model", component: <Slide11 /> },
+  { id: 16, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 17, title: "Team", component: <Slide12 /> },
+  { id: 18, title: "The Ask", component: <Slide13 /> },
+  { id: 19, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 20, title: "Appendix: How It Works", component: <Slide07 /> },
+  { id: 21, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
