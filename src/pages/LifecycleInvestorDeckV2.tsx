@@ -2497,25 +2497,25 @@ function Slide10() {
     {
       layer: "Knowledge Graph", color: ACCENT,
       icon: <Layers size={28} />,
-      desc: "Living organizational memory. Versioned, auditable, propagated.",
+      desc: "The substrate of Organizational Intelligence. Versioned, auditable, propagated across teams.",
       screenshot: "/images/product-define-enforce.png",
     },
     {
       layer: "Protocol Workbooks", color: GOLD,
       icon: <Target size={28} />,
-      desc: "Model-agnostic AI execution. Group collaboration in one workspace.",
+      desc: "Where the Context Layer runs. Model-agnostic execution with standards, exceptions, and live signals applied at draft time.",
       screenshot: "/images/product-execute-protocol.png",
     },
     {
       layer: "Context Engine (AACE v3.1)", color: GREEN,
       icon: <Workflow size={28} />,
-      desc: "Proprietary spec. Intent-locking, knowledge injection. The IP moat.",
+      desc: "The runtime spec. Intent-locking and Organizational Intelligence injection. The IP moat.",
       screenshot: "/images/product-mission-control.png",
     },
     {
       layer: "Governance Loop", color: ACCENT,
       icon: <Eye size={28} />,
-      desc: "Drift detection, compliance scoring, after-action synthesis.",
+      desc: "Drift detection, compliance scoring, and after-action synthesis. Every execution feeds the substrate back.",
       screenshot: "/images/product-oversight.png",
     },
   ];
@@ -2526,7 +2526,7 @@ function Slide10() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>Product Status</p>
         <h2 className="font-bold mb-6" style={{ fontSize: 56, color: TEXT, lineHeight: 1.1 }}>
-          The infrastructure is live.{" "}
+          The Context Layer is live.{" "}
           <span style={{ color: `hsl(${ACCENT})` }}>Not a prototype.</span>
         </h2>
 
