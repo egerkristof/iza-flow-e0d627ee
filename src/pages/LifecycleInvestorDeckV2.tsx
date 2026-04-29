@@ -1342,7 +1342,7 @@ function SlideArchitecture() {
                       <circle cx="50" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
                       <circle cx="90" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
                     </svg>
-                    <p className="font-black" style={{ fontSize: 10, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>KNOWLEDGE GRAPH</p>
+                    <p className="font-black" style={{ fontSize: 12, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>KNOWLEDGE GRAPH</p>
                   </div>
                   <div className="flex-1 grid grid-cols-2 gap-1.5">
                     {[
@@ -1351,9 +1351,9 @@ function SlideArchitecture() {
                       { label: "Decision Exceptions", desc: "Context-specific" },
                       { label: "Accumulated Memory", desc: "Grows with usage" },
                     ].map(item => (
-                      <div key={item.label} className="rounded-lg px-2.5 py-1.5" style={{ background: `hsl(${GOLD} / 0.08)` }}>
-                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>{item.label}</p>
-                        <p style={{ fontSize: 10, color: MUTED }}>{item.desc}</p>
+                      <div key={item.label} className="rounded-lg px-3 py-2" style={{ background: `hsl(${GOLD} / 0.08)` }}>
+                        <p className="font-bold" style={{ fontSize: 13.5, color: `hsl(${GOLD})` }}>{item.label}</p>
+                        <p style={{ fontSize: 12, color: MUTED }}>{item.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -1376,7 +1376,7 @@ function SlideArchitecture() {
                   </div>
                   <div>
                     <p className="font-black" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Nervous System</p>
-                    <p style={{ fontSize: 11, color: MUTED }}>Reasoning & orchestration</p>
+                    <p style={{ fontSize: 13, color: MUTED }}>Reasoning & orchestration</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -1386,10 +1386,10 @@ function SlideArchitecture() {
                     { label: "Propagation", desc: "One update cascades everywhere" },
                     { label: "Feedback Loop", desc: "Every execution teaches the system" },
                   ].map(item => (
-                    <div key={item.label} className="rounded-lg px-3 py-1.5" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                    <div key={item.label} className="rounded-lg px-3 py-2" style={{ background: `hsl(${TEAL} / 0.08)` }}>
                       <div className="flex items-center gap-2">
-                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>{item.label}</p>
-                        <span style={{ fontSize: 10, color: MUTED }}>— {item.desc}</span>
+                        <p className="font-bold" style={{ fontSize: 13.5, color: `hsl(${TEAL})` }}>{item.label}</p>
+                        <span style={{ fontSize: 12, color: MUTED }}>— {item.desc}</span>
                       </div>
                     </div>
                   ))}
