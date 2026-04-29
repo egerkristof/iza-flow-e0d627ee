@@ -1637,20 +1637,33 @@ function SlidePeopleAsNodes() {
 
                 {/* Continuous semantic context field that fills the space BETWEEN nodes */}
                 <circle cx="200" cy="200" r="180" fill="url(#contextField)" />
-                {/* Floating semantic context tokens to suggest fluid knowledge in the field */}
-                {[
-                  { x: 120, y: 90,  t: "policy" },
-                  { x: 290, y: 110, t: "exception" },
-                  { x: 80,  y: 220, t: "precedent" },
-                  { x: 320, y: 240, t: "sign-off" },
-                  { x: 200, y: 320, t: "intent" },
-                  { x: 200, y: 110, t: "decision" },
-                ].map((c, i) => (
-                  <text key={`ctx-${i}`} x={c.x} y={c.y} textAnchor="middle"
-                    style={{ fontSize: 9, fontWeight: 700, fill: `hsl(${GREEN} / 0.7)`, letterSpacing: 0.5 }}>
-                    {c.t}
-                  </text>
-                ))}
+                {/* Context tokens anchored to specific strong edges — knowledge flows between named pairs */}
+                {(() => {
+                  const edgeLabels: Record<string, string> = {
+                    "0-1": "pricing logic",
+                    "0-2": "decision context",
+                    "2-3": "sign-off rules",
+                    "2-4": "exception memory",
+                  };
+                  return edges.map((e, i) => {
+                    const key = `${e.a}-${e.b}`;
+                    const label = edgeLabels[key];
+                    if (!label) return null;
+                    const a = positions[e.a], b = positions[e.b];
+                    const mx = (a.x + b.x) / 2;
+                    const my = (a.y + b.y) / 2;
+                    return (
+                      <g key={`lbl-${i}`}>
+                        <rect x={mx - label.length * 3 - 4} y={my - 18} width={label.length * 6 + 8} height="14" rx="3"
+                          fill={BG} stroke={`hsl(${GREEN} / 0.55)`} strokeWidth="0.8" />
+                        <text x={mx} y={my - 8} textAnchor="middle"
+                          style={{ fontSize: 8.5, fontWeight: 800, fill: `hsl(${GREEN})`, letterSpacing: 0.3 }}>
+                          {label}
+                        </text>
+                      </g>
+                    );
+                  });
+                })()}
 
                 {/* Weighted edges */}
                 {edges.map((e, i) => {
