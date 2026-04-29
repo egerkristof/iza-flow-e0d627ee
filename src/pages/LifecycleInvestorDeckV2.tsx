@@ -1441,7 +1441,151 @@ function Slide06() {
 }
 
 function Slide06Shift() {
-  return _Slide06Shift();
+  // ───────────────────────────────────────────────────────────────────────────
+  // ORGANIZATIONAL INTELLIGENCE — UNPACKED
+  // Replaces the old 4-layer "Strategic Shift" framing. The shift itself is
+  // already explained on the prior slide (Document → Agent → Org. Intelligence).
+  // This slide opens up the Organizational Intelligence box and shows what
+  // actually goes into it. It is the bridge to the vertical-CX slides that follow.
+  // ───────────────────────────────────────────────────────────────────────────
+  const facets = [
+    {
+      icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Personal Expertise",
+      body: "What seniors actually know — judgment calls, exceptions, the way they decide under pressure. Today: trapped in heads.",
+    },
+    {
+      icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Team & Account Memory",
+      body: "How this client is run, what was promised verbally, who owns what, what was tried last quarter and why it failed.",
+    },
+    {
+      icon: <RefreshCw size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Changing Dynamics",
+      body: "Markets, regulation, pricing, supply, competitors — context that drifted last week and rewrote the right answer.",
+    },
+    {
+      icon: <Target size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "New Goals & Strategy",
+      body: "What leadership decided this quarter, what's now in scope, what's been deprioritized. Most AI never gets told.",
+    },
+    {
+      icon: <Globe size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "External Inputs",
+      body: "Regulator updates, partner changes, market signals, supplier notices — facts from the outside the org has to react to.",
+    },
+    {
+      icon: <GitBranch size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Decisions & Exceptions",
+      body: "Sign-off thresholds, escalations still open, the rules that override the rules. The connective tissue between docs.",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full opacity-[0.05]"
+        style={{ background: `radial-gradient(circle, hsl(${GREEN}), transparent 70%)` }} />
+
+      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-10">
+        {/* Header */}
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>
+          Organizational Intelligence — Unpacked
+        </p>
+        <h2 className="font-black mb-4" style={{ fontSize: 56, color: TEXT, lineHeight: 1.04 }}>
+          What actually lives inside{' '}
+          <span style={{ color: `hsl(${GREEN})` }}>the substrate.</span>
+        </h2>
+        <p className="font-medium mb-7" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
+          The 90% the iceberg points at. The substrate the shift slide named. Up close, it is six interacting layers — and a knowledge graph is what holds them together.
+        </p>
+
+        {/* Center: knowledge graph diagram */}
+        <div className="flex-1 min-h-0 grid gap-8 items-center" style={{ gridTemplateColumns: "5fr 7fr" }}>
+
+          {/* LEFT — abstract "knowledge graph" visualization */}
+          <div className="relative h-full rounded-2xl border-2 flex items-center justify-center"
+            style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `linear-gradient(135deg, hsl(${TEAL} / 0.04), hsl(${GREEN} / 0.06))` }}>
+            <svg className="w-full h-full" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="oiHalo" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor={`hsl(${GREEN} / 0.35)`} />
+                  <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+                </radialGradient>
+              </defs>
+              <circle cx="250" cy="250" r="220" fill="url(#oiHalo)" />
+              {/* Six facet nodes evenly distributed */}
+              {Array.from({ length: 6 }).map((_, i) => {
+                const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+                const r = 170;
+                const x = 250 + r * Math.cos(angle);
+                const y = 250 + r * Math.sin(angle);
+                return (
+                  <g key={i}>
+                    {/* spokes to center */}
+                    <line x1="250" y1="250" x2={x} y2={y}
+                      stroke={`hsl(${TEAL} / 0.40)`} strokeWidth="1.5" />
+                    {/* peripheral connections */}
+                    {Array.from({ length: 6 }).map((_, j) => {
+                      if (j <= i) return null;
+                      const a2 = (j / 6) * Math.PI * 2 - Math.PI / 2;
+                      const x2 = 250 + r * Math.cos(a2);
+                      const y2 = 250 + r * Math.sin(a2);
+                      return (
+                        <line key={`p-${j}`} x1={x} y1={y} x2={x2} y2={y2}
+                          stroke={`hsl(${TEAL} / 0.15)`} strokeWidth="0.8" />
+                      );
+                    })}
+                    <circle cx={x} cy={y} r="22" fill={BG}
+                      stroke={`hsl(${GREEN})`} strokeWidth="2" />
+                    <circle cx={x} cy={y} r="6" fill={`hsl(${GREEN})`} />
+                  </g>
+                );
+              })}
+              {/* Center node — the OI core */}
+              <circle cx="250" cy="250" r="58" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="3" />
+              <text x="250" y="245" textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
+                ORGANIZATIONAL
+              </text>
+              <text x="250" y="265" textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
+                INTELLIGENCE
+              </text>
+            </svg>
+          </div>
+
+          {/* RIGHT — six facets that compose Organizational Intelligence */}
+          <div className="grid grid-cols-2 gap-4 h-full content-center">
+            {facets.map((f, i) => (
+              <div key={i} className="rounded-xl border-2 px-5 py-4"
+                style={{
+                  borderColor: `hsl(${GREEN} / 0.30)`,
+                  background: BG,
+                  boxShadow: `0 2px 0 hsl(${GREEN} / 0.10)`,
+                }}>
+                <div className="flex items-center gap-3 mb-2">
+                  {f.icon}
+                  <p className="font-black" style={{ fontSize: 19, color: TEXT }}>{f.title}</p>
+                </div>
+                <p className="font-medium" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{f.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom punchline — bridges into the vertical-CX slides */}
+        <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
+          <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.4 }}>
+            This substrate looks different in pharma than in AEC than in financial services. <span style={{ color: `hsl(${GREEN})` }}>Which is why execution has to be vertical — next slides.</span>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
+    </div>
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
