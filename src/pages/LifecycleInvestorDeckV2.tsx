@@ -1481,7 +1481,7 @@ function Slide06() {
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
                 { label: "Where we enter", value: "Vertical execution", desc: "Targeted lifecycles in life sciences, AEC, automotive, and space engineering, where plausible AI creates expensive rework. Professional services functions (sales, marketing, delivery) are our generalist entry where we know the work best." },
-                { label: "What LIZA is", value: "Human CX", desc: "We turn expert judgment into governed action through industry experience layers." },
+              { label: "What LIZA is", value: "Human CX", desc: "We turn Organizational Intelligence into governed action through industry experience layers." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
@@ -1530,7 +1530,7 @@ function Slide06Shift() {
     {
       icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Personal Expertise",
-      body: "What seniors actually know — judgment calls, exceptions, the way they decide under pressure. Today: trapped in heads.",
+      body: "What seniors actually know: pricing calls, exceptions, the way they decide under pressure. Today: trapped in heads.",
     },
     {
       icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
