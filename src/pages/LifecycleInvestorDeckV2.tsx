@@ -440,10 +440,10 @@ function SlideContextGapExemplified() {
           The Context Gap, exemplified
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 44, color: TEXT, lineHeight: 1.08 }}>
-          One email. <span style={{ color: `hsl(${WARM})` }}>Six things the AI didn't know.</span>
+          One specimen from the 90%. <span style={{ color: `hsl(${WARM})` }}>One email, six things the AI didn't know.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4, maxWidth: 1100 }}>
-          A real account update, drafted by a Copilot/RAG stack that has full access to email, the CRM and the shared drive. It still gets the work wrong — because everything that matters lives outside those documents.
+        <p className="mb-5" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4, maxWidth: 1200 }}>
+          A real account update, drafted by a Copilot/RAG stack with full access to email, CRM, and the shared drive. It still gets the work wrong, because the six items on the right were never written down anywhere it could index.
         </p>
 
         {/* Two-column: email (left), annotated misses (right) */}
@@ -517,8 +517,8 @@ function SlideContextGapExemplified() {
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 22, color: TEXT }}>
-            The email is what the AI <span style={{ color: `hsl(${TEAL})` }}>could see</span>. The six items on the right are what it <span style={{ color: `hsl(${WARM})` }}>needed</span> — and none of them were ever a document.
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Multiply this by every email, deck, and decision your company makes this week.
           </p>
         </div>
       </div>
