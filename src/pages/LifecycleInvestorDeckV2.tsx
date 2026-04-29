@@ -354,151 +354,152 @@ function Slide02() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideContextGapExemplified() {
-  // Domain-neutral specimen: a Monday status update an exec writes to a client.
-  // LEFT = what AI was given (looks complete, isn't). RIGHT = what AI wasn't given (the unwritten knowledge).
-  const givenLines: { text: string; flagged?: boolean; note?: string }[] = [
-    { text: "Subject: Project Atlas — Weekly Update" },
-    { text: "Hi Sarah," },
-    { text: "" },
-    { text: "Good progress this week. Phase 2 is on track and we expect to" },
-    { text: "complete the integration milestone by next Friday." , flagged: true, note: "Generic timeline. Last review pushed this to Nov 14." },
-    { text: "" },
-    { text: "We've reviewed the open risks and consider them manageable." , flagged: true, note: "Skips the SLA exception flagged in Tuesday's call." },
-    { text: "" },
-    { text: "Pricing for the additional scope follows our standard rate card." , flagged: true, note: "Wrong tier. This account is on the negotiated 2024 framework." },
-    { text: "" },
-    { text: "Happy to discuss on a call when convenient." , flagged: true, note: "Tone too casual. Sarah expects a written summary, not a callback." },
-    { text: "" },
-    { text: "Best regards," },
-    { text: "The Atlas Team" },
+  // SCALE ASYMMETRY: small left (what AI sees), huge right (what it needs and doesn't have).
+  // RAG critique reframed: architecture mismatch (static query layer vs living substrate),
+  // consequence = can't move at the speed of AI/business.
+  const givenLines = [
+    "Subject: Project Atlas — Weekly Update",
+    "Hi Sarah,",
+    "",
+    "Good progress this week. Phase 2 is on track.",
+    "Integration milestone expected next Friday.",
+    "",
+    "Open risks reviewed. Manageable.",
+    "Pricing per standard rate card.",
+    "",
+    "Best,",
+    "The Atlas Team",
   ];
 
-  const missingLayers = [
-    { tag: "How we price this account", body: "2024 framework rate, not list. Tom signs off above €25k." },
-    { tag: "What changed last review",  body: "Milestone moved to Nov 14. Sarah accepted the slip in writing." },
-    { tag: "Who this client is",        body: "Prefers written summaries. Reads on Monday 7am. CFO copies legal." },
-    { tag: "What we agreed Tuesday",    body: "SLA exception for the EU region was opened, owner: M. Garcia." },
-    { tag: "Last three exceptions",     body: "Past deviations from the standard close-out template, with reasons." },
-    { tag: "The line we always add",    body: "Regulated-data clause for accounts in this segment. Never optional." },
+  // Right side: dense field of fragments. The visual point is that there are MANY,
+  // they're heterogeneous, and they change constantly.
+  const fragments = [
+    { tag: "PRICING",   body: "2024 framework rate, not list" },
+    { tag: "SIGN-OFF",  body: "Tom approves above €25k" },
+    { tag: "TIMELINE",  body: "Milestone moved to Nov 14" },
+    { tag: "CLIENT",    body: "Sarah reads Monday 7am" },
+    { tag: "FORMAT",    body: "Written summary, never callback" },
+    { tag: "TUESDAY",   body: "SLA exception opened, EU region" },
+    { tag: "OWNER",     body: "M. Garcia carries this one" },
+    { tag: "EXCEPTION", body: "Last 3 deviations from template" },
+    { tag: "CLAUSE",    body: "Regulated-data line, never optional" },
+    { tag: "CC",        body: "CFO copies legal on this account" },
+    { tag: "LEGAL",     body: "March flag still open" },
+    { tag: "TONE",      body: "Formal. No 'happy to discuss'" },
+    { tag: "REGION",    body: "EU SLA differs from US default" },
+    { tag: "AUDIT",     body: "Q2 finding referenced this client" },
+    { tag: "VERBAL",    body: "Promised on Tuesday's call" },
+    { tag: "PRECEDENT", body: "How we closed the last 4 like this" },
+    { tag: "STANDARD",  body: "The senior's unwritten checklist" },
+    { tag: "ESCALATE",  body: "Goes to partner, not account lead" },
+    { tag: "RENEWAL",   body: "Up in 6 weeks, mention it" },
+    { tag: "RISK",      body: "Margin floor for this segment" },
+    { tag: "HISTORY",   body: "Prior dispute, July 2024" },
+    { tag: "PATTERN",   body: "Sarah always asks about #3" },
+    { tag: "OVERRIDE",  body: "Rule that beats the rule" },
+    { tag: "MEMORY",    body: "What we said last quarter" },
   ];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
+      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+        {/* Header */}
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           The Context Gap, exemplified
         </p>
-        <h2 className="font-black mb-2" style={{ fontSize: 46, color: TEXT, lineHeight: 1.06 }}>
-          One artifact. Two halves of the truth.
+        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.06 }}>
+          What your AI stack sees vs. <span style={{ color: `hsl(${WARM})` }}>what the work actually needs.</span>
         </h2>
-        <p className="font-medium mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          A Monday status update to a client. AI wrote the left side from what it could read. The right side is what nobody told it. Both halves exist in your company. Only one is in the system.
-        </p>
 
-        <div className="flex-1 min-h-0 grid grid-cols-2 gap-8">
-          {/* LEFT — What we gave AI */}
+        {/* Asymmetric grid: 1fr left, 3fr right */}
+        <div className="flex-1 min-h-0 grid gap-8" style={{ gridTemplateColumns: "1fr 3fr" }}>
+
+          {/* LEFT — small, quiet */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="flex items-center justify-between px-6 py-3 border-b"
+            <div className="px-5 py-3 border-b"
               style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.08)` }}>
-              <div className="flex items-center gap-3">
-                <FileText size={18} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
-                  What your current AI stack sees
+              <div className="flex items-center gap-2 mb-1">
+                <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>
+                  What AI sees
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>RAG / Copilot / Glean over your docs</p>
+              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Your RAG / Copilot / Glean stack</p>
             </div>
 
-            {/* The artifact */}
-            <div className="flex-1 px-7 py-5 font-mono" style={{ fontSize: 14, color: TEXT, lineHeight: 1.65 }}>
+            <div className="flex-1 px-5 py-4 font-mono" style={{ fontSize: 12, color: TEXT, lineHeight: 1.55 }}>
               {givenLines.map((line, i) => (
-                <div key={i} className="relative">
-                  {line.flagged ? (
-                    <>
-                      <span style={{
-                        background: `hsl(${WARM} / 0.18)`,
-                        borderBottom: `1.5px wavy hsl(${WARM})`,
-                        boxShadow: `inset 0 -2px 0 hsl(${WARM} / 0.5)`,
-                        padding: "0 2px",
-                      }}>
-                        {line.text}
-                      </span>
-                      {/* Margin callout */}
-                      <div className="absolute right-0 translate-x-[calc(100%+8px)] top-0 w-[230px] hidden xl:block" />
-                    </>
-                  ) : (
-                    line.text || "\u00A0"
-                  )}
-                </div>
+                <div key={i}>{line || "\u00A0"}</div>
               ))}
             </div>
 
-            {/* Footer: callouts list (rendered below the artifact, not in margin, so it scales) */}
-            <div className="px-6 pb-5">
-              <p className="font-black tracking-[0.14em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                Where AI invented
-              </p>
-              <div className="grid grid-cols-2 gap-x-5 gap-y-1.5">
-                {givenLines.filter(l => l.flagged).map((l, i) => (
-                  <div key={i} className="flex gap-2 items-start">
-                    <span className="font-black mt-[2px]" style={{ fontSize: 11, color: `hsl(${WARM})` }}>{i + 1}</span>
-                    <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>{l.note}</p>
-                  </div>
-                ))}
+            <div className="px-5 pb-5">
+              <div className="rounded-lg px-3 py-2.5"
+                style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.30)` }}>
+                <p className="font-black tracking-[0.10em] uppercase mb-1" style={{ fontSize: 10, color: `hsl(${RED})` }}>
+                  AI invents the rest
+                </p>
+                <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.4 }}>
+                  Plausible, generic, wrong on this account.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* RIGHT — What we did not give AI (the unwritten knowledge) */}
+          {/* RIGHT — huge, dense, overwhelming */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
             <div className="flex items-center justify-between px-6 py-3 border-b"
               style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.08)` }}>
-              <div className="flex items-center gap-3">
-                <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
-                <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
-                  What RAG structurally cannot retrieve
+              <div className="flex items-center gap-2">
+                <AlertTriangle size={16} style={{ color: `hsl(${WARM})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
+                  What the work actually needs
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Lives in heads, hallways, and last week's call</p>
+              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Live, relational, changing hourly</p>
             </div>
 
-            {/* Empty document outline with placeholders */}
-            <div className="flex-1 px-7 py-5 flex flex-col gap-3">
-              {missingLayers.map((m, i) => (
-                <div key={i} className="rounded-lg px-4 py-2.5"
+            {/* Dense fragment grid */}
+            <div className="flex-1 px-5 py-4 grid grid-cols-4 gap-2 content-start">
+              {fragments.map((f, i) => (
+                <div key={i} className="rounded-lg px-3 py-2"
                   style={{
                     background: `hsl(${WARM} / 0.06)`,
-                    border: `1.5px dashed hsl(${WARM} / 0.45)`,
+                    border: `1px dashed hsl(${WARM} / 0.45)`,
                   }}>
-                  <p className="font-black tracking-[0.10em] uppercase mb-0.5" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                    {m.tag}
+                  <p className="font-black tracking-[0.08em] uppercase mb-0.5" style={{ fontSize: 9, color: `hsl(${WARM})` }}>
+                    {f.tag}
                   </p>
-                  <p className="font-medium" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>
-                    {m.body}
+                  <p className="font-medium" style={{ fontSize: 11, color: TEXT, lineHeight: 1.3 }}>
+                    {f.body}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="px-6 pb-5">
-              <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                Why RAG can't fix this
-              </p>
-              <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>
-                Retrieval only finds what was written. None of this was. It lives in the senior's head and in the trail of conversations between the people who do the work.
-              </p>
+            {/* RAG critique — reframed */}
+            <div className="px-5 pb-5">
+              <div className="rounded-lg px-4 py-3"
+                style={{ background: `hsl(${WARM} / 0.10)`, border: `1px solid hsl(${WARM} / 0.30)` }}>
+                <p className="font-black tracking-[0.12em] uppercase mb-1.5" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
+                  Why RAG is the wrong architecture for this
+                </p>
+                <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.45 }}>
+                  RAG is a query layer over <span style={{ fontWeight: 700 }}>frozen documents</span>. None of this was ever a document. It is live, relational, and changes hourly. AI works at the speed of human thought. Static retrieval was built for the speed of filing cabinets. <span style={{ fontWeight: 700, color: `hsl(${WARM})` }}>Different architecture, not a tuning problem.</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom punchline — preserved verbatim from Slide02 */}
-        <div className="mt-6 rounded-xl px-10 py-5 text-center"
-          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
-          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
-            Whatever you don&apos;t define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
+        {/* Bottom punchline */}
+        <div className="mt-5 rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            The left is what you indexed. The right is the company.
           </p>
         </div>
       </div>
