@@ -632,7 +632,7 @@ function Slide03() {
       icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
       accent: RED,
       records: ["Batch records", "SOPs", "Validation protocols"],
-      gap: "AI attempts to draft a deviation report based on its general training data. But this batch falls under Annex 7, not Annex 1. A senior QA lead recognizes that instantly. The AI cannot, because nobody encoded that judgment.",
+      gap: "AI attempts to draft a deviation report based on its general training data. But this batch falls under Annex 7, not Annex 1. A senior QA lead recognizes that instantly. The AI cannot, because that piece of Organizational Intelligence was never captured.",
       outputs: ["Deviation reports", "Submission docs"],
       cost: "Safety risk. Audit failure.",
     },
@@ -666,7 +666,7 @@ function Slide03() {
           Where Missing Context Shows Up
         </p>
         <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${ACCENT})` }}>The missing piece is expert judgment.</span>
+          The systems exist. The AI produces an output. <span style={{ color: `hsl(${ACCENT})` }}>The missing piece is your Organizational Intelligence.</span>
         </h2>
 
         <div className="flex flex-col gap-3 flex-1 min-h-0 mb-4">
@@ -677,7 +677,7 @@ function Slide03() {
                 style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
                 <div className="flex items-center gap-2 mb-2">
                   <Database size={16} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
+                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Systems that need Organizational Intelligence</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {ind.records.map(r => (
