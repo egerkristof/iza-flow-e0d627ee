@@ -795,6 +795,7 @@ function Slide03Cost() {
       unit: "per drug program",
       consequence: "Repeat deviations, slower release, real compliance exposure.",
       color: RED,
+      href: "/investor-pharma",
     },
     {
       vertical: "Automotive R&D",
@@ -802,6 +803,7 @@ function Slide03Cost() {
       unit: "engineer ramp per site",
       consequence: "HQ design intent and chassis-control IP re-derived at every new site.",
       color: TEAL,
+      href: "/investor-automotive",
     },
     {
       vertical: "AEC",
@@ -809,6 +811,7 @@ function Slide03Cost() {
       unit: "claims & coordination rework",
       consequence: "Spec amendments and drawing revisions get missed inside generated work.",
       color: GOLD,
+      href: "/investor-aec",
     },
     {
       vertical: "Banking",
@@ -816,6 +819,7 @@ function Slide03Cost() {
       unit: "re-litigated across geos",
       consequence: "Brand book, product rules and regulator guidance interpreted differently each time.",
       color: ACCENT,
+      href: "/investor-banking",
     },
     {
       vertical: "Satcom",
@@ -823,6 +827,7 @@ function Slide03Cost() {
       unit: "memory loss & SLA exposure",
       consequence: "Operator judgment and procurement learning don't survive across mission cycles.",
       color: WARM,
+      href: "/satcom",
     },
   ];
 
@@ -895,6 +900,15 @@ function Slide03Cost() {
               <p className="font-black mt-2" style={{ fontSize: 28, color: TEXT, lineHeight: 1.05 }}>{v.stat}</p>
               <p className="font-semibold mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>{v.unit}</p>
               <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{v.consequence}</p>
+              <a
+                href={v.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto pt-3 font-semibold inline-flex items-center gap-1 hover:opacity-80 transition-opacity"
+                style={{ fontSize: 12, color: `hsl(${v.color})`, letterSpacing: "0.04em" }}
+              >
+                Full thesis <span aria-hidden>→</span>
+              </a>
             </div>
           ))}
         </div>
