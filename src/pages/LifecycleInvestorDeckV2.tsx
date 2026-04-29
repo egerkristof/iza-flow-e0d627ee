@@ -630,6 +630,7 @@ function Slide03() {
   // and keep all copy in HTML overlays so labels wrap cleanly and never turn dark.
   const verticals = [
     {
+      id: "life-sciences",
       name: "Life Sciences",
       icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
       color: RED,
@@ -642,6 +643,7 @@ function Slide03() {
       breaks: "Safety risk. Audit failure.",
     },
     {
+      id: "automotive",
       name: "Automotive",
       icon: <Car size={22} style={{ color: `hsl(${WARM})` }} />,
       color: WARM,
@@ -654,6 +656,7 @@ function Slide03() {
       breaks: "Recall risk. Launch delay.",
     },
     {
+      id: "aec",
       name: "AEC",
       icon: <Building2 size={22} style={{ color: `hsl(${GOLD})` }} />,
       color: GOLD,
@@ -697,26 +700,26 @@ function Slide03() {
                 <div className="relative w-full max-w-[420px] aspect-[1/1.04]">
                   <svg viewBox="0 0 360 374" preserveAspectRatio="xMidYMid meet" className="absolute inset-0 h-full w-full">
                     <defs>
-                      <linearGradient id={`ice-top-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                      <linearGradient id={`ice-top-${v.id}`} x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor={`hsl(${GREEN} / 0.16)`} />
                         <stop offset="100%" stopColor={`hsl(${GREEN} / 0.32)`} />
                       </linearGradient>
-                      <linearGradient id={`ice-bot-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                      <linearGradient id={`ice-bot-${v.id}`} x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor={`hsl(${v.color} / 0.12)`} />
                         <stop offset="100%" stopColor={`hsl(${v.color} / 0.24)`} />
                       </linearGradient>
-                      <linearGradient id={`water-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                      <linearGradient id={`water-${v.id}`} x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor={`hsl(${v.color} / 0.035)`} />
                         <stop offset="100%" stopColor={`hsl(${v.color} / 0.09)`} />
                       </linearGradient>
                     </defs>
 
-                    <rect x="0" y="132" width="360" height="242" fill={`url(#water-${v.name})`} />
+                    <rect x="0" y="132" width="360" height="242" fill={`url(#water-${v.id})`} />
                     <line x1="18" y1="132" x2="342" y2="132"
                       stroke={`hsl(${v.color} / 0.55)`} strokeWidth="1.35" strokeDasharray="7 6" />
-                    <polygon points="112,132 180,24 248,132" fill={`url(#ice-top-${v.name})`}
+                    <polygon points="112,132 180,24 248,132" fill={`url(#ice-top-${v.id})`}
                       stroke={`hsl(${GREEN} / 0.9)`} strokeWidth="1.7" strokeLinejoin="round" />
-                    <polygon points="112,132 28,344 332,344 248,132" fill={`url(#ice-bot-${v.name})`}
+                    <polygon points="112,132 28,344 332,344 248,132" fill={`url(#ice-bot-${v.id})`}
                       stroke={`hsl(${v.color} / 0.76)`} strokeWidth="1.7" strokeLinejoin="round" />
                   </svg>
 
