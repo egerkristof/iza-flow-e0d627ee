@@ -777,7 +777,7 @@ function Slide09Milestones() {
                 "8–10 paying customers",
                 "Channel partner program started",
                 "AACE v3.2 spec published",
-                "Raise €1–1.5M Seed with proof, not projections",
+                "Raise €2M Seed with proof, not projections",
               ],
               metric: "€200–300K ARR",
             },
