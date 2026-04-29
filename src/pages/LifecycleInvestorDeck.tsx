@@ -387,10 +387,10 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-3">
                 <FileText size={18} style={{ color: `hsl(${TEAL})` }} />
                 <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
-                  What we gave AI
+                  What your current AI stack sees
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>SOPs · templates · CRM record · email thread</p>
+              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>RAG / Copilot / Glean over your docs</p>
             </div>
 
             {/* The artifact */}
