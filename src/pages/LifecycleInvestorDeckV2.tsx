@@ -1849,7 +1849,7 @@ function SlidePeopleAsNodes() {
                 The fluid, semantic knowledge of the company is the substrate.
               </p>
               <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
-                Define how the org thinks. Agents become downstream artifacts. AI inherits judgment, exceptions, and intent — live.
+                Define how the org thinks. Agents become downstream surfaces. AI inherits standards, exceptions, and intent, live.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1945,7 +1945,7 @@ function SlidePeopleAsNodes() {
           style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.4 }}>
-            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Organizational Intelligence keeps how the company thinks alive.</span>
+            Documents froze the page. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Organizational Intelligence keeps how the company thinks alive.</span>
           </p>
         </div>
       </div>
