@@ -494,10 +494,10 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-2">
                 <AlertTriangle size={20} style={{ color: `hsl(${WARM})` }} />
                 <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
-                  Six live signals AI must keep up with
+                  Six things RAG cannot resolve
                 </p>
               </div>
-              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Not RAG-compatible. Changes by the hour.</p>
+              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Contradictions. Exceptions. Late changes. Unwritten rules.</p>
             </div>
 
             {/* Six cards positioned in an absolute coordinate system (1000x600) so we can
@@ -598,21 +598,25 @@ function SlideContextGapExemplified() {
                               boxShadow: `0 2px 0 hsl(${WARM} / 0.12), 0 6px 20px hsl(${WARM} / 0.08)`,
                             }}
                           >
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
-                                style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
+                            {/* Nature of the nuance — primary chip. Topic — secondary chip. */}
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <span className="font-black tracking-[0.12em] uppercase rounded-md px-2 py-0.5"
+                                style={{ fontSize: 10.5, color: BG, background: `hsl(${WARM})`, letterSpacing: 0.6 }}>
+                                {m.nature}
+                              </span>
+                              <span className="font-bold tracking-[0.10em] uppercase"
+                                style={{ fontSize: 10, color: MUTED, letterSpacing: 0.6 }}>
                                 {m.tag}
                               </span>
-                              {/* Live pulse dot — signals "updates constantly" */}
                               <span className="ml-auto inline-flex items-center gap-1.5"
-                                style={{ fontSize: 10, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
+                                style={{ fontSize: 9.5, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
                                 <span className="w-1.5 h-1.5 rounded-full animate-pulse"
                                   style={{ background: `hsl(${WARM})` }} />
                                 LIVE
                               </span>
                             </div>
                             <p className="font-black mb-1" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{m.title}</p>
-                            <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
+                            <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
                           </div>
                         );
                       })}
@@ -627,8 +631,9 @@ function SlideContextGapExemplified() {
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl px-10 py-5 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
-            RAG updates the back end in waterfalls. <span style={{ color: `hsl(${WARM})` }}>These six signals change by the hour, depend on each other, and recombine for every email, deck, and decision.</span>
+          <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
+            RAG retrieves documents. It cannot reconcile contradictions, honour exceptions, or learn what was decided 40 minutes ago.{' '}
+            <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence is the layer that does.</span>
           </p>
         </div>
       </div>
