@@ -1378,6 +1378,9 @@ function SlidePeopleAsNodes() {
           From siloed artifacts to a{' '}
           <span style={{ color: `hsl(${TEAL})` }}>living network of people who execute.</span>
         </h2>
+        <p className="font-semibold mb-3" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.4 }}>
+          Remember the missing context cards from the last slide? They live here now. In people.
+        </p>
         <p className="font-medium mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
           The unit of an AI-native organization is not a document, a workflow, or a single agent. It is a <span style={{ color: TEXT, fontWeight: 700 }}>person-node</span>: a continuously updated graph of how that person works, the context they hold, and the artifacts they produce. Connect those nodes and you have an organization that scales its most senior way of doing things.
         </p>
