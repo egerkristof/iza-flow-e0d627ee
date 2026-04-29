@@ -898,23 +898,23 @@ function Slide03Cost() {
         </p>
         <div className="grid grid-cols-5 gap-3 flex-1 min-h-0">
           {verticals.map((v) => (
-            <div key={v.vertical} className="rounded-2xl border px-4 py-4 flex flex-col"
+            <div key={v.vertical} className="rounded-2xl border px-5 py-5 flex flex-col h-full"
               style={{ borderColor: `hsl(${v.color} / 0.22)`, background: `hsl(${v.color} / 0.05)` }}>
-              <p className="font-bold" style={{ fontSize: 12, color: `hsl(${v.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              <p className="font-bold" style={{ fontSize: 13, color: `hsl(${v.color})`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 {v.vertical}
               </p>
-              <p className="font-black mt-2" style={{ fontSize: 28, color: TEXT, lineHeight: 1.05 }}>{v.stat}</p>
-              <p className="font-semibold mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>{v.unit}</p>
-              <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{v.consequence}</p>
-              <p className="mt-2" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.35, fontStyle: "italic" }}>
+              <p className="font-black mt-3" style={{ fontSize: 32, color: TEXT, lineHeight: 1.05 }}>{v.stat}</p>
+              <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{v.unit}</p>
+              <p className="mt-4" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{v.consequence}</p>
+              <p className="mt-3" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.4, fontStyle: "italic" }}>
                 Source: {v.source}
               </p>
               <a
                 href={v.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto pt-3 font-semibold inline-flex items-center gap-1 hover:opacity-80 transition-opacity"
-                style={{ fontSize: 12, color: `hsl(${v.color})`, letterSpacing: "0.04em" }}
+                className="mt-auto pt-4 font-bold inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                style={{ fontSize: 14, color: `hsl(${v.color})`, letterSpacing: "0.04em" }}
               >
                 Full thesis <span aria-hidden>→</span>
               </a>
