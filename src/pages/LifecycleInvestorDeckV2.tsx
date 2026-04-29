@@ -1576,10 +1576,6 @@ function SlidePeopleAsNodes() {
                     <rect x={p.x - 40} y={p.y - 40} width="80" height="80" rx="6"
                       fill={`hsl(${TEAL} / 0.05)`} stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="1.2"
                       strokeDasharray="4 3" />
-                    <text x={p.x - 32} y={p.y - 28} textAnchor="start"
-                      style={{ fontSize: 7, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 0.4 }}>
-                      AGENT
-                    </text>
                     <circle cx={p.x} cy={p.y} r="26" fill={BG}
                       stroke={`hsl(${TEAL})`} strokeWidth="2" />
                     <text x={p.x} y={p.y - 2} textAnchor="middle"
@@ -1587,6 +1583,13 @@ function SlidePeopleAsNodes() {
                     <text x={p.x} y={p.y + 11} textAnchor="middle"
                       style={{ fontSize: 8, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
                       {p.role.toUpperCase()}
+                    </text>
+                    {/* Tiny "agent" badge attached to the locked frame */}
+                    <rect x={p.x + 14} y={p.y - 44} width="32" height="12" rx="2"
+                      fill={`hsl(${TEAL})`} />
+                    <text x={p.x + 30} y={p.y - 35} textAnchor="middle"
+                      style={{ fontSize: 7, fontWeight: 900, fill: BG, letterSpacing: 0.6 }}>
+                      AGENT
                     </text>
                   </g>
                 ))}
