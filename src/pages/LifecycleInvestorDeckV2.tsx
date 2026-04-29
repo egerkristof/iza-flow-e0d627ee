@@ -244,7 +244,7 @@ function Slide02() {
     { x: 1210, label: "Records" },
   ];
   const buckets: { title: string; items: string[] }[] = [
-    { title: "Operating Standards",
+    { title: "Operating Judgment",
       items: ["How we actually price this segment", "The exceptions to the SOP", "Senior judgment calls"] },
     { title: "Account & Client Memory",
       items: ["How this client is run", "What was promised verbally", "Past disputes and resolutions"] },
@@ -276,17 +276,17 @@ function Slide02() {
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.04)`} />
-              <stop offset="40%" stopColor={`hsl(${TEAL} / 0.10)`} />
-              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.22)`} />
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.04)`} />
+              <stop offset="40%" stopColor={`hsl(${WARM} / 0.10)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.22)`} />
             </linearGradient>
             <linearGradient id="icebergTop" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`hsl(${WARM} / 0.18)`} />
-              <stop offset="100%" stopColor={`hsl(${WARM} / 0.32)`} />
+              <stop offset="0%" stopColor={`hsl(${GREEN} / 0.20)`} />
+              <stop offset="100%" stopColor={`hsl(${GREEN} / 0.36)`} />
             </linearGradient>
             <linearGradient id="icebergBot" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.28)`} />
-              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.50)`} />
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.30)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.55)`} />
             </linearGradient>
           </defs>
 
@@ -294,28 +294,30 @@ function Slide02() {
           <rect x="0" y="220" width="1920" height="540" fill="url(#waterGrad)" />
 
           {/* Waterline + enterprise-vocabulary labels (right-aligned to avoid header collision) */}
-          <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
-          <text x="1840" y="206" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
-          <text x="1840" y="226" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Documented. Machine-readable. What AI is given.</text>
-          <text x="1840" y="256" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>~90% TACIT OPERATING KNOWLEDGE</text>
-          <text x="1840" y="276" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Lives in people, calls, decisions. What the work actually needs.</text>
+          <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${WARM} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
+          {/* Right-side stack: oversized, hierarchy-leading labels */}
+          <text x="1840" y="178" textAnchor="end" style={{ fontSize: 28, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
+          <text x="1840" y="206" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI is given today</text>
+          <text x="1840" y="262" textAnchor="end" style={{ fontSize: 28, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~90% ORGANIZATIONAL INTELLIGENCE</text>
+          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to work to your standards</text>
+          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in people, calls, decisions, exceptions</text>
 
           {/* Iceberg — above waterline (small) */}
-          <polygon points="870,220 960,90 1050,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
+          <polygon points="870,220 960,90 1050,220" fill="url(#icebergTop)" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.5" />
           {/* Iceberg — below waterline (massive — wider so buckets fit) */}
-          <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#icebergBot)" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.5" />
+          <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#icebergBot)" stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.5" />
 
           {/* Above-water artifact labels */}
           {above.map((a, i) => (
             <g key={`a-${i}`}>
               <rect x={a.x - 60} y={140 - (i % 2) * 14} width="120" height="28" rx="6"
-                fill={BG} stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1" />
+                fill={BG} stroke={`hsl(${GREEN} / 0.6)`} strokeWidth="1" />
               <text x={a.x} y={159 - (i % 2) * 14} textAnchor="middle"
                 style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
             </g>
           ))}
-          <text x="960" y="62" textAnchor="middle"
-            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI IS GIVEN TODAY</text>
+          <text x="960" y="58" textAnchor="middle"
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>WHAT AI IS GIVEN TODAY</text>
 
           {/* Below-water — 4 categorized buckets, 2x2, no overlap */}
           {buckets.map((bucket, i) => {
@@ -328,22 +330,22 @@ function Slide02() {
               <g key={`bk-${i}`}>
                 {/* Bucket panel */}
                 <rect x={bx} y={by} width={bw} height={bh} rx="10"
-                  fill={BG} stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="1.2" opacity="0.96" />
+                  fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.2" opacity="0.96" />
                 {/* Bucket title bar */}
                 <rect x={bx} y={by} width={bw} height="34" rx="10"
-                  fill={`hsl(${TEAL} / 0.18)`} />
+                  fill={`hsl(${WARM} / 0.18)`} />
                 <rect x={bx} y={by + 24} width={bw} height="10"
-                  fill={`hsl(${TEAL} / 0.18)`} />
+                  fill={`hsl(${WARM} / 0.18)`} />
                 <text x={bx + 18} y={by + 23}
-                  style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 1.5 }}>
+                  style={{ fontSize: 16, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 1.5 }}>
                   {bucket.title.toUpperCase()}
                 </text>
                 {/* Bucket items */}
                 {bucket.items.map((item, j) => (
                   <g key={`it-${j}`}>
-                    <circle cx={bx + 24} cy={by + 64 + j * 32} r="3" fill={`hsl(${TEAL})`} />
-                    <text x={bx + 36} y={by + 68 + j * 32}
-                      style={{ fontSize: 14, fontWeight: 600, fill: TEXT }}>{item}</text>
+                    <circle cx={bx + 24} cy={by + 66 + j * 34} r="3.5" fill={`hsl(${WARM})`} />
+                    <text x={bx + 36} y={by + 70 + j * 34}
+                      style={{ fontSize: 16, fontWeight: 600, fill: TEXT }}>{item}</text>
                   </g>
                 ))}
               </g>
@@ -352,7 +354,7 @@ function Slide02() {
 
           {/* Bottom caption */}
           <text x="960" y="725" textAnchor="middle"
-            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT AI NEEDS TO WORK TO YOUR STANDARDS</text>
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO WORK TO YOUR STANDARDS</text>
         </svg>
       </div>
 
@@ -366,7 +368,7 @@ function Slide02() {
         </div>
       </div>
 
-      <SlideBar from={WARM} to={TEAL} />
+      <SlideBar from={GREEN} to={WARM} />
     </div>
   );
 }
@@ -439,12 +441,10 @@ function SlideContextGapExemplified() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           The Context Gap, exemplified
         </p>
-        <h2 className="font-black mb-2" style={{ fontSize: 44, color: TEXT, lineHeight: 1.08 }}>
-          One specimen from the 90%. <span style={{ color: `hsl(${WARM})` }}>One email, six things the AI didn't know.</span>
+        <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.06 }}>
+          One specimen of <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence.</span>{' '}
+          One email. Six things the AI didn&apos;t know.
         </h2>
-        <p className="mb-5" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4, maxWidth: 1200 }}>
-          A real account update, drafted by a Copilot/RAG stack with full access to email, CRM, and the shared drive. It still gets the work wrong, because the six items on the right were never written down anywhere it could index.
-        </p>
 
         {/* Two-column: email (left), annotated misses (right) */}
         <div className="flex-1 min-h-0 grid gap-7" style={{ gridTemplateColumns: "5fr 7fr" }}>
@@ -452,23 +452,23 @@ function SlideContextGapExemplified() {
           {/* LEFT — the email, legible */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="px-5 py-3 border-b flex items-center justify-between"
+            <div className="px-6 py-4 border-b flex items-center justify-between"
               style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.08)` }}>
               <div className="flex items-center gap-2">
-                <FileText size={16} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
-                  What the AI drafted
+                <FileText size={20} style={{ color: `hsl(${TEAL})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
+                  What AI drafted (from static RAG)
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Looks fine. Reads fine.</p>
+              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Looks fine. Reads fine.</p>
             </div>
 
-            <div className="flex-1 px-6 py-5" style={{ fontSize: 14, color: TEXT, lineHeight: 1.55 }}>
+            <div className="flex-1 px-7 py-6" style={{ fontSize: 17, color: TEXT, lineHeight: 1.6 }}>
               {emailLines.map((l, i) => {
                 if (l.sep) return <div key={i} className="my-3" style={{ borderTop: `1px solid hsl(${TEAL} / 0.18)` }} />;
                 if (l.t) {
                   return (
-                    <div key={i} style={{ fontSize: 13 }}>
+                    <div key={i} style={{ fontSize: 15 }}>
                       <span style={{ color: MUTED }}>{l.t}</span>
                       <span style={{ fontWeight: l.bold ? 700 : 500 }}>{l.v}</span>
                     </div>
@@ -482,43 +482,59 @@ function SlideContextGapExemplified() {
           {/* RIGHT — six concrete misses, large and readable */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
-            <div className="flex items-center justify-between px-6 py-3 border-b"
+            <div className="flex items-center justify-between px-6 py-4 border-b"
               style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.08)` }}>
               <div className="flex items-center gap-2">
-                <AlertTriangle size={16} style={{ color: `hsl(${WARM})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
-                  What it didn't know
+                <AlertTriangle size={20} style={{ color: `hsl(${WARM})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
+                  What it didn&apos;t know — one combination of many
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Lives in people, decisions, exceptions</p>
+              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Endless variations. One per situation.</p>
             </div>
 
-            <div className="flex-1 px-5 py-4 grid grid-cols-2 gap-3 content-start">
-              {missing.map((m, i) => (
-                <div key={i} className="rounded-xl px-4 py-3"
-                  style={{
-                    background: `hsl(${WARM} / 0.06)`,
-                    border: `1px solid hsl(${WARM} / 0.30)`,
-                  }}>
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
-                      style={{ fontSize: 10, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
-                      {m.tag}
-                    </span>
-                    <p className="font-black" style={{ fontSize: 14, color: TEXT }}>{m.title}</p>
+            {/* Cards layered ON a faint connection mesh, signalling that these 6 items are
+                co-occurring facets of one situation, not a checklist. */}
+            <div className="relative flex-1 px-5 py-5">
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 360"
+                preserveAspectRatio="none">
+                <g stroke={`hsl(${WARM} / 0.30)`} strokeWidth="1" strokeDasharray="3 4" fill="none">
+                  <path d="M 150 80  L 450 80" />
+                  <path d="M 150 180 L 450 180" />
+                  <path d="M 150 280 L 450 280" />
+                  <path d="M 150 80  L 450 280" />
+                  <path d="M 450 80  L 150 280" />
+                  <path d="M 300 80  L 300 280" />
+                </g>
+              </svg>
+              <div className="relative grid grid-cols-2 gap-3 content-start h-full">
+                {missing.map((m, i) => (
+                  <div key={i} className="rounded-xl px-4 py-3"
+                    style={{
+                      background: BG,
+                      border: `1.5px solid hsl(${WARM} / 0.40)`,
+                      boxShadow: `0 2px 0 hsl(${WARM} / 0.10)`,
+                    }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
+                        style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
+                        {m.tag}
+                      </span>
+                      <p className="font-black" style={{ fontSize: 16, color: TEXT }}>{m.title}</p>
+                    </div>
+                    <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.5 }}>{m.body}</p>
                   </div>
-                  <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom punchline */}
-        <div className="mt-5 rounded-xl px-10 py-4 text-center"
+        <div className="mt-5 rounded-xl px-10 py-5 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
-            Multiply this by every email, deck, and decision your company makes this week.
+          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
+            Six combined circumstances here. <span style={{ color: `hsl(${WARM})` }}>Endless combinations across every email, deck, and decision your company makes this week.</span>
           </p>
         </div>
       </div>
@@ -1425,7 +1441,151 @@ function Slide06() {
 }
 
 function Slide06Shift() {
-  return _Slide06Shift();
+  // ───────────────────────────────────────────────────────────────────────────
+  // ORGANIZATIONAL INTELLIGENCE — UNPACKED
+  // Replaces the old 4-layer "Strategic Shift" framing. The shift itself is
+  // already explained on the prior slide (Document → Agent → Org. Intelligence).
+  // This slide opens up the Organizational Intelligence box and shows what
+  // actually goes into it. It is the bridge to the vertical-CX slides that follow.
+  // ───────────────────────────────────────────────────────────────────────────
+  const facets = [
+    {
+      icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Personal Expertise",
+      body: "What seniors actually know — judgment calls, exceptions, the way they decide under pressure. Today: trapped in heads.",
+    },
+    {
+      icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Team & Account Memory",
+      body: "How this client is run, what was promised verbally, who owns what, what was tried last quarter and why it failed.",
+    },
+    {
+      icon: <RefreshCw size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Changing Dynamics",
+      body: "Markets, regulation, pricing, supply, competitors — context that drifted last week and rewrote the right answer.",
+    },
+    {
+      icon: <Target size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "New Goals & Strategy",
+      body: "What leadership decided this quarter, what's now in scope, what's been deprioritized. Most AI never gets told.",
+    },
+    {
+      icon: <Globe size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "External Inputs",
+      body: "Regulator updates, partner changes, market signals, supplier notices — facts from the outside the org has to react to.",
+    },
+    {
+      icon: <GitBranch size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Decisions & Exceptions",
+      body: "Sign-off thresholds, escalations still open, the rules that override the rules. The connective tissue between docs.",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full opacity-[0.05]"
+        style={{ background: `radial-gradient(circle, hsl(${GREEN}), transparent 70%)` }} />
+
+      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-10">
+        {/* Header */}
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>
+          Organizational Intelligence — Unpacked
+        </p>
+        <h2 className="font-black mb-4" style={{ fontSize: 56, color: TEXT, lineHeight: 1.04 }}>
+          What actually lives inside{' '}
+          <span style={{ color: `hsl(${GREEN})` }}>the substrate.</span>
+        </h2>
+        <p className="font-medium mb-7" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
+          The 90% the iceberg points at. The substrate the shift slide named. Up close, it is six interacting layers — and a knowledge graph is what holds them together.
+        </p>
+
+        {/* Center: knowledge graph diagram */}
+        <div className="flex-1 min-h-0 grid gap-8 items-center" style={{ gridTemplateColumns: "5fr 7fr" }}>
+
+          {/* LEFT — abstract "knowledge graph" visualization */}
+          <div className="relative h-full rounded-2xl border-2 flex items-center justify-center"
+            style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `linear-gradient(135deg, hsl(${TEAL} / 0.04), hsl(${GREEN} / 0.06))` }}>
+            <svg className="w-full h-full" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="oiHalo" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor={`hsl(${GREEN} / 0.35)`} />
+                  <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+                </radialGradient>
+              </defs>
+              <circle cx="250" cy="250" r="220" fill="url(#oiHalo)" />
+              {/* Six facet nodes evenly distributed */}
+              {Array.from({ length: 6 }).map((_, i) => {
+                const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+                const r = 170;
+                const x = 250 + r * Math.cos(angle);
+                const y = 250 + r * Math.sin(angle);
+                return (
+                  <g key={i}>
+                    {/* spokes to center */}
+                    <line x1="250" y1="250" x2={x} y2={y}
+                      stroke={`hsl(${TEAL} / 0.40)`} strokeWidth="1.5" />
+                    {/* peripheral connections */}
+                    {Array.from({ length: 6 }).map((_, j) => {
+                      if (j <= i) return null;
+                      const a2 = (j / 6) * Math.PI * 2 - Math.PI / 2;
+                      const x2 = 250 + r * Math.cos(a2);
+                      const y2 = 250 + r * Math.sin(a2);
+                      return (
+                        <line key={`p-${j}`} x1={x} y1={y} x2={x2} y2={y2}
+                          stroke={`hsl(${TEAL} / 0.15)`} strokeWidth="0.8" />
+                      );
+                    })}
+                    <circle cx={x} cy={y} r="22" fill={BG}
+                      stroke={`hsl(${GREEN})`} strokeWidth="2" />
+                    <circle cx={x} cy={y} r="6" fill={`hsl(${GREEN})`} />
+                  </g>
+                );
+              })}
+              {/* Center node — the OI core */}
+              <circle cx="250" cy="250" r="58" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="3" />
+              <text x="250" y="245" textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
+                ORGANIZATIONAL
+              </text>
+              <text x="250" y="265" textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
+                INTELLIGENCE
+              </text>
+            </svg>
+          </div>
+
+          {/* RIGHT — six facets that compose Organizational Intelligence */}
+          <div className="grid grid-cols-2 gap-4 h-full content-center">
+            {facets.map((f, i) => (
+              <div key={i} className="rounded-xl border-2 px-5 py-4"
+                style={{
+                  borderColor: `hsl(${GREEN} / 0.30)`,
+                  background: BG,
+                  boxShadow: `0 2px 0 hsl(${GREEN} / 0.10)`,
+                }}>
+                <div className="flex items-center gap-3 mb-2">
+                  {f.icon}
+                  <p className="font-black" style={{ fontSize: 19, color: TEXT }}>{f.title}</p>
+                </div>
+                <p className="font-medium" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{f.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom punchline — bridges into the vertical-CX slides */}
+        <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
+          <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.4 }}>
+            This substrate looks different in pharma than in AEC than in financial services. <span style={{ color: `hsl(${GREEN})` }}>Which is why execution has to be vertical — next slides.</span>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
+    </div>
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1480,13 +1640,10 @@ function SlidePeopleAsNodes() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
           The Shift
         </p>
-        <h2 className="font-black mb-3" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 56, color: TEXT, lineHeight: 1.04 }}>
           From documents, to static agents, to a{' '}
-          <span style={{ color: `hsl(${TEAL})` }}>living context infrastructure.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>living Organizational Intelligence.</span>
         </h2>
-        <p className="font-medium mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1600 }}>
-          Three eras of how organizations try to execute work. Each one moves the same five people, Bob, George, Maria, Anna and Tom, closer to a system where AI inherits how the company actually thinks.
-        </p>
 
         {/* 3-stage progression */}
         <div className="flex-1 min-h-0 grid grid-cols-3 gap-6">
@@ -1498,15 +1655,14 @@ function SlidePeopleAsNodes() {
               style={{ borderColor: `hsl(${RED} / 0.20)`, background: `hsl(${RED} / 0.06)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${RED})` }}>1</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${RED})` }}>Document Era</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Humans patch every gap</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${RED})` }}>Document Era</p>
             </div>
-            <div className="px-5 pt-4">
-              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Work lives in documents.
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
+                Work lives in documents. Execution lives in people.
               </p>
-              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                Between any two documents, what to do is undefined. Humans patch every gap from memory. AI cannot. Silos form. Nothing scales.
+              <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
+                Documents define <em>what</em>. Human intelligence defines <em>how to actually execute</em>. Nothing scales — and AI inherits none of it.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1549,15 +1705,14 @@ function SlidePeopleAsNodes() {
               style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.06)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})` }}>2</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Agent Era</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Statically defined, snapshot in time</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Agent Era</p>
             </div>
-            <div className="px-5 pt-4">
-              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Static agents wrap each role.
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
+                Agents are statically defined snapshots in time.
               </p>
-              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                You define Bob, George, Maria, Anna, Tom as agents. Useful in a snapshot. Frozen the moment the work changes. Re-prompt forever.
+              <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
+                Each role gets wrapped as an agent. Frozen the moment the work changes. Re-prompt forever.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1609,15 +1764,14 @@ function SlidePeopleAsNodes() {
               style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.08)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${GREEN})` }}>3</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Context Infrastructure</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Fluid, semantic, live</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Organizational Intelligence</p>
             </div>
-            <div className="px-5 pt-4">
-              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Context is the substrate.
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>
+                The fluid, semantic knowledge of the company is the substrate.
               </p>
-              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                Drop the static agent. Define the fluid, semantic knowledge between people. Agents become downstream artifacts. AI inherits how the org thinks.
+              <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
+                Define how the org thinks. Agents become downstream artifacts. AI inherits judgment, exceptions, and intent — live.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1710,10 +1864,10 @@ function SlidePeopleAsNodes() {
 
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
-          style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
-          <Sparkles size={22} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
-            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Context infrastructure keeps how the company thinks alive.</span>
+          style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
+          <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.4 }}>
+            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Organizational Intelligence keeps how the company thinks alive.</span>
           </p>
         </div>
       </div>
@@ -2681,7 +2835,7 @@ const SLIDES = [
   { id: 8, title: "Why Now", component: <SlideWhyNow /> },
   { id: 9, title: "The Context Layer", component: <Slide05 /> },
   { id: 10, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
-  { id: 11, title: "Strategic Shift", component: <Slide06Shift /> },
+  { id: 11, title: "Organizational Intelligence", component: <Slide06Shift /> },
   { id: 12, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 13, title: "Expansion Path", component: <Slide09 /> },
   { id: 14, title: "Shape of the Company", component: <SlideShape /> },
