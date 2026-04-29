@@ -1316,12 +1316,12 @@ function SlidePeopleAsNodes() {
                 { k: "FLOW",  v: "Static snapshots. Frozen at save." },
                 { k: "AI",    v: "Reads dead text. Guesses the rest." },
               ].map((row) => (
-                <>
-                  <span key={`k-${row.k}`} className="font-black tracking-[0.14em] uppercase self-center"
+                <div key={`r-${row.k}`} className="contents">
+                  <span className="font-black tracking-[0.14em] uppercase self-center"
                     style={{ fontSize: 11, color: `hsl(${RED})` }}>{row.k}</span>
-                  <span key={`v-${row.k}`} className="font-semibold self-center"
+                  <span className="font-semibold self-center"
                     style={{ fontSize: 14, color: TEXT }}>{row.v}</span>
-                </>
+                </div>
               ))}
             </div>
 
@@ -1386,12 +1386,12 @@ function SlidePeopleAsNodes() {
                 { k: "FLOW", v: "Live signals. Updates as work happens." },
                 { k: "AI",   v: "Operates through the node, in the senior's standard." },
               ].map((row) => (
-                <>
-                  <span key={`tk-${row.k}`} className="font-black tracking-[0.14em] uppercase self-center"
+                <div key={`tr-${row.k}`} className="contents">
+                  <span className="font-black tracking-[0.14em] uppercase self-center"
                     style={{ fontSize: 11, color: `hsl(${TEAL})` }}>{row.k}</span>
-                  <span key={`tv-${row.k}`} className="font-semibold self-center"
+                  <span className="font-semibold self-center"
                     style={{ fontSize: 14, color: TEXT }}>{row.v}</span>
-                </>
+                </div>
               ))}
             </div>
 
