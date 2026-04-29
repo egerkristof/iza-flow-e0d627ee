@@ -1712,8 +1712,8 @@ function SlidePeopleAsNodes() {
         <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
           style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-            Documents capture what was written. Agents capture a snapshot of a role. Context infrastructure captures how the company actually thinks, and keeps it live.
+          <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Context infrastructure keeps how the company thinks alive.</span>
           </p>
         </div>
       </div>
