@@ -244,8 +244,8 @@ function Slide02() {
     { x: 1210, label: "Records" },
   ];
   const buckets: { title: string; items: string[] }[] = [
-    { title: "Operating Judgment",
-      items: ["How we actually price this segment", "The exceptions to the SOP", "Senior judgment calls"] },
+    { title: "Operating Reasoning",
+      items: ["How we actually price this segment", "The exceptions to the SOP", "Senior pricing & sign-off calls"] },
     { title: "Account & Client Memory",
       items: ["How this client is run", "What was promised verbally", "Past disputes and resolutions"] },
     { title: "Cross-Functional Decisions",
