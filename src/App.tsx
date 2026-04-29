@@ -132,6 +132,7 @@ const App = () => (
             <Route path="/pharma" element={<Navigate to="/pharma-pitch" replace />} />
             <Route path="/pharma-audit" element={<Navigate to="/pharma-pitch" replace />} />
             <Route path="/investor-lifecycle" element={<Navigate to="/investor" replace />} />
+            <Route path="/investor-v2" element={<Navigate to="/investor" replace />} />
             <Route path="/pitch" element={<Navigate to="/sales" replace />} />
             <Route path="/investor-remred" element={<Navigate to="/space" replace />} />
 
