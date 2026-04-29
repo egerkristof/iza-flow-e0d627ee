@@ -1434,7 +1434,7 @@ function Slide06() {
     {
       layer: "Cross-team Network Effect",
       desc: "Every team execution feeds the shared blueprint, improving standards across departments.",
-      proof: "The loop compounds as more teams encode, reuse, and improve operating knowledge.",
+      proof: "The loop compounds as more teams encode, reuse, and improve Organizational Intelligence.",
       icon: <Network size={20} />,
     },
   ];
