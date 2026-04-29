@@ -398,38 +398,45 @@ function SlideContextGapExemplified() {
     { v: "The Atlas Team" },
   ];
 
-  // Six concrete, large, readable items the AI got wrong because nobody
-  // ever wrote them down. Each one maps to a real failure mode.
+  // Six items framed as the nuances RAG cannot handle: contradictions,
+  // exceptions, late changes, unwritten rules, open issues, person-specific
+  // judgment. Each card has a NATURE tag (what kind of nuance) and a TOPIC tag.
   const missing = [
     {
+      nature: "CONTRADICTION",
       tag: "PRICING",
-      title: "Wrong rate quoted",
-      body: "NorthBank is on the 2024 framework rate, not the standard rate card. Saying \"standard\" mis-prices the account.",
+      title: "Two pricing rules disagree",
+      body: "Standard rate card says €X. The 2024 NorthBank framework says €Y. The framework wins, but RAG retrieves both and has no way to pick.",
     },
     {
+      nature: "EXCEPTION",
       tag: "SIGN-OFF",
-      title: "Skipped an approver",
-      body: "Anything above €25k on this account requires Tom's sign-off before it goes to the client. The AI didn't know Tom exists.",
+      title: "Account-specific override",
+      body: "Normal threshold is €50k. For NorthBank it's €25k after the 2023 incident. The exception lives in Tom's head, not in the SOP.",
     },
     {
+      nature: "JUST CHANGED",
       tag: "TIMELINE",
-      title: "Stale milestone",
-      body: "The integration milestone was moved to Nov 14 in Tuesday's steerco. The deck still says \"next Friday.\"",
+      title: "Decided 40 minutes ago",
+      body: "The integration milestone moved to Nov 14 in Tuesday's steerco call. No document captures it yet. Next index refresh: tonight.",
     },
     {
+      nature: "UNWRITTEN RULE",
       tag: "CLIENT",
-      title: "Wrong tone for the reader",
-      body: "Sarah is formal, reads on Monday at 7am, and never replies to \"happy to discuss.\" The closing line will be ignored.",
+      title: "How Sarah actually reads",
+      body: "Formal, Monday 7am, ignores anything ending in \"happy to discuss.\" Nobody documents this. The team just knows.",
     },
     {
-      tag: "REGULATORY",
-      title: "Missing a required clause",
-      body: "EU regulated-data clients must have the data-residency line in every status update. It's not optional. It's not in the template.",
+      nature: "REGULATORY EXCEPTION",
+      tag: "COMPLIANCE",
+      title: "Clause that overrides the template",
+      body: "EU regulated-data accounts need the data-residency line in every update. The template doesn't include it. Legal said so verbally.",
     },
     {
+      nature: "OPEN ISSUE",
       tag: "HISTORY",
-      title: "Forgotten dispute",
-      body: "There's an open commercial dispute from July 2024 on this account. Sending a chirpy update without acknowledging it lands badly.",
+      title: "Live dispute, still unresolved",
+      body: "Commercial dispute from July 2024 still open. Tone of any update has to acknowledge it. Status changes weekly. RAG will never know.",
     },
   ];
 
