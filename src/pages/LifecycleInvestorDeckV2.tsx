@@ -1820,7 +1820,7 @@ function SlidePeopleAsNodes() {
                 ))}
                 <text x="180" y="350" textAnchor="middle"
                   style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${RED})`, letterSpacing: 1 }}>
-                  THE GAPS BETWEEN DOCS ARE UNDEFINED.
+                  EXECUTION BETWEEN DOCS IS UNDEFINED.
                 </text>
               </svg>
             </div>
