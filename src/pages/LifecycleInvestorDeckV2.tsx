@@ -378,9 +378,16 @@ function Slide02() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideContextGapExemplified() {
-  // Single concrete example: a real-looking email on the left (legible),
-  // big annotated context on the right showing what the AI actually needed
-  // and didn't have. Few items, large type, plain language.
+  // Three-column anatomy of one AI-drafted email:
+  //   LEFT   — the email itself (what the AI produced).
+  //   MIDDLE — what AI *did* have access to (the static, RAG-friendly systems
+  //            and documents — rate cards, CRM, contracts repo, templates).
+  //            This is the world today's AI tools live in.
+  //   RIGHT  — what AI *didn't* have: the live, contradictory, unwritten
+  //            signals that actually decide whether the email is correct.
+  // The point: the artifacts exist, the systems exist, the AI produces
+  // a clean output — and it's still wrong, because Organizational Intelligence
+  // is missing.
   const emailLines = [
     { t: "Subject: ", v: "Project Atlas — Weekly Update", bold: true },
     { t: "From: ",    v: "atlas-team@company.com" },
@@ -398,84 +405,95 @@ function SlideContextGapExemplified() {
     { v: "The Atlas Team" },
   ];
 
-  // Six items framed as the nuances RAG cannot handle: contradictions,
-  // exceptions, late changes, unwritten rules, open issues, person-specific
-  // judgment. Each card has a NATURE tag (what kind of nuance) and a TOPIC tag.
+  // What AI *did* have — the legible, indexable, RAG-compatible sources.
+  // These are the systems every enterprise AI deployment can already plug into.
+  // The slide's argument is that this stack, by itself, is insufficient.
+  const had = [
+    { system: "Rate card",          source: "SharePoint / PDF",  detail: "Standard pricing, last refreshed Q1." },
+    { system: "CRM account record", source: "Salesforce",        detail: "Contacts, stage, ARR, last meeting note." },
+    { system: "Contracts repo",     source: "DocuSign / vault",  detail: "Signed MSAs, NDAs, framework agreements." },
+    { system: "Email templates",    source: "Marketing library", detail: "Approved tone, structure, sign-off." },
+    { system: "Project plan",       source: "Jira / MS Project", detail: "Milestones, owners, last status." },
+    { system: "Policy library",     source: "Compliance wiki",   detail: "SOPs, data-handling policies, code of conduct." },
+  ];
+
+  // What AI *didn't* have — the live, contradictory, person-specific
+  // signals that actually decide whether the email is correct. These are
+  // exactly the things RAG cannot resolve.
   const missing = [
     {
       nature: "CONTRADICTION",
       tag: "PRICING",
       title: "Two pricing rules disagree",
-      body: "Standard rate card says €X. The 2024 NorthBank framework says €Y. The framework wins, but RAG retrieves both and has no way to pick.",
+      body: "Rate card says €X. The 2024 NorthBank framework says €Y. The framework wins — but RAG retrieves both with no way to pick.",
     },
     {
       nature: "EXCEPTION",
       tag: "SIGN-OFF",
       title: "Account-specific override",
-      body: "Normal threshold is €50k. For NorthBank it's €25k after the 2023 incident. The exception lives in Tom's head, not in the SOP.",
+      body: "Normal threshold is €50k. For NorthBank it's €25k after the 2023 incident. Lives in Tom's head, not in the SOP.",
     },
     {
       nature: "JUST CHANGED",
       tag: "TIMELINE",
       title: "Decided 40 minutes ago",
-      body: "The integration milestone moved to Nov 14 in Tuesday's steerco call. No document captures it yet. Next index refresh: tonight.",
+      body: "Integration milestone moved to Nov 14 in Tuesday's steerco. No document captures it yet. Next index refresh: tonight.",
     },
     {
       nature: "UNWRITTEN RULE",
       tag: "CLIENT",
       title: "How Sarah actually reads",
-      body: "Formal, Monday 7am, ignores anything ending in \"happy to discuss.\" Nobody documents this. The team just knows.",
+      body: "Formal, Monday 7am, ignores anything ending in \"happy to discuss.\" Nobody writes this down. The team just knows.",
     },
     {
       nature: "REGULATORY EXCEPTION",
       tag: "COMPLIANCE",
       title: "Clause that overrides the template",
-      body: "EU regulated-data accounts need the data-residency line in every update. The template doesn't include it. Legal said so verbally.",
+      body: "EU regulated-data accounts need a data-residency line in every update. Template doesn't include it. Legal said so verbally.",
     },
     {
       nature: "OPEN ISSUE",
       tag: "HISTORY",
       title: "Live dispute, still unresolved",
-      body: "Commercial dispute from July 2024 still open. Tone of any update has to acknowledge it. Status changes weekly. RAG will never know.",
+      body: "July 2024 commercial dispute still open. Tone has to acknowledge it. Status changes weekly. RAG will never know.",
     },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+      <div className="relative z-10 flex flex-col h-full px-16 pt-9 pb-7">
         {/* Header */}
-        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 20, color: `hsl(${WARM})` }}>
           The Context Gap, exemplified
         </p>
-        <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.06 }}>
-          One specimen of <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence.</span>{' '}
-          One email. Six things the AI didn&apos;t know.
+        <h2 className="font-black mb-4" style={{ fontSize: 42, color: TEXT, lineHeight: 1.08 }}>
+          One email to NorthBank. <span style={{ color: `hsl(${TEAL})` }}>What AI had.</span>{' '}
+          <span style={{ color: `hsl(${WARM})` }}>What AI missed.</span>
         </h2>
 
-        {/* Two-column: email (left), annotated misses (right) */}
-        <div className="flex-1 min-h-0 grid gap-7" style={{ gridTemplateColumns: "5fr 7fr" }}>
+        {/* Three-column anatomy */}
+        <div className="flex-1 min-h-0 grid gap-5" style={{ gridTemplateColumns: "4fr 4fr 5fr" }}>
 
           {/* LEFT — the email, legible */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="px-6 py-4 border-b flex items-center justify-between"
+            <div className="px-5 py-3 border-b flex items-center justify-between"
               style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.08)` }}>
               <div className="flex items-center gap-2">
-                <FileText size={20} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
-                  What AI drafted (from static RAG)
+                <FileText size={18} style={{ color: `hsl(${TEAL})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
+                  The email AI drafted
                 </p>
               </div>
-              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Looks fine. Reads fine.</p>
             </div>
 
-            <div className="flex-1 px-7 py-6" style={{ fontSize: 17, color: TEXT, lineHeight: 1.6 }}>
+            <div className="flex-1 px-6 py-5" style={{ fontSize: 14, color: TEXT, lineHeight: 1.55 }}>
               {emailLines.map((l, i) => {
-                if (l.sep) return <div key={i} className="my-3" style={{ borderTop: `1px solid hsl(${TEAL} / 0.18)` }} />;
+                if (l.sep) return <div key={i} className="my-2.5" style={{ borderTop: `1px solid hsl(${TEAL} / 0.18)` }} />;
                 if (l.t) {
                   return (
-                    <div key={i} style={{ fontSize: 15 }}>
+                    <div key={i} style={{ fontSize: 12.5 }}>
                       <span style={{ color: MUTED }}>{l.t}</span>
                       <span style={{ fontWeight: l.bold ? 700 : 500 }}>{l.v}</span>
                     </div>
@@ -484,156 +502,96 @@ function SlideContextGapExemplified() {
                 return <div key={i}>{l.v || "\u00A0"}</div>;
               })}
             </div>
+            <div className="px-5 py-2.5 border-t" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+              <p className="font-bold" style={{ fontSize: 12, color: MUTED }}>Looks fine. Reads fine. <span style={{ color: `hsl(${WARM})` }}>It is wrong.</span></p>
+            </div>
           </div>
 
-          {/* RIGHT — six concrete misses, large and readable */}
+          {/* MIDDLE — what AI *did* have (the RAG-friendly stack) */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
-            style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
-            <div className="flex items-center justify-between px-6 py-4 border-b"
-              style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.08)` }}>
+            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <div className="flex items-center justify-between px-5 py-3 border-b"
+              style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.08)` }}>
               <div className="flex items-center gap-2">
-                <AlertTriangle size={20} style={{ color: `hsl(${WARM})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
-                  Six things RAG cannot resolve
+                <Database size={18} style={{ color: `hsl(${TEAL})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>
+                  What AI had access to
                 </p>
               </div>
-              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Contradictions. Exceptions. Late changes. Unwritten rules.</p>
+              <p className="font-bold" style={{ fontSize: 11, color: MUTED }}>Indexable. RAG-friendly.</p>
+            </div>
+            <div className="flex-1 p-3 flex flex-col gap-2">
+              {had.map((h, i) => (
+                <div key={i} className="rounded-lg px-3.5 py-2.5 flex flex-col"
+                  style={{ background: BG, border: `1px solid hsl(${TEAL} / 0.35)` }}>
+                  <div className="flex items-center justify-between mb-0.5">
+                    <p className="font-black" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.2 }}>{h.system}</p>
+                    <span className="font-bold tracking-[0.10em] uppercase rounded px-1.5 py-0.5"
+                      style={{ fontSize: 9, color: `hsl(${TEAL})`, background: `hsl(${TEAL} / 0.10)`, letterSpacing: 0.5 }}>
+                      {h.source}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.35 }}>{h.detail}</p>
+                </div>
+              ))}
+            </div>
+            <div className="px-5 py-2.5 border-t" style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+              <p className="font-bold" style={{ fontSize: 12, color: MUTED }}>This is the stack every AI tool plugs into today.</p>
+            </div>
+          </div>
+
+          {/* RIGHT — what AI *didn't* have */}
+          <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
+            style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
+            <div className="flex items-center justify-between px-5 py-3 border-b"
+              style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.08)` }}>
+              <div className="flex items-center gap-2">
+                <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 13, color: `hsl(${WARM})` }}>
+                  What AI didn&apos;t have
+                </p>
+              </div>
+              <p className="font-bold" style={{ fontSize: 11, color: MUTED }}>Live. Contradictory. Unwritten.</p>
             </div>
 
-            {/* Six cards positioned in an absolute coordinate system (1000x600) so we can
-                draw real, deliberate connections between specific card centers — not random
-                cross-hatch. Each connection has a labelled relationship type. */}
-            <div className="relative flex-1">
-              {(() => {
-                // Card layout — 3 columns x 2 rows, with comfortable breathing room.
-                const W = 1000, H = 600;
-                const cw = 296, ch = 196;
-                const positions = [
-                  { x: 30,  y: 30  }, // 0 PRICING
-                  { x: 352, y: 30  }, // 1 SIGN-OFF
-                  { x: 674, y: 30  }, // 2 TIMELINE
-                  { x: 30,  y: 374 }, // 3 CLIENT
-                  { x: 352, y: 374 }, // 4 REGULATORY
-                  { x: 674, y: 374 }, // 5 HISTORY
-                ];
-                const center = (i: number) => ({
-                  x: positions[i].x + cw / 2,
-                  y: positions[i].y + ch / 2,
-                });
-                // Deliberate, semantically meaningful relationships.
-                // Each line carries a short label naming the dependency type.
-                const links: { a: number; b: number; label: string; weight: number }[] = [
-                  { a: 0, b: 1, label: "approval threshold",  weight: 2.6 }, // pricing ↔ sign-off
-                  { a: 0, b: 4, label: "rate by region",      weight: 1.8 }, // pricing ↔ regulatory
-                  { a: 1, b: 5, label: "history triggers approver", weight: 1.6 }, // sign-off ↔ history
-                  { a: 2, b: 3, label: "tone shifts with date",     weight: 1.4 }, // timeline ↔ client
-                  { a: 2, b: 4, label: "deadline vs. clause",       weight: 1.6 }, // timeline ↔ regulatory
-                  { a: 3, b: 5, label: "open dispute changes voice",weight: 2.2 }, // client ↔ history
-                  { a: 0, b: 5, label: "prior commercials",   weight: 1.4 }, // pricing ↔ history
-                ];
-                return (
-                  <>
-                    {/* SVG connection layer — sits between the panel background and the cards */}
-                    <svg
-                      viewBox={`0 0 ${W} ${H}`}
-                      preserveAspectRatio="none"
-                      className="absolute inset-0 w-full h-full pointer-events-none"
-                    >
-                      <defs>
-                        <marker id="warmDot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6">
-                          <circle cx="3" cy="3" r="2.4" fill={`hsl(${WARM})`} />
-                        </marker>
-                      </defs>
-                      {links.map((l, i) => {
-                        const A = center(l.a), B = center(l.b);
-                        // Curve control point — push perpendicular to the segment so lines
-                        // don't all overlap. Alternate sides per link index.
-                        const dx = B.x - A.x, dy = B.y - A.y;
-                        const len = Math.hypot(dx, dy);
-                        const nx = -dy / len, ny = dx / len;
-                        const bow = (i % 2 === 0 ? 28 : -28) + (l.weight - 1.5) * 14;
-                        const cx = (A.x + B.x) / 2 + nx * bow;
-                        const cy = (A.y + B.y) / 2 + ny * bow;
-                        const path = `M ${A.x} ${A.y} Q ${cx} ${cy} ${B.x} ${B.y}`;
-                        const labelPad = l.label.length * 4.6 + 14;
-                        return (
-                          <g key={i}>
-                            <path d={path} fill="none"
-                              stroke={`hsl(${WARM} / ${0.22 + l.weight * 0.08})`}
-                              strokeWidth={l.weight}
-                              strokeDasharray="6 5"
-                              markerStart="url(#warmDot)"
-                              markerEnd="url(#warmDot)"
-                            />
-                            {/* Label chip on the curve midpoint */}
-                            <rect
-                              x={cx - labelPad / 2} y={cy - 11} width={labelPad} height="20" rx="4"
-                              fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="0.9"
-                            />
-                            <text x={cx} y={cy + 3} textAnchor="middle"
-                              style={{ fontSize: 10.5, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 0.2 }}>
-                              {l.label}
-                            </text>
-                          </g>
-                        );
-                      })}
-                    </svg>
-
-                    {/* Cards — absolutely positioned inside a percentage container to match
-                        the SVG viewBox of 1000x600. */}
-                    <div className="absolute inset-0">
-                      {missing.map((m, i) => {
-                        const p = positions[i];
-                        return (
-                          <div
-                            key={i}
-                            className="absolute rounded-xl px-4 py-3"
-                            style={{
-                              left: `${(p.x / W) * 100}%`,
-                              top:  `${(p.y / H) * 100}%`,
-                              width:  `${(cw / W) * 100}%`,
-                              height: `${(ch / H) * 100}%`,
-                              background: BG,
-                              border: `1.5px solid hsl(${WARM} / 0.55)`,
-                              boxShadow: `0 2px 0 hsl(${WARM} / 0.12), 0 6px 20px hsl(${WARM} / 0.08)`,
-                            }}
-                          >
-                            {/* Nature of the nuance — primary chip. Topic — secondary chip. */}
-                            <div className="flex items-center gap-2 mb-1.5">
-                              <span className="font-black tracking-[0.12em] uppercase rounded-md px-2 py-0.5"
-                                style={{ fontSize: 10.5, color: BG, background: `hsl(${WARM})`, letterSpacing: 0.6 }}>
-                                {m.nature}
-                              </span>
-                              <span className="font-bold tracking-[0.10em] uppercase"
-                                style={{ fontSize: 10, color: MUTED, letterSpacing: 0.6 }}>
-                                {m.tag}
-                              </span>
-                              <span className="ml-auto inline-flex items-center gap-1.5"
-                                style={{ fontSize: 9.5, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
-                                <span className="w-1.5 h-1.5 rounded-full animate-pulse"
-                                  style={{ background: `hsl(${WARM})` }} />
-                                LIVE
-                              </span>
-                            </div>
-                            <p className="font-black mb-1" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{m.title}</p>
-                            <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                );
-              })()}
+            <div className="flex-1 p-3 flex flex-col gap-2">
+              {missing.map((m, i) => (
+                <div key={i} className="rounded-lg px-3.5 py-2.5"
+                  style={{ background: BG, border: `1.5px solid hsl(${WARM} / 0.55)`,
+                    boxShadow: `0 2px 0 hsl(${WARM} / 0.10)` }}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-black tracking-[0.12em] uppercase rounded px-1.5 py-0.5"
+                      style={{ fontSize: 9.5, color: BG, background: `hsl(${WARM})`, letterSpacing: 0.5 }}>
+                      {m.nature}
+                    </span>
+                    <span className="font-bold tracking-[0.10em] uppercase"
+                      style={{ fontSize: 9, color: MUTED, letterSpacing: 0.5 }}>
+                      {m.tag}
+                    </span>
+                    <span className="ml-auto inline-flex items-center gap-1"
+                      style={{ fontSize: 8.5, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
+                      <span className="w-1.5 h-1.5 rounded-full animate-pulse"
+                        style={{ background: `hsl(${WARM})` }} />
+                      LIVE
+                    </span>
+                  </div>
+                  <p className="font-black mb-0.5" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.2 }}>{m.title}</p>
+                  <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>{m.body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="px-5 py-2.5 border-t" style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.06)` }}>
+              <p className="font-bold" style={{ fontSize: 12, color: MUTED }}>None of this lives in a document AI can index.</p>
             </div>
           </div>
         </div>
 
         {/* Bottom punchline */}
-        <div className="mt-5 rounded-xl px-10 py-5 text-center"
+        <div className="mt-4 rounded-xl px-8 py-4 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-            RAG retrieves documents. It cannot reconcile contradictions, honour exceptions, or learn what was decided 40 minutes ago.{' '}
-            <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence is the layer that does.</span>
+          <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>
+            Today&apos;s AI stack reads the middle column. The email is wrong because of the right column.{' '}
+            <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence is the layer that closes the gap.</span>
           </p>
         </div>
       </div>
