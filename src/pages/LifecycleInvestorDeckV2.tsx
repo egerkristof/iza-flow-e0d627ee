@@ -441,12 +441,10 @@ function SlideContextGapExemplified() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           The Context Gap, exemplified
         </p>
-        <h2 className="font-black mb-2" style={{ fontSize: 44, color: TEXT, lineHeight: 1.08 }}>
-          One specimen from the 90%. <span style={{ color: `hsl(${WARM})` }}>One email, six things the AI didn't know.</span>
+        <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.06 }}>
+          One specimen of <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence.</span>{' '}
+          One email. Six things the AI didn&apos;t know.
         </h2>
-        <p className="mb-5" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4, maxWidth: 1200 }}>
-          A real account update, drafted by a Copilot/RAG stack with full access to email, CRM, and the shared drive. It still gets the work wrong, because the six items on the right were never written down anywhere it could index.
-        </p>
 
         {/* Two-column: email (left), annotated misses (right) */}
         <div className="flex-1 min-h-0 grid gap-7" style={{ gridTemplateColumns: "5fr 7fr" }}>
@@ -454,23 +452,23 @@ function SlideContextGapExemplified() {
           {/* LEFT — the email, legible */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="px-5 py-3 border-b flex items-center justify-between"
+            <div className="px-6 py-4 border-b flex items-center justify-between"
               style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.08)` }}>
               <div className="flex items-center gap-2">
-                <FileText size={16} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
-                  What the AI drafted
+                <FileText size={20} style={{ color: `hsl(${TEAL})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>
+                  What AI drafted (from static RAG)
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Looks fine. Reads fine.</p>
+              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Looks fine. Reads fine.</p>
             </div>
 
-            <div className="flex-1 px-6 py-5" style={{ fontSize: 14, color: TEXT, lineHeight: 1.55 }}>
+            <div className="flex-1 px-7 py-6" style={{ fontSize: 17, color: TEXT, lineHeight: 1.6 }}>
               {emailLines.map((l, i) => {
                 if (l.sep) return <div key={i} className="my-3" style={{ borderTop: `1px solid hsl(${TEAL} / 0.18)` }} />;
                 if (l.t) {
                   return (
-                    <div key={i} style={{ fontSize: 13 }}>
+                    <div key={i} style={{ fontSize: 15 }}>
                       <span style={{ color: MUTED }}>{l.t}</span>
                       <span style={{ fontWeight: l.bold ? 700 : 500 }}>{l.v}</span>
                     </div>
@@ -484,43 +482,59 @@ function SlideContextGapExemplified() {
           {/* RIGHT — six concrete misses, large and readable */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
-            <div className="flex items-center justify-between px-6 py-3 border-b"
+            <div className="flex items-center justify-between px-6 py-4 border-b"
               style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.08)` }}>
               <div className="flex items-center gap-2">
-                <AlertTriangle size={16} style={{ color: `hsl(${WARM})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
-                  What it didn't know
+                <AlertTriangle size={20} style={{ color: `hsl(${WARM})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
+                  What it didn&apos;t know — one combination of many
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Lives in people, decisions, exceptions</p>
+              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Endless variations. One per situation.</p>
             </div>
 
-            <div className="flex-1 px-5 py-4 grid grid-cols-2 gap-3 content-start">
-              {missing.map((m, i) => (
-                <div key={i} className="rounded-xl px-4 py-3"
-                  style={{
-                    background: `hsl(${WARM} / 0.06)`,
-                    border: `1px solid hsl(${WARM} / 0.30)`,
-                  }}>
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
-                      style={{ fontSize: 10, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
-                      {m.tag}
-                    </span>
-                    <p className="font-black" style={{ fontSize: 14, color: TEXT }}>{m.title}</p>
+            {/* Cards layered ON a faint connection mesh, signalling that these 6 items are
+                co-occurring facets of one situation, not a checklist. */}
+            <div className="relative flex-1 px-5 py-5">
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 360"
+                preserveAspectRatio="none">
+                <g stroke={`hsl(${WARM} / 0.30)`} strokeWidth="1" strokeDasharray="3 4" fill="none">
+                  <path d="M 150 80  L 450 80" />
+                  <path d="M 150 180 L 450 180" />
+                  <path d="M 150 280 L 450 280" />
+                  <path d="M 150 80  L 450 280" />
+                  <path d="M 450 80  L 150 280" />
+                  <path d="M 300 80  L 300 280" />
+                </g>
+              </svg>
+              <div className="relative grid grid-cols-2 gap-3 content-start h-full">
+                {missing.map((m, i) => (
+                  <div key={i} className="rounded-xl px-4 py-3"
+                    style={{
+                      background: BG,
+                      border: `1.5px solid hsl(${WARM} / 0.40)`,
+                      boxShadow: `0 2px 0 hsl(${WARM} / 0.10)`,
+                    }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
+                        style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
+                        {m.tag}
+                      </span>
+                      <p className="font-black" style={{ fontSize: 16, color: TEXT }}>{m.title}</p>
+                    </div>
+                    <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.5 }}>{m.body}</p>
                   </div>
-                  <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom punchline */}
-        <div className="mt-5 rounded-xl px-10 py-4 text-center"
+        <div className="mt-5 rounded-xl px-10 py-5 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
-            Multiply this by every email, deck, and decision your company makes this week.
+          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
+            Six combined circumstances here. <span style={{ color: `hsl(${WARM})` }}>Endless combinations across every email, deck, and decision your company makes this week.</span>
           </p>
         </div>
       </div>
