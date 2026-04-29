@@ -233,32 +233,117 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  // Stripped to pure category-naming. The exemplified specimen lives on the next slide.
+  // Iceberg metaphor: visible artifact above waterline, vast unwritten knowledge below.
+  // The whole point is felt in one image.
+  const above = [
+    { x: 740, label: "Document" },
+    { x: 880, label: "Email" },
+    { x: 1020, label: "Slide" },
+    { x: 1160, label: "Ticket" },
+  ];
+  const below = [
+    "Why we priced it this way", "What changed last review", "Who this client really is",
+    "What we agreed Tuesday", "The exception we always make", "How the senior judges this",
+    "The line we always add", "The unwritten escalation rule", "Last quarter's deviation log",
+    "What legal flagged in March", "Tom's sign-off threshold", "The clause for EU accounts",
+    "Why we never use list price", "What Sarah reads on Monday", "The pattern in the last 3 calls",
+    "How we handle SLA misses", "What the CFO actually wants", "The framework only Maria knows",
+    "Why this region is different", "What we promised verbally", "The standard nobody documented",
+    "How we close out this segment", "What past audits flagged", "The rule that overrides the rule",
+  ];
+
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10 max-w-[1600px] mx-auto">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-6" style={{ fontSize: 26, color: `hsl(${WARM})` }}>
+
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           The Category
         </p>
-
-        <h2 className="font-black mb-10" style={{ fontSize: 88, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
           The Context Gap.
         </h2>
-
-        <p className="font-medium mb-12" style={{ fontSize: 32, color: MUTED, lineHeight: 1.35, maxWidth: 1300 }}>
-          The distance between what AI is given<br />
-          and what AI needs to work to your standards.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          AI doesn&apos;t fail because the model is weak. It fails because <span style={{ color: TEXT, fontWeight: 700 }}>most of what it needs to work to your standards was never written down.</span>
         </p>
+      </div>
 
-        <div className="flex items-center gap-4">
-          <div className="h-px flex-1" style={{ background: `linear-gradient(to right, hsl(${WARM} / 0.4), transparent)` }} />
-          <p className="font-bold tracking-[0.18em] uppercase" style={{ fontSize: 16, color: `hsl(${WARM})` }}>
-            Next: what it actually looks like
+      {/* Iceberg canvas */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.04)`} />
+              <stop offset="40%" stopColor={`hsl(${TEAL} / 0.10)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.22)`} />
+            </linearGradient>
+            <linearGradient id="icebergTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.18)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.32)`} />
+            </linearGradient>
+            <linearGradient id="icebergBot" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.32)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.55)`} />
+            </linearGradient>
+          </defs>
+
+          {/* Water below waterline */}
+          <rect x="0" y="220" width="1920" height="540" fill="url(#waterGrad)" />
+
+          {/* Waterline */}
+          <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
+          <text x="80" y="212" style={{ fontSize: 13, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT&apos;S WRITTEN DOWN</text>
+          <text x="80" y="244" style={{ fontSize: 13, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT LIVES IN PEOPLE</text>
+
+          {/* Iceberg — above waterline (small) */}
+          <polygon points="820,220 960,80 1100,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
+          {/* Iceberg — below waterline (massive) */}
+          <polygon points="820,220 600,720 1320,720 1100,220" fill="url(#icebergBot)" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.5" />
+
+          {/* Above-water artifact labels */}
+          {above.map((a, i) => (
+            <g key={`a-${i}`}>
+              <rect x={a.x - 50} y={130 - (i % 2) * 14} width="100" height="26" rx="6"
+                fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1" />
+              <text x={a.x} y={148 - (i % 2) * 14} textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
+            </g>
+          ))}
+          <text x="960" y="56" textAnchor="middle"
+            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI IS GIVEN</text>
+
+          {/* Below-water knowledge fragments — dense */}
+          {below.map((label, i) => {
+            const cols = 6;
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            const x = 660 + col * 110;
+            const y = 280 + row * 95;
+            return (
+              <g key={`b-${i}`}>
+                <rect x={x - 95} y={y - 18} width="190" height="36" rx="6"
+                  fill={`hsl(${TEAL} / 0.10)`} stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="0.8" />
+                <text x={x} y={y + 5} textAnchor="middle"
+                  style={{ fontSize: 12, fontWeight: 600, fill: TEXT }}>{label}</text>
+              </g>
+            );
+          })}
+          <text x="960" y="710" textAnchor="middle"
+            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT AI NEEDS, AND DOESN&apos;T HAVE</text>
+        </svg>
+      </div>
+
+      {/* Bottom punchline strip */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Whatever you don&apos;t define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
           </p>
-          <div className="h-px flex-1" style={{ background: `linear-gradient(to left, hsl(${WARM} / 0.4), transparent)` }} />
         </div>
       </div>
+
       <SlideBar from={WARM} to={TEAL} />
     </div>
   );
@@ -269,151 +354,152 @@ function Slide02() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideContextGapExemplified() {
-  // Domain-neutral specimen: a Monday status update an exec writes to a client.
-  // LEFT = what AI was given (looks complete, isn't). RIGHT = what AI wasn't given (the unwritten knowledge).
-  const givenLines: { text: string; flagged?: boolean; note?: string }[] = [
-    { text: "Subject: Project Atlas — Weekly Update" },
-    { text: "Hi Sarah," },
-    { text: "" },
-    { text: "Good progress this week. Phase 2 is on track and we expect to" },
-    { text: "complete the integration milestone by next Friday." , flagged: true, note: "Generic timeline. Last review pushed this to Nov 14." },
-    { text: "" },
-    { text: "We've reviewed the open risks and consider them manageable." , flagged: true, note: "Skips the SLA exception flagged in Tuesday's call." },
-    { text: "" },
-    { text: "Pricing for the additional scope follows our standard rate card." , flagged: true, note: "Wrong tier. This account is on the negotiated 2024 framework." },
-    { text: "" },
-    { text: "Happy to discuss on a call when convenient." , flagged: true, note: "Tone too casual. Sarah expects a written summary, not a callback." },
-    { text: "" },
-    { text: "Best regards," },
-    { text: "The Atlas Team" },
+  // SCALE ASYMMETRY: small left (what AI sees), huge right (what it needs and doesn't have).
+  // RAG critique reframed: architecture mismatch (static query layer vs living substrate),
+  // consequence = can't move at the speed of AI/business.
+  const givenLines = [
+    "Subject: Project Atlas — Weekly Update",
+    "Hi Sarah,",
+    "",
+    "Good progress this week. Phase 2 is on track.",
+    "Integration milestone expected next Friday.",
+    "",
+    "Open risks reviewed. Manageable.",
+    "Pricing per standard rate card.",
+    "",
+    "Best,",
+    "The Atlas Team",
   ];
 
-  const missingLayers = [
-    { tag: "How we price this account", body: "2024 framework rate, not list. Tom signs off above €25k." },
-    { tag: "What changed last review",  body: "Milestone moved to Nov 14. Sarah accepted the slip in writing." },
-    { tag: "Who this client is",        body: "Prefers written summaries. Reads on Monday 7am. CFO copies legal." },
-    { tag: "What we agreed Tuesday",    body: "SLA exception for the EU region was opened, owner: M. Garcia." },
-    { tag: "Last three exceptions",     body: "Past deviations from the standard close-out template, with reasons." },
-    { tag: "The line we always add",    body: "Regulated-data clause for accounts in this segment. Never optional." },
+  // Right side: dense field of fragments. The visual point is that there are MANY,
+  // they're heterogeneous, and they change constantly.
+  const fragments = [
+    { tag: "PRICING",   body: "2024 framework rate, not list" },
+    { tag: "SIGN-OFF",  body: "Tom approves above €25k" },
+    { tag: "TIMELINE",  body: "Milestone moved to Nov 14" },
+    { tag: "CLIENT",    body: "Sarah reads Monday 7am" },
+    { tag: "FORMAT",    body: "Written summary, never callback" },
+    { tag: "TUESDAY",   body: "SLA exception opened, EU region" },
+    { tag: "OWNER",     body: "M. Garcia carries this one" },
+    { tag: "EXCEPTION", body: "Last 3 deviations from template" },
+    { tag: "CLAUSE",    body: "Regulated-data line, never optional" },
+    { tag: "CC",        body: "CFO copies legal on this account" },
+    { tag: "LEGAL",     body: "March flag still open" },
+    { tag: "TONE",      body: "Formal. No 'happy to discuss'" },
+    { tag: "REGION",    body: "EU SLA differs from US default" },
+    { tag: "AUDIT",     body: "Q2 finding referenced this client" },
+    { tag: "VERBAL",    body: "Promised on Tuesday's call" },
+    { tag: "PRECEDENT", body: "How we closed the last 4 like this" },
+    { tag: "STANDARD",  body: "The senior's unwritten checklist" },
+    { tag: "ESCALATE",  body: "Goes to partner, not account lead" },
+    { tag: "RENEWAL",   body: "Up in 6 weeks, mention it" },
+    { tag: "RISK",      body: "Margin floor for this segment" },
+    { tag: "HISTORY",   body: "Prior dispute, July 2024" },
+    { tag: "PATTERN",   body: "Sarah always asks about #3" },
+    { tag: "OVERRIDE",  body: "Rule that beats the rule" },
+    { tag: "MEMORY",    body: "What we said last quarter" },
   ];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
+      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
+        {/* Header */}
+        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           The Context Gap, exemplified
         </p>
-        <h2 className="font-black mb-2" style={{ fontSize: 46, color: TEXT, lineHeight: 1.06 }}>
-          One artifact. Two halves of the truth.
+        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.06 }}>
+          What your AI stack sees vs. <span style={{ color: `hsl(${WARM})` }}>what the work actually needs.</span>
         </h2>
-        <p className="font-medium mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          A Monday status update to a client. AI wrote the left side from what it could read. The right side is what nobody told it. Both halves exist in your company. Only one is in the system.
-        </p>
 
-        <div className="flex-1 min-h-0 grid grid-cols-2 gap-8">
-          {/* LEFT — What we gave AI */}
+        {/* Asymmetric grid: 1fr left, 3fr right */}
+        <div className="flex-1 min-h-0 grid gap-8" style={{ gridTemplateColumns: "1fr 3fr" }}>
+
+          {/* LEFT — small, quiet */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="flex items-center justify-between px-6 py-3 border-b"
+            <div className="px-5 py-3 border-b"
               style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.08)` }}>
-              <div className="flex items-center gap-3">
-                <FileText size={18} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
-                  What your current AI stack sees
+              <div className="flex items-center gap-2 mb-1">
+                <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>
+                  What AI sees
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>RAG / Copilot / Glean over your docs</p>
+              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Your RAG / Copilot / Glean stack</p>
             </div>
 
-            {/* The artifact */}
-            <div className="flex-1 px-7 py-5 font-mono" style={{ fontSize: 14, color: TEXT, lineHeight: 1.65 }}>
+            <div className="flex-1 px-5 py-4 font-mono" style={{ fontSize: 12, color: TEXT, lineHeight: 1.55 }}>
               {givenLines.map((line, i) => (
-                <div key={i} className="relative">
-                  {line.flagged ? (
-                    <>
-                      <span style={{
-                        background: `hsl(${WARM} / 0.18)`,
-                        borderBottom: `1.5px wavy hsl(${WARM})`,
-                        boxShadow: `inset 0 -2px 0 hsl(${WARM} / 0.5)`,
-                        padding: "0 2px",
-                      }}>
-                        {line.text}
-                      </span>
-                      {/* Margin callout */}
-                      <div className="absolute right-0 translate-x-[calc(100%+8px)] top-0 w-[230px] hidden xl:block" />
-                    </>
-                  ) : (
-                    line.text || "\u00A0"
-                  )}
-                </div>
+                <div key={i}>{line || "\u00A0"}</div>
               ))}
             </div>
 
-            {/* Footer: callouts list (rendered below the artifact, not in margin, so it scales) */}
-            <div className="px-6 pb-5">
-              <p className="font-black tracking-[0.14em] uppercase mb-2" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                Where AI invented
-              </p>
-              <div className="grid grid-cols-2 gap-x-5 gap-y-1.5">
-                {givenLines.filter(l => l.flagged).map((l, i) => (
-                  <div key={i} className="flex gap-2 items-start">
-                    <span className="font-black mt-[2px]" style={{ fontSize: 11, color: `hsl(${WARM})` }}>{i + 1}</span>
-                    <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>{l.note}</p>
-                  </div>
-                ))}
+            <div className="px-5 pb-5">
+              <div className="rounded-lg px-3 py-2.5"
+                style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.30)` }}>
+                <p className="font-black tracking-[0.10em] uppercase mb-1" style={{ fontSize: 10, color: `hsl(${RED})` }}>
+                  AI invents the rest
+                </p>
+                <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.4 }}>
+                  Plausible, generic, wrong on this account.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* RIGHT — What we did not give AI (the unwritten knowledge) */}
+          {/* RIGHT — huge, dense, overwhelming */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
             <div className="flex items-center justify-between px-6 py-3 border-b"
               style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.08)` }}>
-              <div className="flex items-center gap-3">
-                <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
-                <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
-                  What RAG structurally cannot retrieve
+              <div className="flex items-center gap-2">
+                <AlertTriangle size={16} style={{ color: `hsl(${WARM})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
+                  What the work actually needs
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Lives in heads, hallways, and last week's call</p>
+              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Live, relational, changing hourly</p>
             </div>
 
-            {/* Empty document outline with placeholders */}
-            <div className="flex-1 px-7 py-5 flex flex-col gap-3">
-              {missingLayers.map((m, i) => (
-                <div key={i} className="rounded-lg px-4 py-2.5"
+            {/* Dense fragment grid */}
+            <div className="flex-1 px-5 py-4 grid grid-cols-4 gap-2 content-start">
+              {fragments.map((f, i) => (
+                <div key={i} className="rounded-lg px-3 py-2"
                   style={{
                     background: `hsl(${WARM} / 0.06)`,
-                    border: `1.5px dashed hsl(${WARM} / 0.45)`,
+                    border: `1px dashed hsl(${WARM} / 0.45)`,
                   }}>
-                  <p className="font-black tracking-[0.10em] uppercase mb-0.5" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                    {m.tag}
+                  <p className="font-black tracking-[0.08em] uppercase mb-0.5" style={{ fontSize: 9, color: `hsl(${WARM})` }}>
+                    {f.tag}
                   </p>
-                  <p className="font-medium" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>
-                    {m.body}
+                  <p className="font-medium" style={{ fontSize: 11, color: TEXT, lineHeight: 1.3 }}>
+                    {f.body}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="px-6 pb-5">
-              <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                Why RAG can't fix this
-              </p>
-              <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>
-                Retrieval only finds what was written. None of this was. It lives in the senior's head and in the trail of conversations between the people who do the work.
-              </p>
+            {/* RAG critique — reframed */}
+            <div className="px-5 pb-5">
+              <div className="rounded-lg px-4 py-3"
+                style={{ background: `hsl(${WARM} / 0.10)`, border: `1px solid hsl(${WARM} / 0.30)` }}>
+                <p className="font-black tracking-[0.12em] uppercase mb-1.5" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
+                  Why RAG is the wrong architecture for this
+                </p>
+                <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.45 }}>
+                  RAG is a query layer over <span style={{ fontWeight: 700 }}>frozen documents</span>. None of this was ever a document. It is live, relational, and changes hourly. AI works at the speed of human thought. Static retrieval was built for the speed of filing cabinets. <span style={{ fontWeight: 700, color: `hsl(${WARM})` }}>Different architecture, not a tuning problem.</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom punchline — preserved verbatim from Slide02 */}
-        <div className="mt-6 rounded-xl px-10 py-5 text-center"
-          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
-          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
-            Whatever you don&apos;t define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
+        {/* Bottom punchline */}
+        <div className="mt-5 rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            The left is what you indexed. The right is the company.
           </p>
         </div>
       </div>
@@ -1328,265 +1414,241 @@ function Slide06Shift() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlidePeopleAsNodes() {
-  // LEFT — static artifacts (with faint ghost-people behind them)
-  const oldArtifacts = [
-    { label: "Docs",         x: 60,  y: 40 },
-    { label: "Slides",       x: 200, y: 30 },
-    { label: "CRM",          x: 330, y: 90 },
-    { label: "Wiki",         x: 100, y: 150 },
-    { label: "Email",        x: 260, y: 170 },
-    { label: "Spreadsheets", x: 50,  y: 250 },
-    { label: "Tickets",      x: 220, y: 280 },
-    { label: "Chat logs",    x: 340, y: 230 },
+  // 3-stage progression: Artifacts (today) → Named Person-Nodes → Living weighted network.
+  // Uses a real team (Bob/Marketing, George/Sales, Maria/Research, Anna/Ops, Tom/Eng).
+  // The SAME five people appear in stage 2 and stage 3, so the viewer sees the evolution.
+  const team = [
+    { name: "Bob",   role: "Marketing" },
+    { name: "George", role: "Sales" },
+    { name: "Maria", role: "Research" },
+    { name: "Anna",  role: "Ops" },
+    { name: "Tom",   role: "Eng" },
   ];
-  // Ghost people behind the artifacts — the real source the system can't see
-  const ghostPeople = [
-    { x: 80,  y: 110 },
-    { x: 230, y: 90  },
-    { x: 360, y: 150 },
-    { x: 130, y: 230 },
-    { x: 300, y: 240 },
+  // Pentagon layout for stages 2 and 3 (same coords)
+  const cx = 200, cy = 200, r = 130;
+  const positions = team.map((p, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI) / team.length;
+    return { ...p, x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+  });
+
+  // Edge weights for stage 3 (some thicker, some thinner — the "living, weighted" point)
+  const edges = [
+    { a: 0, b: 1, w: 3.5 }, // Bob ↔ George (marketing-sales)
+    { a: 1, b: 2, w: 1.2 }, // George ↔ Maria
+    { a: 2, b: 3, w: 2.4 }, // Maria ↔ Anna
+    { a: 3, b: 4, w: 1.8 }, // Anna ↔ Tom
+    { a: 4, b: 0, w: 1.0 }, // Tom ↔ Bob
+    { a: 0, b: 2, w: 2.8 }, // Bob ↔ Maria
+    { a: 1, b: 3, w: 1.5 }, // George ↔ Anna
+    { a: 2, b: 4, w: 2.2 }, // Maria ↔ Tom
   ];
 
-  // RIGHT — network of person-nodes around a senior
-  const cx = 230, cy = 215;
-  // Hero node sits at top — fully labeled, teaches the vocabulary
-  const heroNode = { x: cx, y: cy - 150, role: "PM", hero: true };
-  const ringRest = [
-    { x: cx + 140,  y: cy - 75,  role: "Sales" },
-    { x: cx + 140,  y: cy + 75,  role: "Eng" },
-    { x: cx,        y: cy + 150, role: "Ops" },
-    { x: cx - 140,  y: cy + 75,  role: "Design" },
-    { x: cx - 140,  y: cy - 75,  role: "Research" },
-  ];
-  const ring = [heroNode, ...ringRest];
-  // Three layers every person-node carries
-  const heroLayers = [
-    { label: "HOW",       angle: -Math.PI / 2 },
-    { label: "CONTEXT",   angle:  Math.PI / 6 },
-    { label: "ARTIFACTS", angle:  (5 * Math.PI) / 6 },
+  // Stage 1 — old artifacts
+  const artifacts = [
+    { label: "Docs",         x: 70,  y: 60 },
+    { label: "CRM",          x: 240, y: 50 },
+    { label: "Wiki",         x: 90,  y: 170 },
+    { label: "Email",        x: 250, y: 180 },
+    { label: "Slides",       x: 60,  y: 280 },
+    { label: "Tickets",      x: 240, y: 300 },
   ];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>
+      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-10">
+        {/* Header */}
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
           The Shift
         </p>
-        <h2 className="font-black mb-3" style={{ fontSize: 54, color: TEXT, lineHeight: 1.05 }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
           From siloed artifacts to a{' '}
           <span style={{ color: `hsl(${TEAL})` }}>living network of people who execute.</span>
         </h2>
-        <p className="font-semibold mb-3" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.4 }}>
-          Remember the missing context cards from the last slide? They live here now. In people.
-        </p>
-        <p className="font-medium mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          The unit of an AI-native organization is not a document, a workflow, or a single agent. It is a <span style={{ color: TEXT, fontWeight: 700 }}>person-node</span>: a continuously updated graph of how that person works, the context they hold, and the artifacts they produce. Connect those nodes and you have an organization that scales its most senior way of doing things.
+        <p className="font-medium mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1600 }}>
+          The unit of an AI-native organization is not a document. It is a <span style={{ color: TEXT, fontWeight: 700 }}>person-node</span> carrying how someone works, the context they hold, and the artifacts they produce. Same five people across all three stages. Watch what happens.
         </p>
 
-        <div className="flex-1 min-h-0 grid grid-cols-2 gap-10">
-          {/* LEFT — Today */}
-          <div className="relative rounded-2xl border p-7 flex flex-col"
-            style={{ borderColor: `hsl(${RED} / 0.22)`, background: `hsl(${RED} / 0.03)` }}>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-black tracking-[0.16em] uppercase px-3 py-1 rounded-full"
-                style={{ fontSize: 13, color: `hsl(${RED})`, background: `hsl(${RED} / 0.10)`, border: `1px solid hsl(${RED} / 0.25)` }}>
-                Today
-              </span>
-              <p className="font-bold" style={{ fontSize: 18, color: MUTED }}>The system sees the artifacts. Not the people.</p>
-            </div>
-            <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
-              Disconnected documents. Frozen workflows.
-            </p>
-            <p className="font-medium mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              People are still the source. The system can only read what they leave behind.
-            </p>
+        {/* 3-stage progression */}
+        <div className="flex-1 min-h-0 grid grid-cols-3 gap-6">
 
-            {/* Three-row contrast: Unit / Flow / AI */}
-            <div className="grid grid-cols-[88px_1fr] gap-x-3 gap-y-2 mb-4">
-              {[
-                { k: "UNIT",  v: "A document, a record, a slide" },
-                { k: "FLOW",  v: "Static snapshots. Frozen at save." },
-                { k: "AI",    v: "Reads dead text. Guesses the rest." },
-              ].map((row) => (
-                <div key={`r-${row.k}`} className="contents">
-                  <span className="font-black tracking-[0.14em] uppercase self-center"
-                    style={{ fontSize: 11, color: `hsl(${RED})` }}>{row.k}</span>
-                  <span className="font-semibold self-center"
-                    style={{ fontSize: 14, color: TEXT }}>{row.v}</span>
-                </div>
-              ))}
+          {/* STAGE 1 — Artifacts */}
+          <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
+            style={{ borderColor: `hsl(${RED} / 0.30)`, background: `hsl(${RED} / 0.03)` }}>
+            <div className="px-5 py-3 border-b flex items-center gap-2"
+              style={{ borderColor: `hsl(${RED} / 0.20)`, background: `hsl(${RED} / 0.06)` }}>
+              <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ fontSize: 13, color: BG, background: `hsl(${RED})` }}>1</span>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${RED})` }}>Today</p>
+              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Artifact-centric</p>
             </div>
-
-            {/* Visual: artifacts on top, ghost-people behind them */}
-            <div className="relative flex-1 rounded-xl overflow-hidden"
+            <div className="px-5 pt-4">
+              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
+                The center is the document.
+              </p>
+              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
+                Frozen, scattered across systems. People are invisible to AI.
+              </p>
+            </div>
+            <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
               style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <svg className="absolute inset-0" viewBox="0 0 420 320" preserveAspectRatio="xMidYMid meet">
-                {/* Ghost people behind — the real source the system can't see */}
-                {ghostPeople.map((g, i) => (
-                  <g key={`gp-${i}`} opacity={0.35}>
-                    <circle cx={g.x} cy={g.y - 6} r="9"
-                      fill="none" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.2" strokeDasharray="2 3" />
-                    <path d={`M ${g.x - 14} ${g.y + 22} Q ${g.x} ${g.y + 4} ${g.x + 14} ${g.y + 22}`}
-                      fill="none" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.2" strokeDasharray="2 3" />
-                  </g>
-                ))}
-                {/* Floating disconnected artifacts on top */}
-                {oldArtifacts.map((a, i) => (
+              <svg className="w-full h-full" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+                {artifacts.map((a, i) => (
                   <g key={i}>
-                    <rect x={a.x} y={a.y} width="86" height="44" rx="8"
-                      fill={`hsl(${RED} / 0.08)`} stroke={`hsl(${RED} / 0.32)`} strokeWidth="1" />
-                    <text x={a.x + 43} y={a.y + 28} textAnchor="middle"
-                      style={{ fontSize: 14, fontWeight: 700, fill: TEXT }}>{a.label}</text>
+                    <rect x={a.x} y={a.y} width="80" height="42" rx="6"
+                      fill={`hsl(${RED} / 0.08)`} stroke={`hsl(${RED} / 0.35)`} strokeWidth="1" />
+                    <text x={a.x + 40} y={a.y + 27} textAnchor="middle"
+                      style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
                   </g>
                 ))}
-                {/* dashed broken connections between artifacts */}
-                <line x1="146" y1="62"  x2="200" y2="55"  stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
-                <line x1="343" y1="172" x2="386" y2="112" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
-                <line x1="186" y1="150" x2="260" y2="170" stroke={`hsl(${RED} / 0.4)`} strokeWidth="1.5" strokeDasharray="4 4" />
-
-                {/* Caption strip */}
-                <g transform="translate(12, 302)">
-                  <text style={{ fontSize: 10, fontWeight: 700, fill: `hsl(${RED})`, letterSpacing: 0.6 }}>
-                    DASHED OUTLINES = THE PEOPLE THE SYSTEM CAN&apos;T SEE
-                  </text>
-                </g>
+                <text x="180" y="350" textAnchor="middle"
+                  style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${RED})`, letterSpacing: 1 }}>
+                  DISCONNECTED. STATIC. DEAD ON SAVE.
+                </text>
               </svg>
             </div>
           </div>
 
-          {/* RIGHT — LIZA */}
-          <div className="relative rounded-2xl border p-7 flex flex-col"
-            style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `linear-gradient(135deg, hsl(${TEAL} / 0.05), hsl(${GREEN} / 0.04))` }}>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-black tracking-[0.16em] uppercase px-3 py-1 rounded-full"
-                style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})`, border: `1px solid hsl(${TEAL})` }}>
-                With LIZA
-              </span>
-              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>The system sees the people. Artifacts are the trail.</p>
+          {/* STAGE 2 — Named Person-Nodes */}
+          <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
+            style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `hsl(${TEAL} / 0.03)` }}>
+            <div className="px-5 py-3 border-b flex items-center gap-2"
+              style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.06)` }}>
+              <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})` }}>2</span>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Person-Nodes</p>
+              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>People become the unit</p>
             </div>
-            <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>
-              Each person is a node. The network is the org.
-            </p>
-            <p className="font-medium mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Execution and documentation merge. Every action a person takes updates their node.
-            </p>
-
-            {/* Three-row contrast: Unit / Flow / AI */}
-            <div className="grid grid-cols-[88px_1fr] gap-x-3 gap-y-2 mb-4">
-              {[
-                { k: "UNIT", v: "A person-node carrying how, context, artifacts" },
-                { k: "FLOW", v: "Live signals. Updates as work happens." },
-                { k: "AI",   v: "Operates through the node, in the senior's standard." },
-              ].map((row) => (
-                <div key={`tr-${row.k}`} className="contents">
-                  <span className="font-black tracking-[0.14em] uppercase self-center"
-                    style={{ fontSize: 11, color: `hsl(${TEAL})` }}>{row.k}</span>
-                  <span className="font-semibold self-center"
-                    style={{ fontSize: 14, color: TEXT }}>{row.v}</span>
-                </div>
-              ))}
+            <div className="px-5 pt-4">
+              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
+                Each person is a node.
+              </p>
+              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
+                Bob, George, Maria, Anna, Tom. Each carries HOW, CONTEXT, ARTIFACTS.
+              </p>
             </div>
-
-            {/* People network with hero node + AI halos */}
-            <div className="relative flex-1 rounded-xl overflow-hidden"
+            <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
               style={{ background: BG, border: `1px solid hsl(${TEAL} / 0.15)` }}>
-              <svg className="absolute inset-0" viewBox="0 0 460 440" preserveAspectRatio="xMidYMid meet">
+              <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                {/* Nodes only — no edges yet */}
+                {positions.map((p, i) => (
+                  <g key={i}>
+                    <circle cx={p.x} cy={p.y} r="36" fill={BG}
+                      stroke={`hsl(${TEAL})`} strokeWidth="2" />
+                    <text x={p.x} y={p.y - 2} textAnchor="middle"
+                      style={{ fontSize: 13, fontWeight: 800, fill: TEXT }}>{p.name}</text>
+                    <text x={p.x} y={p.y + 12} textAnchor="middle"
+                      style={{ fontSize: 9, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
+                      {p.role.toUpperCase()}
+                    </text>
+                  </g>
+                ))}
+                {/* Layer chips around Bob (top node) */}
+                {(() => {
+                  const hero = positions[0];
+                  const layers = [
+                    { label: "HOW",       dx: -50, dy: -22 },
+                    { label: "CONTEXT",   dx:  50, dy: -22 },
+                    { label: "ARTIFACTS", dx:   0, dy: -55 },
+                  ];
+                  return layers.map((l, i) => (
+                    <g key={`hl-${i}`}>
+                      <line x1={hero.x} y1={hero.y - 28} x2={hero.x + l.dx} y2={hero.y + l.dy}
+                        stroke={`hsl(${GREEN} / 0.55)`} strokeWidth="1" />
+                      <rect x={hero.x + l.dx - l.label.length * 3.5 - 6} y={hero.y + l.dy - 8}
+                        width={l.label.length * 7 + 12} height="16" rx="8"
+                        fill={`hsl(${GREEN} / 0.14)`} stroke={`hsl(${GREEN})`} strokeWidth="0.8" />
+                      <text x={hero.x + l.dx} y={hero.y + l.dy + 4} textAnchor="middle"
+                        style={{ fontSize: 9, fontWeight: 800, fill: TEXT, letterSpacing: 0.6 }}>{l.label}</text>
+                    </g>
+                  ));
+                })()}
+                <text x="200" y="390" textAnchor="middle"
+                  style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 1 }}>
+                  PEOPLE, NOT DOCUMENTS, ARE THE UNIT.
+                </text>
+              </svg>
+            </div>
+          </div>
+
+          {/* STAGE 3 — Living weighted network */}
+          <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
+            style={{ borderColor: `hsl(${GREEN} / 0.40)`,
+              background: `linear-gradient(135deg, hsl(${TEAL} / 0.04), hsl(${GREEN} / 0.05))` }}>
+            <div className="px-5 py-3 border-b flex items-center gap-2"
+              style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ fontSize: 13, color: BG, background: `hsl(${GREEN})` }}>3</span>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Living Network</p>
+              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Weighted, live, dynamic</p>
+            </div>
+            <div className="px-5 pt-4">
+              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
+                The network is the org.
+              </p>
+              <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
+                Edges weighted by real collaboration. Updates as work happens. AI inherits how the network thinks.
+              </p>
+            </div>
+            <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
+              style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.20)` }}>
+              <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
                 <defs>
-                  <radialGradient id="seniorGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor={`hsl(${TEAL} / 0.35)`} />
-                    <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
-                  </radialGradient>
-                  <radialGradient id="aiHalo" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor={`hsl(${GREEN} / 0.30)`} />
+                  <radialGradient id="aiHaloGreen" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={`hsl(${GREEN} / 0.35)`} />
                     <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
                   </radialGradient>
                 </defs>
 
-                {/* connections between ring members */}
-                {ring.map((p, i) => {
-                  const next = ring[(i + 1) % ring.length];
+                {/* Weighted edges */}
+                {edges.map((e, i) => {
+                  const a = positions[e.a], b = positions[e.b];
                   return (
-                    <line key={`r${i}`} x1={p.x} y1={p.y} x2={next.x} y2={next.y}
-                      stroke={`hsl(${TEAL} / 0.28)`} strokeWidth="1.2" />
+                    <line key={`e-${i}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+                      stroke={`hsl(${TEAL} / ${0.25 + e.w * 0.12})`} strokeWidth={e.w} />
                   );
                 })}
-                {/* connections to senior center */}
-                {ring.map((p, i) => (
-                  <line key={`c${i}`} x1={cx} y1={cy} x2={p.x} y2={p.y}
-                    stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.6" />
+
+                {/* Pulse dots traveling on the strongest edge — implied via layered circles */}
+                {edges.filter(e => e.w >= 2.4).map((e, i) => {
+                  const a = positions[e.a], b = positions[e.b];
+                  const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+                  return (
+                    <circle key={`pulse-${i}`} cx={mx} cy={my} r="3.5"
+                      fill={`hsl(${GREEN})`} stroke={BG} strokeWidth="1.5" />
+                  );
+                })}
+
+                {/* Nodes with AI halos */}
+                {positions.map((p, i) => (
+                  <g key={i}>
+                    <circle cx={p.x} cy={p.y} r="48" fill="url(#aiHaloGreen)" />
+                    <circle cx={p.x} cy={p.y} r="32" fill={BG}
+                      stroke={`hsl(${TEAL})`} strokeWidth="2.5" />
+                    <text x={p.x} y={p.y - 2} textAnchor="middle"
+                      style={{ fontSize: 12, fontWeight: 800, fill: TEXT }}>{p.name}</text>
+                    <text x={p.x} y={p.y + 11} textAnchor="middle"
+                      style={{ fontSize: 8, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
+                      {p.role.toUpperCase()}
+                    </text>
+                  </g>
                 ))}
 
-                {/* Senior */}
-                <circle cx={cx} cy={cy} r="64" fill="url(#seniorGlow)" />
-                <circle cx={cx} cy={cy} r="34"
-                  fill={`hsl(${TEAL})`} stroke={BG} strokeWidth="3" />
-                <text x={cx} y={cy + 5} textAnchor="middle"
-                  style={{ fontSize: 13, fontWeight: 800, fill: BG, letterSpacing: 1 }}>SENIOR</text>
-
-                {/* Ring nodes */}
-                {ring.map((p, i) => {
-                  const isHero = (p as any).hero;
-                  const r = isHero ? 30 : 20;
-                  return (
-                    <g key={`n${i}`}>
-                      {/* AI halo around every person-node */}
-                      <circle cx={p.x} cy={p.y} r={r + 18} fill="url(#aiHalo)" />
-                      <circle cx={p.x} cy={p.y} r={r}
-                        fill={BG} stroke={`hsl(${TEAL})`} strokeWidth={isHero ? 3 : 2} />
-                      <text x={p.x} y={p.y + 4} textAnchor="middle"
-                        style={{ fontSize: isHero ? 12 : 11, fontWeight: 800, fill: TEXT }}>{p.role}</text>
-                    </g>
-                  );
-                })}
-
-                {/* Hero node — labeled HOW · CONTEXT · ARTIFACTS chips */}
-                {heroLayers.map((layer, i) => {
-                  const dist = 64;
-                  const lx = heroNode.x + Math.cos(layer.angle) * dist;
-                  const ly = heroNode.y + Math.sin(layer.angle) * dist;
-                  const w = layer.label.length * 7 + 14;
-                  return (
-                    <g key={`hl-${i}`}>
-                      <line x1={heroNode.x} y1={heroNode.y} x2={lx} y2={ly}
-                        stroke={`hsl(${GREEN} / 0.55)`} strokeWidth="1.2" />
-                      <rect x={lx - w / 2} y={ly - 9} width={w} height="18" rx="9"
-                        fill={`hsl(${GREEN} / 0.14)`} stroke={`hsl(${GREEN})`} strokeWidth="1" />
-                      <text x={lx} y={ly + 4} textAnchor="middle"
-                        style={{ fontSize: 10, fontWeight: 800, fill: TEXT, letterSpacing: 0.8 }}>{layer.label}</text>
-                    </g>
-                  );
-                })}
-                {/* Hero callout */}
-                <text x={heroNode.x} y={heroNode.y - 78} textAnchor="middle"
-                  style={{ fontSize: 10, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 1 }}>
-                  EVERY NODE CARRIES THESE THREE LAYERS
+                <text x="200" y="390" textAnchor="middle"
+                  style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${GREEN})`, letterSpacing: 1 }}>
+                  WEIGHTED EDGES. LIVE SIGNALS. AI HALO ON EVERY NODE.
                 </text>
-
-                {/* Footer caption — the punchline visible inside the picture */}
-                <g transform="translate(0, 410)">
-                  <rect x="14" y="-14" width="432" height="24" rx="6"
-                    fill={`hsl(${TEAL} / 0.10)`} stroke={`hsl(${TEAL} / 0.30)`} strokeWidth="1" />
-                  <text x="230" y="2" textAnchor="middle"
-                    style={{ fontSize: 11, fontWeight: 800, fill: TEXT, letterSpacing: 1 }}>
-                    EXECUTION AND DOCUMENTATION MERGE
-                  </text>
-                  <g transform="translate(28, -2)">
-                    <circle r="3" fill={`hsl(${GREEN})`} />
-                    <text x="8" y="3" style={{ fontSize: 9, fontWeight: 700, fill: MUTED }}>AI halo</text>
-                  </g>
-                </g>
               </svg>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
-          style={{ borderColor: `hsl(${TEAL} / 0.22)`, background: `hsl(${TEAL} / 0.06)` }}>
-          <Sparkles size={24} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
-            On the left, AI reads the trail and guesses the worker. On the right, AI inherits how the worker thinks. The agent stops being a tool bolted on the side and becomes a property of the person-node.
+        {/* Bottom punchline */}
+        <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <Sparkles size={22} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+            Stop indexing the trail people leave behind. Start operating the network of people who do the work.
           </p>
         </div>
       </div>
