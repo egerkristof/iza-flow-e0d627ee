@@ -6,7 +6,7 @@ import {
   AlertTriangle, Check, CheckCircle2,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText, Car,
-  User, GitBranch,
+  User, GitBranch, Sparkles,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
