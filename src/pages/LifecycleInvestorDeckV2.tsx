@@ -626,8 +626,10 @@ function SlideContextGapExemplified() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide03() {
-  // Three vertical mini-icebergs: each industry shows the same above/below split as Slide 02,
+  // Three vertical waterline cards: each industry mirrors the same above/below split as Slide 02,
   // proving the Context Gap is universal across regulated and project-based work.
+  // Council redesign: dropped SVG triangles (overlap + low contrast on RED) in favor of
+  // clean split-cards with a horizontal waterline. Iceberg metaphor stays via language + color.
   const verticals = [
     {
       name: "Life Sciences",
@@ -686,79 +688,56 @@ function Slide03() {
         <div className="grid grid-cols-3 gap-6 flex-1 min-h-0 mb-5">
           {verticals.map((v) => (
             <div key={v.name} className="rounded-2xl border flex flex-col overflow-hidden"
-              style={{ borderColor: `hsl(${v.color} / 0.22)`, background: BG }}>
+              style={{ borderColor: `hsl(${v.color} / 0.25)`, background: BG, boxShadow: `0 1px 3px hsl(${v.color} / 0.06)` }}>
               {/* Header */}
               <div className="px-5 py-3 flex items-center gap-3 border-b"
-                style={{ borderColor: `hsl(${v.color} / 0.15)`, background: `hsl(${v.color} / 0.05)` }}>
+                style={{ borderColor: `hsl(${v.color} / 0.18)`, background: `hsl(${v.color} / 0.06)` }}>
                 {v.icon}
                 <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{v.name}</p>
               </div>
 
-              {/* Mini iceberg */}
-              <div className="flex-1 relative px-3 pt-4 pb-3">
-                <svg viewBox="0 0 320 360" preserveAspectRatio="xMidYMid meet" className="w-full h-full">
-                  <defs>
-                    <linearGradient id={`ice-top-${v.name}`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={`hsl(${GREEN} / 0.20)`} />
-                      <stop offset="100%" stopColor={`hsl(${GREEN} / 0.36)`} />
-                    </linearGradient>
-                    <linearGradient id={`ice-bot-${v.name}`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={`hsl(${v.color} / 0.30)`} />
-                      <stop offset="100%" stopColor={`hsl(${v.color} / 0.55)`} />
-                    </linearGradient>
-                    <linearGradient id={`water-${v.name}`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={`hsl(${v.color} / 0.04)`} />
-                      <stop offset="100%" stopColor={`hsl(${v.color} / 0.16)`} />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Water tint */}
-                  <rect x="0" y="110" width="320" height="250" fill={`url(#water-${v.name})`} />
-                  {/* Waterline */}
-                  <line x1="0" y1="110" x2="320" y2="110"
-                    stroke={`hsl(${v.color} / 0.5)`} strokeWidth="1.2" strokeDasharray="5 5" />
-
-                  {/* Iceberg above */}
-                  <polygon points="135,110 160,40 185,110" fill={`url(#ice-top-${v.name})`}
-                    stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.2" />
-                  {/* Iceberg below */}
-                  <polygon points="135,110 50,340 270,340 185,110" fill={`url(#ice-bot-${v.name})`}
-                    stroke={`hsl(${v.color} / 0.55)`} strokeWidth="1.2" />
-
-                  {/* Above-water labels */}
-                  <text x="160" y="22" textAnchor="middle"
-                    style={{ fontSize: 10, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
-                    WHAT AI SEES
-                  </text>
-                  {v.above.map((label, i) => (
-                    <g key={`top-${i}`}>
-                      <rect x={20 + i * 95} y={70} width="85" height="22" rx="4"
-                        fill={BG} stroke={`hsl(${GREEN} / 0.6)`} strokeWidth="0.9" />
-                      <text x={62 + i * 95} y={85} textAnchor="middle"
-                        style={{ fontSize: 10, fontWeight: 700, fill: TEXT }}>{label}</text>
-                    </g>
+              {/* ABOVE THE WATERLINE — what AI sees */}
+              <div className="px-5 pt-4 pb-4" style={{ background: `hsl(${GREEN} / 0.04)` }}>
+                <div className="flex items-center gap-2 mb-2.5">
+                  <span className="inline-block rounded-sm" style={{ width: 8, height: 8, background: `hsl(${GREEN})` }} />
+                  <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
+                    Above the waterline · What AI sees
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {v.above.map((label) => (
+                    <span key={label} className="rounded-md px-2.5 py-1 font-semibold border"
+                      style={{ fontSize: 13, color: TEXT, background: BG, borderColor: `hsl(${GREEN} / 0.45)` }}>
+                      {label}
+                    </span>
                   ))}
+                </div>
+              </div>
 
-                  {/* Below-water label header */}
-                  <text x="160" y="135" textAnchor="middle"
-                    style={{ fontSize: 10, fontWeight: 900, fill: `hsl(${v.color})`, letterSpacing: 1.5 }}>
-                    WHAT AI MISSES
-                  </text>
+              {/* WATERLINE */}
+              <div className="relative" style={{ height: 1, background: `hsl(${v.color} / 0.5)`, backgroundImage: `repeating-linear-gradient(90deg, hsl(${v.color} / 0.55) 0 6px, transparent 6px 12px)` }} />
 
-                  {/* Below-water items */}
-                  {v.below.map((item, i) => (
-                    <g key={`bot-${i}`}>
-                      <circle cx={70} cy={170 + i * 50} r="3" fill={`hsl(${v.color})`} />
-                      <text x={82} y={174 + i * 50}
-                        style={{ fontSize: 11.5, fontWeight: 600, fill: TEXT }}>{item}</text>
-                    </g>
+              {/* BELOW THE WATERLINE — what AI misses */}
+              <div className="px-5 pt-4 pb-4 flex-1 flex flex-col" style={{ background: `hsl(${v.color} / 0.05)` }}>
+                <div className="flex items-center gap-2 mb-2.5">
+                  <span className="inline-block rounded-sm" style={{ width: 8, height: 8, background: `hsl(${v.color})` }} />
+                  <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 11, color: `hsl(${v.color})` }}>
+                    Below the waterline · What AI misses
+                  </p>
+                </div>
+                <ul className="flex flex-col gap-2">
+                  {v.below.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <span className="shrink-0 rounded-full mt-1.5" style={{ width: 6, height: 6, background: `hsl(${v.color})` }} />
+                      <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>{item}</p>
+                    </li>
                   ))}
-                </svg>
+                </ul>
               </div>
 
               {/* What breaks */}
               <div className="px-5 py-3 border-t flex items-center gap-2"
-                style={{ borderColor: `hsl(${RED} / 0.15)`, background: `hsl(${RED} / 0.05)` }}>
+                style={{ borderColor: `hsl(${RED} / 0.18)`, background: `hsl(${RED} / 0.06)` }}>
                 <AlertTriangle size={14} style={{ color: `hsl(${RED})` }} />
                 <p className="font-bold" style={{ fontSize: 14, color: `hsl(${RED})` }}>{v.breaks}</p>
               </div>
@@ -1107,37 +1086,9 @@ function Slide05() {
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
           Organizational Intelligence is the substrate. <span style={{ color: `hsl(${TEAL})` }}>The Context Layer is the runtime AI executes on.</span>
         </h2>
-
-        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
-          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
-            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>SOPs, policies, templates, CRM records, requirements, project memory</p>
-          </div>
-          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
-          <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
-            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>LIZA OS</p>
-            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The layer that turns raw inputs into <span style={{ color: `hsl(${TEAL})` }}>Organizational Intelligence</span> AI can execute against</p>
-          </div>
-          <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
-          <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
-            <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that honours contradictions, exceptions, and the latest decisions</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-center mb-1 h-10">
-          <div className="flex justify-center">
-            <ArrowRight size={30} style={{ color: `hsl(${BLUE} / 0.5)`, transform: "rotate(105deg)" }} />
-          </div>
-          <div />
-          <div className="flex justify-center">
-            <ArrowRight size={30} style={{ color: `hsl(${TEAL} / 0.55)`, transform: "rotate(90deg)" }} />
-          </div>
-          <div />
-          <div className="flex justify-center">
-            <ArrowRight size={30} style={{ color: `hsl(${GREEN} / 0.5)`, transform: "rotate(75deg)" }} />
-          </div>
-        </div>
+        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          One horizontal infrastructure on the left. The runtime in the middle. Domain experience layers on the right. Built once. Portable across every vertical.
+        </p>
 
         {/* Three-column flow */}
         <div className="flex-1 flex items-center gap-0">
@@ -2851,7 +2802,7 @@ function Slide12() {
             </div>
             {[
               { title: "We lived this problem", desc: "Built AI practices at enterprise scale. Saw the expertise gap firsthand across industries, countries, and team sizes.", color: GREEN },
-              { title: "Capital efficient & committed", desc: "15 months of self-funded development. Full product, marketing site, diagnostic tool, and enterprise pipeline — built on a fraction of what funded competitors raised. We ship more with less.", color: TEAL },
+              { title: "Capital efficient & committed", desc: "15 months of self-funded development. Full product, marketing site, diagnostic tool, and enterprise pipeline. Built on a fraction of what funded competitors raised. We ship more with less.", color: TEAL },
               { title: "Proprietary IP", desc: "AACE v3.1: the context specification. Intent-locking, knowledge injection, drift detection. Hard to replicate.", color: GREEN },
             ].map(({ title, desc, color }) => (
               <div key={title} className="rounded-xl border p-4"
