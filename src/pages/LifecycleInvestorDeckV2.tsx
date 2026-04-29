@@ -1481,37 +1481,38 @@ function SlidePeopleAsNodes() {
           The Shift
         </p>
         <h2 className="font-black mb-3" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
-          From siloed artifacts to a{' '}
-          <span style={{ color: `hsl(${TEAL})` }}>living network of people who execute.</span>
+          From documents, to static agents, to a{' '}
+          <span style={{ color: `hsl(${TEAL})` }}>living context infrastructure.</span>
         </h2>
         <p className="font-medium mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1600 }}>
-          The unit of an AI-native organization is not a document. It is a <span style={{ color: TEXT, fontWeight: 700 }}>person-node</span> carrying how someone works, the context they hold, and the artifacts they produce. Same five people across all three stages. Watch what happens.
+          Three eras of how organizations try to execute work. Each one moves the same five people, Bob, George, Maria, Anna and Tom, closer to a system where AI inherits how the company actually thinks.
         </p>
 
         {/* 3-stage progression */}
         <div className="flex-1 min-h-0 grid grid-cols-3 gap-6">
 
-          {/* STAGE 1 — Artifacts */}
+          {/* STAGE 1 — Documents */}
           <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${RED} / 0.30)`, background: `hsl(${RED} / 0.03)` }}>
             <div className="px-5 py-3 border-b flex items-center gap-2"
               style={{ borderColor: `hsl(${RED} / 0.20)`, background: `hsl(${RED} / 0.06)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${RED})` }}>1</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${RED})` }}>Today</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Artifact-centric</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${RED})` }}>Document Era</p>
+              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Humans patch every gap</p>
             </div>
             <div className="px-5 pt-4">
               <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                The center is the document.
+                Work lives in documents.
               </p>
               <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                Frozen, scattered across systems. People are invisible to AI.
+                Between any two documents, what to do is undefined. Humans patch every gap from memory. AI cannot. Silos form. Nothing scales.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
               style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <svg className="w-full h-full" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+                {/* Two documents with an undefined gap between them, patched by a tiny human silhouette */}
                 {artifacts.map((a, i) => (
                   <g key={i}>
                     <rect x={a.x} y={a.y} width="80" height="42" rx="6"
@@ -1520,77 +1521,84 @@ function SlidePeopleAsNodes() {
                       style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
                   </g>
                 ))}
+                {/* "?" gaps floating between docs — what happens between them is undefined */}
+                {[
+                  { x: 180, y: 80 },
+                  { x: 180, y: 195 },
+                  { x: 180, y: 305 },
+                ].map((g, i) => (
+                  <g key={`gap-${i}`}>
+                    <circle cx={g.x} cy={g.y} r="14"
+                      fill={`hsl(${RED} / 0.10)`} stroke={`hsl(${RED} / 0.55)`} strokeDasharray="3 2" strokeWidth="1.2" />
+                    <text x={g.x} y={g.y + 5} textAnchor="middle"
+                      style={{ fontSize: 14, fontWeight: 900, fill: `hsl(${RED})` }}>?</text>
+                  </g>
+                ))}
                 <text x="180" y="350" textAnchor="middle"
                   style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${RED})`, letterSpacing: 1 }}>
-                  DISCONNECTED. STATIC. DEAD ON SAVE.
+                  THE GAPS BETWEEN DOCS ARE UNDEFINED.
                 </text>
               </svg>
             </div>
           </div>
 
-          {/* STAGE 2 — Named Person-Nodes */}
+          {/* STAGE 2 — Static agents on top of documents */}
           <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `hsl(${TEAL} / 0.03)` }}>
             <div className="px-5 py-3 border-b flex items-center gap-2"
               style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.06)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})` }}>2</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Person-Nodes</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>People become the unit</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Agent Era</p>
+              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Statically defined, snapshot in time</p>
             </div>
             <div className="px-5 pt-4">
               <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Each person is a node.
+                Static agents wrap each role.
               </p>
               <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                Bob, George, Maria, Anna, Tom. Each carries HOW, CONTEXT, ARTIFACTS.
+                You define Bob, George, Maria, Anna, Tom as agents. Useful in a snapshot. Frozen the moment the work changes. Re-prompt forever.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
               style={{ background: BG, border: `1px solid hsl(${TEAL} / 0.15)` }}>
               <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
-                {/* Nodes only — no edges yet */}
+                {/* Background: faded documents still underneath */}
+                {artifacts.map((a, i) => (
+                  <rect key={`bg-${i}`} x={a.x * 1.05 + 10} y={a.y * 1.05 + 10} width="60" height="32" rx="4"
+                    fill={`hsl(${MUTED_HUE} / 0.05)`} stroke={`hsl(${MUTED_HUE} / 0.18)`} strokeWidth="0.8"
+                    strokeDasharray="2 2" />
+                ))}
+                {/* Static agent boxes (square, locked) wrapping each person */}
                 {positions.map((p, i) => (
                   <g key={i}>
-                    <circle cx={p.x} cy={p.y} r="36" fill={BG}
+                    {/* Locked square frame around the node — signals "static / snapshot" */}
+                    <rect x={p.x - 40} y={p.y - 40} width="80" height="80" rx="6"
+                      fill={`hsl(${TEAL} / 0.05)`} stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="1.2"
+                      strokeDasharray="4 3" />
+                    <text x={p.x - 32} y={p.y - 28} textAnchor="start"
+                      style={{ fontSize: 7, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 0.4 }}>
+                      AGENT
+                    </text>
+                    <circle cx={p.x} cy={p.y} r="26" fill={BG}
                       stroke={`hsl(${TEAL})`} strokeWidth="2" />
                     <text x={p.x} y={p.y - 2} textAnchor="middle"
-                      style={{ fontSize: 13, fontWeight: 800, fill: TEXT }}>{p.name}</text>
-                    <text x={p.x} y={p.y + 12} textAnchor="middle"
-                      style={{ fontSize: 9, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
+                      style={{ fontSize: 12, fontWeight: 800, fill: TEXT }}>{p.name}</text>
+                    <text x={p.x} y={p.y + 11} textAnchor="middle"
+                      style={{ fontSize: 8, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
                       {p.role.toUpperCase()}
                     </text>
                   </g>
                 ))}
-                {/* Layer chips around Bob (top node) */}
-                {(() => {
-                  const hero = positions[0];
-                  const layers = [
-                    { label: "HOW",       dx: -50, dy: -22 },
-                    { label: "CONTEXT",   dx:  50, dy: -22 },
-                    { label: "ARTIFACTS", dx:   0, dy: -55 },
-                  ];
-                  return layers.map((l, i) => (
-                    <g key={`hl-${i}`}>
-                      <line x1={hero.x} y1={hero.y - 28} x2={hero.x + l.dx} y2={hero.y + l.dy}
-                        stroke={`hsl(${GREEN} / 0.55)`} strokeWidth="1" />
-                      <rect x={hero.x + l.dx - l.label.length * 3.5 - 6} y={hero.y + l.dy - 8}
-                        width={l.label.length * 7 + 12} height="16" rx="8"
-                        fill={`hsl(${GREEN} / 0.14)`} stroke={`hsl(${GREEN})`} strokeWidth="0.8" />
-                      <text x={hero.x + l.dx} y={hero.y + l.dy + 4} textAnchor="middle"
-                        style={{ fontSize: 9, fontWeight: 800, fill: TEXT, letterSpacing: 0.6 }}>{l.label}</text>
-                    </g>
-                  ));
-                })()}
                 <text x="200" y="390" textAnchor="middle"
                   style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 1 }}>
-                  PEOPLE, NOT DOCUMENTS, ARE THE UNIT.
+                  AGENTS ARE STATIC SNAPSHOTS OF PEOPLE.
                 </text>
               </svg>
             </div>
           </div>
 
-          {/* STAGE 3 — Living weighted network */}
+          {/* STAGE 3 — Living context infrastructure */}
           <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${GREEN} / 0.40)`,
               background: `linear-gradient(135deg, hsl(${TEAL} / 0.04), hsl(${GREEN} / 0.05))` }}>
@@ -1598,15 +1606,15 @@ function SlidePeopleAsNodes() {
               style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.08)` }}>
               <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ fontSize: 13, color: BG, background: `hsl(${GREEN})` }}>3</span>
-              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Living Network</p>
-              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Weighted, live, dynamic</p>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Context Infrastructure</p>
+              <p className="font-semibold ml-auto" style={{ fontSize: 11, color: MUTED }}>Fluid, semantic, live</p>
             </div>
             <div className="px-5 pt-4">
               <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                The network is the org.
+                Context is the substrate.
               </p>
               <p className="font-medium mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-                Edges weighted by real collaboration. Updates as work happens. AI inherits how the network thinks.
+                Drop the static agent. Define the fluid, semantic knowledge between people. Agents become downstream artifacts. AI inherits how the org thinks.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1617,7 +1625,29 @@ function SlidePeopleAsNodes() {
                     <stop offset="0%" stopColor={`hsl(${GREEN} / 0.35)`} />
                     <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
                   </radialGradient>
+                  <radialGradient id="contextField" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={`hsl(${GREEN} / 0.10)`} />
+                    <stop offset="70%" stopColor={`hsl(${TEAL} / 0.06)`} />
+                    <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+                  </radialGradient>
                 </defs>
+
+                {/* Continuous semantic context field that fills the space BETWEEN nodes */}
+                <circle cx="200" cy="200" r="180" fill="url(#contextField)" />
+                {/* Floating semantic context tokens to suggest fluid knowledge in the field */}
+                {[
+                  { x: 120, y: 90,  t: "policy" },
+                  { x: 290, y: 110, t: "exception" },
+                  { x: 80,  y: 220, t: "precedent" },
+                  { x: 320, y: 240, t: "sign-off" },
+                  { x: 200, y: 320, t: "intent" },
+                  { x: 200, y: 110, t: "decision" },
+                ].map((c, i) => (
+                  <text key={`ctx-${i}`} x={c.x} y={c.y} textAnchor="middle"
+                    style={{ fontSize: 9, fontWeight: 700, fill: `hsl(${GREEN} / 0.7)`, letterSpacing: 0.5 }}>
+                    {c.t}
+                  </text>
+                ))}
 
                 {/* Weighted edges */}
                 {edges.map((e, i) => {
@@ -1655,7 +1685,7 @@ function SlidePeopleAsNodes() {
 
                 <text x="200" y="390" textAnchor="middle"
                   style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${GREEN})`, letterSpacing: 1 }}>
-                  WEIGHTED EDGES. LIVE SIGNALS. AI HALO ON EVERY NODE.
+                  CONTEXT FILLS THE SPACE BETWEEN PEOPLE.
                 </text>
               </svg>
             </div>
@@ -1667,7 +1697,7 @@ function SlidePeopleAsNodes() {
           style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
           <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-            Stop indexing the trail people leave behind. Start operating the network of people who do the work.
+            Documents capture what was written. Agents capture a snapshot of a role. Context infrastructure captures how the company actually thinks, and keeps it live.
           </p>
         </div>
       </div>
