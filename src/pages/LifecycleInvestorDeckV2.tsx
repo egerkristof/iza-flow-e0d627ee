@@ -398,38 +398,45 @@ function SlideContextGapExemplified() {
     { v: "The Atlas Team" },
   ];
 
-  // Six concrete, large, readable items the AI got wrong because nobody
-  // ever wrote them down. Each one maps to a real failure mode.
+  // Six items framed as the nuances RAG cannot handle: contradictions,
+  // exceptions, late changes, unwritten rules, open issues, person-specific
+  // judgment. Each card has a NATURE tag (what kind of nuance) and a TOPIC tag.
   const missing = [
     {
+      nature: "CONTRADICTION",
       tag: "PRICING",
-      title: "Wrong rate quoted",
-      body: "NorthBank is on the 2024 framework rate, not the standard rate card. Saying \"standard\" mis-prices the account.",
+      title: "Two pricing rules disagree",
+      body: "Standard rate card says €X. The 2024 NorthBank framework says €Y. The framework wins, but RAG retrieves both and has no way to pick.",
     },
     {
+      nature: "EXCEPTION",
       tag: "SIGN-OFF",
-      title: "Skipped an approver",
-      body: "Anything above €25k on this account requires Tom's sign-off before it goes to the client. The AI didn't know Tom exists.",
+      title: "Account-specific override",
+      body: "Normal threshold is €50k. For NorthBank it's €25k after the 2023 incident. The exception lives in Tom's head, not in the SOP.",
     },
     {
+      nature: "JUST CHANGED",
       tag: "TIMELINE",
-      title: "Stale milestone",
-      body: "The integration milestone was moved to Nov 14 in Tuesday's steerco. The deck still says \"next Friday.\"",
+      title: "Decided 40 minutes ago",
+      body: "The integration milestone moved to Nov 14 in Tuesday's steerco call. No document captures it yet. Next index refresh: tonight.",
     },
     {
+      nature: "UNWRITTEN RULE",
       tag: "CLIENT",
-      title: "Wrong tone for the reader",
-      body: "Sarah is formal, reads on Monday at 7am, and never replies to \"happy to discuss.\" The closing line will be ignored.",
+      title: "How Sarah actually reads",
+      body: "Formal, Monday 7am, ignores anything ending in \"happy to discuss.\" Nobody documents this. The team just knows.",
     },
     {
-      tag: "REGULATORY",
-      title: "Missing a required clause",
-      body: "EU regulated-data clients must have the data-residency line in every status update. It's not optional. It's not in the template.",
+      nature: "REGULATORY EXCEPTION",
+      tag: "COMPLIANCE",
+      title: "Clause that overrides the template",
+      body: "EU regulated-data accounts need the data-residency line in every update. The template doesn't include it. Legal said so verbally.",
     },
     {
+      nature: "OPEN ISSUE",
       tag: "HISTORY",
-      title: "Forgotten dispute",
-      body: "There's an open commercial dispute from July 2024 on this account. Sending a chirpy update without acknowledging it lands badly.",
+      title: "Live dispute, still unresolved",
+      body: "Commercial dispute from July 2024 still open. Tone of any update has to acknowledge it. Status changes weekly. RAG will never know.",
     },
   ];
 
@@ -487,10 +494,10 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-2">
                 <AlertTriangle size={20} style={{ color: `hsl(${WARM})` }} />
                 <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
-                  Six live signals AI must keep up with
+                  Six things RAG cannot resolve
                 </p>
               </div>
-              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Not RAG-compatible. Changes by the hour.</p>
+              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Contradictions. Exceptions. Late changes. Unwritten rules.</p>
             </div>
 
             {/* Six cards positioned in an absolute coordinate system (1000x600) so we can
@@ -591,21 +598,25 @@ function SlideContextGapExemplified() {
                               boxShadow: `0 2px 0 hsl(${WARM} / 0.12), 0 6px 20px hsl(${WARM} / 0.08)`,
                             }}
                           >
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
-                                style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
+                            {/* Nature of the nuance — primary chip. Topic — secondary chip. */}
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <span className="font-black tracking-[0.12em] uppercase rounded-md px-2 py-0.5"
+                                style={{ fontSize: 10.5, color: BG, background: `hsl(${WARM})`, letterSpacing: 0.6 }}>
+                                {m.nature}
+                              </span>
+                              <span className="font-bold tracking-[0.10em] uppercase"
+                                style={{ fontSize: 10, color: MUTED, letterSpacing: 0.6 }}>
                                 {m.tag}
                               </span>
-                              {/* Live pulse dot — signals "updates constantly" */}
                               <span className="ml-auto inline-flex items-center gap-1.5"
-                                style={{ fontSize: 10, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
+                                style={{ fontSize: 9.5, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
                                 <span className="w-1.5 h-1.5 rounded-full animate-pulse"
                                   style={{ background: `hsl(${WARM})` }} />
                                 LIVE
                               </span>
                             </div>
                             <p className="font-black mb-1" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{m.title}</p>
-                            <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
+                            <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
                           </div>
                         );
                       })}
@@ -620,8 +631,9 @@ function SlideContextGapExemplified() {
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl px-10 py-5 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
-            RAG updates the back end in waterfalls. <span style={{ color: `hsl(${WARM})` }}>These six signals change by the hour, depend on each other, and recombine for every email, deck, and decision.</span>
+          <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
+            RAG retrieves documents. It cannot reconcile contradictions, honour exceptions, or learn what was decided 40 minutes ago.{' '}
+            <span style={{ color: `hsl(${WARM})` }}>Organizational Intelligence is the layer that does.</span>
           </p>
         </div>
       </div>
@@ -1067,12 +1079,12 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>LIZA OS</p>
-            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The in-between operating layer that turns raw context into governed execution</p>
+            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The layer that turns raw inputs into <span style={{ color: `hsl(${TEAL})` }}>Organizational Intelligence</span> AI can execute against</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows institutional memory, expert judgment, and domain standards</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that honours contradictions, exceptions, and the latest decisions</p>
           </div>
         </div>
 
@@ -1422,7 +1434,7 @@ function Slide06() {
     {
       layer: "Cross-team Network Effect",
       desc: "Every team execution feeds the shared blueprint, improving standards across departments.",
-      proof: "The loop compounds as more teams encode, reuse, and improve operating knowledge.",
+      proof: "The loop compounds as more teams encode, reuse, and improve Organizational Intelligence.",
       icon: <Network size={20} />,
     },
   ];
