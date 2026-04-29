@@ -2041,7 +2041,7 @@ function Slide07() {
     {
       num: "01", title: "Encode", icon: <BookOpen size={28} />,
       desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
-      flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
+      flow: ["Upload existing systems", "AI extracts standards & rules", "Copilot fills the gaps"],
       output: "Versioned playbooks ready",
       color: GOLD,
     },
@@ -2184,7 +2184,7 @@ function Slide08() {
       metric: "3 depts",
       metricLabel: "Active",
       points: [
-        "Encoding artifact workflows across R&D, HR, and Engineering",
+        "Encoding core workflows across R&D, HR, and Engineering",
         "Working directly with the CTO on organizational rollout",
       ],
     },
@@ -2197,7 +2197,7 @@ function Slide08() {
       metric: "60×",
       metricLabel: "Faster",
       points: [
-        "Encoded senior partner's C-level candidate evaluation judgment",
+        "Encoded senior partner's C-level candidate evaluation reasoning",
         "Maintained senior-level quality with junior staff execution",
       ],
     },
