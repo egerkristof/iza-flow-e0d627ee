@@ -1044,10 +1044,10 @@ function Slide05() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Horizontal Core · Vertical Experience
+          The Context Layer
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through domain-native experiences.</span>
+          Organizational Intelligence is the substrate. <span style={{ color: `hsl(${TEAL})` }}>The Context Layer is the runtime AI executes on.</span>
         </h2>
 
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
