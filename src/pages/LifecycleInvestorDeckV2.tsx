@@ -376,50 +376,59 @@ function Slide02() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideContextGapExemplified() {
-  // SCALE ASYMMETRY: small left (what AI sees), huge right (what it needs and doesn't have).
-  // RAG critique reframed: architecture mismatch (static query layer vs living substrate),
-  // consequence = can't move at the speed of AI/business.
-  const givenLines = [
-    "Subject: Project Atlas — Weekly Update",
-    "Hi Sarah,",
-    "",
-    "Good progress this week. Phase 2 is on track.",
-    "Integration milestone expected next Friday.",
-    "",
-    "Open risks reviewed. Manageable.",
-    "Pricing per standard rate card.",
-    "",
-    "Best,",
-    "The Atlas Team",
+  // Single concrete example: a real-looking email on the left (legible),
+  // big annotated context on the right showing what the AI actually needed
+  // and didn't have. Few items, large type, plain language.
+  const emailLines = [
+    { t: "Subject: ", v: "Project Atlas — Weekly Update", bold: true },
+    { t: "From: ",    v: "atlas-team@company.com" },
+    { t: "To: ",      v: "Sarah Chen (Client Lead, NorthBank)" },
+    { sep: true },
+    { v: "Hi Sarah," },
+    { v: "" },
+    { v: "Quick update on Atlas. Phase 2 is on track and the integration milestone is expected next Friday." },
+    { v: "" },
+    { v: "Open risks were reviewed this week — all manageable. Pricing follows the standard rate card." },
+    { v: "" },
+    { v: "Let me know if you'd like to discuss." },
+    { v: "" },
+    { v: "Best," },
+    { v: "The Atlas Team" },
   ];
 
-  // Right side: dense field of fragments. The visual point is that there are MANY,
-  // they're heterogeneous, and they change constantly.
-  const fragments = [
-    { tag: "PRICING",   body: "2024 framework rate, not list" },
-    { tag: "SIGN-OFF",  body: "Tom approves above €25k" },
-    { tag: "TIMELINE",  body: "Milestone moved to Nov 14" },
-    { tag: "CLIENT",    body: "Sarah reads Monday 7am" },
-    { tag: "FORMAT",    body: "Written summary, never callback" },
-    { tag: "TUESDAY",   body: "SLA exception opened, EU region" },
-    { tag: "OWNER",     body: "M. Garcia carries this one" },
-    { tag: "EXCEPTION", body: "Last 3 deviations from template" },
-    { tag: "CLAUSE",    body: "Regulated-data line, never optional" },
-    { tag: "CC",        body: "CFO copies legal on this account" },
-    { tag: "LEGAL",     body: "March flag still open" },
-    { tag: "TONE",      body: "Formal. No 'happy to discuss'" },
-    { tag: "REGION",    body: "EU SLA differs from US default" },
-    { tag: "AUDIT",     body: "Q2 finding referenced this client" },
-    { tag: "VERBAL",    body: "Promised on Tuesday's call" },
-    { tag: "PRECEDENT", body: "How we closed the last 4 like this" },
-    { tag: "STANDARD",  body: "The senior's unwritten checklist" },
-    { tag: "ESCALATE",  body: "Goes to partner, not account lead" },
-    { tag: "RENEWAL",   body: "Up in 6 weeks, mention it" },
-    { tag: "RISK",      body: "Margin floor for this segment" },
-    { tag: "HISTORY",   body: "Prior dispute, July 2024" },
-    { tag: "PATTERN",   body: "Sarah always asks about #3" },
-    { tag: "OVERRIDE",  body: "Rule that beats the rule" },
-    { tag: "MEMORY",    body: "What we said last quarter" },
+  // Six concrete, large, readable items the AI got wrong because nobody
+  // ever wrote them down. Each one maps to a real failure mode.
+  const missing = [
+    {
+      tag: "PRICING",
+      title: "Wrong rate quoted",
+      body: "NorthBank is on the 2024 framework rate, not the standard rate card. Saying \"standard\" mis-prices the account.",
+    },
+    {
+      tag: "SIGN-OFF",
+      title: "Skipped an approver",
+      body: "Anything above €25k on this account requires Tom's sign-off before it goes to the client. The AI didn't know Tom exists.",
+    },
+    {
+      tag: "TIMELINE",
+      title: "Stale milestone",
+      body: "The integration milestone was moved to Nov 14 in Tuesday's steerco. The deck still says \"next Friday.\"",
+    },
+    {
+      tag: "CLIENT",
+      title: "Wrong tone for the reader",
+      body: "Sarah is formal, reads on Monday at 7am, and never replies to \"happy to discuss.\" The closing line will be ignored.",
+    },
+    {
+      tag: "REGULATORY",
+      title: "Missing a required clause",
+      body: "EU regulated-data clients must have the data-residency line in every status update. It's not optional. It's not in the template.",
+    },
+    {
+      tag: "HISTORY",
+      title: "Forgotten dispute",
+      body: "There's an open commercial dispute from July 2024 on this account. Sending a chirpy update without acknowledging it lands badly.",
+    },
   ];
 
   return (
@@ -430,47 +439,47 @@ function SlideContextGapExemplified() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           The Context Gap, exemplified
         </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.06 }}>
-          What your AI stack sees vs. <span style={{ color: `hsl(${WARM})` }}>what the work actually needs.</span>
+        <h2 className="font-black mb-2" style={{ fontSize: 44, color: TEXT, lineHeight: 1.08 }}>
+          One email. <span style={{ color: `hsl(${WARM})` }}>Six things the AI didn't know.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4, maxWidth: 1100 }}>
+          A real account update, drafted by a Copilot/RAG stack that has full access to email, the CRM and the shared drive. It still gets the work wrong — because everything that matters lives outside those documents.
+        </p>
 
-        {/* Asymmetric grid: 1fr left, 3fr right */}
-        <div className="flex-1 min-h-0 grid gap-8" style={{ gridTemplateColumns: "1fr 3fr" }}>
+        {/* Two-column: email (left), annotated misses (right) */}
+        <div className="flex-1 min-h-0 grid gap-7" style={{ gridTemplateColumns: "5fr 7fr" }}>
 
-          {/* LEFT — small, quiet */}
+          {/* LEFT — the email, legible */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
-            style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `hsl(${TEAL} / 0.04)` }}>
-            <div className="px-5 py-3 border-b"
-              style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.08)` }}>
-              <div className="flex items-center gap-2 mb-1">
-                <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
-                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>
-                  What AI sees
+            style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <div className="px-5 py-3 border-b flex items-center justify-between"
+              style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.08)` }}>
+              <div className="flex items-center gap-2">
+                <FileText size={16} style={{ color: `hsl(${TEAL})` }} />
+                <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
+                  What the AI drafted
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Your RAG / Copilot / Glean stack</p>
+              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Looks fine. Reads fine.</p>
             </div>
 
-            <div className="flex-1 px-5 py-4 font-mono" style={{ fontSize: 12, color: TEXT, lineHeight: 1.55 }}>
-              {givenLines.map((line, i) => (
-                <div key={i}>{line || "\u00A0"}</div>
-              ))}
-            </div>
-
-            <div className="px-5 pb-5">
-              <div className="rounded-lg px-3 py-2.5"
-                style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.30)` }}>
-                <p className="font-black tracking-[0.10em] uppercase mb-1" style={{ fontSize: 10, color: `hsl(${RED})` }}>
-                  AI invents the rest
-                </p>
-                <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.4 }}>
-                  Plausible, generic, wrong on this account.
-                </p>
-              </div>
+            <div className="flex-1 px-6 py-5" style={{ fontSize: 14, color: TEXT, lineHeight: 1.55 }}>
+              {emailLines.map((l, i) => {
+                if (l.sep) return <div key={i} className="my-3" style={{ borderTop: `1px solid hsl(${TEAL} / 0.18)` }} />;
+                if (l.t) {
+                  return (
+                    <div key={i} style={{ fontSize: 13 }}>
+                      <span style={{ color: MUTED }}>{l.t}</span>
+                      <span style={{ fontWeight: l.bold ? 700 : 500 }}>{l.v}</span>
+                    </div>
+                  );
+                }
+                return <div key={i}>{l.v || "\u00A0"}</div>;
+              })}
             </div>
           </div>
 
-          {/* RIGHT — huge, dense, overwhelming */}
+          {/* RIGHT — six concrete misses, large and readable */}
           <div className="relative rounded-2xl border-2 flex flex-col overflow-hidden"
             style={{ borderColor: `hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.04)` }}>
             <div className="flex items-center justify-between px-6 py-3 border-b"
@@ -478,41 +487,29 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-2">
                 <AlertTriangle size={16} style={{ color: `hsl(${WARM})` }} />
                 <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
-                  What the work actually needs
+                  What it didn't know
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Live, relational, changing hourly</p>
+              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>Lives in people, decisions, exceptions</p>
             </div>
 
-            {/* Dense fragment grid */}
-            <div className="flex-1 px-5 py-4 grid grid-cols-4 gap-2 content-start">
-              {fragments.map((f, i) => (
-                <div key={i} className="rounded-lg px-3 py-2"
+            <div className="flex-1 px-5 py-4 grid grid-cols-2 gap-3 content-start">
+              {missing.map((m, i) => (
+                <div key={i} className="rounded-xl px-4 py-3"
                   style={{
                     background: `hsl(${WARM} / 0.06)`,
-                    border: `1px dashed hsl(${WARM} / 0.45)`,
+                    border: `1px solid hsl(${WARM} / 0.30)`,
                   }}>
-                  <p className="font-black tracking-[0.08em] uppercase mb-0.5" style={{ fontSize: 9, color: `hsl(${WARM})` }}>
-                    {f.tag}
-                  </p>
-                  <p className="font-medium" style={{ fontSize: 11, color: TEXT, lineHeight: 1.3 }}>
-                    {f.body}
-                  </p>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
+                      style={{ fontSize: 10, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
+                      {m.tag}
+                    </span>
+                    <p className="font-black" style={{ fontSize: 14, color: TEXT }}>{m.title}</p>
+                  </div>
+                  <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
                 </div>
               ))}
-            </div>
-
-            {/* RAG critique — reframed */}
-            <div className="px-5 pb-5">
-              <div className="rounded-lg px-4 py-3"
-                style={{ background: `hsl(${WARM} / 0.10)`, border: `1px solid hsl(${WARM} / 0.30)` }}>
-                <p className="font-black tracking-[0.12em] uppercase mb-1.5" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                  Why RAG is the wrong architecture for this
-                </p>
-                <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.45 }}>
-                  RAG is a query layer over <span style={{ fontWeight: 700 }}>frozen documents</span>. None of this was ever a document. It is live, relational, and changes hourly. AI works at the speed of human thought. Static retrieval was built for the speed of filing cabinets. <span style={{ fontWeight: 700, color: `hsl(${WARM})` }}>Different architecture, not a tuning problem.</span>
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -520,8 +517,8 @@ function SlideContextGapExemplified() {
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
-            The left is what you indexed. The right is the company.
+          <p className="font-black" style={{ fontSize: 22, color: TEXT }}>
+            The email is what the AI <span style={{ color: `hsl(${TEAL})` }}>could see</span>. The six items on the right are what it <span style={{ color: `hsl(${WARM})` }}>needed</span> — and none of them were ever a document.
           </p>
         </div>
       </div>
