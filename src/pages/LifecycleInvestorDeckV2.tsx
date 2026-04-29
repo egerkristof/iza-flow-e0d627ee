@@ -2311,7 +2311,7 @@ function Slide09() {
       vertical: "Professional Services", status: "Beachhead", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Delivery expertise is trapped in senior operators. AI makes juniors faster but not reliably better.",
-      result: "Client delivery CX layer for proposals, workshops, research, and advisory artifacts.",
+      result: "Client delivery CX layer for proposals, workshops, research, and advisory deliverables.",
       proof: "Paid proof. Consultancy and digital agency active.",
     },
     {
@@ -2401,7 +2401,7 @@ function Slide09() {
             <div className="grid gap-3">
               {[
                 { name: "Input documents", col: TEAL },
-                { name: "Output artifacts", col: GREEN },
+                { name: "Output deliverables", col: GREEN },
                 { name: "Personas", col: GOLD },
                 { name: "Review flows", col: ACCENT },
                 { name: "Compliance language", col: WARM },
@@ -2550,7 +2550,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Usage-based execution</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Customers pay for high-intensity actions like extraction, governed runs, simulations, and artifact generation.
+                Customers pay for high-intensity actions like extraction, governed runs, simulations, and output generation.
                 Vertical CX layers create repeated review, execution, and reporting events that compound usage.
               </p>
             </div>
