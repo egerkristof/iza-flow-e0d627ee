@@ -792,42 +792,47 @@ function Slide03Cost() {
     {
       vertical: "Life Sciences",
       stat: "$2.6B",
-      unit: "per drug program",
-      consequence: "Repeat deviations, slower release, real compliance exposure.",
+      unit: "avg cost per approved drug",
+      consequence: "30–40% deviation repeat rate. ~10% Phase I to approval. Each missed signal compounds the next program.",
       color: RED,
       href: "/investor-pharma",
+      source: "Tufts CSDD; FDA",
     },
     {
       vertical: "Automotive R&D",
-      stat: "9–12 mo",
-      unit: "engineer ramp per site",
-      consequence: "HQ design intent and chassis-control IP re-derived at every new site.",
+      stat: "$2.3M",
+      unit: "per engineer ramp at a new R&D site",
+      consequence: "9–12 months to productivity. HQ design intent and chassis-control IP re-derived at every greenfield site.",
       color: TEAL,
       href: "/investor-automotive",
+      source: "Industry benchmarks; ISO 26262 onboarding norms",
     },
     {
       vertical: "AEC",
-      stat: "Per project",
-      unit: "claims & coordination rework",
-      consequence: "Spec amendments and drawing revisions get missed inside generated work.",
+      stat: "9% of project value",
+      unit: "lost to rework on a typical build",
+      consequence: "$280B / yr in US construction rework alone. Spec amendments and RFI history get missed inside generated work.",
       color: GOLD,
       href: "/investor-aec",
+      source: "FMI; Get It Right Initiative",
     },
     {
       vertical: "Banking",
-      stat: "Every campaign",
-      unit: "re-litigated across geos",
-      consequence: "Brand book, product rules and regulator guidance interpreted differently each time.",
+      stat: "$10–50M",
+      unit: "per consumer-protection finding",
+      consequence: "Brand book, product rules and regulator guidance interpreted differently each time. EBA, DORA, Consumer Duty exposure compounds.",
       color: ACCENT,
       href: "/investor-banking",
+      source: "EBA enforcement actions 2023–2024",
     },
     {
       vertical: "Satcom",
-      stat: "Per fleet",
-      unit: "memory loss & SLA exposure",
-      consequence: "Operator judgment and procurement learning don't survive across mission cycles.",
+      stat: "$50M+",
+      unit: "per fleet renewal cycle",
+      consequence: "Operator judgment and procurement learning don't survive across mission cycles. SLA exposure rises with every handover.",
       color: WARM,
       href: "/satcom",
+      source: "Operator capex benchmarks",
     },
   ];
 
@@ -900,6 +905,9 @@ function Slide03Cost() {
               <p className="font-black mt-2" style={{ fontSize: 28, color: TEXT, lineHeight: 1.05 }}>{v.stat}</p>
               <p className="font-semibold mt-1" style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>{v.unit}</p>
               <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{v.consequence}</p>
+              <p className="mt-2" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.35, fontStyle: "italic" }}>
+                Source: {v.source}
+              </p>
               <a
                 href={v.href}
                 target="_blank"
