@@ -113,7 +113,7 @@ function Slide01() {
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
           Your experts know what good looks like. AI doesn't.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>We make expert judgment run everywhere AI executes.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>We turn your Organizational Intelligence into the runtime AI executes on.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
