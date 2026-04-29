@@ -293,12 +293,12 @@ function Slide02() {
           {/* Water below waterline */}
           <rect x="0" y="220" width="1920" height="540" fill="url(#waterGrad)" />
 
-          {/* Waterline + enterprise-vocabulary labels */}
+          {/* Waterline + enterprise-vocabulary labels (right-aligned to avoid header collision) */}
           <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
-          <text x="80" y="206" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>FORMALLY DEFINED</text>
-          <text x="80" y="225" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Documented. Machine-readable. ~10% of how the enterprise runs.</text>
-          <text x="80" y="252" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>TACIT OPERATING KNOWLEDGE</text>
-          <text x="80" y="271" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Lives in people, calls, decisions. ~90% of how the work actually gets done.</text>
+          <text x="1840" y="206" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
+          <text x="1840" y="226" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Documented. Machine-readable. What AI is given.</text>
+          <text x="1840" y="256" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>~90% TACIT OPERATING KNOWLEDGE</text>
+          <text x="1840" y="276" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Lives in people, calls, decisions. What the work actually needs.</text>
 
           {/* Iceberg — above waterline (small) */}
           <polygon points="870,220 960,90 1050,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
@@ -440,10 +440,10 @@ function SlideContextGapExemplified() {
           The Context Gap, exemplified
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 44, color: TEXT, lineHeight: 1.08 }}>
-          One email. <span style={{ color: `hsl(${WARM})` }}>Six things the AI didn't know.</span>
+          One specimen from the 90%. <span style={{ color: `hsl(${WARM})` }}>One email, six things the AI didn't know.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4, maxWidth: 1100 }}>
-          A real account update, drafted by a Copilot/RAG stack that has full access to email, the CRM and the shared drive. It still gets the work wrong — because everything that matters lives outside those documents.
+        <p className="mb-5" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4, maxWidth: 1200 }}>
+          A real account update, drafted by a Copilot/RAG stack with full access to email, CRM, and the shared drive. It still gets the work wrong, because the six items on the right were never written down anywhere it could index.
         </p>
 
         {/* Two-column: email (left), annotated misses (right) */}
@@ -517,8 +517,8 @@ function SlideContextGapExemplified() {
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 22, color: TEXT }}>
-            The email is what the AI <span style={{ color: `hsl(${TEAL})` }}>could see</span>. The six items on the right are what it <span style={{ color: `hsl(${WARM})` }}>needed</span> — and none of them were ever a document.
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Multiply this by every email, deck, and decision your company makes this week.
           </p>
         </div>
       </div>
@@ -1576,10 +1576,6 @@ function SlidePeopleAsNodes() {
                     <rect x={p.x - 40} y={p.y - 40} width="80" height="80" rx="6"
                       fill={`hsl(${TEAL} / 0.05)`} stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="1.2"
                       strokeDasharray="4 3" />
-                    <text x={p.x - 32} y={p.y - 28} textAnchor="start"
-                      style={{ fontSize: 7, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 0.4 }}>
-                      AGENT
-                    </text>
                     <circle cx={p.x} cy={p.y} r="26" fill={BG}
                       stroke={`hsl(${TEAL})`} strokeWidth="2" />
                     <text x={p.x} y={p.y - 2} textAnchor="middle"
@@ -1587,6 +1583,13 @@ function SlidePeopleAsNodes() {
                     <text x={p.x} y={p.y + 11} textAnchor="middle"
                       style={{ fontSize: 8, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
                       {p.role.toUpperCase()}
+                    </text>
+                    {/* Tiny "agent" badge attached to the locked frame */}
+                    <rect x={p.x + 14} y={p.y - 44} width="32" height="12" rx="2"
+                      fill={`hsl(${TEAL})`} />
+                    <text x={p.x + 30} y={p.y - 35} textAnchor="middle"
+                      style={{ fontSize: 7, fontWeight: 900, fill: BG, letterSpacing: 0.6 }}>
+                      AGENT
                     </text>
                   </g>
                 ))}
@@ -1634,20 +1637,33 @@ function SlidePeopleAsNodes() {
 
                 {/* Continuous semantic context field that fills the space BETWEEN nodes */}
                 <circle cx="200" cy="200" r="180" fill="url(#contextField)" />
-                {/* Floating semantic context tokens to suggest fluid knowledge in the field */}
-                {[
-                  { x: 120, y: 90,  t: "policy" },
-                  { x: 290, y: 110, t: "exception" },
-                  { x: 80,  y: 220, t: "precedent" },
-                  { x: 320, y: 240, t: "sign-off" },
-                  { x: 200, y: 320, t: "intent" },
-                  { x: 200, y: 110, t: "decision" },
-                ].map((c, i) => (
-                  <text key={`ctx-${i}`} x={c.x} y={c.y} textAnchor="middle"
-                    style={{ fontSize: 9, fontWeight: 700, fill: `hsl(${GREEN} / 0.7)`, letterSpacing: 0.5 }}>
-                    {c.t}
-                  </text>
-                ))}
+                {/* Context tokens anchored to specific strong edges — knowledge flows between named pairs */}
+                {(() => {
+                  const edgeLabels: Record<string, string> = {
+                    "0-1": "pricing logic",
+                    "0-2": "decision context",
+                    "2-3": "sign-off rules",
+                    "2-4": "exception memory",
+                  };
+                  return edges.map((e, i) => {
+                    const key = `${e.a}-${e.b}`;
+                    const label = edgeLabels[key];
+                    if (!label) return null;
+                    const a = positions[e.a], b = positions[e.b];
+                    const mx = (a.x + b.x) / 2;
+                    const my = (a.y + b.y) / 2;
+                    return (
+                      <g key={`lbl-${i}`}>
+                        <rect x={mx - label.length * 3 - 4} y={my - 18} width={label.length * 6 + 8} height="14" rx="3"
+                          fill={BG} stroke={`hsl(${GREEN} / 0.55)`} strokeWidth="0.8" />
+                        <text x={mx} y={my - 8} textAnchor="middle"
+                          style={{ fontSize: 8.5, fontWeight: 800, fill: `hsl(${GREEN})`, letterSpacing: 0.3 }}>
+                          {label}
+                        </text>
+                      </g>
+                    );
+                  });
+                })()}
 
                 {/* Weighted edges */}
                 {edges.map((e, i) => {
@@ -1696,8 +1712,8 @@ function SlidePeopleAsNodes() {
         <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
           style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${TEAL})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-            Documents capture what was written. Agents capture a snapshot of a role. Context infrastructure captures how the company actually thinks, and keeps it live.
+          <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Context infrastructure keeps how the company thinks alive.</span>
           </p>
         </div>
       </div>
