@@ -1153,7 +1153,7 @@ function Slide05() {
               </p>
             </div>
             <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 520, lineHeight: 1.45 }}>
-              The reasoning engine runs on LIZA. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Your standards, exceptions, and institutional memory remain your asset.</span>
+              The reasoning engine runs on LIZA. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Your standards, exceptions, and Organizational Intelligence remain your asset.</span>
             </p>
           </div>
 
@@ -1185,7 +1185,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Turn it into domain-specific work experiences.</span>
+            Capture Organizational Intelligence once. <span style={{ color: `hsl(${TEAL})` }}>Run it across every domain experience.</span>
           </p>
         </div>
       </div>
@@ -1226,7 +1226,7 @@ function SlideArchitecture() {
           {/* Layer 3: Output Artifacts */}
           <div className="rounded-2xl border px-8 py-4 text-center"
             style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output Artifacts</p>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output</p>
             <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Any LLM · Any Workflow · Any Team. All governed by your expertise</p>
           </div>
 
@@ -1296,7 +1296,7 @@ function SlideArchitecture() {
                   <div className="flex-1 grid grid-cols-2 gap-1.5">
                     {[
                       { label: "Standards & SOPs", desc: "Versioned, governed" },
-                      { label: "Expert Judgment", desc: "Encoded as rules" },
+                      { label: "Expert Reasoning", desc: "Encoded as rules" },
                       { label: "Decision Exceptions", desc: "Context-specific" },
                       { label: "Accumulated Memory", desc: "Grows with usage" },
                     ].map(item => (
@@ -1358,7 +1358,7 @@ function SlideArchitecture() {
           <div className="rounded-2xl border px-8 py-4"
             style={{ borderColor: `hsl(${BLUE} / 0.15)`, background: `hsl(${BLUE} / 0.03)` }}>
             <p className="font-black tracking-[0.15em] uppercase mb-2.5" style={{ fontSize: 12, color: `hsl(${BLUE})` }}>
-              Your Existing Systems · Input Artifacts · Unchanged
+              Your Existing Systems · Inputs · Unchanged
             </p>
             <div className="flex gap-3">
               {existingSystems.map(s => (
@@ -1401,7 +1401,7 @@ function Slide06() {
     {
       layer: "AACE v3.1 Specification",
       desc: "Encode, govern, execute, and evolve as one repeatable system for human knowledge.",
-      proof: "The spec makes expert judgment operational, not just searchable.",
+      proof: "The spec makes Organizational Intelligence operational, not just searchable.",
       icon: <Cpu size={20} />,
     },
     {
