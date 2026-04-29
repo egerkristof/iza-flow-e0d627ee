@@ -757,7 +757,7 @@ function Slide03Cost() {
     {
       title: "Professional Services",
       kicker: "Margin erosion",
-      body: "Output can look convincing and still miss the judgment clients actually pay for.",
+      body: "Output can look convincing and still miss the Organizational Intelligence clients actually pay for.",
       result: "Senior experts spend time correcting AI instead of scaling expertise.",
       color: ACCENT,
     },
@@ -823,7 +823,7 @@ function Slide03Cost() {
             What "plausible" means
           </p>
           <p className="mt-2 font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.45 }}>
-            AI output looks right enough at first glance, but misses the domain-specific context, exception, or judgment that makes it actually correct.
+            AI output looks right enough at first glance, but misses the domain-specific context, exception, or live signal that makes it actually correct.
           </p>
         </div>
 
@@ -894,7 +894,7 @@ function Slide03WorkflowProof() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
         <h2 className="font-black mb-5" style={{ fontSize: 58, color: TEXT, lineHeight: 1.08 }}>
           The same failure repeats across core roles.<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>Artifacts exist. Judgment still lives in people.</span>
+          <span style={{ color: `hsl(${ACCENT})` }}>Systems exist. Organizational Intelligence still lives in people.</span>
         </h2>
 
         <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
