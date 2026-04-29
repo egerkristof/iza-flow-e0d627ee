@@ -113,7 +113,7 @@ function Slide01() {
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
           Your experts know what good looks like. AI doesn't.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>We make expert judgment run everywhere AI executes.</span>
+          <span style={{ color: `hsl(${TEAL})` }}>We turn your Organizational Intelligence into the runtime AI executes on.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
@@ -244,8 +244,8 @@ function Slide02() {
     { x: 1210, label: "Records" },
   ];
   const buckets: { title: string; items: string[] }[] = [
-    { title: "Operating Judgment",
-      items: ["How we actually price this segment", "The exceptions to the SOP", "Senior judgment calls"] },
+    { title: "Operating Reasoning",
+      items: ["How we actually price this segment", "The exceptions to the SOP", "Senior pricing & sign-off calls"] },
     { title: "Account & Client Memory",
       items: ["How this client is run", "What was promised verbally", "Past disputes and resolutions"] },
     { title: "Cross-Functional Decisions",
@@ -626,33 +626,44 @@ function SlideContextGapExemplified() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide03() {
-  const industries = [
+  // Three vertical mini-icebergs: each industry shows the same above/below split as Slide 02,
+  // proving the Context Gap is universal across regulated and project-based work.
+  const verticals = [
     {
       name: "Life Sciences",
       icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
-      accent: RED,
-      records: ["Batch records", "SOPs", "Validation protocols"],
-      gap: "AI attempts to draft a deviation report based on its general training data. But this batch falls under Annex 7, not Annex 1. A senior QA lead recognizes that instantly. The AI cannot, because nobody encoded that judgment.",
-      outputs: ["Deviation reports", "Submission docs"],
-      cost: "Safety risk. Audit failure.",
+      color: RED,
+      above: ["Batch records", "SOPs", "Validation protocols"],
+      below: [
+        "Annex 7 vs Annex 1 applicability",
+        "Open deviation context from last batch",
+        "Senior QA judgment on edge cases",
+      ],
+      breaks: "Safety risk. Audit failure.",
     },
     {
       name: "Automotive",
       icon: <Car size={22} style={{ color: `hsl(${WARM})` }} />,
-      accent: WARM,
-      records: ["ECU specs", "Homologation files", "Supplier change notices"],
-      gap: "AI drafts a clean change report, but misses the variant-specific homologation constraint, supplier validation status, or platform reuse rule that determines whether the change is releasable. The release engineer knows the exception. The AI does not, because program memory was never encoded.",
-      outputs: ["Change reports", "Release packages"],
-      cost: "Recall risk. Launch delay.",
+      color: WARM,
+      above: ["ECU specs", "Homologation files", "Supplier change notices"],
+      below: [
+        "Variant-specific homologation constraint",
+        "Supplier validation status this week",
+        "Platform reuse rules and exceptions",
+      ],
+      breaks: "Recall risk. Launch delay.",
     },
     {
-      name: "AEC (Architecture, Engineering & Construction)",
+      name: "AEC",
       icon: <Building2 size={22} style={{ color: `hsl(${GOLD})` }} />,
-      accent: GOLD,
-      records: ["RFIs", "Submittals", "Specs"],
-      gap: "AI drafts a clean response to an RFI, but misses the project-specific spec amendment, drawing revision, or owner standard that changes the answer. The project manager knows the exception. The AI does not, because project memory was never encoded.",
-      outputs: ["RFI responses", "Review packages"],
-      cost: "Rework. Claims exposure. Project delay.",
+      color: GOLD,
+      above: ["RFIs", "Submittals", "Spec packages"],
+      below: [
+        "Spec amendment from yesterday",
+        "Drawing revision in coordination",
+        "Owner-specific standard overriding the spec",
+      ],
+      breaks: "Rework. Claims exposure. Project delay.",
     },
   ];
 
@@ -665,55 +676,102 @@ function Slide03() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${ACCENT})` }}>
           Where Missing Context Shows Up
         </p>
-        <h2 className="font-black mb-5" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${ACCENT})` }}>The missing piece is expert judgment.</span>
+        <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.05 }}>
+          The same iceberg, in every vertical. <span style={{ color: `hsl(${ACCENT})` }}>What is captured is dwarfed by what runs the work.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
+          The systems on top of the waterline are what AI sees. The Organizational Intelligence below the waterline is what determines whether the output is correct.
+        </p>
 
-        <div className="flex flex-col gap-3 flex-1 min-h-0 mb-4">
-          {industries.map((ind) => (
-            <div key={ind.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border"
-              style={{ borderColor: `hsl(${ind.accent} / 0.15)` }}>
-              <div className="w-[260px] shrink-0 px-6 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Database size={16} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {ind.records.map(r => (
-                    <span key={r} className="rounded-full px-3 py-1 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{r}</span>
+        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0 mb-5">
+          {verticals.map((v) => (
+            <div key={v.name} className="rounded-2xl border flex flex-col overflow-hidden"
+              style={{ borderColor: `hsl(${v.color} / 0.22)`, background: BG }}>
+              {/* Header */}
+              <div className="px-5 py-3 flex items-center gap-3 border-b"
+                style={{ borderColor: `hsl(${v.color} / 0.15)`, background: `hsl(${v.color} / 0.05)` }}>
+                {v.icon}
+                <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{v.name}</p>
+              </div>
+
+              {/* Mini iceberg */}
+              <div className="flex-1 relative px-3 pt-4 pb-3">
+                <svg viewBox="0 0 320 360" preserveAspectRatio="xMidYMid meet" className="w-full h-full">
+                  <defs>
+                    <linearGradient id={`ice-top-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={`hsl(${GREEN} / 0.20)`} />
+                      <stop offset="100%" stopColor={`hsl(${GREEN} / 0.36)`} />
+                    </linearGradient>
+                    <linearGradient id={`ice-bot-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={`hsl(${v.color} / 0.30)`} />
+                      <stop offset="100%" stopColor={`hsl(${v.color} / 0.55)`} />
+                    </linearGradient>
+                    <linearGradient id={`water-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={`hsl(${v.color} / 0.04)`} />
+                      <stop offset="100%" stopColor={`hsl(${v.color} / 0.16)`} />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Water tint */}
+                  <rect x="0" y="110" width="320" height="250" fill={`url(#water-${v.name})`} />
+                  {/* Waterline */}
+                  <line x1="0" y1="110" x2="320" y2="110"
+                    stroke={`hsl(${v.color} / 0.5)`} strokeWidth="1.2" strokeDasharray="5 5" />
+
+                  {/* Iceberg above */}
+                  <polygon points="135,110 160,40 185,110" fill={`url(#ice-top-${v.name})`}
+                    stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.2" />
+                  {/* Iceberg below */}
+                  <polygon points="135,110 50,340 270,340 185,110" fill={`url(#ice-bot-${v.name})`}
+                    stroke={`hsl(${v.color} / 0.55)`} strokeWidth="1.2" />
+
+                  {/* Above-water labels */}
+                  <text x="160" y="22" textAnchor="middle"
+                    style={{ fontSize: 10, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
+                    WHAT AI SEES
+                  </text>
+                  {v.above.map((label, i) => (
+                    <g key={`top-${i}`}>
+                      <rect x={20 + i * 95} y={70} width="85" height="22" rx="4"
+                        fill={BG} stroke={`hsl(${GREEN} / 0.6)`} strokeWidth="0.9" />
+                      <text x={62 + i * 95} y={85} textAnchor="middle"
+                        style={{ fontSize: 10, fontWeight: 700, fill: TEXT }}>{label}</text>
+                    </g>
                   ))}
-                </div>
+
+                  {/* Below-water label header */}
+                  <text x="160" y="135" textAnchor="middle"
+                    style={{ fontSize: 10, fontWeight: 900, fill: `hsl(${v.color})`, letterSpacing: 1.5 }}>
+                    WHAT AI MISSES
+                  </text>
+
+                  {/* Below-water items */}
+                  {v.below.map((item, i) => (
+                    <g key={`bot-${i}`}>
+                      <circle cx={70} cy={170 + i * 50} r="3" fill={`hsl(${v.color})`} />
+                      <text x={82} y={174 + i * 50}
+                        style={{ fontSize: 11.5, fontWeight: 600, fill: TEXT }}>{item}</text>
+                    </g>
+                  ))}
+                </svg>
               </div>
-              <div className="flex-1 px-7 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${ACCENT} / 0.05)`, borderRight: `1.5px solid hsl(${ACCENT} / 0.1)`, borderLeft: `1.5px solid hsl(${ACCENT} / 0.1)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  {ind.icon}
-                  <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{ind.name}</p>
-                  <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: `hsl(${ACCENT} / 0.1)` }}>
-                    <AlertTriangle size={12} style={{ color: `hsl(${ACCENT})` }} />
-                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>THE GAP</span>
-                  </div>
-                </div>
-                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{ind.gap}</p>
-              </div>
-              <div className="w-[200px] shrink-0 px-6 py-4 flex flex-col justify-center"
-                style={{ background: `hsl(${RED} / 0.04)` }}>
-                <p className="font-bold mb-1" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
-                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.35 }}>{ind.cost}</p>
+
+              {/* What breaks */}
+              <div className="px-5 py-3 border-t flex items-center gap-2"
+                style={{ borderColor: `hsl(${RED} / 0.15)`, background: `hsl(${RED} / 0.05)` }}>
+                <AlertTriangle size={14} style={{ color: `hsl(${RED})` }} />
+                <p className="font-bold" style={{ fontSize: 14, color: `hsl(${RED})` }}>{v.breaks}</p>
               </div>
             </div>
           ))}
         </div>
 
         <div className="flex items-center gap-4 px-2">
-          <div className="flex items-center gap-4">
-            <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
-            <div className="flex flex-wrap gap-2.5">
-              {alsoApplies.map(a => (
-                <span key={a} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{a}</span>
-              ))}
-            </div>
+          <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
+          <div className="flex flex-wrap gap-2.5">
+            {alsoApplies.map(a => (
+              <span key={a} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{a}</span>
+            ))}
           </div>
         </div>
       </div>
@@ -757,7 +815,7 @@ function Slide03Cost() {
     {
       title: "Professional Services",
       kicker: "Margin erosion",
-      body: "Output can look convincing and still miss the judgment clients actually pay for.",
+      body: "Output can look convincing and still miss the Organizational Intelligence clients actually pay for.",
       result: "Senior experts spend time correcting AI instead of scaling expertise.",
       color: ACCENT,
     },
@@ -823,7 +881,7 @@ function Slide03Cost() {
             What "plausible" means
           </p>
           <p className="mt-2 font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.45 }}>
-            AI output looks right enough at first glance, but misses the domain-specific context, exception, or judgment that makes it actually correct.
+            AI output looks right enough at first glance, but misses the domain-specific context, exception, or live signal that makes it actually correct.
           </p>
         </div>
 
@@ -894,7 +952,7 @@ function Slide03WorkflowProof() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
         <h2 className="font-black mb-5" style={{ fontSize: 58, color: TEXT, lineHeight: 1.08 }}>
           The same failure repeats across core roles.<br />
-          <span style={{ color: `hsl(${ACCENT})` }}>Artifacts exist. Judgment still lives in people.</span>
+          <span style={{ color: `hsl(${ACCENT})` }}>Systems exist. Organizational Intelligence still lives in people.</span>
         </h2>
 
         <div className="grid grid-cols-4 gap-5 flex-1 min-h-0">
@@ -1044,10 +1102,10 @@ function Slide05() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Horizontal Core · Vertical Experience
+          The Context Layer
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through domain-native experiences.</span>
+          Organizational Intelligence is the substrate. <span style={{ color: `hsl(${TEAL})` }}>The Context Layer is the runtime AI executes on.</span>
         </h2>
 
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
@@ -1153,7 +1211,7 @@ function Slide05() {
               </p>
             </div>
             <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 520, lineHeight: 1.45 }}>
-              The reasoning engine runs on LIZA. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Your standards, exceptions, and institutional memory remain your asset.</span>
+              The reasoning engine runs on LIZA. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Your standards, exceptions, and Organizational Intelligence remain your asset.</span>
             </p>
           </div>
 
@@ -1185,7 +1243,7 @@ function Slide05() {
         {/* Bottom tagline */}
         <div className="mt-6 rounded-xl px-8 py-3 text-center" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1.5px solid hsl(${TEAL} / 0.2)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>
-            Encode judgment once. <span style={{ color: `hsl(${TEAL})` }}>Turn it into domain-specific work experiences.</span>
+            Capture Organizational Intelligence once. <span style={{ color: `hsl(${TEAL})` }}>Run it across every domain experience.</span>
           </p>
         </div>
       </div>
@@ -1226,7 +1284,7 @@ function SlideArchitecture() {
           {/* Layer 3: Output Artifacts */}
           <div className="rounded-2xl border px-8 py-4 text-center"
             style={{ borderColor: `hsl(${GREEN} / 0.2)`, background: `hsl(${GREEN} / 0.04)` }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output Artifacts</p>
+            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Governed Output</p>
             <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Any LLM · Any Workflow · Any Team. All governed by your expertise</p>
           </div>
 
@@ -1296,7 +1354,7 @@ function SlideArchitecture() {
                   <div className="flex-1 grid grid-cols-2 gap-1.5">
                     {[
                       { label: "Standards & SOPs", desc: "Versioned, governed" },
-                      { label: "Expert Judgment", desc: "Encoded as rules" },
+                      { label: "Expert Reasoning", desc: "Encoded as rules" },
                       { label: "Decision Exceptions", desc: "Context-specific" },
                       { label: "Accumulated Memory", desc: "Grows with usage" },
                     ].map(item => (
@@ -1358,7 +1416,7 @@ function SlideArchitecture() {
           <div className="rounded-2xl border px-8 py-4"
             style={{ borderColor: `hsl(${BLUE} / 0.15)`, background: `hsl(${BLUE} / 0.03)` }}>
             <p className="font-black tracking-[0.15em] uppercase mb-2.5" style={{ fontSize: 12, color: `hsl(${BLUE})` }}>
-              Your Existing Systems · Input Artifacts · Unchanged
+              Your Existing Systems · Inputs · Unchanged
             </p>
             <div className="flex gap-3">
               {existingSystems.map(s => (
@@ -1401,7 +1459,7 @@ function Slide06() {
     {
       layer: "AACE v3.1 Specification",
       desc: "Encode, govern, execute, and evolve as one repeatable system for human knowledge.",
-      proof: "The spec makes expert judgment operational, not just searchable.",
+      proof: "The spec makes Organizational Intelligence operational, not just searchable.",
       icon: <Cpu size={20} />,
     },
     {
@@ -1425,8 +1483,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Competitors retrieve knowledge.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>LIZA designs the industry human experience around it.</span>
+          Competitors index documents and remember chats.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>LIZA is the Context Layer that runs Organizational Intelligence at execution time.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1459,12 +1517,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others help AI find knowledge.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA turns human knowledge into an operating experience.</span>
+              Others sit beside the work.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA sits inside it — as the runtime that resolves Organizational Intelligence at draft time.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              We focus on the human layer of encode, govern, execute, and evolve: the way experts decide, coach, review, and improve work inside each industry.
-              Other tools give AI your data. We give AI your operating logic.
+              Retrieval finds documents. Memory remembers chats. The Context Layer encodes, governs, and executes the standards, exceptions, and live decisions that determine whether AI output is correct in your domain.
             </p>
           </div>
         </div>
@@ -1481,7 +1538,7 @@ function Slide06() {
               {[
                 { label: "Closest market", value: "$8.7B", desc: "The nearest sourceable category is AI governance. That is the cleanest external market anchor." },
                 { label: "Where we enter", value: "Vertical execution", desc: "Targeted lifecycles in life sciences, AEC, automotive, and space engineering, where plausible AI creates expensive rework. Professional services functions (sales, marketing, delivery) are our generalist entry where we know the work best." },
-                { label: "What LIZA is", value: "Human CX", desc: "We turn expert judgment into governed action through industry experience layers." },
+              { label: "What LIZA is", value: "Human CX", desc: "We turn Organizational Intelligence into governed action through industry experience layers." },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-1">
@@ -1530,7 +1587,7 @@ function Slide06Shift() {
     {
       icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Personal Expertise",
-      body: "What seniors actually know — judgment calls, exceptions, the way they decide under pressure. Today: trapped in heads.",
+      body: "What seniors actually know: pricing calls, exceptions, the way they decide under pressure. Today: trapped in heads.",
     },
     {
       icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
@@ -1849,7 +1906,7 @@ function SlidePeopleAsNodes() {
                 The fluid, semantic knowledge of the company is the substrate.
               </p>
               <p className="font-semibold mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
-                Define how the org thinks. Agents become downstream artifacts. AI inherits judgment, exceptions, and intent — live.
+                Define how the org thinks. Agents become downstream surfaces. AI inherits standards, exceptions, and intent, live.
               </p>
             </div>
             <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
@@ -1945,7 +2002,7 @@ function SlidePeopleAsNodes() {
           style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
           <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.4 }}>
-            Documents froze the artifact. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Organizational Intelligence keeps how the company thinks alive.</span>
+            Documents froze the page. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Organizational Intelligence keeps how the company thinks alive.</span>
           </p>
         </div>
       </div>
@@ -2041,7 +2098,7 @@ function Slide07() {
     {
       num: "01", title: "Encode", icon: <BookOpen size={28} />,
       desc: "Upload documents, AI extracts structure. A copilot guides experts to fill what's missing for full AI intelligence.",
-      flow: ["Upload existing artifacts", "AI extracts judgment & rules", "Copilot fills the gaps"],
+      flow: ["Upload existing systems", "AI extracts standards & rules", "Copilot fills the gaps"],
       output: "Versioned playbooks ready",
       color: GOLD,
     },
@@ -2184,7 +2241,7 @@ function Slide08() {
       metric: "3 depts",
       metricLabel: "Active",
       points: [
-        "Encoding artifact workflows across R&D, HR, and Engineering",
+        "Encoding core workflows across R&D, HR, and Engineering",
         "Working directly with the CTO on organizational rollout",
       ],
     },
@@ -2197,7 +2254,7 @@ function Slide08() {
       metric: "60×",
       metricLabel: "Faster",
       points: [
-        "Encoded senior partner's C-level candidate evaluation judgment",
+        "Encoded senior partner's C-level candidate evaluation reasoning",
         "Maintained senior-level quality with junior staff execution",
       ],
     },
@@ -2311,7 +2368,7 @@ function Slide09() {
       vertical: "Professional Services", status: "Beachhead", color: GREEN,
       icon: <Users size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Delivery expertise is trapped in senior operators. AI makes juniors faster but not reliably better.",
-      result: "Client delivery CX layer for proposals, workshops, research, and advisory artifacts.",
+      result: "Client delivery CX layer for proposals, workshops, research, and advisory deliverables.",
       proof: "Paid proof. Consultancy and digital agency active.",
     },
     {
@@ -2401,7 +2458,7 @@ function Slide09() {
             <div className="grid gap-3">
               {[
                 { name: "Input documents", col: TEAL },
-                { name: "Output artifacts", col: GREEN },
+                { name: "Output deliverables", col: GREEN },
                 { name: "Personas", col: GOLD },
                 { name: "Review flows", col: ACCENT },
                 { name: "Compliance language", col: WARM },
@@ -2440,25 +2497,25 @@ function Slide10() {
     {
       layer: "Knowledge Graph", color: ACCENT,
       icon: <Layers size={28} />,
-      desc: "Living organizational memory. Versioned, auditable, propagated.",
+      desc: "The substrate of Organizational Intelligence. Versioned, auditable, propagated across teams.",
       screenshot: "/images/product-define-enforce.png",
     },
     {
       layer: "Protocol Workbooks", color: GOLD,
       icon: <Target size={28} />,
-      desc: "Model-agnostic AI execution. Group collaboration in one workspace.",
+      desc: "Where the Context Layer runs. Model-agnostic execution with standards, exceptions, and live signals applied at draft time.",
       screenshot: "/images/product-execute-protocol.png",
     },
     {
       layer: "Context Engine (AACE v3.1)", color: GREEN,
       icon: <Workflow size={28} />,
-      desc: "Proprietary spec. Intent-locking, knowledge injection. The IP moat.",
+      desc: "The runtime spec. Intent-locking and Organizational Intelligence injection. The IP moat.",
       screenshot: "/images/product-mission-control.png",
     },
     {
       layer: "Governance Loop", color: ACCENT,
       icon: <Eye size={28} />,
-      desc: "Drift detection, compliance scoring, after-action synthesis.",
+      desc: "Drift detection, compliance scoring, and after-action synthesis. Every execution feeds the substrate back.",
       screenshot: "/images/product-oversight.png",
     },
   ];
@@ -2469,7 +2526,7 @@ function Slide10() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-16 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${ACCENT})` }}>Product Status</p>
         <h2 className="font-bold mb-6" style={{ fontSize: 56, color: TEXT, lineHeight: 1.1 }}>
-          The infrastructure is live.{" "}
+          The Context Layer is live.{" "}
           <span style={{ color: `hsl(${ACCENT})` }}>Not a prototype.</span>
         </h2>
 
@@ -2550,7 +2607,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>Usage-based execution</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                Customers pay for high-intensity actions like extraction, governed runs, simulations, and artifact generation.
+                Customers pay for high-intensity actions like extraction, governed runs, simulations, and output generation.
                 Vertical CX layers create repeated review, execution, and reporting events that compound usage.
               </p>
             </div>
