@@ -1566,7 +1566,7 @@ function SlidePeopleAsNodes() {
                 {/* Background: faded documents still underneath */}
                 {artifacts.map((a, i) => (
                   <rect key={`bg-${i}`} x={a.x * 1.05 + 10} y={a.y * 1.05 + 10} width="60" height="32" rx="4"
-                    fill={`hsl(${MUTED_HUE} / 0.05)`} stroke={`hsl(${MUTED_HUE} / 0.18)`} strokeWidth="0.8"
+                    fill={`hsl(${TEAL} / 0.03)`} stroke={`hsl(${TEAL} / 0.15)`} strokeWidth="0.8"
                     strokeDasharray="2 2" />
                 ))}
                 {/* Static agent boxes (square, locked) wrapping each person */}
