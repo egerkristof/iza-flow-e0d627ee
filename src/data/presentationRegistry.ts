@@ -5,6 +5,7 @@ import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
 import LinkedInImageCard from "@/pages/LinkedInImageCard";
 import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
+import LifecycleInvestorDeckV2 from "@/pages/LifecycleInvestorDeckV2";
 import LCVInvestorDeck from "@/pages/LCVInvestorDeck";
 import AuditOffer from "@/pages/offers/AuditOffer";
 import AECInvestorDeck from "@/pages/AECInvestorDeck";
@@ -35,6 +36,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/LifecycleInvestorDeck.tsx",
     description: "Primary investor presentation (Seed Round)",
     component: LifecycleInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-v2",
+    title: "Investor Deck V2 (Working Draft)",
+    path: "/investor-v2",
+    sourcePath: "src/pages/LifecycleInvestorDeckV2.tsx",
+    description: "Working draft of the investor deck. Iterating on Context Gap narrative arc (Slides 02 → 03 → 09). /investor remains the stable published version.",
+    component: LifecycleInvestorDeckV2,
     showInAdmin: true,
   },
   {
