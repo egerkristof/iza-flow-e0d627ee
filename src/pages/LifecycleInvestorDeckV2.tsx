@@ -626,10 +626,9 @@ function SlideContextGapExemplified() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide03() {
-  // Three vertical waterline cards: each industry mirrors the same above/below split as Slide 02,
-  // proving the Context Gap is universal across regulated and project-based work.
-  // Council redesign: dropped SVG triangles (overlap + low contrast on RED) in favor of
-  // clean split-cards with a horizontal waterline. Iceberg metaphor stays via language + color.
+  // Three mini-icebergs: each industry mirrors Slide 02's above/below split.
+  // Iceberg is a pure visual metaphor — labels live OUTSIDE the SVG (text lists)
+  // so nothing overlaps and every line is fully legible regardless of vertical color.
   const verticals = [
     {
       name: "Life Sciences",
@@ -696,29 +695,53 @@ function Slide03() {
                 <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{v.name}</p>
               </div>
 
-              {/* ABOVE THE WATERLINE — what AI sees */}
-              <div className="px-5 pt-4 pb-4" style={{ background: `hsl(${GREEN} / 0.04)` }}>
-                <div className="flex items-center gap-2 mb-2.5">
+              {/* ABOVE — heading + tags + mini iceberg tip */}
+              <div className="px-5 pt-4 pb-3" style={{ background: `hsl(${GREEN} / 0.05)` }}>
+                <div className="flex items-center gap-2 mb-2">
                   <span className="inline-block rounded-sm" style={{ width: 8, height: 8, background: `hsl(${GREEN})` }} />
                   <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
                     Above the waterline · What AI sees
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 mb-3">
                   {v.above.map((label) => (
                     <span key={label} className="rounded-md px-2.5 py-1 font-semibold border"
-                      style={{ fontSize: 13, color: TEXT, background: BG, borderColor: `hsl(${GREEN} / 0.45)` }}>
+                      style={{ fontSize: 13, color: TEXT, background: BG, borderColor: `hsl(${GREEN} / 0.5)` }}>
                       {label}
                     </span>
                   ))}
                 </div>
+                {/* Mini iceberg tip (pure visual, no text inside) */}
+                <div className="flex justify-center">
+                  <svg width="120" height="44" viewBox="0 0 120 44" aria-hidden="true">
+                    <defs>
+                      <linearGradient id={`tip-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={`hsl(${GREEN} / 0.25)`} />
+                        <stop offset="100%" stopColor={`hsl(${GREEN} / 0.45)`} />
+                      </linearGradient>
+                    </defs>
+                    <polygon points="60,4 90,42 30,42" fill={`url(#tip-${v.name})`} stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.2" />
+                  </svg>
+                </div>
               </div>
 
               {/* WATERLINE */}
-              <div className="relative" style={{ height: 1, background: `hsl(${v.color} / 0.5)`, backgroundImage: `repeating-linear-gradient(90deg, hsl(${v.color} / 0.55) 0 6px, transparent 6px 12px)` }} />
+              <div className="relative" style={{ height: 2, backgroundImage: `repeating-linear-gradient(90deg, hsl(${v.color} / 0.6) 0 6px, transparent 6px 12px)` }} />
 
-              {/* BELOW THE WATERLINE — what AI misses */}
-              <div className="px-5 pt-4 pb-4 flex-1 flex flex-col" style={{ background: `hsl(${v.color} / 0.05)` }}>
+              {/* BELOW — mini iceberg base + heading + bullets */}
+              <div className="px-5 pt-3 pb-4 flex-1 flex flex-col" style={{ background: `hsl(${v.color} / 0.05)` }}>
+                {/* Inverted iceberg base (pure visual) */}
+                <div className="flex justify-center mb-3">
+                  <svg width="220" height="80" viewBox="0 0 220 80" aria-hidden="true">
+                    <defs>
+                      <linearGradient id={`base-${v.name}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={`hsl(${v.color} / 0.32)`} />
+                        <stop offset="100%" stopColor={`hsl(${v.color} / 0.55)`} />
+                      </linearGradient>
+                    </defs>
+                    <polygon points="40,0 180,0 110,78" fill={`url(#base-${v.name})`} stroke={`hsl(${v.color} / 0.7)`} strokeWidth="1.2" />
+                  </svg>
+                </div>
                 <div className="flex items-center gap-2 mb-2.5">
                   <span className="inline-block rounded-sm" style={{ width: 8, height: 8, background: `hsl(${v.color})` }} />
                   <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 11, color: `hsl(${v.color})` }}>
