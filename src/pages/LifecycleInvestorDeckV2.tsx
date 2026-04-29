@@ -2570,7 +2570,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function LifecycleInvestorDeck() {
+export default function LifecycleInvestorDeckV2() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
