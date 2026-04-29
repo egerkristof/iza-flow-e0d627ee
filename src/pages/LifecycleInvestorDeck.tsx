@@ -233,97 +233,30 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["SOPs", "Policies", "Templates", "Requirements", "Data", "Records"];
-  const outputs = ["Reports", "Proposals", "Decisions", "Deliverables", "Actions", "Answers"];
-
+  // Stripped to pure category-naming. The exemplified specimen lives on the next slide.
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-          The Context Gap
+      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10 max-w-[1600px] mx-auto">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-6" style={{ fontSize: 26, color: `hsl(${WARM})` }}>
+          The Category
         </p>
 
-        <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
-          Companies have inputs. AI generates outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your standards.</span>
+        <h2 className="font-black mb-10" style={{ fontSize: 88, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          The Context Gap.
         </h2>
 
-        {/* Three columns: Inputs → THE GAP → Outputs */}
-        <div className="flex items-stretch gap-0 flex-1 min-h-0 max-h-[420px]">
+        <p className="font-medium mb-12" style={{ fontSize: 32, color: MUTED, lineHeight: 1.35, maxWidth: 1300 }}>
+          The distance between what AI is given<br />
+          and what AI needs to work to your standards.
+        </p>
 
-          {/* LEFT — Input Artifacts */}
-          <div className="flex-1 rounded-l-2xl border-2 p-8 flex flex-col justify-center"
-            style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)`, borderRight: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Input Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What companies feed AI today</p>
-            <div className="flex flex-wrap gap-3">
-              {inputs.map(item => (
-                <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${TEAL} / 0.12)`, color: TEXT, border: `1px solid hsl(${TEAL} / 0.2)` }}>
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-5">
-              <Check size={18} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
-            </div>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. It sits in files no model can reason over.
-            </p>
-          </div>
-
-          {/* CENTER — THE GAP (deliberately stark) */}
-          <div className="w-[340px] shrink-0 border-y-2 flex flex-col items-center justify-center relative"
-            style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.04)` }}>
-            {/* Dashed vertical lines suggesting disconnection */}
-            <div className="absolute left-0 top-8 bottom-8 w-px" style={{ borderLeft: `2px dashed hsl(${WARM} / 0.2)` }} />
-            <div className="absolute right-0 top-8 bottom-8 w-px" style={{ borderRight: `2px dashed hsl(${WARM} / 0.2)` }} />
-
-            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
-              style={{ background: `hsl(${WARM} / 0.12)`, border: `2px solid hsl(${WARM} / 0.3)` }}>
-              <span className="font-black" style={{ fontSize: 44, color: `hsl(${WARM})` }}>?</span>
-            </div>
-            <p className="font-black text-center mb-2" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-              No System of<br />Intelligence
-            </p>
-            <p className="text-center px-5" style={{ fontSize: 15, color: MUTED, lineHeight: 1.55 }}>
-              AI can generate fast, but it can't apply your expertise, your judgment, or your standards.
-            </p>
-            <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: TEXT }}>
-              The result: experts redo AI's work instead of scaling their own.
-            </p>
-          </div>
-
-          {/* RIGHT — Output Artifacts */}
-          <div className="flex-1 rounded-r-2xl border-2 p-8 flex flex-col justify-center"
-            style={{ borderColor: `hsl(${GREEN} / 0.3)`, background: `hsl(${GREEN} / 0.06)`, borderLeft: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Output Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What AI produces without guidance</p>
-            <div className="flex flex-wrap gap-3">
-              {outputs.map(item => (
-                <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${GREEN} / 0.12)`, color: TEXT, border: `1px solid hsl(${GREEN} / 0.2)` }}>
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-5">
-              <Check size={18} style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
-            </div>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But without your standards, every output is generic: the average, not the expert.
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom punchline */}
-        <div className="mt-8 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
-          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
-            Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
+        <div className="flex items-center gap-4">
+          <div className="h-px flex-1" style={{ background: `linear-gradient(to right, hsl(${WARM} / 0.4), transparent)` }} />
+          <p className="font-bold tracking-[0.18em] uppercase" style={{ fontSize: 16, color: `hsl(${WARM})` }}>
+            Next: what it actually looks like
           </p>
+          <div className="h-px flex-1" style={{ background: `linear-gradient(to left, hsl(${WARM} / 0.4), transparent)` }} />
         </div>
       </div>
       <SlideBar from={WARM} to={TEAL} />
@@ -387,10 +320,10 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-3">
                 <FileText size={18} style={{ color: `hsl(${TEAL})` }} />
                 <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>
-                  What we gave AI
+                  What your current AI stack sees
                 </p>
               </div>
-              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>SOPs · templates · CRM record · email thread</p>
+              <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>RAG / Copilot / Glean over your docs</p>
             </div>
 
             {/* The artifact */}
@@ -441,7 +374,7 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-3">
                 <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
                 <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
-                  What we did not give AI
+                  What RAG structurally cannot retrieve
                 </p>
               </div>
               <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Lives in heads, hallways, and last week's call</p>
@@ -467,10 +400,10 @@ function SlideContextGapExemplified() {
 
             <div className="px-6 pb-5">
               <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                Why none of this reaches AI
+                Why RAG can't fix this
               </p>
               <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>
-                It was never written down as something a system can read. It lives in the senior's head and in the trail of conversations between the people who do the work.
+                Retrieval only finds what was written. None of this was. It lives in the senior's head and in the trail of conversations between the people who do the work.
               </p>
             </div>
           </div>
@@ -1445,6 +1378,9 @@ function SlidePeopleAsNodes() {
           From siloed artifacts to a{' '}
           <span style={{ color: `hsl(${TEAL})` }}>living network of people who execute.</span>
         </h2>
+        <p className="font-semibold mb-3" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.4 }}>
+          Remember the missing context cards from the last slide? They live here now. In people.
+        </p>
         <p className="font-medium mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
           The unit of an AI-native organization is not a document, a workflow, or a single agent. It is a <span style={{ color: TEXT, fontWeight: 700 }}>person-node</span>: a continuously updated graph of how that person works, the context they hold, and the artifacts they produce. Connect those nodes and you have an organization that scales its most senior way of doing things.
         </p>
