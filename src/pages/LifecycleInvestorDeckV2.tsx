@@ -2835,7 +2835,7 @@ const SLIDES = [
   { id: 8, title: "Why Now", component: <SlideWhyNow /> },
   { id: 9, title: "The Context Layer", component: <Slide05 /> },
   { id: 10, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
-  { id: 11, title: "Strategic Shift", component: <Slide06Shift /> },
+  { id: 11, title: "Organizational Intelligence", component: <Slide06Shift /> },
   { id: 12, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 13, title: "Expansion Path", component: <Slide09 /> },
   { id: 14, title: "Shape of the Company", component: <SlideShape /> },
