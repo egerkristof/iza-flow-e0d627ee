@@ -441,7 +441,7 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-3">
                 <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
                 <p className="font-black tracking-[0.16em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
-                  What we did not give AI
+                  What RAG structurally cannot retrieve
                 </p>
               </div>
               <p className="font-semibold" style={{ fontSize: 12, color: MUTED }}>Lives in heads, hallways, and last week's call</p>
@@ -467,10 +467,10 @@ function SlideContextGapExemplified() {
 
             <div className="px-6 pb-5">
               <p className="font-black tracking-[0.14em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
-                Why none of this reaches AI
+                Why RAG can't fix this
               </p>
               <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>
-                It was never written down as something a system can read. It lives in the senior's head and in the trail of conversations between the people who do the work.
+                Retrieval only finds what was written. None of this was. It lives in the senior's head and in the trail of conversations between the people who do the work.
               </p>
             </div>
           </div>
