@@ -1079,12 +1079,12 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${TEAL})` }}>LIZA OS</p>
-            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The in-between operating layer that turns raw context into governed execution</p>
+            <p className="font-black" style={{ fontSize: 21, color: TEXT }}>The layer that turns raw inputs into <span style={{ color: `hsl(${TEAL})` }}>Organizational Intelligence</span> AI can execute against</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows institutional memory, expert judgment, and domain standards</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that honours contradictions, exceptions, and the latest decisions</p>
           </div>
         </div>
 
