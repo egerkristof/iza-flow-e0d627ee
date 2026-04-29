@@ -543,17 +543,17 @@ function SlideContextGapExemplified() {
           {/* ─── MARGIN NOTES — the missing reality ─── */}
           <div className="flex flex-col">
             <div className="flex items-baseline justify-between mb-3">
-              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${WARM})` }}>
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 14, color: `hsl(${WARM})` }}>
                 What AI couldn&apos;t see
               </p>
-              <p className="font-semibold" style={{ fontSize: 11, color: MUTED }}>
+              <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
                 Lives in heads, threads, hallway calls.
               </p>
             </div>
 
-            <div className="flex-1 flex flex-col gap-2.5">
+            <div className="flex-1 flex flex-col gap-3">
               {annotations.map((a) => (
-                <div key={a.n} className="relative rounded-xl px-4 py-3 flex gap-3"
+                <div key={a.n} className="relative rounded-xl px-4 py-3.5 flex gap-3"
                   style={{
                     background: BG,
                     border: `1px solid hsl(${WARM} / 0.30)`,
@@ -568,47 +568,47 @@ function SlideContextGapExemplified() {
                       }}>{a.n}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
+                    <div className="flex items-center gap-2 mb-1">
                       <span className="font-black tracking-[0.14em] uppercase rounded-sm px-1.5 py-0.5"
-                        style={{ fontSize: 9.5, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)` }}>
+                        style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)` }}>
                         {a.nature}
                       </span>
                     </div>
-                    <p className="font-black mb-0.5" style={{ fontSize: 14.5, color: TEXT, lineHeight: 1.25 }}>
+                    <p className="font-black mb-1" style={{ fontSize: 16, color: TEXT, lineHeight: 1.25 }}>
                       {a.title}
                     </p>
-                    <p style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.45 }}>{a.body}</p>
+                    <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.5 }}>{a.body}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Footer micro-strip: had vs. closes the gap */}
-            <div className="mt-3 grid grid-cols-2 gap-2.5">
-              <div className="rounded-lg px-3.5 py-2.5"
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="rounded-lg px-4 py-3"
                 style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.20)` }}>
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <Database size={12} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 9.5, color: `hsl(${TEAL})` }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <Database size={14} style={{ color: `hsl(${TEAL})` }} />
+                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 11.5, color: `hsl(${TEAL})` }}>
                     What AI had
                   </p>
                 </div>
-                <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
                   Rate card. CRM record. Contracts. Templates. Project plan. Policy wiki.
                 </p>
-                <p className="mt-0.5 font-semibold" style={{ fontSize: 10.5, color: MUTED }}>
+                <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
                   Indexable. RAG-friendly. Insufficient.
                 </p>
               </div>
-              <div className="rounded-lg px-3.5 py-2.5"
+              <div className="rounded-lg px-4 py-3"
                 style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.30)` }}>
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <Sparkles size={12} style={{ color: `hsl(${ACCENT})` }} />
-                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 9.5, color: `hsl(${ACCENT})` }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
+                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 11.5, color: `hsl(${ACCENT})` }}>
                     What closes the gap
                   </p>
                 </div>
-                <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
                   An <span style={{ fontWeight: 800 }}>Organizational Intelligence</span> layer that captures the live, unwritten signals — and resolves them at draft time.
                 </p>
               </div>
@@ -724,21 +724,21 @@ function Slide03() {
                   </svg>
 
                   <div className="absolute left-0 right-0 top-[4%] text-center font-black tracking-[0.14em] uppercase"
-                    style={{ fontSize: 10.5, color: `hsl(${GREEN})` }}>
+                    style={{ fontSize: 12.5, color: `hsl(${GREEN})` }}>
                     What AI sees
                   </div>
 
                   <div className="absolute left-[8%] right-[8%] top-[24%] grid grid-cols-3 gap-1.5">
                     {v.above.map((label) => (
                       <div key={label} className="min-h-[34px] rounded-md border px-1.5 py-1 flex items-center justify-center text-center font-extrabold"
-                        style={{ fontSize: 9.4, lineHeight: 1.12, color: TEXT, background: `hsl(0 0% 100% / 0.95)`, borderColor: `hsl(${GREEN} / 0.48)` }}>
+                        style={{ fontSize: 11, lineHeight: 1.18, color: TEXT, background: `hsl(0 0% 100% / 0.95)`, borderColor: `hsl(${GREEN} / 0.48)` }}>
                         {label}
                       </div>
                     ))}
                   </div>
 
                   <div className="absolute left-0 right-0 top-[39%] text-center font-black tracking-[0.14em] uppercase"
-                    style={{ fontSize: 10.5, color: `hsl(${v.color})` }}>
+                    style={{ fontSize: 12.5, color: `hsl(${v.color})` }}>
                     What AI misses
                   </div>
 
@@ -747,7 +747,7 @@ function Slide03() {
                       <div key={item} className="rounded-md border px-2.5 py-2 flex gap-2"
                         style={{ background: `hsl(0 0% 100% / 0.92)`, borderColor: `hsl(${v.color} / 0.22)` }}>
                         <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: `hsl(${v.color})` }} />
-                        <p className="font-bold" style={{ fontSize: 11.2, color: TEXT, lineHeight: 1.22 }}>{item}</p>
+                        <p className="font-bold" style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3 }}>{item}</p>
                       </div>
                     ))}
                   </div>
@@ -1342,7 +1342,7 @@ function SlideArchitecture() {
                       <circle cx="50" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
                       <circle cx="90" cy="85" r="4" fill={`hsl(${GOLD})`} fillOpacity="0.12" stroke={`hsl(${GOLD})`} strokeWidth="1.5" />
                     </svg>
-                    <p className="font-black" style={{ fontSize: 10, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>KNOWLEDGE GRAPH</p>
+                    <p className="font-black" style={{ fontSize: 12, color: `hsl(${GOLD})`, letterSpacing: "0.1em" }}>KNOWLEDGE GRAPH</p>
                   </div>
                   <div className="flex-1 grid grid-cols-2 gap-1.5">
                     {[
@@ -1351,9 +1351,9 @@ function SlideArchitecture() {
                       { label: "Decision Exceptions", desc: "Context-specific" },
                       { label: "Accumulated Memory", desc: "Grows with usage" },
                     ].map(item => (
-                      <div key={item.label} className="rounded-lg px-2.5 py-1.5" style={{ background: `hsl(${GOLD} / 0.08)` }}>
-                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>{item.label}</p>
-                        <p style={{ fontSize: 10, color: MUTED }}>{item.desc}</p>
+                      <div key={item.label} className="rounded-lg px-3 py-2" style={{ background: `hsl(${GOLD} / 0.08)` }}>
+                        <p className="font-bold" style={{ fontSize: 13.5, color: `hsl(${GOLD})` }}>{item.label}</p>
+                        <p style={{ fontSize: 12, color: MUTED }}>{item.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -1376,7 +1376,7 @@ function SlideArchitecture() {
                   </div>
                   <div>
                     <p className="font-black" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Nervous System</p>
-                    <p style={{ fontSize: 11, color: MUTED }}>Reasoning & orchestration</p>
+                    <p style={{ fontSize: 13, color: MUTED }}>Reasoning & orchestration</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -1386,10 +1386,10 @@ function SlideArchitecture() {
                     { label: "Propagation", desc: "One update cascades everywhere" },
                     { label: "Feedback Loop", desc: "Every execution teaches the system" },
                   ].map(item => (
-                    <div key={item.label} className="rounded-lg px-3 py-1.5" style={{ background: `hsl(${TEAL} / 0.08)` }}>
+                    <div key={item.label} className="rounded-lg px-3 py-2" style={{ background: `hsl(${TEAL} / 0.08)` }}>
                       <div className="flex items-center gap-2">
-                        <p className="font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>{item.label}</p>
-                        <span style={{ fontSize: 10, color: MUTED }}>— {item.desc}</span>
+                        <p className="font-bold" style={{ fontSize: 13.5, color: `hsl(${TEAL})` }}>{item.label}</p>
+                        <span style={{ fontSize: 12, color: MUTED }}>— {item.desc}</span>
                       </div>
                     </div>
                   ))}
