@@ -1483,8 +1483,8 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          Competitors retrieve knowledge.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>LIZA designs the industry human experience around it.</span>
+          Competitors index documents and remember chats.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>LIZA is the Context Layer that runs Organizational Intelligence at execution time.</span>
         </h2>
 
         {/* Top: 4 competitor cards */}
@@ -1517,12 +1517,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others help AI find knowledge.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA turns human knowledge into an operating experience.</span>
+              Others sit beside the work.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA sits inside it — as the runtime that resolves Organizational Intelligence at draft time.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              We focus on the human layer of encode, govern, execute, and evolve: the way experts decide, coach, review, and improve work inside each industry.
-              Other tools give AI your data. We give AI your operating logic.
+              Retrieval finds documents. Memory remembers chats. The Context Layer encodes, governs, and executes the standards, exceptions, and live decisions that determine whether AI output is correct in your domain.
             </p>
           </div>
         </div>
