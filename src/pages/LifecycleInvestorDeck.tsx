@@ -1237,32 +1237,44 @@ function Slide06Shift() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlidePeopleAsNodes() {
-  // Left side — old world
+  // LEFT — static artifacts (with faint ghost-people behind them)
   const oldArtifacts = [
-    { label: "Docs", x: 60, y: 40 },
-    { label: "Slides", x: 200, y: 30 },
-    { label: "CRM", x: 330, y: 90 },
-    { label: "Wiki", x: 100, y: 150 },
-    { label: "Email", x: 260, y: 170 },
-    { label: "Spreadsheets", x: 50, y: 250 },
-    { label: "Tickets", x: 220, y: 280 },
-    { label: "Chat logs", x: 340, y: 230 },
+    { label: "Docs",         x: 60,  y: 40 },
+    { label: "Slides",       x: 200, y: 30 },
+    { label: "CRM",          x: 330, y: 90 },
+    { label: "Wiki",         x: 100, y: 150 },
+    { label: "Email",        x: 260, y: 170 },
+    { label: "Spreadsheets", x: 50,  y: 250 },
+    { label: "Tickets",      x: 220, y: 280 },
+    { label: "Chat logs",    x: 340, y: 230 },
+  ];
+  // Ghost people behind the artifacts — the real source the system can't see
+  const ghostPeople = [
+    { x: 80,  y: 110 },
+    { x: 230, y: 90  },
+    { x: 360, y: 150 },
+    { x: 130, y: 230 },
+    { x: 300, y: 240 },
   ];
 
-  // Right side — new world: a network of people-nodes
-  // Layout: 1 senior at center, 6 people around, connections between them and to senior
-  const cx = 230, cy = 220;
-  const ring = [
-    { x: cx,        y: cy - 150, role: "PM" },
+  // RIGHT — network of person-nodes around a senior
+  const cx = 230, cy = 215;
+  // Hero node sits at top — fully labeled, teaches the vocabulary
+  const heroNode = { x: cx, y: cy - 150, role: "PM", hero: true };
+  const ringRest = [
     { x: cx + 140,  y: cy - 75,  role: "Sales" },
     { x: cx + 140,  y: cy + 75,  role: "Eng" },
     { x: cx,        y: cy + 150, role: "Ops" },
     { x: cx - 140,  y: cy + 75,  role: "Design" },
     { x: cx - 140,  y: cy - 75,  role: "Research" },
   ];
-
-  // Person-node sub-nodes (orbital chips around each node)
-  const subChips = ["how", "context", "artifacts"];
+  const ring = [heroNode, ...ringRest];
+  // Three layers every person-node carries
+  const heroLayers = [
+    { label: "HOW",       angle: -Math.PI / 2 },
+    { label: "CONTEXT",   angle:  Math.PI / 6 },
+    { label: "ARTIFACTS", angle:  (5 * Math.PI) / 6 },
+  ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
