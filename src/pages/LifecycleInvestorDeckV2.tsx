@@ -487,45 +487,132 @@ function SlideContextGapExemplified() {
               <div className="flex items-center gap-2">
                 <AlertTriangle size={20} style={{ color: `hsl(${WARM})` }} />
                 <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 15, color: `hsl(${WARM})` }}>
-                  What it didn&apos;t know — one combination of many
+                  Six live signals AI must keep up with
                 </p>
               </div>
-              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Endless variations. One per situation.</p>
+              <p className="font-bold" style={{ fontSize: 13, color: MUTED }}>Not RAG-compatible. Changes by the hour.</p>
             </div>
 
-            {/* Cards layered ON a faint connection mesh, signalling that these 6 items are
-                co-occurring facets of one situation, not a checklist. */}
-            <div className="relative flex-1 px-5 py-5">
-              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 360"
-                preserveAspectRatio="none">
-                <g stroke={`hsl(${WARM} / 0.30)`} strokeWidth="1" strokeDasharray="3 4" fill="none">
-                  <path d="M 150 80  L 450 80" />
-                  <path d="M 150 180 L 450 180" />
-                  <path d="M 150 280 L 450 280" />
-                  <path d="M 150 80  L 450 280" />
-                  <path d="M 450 80  L 150 280" />
-                  <path d="M 300 80  L 300 280" />
-                </g>
-              </svg>
-              <div className="relative grid grid-cols-2 gap-3 content-start h-full">
-                {missing.map((m, i) => (
-                  <div key={i} className="rounded-xl px-4 py-3"
-                    style={{
-                      background: BG,
-                      border: `1.5px solid hsl(${WARM} / 0.40)`,
-                      boxShadow: `0 2px 0 hsl(${WARM} / 0.10)`,
-                    }}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
-                        style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
-                        {m.tag}
-                      </span>
-                      <p className="font-black" style={{ fontSize: 16, color: TEXT }}>{m.title}</p>
+            {/* Six cards positioned in an absolute coordinate system (1000x600) so we can
+                draw real, deliberate connections between specific card centers — not random
+                cross-hatch. Each connection has a labelled relationship type. */}
+            <div className="relative flex-1">
+              {(() => {
+                // Card layout — 3 columns x 2 rows, with comfortable breathing room.
+                const W = 1000, H = 600;
+                const cw = 296, ch = 196;
+                const positions = [
+                  { x: 30,  y: 30  }, // 0 PRICING
+                  { x: 352, y: 30  }, // 1 SIGN-OFF
+                  { x: 674, y: 30  }, // 2 TIMELINE
+                  { x: 30,  y: 374 }, // 3 CLIENT
+                  { x: 352, y: 374 }, // 4 REGULATORY
+                  { x: 674, y: 374 }, // 5 HISTORY
+                ];
+                const center = (i: number) => ({
+                  x: positions[i].x + cw / 2,
+                  y: positions[i].y + ch / 2,
+                });
+                // Deliberate, semantically meaningful relationships.
+                // Each line carries a short label naming the dependency type.
+                const links: { a: number; b: number; label: string; weight: number }[] = [
+                  { a: 0, b: 1, label: "approval threshold",  weight: 2.6 }, // pricing ↔ sign-off
+                  { a: 0, b: 4, label: "rate by region",      weight: 1.8 }, // pricing ↔ regulatory
+                  { a: 1, b: 5, label: "history triggers approver", weight: 1.6 }, // sign-off ↔ history
+                  { a: 2, b: 3, label: "tone shifts with date",     weight: 1.4 }, // timeline ↔ client
+                  { a: 2, b: 4, label: "deadline vs. clause",       weight: 1.6 }, // timeline ↔ regulatory
+                  { a: 3, b: 5, label: "open dispute changes voice",weight: 2.2 }, // client ↔ history
+                  { a: 0, b: 5, label: "prior commercials",   weight: 1.4 }, // pricing ↔ history
+                ];
+                return (
+                  <>
+                    {/* SVG connection layer — sits between the panel background and the cards */}
+                    <svg
+                      viewBox={`0 0 ${W} ${H}`}
+                      preserveAspectRatio="none"
+                      className="absolute inset-0 w-full h-full pointer-events-none"
+                    >
+                      <defs>
+                        <marker id="warmDot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6">
+                          <circle cx="3" cy="3" r="2.4" fill={`hsl(${WARM})`} />
+                        </marker>
+                      </defs>
+                      {links.map((l, i) => {
+                        const A = center(l.a), B = center(l.b);
+                        // Curve control point — push perpendicular to the segment so lines
+                        // don't all overlap. Alternate sides per link index.
+                        const dx = B.x - A.x, dy = B.y - A.y;
+                        const len = Math.hypot(dx, dy);
+                        const nx = -dy / len, ny = dx / len;
+                        const bow = (i % 2 === 0 ? 28 : -28) + (l.weight - 1.5) * 14;
+                        const cx = (A.x + B.x) / 2 + nx * bow;
+                        const cy = (A.y + B.y) / 2 + ny * bow;
+                        const path = `M ${A.x} ${A.y} Q ${cx} ${cy} ${B.x} ${B.y}`;
+                        const labelPad = l.label.length * 4.6 + 14;
+                        return (
+                          <g key={i}>
+                            <path d={path} fill="none"
+                              stroke={`hsl(${WARM} / ${0.22 + l.weight * 0.08})`}
+                              strokeWidth={l.weight}
+                              strokeDasharray="6 5"
+                              markerStart="url(#warmDot)"
+                              markerEnd="url(#warmDot)"
+                            />
+                            {/* Label chip on the curve midpoint */}
+                            <rect
+                              x={cx - labelPad / 2} y={cy - 11} width={labelPad} height="20" rx="4"
+                              fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="0.9"
+                            />
+                            <text x={cx} y={cy + 3} textAnchor="middle"
+                              style={{ fontSize: 10.5, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 0.2 }}>
+                              {l.label}
+                            </text>
+                          </g>
+                        );
+                      })}
+                    </svg>
+
+                    {/* Cards — absolutely positioned inside a percentage container to match
+                        the SVG viewBox of 1000x600. */}
+                    <div className="absolute inset-0">
+                      {missing.map((m, i) => {
+                        const p = positions[i];
+                        return (
+                          <div
+                            key={i}
+                            className="absolute rounded-xl px-4 py-3"
+                            style={{
+                              left: `${(p.x / W) * 100}%`,
+                              top:  `${(p.y / H) * 100}%`,
+                              width:  `${(cw / W) * 100}%`,
+                              height: `${(ch / H) * 100}%`,
+                              background: BG,
+                              border: `1.5px solid hsl(${WARM} / 0.55)`,
+                              boxShadow: `0 2px 0 hsl(${WARM} / 0.12), 0 6px 20px hsl(${WARM} / 0.08)`,
+                            }}
+                          >
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="font-black tracking-[0.10em] uppercase rounded px-2 py-0.5"
+                                style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)`, border: `1px solid hsl(${WARM} / 0.35)` }}>
+                                {m.tag}
+                              </span>
+                              {/* Live pulse dot — signals "updates constantly" */}
+                              <span className="ml-auto inline-flex items-center gap-1.5"
+                                style={{ fontSize: 10, fontWeight: 800, color: `hsl(${WARM})`, letterSpacing: 0.5 }}>
+                                <span className="w-1.5 h-1.5 rounded-full animate-pulse"
+                                  style={{ background: `hsl(${WARM})` }} />
+                                LIVE
+                              </span>
+                            </div>
+                            <p className="font-black mb-1" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{m.title}</p>
+                            <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.45 }}>{m.body}</p>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.5 }}>{m.body}</p>
-                  </div>
-                ))}
-              </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
         </div>
@@ -533,8 +620,8 @@ function SlideContextGapExemplified() {
         {/* Bottom punchline */}
         <div className="mt-5 rounded-xl px-10 py-5 text-center"
           style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
-          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
-            Six combined circumstances here. <span style={{ color: `hsl(${WARM})` }}>Endless combinations across every email, deck, and decision your company makes this week.</span>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
+            RAG updates the back end in waterfalls. <span style={{ color: `hsl(${WARM})` }}>These six signals change by the hour, depend on each other, and recombine for every email, deck, and decision.</span>
           </p>
         </div>
       </div>
