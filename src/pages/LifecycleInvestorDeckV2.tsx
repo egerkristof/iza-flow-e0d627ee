@@ -886,8 +886,9 @@ function Slide03Cost() {
           style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.16)` }}>
           <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
             The same Context Gap shows up as <span style={{ color: `hsl(${WARM})` }}>€550K</span> in a 100-person team,{" "}
-            <span style={{ color: `hsl(${RED})` }}>$2.6B</span> in a drug program, and{" "}
-            <span style={{ color: `hsl(${TEAL})` }}>12 months</span> in an engineering site. Different units. One root cause.
+            <span style={{ color: `hsl(${RED})` }}>$2.6B</span> in a drug program,{" "}
+            <span style={{ color: `hsl(${TEAL})` }}>$2.3M</span> per engineer ramp, and{" "}
+            <span style={{ color: `hsl(${GOLD})` }}>9% of project value</span> on a build. Different units. One root cause.
           </p>
         </div>
 
