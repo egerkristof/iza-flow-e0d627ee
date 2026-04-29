@@ -233,32 +233,117 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  // Stripped to pure category-naming. The exemplified specimen lives on the next slide.
+  // Iceberg metaphor: visible artifact above waterline, vast unwritten knowledge below.
+  // The whole point is felt in one image.
+  const above = [
+    { x: 740, label: "Document" },
+    { x: 880, label: "Email" },
+    { x: 1020, label: "Slide" },
+    { x: 1160, label: "Ticket" },
+  ];
+  const below = [
+    "Why we priced it this way", "What changed last review", "Who this client really is",
+    "What we agreed Tuesday", "The exception we always make", "How the senior judges this",
+    "The line we always add", "The unwritten escalation rule", "Last quarter's deviation log",
+    "What legal flagged in March", "Tom's sign-off threshold", "The clause for EU accounts",
+    "Why we never use list price", "What Sarah reads on Monday", "The pattern in the last 3 calls",
+    "How we handle SLA misses", "What the CFO actually wants", "The framework only Maria knows",
+    "Why this region is different", "What we promised verbally", "The standard nobody documented",
+    "How we close out this segment", "What past audits flagged", "The rule that overrides the rule",
+  ];
+
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10 max-w-[1600px] mx-auto">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-6" style={{ fontSize: 26, color: `hsl(${WARM})` }}>
+
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
           The Category
         </p>
-
-        <h2 className="font-black mb-10" style={{ fontSize: 88, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
           The Context Gap.
         </h2>
-
-        <p className="font-medium mb-12" style={{ fontSize: 32, color: MUTED, lineHeight: 1.35, maxWidth: 1300 }}>
-          The distance between what AI is given<br />
-          and what AI needs to work to your standards.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          AI doesn&apos;t fail because the model is weak. It fails because <span style={{ color: TEXT, fontWeight: 700 }}>most of what it needs to work to your standards was never written down.</span>
         </p>
+      </div>
 
-        <div className="flex items-center gap-4">
-          <div className="h-px flex-1" style={{ background: `linear-gradient(to right, hsl(${WARM} / 0.4), transparent)` }} />
-          <p className="font-bold tracking-[0.18em] uppercase" style={{ fontSize: 16, color: `hsl(${WARM})` }}>
-            Next: what it actually looks like
+      {/* Iceberg canvas */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.04)`} />
+              <stop offset="40%" stopColor={`hsl(${TEAL} / 0.10)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.22)`} />
+            </linearGradient>
+            <linearGradient id="icebergTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.18)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.32)`} />
+            </linearGradient>
+            <linearGradient id="icebergBot" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.32)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.55)`} />
+            </linearGradient>
+          </defs>
+
+          {/* Water below waterline */}
+          <rect x="0" y="220" width="1920" height="540" fill="url(#waterGrad)" />
+
+          {/* Waterline */}
+          <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
+          <text x="80" y="212" style={{ fontSize: 13, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT&apos;S WRITTEN DOWN</text>
+          <text x="80" y="244" style={{ fontSize: 13, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT LIVES IN PEOPLE</text>
+
+          {/* Iceberg — above waterline (small) */}
+          <polygon points="820,220 960,80 1100,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
+          {/* Iceberg — below waterline (massive) */}
+          <polygon points="820,220 600,720 1320,720 1100,220" fill="url(#icebergBot)" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.5" />
+
+          {/* Above-water artifact labels */}
+          {above.map((a, i) => (
+            <g key={`a-${i}`}>
+              <rect x={a.x - 50} y={130 - (i % 2) * 14} width="100" height="26" rx="6"
+                fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1" />
+              <text x={a.x} y={148 - (i % 2) * 14} textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
+            </g>
+          ))}
+          <text x="960" y="56" textAnchor="middle"
+            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI IS GIVEN</text>
+
+          {/* Below-water knowledge fragments — dense */}
+          {below.map((label, i) => {
+            const cols = 6;
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            const x = 660 + col * 110;
+            const y = 280 + row * 95;
+            return (
+              <g key={`b-${i}`}>
+                <rect x={x - 95} y={y - 18} width="190" height="36" rx="6"
+                  fill={`hsl(${TEAL} / 0.10)`} stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="0.8" />
+                <text x={x} y={y + 5} textAnchor="middle"
+                  style={{ fontSize: 12, fontWeight: 600, fill: TEXT }}>{label}</text>
+              </g>
+            );
+          })}
+          <text x="960" y="710" textAnchor="middle"
+            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT AI NEEDS, AND DOESN&apos;T HAVE</text>
+        </svg>
+      </div>
+
+      {/* Bottom punchline strip */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Whatever you don&apos;t define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
           </p>
-          <div className="h-px flex-1" style={{ background: `linear-gradient(to left, hsl(${WARM} / 0.4), transparent)` }} />
         </div>
       </div>
+
       <SlideBar from={WARM} to={TEAL} />
     </div>
   );
