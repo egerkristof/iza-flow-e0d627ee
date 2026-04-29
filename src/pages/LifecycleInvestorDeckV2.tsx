@@ -293,12 +293,12 @@ function Slide02() {
           {/* Water below waterline */}
           <rect x="0" y="220" width="1920" height="540" fill="url(#waterGrad)" />
 
-          {/* Waterline + enterprise-vocabulary labels */}
+          {/* Waterline + enterprise-vocabulary labels (right-aligned to avoid header collision) */}
           <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
-          <text x="80" y="206" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>FORMALLY DEFINED</text>
-          <text x="80" y="225" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Documented. Machine-readable. ~10% of how the enterprise runs.</text>
-          <text x="80" y="252" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>TACIT OPERATING KNOWLEDGE</text>
-          <text x="80" y="271" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Lives in people, calls, decisions. ~90% of how the work actually gets done.</text>
+          <text x="1840" y="206" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
+          <text x="1840" y="226" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Documented. Machine-readable. What AI is given.</text>
+          <text x="1840" y="256" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>~90% TACIT OPERATING KNOWLEDGE</text>
+          <text x="1840" y="276" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Lives in people, calls, decisions. What the work actually needs.</text>
 
           {/* Iceberg — above waterline (small) */}
           <polygon points="870,220 960,90 1050,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
