@@ -244,7 +244,7 @@ function Slide02() {
     { x: 1210, label: "Records" },
   ];
   const buckets: { title: string; items: string[] }[] = [
-    { title: "Operating Standards",
+    { title: "Operating Judgment",
       items: ["How we actually price this segment", "The exceptions to the SOP", "Senior judgment calls"] },
     { title: "Account & Client Memory",
       items: ["How this client is run", "What was promised verbally", "Past disputes and resolutions"] },
@@ -276,17 +276,17 @@ function Slide02() {
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.04)`} />
-              <stop offset="40%" stopColor={`hsl(${TEAL} / 0.10)`} />
-              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.22)`} />
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.04)`} />
+              <stop offset="40%" stopColor={`hsl(${WARM} / 0.10)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.22)`} />
             </linearGradient>
             <linearGradient id="icebergTop" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`hsl(${WARM} / 0.18)`} />
-              <stop offset="100%" stopColor={`hsl(${WARM} / 0.32)`} />
+              <stop offset="0%" stopColor={`hsl(${GREEN} / 0.20)`} />
+              <stop offset="100%" stopColor={`hsl(${GREEN} / 0.36)`} />
             </linearGradient>
             <linearGradient id="icebergBot" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.28)`} />
-              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.50)`} />
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.30)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.55)`} />
             </linearGradient>
           </defs>
 
@@ -294,28 +294,30 @@ function Slide02() {
           <rect x="0" y="220" width="1920" height="540" fill="url(#waterGrad)" />
 
           {/* Waterline + enterprise-vocabulary labels (right-aligned to avoid header collision) */}
-          <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
-          <text x="1840" y="206" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
-          <text x="1840" y="226" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Documented. Machine-readable. What AI is given.</text>
-          <text x="1840" y="256" textAnchor="end" style={{ fontSize: 15, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>~90% TACIT OPERATING KNOWLEDGE</text>
-          <text x="1840" y="276" textAnchor="end" style={{ fontSize: 12, fontWeight: 600, fill: MUTED }}>Lives in people, calls, decisions. What the work actually needs.</text>
+          <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${WARM} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
+          {/* Right-side stack: oversized, hierarchy-leading labels */}
+          <text x="1840" y="178" textAnchor="end" style={{ fontSize: 28, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
+          <text x="1840" y="206" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI is given today</text>
+          <text x="1840" y="262" textAnchor="end" style={{ fontSize: 28, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~90% ORGANIZATIONAL INTELLIGENCE</text>
+          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to work to your standards</text>
+          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in people, calls, decisions, exceptions</text>
 
           {/* Iceberg — above waterline (small) */}
-          <polygon points="870,220 960,90 1050,220" fill="url(#icebergTop)" stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1.5" />
+          <polygon points="870,220 960,90 1050,220" fill="url(#icebergTop)" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.5" />
           {/* Iceberg — below waterline (massive — wider so buckets fit) */}
-          <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#icebergBot)" stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.5" />
+          <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#icebergBot)" stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.5" />
 
           {/* Above-water artifact labels */}
           {above.map((a, i) => (
             <g key={`a-${i}`}>
               <rect x={a.x - 60} y={140 - (i % 2) * 14} width="120" height="28" rx="6"
-                fill={BG} stroke={`hsl(${WARM} / 0.6)`} strokeWidth="1" />
+                fill={BG} stroke={`hsl(${GREEN} / 0.6)`} strokeWidth="1" />
               <text x={a.x} y={159 - (i % 2) * 14} textAnchor="middle"
                 style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
             </g>
           ))}
-          <text x="960" y="62" textAnchor="middle"
-            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI IS GIVEN TODAY</text>
+          <text x="960" y="58" textAnchor="middle"
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>WHAT AI IS GIVEN TODAY</text>
 
           {/* Below-water — 4 categorized buckets, 2x2, no overlap */}
           {buckets.map((bucket, i) => {
@@ -328,22 +330,22 @@ function Slide02() {
               <g key={`bk-${i}`}>
                 {/* Bucket panel */}
                 <rect x={bx} y={by} width={bw} height={bh} rx="10"
-                  fill={BG} stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="1.2" opacity="0.96" />
+                  fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.2" opacity="0.96" />
                 {/* Bucket title bar */}
                 <rect x={bx} y={by} width={bw} height="34" rx="10"
-                  fill={`hsl(${TEAL} / 0.18)`} />
+                  fill={`hsl(${WARM} / 0.18)`} />
                 <rect x={bx} y={by + 24} width={bw} height="10"
-                  fill={`hsl(${TEAL} / 0.18)`} />
+                  fill={`hsl(${WARM} / 0.18)`} />
                 <text x={bx + 18} y={by + 23}
-                  style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 1.5 }}>
+                  style={{ fontSize: 16, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 1.5 }}>
                   {bucket.title.toUpperCase()}
                 </text>
                 {/* Bucket items */}
                 {bucket.items.map((item, j) => (
                   <g key={`it-${j}`}>
-                    <circle cx={bx + 24} cy={by + 64 + j * 32} r="3" fill={`hsl(${TEAL})`} />
-                    <text x={bx + 36} y={by + 68 + j * 32}
-                      style={{ fontSize: 14, fontWeight: 600, fill: TEXT }}>{item}</text>
+                    <circle cx={bx + 24} cy={by + 66 + j * 34} r="3.5" fill={`hsl(${WARM})`} />
+                    <text x={bx + 36} y={by + 70 + j * 34}
+                      style={{ fontSize: 16, fontWeight: 600, fill: TEXT }}>{item}</text>
                   </g>
                 ))}
               </g>
@@ -352,7 +354,7 @@ function Slide02() {
 
           {/* Bottom caption */}
           <text x="960" y="725" textAnchor="middle"
-            style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>WHAT AI NEEDS TO WORK TO YOUR STANDARDS</text>
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO WORK TO YOUR STANDARDS</text>
         </svg>
       </div>
 
@@ -366,7 +368,7 @@ function Slide02() {
         </div>
       </div>
 
-      <SlideBar from={WARM} to={TEAL} />
+      <SlideBar from={GREEN} to={WARM} />
     </div>
   );
 }
