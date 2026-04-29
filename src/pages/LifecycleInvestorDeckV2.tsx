@@ -724,21 +724,21 @@ function Slide03() {
                   </svg>
 
                   <div className="absolute left-0 right-0 top-[4%] text-center font-black tracking-[0.14em] uppercase"
-                    style={{ fontSize: 10.5, color: `hsl(${GREEN})` }}>
+                    style={{ fontSize: 12.5, color: `hsl(${GREEN})` }}>
                     What AI sees
                   </div>
 
                   <div className="absolute left-[8%] right-[8%] top-[24%] grid grid-cols-3 gap-1.5">
                     {v.above.map((label) => (
                       <div key={label} className="min-h-[34px] rounded-md border px-1.5 py-1 flex items-center justify-center text-center font-extrabold"
-                        style={{ fontSize: 9.4, lineHeight: 1.12, color: TEXT, background: `hsl(0 0% 100% / 0.95)`, borderColor: `hsl(${GREEN} / 0.48)` }}>
+                        style={{ fontSize: 11, lineHeight: 1.18, color: TEXT, background: `hsl(0 0% 100% / 0.95)`, borderColor: `hsl(${GREEN} / 0.48)` }}>
                         {label}
                       </div>
                     ))}
                   </div>
 
                   <div className="absolute left-0 right-0 top-[39%] text-center font-black tracking-[0.14em] uppercase"
-                    style={{ fontSize: 10.5, color: `hsl(${v.color})` }}>
+                    style={{ fontSize: 12.5, color: `hsl(${v.color})` }}>
                     What AI misses
                   </div>
 
@@ -747,7 +747,7 @@ function Slide03() {
                       <div key={item} className="rounded-md border px-2.5 py-2 flex gap-2"
                         style={{ background: `hsl(0 0% 100% / 0.92)`, borderColor: `hsl(${v.color} / 0.22)` }}>
                         <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: `hsl(${v.color})` }} />
-                        <p className="font-bold" style={{ fontSize: 11.2, color: TEXT, lineHeight: 1.22 }}>{item}</p>
+                        <p className="font-bold" style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3 }}>{item}</p>
                       </div>
                     ))}
                   </div>
