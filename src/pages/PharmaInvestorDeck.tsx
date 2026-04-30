@@ -14,6 +14,12 @@ import { cn } from "@/lib/utils";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
 import zoltanPhoto from "@/assets/zoltan-kauker.png";
+import {
+  IcebergContextGap,
+  ExemplifiedArtifact,
+  SinglePyramid,
+  OrgIntelligenceUnpacked,
+} from "@/components/decks/ContextGapShared";
 
 // ─── Scaled slide container ──────────────────────────────────────────────────
 
