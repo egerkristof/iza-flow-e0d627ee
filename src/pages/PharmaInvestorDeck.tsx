@@ -357,68 +357,55 @@ const PHARMA_COST_BENCHMARKS = [
 ];
 
 function Slide03() {
-  const alsoApplies = ["Pharmacovigilance", "Regulatory affairs", "Medical affairs", "Clinical data mgmt", "Supply chain & cold chain", "Medical devices"];
-
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in Life Sciences
-        </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is expert judgment.</span>
-        </h2>
+    <SinglePyramid config={{
+      palette: { TEAL, WARM, GREEN, RED, ACCENT },
+      kicker: "Where Missing Context Shows Up in Life Sciences",
+      headlineLead: "The same iceberg, every batch, every dossier.",
+      headlineEmphasis: "What's captured is dwarfed by what runs the work.",
+      above: ["SOPs", "Batch records", "Validation protocols", "Annex / ICH refs"],
+      below: [
+        "Senior QA judgment on Annex 1 edge cases",
+        "Open deviation context from sister batches this week",
+        "Inspection commitments that override the SOP",
+        "Sponsor-specific protocol nuance and prior agency feedback",
+        "Repeat-deviation patterns the eDMS never linked",
+        "Unwritten release-hold conventions when the QP is off-site",
+      ],
+      breaks: "Batch reject. 483 observation. Submission slip. Recall risk.",
+      alsoApplies: ["Pharmacovigilance", "Regulatory affairs", "Medical affairs", "Clinical data mgmt", "Cold chain & supply", "Medical devices"],
+    }} />
+  );
+}
 
-        <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
-          {PHARMA_GAP_CASES.map((item) => (
-            <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
-              <div className="w-[290px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Database size={18} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
-                </div>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {item.records.map((record) => (
-                    <span key={record} className="rounded-full px-3.5 py-1.5 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{record}</span>
-                  ))}
-                </div>
-                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}><span className="font-bold" style={{ color: TEXT }}>Typical AI output:</span> {item.output}</p>
-              </div>
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 06b — ORGANIZATIONAL INTELLIGENCE, UNPACKED (pharma framing)
+// ═══════════════════════════════════════════════════════════════════════════════
 
-              <div className="flex-1 px-7 py-4 flex flex-col justify-center" style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: `hsl(${item.accent} / 0.12)` }}>
-                    {item.icon}
-                  </div>
-                  <p className="font-black" style={{ fontSize: 23, color: TEXT }}>{item.name}</p>
-                  <div className="ml-auto flex items-center gap-2 px-4 py-1.5 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                    <AlertTriangle size={15} style={{ color: `hsl(${WARM})` }} />
-                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
-                  </div>
-                </div>
-                <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.42 }}>{item.gap}</p>
-              </div>
-
-              <div className="w-[220px] shrink-0 px-5 py-4 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.04)` }}>
-                <p className="font-bold mb-1.5" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
-                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.32 }}>{item.cost}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-4 px-2">
-          <p className="font-bold shrink-0" style={{ fontSize: 17, color: MUTED }}>Same pattern in:</p>
-          <div className="flex flex-wrap gap-2.5">
-            {alsoApplies.map((item) => (
-              <span key={item} className="rounded-full px-4 py-2 font-semibold border" style={{ fontSize: 16, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-      <SlideBar from={TEAL} to={WARM} />
-    </div>
+function Slide06OrgIntel() {
+  return (
+    <OrgIntelligenceUnpacked config={{
+      palette: { TEAL, WARM, GREEN, RED, ACCENT },
+      kicker: "Organizational Intelligence — Unpacked",
+      headlineLead: "What actually lives inside",
+      headlineEmphasis: "the GxP substrate.",
+      intro: "The 90% the iceberg points at. Up close, it is six interacting layers — and a knowledge graph is what holds them together.",
+      facets: [
+        { title: "Senior QA & QP Judgment",
+          body: "Annex 1 calls, batch-release decisions under pressure, the way a seasoned QP weighs an excursion. Today: trapped in heads." },
+        { title: "Trial & Sponsor Memory",
+          body: "Prior agency feedback, monitoring findings, sponsor-specific protocol nuance, what was promised in pre-submission meetings." },
+        { title: "Changing GxP Dynamics",
+          body: "Annex 1 revision, Annex 11 modernization, Part 11 enforcement, EU AI Act on GxP systems — context that drifted last quarter." },
+        { title: "New Quality Strategy",
+          body: "Quality Council decisions, this year's audit posture, what's now in scope for the integrated quality system." },
+        { title: "External Inspection Inputs",
+          body: "Open 483s, EU GMP findings still in scope, partner CMO observations, supplier change notices that reshape risk this week." },
+        { title: "Decisions & Exceptions",
+          body: "Sign-off thresholds, deviations escalated but not closed, the inspection commitment that overrides the SOP. The connective tissue between docs." },
+      ],
+      punchline: (<>This GxP substrate is what every deviation, CAPA, CSR section and submission actually depends on. <span style={{ color: `hsl(${GREEN})` }}>It's what the Context Layer captures, governs, and makes executable.</span></>),
+    }} />
   );
 }
 
