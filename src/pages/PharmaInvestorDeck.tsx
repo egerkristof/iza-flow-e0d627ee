@@ -239,101 +239,68 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["SOPs", "Protocols", "Batch records", "Validation specs", "Annex/ICH refs", "Trial data"];
-  const outputs = ["Deviation reports", "CSRs", "Submissions", "CAPAs", "PV narratives", "Audit responses"];
-
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-          The Context Gap
-        </p>
+    <IcebergContextGap config={{
+      palette: { TEAL, WARM, GREEN, RED, ACCENT },
+      kicker: "The Category",
+      headline: "The Context Gap.",
+      subheadline: (<>AI doesn't fail in pharma because the model is weak. It fails because <span style={{ color: TEXT, fontWeight: 700 }}>most of how your GxP organization actually operates was never formally defined.</span></>),
+      above: ["SOPs", "Batch records", "Protocols", "Validation specs"],
+      buckets: [
+        { title: "Senior QA Judgment",
+          items: ["How Annex 1 applies to this batch", "When a deviation is releasable", "Sign-off calls under pressure"] },
+        { title: "Trial & Sponsor Memory",
+          items: ["Prior agency feedback on the dossier", "Open monitoring findings", "Sponsor-specific protocol nuance"] },
+        { title: "Cross-Site GxP Decisions",
+          items: ["Last week's CAPA on a sister batch", "Repeat-deviation patterns", "Site-by-site interpretation drift"] },
+        { title: "Regulatory & Compliance Practice",
+          items: ["Region-specific filing rules", "Inspection findings still open", "Annex/ICH overrides on the SOP"] },
+      ],
+    }} />
+  );
+}
 
-        <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
-          Companies have inputs. AI generates outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your standards.</span>
-        </h2>
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE 02b — THE CONTEXT GAP, EXEMPLIFIED (annotated deviation report)
+// ═══════════════════════════════════════════════════════════════════════════════
 
-        {/* Three columns: Inputs → THE GAP → Outputs */}
-        <div className="flex items-stretch gap-0 flex-1 min-h-0 max-h-[420px]">
-
-          {/* LEFT — Input Artifacts */}
-          <div className="flex-1 rounded-l-2xl border-2 p-8 flex flex-col justify-center"
-            style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)`, borderRight: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Input Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What companies feed AI today</p>
-            <div className="flex flex-wrap gap-3">
-              {inputs.map(item => (
-                <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${TEAL} / 0.12)`, color: TEXT, border: `1px solid hsl(${TEAL} / 0.2)` }}>
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-5">
-              <Check size={18} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
-            </div>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. It sits in files no model can reason over.
-            </p>
-          </div>
-
-          {/* CENTER — THE GAP (deliberately stark) */}
-          <div className="w-[340px] shrink-0 border-y-2 flex flex-col items-center justify-center relative"
-            style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.04)` }}>
-            {/* Dashed vertical lines suggesting disconnection */}
-            <div className="absolute left-0 top-8 bottom-8 w-px" style={{ borderLeft: `2px dashed hsl(${WARM} / 0.2)` }} />
-            <div className="absolute right-0 top-8 bottom-8 w-px" style={{ borderRight: `2px dashed hsl(${WARM} / 0.2)` }} />
-
-            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
-              style={{ background: `hsl(${WARM} / 0.12)`, border: `2px solid hsl(${WARM} / 0.3)` }}>
-              <span className="font-black" style={{ fontSize: 44, color: `hsl(${WARM})` }}>?</span>
-            </div>
-            <p className="font-black text-center mb-2" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-              No System of<br />Intelligence
-            </p>
-            <p className="text-center px-5" style={{ fontSize: 15, color: MUTED, lineHeight: 1.55 }}>
-              AI can generate fast, but it can't apply your expertise, your judgment, or your standards.
-            </p>
-            <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: TEXT }}>
-              The result: experts redo AI's work instead of scaling their own.
-            </p>
-          </div>
-
-          {/* RIGHT — Output Artifacts */}
-          <div className="flex-1 rounded-r-2xl border-2 p-8 flex flex-col justify-center"
-            style={{ borderColor: `hsl(${GREEN} / 0.3)`, background: `hsl(${GREEN} / 0.06)`, borderLeft: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Output Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What AI produces without guidance</p>
-            <div className="flex flex-wrap gap-3">
-              {outputs.map(item => (
-                <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${GREEN} / 0.12)`, color: TEXT, border: `1px solid hsl(${GREEN} / 0.2)` }}>
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-5">
-              <Check size={18} style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
-            </div>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But without your standards, every output is generic: the average, not the expert.
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom punchline */}
-        <div className="mt-8 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
-          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
-            Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
-          </p>
-        </div>
-      </div>
-      <SlideBar from={WARM} to={TEAL} />
-    </div>
+function Slide02Exemplified() {
+  return (
+    <ExemplifiedArtifact config={{
+      palette: { TEAL, WARM, GREEN, RED, ACCENT },
+      kicker: "The Context Gap, exemplified",
+      headlineLead: "The deviation report AI drafted reads clean.",
+      headlineEmphasis: "Every highlighted line is wrong.",
+      liveChip: "Live signals · not in any SOP",
+      artifact: {
+        typeLabel: "Deviation report · drafted by AI · ready for QA review",
+        timestamp: "07:18 · Tue",
+        headers: [
+          { label: "Batch", value: <><span style={{ fontWeight: 700 }}>BX-2241-A</span><span style={{ color: "hsl(215 15% 42%)" }}> · sterile fill, line 4</span></> },
+          { label: "Author", value: "qa-bot@company.com" },
+          { label: "Subject", value: <span style={{ fontWeight: 800, fontSize: 16 }}>Deviation 2241-D17 — Environmental excursion, Grade A</span> },
+        ],
+        body: [
+          ["A Grade A excursion was detected during fill of batch BX-2241-A. Root cause analysis indicates ", { mark: "no impact on product sterility per Annex 1 §8.30", n: 1 }, "."],
+          [{ mark: "No prior excursions on this line in the last 12 months.", n: 2 }, " The deviation is classified as ", { mark: "Minor under SOP-QA-014.", n: 3 }],
+          [{ mark: "Recommend release upon supervisor sign-off.", n: 4 }],
+          ["Drafted automatically. Pending QA review."],
+        ],
+        verdict: "Procedurally correct. Factually wrong. Audit-fragile.",
+      },
+      annotations: [
+        { n: 1, nature: "CONTRADICTION", title: "Two GxP rules disagree",
+          body: "The site SOP cites the §8.30 carve-out. The 2024 inspection commitment requires impact assessment for any Grade A excursion regardless of duration. The commitment wins. RAG retrieves both with no way to choose." },
+        { n: 2, nature: "OPEN ISSUE", title: "Two prior excursions, unlogged",
+          body: "Two near-misses on this line in the last 90 days were captured in the daily QA huddle, never escalated to the eDMS. Senior QA already flagged the pattern in last Friday's stand-up." },
+        { n: 3, nature: "JUST CHANGED", title: "Severity matrix updated 11 days ago",
+          body: "SOP-QA-014 was revised to upgrade environmental excursions on sterile lines from Minor to Major. The new SOP is in approval workflow. The old one is still indexed." },
+        { n: 4, nature: "UNWRITTEN RULE", title: "Releases pause when QP travels",
+          body: "The Qualified Person is on-site in Singapore this week. By informal practice, sterile lots are held until in-person QP review on return. Nobody writes this down. The team just knows." },
+      ],
+      hadBody: "SOPs. Batch records. Annex 1 references. Validation specs. Last quarter's CAPAs.",
+      closesBody: (<>An <span style={{ fontWeight: 800 }}>Organizational Intelligence</span> layer that captures the live, unwritten GxP signals — and resolves them at draft time, before QA review.</>),
+    }} />
   );
 }
 
