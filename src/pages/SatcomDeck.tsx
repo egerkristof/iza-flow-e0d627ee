@@ -7,7 +7,8 @@ import {
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
   Pill, FlaskConical, Microscope, FileCheck, HeartPulse, Factory,
-, Sparkles , GitBranch } from "lucide-react";
+  Sparkles, GitBranch,
+} from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
