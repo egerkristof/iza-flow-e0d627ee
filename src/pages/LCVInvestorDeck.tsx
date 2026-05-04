@@ -1977,7 +1977,6 @@ const SLIDES = [
   { id: 14, title: "Team", component: <Slide12 /> },
   { id: 15, title: "The Ask", component: <Slide13 /> },
   { id: 16, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 17, title: "Appendix: How It Works", component: <Slide07 /> },
   { id: 18, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
