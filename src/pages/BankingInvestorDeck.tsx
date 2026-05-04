@@ -6,7 +6,7 @@ import {
   AlertTriangle, Check, CheckCircle2, DollarSign,
   Users, Globe, Briefcase, Building2, TrendingUp, Target, Shield,
   Layers, Eye, Workflow, Lightbulb, Award, Database, Brain, Cpu, Clock, Rocket, FileText,
-} from "lucide-react";
+, Sparkles , GitBranch } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -2121,16 +2121,624 @@ function SlideAppendixDivider() {
   );
 }
 
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE — THE CONTEXT GAP, EXEMPLIFIED (Retail Banking)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideContextGapExemplified() {
+  const annotations = [
+    {
+      n: 1,
+      nature: "JUST CHANGED",
+      title: "Affordability model retrained two days ago",
+      body: "Risk pushed a new affordability model on Monday after the regulator's stress-test letter. The letter template still cites the old one. Today's batch will go out misciting the model used.",
+    },
+    {
+      n: 2,
+      nature: "OPEN ISSUE",
+      title: "Open consumer-duty query from internal audit",
+      body: "Audit raised a Consumer Duty fair-value question on this segment two weeks ago. Not closed. Letters cannot be sent claiming 'standard fairness checks' until it is.",
+    },
+    {
+      n: 3,
+      nature: "CONTRADICTION",
+      title: "Two reason-code templates disagree",
+      body: "The decisioning engine emits one reason-code mapping. The disclosures team's regulator-approved letter library uses another. Both retrievable. Only one is compliant for this jurisdiction.",
+    },
+    {
+      n: 4,
+      nature: "UNWRITTEN RULE",
+      title: "Head of Retail Credit blocks generic refusals",
+      body: "On adverse-action letters in this segment, leadership requires a specific affordability-pathway sentence. Letters without it have been recalled. Nobody wrote the rule down.",
+    },
+  ];
+
+  const Pin = ({ n }: { n: number }) => (
+    <sup
+      className="inline-flex items-center justify-center rounded-full font-black align-super ml-0.5"
+      style={{
+        width: 18, height: 18, fontSize: 11, lineHeight: 1,
+        background: `hsl(${WARM})`, color: BG,
+        boxShadow: `0 0 0 2px hsl(${WARM} / 0.18)`,
+        verticalAlign: "super",
+      }}
+    >{n}</sup>
+  );
+
+  const Mark = ({ children, n }: { children: React.ReactNode; n: number }) => (
+    <span style={{
+      background: `hsl(${WARM} / 0.14)`,
+      borderBottom: `2px solid hsl(${WARM})`,
+      padding: "0 2px",
+      borderRadius: 2,
+      color: TEXT,
+      fontWeight: 600,
+    }}>{children}<Pin n={n} /></span>
+  );
+
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-16 pt-9 pb-7">
+        <div className="flex items-end justify-between mb-5">
+          <div>
+            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
+              The Context Gap, exemplified
+            </p>
+            <h2 className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05 }}>
+              The customer letter AI drafted reads cleanly.{' '}
+              <span style={{ color: `hsl(${WARM})` }}>Every highlighted phrase is wrong.</span>
+            </h2>
+          </div>
+          <div className="hidden lg:flex items-center gap-2 shrink-0 ml-8 px-4 py-2 rounded-full"
+            style={{ border: `1.5px solid hsl(${WARM} / 0.35)`, background: `hsl(${WARM} / 0.06)` }}>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: `hsl(${WARM})` }} />
+            <span className="font-bold tracking-[0.18em] uppercase" style={{ fontSize: 11, color: `hsl(${WARM})` }}>
+              Live signals · not in any indexed document
+            </span>
+          </div>
+        </div>
+
+        <div className="flex-1 min-h-0 grid gap-7" style={{ gridTemplateColumns: "7fr 5fr" }}>
+          <div className="relative rounded-2xl flex flex-col overflow-hidden"
+            style={{
+              background: BG,
+              border: `1px solid hsl(${TEAL} / 0.20)`,
+              boxShadow: `0 18px 60px -24px hsl(222 30% 20% / 0.18), 0 2px 0 hsl(${TEAL} / 0.06)`,
+            }}>
+            <div className="px-7 py-3 flex items-center gap-2 border-b"
+              style={{ borderColor: `hsl(${TEAL} / 0.12)`, background: `hsl(${TEAL} / 0.03)` }}>
+              <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
+              <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${TEAL})` }}>
+                Customer comms · Adverse action · Personal loan
+              </span>
+              <div className="flex items-center gap-2 ml-3 pl-3 border-l" style={{ borderColor: `hsl(${TEAL} / 0.18)` }}>
+                <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
+                <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${ACCENT})` }}>
+                  Drafted by AI · ready for review
+                </span>
+              </div>
+              <span className="ml-auto font-mono" style={{ fontSize: 10.5, color: MUTED }}>
+                Adverse Action · cycle current
+              </span>
+            </div>
+
+            <div className="px-9 pt-6 pb-3" style={{ borderBottom: `1px dashed hsl(${TEAL} / 0.18)` }}>
+              <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
+                <div className="mt-1"><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Product</span>
+                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Personal loan · €25k · 60 months</span>
+                  <span style={{ color: MUTED }}> · decisioned · pre-send</span>
+                </div>
+                <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Sponsor</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Retail Credit · Decisioning</span>
+                </div>
+                <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Audience</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Customer · regulator · audit log</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 px-9 py-7"
+              style={{ fontSize: 20, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
+              <p className="mb-5">Your application was assessed against <Mark n={1}>our standard affordability model</Mark> as required by our credit policy.</p>
+              <p className="mb-5">The decision was reviewed for fairness using <Mark n={2}>the bank's standard ECOA / consumer-duty checks.</Mark>.</p>
+              <p className="mb-5">We applied <Mark n={3}>the standard adverse-action wording</Mark> per regulatory guidance.</p>
+              <p style={{ color: MUTED }}><Mark n={4}>We are unable to extend credit at this time.</Mark></p>
+            </div>
+
+            <div className="px-9 py-3.5 flex items-center gap-3"
+              style={{ borderTop: `1px solid hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.06)` }}>
+              <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
+              <p className="font-black" style={{ fontSize: 15, color: TEXT }}>
+                Compliant? No. Customer-letter-blocking. Regulator-fineable.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col">
+            <div className="flex items-baseline justify-between mb-3">
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 14, color: `hsl(${WARM})` }}>
+                What AI couldn&apos;t see
+              </p>
+              <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
+                Lives in model changelogs, audit threads, credit leadership's heads.
+              </p>
+            </div>
+
+            <div className="flex-1 flex flex-col gap-3">
+              {annotations.map((a) => (
+                <div key={a.n} className="relative rounded-xl px-4 py-3.5 flex gap-3"
+                  style={{
+                    background: BG,
+                    border: `1px solid hsl(${WARM} / 0.30)`,
+                    boxShadow: `0 1px 0 hsl(${WARM} / 0.08)`,
+                  }}>
+                  <div className="shrink-0 flex flex-col items-center" style={{ width: 28 }}>
+                    <span className="inline-flex items-center justify-center rounded-full font-black"
+                      style={{
+                        width: 26, height: 26, fontSize: 13,
+                        background: `hsl(${WARM})`, color: BG,
+                        boxShadow: `0 0 0 3px hsl(${WARM} / 0.15)`,
+                      }}>{a.n}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-black tracking-[0.14em] uppercase rounded-sm px-1.5 py-0.5"
+                        style={{ fontSize: 11, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.12)` }}>
+                        {a.nature}
+                      </span>
+                    </div>
+                    <p className="font-black mb-1" style={{ fontSize: 16, color: TEXT, lineHeight: 1.25 }}>
+                      {a.title}
+                    </p>
+                    <p style={{ fontSize: 13.5, color: MUTED, lineHeight: 1.5 }}>{a.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="rounded-lg px-4 py-3"
+                style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.20)` }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <Database size={14} style={{ color: `hsl(${TEAL})` }} />
+                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 11.5, color: `hsl(${TEAL})` }}>
+                    What AI had
+                  </p>
+                </div>
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
+                  Credit policy. Decisioning rules. Letter library. Reason-code mapping.
+                </p>
+                <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
+                  Indexable. RAG-friendly. Insufficient for a regulator or an ombudsman.
+                </p>
+              </div>
+              <div className="rounded-lg px-4 py-3"
+                style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.30)` }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
+                  <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 11.5, color: `hsl(${ACCENT})` }}>
+                    What closes the gap
+                  </p>
+                </div>
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live model changes, open audit queries, and leadership conventions and resolves them at letter-generation time." }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={WARM} to={TEAL} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE — PEOPLE AS NODES (Retail Banking)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlidePeopleAsNodes() {
+  const team = [
+    { name: "Eva", role: "Underwriter" },
+    { name: "Raj", role: "Risk" },
+    { name: "Maria", role: "Disclosures" },
+    { name: "Anna", role: "Compliance" },
+    { name: "Tom", role: "Operations" },
+  ];
+  const cx = 200, cy = 200, r = 130;
+  const positions = team.map((p, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI) / team.length;
+    return { ...p, x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+  });
+
+  const edges = [
+    { a: 0, b: 1, w: 3.5 },
+    { a: 1, b: 2, w: 1.2 },
+    { a: 2, b: 3, w: 2.4 },
+    { a: 3, b: 4, w: 1.8 },
+    { a: 4, b: 0, w: 1.0 },
+    { a: 0, b: 2, w: 2.8 },
+    { a: 1, b: 3, w: 1.5 },
+    { a: 2, b: 4, w: 2.2 },
+  ];
+
+  const artifacts = [
+    { label: "Policy", x: 60, y: 60 },
+    { label: "Models", x: 240, y: 50 },
+    { label: "Letter lib", x: 80, y: 170 },
+    { label: "Reason map", x: 240, y: 180 },
+    { label: "Audit logs", x: 50, y: 280 },
+    { label: "Reg letters", x: 240, y: 300 },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
+          The Shift
+        </p>
+        <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.04 }}>
+          From documents, to static agents, to a{' '}
+          <span style={{ color: `hsl(${GREEN})` }}>living Organizational Intelligence.</span>
+        </h2>
+
+        <div className="flex-1 min-h-0 grid grid-cols-3 gap-6">
+          <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
+            style={{ borderColor: `hsl(${RED} / 0.30)`, background: `hsl(${RED} / 0.03)` }}>
+            <div className="px-5 py-3 border-b flex items-center gap-2"
+              style={{ borderColor: `hsl(${RED} / 0.20)`, background: `hsl(${RED} / 0.06)` }}>
+              <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ fontSize: 13, color: BG, background: `hsl(${RED})` }}>1</span>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${RED})` }}>Document Era</p>
+            </div>
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>
+                Policies and rule books define what. Underwriters, compliance and disclosures define how.
+              </p>
+              <p className="font-semibold mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
+                Documents are versioned. Judgment is not. Nothing scales and AI inherits none of it.
+              </p>
+            </div>
+            <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
+              style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <svg className="w-full h-full" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+                {artifacts.map((a, i) => (
+                  <g key={i}>
+                    <rect x={a.x} y={a.y} width="80" height="42" rx="6"
+                      fill={`hsl(${RED} / 0.08)`} stroke={`hsl(${RED} / 0.35)`} strokeWidth="1" />
+                    <text x={a.x + 40} y={a.y + 27} textAnchor="middle"
+                      style={{ fontSize: 12, fontWeight: 700, fill: TEXT }}>{a.label}</text>
+                  </g>
+                ))}
+                {[
+                  { x: 180, y: 80 },
+                  { x: 180, y: 195 },
+                  { x: 180, y: 305 },
+                ].map((g, i) => (
+                  <g key={`gap-${i}`}>
+                    <circle cx={g.x} cy={g.y} r="14"
+                      fill={`hsl(${RED} / 0.10)`} stroke={`hsl(${RED} / 0.55)`} strokeDasharray="3 2" strokeWidth="1.2" />
+                    <text x={g.x} y={g.y + 5} textAnchor="middle"
+                      style={{ fontSize: 14, fontWeight: 900, fill: `hsl(${RED})` }}>?</text>
+                  </g>
+                ))}
+                <text x="180" y="350" textAnchor="middle"
+                  style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${RED})`, letterSpacing: 1 }}>
+                  EXECUTION BETWEEN DOCS IS UNDEFINED.
+                </text>
+              </svg>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
+            style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `hsl(${TEAL} / 0.03)` }}>
+            <div className="px-5 py-3 border-b flex items-center gap-2"
+              style={{ borderColor: `hsl(${TEAL} / 0.20)`, background: `hsl(${TEAL} / 0.06)` }}>
+              <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ fontSize: 13, color: BG, background: `hsl(${TEAL})` }}>2</span>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>Agent Era</p>
+            </div>
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>
+                Agents are statically defined snapshots in time.
+              </p>
+              <p className="font-semibold mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
+                Each role gets wrapped as an agent. Frozen the moment policy shifts or the world changes. Re-prompt forever.
+              </p>
+            </div>
+            <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
+              style={{ background: BG, border: `1px solid hsl(${TEAL} / 0.15)` }}>
+              <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                {artifacts.map((a, i) => (
+                  <rect key={`bg-${i}`} x={a.x * 1.05 + 10} y={a.y * 1.05 + 10} width="60" height="32" rx="4"
+                    fill={`hsl(${TEAL} / 0.03)`} stroke={`hsl(${TEAL} / 0.15)`} strokeWidth="0.8"
+                    strokeDasharray="2 2" />
+                ))}
+                {positions.map((p, i) => (
+                  <g key={i}>
+                    <rect x={p.x - 40} y={p.y - 40} width="80" height="80" rx="6"
+                      fill={`hsl(${TEAL} / 0.05)`} stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="1.2"
+                      strokeDasharray="4 3" />
+                    <circle cx={p.x} cy={p.y} r="26" fill={BG}
+                      stroke={`hsl(${TEAL})`} strokeWidth="2" />
+                    <text x={p.x} y={p.y - 2} textAnchor="middle"
+                      style={{ fontSize: 12, fontWeight: 800, fill: TEXT }}>{p.name}</text>
+                    <text x={p.x} y={p.y + 11} textAnchor="middle"
+                      style={{ fontSize: 7.5, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
+                      {p.role.toUpperCase()}
+                    </text>
+                    <rect x={p.x + 14} y={p.y - 44} width="32" height="12" rx="2"
+                      fill={`hsl(${TEAL})`} />
+                    <text x={p.x + 30} y={p.y - 35} textAnchor="middle"
+                      style={{ fontSize: 7, fontWeight: 900, fill: BG, letterSpacing: 0.6 }}>
+                      AGENT
+                    </text>
+                  </g>
+                ))}
+                <text x="200" y="390" textAnchor="middle"
+                  style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${TEAL})`, letterSpacing: 1 }}>
+                  AGENTS ARE STATIC SNAPSHOTS OF PEOPLE.
+                </text>
+              </svg>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border-2 flex flex-col overflow-hidden"
+            style={{ borderColor: `hsl(${GREEN} / 0.40)`,
+              background: `linear-gradient(135deg, hsl(${TEAL} / 0.04), hsl(${GREEN} / 0.05))` }}>
+            <div className="px-5 py-3 border-b flex items-center gap-2"
+              style={{ borderColor: `hsl(${GREEN} / 0.25)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <span className="font-black w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ fontSize: 13, color: BG, background: `hsl(${GREEN})` }}>3</span>
+              <p className="font-black tracking-[0.14em] uppercase" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Organizational Intelligence</p>
+            </div>
+            <div className="px-5 pt-5">
+              <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>
+                The fluid, semantic knowledge of the company is the substrate.
+              </p>
+              <p className="font-semibold mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
+                Define how the org thinks. Agents become downstream surfaces. AI inherits standards, exceptions, and intent, live.
+              </p>
+            </div>
+            <div className="flex-1 px-4 py-3 mt-3 mx-4 mb-4 rounded-xl overflow-hidden"
+              style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.20)` }}>
+              <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <radialGradient id="bank-aiHaloGreen" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={`hsl(${GREEN} / 0.35)`} />
+                    <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+                  </radialGradient>
+                  <radialGradient id="bank-contextField" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={`hsl(${GREEN} / 0.10)`} />
+                    <stop offset="70%" stopColor={`hsl(${TEAL} / 0.06)`} />
+                    <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+                  </radialGradient>
+                </defs>
+
+                <circle cx="200" cy="200" r="180" fill="url(#bank-contextField)" />
+
+                {(() => {
+                  const edgeLabels: Record<string, string> = {"0-1":"policy alignment","0-2":"letter accuracy","2-3":"audit trail","2-4":"complaint memory"};
+                  return edges.map((e, i) => {
+                    const key = `${e.a}-${e.b}`;
+                    const label = edgeLabels[key];
+                    if (!label) return null;
+                    const a = positions[e.a], b = positions[e.b];
+                    const mx = (a.x + b.x) / 2;
+                    const my = (a.y + b.y) / 2;
+                    return (
+                      <g key={`lbl-${i}`}>
+                        <rect x={mx - label.length * 3 - 4} y={my - 18} width={label.length * 6 + 8} height="14" rx="3"
+                          fill={BG} stroke={`hsl(${GREEN} / 0.55)`} strokeWidth="0.8" />
+                        <text x={mx} y={my - 8} textAnchor="middle"
+                          style={{ fontSize: 8.5, fontWeight: 800, fill: `hsl(${GREEN})`, letterSpacing: 0.3 }}>
+                          {label}
+                        </text>
+                      </g>
+                    );
+                  });
+                })()}
+
+                {edges.map((e, i) => {
+                  const a = positions[e.a], b = positions[e.b];
+                  return (
+                    <line key={`e-${i}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+                      stroke={`hsl(${TEAL} / ${0.25 + e.w * 0.12})`} strokeWidth={e.w} />
+                  );
+                })}
+
+                {edges.filter(e => e.w >= 2.4).map((e, i) => {
+                  const a = positions[e.a], b = positions[e.b];
+                  const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+                  return (
+                    <circle key={`pulse-${i}`} cx={mx} cy={my} r="3.5"
+                      fill={`hsl(${GREEN})`} stroke={BG} strokeWidth="1.5" />
+                  );
+                })}
+
+                {positions.map((p, i) => (
+                  <g key={i}>
+                    <circle cx={p.x} cy={p.y} r="48" fill="url(#bank-aiHaloGreen)" />
+                    <circle cx={p.x} cy={p.y} r="32" fill={BG}
+                      stroke={`hsl(${TEAL})`} strokeWidth="2.5" />
+                    <text x={p.x} y={p.y - 2} textAnchor="middle"
+                      style={{ fontSize: 12, fontWeight: 800, fill: TEXT }}>{p.name}</text>
+                    <text x={p.x} y={p.y + 11} textAnchor="middle"
+                      style={{ fontSize: 7.5, fontWeight: 700, fill: `hsl(${TEAL})`, letterSpacing: 0.5 }}>
+                      {p.role.toUpperCase()}
+                    </text>
+                  </g>
+                ))}
+
+                <text x="200" y="390" textAnchor="middle"
+                  style={{ fontSize: 11, fontWeight: 800, fill: `hsl(${GREEN})`, letterSpacing: 1 }}>
+                  CONTEXT FILLS THE SPACE BETWEEN PEOPLE.
+                </text>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
+          <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
+            Documents froze the policy. Agents froze the role. <span style={{ color: `hsl(${GREEN})` }}>Organizational Intelligence keeps how the company decides alive.</span>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SLIDE — ORGANIZATIONAL INTELLIGENCE UNPACKED (Retail Banking)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideOrgIntelligence() {
+  const facets = [
+    {
+      icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Senior Credit Judgment",
+      body: "How experienced underwriters, risk and compliance leads actually decide: which exception holds, when to override the model, when 'standard fairness' is acceptable. Today: trapped in heads.",
+    },
+    {
+      icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Customer & Portfolio Memory",
+      body: "How this segment is run: prior remediation commitments, vulnerable-customer flags, what was promised in the last regulator visit, who owns each open complaint.",
+    },
+    {
+      icon: <RefreshCw size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Changing Rules & Models",
+      body: "Consumer Duty, FCA / BaFin updates, model retrains, letter library revisions. Context that drifted last week and rewrote the right answer for today's batch.",
+    },
+    {
+      icon: <Target size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Risk Appetite & Strategy",
+      body: "What the credit committee locked this quarter, which segments to grow, which to shrink, which exceptions are blessed. Most AI never gets told.",
+    },
+    {
+      icon: <Globe size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Regulator & External Signals",
+      body: "FCA Dear-CEO letters, BaFin clarifications, ombudsman decisions, complaint signals. Facts from outside the bank the team must react to.",
+    },
+    {
+      icon: <GitBranch size={26} style={{ color: `hsl(${TEAL})` }} />,
+      title: "Decisions & Exceptions",
+      body: "Override thresholds, open remediations, segment-specific waivers, the rules that override the rules. The connective tissue between policy and reality.",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full opacity-[0.05]"
+        style={{ background: `radial-gradient(circle, hsl(${GREEN}), transparent 70%)` }} />
+
+      <div className="relative z-10 flex flex-col h-full px-20 pt-12 pb-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>
+          Organizational Intelligence — Unpacked
+        </p>
+        <h2 className="font-black mb-4" style={{ fontSize: 50, color: TEXT, lineHeight: 1.04 }}>
+          What actually lives inside{' '}
+          <span style={{ color: `hsl(${GREEN})` }}>the substrate.</span>
+        </h2>
+        <p className="font-medium mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
+          The 90% the iceberg points at. Up close, it is six interacting layers. A banking knowledge graph is what holds them together.
+        </p>
+
+        <div className="flex-1 min-h-0 grid gap-8 items-center" style={{ gridTemplateColumns: "5fr 7fr" }}>
+          <div className="relative h-full rounded-2xl border-2 flex items-center justify-center"
+            style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `linear-gradient(135deg, hsl(${TEAL} / 0.04), hsl(${GREEN} / 0.06))` }}>
+            <svg className="w-full h-full" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="bank-oiHalo" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor={`hsl(${GREEN} / 0.35)`} />
+                  <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+                </radialGradient>
+              </defs>
+              <circle cx="250" cy="250" r="220" fill="url(#bank-oiHalo)" />
+              {Array.from({ length: 6 }).map((_, i) => {
+                const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+                const r = 170;
+                const x = 250 + r * Math.cos(angle);
+                const y = 250 + r * Math.sin(angle);
+                return (
+                  <g key={i}>
+                    <line x1="250" y1="250" x2={x} y2={y}
+                      stroke={`hsl(${TEAL} / 0.40)`} strokeWidth="1.5" />
+                    {Array.from({ length: 6 }).map((_, j) => {
+                      if (j <= i) return null;
+                      const a2 = (j / 6) * Math.PI * 2 - Math.PI / 2;
+                      const x2 = 250 + r * Math.cos(a2);
+                      const y2 = 250 + r * Math.sin(a2);
+                      return (
+                        <line key={`p-${j}`} x1={x} y1={y} x2={x2} y2={y2}
+                          stroke={`hsl(${TEAL} / 0.15)`} strokeWidth="0.8" />
+                      );
+                    })}
+                    <circle cx={x} cy={y} r="22" fill={BG}
+                      stroke={`hsl(${GREEN})`} strokeWidth="2" />
+                    <circle cx={x} cy={y} r="6" fill={`hsl(${GREEN})`} />
+                  </g>
+                );
+              })}
+              <circle cx="250" cy="250" r="58" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="3" />
+              <text x="250" y="245" textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
+                ORGANIZATIONAL
+              </text>
+              <text x="250" y="265" textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>
+                INTELLIGENCE
+              </text>
+            </svg>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 h-full content-center">
+            {facets.map((f, i) => (
+              <div key={i} className="rounded-xl border-2 px-5 py-4"
+                style={{
+                  borderColor: `hsl(${GREEN} / 0.30)`,
+                  background: BG,
+                  boxShadow: `0 2px 0 hsl(${GREEN} / 0.10)`,
+                }}>
+                <div className="flex items-center gap-3 mb-2">
+                  {f.icon}
+                  <p className="font-black" style={{ fontSize: 18, color: TEXT }}>{f.title}</p>
+                </div>
+                <p className="font-medium" style={{ fontSize: 13.5, color: MUTED, lineHeight: 1.45 }}>{f.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
+          <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "This substrate looks different in unsecured lending than in mortgages than in onboarding. <strong>Which is why execution has to be sub-vertical.</strong>" }} />
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
+    </div>
+  );
+}
+
 // ─── Slide registry ──────────────────────────────────────────────────────────
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
+  { id: 2, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
   { id: 3, title: "Where Missing Context Shows Up in Retail Banking", component: <Slide03 /> },
   { id: 4, title: "What Missing Context Costs in Retail Banking", component: <Slide04Cost /> },
   { id: 5, title: "Early Validation", component: <Slide08 /> },
   { id: 6, title: "Why Now", component: <SlideWhyNow /> },
   { id: 7, title: "The Context Layer", component: <Slide05 /> },
+  { id: 2, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
+  { id: 2, title: "Organizational Intelligence", component: <SlideOrgIntelligence /> },
   { id: 8, title: "Strategic Pivot", component: <SlideVerticalization /> },
   { id: 9, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 10, title: "Expansion Path", component: <Slide09 /> },
