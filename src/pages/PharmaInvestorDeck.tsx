@@ -233,100 +233,130 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const inputs = ["SOPs", "Protocols", "Batch records", "Validation specs", "Annex/ICH refs", "Trial data"];
-  const outputs = ["Deviation reports", "CSRs", "Submissions", "CAPAs", "PV narratives", "Audit responses"];
+  // Above-water = formally captured pharma artifacts AI can read.
+  // Below-water = tacit operating knowledge that determines whether the
+  // AI output is regulator-grade. Four buckets, no overlap.
+  const above = [
+    { x: 720,  label: "SOPs" },
+    { x: 870,  label: "Protocols" },
+    { x: 1050, label: "Batch records" },
+    { x: 1210, label: "ICH / Annex refs" },
+  ];
+  const buckets: { title: string; items: string[] }[] = [
+    { title: "Scientific & Clinical Reasoning",
+      items: ["Therapeutic-area precedent", "Why this endpoint, not that one", "Senior medical-writer judgment"] },
+    { title: "Regulator & Inspector Memory",
+      items: ["Prior agency feedback on this asset", "Open 483s and inspection commitments", "Country-specific interpretations"] },
+    { title: "Quality & Manufacturing Practice",
+      items: ["Annex 1 nuance for this process", "Batch-specific exceptions and rationale", "Prior CAPA patterns and root causes"] },
+    { title: "Cross-Functional Decisions",
+      items: ["Protocol amendments not yet in the file", "Sign-off thresholds and owners", "Live escalations and safety signals"] },
+  ];
 
   return (
-    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+    <div className="w-full h-full flex flex-col relative overflow-hidden" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-          The Context Gap
+
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
+          The Context Gap in Life Sciences
         </p>
-
-        <h2 className="font-black mb-10" style={{ fontSize: 52, color: TEXT, lineHeight: 1.08 }}>
-          Companies have inputs. AI generates outputs.<br />
-          <span style={{ color: `hsl(${WARM})` }}>There's no system to make AI work to your standards.</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          The Context Gap.
         </h2>
+        <p className="font-medium" style={{ fontSize: 24, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          AI doesn&apos;t miss the dose because the model is weak. It misses it because <span style={{ color: TEXT, fontWeight: 700 }}>most of how a regulated organization actually decides was never formally defined.</span>
+        </p>
+      </div>
 
-        {/* Three columns: Inputs → THE GAP → Outputs */}
-        <div className="flex items-stretch gap-0 flex-1 min-h-0 max-h-[420px]">
+      {/* Iceberg canvas */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="ph-water" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.04)`} />
+              <stop offset="40%" stopColor={`hsl(${WARM} / 0.10)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.22)`} />
+            </linearGradient>
+            <linearGradient id="ph-iceTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${GREEN} / 0.20)`} />
+              <stop offset="100%" stopColor={`hsl(${GREEN} / 0.36)`} />
+            </linearGradient>
+            <linearGradient id="ph-iceBot" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${WARM} / 0.30)`} />
+              <stop offset="100%" stopColor={`hsl(${WARM} / 0.55)`} />
+            </linearGradient>
+          </defs>
 
-          {/* LEFT — Input Artifacts */}
-          <div className="flex-1 rounded-l-2xl border-2 p-8 flex flex-col justify-center"
-            style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)`, borderRight: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Input Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What companies feed AI today</p>
-            <div className="flex flex-wrap gap-3">
-              {inputs.map(item => (
-                <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${TEAL} / 0.12)`, color: TEXT, border: `1px solid hsl(${TEAL} / 0.2)` }}>
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-5">
-              <Check size={18} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${TEAL})` }}>Already digitized. Already structured.</p>
-            </div>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But none of it is queryable by AI. It sits in files no model can reason over.
-            </p>
-          </div>
+          <rect x="0" y="220" width="1920" height="540" fill="url(#ph-water)" />
 
-          {/* CENTER — THE GAP (deliberately stark) */}
-          <div className="w-[340px] shrink-0 border-y-2 flex flex-col items-center justify-center relative"
-            style={{ borderColor: `hsl(${WARM} / 0.3)`, background: `hsl(${WARM} / 0.04)` }}>
-            {/* Dashed vertical lines suggesting disconnection */}
-            <div className="absolute left-0 top-8 bottom-8 w-px" style={{ borderLeft: `2px dashed hsl(${WARM} / 0.2)` }} />
-            <div className="absolute right-0 top-8 bottom-8 w-px" style={{ borderRight: `2px dashed hsl(${WARM} / 0.2)` }} />
+          <line x1="0" y1="220" x2="1920" y2="220" stroke={`hsl(${WARM} / 0.45)`} strokeWidth="1.5" strokeDasharray="6 6" />
+          <text x="1840" y="178" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
+          <text x="1840" y="206" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI is given today</text>
+          <text x="1840" y="262" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~90% ORGANIZATIONAL INTELLIGENCE</text>
+          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to work to GxP standards</text>
+          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in writers, monitors, inspectors, prior decisions</text>
 
-            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
-              style={{ background: `hsl(${WARM} / 0.12)`, border: `2px solid hsl(${WARM} / 0.3)` }}>
-              <span className="font-black" style={{ fontSize: 44, color: `hsl(${WARM})` }}>?</span>
-            </div>
-            <p className="font-black text-center mb-2" style={{ fontSize: 24, color: `hsl(${WARM})` }}>
-              No System of<br />Intelligence
-            </p>
-            <p className="text-center px-5" style={{ fontSize: 15, color: MUTED, lineHeight: 1.55 }}>
-              AI can generate fast, but it can't apply your expertise, your judgment, or your standards.
-            </p>
-            <p className="font-semibold text-center mt-4 px-4" style={{ fontSize: 14, color: TEXT }}>
-              The result: experts redo AI's work instead of scaling their own.
-            </p>
-          </div>
+          <polygon points="870,220 960,90 1050,220" fill="url(#ph-iceTop)" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.5" />
+          <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#ph-iceBot)" stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.5" />
 
-          {/* RIGHT — Output Artifacts */}
-          <div className="flex-1 rounded-r-2xl border-2 p-8 flex flex-col justify-center"
-            style={{ borderColor: `hsl(${GREEN} / 0.3)`, background: `hsl(${GREEN} / 0.06)`, borderLeft: "none" }}>
-            <p className="font-black tracking-[0.15em] uppercase mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Output Artifacts</p>
-            <p className="font-bold mb-6" style={{ fontSize: 22, color: TEXT }}>What AI produces without guidance</p>
-            <div className="flex flex-wrap gap-3">
-              {outputs.map(item => (
-                <span key={item} className="rounded-full px-5 py-2.5 font-bold"
-                  style={{ fontSize: 16, background: `hsl(${GREEN} / 0.12)`, color: TEXT, border: `1px solid hsl(${GREEN} / 0.2)` }}>
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-5">
-              <Check size={18} style={{ color: `hsl(${GREEN})` }} />
-              <p className="font-semibold" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Already fast. Already cheap.</p>
-            </div>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              But without your standards, every output is generic: the average, not the expert.
-            </p>
-          </div>
-        </div>
+          {above.map((a, i) => (
+            <g key={`a-${i}`}>
+              <rect x={a.x - 64} y={140 - (i % 2) * 14} width="128" height="28" rx="6"
+                fill={BG} stroke={`hsl(${GREEN} / 0.6)`} strokeWidth="1" />
+              <text x={a.x} y={159 - (i % 2) * 14} textAnchor="middle"
+                style={{ fontSize: 13, fontWeight: 700, fill: TEXT }}>{a.label}</text>
+            </g>
+          ))}
+          <text x="960" y="58" textAnchor="middle"
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>WHAT AI IS GIVEN TODAY</text>
 
-        {/* Bottom punchline */}
-        <div className="mt-8 rounded-xl px-10 py-5 text-center" style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.25)` }}>
-          <p className="font-black" style={{ fontSize: 26, color: TEXT }}>
-            Whatever you don't define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
+          {buckets.map((bucket, i) => {
+            const col = i % 2;
+            const row = Math.floor(i / 2);
+            const bw = 360, bh = 168;
+            const bx = 580 + col * 410;
+            const by = 305 + row * 195;
+            return (
+              <g key={`bk-${i}`}>
+                <rect x={bx} y={by} width={bw} height={bh} rx="10"
+                  fill={BG} stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.2" opacity="0.96" />
+                <rect x={bx} y={by} width={bw} height="34" rx="10"
+                  fill={`hsl(${WARM} / 0.18)`} />
+                <rect x={bx} y={by + 24} width={bw} height="10"
+                  fill={`hsl(${WARM} / 0.18)`} />
+                <text x={bx + 18} y={by + 23}
+                  style={{ fontSize: 15, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 1.5 }}>
+                  {bucket.title.toUpperCase()}
+                </text>
+                {bucket.items.map((item, j) => (
+                  <g key={`it-${j}`}>
+                    <circle cx={bx + 24} cy={by + 66 + j * 34} r="3.5" fill={`hsl(${WARM})`} />
+                    <text x={bx + 36} y={by + 70 + j * 34}
+                      style={{ fontSize: 15, fontWeight: 600, fill: TEXT }}>{item}</text>
+                  </g>
+                ))}
+              </g>
+            );
+          })}
+
+          <text x="960" y="725" textAnchor="middle"
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO WORK TO GxP STANDARDS</text>
+        </svg>
+      </div>
+
+      {/* Bottom punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Whatever you don&apos;t define, <span style={{ color: `hsl(${WARM})` }}>AI invents.</span>
           </p>
         </div>
       </div>
-      <SlideBar from={WARM} to={TEAL} />
+
+      <SlideBar from={GREEN} to={WARM} />
     </div>
   );
 }
@@ -337,31 +367,43 @@ function Slide02() {
 
 const PHARMA_GAP_CASES = [
   {
+    id: "sponsor",
     name: "Sponsor / BioPharma",
-    icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
-    accent: RED,
-    records: ["Protocols", "Investigator brochures", "Submission modules"],
-    output: "Protocol drafts · CTD module narratives",
-    gap: "AI drafts from the visible documents, but misses the protocol amendment, prior agency feedback, or therapeutic-area precedent the senior medical writer already knows.",
-    cost: "Submission delay. RTF risk. Approval slip.",
+    icon: <Shield size={20} style={{ color: `hsl(${RED})` }} />,
+    color: RED,
+    above: ["Protocols", "Investigator brochures", "Submission modules"],
+    below: [
+      "Prior agency feedback on this asset",
+      "Therapeutic-area precedent",
+      "Senior medical-writer judgment",
+    ],
+    breaks: "Submission delay. RTF risk. Approval slip.",
   },
   {
+    id: "cro",
     name: "CRO / Clinical Operations",
-    icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
-    accent: WARM,
-    records: ["ICH-GCP refs", "Site SOPs", "Monitoring plans"],
-    output: "Monitoring reports · Query responses",
-    gap: "AI gives an ICH-GCP-compliant answer, but not the sponsor-specific interpretation already aligned with the medical monitor and prior protocol deviations.",
-    cost: "Data integrity findings. Audit observations.",
+    icon: <Briefcase size={20} style={{ color: `hsl(${WARM})` }} />,
+    color: WARM,
+    above: ["ICH-GCP refs", "Site SOPs", "Monitoring plans"],
+    below: [
+      "Sponsor-specific interpretation",
+      "Live protocol deviations and rationale",
+      "Medical-monitor alignment in last call",
+    ],
+    breaks: "Data integrity findings. Audit observations.",
   },
   {
+    id: "gmp",
     name: "GMP Manufacturing & QA",
-    icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
-    accent: GOLD,
-    records: ["SOPs", "Batch records", "Validation reports"],
-    output: "Deviation reports · CAPA records",
-    gap: "AI summarises the deviation, but misses the Annex 1 nuance, the batch-specific exception, and the prior CAPA pattern that determines whether the lot is releasable.",
-    cost: "Batch reject. 483 observation. Recall risk.",
+    icon: <Factory size={20} style={{ color: `hsl(${GOLD})` }} />,
+    color: GOLD,
+    above: ["SOPs", "Batch records", "Validation reports"],
+    below: [
+      "Annex 1 nuance for this process",
+      "Batch-specific exception and rationale",
+      "Prior CAPA pattern for this defect",
+    ],
+    breaks: "Batch reject. 483 observation. Recall risk.",
   },
 ];
 
@@ -393,53 +435,95 @@ function Slide03() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
           Where Missing Context Shows Up in Life Sciences
         </p>
-        <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1680 }}>
-          The artifacts exist. The AI produces an output. <span style={{ color: `hsl(${TEAL})` }}>The missing piece is expert judgment.</span>
+        <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
+          The same iceberg, in every sub-sector. <span style={{ color: `hsl(${TEAL})` }}>What is captured is dwarfed by what runs the work.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
+          The systems on top of the waterline are what AI sees. The Organizational Intelligence below the waterline is what determines whether the output is regulator-grade.
+        </p>
 
-        <div className="flex flex-col gap-3 flex-1 min-h-0 mb-3">
-          {PHARMA_GAP_CASES.map((item) => (
-            <div key={item.name} className="flex-1 flex items-stretch gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: `hsl(${item.accent} / 0.15)` }}>
-              <div className="w-[290px] shrink-0 px-6 py-4 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.05)`, borderRight: `1.5px solid hsl(${TEAL} / 0.12)` }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Database size={18} style={{ color: `hsl(${TEAL})` }} />
-                  <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Artifacts that need expert judgment</p>
-                </div>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {item.records.map((record) => (
-                    <span key={record} className="rounded-full px-3.5 py-1.5 font-semibold" style={{ fontSize: 14, background: `hsl(${TEAL} / 0.08)`, color: TEXT }}>{record}</span>
-                  ))}
-                </div>
-                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}><span className="font-bold" style={{ color: TEXT }}>Typical AI output:</span> {item.output}</p>
+        <div className="grid grid-cols-3 gap-6 flex-1 min-h-0 mb-4">
+          {PHARMA_GAP_CASES.map((v) => (
+            <div key={v.id} className="rounded-xl border flex flex-col overflow-hidden"
+              style={{ borderColor: `hsl(${v.color} / 0.24)`, background: `hsl(${v.color} / 0.025)` }}>
+              <div className="px-5 py-3 flex items-center gap-3 border-b"
+                style={{ borderColor: `hsl(${v.color} / 0.16)`, background: `hsl(${v.color} / 0.055)` }}>
+                {v.icon}
+                <p className="font-black" style={{ fontSize: 20, color: TEXT }}>{v.name}</p>
               </div>
 
-              <div className="flex-1 px-7 py-4 flex flex-col justify-center" style={{ background: `hsl(${WARM} / 0.05)`, borderRight: `1.5px solid hsl(${WARM} / 0.1)`, borderLeft: `1.5px solid hsl(${WARM} / 0.1)` }}>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: `hsl(${item.accent} / 0.12)` }}>
-                    {item.icon}
+              <div className="flex-1 px-4 pt-4 pb-3 flex items-center justify-center min-h-0">
+                <div className="relative w-full max-w-[420px] aspect-[1/1.04]">
+                  <svg viewBox="0 0 360 374" preserveAspectRatio="xMidYMid meet" className="absolute inset-0 h-full w-full">
+                    <defs>
+                      <linearGradient id={`pharma-ice-top-${v.id}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={`hsl(${GREEN} / 0.16)`} />
+                        <stop offset="100%" stopColor={`hsl(${GREEN} / 0.32)`} />
+                      </linearGradient>
+                      <linearGradient id={`pharma-ice-bot-${v.id}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={`hsl(${v.color} / 0.12)`} />
+                        <stop offset="100%" stopColor={`hsl(${v.color} / 0.24)`} />
+                      </linearGradient>
+                      <linearGradient id={`pharma-water-${v.id}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={`hsl(${v.color} / 0.035)`} />
+                        <stop offset="100%" stopColor={`hsl(${v.color} / 0.09)`} />
+                      </linearGradient>
+                    </defs>
+
+                    <rect x="0" y="132" width="360" height="242" fill={`url(#pharma-water-${v.id})`} />
+                    <line x1="18" y1="132" x2="342" y2="132"
+                      stroke={`hsl(${v.color} / 0.55)`} strokeWidth="1.35" strokeDasharray="7 6" />
+                    <polygon points="112,132 180,24 248,132" fill={`url(#pharma-ice-top-${v.id})`}
+                      stroke={`hsl(${GREEN} / 0.9)`} strokeWidth="1.7" strokeLinejoin="round" />
+                    <polygon points="112,132 28,344 332,344 248,132" fill={`url(#pharma-ice-bot-${v.id})`}
+                      stroke={`hsl(${v.color} / 0.76)`} strokeWidth="1.7" strokeLinejoin="round" />
+                  </svg>
+
+                  <div className="absolute left-0 right-0 top-[4%] text-center font-black tracking-[0.14em] uppercase"
+                    style={{ fontSize: 12.5, color: `hsl(${GREEN})` }}>
+                    What AI sees
                   </div>
-                  <p className="font-black" style={{ fontSize: 23, color: TEXT }}>{item.name}</p>
-                  <div className="ml-auto flex items-center gap-2 px-4 py-1.5 rounded-full" style={{ background: `hsl(${WARM} / 0.1)` }}>
-                    <AlertTriangle size={15} style={{ color: `hsl(${WARM})` }} />
-                    <span className="font-bold" style={{ fontSize: 11, color: `hsl(${WARM})` }}>THE GAP</span>
+
+                  <div className="absolute left-[8%] right-[8%] top-[24%] grid grid-cols-3 gap-1.5">
+                    {v.above.map((label) => (
+                      <div key={label} className="min-h-[34px] rounded-md border px-1.5 py-1 flex items-center justify-center text-center font-extrabold"
+                        style={{ fontSize: 11, lineHeight: 1.18, color: TEXT, background: `hsl(0 0% 100% / 0.95)`, borderColor: `hsl(${GREEN} / 0.48)` }}>
+                        {label}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="absolute left-0 right-0 top-[39%] text-center font-black tracking-[0.14em] uppercase"
+                    style={{ fontSize: 12.5, color: `hsl(${v.color})` }}>
+                    What AI misses
+                  </div>
+
+                  <div className="absolute left-[16%] right-[12%] top-[49%] space-y-2.5">
+                    {v.below.map((item) => (
+                      <div key={item} className="rounded-md border px-2.5 py-2 flex gap-2"
+                        style={{ background: `hsl(0 0% 100% / 0.92)`, borderColor: `hsl(${v.color} / 0.22)` }}>
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: `hsl(${v.color})` }} />
+                        <p className="font-bold" style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3 }}>{item}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.42 }}>{item.gap}</p>
               </div>
 
-              <div className="w-[220px] shrink-0 px-5 py-4 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.04)` }}>
-                <p className="font-bold mb-1.5" style={{ fontSize: 12, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>What breaks</p>
-                <p className="font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, lineHeight: 1.32 }}>{item.cost}</p>
+              <div className="px-5 py-3 border-t flex items-center gap-2"
+                style={{ borderColor: `hsl(${RED} / 0.15)`, background: `hsl(${RED} / 0.05)` }}>
+                <AlertTriangle size={14} style={{ color: `hsl(${RED})` }} />
+                <p className="font-bold" style={{ fontSize: 14, color: `hsl(${RED})` }}>{v.breaks}</p>
               </div>
             </div>
           ))}
         </div>
 
         <div className="flex items-center gap-4 px-2">
-          <p className="font-bold shrink-0" style={{ fontSize: 17, color: MUTED }}>Same pattern in:</p>
+          <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
           <div className="flex flex-wrap gap-2.5">
             {alsoApplies.map((item) => (
-              <span key={item} className="rounded-full px-4 py-2 font-semibold border" style={{ fontSize: 16, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
+              <span key={item} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
             ))}
           </div>
         </div>
