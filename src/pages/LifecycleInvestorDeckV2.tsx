@@ -131,10 +131,10 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "AEC", sub: "Live · Nemetschek path", color: TEAL, status: "LIVE" },
-    { label: "Pharma", sub: "Lighthouse recruiting", color: BLUE, status: "NEXT" },
-    { label: "Automotive", sub: "Cross-border R&D pilot", color: MINT, status: "NEXT" },
-    { label: "Prof. Services", sub: "Reference deployment", color: GOLD, status: "LIVE" },
+    { label: "Prof. Services", sub: "Live · reference deployment", color: GOLD, status: "LIVE" },
+    { label: "AEC", sub: "Entering · Nemetschek path", color: TEAL, status: "NEXT" },
+    { label: "Pharma", sub: "In build · lighthouse recruiting", color: BLUE, status: "NEXT" },
+    { label: "Automotive", sub: "In build · cross-border R&D", color: MINT, status: "NEXT" },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
