@@ -5,11 +5,9 @@ import {
   Shield,
   Rocket,
   RefreshCw,
-  FileQuestion,
-  Clock,
-  TrendingUp,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import BriefIceberg from "@/components/marketing/BriefIceberg";
 
 /**
  * /space-brief — Responsive one-page summary of the Space Strategic Deck.
@@ -135,36 +133,25 @@ export default function SpaceBrief() {
           Mission heritage retires. Standards drift between programs. AI doesn't know either.
         </motion.p>
 
-        {/* Visual: the lifecycle gap — three symptoms of uncodified mission knowledge */}
+        {/* The Context Gap, as one iceberg */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="mt-10 sm:mt-12 grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl"
+          className="mt-10 sm:mt-12 max-w-3xl"
         >
-          {[
-            { Icon: FileQuestion, label: "Not codified", sub: "Lives in senior heads" },
-            { Icon: Clock, label: "Slow to onboard", sub: "6–12 months to ramp" },
-            { Icon: TrendingUp, label: "Doesn't propagate", sub: "Lessons stay in one team" },
-          ].map((item) => {
-            const Icon = item.Icon;
-            return (
-              <div key={item.label} className="flex flex-col items-center text-center">
-                <div
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center border-2"
-                  style={{ borderColor: `hsl(${TEAL} / 0.3)`, background: `hsl(${TEAL} / 0.06)` }}
-                >
-                  <Icon className="w-7 h-7 sm:w-9 sm:h-9" style={{ color: `hsl(${TEAL})` }} />
-                </div>
-                <p className="mt-3 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-foreground">
-                  {item.label}
-                </p>
-                <p className="mt-1 text-[10px] sm:text-xs text-muted-foreground leading-snug max-w-[140px]">
-                  {item.sub}
-                </p>
-              </div>
-            );
-          })}
+          <BriefIceberg
+            teal={TEAL}
+            aboveLabel="What AI is given today"
+            belowLabel="What actually flies the mission"
+            above={["ECSS / AS9100", "Specs", "Trade studies", "Review packs"]}
+            below={[
+              "Chief-engineer judgment & mission heritage",
+              "Anomaly precedent across programs",
+              "Why-not-this decisions in past reviews",
+              "Standards interpretation per agency",
+            ]}
+          />
         </motion.div>
 
         <motion.p
