@@ -42,15 +42,16 @@ export default function BriefIceberg({
 
   // Tip anchor points (on the iceberg silhouette)
   const tipAnchors = above.slice(0, 4).map((_, i, arr) => {
-    // Spread points along the upper facet of the tip, right side
     const t = arr.length === 1 ? 0.5 : i / (arr.length - 1);
-    return { x: 410 + t * 18, y: 195 - t * 60 };
+    // Spread points along the right ridge of the jagged tip
+    return { x: 430 + t * 22, y: 188 - t * 70 };
   });
 
   // Mass anchor points (left side of the underwater mass)
   const massAnchors = below.slice(0, 4).map((_, i, arr) => {
     const t = arr.length === 1 ? 0.5 : i / (arr.length - 1);
-    return { x: 380 - t * 60, y: 250 + t * 230 };
+    // Walk down the left flank of the tapering underwater keel
+    return { x: 360 - t * 90, y: 240 + t * 250 };
   });
 
   return (
@@ -108,45 +109,49 @@ export default function BriefIceberg({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          points="360,200 392,138 415,118 432,135 425,170 440,200"
+          points="330,200 360,170 388,150 405,118 422,92 438,118 452,140 470,165 490,182 510,200"
           fill="url(#bi-tip)"
           stroke={`hsl(${C} / 0.9)`}
           strokeWidth="1.4"
           strokeLinejoin="round"
         />
-        {/* Tip facet line for depth */}
-        <line
-          x1="392"
-          y1="138"
-          x2="425"
-          y2="170"
-          stroke={`hsl(${C} / 0.55)`}
+        {/* Tip facets for crystalline depth */}
+        <path
+          d="M 422 92 L 405 200 M 422 92 L 470 165 M 388 150 L 452 200"
+          fill="none"
+          stroke={`hsl(${C} / 0.5)`}
           strokeWidth="1"
         />
 
-        {/* Iceberg — mass (below waterline). Wide, organic, asymmetric. */}
+        {/* Iceberg — submerged keel. Wide at the waterline, tapering to a craggy point. */}
         <motion.polygon
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          points="360,200 440,200 510,235 545,295 540,370 495,440 410,485 320,490 235,460 175,395 165,320 195,255 270,215"
+          points="330,200 510,200 590,222 640,260 660,310 640,365 600,420 540,460 470,485 420,505 395,520 370,505 345,475 290,445 235,400 195,350 175,295 185,250 240,218"
           fill="url(#bi-mass)"
           stroke={`hsl(${C} / 0.7)`}
           strokeWidth="1.4"
           strokeLinejoin="round"
         />
-        {/* Mass facet lines */}
+        {/* Keel facet lines — angular, crystalline */}
         <path
-          d="M 270 215 L 320 320 L 235 460"
+          d="M 240 218 L 320 310 L 370 505"
           fill="none"
           stroke={`hsl(${C} / 0.35)`}
           strokeWidth="1"
         />
         <path
-          d="M 510 235 L 430 340 L 495 440"
+          d="M 590 222 L 500 320 L 540 460"
           fill="none"
           stroke={`hsl(${C} / 0.35)`}
+          strokeWidth="1"
+        />
+        <path
+          d="M 420 200 L 430 380 L 395 520"
+          fill="none"
+          stroke={`hsl(${C} / 0.28)`}
           strokeWidth="1"
         />
 
