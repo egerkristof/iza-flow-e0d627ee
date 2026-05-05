@@ -117,7 +117,7 @@ function Slide01() {
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; €1.5M Seed &nbsp;·&nbsp; Early Revenue
+          Confidential &nbsp;·&nbsp; €2M Seed &nbsp;·&nbsp; Early Revenue
         </p>
       </div>
       <SlideBar />
@@ -133,7 +133,7 @@ function SlideShape() {
   const verticals = [
     { label: "AEC", sub: "Live · Nemetschek path", color: TEAL, status: "LIVE" },
     { label: "Pharma", sub: "Lighthouse recruiting", color: BLUE, status: "NEXT" },
-    { label: "GTM", sub: "Horizontal validation", color: MINT, status: "LIVE" },
+    { label: "Automotive", sub: "Cross-border R&D pilot", color: MINT, status: "NEXT" },
     { label: "Prof. Services", sub: "Reference deployment", color: GOLD, status: "LIVE" },
   ];
   return (
@@ -1503,7 +1503,7 @@ function Slide06() {
               </div>
               <div>
                 <p className="font-black" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>LIZA OS</p>
-                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€1.5M Seed</p>
+                <p className="font-semibold" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>€2M Seed</p>
               </div>
             </div>
           </div>
@@ -2862,7 +2862,7 @@ function Slide12() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE 12 — THE ASK (€1.5M + milestones + use of funds)
+// SLIDE 12 — THE ASK (€2M + milestones + use of funds)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide13() {
@@ -2875,7 +2875,7 @@ function Slide13() {
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Seed Round</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€1.5M</h2>
+          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€2M</h2>
           <p style={{ fontSize: 24, color: MUTED }}>
             Post-money SAFE &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; Series A readiness
           </p>
@@ -2884,10 +2884,10 @@ function Slide13() {
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "Core Infrastructure", pct: "40%", amt: "€600K", desc: "Knowledge graph, governance, scale", color: ACCENT },
-            { label: "Vertical CX", pct: "25%", amt: "€375K", desc: "Protocol packs and domain workflows", color: GREEN },
-            { label: "GTM", pct: "25%", amt: "€375K", desc: "Cohort, partners, case studies", color: GOLD },
-            { label: "Operations", pct: "10%", amt: "€150K", desc: "Legal, IP, compliance", color: MUTED },
+            { label: "Core Infrastructure", pct: "40%", amt: "€800K", desc: "Knowledge graph, governance, scale", color: ACCENT },
+            { label: "Vertical CX", pct: "25%", amt: "€500K", desc: "Protocol packs and domain workflows", color: GREEN },
+            { label: "GTM", pct: "25%", amt: "€500K", desc: "Cohort, partners, case studies", color: GOLD },
+            { label: "Operations", pct: "10%", amt: "€200K", desc: "Legal, IP, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
