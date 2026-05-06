@@ -93,7 +93,7 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Space & Defence Holdings · Strategic Round
+            LIZA OS · Space & Defence Holdings · Customer + Investor Path
           </span>
         </div>
 
@@ -105,12 +105,12 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          One context layer across Space, Aero, Land Systems, Weapons &amp; Ammunition, and Cyber &amp; Defence Digitalisation. Capture chief-engineer judgment from every acquisition. Enforce NATO AQAP, ISO 9001, ISO 27001, and ECSS as executable standards.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · Federation Beachhead</span>
+          One context layer across the full programme lifecycle. From capture and bid, through engineering and qualification, to sustainment and ILS. Capture chief-engineer judgment from every acquisition. Enforce NATO AQAP, ISO 9001, ISO 27001, and ECSS as executable standards.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Come on board as a customer, an investor, or both.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; Space & Defence Holdings Beachhead
+          Confidential &nbsp;·&nbsp; 30-Day Lifecycle Pilot &nbsp;·&nbsp; €3M Strategic Round
         </p>
       </div>
       <SlideBar />
