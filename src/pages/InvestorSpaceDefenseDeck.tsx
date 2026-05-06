@@ -1722,19 +1722,19 @@ function Slide09Partnership() {
       phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm intros into top 20 Aero / Space Divisions accounts. LIZA sits alongside; Space & Defence Holdings opens doors. Low commitment, fast signal.",
+      desc: "Warm intros into the top engineering subsidiaries inside the holding. LIZA sits alongside; the holding opens doors across primes, customer programme offices, and tier-1 suppliers. Low commitment, fast signal.",
     },
     {
       phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded ECR Lifecycle Sprint productized with Aero Division. Generates Portfolio case studies plus revenue share.",
+      desc: "Co-branded ECR &amp; Qualification Lifecycle Sprint productized with two anchor subsidiaries. Generates portfolio case studies plus revenue share.",
     },
     {
       phase: "Months 12-24",
       title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one Space & Defence Holdings brand. Start with Aero Division for ECRs, then expand to Space Division for design intent.",
+      desc: "LIZA becomes the governance and memory layer underneath the holding's engineering operating model. Start with one subsidiary's ECR backbone, then expand across space, aero, land systems, and cyber.",
     },
   ];
 
