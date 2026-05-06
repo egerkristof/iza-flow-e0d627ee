@@ -1439,18 +1439,31 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Federated Defence Holding (Active Discussion)",
-      subtitle: "Space & Defence signal",
-      scope: "Multi-subsidiary engineering memory",
+      title: "AEC Engineering Group",
+      subtitle: "Live design partnership",
+      scope: "Multi-discipline engineering memory",
       color: TEAL,
-      outcome: "Live engagement on cross-portfolio engineering context",
-      metric: "Active",
-      metricLabel: "Discussion",
+      outcome: "Project-aware AI grounded in live RFIs and standards",
+      metric: "Live",
+      metricLabel: "Pilot",
       points: [
-        "Federated defence group exploring one context layer across recently acquired engineering subsidiaries",
-        "Direct signal that fragmented chief-engineer judgment is the binding constraint on AI adoption",
+        "One context layer across architects, engineers, and project managers",
+        "Same failure mode as Space & Defence: fragmented senior judgment is the binding constraint on AI adoption",
       ],
       featured: true,
+    },
+    {
+      title: "Regulated Life Sciences (Exploration)",
+      subtitle: "GxP context layer",
+      scope: "Lab governance & QA/QC",
+      color: WARM,
+      outcome: "Mapping deviations, CSRs, and SOP drift into one memory layer",
+      metric: "Scoping",
+      metricLabel: "Engagements",
+      points: [
+        "Active scoping conversations with regulated science directors",
+        "Confirms the pattern travels from buildings, to molecules, to mission systems",
+      ],
     },
     {
       title: "Top-Tier Swiss Executive Search Firm",
@@ -1463,19 +1476,6 @@ function Slide08() {
       points: [
         "Encoded senior partner's C-level candidate evaluation judgment",
         "Maintained senior-level quality with junior staff execution",
-      ],
-    },
-    {
-      title: "Professional Services Consultancy",
-      subtitle: "Multi-team deployment",
-      scope: "Sales, PM & Marketing",
-      color: GOLD,
-      outcome: "75% faster proposal creation",
-      metric: "75%",
-      metricLabel: "Faster",
-      points: [
-        "Codified workflows across sales, project management & marketing",
-        "25% improvement in deal velocity across the team",
       ],
     },
     {
@@ -1501,10 +1501,10 @@ function Slide08() {
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
+            The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>Space & Defence is where it goes deepest.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: chief-engineer judgment must be captured, governed, and updated. Space &amp; Defence is where the experience now becomes native.
+            From AEC engineering, to regulated life sciences, to advisory and audit firms, the same loop holds: senior judgment must be captured, governed, and updated. Space &amp; Defence is the natural next vertical: same failure mode, higher stakes, deeper engineering memory.
           </p>
         </div>
 
