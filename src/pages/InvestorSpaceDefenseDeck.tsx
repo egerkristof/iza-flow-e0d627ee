@@ -602,20 +602,20 @@ function Slide04Cost() {
           What Missing Context Costs across Space & Defence Holdings
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
+          In Space &amp; Defence, missing context becomes expensive because every late ECR, ICD revision, and qualification finding compounds <span style={{ color: `hsl(${WARM})` }}>cost growth, schedule slip, and certification risk.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
+            <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>+27%</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of rework is tied to poor project data and miscommunication
+              average schedule growth on major DOD weapon programmes since baseline
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest ICD revision, ECR disposition, customer standard, or engineering interpretation.
+              Late requirements changes, ECR backlog, and engineering rework are repeatedly named as primary drivers. AI without programme context multiplies the same failure mode.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              IDC / industry benchmark, defence & aerospace engineering, 2023
+              GAO-25-107569, Weapon Systems Annual Assessment, June 2025
             </p>
           </div>
 
@@ -635,10 +635,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the full programme context</span>, the team still has to catch it, correct it, and reissue it.
+                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the latest ICD revision, ECP disposition, and chief-engineer judgment</span>, the team still has to catch it, correct it, and reissue it &mdash; at late-phase rework cost.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€50M programme</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream milestone delay.
+                On a <span className="font-bold" style={{ color: TEXT }}>€500M programme</span>, the GAO-observed 25-30% cost growth band implies <span className="font-bold" style={{ color: TEXT }}>€125&ndash;150M at risk</span>. A 1% reduction by closing the context gap is €5M back to EAC.
               </p>
             </div>
           </div>
