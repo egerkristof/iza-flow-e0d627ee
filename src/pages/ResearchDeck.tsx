@@ -726,15 +726,28 @@ function S10SECI() {
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           Most of what makes a research group good lives in conversation: between supervisor and student, in reading groups, in late corridor debates. Today it dies with the cohort. LIZA OS treats that conversation as the asset and carries it forward.
         </p>
-        <div className="grid grid-cols-4 gap-5 flex-1">
-          {phases.map((p, i) => (
-            <div key={p.tag} className="rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${p.color} / 0.08)`, border: `1px solid hsl(${p.color} / 0.3)` }}>
-              <p className="font-black" style={{ fontSize: 22, color: `hsl(${p.color})`, letterSpacing: "0.05em" }}>0{i + 1}</p>
-              <p className="font-black mt-3 mb-4" style={{ fontSize: 28, color: TEXT }}>{p.tag}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-            </div>
-          ))}
+        <div className="relative flex-1">
+          <div className="absolute left-0 right-0 top-[68px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0.4), hsl(${TEAL} / 0.4))`, opacity: 0.4 }} />
+          <div className="grid grid-cols-4 gap-5 h-full relative">
+            {phases.map((p, i) => (
+              <div key={p.tag} className="rounded-2xl p-8 pt-12 flex flex-col relative" style={{ background: `hsl(${p.color} / 0.06)`, border: `1px solid hsl(${p.color} / 0.3)` }}>
+                <div className="absolute -top-6 left-8 w-14 h-14 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${p.color})`, color: BG, fontSize: 22, boxShadow: `0 6px 16px hsl(${p.color} / 0.3)` }}>
+                  {i + 1}
+                </div>
+                {i < phases.length - 1 && (
+                  <div className="absolute -right-5 top-[58px] z-10 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: BG, color: `hsl(${TEAL})` }}>
+                    <ArrowRight size={22} strokeWidth={3} />
+                  </div>
+                )}
+                <p className="font-black mb-4" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{p.tag}</p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
+        <p className="mt-6 text-center" style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.25em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
+          ↻ Each cohort feeds the next · the loop tightens with every cycle
+        </p>
       </div>
       <SlideBar />
     </div>
