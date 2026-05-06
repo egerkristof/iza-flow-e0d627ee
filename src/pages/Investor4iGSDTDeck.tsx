@@ -100,17 +100,17 @@ function Slide01() {
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
           The Project Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Construction.
+            for AI-Native Defense & Space.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
           LIZA OS turns project standards, decisions, and expert judgment into the operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · AEC Beachhead</span>
+          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · 4iG SDT Beachhead</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; AEC Beachhead
+          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; 4iG SDT Beachhead
         </p>
       </div>
       <SlideBar />
@@ -124,7 +124,7 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "AEC", sub: "RFI · Submittals · Handover", active: true, color: TEAL },
+    { label: "AEC", sub: "ECR · Qualification packages · Handover", active: true, color: TEAL },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: BLUE },
     { label: "GTM", sub: "Sales · CS · Onboarding", active: false, color: MUTED },
     { label: "Prof. Services", sub: "Delivery · Methods", active: false, color: MUTED },
@@ -139,7 +139,7 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>AEC is the spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>4iG SDT is the spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           We build a single context layer and deploy it vertical-by-vertical. You are investing in AEC specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
@@ -194,7 +194,7 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              The AEC vertical thesis. Category leadership in built-environment execution.
+              The Defense & Space vertical thesis. Category leadership in mission-engineering execution.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
@@ -206,7 +206,7 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Standard equity + AEC board observer + commercial visibility on the vertical roadmap.
+              Standard equity + Strategic board observer + commercial visibility on the vertical roadmap.
             </div>
           </div>
         </div>
@@ -221,7 +221,7 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const above: { x: number; label: string }[] = ["Specs","Drawings","RFIs","Submittals"].map((label: string, i: number) => ({
+  const above: { x: number; label: string }[] = ["Mission specs","ICDs","ECRs","Qualification packages"].map((label: string, i: number) => ({
     x: 720 + i * 165,
     label,
   }));
@@ -247,7 +247,7 @@ function Slide02() {
       "items": [
         "Subcontractor-specific tolerances",
         "Sequencing learned from last project",
-        "RFI patterns from similar typologies"
+        "ECR patterns from similar typologies"
       ]
     },
     {
@@ -377,8 +377,8 @@ const AEC_GAP_CASES = [
     name: "General Contractor",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
-    records: ["Specs", "Submittals", "RFIs", "Drawings"],
-    output: "RFI responses · Submittal logs",
+    records: ["Mission specs", "Qualification packages", "ECRs", "ICDs"],
+    output: "ECR responses · Qualification logs",
     gap: "AI drafts from the visible documents, but misses the addendum change, field condition, or precedent the senior PM already knows.",
     cost: "Rework. Schedule slip. Margin loss.",
   },
@@ -405,8 +405,8 @@ const AEC_GAP_CASES = [
 const AEC_COST_BENCHMARKS = [
   {
     value: "$177.5B",
-    label: "estimated annual labor cost impact in the U.S. construction industry from rework, conflict resolution, and searching for project data",
-    source: "FMI / PlanGrid, Construction Disconnected, U.S., 2018",
+    label: "estimated annual labor cost impact in the global defense engineering industry from rework, conflict resolution, and searching for project data",
+    source: "FMI / PlanGrid, Engineering Disconnected, U.S., 2018",
   },
   {
     value: "14+ hrs",
@@ -427,10 +427,10 @@ const __VERTICAL_PERSONAS = [
     "color": "RED",
     "iconName": "Briefcase",
     "above": [
-      "Specs",
-      "Submittals",
-      "RFIs",
-      "Drawings"
+      "Mission specs",
+      "Qualification packages",
+      "ECRs",
+      "ICDs"
     ],
     "below": [
       "Subcontractor tolerances on this trade",
@@ -615,7 +615,7 @@ function Slide04Cost() {
               This is the part AI can amplify if it runs without the latest addendum, field decision, owner standard, or design interpretation.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              FMI / PlanGrid, Construction Disconnected, U.S. construction industry, 2018
+              FMI / PlanGrid, Engineering Disconnected, global defense engineering industry, 2018
             </p>
           </div>
 
@@ -635,7 +635,7 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an RFI, spec review, submittal, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
+                If AI produces a plausible answer inside an ECR, design review, qualification, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
                 On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream delay.
@@ -647,7 +647,7 @@ function Slide04Cost() {
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
             { label: "Margin", value: "compressed", desc: "Senior time is spent fixing AI-assisted work instead of moving the project forward.", color: RED },
-            { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time across RFIs, submittals, and approvals.", color: WARM },
+            { label: "Schedule", value: "delayed", desc: "Wrong outputs create review loops, re-approval cycles, and waiting time across ECRs, qualification reviews, and approvals.", color: WARM },
             { label: "AI usage", value: "cannot scale safely", desc: "Without governance, leaders limit adoption because every output creates quality, liability, and control risk.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
@@ -752,9 +752,9 @@ function SlideWhyNow() {
 
 function Slide05() {
   const verticalSurfaces = [
-    { title: "AEC roles", items: "PM, estimator, BIM lead, principal", color: TEAL },
-    { title: "AEC workflows", items: "RFI, submittal, spec review, handover", color: GOLD },
-    { title: "AEC language", items: "Addenda, AHJ, owner standards, field decisions", color: GREEN },
+    { title: "Engineering roles", items: "Program manager, systems engineer, V&V lead, chief engineer", color: TEAL },
+    { title: "Engineering workflows", items: "ECR, qualification, design review, handover", color: GOLD },
+    { title: "Engineering language", items: "ECNs, customer authority, mission standards, field decisions", color: GREEN },
   ];
 
   return (
@@ -765,12 +765,12 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an AEC-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an Portfolio-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>RFIs, submittals, drawings, specs, addenda, owner standards, field decisions</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>ECRs, qualification packages, ICDs, mission specs, ECNs, customer standards, field decisions</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
@@ -882,7 +882,7 @@ function Slide05() {
 
           {/* RIGHT — Governed Output */}
           <div className="w-[390px] shrink-0 flex flex-col gap-3">
-            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>AEC-native experience</p>
+            <p className="font-black tracking-[0.2em] uppercase text-center mb-1" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Portfolio-native experience</p>
             {verticalSurfaces.map((item) => (
               <div key={item.title} className="rounded-2xl border px-6 py-5 flex items-center gap-4"
                 style={{ borderColor: `hsl(${item.color} / 0.18)`, background: `hsl(${item.color} / 0.04)` }}>
@@ -919,7 +919,7 @@ function Slide05() {
 function SlideArchitecture() {
   const existingSystems = [
     { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
-    { name: "Aero Division / Newforma", layer: "RFI & Markup", color: BLUE },
+    { name: "Aero Division / Newforma", layer: "ECR & Markup", color: BLUE },
     { name: "Revit / Space Division", layer: "Design / BIM", color: BLUE },
     { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
     { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
@@ -1116,8 +1116,8 @@ function Slide06() {
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every Defense & Space AI tool will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Project Memory", desc: "ECR precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
     { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the 4iG SDT ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
   ];
 
@@ -1128,7 +1128,7 @@ function Slide06() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Category Thesis & Moat</p>
 
         <h2 className="font-black mb-5" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          AEC AI tools read documents and predict risk.{" "}
+          Defense & Space AI tools read documents and predict risk.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>No one has shipped the project-memory layer that encodes your firm's judgment.</span>
         </h2>
 
@@ -1166,7 +1166,7 @@ function Slide06() {
               <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every AEC AI stack will need: spec amendments, RFI precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into AEC.
+              The instruction layer every Defense & Space AI stack will need: spec amendments, ECR precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into AEC.
             </p>
           </div>
         </div>
@@ -1178,7 +1178,7 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$16.4B", desc: "Construction management software by 2033" },
+                { label: "TAM", value: "$16.4B", desc: "Defense engineering software by 2033" },
                 { label: "SAM", value: "$3-4B", desc: "AI control layer across project execution, review, compliance" },
                 { label: "SOM", value: "$250-300M", desc: "EU/NA enterprise wedge: GCs, A/E firms, owners" },
               ].map(({ label, value, desc }) => (
@@ -1192,7 +1192,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Grand View Research, Construction Management Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, BIM Market, 2025-2030: $15.42B by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
+              Sources: Grand View Research, Defense Engineering Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, BIM Market, 2025-2030: $15.42B by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
             </p>
           </div>
 
@@ -1220,8 +1220,8 @@ function Slide06() {
 
 function SlideVerticalization() {
   const rows = [
-    { old: "Customers ask for one use case because software has trained them to buy point solutions", now: "LIZA creates one governed knowledge loop that can power many AEC workflows", color: TEAL },
-    { old: "Generic AI tools ignore how project managers, BIM leads, estimators, and principals actually work", now: "The experience becomes native to AEC roles, language, decisions, and handoffs", color: GOLD },
+    { old: "Customers ask for one use case because software has trained them to buy point solutions", now: "LIZA creates one governed knowledge loop that can power many Engineering workflows", color: TEAL },
+    { old: "Generic AI tools ignore how program managers, V&V leads, systems engineers, and chief engineers actually work", now: "The experience becomes native to Engineering roles, language, decisions, and handoffs", color: GOLD },
     { old: "Prompts and templates stay static, so every team has to remember what changed", now: "Project memory is versioned, updated, and reused after every execution", color: GREEN },
   ];
 
@@ -1439,15 +1439,15 @@ function Slide08() {
   const cases = [
     {
       title: "Graphisoft workflow exploration",
-      subtitle: "AEC signal",
+      subtitle: "Defense & Space signal",
       scope: "Internal use-case discovery",
       color: TEAL,
-      outcome: "Live access to real AEC workflow pain",
+      outcome: "Live access to real Defense & Space workflow pain",
       metric: "Active",
       metricLabel: "Discussion",
       points: [
-        "Exploring internal AEC workflow opportunities with a major ecosystem player",
-        "Direct signal that the AEC workflow problem is real and strategically relevant",
+        "Exploring internal Defense & Space workflow opportunities with a major ecosystem player",
+        "Direct signal that the Defense & Space workflow problem is real and strategically relevant",
       ],
       featured: true,
     },
@@ -1570,17 +1570,17 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Preconstruction", status: "Wedge", color: GREEN,
+      vertical: "Pre-Program", status: "Wedge", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
       result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
-      proof: "Adjacent to Document Crunch & Handoff (4iG SDT portfolio)",
+      proof: "Adjacent to Standards Capture & Handoff (4iG SDT portfolio)",
     },
     {
-      vertical: "Construction Execution", status: "Anchor", color: TEAL,
+      vertical: "Mission Execution", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "RFIs, submittals, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
-      result: "Unified RFI & submittal lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
+      problem: "ECRs, qualification packages, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
+      result: "Unified ECR & qualification lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
       proof: "Target embedding path across Aero, Space, Land Systems, and Solibri workflows",
     },
     {
@@ -1605,7 +1605,7 @@ function Slide09() {
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>AEC Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Portfolio Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
@@ -1618,7 +1618,7 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the AEC AI stack.
+              The missing connective tissue underneath the Defense & Space AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
               Current signal: Graphisoft workflow exploration, not a commercial integration claim.
@@ -1728,13 +1728,13 @@ function Slide09Partnership() {
       phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded RFI Lifecycle Sprint productized with Aero Division. Generates AEC case studies plus revenue share.",
+      desc: "Co-branded ECR Lifecycle Sprint productized with Aero Division. Generates Portfolio case studies plus revenue share.",
     },
     {
       phase: "Months 12-24",
       title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one 4iG SDT brand. Start with Aero Division for RFIs, then expand to Space Division for design intent.",
+      desc: "LIZA becomes the governance and memory layer underneath one 4iG SDT brand. Start with Aero Division for ECRs, then expand to Space Division for design intent.",
     },
   ];
 
@@ -1975,7 +1975,7 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "GC or A/E selects one high-value workflow (e.g. RFI response, submittal review, spec compliance)",
+        "GC or A/E selects one high-value workflow (e.g. ECR response, submittal review, spec compliance)",
         "Platform guides structured capture from 2-3 senior PMs / principals",
         "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
       ],
@@ -1987,7 +1987,7 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Project team self-serves: run playbooks against live RFIs, submittals, and spec questions",
+        "Project team self-serves: run playbooks against live ECRs, qualification packages, and standards questions",
         "Real projects, real owners, real deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
@@ -1999,7 +1999,7 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per RFI, rework avoided, schedule risk reduced",
+        "Automated review: hours saved per ECR, rework avoided, schedule risk reduced",
         "Project memory self-improves from every execution",
         "Business case for firm-wide rollout with real project numbers",
       ],
@@ -2014,7 +2014,7 @@ function SlideExecutionChallenge() {
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GREEN})` }}>Go-To-Market Wedge</p>
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-          The wedge is one workflow. The product is the AEC-native knowledge loop.{" "}
+          The wedge is one workflow. The product is the Portfolio-native knowledge loop.{" "}
           <span style={{ color: `hsl(${GREEN})` }}>Co-built with the first enterprise cohort.</span>
         </h2>
 
@@ -2061,7 +2061,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "AEC-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
+            { metric: "Portfolio-native", label: "Product direction", sub: "Role, workflow, and UI fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -2089,7 +2089,7 @@ function Slide12() {
 
   const advisors = [
     { name: "Tom Ray", role: "Chairman, Aliz.ai; Founding CEO, EdgeCore Data Centers", bio: "Leader in scaling global tech service companies and building enterprise infrastructure." },
-    { name: "Enterprise Advisor", role: "VP Product Management, Global AEC Software Company (€6B Group)", bio: "Senior product leader in the AEC space. 15+ years across desktop, cloud, mobile, AI, and data-driven product strategy in global enterprise software." },
+    { name: "Enterprise Advisor", role: "VP Product Management, Global Aerospace & Defense Software Company (€6B Group)", bio: "Senior product leader in the aerospace & defense space. 15+ years across desktop, cloud, mobile, AI, and data-driven product strategy in global enterprise software." },
   ];
 
   return (
@@ -2167,9 +2167,9 @@ function Slide13() {
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "AEC-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
+            { label: "Portfolio-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Aero, Space, Land Systems, BIM bridges, lighthouse deployments", color: GOLD },
+            { label: "Division Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Aero, Space, Land Systems, BIM bridges, lighthouse deployments", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -2184,9 +2184,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1-6", target: "AEC-native UX live", milestone: "RFI, submittal, and spec-review surfaces in market with first lighthouse deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Aero / Space Divisions integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and AEC customers on a repeatable self-serve expansion path.", color: MINT },
+            { month: "Month 1-6", target: "Portfolio-native UX live", milestone: "ECR, qualification, and design-review surfaces in market with first lighthouse deployments.", color: TEAL },
+            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Division pilots convert to platform base plus credits. Aero / Space Divisions integration path live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and Division customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2201,7 +2201,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the AEC-native control layer for every AI workflow.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the Portfolio-native control layer for every AI workflow.</strong>
           </p>
         </div>
 
@@ -2249,8 +2249,8 @@ function SlideContextGapExemplified() {
     {
       n: 2,
       nature: "OPEN ISSUE",
-      title: "Unresolved RFI on the connection",
-      body: "Structural engineer raised an RFI on the curtain-wall back-pan two weeks ago. No response yet. The connection cannot be called 'standard' until that closes.",
+      title: "Unresolved ECR on the connection",
+      body: "Structural engineer raised an ECR on the curtain-wall back-pan two weeks ago. No response yet. The connection cannot be called 'standard' until that closes.",
     },
     {
       n: 3,
@@ -2374,7 +2374,7 @@ function SlideContextGapExemplified() {
                 What AI couldn&apos;t see
               </p>
               <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
-                Lives in variance letters, RFI threads, reviewers' heads.
+                Lives in variance letters, ECR threads, reviewers' heads.
               </p>
             </div>
 
@@ -2420,7 +2420,7 @@ function SlideContextGapExemplified() {
                   </p>
                 </div>
                 <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
-                  Drawings. Specs. BIM model. Code references. Standard details.
+                  ICDs. Mission specs. BIM model. Code references. Standard details.
                 </p>
                 <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
                   Indexable. RAG-friendly. Insufficient for an AHJ submission.
@@ -2434,7 +2434,7 @@ function SlideContextGapExemplified() {
                     What closes the gap
                   </p>
                 </div>
-                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live variances, open RFIs, and reviewer conventions and resolves them at issue time." }} />
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live variances, open ECRs, and reviewer conventions and resolves them at issue time." }} />
               </div>
             </div>
           </div>
@@ -2475,11 +2475,11 @@ function SlidePeopleAsNodes() {
   ];
 
   const artifacts = [
-    { label: "Drawings", x: 60, y: 60 },
-    { label: "Specs", x: 240, y: 50 },
+    { label: "ICDs", x: 60, y: 60 },
+    { label: "Mission specs", x: 240, y: 50 },
     { label: "BIM model", x: 80, y: 170 },
     { label: "Code refs", x: 240, y: 180 },
-    { label: "RFIs", x: 50, y: 280 },
+    { label: "ECRs", x: 50, y: 280 },
     { label: "Variances", x: 240, y: 300 },
   ];
 
@@ -2506,7 +2506,7 @@ function SlidePeopleAsNodes() {
             </div>
             <div className="px-5 pt-5">
               <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>
-                Specs and drawings define what. Architects, engineers and reviewers define how.
+                Mission specs and drawings define what. Architects, engineers and reviewers define how.
               </p>
               <p className="font-semibold mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
                 Documents are versioned. Judgment is not. Nothing scales and AI inherits none of it.
@@ -2719,7 +2719,7 @@ function SlideOrgIntelligence() {
     {
       icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Project & Client Memory",
-      body: "How this project is run: prior client commitments, contractor pain points, what was promised in the last design review, who owns each open RFI.",
+      body: "How this project is run: prior client commitments, contractor pain points, what was promised in the last design review, who owns each open ECR.",
     },
     {
       icon: <RefreshCw size={26} style={{ color: `hsl(${TEAL})` }} />,
@@ -2734,12 +2734,12 @@ function SlideOrgIntelligence() {
     {
       icon: <Globe size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Authority & External Signals",
-      body: "AHJ feedback, consultant reviews, client steerco notes, contractor RFIs, supplier lead-time alerts. Facts from outside the firm the team must react to.",
+      body: "AHJ feedback, consultant reviews, client steerco notes, contractor ECRs, supplier lead-time alerts. Facts from outside the firm the team must react to.",
     },
     {
       icon: <GitBranch size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Decisions & Exceptions",
-      body: "Sign-off thresholds, open RFIs, contract-specific clauses, the rules that override the rules. The connective tissue between standards and reality.",
+      body: "Sign-off thresholds, open ECRs, contract-specific clauses, the rules that override the rules. The connective tissue between standards and reality.",
     },
   ];
 
