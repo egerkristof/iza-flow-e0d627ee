@@ -1438,16 +1438,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Graphisoft workflow exploration",
-      subtitle: "Defense & Space signal",
-      scope: "Internal use-case discovery",
+      title: "Federated Defence Holding (Active Discussion)",
+      subtitle: "Space & Defence signal",
+      scope: "Multi-subsidiary engineering memory",
       color: TEAL,
-      outcome: "Live access to real Defense & Space workflow pain",
+      outcome: "Live engagement on cross-portfolio engineering context",
       metric: "Active",
       metricLabel: "Discussion",
       points: [
-        "Exploring internal Defense & Space workflow opportunities with a major ecosystem player",
-        "Direct signal that the Defense & Space workflow problem is real and strategically relevant",
+        "Federated defence group exploring one context layer across recently acquired engineering subsidiaries",
+        "Direct signal that fragmented chief-engineer judgment is the binding constraint on AI adoption",
       ],
       featured: true,
     },
