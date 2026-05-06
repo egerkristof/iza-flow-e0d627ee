@@ -96,11 +96,11 @@ export default function ResearchBrief() {
             </span>
           </div>
           <Link
-            to="/industries"
+            to="/research-deck"
             className="group inline-flex items-center gap-1.5 rounded-full px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all hover:opacity-90"
             style={{ background: `hsl(${TEAL})`, color: "white" }}
           >
-            <span>All verticals</span>
+            <span>Open the deck</span>
             <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
