@@ -217,17 +217,14 @@ function S02WhoBreaks() {
 
 function S03Iceberg() {
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-14" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="03" text="THE GAP" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           A literature review captures the tip. <span style={{ color: `hsl(${TEAL})` }}>The field lives below.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 22, color: MUTED, maxWidth: 1400, lineHeight: 1.45 }}>
-          Citations, abstracts, keywords, recent papers — all visible. The hierarchies, lineages, and tacit disagreements that actually constitute the field stay invisible. That is the layer LIZA OS makes legible.
-        </p>
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center mt-2">
           <div style={{ width: 1200 }}>
             <DeckIceberg
               aboveLabel="What a literature review captures"
