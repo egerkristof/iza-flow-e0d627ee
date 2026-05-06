@@ -19,6 +19,7 @@ import BankingInvestorDeck from "@/pages/BankingInvestorDeck";
 import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
 import SpaceDefenseHoldingsDeck from "@/pages/SpaceDefenseHoldingsDeck";
 import SpaceDefenseHoldingsBrief from "@/pages/SpaceDefenseHoldingsBrief";
+import ResearchBrief from "@/pages/ResearchBrief";
 
 export type PresentationRoute = {
   id: string;
@@ -101,6 +102,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/SpaceDefenseHoldingsBrief.tsx",
     description: "Responsive 2-minute brief of the Space & Defence Holdings deck. Lifecycle framing (capture, engineering, sustainment), GAO/INCOSE benchmarks, dual customer + investor CTA. Funnels to /space-defense-holdings.",
     component: SpaceDefenseHoldingsBrief,
+    showInAdmin: true,
+  },
+  {
+    id: "research-brief",
+    title: "Research Brief (Universities & Research Groups)",
+    path: "/research-brief",
+    sourcePath: "src/pages/ResearchBrief.tsx",
+    description: "Responsive 2-minute brief positioning LIZA OS as a Research Memory Layer for PhDs, early-career researchers, and faculty. Reframes literature review as field-mapping (hierarchies and relations between schools, lineages, authors), grounded in relational theory of knowledge (Polanyi, Nonaka/SECI, Csíkszentmihályi flow, neuroscience of social cognition). Augmentation, not automation. Two-door CTA: 30-day pilot inside one research group, or sponsor relationship to co-define the academic standard.",
+    component: ResearchBrief,
     showInAdmin: true,
   },
   {
