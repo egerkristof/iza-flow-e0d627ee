@@ -463,7 +463,112 @@ function S06WhyNow() {
   );
 }
 
-function S07Loop() {
+function S07Shift() {
+  const passive = [
+    "You build the structure alone, note by note",
+    "Tools retrieve, you reason in isolation",
+    "Graph rots without daily discipline",
+    "Expertise lives only in your head",
+    "Output is a folder of notes",
+  ];
+  const active = [
+    "Pre-installed research expertise structures the field for you",
+    "Agents reason inside the map and push back on your stance",
+    "Anchors keep your judgment versioned and alive",
+    "Pick your field and your preferred thinkers, the system maps them",
+    "Output is a compounding asset you own",
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <Eyebrow n="07" text="THE SHIFT" />
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+          A graph is not enough.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>You need a nervous system around it.</span>
+        </h2>
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
+          Obsidian, Roam, and RAG vaults give you a container. They are passive. They do not know what good thinking looks like in your field, they do not push back, they do not guide the structure. The map only compounds when expertise is installed around it.
+        </p>
+        <div className="grid grid-cols-2 gap-8 flex-1">
+          {/* Passive container */}
+          <div className="rounded-2xl border p-8 flex flex-col relative overflow-hidden" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>BEFORE</p>
+            <p className="mt-2 font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>Passive knowledge container</p>
+            <p className="mt-1 mb-6" style={{ fontSize: 16, color: SUBTLE, fontStyle: "italic" }}>Obsidian, Roam, vector DBs, RAG</p>
+            {/* Visual: lonely graph */}
+            <svg viewBox="0 0 400 160" className="w-full h-32 mb-5">
+              {[
+                [80, 50], [160, 30], [240, 70], [320, 40],
+                [60, 110], [150, 130], [250, 120], [340, 110],
+              ].map(([x, y], i) => (
+                <g key={i}>
+                  <circle cx={x} cy={y} r={7} fill={`hsl(${SUBTLE.split(" ").slice(0).join(" ")} / 0.5)`} stroke={GRID_LINE} />
+                </g>
+              ))}
+              {/* a few faint disconnected lines */}
+              <line x1="80" y1="50" x2="160" y2="30" stroke={GRID_LINE} strokeDasharray="2 4" />
+              <line x1="240" y1="70" x2="320" y2="40" stroke={GRID_LINE} strokeDasharray="2 4" />
+              <line x1="60" y1="110" x2="150" y2="130" stroke={GRID_LINE} strokeDasharray="2 4" />
+            </svg>
+            <ul className="space-y-2.5 mt-auto">
+              {passive.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <X size={16} style={{ color: `hsl(${RED})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Active nervous system */}
+          <div className="rounded-2xl border-2 p-8 flex flex-col relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.5)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>AFTER</p>
+            <p className="mt-2 font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>Graph plus nervous system</p>
+            <p className="mt-1 mb-6" style={{ fontSize: 16, color: `hsl(${TEAL})`, fontStyle: "italic", fontWeight: 700 }}>Liza Research Memory Layer</p>
+            {/* Visual: structured graph with halo + thinker chips */}
+            <svg viewBox="0 0 400 160" className="w-full h-32 mb-5">
+              <defs>
+                <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor={`hsl(${TEAL} / 0.25)`} />
+                  <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+                </radialGradient>
+              </defs>
+              <ellipse cx="200" cy="80" rx="180" ry="70" fill="url(#halo)" />
+              {/* edges */}
+              {[
+                [80, 50, 160, 30], [160, 30, 240, 70], [240, 70, 320, 40],
+                [80, 50, 150, 130], [160, 30, 250, 120], [240, 70, 150, 130],
+                [320, 40, 340, 110], [250, 120, 340, 110], [150, 130, 250, 120],
+                [200, 80, 80, 50], [200, 80, 320, 40], [200, 80, 150, 130], [200, 80, 250, 120],
+              ].map(([x1, y1, x2, y2], i) => (
+                <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.2" />
+              ))}
+              {/* nodes */}
+              {[[80, 50], [160, 30], [240, 70], [320, 40], [150, 130], [250, 120], [340, 110]].map(([x, y], i) => (
+                <circle key={i} cx={x} cy={y} r={7} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="2" />
+              ))}
+              {/* center anchor */}
+              <circle cx="200" cy="80" r="11" fill={`hsl(${TEAL})`} />
+              <circle cx="200" cy="80" r="18" fill="none" stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 3" />
+            </svg>
+            <ul className="space-y-2.5 mt-auto">
+              {active.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <Check size={16} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 16, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+function S08Loop() {
   const loop = [
     {
       step: "1 · Map",
@@ -514,7 +619,7 @@ function S07Loop() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="07" text="HOW IT WORKS" />
+        <Eyebrow n="08" text="HOW IT WORKS" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
@@ -577,7 +682,7 @@ function S09Architecture() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="08" text="ARCHITECTURE" />
+        <Eyebrow n="09" text="ARCHITECTURE" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
