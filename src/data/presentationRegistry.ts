@@ -17,7 +17,7 @@ import SatcomBrief from "@/pages/SatcomBrief";
 import PharmaBrief from "@/pages/PharmaBrief";
 import BankingInvestorDeck from "@/pages/BankingInvestorDeck";
 import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
-import Investor4iGSDTDeck from "@/pages/Investor4iGSDTDeck";
+import InvestorSpaceDefenseDeck from "@/pages/InvestorSpaceDefenseDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -85,12 +85,12 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
-    id: "investor-4ig-sdt",
-    title: "4iG Space & Defence Investor Deck",
-    path: "/investor-4ig-sdt",
-    sourcePath: "src/pages/Investor4iGSDTDeck.tsx",
-    description: "Strategic-round deck targeting 4iG Space & Defence Technologies (4iG SDT). Federation memory layer across Space, Aero, Land Systems, Weapons & Ammunition, and Cyber & Defence Digitalisation. Wedge: post-merger engineering knowledge capture across newly-acquired subsidiaries; NATO AQAP / ISO 9001 / ISO 27001 / ECSS as executable standards. Two-door CTA: 30-day division pilot or strategic stake to co-define the federation reference architecture. Best entry: Gergely Sántha (Deputy CEO, integrations) and Szilárd Gerőfi (Cyber & Defence Digitalisation).",
-    component: Investor4iGSDTDeck,
+    id: "investor-space-defense",
+    title: "Space & Defence Holdings Investor Deck",
+    path: "/investor-space-defense",
+    sourcePath: "src/pages/InvestorSpaceDefenseDeck.tsx",
+    description: "Generic strategic-round deck for federated Space & Defence holding companies (4iG SDT, Hensoldt, Leonardo, Saab, KNDS, Rheinmetall portfolios). Federation memory layer across Space, Aero, Land Systems, Weapons & Ammunition, and Cyber divisions. Wedge: post-merger engineering knowledge capture across newly-acquired subsidiaries; NATO AQAP / AS9100 / ISO 27001 / ECSS as executable standards. Two-door CTA: 30-day division pilot or strategic stake to co-define the federation reference architecture.",
+    component: InvestorSpaceDefenseDeck,
     showInAdmin: true,
   },
   {
