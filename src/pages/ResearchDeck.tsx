@@ -157,13 +157,13 @@ function S01Cover() {
           </span>
         </div>
         <h1 className="font-black mb-10" style={{ fontSize: 96, lineHeight: 1.04, color: TEXT }}>
-          Obsidian was the benchmark.<br />
+          The research memory layer.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Now reason inside the map.
+            Structured field. Your judgment. AI inside the map.
           </span>
         </h1>
         <p style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.18em" }}>
-          BUILT FOR THE INDIVIDUAL · OPTIONAL FOR THE LAB
+          FOR THE INDIVIDUAL RESEARCHER
         </p>
       </div>
       <SlideBar />
