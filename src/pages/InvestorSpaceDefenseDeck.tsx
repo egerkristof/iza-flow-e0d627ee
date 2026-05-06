@@ -2714,32 +2714,32 @@ function SlideOrgIntelligence() {
     {
       icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Senior Design Judgment",
-      body: "How experienced architects, engineers and PMs actually decide: which clash matters, when to redesign vs. waive, when 'constructible' is acceptable. Today: trapped in heads.",
+      body: "How experienced chief engineers, systems engineers and programme managers actually decide: which non-conformance matters, when to redesign vs. waive, when 'qualified-as-built' is acceptable. Today: trapped in heads.",
     },
     {
       icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Project & Client Memory",
-      body: "How this project is run: prior client commitments, contractor pain points, what was promised in the last design review, who owns each open ECR.",
+      title: "Programme & Customer Memory",
+      body: "How this programme is run: prior customer commitments, supplier pain points, what was promised at the last design review, who owns each open ECR.",
     },
     {
       icon: <RefreshCw size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Changing Codes & Standards",
-      body: "Code variances, IBC updates, manufacturer revisions, in-house detail libraries. Context that drifted last week and rewrote the right answer for today's set.",
+      title: "Changing Standards & Authorities",
+      body: "AQAP / AS9100 / ECSS revisions, ITAR rulings, supplier qualifications, in-house engineering standards. Context that drifted last week and rewrote the right answer for today's review.",
     },
     {
       icon: <Target size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Program & Phase Strategy",
-      body: "What leadership decided this phase, what is now in scope, which trades sequence first, which value-engineering decisions are locked. Most AI never gets told.",
+      body: "What leadership decided this phase, what is now in scope, which subsystems integrate first, which design-to-cost decisions are locked. Most AI never gets told.",
     },
     {
       icon: <Globe size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Authority & External Signals",
-      body: "AHJ feedback, consultant reviews, client steerco notes, contractor ECRs, supplier lead-time alerts. Facts from outside the firm the team must react to.",
+      body: "Customer authority feedback, DCMA findings, programme steerco notes, supplier ECRs, long-lead component alerts. Facts from outside the firm the team must react to.",
     },
     {
       icon: <GitBranch size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Decisions & Exceptions",
-      body: "Sign-off thresholds, open ECRs, contract-specific clauses, the rules that override the rules. The connective tissue between standards and reality.",
+      body: "Sign-off thresholds, open ECRs, programme-specific clauses, the rules that override the rules. The connective tissue between standards and reality.",
     },
   ];
 
