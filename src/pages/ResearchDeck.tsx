@@ -3,7 +3,7 @@ import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile
 import {
   ArrowRight, BookOpen, Brain, ChevronLeft, ChevronRight, Eye, FileText,
   GitBranch, Globe, Grid3x3, Layers, Lightbulb, Maximize2, Network,
-  RefreshCw, Sparkles, Target, Users, Workflow, X,
+  RefreshCw, Sparkles, Target, Users, Workflow, X, Check, AlertTriangle,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
@@ -289,6 +289,14 @@ function S04ThirdPath() {
       what: "What it is: months in PDFs, hand-built bibliographies, notes in private docs.",
       limit: "Why it falls short: 6 to 12 months per researcher. The field gets flattened into a citation list. Hierarchies between schools, lineages of ideas, and the disagreements that actually matter never get mapped. Tacit judgment lives in the researcher's head and leaves with them.",
       tone: RED,
+      verdict: "FLATTENS THE FIELD",
+      icon: X,
+      meters: [
+        { label: "Speed", v: 1 },
+        { label: "Field map", v: 1 },
+        { label: "Researcher as author", v: 5 },
+        { label: "Compounds for the lab", v: 1 },
+      ],
     },
     {
       tag: "PATH 2",
@@ -296,6 +304,14 @@ function S04ThirdPath() {
       what: "What it is: ChatGPT, Claude, Elicit, Consensus used to summarise papers and draft sections.",
       limit: "Why it falls short: returns fluent prose and citation lists, not a map of the field. No memory of the lab, the prior cohort, or the open debates. The researcher reads less, judges less, and the thesis becomes the model's voice. Faster output, weaker thinker, no compounding asset for the group.",
       tone: AMBER,
+      verdict: "REPLACES THE THINKER",
+      icon: AlertTriangle,
+      meters: [
+        { label: "Speed", v: 5 },
+        { label: "Field map", v: 1 },
+        { label: "Researcher as author", v: 1 },
+        { label: "Compounds for the lab", v: 1 },
+      ],
     },
     {
       tag: "PATH 3",
@@ -303,6 +319,14 @@ function S04ThirdPath() {
       what: "What it is: a shared map of the field that the researcher builds with the system, not against it.",
       limit: "Why it works: surfaces hierarchies between schools, lineages across decades, and tacit disagreements between authors. The researcher stays the author of every claim. Each cohort's reasoning is captured and compounds for the next, so the lab's judgment becomes an asset that grows.",
       tone: TEAL,
+      verdict: "MAP, JUDGMENT, COMPOUND",
+      icon: Check,
+      meters: [
+        { label: "Speed", v: 4 },
+        { label: "Field map", v: 5 },
+        { label: "Researcher as author", v: 5 },
+        { label: "Compounds for the lab", v: 5 },
+      ],
     },
   ];
   return (
@@ -320,11 +344,29 @@ function S04ThirdPath() {
         <div className="grid grid-cols-3 gap-6 flex-1">
           {cols.map(c => (
             <div key={c.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${c.tone} / 0.5)`, background: `hsl(${c.tone} / 0.04)` }}>
-              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${c.tone})` }}>{c.tag}</p>
-              <p className="mt-3 mb-4 font-black" style={{ fontSize: 26, lineHeight: 1.15, color: TEXT }}>{c.title}</p>
+              <div className="flex items-center justify-between">
+                <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${c.tone})` }}>{c.tag}</p>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: `hsl(${c.tone} / 0.15)`, color: `hsl(${c.tone})` }}>
+                  <c.icon size={20} strokeWidth={3} />
+                </div>
+              </div>
+              <p className="mt-3 mb-2 font-black" style={{ fontSize: 26, lineHeight: 1.15, color: TEXT }}>{c.title}</p>
+              <p className="mb-4" style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${c.tone})` }}>{c.verdict}</p>
               <p className="mb-3" style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>{c.what}</p>
               <div className="my-3 h-px" style={{ background: `hsl(${c.tone} / 0.25)` }} />
               <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{c.limit}</p>
+              <div className="mt-auto pt-5 space-y-2">
+                {c.meters.map(m => (
+                  <div key={m.label} className="flex items-center gap-3">
+                    <p className="w-44" style={{ fontSize: 12, color: MUTED, fontWeight: 600 }}>{m.label}</p>
+                    <div className="flex-1 flex gap-1">
+                      {[1,2,3,4,5].map(i => (
+                        <div key={i} className="flex-1 h-1.5 rounded-full" style={{ background: i <= m.v ? `hsl(${c.tone})` : `hsl(${c.tone} / 0.12)` }} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -464,13 +506,24 @@ function S07Loop() {
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           One loop, two beneficiaries. Each step does work for the individual researcher today, and leaves a structured asset behind for the lab and the institution.
         </p>
-        <div className="grid grid-cols-4 gap-5 flex-1">
-          {loop.map((s) => {
+        <div className="relative flex-1">
+          {/* Connector spine */}
+          <div className="absolute left-0 right-0 top-[58px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0), hsl(${TEAL} / 0.45) 8%, hsl(${TEAL} / 0.45) 92%, hsl(${TEAL} / 0))` }} />
+          <div className="grid grid-cols-4 gap-5 h-full relative">
+          {loop.map((s, idx) => {
             const Icon = s.Icon;
             return (
-              <div key={s.step} className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 mb-4" style={{ borderColor: `hsl(${TEAL})`, color: `hsl(${TEAL})` }}>
-                  <Icon size={22} />
+              <div key={s.step} className="rounded-2xl border p-6 flex flex-col relative" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 18, boxShadow: `0 4px 12px hsl(${TEAL} / 0.35)` }}>
+                  {idx + 1}
+                </div>
+                {idx < loop.length - 1 && (
+                  <div className="absolute -right-5 top-[58px] z-10 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: BG, color: `hsl(${TEAL})` }}>
+                    <ArrowRight size={22} strokeWidth={3} />
+                  </div>
+                )}
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 mt-4" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
+                  <Icon size={24} />
                 </div>
                 <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{s.step}</p>
                 <p className="mt-1 mb-3 font-bold" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>{s.short}</p>
@@ -485,6 +538,7 @@ function S07Loop() {
               </div>
             );
           })}
+          </div>
         </div>
         <p className="mt-6 text-center" style={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.2em", color: MUTED, textTransform: "uppercase" }}>
           Individual productivity today · Institutional memory tomorrow
@@ -503,6 +557,7 @@ function S08Landscape() {
       missing: "A map of the field",
       gap: "Returns ranked papers and one-line summaries. Treats the literature as a list, not as schools, lineages, and disagreements between authors.",
       liza: "Resolves the same corpus into a structured field map the researcher can navigate, challenge, and extend.",
+      caps: [1, 0, 0, 0, 0],
     },
     {
       name: "ChatGPT / Claude / Gemini",
@@ -510,6 +565,7 @@ function S08Landscape() {
       missing: "The researcher's own judgment",
       gap: "Generates fluent prose from the average of the internet. No memory of the lab, the prior cohort, or the open debates. Speed at the cost of the researcher's voice.",
       liza: "Augments the researcher's own thinking inside their map. Every claim stays attributable to the researcher, not the model.",
+      caps: [0, 0, 0, 0, 0],
     },
     {
       name: "Zotero / Mendeley / Notion",
@@ -517,6 +573,7 @@ function S08Landscape() {
       missing: "Reasoning over the artifacts",
       gap: "Stores PDFs, citations, and notes as files in folders. Does not reason about the relations between them or surface contradictions.",
       liza: "Treats every artifact as a node in a living map. Relations, lineages, and contradictions become first-class.",
+      caps: [0, 0, 0, 0, 0],
     },
     {
       name: "Research Rabbit / Connected Papers",
@@ -524,6 +581,7 @@ function S08Landscape() {
       missing: "Tacit disagreement and judgment",
       gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what the lab's own stance is.",
       liza: "Captures the why-not-this decisions and the lab's own judgment, alongside the citation structure.",
+      caps: [1, 0, 0, 0, 0],
     },
     {
       name: "Obsidian / Roam",
@@ -531,8 +589,10 @@ function S08Landscape() {
       missing: "Cohort scale and portability",
       gap: "The closest in spirit: they actually do build knowledge graphs of how a researcher connects ideas. Two structural limits: solo by design (one user's vault, no cohort or lab layer), and locked to the tool. The graph cannot be lifted out and reused elsewhere.",
       liza: "Cohort-first and portable by default. The researcher's graph is exportable and the system is LLM-agnostic, so the way you connect ideas travels with you, with no lock-in to LIZA OS or to any single model.",
+      caps: [1, 1, 0, 0, 0],
     },
   ];
+  const capCols = ["Field map", "Researcher graph", "Cohort layer", "Judgment log", "Portable / LLM-agnostic"];
   return (
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
@@ -541,24 +601,50 @@ function S08Landscape() {
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
           Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, or the lab.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+        <p className="mb-4" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           For each category, one core thing is missing. That missing thing is what LIZA OS is built around.
         </p>
-        <div className="flex-1 grid grid-cols-1 gap-2.5">
+        {/* Capability matrix */}
+        <div className="rounded-xl border mb-4 overflow-hidden" style={{ borderColor: CHROME_BORDER, background: BG }}>
+          <div className="grid grid-cols-12 gap-3 px-5 py-3" style={{ background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+            <p className="col-span-3" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: SUBTLE, textTransform: "uppercase" }}>Capability coverage</p>
+            {capCols.map(c => (
+              <p key={c} className="col-span-1 text-center" style={{ fontSize: 11, fontWeight: 800, color: SUBTLE, lineHeight: 1.2 }}>{c}</p>
+            ))}
+            <p className="col-span-4 text-right" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>● = present  ○ = absent</p>
+          </div>
           {tools.map(t => (
-            <div key={t.name} className="rounded-xl border p-4 grid grid-cols-12 gap-5 items-stretch" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div key={t.name} className="grid grid-cols-12 gap-3 px-5 py-2.5 items-center border-b last:border-b-0" style={{ borderColor: CHROME_BORDER }}>
+              <p className="col-span-3" style={{ fontSize: 13, color: TEXT, fontWeight: 700 }}>{t.name}</p>
+              {t.caps.map((v, i) => (
+                <div key={i} className="col-span-1 flex justify-center">
+                  <div className="w-3.5 h-3.5 rounded-full" style={{ background: v ? `hsl(${TEAL})` : "transparent", border: v ? "none" : `1.5px solid hsl(${SUBTLE} / 0.5)` }} />
+                </div>
+              ))}
+              <p className="col-span-4 text-right" style={{ fontSize: 12, color: MUTED, fontStyle: "italic" }}>missing: {t.missing}</p>
+            </div>
+          ))}
+          <div className="grid grid-cols-12 gap-3 px-5 py-3 items-center" style={{ background: `hsl(${TEAL} / 0.07)`, borderTop: `2px solid hsl(${TEAL} / 0.4)` }}>
+            <p className="col-span-3 font-black" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>LIZA OS</p>
+            {[1,1,1,1,1].map((_, i) => (
+              <div key={i} className="col-span-1 flex justify-center">
+                <div className="w-4 h-4 rounded-full" style={{ background: `hsl(${TEAL})`, boxShadow: `0 0 0 3px hsl(${TEAL} / 0.18)` }} />
+              </div>
+            ))}
+            <p className="col-span-4 text-right font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.05em" }}>The full stack, by design</p>
+          </div>
+        </div>
+        <div className="flex-1 grid grid-cols-1 gap-2">
+          {tools.map(t => (
+            <div key={t.name} className="rounded-xl border p-3 grid grid-cols-12 gap-5 items-stretch" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
               <div className="col-span-3 flex flex-col justify-center">
-                <p className="font-black" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>{t.name}</p>
+                <p className="font-black" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{t.name}</p>
                 <p className="mt-1" style={{ fontSize: 13, fontWeight: 700, color: SUBTLE, letterSpacing: "0.05em" }}>{t.role}</p>
               </div>
-              <div className="col-span-3 flex flex-col justify-center pl-4 border-l" style={{ borderColor: `hsl(${RED} / 0.3)` }}>
-                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${RED})`, textTransform: "uppercase" }}>Core thing missing</p>
-                <p className="mt-1 font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{t.missing}</p>
-              </div>
-              <p className="col-span-3 flex items-center" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{t.gap}</p>
-              <div className="col-span-3 rounded-lg p-3 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>What LIZA OS adds</p>
-                <p className="mt-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{t.liza}</p>
+              <p className="col-span-5 flex items-center" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{t.gap}</p>
+              <div className="col-span-4 rounded-lg px-3 py-2 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>What LIZA OS adds</p>
+                <p className="mt-0.5" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{t.liza}</p>
               </div>
             </div>
           ))}
@@ -571,10 +657,10 @@ function S08Landscape() {
 
 function S09Architecture() {
   const layers = [
-    { tag: "L1 · Corpus", title: "Field Map", body: "Papers, books, citations, datasets — ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers },
-    { tag: "L2 · Researcher", title: "Stance & Judgment Log", body: "The researcher's framework, assumptions, prior work, and why-not-this decisions captured as executable context.", Icon: FileText },
-    { tag: "L3 · Cohort", title: "Commons of the Lab", body: "Group's collective reading, dialogues, and disagreements compound across cohorts. Tacit knowledge survives the PhD.", Icon: Users },
-    { tag: "L4 · Reasoning", title: "Augmentation Loop", body: "Counter-arguments, gaps, and trade-offs surface in dialogue. The researcher stays the author of every claim.", Icon: Workflow },
+    { tag: "L4", scope: "Reasoning", title: "Augmentation Loop", body: "Counter-arguments, gaps, and trade-offs surface in dialogue. The researcher stays the author of every claim.", Icon: Workflow, opacity: 1.0 },
+    { tag: "L3", scope: "Cohort", title: "Commons of the Lab", body: "Group's collective reading, dialogues, and disagreements compound across cohorts. Tacit knowledge survives the PhD.", Icon: Users, opacity: 0.85 },
+    { tag: "L2", scope: "Researcher", title: "Stance & Judgment Log", body: "The researcher's framework, assumptions, prior work, and why-not-this decisions captured as executable context.", Icon: FileText, opacity: 0.7 },
+    { tag: "L1", scope: "Corpus", title: "Field Map", body: "Papers, books, citations, datasets — ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers, opacity: 0.55 },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -584,23 +670,37 @@ function S09Architecture() {
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, researcher, cohort, reasoning — each compounding into the next.
         </p>
-        <div className="grid grid-cols-4 gap-5 flex-1">
-          {layers.map(l => {
-            const Icon = l.Icon;
-            return (
-              <div key={l.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
-                <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{l.tag}</p>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center my-5" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
-                  <Icon size={28} />
+        <div className="flex-1 flex gap-10 items-stretch">
+          {/* Stacked layers */}
+          <div className="flex-1 flex flex-col gap-3">
+            {layers.map((l, idx) => {
+              const Icon = l.Icon;
+              return (
+                <div key={l.tag} className="rounded-xl flex items-center gap-6 px-7 py-5 relative" style={{ background: `hsl(${TEAL} / ${0.06 + idx * 0.04})`, border: `1px solid hsl(${TEAL} / ${0.25 + idx * 0.1})` }}>
+                  <div className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `hsl(${TEAL} / 0.18)`, color: `hsl(${TEAL})` }}>
+                    <Icon size={28} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-baseline gap-3">
+                      <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>{l.tag}</p>
+                      <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE, textTransform: "uppercase" }}>{l.scope}</p>
+                    </div>
+                    <p className="font-black mt-1" style={{ fontSize: 22, color: TEXT }}>{l.title}</p>
+                  </div>
+                  <p className="flex-[1.5]" style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{l.body}</p>
                 </div>
-                <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT }}>{l.title}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{l.body}</p>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+          {/* Compounding axis */}
+          <div className="w-16 flex flex-col items-center">
+            <p className="font-black" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})`, textTransform: "uppercase", writingMode: "vertical-rl", transform: "rotate(180deg)" }}>Compounds upward →</p>
+            <div className="flex-1 my-3 w-1 rounded-full" style={{ background: `linear-gradient(to top, hsl(${TEAL} / 0.15), hsl(${TEAL}))` }} />
+            <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${TEAL})` }} />
+          </div>
         </div>
       </div>
       <SlideBar />
@@ -626,15 +726,28 @@ function S10SECI() {
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           Most of what makes a research group good lives in conversation: between supervisor and student, in reading groups, in late corridor debates. Today it dies with the cohort. LIZA OS treats that conversation as the asset and carries it forward.
         </p>
-        <div className="grid grid-cols-4 gap-5 flex-1">
-          {phases.map((p, i) => (
-            <div key={p.tag} className="rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${p.color} / 0.08)`, border: `1px solid hsl(${p.color} / 0.3)` }}>
-              <p className="font-black" style={{ fontSize: 22, color: `hsl(${p.color})`, letterSpacing: "0.05em" }}>0{i + 1}</p>
-              <p className="font-black mt-3 mb-4" style={{ fontSize: 28, color: TEXT }}>{p.tag}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-            </div>
-          ))}
+        <div className="relative flex-1">
+          <div className="absolute left-0 right-0 top-[68px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0.4), hsl(${TEAL} / 0.4))`, opacity: 0.4 }} />
+          <div className="grid grid-cols-4 gap-5 h-full relative">
+            {phases.map((p, i) => (
+              <div key={p.tag} className="rounded-2xl p-8 pt-12 flex flex-col relative" style={{ background: `hsl(${p.color} / 0.06)`, border: `1px solid hsl(${p.color} / 0.3)` }}>
+                <div className="absolute -top-6 left-8 w-14 h-14 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${p.color})`, color: BG, fontSize: 22, boxShadow: `0 6px 16px hsl(${p.color} / 0.3)` }}>
+                  {i + 1}
+                </div>
+                {i < phases.length - 1 && (
+                  <div className="absolute -right-5 top-[58px] z-10 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: BG, color: `hsl(${TEAL})` }}>
+                    <ArrowRight size={22} strokeWidth={3} />
+                  </div>
+                )}
+                <p className="font-black mb-4" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{p.tag}</p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
+        <p className="mt-6 text-center" style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.25em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
+          ↻ Each cohort feeds the next · the loop tightens with every cycle
+        </p>
       </div>
       <SlideBar />
     </div>
@@ -691,18 +804,39 @@ function S12Pilot() {
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           We co-build the Research Memory Layer with one PhD cohort or one research group as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
         </p>
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {[
-            { tag: "Weeks 1–4", title: "Map the field", body: "Ingest the group's corpus. Surface schools, lineages, disagreements. Researcher reviews and corrects." },
-            { tag: "Weeks 5–10", title: "Anchor & augment", body: "Researcher's stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time." },
-            { tag: "Weeks 11–16", title: "Compound & hand off", body: "The map and judgment log become the cohort's shared memory. Next student starts from there." },
-          ].map(p => (
-            <div key={p.tag} className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
-              <p style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{p.tag}</p>
-              <p className="font-black mt-3 mb-4" style={{ fontSize: 28, color: TEXT }}>{p.title}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-            </div>
-          ))}
+        <div className="relative flex-1 flex flex-col justify-center">
+          {/* Week ruler */}
+          <div className="relative h-2 rounded-full mb-2 mx-6" style={{ background: `hsl(${TEAL} / 0.12)` }}>
+            <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: "100%", background: `linear-gradient(90deg, hsl(${TEAL}), hsl(${MINT}))` }} />
+            {[0, 25, 62.5, 100].map((pct, i) => (
+              <div key={i} className="absolute -top-1 w-4 h-4 rounded-full" style={{ left: `calc(${pct}% - 8px)`, background: BG, border: `3px solid hsl(${TEAL})` }} />
+            ))}
+          </div>
+          <div className="flex justify-between mx-3 mb-10" style={{ fontSize: 12, fontWeight: 700, color: SUBTLE, letterSpacing: "0.18em" }}>
+            <span>WEEK 1</span><span>WEEK 4</span><span>WEEK 10</span><span>WEEK 16</span>
+          </div>
+          <div className="grid grid-cols-3 gap-6">
+            {[
+              { tag: "Weeks 1–4", title: "Map the field", body: "Ingest the group's corpus. Surface schools, lineages, disagreements. Researcher reviews and corrects.", deliverable: "Living field map (v1)" },
+              { tag: "Weeks 5–10", title: "Anchor & augment", body: "Researcher's stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time.", deliverable: "Judgment log + augmented dialogue" },
+              { tag: "Weeks 11–16", title: "Compound & hand off", body: "The map and judgment log become the cohort's shared memory. Next student starts from there.", deliverable: "Cohort handoff package" },
+            ].map((p, i) => (
+              <div key={p.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 18 }}>{i + 1}</div>
+                  <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>{p.tag}</p>
+                </div>
+                <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT }}>{p.title}</p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
+                <div className="mt-auto pt-5">
+                  <div className="rounded-lg px-3 py-2 inline-flex items-center gap-2" style={{ background: `hsl(${TEAL} / 0.1)` }}>
+                    <Check size={14} color={`hsl(${TEAL})`} strokeWidth={3} />
+                    <p style={{ fontSize: 13, fontWeight: 700, color: `hsl(${TEAL})` }}>{p.deliverable}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar />
