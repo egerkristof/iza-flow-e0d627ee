@@ -404,19 +404,19 @@ const SDT_GAP_CASES = [
 
 const SDT_COST_BENCHMARKS = [
   {
-    value: "$177.5B",
-    label: "estimated annual labour cost impact across global defence & aerospace engineering from rework, NCR resolution, and searching for programme data",
-    source: "Industry benchmark, defence & aerospace engineering",
+    value: "$7.6B",
+    label: "cumulative cost overruns on NASA's portfolio of major projects in development, with engineering rework and late requirements changes among the largest drivers",
+    source: "GAO-23-106021, NASA Assessments of Major Projects, 2023",
   },
   {
-    value: "14+ hrs",
-    label: "lost per engineer per week on non-value activities, including ~4 hours tied specifically to rework",
-    source: "Industry benchmark, defence & aerospace engineering",
+    value: "+40%",
+    label: "average cost growth across major defence acquisition programmes (MDAPs) versus baseline, with requirements churn and engineering changes a primary driver",
+    source: "RAND, Sources of Weapon System Cost Growth (35 MDAPs); GAO-25-107569 Weapon Systems Annual Assessment, 2025",
   },
   {
-    value: "5–15%",
-    label: "common rework range across complex programmes, depending on platform complexity and integration conditions",
-    source: "McKinsey / industry benchmark range",
+    value: "100×",
+    label: "cost amplification of fixing a requirements or interface defect after qualification versus catching it at design — the canonical late-defect curve in systems engineering",
+    source: "INCOSE / NASA, Error Cost Escalation Through the Project Life Cycle",
   },
 ];
 
