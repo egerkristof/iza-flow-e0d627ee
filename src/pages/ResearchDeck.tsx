@@ -411,19 +411,19 @@ function S06WhyNow() {
     {
       stat: "67 wks",
       label: "Average time to complete a systematic review",
-      context: "Mean of 67.3 weeks from registration to publication across 195 PROSPERO-registered reviews. Why it matters: in fields like AI, biotech, and climate science the literature now doubles every 2 to 3 years. A PhD that spends 15 months catching up to a frontier that has already moved is no longer doing original work. The strategic act is the synthesis above the review, not the review itself.",
+      context: "Mean of 67.3 weeks from registration to publication across 195 PROSPERO-registered reviews. Why it matters: in fields like AI, biotech, and climate science the literature now doubles every 2 to 3 years. A researcher who spends 15 months catching up to a frontier that has already moved is no longer doing original work. The strategic act is the synthesis above the review, not the review itself.",
       source: "Borah, Brown, Capers & Kaiser. BMJ Open, 2017. Analysis of the time and workers needed to conduct systematic reviews (PROSPERO).",
     },
     {
       stat: "~30%",
       label: "Of researchers already use generative AI in their writing",
-      context: "Of 1,600+ scientists Nature surveyed, roughly a third use generative AI to draft manuscripts, refine text, or summarise the literature. Why it matters: this is happening with no institutional standard for how the field gets mapped or how judgment is preserved. Without one, the next generation learns to produce the model's voice instead of forming their own. That is the hollowing-out: speed at the cost of the next generation of thinkers.",
+      context: "Of 1,600+ scientists Nature surveyed, roughly a third use generative AI to draft manuscripts, refine text, or summarise the literature. Why it matters: it is happening with no structured way for the individual researcher to map the field or preserve their own judgment. Without that structure, the researcher learns to produce the model's voice instead of forming their own. Speed at the cost of becoming a thinker.",
       source: "Van Noorden & Perkel. Nature, 2023. AI and science: what 1,600 researchers think (n = 1,600+).",
     },
     {
       stat: "12%",
       label: "Of scientific papers receive zero citations five years after publication",
-      context: "A Web of Science study finds about 12% of articles remain uncited after five years, with the share much higher in several fields. Why it matters: not reading the field is no longer a quality gap, it is now a structural certainty. The corpus grows faster than any cohort can read it, so entire schools of thought stay invisible. Without a shared map, every researcher restarts from a partial view, and the institution never builds a position on the field.",
+      context: "A Web of Science study finds about 12% of articles remain uncited after five years, with the share much higher in several fields. Why it matters: not reading the field is no longer a quality gap, it is now a structural certainty. The corpus grows faster than any individual can read it, so entire schools of thought stay invisible. Without a structured map, the researcher restarts from a partial view every time.",
       source: "Hovden et al. Scientometrics, 2019. Zero impact: a large-scale study of uncitedness (Web of Science corpus).",
     },
   ];
@@ -462,29 +462,25 @@ function S07Loop() {
     {
       step: "1 · Map",
       short: "See the field, not a list.",
-      researcher: "Drop in your corpus: PDFs, citations, your supervisor's reading list, your own past notes. LIZA OS clusters the literature into schools of thought, surfaces lineages of ideas across decades, and flags where authors actually disagree. The PhD walks into a structured field on day one.",
-      institution: "The lab gets a living map of its domain that any new student inherits. The map is no longer locked in one professor's head.",
+      researcher: "Drop in your corpus: PDFs, citations, your reading list, your own past notes. LIZA OS clusters the literature into schools of thought, surfaces lineages of ideas across decades, and flags where authors actually disagree. You walk into a structured field on day one.",
       Icon: Network,
     },
     {
       step: "2 · Anchor",
       short: "Codify your stance.",
       researcher: "Your hypothesis, framework, and assumptions become explicit anchors the system reasons against. Every claim is tied to your position, not a generic average of the internet.",
-      institution: "The group's methodology, prior critiques, and standards of evidence are captured as shared anchors that newcomers can read, challenge, and extend.",
       Icon: BookOpen,
     },
     {
       step: "3 · Augment",
       short: "Think further, faster.",
-      researcher: "The researcher stays the author. The system surfaces counter-arguments, trade-offs, gaps in their reading, and lineages they have not yet placed. Less time searching and re-summarising. More time judging and writing.",
-      institution: "Cohorts converge on a shared standard for AI-augmented research. The institution can show how AI is used to deepen judgment, not replace it.",
+      researcher: "You stay the author. The system surfaces counter-arguments, trade-offs, gaps in your reading, and lineages you have not yet placed. Less time searching and re-summarising. More time judging and writing.",
       Icon: Sparkles,
     },
     {
       step: "4 · Compound",
       short: "Knowledge accumulates.",
-      researcher: "Every reading, note, and decision feeds back into the map. The researcher's own thinking becomes a structured asset they own across projects, not a folder of dead PDFs.",
-      institution: "Each cohort hands off a richer field map and a deeper judgment log to the next. The lab's reasoning becomes a compounding institutional asset, not something that leaves with each graduate.",
+      researcher: "Every reading, note, and decision feeds back into the map. Your own thinking becomes a structured, portable asset you own across projects, not a folder of dead PDFs. Exportable. LLM-agnostic. No lock-in.",
       Icon: RefreshCw,
     },
   ];
@@ -497,7 +493,7 @@ function S07Loop() {
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          One loop, two beneficiaries. Each step does work for the individual researcher today, and leaves a structured asset behind for the lab and the institution.
+          One loop. One researcher. Each step compounds the next: a structured field, your stance against it, AI reasoning inside it, and a portable asset that grows with every reading.
         </p>
         <div className="relative flex-1">
           {/* Connector spine */}
@@ -519,23 +515,13 @@ function S07Loop() {
                   <Icon size={24} />
                 </div>
                 <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{s.step}</p>
-                <p className="mt-1 mb-3 font-bold" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>{s.short}</p>
-                <div className="rounded-lg p-3 mb-3" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.18)` }}>
-                  <p className="mb-1" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>For the researcher</p>
-                  <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.45 }}>{s.researcher}</p>
-                </div>
-                <div className="rounded-lg p-3" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-                  <p className="mb-1" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: SUBTLE, textTransform: "uppercase" }}>For the institution</p>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>{s.institution}</p>
-                </div>
+                <p className="mt-1 mb-4 font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>{s.short}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{s.researcher}</p>
               </div>
             );
           })}
           </div>
         </div>
-        <p className="mt-6 text-center" style={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.2em", color: MUTED, textTransform: "uppercase" }}>
-          Individual productivity today · Institutional memory tomorrow
-        </p>
       </div>
       <SlideBar />
     </div>
@@ -556,7 +542,7 @@ function S08Landscape() {
       name: "ChatGPT / Claude / Gemini",
       role: "General writing assistants",
       missing: "The researcher's own judgment",
-      gap: "Generates fluent prose from the average of the internet. No memory of the lab, the prior cohort, or the open debates. Speed at the cost of the researcher's voice.",
+      gap: "Generates fluent prose from the average of the internet. No memory of your prior reading, your stance, or the open debates in the field. Speed at the cost of the researcher's voice.",
       liza: "Augments the researcher's own thinking inside their map. Every claim stays attributable to the researcher, not the model.",
       caps: [0, 0, 0, 0, 0],
     },
@@ -572,27 +558,27 @@ function S08Landscape() {
       name: "Research Rabbit / Connected Papers",
       role: "Citation graphs",
       missing: "Tacit disagreement and judgment",
-      gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what the lab's own stance is.",
-      liza: "Captures the why-not-this decisions and the lab's own judgment, alongside the citation structure.",
+      gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what your own stance is.",
+      liza: "Captures the why-not-this decisions and the researcher's own judgment, alongside the citation structure.",
       caps: [1, 0, 0, 0, 0],
     },
     {
       name: "Obsidian / Roam",
       role: "Personal knowledge graphs",
-      missing: "Cohort scale and portability",
-      gap: "The closest in spirit: they actually do build knowledge graphs of how a researcher connects ideas. Two structural limits: solo by design (one user's vault, no cohort or lab layer), and locked to the tool. The graph cannot be lifted out and reused elsewhere.",
-      liza: "Cohort-first and portable by default. The researcher's graph is exportable and the system is LLM-agnostic, so the way you connect ideas travels with you, with no lock-in to LIZA OS or to any single model.",
-      caps: [1, 1, 0, 0, 0],
+      missing: "Structure and reasoning",
+      gap: "The closest tool in spirit. Real knowledge graphs of how a researcher connects ideas. Two structural limits: a blank canvas with no typed primitives for the field, and AI plugins that retrieve text by similarity rather than reason over the structure of the field.",
+      liza: "Typed primitives (school, stance, rebuttal, supersession) on day one. AI that reasons over the structured field, not around it. Portable and LLM-agnostic by default.",
+      caps: [1, 1, 0, 0, 1],
     },
   ];
-  const capCols = ["Field map", "Researcher graph", "Cohort layer", "Judgment log", "Portable / LLM-agnostic"];
+  const capCols = ["Field map", "Researcher graph", "Typed primitives", "Judgment log", "Portable / LLM-agnostic"];
   return (
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="08" text="THE LANDSCAPE" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
-          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, or the lab.</span>
+          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, and the researcher together.</span>
         </h2>
         <p className="mb-4" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           For each category, one core thing is missing. That missing thing is what LIZA OS is built around.
@@ -651,9 +637,9 @@ function S08Landscape() {
 function S09Architecture() {
   const layers = [
     { tag: "L4", scope: "Reasoning", title: "Augmentation Loop", body: "Counter-arguments, gaps, and trade-offs surface in dialogue. The researcher stays the author of every claim.", Icon: Workflow, opacity: 1.0 },
-    { tag: "L3", scope: "Cohort", title: "Commons of the Lab", body: "Group's collective reading, dialogues, and disagreements compound across cohorts. Tacit knowledge survives the PhD.", Icon: Users, opacity: 0.85 },
-    { tag: "L2", scope: "Researcher", title: "Stance & Judgment Log", body: "The researcher's framework, assumptions, prior work, and why-not-this decisions captured as executable context.", Icon: FileText, opacity: 0.7 },
-    { tag: "L1", scope: "Corpus", title: "Field Map", body: "Papers, books, citations, datasets — ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers, opacity: 0.55 },
+    { tag: "L3", scope: "Researcher", title: "Stance & Judgment Log", body: "Your framework, assumptions, prior work, and why-not-this decisions captured as executable context. Portable and LLM-agnostic.", Icon: FileText, opacity: 0.85 },
+    { tag: "L2", scope: "Structure", title: "Typed Primitives", body: "School, stance, rebuttal, supersession, why-not-this. The ontology of how a field actually argues with itself.", Icon: GitBranch, opacity: 0.7 },
+    { tag: "L1", scope: "Corpus", title: "Field Map", body: "Papers, books, citations, datasets ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers, opacity: 0.55 },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -664,7 +650,7 @@ function S09Architecture() {
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, researcher, cohort, reasoning — each compounding into the next.
+          The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, structure, researcher, reasoning. Each compounding into the next.
         </p>
         <div className="flex-1 flex gap-10 items-stretch">
           {/* Stacked layers */}
@@ -701,101 +687,17 @@ function S09Architecture() {
   );
 }
 
-function S10SECI() {
-  const phases = [
-    { tag: "Capture the conversation", body: "Reading group discussions, advisor-student exchanges, lab debates. The system listens and keeps them, instead of letting them disappear into private notebooks.", color: TEAL },
-    { tag: "Externalise the judgment", body: "The disagreements, the why-not-this decisions, the half-formed positions become first-class objects on the field map — not lost in a drawer.", color: MINT },
-    { tag: "Connect across the field", body: "Those judgments get linked to the schools, the lineages, the authors they argue with. The map deepens with every reading.", color: NAVY },
-    { tag: "Hand off to the next cohort", body: "The next PhD does not start from zero. They inherit the group's map and judgment, and form their own positions from there — faster, and deeper.", color: TEAL },
-  ];
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="10" text="HOW THE GROUP'S MEMORY FORMS" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          The conversation is the work. <span style={{ color: `hsl(${TEAL})` }}>We keep it.</span>
-        </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Most of what makes a research group good lives in conversation: between supervisor and student, in reading groups, in late corridor debates. Today it dies with the cohort. LIZA OS treats that conversation as the asset and carries it forward.
-        </p>
-        <div className="relative flex-1">
-          <div className="absolute left-0 right-0 top-[68px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0.4), hsl(${TEAL} / 0.4))`, opacity: 0.4 }} />
-          <div className="grid grid-cols-4 gap-5 h-full relative">
-            {phases.map((p, i) => (
-              <div key={p.tag} className="rounded-2xl p-8 pt-12 flex flex-col relative" style={{ background: `hsl(${p.color} / 0.06)`, border: `1px solid hsl(${p.color} / 0.3)` }}>
-                <div className="absolute -top-6 left-8 w-14 h-14 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${p.color})`, color: BG, fontSize: 22, boxShadow: `0 6px 16px hsl(${p.color} / 0.3)` }}>
-                  {i + 1}
-                </div>
-                {i < phases.length - 1 && (
-                  <div className="absolute -right-5 top-[58px] z-10 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: BG, color: `hsl(${TEAL})` }}>
-                    <ArrowRight size={22} strokeWidth={3} />
-                  </div>
-                )}
-                <p className="font-black mb-4" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{p.tag}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <p className="mt-6 text-center" style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.25em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
-          ↻ Each cohort feeds the next · the loop tightens with every cycle
-        </p>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
-function S11JointVision() {
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="11" text="UNIT OF VALUE" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          Not the solo researcher. <span style={{ color: `hsl(${TEAL})` }}>The Joint Vision of the group.</span>
-        </h2>
-        <p className="mb-12" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Productivity tools optimise individuals. We refuse that frame. The unit of value in research is the lab, the cohort, the school of thought — the people who think together over years and leave a tradition behind them.
-        </p>
-        <div className="grid grid-cols-2 gap-6 flex-1">
-          <div className="rounded-2xl border p-10 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p className="font-black mb-5" style={{ fontSize: 32, color: `hsl(${RED})` }}>Atomised default</p>
-            <ul className="space-y-3" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>
-              <li>· Individual productivity metrics</li>
-              <li>· Each PhD restarts from zero</li>
-              <li>· Tacit judgment dies with the cohort</li>
-              <li>· The institution loses its tradition</li>
-            </ul>
-          </div>
-          <div className="rounded-2xl border-2 p-10 flex flex-col" style={{ borderColor: `hsl(${TEAL})`, background: `hsl(${MINT} / 0.06)` }}>
-            <p className="font-black mb-5" style={{ fontSize: 32, color: `hsl(${TEAL})` }}>Joint Vision</p>
-            <ul className="space-y-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
-              <li>· Group-level field map and judgment log</li>
-              <li>· Each cohort starts where the last one left off</li>
-              <li>· Tacit disagreements survive as first-class objects</li>
-              <li>· The institution compounds a school of thought</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
 function S12Pilot() {
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="12" text="COHORT PILOT" />
+        <Eyebrow n="10" text="DESIGN PARTNER" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One research group. One field. <span style={{ color: `hsl(${TEAL})` }}>One semester.</span>
+          One researcher. One field. <span style={{ color: `hsl(${TEAL})` }}>One semester.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We co-build the Research Memory Layer with one PhD cohort or one research group as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
+          We co-build the Research Memory Layer with a single researcher as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
         </p>
         <div className="relative flex-1 flex flex-col justify-center">
           {/* Week ruler */}
@@ -810,9 +712,9 @@ function S12Pilot() {
           </div>
           <div className="grid grid-cols-3 gap-6">
             {[
-              { tag: "Weeks 1–4", title: "Map the field", body: "Ingest the group's corpus. Surface schools, lineages, disagreements. Researcher reviews and corrects.", deliverable: "Living field map (v1)" },
-              { tag: "Weeks 5–10", title: "Anchor & augment", body: "Researcher's stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time.", deliverable: "Judgment log + augmented dialogue" },
-              { tag: "Weeks 11–16", title: "Compound & hand off", body: "The map and judgment log become the cohort's shared memory. Next student starts from there.", deliverable: "Cohort handoff package" },
+              { tag: "Weeks 1–4", title: "Map the field", body: "Ingest your corpus. Surface schools, lineages, disagreements. You review and correct.", deliverable: "Living field map (v1)" },
+              { tag: "Weeks 5–10", title: "Anchor & augment", body: "Your stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time.", deliverable: "Judgment log + augmented dialogue" },
+              { tag: "Weeks 11–16", title: "Compound & own", body: "The map and judgment log become your portable, structured asset. Exportable and LLM-agnostic.", deliverable: "Portable researcher graph" },
             ].map((p, i) => (
               <div key={p.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
                 <div className="flex items-center gap-3 mb-3">
@@ -840,33 +742,33 @@ function S12Pilot() {
 function S13Outcomes() {
   const tiers = [
     {
-      tag: "FOR THE INDIVIDUAL",
-      headline: "The researcher",
+      tag: "ON DAY ONE",
+      headline: "Walk into a structured field",
       bullets: [
-        "Walks into a structured field map on day one instead of 6 to 12 months of solo PDF reading.",
-        "Spends more hours judging, writing, and forming a position. Less hours searching and re-summarising.",
-        "Stays the author of every claim. No model voice in the thesis.",
-        "Owns a portable graph of how they connect ideas. It travels with them after the PhD.",
+        "A structured field map instead of 6 to 12 months of solo PDF reading.",
+        "Schools, lineages, and disagreements typed and visible from the start.",
+        "Zero setup tax. The structure exists before you do the work.",
+        "You start judging the field, not cataloguing it.",
       ],
     },
     {
-      tag: "FOR THE TEAM",
-      headline: "The cohort and lab",
+      tag: "WHILE YOU WORK",
+      headline: "Augmented, not replaced",
       bullets: [
-        "Shared field map and judgment log that every member can read, challenge, and extend.",
-        "Disagreements between authors and prior critiques are visible, not stuck in one professor's head.",
-        "New students reach productive contribution in weeks, not in their second year.",
-        "The group converges on a shared standard for how AI is used in their research.",
+        "More hours judging, writing, and forming a position. Fewer hours searching and re-summarising.",
+        "AI surfaces counter-arguments and trade-offs inside the structured map.",
+        "Every claim stays attributable to you. No model voice in your thesis.",
+        "Your why-not-this decisions get captured as you reason, not lost in a notebook.",
       ],
     },
     {
-      tag: "FOR THE INSTITUTION",
-      headline: "The faculty and university",
+      tag: "AT THE END",
+      headline: "A portable asset that is yours",
       bullets: [
-        "An institutional standard for AI-augmented research that protects the formation of judgment.",
-        "Cohort-to-cohort knowledge stops leaving with each graduate. The lab's reasoning becomes a compounding asset.",
-        "A defensible position on what good academic AI use looks like, with the artefacts to show it.",
-        "No vendor or model lock-in. Field maps and judgment logs are exportable. The system is LLM-agnostic.",
+        "A structured graph of how you connect ideas. Yours, across projects and years.",
+        "Exportable. LLM-agnostic. No lock-in to LIZA OS or to any single model.",
+        "Travels with you to the next paper, the next field, the next role.",
+        "The thinking compounds. The next project starts where this one ended.",
       ],
     },
   ];
@@ -874,12 +776,12 @@ function S13Outcomes() {
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="13" text="OUTCOMES" />
+        <Eyebrow n="11" text="OUTCOMES" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
-          What changes, <span style={{ color: `hsl(${TEAL})` }}>at three levels.</span>
+          What changes <span style={{ color: `hsl(${TEAL})` }}>for the researcher.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          These are the working assumptions we hold today. The semester pilot is how we validate or revise each one with a real cohort.
+          Three moments in one PhD. These are the working assumptions we hold today. The semester pilot is how we validate or revise each one with a real researcher.
         </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {tiers.map((t, idx) => (
@@ -918,24 +820,20 @@ function S14TwoDoor() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="14" text="TWO WAYS TO START" />
+        <Eyebrow n="12" text="HOW TO START" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          Co-build with us. <span style={{ color: `hsl(${TEAL})` }}>As a partner, or a sponsor.</span>
+          Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
         </h2>
-        <div className="grid grid-cols-2 gap-6 flex-1">
-          <div className="rounded-2xl p-10 flex flex-col" style={{ background: TEXT, color: BG }}>
-            <p style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>OPTION A · COHORT PARTNER</p>
-            <p className="font-black mt-4 mb-5" style={{ fontSize: 40 }}>Run the semester pilot</p>
-            <p style={{ fontSize: 22, color: "hsl(0 0% 100% / 0.85)", lineHeight: 1.5 }}>
-              One research group. One field. Sixteen weeks. We co-build the Research Memory Layer alongside your cohort and leave you with a usable field map, a judgment log, and a measurable return of deep-work hours.
+        <div className="flex-1 flex">
+          <div className="rounded-2xl p-14 flex flex-col w-full" style={{ background: TEXT, color: BG }}>
+            <p style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>DESIGN PARTNER · ONE RESEARCHER</p>
+            <p className="font-black mt-5 mb-7" style={{ fontSize: 56, lineHeight: 1.05 }}>Run the semester pilot</p>
+            <p style={{ fontSize: 26, color: "hsl(0 0% 100% / 0.85)", lineHeight: 1.5, maxWidth: 1300 }}>
+              One researcher. One field. Sixteen weeks. We co-build the Research Memory Layer alongside you and leave you with a usable field map, a judgment log, and a portable structured graph that is yours after the pilot ends.
             </p>
-          </div>
-          <div className="rounded-2xl p-10 flex flex-col text-white" style={{ background: `hsl(${TEAL})` }}>
-            <p style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.25em", color: "hsl(0 0% 100% / 0.7)" }}>OPTION B · INSTITUTIONAL SPONSOR</p>
-            <p className="font-black mt-4 mb-5" style={{ fontSize: 40 }}>Co-define the standard</p>
-            <p style={{ fontSize: 22, color: "hsl(0 0% 100% / 0.9)", lineHeight: 1.5 }}>
-              Build the academic version of LIZA OS with us. Anchor it for your university and faculty, take a strategic position, and set the global reference for AI-augmented research.
-            </p>
+            <div className="mt-auto pt-10 flex items-center gap-3">
+              <p style={{ fontSize: 16, color: "hsl(0 0% 100% / 0.6)", letterSpacing: "0.18em" }}>NO INSTITUTIONAL COMMITMENT REQUIRED</p>
+            </div>
           </div>
         </div>
       </div>
@@ -961,7 +859,7 @@ function S15Close() {
           </span>
         </h1>
         <p style={{ fontSize: 26, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The next great PhD should inherit the last one's judgment — not just their bibliography. That is what we are building.
+          The structure of a field, on day one. AI that reasons inside it. A portable record of how you think. That is what we are building.
         </p>
         <p className="mt-12" style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.2em" }}>
           lizaos.ai/research-brief
@@ -983,12 +881,10 @@ const SLIDES = [
   { id: 7, title: "How It Works", component: <S07Loop /> },
   { id: 8, title: "The Landscape", component: <S08Landscape /> },
   { id: 9, title: "Architecture", component: <S09Architecture /> },
-  { id: 10, title: "Group Memory", component: <S10SECI /> },
-  { id: 11, title: "Joint Vision", component: <S11JointVision /> },
-  { id: 12, title: "Cohort Pilot", component: <S12Pilot /> },
-  { id: 13, title: "Outcomes", component: <S13Outcomes /> },
-  { id: 14, title: "Two Doors", component: <S14TwoDoor /> },
-  { id: 15, title: "Close", component: <S15Close /> },
+  { id: 10, title: "Design Partner", component: <S12Pilot /> },
+  { id: 11, title: "Outcomes", component: <S13Outcomes /> },
+  { id: 12, title: "How to Start", component: <S14TwoDoor /> },
+  { id: 13, title: "Close", component: <S15Close /> },
 ];
 
 // ─── Main page (mirrors SpaceDefenseHoldingsDeck shell) ──────────────────────
