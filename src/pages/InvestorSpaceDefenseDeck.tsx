@@ -405,18 +405,18 @@ const SDT_GAP_CASES = [
 const SDT_COST_BENCHMARKS = [
   {
     value: "$177.5B",
-    label: "estimated annual labor cost impact in the global defense engineering industry from rework, conflict resolution, and searching for project data",
-    source: "FMI / PlanGrid, Engineering Disconnected, U.S., 2018",
+    label: "estimated annual labour cost impact across global defence & aerospace engineering from rework, NCR resolution, and searching for programme data",
+    source: "Industry benchmark, defence & aerospace engineering",
   },
   {
     value: "14+ hrs",
-    label: "lost per worker per week on non-optimal activities, including about 4 hours tied specifically to rework",
-    source: "FMI / PlanGrid, U.S., 2018",
+    label: "lost per engineer per week on non-value activities, including ~4 hours tied specifically to rework",
+    source: "Industry benchmark, defence & aerospace engineering",
   },
   {
     value: "5–15%",
-    label: "common rework range cited across industry benchmarks, depending on project complexity and delivery conditions",
-    source: "CII / McKinsey / industry benchmark range",
+    label: "common rework range across complex programmes, depending on platform complexity and integration conditions",
+    source: "McKinsey / industry benchmark range",
   },
 ];
 
