@@ -39,6 +39,16 @@ const REGULATED_INDUSTRIES = [
     available: true,
   },
   {
+    slug: "space-defense",
+    icon: <Rocket className="w-6 h-6" />,
+    title: "Space & Defence Holdings",
+    lifecycle: "Federation Memory Layer · Multi-Division Integration",
+    description:
+      "For consolidating Space & Defence groups: capture engineering memory across newly-acquired subsidiaries before standards diverge. Govern AQAP, AS9100, ISO 27001, and ECSS as one stack across the federation.",
+    tags: ["NATO AQAP", "AS9100", "ECSS", "ISO 27001", "M&A Integration"],
+    available: true,
+  },
+  {
     slug: "satcom",
     icon: <Satellite className="w-6 h-6" />,
     title: "Satellite Operators & Fleet Operations",
