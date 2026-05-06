@@ -562,7 +562,7 @@ function S12Pilot() {
 function S13Outcomes() {
   const k = [
     { v: "−60%", l: "Time to a credible field map", d: "From 6–12 months of solo review to 6–10 weeks of group dialogue inside the map." },
-    { v: "+3×", l: "Deep-work hours returned", d: "Measured against baseline. Flow as the metric, not throughput." },
+    { v: "+3×", l: "Deep-work hours returned", d: "Measured against baseline. Time the researcher actually spends thinking, not time spent searching and re-summarising." },
     { v: "1", l: "Compounding cohort memory", d: "First semester where the next PhD inherits the previous cohort's judgment, not just their files." },
   ];
   return (
@@ -658,7 +658,7 @@ const SLIDES = [
   { id: 7, title: "How It Works", component: <S07Loop /> },
   { id: 8, title: "The Landscape", component: <S08Landscape /> },
   { id: 9, title: "Architecture", component: <S09Architecture /> },
-  { id: 10, title: "SECI as Product", component: <S10SECI /> },
+  { id: 10, title: "Group Memory", component: <S10SECI /> },
   { id: 11, title: "Joint Vision", component: <S11JointVision /> },
   { id: 12, title: "Cohort Pilot", component: <S12Pilot /> },
   { id: 13, title: "Outcomes", component: <S13Outcomes /> },
