@@ -93,7 +93,7 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Space & Defence Holdings · Strategic Round
+            LIZA OS · Space & Defence Holdings · Customer + Investor Path
           </span>
         </div>
 
@@ -105,12 +105,12 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          One context layer across Space, Aero, Land Systems, Weapons &amp; Ammunition, and Cyber &amp; Defence Digitalisation. Capture chief-engineer judgment from every acquisition. Enforce NATO AQAP, ISO 9001, ISO 27001, and ECSS as executable standards.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · Federation Beachhead</span>
+          One context layer across the full programme lifecycle. From capture and bid, through engineering and qualification, to sustainment and ILS. Capture chief-engineer judgment from every acquisition. Enforce NATO AQAP, ISO 9001, ISO 27001, and ECSS as executable standards.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Come on board as a customer, an investor, or both.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; Space & Defence Holdings Beachhead
+          Confidential &nbsp;·&nbsp; 30-Day Lifecycle Pilot &nbsp;·&nbsp; €3M Strategic Round
         </p>
       </div>
       <SlideBar />
@@ -2156,57 +2156,81 @@ function Slide13() {
       <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06]"
         style={{ background: `radial-gradient(circle, hsl(${MINT}), transparent 70%)` }} />
 
-      <div className="relative z-10 w-full px-28">
-        <div className="text-center mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
-          <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
-          <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + Space & Defence Holdings beachhead build-out
+      <div className="relative z-10 w-full px-24">
+        <div className="text-center mb-7">
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${GREEN} / 0.8)` }}>Two Ways To Come On Board</p>
+          <h2 className="font-black mb-3" style={{ fontSize: 64, color: TEXT, lineHeight: 1.05 }}>
+            As a <span style={{ color: `hsl(${TEAL})` }}>customer</span>, an <span style={{ color: `hsl(${GOLD})` }}>investor</span>, or both.
+          </h2>
+          <p style={{ fontSize: 20, color: MUTED, maxWidth: 1200, margin: "0 auto" }}>
+            The same context layer underwrites the customer outcome and the equity story. Either path stands alone. Together they compound.
           </p>
         </div>
 
-        {/* Use of funds */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
-          {[
-            { label: "Portfolio-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
-            { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "Subsidiary Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Space, aero, land systems, PLM bridges, lighthouse deployments inside the holding", color: GOLD },
-            { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
-          ].map(({ label, pct, amt, desc, color }) => (
-            <div key={label} className="rounded-xl border px-5 py-4 text-center"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
-              <p className="font-black" style={{ fontSize: 32, color: TEXT }}>{pct}</p>
-              <p className="font-bold" style={{ fontSize: 16, color: `hsl(${color})` }}>{label}</p>
-              <p style={{ fontSize: 14, color: MUTED }}>{amt}: {desc}</p>
+        <div className="grid grid-cols-2 gap-6 mb-6">
+          <div className="rounded-2xl border-2 p-7 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.30)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <p className="font-black tracking-[0.18em] uppercase mb-2" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Customer Path</p>
+            <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>30-Day Lifecycle Pilot</p>
+            <p className="mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              One subsidiary, one lifecycle stage. Capture, engineering, or sustainment. Live programme, real artifacts, in market in 30 days.
+            </p>
+            <div className="grid gap-2 mb-4">
+              {[
+                { label: "Scope", value: "1 subsidiary · 1 stage · 1 programme" },
+                { label: "Deliverable", value: "Working context layer in your engineering stack" },
+                { label: "Commercials", value: "Fixed-fee pilot. Convert to platform + usage credits." },
+                { label: "First value", value: "Reduced rework on the live programme inside 30 days" },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex gap-3">
+                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${TEAL})`, width: 110, letterSpacing: "0.06em", textTransform: "uppercase" }}>{label}</span>
+                  <span style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{value}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="mt-auto rounded-xl px-4 py-3" style={{ background: `hsl(${TEAL} / 0.10)`, border: `1px solid hsl(${TEAL} / 0.20)` }}>
+              <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
+                Outcome: a measured rework reduction on a live programme, plus a portable context layer the holding owns.
+              </p>
+            </div>
+          </div>
 
-        {/* Milestones */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          {[
-            { month: "Month 1-6", target: "Portfolio-native UX live", milestone: "ECR, qualification, and design-review surfaces in market with first lighthouse deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Subsidiary pilots convert to platform base plus credits. Cross-holding PLM integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and subsidiary customers on a repeatable self-serve expansion path.", color: MINT },
-          ].map(({ month, target, milestone, color }) => (
-            <div key={month} className="rounded-xl border px-5 py-4"
-              style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
-              <p className="font-semibold" style={{ fontSize: 16, color: `hsl(${color})`, letterSpacing: "0.1em" }}>{month}</p>
-              <p className="font-black mt-1" style={{ fontSize: 28, color: TEXT }}>{target}</p>
-              <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{milestone}</p>
+          <div className="rounded-2xl border-2 p-7 flex flex-col"
+            style={{ borderColor: `hsl(${GOLD} / 0.30)`, background: `hsl(${GOLD} / 0.05)` }}>
+            <p className="font-black tracking-[0.18em] uppercase mb-2" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>Investor Path</p>
+            <p className="font-black mb-1" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>€3M Strategic Round</p>
+            <p className="mb-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Strategic minority. 18-month runway. Self-serve productisation plus Space &amp; Defence beachhead build-out.
+            </p>
+            <div className="grid gap-2 mb-4">
+              {[
+                { label: "Round", value: "€3M strategic minority" },
+                { label: "Runway", value: "18 months to repeatable vertical motion" },
+                { label: "Use of funds", value: "Product UX 35% · Usage & billing 25% · Subsidiary pilots 25% · GTM 15%" },
+                { label: "Target", value: "12+ design partners and subsidiary customers; €1.5-2.5M ARR" },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex gap-3">
+                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${GOLD})`, width: 110, letterSpacing: "0.06em", textTransform: "uppercase" }}>{label}</span>
+                  <span style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{value}</span>
+                </div>
+              ))}
             </div>
-          ))}
+            <div className="mt-auto rounded-xl px-4 py-3" style={{ background: `hsl(${GOLD} / 0.10)`, border: `1px solid hsl(${GOLD} / 0.20)` }}>
+              <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
+                Outcome: equity in the context layer underneath every AI workflow in Space &amp; Defence and adjacent regulated verticals.
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="rounded-xl px-10 py-4 text-center"
-          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
-            LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>This round turns it into the Portfolio-native control layer for every AI workflow.</strong>
+          style={{ background: `hsl(${GREEN} / 0.07)`, border: `1.5px solid hsl(${GREEN} / 0.25)` }}>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            <strong style={{ color: `hsl(${GREEN})` }}>The combined path:</strong> a lighthouse pilot inside one subsidiary, alongside strategic equity in the platform that scales it across the holding and the wider Space &amp; Defence market.
           </p>
         </div>
 
-        <p className="mt-5 text-center" style={{ fontSize: 18, color: SUBTLE }}>
+        <p className="mt-4 text-center" style={{ fontSize: 16, color: SUBTLE }}>
           lizaos.ai &nbsp;·&nbsp; kristof.eger@lizaos.ai &nbsp;·&nbsp; Confidential
         </p>
       </div>
