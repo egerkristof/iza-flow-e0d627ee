@@ -289,6 +289,14 @@ function S04ThirdPath() {
       what: "What it is: months in PDFs, hand-built bibliographies, notes in private docs.",
       limit: "Why it falls short: 6 to 12 months per researcher. The field gets flattened into a citation list. Hierarchies between schools, lineages of ideas, and the disagreements that actually matter never get mapped. Tacit judgment lives in the researcher's head and leaves with them.",
       tone: RED,
+      verdict: "FLATTENS THE FIELD",
+      icon: X,
+      meters: [
+        { label: "Speed", v: 1 },
+        { label: "Field map", v: 1 },
+        { label: "Researcher as author", v: 5 },
+        { label: "Compounds for the lab", v: 1 },
+      ],
     },
     {
       tag: "PATH 2",
@@ -296,6 +304,14 @@ function S04ThirdPath() {
       what: "What it is: ChatGPT, Claude, Elicit, Consensus used to summarise papers and draft sections.",
       limit: "Why it falls short: returns fluent prose and citation lists, not a map of the field. No memory of the lab, the prior cohort, or the open debates. The researcher reads less, judges less, and the thesis becomes the model's voice. Faster output, weaker thinker, no compounding asset for the group.",
       tone: AMBER,
+      verdict: "REPLACES THE THINKER",
+      icon: AlertTriangle,
+      meters: [
+        { label: "Speed", v: 5 },
+        { label: "Field map", v: 1 },
+        { label: "Researcher as author", v: 1 },
+        { label: "Compounds for the lab", v: 1 },
+      ],
     },
     {
       tag: "PATH 3",
@@ -303,6 +319,14 @@ function S04ThirdPath() {
       what: "What it is: a shared map of the field that the researcher builds with the system, not against it.",
       limit: "Why it works: surfaces hierarchies between schools, lineages across decades, and tacit disagreements between authors. The researcher stays the author of every claim. Each cohort's reasoning is captured and compounds for the next, so the lab's judgment becomes an asset that grows.",
       tone: TEAL,
+      verdict: "MAP, JUDGMENT, COMPOUND",
+      icon: Check,
+      meters: [
+        { label: "Speed", v: 4 },
+        { label: "Field map", v: 5 },
+        { label: "Researcher as author", v: 5 },
+        { label: "Compounds for the lab", v: 5 },
+      ],
     },
   ];
   return (
@@ -320,11 +344,29 @@ function S04ThirdPath() {
         <div className="grid grid-cols-3 gap-6 flex-1">
           {cols.map(c => (
             <div key={c.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${c.tone} / 0.5)`, background: `hsl(${c.tone} / 0.04)` }}>
-              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${c.tone})` }}>{c.tag}</p>
-              <p className="mt-3 mb-4 font-black" style={{ fontSize: 26, lineHeight: 1.15, color: TEXT }}>{c.title}</p>
+              <div className="flex items-center justify-between">
+                <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${c.tone})` }}>{c.tag}</p>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: `hsl(${c.tone} / 0.15)`, color: `hsl(${c.tone})` }}>
+                  <c.icon size={20} strokeWidth={3} />
+                </div>
+              </div>
+              <p className="mt-3 mb-2 font-black" style={{ fontSize: 26, lineHeight: 1.15, color: TEXT }}>{c.title}</p>
+              <p className="mb-4" style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${c.tone})` }}>{c.verdict}</p>
               <p className="mb-3" style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>{c.what}</p>
               <div className="my-3 h-px" style={{ background: `hsl(${c.tone} / 0.25)` }} />
               <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{c.limit}</p>
+              <div className="mt-auto pt-5 space-y-2">
+                {c.meters.map(m => (
+                  <div key={m.label} className="flex items-center gap-3">
+                    <p className="w-44" style={{ fontSize: 12, color: MUTED, fontWeight: 600 }}>{m.label}</p>
+                    <div className="flex-1 flex gap-1">
+                      {[1,2,3,4,5].map(i => (
+                        <div key={i} className="flex-1 h-1.5 rounded-full" style={{ background: i <= m.v ? `hsl(${c.tone})` : `hsl(${c.tone} / 0.12)` }} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
