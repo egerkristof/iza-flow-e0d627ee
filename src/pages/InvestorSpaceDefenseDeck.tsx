@@ -1570,35 +1570,35 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Pre-Program", status: "Wedge", color: GREEN,
+      vertical: "Bid & Capture", status: "Wedge", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
-      result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
-      proof: "Adjacent to Standards Capture & Handoff (Space & Defence Holdings portfolio)",
+      problem: "Capture teams redo proposal volumes because requirements and prior bids don't propagate. AI drafts from generic data, not your win-themes.",
+      result: "Requirement-aware capture. Bid memory across programmes. Faster, sharper, more compliant proposals.",
+      proof: "Adjacent to Standards Capture & Handoff across Space & Defence Holdings",
     },
     {
       vertical: "Mission Execution", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "ECRs, qualification packages, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
-      result: "Unified ECR & qualification lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
-      proof: "Target embedding path across Aero, Space, Land Systems, and Solibri workflows",
+      problem: "ECRs, qualification packages, and integration decisions live in disconnected tools. AI can't reason across them. Programme memory dies between phases.",
+      result: "Unified ECR & qualification lifecycle. Every AI response grounded in this programme's ICDs, revisions, and prior dispositions.",
+      proof: "Target embedding path across Space, Aero, Land Systems, Weapons & Cyber subsidiaries",
     },
     {
-      vertical: "Handover & Operations", status: "Expansion", color: GOLD,
+      vertical: "Sustainment & ILS", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "Closeout packages and as-builts diverge from owner standards. O&M knowledge evaporates after handover. Operators inherit fragmented data.",
-      result: "Standards-aware closeout. Living O&M memory. Owner-grade handover artifacts, every time.",
-      proof: "Owner / FM extension path once workflow integrations are in market",
+      problem: "As-built configurations diverge from customer standards. Sustainment knowledge evaporates after acceptance. Operators inherit fragmented data.",
+      result: "Standards-aware acceptance. Living ILS memory. Customer-grade sustainment artifacts, every time.",
+      proof: "Operator / depot extension path once engineering integrations are in market",
     },
   ];
 
   const expandInto = [
-    { name: "Mission systems integration & interface review", col: TEAL },
-    { name: "Spec & code compliance", col: "215 25% 50%" },
-    { name: "Cost estimating & change orders", col: GOLD },
-    { name: "Safety & QA/QC inspections", col: GREEN },
-    { name: "Subcontractor management", col: ACCENT },
-    { name: "Facility management & lifecycle", col: "330 70% 55%" },
+    { name: "Systems integration & ICD review", col: TEAL },
+    { name: "Standards & qualification compliance", col: "215 25% 50%" },
+    { name: "Cost estimating & ECPs", col: GOLD },
+    { name: "Safety, mission assurance & QA/QC", col: GREEN },
+    { name: "Supplier & subcontractor management", col: ACCENT },
+    { name: "Sustainment, ILS & lifecycle", col: "330 70% 55%" },
   ];
 
   return (
