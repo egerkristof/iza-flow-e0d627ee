@@ -657,10 +657,10 @@ function S08Landscape() {
 
 function S09Architecture() {
   const layers = [
-    { tag: "L1 · Corpus", title: "Field Map", body: "Papers, books, citations, datasets — ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers },
-    { tag: "L2 · Researcher", title: "Stance & Judgment Log", body: "The researcher's framework, assumptions, prior work, and why-not-this decisions captured as executable context.", Icon: FileText },
-    { tag: "L3 · Cohort", title: "Commons of the Lab", body: "Group's collective reading, dialogues, and disagreements compound across cohorts. Tacit knowledge survives the PhD.", Icon: Users },
-    { tag: "L4 · Reasoning", title: "Augmentation Loop", body: "Counter-arguments, gaps, and trade-offs surface in dialogue. The researcher stays the author of every claim.", Icon: Workflow },
+    { tag: "L4", scope: "Reasoning", title: "Augmentation Loop", body: "Counter-arguments, gaps, and trade-offs surface in dialogue. The researcher stays the author of every claim.", Icon: Workflow, opacity: 1.0 },
+    { tag: "L3", scope: "Cohort", title: "Commons of the Lab", body: "Group's collective reading, dialogues, and disagreements compound across cohorts. Tacit knowledge survives the PhD.", Icon: Users, opacity: 0.85 },
+    { tag: "L2", scope: "Researcher", title: "Stance & Judgment Log", body: "The researcher's framework, assumptions, prior work, and why-not-this decisions captured as executable context.", Icon: FileText, opacity: 0.7 },
+    { tag: "L1", scope: "Corpus", title: "Field Map", body: "Papers, books, citations, datasets — ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers, opacity: 0.55 },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -670,23 +670,37 @@ function S09Architecture() {
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, researcher, cohort, reasoning — each compounding into the next.
         </p>
-        <div className="grid grid-cols-4 gap-5 flex-1">
-          {layers.map(l => {
-            const Icon = l.Icon;
-            return (
-              <div key={l.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
-                <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{l.tag}</p>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center my-5" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
-                  <Icon size={28} />
+        <div className="flex-1 flex gap-10 items-stretch">
+          {/* Stacked layers */}
+          <div className="flex-1 flex flex-col gap-3">
+            {layers.map((l, idx) => {
+              const Icon = l.Icon;
+              return (
+                <div key={l.tag} className="rounded-xl flex items-center gap-6 px-7 py-5 relative" style={{ background: `hsl(${TEAL} / ${0.06 + idx * 0.04})`, border: `1px solid hsl(${TEAL} / ${0.25 + idx * 0.1})` }}>
+                  <div className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `hsl(${TEAL} / 0.18)`, color: `hsl(${TEAL})` }}>
+                    <Icon size={28} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-baseline gap-3">
+                      <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>{l.tag}</p>
+                      <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE, textTransform: "uppercase" }}>{l.scope}</p>
+                    </div>
+                    <p className="font-black mt-1" style={{ fontSize: 22, color: TEXT }}>{l.title}</p>
+                  </div>
+                  <p className="flex-[1.5]" style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{l.body}</p>
                 </div>
-                <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT }}>{l.title}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{l.body}</p>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+          {/* Compounding axis */}
+          <div className="w-16 flex flex-col items-center">
+            <p className="font-black" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})`, textTransform: "uppercase", writingMode: "vertical-rl", transform: "rotate(180deg)" }}>Compounds upward →</p>
+            <div className="flex-1 my-3 w-1 rounded-full" style={{ background: `linear-gradient(to top, hsl(${TEAL} / 0.15), hsl(${TEAL}))` }} />
+            <div className="w-3 h-3 rounded-full" style={{ background: `hsl(${TEAL})` }} />
+          </div>
         </div>
       </div>
       <SlideBar />
