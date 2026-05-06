@@ -128,7 +128,7 @@ export default function IndustryDefensePortfolioPage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              View the investor deck <ArrowRight className="w-4 h-4" />
+              View the customer + investor deck <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href={CAL_URL}
@@ -327,7 +327,7 @@ export default function IndustryDefensePortfolioPage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              View the investor deck <ArrowRight className="w-4 h-4" />
+              View the customer + investor deck <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href={CAL_URL}
