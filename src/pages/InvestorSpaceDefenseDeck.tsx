@@ -1503,7 +1503,7 @@ function Slide08() {
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Defense & Space is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: chief-engineer judgment must be captured, governed, and updated. Space &amp; Defence is where the experience now becomes native.
           </p>
         </div>
 
@@ -1621,7 +1621,7 @@ function Slide09() {
               The missing connective tissue underneath the Defense & Space AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: Graphisoft workflow exploration, not a commercial integration claim.
+              Current signal: active discussion with a federated defence holding. Not a commercial integration claim.
             </p>
           </div>
         </div>
