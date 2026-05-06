@@ -142,7 +142,7 @@ function SlideShape() {
           One OS. <span style={{ color: `hsl(${TEAL})` }}>Space & Defence Holdings is the spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. You are investing in Space & Defence Holdings specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
+          We build a single context layer and deploy it vertical-by-vertical. You are investing in Space &amp; Defence Holdings specifically, and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
         </p>
 
         <div className="flex-1 flex flex-col justify-center">
@@ -415,7 +415,7 @@ const SDT_COST_BENCHMARKS = [
   },
   {
     value: "100×",
-    label: "cost amplification of fixing a requirements or interface defect after qualification versus catching it at design — the canonical late-defect curve in systems engineering",
+    label: "cost amplification of fixing a requirements or interface defect after qualification versus catching it at design. The canonical late-defect curve in systems engineering.",
     source: "INCOSE / NASA, Error Cost Escalation Through the Project Life Cycle",
   },
 ];
@@ -1117,7 +1117,7 @@ function Slide06() {
 
   const moatLayers = [
     { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, standards-aware injection, drift detection. The plumbing every Defence & Space AI stack will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Programme Memory", desc: "ECR precedent, ICD revisions, customer standards, qualification interpretations — graph deepens programme-by-programme. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Compounding Programme Memory", desc: "ECR precedent, ICD revisions, customer standards, qualification interpretations. Graph deepens programme-by-programme. Switching cost grows organically.", icon: <Layers size={20} /> },
     { layer: "Federated Conglomerate Distribution", desc: "Designed for multi-subsidiary defence & space holdings. One context layer across acquired engineering memory, not per-tool integration.", icon: <Network size={20} /> },
   ];
 
@@ -1166,7 +1166,7 @@ function Slide06() {
               <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your engineering authority decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every Defence & Space AI stack will need: ICD revisions, ECR precedent, qualification interpretations, customer standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into Defence & Space.
+              The instruction layer every Defence &amp; Space AI stack will need: ICD revisions, ECR precedent, qualification interpretations, customer standards. All versioned and queryable. Same architecture validated across regulated industries, now being focused into Defence &amp; Space.
             </p>
           </div>
         </div>
