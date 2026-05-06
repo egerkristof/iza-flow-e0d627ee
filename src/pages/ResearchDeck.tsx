@@ -280,9 +280,9 @@ function S04ThirdPath() {
 
 function S05Thesis() {
   const items = [
-    { title: "Knowledge is relational", body: "Polanyi's tacit knowledge. Nonaka's SECI. The neuroscience of social cognition. Real knowing is formed in relation — between people, ideas, and traditions. Not extracted in isolation.", Icon: Network },
+    { title: "Understand the field, don't flatten it", body: "A literature review is not a bibliography task. It is the act of mapping a field: the schools, the lineages, the disagreements between authors, the why-not-this decisions in past debates. The researcher needs to see that map.", Icon: Network },
     { title: "Augment, don't automate", body: "A tool that writes the thesis for the PhD is a regression. A tool that helps the researcher see further — and stay the author — is the only direction worth building.", Icon: Sparkles },
-    { title: "Flow as the metric", body: "Csíkszentmihályi's flow is where tacit knowledge actually forms. The system is judged by how much of the researcher's day it returns to deep work.", Icon: Brain },
+    { title: "The researcher stays the author", body: "Every claim, every judgment, every disagreement remains the researcher's own. The system surfaces trade-offs and counter-arguments inside the map. It does not write the work.", Icon: Brain },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -293,7 +293,7 @@ function S05Thesis() {
           Three commitments. <span style={{ color: `hsl(${TEAL})` }}>One worldview.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Grounded in a relational theory of knowledge — not a productivity gimmick. The product is downstream of the philosophy.
+          Built around how researchers actually work — not a productivity gimmick. The product is downstream of one conviction: the field comes first, the researcher stays the author.
         </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {items.map(i => {
@@ -401,7 +401,7 @@ function S08Landscape() {
           Existing tools handle artifacts. <span style={{ color: `hsl(${TEAL})` }}>None handle the field.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Five categories of tooling already exist in research workflows. Each addresses a slice. None hold the relational map of a field, the cohort's tacit judgment, or the institution's compounding memory.
+          Five categories of tooling already exist in research workflows. Each addresses a slice. None hold the map of the field, the group's accumulated judgment, or the institution's memory across cohorts.
         </p>
         <div className="flex-1 grid grid-cols-1 gap-3">
           {tools.map(t => (
@@ -459,21 +459,21 @@ function S09Architecture() {
 
 function S10SECI() {
   const phases = [
-    { tag: "Socialisation", body: "Tacit → tacit. Reading group dialogue, advisor-student conversation. The system listens, never replaces.", color: TEAL },
-    { tag: "Externalisation", body: "Tacit → explicit. Judgments, disagreements, and why-not-this decisions captured as first-class objects.", color: MINT },
-    { tag: "Combination", body: "Explicit → explicit. The field map links externalised judgments across schools, lineages, and decades.", color: NAVY },
-    { tag: "Internalisation", body: "Explicit → tacit. The next cohort starts from the field map and forms their own judgment faster, deeper.", color: TEAL },
+    { tag: "Capture the conversation", body: "Reading group discussions, advisor-student exchanges, lab debates. The system listens and keeps them, instead of letting them disappear into private notebooks.", color: TEAL },
+    { tag: "Externalise the judgment", body: "The disagreements, the why-not-this decisions, the half-formed positions become first-class objects on the field map — not lost in a drawer.", color: MINT },
+    { tag: "Connect across the field", body: "Those judgments get linked to the schools, the lineages, the authors they argue with. The map deepens with every reading.", color: NAVY },
+    { tag: "Hand off to the next cohort", body: "The next PhD does not start from zero. They inherit the group's map and judgment, and form their own positions from there — faster, and deeper.", color: TEAL },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="10" text="THE LOOP THAT MAKES KNOWLEDGE" />
+        <Eyebrow n="10" text="HOW THE GROUP'S MEMORY FORMS" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          SECI as product. <span style={{ color: `hsl(${TEAL})` }}>Not a metaphor — a mechanism.</span>
+          The conversation is the work. <span style={{ color: `hsl(${TEAL})` }}>We keep it.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Nonaka's SECI loop describes how knowledge is actually created in groups. LIZA OS implements each phase as a primitive: dialogue capture, externalisation of judgment, combination through the field map, and re-internalisation in the next cohort.
+          Most of what makes a research group good lives in conversation: between supervisor and student, in reading groups, in late corridor debates. Today it dies with the cohort. LIZA OS treats that conversation as the asset and carries it forward.
         </p>
         <div className="grid grid-cols-4 gap-5 flex-1">
           {phases.map((p, i) => (
@@ -562,7 +562,7 @@ function S12Pilot() {
 function S13Outcomes() {
   const k = [
     { v: "−60%", l: "Time to a credible field map", d: "From 6–12 months of solo review to 6–10 weeks of group dialogue inside the map." },
-    { v: "+3×", l: "Deep-work hours returned", d: "Measured against baseline. Flow as the metric, not throughput." },
+    { v: "+3×", l: "Deep-work hours returned", d: "Measured against baseline. Time the researcher actually spends thinking, not time spent searching and re-summarising." },
     { v: "1", l: "Compounding cohort memory", d: "First semester where the next PhD inherits the previous cohort's judgment, not just their files." },
   ];
   return (
@@ -658,7 +658,7 @@ const SLIDES = [
   { id: 7, title: "How It Works", component: <S07Loop /> },
   { id: 8, title: "The Landscape", component: <S08Landscape /> },
   { id: 9, title: "Architecture", component: <S09Architecture /> },
-  { id: 10, title: "SECI as Product", component: <S10SECI /> },
+  { id: 10, title: "Group Memory", component: <S10SECI /> },
   { id: 11, title: "Joint Vision", component: <S11JointVision /> },
   { id: 12, title: "Cohort Pilot", component: <S12Pilot /> },
   { id: 13, title: "Outcomes", component: <S13Outcomes /> },

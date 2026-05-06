@@ -211,11 +211,13 @@ export default function ResearchBrief() {
           </p>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-border p-6 sm:p-7">
-              <p className="font-black text-lg tracking-tight">Knowledge is relational</p>
+              <p className="font-black text-lg tracking-tight">Understand the field, don't flatten it</p>
               <p className="mt-2 text-sm text-muted-foreground leading-snug">
-                From Polanyi's tacit knowledge to Nonaka's SECI model and the
-                neuroscience of social cognition: real knowing is formed in
-                relation — between people, ideas, and traditions.
+                A literature review is not a bibliography task. It is the act
+                of mapping a field: the schools, the lineages, the
+                disagreements between authors, the why-not-this decisions in
+                past debates. The researcher needs to see that map, not a
+                flat list of citations.
               </p>
             </div>
             <div className="rounded-2xl border border-border p-6 sm:p-7">
@@ -227,11 +229,12 @@ export default function ResearchBrief() {
               </p>
             </div>
             <div className="rounded-2xl border border-border p-6 sm:p-7">
-              <p className="font-black text-lg tracking-tight">Flow as the metric</p>
+              <p className="font-black text-lg tracking-tight">The researcher stays the author</p>
               <p className="mt-2 text-sm text-muted-foreground leading-snug">
-                Csíkszentmihályi's flow is where tacit knowledge actually
-                forms. The system is judged by how much of the researcher's
-                day it returns to deep work, not how much it removes.
+                Every claim, every judgment, every disagreement remains the
+                researcher's own. The system surfaces trade-offs and
+                counter-arguments inside the map. It does not write the work,
+                and it does not replace the thinking.
               </p>
             </div>
           </div>
@@ -360,7 +363,7 @@ export default function ResearchBrief() {
               See the 15-slide Research Concept Deck
             </p>
             <p className="mt-1 text-sm text-muted-foreground max-w-xl">
-              Personas, the landscape of existing tools, the 4-layer architecture, SECI as product, the cohort pilot, and the two-door ask — in one walkthrough.
+              Personas, the landscape of existing tools, the four-layer architecture, how the group's memory forms across cohorts, the semester pilot, and the two-door ask — in one walkthrough.
             </p>
           </div>
           <Link
