@@ -363,7 +363,7 @@ export default function ResearchBrief() {
               See the 15-slide Research Concept Deck
             </p>
             <p className="mt-1 text-sm text-muted-foreground max-w-xl">
-              Personas, the landscape of existing tools, the 4-layer architecture, SECI as product, the cohort pilot, and the two-door ask — in one walkthrough.
+              Personas, the landscape of existing tools, the four-layer architecture, how the group's memory forms across cohorts, the semester pilot, and the two-door ask — in one walkthrough.
             </p>
           </div>
           <Link
