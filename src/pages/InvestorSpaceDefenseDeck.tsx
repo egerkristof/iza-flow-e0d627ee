@@ -2243,26 +2243,26 @@ function SlideContextGapExemplified() {
     {
       n: 1,
       nature: "JUST CHANGED",
-      title: "ICD revision issued last week",
-      body: "The customer issued ICD revision C for the avionics interface two days ago. The qualification plan still references revision B. Tonight's review package will reference the wrong interface.",
+      title: "Spec revision issued last week",
+      body: "The customer issued revision C for the interface two days ago. The test plan still references revision B. Tonight's review package will reference the wrong interface.",
     },
     {
       n: 2,
       nature: "OPEN ISSUE",
-      title: "Unresolved ECR on the harness",
-      body: "The systems engineer raised an ECR on the EMI shielding two weeks ago. No disposition yet. The interface cannot be called qualified until that closes.",
+      title: "Unresolved change request",
+      body: "The systems engineer raised a change request on a related sub-assembly two weeks ago. No disposition yet. The component cannot be called qualified until that closes.",
     },
     {
       n: 3,
       nature: "CONTRADICTION",
       title: "Two margin policies disagree",
-      body: "The Mission Assurance Plan locks one structural margin. The supplier's qualification template assumes another. Both retrievable. Only one is correct for this build standard.",
+      body: "The internal assurance plan locks one structural margin. The supplier's qualification template assumes another. Both retrievable. Only one is correct for this build standard.",
     },
     {
       n: 4,
       nature: "UNWRITTEN RULE",
       title: "Chief engineer never signs this off",
-      body: "On dual-redundant control paths in this product line, the chief engineer always requires a single-event upset rationale in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
+      body: "On dual-redundant control paths in this product line, the chief engineer always requires a fault-tolerance rationale in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
     },
   ];
 
@@ -2295,11 +2295,11 @@ function SlideContextGapExemplified() {
       <div className="relative z-10 flex flex-col h-full px-16 pt-9 pb-7">
         <div className="flex items-end justify-between mb-5">
           <div>
-            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
               The Context Gap, exemplified
             </p>
             <h2 className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05 }}>
-              The qualification narrative AI drafted reads cleanly.{' '}
+              The engineering narrative AI drafted reads cleanly.{' '}
               <span style={{ color: `hsl(${WARM})` }}>Every highlighted phrase is wrong.</span>
             </h2>
           </div>
@@ -2323,7 +2323,7 @@ function SlideContextGapExemplified() {
               style={{ borderColor: `hsl(${TEAL} / 0.12)`, background: `hsl(${TEAL} / 0.03)` }}>
               <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
               <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${TEAL})` }}>
-                QR-204 · Section A · Subsystem qualification narrative
+                REV-204 · Section A · Subsystem qualification narrative
               </span>
               <div className="flex items-center gap-2 ml-3 pl-3 border-l" style={{ borderColor: `hsl(${TEAL} / 0.18)` }}>
                 <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
@@ -2339,23 +2339,23 @@ function SlideContextGapExemplified() {
             <div className="px-9 pt-6 pb-3" style={{ borderBottom: `1px dashed hsl(${TEAL} / 0.18)` }}>
               <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
                 <div className="mt-1"><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Project</span>
-                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Programme Falcon · avionics LRU + harness</span>
-                  <span style={{ color: MUTED }}> · airborne · NATO customer</span>
+                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Programme Falcon · electronic control unit + harness</span>
+                  <span style={{ color: MUTED }}> · regulated customer</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Client</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · CDR package</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · design review package</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Audience</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Customer authority · DCMA · chief engineer</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Customer authority · auditor · chief engineer</span>
                 </div>
               </div>
             </div>
 
             <div className="flex-1 px-9 py-7"
               style={{ fontSize: 20, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              <p className="mb-5">The avionics LRU interface is qualified to <Mark n={1}>ICD revision B</Mark> as required by the programme baseline.</p>
-              <p className="mb-5">The shielded harness was analysed using <Mark n={2}>the standard EMI margin model.</Mark></p>
-              <p className="mb-5">Subsystem margins were resolved per <Mark n={3}>the programme's standard margin policy</Mark> in the mission assurance plan.</p>
+              <p className="mb-5">The control unit interface is qualified to <Mark n={1}>specification revision B</Mark> as required by the programme baseline.</p>
+              <p className="mb-5">The harness was analysed using <Mark n={2}>the standard reference margin model.</Mark></p>
+              <p className="mb-5">Subsystem margins were resolved per <Mark n={3}>the programme&apos;s standard margin policy</Mark> in the assurance plan.</p>
               <p style={{ color: MUTED }}><Mark n={4}>Overall, the subsystem is qualified as designed.</Mark></p>
             </div>
 
@@ -2363,7 +2363,7 @@ function SlideContextGapExemplified() {
               style={{ borderTop: `1px solid hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.06)` }}>
               <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
               <p className="font-black" style={{ fontSize: 15, color: TEXT }}>
-                AS9100-grade? No. CDR-blocking. Customer-rejectable. EAC-overrun-trigger.
+                Review-grade? No. Blocks the design review. Customer-rejectable. Cost-overrun trigger.
               </p>
             </div>
           </div>
@@ -2374,7 +2374,7 @@ function SlideContextGapExemplified() {
                 What AI couldn&apos;t see
               </p>
               <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
-                Lives in ICD revisions, ECR threads, chief engineers' heads.
+                Lives in spec revisions, change threads, chief engineers&apos; heads.
               </p>
             </div>
 
@@ -2420,10 +2420,10 @@ function SlideContextGapExemplified() {
                   </p>
                 </div>
                 <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
-                  ICDs. Mission specs. CAD model. Standards references. ECSS/AQAP details.
+                  Specifications. CAD model. Standards references. Compliance handbooks.
                 </p>
                 <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
-                  Indexable. RAG-friendly. Insufficient for a CDR submission.
+                  Indexable. RAG-friendly. Insufficient for a design-review submission.
                 </p>
               </div>
               <div className="rounded-lg px-4 py-3"
