@@ -468,25 +468,45 @@ function S07Loop() {
     {
       step: "1 · Map",
       short: "See the field, not a list.",
-      researcher: "Drop in your corpus: PDFs, citations, your reading list, your own past notes. LIZA OS clusters the literature into schools of thought, surfaces lineages of ideas across decades, and flags where authors actually disagree. You walk into a structured field on day one.",
+      researcher: "Drop in your corpus. The agentic environment reads it through pre-installed research expertise and resolves it into a structured field, not a folder.",
+      does: [
+        "Clusters the literature into schools of thought",
+        "Surfaces lineages of ideas across decades",
+        "Flags where authors actually disagree, and on what",
+      ],
       Icon: Network,
     },
     {
       step: "2 · Anchor",
       short: "Codify your stance.",
-      researcher: "Your hypothesis, framework, and assumptions become explicit anchors the system reasons against. Every claim is tied to your position, not a generic average of the internet.",
+      researcher: "Your hypothesis, framework, and assumptions become explicit anchors inside the map. Every claim is tied to your position, not a generic average of the internet.",
+      does: [
+        "Captures hypothesis, framework, assumptions as typed anchors",
+        "Locates your stance against the schools and lineages",
+        "Records why-not-this on the alternatives you reject",
+      ],
       Icon: BookOpen,
     },
     {
       step: "3 · Augment",
       short: "Think further, faster.",
-      researcher: "You stay the author. The system surfaces counter-arguments, trade-offs, gaps in your reading, and lineages you have not yet placed. Less time searching and re-summarising. More time judging and writing.",
+      researcher: "You stay the author. The agents reason over the structure of the field and push back from inside the map.",
+      does: [
+        "Surfaces counter-arguments and trade-offs against your anchors",
+        "Names gaps in your reading and lineages you have not placed",
+        "Drafts only against your stance, never instead of it",
+      ],
       Icon: Sparkles,
     },
     {
       step: "4 · Compound",
       short: "Knowledge accumulates.",
-      researcher: "Every reading, note, and decision feeds back into the map. Your own thinking becomes a structured, portable asset you own across projects, not a folder of dead PDFs. Exportable. LLM-agnostic. No lock-in.",
+      researcher: "Every reading, note, and judgment feeds back into the map. Your thinking becomes a portable asset you own across projects.",
+      does: [
+        "Writes new claims and rebuttals back as typed primitives",
+        "Versions your stance as the field and your thinking move",
+        "Exportable, LLM-agnostic, no lock-in",
+      ],
       Icon: RefreshCw,
     },
   ];
@@ -498,6 +518,12 @@ function S07Loop() {
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
+        <div className="rounded-xl border-2 px-6 py-4 mb-7 flex items-center gap-5" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.06)` }}>
+          <p className="font-black flex-shrink-0" style={{ fontSize: 12, letterSpacing: "0.22em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>The engine</p>
+          <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>
+            A pre-installed agentic environment with research expertise built in. It manages the knowledge graph of your field and reasons inside it as you work.
+          </p>
+        </div>
         <div className="relative flex-1">
           {/* Connector spine */}
           <div className="absolute left-0 right-0 top-[58px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0), hsl(${TEAL} / 0.45) 8%, hsl(${TEAL} / 0.45) 92%, hsl(${TEAL} / 0))` }} />
@@ -518,8 +544,17 @@ function S07Loop() {
                   <Icon size={24} />
                 </div>
                 <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{s.step}</p>
-                <p className="mt-1 mb-4 font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>{s.short}</p>
-                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{s.researcher}</p>
+                <p className="mt-1 mb-3 font-bold" style={{ fontSize: 17, color: `hsl(${TEAL})` }}>{s.short}</p>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{s.researcher}</p>
+                <div className="mt-4 pt-3 border-t flex flex-col gap-2" style={{ borderColor: CHROME_BORDER }}>
+                  <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE, textTransform: "uppercase" }}>What it does</p>
+                  {s.does.map(d => (
+                    <div key={d} className="flex gap-2 items-start">
+                      <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: `hsl(${TEAL})` }} />
+                      <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.4, fontWeight: 600 }}>{d}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           })}
