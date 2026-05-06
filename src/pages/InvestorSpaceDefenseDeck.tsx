@@ -2434,7 +2434,7 @@ function SlideContextGapExemplified() {
                     What closes the gap
                   </p>
                 </div>
-                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live variances, open ECRs, and reviewer conventions and resolves them at issue time." }} />
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live variances, open change requests, and reviewer conventions and resolves them at issue time." }} />
               </div>
             </div>
           </div>
