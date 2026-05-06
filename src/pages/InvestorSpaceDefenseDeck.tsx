@@ -422,66 +422,65 @@ const SDT_COST_BENCHMARKS = [
 
 const __VERTICAL_PERSONAS = [
   {
-    "id": "prime",
-    "name": "Prime / System Integrator",
+    "id": "space",
+    "name": "Space Systems",
     "color": "RED",
-    "iconName": "Briefcase",
+    "iconName": "Satellite",
     "above": [
       "Mission specs",
+      "Spacecraft ICDs",
       "Qualification packages",
-      "ECRs",
-      "ICDs"
+      "ECSS standards"
     ],
     "below": [
-      "Subcontractor tolerances on this build",
-      "Integration rationale from the last similar program",
-      "Test-floor workarounds the lead tech never wrote down"
+      "Single-event-upset rationale by orbit class",
+      "Integration lessons from the last constellation build",
+      "Vibration-test workarounds the lead engineer never wrote down"
     ],
     "breaks": "Rework. Milestone slip. EAC erosion."
   },
   {
-    "id": "engineering",
-    "name": "Engineering Authority",
+    "id": "defence",
+    "name": "Defence Platforms",
     "color": "WARM",
     "iconName": "Shield",
     "above": [
-      "Design intent",
-      "Standards references (AS9100, ECSS, AQAP)",
-      "ICD sections"
+      "Platform requirements",
+      "AS9100 / AQAP references",
+      "Programme ICDs"
     ],
     "below": [
-      "Certifying-authority interpretation on this program",
+      "Customer / certifying-authority interpretation on this programme",
       "Why this margin, not the handbook one",
       "Chief engineer judgment on this subsystem"
     ],
     "breaks": "Non-conformance exposure. Redesign cycles."
   },
   {
-    "id": "customer",
-    "name": "Customer / Programme Office",
+    "id": "cyber",
+    "name": "Cyber & Mission Systems",
     "color": "GOLD",
-    "iconName": "Database",
+    "iconName": "Cpu",
     "above": [
-      "Customer standards",
-      "As-built configuration",
-      "ILS / sustainment manuals"
+      "Security architecture",
+      "Mission software requirements",
+      "Accreditation packages"
     ],
     "below": [
-      "Customer standards exceptions and rationale",
-      "Reliability patterns from the prior platform",
+      "Threat-model exceptions and rationale",
+      "Cross-domain data-handling decisions never written down",
       "Operator preferences not in the requirements"
     ],
-    "breaks": "Operational risk. Warranty and LCC disputes."
+    "breaks": "Accreditation risk. Mission-readiness gaps."
   }
 ] as const;
 
 function Slide03() {
-  const alsoApplies = ["Bid & estimation","Procurement","Subsystem integration","Qualification","Acceptance","Sustainment & ILS"];
   const renderIcon = (name: string, color: string) => {
     const props = { size: 20, style: { color: `hsl(${color})` } };
-    if (name === "Briefcase") return <Briefcase {...props} />;
+    if (name === "Satellite") return <Sparkles {...props} />;
     if (name === "Shield") return <Shield {...props} />;
-    if (name === "Database") return <Database {...props} />;
+    if (name === "Cpu") return <Cpu {...props} />;
     return <Shield {...props} />;
   };
   const colorVal = (k: string) => (k === "RED" ? RED : k === "WARM" ? WARM : k === "GOLD" ? GOLD : k === "GREEN" ? GREEN : TEAL);
@@ -491,13 +490,13 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up across Space & Defence Holdings
+          Where Missing Context Shows Up across a Space & Defence Holding
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          The same iceberg, in every persona. <span style={{ color: `hsl(${TEAL})` }}>What is captured is dwarfed by what runs the work.</span>
+          The same iceberg, in every domain. <span style={{ color: `hsl(${TEAL})` }}>And the knowledge that connects them barely exists at all.</span>
         </h2>
         <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          The artifacts above the waterline are what AI sees. The Organizational Intelligence below the waterline is the design intent and code judgment that determines whether the output is usable.
+          Each subsidiary captures specs, standards, and packages above the waterline. The design intent, authority precedent, and engineering judgment below the waterline stays trapped inside that subsidiary, and the cross-domain memory between them is the thinnest layer of all.
         </p>
 
         <div className="grid grid-cols-3 gap-6 flex-1 min-h-0 mb-4">
@@ -580,11 +579,13 @@ function Slide03() {
         </div>
 
         <div className="flex items-center gap-4 px-2">
-          <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
-          <div className="flex flex-wrap gap-2.5">
-            {alsoApplies.map((item) => (
-              <span key={item} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
-            ))}
+          <div className="w-full rounded-xl border-2 px-5 py-3 flex items-center gap-4"
+            style={{ borderColor: `hsl(${WARM} / 0.30)`, background: `hsl(${WARM} / 0.05)` }}>
+            <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
+            <p className="font-bold" style={{ fontSize: 15.5, color: TEXT, lineHeight: 1.35 }}>
+              And between the three: <span style={{ color: `hsl(${WARM})` }}>the connective memory is the thinnest layer of all.</span>{' '}
+              <span style={{ color: MUTED, fontWeight: 500 }}>Lessons from a satellite build never reach the next radar programme. Cyber accreditation knowledge does not propagate to the avionics team. Each acquisition becomes a knowledge silo.</span>
+            </p>
           </div>
         </div>
       </div>
