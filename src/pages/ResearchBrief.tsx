@@ -351,7 +351,29 @@ export default function ResearchBrief() {
         </section>
 
         {/* Footer */}
-        <footer className="mt-16 pt-6 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
+        <div className="mt-14 sm:mt-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-border p-6 sm:p-8">
+          <div>
+            <p className="text-[11px] font-bold tracking-widest uppercase mb-1" style={{ color: `hsl(${TEAL})` }}>
+              The full concept
+            </p>
+            <p className="font-black text-lg sm:text-2xl tracking-tight">
+              See the 15-slide Research Concept Deck
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground max-w-xl">
+              Personas, the landscape of existing tools, the 4-layer architecture, SECI as product, the cohort pilot, and the two-door ask — in one walkthrough.
+            </p>
+          </div>
+          <Link
+            to="/research-deck"
+            className="group inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-white transition-all hover:opacity-90 shrink-0"
+            style={{ background: `hsl(${TEAL})` }}
+          >
+            <span>Open the deck</span>
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
+
+        <footer className="mt-12 pt-6 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
           <span className="font-bold text-foreground">LIZA OS · Research, understood.</span>
           <span>lizaos.ai/research-brief</span>
         </footer>
