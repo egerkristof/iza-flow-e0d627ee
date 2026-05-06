@@ -687,101 +687,17 @@ function S09Architecture() {
   );
 }
 
-function S10SECI() {
-  const phases = [
-    { tag: "Capture the conversation", body: "Reading group discussions, advisor-student exchanges, lab debates. The system listens and keeps them, instead of letting them disappear into private notebooks.", color: TEAL },
-    { tag: "Externalise the judgment", body: "The disagreements, the why-not-this decisions, the half-formed positions become first-class objects on the field map — not lost in a drawer.", color: MINT },
-    { tag: "Connect across the field", body: "Those judgments get linked to the schools, the lineages, the authors they argue with. The map deepens with every reading.", color: NAVY },
-    { tag: "Hand off to the next cohort", body: "The next PhD does not start from zero. They inherit the group's map and judgment, and form their own positions from there — faster, and deeper.", color: TEAL },
-  ];
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="10" text="HOW THE GROUP'S MEMORY FORMS" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          The conversation is the work. <span style={{ color: `hsl(${TEAL})` }}>We keep it.</span>
-        </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Most of what makes a research group good lives in conversation: between supervisor and student, in reading groups, in late corridor debates. Today it dies with the cohort. LIZA OS treats that conversation as the asset and carries it forward.
-        </p>
-        <div className="relative flex-1">
-          <div className="absolute left-0 right-0 top-[68px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0.4), hsl(${TEAL} / 0.4))`, opacity: 0.4 }} />
-          <div className="grid grid-cols-4 gap-5 h-full relative">
-            {phases.map((p, i) => (
-              <div key={p.tag} className="rounded-2xl p-8 pt-12 flex flex-col relative" style={{ background: `hsl(${p.color} / 0.06)`, border: `1px solid hsl(${p.color} / 0.3)` }}>
-                <div className="absolute -top-6 left-8 w-14 h-14 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${p.color})`, color: BG, fontSize: 22, boxShadow: `0 6px 16px hsl(${p.color} / 0.3)` }}>
-                  {i + 1}
-                </div>
-                {i < phases.length - 1 && (
-                  <div className="absolute -right-5 top-[58px] z-10 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: BG, color: `hsl(${TEAL})` }}>
-                    <ArrowRight size={22} strokeWidth={3} />
-                  </div>
-                )}
-                <p className="font-black mb-4" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{p.tag}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <p className="mt-6 text-center" style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.25em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
-          ↻ Each cohort feeds the next · the loop tightens with every cycle
-        </p>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
-function S11JointVision() {
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="11" text="UNIT OF VALUE" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          Not the solo researcher. <span style={{ color: `hsl(${TEAL})` }}>The Joint Vision of the group.</span>
-        </h2>
-        <p className="mb-12" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Productivity tools optimise individuals. We refuse that frame. The unit of value in research is the lab, the cohort, the school of thought — the people who think together over years and leave a tradition behind them.
-        </p>
-        <div className="grid grid-cols-2 gap-6 flex-1">
-          <div className="rounded-2xl border p-10 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p className="font-black mb-5" style={{ fontSize: 32, color: `hsl(${RED})` }}>Atomised default</p>
-            <ul className="space-y-3" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>
-              <li>· Individual productivity metrics</li>
-              <li>· Each PhD restarts from zero</li>
-              <li>· Tacit judgment dies with the cohort</li>
-              <li>· The institution loses its tradition</li>
-            </ul>
-          </div>
-          <div className="rounded-2xl border-2 p-10 flex flex-col" style={{ borderColor: `hsl(${TEAL})`, background: `hsl(${MINT} / 0.06)` }}>
-            <p className="font-black mb-5" style={{ fontSize: 32, color: `hsl(${TEAL})` }}>Joint Vision</p>
-            <ul className="space-y-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
-              <li>· Group-level field map and judgment log</li>
-              <li>· Each cohort starts where the last one left off</li>
-              <li>· Tacit disagreements survive as first-class objects</li>
-              <li>· The institution compounds a school of thought</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
 function S12Pilot() {
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="12" text="COHORT PILOT" />
+        <Eyebrow n="10" text="DESIGN PARTNER" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One research group. One field. <span style={{ color: `hsl(${TEAL})` }}>One semester.</span>
+          One researcher. One field. <span style={{ color: `hsl(${TEAL})` }}>One semester.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We co-build the Research Memory Layer with one PhD cohort or one research group as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
+          We co-build the Research Memory Layer with a single researcher as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
         </p>
         <div className="relative flex-1 flex flex-col justify-center">
           {/* Week ruler */}
@@ -796,9 +712,9 @@ function S12Pilot() {
           </div>
           <div className="grid grid-cols-3 gap-6">
             {[
-              { tag: "Weeks 1–4", title: "Map the field", body: "Ingest the group's corpus. Surface schools, lineages, disagreements. Researcher reviews and corrects.", deliverable: "Living field map (v1)" },
-              { tag: "Weeks 5–10", title: "Anchor & augment", body: "Researcher's stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time.", deliverable: "Judgment log + augmented dialogue" },
-              { tag: "Weeks 11–16", title: "Compound & hand off", body: "The map and judgment log become the cohort's shared memory. Next student starts from there.", deliverable: "Cohort handoff package" },
+              { tag: "Weeks 1–4", title: "Map the field", body: "Ingest your corpus. Surface schools, lineages, disagreements. You review and correct.", deliverable: "Living field map (v1)" },
+              { tag: "Weeks 5–10", title: "Anchor & augment", body: "Your stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time.", deliverable: "Judgment log + augmented dialogue" },
+              { tag: "Weeks 11–16", title: "Compound & own", body: "The map and judgment log become your portable, structured asset. Exportable and LLM-agnostic.", deliverable: "Portable researcher graph" },
             ].map((p, i) => (
               <div key={p.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
                 <div className="flex items-center gap-3 mb-3">
