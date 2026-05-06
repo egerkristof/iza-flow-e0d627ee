@@ -2451,11 +2451,11 @@ function SlideContextGapExemplified() {
 
 function SlidePeopleAsNodes() {
   const team = [
-    { name: "Eva", role: "Architect" },
-    { name: "Raj", role: "Structural" },
-    { name: "Maria", role: "MEP" },
-    { name: "Anna", role: "QS" },
-    { name: "Tom", role: "Project Mgr" },
+    { name: "Eva", role: "Systems Eng" },
+    { name: "Raj", role: "Mechanical" },
+    { name: "Maria", role: "Avionics" },
+    { name: "Anna", role: "Mission Assurance" },
+    { name: "Tom", role: "Programme Mgr" },
   ];
   const cx = 200, cy = 200, r = 130;
   const positions = team.map((p, i) => {
