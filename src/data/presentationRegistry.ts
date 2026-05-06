@@ -115,6 +115,15 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
+    id: "research-deck",
+    title: "Research Concept Deck (Universities & Research Groups)",
+    path: "/research-deck",
+    sourcePath: "src/pages/ResearchDeck.tsx",
+    description: "Full concept deck behind the /research-brief page. 15 slides: personas (PhD, ECR, PI, faculty), the iceberg gap (review vs. field), three-path framing (manual / generative / Research Memory Layer), thesis (relational knowledge, augmentation, flow), competitive landscape (Elicit, Consensus, Scite, ChatGPT/Claude, Zotero/Mendeley, Research Rabbit, Obsidian), 4-layer architecture, SECI as product, Joint Vision (group not solo), semester-long cohort pilot, outcomes, two-door CTA (cohort partner / institutional sponsor).",
+    component: ResearchDeck,
+    showInAdmin: true,
+  },
+  {
     id: "space",
     title: "Space Strategic Deck",
     path: "/space",
