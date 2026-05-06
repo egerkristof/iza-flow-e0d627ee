@@ -542,7 +542,7 @@ function S08Landscape() {
       name: "ChatGPT / Claude / Gemini",
       role: "General writing assistants",
       missing: "The researcher's own judgment",
-      gap: "Generates fluent prose from the average of the internet. No memory of the lab, the prior cohort, or the open debates. Speed at the cost of the researcher's voice.",
+      gap: "Generates fluent prose from the average of the internet. No memory of your prior reading, your stance, or the open debates in the field. Speed at the cost of the researcher's voice.",
       liza: "Augments the researcher's own thinking inside their map. Every claim stays attributable to the researcher, not the model.",
       caps: [0, 0, 0, 0, 0],
     },
@@ -558,8 +558,8 @@ function S08Landscape() {
       name: "Research Rabbit / Connected Papers",
       role: "Citation graphs",
       missing: "Tacit disagreement and judgment",
-      gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what the lab's own stance is.",
-      liza: "Captures the why-not-this decisions and the lab's own judgment, alongside the citation structure.",
+      gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what your own stance is.",
+      liza: "Captures the why-not-this decisions and the researcher's own judgment, alongside the citation structure.",
       caps: [1, 0, 0, 0, 0],
     },
     {
@@ -578,7 +578,7 @@ function S08Landscape() {
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="08" text="THE LANDSCAPE" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
-          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, or the lab.</span>
+          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, and the researcher together.</span>
         </h2>
         <p className="mb-4" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           For each category, one core thing is missing. That missing thing is what LIZA OS is built around.
