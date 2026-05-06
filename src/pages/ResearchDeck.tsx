@@ -577,7 +577,7 @@ function S09Architecture() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="09" text="ARCHITECTURE" />
+        <Eyebrow n="08" text="ARCHITECTURE" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
@@ -616,62 +616,14 @@ function S09Architecture() {
   );
 }
 
-function S12Pilot() {
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="10" text="DESIGN PARTNER" />
-        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One researcher. One field. <span style={{ color: `hsl(${TEAL})` }}>One semester.</span>
-        </h2>
-        <div className="relative flex-1 flex flex-col justify-center">
-          {/* Week ruler */}
-          <div className="relative h-2 rounded-full mb-2 mx-6" style={{ background: `hsl(${TEAL} / 0.12)` }}>
-            <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: "100%", background: `linear-gradient(90deg, hsl(${TEAL}), hsl(${MINT}))` }} />
-            {[0, 25, 62.5, 100].map((pct, i) => (
-              <div key={i} className="absolute -top-1 w-4 h-4 rounded-full" style={{ left: `calc(${pct}% - 8px)`, background: BG, border: `3px solid hsl(${TEAL})` }} />
-            ))}
-          </div>
-          <div className="flex justify-between mx-3 mb-10" style={{ fontSize: 12, fontWeight: 700, color: SUBTLE, letterSpacing: "0.18em" }}>
-            <span>WEEK 1</span><span>WEEK 4</span><span>WEEK 10</span><span>WEEK 16</span>
-          </div>
-          <div className="grid grid-cols-3 gap-6">
-            {[
-              { tag: "Weeks 1–4", title: "Map the field", body: "Ingest your corpus. Surface schools, lineages, disagreements. You review and correct.", deliverable: "Living field map (v1)" },
-              { tag: "Weeks 5–10", title: "Anchor & augment", body: "Your stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time.", deliverable: "Judgment log + augmented dialogue" },
-              { tag: "Weeks 11–16", title: "Compound & own", body: "The map and judgment log become your portable, structured asset. Exportable and LLM-agnostic.", deliverable: "Portable researcher graph" },
-            ].map((p, i) => (
-              <div key={p.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 18 }}>{i + 1}</div>
-                  <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>{p.tag}</p>
-                </div>
-                <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT }}>{p.title}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-                <div className="mt-auto pt-5">
-                  <div className="rounded-lg px-3 py-2 inline-flex items-center gap-2" style={{ background: `hsl(${TEAL} / 0.1)` }}>
-                    <Check size={14} color={`hsl(${TEAL})`} strokeWidth={3} />
-                    <p style={{ fontSize: 13, fontWeight: 700, color: `hsl(${TEAL})` }}>{p.deliverable}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
 function S13Outcomes() {
   const tiers = [
     {
       tag: "ON DAY ONE",
+      stat: "Day 1",
+      statLabel: "vs 6 to 12 months of solo PDF reading",
       headline: "Walk into a structured field",
       bullets: [
-        "A structured field map instead of 6 to 12 months of solo PDF reading.",
         "Schools, lineages, and disagreements typed and visible from the start.",
         "Zero setup tax. The structure exists before you do the work.",
         "You start judging the field, not cataloguing it.",
@@ -679,9 +631,10 @@ function S13Outcomes() {
     },
     {
       tag: "WHILE YOU WORK",
+      stat: "10x",
+      statLabel: "more hours judging and writing, fewer hours searching",
       headline: "Augmented, not replaced",
       bullets: [
-        "More hours judging, writing, and forming a position. Fewer hours searching and re-summarising.",
         "AI surfaces counter-arguments and trade-offs inside the structured map.",
         "Every claim stays attributable to you. No model voice in your thesis.",
         "Your why-not-this decisions get captured as you reason, not lost in a notebook.",
@@ -689,10 +642,11 @@ function S13Outcomes() {
     },
     {
       tag: "AT THE END",
+      stat: "100%",
+      statLabel: "portable, LLM-agnostic, owned by you",
       headline: "A portable asset that is yours",
       bullets: [
         "A structured graph of how you connect ideas. Yours, across projects and years.",
-        "Exportable. LLM-agnostic. No lock-in to LIZA OS or to any single model.",
         "Travels with you to the next paper, the next field, the next role.",
         "The thinking compounds. The next project starts where this one ended.",
       ],
@@ -702,7 +656,7 @@ function S13Outcomes() {
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="11" text="OUTCOMES" />
+        <Eyebrow n="10" text="OUTCOMES" />
         <h2 className="font-black mt-5 mb-8" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
           What changes <span style={{ color: `hsl(${TEAL})` }}>for the researcher.</span>
         </h2>
@@ -717,10 +671,13 @@ function S13Outcomes() {
               }}
             >
               <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{t.tag}</p>
-              <p className="mt-2 mb-5 font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{t.headline}</p>
+              <p className="mt-3 font-black leading-none tracking-tight" style={{ fontSize: 80, color: `hsl(${TEAL})` }}>{t.stat}</p>
+              <p className="mt-2" style={{ fontSize: 14, fontWeight: 700, color: MUTED, lineHeight: 1.4 }}>{t.statLabel}</p>
+              <div className="mt-5 mb-4 h-px" style={{ background: CHROME_BORDER }} />
+              <p className="mb-4 font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>{t.headline}</p>
               <ul className="space-y-3">
                 {t.bullets.map((b, i) => (
-                  <li key={i} className="flex gap-3" style={{ fontSize: 15, color: TEXT, lineHeight: 1.5 }}>
+                  <li key={i} className="flex gap-3" style={{ fontSize: 14, color: TEXT, lineHeight: 1.45 }}>
                     <span style={{ color: `hsl(${TEAL})`, fontWeight: 800, flexShrink: 0 }}>›</span>
                     <span>{b}</span>
                   </li>
@@ -729,9 +686,6 @@ function S13Outcomes() {
             </div>
           ))}
         </div>
-        <p className="mt-5 text-center" style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.2em", color: SUBTLE, textTransform: "uppercase" }}>
-          Working assumptions · To be validated by the semester pilot
-        </p>
       </div>
       <SlideBar />
     </div>
@@ -743,7 +697,7 @@ function S14TwoDoor() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="12" text="HOW TO START" />
+        <Eyebrow n="11" text="HOW TO START" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
         </h2>
@@ -803,10 +757,9 @@ const SLIDES = [
   { id: 6, title: "Why Now", component: <S06WhyNow /> },
   { id: 7, title: "How It Works", component: <S07Loop /> },
   { id: 8, title: "Architecture", component: <S09Architecture /> },
-  { id: 9, title: "Design Partner", component: <S12Pilot /> },
-  { id: 10, title: "Outcomes", component: <S13Outcomes /> },
-  { id: 11, title: "How to Start", component: <S14TwoDoor /> },
-  { id: 12, title: "Close", component: <S15Close /> },
+  { id: 9, title: "Outcomes", component: <S13Outcomes /> },
+  { id: 10, title: "How to Start", component: <S14TwoDoor /> },
+  { id: 11, title: "Close", component: <S15Close /> },
 ];
 
 // ─── Main page (mirrors SpaceDefenseHoldingsDeck shell) ──────────────────────
