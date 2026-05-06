@@ -2169,7 +2169,7 @@ function Slide13() {
           {[
             { label: "Portfolio-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "Division Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Aero, Space, Land Systems, PLM bridges, lighthouse deployments", color: GOLD },
+            { label: "Subsidiary Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Space, aero, land systems, PLM bridges, lighthouse deployments inside the holding", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -2185,8 +2185,8 @@ function Slide13() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
             { month: "Month 1-6", target: "Portfolio-native UX live", milestone: "ECR, qualification, and design-review surfaces in market with first lighthouse deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Division pilots convert to platform base plus credits. Aero / Space Divisions integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and Division customers on a repeatable self-serve expansion path.", color: MINT },
+            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Subsidiary pilots convert to platform base plus credits. Cross-holding PLM integration path live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and subsidiary customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
