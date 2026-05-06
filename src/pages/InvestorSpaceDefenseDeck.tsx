@@ -635,10 +635,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an ECR, design review, qualification, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
+                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the full programme context</span>, the team still has to catch it, correct it, and reissue it.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream delay.
+                On a <span className="font-bold" style={{ color: TEXT }}>€50M programme</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream milestone delay.
               </p>
             </div>
           </div>
