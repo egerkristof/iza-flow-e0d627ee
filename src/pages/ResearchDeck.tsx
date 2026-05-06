@@ -247,33 +247,76 @@ function S02WhoBreaks() {
 }
 
 function S03Iceberg() {
+  // Matrix: X = extractable + shared, Y = depth into the field
+  // Tools plotted to show that even tools that reach the depths trap knowledge in one vault
+  const W = 1100, H = 560;
+  const PAD_L = 110, PAD_R = 60, PAD_T = 50, PAD_B = 90;
+  const px = (x: number) => PAD_L + x * (W - PAD_L - PAD_R);
+  const py = (y: number) => PAD_T + (1 - y) * (H - PAD_T - PAD_B);
+  const tools = [
+    { name: "ChatGPT / Claude",        x: 0.18, y: 0.22, note: "Surface summaries.\nLocked in a chat.",   tone: SUBTLE },
+    { name: "Elicit / Consensus",      x: 0.30, y: 0.34, note: "Ranked papers.\nNo lab memory.",          tone: SUBTLE },
+    { name: "Zotero / Notion",         x: 0.34, y: 0.18, note: "Files in folders.\nNo reasoning.",        tone: SUBTLE },
+    { name: "Research Rabbit",         x: 0.42, y: 0.48, note: "Citation graphs.\nNo judgment.",          tone: SUBTLE },
+    { name: "Obsidian / Roam",         x: 0.30, y: 0.78, note: "Real knowledge graphs.\nOne vault. One person.\nNot extractable.", tone: AMBER },
+    { name: "LIZA OS",                 x: 0.86, y: 0.90, note: "Deep + extractable\n+ cohort-shared.",    tone: TEAL, hero: true },
+  ];
   return (
     <div className="w-full h-full relative px-28 py-14" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="03" text="THE GAP" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          AI summarises the tip. <span style={{ color: `hsl(${TEAL})` }}>The field lives below.</span>
+          Some tools reach the field. <span style={{ color: `hsl(${TEAL})` }}>None let you take it with you.</span>
         </h2>
-        <div className="flex-1 flex items-center justify-center mt-2">
-          <div style={{ width: 1200 }}>
-            <DeckIceberg
-              aboveLabel="What today's AI tools can reach"
-              belowLabel="What actually constitutes the field"
-              above={[
-                "Paper summaries from ChatGPT",
-                "Citation lists from Elicit",
-                "Keyword clusters",
-                "Fluent prose with no map",
-              ]}
-              below={[
-                "Hierarchies between schools of thought",
-                "Lineages of ideas across decades",
-                "Tacit disagreements between authors",
-                "Why-not-this decisions in past debates",
-              ]}
-            />
-          </div>
+        <p className="mb-4" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          Two axes that matter. <span style={{ fontWeight: 800, color: TEXT }}>Depth</span>: does the tool reach the schools, lineages, and disagreements that actually constitute the field. <span style={{ fontWeight: 800, color: TEXT }}>Extractability</span>: does the resulting knowledge leave the tool, scale to a cohort, and stay yours.
+        </p>
+        <div className="flex-1 flex items-center justify-center">
+          <svg viewBox={`0 0 ${W} ${H}`} className="block w-full h-auto" style={{ maxHeight: 580 }}>
+            <defs>
+              <linearGradient id="rd-quad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor={`hsl(${TEAL} / 0.02)`} />
+                <stop offset="100%" stopColor={`hsl(${TEAL} / 0.14)`} />
+              </linearGradient>
+            </defs>
+            {/* Plot area */}
+            <rect x={PAD_L} y={PAD_T} width={W - PAD_L - PAD_R} height={H - PAD_T - PAD_B} fill="url(#rd-quad)" rx="8" />
+            {/* Quadrant guides */}
+            <line x1={px(0.5)} y1={PAD_T} x2={px(0.5)} y2={H - PAD_B} stroke={`hsl(${SUBTLE} / 0.25)`} strokeDasharray="4 6" />
+            <line x1={PAD_L} y1={py(0.5)} x2={W - PAD_R} y2={py(0.5)} stroke={`hsl(${SUBTLE} / 0.25)`} strokeDasharray="4 6" />
+            {/* Quadrant labels */}
+            <text x={px(0.05)} y={py(0.97)} fontSize="11" fontWeight="800" fill={`hsl(${SUBTLE})`} style={{ letterSpacing: "0.18em" }}>SHALLOW · TRAPPED</text>
+            <text x={px(0.95)} y={py(0.97)} fontSize="11" fontWeight="800" fill={`hsl(${SUBTLE})`} textAnchor="end" style={{ letterSpacing: "0.18em" }}>SHALLOW · PORTABLE</text>
+            <text x={px(0.05)} y={py(0.03) + 12} fontSize="11" fontWeight="800" fill={`hsl(${AMBER})`} style={{ letterSpacing: "0.18em" }}>DEEP · TRAPPED</text>
+            <text x={px(0.95)} y={py(0.03) + 12} fontSize="11" fontWeight="800" fill={`hsl(${TEAL})`} textAnchor="end" style={{ letterSpacing: "0.18em" }}>DEEP · EXTRACTABLE</text>
+            {/* Axes */}
+            <line x1={PAD_L} y1={H - PAD_B} x2={W - PAD_R} y2={H - PAD_B} stroke={`hsl(${TEXT} / 0.4)`} strokeWidth="1.5" />
+            <line x1={PAD_L} y1={PAD_T} x2={PAD_L} y2={H - PAD_B} stroke={`hsl(${TEXT} / 0.4)`} strokeWidth="1.5" />
+            {/* Axis arrows */}
+            <polygon points={`${W - PAD_R},${H - PAD_B} ${W - PAD_R - 10},${H - PAD_B - 5} ${W - PAD_R - 10},${H - PAD_B + 5}`} fill={`hsl(${TEXT} / 0.4)`} />
+            <polygon points={`${PAD_L},${PAD_T} ${PAD_L - 5},${PAD_T + 10} ${PAD_L + 5},${PAD_T + 10}`} fill={`hsl(${TEXT} / 0.4)`} />
+            {/* Axis labels */}
+            <text x={(PAD_L + W - PAD_R) / 2} y={H - 18} textAnchor="middle" fontSize="14" fontWeight="800" fill={TEXT} style={{ letterSpacing: "0.15em" }}>EXTRACTABLE · COHORT-SHARED · YOURS →</text>
+            <text x={28} y={(PAD_T + H - PAD_B) / 2} fontSize="14" fontWeight="800" fill={TEXT} style={{ letterSpacing: "0.15em" }} transform={`rotate(-90 28 ${(PAD_T + H - PAD_B) / 2})`} textAnchor="middle">DEPTH INTO THE FIELD →</text>
+            {/* Tools */}
+            {tools.map((t, i) => {
+              const r = t.hero ? 18 : 11;
+              const cx = px(t.x), cy = py(t.y);
+              return (
+                <g key={i}>
+                  {t.hero && (
+                    <circle cx={cx} cy={cy} r={r + 12} fill={`hsl(${t.tone} / 0.18)`} />
+                  )}
+                  <circle cx={cx} cy={cy} r={r} fill={`hsl(${t.tone})`} stroke={BG} strokeWidth="3" />
+                  <text x={cx} y={cy - r - 8} textAnchor="middle" fontSize={t.hero ? "16" : "13"} fontWeight={t.hero ? "900" : "800"} fill={t.hero ? `hsl(${t.tone})` : TEXT}>{t.name}</text>
+                  {t.note.split("\n").map((line, li) => (
+                    <text key={li} x={cx} y={cy + r + 16 + li * 14} textAnchor="middle" fontSize="11" fill={MUTED}>{line}</text>
+                  ))}
+                </g>
+              );
+            })}
+          </svg>
         </div>
       </div>
       <SlideBar />
