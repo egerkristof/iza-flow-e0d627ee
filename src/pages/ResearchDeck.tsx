@@ -483,80 +483,176 @@ function S07Shift() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="07" text="THE SHIFT" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
           A graph is not enough.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>You need a nervous system around it.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
           Obsidian, Roam, and RAG vaults give you a container. They are passive. They do not know what good thinking looks like in your field, they do not push back, they do not guide the structure. The map only compounds when expertise is installed around it.
         </p>
-        <div className="grid grid-cols-2 gap-8 flex-1">
-          {/* Passive container */}
-          <div className="rounded-2xl border p-8 flex flex-col relative overflow-hidden" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>BEFORE</p>
-            <p className="mt-2 font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>Passive knowledge container</p>
-            <p className="mt-1 mb-6" style={{ fontSize: 16, color: SUBTLE, fontStyle: "italic" }}>Obsidian, Roam, vector DBs, RAG</p>
-            {/* Visual: lonely graph */}
-            <svg viewBox="0 0 400 160" className="w-full h-32 mb-5">
-              {[
-                [80, 50], [160, 30], [240, 70], [320, 40],
-                [60, 110], [150, 130], [250, 120], [340, 110],
-              ].map(([x, y], i) => (
-                <g key={i}>
-                  <circle cx={x} cy={y} r={7} fill={`hsl(${SUBTLE.split(" ").slice(0).join(" ")} / 0.5)`} stroke={GRID_LINE} />
-                </g>
-              ))}
-              {/* a few faint disconnected lines */}
-              <line x1="80" y1="50" x2="160" y2="30" stroke={GRID_LINE} strokeDasharray="2 4" />
-              <line x1="240" y1="70" x2="320" y2="40" stroke={GRID_LINE} strokeDasharray="2 4" />
-              <line x1="60" y1="110" x2="150" y2="130" stroke={GRID_LINE} strokeDasharray="2 4" />
-            </svg>
-            <ul className="space-y-2.5 mt-auto">
+        <div className="grid grid-cols-2 gap-7 flex-1">
+          {/* ── BEFORE: Passive container ─────────────────────────── */}
+          <div className="rounded-2xl border p-7 flex flex-col relative overflow-hidden" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="flex items-baseline justify-between">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>BEFORE</p>
+              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", color: SUBTLE }}>OBSIDIAN · ROAM · RAG</p>
+            </div>
+            <p className="mt-2 font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>Passive knowledge container</p>
+            <p className="mt-1 mb-3" style={{ fontSize: 14, color: SUBTLE, fontStyle: "italic" }}>A vault. No expertise. No guidance. No reasoning.</p>
+
+            {/* Visual: bare graph inside a thin container, no surrounding system */}
+            <div className="rounded-xl border my-2 relative" style={{ borderColor: GRID_LINE, background: BG, height: 250 }}>
+              <p className="absolute top-2 left-3" style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", color: SUBTLE }}>VAULT</p>
+              <svg viewBox="0 0 500 250" className="w-full h-full">
+                {/* sparse, mostly disconnected nodes in clusters that never meet */}
+                {(() => {
+                  const nodes: [number, number, number][] = [
+                    [70, 70, 6], [110, 50, 5], [140, 95, 5], [85, 130, 5],
+                    [240, 60, 6], [275, 95, 5], [220, 110, 5],
+                    [380, 80, 6], [420, 115, 5], [350, 130, 5],
+                    [110, 195, 5], [180, 200, 5], [320, 200, 5], [400, 195, 5],
+                  ];
+                  const edges: [number, number, number, number][] = [
+                    [70, 70, 110, 50], [110, 50, 140, 95], [140, 95, 85, 130],
+                    [240, 60, 275, 95], [275, 95, 220, 110],
+                    [380, 80, 420, 115], [420, 115, 350, 130],
+                    [110, 195, 180, 200], [320, 200, 400, 195],
+                  ];
+                  return (
+                    <>
+                      {edges.map(([x1, y1, x2, y2], i) => (
+                        <line key={`e${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={GRID_LINE} strokeWidth="1" strokeDasharray="3 4" />
+                      ))}
+                      {nodes.map(([x, y, r], i) => (
+                        <circle key={`n${i}`} cx={x} cy={y} r={r} fill={BG} stroke={SUBTLE} strokeWidth="1.2" />
+                      ))}
+                      {/* tiny stray notes */}
+                      <text x={70} y={232} fontSize="9" fill={SUBTLE} fontStyle="italic">untitled note</text>
+                      <text x={300} y={232} fontSize="9" fill={SUBTLE} fontStyle="italic">draft 2024-03</text>
+                    </>
+                  );
+                })()}
+              </svg>
+              {/* No surrounding ring. No external input. Static. */}
+              <p className="absolute bottom-2 right-3" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", color: SUBTLE }}>NO REASONING LAYER</p>
+            </div>
+
+            <ul className="space-y-2 mt-3">
               {passive.map(p => (
                 <li key={p} className="flex gap-3 items-start">
-                  <X size={16} style={{ color: `hsl(${RED})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{p}</span>
+                  <X size={15} style={{ color: `hsl(${RED})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{p}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Active nervous system */}
-          <div className="rounded-2xl border-2 p-8 flex flex-col relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.5)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>AFTER</p>
-            <p className="mt-2 font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>Graph plus nervous system</p>
-            <p className="mt-1 mb-6" style={{ fontSize: 16, color: `hsl(${TEAL})`, fontStyle: "italic", fontWeight: 700 }}>Liza Research Memory Layer</p>
-            {/* Visual: structured graph with halo + thinker chips */}
-            <svg viewBox="0 0 400 160" className="w-full h-32 mb-5">
-              <defs>
-                <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor={`hsl(${TEAL} / 0.25)`} />
-                  <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
-                </radialGradient>
-              </defs>
-              <ellipse cx="200" cy="80" rx="180" ry="70" fill="url(#halo)" />
-              {/* edges */}
-              {[
-                [80, 50, 160, 30], [160, 30, 240, 70], [240, 70, 320, 40],
-                [80, 50, 150, 130], [160, 30, 250, 120], [240, 70, 150, 130],
-                [320, 40, 340, 110], [250, 120, 340, 110], [150, 130, 250, 120],
-                [200, 80, 80, 50], [200, 80, 320, 40], [200, 80, 150, 130], [200, 80, 250, 120],
-              ].map(([x1, y1, x2, y2], i) => (
-                <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={`hsl(${TEAL} / 0.5)`} strokeWidth="1.2" />
-              ))}
-              {/* nodes */}
-              {[[80, 50], [160, 30], [240, 70], [320, 40], [150, 130], [250, 120], [340, 110]].map(([x, y], i) => (
-                <circle key={i} cx={x} cy={y} r={7} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="2" />
-              ))}
-              {/* center anchor */}
-              <circle cx="200" cy="80" r="11" fill={`hsl(${TEAL})`} />
-              <circle cx="200" cy="80" r="18" fill="none" stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 3" />
-            </svg>
-            <ul className="space-y-2.5 mt-auto">
+          {/* ── AFTER: Graph + nervous system ─────────────────────── */}
+          <div className="rounded-2xl border-2 p-7 flex flex-col relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <div className="flex items-baseline justify-between">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>AFTER</p>
+              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", color: `hsl(${TEAL})` }}>LIZA RESEARCH MEMORY LAYER</p>
+            </div>
+            <p className="mt-2 font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>Graph plus nervous system</p>
+            <p className="mt-1 mb-3" style={{ fontSize: 14, color: `hsl(${TEAL})`, fontStyle: "italic", fontWeight: 700 }}>Surrounded by expertise. Fed by your field. Reasoned over by agents.</p>
+
+            {/* Visual: structured graph at center, surrounded by labeled rings, with external input lines */}
+            <div className="rounded-xl border-2 my-2 relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: BG, height: 250 }}>
+              <svg viewBox="0 0 500 250" className="w-full h-full">
+                <defs>
+                  <radialGradient id="halo-aft" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stopColor={`hsl(${TEAL} / 0.18)`} />
+                    <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+                  </radialGradient>
+                  <marker id="arrow-aft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${TEAL})`} />
+                  </marker>
+                </defs>
+
+                {/* halo */}
+                <ellipse cx="250" cy="125" rx="160" ry="95" fill="url(#halo-aft)" />
+
+                {/* nervous-system rings */}
+                <ellipse cx="250" cy="125" rx="138" ry="82" fill="none" stroke={`hsl(${TEAL} / 0.45)`} strokeWidth="1.2" strokeDasharray="2 4" />
+                <ellipse cx="250" cy="125" rx="108" ry="64" fill="none" stroke={`hsl(${TEAL} / 0.6)`} strokeWidth="1" />
+
+                {/* ring labels */}
+                <text x="250" y="38" textAnchor="middle" fontSize="9" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="2">EXPERTISE  ·  ANCHORS  ·  AGENTS</text>
+                <text x="250" y="220" textAnchor="middle" fontSize="9" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="2">VERSIONING  ·  JUDGMENT LOG  ·  COMPOUNDING</text>
+
+                {/* graph nodes (clustered into 3 schools) */}
+                {(() => {
+                  type N = [number, number, number, string];
+                  const nodes: N[] = [
+                    // school A (top-left)
+                    [200, 95, 5, "a"], [220, 80, 4, "a"], [185, 115, 4, "a"], [215, 110, 4, "a"],
+                    // school B (top-right)
+                    [295, 95, 5, "b"], [315, 110, 4, "b"], [285, 115, 4, "b"],
+                    // school C (bottom)
+                    [235, 160, 5, "c"], [265, 160, 5, "c"], [250, 175, 4, "c"],
+                  ];
+                  const edges: [number, number, number, number, number][] = [
+                    [200, 95, 220, 80, 0.55], [200, 95, 185, 115, 0.55], [220, 80, 215, 110, 0.55], [185, 115, 215, 110, 0.55],
+                    [295, 95, 315, 110, 0.55], [295, 95, 285, 115, 0.55], [315, 110, 285, 115, 0.55],
+                    [235, 160, 265, 160, 0.55], [235, 160, 250, 175, 0.55], [265, 160, 250, 175, 0.55],
+                    // anchor → schools
+                    [250, 125, 200, 95, 0.7], [250, 125, 295, 95, 0.7], [250, 125, 250, 160, 0.7],
+                    // cross-school disagreements
+                    [215, 110, 285, 115, 0.4], [215, 110, 235, 160, 0.4], [285, 115, 265, 160, 0.4],
+                  ];
+                  return (
+                    <>
+                      {edges.map(([x1, y1, x2, y2, o], i) => (
+                        <line key={`ae${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={`hsl(${TEAL} / ${o})`} strokeWidth="1.1" />
+                      ))}
+                      {nodes.map(([x, y, r], i) => (
+                        <circle key={`an${i}`} cx={x} cy={y} r={r} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                      ))}
+                      {/* anchor center */}
+                      <circle cx="250" cy="125" r="9" fill={`hsl(${TEAL})`} />
+                      <circle cx="250" cy="125" r="14" fill="none" stroke={`hsl(${TEAL} / 0.5)`} strokeDasharray="2 2" />
+                      <text x="250" y="148" textAnchor="middle" fontSize="8" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.5">ANCHOR</text>
+                      {/* school labels */}
+                      <text x="200" y="74" textAnchor="middle" fontSize="8" fontWeight="700" fill={MUTED} letterSpacing="1">SCHOOL A</text>
+                      <text x="300" y="74" textAnchor="middle" fontSize="8" fontWeight="700" fill={MUTED} letterSpacing="1">SCHOOL B</text>
+                      <text x="250" y="195" textAnchor="middle" fontSize="8" fontWeight="700" fill={MUTED} letterSpacing="1">SCHOOL C</text>
+                    </>
+                  );
+                })()}
+
+                {/* external inputs feeding the system */}
+                {/* left: Corpus */}
+                <g>
+                  <rect x="14" y="105" width="78" height="22" rx="4" fill={BG} stroke={`hsl(${TEAL} / 0.7)`} />
+                  <text x="53" y="120" textAnchor="middle" fontSize="9" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.2">YOUR CORPUS</text>
+                  <line x1="92" y1="116" x2="138" y2="125" stroke={`hsl(${TEAL})`} strokeWidth="1.4" markerEnd="url(#arrow-aft)" />
+                </g>
+                {/* top: Field */}
+                <g>
+                  <rect x="80" y="14" width="78" height="22" rx="4" fill={BG} stroke={`hsl(${TEAL} / 0.7)`} />
+                  <text x="119" y="29" textAnchor="middle" fontSize="9" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.2">YOUR FIELD</text>
+                  <line x1="135" y1="36" x2="172" y2="78" stroke={`hsl(${TEAL})`} strokeWidth="1.4" markerEnd="url(#arrow-aft)" />
+                </g>
+                {/* right: Preferred Thinkers */}
+                <g>
+                  <rect x="408" y="14" width="84" height="22" rx="4" fill={BG} stroke={`hsl(${TEAL} / 0.7)`} />
+                  <text x="450" y="29" textAnchor="middle" fontSize="9" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.2">PREFERRED THINKERS</text>
+                  <line x1="408" y1="36" x2="332" y2="78" stroke={`hsl(${TEAL})`} strokeWidth="1.4" markerEnd="url(#arrow-aft)" />
+                </g>
+                {/* right side: Your Stance */}
+                <g>
+                  <rect x="408" y="105" width="78" height="22" rx="4" fill={BG} stroke={`hsl(${TEAL} / 0.7)`} />
+                  <text x="447" y="120" textAnchor="middle" fontSize="9" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.2">YOUR STANCE</text>
+                  <line x1="408" y1="116" x2="362" y2="125" stroke={`hsl(${TEAL})`} strokeWidth="1.4" markerEnd="url(#arrow-aft)" />
+                </g>
+              </svg>
+            </div>
+
+            <ul className="space-y-2 mt-3">
               {active.map(p => (
                 <li key={p} className="flex gap-3 items-start">
-                  <Check size={16} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 16, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>{p}</span>
+                  <Check size={15} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 15, color: TEXT, lineHeight: 1.4, fontWeight: 600 }}>{p}</span>
                 </li>
               ))}
             </ul>
