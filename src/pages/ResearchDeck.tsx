@@ -497,29 +497,69 @@ function S07Loop() {
 
 function S08Landscape() {
   const tools = [
-    { name: "Elicit / Consensus / Scite", role: "Search + summarisation", gap: "Returns lists. Does not surface hierarchies between schools or lineages of ideas." },
-    { name: "ChatGPT / Claude / Gemini", role: "General writing assistants", gap: "Generates the prose. Hollows out the researcher. No memory of the field, the lab, or prior work." },
-    { name: "Zotero / Mendeley / Notion", role: "Reference + note managers", gap: "Stores artifacts. Does not reason about the relations between them." },
-    { name: "Research Rabbit / Connected Papers", role: "Citation graphs", gap: "Maps citations. Does not capture tacit disagreement, judgment, or why-not-this decisions." },
-    { name: "Obsidian / Roam", role: "Personal knowledge graphs", gap: "Solo by design. No cohort, no lab, no institution. Knowledge dies with the user." },
+    {
+      name: "Elicit / Consensus / Scite",
+      role: "Search + summarisation",
+      missing: "A map of the field",
+      gap: "Returns ranked papers and one-line summaries. Treats the literature as a list, not as schools, lineages, and disagreements between authors.",
+      liza: "Resolves the same corpus into a structured field map the researcher can navigate, challenge, and extend.",
+    },
+    {
+      name: "ChatGPT / Claude / Gemini",
+      role: "General writing assistants",
+      missing: "The researcher's own judgment",
+      gap: "Generates fluent prose from the average of the internet. No memory of the lab, the prior cohort, or the open debates. Speed at the cost of the researcher's voice.",
+      liza: "Augments the researcher's own thinking inside their map. Every claim stays attributable to the researcher, not the model.",
+    },
+    {
+      name: "Zotero / Mendeley / Notion",
+      role: "Reference and note managers",
+      missing: "Reasoning over the artifacts",
+      gap: "Stores PDFs, citations, and notes as files in folders. Does not reason about the relations between them or surface contradictions.",
+      liza: "Treats every artifact as a node in a living map. Relations, lineages, and contradictions become first-class.",
+    },
+    {
+      name: "Research Rabbit / Connected Papers",
+      role: "Citation graphs",
+      missing: "Tacit disagreement and judgment",
+      gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what the lab's own stance is.",
+      liza: "Captures the why-not-this decisions and the lab's own judgment, alongside the citation structure.",
+    },
+    {
+      name: "Obsidian / Roam",
+      role: "Personal knowledge graphs",
+      missing: "A shared cohort memory",
+      gap: "Solo by design. The graph lives in one user's vault. When the PhD finishes, the knowledge leaves with them.",
+      liza: "Built around the cohort and the lab. Each researcher's reasoning compounds into a shared institutional asset.",
+    },
   ];
   return (
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="08" text="THE LANDSCAPE" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
-          Existing tools handle artifacts. <span style={{ color: `hsl(${TEAL})` }}>None handle the field.</span>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, or the lab.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Five categories of tooling already exist in research workflows. Each addresses a slice. None hold the map of the field, the group's accumulated judgment, or the institution's memory across cohorts.
+        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          For each category, one core thing is missing. That missing thing is what LIZA OS is built around.
         </p>
-        <div className="flex-1 grid grid-cols-1 gap-3">
+        <div className="flex-1 grid grid-cols-1 gap-2.5">
           {tools.map(t => (
-            <div key={t.name} className="rounded-xl border p-5 grid grid-cols-12 gap-6 items-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-              <p className="col-span-3 font-black" style={{ fontSize: 22, color: TEXT }}>{t.name}</p>
-              <p className="col-span-3" style={{ fontSize: 18, fontWeight: 700, color: `hsl(${TEAL})` }}>{t.role}</p>
-              <p className="col-span-6" style={{ fontSize: 18, color: MUTED }}><span style={{ color: `hsl(${RED})`, fontWeight: 700 }}>Gap: </span>{t.gap}</p>
+            <div key={t.name} className="rounded-xl border p-4 grid grid-cols-12 gap-5 items-stretch" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <div className="col-span-3 flex flex-col justify-center">
+                <p className="font-black" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>{t.name}</p>
+                <p className="mt-1" style={{ fontSize: 13, fontWeight: 700, color: SUBTLE, letterSpacing: "0.05em" }}>{t.role}</p>
+              </div>
+              <div className="col-span-3 flex flex-col justify-center pl-4 border-l" style={{ borderColor: `hsl(${RED} / 0.3)` }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${RED})`, textTransform: "uppercase" }}>Core thing missing</p>
+                <p className="mt-1 font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{t.missing}</p>
+              </div>
+              <p className="col-span-3 flex items-center" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{t.gap}</p>
+              <div className="col-span-3 rounded-lg p-3 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>What LIZA OS adds</p>
+                <p className="mt-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{t.liza}</p>
+              </div>
             </div>
           ))}
         </div>
