@@ -742,33 +742,33 @@ function S12Pilot() {
 function S13Outcomes() {
   const tiers = [
     {
-      tag: "FOR THE INDIVIDUAL",
-      headline: "The researcher",
+      tag: "ON DAY ONE",
+      headline: "Walk into a structured field",
       bullets: [
-        "Walks into a structured field map on day one instead of 6 to 12 months of solo PDF reading.",
-        "Spends more hours judging, writing, and forming a position. Less hours searching and re-summarising.",
-        "Stays the author of every claim. No model voice in the thesis.",
-        "Owns a portable graph of how they connect ideas. It travels with them after the PhD.",
+        "A structured field map instead of 6 to 12 months of solo PDF reading.",
+        "Schools, lineages, and disagreements typed and visible from the start.",
+        "Zero setup tax. The structure exists before you do the work.",
+        "You start judging the field, not cataloguing it.",
       ],
     },
     {
-      tag: "FOR THE TEAM",
-      headline: "The cohort and lab",
+      tag: "WHILE YOU WORK",
+      headline: "Augmented, not replaced",
       bullets: [
-        "Shared field map and judgment log that every member can read, challenge, and extend.",
-        "Disagreements between authors and prior critiques are visible, not stuck in one professor's head.",
-        "New students reach productive contribution in weeks, not in their second year.",
-        "The group converges on a shared standard for how AI is used in their research.",
+        "More hours judging, writing, and forming a position. Fewer hours searching and re-summarising.",
+        "AI surfaces counter-arguments and trade-offs inside the structured map.",
+        "Every claim stays attributable to you. No model voice in your thesis.",
+        "Your why-not-this decisions get captured as you reason, not lost in a notebook.",
       ],
     },
     {
-      tag: "FOR THE INSTITUTION",
-      headline: "The faculty and university",
+      tag: "AT THE END",
+      headline: "A portable asset that is yours",
       bullets: [
-        "An institutional standard for AI-augmented research that protects the formation of judgment.",
-        "Cohort-to-cohort knowledge stops leaving with each graduate. The lab's reasoning becomes a compounding asset.",
-        "A defensible position on what good academic AI use looks like, with the artefacts to show it.",
-        "No vendor or model lock-in. Field maps and judgment logs are exportable. The system is LLM-agnostic.",
+        "A structured graph of how you connect ideas. Yours, across projects and years.",
+        "Exportable. LLM-agnostic. No lock-in to LIZA OS or to any single model.",
+        "Travels with you to the next paper, the next field, the next role.",
+        "The thinking compounds. The next project starts where this one ended.",
       ],
     },
   ];
@@ -776,12 +776,12 @@ function S13Outcomes() {
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="13" text="OUTCOMES" />
+        <Eyebrow n="11" text="OUTCOMES" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
-          What changes, <span style={{ color: `hsl(${TEAL})` }}>at three levels.</span>
+          What changes <span style={{ color: `hsl(${TEAL})` }}>for the researcher.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          These are the working assumptions we hold today. The semester pilot is how we validate or revise each one with a real cohort.
+          Three moments in one PhD. These are the working assumptions we hold today. The semester pilot is how we validate or revise each one with a real researcher.
         </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {tiers.map((t, idx) => (
@@ -820,24 +820,20 @@ function S14TwoDoor() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="14" text="TWO WAYS TO START" />
+        <Eyebrow n="12" text="HOW TO START" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          Co-build with us. <span style={{ color: `hsl(${TEAL})` }}>As a partner, or a sponsor.</span>
+          Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
         </h2>
-        <div className="grid grid-cols-2 gap-6 flex-1">
-          <div className="rounded-2xl p-10 flex flex-col" style={{ background: TEXT, color: BG }}>
-            <p style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>OPTION A · COHORT PARTNER</p>
-            <p className="font-black mt-4 mb-5" style={{ fontSize: 40 }}>Run the semester pilot</p>
-            <p style={{ fontSize: 22, color: "hsl(0 0% 100% / 0.85)", lineHeight: 1.5 }}>
-              One research group. One field. Sixteen weeks. We co-build the Research Memory Layer alongside your cohort and leave you with a usable field map, a judgment log, and a measurable return of deep-work hours.
+        <div className="flex-1 flex">
+          <div className="rounded-2xl p-14 flex flex-col w-full" style={{ background: TEXT, color: BG }}>
+            <p style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>DESIGN PARTNER · ONE RESEARCHER</p>
+            <p className="font-black mt-5 mb-7" style={{ fontSize: 56, lineHeight: 1.05 }}>Run the semester pilot</p>
+            <p style={{ fontSize: 26, color: "hsl(0 0% 100% / 0.85)", lineHeight: 1.5, maxWidth: 1300 }}>
+              One researcher. One field. Sixteen weeks. We co-build the Research Memory Layer alongside you and leave you with a usable field map, a judgment log, and a portable structured graph that is yours after the pilot ends.
             </p>
-          </div>
-          <div className="rounded-2xl p-10 flex flex-col text-white" style={{ background: `hsl(${TEAL})` }}>
-            <p style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.25em", color: "hsl(0 0% 100% / 0.7)" }}>OPTION B · INSTITUTIONAL SPONSOR</p>
-            <p className="font-black mt-4 mb-5" style={{ fontSize: 40 }}>Co-define the standard</p>
-            <p style={{ fontSize: 22, color: "hsl(0 0% 100% / 0.9)", lineHeight: 1.5 }}>
-              Build the academic version of LIZA OS with us. Anchor it for your university and faculty, take a strategic position, and set the global reference for AI-augmented research.
-            </p>
+            <div className="mt-auto pt-10 flex items-center gap-3">
+              <p style={{ fontSize: 16, color: "hsl(0 0% 100% / 0.6)", letterSpacing: "0.18em" }}>NO INSTITUTIONAL COMMITMENT REQUIRED</p>
+            </div>
           </div>
         </div>
       </div>
@@ -863,7 +859,7 @@ function S15Close() {
           </span>
         </h1>
         <p style={{ fontSize: 26, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The next great PhD should inherit the last one's judgment — not just their bibliography. That is what we are building.
+          The structure of a field, on day one. AI that reasons inside it. A portable record of how you think. That is what we are building.
         </p>
         <p className="mt-12" style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.2em" }}>
           lizaos.ai/research-brief
