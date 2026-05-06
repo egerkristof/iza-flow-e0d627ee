@@ -422,65 +422,65 @@ const SDT_COST_BENCHMARKS = [
 
 const __VERTICAL_PERSONAS = [
   {
-    "id": "space",
-    "name": "Space Systems",
+    "id": "capture",
+    "name": "Capture & Bid",
     "color": "RED",
-    "iconName": "Satellite",
+    "iconName": "FileText",
     "above": [
-      "Mission specs",
-      "Spacecraft ICDs",
-      "Qualification packages",
-      "ECSS standards"
+      "RFP / RFI text",
+      "Customer requirements",
+      "Past proposal volumes",
+      "Compliance matrices"
     ],
     "below": [
-      "Single-event-upset rationale by orbit class",
-      "Integration lessons from the last constellation build",
-      "Vibration-test workarounds the lead engineer never wrote down"
+      "Win themes that actually closed prior bids",
+      "Customer evaluator preferences and red-team patterns",
+      "Pricing precedent and walk-away thresholds nobody documented"
     ],
-    "breaks": "Rework. Milestone slip. EAC erosion."
+    "breaks": "Lost bids. Compliant but uncompetitive proposals."
   },
   {
-    "id": "defence",
-    "name": "Defence Platforms",
+    "id": "execution",
+    "name": "Engineering & Qualification",
     "color": "WARM",
     "iconName": "Shield",
     "above": [
       "Platform requirements",
-      "AS9100 / AQAP references",
-      "Programme ICDs"
+      "AS9100 / AQAP / ECSS references",
+      "Programme ICDs and qualification packages"
     ],
     "below": [
       "Customer / certifying-authority interpretation on this programme",
       "Why this margin, not the handbook one",
       "Chief engineer judgment on this subsystem"
     ],
-    "breaks": "Non-conformance exposure. Redesign cycles."
+    "breaks": "Non-conformance exposure. Redesign cycles. Schedule slip."
   },
   {
-    "id": "cyber",
-    "name": "Cyber & Mission Systems",
+    "id": "sustainment",
+    "name": "Sustainment & ILS",
     "color": "GOLD",
-    "iconName": "Cpu",
+    "iconName": "Database",
     "above": [
-      "Security architecture",
-      "Mission software requirements",
-      "Accreditation packages"
+      "As-built configuration",
+      "ILS and sustainment manuals",
+      "Customer acceptance packages"
     ],
     "below": [
-      "Threat-model exceptions and rationale",
-      "Cross-domain data-handling decisions never written down",
-      "Operator preferences not in the requirements"
+      "Why this deviation was accepted at acceptance",
+      "Reliability patterns from the prior platform",
+      "Operator workarounds that never reached engineering"
     ],
-    "breaks": "Accreditation risk. Mission-readiness gaps."
+    "breaks": "Operational risk. Warranty and lifecycle-cost disputes."
   }
 ] as const;
 
 function Slide03() {
   const renderIcon = (name: string, color: string) => {
     const props = { size: 20, style: { color: `hsl(${color})` } };
-    if (name === "Satellite") return <Sparkles {...props} />;
+    if (name === "FileText") return <FileText {...props} />;
     if (name === "Shield") return <Shield {...props} />;
-    if (name === "Cpu") return <Cpu {...props} />;
+    if (name === "Database") return <Database {...props} />;
     return <Shield {...props} />;
   };
   const colorVal = (k: string) => (k === "RED" ? RED : k === "WARM" ? WARM : k === "GOLD" ? GOLD : k === "GREEN" ? GREEN : TEAL);
@@ -490,13 +490,13 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up across a Space & Defence Holding
+          Where Missing Context Shows Up across the Programme Lifecycle
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          The same iceberg, in every domain. <span style={{ color: `hsl(${TEAL})` }}>And the knowledge that connects them barely exists at all.</span>
+          From winning the work, to building it, to sustaining it. <span style={{ color: `hsl(${TEAL})` }}>The same iceberg at every stage. And almost nothing connecting them.</span>
         </h2>
         <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          Each subsidiary captures specs, standards, and packages above the waterline. The design intent, authority precedent, and engineering judgment below the waterline stays trapped inside that subsidiary, and the cross-domain memory between them is the thinnest layer of all.
+          Each stage captures documents, standards, and packages above the waterline. Win-themes, design intent, authority precedent, and operator judgment stay below the waterline. The handover memory between capture, engineering, and sustainment is the thinnest layer of all.
         </p>
 
         <div className="grid grid-cols-3 gap-6 flex-1 min-h-0 mb-4">
@@ -583,8 +583,8 @@ function Slide03() {
             style={{ borderColor: `hsl(${WARM} / 0.30)`, background: `hsl(${WARM} / 0.05)` }}>
             <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
             <p className="font-bold" style={{ fontSize: 15.5, color: TEXT, lineHeight: 1.35 }}>
-              And between the three: <span style={{ color: `hsl(${WARM})` }}>the connective memory is the thinnest layer of all.</span>{' '}
-              <span style={{ color: MUTED, fontWeight: 500 }}>Lessons from a satellite build never reach the next radar programme. Cyber accreditation knowledge does not propagate to the avionics team. Each acquisition becomes a knowledge silo.</span>
+              And between the stages: <span style={{ color: `hsl(${WARM})` }}>the connective memory is the thinnest layer of all.</span>{' '}
+              <span style={{ color: MUTED, fontWeight: 500 }}>Win-themes from a captured bid never reach the engineering team. Engineering judgment never reaches sustainment. Operator field-fixes never reach the next capture. Each handover loses the context that would compound across programmes.</span>
             </p>
           </div>
         </div>
@@ -600,10 +600,10 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs across Space & Defence Holdings
+          What Missing Context Costs across the Programme Lifecycle
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          In Space &amp; Defence, missing context becomes expensive because every late ECR, ICD revision, and qualification finding compounds <span style={{ color: `hsl(${WARM})` }}>cost growth, schedule slip, and certification risk.</span>
+          In Space &amp; Defence, missing context compounds at every stage. Lost bids, late ECRs, ICD revisions, and qualification findings become <span style={{ color: `hsl(${WARM})` }}>lower win-rate, cost growth, schedule slip, and certification risk.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
