@@ -112,7 +112,7 @@ export default function IndustryDefensePortfolioPage() {
           <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-[1.1]">
             The Federation Memory Layer for
             <br />
-            <span className="text-primary">4iG Space & Defence.</span>
+            <span className="text-primary">Space & Defence Holdings.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
             Mission heritage is walking out the door. AI is making it worse, not better. LIZA codifies the
@@ -120,7 +120,7 @@ export default function IndustryDefensePortfolioPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/investor-4ig-sdt"
+              to="/investor-space-defense"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -319,7 +319,7 @@ export default function IndustryDefensePortfolioPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/investor-4ig-sdt"
+              to="/investor-space-defense"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",

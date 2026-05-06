@@ -93,24 +93,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · 4iG SDT · Strategic Round
+            LIZA OS · Space & Defence Holdings · Strategic Round
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
           The Engineering Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for 4iG Space &amp; Defence.
+            for Space &amp; Defence Holdings.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
           One context layer across Space, Aero, Land Systems, Weapons &amp; Ammunition, and Cyber &amp; Defence Digitalisation. Capture chief-engineer judgment from every acquisition. Enforce NATO AQAP, ISO 9001, ISO 27001, and ECSS as executable standards.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · 4iG SDT Federation Beachhead</span>
+          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · Federation Beachhead</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; 4iG SDT Beachhead
+          Confidential &nbsp;·&nbsp; Strategic Round + Partnership &nbsp;·&nbsp; Space & Defence Holdings Beachhead
         </p>
       </div>
       <SlideBar />
@@ -119,12 +119,12 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE SHAPE — THE SHAPE OF THE COMPANY (4iG SDT framing)
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (Space & Defence Holdings framing)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideShape() {
   const verticals = [
-    { label: "4iG SDT", sub: "ECR · Qualification · Handover", active: true, color: TEAL },
+    { label: "Space & Defence Holdings", sub: "ECR · Qualification · Handover", active: true, color: TEAL },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: BLUE },
     { label: "GTM", sub: "Sales · CS · Onboarding", active: false, color: MUTED },
     { label: "Prof. Services", sub: "Delivery · Methods", active: false, color: MUTED },
@@ -139,10 +139,10 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>4iG SDT is the spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Space & Defence Holdings is the spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. You are investing in 4iG SDT specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
+          We build a single context layer and deploy it vertical-by-vertical. You are investing in Space & Defence Holdings specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
         </p>
 
         <div className="flex-1 flex flex-col justify-center">
@@ -267,7 +267,7 @@ function Slide02() {
       {/* Header */}
       <div className="relative z-20 px-28 pt-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          The Context Gap at 4iG SDT
+          The Context Gap at Space & Defence Holdings
         </p>
         <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
           The Context Gap.
@@ -491,7 +491,7 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up across 4iG SDT
+          Where Missing Context Shows Up across Space & Defence Holdings
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           The same iceberg, in every persona. <span style={{ color: `hsl(${TEAL})` }}>What is captured is dwarfed by what runs the work.</span>
@@ -599,7 +599,7 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs across 4iG SDT
+          What Missing Context Costs across Space & Defence Holdings
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
           Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
@@ -871,7 +871,7 @@ function Slide05() {
             </div>
 
             <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the 4iG SDT operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the Space & Defence Holdings operating experience.</span>
             </p>
           </div>
 
@@ -1112,13 +1112,13 @@ function Slide06() {
     { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
     { name: "Palantir Foundry / Helix", funding: "Public", round: "Public · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
     { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Aero Division (4iG SDT)", funding: "Strategic", round: "4iG SDT portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
+    { name: "Aero Division (Space & Defence Holdings)", funding: "Strategic", round: "Space & Defence Holdings portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
   ];
 
   const moatLayers = [
     { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every Defense & Space AI tool will need.", icon: <Cpu size={20} /> },
     { layer: "Compounding Project Memory", desc: "ECR precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the 4iG SDT ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
+    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Space & Defence Holdings ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -1574,7 +1574,7 @@ function Slide09() {
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
       result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
-      proof: "Adjacent to Standards Capture & Handoff (4iG SDT portfolio)",
+      proof: "Adjacent to Standards Capture & Handoff (Space & Defence Holdings portfolio)",
     },
     {
       vertical: "Mission Execution", status: "Anchor", color: TEAL,
@@ -1722,7 +1722,7 @@ function Slide09Partnership() {
       phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm intros into top 20 Aero / Space Divisions accounts. LIZA sits alongside; 4iG SDT opens doors. Low commitment, fast signal.",
+      desc: "Warm intros into top 20 Aero / Space Divisions accounts. LIZA sits alongside; Space & Defence Holdings opens doors. Low commitment, fast signal.",
     },
     {
       phase: "Months 6-12",
@@ -1734,7 +1734,7 @@ function Slide09Partnership() {
       phase: "Months 12-24",
       title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one 4iG SDT brand. Start with Aero Division for ECRs, then expand to Space Division for design intent.",
+      desc: "LIZA becomes the governance and memory layer underneath one Space & Defence Holdings brand. Start with Aero Division for ECRs, then expand to Space Division for design intent.",
     },
   ];
 
@@ -1744,7 +1744,7 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            4iG SDT GTM Mechanic
+            Space & Defence Holdings GTM Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
             A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
@@ -2160,7 +2160,7 @@ function Slide13() {
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
           <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + 4iG SDT beachhead build-out
+            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + Space & Defence Holdings beachhead build-out
           </p>
         </div>
 
@@ -2235,7 +2235,7 @@ function SlideAppendixDivider() {
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE — THE CONTEXT GAP, EXEMPLIFIED (4iG SDT)
+// SLIDE — THE CONTEXT GAP, EXEMPLIFIED (Space & Defence Holdings)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideContextGapExemplified() {
@@ -2446,7 +2446,7 @@ function SlideContextGapExemplified() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE — PEOPLE AS NODES (4iG SDT)
+// SLIDE — PEOPLE AS NODES (Space & Defence Holdings)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlidePeopleAsNodes() {
@@ -2706,7 +2706,7 @@ function SlidePeopleAsNodes() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE — ORGANIZATIONAL INTELLIGENCE UNPACKED (4iG SDT)
+// SLIDE — ORGANIZATIONAL INTELLIGENCE UNPACKED (Space & Defence Holdings)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideOrgIntelligence() {
@@ -2844,8 +2844,8 @@ const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
   { id: 3, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
-  { id: 4, title: "Where Missing Context Shows Up across 4iG SDT", component: <Slide03 /> },
-  { id: 5, title: "What Missing Context Costs across 4iG SDT", component: <Slide04Cost /> },
+  { id: 4, title: "Where Missing Context Shows Up across Space & Defence Holdings", component: <Slide03 /> },
+  { id: 5, title: "What Missing Context Costs across Space & Defence Holdings", component: <Slide04Cost /> },
   { id: 6, title: "Early Validation", component: <Slide08 /> },
   { id: 7, title: "Why Now", component: <SlideWhyNow /> },
   { id: 8, title: "The Context Layer", component: <Slide05 /> },
@@ -2867,7 +2867,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function Investor4iGSDTDeck() {
+export default function InvestorSpaceDefenseDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2982,7 +2982,7 @@ export default function Investor4iGSDTDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-4iG-SDT-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Space-Defence-Holdings-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -3029,9 +3029,9 @@ export default function Investor4iGSDTDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · 4iG SDT Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Space & Defence Holdings Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-4iG-SDT-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Space-Defence-Holdings-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -3067,13 +3067,13 @@ export default function Investor4iGSDTDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · 4iG SDT Investor Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · Space & Defence Holdings Investor Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-4iG-SDT-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Space-Defence-Holdings-Investor-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
