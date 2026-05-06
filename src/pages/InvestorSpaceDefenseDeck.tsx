@@ -1622,7 +1622,7 @@ function Slide09() {
               The missing connective tissue underneath the Defense & Space AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: active discussion with a federated defence holding. Not a commercial integration claim.
+              Proven horizontally across AEC, executive search, and audit. Space &amp; Defence is the next vertical, not a current customer claim.
             </p>
           </div>
         </div>
