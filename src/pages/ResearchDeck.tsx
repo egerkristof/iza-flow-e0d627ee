@@ -156,15 +156,12 @@ function S01Cover() {
             LIZA OS · Research Memory Layer · Concept Deck
           </span>
         </div>
-        <h1 className="font-black mb-6" style={{ fontSize: 84, lineHeight: 1.04, color: TEXT }}>
+        <h1 className="font-black mb-10" style={{ fontSize: 96, lineHeight: 1.04, color: TEXT }}>
           Obsidian was the benchmark.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Now reason inside the map.
           </span>
         </h1>
-        <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          A research memory layer for the individual researcher. Obsidian and Roam already prove the appetite: thousands of researchers building knowledge graphs by hand. We pick up where they stop. <span style={{ color: `hsl(${TEAL})` }}>Structured field, on day one. AI that reasons over it, not around it.</span>
-        </p>
         <p style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.18em" }}>
           BUILT FOR THE INDIVIDUAL · OPTIONAL FOR THE LAB
         </p>
@@ -210,12 +207,9 @@ function S02WhoBreaks() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="02" text="FOUR MOMENTS IN ONE PHD" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           The same researcher. <span style={{ color: `hsl(${TEAL})` }}>Four places today's tools quietly break.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          One individual researcher across a PhD. Obsidian solved the canvas. AI assistants solved retrieval. Neither solved the structure of the field, the structure of disagreement, or the structure of judgment.
-        </p>
         <div className="grid grid-cols-2 gap-5 flex-1">
           {personas.map(p => {
             const Icon = p.Icon;
@@ -264,18 +258,14 @@ function S03Iceberg() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="03" text="OUR HONEST BENCHMARK" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Obsidian is the benchmark. <span style={{ color: `hsl(${TEAL})` }}>Three structural things it does not do.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Obsidian, with Smart Connections, Copilot, and Zotero plugins, is the closest tool in spirit to what we are building. A serious researcher gets to roughly 70 percent of the individual experience inside it. We say that openly. The remaining 30 percent is structural, and it is the entire reason LIZA OS exists.
-        </p>
         <div className="grid grid-cols-12 gap-6 flex-1">
           <div className="col-span-4 rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${AMBER} / 0.45)`, background: `hsl(${AMBER} / 0.04)` }}>
             <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${AMBER})` }}>BENCHMARK</p>
             <p className="font-black mt-3 mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>Obsidian + plugins</p>
-            <p className="mb-5" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>The serious individual researcher\'s stack today. Free, local, portable, vibrant plugin ecosystem.</p>
-            <ul className="space-y-3 mb-5">
+            <ul className="space-y-3 mb-5 mt-4">
               {obsidian.map(o => (
                 <li key={o} className="flex gap-3 items-start" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
                   <Check size={16} color={`hsl(${AMBER})`} strokeWidth={3} className="mt-1 flex-shrink-0" />
@@ -328,12 +318,9 @@ function S04ThirdPath() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="04" text="HEAD TO HEAD" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Where Obsidian stops. <span style={{ color: `hsl(${TEAL})` }}>Where LIZA OS picks up.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Seven capabilities a serious individual researcher actually needs. The first four are well covered by today\'s tools. The last three are not, and they are the structure of what good research thinking actually looks like.
-        </p>
         <div className="rounded-2xl border-2 overflow-hidden flex-1 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
           {/* header */}
           <div className="grid grid-cols-12 px-7 py-5" style={{ background: CARD_ALT, borderBottom: `2px solid ${CHROME_BORDER}` }}>
@@ -380,12 +367,9 @@ function S05Thesis() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="05" text="THE THESIS" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Three commitments. <span style={{ color: `hsl(${TEAL})` }}>One worldview.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Built around the individual researcher. The product is downstream of one conviction: the structure of the field comes first, and the researcher stays the author of every claim.
-        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {items.map(i => {
             const Icon = i.Icon;
@@ -432,12 +416,9 @@ function S06WhyNow() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="06" text="WHY NOW" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           The cost of doing nothing <span style={{ color: `hsl(${TEAL})` }}>is already paid — every day.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Three numbers, three sources. Each describes a structural pressure on research today: time lost, AI used without a standard, and a literature growing faster than it can be read.
-        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {stats.map(s => (
             <div key={s.label} className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
@@ -489,12 +470,9 @@ function S07Loop() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="07" text="HOW IT WORKS" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          One loop. One researcher. Each step compounds the next: a structured field, your stance against it, AI reasoning inside it, and a portable asset that grows with every reading.
-        </p>
         <div className="relative flex-1">
           {/* Connector spine */}
           <div className="absolute left-0 right-0 top-[58px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0), hsl(${TEAL} / 0.45) 8%, hsl(${TEAL} / 0.45) 92%, hsl(${TEAL} / 0))` }} />
@@ -577,12 +555,9 @@ function S08Landscape() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="08" text="THE LANDSCAPE" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
           Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, and the researcher together.</span>
         </h2>
-        <p className="mb-4" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          For each category, one core thing is missing. That missing thing is what LIZA OS is built around.
-        </p>
         {/* Capability matrix */}
         <div className="rounded-xl border mb-4 overflow-hidden" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <div className="grid grid-cols-12 gap-3 px-5 py-3" style={{ background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
@@ -646,12 +621,9 @@ function S09Architecture() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="09" text="ARCHITECTURE" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, structure, researcher, reasoning. Each compounding into the next.
-        </p>
         <div className="flex-1 flex gap-10 items-stretch">
           {/* Stacked layers */}
           <div className="flex-1 flex flex-col gap-3">
@@ -693,12 +665,9 @@ function S12Pilot() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="10" text="DESIGN PARTNER" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           One researcher. One field. <span style={{ color: `hsl(${TEAL})` }}>One semester.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We co-build the Research Memory Layer with a single researcher as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
-        </p>
         <div className="relative flex-1 flex flex-col justify-center">
           {/* Week ruler */}
           <div className="relative h-2 rounded-full mb-2 mx-6" style={{ background: `hsl(${TEAL} / 0.12)` }}>
@@ -777,12 +746,9 @@ function S13Outcomes() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="11" text="OUTCOMES" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
           What changes <span style={{ color: `hsl(${TEAL})` }}>for the researcher.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Three moments in one PhD. These are the working assumptions we hold today. The semester pilot is how we validate or revise each one with a real researcher.
-        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {tiers.map((t, idx) => (
             <div
