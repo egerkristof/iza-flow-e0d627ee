@@ -176,10 +176,34 @@ function S01Cover() {
 
 function S02WhoBreaks() {
   const personas = [
-    { who: "PhD candidate", pain: "6–12 months lost to a literature review that flattens the field", win: "Map the field in weeks. Stay the author.", Icon: BookOpen },
-    { who: "Early-career researcher", pain: "Cannot see the lineages of disagreement between authors", win: "Surfaces schools, debates, and why-not-this decisions", Icon: GitBranch },
-    { who: "PI / research group lead", pain: "Tacit judgment dies between cohorts; new students restart from zero", win: "Group's reasoning becomes a compounding asset", Icon: Users },
-    { who: "Faculty / Vice-Rector", pain: "Generative AI hollows out the next generation of researchers", win: "An institutional standard for AI-augmented research", Icon: Globe },
+    {
+      who: "PhD candidate",
+      today: "Spends 6 to 12 months building a literature review that flattens the field into a bibliography.",
+      withAI: "Asks ChatGPT to summarise papers. Gets fluent prose with no map of the field underneath. The judgment never forms.",
+      win: "Maps the field in weeks. Stays the author of every claim.",
+      Icon: BookOpen,
+    },
+    {
+      who: "Early-career researcher",
+      today: "Reads in isolation. Cannot see the lineages of disagreement between authors.",
+      withAI: "Generative tools return summaries, not relations. Schools, debates, and why-not-this decisions stay invisible.",
+      win: "Surfaces hierarchies, lineages, and the disagreements that actually constitute the field.",
+      Icon: GitBranch,
+    },
+    {
+      who: "PI / research group lead",
+      today: "Tacit judgment dies between cohorts. Each new student restarts from zero.",
+      withAI: "Each researcher prompts their own private chat. Nothing accrues to the group. The lab has no shared memory.",
+      win: "The group's reasoning becomes a compounding asset across cohorts.",
+      Icon: Users,
+    },
+    {
+      who: "Faculty / Vice-Rector",
+      today: "No institutional view of how AI is actually being used in research.",
+      withAI: "Generative AI writes the thesis. The next generation of researchers is hollowed out before it forms.",
+      win: "An institutional standard for AI-augmented research that protects judgment.",
+      Icon: Globe,
+    },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -189,22 +213,29 @@ function S02WhoBreaks() {
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four people. <span style={{ color: `hsl(${TEAL})` }}>One missing layer.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          The literature review is not a bibliography task. It is the act of mapping a field — and right now every researcher does it alone, from scratch, in private.
+        <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          Mapping a field is not a bibliography task. Today researchers do it alone. With generative AI they do it faster, but flatter. The map of the field still does not exist.
         </p>
-        <div className="grid grid-cols-2 gap-6 flex-1">
+        <div className="grid grid-cols-2 gap-5 flex-1">
           {personas.map(p => {
             const Icon = p.Icon;
             return (
-              <div key={p.who} className="rounded-2xl border p-8 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
-                    <Icon size={28} />
+              <div key={p.who} className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
+                    <Icon size={24} />
                   </div>
-                  <p className="font-black" style={{ fontSize: 30, color: TEXT }}>{p.who}</p>
+                  <p className="font-black" style={{ fontSize: 26, color: TEXT }}>{p.who}</p>
                 </div>
-                <p className="mb-3" style={{ fontSize: 19, color: `hsl(${RED})`, fontWeight: 700 }}>Today: {p.pain}</p>
-                <p style={{ fontSize: 19, color: TEXT }}><span style={{ color: `hsl(${TEAL})`, fontWeight: 800 }}>With LIZA OS: </span>{p.win}</p>
+                <p className="mb-2" style={{ fontSize: 16, color: MUTED }}>
+                  <span style={{ color: TEXT, fontWeight: 800 }}>Today: </span>{p.today}
+                </p>
+                <p className="mb-2" style={{ fontSize: 16, color: MUTED }}>
+                  <span style={{ color: `hsl(${RED})`, fontWeight: 800 }}>Today with AI: </span>{p.withAI}
+                </p>
+                <p style={{ fontSize: 16, color: TEXT }}>
+                  <span style={{ color: `hsl(${TEAL})`, fontWeight: 800 }}>With LIZA OS: </span>{p.win}
+                </p>
               </div>
             );
           })}
