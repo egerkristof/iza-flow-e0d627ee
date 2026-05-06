@@ -221,7 +221,7 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const above: { x: number; label: string }[] = ["Mission specs","ICDs","ECRs","Qualification packages"].map((label: string, i: number) => ({
+  const above: { x: number; label: string }[] = ["Specifications","Interface documents","Change requests","Test & qualification reports"].map((label: string, i: number) => ({
     x: 720 + i * 165,
     label,
   }));
@@ -231,31 +231,31 @@ function Slide02() {
       "items": [
         "Why this margin, not the handbook one",
         "Chief engineer rule-of-thumb on this subsystem",
-        "Trade-offs already settled at PDR"
+        "Trade-offs already settled in earlier reviews"
       ]
     },
     {
-      "title": "Standards & Certifying-Authority Memory",
+      "title": "Standards & Authority Memory",
       "items": [
-        "NATO / national authority interpretations on this program",
-        "Prior qualification findings and conditions",
-        "Customer / DCMA precedent on edge cases"
+        "Authority interpretations applied on this programme",
+        "Prior audit and qualification findings",
+        "Customer precedent on edge cases"
       ]
     },
     {
       "title": "Producibility & Test Practice",
       "items": [
-        "Subcontractor-specific build tolerances",
-        "Integration sequencing learned from the last article",
-        "ECR / NCR patterns from similar platforms"
+        "Supplier-specific build tolerances",
+        "Integration sequencing learned from the last build",
+        "Change and non-conformance patterns from similar platforms"
       ]
     },
     {
       "title": "Cross-Discipline Decisions",
       "items": [
-        "ICD calls not yet redlined",
-        "Customer sign-offs and rationale",
-        "Live ECP and budget posture"
+        "Interface calls not yet redlined",
+        "Customer sign-offs and their rationale",
+        "Live cost & change posture across teams"
       ]
     }
   ];
@@ -267,13 +267,13 @@ function Slide02() {
       {/* Header */}
       <div className="relative z-20 px-28 pt-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          The Context Gap at Space & Defence Holdings
+          The Context Gap in Engineering-Led Organisations
         </p>
         <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
           The Context Gap.
         </h2>
         <p className="font-medium" style={{ fontSize: 24, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
-          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how a Space &amp; Defence organisation actually decides was never formally defined.</span>
+          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how an engineering organisation actually decides was never formally defined.</span>
         </p>
       </div>
 
@@ -302,8 +302,8 @@ function Slide02() {
           <text x="1840" y="178" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
           <text x="1840" y="206" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI is given today</text>
           <text x="1840" y="262" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~90% ORGANIZATIONAL INTELLIGENCE</text>
-          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to meet design intent &amp; certification</text>
-          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in chief engineers, reviewers, prior dispositions, and live ECRs</text>
+          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to meet design intent &amp; review standards</text>
+          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in chief engineers, reviewers, prior dispositions, and live change threads</text>
 
           <polygon points="870,220 960,90 1050,220" fill="url(#ice-top)" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.5" />
           <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#ice-bot)" stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.5" />
@@ -349,7 +349,7 @@ function Slide02() {
           })}
 
           <text x="960" y="725" textAnchor="middle"
-            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO MEET DESIGN INTENT &amp; CERTIFICATION</text>
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO MEET DESIGN INTENT &amp; REVIEW STANDARDS</text>
         </svg>
       </div>
 
@@ -422,66 +422,65 @@ const SDT_COST_BENCHMARKS = [
 
 const __VERTICAL_PERSONAS = [
   {
-    "id": "prime",
-    "name": "Prime / System Integrator",
+    "id": "space",
+    "name": "Space Systems",
     "color": "RED",
-    "iconName": "Briefcase",
+    "iconName": "Satellite",
     "above": [
       "Mission specs",
+      "Spacecraft ICDs",
       "Qualification packages",
-      "ECRs",
-      "ICDs"
+      "ECSS standards"
     ],
     "below": [
-      "Subcontractor tolerances on this build",
-      "Integration rationale from the last similar program",
-      "Test-floor workarounds the lead tech never wrote down"
+      "Single-event-upset rationale by orbit class",
+      "Integration lessons from the last constellation build",
+      "Vibration-test workarounds the lead engineer never wrote down"
     ],
     "breaks": "Rework. Milestone slip. EAC erosion."
   },
   {
-    "id": "engineering",
-    "name": "Engineering Authority",
+    "id": "defence",
+    "name": "Defence Platforms",
     "color": "WARM",
     "iconName": "Shield",
     "above": [
-      "Design intent",
-      "Standards references (AS9100, ECSS, AQAP)",
-      "ICD sections"
+      "Platform requirements",
+      "AS9100 / AQAP references",
+      "Programme ICDs"
     ],
     "below": [
-      "Certifying-authority interpretation on this program",
+      "Customer / certifying-authority interpretation on this programme",
       "Why this margin, not the handbook one",
       "Chief engineer judgment on this subsystem"
     ],
     "breaks": "Non-conformance exposure. Redesign cycles."
   },
   {
-    "id": "customer",
-    "name": "Customer / Programme Office",
+    "id": "cyber",
+    "name": "Cyber & Mission Systems",
     "color": "GOLD",
-    "iconName": "Database",
+    "iconName": "Cpu",
     "above": [
-      "Customer standards",
-      "As-built configuration",
-      "ILS / sustainment manuals"
+      "Security architecture",
+      "Mission software requirements",
+      "Accreditation packages"
     ],
     "below": [
-      "Customer standards exceptions and rationale",
-      "Reliability patterns from the prior platform",
+      "Threat-model exceptions and rationale",
+      "Cross-domain data-handling decisions never written down",
       "Operator preferences not in the requirements"
     ],
-    "breaks": "Operational risk. Warranty and LCC disputes."
+    "breaks": "Accreditation risk. Mission-readiness gaps."
   }
 ] as const;
 
 function Slide03() {
-  const alsoApplies = ["Bid & estimation","Procurement","Subsystem integration","Qualification","Acceptance","Sustainment & ILS"];
   const renderIcon = (name: string, color: string) => {
     const props = { size: 20, style: { color: `hsl(${color})` } };
-    if (name === "Briefcase") return <Briefcase {...props} />;
+    if (name === "Satellite") return <Sparkles {...props} />;
     if (name === "Shield") return <Shield {...props} />;
-    if (name === "Database") return <Database {...props} />;
+    if (name === "Cpu") return <Cpu {...props} />;
     return <Shield {...props} />;
   };
   const colorVal = (k: string) => (k === "RED" ? RED : k === "WARM" ? WARM : k === "GOLD" ? GOLD : k === "GREEN" ? GREEN : TEAL);
@@ -491,13 +490,13 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up across Space & Defence Holdings
+          Where Missing Context Shows Up across a Space & Defence Holding
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
-          The same iceberg, in every persona. <span style={{ color: `hsl(${TEAL})` }}>What is captured is dwarfed by what runs the work.</span>
+          The same iceberg, in every domain. <span style={{ color: `hsl(${TEAL})` }}>And the knowledge that connects them barely exists at all.</span>
         </h2>
         <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          The artifacts above the waterline are what AI sees. The Organizational Intelligence below the waterline is the design intent and code judgment that determines whether the output is usable.
+          Each subsidiary captures specs, standards, and packages above the waterline. The design intent, authority precedent, and engineering judgment below the waterline stays trapped inside that subsidiary, and the cross-domain memory between them is the thinnest layer of all.
         </p>
 
         <div className="grid grid-cols-3 gap-6 flex-1 min-h-0 mb-4">
@@ -580,11 +579,13 @@ function Slide03() {
         </div>
 
         <div className="flex items-center gap-4 px-2">
-          <p className="font-bold shrink-0" style={{ fontSize: 16, color: MUTED }}>Same pattern in:</p>
-          <div className="flex flex-wrap gap-2.5">
-            {alsoApplies.map((item) => (
-              <span key={item} className="rounded-full px-4 py-1.5 font-semibold border" style={{ fontSize: 15, color: MUTED, borderColor: `hsl(215 15% 85%)`, background: `hsl(220 15% 98%)` }}>{item}</span>
-            ))}
+          <div className="w-full rounded-xl border-2 px-5 py-3 flex items-center gap-4"
+            style={{ borderColor: `hsl(${WARM} / 0.30)`, background: `hsl(${WARM} / 0.05)` }}>
+            <AlertTriangle size={18} style={{ color: `hsl(${WARM})`, flexShrink: 0 }} />
+            <p className="font-bold" style={{ fontSize: 15.5, color: TEXT, lineHeight: 1.35 }}>
+              And between the three: <span style={{ color: `hsl(${WARM})` }}>the connective memory is the thinnest layer of all.</span>{' '}
+              <span style={{ color: MUTED, fontWeight: 500 }}>Lessons from a satellite build never reach the next radar programme. Cyber accreditation knowledge does not propagate to the avionics team. Each acquisition becomes a knowledge silo.</span>
+            </p>
           </div>
         </div>
       </div>
@@ -1438,18 +1439,31 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Federated Defence Holding (Active Discussion)",
-      subtitle: "Space & Defence signal",
-      scope: "Multi-subsidiary engineering memory",
+      title: "AEC Engineering Group",
+      subtitle: "Live design partnership",
+      scope: "Multi-discipline engineering memory",
       color: TEAL,
-      outcome: "Live engagement on cross-portfolio engineering context",
-      metric: "Active",
-      metricLabel: "Discussion",
+      outcome: "Project-aware AI grounded in live RFIs and standards",
+      metric: "Live",
+      metricLabel: "Pilot",
       points: [
-        "Federated defence group exploring one context layer across recently acquired engineering subsidiaries",
-        "Direct signal that fragmented chief-engineer judgment is the binding constraint on AI adoption",
+        "One context layer across architects, engineers, and project managers",
+        "Same failure mode as Space & Defence: fragmented senior judgment is the binding constraint on AI adoption",
       ],
       featured: true,
+    },
+    {
+      title: "Regulated Life Sciences (Exploration)",
+      subtitle: "GxP context layer",
+      scope: "Lab governance & QA/QC",
+      color: WARM,
+      outcome: "Mapping deviations, CSRs, and SOP drift into one memory layer",
+      metric: "Scoping",
+      metricLabel: "Engagements",
+      points: [
+        "Active scoping conversations with regulated science directors",
+        "Confirms the pattern travels from buildings, to molecules, to mission systems",
+      ],
     },
     {
       title: "Top-Tier Swiss Executive Search Firm",
@@ -1462,19 +1476,6 @@ function Slide08() {
       points: [
         "Encoded senior partner's C-level candidate evaluation judgment",
         "Maintained senior-level quality with junior staff execution",
-      ],
-    },
-    {
-      title: "Professional Services Consultancy",
-      subtitle: "Multi-team deployment",
-      scope: "Sales, PM & Marketing",
-      color: GOLD,
-      outcome: "75% faster proposal creation",
-      metric: "75%",
-      metricLabel: "Faster",
-      points: [
-        "Codified workflows across sales, project management & marketing",
-        "25% improvement in deal velocity across the team",
       ],
     },
     {
@@ -1500,10 +1501,10 @@ function Slide08() {
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Pattern Proof Across Industries</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
+            The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>Space & Defence is where it goes deepest.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: chief-engineer judgment must be captured, governed, and updated. Space &amp; Defence is where the experience now becomes native.
+            From AEC engineering, to regulated life sciences, to advisory and audit firms, the same loop holds: senior judgment must be captured, governed, and updated. Space &amp; Defence is the natural next vertical: same failure mode, higher stakes, deeper engineering memory.
           </p>
         </div>
 
@@ -1621,7 +1622,7 @@ function Slide09() {
               The missing connective tissue underneath the Defense & Space AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: active discussion with a federated defence holding. Not a commercial integration claim.
+              Proven horizontally across AEC, executive search, and audit. Space &amp; Defence is the next vertical, not a current customer claim.
             </p>
           </div>
         </div>
@@ -2243,26 +2244,26 @@ function SlideContextGapExemplified() {
     {
       n: 1,
       nature: "JUST CHANGED",
-      title: "ICD revision issued last week",
-      body: "The customer issued ICD revision C for the avionics interface two days ago. The qualification plan still references revision B. Tonight's review package will reference the wrong interface.",
+      title: "Spec revision issued last week",
+      body: "The customer issued revision C for the interface two days ago. The test plan still references revision B. Tonight's review package will reference the wrong interface.",
     },
     {
       n: 2,
       nature: "OPEN ISSUE",
-      title: "Unresolved ECR on the harness",
-      body: "The systems engineer raised an ECR on the EMI shielding two weeks ago. No disposition yet. The interface cannot be called qualified until that closes.",
+      title: "Unresolved change request",
+      body: "The systems engineer raised a change request on a related sub-assembly two weeks ago. No disposition yet. The component cannot be called qualified until that closes.",
     },
     {
       n: 3,
       nature: "CONTRADICTION",
       title: "Two margin policies disagree",
-      body: "The Mission Assurance Plan locks one structural margin. The supplier's qualification template assumes another. Both retrievable. Only one is correct for this build standard.",
+      body: "The internal assurance plan locks one structural margin. The supplier's qualification template assumes another. Both retrievable. Only one is correct for this build standard.",
     },
     {
       n: 4,
       nature: "UNWRITTEN RULE",
       title: "Chief engineer never signs this off",
-      body: "On dual-redundant control paths in this product line, the chief engineer always requires a single-event upset rationale in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
+      body: "On dual-redundant control paths in this product line, the chief engineer always requires a fault-tolerance rationale in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
     },
   ];
 
@@ -2295,11 +2296,11 @@ function SlideContextGapExemplified() {
       <div className="relative z-10 flex flex-col h-full px-16 pt-9 pb-7">
         <div className="flex items-end justify-between mb-5">
           <div>
-            <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 18, color: `hsl(${WARM})` }}>
               The Context Gap, exemplified
             </p>
             <h2 className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05 }}>
-              The qualification narrative AI drafted reads cleanly.{' '}
+              The engineering narrative AI drafted reads cleanly.{' '}
               <span style={{ color: `hsl(${WARM})` }}>Every highlighted phrase is wrong.</span>
             </h2>
           </div>
@@ -2323,7 +2324,7 @@ function SlideContextGapExemplified() {
               style={{ borderColor: `hsl(${TEAL} / 0.12)`, background: `hsl(${TEAL} / 0.03)` }}>
               <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
               <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${TEAL})` }}>
-                QR-204 · Section A · Subsystem qualification narrative
+                REV-204 · Section A · Subsystem qualification narrative
               </span>
               <div className="flex items-center gap-2 ml-3 pl-3 border-l" style={{ borderColor: `hsl(${TEAL} / 0.18)` }}>
                 <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
@@ -2339,23 +2340,23 @@ function SlideContextGapExemplified() {
             <div className="px-9 pt-6 pb-3" style={{ borderBottom: `1px dashed hsl(${TEAL} / 0.18)` }}>
               <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
                 <div className="mt-1"><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Project</span>
-                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Programme Falcon · avionics LRU + harness</span>
-                  <span style={{ color: MUTED }}> · airborne · NATO customer</span>
+                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Programme Falcon · electronic control unit + harness</span>
+                  <span style={{ color: MUTED }}> · regulated customer</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Client</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · CDR package</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · design review package</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Audience</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Customer authority · DCMA · chief engineer</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Customer authority · auditor · chief engineer</span>
                 </div>
               </div>
             </div>
 
             <div className="flex-1 px-9 py-7"
               style={{ fontSize: 20, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              <p className="mb-5">The avionics LRU interface is qualified to <Mark n={1}>ICD revision B</Mark> as required by the programme baseline.</p>
-              <p className="mb-5">The shielded harness was analysed using <Mark n={2}>the standard EMI margin model.</Mark></p>
-              <p className="mb-5">Subsystem margins were resolved per <Mark n={3}>the programme's standard margin policy</Mark> in the mission assurance plan.</p>
+              <p className="mb-5">The control unit interface is qualified to <Mark n={1}>specification revision B</Mark> as required by the programme baseline.</p>
+              <p className="mb-5">The harness was analysed using <Mark n={2}>the standard reference margin model.</Mark></p>
+              <p className="mb-5">Subsystem margins were resolved per <Mark n={3}>the programme&apos;s standard margin policy</Mark> in the assurance plan.</p>
               <p style={{ color: MUTED }}><Mark n={4}>Overall, the subsystem is qualified as designed.</Mark></p>
             </div>
 
@@ -2363,7 +2364,7 @@ function SlideContextGapExemplified() {
               style={{ borderTop: `1px solid hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.06)` }}>
               <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
               <p className="font-black" style={{ fontSize: 15, color: TEXT }}>
-                AS9100-grade? No. CDR-blocking. Customer-rejectable. EAC-overrun-trigger.
+                Review-grade? No. Blocks the design review. Customer-rejectable. Cost-overrun trigger.
               </p>
             </div>
           </div>
@@ -2374,7 +2375,7 @@ function SlideContextGapExemplified() {
                 What AI couldn&apos;t see
               </p>
               <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
-                Lives in ICD revisions, ECR threads, chief engineers' heads.
+                Lives in spec revisions, change threads, chief engineers&apos; heads.
               </p>
             </div>
 
@@ -2420,10 +2421,10 @@ function SlideContextGapExemplified() {
                   </p>
                 </div>
                 <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
-                  ICDs. Mission specs. CAD model. Standards references. ECSS/AQAP details.
+                  Specifications. CAD model. Standards references. Compliance handbooks.
                 </p>
                 <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
-                  Indexable. RAG-friendly. Insufficient for a CDR submission.
+                  Indexable. RAG-friendly. Insufficient for a design-review submission.
                 </p>
               </div>
               <div className="rounded-lg px-4 py-3"
@@ -2434,7 +2435,7 @@ function SlideContextGapExemplified() {
                     What closes the gap
                   </p>
                 </div>
-                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live variances, open ECRs, and reviewer conventions and resolves them at issue time." }} />
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live variances, open change requests, and reviewer conventions and resolves them at issue time." }} />
               </div>
             </div>
           </div>
