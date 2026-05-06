@@ -506,13 +506,24 @@ function S07Loop() {
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           One loop, two beneficiaries. Each step does work for the individual researcher today, and leaves a structured asset behind for the lab and the institution.
         </p>
-        <div className="grid grid-cols-4 gap-5 flex-1">
-          {loop.map((s) => {
+        <div className="relative flex-1">
+          {/* Connector spine */}
+          <div className="absolute left-0 right-0 top-[58px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0), hsl(${TEAL} / 0.45) 8%, hsl(${TEAL} / 0.45) 92%, hsl(${TEAL} / 0))` }} />
+          <div className="grid grid-cols-4 gap-5 h-full relative">
+          {loop.map((s, idx) => {
             const Icon = s.Icon;
             return (
-              <div key={s.step} className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 mb-4" style={{ borderColor: `hsl(${TEAL})`, color: `hsl(${TEAL})` }}>
-                  <Icon size={22} />
+              <div key={s.step} className="rounded-2xl border p-6 flex flex-col relative" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 18, boxShadow: `0 4px 12px hsl(${TEAL} / 0.35)` }}>
+                  {idx + 1}
+                </div>
+                {idx < loop.length - 1 && (
+                  <div className="absolute -right-5 top-[58px] z-10 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: BG, color: `hsl(${TEAL})` }}>
+                    <ArrowRight size={22} strokeWidth={3} />
+                  </div>
+                )}
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 mt-4" style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}>
+                  <Icon size={24} />
                 </div>
                 <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{s.step}</p>
                 <p className="mt-1 mb-3 font-bold" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>{s.short}</p>
@@ -527,6 +538,7 @@ function S07Loop() {
               </div>
             );
           })}
+          </div>
         </div>
         <p className="mt-6 text-center" style={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.2em", color: MUTED, textTransform: "uppercase" }}>
           Individual productivity today · Institutional memory tomorrow
