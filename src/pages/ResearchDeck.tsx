@@ -424,36 +424,70 @@ function S06WhyNow() {
 
 function S07Loop() {
   const loop = [
-    { step: "1 · Map", short: "See the field, not a list.", desc: "Ingest the corpus and surface schools, lineages, and disagreements between authors — not a flat bibliography.", Icon: Network },
-    { step: "2 · Anchor", short: "Codify your stance.", desc: "Your assumptions, framework, and prior work become executable context the system reasons against.", Icon: BookOpen },
-    { step: "3 · Augment", short: "Think further, faster.", desc: "Trade-offs, counter-arguments, and gaps surface in dialogue. The researcher stays the author.", Icon: Sparkles },
-    { step: "4 · Compound", short: "Knowledge accumulates.", desc: "Every reading, note, and decision feeds the next project — for the researcher, the lab, and the institution.", Icon: RefreshCw },
+    {
+      step: "1 · Map",
+      short: "See the field, not a list.",
+      researcher: "Drop in your corpus: PDFs, citations, your supervisor's reading list, your own past notes. LIZA OS clusters the literature into schools of thought, surfaces lineages of ideas across decades, and flags where authors actually disagree. The PhD walks into a structured field on day one.",
+      institution: "The lab gets a living map of its domain that any new student inherits. The map is no longer locked in one professor's head.",
+      Icon: Network,
+    },
+    {
+      step: "2 · Anchor",
+      short: "Codify your stance.",
+      researcher: "Your hypothesis, framework, and assumptions become explicit anchors the system reasons against. Every claim is tied to your position, not a generic average of the internet.",
+      institution: "The group's methodology, prior critiques, and standards of evidence are captured as shared anchors that newcomers can read, challenge, and extend.",
+      Icon: BookOpen,
+    },
+    {
+      step: "3 · Augment",
+      short: "Think further, faster.",
+      researcher: "The researcher stays the author. The system surfaces counter-arguments, trade-offs, gaps in their reading, and lineages they have not yet placed. Less time searching and re-summarising. More time judging and writing.",
+      institution: "Cohorts converge on a shared standard for AI-augmented research. The institution can show how AI is used to deepen judgment, not replace it.",
+      Icon: Sparkles,
+    },
+    {
+      step: "4 · Compound",
+      short: "Knowledge accumulates.",
+      researcher: "Every reading, note, and decision feeds back into the map. The researcher's own thinking becomes a structured asset they own across projects, not a folder of dead PDFs.",
+      institution: "Each cohort hands off a richer field map and a deeper judgment log to the next. The lab's reasoning becomes a compounding institutional asset, not something that leaves with each graduate.",
+      Icon: RefreshCw,
+    },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="07" text="HOW IT WORKS" />
-        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          One loop, two beneficiaries. Each step does work for the individual researcher today, and leaves a structured asset behind for the lab and the institution.
+        </p>
         <div className="grid grid-cols-4 gap-5 flex-1">
           {loop.map((s) => {
             const Icon = s.Icon;
             return (
-              <div key={s.step} className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
-                <div className="w-16 h-16 rounded-full flex items-center justify-center border-2 mb-5" style={{ borderColor: `hsl(${TEAL})`, color: `hsl(${TEAL})` }}>
-                  <Icon size={30} />
+              <div key={s.step} className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 mb-4" style={{ borderColor: `hsl(${TEAL})`, color: `hsl(${TEAL})` }}>
+                  <Icon size={22} />
                 </div>
-                <p className="font-black" style={{ fontSize: 26, color: TEXT }}>{s.step}</p>
-                <p className="mt-2 mb-3 font-bold" style={{ fontSize: 20, color: `hsl(${TEAL})` }}>{s.short}</p>
-                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>{s.desc}</p>
+                <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{s.step}</p>
+                <p className="mt-1 mb-3 font-bold" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>{s.short}</p>
+                <div className="rounded-lg p-3 mb-3" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.18)` }}>
+                  <p className="mb-1" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>For the researcher</p>
+                  <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.45 }}>{s.researcher}</p>
+                </div>
+                <div className="rounded-lg p-3" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+                  <p className="mb-1" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: SUBTLE, textTransform: "uppercase" }}>For the institution</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>{s.institution}</p>
+                </div>
               </div>
             );
           })}
         </div>
-        <p className="mt-8 text-center" style={{ fontSize: 18, fontWeight: 700, letterSpacing: "0.2em", color: MUTED, textTransform: "uppercase" }}>
-          Each project leaves the next researcher smarter
+        <p className="mt-6 text-center" style={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.2em", color: MUTED, textTransform: "uppercase" }}>
+          Individual productivity today · Institutional memory tomorrow
         </p>
       </div>
       <SlideBar />
