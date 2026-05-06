@@ -98,15 +98,15 @@ function Slide01() {
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Project Memory Layer<br />
+          The Engineering Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Defense & Space.
+            for 4iG Space &amp; Defence.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns project standards, decisions, and expert judgment into the operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · 4iG SDT Beachhead</span>
+          One context layer across Space, Aero, Land Systems, Weapons &amp; Ammunition, and Cyber &amp; Defence Digitalisation. Capture chief-engineer judgment from every acquisition. Enforce NATO AQAP, ISO 9001, ISO 27001, and ECSS as executable standards.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Strategic Round + Partnership · 4iG SDT Federation Beachhead</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
