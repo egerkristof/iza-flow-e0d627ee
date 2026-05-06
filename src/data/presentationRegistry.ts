@@ -20,6 +20,7 @@ import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
 import SpaceDefenseHoldingsDeck from "@/pages/SpaceDefenseHoldingsDeck";
 import SpaceDefenseHoldingsBrief from "@/pages/SpaceDefenseHoldingsBrief";
 import ResearchBrief from "@/pages/ResearchBrief";
+import ResearchDeck from "@/pages/ResearchDeck";
 
 export type PresentationRoute = {
   id: string;
@@ -111,6 +112,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/ResearchBrief.tsx",
     description: "Responsive 2-minute brief positioning LIZA OS as a Research Memory Layer for PhDs, early-career researchers, and faculty. Reframes literature review as field-mapping (hierarchies and relations between schools, lineages, authors), grounded in relational theory of knowledge (Polanyi, Nonaka/SECI, Csíkszentmihályi flow, neuroscience of social cognition). Augmentation, not automation. Two-door CTA: 30-day pilot inside one research group, or sponsor relationship to co-define the academic standard.",
     component: ResearchBrief,
+    showInAdmin: true,
+  },
+  {
+    id: "research-deck",
+    title: "Research Concept Deck (Universities & Research Groups)",
+    path: "/research-deck",
+    sourcePath: "src/pages/ResearchDeck.tsx",
+    description: "Full concept deck behind the /research-brief page. 15 slides: personas (PhD, ECR, PI, faculty), the iceberg gap (review vs. field), three-path framing (manual / generative / Research Memory Layer), thesis (relational knowledge, augmentation, flow), competitive landscape (Elicit, Consensus, Scite, ChatGPT/Claude, Zotero/Mendeley, Research Rabbit, Obsidian), 4-layer architecture, SECI as product, Joint Vision (group not solo), semester-long cohort pilot, outcomes, two-door CTA (cohort partner / institutional sponsor).",
+    component: ResearchDeck,
     showInAdmin: true,
   },
   {
