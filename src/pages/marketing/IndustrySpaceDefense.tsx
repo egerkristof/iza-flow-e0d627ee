@@ -120,7 +120,7 @@ export default function IndustryDefensePortfolioPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/investor-space-defense"
+              to="/space-defense-holdings"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -128,7 +128,7 @@ export default function IndustryDefensePortfolioPage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              View the investor deck <ArrowRight className="w-4 h-4" />
+              View the customer + investor deck <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href={CAL_URL}
@@ -319,7 +319,7 @@ export default function IndustryDefensePortfolioPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/investor-space-defense"
+              to="/space-defense-holdings"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -327,7 +327,7 @@ export default function IndustryDefensePortfolioPage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              View the investor deck <ArrowRight className="w-4 h-4" />
+              View the customer + investor deck <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href={CAL_URL}
