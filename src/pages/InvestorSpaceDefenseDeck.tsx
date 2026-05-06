@@ -229,33 +229,33 @@ function Slide02() {
     {
       "title": "Design Intent & Engineering Judgment",
       "items": [
-        "Why this detail, not the catalog one",
-        "Senior PE rule-of-thumb on this assembly",
-        "Trade-offs already settled in DDs"
+        "Why this margin, not the handbook one",
+        "Chief engineer rule-of-thumb on this subsystem",
+        "Trade-offs already settled at PDR"
       ]
     },
     {
-      "title": "Code & Authority Memory",
+      "title": "Standards & Certifying-Authority Memory",
       "items": [
-        "AHJ interpretations on this jurisdiction",
-        "Prior plan-review comments and conditions",
-        "Building-official precedent on edge cases"
+        "NATO / national authority interpretations on this program",
+        "Prior qualification findings and conditions",
+        "Customer / DCMA precedent on edge cases"
       ]
     },
     {
-      "title": "Constructibility & Field Practice",
+      "title": "Producibility & Test Practice",
       "items": [
-        "Subcontractor-specific tolerances",
-        "Sequencing learned from last project",
-        "ECR patterns from similar typologies"
+        "Subcontractor-specific build tolerances",
+        "Integration sequencing learned from the last article",
+        "ECR / NCR patterns from similar platforms"
       ]
     },
     {
       "title": "Cross-Discipline Decisions",
       "items": [
-        "Coordination calls not yet redlined",
-        "Owner sign-offs and rationale",
-        "Live change-order and budget posture"
+        "ICD calls not yet redlined",
+        "Customer sign-offs and rationale",
+        "Live ECP and budget posture"
       ]
     }
   ];
@@ -383,47 +383,47 @@ const SDT_GAP_CASES = [
     cost: "Rework. Schedule slip. Margin loss.",
   },
   {
-    name: "Architecture / Engineering",
+    name: "Engineering Authority",
     icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["Design intent", "Code references", "Spec sections"],
-    output: "Drawing reviews · Spec markups",
-    gap: "AI gives a textbook-compliant answer, but not the project-specific interpretation already aligned with the AHJ or principal-in-charge.",
-    cost: "Liability exposure. Redesign cycles.",
+    records: ["Design intent", "Standards references (AS9100 / ECSS / AQAP)", "ICD sections"],
+    output: "Design reviews · ICD markups",
+    gap: "AI gives a textbook-compliant answer, but not the programme-specific interpretation already aligned with the certifying authority or chief engineer.",
+    cost: "Non-conformance exposure. Redesign cycles.",
   },
   {
-    name: "Owner / Developer",
+    name: "Customer / Programme Office",
     icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
     accent: GOLD,
-    records: ["Standards", "As-builts", "O&M manuals"],
-    output: "Closeout packages · Handover docs",
-    gap: "AI summarizes documents, but misses owner overrides, field changes, and standards that never became one queryable memory layer.",
-    cost: "Operational risk. Warranty disputes.",
+    records: ["Customer standards", "As-built configuration", "ILS / sustainment manuals"],
+    output: "Acceptance packages · Sustainment docs",
+    gap: "AI summarises documents, but misses customer overrides, integration changes, and standards that never became one queryable memory layer.",
+    cost: "Operational risk. Warranty and LCC disputes.",
   },
 ];
 
 const SDT_COST_BENCHMARKS = [
   {
     value: "$177.5B",
-    label: "estimated annual labor cost impact in the global defense engineering industry from rework, conflict resolution, and searching for project data",
-    source: "FMI / PlanGrid, Engineering Disconnected, U.S., 2018",
+    label: "estimated annual labour cost impact across global defence & aerospace engineering from rework, NCR resolution, and searching for programme data",
+    source: "Industry benchmark, defence & aerospace engineering",
   },
   {
     value: "14+ hrs",
-    label: "lost per worker per week on non-optimal activities, including about 4 hours tied specifically to rework",
-    source: "FMI / PlanGrid, U.S., 2018",
+    label: "lost per engineer per week on non-value activities, including ~4 hours tied specifically to rework",
+    source: "Industry benchmark, defence & aerospace engineering",
   },
   {
     value: "5–15%",
-    label: "common rework range cited across industry benchmarks, depending on project complexity and delivery conditions",
-    source: "CII / McKinsey / industry benchmark range",
+    label: "common rework range across complex programmes, depending on platform complexity and integration conditions",
+    source: "McKinsey / industry benchmark range",
   },
 ];
 
 const __VERTICAL_PERSONAS = [
   {
-    "id": "gc",
-    "name": "General Contractor",
+    "id": "prime",
+    "name": "Prime / System Integrator",
     "color": "RED",
     "iconName": "Briefcase",
     "above": [
@@ -433,50 +433,50 @@ const __VERTICAL_PERSONAS = [
       "ICDs"
     ],
     "below": [
-      "Subcontractor tolerances on this trade",
-      "Sequencing rationale from the last similar job",
-      "Field-edit patterns the foreman never wrote down"
+      "Subcontractor tolerances on this build",
+      "Integration rationale from the last similar program",
+      "Test-floor workarounds the lead tech never wrote down"
     ],
-    "breaks": "Rework. Schedule slip. Margin loss."
+    "breaks": "Rework. Milestone slip. EAC erosion."
   },
   {
-    "id": "ae",
-    "name": "Architecture / Engineering",
+    "id": "engineering",
+    "name": "Engineering Authority",
     "color": "WARM",
     "iconName": "Shield",
     "above": [
       "Design intent",
-      "Code references",
-      "Spec sections"
+      "Standards references (AS9100, ECSS, AQAP)",
+      "ICD sections"
     ],
     "below": [
-      "AHJ interpretation on this jurisdiction",
-      "Why this detail, not the catalog one",
-      "Senior PE judgment on this assembly"
+      "Certifying-authority interpretation on this program",
+      "Why this margin, not the handbook one",
+      "Chief engineer judgment on this subsystem"
     ],
-    "breaks": "Liability exposure. Redesign cycles."
+    "breaks": "Non-conformance exposure. Redesign cycles."
   },
   {
-    "id": "owner",
-    "name": "Owner / Developer",
+    "id": "customer",
+    "name": "Customer / Programme Office",
     "color": "GOLD",
     "iconName": "Database",
     "above": [
-      "Standards",
-      "As-builts",
-      "O&M manuals"
+      "Customer standards",
+      "As-built configuration",
+      "ILS / sustainment manuals"
     ],
     "below": [
-      "Owner standards exceptions and rationale",
-      "Warranty patterns from the prior asset",
-      "Operator preferences not in the brief"
+      "Customer standards exceptions and rationale",
+      "Reliability patterns from the prior platform",
+      "Operator preferences not in the requirements"
     ],
-    "breaks": "Operational risk. Warranty disputes."
+    "breaks": "Operational risk. Warranty and LCC disputes."
   }
 ] as const;
 
 function Slide03() {
-  const alsoApplies = ["Cost estimation","Procurement","MEP coordination","Permitting","Commissioning","Facilities & ops"];
+  const alsoApplies = ["Bid & estimation","Procurement","Subsystem integration","Qualification","Acceptance","Sustainment & ILS"];
   const renderIcon = (name: string, color: string) => {
     const props = { size: 20, style: { color: `hsl(${color})` } };
     if (name === "Briefcase") return <Briefcase {...props} />;
@@ -612,10 +612,10 @@ function Slide04Cost() {
               of rework is tied to poor project data and miscommunication
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest addendum, field decision, owner standard, or design interpretation.
+              This is the part AI can amplify if it runs without the latest ICD revision, ECR disposition, customer standard, or engineering interpretation.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              FMI / PlanGrid, Engineering Disconnected, global defense engineering industry, 2018
+              IDC / industry benchmark, defence & aerospace engineering, 2023
             </p>
           </div>
 
@@ -635,10 +635,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an ECR, design review, qualification, or handover workflow <span className="font-bold">without the full project context</span>, the team still has to catch it, correct it, and reissue it.
+                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the full programme context</span>, the team still has to catch it, correct it, and reissue it.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€50M project</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream delay.
+                On a <span className="font-bold" style={{ color: TEXT }}>€50M programme</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream milestone delay.
               </p>
             </div>
           </div>
@@ -918,11 +918,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
-    { name: "Aero Division / Newforma", layer: "ECR & Markup", color: BLUE },
-    { name: "Catia / Siemens NX", layer: "Design / BIM", color: BLUE },
-    { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
-    { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
+    { name: "Jira / Polarion / DOORS", layer: "Requirements & PLM", color: BLUE },
+    { name: "Teamcenter / Windchill", layer: "Configuration & ECR", color: BLUE },
+    { name: "Catia / NX / Creo", layer: "Design / MBSE", color: BLUE },
+    { name: "ANSYS / Simulink", layer: "Analysis & Simulation", color: BLUE },
+    { name: "SAP / IFS", layer: "Programme & ERP", color: BLUE },
   ];
 
   return (
@@ -1109,16 +1109,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
-    { name: "Palantir Foundry / Helix", funding: "Public", round: "Public · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
-    { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Aero Division (Space & Defence Holdings)", funding: "Strategic", round: "Space & Defence Holdings portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
+    { name: "Palantir Foundry / Helix", funding: "Public", round: "Public · 2024", what: "Operational data ontology & risk insights. Reads programme data, doesn't encode chief-engineer judgment.", color: SEAFOAM },
+    { name: "Siemens Xcelerator AI", funding: "Public", round: "Siemens DI · 2024", what: "PLM-embedded copilots inside Teamcenter / NX. Strong workflow position, no governed standards layer across acquisitions.", color: BLUE },
+    { name: "Anduril Lattice / Helsing", funding: "$1.5B+ / €450M", round: "Late stage · 2024", what: "Mission autonomy stacks. Operate downstream of engineering memory, not on it.", color: GREEN },
+    { name: "Scale AI · Donovan", funding: "Public", round: "Defense AI · 2024", what: "LLM workflows on top of mission data. Strong on operations, not on programme & qualification memory.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every Defense & Space AI tool will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Project Memory", desc: "ECR precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Space & Defence Holdings ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, standards-aware injection, drift detection. The plumbing every Defence & Space AI stack will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Programme Memory", desc: "ECR precedent, ICD revisions, customer standards, qualification interpretations — graph deepens programme-by-programme. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Federated Conglomerate Distribution", desc: "Designed for multi-subsidiary defence & space holdings. One context layer across acquired engineering memory, not per-tool integration.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -1162,11 +1162,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read drawings and contracts.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
+              Others read documents and predict risk.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your engineering authority decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every Defense & Space AI stack will need: spec amendments, ECR precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into Defense & Space.
+              The instruction layer every Defence & Space AI stack will need: ICD revisions, ECR precedent, qualification interpretations, customer standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into Defence & Space.
             </p>
           </div>
         </div>
@@ -1178,9 +1178,9 @@ function Slide06() {
             <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>Market Size</p>
             <div className="flex flex-col gap-2.5">
               {[
-                { label: "TAM", value: "$16.4B", desc: "Defense engineering software by 2033" },
-                { label: "SAM", value: "$3-4B", desc: "AI control layer across project execution, review, compliance" },
-                { label: "SOM", value: "$250-300M", desc: "EU/NA enterprise wedge: GCs, A/E firms, owners" },
+                { label: "TAM", value: "$16.4B", desc: "Defence engineering software by 2033" },
+                { label: "SAM", value: "$3-4B", desc: "AI control layer across programme execution, qualification, compliance" },
+                { label: "SOM", value: "$250-300M", desc: "EU/NATO enterprise wedge: primes, system integrators, customer programme offices" },
               ].map(({ label, value, desc }) => (
                 <div key={label} className="rounded-xl px-5 py-2.5" style={{ background: `hsl(${TEAL} / 0.1)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
                   <div className="flex items-baseline gap-3 mb-0.5">
@@ -1192,7 +1192,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Grand View Research, Defense Engineering Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, Defense PLM, 2025-2030: $15B+ by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
+              Sources: Grand View Research, Defense Engineering Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, Defense PLM, 2025-2030: $15B+ by 2030. SAM/SOM are LIZA OS estimates based on the programme execution, qualification, and governance layer inside these markets.
             </p>
           </div>
 
@@ -1570,35 +1570,35 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Pre-Program", status: "Wedge", color: GREEN,
+      vertical: "Bid & Capture", status: "Wedge", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
-      result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
-      proof: "Adjacent to Standards Capture & Handoff (Space & Defence Holdings portfolio)",
+      problem: "Capture teams redo proposal volumes because requirements and prior bids don't propagate. AI drafts from generic data, not your win-themes.",
+      result: "Requirement-aware capture. Bid memory across programmes. Faster, sharper, more compliant proposals.",
+      proof: "Adjacent to Standards Capture & Handoff across Space & Defence Holdings",
     },
     {
       vertical: "Mission Execution", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "ECRs, qualification packages, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
-      result: "Unified ECR & qualification lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
-      proof: "Target embedding path across Aero, Space, Land Systems, and Solibri workflows",
+      problem: "ECRs, qualification packages, and integration decisions live in disconnected tools. AI can't reason across them. Programme memory dies between phases.",
+      result: "Unified ECR & qualification lifecycle. Every AI response grounded in this programme's ICDs, revisions, and prior dispositions.",
+      proof: "Target embedding path across Space, Aero, Land Systems, Weapons & Cyber subsidiaries",
     },
     {
-      vertical: "Handover & Operations", status: "Expansion", color: GOLD,
+      vertical: "Sustainment & ILS", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "Closeout packages and as-builts diverge from owner standards. O&M knowledge evaporates after handover. Operators inherit fragmented data.",
-      result: "Standards-aware closeout. Living O&M memory. Owner-grade handover artifacts, every time.",
-      proof: "Owner / FM extension path once workflow integrations are in market",
+      problem: "As-built configurations diverge from customer standards. Sustainment knowledge evaporates after acceptance. Operators inherit fragmented data.",
+      result: "Standards-aware acceptance. Living ILS memory. Customer-grade sustainment artifacts, every time.",
+      proof: "Operator / depot extension path once engineering integrations are in market",
     },
   ];
 
   const expandInto = [
-    { name: "Mission systems integration & interface review", col: TEAL },
-    { name: "Spec & code compliance", col: "215 25% 50%" },
-    { name: "Cost estimating & change orders", col: GOLD },
-    { name: "Safety & QA/QC inspections", col: GREEN },
-    { name: "Subcontractor management", col: ACCENT },
-    { name: "Facility management & lifecycle", col: "330 70% 55%" },
+    { name: "Systems integration & ICD review", col: TEAL },
+    { name: "Standards & qualification compliance", col: "215 25% 50%" },
+    { name: "Cost estimating & ECPs", col: GOLD },
+    { name: "Safety, mission assurance & QA/QC", col: GREEN },
+    { name: "Supplier & subcontractor management", col: ACCENT },
+    { name: "Sustainment, ILS & lifecycle", col: "330 70% 55%" },
   ];
 
   return (
@@ -1975,11 +1975,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "GC or A/E selects one high-value workflow (e.g. ECR response, submittal review, spec compliance)",
-        "Platform guides structured capture from 2-3 senior PMs / principals",
-        "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
+        "Subsidiary engineering lead selects one high-value workflow (e.g. ECR response, qualification review, ICD compliance)",
+        "Platform guides structured capture from 2-3 chief engineers / programme leads",
+        "LIZA auto-generates programme-aware playbooks grounded in the programme's ICDs & revisions",
       ],
-      output: "3-5 project-aware playbooks ready",
+      output: "3-5 programme-aware playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1987,11 +1987,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Project team self-serves: run playbooks against live ECRs, qualification packages, and standards questions",
-        "Real projects, real owners, real deliverables",
+        "Programme team self-serves: run playbooks against live ECRs, qualification packages, and standards questions",
+        "Real programmes, real customers, real deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior PM vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: chief engineer vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1999,11 +1999,11 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per ECR, rework avoided, schedule risk reduced",
-        "Project memory self-improves from every execution",
-        "Business case for firm-wide rollout with real project numbers",
+        "Automated review: hours saved per ECR, rework avoided, milestone risk reduced",
+        "Programme memory self-improves from every execution",
+        "Business case for portfolio-wide rollout with real programme numbers",
       ],
-      output: "ROI proven. Expansion decision with data.",
+      output: "ROI proven. Portfolio expansion decision with data.",
     },
   ];
 
@@ -2243,26 +2243,26 @@ function SlideContextGapExemplified() {
     {
       n: 1,
       nature: "JUST CHANGED",
-      title: "Code variance issued last week",
-      body: "The local AHJ approved a Type IV-B variance for the podium two days ago. The specification still references the original Type II-A. Tonight's plot set will print the wrong rating.",
+      title: "ICD revision issued last week",
+      body: "The customer issued ICD revision C for the avionics interface two days ago. The qualification plan still references revision B. Tonight's review package will reference the wrong interface.",
     },
     {
       n: 2,
       nature: "OPEN ISSUE",
-      title: "Unresolved ECR on the connection",
-      body: "Structural engineer raised an ECR on the curtain-wall back-pan two weeks ago. No response yet. The connection cannot be called 'standard' until that closes.",
+      title: "Unresolved ECR on the harness",
+      body: "The systems engineer raised an ECR on the EMI shielding two weeks ago. No disposition yet. The interface cannot be called qualified until that closes.",
     },
     {
       n: 3,
       nature: "CONTRADICTION",
-      title: "Two clash rule sets disagree",
-      body: "The Mission Assurance Plan locks one tolerance. The QS team's takeoff template assumes another. Both retrievable. Only one is correct for this trade package.",
+      title: "Two margin policies disagree",
+      body: "The Mission Assurance Plan locks one structural margin. The supplier's qualification template assumes another. Both retrievable. Only one is correct for this build standard.",
     },
     {
       n: 4,
       nature: "UNWRITTEN RULE",
-      title: "Senior architect never signs this off",
-      body: "On podium-to-tower transitions in this practice, lead architects always require a thermal-bridge callout in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
+      title: "Chief engineer never signs this off",
+      body: "On dual-redundant control paths in this product line, the chief engineer always requires a single-event upset rationale in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
     },
   ];
 
@@ -2299,7 +2299,7 @@ function SlideContextGapExemplified() {
               The Context Gap, exemplified
             </p>
             <h2 className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05 }}>
-              The enclosure narrative AI drafted reads cleanly.{' '}
+              The qualification narrative AI drafted reads cleanly.{' '}
               <span style={{ color: `hsl(${WARM})` }}>Every highlighted phrase is wrong.</span>
             </h2>
           </div>
@@ -2323,7 +2323,7 @@ function SlideContextGapExemplified() {
               style={{ borderColor: `hsl(${TEAL} / 0.12)`, background: `hsl(${TEAL} / 0.03)` }}>
               <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
               <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${TEAL})` }}>
-                DD-204 · Section A · Building enclosure narrative
+                QR-204 · Section A · Subsystem qualification narrative
               </span>
               <div className="flex items-center gap-2 ml-3 pl-3 border-l" style={{ borderColor: `hsl(${TEAL} / 0.18)` }}>
                 <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
@@ -2332,38 +2332,38 @@ function SlideContextGapExemplified() {
                 </span>
               </div>
               <span className="ml-auto font-mono" style={{ fontSize: 10.5, color: MUTED }}>
-                DD-Set · cycle current
+                QR-Set · cycle current
               </span>
             </div>
 
             <div className="px-9 pt-6 pb-3" style={{ borderBottom: `1px dashed hsl(${TEAL} / 0.18)` }}>
               <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
                 <div className="mt-1"><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Project</span>
-                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Atrium Tower · podium + 18 floors</span>
-                  <span style={{ color: MUTED }}> · mixed-use · CBD</span>
+                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Programme Falcon · avionics LRU + harness</span>
+                  <span style={{ color: MUTED }}> · airborne · NATO customer</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Client</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · DD package</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · CDR package</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Audience</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Local code authority · QS · structural engineer</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Customer authority · DCMA · chief engineer</span>
                 </div>
               </div>
             </div>
 
             <div className="flex-1 px-9 py-7"
               style={{ fontSize: 20, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              <p className="mb-5">The exterior wall assembly is detailed for <Mark n={1}>Type IV-B fire rating</Mark> as required by the project specification.</p>
-              <p className="mb-5">The curtain-wall connections were modelled using <Mark n={2}>the standard parametric family.</Mark>.</p>
-              <p className="mb-5">Coordination clashes were resolved per <Mark n={3}>the project's standard clash-resolution rules</Mark> in the mission assurance plan.</p>
-              <p style={{ color: MUTED }}><Mark n={4}>Overall, the enclosure is constructible as drawn.</Mark></p>
+              <p className="mb-5">The avionics LRU interface is qualified to <Mark n={1}>ICD revision B</Mark> as required by the programme baseline.</p>
+              <p className="mb-5">The shielded harness was analysed using <Mark n={2}>the standard EMI margin model.</Mark></p>
+              <p className="mb-5">Subsystem margins were resolved per <Mark n={3}>the programme's standard margin policy</Mark> in the mission assurance plan.</p>
+              <p style={{ color: MUTED }}><Mark n={4}>Overall, the subsystem is qualified as designed.</Mark></p>
             </div>
 
             <div className="px-9 py-3.5 flex items-center gap-3"
               style={{ borderTop: `1px solid hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.06)` }}>
               <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
               <p className="font-black" style={{ fontSize: 15, color: TEXT }}>
-                GxP-formatted? No. Issue-blocking. Reviewer-rejectable. Cost-overrun-trigger.
+                AS9100-grade? No. CDR-blocking. Customer-rejectable. EAC-overrun-trigger.
               </p>
             </div>
           </div>
@@ -2374,7 +2374,7 @@ function SlideContextGapExemplified() {
                 What AI couldn&apos;t see
               </p>
               <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
-                Lives in variance letters, ECR threads, reviewers' heads.
+                Lives in ICD revisions, ECR threads, chief engineers' heads.
               </p>
             </div>
 
@@ -2423,7 +2423,7 @@ function SlideContextGapExemplified() {
                   ICDs. Mission specs. CAD model. Standards references. ECSS/AQAP details.
                 </p>
                 <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
-                  Indexable. RAG-friendly. Insufficient for an AHJ submission.
+                  Indexable. RAG-friendly. Insufficient for a CDR submission.
                 </p>
               </div>
               <div className="rounded-lg px-4 py-3"
@@ -2451,11 +2451,11 @@ function SlideContextGapExemplified() {
 
 function SlidePeopleAsNodes() {
   const team = [
-    { name: "Eva", role: "Architect" },
-    { name: "Raj", role: "Structural" },
-    { name: "Maria", role: "MEP" },
-    { name: "Anna", role: "QS" },
-    { name: "Tom", role: "Project Mgr" },
+    { name: "Eva", role: "Systems Eng" },
+    { name: "Raj", role: "Mechanical" },
+    { name: "Maria", role: "Avionics" },
+    { name: "Anna", role: "Mission Assurance" },
+    { name: "Tom", role: "Programme Mgr" },
   ];
   const cx = 200, cy = 200, r = 130;
   const positions = team.map((p, i) => {
@@ -2506,7 +2506,7 @@ function SlidePeopleAsNodes() {
             </div>
             <div className="px-5 pt-5">
               <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>
-                Mission specs and drawings define what. Architects, engineers and reviewers define how.
+                Mission specs and drawings define what. Chief engineers, systems engineers and reviewers define how.
               </p>
               <p className="font-semibold mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
                 Documents are versioned. Judgment is not. Nothing scales and AI inherits none of it.
@@ -2631,7 +2631,7 @@ function SlidePeopleAsNodes() {
                 <circle cx="200" cy="200" r="180" fill="url(#aec-contextField)" />
 
                 {(() => {
-                  const edgeLabels: Record<string, string> = {"0-1":"constructibility","0-2":"service routing","2-3":"takeoff alignment","2-4":"issue sequencing"};
+                  const edgeLabels: Record<string, string> = {"0-1":"interface margin","0-2":"harness routing","2-3":"qualification alignment","2-4":"integration sequencing"};
                   return edges.map((e, i) => {
                     const key = `${e.a}-${e.b}`;
                     const label = edgeLabels[key];
@@ -2714,32 +2714,32 @@ function SlideOrgIntelligence() {
     {
       icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Senior Design Judgment",
-      body: "How experienced architects, engineers and PMs actually decide: which clash matters, when to redesign vs. waive, when 'constructible' is acceptable. Today: trapped in heads.",
+      body: "How experienced chief engineers, systems engineers and programme managers actually decide: which non-conformance matters, when to redesign vs. waive, when 'qualified-as-built' is acceptable. Today: trapped in heads.",
     },
     {
       icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Project & Client Memory",
-      body: "How this project is run: prior client commitments, contractor pain points, what was promised in the last design review, who owns each open ECR.",
+      title: "Programme & Customer Memory",
+      body: "How this programme is run: prior customer commitments, supplier pain points, what was promised at the last design review, who owns each open ECR.",
     },
     {
       icon: <RefreshCw size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Changing Codes & Standards",
-      body: "Code variances, IBC updates, manufacturer revisions, in-house detail libraries. Context that drifted last week and rewrote the right answer for today's set.",
+      title: "Changing Standards & Authorities",
+      body: "AQAP / AS9100 / ECSS revisions, ITAR rulings, supplier qualifications, in-house engineering standards. Context that drifted last week and rewrote the right answer for today's review.",
     },
     {
       icon: <Target size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Program & Phase Strategy",
-      body: "What leadership decided this phase, what is now in scope, which trades sequence first, which value-engineering decisions are locked. Most AI never gets told.",
+      body: "What leadership decided this phase, what is now in scope, which subsystems integrate first, which design-to-cost decisions are locked. Most AI never gets told.",
     },
     {
       icon: <Globe size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Authority & External Signals",
-      body: "AHJ feedback, consultant reviews, client steerco notes, contractor ECRs, supplier lead-time alerts. Facts from outside the firm the team must react to.",
+      body: "Customer authority feedback, DCMA findings, programme steerco notes, supplier ECRs, long-lead component alerts. Facts from outside the firm the team must react to.",
     },
     {
       icon: <GitBranch size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Decisions & Exceptions",
-      body: "Sign-off thresholds, open ECRs, contract-specific clauses, the rules that override the rules. The connective tissue between standards and reality.",
+      body: "Sign-off thresholds, open ECRs, programme-specific clauses, the rules that override the rules. The connective tissue between standards and reality.",
     },
   ];
 
@@ -2830,7 +2830,7 @@ function SlideOrgIntelligence() {
         <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
           style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "This substrate looks different in podium-and-tower than in airports than in healthcare. <strong>Which is why execution has to be sub-vertical.</strong>" }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "This substrate looks different in space than in airborne than in land systems. <strong>Which is why execution has to be sub-vertical.</strong>" }} />
         </div>
       </div>
       <SlideBar from={TEAL} to={GREEN} />
