@@ -557,6 +557,7 @@ function S08Landscape() {
       missing: "A map of the field",
       gap: "Returns ranked papers and one-line summaries. Treats the literature as a list, not as schools, lineages, and disagreements between authors.",
       liza: "Resolves the same corpus into a structured field map the researcher can navigate, challenge, and extend.",
+      caps: [1, 0, 0, 0, 0],
     },
     {
       name: "ChatGPT / Claude / Gemini",
@@ -564,6 +565,7 @@ function S08Landscape() {
       missing: "The researcher's own judgment",
       gap: "Generates fluent prose from the average of the internet. No memory of the lab, the prior cohort, or the open debates. Speed at the cost of the researcher's voice.",
       liza: "Augments the researcher's own thinking inside their map. Every claim stays attributable to the researcher, not the model.",
+      caps: [0, 0, 0, 0, 0],
     },
     {
       name: "Zotero / Mendeley / Notion",
@@ -571,6 +573,7 @@ function S08Landscape() {
       missing: "Reasoning over the artifacts",
       gap: "Stores PDFs, citations, and notes as files in folders. Does not reason about the relations between them or surface contradictions.",
       liza: "Treats every artifact as a node in a living map. Relations, lineages, and contradictions become first-class.",
+      caps: [0, 0, 0, 0, 0],
     },
     {
       name: "Research Rabbit / Connected Papers",
@@ -578,6 +581,7 @@ function S08Landscape() {
       missing: "Tacit disagreement and judgment",
       gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what the lab's own stance is.",
       liza: "Captures the why-not-this decisions and the lab's own judgment, alongside the citation structure.",
+      caps: [1, 0, 0, 0, 0],
     },
     {
       name: "Obsidian / Roam",
@@ -585,8 +589,10 @@ function S08Landscape() {
       missing: "Cohort scale and portability",
       gap: "The closest in spirit: they actually do build knowledge graphs of how a researcher connects ideas. Two structural limits: solo by design (one user's vault, no cohort or lab layer), and locked to the tool. The graph cannot be lifted out and reused elsewhere.",
       liza: "Cohort-first and portable by default. The researcher's graph is exportable and the system is LLM-agnostic, so the way you connect ideas travels with you, with no lock-in to LIZA OS or to any single model.",
+      caps: [1, 1, 0, 0, 0],
     },
   ];
+  const capCols = ["Field map", "Researcher graph", "Cohort layer", "Judgment log", "Portable / LLM-agnostic"];
   return (
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
@@ -595,24 +601,50 @@ function S08Landscape() {
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
           Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, or the lab.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+        <p className="mb-4" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           For each category, one core thing is missing. That missing thing is what LIZA OS is built around.
         </p>
-        <div className="flex-1 grid grid-cols-1 gap-2.5">
+        {/* Capability matrix */}
+        <div className="rounded-xl border mb-4 overflow-hidden" style={{ borderColor: CHROME_BORDER, background: BG }}>
+          <div className="grid grid-cols-12 gap-3 px-5 py-3" style={{ background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+            <p className="col-span-3" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: SUBTLE, textTransform: "uppercase" }}>Capability coverage</p>
+            {capCols.map(c => (
+              <p key={c} className="col-span-1 text-center" style={{ fontSize: 11, fontWeight: 800, color: SUBTLE, lineHeight: 1.2 }}>{c}</p>
+            ))}
+            <p className="col-span-4 text-right" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>● = present  ○ = absent</p>
+          </div>
           {tools.map(t => (
-            <div key={t.name} className="rounded-xl border p-4 grid grid-cols-12 gap-5 items-stretch" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div key={t.name} className="grid grid-cols-12 gap-3 px-5 py-2.5 items-center border-b last:border-b-0" style={{ borderColor: CHROME_BORDER }}>
+              <p className="col-span-3" style={{ fontSize: 13, color: TEXT, fontWeight: 700 }}>{t.name}</p>
+              {t.caps.map((v, i) => (
+                <div key={i} className="col-span-1 flex justify-center">
+                  <div className="w-3.5 h-3.5 rounded-full" style={{ background: v ? `hsl(${TEAL})` : "transparent", border: v ? "none" : `1.5px solid hsl(${SUBTLE} / 0.5)` }} />
+                </div>
+              ))}
+              <p className="col-span-4 text-right" style={{ fontSize: 12, color: MUTED, fontStyle: "italic" }}>missing: {t.missing}</p>
+            </div>
+          ))}
+          <div className="grid grid-cols-12 gap-3 px-5 py-3 items-center" style={{ background: `hsl(${TEAL} / 0.07)`, borderTop: `2px solid hsl(${TEAL} / 0.4)` }}>
+            <p className="col-span-3 font-black" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>LIZA OS</p>
+            {[1,1,1,1,1].map((_, i) => (
+              <div key={i} className="col-span-1 flex justify-center">
+                <div className="w-4 h-4 rounded-full" style={{ background: `hsl(${TEAL})`, boxShadow: `0 0 0 3px hsl(${TEAL} / 0.18)` }} />
+              </div>
+            ))}
+            <p className="col-span-4 text-right font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.05em" }}>The full stack, by design</p>
+          </div>
+        </div>
+        <div className="flex-1 grid grid-cols-1 gap-2">
+          {tools.map(t => (
+            <div key={t.name} className="rounded-xl border p-3 grid grid-cols-12 gap-5 items-stretch" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
               <div className="col-span-3 flex flex-col justify-center">
-                <p className="font-black" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>{t.name}</p>
+                <p className="font-black" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{t.name}</p>
                 <p className="mt-1" style={{ fontSize: 13, fontWeight: 700, color: SUBTLE, letterSpacing: "0.05em" }}>{t.role}</p>
               </div>
-              <div className="col-span-3 flex flex-col justify-center pl-4 border-l" style={{ borderColor: `hsl(${RED} / 0.3)` }}>
-                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${RED})`, textTransform: "uppercase" }}>Core thing missing</p>
-                <p className="mt-1 font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{t.missing}</p>
-              </div>
-              <p className="col-span-3 flex items-center" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{t.gap}</p>
-              <div className="col-span-3 rounded-lg p-3 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>What LIZA OS adds</p>
-                <p className="mt-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{t.liza}</p>
+              <p className="col-span-5 flex items-center" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{t.gap}</p>
+              <div className="col-span-4 rounded-lg px-3 py-2 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>What LIZA OS adds</p>
+                <p className="mt-0.5" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{t.liza}</p>
               </div>
             </div>
           ))}
