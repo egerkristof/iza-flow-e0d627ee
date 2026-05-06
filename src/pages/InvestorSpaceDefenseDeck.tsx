@@ -918,11 +918,11 @@ function Slide05() {
 
 function SlideArchitecture() {
   const existingSystems = [
-    { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
-    { name: "Aero Division / Newforma", layer: "ECR & Markup", color: BLUE },
-    { name: "Catia / Siemens NX", layer: "Design / BIM", color: BLUE },
-    { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
-    { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
+    { name: "Jira / Polarion / DOORS", layer: "Requirements & PLM", color: BLUE },
+    { name: "Teamcenter / Windchill", layer: "Configuration & ECR", color: BLUE },
+    { name: "Catia / NX / Creo", layer: "Design / MBSE", color: BLUE },
+    { name: "ANSYS / Simulink", layer: "Analysis & Simulation", color: BLUE },
+    { name: "SAP / IFS", layer: "Programme & ERP", color: BLUE },
   ];
 
   return (
