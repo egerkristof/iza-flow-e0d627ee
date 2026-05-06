@@ -528,9 +528,9 @@ function S08Landscape() {
     {
       name: "Obsidian / Roam",
       role: "Personal knowledge graphs",
-      missing: "A shared cohort memory",
-      gap: "Solo by design. The graph lives in one user's vault. When the PhD finishes, the knowledge leaves with them.",
-      liza: "Built around the cohort and the lab. Each researcher's reasoning compounds into a shared institutional asset.",
+      missing: "Cohort scale and portability",
+      gap: "The closest in spirit: they actually do build knowledge graphs of how a researcher connects ideas. Two structural limits: solo by design (one user's vault, no cohort or lab layer), and locked to the tool. The graph cannot be lifted out and reused elsewhere.",
+      liza: "Cohort-first and portable by default. The researcher's graph is exportable and the system is LLM-agnostic, so the way you connect ideas travels with you, with no lock-in to LIZA OS or to any single model.",
     },
   ];
   return (
