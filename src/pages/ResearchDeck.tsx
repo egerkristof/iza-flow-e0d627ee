@@ -373,25 +373,46 @@ function S05Thesis() {
 
 function S06WhyNow() {
   const stats = [
-    { stat: "6–12 mo", label: "Lost to literature review", source: "Cochrane / PRISMA guidance" },
-    { stat: "30%+", label: "Of the field never read", source: "Meta-research on review coverage" },
-    { stat: "1 in 2", label: "Researchers hollowed out by automation", source: "HBR, 2025 · AI and knowledge work" },
+    {
+      stat: "67 wks",
+      label: "Average time to complete a systematic review",
+      context: "Mean of 67.3 weeks from registration to publication, across 195 reviews registered in PROSPERO. Roughly 15 months of researcher time per review, before any new thinking begins.",
+      source: "Borah, Brown, Capers & Kaiser. BMJ Open, 2017. Analysis of the time and workers needed to conduct systematic reviews using PROSPERO data.",
+    },
+    {
+      stat: "~30%",
+      label: "Of researchers already use generative AI in their writing",
+      context: "In a Nature survey of more than 1,600 scientists, around a third reported using generative AI tools to help write manuscripts, refine text, or summarise the literature. Adoption is happening with no shared standard for how the field gets mapped.",
+      source: "Van Noorden & Perkel. Nature, 2023. AI and science: what 1,600 researchers think (n = 1,600+).",
+    },
+    {
+      stat: "12%",
+      label: "Of scientific papers receive zero citations five years after publication",
+      context: "A large-scale Web of Science study finds roughly 12% of articles remain uncited five years on, with the share much higher in several fields. The corpus is growing faster than any cohort can read it, let alone map it.",
+      source: "Hovden et al. Scientometrics, 2019. Zero impact: a large-scale study of uncitedness (Web of Science corpus).",
+    },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="06" text="WHY NOW" />
-        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           The cost of doing nothing <span style={{ color: `hsl(${TEAL})` }}>is already paid — every day.</span>
         </h2>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          Three numbers, three sources. Each describes a structural pressure on research today: time lost, AI used without a standard, and a literature growing faster than it can be read.
+        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {stats.map(s => (
-            <div key={s.label} className="rounded-2xl border p-10 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-              <p className="font-black leading-none tracking-tight" style={{ fontSize: 110, color: `hsl(${TEAL})` }}>{s.stat}</p>
-              <p className="mt-6" style={{ fontSize: 22, fontWeight: 800, letterSpacing: "0.12em", color: TEXT, textTransform: "uppercase" }}>{s.label}</p>
+            <div key={s.label} className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <p className="font-black leading-none tracking-tight" style={{ fontSize: 88, color: `hsl(${TEAL})` }}>{s.stat}</p>
+              <p className="mt-4 mb-3" style={{ fontSize: 17, fontWeight: 800, letterSpacing: "0.08em", color: TEXT, textTransform: "uppercase", lineHeight: 1.25 }}>{s.label}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{s.context}</p>
               <div className="flex-1" />
-              <p style={{ fontSize: 16, color: SUBTLE, fontStyle: "italic" }}>Source: {s.source}</p>
+              <div className="mt-4 pt-3 border-t" style={{ borderColor: CHROME_BORDER }}>
+                <p style={{ fontSize: 12, color: SUBTLE, fontStyle: "italic", lineHeight: 1.45 }}>Source: {s.source}</p>
+              </div>
             </div>
           ))}
         </div>
