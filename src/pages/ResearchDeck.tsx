@@ -804,18 +804,39 @@ function S12Pilot() {
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
           We co-build the Research Memory Layer with one PhD cohort or one research group as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
         </p>
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {[
-            { tag: "Weeks 1–4", title: "Map the field", body: "Ingest the group's corpus. Surface schools, lineages, disagreements. Researcher reviews and corrects." },
-            { tag: "Weeks 5–10", title: "Anchor & augment", body: "Researcher's stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time." },
-            { tag: "Weeks 11–16", title: "Compound & hand off", body: "The map and judgment log become the cohort's shared memory. Next student starts from there." },
-          ].map(p => (
-            <div key={p.tag} className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
-              <p style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{p.tag}</p>
-              <p className="font-black mt-3 mb-4" style={{ fontSize: 28, color: TEXT }}>{p.title}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-            </div>
-          ))}
+        <div className="relative flex-1 flex flex-col justify-center">
+          {/* Week ruler */}
+          <div className="relative h-2 rounded-full mb-2 mx-6" style={{ background: `hsl(${TEAL} / 0.12)` }}>
+            <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: "100%", background: `linear-gradient(90deg, hsl(${TEAL}), hsl(${MINT}))` }} />
+            {[0, 25, 62.5, 100].map((pct, i) => (
+              <div key={i} className="absolute -top-1 w-4 h-4 rounded-full" style={{ left: `calc(${pct}% - 8px)`, background: BG, border: `3px solid hsl(${TEAL})` }} />
+            ))}
+          </div>
+          <div className="flex justify-between mx-3 mb-10" style={{ fontSize: 12, fontWeight: 700, color: SUBTLE, letterSpacing: "0.18em" }}>
+            <span>WEEK 1</span><span>WEEK 4</span><span>WEEK 10</span><span>WEEK 16</span>
+          </div>
+          <div className="grid grid-cols-3 gap-6">
+            {[
+              { tag: "Weeks 1–4", title: "Map the field", body: "Ingest the group's corpus. Surface schools, lineages, disagreements. Researcher reviews and corrects.", deliverable: "Living field map (v1)" },
+              { tag: "Weeks 5–10", title: "Anchor & augment", body: "Researcher's stance and judgments captured. Dialogues run inside the map. Counter-arguments surface in real time.", deliverable: "Judgment log + augmented dialogue" },
+              { tag: "Weeks 11–16", title: "Compound & hand off", body: "The map and judgment log become the cohort's shared memory. Next student starts from there.", deliverable: "Cohort handoff package" },
+            ].map((p, i) => (
+              <div key={p.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: BG }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-black" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 18 }}>{i + 1}</div>
+                  <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>{p.tag}</p>
+                </div>
+                <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT }}>{p.title}</p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
+                <div className="mt-auto pt-5">
+                  <div className="rounded-lg px-3 py-2 inline-flex items-center gap-2" style={{ background: `hsl(${TEAL} / 0.1)` }}>
+                    <Check size={14} color={`hsl(${TEAL})`} strokeWidth={3} />
+                    <p style={{ fontSize: 13, fontWeight: 700, color: `hsl(${TEAL})` }}>{p.deliverable}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar />
