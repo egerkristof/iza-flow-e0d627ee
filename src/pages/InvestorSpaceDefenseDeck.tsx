@@ -229,33 +229,33 @@ function Slide02() {
     {
       "title": "Design Intent & Engineering Judgment",
       "items": [
-        "Why this detail, not the catalog one",
-        "Senior PE rule-of-thumb on this assembly",
-        "Trade-offs already settled in DDs"
+        "Why this margin, not the handbook one",
+        "Chief engineer rule-of-thumb on this subsystem",
+        "Trade-offs already settled at PDR"
       ]
     },
     {
-      "title": "Code & Authority Memory",
+      "title": "Standards & Certifying-Authority Memory",
       "items": [
-        "AHJ interpretations on this jurisdiction",
-        "Prior plan-review comments and conditions",
-        "Building-official precedent on edge cases"
+        "NATO / national authority interpretations on this program",
+        "Prior qualification findings and conditions",
+        "Customer / DCMA precedent on edge cases"
       ]
     },
     {
-      "title": "Constructibility & Field Practice",
+      "title": "Producibility & Test Practice",
       "items": [
-        "Subcontractor-specific tolerances",
-        "Sequencing learned from last project",
-        "ECR patterns from similar typologies"
+        "Subcontractor-specific build tolerances",
+        "Integration sequencing learned from the last article",
+        "ECR / NCR patterns from similar platforms"
       ]
     },
     {
       "title": "Cross-Discipline Decisions",
       "items": [
-        "Coordination calls not yet redlined",
-        "Owner sign-offs and rationale",
-        "Live change-order and budget posture"
+        "ICD calls not yet redlined",
+        "Customer sign-offs and rationale",
+        "Live ECP and budget posture"
       ]
     }
   ];
