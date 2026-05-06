@@ -102,17 +102,17 @@ const ADJACENT_VERTICALS = [
   },
 ];
 
-export default function IndustrySpacePage() {
+export default function IndustryDefensePortfolioPage() {
   return (
     <MarketingLayout>
       {/* Hero */}
       <section className="pt-16 pb-14 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <SectionTag label="Space Engineering & Mission Operations" icon={<Rocket className="w-3.5 h-3.5" />} />
+          <SectionTag label="Defense Portfolio · Federation Memory Layer" icon={<Rocket className="w-3.5 h-3.5" />} />
           <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-[1.1]">
-            The Mission Memory Layer for
+            The Federation Memory Layer for
             <br />
-            <span className="text-primary">AI-Native Space Programs.</span>
+            <span className="text-primary">4iG Space & Defence.</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-8">
             Mission heritage is walking out the door. AI is making it worse, not better. LIZA codifies the
@@ -120,7 +120,7 @@ export default function IndustrySpacePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/space"
+              to="/investor-4ig-sdt"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -128,7 +128,7 @@ export default function IndustrySpacePage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              View the full deck <ArrowRight className="w-4 h-4" />
+              View the investor deck <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href={CAL_URL}
@@ -319,7 +319,7 @@ export default function IndustrySpacePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/space"
+              to="/investor-4ig-sdt"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -327,7 +327,7 @@ export default function IndustrySpacePage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              View the full deck <ArrowRight className="w-4 h-4" />
+              View the investor deck <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href={CAL_URL}
