@@ -2631,7 +2631,7 @@ function SlidePeopleAsNodes() {
                 <circle cx="200" cy="200" r="180" fill="url(#aec-contextField)" />
 
                 {(() => {
-                  const edgeLabels: Record<string, string> = {"0-1":"constructibility","0-2":"service routing","2-3":"takeoff alignment","2-4":"issue sequencing"};
+                  const edgeLabels: Record<string, string> = {"0-1":"interface margin","0-2":"harness routing","2-3":"qualification alignment","2-4":"integration sequencing"};
                   return edges.map((e, i) => {
                     const key = `${e.a}-${e.b}`;
                     const label = edgeLabels[key];
@@ -2830,7 +2830,7 @@ function SlideOrgIntelligence() {
         <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
           style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "This substrate looks different in podium-and-tower than in airports than in healthcare. <strong>Which is why execution has to be sub-vertical.</strong>" }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "This substrate looks different in space than in airborne than in land systems. <strong>Which is why execution has to be sub-vertical.</strong>" }} />
         </div>
       </div>
       <SlideBar from={TEAL} to={GREEN} />
