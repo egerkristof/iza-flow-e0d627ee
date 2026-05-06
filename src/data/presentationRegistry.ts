@@ -20,6 +20,7 @@ import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
 import SpaceDefenseHoldingsDeck from "@/pages/SpaceDefenseHoldingsDeck";
 import SpaceDefenseHoldingsBrief from "@/pages/SpaceDefenseHoldingsBrief";
 import ResearchBrief from "@/pages/ResearchBrief";
+import ResearchDeck from "@/pages/ResearchDeck";
 
 export type PresentationRoute = {
   id: string;
