@@ -711,28 +711,75 @@ function S12Pilot() {
 }
 
 function S13Outcomes() {
-  const k = [
-    { v: "−60%", l: "Time to a credible field map", d: "From 6–12 months of solo review to 6–10 weeks of group dialogue inside the map." },
-    { v: "+3×", l: "Deep-work hours returned", d: "Measured against baseline. Time the researcher actually spends thinking, not time spent searching and re-summarising." },
-    { v: "1", l: "Compounding cohort memory", d: "First semester where the next PhD inherits the previous cohort's judgment, not just their files." },
+  const tiers = [
+    {
+      tag: "FOR THE INDIVIDUAL",
+      headline: "The researcher",
+      bullets: [
+        "Walks into a structured field map on day one instead of 6 to 12 months of solo PDF reading.",
+        "Spends more hours judging, writing, and forming a position. Less hours searching and re-summarising.",
+        "Stays the author of every claim. No model voice in the thesis.",
+        "Owns a portable graph of how they connect ideas. It travels with them after the PhD.",
+      ],
+    },
+    {
+      tag: "FOR THE TEAM",
+      headline: "The cohort and lab",
+      bullets: [
+        "Shared field map and judgment log that every member can read, challenge, and extend.",
+        "Disagreements between authors and prior critiques are visible, not stuck in one professor's head.",
+        "New students reach productive contribution in weeks, not in their second year.",
+        "The group converges on a shared standard for how AI is used in their research.",
+      ],
+    },
+    {
+      tag: "FOR THE INSTITUTION",
+      headline: "The faculty and university",
+      bullets: [
+        "An institutional standard for AI-augmented research that protects the formation of judgment.",
+        "Cohort-to-cohort knowledge stops leaving with each graduate. The lab's reasoning becomes a compounding asset.",
+        "A defensible position on what good academic AI use looks like, with the artefacts to show it.",
+        "No vendor or model lock-in. Field maps and judgment logs are exportable. The system is LLM-agnostic.",
+      ],
+    },
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="13" text="OUTCOMES" />
-        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          What changes <span style={{ color: `hsl(${TEAL})` }}>after one semester.</span>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+          What changes, <span style={{ color: `hsl(${TEAL})` }}>at three levels.</span>
         </h2>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          These are the working assumptions we hold today. The semester pilot is how we validate or revise each one with a real cohort.
+        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
-          {k.map(s => (
-            <div key={s.l} className="rounded-2xl border p-10 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-              <p className="font-black leading-none" style={{ fontSize: 110, color: `hsl(${TEAL})` }}>{s.v}</p>
-              <p className="mt-6" style={{ fontSize: 22, fontWeight: 800, letterSpacing: "0.1em", color: TEXT, textTransform: "uppercase" }}>{s.l}</p>
-              <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{s.d}</p>
+          {tiers.map((t, idx) => (
+            <div
+              key={t.tag}
+              className="rounded-2xl border-2 p-7 flex flex-col"
+              style={{
+                borderColor: idx === 2 ? `hsl(${TEAL} / 0.5)` : CHROME_BORDER,
+                background: idx === 2 ? `hsl(${TEAL} / 0.05)` : CARD_ALT,
+              }}
+            >
+              <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{t.tag}</p>
+              <p className="mt-2 mb-5 font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{t.headline}</p>
+              <ul className="space-y-3">
+                {t.bullets.map((b, i) => (
+                  <li key={i} className="flex gap-3" style={{ fontSize: 15, color: TEXT, lineHeight: 1.5 }}>
+                    <span style={{ color: `hsl(${TEAL})`, fontWeight: 800, flexShrink: 0 }}>›</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
+        <p className="mt-5 text-center" style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.2em", color: SUBTLE, textTransform: "uppercase" }}>
+          Working assumptions · To be validated by the semester pilot
+        </p>
       </div>
       <SlideBar />
     </div>
