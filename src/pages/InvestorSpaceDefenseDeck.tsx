@@ -612,10 +612,10 @@ function Slide04Cost() {
               of rework is tied to poor project data and miscommunication
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest addendum, field decision, owner standard, or design interpretation.
+              This is the part AI can amplify if it runs without the latest ICD revision, ECR disposition, customer standard, or engineering interpretation.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              FMI / PlanGrid, Engineering Disconnected, global defense engineering industry, 2018
+              IDC / industry benchmark, defence & aerospace engineering, 2023
             </p>
           </div>
 
