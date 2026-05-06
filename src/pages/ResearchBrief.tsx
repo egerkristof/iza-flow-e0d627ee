@@ -29,7 +29,6 @@ import BriefIceberg from "@/components/marketing/BriefIceberg";
  */
 
 const TEAL = "174 97% 28%";
-const MINT = "160 96% 39%";
 
 const verticalProblems = [
   {
