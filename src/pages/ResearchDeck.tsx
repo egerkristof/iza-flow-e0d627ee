@@ -156,15 +156,12 @@ function S01Cover() {
             LIZA OS · Research Memory Layer · Concept Deck
           </span>
         </div>
-        <h1 className="font-black mb-6" style={{ fontSize: 84, lineHeight: 1.04, color: TEXT }}>
+        <h1 className="font-black mb-10" style={{ fontSize: 96, lineHeight: 1.04, color: TEXT }}>
           Obsidian was the benchmark.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Now reason inside the map.
           </span>
         </h1>
-        <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          A research memory layer for the individual researcher. Obsidian and Roam already prove the appetite: thousands of researchers building knowledge graphs by hand. We pick up where they stop. <span style={{ color: `hsl(${TEAL})` }}>Structured field, on day one. AI that reasons over it, not around it.</span>
-        </p>
         <p style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.18em" }}>
           BUILT FOR THE INDIVIDUAL · OPTIONAL FOR THE LAB
         </p>
@@ -210,12 +207,9 @@ function S02WhoBreaks() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="02" text="FOUR MOMENTS IN ONE PHD" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           The same researcher. <span style={{ color: `hsl(${TEAL})` }}>Four places today's tools quietly break.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          One individual researcher across a PhD. Obsidian solved the canvas. AI assistants solved retrieval. Neither solved the structure of the field, the structure of disagreement, or the structure of judgment.
-        </p>
         <div className="grid grid-cols-2 gap-5 flex-1">
           {personas.map(p => {
             const Icon = p.Icon;
@@ -264,18 +258,14 @@ function S03Iceberg() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="03" text="OUR HONEST BENCHMARK" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Obsidian is the benchmark. <span style={{ color: `hsl(${TEAL})` }}>Three structural things it does not do.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Obsidian, with Smart Connections, Copilot, and Zotero plugins, is the closest tool in spirit to what we are building. A serious researcher gets to roughly 70 percent of the individual experience inside it. We say that openly. The remaining 30 percent is structural, and it is the entire reason LIZA OS exists.
-        </p>
         <div className="grid grid-cols-12 gap-6 flex-1">
           <div className="col-span-4 rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${AMBER} / 0.45)`, background: `hsl(${AMBER} / 0.04)` }}>
             <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${AMBER})` }}>BENCHMARK</p>
             <p className="font-black mt-3 mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>Obsidian + plugins</p>
-            <p className="mb-5" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>The serious individual researcher\'s stack today. Free, local, portable, vibrant plugin ecosystem.</p>
-            <ul className="space-y-3 mb-5">
+            <ul className="space-y-3 mb-5 mt-4">
               {obsidian.map(o => (
                 <li key={o} className="flex gap-3 items-start" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
                   <Check size={16} color={`hsl(${AMBER})`} strokeWidth={3} className="mt-1 flex-shrink-0" />
@@ -328,12 +318,9 @@ function S04ThirdPath() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="04" text="HEAD TO HEAD" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Where Obsidian stops. <span style={{ color: `hsl(${TEAL})` }}>Where LIZA OS picks up.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Seven capabilities a serious individual researcher actually needs. The first four are well covered by today\'s tools. The last three are not, and they are the structure of what good research thinking actually looks like.
-        </p>
         <div className="rounded-2xl border-2 overflow-hidden flex-1 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
           {/* header */}
           <div className="grid grid-cols-12 px-7 py-5" style={{ background: CARD_ALT, borderBottom: `2px solid ${CHROME_BORDER}` }}>
@@ -380,12 +367,9 @@ function S05Thesis() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="05" text="THE THESIS" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Three commitments. <span style={{ color: `hsl(${TEAL})` }}>One worldview.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Built around the individual researcher. The product is downstream of one conviction: the structure of the field comes first, and the researcher stays the author of every claim.
-        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {items.map(i => {
             const Icon = i.Icon;
@@ -432,12 +416,9 @@ function S06WhyNow() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="06" text="WHY NOW" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           The cost of doing nothing <span style={{ color: `hsl(${TEAL})` }}>is already paid — every day.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Three numbers, three sources. Each describes a structural pressure on research today: time lost, AI used without a standard, and a literature growing faster than it can be read.
-        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {stats.map(s => (
             <div key={s.label} className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
@@ -489,12 +470,9 @@ function S07Loop() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="07" text="HOW IT WORKS" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          One loop. One researcher. Each step compounds the next: a structured field, your stance against it, AI reasoning inside it, and a portable asset that grows with every reading.
-        </p>
         <div className="relative flex-1">
           {/* Connector spine */}
           <div className="absolute left-0 right-0 top-[58px] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${TEAL} / 0), hsl(${TEAL} / 0.45) 8%, hsl(${TEAL} / 0.45) 92%, hsl(${TEAL} / 0))` }} />
@@ -529,104 +507,84 @@ function S07Loop() {
 }
 
 function S08Landscape() {
+  // 0 = absent, 1 = partial, 2 = present
   const tools = [
-    {
-      name: "Elicit / Consensus / Scite",
-      role: "Search + summarisation",
-      missing: "A map of the field",
-      gap: "Returns ranked papers and one-line summaries. Treats the literature as a list, not as schools, lineages, and disagreements between authors.",
-      liza: "Resolves the same corpus into a structured field map the researcher can navigate, challenge, and extend.",
-      caps: [1, 0, 0, 0, 0],
-    },
-    {
-      name: "ChatGPT / Claude / Gemini",
-      role: "General writing assistants",
-      missing: "The researcher's own judgment",
-      gap: "Generates fluent prose from the average of the internet. No memory of your prior reading, your stance, or the open debates in the field. Speed at the cost of the researcher's voice.",
-      liza: "Augments the researcher's own thinking inside their map. Every claim stays attributable to the researcher, not the model.",
-      caps: [0, 0, 0, 0, 0],
-    },
-    {
-      name: "Zotero / Mendeley / Notion",
-      role: "Reference and note managers",
-      missing: "Reasoning over the artifacts",
-      gap: "Stores PDFs, citations, and notes as files in folders. Does not reason about the relations between them or surface contradictions.",
-      liza: "Treats every artifact as a node in a living map. Relations, lineages, and contradictions become first-class.",
-      caps: [0, 0, 0, 0, 0],
-    },
-    {
-      name: "Research Rabbit / Connected Papers",
-      role: "Citation graphs",
-      missing: "Tacit disagreement and judgment",
-      gap: "Maps who cited whom. Cannot see why authors disagree, which decisions a school rejected, or what your own stance is.",
-      liza: "Captures the why-not-this decisions and the researcher's own judgment, alongside the citation structure.",
-      caps: [1, 0, 0, 0, 0],
-    },
-    {
-      name: "Obsidian / Roam",
-      role: "Personal knowledge graphs",
-      missing: "Structure and reasoning",
-      gap: "The closest tool in spirit. Real knowledge graphs of how a researcher connects ideas. Two structural limits: a blank canvas with no typed primitives for the field, and AI plugins that retrieve text by similarity rather than reason over the structure of the field.",
-      liza: "Typed primitives (school, stance, rebuttal, supersession) on day one. AI that reasons over the structured field, not around it. Portable and LLM-agnostic by default.",
-      caps: [1, 1, 0, 0, 1],
-    },
+    { name: "ChatGPT / Claude / Gemini",         role: "General writing assistants", caps: [0, 0, 2, 0, 0, 0, 0] },
+    { name: "Elicit / Consensus / Scite",        role: "Search and summarisation",   caps: [1, 0, 1, 0, 0, 0, 0] },
+    { name: "Zotero / Mendeley",                 role: "Reference managers",         caps: [0, 0, 0, 0, 0, 0, 2] },
+    { name: "Notion / Evernote",                 role: "Note managers",              caps: [0, 1, 0, 0, 0, 0, 0] },
+    { name: "Research Rabbit / Connected Papers",role: "Citation graphs",            caps: [1, 1, 0, 0, 0, 0, 1] },
+    { name: "Obsidian / Roam",                   role: "Personal knowledge graphs",  caps: [1, 2, 1, 0, 0, 1, 2] },
   ];
-  const capCols = ["Field map", "Researcher graph", "Typed primitives", "Judgment log", "Portable / LLM-agnostic"];
+  const capCols = [
+    "Field map of the corpus",
+    "Personal knowledge graph",
+    "AI assistance",
+    "Typed primitives (school, stance, rebuttal)",
+    "AI reasons over the structure",
+    "Captures judgment & why-not-this",
+    "Portable / LLM-agnostic",
+  ];
+  const Dot = ({ v, hero }: { v: number; hero?: boolean }) => {
+    const tone = hero ? TEAL : (v ? TEAL : SUBTLE);
+    if (v === 2) return <div className="rounded-full mx-auto" style={{ width: hero ? 22 : 18, height: hero ? 22 : 18, background: `hsl(${tone})`, boxShadow: hero ? `0 0 0 5px hsl(${TEAL} / 0.2)` : undefined }} />;
+    if (v === 1) return <div className="rounded-full mx-auto" style={{ width: 18, height: 18, background: `hsl(${tone} / 0.35)`, border: `2px solid hsl(${tone} / 0.7)` }} />;
+    return <div className="rounded-full mx-auto" style={{ width: 18, height: 18, border: `2px solid hsl(${SUBTLE} / 0.45)` }} />;
+  };
   return (
-    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
+    <div className="w-full h-full relative px-20 py-14" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="08" text="THE LANDSCAPE" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
-          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>None hold the field, the judgment, and the researcher together.</span>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>One stack holds them together.</span>
         </h2>
-        <p className="mb-4" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          For each category, one core thing is missing. That missing thing is what LIZA OS is built around.
-        </p>
-        {/* Capability matrix */}
-        <div className="rounded-xl border mb-4 overflow-hidden" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <div className="grid grid-cols-12 gap-3 px-5 py-3" style={{ background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
-            <p className="col-span-3" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: SUBTLE, textTransform: "uppercase" }}>Capability coverage</p>
+        {/* One large capability matrix */}
+        <div className="rounded-2xl border-2 overflow-hidden flex-1 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
+          {/* Header row */}
+          <div className="grid items-end px-7 pt-6 pb-4" style={{ gridTemplateColumns: `360px repeat(${capCols.length}, 1fr)`, background: CARD_ALT, borderBottom: `2px solid ${CHROME_BORDER}` }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE, textTransform: "uppercase" }}>Tool</p>
             {capCols.map(c => (
-              <p key={c} className="col-span-1 text-center" style={{ fontSize: 11, fontWeight: 800, color: SUBTLE, lineHeight: 1.2 }}>{c}</p>
+              <p key={c} className="text-center px-2" style={{ fontSize: 13, fontWeight: 800, color: TEXT, lineHeight: 1.25 }}>{c}</p>
             ))}
-            <p className="col-span-4 text-right" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>● = present  ○ = absent</p>
           </div>
-          {tools.map(t => (
-            <div key={t.name} className="grid grid-cols-12 gap-3 px-5 py-2.5 items-center border-b last:border-b-0" style={{ borderColor: CHROME_BORDER }}>
-              <p className="col-span-3" style={{ fontSize: 13, color: TEXT, fontWeight: 700 }}>{t.name}</p>
-              {t.caps.map((v, i) => (
-                <div key={i} className="col-span-1 flex justify-center">
-                  <div className="w-3.5 h-3.5 rounded-full" style={{ background: v ? `hsl(${TEAL})` : "transparent", border: v ? "none" : `1.5px solid hsl(${SUBTLE} / 0.5)` }} />
+          {/* Tool rows */}
+          <div className="flex-1 flex flex-col">
+            {tools.map((t, idx) => (
+              <div key={t.name} className="grid items-center px-7 flex-1" style={{ gridTemplateColumns: `360px repeat(${capCols.length}, 1fr)`, borderBottom: idx < tools.length - 1 ? `1px solid ${CHROME_BORDER}` : "none" }}>
+                <div>
+                  <p style={{ fontSize: 18, color: TEXT, fontWeight: 800, lineHeight: 1.15 }}>{t.name}</p>
+                  <p className="mt-1" style={{ fontSize: 13, color: SUBTLE, fontWeight: 600, letterSpacing: "0.04em" }}>{t.role}</p>
+                </div>
+                {t.caps.map((v, i) => (
+                  <div key={i} className="flex justify-center"><Dot v={v} /></div>
+                ))}
+              </div>
+            ))}
+            {/* LIZA OS hero row with continuous line */}
+            <div className="grid items-center px-7 relative" style={{ gridTemplateColumns: `360px repeat(${capCols.length}, 1fr)`, background: `hsl(${TEAL} / 0.08)`, borderTop: `3px solid hsl(${TEAL})`, minHeight: 100 }}>
+              <div>
+                <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})`, letterSpacing: "0.04em" }}>LIZA OS</p>
+                <p className="mt-1" style={{ fontSize: 13, color: `hsl(${TEAL} / 0.85)`, fontWeight: 700, letterSpacing: "0.04em" }}>The full stack, by design</p>
+              </div>
+              {/* Continuous bar across all cap columns */}
+              <div className="absolute" style={{ left: 388, right: 28, top: "50%", transform: "translateY(-50%)", height: 14, borderRadius: 999, background: `linear-gradient(90deg, hsl(${TEAL}), hsl(${MINT}))`, boxShadow: `0 0 0 6px hsl(${TEAL} / 0.15)` }} />
+              {capCols.map((_, i) => (
+                <div key={i} className="flex justify-center relative z-10">
+                  <div className="rounded-full" style={{ width: 22, height: 22, background: BG, border: `4px solid hsl(${TEAL})`, boxShadow: `0 2px 8px hsl(${TEAL} / 0.4)` }} />
                 </div>
               ))}
-              <p className="col-span-4 text-right" style={{ fontSize: 12, color: MUTED, fontStyle: "italic" }}>missing: {t.missing}</p>
             </div>
-          ))}
-          <div className="grid grid-cols-12 gap-3 px-5 py-3 items-center" style={{ background: `hsl(${TEAL} / 0.07)`, borderTop: `2px solid hsl(${TEAL} / 0.4)` }}>
-            <p className="col-span-3 font-black" style={{ fontSize: 14, color: `hsl(${TEAL})` }}>LIZA OS</p>
-            {[1,1,1,1,1].map((_, i) => (
-              <div key={i} className="col-span-1 flex justify-center">
-                <div className="w-4 h-4 rounded-full" style={{ background: `hsl(${TEAL})`, boxShadow: `0 0 0 3px hsl(${TEAL} / 0.18)` }} />
-              </div>
-            ))}
-            <p className="col-span-4 text-right font-bold" style={{ fontSize: 12, color: `hsl(${TEAL})`, letterSpacing: "0.05em" }}>The full stack, by design</p>
           </div>
-        </div>
-        <div className="flex-1 grid grid-cols-1 gap-2">
-          {tools.map(t => (
-            <div key={t.name} className="rounded-xl border p-3 grid grid-cols-12 gap-5 items-stretch" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-              <div className="col-span-3 flex flex-col justify-center">
-                <p className="font-black" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{t.name}</p>
-                <p className="mt-1" style={{ fontSize: 13, fontWeight: 700, color: SUBTLE, letterSpacing: "0.05em" }}>{t.role}</p>
-              </div>
-              <p className="col-span-5 flex items-center" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{t.gap}</p>
-              <div className="col-span-4 rounded-lg px-3 py-2 flex flex-col justify-center" style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-                <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>What LIZA OS adds</p>
-                <p className="mt-0.5" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{t.liza}</p>
-              </div>
+          {/* Legend */}
+          <div className="flex items-center justify-between px-7 py-3" style={{ background: CARD_ALT, borderTop: `1px solid ${CHROME_BORDER}` }}>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full" style={{ background: `hsl(${TEAL})` }} /><span style={{ fontSize: 12, color: SUBTLE, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Present</span></div>
+              <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full" style={{ background: `hsl(${TEAL} / 0.35)`, border: `2px solid hsl(${TEAL} / 0.7)` }} /><span style={{ fontSize: 12, color: SUBTLE, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Partial</span></div>
+              <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full" style={{ border: `2px solid hsl(${SUBTLE} / 0.5)` }} /><span style={{ fontSize: 12, color: SUBTLE, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Absent</span></div>
             </div>
-          ))}
+            <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})`, letterSpacing: "0.05em" }}>Three columns on the right are the structural deltas</p>
+          </div>
         </div>
       </div>
       <SlideBar />
@@ -646,12 +604,9 @@ function S09Architecture() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="09" text="ARCHITECTURE" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, structure, researcher, reasoning. Each compounding into the next.
-        </p>
         <div className="flex-1 flex gap-10 items-stretch">
           {/* Stacked layers */}
           <div className="flex-1 flex flex-col gap-3">
@@ -693,12 +648,9 @@ function S12Pilot() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="10" text="DESIGN PARTNER" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           One researcher. One field. <span style={{ color: `hsl(${TEAL})` }}>One semester.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We co-build the Research Memory Layer with a single researcher as design partner. Not a 30-day trial — a semester-long cycle that produces a usable field map, a judgment log, and a measurable return of deep-work hours.
-        </p>
         <div className="relative flex-1 flex flex-col justify-center">
           {/* Week ruler */}
           <div className="relative h-2 rounded-full mb-2 mx-6" style={{ background: `hsl(${TEAL} / 0.12)` }}>
@@ -777,12 +729,9 @@ function S13Outcomes() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="11" text="OUTCOMES" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
           What changes <span style={{ color: `hsl(${TEAL})` }}>for the researcher.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Three moments in one PhD. These are the working assumptions we hold today. The semester pilot is how we validate or revise each one with a real researcher.
-        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {tiers.map((t, idx) => (
             <div
