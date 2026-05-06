@@ -2506,7 +2506,7 @@ function SlidePeopleAsNodes() {
             </div>
             <div className="px-5 pt-5">
               <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>
-                Mission specs and drawings define what. Architects, engineers and reviewers define how.
+                Mission specs and drawings define what. Chief engineers, systems engineers and reviewers define how.
               </p>
               <p className="font-semibold mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
                 Documents are versioned. Judgment is not. Nothing scales and AI inherits none of it.
