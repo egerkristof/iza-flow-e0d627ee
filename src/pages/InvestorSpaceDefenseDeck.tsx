@@ -142,7 +142,7 @@ function SlideShape() {
           One OS. <span style={{ color: `hsl(${TEAL})` }}>Space & Defence Holdings is the spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. You are investing in Space & Defence Holdings specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
+          We build a single context layer and deploy it vertical-by-vertical. You are investing in Space &amp; Defence Holdings specifically, and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
         </p>
 
         <div className="flex-1 flex flex-col justify-center">
@@ -273,7 +273,7 @@ function Slide02() {
           The Context Gap.
         </h2>
         <p className="font-medium" style={{ fontSize: 24, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
-          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how a aec organization actually decides was never formally defined.</span>
+          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how a Space &amp; Defence organisation actually decides was never formally defined.</span>
         </p>
       </div>
 
@@ -302,8 +302,8 @@ function Slide02() {
           <text x="1840" y="178" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
           <text x="1840" y="206" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI is given today</text>
           <text x="1840" y="262" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~90% ORGANIZATIONAL INTELLIGENCE</text>
-          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What ai needs to meet design intent & code</text>
-          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in experts, reviewers, prior decisions, and live escalations</text>
+          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to meet design intent &amp; certification</text>
+          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in chief engineers, reviewers, prior dispositions, and live ECRs</text>
 
           <polygon points="870,220 960,90 1050,220" fill="url(#ice-top)" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.5" />
           <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#ice-bot)" stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.5" />
@@ -349,7 +349,7 @@ function Slide02() {
           })}
 
           <text x="960" y="725" textAnchor="middle"
-            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO MEET DESIGN INTENT & CODE</text>
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO MEET DESIGN INTENT &amp; CERTIFICATION</text>
         </svg>
       </div>
 
@@ -404,19 +404,19 @@ const SDT_GAP_CASES = [
 
 const SDT_COST_BENCHMARKS = [
   {
-    value: "$177.5B",
-    label: "estimated annual labour cost impact across global defence & aerospace engineering from rework, NCR resolution, and searching for programme data",
-    source: "Industry benchmark, defence & aerospace engineering",
+    value: "$7.6B",
+    label: "cumulative cost overruns on NASA's portfolio of major projects in development, with engineering rework and late requirements changes among the largest drivers",
+    source: "GAO-23-106021, NASA Assessments of Major Projects, 2023",
   },
   {
-    value: "14+ hrs",
-    label: "lost per engineer per week on non-value activities, including ~4 hours tied specifically to rework",
-    source: "Industry benchmark, defence & aerospace engineering",
+    value: "+40%",
+    label: "average cost growth across major defence acquisition programmes (MDAPs) versus baseline, with requirements churn and engineering changes a primary driver",
+    source: "RAND, Sources of Weapon System Cost Growth (35 MDAPs); GAO-25-107569 Weapon Systems Annual Assessment, 2025",
   },
   {
-    value: "5–15%",
-    label: "common rework range across complex programmes, depending on platform complexity and integration conditions",
-    source: "McKinsey / industry benchmark range",
+    value: "100×",
+    label: "cost amplification of fixing a requirements or interface defect after qualification versus catching it at design. The canonical late-defect curve in systems engineering.",
+    source: "INCOSE / NASA, Error Cost Escalation Through the Project Life Cycle",
   },
 ];
 
@@ -602,20 +602,20 @@ function Slide04Cost() {
           What Missing Context Costs across Space & Defence Holdings
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
+          In Space &amp; Defence, missing context becomes expensive because every late ECR, ICD revision, and qualification finding compounds <span style={{ color: `hsl(${WARM})` }}>cost growth, schedule slip, and certification risk.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>52%</p>
+            <p className="font-black" style={{ fontSize: 78, color: `hsl(${WARM})`, lineHeight: 0.95 }}>+27%</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of rework is tied to poor project data and miscommunication
+              average schedule growth on major DOD weapon programmes since baseline
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is the part AI can amplify if it runs without the latest ICD revision, ECR disposition, customer standard, or engineering interpretation.
+              Late requirements changes, ECR backlog, and engineering rework are repeatedly named as primary drivers. AI without programme context multiplies the same failure mode.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              IDC / industry benchmark, defence & aerospace engineering, 2023
+              GAO-25-107569, Weapon Systems Annual Assessment, June 2025
             </p>
           </div>
 
@@ -635,10 +635,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the full programme context</span>, the team still has to catch it, correct it, and reissue it.
+                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the latest ICD revision, ECP disposition, and chief-engineer judgment</span>, the team still has to catch it, correct it, and reissue it. At late-phase rework cost.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€50M programme</span>, a 5% direct rework benchmark implies roughly <span className="font-bold" style={{ color: TEXT }}>€2.5M of direct cost at risk</span> before supervision, overhead, and downstream milestone delay.
+                On a <span className="font-bold" style={{ color: TEXT }}>€500M programme</span>, the GAO-observed 25 to 30% cost growth band implies <span className="font-bold" style={{ color: TEXT }}>€125 to €150M at risk</span>. A 1% reduction by closing the context gap is €5M back to EAC.
               </p>
             </div>
           </div>
@@ -765,7 +765,7 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an Portfolio-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a portfolio-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
@@ -1117,7 +1117,7 @@ function Slide06() {
 
   const moatLayers = [
     { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, standards-aware injection, drift detection. The plumbing every Defence & Space AI stack will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Programme Memory", desc: "ECR precedent, ICD revisions, customer standards, qualification interpretations — graph deepens programme-by-programme. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Compounding Programme Memory", desc: "ECR precedent, ICD revisions, customer standards, qualification interpretations. Graph deepens programme-by-programme. Switching cost grows organically.", icon: <Layers size={20} /> },
     { layer: "Federated Conglomerate Distribution", desc: "Designed for multi-subsidiary defence & space holdings. One context layer across acquired engineering memory, not per-tool integration.", icon: <Network size={20} /> },
   ];
 
@@ -1166,7 +1166,7 @@ function Slide06() {
               <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your engineering authority decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every Defence & Space AI stack will need: ICD revisions, ECR precedent, qualification interpretations, customer standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into Defence & Space.
+              The instruction layer every Defence &amp; Space AI stack will need: ICD revisions, ECR precedent, qualification interpretations, customer standards. All versioned and queryable. Same architecture validated across regulated industries, now being focused into Defence &amp; Space.
             </p>
           </div>
         </div>
@@ -1231,7 +1231,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another defense IT use case. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+          LIZA is not selling another defence IT point tool. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the engineering knowledge loop across the holding.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
@@ -1438,16 +1438,16 @@ function Slide07() {
 function Slide08() {
   const cases = [
     {
-      title: "Graphisoft workflow exploration",
-      subtitle: "Defense & Space signal",
-      scope: "Internal use-case discovery",
+      title: "Federated Defence Holding (Active Discussion)",
+      subtitle: "Space & Defence signal",
+      scope: "Multi-subsidiary engineering memory",
       color: TEAL,
-      outcome: "Live access to real Defense & Space workflow pain",
+      outcome: "Live engagement on cross-portfolio engineering context",
       metric: "Active",
       metricLabel: "Discussion",
       points: [
-        "Exploring internal Defense & Space workflow opportunities with a major ecosystem player",
-        "Direct signal that the Defense & Space workflow problem is real and strategically relevant",
+        "Federated defence group exploring one context layer across recently acquired engineering subsidiaries",
+        "Direct signal that fragmented chief-engineer judgment is the binding constraint on AI adoption",
       ],
       featured: true,
     },
@@ -1503,7 +1503,7 @@ function Slide08() {
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Defense & Space is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: chief-engineer judgment must be captured, governed, and updated. Space &amp; Defence is where the experience now becomes native.
           </p>
         </div>
 
@@ -1621,7 +1621,7 @@ function Slide09() {
               The missing connective tissue underneath the Defense & Space AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: Graphisoft workflow exploration, not a commercial integration claim.
+              Current signal: active discussion with a federated defence holding. Not a commercial integration claim.
             </p>
           </div>
         </div>
@@ -1722,19 +1722,19 @@ function Slide09Partnership() {
       phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm intros into top 20 Aero / Space Divisions accounts. LIZA sits alongside; Space & Defence Holdings opens doors. Low commitment, fast signal.",
+      desc: "Warm intros into the top engineering subsidiaries inside the holding. LIZA sits alongside; the holding opens doors across primes, customer programme offices, and tier-1 suppliers. Low commitment, fast signal.",
     },
     {
       phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded ECR Lifecycle Sprint productized with Aero Division. Generates Portfolio case studies plus revenue share.",
+      desc: "Co-branded ECR &amp; Qualification Lifecycle Sprint productized with two anchor subsidiaries. Generates portfolio case studies plus revenue share.",
     },
     {
       phase: "Months 12-24",
       title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one Space & Defence Holdings brand. Start with Aero Division for ECRs, then expand to Space Division for design intent.",
+      desc: "LIZA becomes the governance and memory layer underneath the holding's engineering operating model. Start with one subsidiary's ECR backbone, then expand across space, aero, land systems, and cyber.",
     },
   ];
 
@@ -2169,7 +2169,7 @@ function Slide13() {
           {[
             { label: "Portfolio-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "Division Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Aero, Space, Land Systems, PLM bridges, lighthouse deployments", color: GOLD },
+            { label: "Subsidiary Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Space, aero, land systems, PLM bridges, lighthouse deployments inside the holding", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -2185,8 +2185,8 @@ function Slide13() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
             { month: "Month 1-6", target: "Portfolio-native UX live", milestone: "ECR, qualification, and design-review surfaces in market with first lighthouse deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Division pilots convert to platform base plus credits. Aero / Space Divisions integration path live.", color: SEAFOAM },
-            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and Division customers on a repeatable self-serve expansion path.", color: MINT },
+            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "Subsidiary pilots convert to platform base plus credits. Cross-holding PLM integration path live.", color: SEAFOAM },
+            { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and subsidiary customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2758,7 +2758,7 @@ function SlideOrgIntelligence() {
           <span style={{ color: `hsl(${GREEN})` }}>the substrate.</span>
         </h2>
         <p className="font-medium mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          The 90% the iceberg points at. Up close, it is six interacting layers. A aec knowledge graph is what holds them together.
+          The 90% the iceberg points at. Up close, it is six interacting layers. A Space &amp; Defence knowledge graph is what holds them together.
         </p>
 
         <div className="flex-1 min-h-0 grid gap-8 items-center" style={{ gridTemplateColumns: "5fr 7fr" }}>
