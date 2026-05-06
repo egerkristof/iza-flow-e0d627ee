@@ -18,6 +18,7 @@ import PharmaBrief from "@/pages/PharmaBrief";
 import BankingInvestorDeck from "@/pages/BankingInvestorDeck";
 import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
 import SpaceDefenseHoldingsDeck from "@/pages/SpaceDefenseHoldingsDeck";
+import SpaceDefenseHoldingsBrief from "@/pages/SpaceDefenseHoldingsBrief";
 
 export type PresentationRoute = {
   id: string;
@@ -91,6 +92,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/SpaceDefenseHoldingsDeck.tsx",
     description: "Generic dual-path deck for federated Space & Defence holding companies (Hensoldt, Leonardo, Saab, KNDS, Rheinmetall, 4iG SDT-style portfolios). One context layer across the full programme lifecycle: capture & bid, engineering & qualification, sustainment & ILS. Wedge: post-merger engineering knowledge capture across newly-acquired subsidiaries; NATO AQAP / AS9100 / ISO 27001 / ECSS as executable standards. Two-door CTA: 30-day lifecycle pilot inside one subsidiary, or €3M strategic stake in the platform that scales it across the holding.",
     component: SpaceDefenseHoldingsDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "space-defense-holdings-brief",
+    title: "Space & Defence Holdings Brief (Mobile + Desktop)",
+    path: "/space-defense-holdings-brief",
+    sourcePath: "src/pages/SpaceDefenseHoldingsBrief.tsx",
+    description: "Responsive 2-minute brief of the Space & Defence Holdings deck. Lifecycle framing (capture, engineering, sustainment), GAO/INCOSE benchmarks, dual customer + investor CTA. Funnels to /space-defense-holdings.",
+    component: SpaceDefenseHoldingsBrief,
     showInAdmin: true,
   },
   {

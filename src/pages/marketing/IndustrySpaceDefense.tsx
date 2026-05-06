@@ -138,6 +138,12 @@ export default function IndustryDefensePortfolioPage() {
             >
               Book a discovery call
             </a>
+            <Link
+              to="/space-defense-holdings-brief"
+              className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+            >
+              2-minute brief
+            </Link>
           </div>
         </div>
       </section>
