@@ -411,19 +411,19 @@ function S06WhyNow() {
     {
       stat: "67 wks",
       label: "Average time to complete a systematic review",
-      context: "Mean of 67.3 weeks from registration to publication across 195 PROSPERO-registered reviews. Why it matters: in fields like AI, biotech, and climate science the literature now doubles every 2 to 3 years. A PhD that spends 15 months catching up to a frontier that has already moved is no longer doing original work. The strategic act is the synthesis above the review, not the review itself.",
+      context: "Mean of 67.3 weeks from registration to publication across 195 PROSPERO-registered reviews. Why it matters: in fields like AI, biotech, and climate science the literature now doubles every 2 to 3 years. A researcher who spends 15 months catching up to a frontier that has already moved is no longer doing original work. The strategic act is the synthesis above the review, not the review itself.",
       source: "Borah, Brown, Capers & Kaiser. BMJ Open, 2017. Analysis of the time and workers needed to conduct systematic reviews (PROSPERO).",
     },
     {
       stat: "~30%",
       label: "Of researchers already use generative AI in their writing",
-      context: "Of 1,600+ scientists Nature surveyed, roughly a third use generative AI to draft manuscripts, refine text, or summarise the literature. Why it matters: this is happening with no institutional standard for how the field gets mapped or how judgment is preserved. Without one, the next generation learns to produce the model's voice instead of forming their own. That is the hollowing-out: speed at the cost of the next generation of thinkers.",
+      context: "Of 1,600+ scientists Nature surveyed, roughly a third use generative AI to draft manuscripts, refine text, or summarise the literature. Why it matters: it is happening with no structured way for the individual researcher to map the field or preserve their own judgment. Without that structure, the researcher learns to produce the model's voice instead of forming their own. Speed at the cost of becoming a thinker.",
       source: "Van Noorden & Perkel. Nature, 2023. AI and science: what 1,600 researchers think (n = 1,600+).",
     },
     {
       stat: "12%",
       label: "Of scientific papers receive zero citations five years after publication",
-      context: "A Web of Science study finds about 12% of articles remain uncited after five years, with the share much higher in several fields. Why it matters: not reading the field is no longer a quality gap, it is now a structural certainty. The corpus grows faster than any cohort can read it, so entire schools of thought stay invisible. Without a shared map, every researcher restarts from a partial view, and the institution never builds a position on the field.",
+      context: "A Web of Science study finds about 12% of articles remain uncited after five years, with the share much higher in several fields. Why it matters: not reading the field is no longer a quality gap, it is now a structural certainty. The corpus grows faster than any individual can read it, so entire schools of thought stay invisible. Without a structured map, the researcher restarts from a partial view every time.",
       source: "Hovden et al. Scientometrics, 2019. Zero impact: a large-scale study of uncitedness (Web of Science corpus).",
     },
   ];
