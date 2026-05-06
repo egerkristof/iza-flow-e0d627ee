@@ -531,92 +531,6 @@ function S07Loop() {
   );
 }
 
-function S08Landscape() {
-  // 0 = absent, 1 = partial, 2 = present
-  const tools = [
-    { name: "ChatGPT / Claude / Gemini",         role: "General writing assistants", caps: [0, 0, 2, 0, 0, 0, 0] },
-    { name: "Elicit / Consensus / Scite",        role: "Search and summarisation",   caps: [1, 0, 1, 0, 0, 0, 0] },
-    { name: "Zotero / Mendeley",                 role: "Reference managers",         caps: [0, 0, 0, 0, 0, 0, 2] },
-    { name: "Notion / Evernote",                 role: "Note managers",              caps: [0, 1, 0, 0, 0, 0, 0] },
-    { name: "Research Rabbit / Connected Papers",role: "Citation graphs",            caps: [1, 1, 0, 0, 0, 0, 1] },
-    { name: "Obsidian / Roam",                   role: "Personal knowledge graphs",  caps: [1, 2, 1, 0, 0, 1, 2] },
-  ];
-  const capCols = [
-    "Field map of the corpus",
-    "Personal knowledge graph",
-    "AI assistance",
-    "Typed primitives (school, stance, rebuttal)",
-    "AI reasons over the structure",
-    "Captures judgment & why-not-this",
-    "Portable / LLM-agnostic",
-  ];
-  const Dot = ({ v, hero }: { v: number; hero?: boolean }) => {
-    const tone = hero ? TEAL : (v ? TEAL : SUBTLE);
-    if (v === 2) return <div className="rounded-full mx-auto" style={{ width: hero ? 22 : 18, height: hero ? 22 : 18, background: `hsl(${tone})`, boxShadow: hero ? `0 0 0 5px hsl(${TEAL} / 0.2)` : undefined }} />;
-    if (v === 1) return <div className="rounded-full mx-auto" style={{ width: 18, height: 18, background: `hsl(${tone} / 0.35)`, border: `2px solid hsl(${tone} / 0.7)` }} />;
-    return <div className="rounded-full mx-auto" style={{ width: 18, height: 18, border: `2px solid hsl(${SUBTLE} / 0.45)` }} />;
-  };
-  return (
-    <div className="w-full h-full relative px-20 py-14" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="08" text="THE LANDSCAPE" />
-        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
-          Each tool fixes a slice. <span style={{ color: `hsl(${TEAL})` }}>One stack holds them together.</span>
-        </h2>
-        {/* One large capability matrix */}
-        <div className="rounded-2xl border-2 overflow-hidden flex-1 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          {/* Header row */}
-          <div className="grid items-end px-7 pt-6 pb-4" style={{ gridTemplateColumns: `360px repeat(${capCols.length}, 1fr)`, background: CARD_ALT, borderBottom: `2px solid ${CHROME_BORDER}` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE, textTransform: "uppercase" }}>Tool</p>
-            {capCols.map(c => (
-              <p key={c} className="text-center px-2" style={{ fontSize: 13, fontWeight: 800, color: TEXT, lineHeight: 1.25 }}>{c}</p>
-            ))}
-          </div>
-          {/* Tool rows */}
-          <div className="flex-1 flex flex-col">
-            {tools.map((t, idx) => (
-              <div key={t.name} className="grid items-center px-7 flex-1" style={{ gridTemplateColumns: `360px repeat(${capCols.length}, 1fr)`, borderBottom: idx < tools.length - 1 ? `1px solid ${CHROME_BORDER}` : "none" }}>
-                <div>
-                  <p style={{ fontSize: 18, color: TEXT, fontWeight: 800, lineHeight: 1.15 }}>{t.name}</p>
-                  <p className="mt-1" style={{ fontSize: 13, color: SUBTLE, fontWeight: 600, letterSpacing: "0.04em" }}>{t.role}</p>
-                </div>
-                {t.caps.map((v, i) => (
-                  <div key={i} className="flex justify-center"><Dot v={v} /></div>
-                ))}
-              </div>
-            ))}
-            {/* LIZA OS hero row with continuous line */}
-            <div className="grid items-center px-7 relative" style={{ gridTemplateColumns: `360px repeat(${capCols.length}, 1fr)`, background: `hsl(${TEAL} / 0.08)`, borderTop: `3px solid hsl(${TEAL})`, minHeight: 100 }}>
-              <div>
-                <p className="font-black" style={{ fontSize: 22, color: `hsl(${TEAL})`, letterSpacing: "0.04em" }}>LIZA OS</p>
-                <p className="mt-1" style={{ fontSize: 13, color: `hsl(${TEAL} / 0.85)`, fontWeight: 700, letterSpacing: "0.04em" }}>The full stack, by design</p>
-              </div>
-              {/* Continuous bar across all cap columns */}
-              <div className="absolute" style={{ left: 388, right: 28, top: "50%", transform: "translateY(-50%)", height: 14, borderRadius: 999, background: `linear-gradient(90deg, hsl(${TEAL}), hsl(${MINT}))`, boxShadow: `0 0 0 6px hsl(${TEAL} / 0.15)` }} />
-              {capCols.map((_, i) => (
-                <div key={i} className="flex justify-center relative z-10">
-                  <div className="rounded-full" style={{ width: 22, height: 22, background: BG, border: `4px solid hsl(${TEAL})`, boxShadow: `0 2px 8px hsl(${TEAL} / 0.4)` }} />
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Legend */}
-          <div className="flex items-center justify-between px-7 py-3" style={{ background: CARD_ALT, borderTop: `1px solid ${CHROME_BORDER}` }}>
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full" style={{ background: `hsl(${TEAL})` }} /><span style={{ fontSize: 12, color: SUBTLE, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Present</span></div>
-              <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full" style={{ background: `hsl(${TEAL} / 0.35)`, border: `2px solid hsl(${TEAL} / 0.7)` }} /><span style={{ fontSize: 12, color: SUBTLE, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Partial</span></div>
-              <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full" style={{ border: `2px solid hsl(${SUBTLE} / 0.5)` }} /><span style={{ fontSize: 12, color: SUBTLE, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Absent</span></div>
-            </div>
-            <p className="font-bold" style={{ fontSize: 13, color: `hsl(${TEAL})`, letterSpacing: "0.05em" }}>Three columns on the right are the structural deltas</p>
-          </div>
-        </div>
-      </div>
-      <SlideBar />
-    </div>
-  );
-}
-
 function S09Architecture() {
   const layers = [
     { tag: "L4", scope: "Reasoning", title: "Augmentation Loop", body: "Counter-arguments, gaps, and trade-offs surface in dialogue. The researcher stays the author of every claim.", Icon: Workflow, opacity: 1.0 },
@@ -853,12 +767,11 @@ const SLIDES = [
   { id: 5, title: "The Thesis", component: <S05Thesis /> },
   { id: 6, title: "Why Now", component: <S06WhyNow /> },
   { id: 7, title: "How It Works", component: <S07Loop /> },
-  { id: 8, title: "The Landscape", component: <S08Landscape /> },
-  { id: 9, title: "Architecture", component: <S09Architecture /> },
-  { id: 10, title: "Design Partner", component: <S12Pilot /> },
-  { id: 11, title: "Outcomes", component: <S13Outcomes /> },
-  { id: 12, title: "How to Start", component: <S14TwoDoor /> },
-  { id: 13, title: "Close", component: <S15Close /> },
+  { id: 8, title: "Architecture", component: <S09Architecture /> },
+  { id: 9, title: "Design Partner", component: <S12Pilot /> },
+  { id: 10, title: "Outcomes", component: <S13Outcomes /> },
+  { id: 11, title: "How to Start", component: <S14TwoDoor /> },
+  { id: 12, title: "Close", component: <S15Close /> },
 ];
 
 // ─── Main page (mirrors SpaceDefenseHoldingsDeck shell) ──────────────────────
