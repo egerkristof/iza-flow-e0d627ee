@@ -156,17 +156,17 @@ function S01Cover() {
             LIZA OS · Research Memory Layer · Concept Deck
           </span>
         </div>
-        <h1 className="font-black mb-6" style={{ fontSize: 88, lineHeight: 1.04, color: TEXT }}>
-          Don't review the literature.<br />
+        <h1 className="font-black mb-6" style={{ fontSize: 84, lineHeight: 1.04, color: TEXT }}>
+          Obsidian was the benchmark.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Understand the field.
+            Now reason inside the map.
           </span>
         </h1>
-        <p className="mb-12" style={{ fontSize: 28, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
-          A research memory layer for universities and research groups. Map the hierarchies between schools, lineages of ideas, and disagreements between authors — then think further inside that map. <span style={{ color: `hsl(${TEAL})` }}>Augmentation, not automation.</span>
+        <p className="mb-10" style={{ fontSize: 26, color: MUTED, maxWidth: 1200, lineHeight: 1.5 }}>
+          A research memory layer for the individual researcher. Obsidian and Roam already prove the appetite: thousands of researchers building knowledge graphs by hand. We pick up where they stop. <span style={{ color: `hsl(${TEAL})` }}>Structured field, on day one. AI that reasons over it, not around it.</span>
         </p>
-        <p style={{ fontSize: 20, color: SUBTLE }}>
-          Concept · Cohort Pilot · Sponsor Track
+        <p style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.18em" }}>
+          BUILT FOR THE INDIVIDUAL · OPTIONAL FOR THE LAB
         </p>
       </div>
       <SlideBar />
