@@ -2243,26 +2243,26 @@ function SlideContextGapExemplified() {
     {
       n: 1,
       nature: "JUST CHANGED",
-      title: "Code variance issued last week",
-      body: "The local AHJ approved a Type IV-B variance for the podium two days ago. The specification still references the original Type II-A. Tonight's plot set will print the wrong rating.",
+      title: "ICD revision issued last week",
+      body: "The customer issued ICD revision C for the avionics interface two days ago. The qualification plan still references revision B. Tonight's review package will reference the wrong interface.",
     },
     {
       n: 2,
       nature: "OPEN ISSUE",
-      title: "Unresolved ECR on the connection",
-      body: "Structural engineer raised an ECR on the curtain-wall back-pan two weeks ago. No response yet. The connection cannot be called 'standard' until that closes.",
+      title: "Unresolved ECR on the harness",
+      body: "The systems engineer raised an ECR on the EMI shielding two weeks ago. No disposition yet. The interface cannot be called qualified until that closes.",
     },
     {
       n: 3,
       nature: "CONTRADICTION",
-      title: "Two clash rule sets disagree",
-      body: "The Mission Assurance Plan locks one tolerance. The QS team's takeoff template assumes another. Both retrievable. Only one is correct for this trade package.",
+      title: "Two margin policies disagree",
+      body: "The Mission Assurance Plan locks one structural margin. The supplier's qualification template assumes another. Both retrievable. Only one is correct for this build standard.",
     },
     {
       n: 4,
       nature: "UNWRITTEN RULE",
-      title: "Senior architect never signs this off",
-      body: "On podium-to-tower transitions in this practice, lead architects always require a thermal-bridge callout in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
+      title: "Chief engineer never signs this off",
+      body: "On dual-redundant control paths in this product line, the chief engineer always requires a single-event upset rationale in the narrative. Reviewers have flagged it before. Nobody wrote the rule down.",
     },
   ];
 
@@ -2299,7 +2299,7 @@ function SlideContextGapExemplified() {
               The Context Gap, exemplified
             </p>
             <h2 className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05 }}>
-              The enclosure narrative AI drafted reads cleanly.{' '}
+              The qualification narrative AI drafted reads cleanly.{' '}
               <span style={{ color: `hsl(${WARM})` }}>Every highlighted phrase is wrong.</span>
             </h2>
           </div>
@@ -2323,7 +2323,7 @@ function SlideContextGapExemplified() {
               style={{ borderColor: `hsl(${TEAL} / 0.12)`, background: `hsl(${TEAL} / 0.03)` }}>
               <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
               <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${TEAL})` }}>
-                DD-204 · Section A · Building enclosure narrative
+                QR-204 · Section A · Subsystem qualification narrative
               </span>
               <div className="flex items-center gap-2 ml-3 pl-3 border-l" style={{ borderColor: `hsl(${TEAL} / 0.18)` }}>
                 <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
@@ -2332,38 +2332,38 @@ function SlideContextGapExemplified() {
                 </span>
               </div>
               <span className="ml-auto font-mono" style={{ fontSize: 10.5, color: MUTED }}>
-                DD-Set · cycle current
+                QR-Set · cycle current
               </span>
             </div>
 
             <div className="px-9 pt-6 pb-3" style={{ borderBottom: `1px dashed hsl(${TEAL} / 0.18)` }}>
               <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
                 <div className="mt-1"><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Project</span>
-                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Atrium Tower · podium + 18 floors</span>
-                  <span style={{ color: MUTED }}> · mixed-use · CBD</span>
+                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Programme Falcon · avionics LRU + harness</span>
+                  <span style={{ color: MUTED }}> · airborne · NATO customer</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Client</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · DD package</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · CDR package</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Audience</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Local code authority · QS · structural engineer</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Customer authority · DCMA · chief engineer</span>
                 </div>
               </div>
             </div>
 
             <div className="flex-1 px-9 py-7"
               style={{ fontSize: 20, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              <p className="mb-5">The exterior wall assembly is detailed for <Mark n={1}>Type IV-B fire rating</Mark> as required by the project specification.</p>
-              <p className="mb-5">The curtain-wall connections were modelled using <Mark n={2}>the standard parametric family.</Mark>.</p>
-              <p className="mb-5">Coordination clashes were resolved per <Mark n={3}>the project's standard clash-resolution rules</Mark> in the mission assurance plan.</p>
-              <p style={{ color: MUTED }}><Mark n={4}>Overall, the enclosure is constructible as drawn.</Mark></p>
+              <p className="mb-5">The avionics LRU interface is qualified to <Mark n={1}>ICD revision B</Mark> as required by the programme baseline.</p>
+              <p className="mb-5">The shielded harness was analysed using <Mark n={2}>the standard EMI margin model.</Mark></p>
+              <p className="mb-5">Subsystem margins were resolved per <Mark n={3}>the programme's standard margin policy</Mark> in the mission assurance plan.</p>
+              <p style={{ color: MUTED }}><Mark n={4}>Overall, the subsystem is qualified as designed.</Mark></p>
             </div>
 
             <div className="px-9 py-3.5 flex items-center gap-3"
               style={{ borderTop: `1px solid hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.06)` }}>
               <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
               <p className="font-black" style={{ fontSize: 15, color: TEXT }}>
-                GxP-formatted? No. Issue-blocking. Reviewer-rejectable. Cost-overrun-trigger.
+                AS9100-grade? No. CDR-blocking. Customer-rejectable. EAC-overrun-trigger.
               </p>
             </div>
           </div>
@@ -2374,7 +2374,7 @@ function SlideContextGapExemplified() {
                 What AI couldn&apos;t see
               </p>
               <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
-                Lives in variance letters, ECR threads, reviewers' heads.
+                Lives in ICD revisions, ECR threads, chief engineers' heads.
               </p>
             </div>
 
@@ -2423,7 +2423,7 @@ function SlideContextGapExemplified() {
                   ICDs. Mission specs. CAD model. Standards references. ECSS/AQAP details.
                 </p>
                 <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
-                  Indexable. RAG-friendly. Insufficient for an AHJ submission.
+                  Indexable. RAG-friendly. Insufficient for a CDR submission.
                 </p>
               </div>
               <div className="rounded-lg px-4 py-3"
