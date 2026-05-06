@@ -309,93 +309,59 @@ function S03Iceberg() {
 }
 
 function S04ThirdPath() {
-  const cols = [
-    {
-      tag: "PATH 1",
-      title: "Manual review",
-      what: "What it is: months in PDFs, hand-built bibliographies, notes in private docs.",
-      limit: "Why it falls short: 6 to 12 months per researcher. The field gets flattened into a citation list. Hierarchies between schools, lineages of ideas, and the disagreements that actually matter never get mapped. Tacit judgment lives in the researcher's head and leaves with them.",
-      tone: RED,
-      verdict: "FLATTENS THE FIELD",
-      icon: X,
-      meters: [
-        { label: "Speed", v: 1 },
-        { label: "Reaches the depth", v: 2 },
-        { label: "Extractable / portable", v: 1 },
-        { label: "Compounds for the lab", v: 1 },
-      ],
-    },
-    {
-      tag: "PATH 2",
-      title: "AI shortcuts and personal graphs",
-      what: "What it is: two halves of the same gap. ChatGPT, Claude, Elicit, Consensus produce fluent summaries with no map. Obsidian and Roam do build real knowledge graphs of how a researcher connects ideas, which is closer in spirit to what the field actually needs.",
-      limit: "Why it falls short: AI assistants stay shallow and the thesis drifts into the model's voice. Personal graphs reach the depth, but the knowledge is locked in one user's vault, glued to the tool, and never reaches the cohort. In both cases the researcher's reasoning is not extractable, not shared, and not portable. Nothing compounds for the lab.",
-      tone: AMBER,
-      verdict: "SHALLOW OR TRAPPED",
-      icon: AlertTriangle,
-      meters: [
-        { label: "Speed", v: 5 },
-        { label: "Reaches the depth", v: 3 },
-        { label: "Extractable / portable", v: 1 },
-        { label: "Compounds for the lab", v: 1 },
-      ],
-    },
-    {
-      tag: "PATH 3",
-      title: "LIZA OS, the Research Memory Layer",
-      what: "What it is: a shared map of the field that the researcher builds with the system, and an extractable record of how they reason on top of it.",
-      limit: "Why it works: reaches the depth that personal graphs reach, and goes one step further. The map, the judgment log, and the way you connect ideas are first-class objects that scale to the cohort, are exportable, and stay yours. LLM-agnostic by design. The researcher stays the author of every claim, and the lab's reasoning becomes an asset that compounds.",
-      tone: TEAL,
-      verdict: "DEEP · EXTRACTABLE · SHARED",
-      icon: Check,
-      meters: [
-        { label: "Speed", v: 4 },
-        { label: "Reaches the depth", v: 5 },
-        { label: "Extractable / portable", v: 5 },
-        { label: "Compounds for the lab", v: 5 },
-      ],
-    },
+  const rows = [
+    { cap: "Stores notes / corpus",                a: 1, b: 2, c: 2 },
+    { cap: "Retrieves related papers and notes",   a: 2, b: 2, c: 2 },
+    { cap: "Builds a personal knowledge graph",    a: 0, b: 2, c: 2 },
+    { cap: "Portable, LLM-agnostic, no lock-in",   a: 0, b: 2, c: 2 },
+    { cap: "Typed primitives (school, stance, rebuttal, supersession)", a: 0, b: 0, c: 2 },
+    { cap: "Resolves a fresh corpus into a structured field map",       a: 0, b: 0, c: 2 },
+    { cap: "AI reasons over the structure of the field",                 a: 0, b: 0, c: 2 },
   ];
+  const Dot = ({ v, tone }: { v: number; tone: string }) => {
+    if (v === 2) return <div className="w-4 h-4 rounded-full mx-auto" style={{ background: `hsl(${tone})` }} />;
+    if (v === 1) return <div className="w-4 h-4 rounded-full mx-auto" style={{ background: `hsl(${tone} / 0.35)`, border: `1.5px solid hsl(${tone} / 0.6)` }} />;
+    return <div className="w-4 h-4 rounded-full mx-auto" style={{ border: `1.5px solid hsl(${SUBTLE} / 0.5)` }} />;
+  };
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="04" text="THE THIRD PATH" />
+        <Eyebrow n="04" text="HEAD TO HEAD" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
-          Researchers are forced to <span style={{ color: `hsl(${RED})` }}>flatten</span> or be <span style={{ color: `hsl(${AMBER})` }}>replaced.</span><br />
-          <span style={{ color: `hsl(${TEAL})` }}>There is a third option.</span>
+          Where Obsidian stops. <span style={{ color: `hsl(${TEAL})` }}>Where LIZA OS picks up.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Two paths exist today. Both are real attempts. Both fail the researcher in a specific, structural way. The third path keeps what each tries to do and removes the cost.
+        <p className="mb-8" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          Seven capabilities a serious individual researcher actually needs. The first four are well covered by today\'s tools. The last three are not, and they are the structure of what good research thinking actually looks like.
         </p>
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {cols.map(c => (
-            <div key={c.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${c.tone} / 0.5)`, background: `hsl(${c.tone} / 0.04)` }}>
-              <div className="flex items-center justify-between">
-                <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${c.tone})` }}>{c.tag}</p>
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: `hsl(${c.tone} / 0.15)`, color: `hsl(${c.tone})` }}>
-                  <c.icon size={20} strokeWidth={3} />
+        <div className="rounded-2xl border-2 overflow-hidden flex-1 flex flex-col" style={{ borderColor: CHROME_BORDER, background: BG }}>
+          {/* header */}
+          <div className="grid grid-cols-12 px-7 py-5" style={{ background: CARD_ALT, borderBottom: `2px solid ${CHROME_BORDER}` }}>
+            <p className="col-span-6" style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE, textTransform: "uppercase" }}>Capability the individual researcher needs</p>
+            <p className="col-span-2 text-center" style={{ fontSize: 14, fontWeight: 800, color: SUBTLE }}>ChatGPT / Elicit</p>
+            <p className="col-span-2 text-center" style={{ fontSize: 14, fontWeight: 900, color: `hsl(${AMBER})` }}>Obsidian + plugins<br/><span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em" }}>(THE BENCHMARK)</span></p>
+            <p className="col-span-2 text-center" style={{ fontSize: 14, fontWeight: 900, color: `hsl(${TEAL})` }}>LIZA OS</p>
+          </div>
+          {rows.map((r, i) => {
+            const isDelta = i >= 4;
+            return (
+              <div key={r.cap} className="grid grid-cols-12 px-7 py-4 items-center" style={{ background: isDelta ? `hsl(${TEAL} / 0.05)` : "transparent", borderBottom: i < rows.length - 1 ? `1px solid ${CHROME_BORDER}` : "none", borderLeft: isDelta ? `4px solid hsl(${TEAL})` : "4px solid transparent" }}>
+                <div className="col-span-6 flex items-center gap-3">
+                  {isDelta && <span className="px-2 py-0.5 rounded text-[10px] font-black tracking-widest" style={{ background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>DELTA {i - 3}</span>}
+                  <p style={{ fontSize: 16, color: TEXT, fontWeight: isDelta ? 800 : 600, lineHeight: 1.3 }}>{r.cap}</p>
                 </div>
+                <div className="col-span-2"><Dot v={r.a} tone={SUBTLE} /></div>
+                <div className="col-span-2"><Dot v={r.b} tone={AMBER} /></div>
+                <div className="col-span-2"><Dot v={r.c} tone={TEAL} /></div>
               </div>
-              <p className="mt-3 mb-2 font-black" style={{ fontSize: 26, lineHeight: 1.15, color: TEXT }}>{c.title}</p>
-              <p className="mb-4" style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${c.tone})` }}>{c.verdict}</p>
-              <p className="mb-3" style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>{c.what}</p>
-              <div className="my-3 h-px" style={{ background: `hsl(${c.tone} / 0.25)` }} />
-              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{c.limit}</p>
-              <div className="mt-auto pt-5 space-y-2">
-                {c.meters.map(m => (
-                  <div key={m.label} className="flex items-center gap-3">
-                    <p className="w-44" style={{ fontSize: 12, color: MUTED, fontWeight: 600 }}>{m.label}</p>
-                    <div className="flex-1 flex gap-1">
-                      {[1,2,3,4,5].map(i => (
-                        <div key={i} className="flex-1 h-1.5 rounded-full" style={{ background: i <= m.v ? `hsl(${c.tone})` : `hsl(${c.tone} / 0.12)` }} />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
+          <div className="grid grid-cols-12 px-7 py-3 mt-auto items-center" style={{ background: CARD_ALT, borderTop: `1px solid ${CHROME_BORDER}` }}>
+            <p className="col-span-6" style={{ fontSize: 11, color: SUBTLE, letterSpacing: "0.12em", fontWeight: 700, textTransform: "uppercase" }}>● = present  ◐ = partial  ○ = absent</p>
+            <p className="col-span-6 text-right" style={{ fontSize: 13, color: TEXT, fontWeight: 800 }}>
+              The three deltas are not features. <span style={{ color: `hsl(${TEAL})` }}>They are the entire reason to build LIZA OS.</span>
+            </p>
+          </div>
         </div>
       </div>
       <SlideBar />
