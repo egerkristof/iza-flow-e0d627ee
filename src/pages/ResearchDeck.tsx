@@ -565,13 +565,13 @@ function S08Landscape() {
     {
       name: "Obsidian / Roam",
       role: "Personal knowledge graphs",
-      missing: "Cohort scale and portability",
-      gap: "The closest in spirit: they actually do build knowledge graphs of how a researcher connects ideas. Two structural limits: solo by design (one user's vault, no cohort or lab layer), and locked to the tool. The graph cannot be lifted out and reused elsewhere.",
-      liza: "Cohort-first and portable by default. The researcher's graph is exportable and the system is LLM-agnostic, so the way you connect ideas travels with you, with no lock-in to LIZA OS or to any single model.",
-      caps: [1, 1, 0, 0, 0],
+      missing: "Structure and reasoning",
+      gap: "The closest tool in spirit. Real knowledge graphs of how a researcher connects ideas. Two structural limits: a blank canvas with no typed primitives for the field, and AI plugins that retrieve text by similarity rather than reason over the structure of the field.",
+      liza: "Typed primitives (school, stance, rebuttal, supersession) on day one. AI that reasons over the structured field, not around it. Portable and LLM-agnostic by default.",
+      caps: [1, 1, 0, 0, 1],
     },
   ];
-  const capCols = ["Field map", "Researcher graph", "Cohort layer", "Judgment log", "Portable / LLM-agnostic"];
+  const capCols = ["Field map", "Researcher graph", "Typed primitives", "Judgment log", "Portable / LLM-agnostic"];
   return (
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
