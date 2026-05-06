@@ -280,9 +280,9 @@ function S04ThirdPath() {
 
 function S05Thesis() {
   const items = [
-    { title: "Knowledge is relational", body: "Polanyi's tacit knowledge. Nonaka's SECI. The neuroscience of social cognition. Real knowing is formed in relation — between people, ideas, and traditions. Not extracted in isolation.", Icon: Network },
+    { title: "Understand the field, don't flatten it", body: "A literature review is not a bibliography task. It is the act of mapping a field: the schools, the lineages, the disagreements between authors, the why-not-this decisions in past debates. The researcher needs to see that map.", Icon: Network },
     { title: "Augment, don't automate", body: "A tool that writes the thesis for the PhD is a regression. A tool that helps the researcher see further — and stay the author — is the only direction worth building.", Icon: Sparkles },
-    { title: "Flow as the metric", body: "Csíkszentmihályi's flow is where tacit knowledge actually forms. The system is judged by how much of the researcher's day it returns to deep work.", Icon: Brain },
+    { title: "The researcher stays the author", body: "Every claim, every judgment, every disagreement remains the researcher's own. The system surfaces trade-offs and counter-arguments inside the map. It does not write the work.", Icon: Brain },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -293,7 +293,7 @@ function S05Thesis() {
           Three commitments. <span style={{ color: `hsl(${TEAL})` }}>One worldview.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Grounded in a relational theory of knowledge — not a productivity gimmick. The product is downstream of the philosophy.
+          Built around how researchers actually work — not a productivity gimmick. The product is downstream of one conviction: the field comes first, the researcher stays the author.
         </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {items.map(i => {
