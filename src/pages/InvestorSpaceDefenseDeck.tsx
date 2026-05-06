@@ -635,10 +635,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the latest ICD revision, ECP disposition, and chief-engineer judgment</span>, the team still has to catch it, correct it, and reissue it &mdash; at late-phase rework cost.
+                If AI produces a plausible answer inside an ECR, design review, qualification, or acceptance workflow <span className="font-bold">without the latest ICD revision, ECP disposition, and chief-engineer judgment</span>, the team still has to catch it, correct it, and reissue it. At late-phase rework cost.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a <span className="font-bold" style={{ color: TEXT }}>€500M programme</span>, the GAO-observed 25-30% cost growth band implies <span className="font-bold" style={{ color: TEXT }}>€125&ndash;150M at risk</span>. A 1% reduction by closing the context gap is €5M back to EAC.
+                On a <span className="font-bold" style={{ color: TEXT }}>€500M programme</span>, the GAO-observed 25 to 30% cost growth band implies <span className="font-bold" style={{ color: TEXT }}>€125 to €150M at risk</span>. A 1% reduction by closing the context gap is €5M back to EAC.
               </p>
             </div>
           </div>
