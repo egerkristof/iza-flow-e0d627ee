@@ -336,8 +336,8 @@ function S04ThirdPath() {
       icon: X,
       meters: [
         { label: "Speed", v: 1 },
-        { label: "Field map", v: 1 },
-        { label: "Researcher as author", v: 5 },
+        { label: "Reaches the depth", v: 2 },
+        { label: "Extractable / portable", v: 1 },
         { label: "Compounds for the lab", v: 1 },
       ],
     },
