@@ -283,25 +283,48 @@ function S03Iceberg() {
 
 function S04ThirdPath() {
   const cols = [
-    { tag: "PATH 1", title: "Manual review", body: "Months in PDFs. Field flattened to a bibliography. Tacit knowledge stays in the researcher's head and dies with the cohort.", tone: RED },
-    { tag: "PATH 2", title: "Generative AI writes the thesis", body: "Speed, but the researcher is hollowed out. Judgment never forms. The institution loses its next generation of thinkers.", tone: AMBER },
-    { tag: "PATH 3", title: "LIZA OS — Research Memory Layer", body: "Map the field. Surface relations between schools, authors, lineages. Augment the researcher's own thinking inside the map. Compound across cohorts.", tone: TEAL },
+    {
+      tag: "PATH 1",
+      title: "Manual review",
+      what: "What it is: months in PDFs, hand-built bibliographies, notes in private docs.",
+      limit: "Why it falls short: 6 to 12 months per researcher. The field gets flattened into a citation list. Hierarchies between schools, lineages of ideas, and the disagreements that actually matter never get mapped. Tacit judgment lives in the researcher's head and leaves with them.",
+      tone: RED,
+    },
+    {
+      tag: "PATH 2",
+      title: "Generative AI as a shortcut",
+      what: "What it is: ChatGPT, Claude, Elicit, Consensus used to summarise papers and draft sections.",
+      limit: "Why it falls short: returns fluent prose and citation lists, not a map of the field. No memory of the lab, the prior cohort, or the open debates. The researcher reads less, judges less, and the thesis becomes the model's voice. Faster output, weaker thinker, no compounding asset for the group.",
+      tone: AMBER,
+    },
+    {
+      tag: "PATH 3",
+      title: "LIZA OS, the Research Memory Layer",
+      what: "What it is: a shared map of the field that the researcher builds with the system, not against it.",
+      limit: "Why it works: surfaces hierarchies between schools, lineages across decades, and tacit disagreements between authors. The researcher stays the author of every claim. Each cohort's reasoning is captured and compounds for the next, so the lab's judgment becomes an asset that grows.",
+      tone: TEAL,
+    },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="04" text="THE THIRD PATH" />
-        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Researchers are forced to <span style={{ color: `hsl(${RED})` }}>flatten</span> or be <span style={{ color: `hsl(${AMBER})` }}>replaced.</span><br />
           <span style={{ color: `hsl(${TEAL})` }}>There is a third option.</span>
         </h2>
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
+          Two paths exist today. Both are real attempts. Both fail the researcher in a specific, structural way. The third path keeps what each tries to do and removes the cost.
+        </p>
         <div className="grid grid-cols-3 gap-6 flex-1">
           {cols.map(c => (
-            <div key={c.tag} className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${c.tone} / 0.5)`, background: `hsl(${c.tone} / 0.04)` }}>
-              <p style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${c.tone})` }}>{c.tag}</p>
-              <p className="mt-3 mb-5 font-black" style={{ fontSize: 32, lineHeight: 1.15, color: TEXT }}>{c.title}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>{c.body}</p>
+            <div key={c.tag} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${c.tone} / 0.5)`, background: `hsl(${c.tone} / 0.04)` }}>
+              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${c.tone})` }}>{c.tag}</p>
+              <p className="mt-3 mb-4 font-black" style={{ fontSize: 26, lineHeight: 1.15, color: TEXT }}>{c.title}</p>
+              <p className="mb-3" style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>{c.what}</p>
+              <div className="my-3 h-px" style={{ background: `hsl(${c.tone} / 0.25)` }} />
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>{c.limit}</p>
             </div>
           ))}
         </div>
