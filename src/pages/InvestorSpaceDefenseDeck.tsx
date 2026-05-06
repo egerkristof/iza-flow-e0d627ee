@@ -2758,7 +2758,7 @@ function SlideOrgIntelligence() {
           <span style={{ color: `hsl(${GREEN})` }}>the substrate.</span>
         </h2>
         <p className="font-medium mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          The 90% the iceberg points at. Up close, it is six interacting layers. A aec knowledge graph is what holds them together.
+          The 90% the iceberg points at. Up close, it is six interacting layers. A Space &amp; Defence knowledge graph is what holds them together.
         </p>
 
         <div className="flex-1 min-h-0 grid gap-8 items-center" style={{ gridTemplateColumns: "5fr 7fr" }}>
