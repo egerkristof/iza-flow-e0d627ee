@@ -28,7 +28,7 @@ import IndustryPharmaPage from "./pages/marketing/IndustryPharma";
 import IndustrySpacePage from "./pages/marketing/IndustrySpace";
 import IndustrySatcomPage from "./pages/marketing/IndustrySatcom";
 import IndustryAECPage from "./pages/marketing/IndustryAEC";
-import IndustryDefensePortfolioPage from "./pages/marketing/IndustryDefensePortfolio";
+import IndustrySpaceDefensePage from "./pages/marketing/IndustrySpaceDefense";
 import IndustryBankingPage from "./pages/marketing/IndustryBanking";
 import IndustryAutomotivePage from "./pages/marketing/IndustryAutomotive";
 import IndustryProfessionalServicesPage from "./pages/marketing/IndustryProfessionalServices";
@@ -89,7 +89,7 @@ const App = () => (
             <Route path="/industries/regulated" element={<IndustryPharmaPage />} />
             <Route path="/industries/pharma" element={<Navigate to="/industries/regulated" replace />} />
             <Route path="/industries/space" element={<IndustrySpacePage />} />
-            <Route path="/industries/defense-portfolio" element={<IndustryDefensePortfolioPage />} />
+            <Route path="/industries/space-defense" element={<IndustrySpaceDefensePage />} />
             <Route path="/industries/satcom" element={<IndustrySatcomPage />} />
             <Route path="/industries/aec" element={<IndustryAECPage />} />
             <Route path="/industries/banking" element={<IndustryBankingPage />} />
