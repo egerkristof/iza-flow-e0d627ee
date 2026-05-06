@@ -86,10 +86,10 @@ export const presentationRoutes: PresentationRoute[] = [
   },
   {
     id: "space-defense-holdings",
-    title: "Space & Defence Holdings Investor Deck",
+    title: "Space & Defence Holdings Deck (Customer + Investor)",
     path: "/space-defense-holdings",
     sourcePath: "src/pages/SpaceDefenseHoldingsDeck.tsx",
-    description: "Generic strategic-round deck for federated Space & Defence holding companies (4iG SDT, Hensoldt, Leonardo, Saab, KNDS, Rheinmetall portfolios). Federation memory layer across Space, Aero, Land Systems, Weapons & Ammunition, and Cyber divisions. Wedge: post-merger engineering knowledge capture across newly-acquired subsidiaries; NATO AQAP / AS9100 / ISO 27001 / ECSS as executable standards. Two-door CTA: 30-day division pilot or strategic stake to co-define the federation reference architecture.",
+    description: "Generic dual-path deck for federated Space & Defence holding companies (Hensoldt, Leonardo, Saab, KNDS, Rheinmetall, 4iG SDT-style portfolios). One context layer across the full programme lifecycle: capture & bid, engineering & qualification, sustainment & ILS. Wedge: post-merger engineering knowledge capture across newly-acquired subsidiaries; NATO AQAP / AS9100 / ISO 27001 / ECSS as executable standards. Two-door CTA: 30-day lifecycle pilot inside one subsidiary, or €3M strategic stake in the platform that scales it across the holding.",
     component: SpaceDefenseHoldingsDeck,
     showInAdmin: true,
   },
