@@ -462,29 +462,25 @@ function S07Loop() {
     {
       step: "1 · Map",
       short: "See the field, not a list.",
-      researcher: "Drop in your corpus: PDFs, citations, your supervisor's reading list, your own past notes. LIZA OS clusters the literature into schools of thought, surfaces lineages of ideas across decades, and flags where authors actually disagree. The PhD walks into a structured field on day one.",
-      institution: "The lab gets a living map of its domain that any new student inherits. The map is no longer locked in one professor's head.",
+      researcher: "Drop in your corpus: PDFs, citations, your reading list, your own past notes. LIZA OS clusters the literature into schools of thought, surfaces lineages of ideas across decades, and flags where authors actually disagree. You walk into a structured field on day one.",
       Icon: Network,
     },
     {
       step: "2 · Anchor",
       short: "Codify your stance.",
       researcher: "Your hypothesis, framework, and assumptions become explicit anchors the system reasons against. Every claim is tied to your position, not a generic average of the internet.",
-      institution: "The group's methodology, prior critiques, and standards of evidence are captured as shared anchors that newcomers can read, challenge, and extend.",
       Icon: BookOpen,
     },
     {
       step: "3 · Augment",
       short: "Think further, faster.",
-      researcher: "The researcher stays the author. The system surfaces counter-arguments, trade-offs, gaps in their reading, and lineages they have not yet placed. Less time searching and re-summarising. More time judging and writing.",
-      institution: "Cohorts converge on a shared standard for AI-augmented research. The institution can show how AI is used to deepen judgment, not replace it.",
+      researcher: "You stay the author. The system surfaces counter-arguments, trade-offs, gaps in your reading, and lineages you have not yet placed. Less time searching and re-summarising. More time judging and writing.",
       Icon: Sparkles,
     },
     {
       step: "4 · Compound",
       short: "Knowledge accumulates.",
-      researcher: "Every reading, note, and decision feeds back into the map. The researcher's own thinking becomes a structured asset they own across projects, not a folder of dead PDFs.",
-      institution: "Each cohort hands off a richer field map and a deeper judgment log to the next. The lab's reasoning becomes a compounding institutional asset, not something that leaves with each graduate.",
+      researcher: "Every reading, note, and decision feeds back into the map. Your own thinking becomes a structured, portable asset you own across projects, not a folder of dead PDFs. Exportable. LLM-agnostic. No lock-in.",
       Icon: RefreshCw,
     },
   ];
@@ -497,7 +493,7 @@ function S07Loop() {
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          One loop, two beneficiaries. Each step does work for the individual researcher today, and leaves a structured asset behind for the lab and the institution.
+          One loop. One researcher. Each step compounds the next: a structured field, your stance against it, AI reasoning inside it, and a portable asset that grows with every reading.
         </p>
         <div className="relative flex-1">
           {/* Connector spine */}
@@ -519,23 +515,13 @@ function S07Loop() {
                   <Icon size={24} />
                 </div>
                 <p className="font-black" style={{ fontSize: 22, color: TEXT }}>{s.step}</p>
-                <p className="mt-1 mb-3 font-bold" style={{ fontSize: 16, color: `hsl(${TEAL})` }}>{s.short}</p>
-                <div className="rounded-lg p-3 mb-3" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.18)` }}>
-                  <p className="mb-1" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>For the researcher</p>
-                  <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.45 }}>{s.researcher}</p>
-                </div>
-                <div className="rounded-lg p-3" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-                  <p className="mb-1" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", color: SUBTLE, textTransform: "uppercase" }}>For the institution</p>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>{s.institution}</p>
-                </div>
+                <p className="mt-1 mb-4 font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>{s.short}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>{s.researcher}</p>
               </div>
             );
           })}
           </div>
         </div>
-        <p className="mt-6 text-center" style={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.2em", color: MUTED, textTransform: "uppercase" }}>
-          Individual productivity today · Institutional memory tomorrow
-        </p>
       </div>
       <SlideBar />
     </div>
