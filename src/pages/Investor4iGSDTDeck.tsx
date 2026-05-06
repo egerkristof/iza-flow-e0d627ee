@@ -93,7 +93,7 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · AEC · Strategic Round
+            LIZA OS · 4iG SDT · Strategic Round
           </span>
         </div>
 
@@ -119,12 +119,12 @@ function Slide01() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE SHAPE — THE SHAPE OF THE COMPANY (AEC framing)
+// SLIDE SHAPE — THE SHAPE OF THE COMPANY (4iG SDT framing)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideShape() {
   const verticals = [
-    { label: "AEC", sub: "ECR · Qualification packages · Handover", active: true, color: TEAL },
+    { label: "4iG SDT", sub: "ECR · Qualification · Handover", active: true, color: TEAL },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: BLUE },
     { label: "GTM", sub: "Sales · CS · Onboarding", active: false, color: MUTED },
     { label: "Prof. Services", sub: "Delivery · Methods", active: false, color: MUTED },
@@ -142,7 +142,7 @@ function SlideShape() {
           One OS. <span style={{ color: `hsl(${TEAL})` }}>4iG SDT is the spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. You are investing in AEC specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
+          We build a single context layer and deploy it vertical-by-vertical. You are investing in 4iG SDT specifically — and benefiting from platform leverage already shipping into pharma, GTM, and professional services.
         </p>
 
         <div className="flex-1 flex flex-col justify-center">
@@ -267,7 +267,7 @@ function Slide02() {
       {/* Header */}
       <div className="relative z-20 px-28 pt-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          The Context Gap in AEC
+          The Context Gap at 4iG SDT
         </p>
         <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
           The Context Gap.
@@ -372,7 +372,7 @@ function Slide02() {
 // SLIDE 03 — WHAT THAT COSTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const AEC_GAP_CASES = [
+const SDT_GAP_CASES = [
   {
     name: "General Contractor",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
@@ -402,7 +402,7 @@ const AEC_GAP_CASES = [
   },
 ];
 
-const AEC_COST_BENCHMARKS = [
+const SDT_COST_BENCHMARKS = [
   {
     value: "$177.5B",
     label: "estimated annual labor cost impact in the global defense engineering industry from rework, conflict resolution, and searching for project data",
@@ -491,7 +491,7 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in AEC
+          Where Missing Context Shows Up across 4iG SDT
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           The same iceberg, in every persona. <span style={{ color: `hsl(${TEAL})` }}>What is captured is dwarfed by what runs the work.</span>
@@ -599,7 +599,7 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs in AEC
+          What Missing Context Costs across 4iG SDT
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
           Missing context becomes expensive because it creates <span style={{ color: `hsl(${WARM})` }}>avoidable rework.</span>
@@ -621,7 +621,7 @@ function Slide04Cost() {
 
           <div className="rounded-[28px] border px-7 py-6" style={{ borderColor: `hsl(${TEAL} / 0.18)`, background: `hsl(${TEAL} / 0.04)` }}>
             <div className="grid grid-cols-3 gap-3 mb-4">
-              {AEC_COST_BENCHMARKS.map((item) => (
+              {SDT_COST_BENCHMARKS.map((item) => (
                 <div key={item.label} className="rounded-xl px-4 py-4 min-h-[172px]" style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.12)` }}>
                   <p className="font-black" style={{ fontSize: 31, color: `hsl(${TEAL})`, lineHeight: 1 }}>{item.value}</p>
                   <p className="font-bold mt-2" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>{item.label}</p>
@@ -871,7 +871,7 @@ function Slide05() {
             </div>
 
             <p className="mt-4 text-center" style={{ fontSize: 14, color: MUTED, maxWidth: 560, lineHeight: 1.45 }}>
-              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the AEC operating experience.</span>
+              LIZA provides the reusable knowledge loop. <span style={{ color: `hsl(${GOLD})`, fontWeight: 700 }}>Strategic capital turns it into the 4iG SDT operating experience.</span>
             </p>
           </div>
 
@@ -920,7 +920,7 @@ function SlideArchitecture() {
   const existingSystems = [
     { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
     { name: "Aero Division / Newforma", layer: "ECR & Markup", color: BLUE },
-    { name: "Revit / Space Division", layer: "Design / BIM", color: BLUE },
+    { name: "Catia / Siemens NX", layer: "Design / BIM", color: BLUE },
     { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
     { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
   ];
@@ -1110,7 +1110,7 @@ function SlideArchitecture() {
 function Slide06() {
   const players = [
     { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
-    { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
+    { name: "Palantir Foundry / Helix", funding: "Public", round: "Public · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
     { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
     { name: "Aero Division (4iG SDT)", funding: "Strategic", round: "4iG SDT portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
   ];
@@ -1166,7 +1166,7 @@ function Slide06() {
               <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every Defense & Space AI stack will need: spec amendments, ECR precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into AEC.
+              The instruction layer every Defense & Space AI stack will need: spec amendments, ECR precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into Defense & Space.
             </p>
           </div>
         </div>
@@ -1192,7 +1192,7 @@ function Slide06() {
               ))}
             </div>
             <p className="mt-3" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.35 }}>
-              Sources: Grand View Research, Defense Engineering Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, BIM Market, 2025-2030: $15.42B by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
+              Sources: Grand View Research, Defense Engineering Software Market, 2026-2033: $7.67B in 2025, $16.37B by 2033. MarketsandMarkets, Defense PLM, 2025-2030: $15B+ by 2030. SAM/SOM are LIZA OS estimates based on the project execution, review, and governance layer inside these markets.
             </p>
           </div>
 
@@ -1231,7 +1231,7 @@ function SlideVerticalization() {
       <div className="relative z-10 flex flex-col h-full px-28 pt-14 pb-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 26, color: `hsl(${GOLD})` }}>Strategic Pivot</p>
         <h2 className="font-black mb-5" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          LIZA is not selling another AEC use case. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
+          LIZA is not selling another defense IT use case. <span style={{ color: `hsl(${GOLD})` }}>It is verticalizing the knowledge loop.</span>
         </h2>
 
         <div className="grid grid-cols-[0.92fr_1.08fr] gap-7 flex-1 min-h-0">
@@ -1503,7 +1503,7 @@ function Slide08() {
             The horizontal infrastructure works. <span style={{ color: `hsl(${GREEN})` }}>The next risk is vertical adoption.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. AEC is where the experience now needs to become native.
+            Cross-industry pilots proved the same loop: expert judgment must be captured, enforced, and updated. Defense & Space is where the experience now needs to become native.
           </p>
         </div>
 
@@ -1593,7 +1593,7 @@ function Slide09() {
   ];
 
   const expandInto = [
-    { name: "BIM coordination & clash review", col: TEAL },
+    { name: "Mission systems integration & interface review", col: TEAL },
     { name: "Spec & code compliance", col: "215 25% 50%" },
     { name: "Cost estimating & change orders", col: GOLD },
     { name: "Safety & QA/QC inspections", col: GREEN },
@@ -2160,7 +2160,7 @@ function Slide13() {
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Strategic Round + Partnership</p>
           <h2 className="font-black mb-3" style={{ fontSize: 96, color: TEXT }}>€3M</h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + AEC beachhead build-out
+            Strategic minority &nbsp;·&nbsp; 18-month runway &nbsp;·&nbsp; self-serve productization + 4iG SDT beachhead build-out
           </p>
         </div>
 
@@ -2169,7 +2169,7 @@ function Slide13() {
           {[
             { label: "Portfolio-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "Division Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Aero, Space, Land Systems, BIM bridges, lighthouse deployments", color: GOLD },
+            { label: "Division Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Aero, Space, Land Systems, PLM bridges, lighthouse deployments", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -2235,7 +2235,7 @@ function SlideAppendixDivider() {
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE — THE CONTEXT GAP, EXEMPLIFIED (AEC)
+// SLIDE — THE CONTEXT GAP, EXEMPLIFIED (4iG SDT)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideContextGapExemplified() {
@@ -2256,7 +2256,7 @@ function SlideContextGapExemplified() {
       n: 3,
       nature: "CONTRADICTION",
       title: "Two clash rule sets disagree",
-      body: "The BIM Execution Plan locks one tolerance. The QS team's takeoff template assumes another. Both retrievable. Only one is correct for this trade package.",
+      body: "The Mission Assurance Plan locks one tolerance. The QS team's takeoff template assumes another. Both retrievable. Only one is correct for this trade package.",
     },
     {
       n: 4,
@@ -2355,7 +2355,7 @@ function SlideContextGapExemplified() {
               style={{ fontSize: 20, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
               <p className="mb-5">The exterior wall assembly is detailed for <Mark n={1}>Type IV-B fire rating</Mark> as required by the project specification.</p>
               <p className="mb-5">The curtain-wall connections were modelled using <Mark n={2}>the standard parametric family.</Mark>.</p>
-              <p className="mb-5">Coordination clashes were resolved per <Mark n={3}>the project's standard clash-resolution rules</Mark> in the BIM execution plan.</p>
+              <p className="mb-5">Coordination clashes were resolved per <Mark n={3}>the project's standard clash-resolution rules</Mark> in the mission assurance plan.</p>
               <p style={{ color: MUTED }}><Mark n={4}>Overall, the enclosure is constructible as drawn.</Mark></p>
             </div>
 
@@ -2420,7 +2420,7 @@ function SlideContextGapExemplified() {
                   </p>
                 </div>
                 <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
-                  ICDs. Mission specs. BIM model. Code references. Standard details.
+                  ICDs. Mission specs. CAD model. Standards references. ECSS/AQAP details.
                 </p>
                 <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
                   Indexable. RAG-friendly. Insufficient for an AHJ submission.
@@ -2446,7 +2446,7 @@ function SlideContextGapExemplified() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE — PEOPLE AS NODES (AEC)
+// SLIDE — PEOPLE AS NODES (4iG SDT)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlidePeopleAsNodes() {
@@ -2477,7 +2477,7 @@ function SlidePeopleAsNodes() {
   const artifacts = [
     { label: "ICDs", x: 60, y: 60 },
     { label: "Mission specs", x: 240, y: 50 },
-    { label: "BIM model", x: 80, y: 170 },
+    { label: "System architecture", x: 80, y: 170 },
     { label: "Code refs", x: 240, y: 180 },
     { label: "ECRs", x: 50, y: 280 },
     { label: "Variances", x: 240, y: 300 },
@@ -2706,7 +2706,7 @@ function SlidePeopleAsNodes() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLIDE — ORGANIZATIONAL INTELLIGENCE UNPACKED (AEC)
+// SLIDE — ORGANIZATIONAL INTELLIGENCE UNPACKED (4iG SDT)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function SlideOrgIntelligence() {
@@ -2844,8 +2844,8 @@ const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
   { id: 3, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
-  { id: 4, title: "Where Missing Context Shows Up in AEC", component: <Slide03 /> },
-  { id: 5, title: "What Missing Context Costs in AEC", component: <Slide04Cost /> },
+  { id: 4, title: "Where Missing Context Shows Up across 4iG SDT", component: <Slide03 /> },
+  { id: 5, title: "What Missing Context Costs across 4iG SDT", component: <Slide04Cost /> },
   { id: 6, title: "Early Validation", component: <Slide08 /> },
   { id: 7, title: "Why Now", component: <SlideWhyNow /> },
   { id: 8, title: "The Context Layer", component: <Slide05 /> },
@@ -2867,7 +2867,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function AECInvestorDeck() {
+export default function Investor4iGSDTDeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2982,7 +2982,7 @@ export default function AECInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-4iG-SDT-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -3029,9 +3029,9 @@ export default function AECInvestorDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · AEC Investor Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · 4iG SDT Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-4iG-SDT-Investor-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -3067,13 +3067,13 @@ export default function AECInvestorDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · AEC Investor Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · 4iG SDT Investor Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-AEC-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-4iG-SDT-Investor-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
