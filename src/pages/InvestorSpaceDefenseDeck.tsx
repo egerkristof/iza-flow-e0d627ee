@@ -600,10 +600,10 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs across Space & Defence Holdings
+          What Missing Context Costs across the Programme Lifecycle
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          In Space &amp; Defence, missing context becomes expensive because every late ECR, ICD revision, and qualification finding compounds <span style={{ color: `hsl(${WARM})` }}>cost growth, schedule slip, and certification risk.</span>
+          In Space &amp; Defence, missing context compounds at every stage. Lost bids, late ECRs, ICD revisions, and qualification findings become <span style={{ color: `hsl(${WARM})` }}>lower win-rate, cost growth, schedule slip, and certification risk.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
