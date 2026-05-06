@@ -3,7 +3,7 @@ import { useIsMobileViewport, useIsPortrait, useSwipe } from "@/hooks/use-mobile
 import {
   ArrowRight, BookOpen, Brain, ChevronLeft, ChevronRight, Eye, FileText,
   GitBranch, Globe, Grid3x3, Layers, Lightbulb, Maximize2, Network,
-  RefreshCw, Sparkles, Target, Users, Workflow, X,
+  RefreshCw, Sparkles, Target, Users, Workflow, X, Check, AlertTriangle,
 } from "lucide-react";
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
