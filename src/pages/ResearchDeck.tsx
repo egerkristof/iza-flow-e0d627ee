@@ -637,9 +637,9 @@ function S08Landscape() {
 function S09Architecture() {
   const layers = [
     { tag: "L4", scope: "Reasoning", title: "Augmentation Loop", body: "Counter-arguments, gaps, and trade-offs surface in dialogue. The researcher stays the author of every claim.", Icon: Workflow, opacity: 1.0 },
-    { tag: "L3", scope: "Cohort", title: "Commons of the Lab", body: "Group's collective reading, dialogues, and disagreements compound across cohorts. Tacit knowledge survives the PhD.", Icon: Users, opacity: 0.85 },
-    { tag: "L2", scope: "Researcher", title: "Stance & Judgment Log", body: "The researcher's framework, assumptions, prior work, and why-not-this decisions captured as executable context.", Icon: FileText, opacity: 0.7 },
-    { tag: "L1", scope: "Corpus", title: "Field Map", body: "Papers, books, citations, datasets — ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers, opacity: 0.55 },
+    { tag: "L3", scope: "Researcher", title: "Stance & Judgment Log", body: "Your framework, assumptions, prior work, and why-not-this decisions captured as executable context. Portable and LLM-agnostic.", Icon: FileText, opacity: 0.85 },
+    { tag: "L2", scope: "Structure", title: "Typed Primitives", body: "School, stance, rebuttal, supersession, why-not-this. The ontology of how a field actually argues with itself.", Icon: GitBranch, opacity: 0.7 },
+    { tag: "L1", scope: "Corpus", title: "Field Map", body: "Papers, books, citations, datasets ingested and resolved into schools, lineages, and authors with their disagreements.", Icon: Layers, opacity: 0.55 },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
@@ -650,7 +650,7 @@ function S09Architecture() {
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, researcher, cohort, reasoning — each compounding into the next.
+          The Research Memory Layer is not a chatbot wrapped around papers. It is a stack: corpus, structure, researcher, reasoning. Each compounding into the next.
         </p>
         <div className="flex-1 flex gap-10 items-stretch">
           {/* Stacked layers */}
