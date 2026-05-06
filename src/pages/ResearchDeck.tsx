@@ -459,21 +459,21 @@ function S09Architecture() {
 
 function S10SECI() {
   const phases = [
-    { tag: "Socialisation", body: "Tacit → tacit. Reading group dialogue, advisor-student conversation. The system listens, never replaces.", color: TEAL },
-    { tag: "Externalisation", body: "Tacit → explicit. Judgments, disagreements, and why-not-this decisions captured as first-class objects.", color: MINT },
-    { tag: "Combination", body: "Explicit → explicit. The field map links externalised judgments across schools, lineages, and decades.", color: NAVY },
-    { tag: "Internalisation", body: "Explicit → tacit. The next cohort starts from the field map and forms their own judgment faster, deeper.", color: TEAL },
+    { tag: "Capture the conversation", body: "Reading group discussions, advisor-student exchanges, lab debates. The system listens and keeps them, instead of letting them disappear into private notebooks.", color: TEAL },
+    { tag: "Externalise the judgment", body: "The disagreements, the why-not-this decisions, the half-formed positions become first-class objects on the field map — not lost in a drawer.", color: MINT },
+    { tag: "Connect across the field", body: "Those judgments get linked to the schools, the lineages, the authors they argue with. The map deepens with every reading.", color: NAVY },
+    { tag: "Hand off to the next cohort", body: "The next PhD does not start from zero. They inherit the group's map and judgment, and form their own positions from there — faster, and deeper.", color: TEAL },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="10" text="THE LOOP THAT MAKES KNOWLEDGE" />
+        <Eyebrow n="10" text="HOW THE GROUP'S MEMORY FORMS" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          SECI as product. <span style={{ color: `hsl(${TEAL})` }}>Not a metaphor — a mechanism.</span>
+          The conversation is the work. <span style={{ color: `hsl(${TEAL})` }}>We keep it.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Nonaka's SECI loop describes how knowledge is actually created in groups. LIZA OS implements each phase as a primitive: dialogue capture, externalisation of judgment, combination through the field map, and re-internalisation in the next cohort.
+          Most of what makes a research group good lives in conversation: between supervisor and student, in reading groups, in late corridor debates. Today it dies with the cohort. LIZA OS treats that conversation as the asset and carries it forward.
         </p>
         <div className="grid grid-cols-4 gap-5 flex-1">
           {phases.map((p, i) => (
