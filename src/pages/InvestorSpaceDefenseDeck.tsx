@@ -1975,11 +1975,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "GC or A/E selects one high-value workflow (e.g. ECR response, submittal review, spec compliance)",
-        "Platform guides structured capture from 2-3 senior PMs / principals",
-        "LIZA auto-generates project-aware playbooks grounded in the project's spec & addenda",
+        "Subsidiary engineering lead selects one high-value workflow (e.g. ECR response, qualification review, ICD compliance)",
+        "Platform guides structured capture from 2-3 chief engineers / programme leads",
+        "LIZA auto-generates programme-aware playbooks grounded in the programme's ICDs & revisions",
       ],
-      output: "3-5 project-aware playbooks ready",
+      output: "3-5 programme-aware playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1987,11 +1987,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Project team self-serves: run playbooks against live ECRs, qualification packages, and standards questions",
-        "Real projects, real owners, real deliverables",
+        "Programme team self-serves: run playbooks against live ECRs, qualification packages, and standards questions",
+        "Real programmes, real customers, real deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior PM vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: chief engineer vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -1999,11 +1999,11 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per ECR, rework avoided, schedule risk reduced",
-        "Project memory self-improves from every execution",
-        "Business case for firm-wide rollout with real project numbers",
+        "Automated review: hours saved per ECR, rework avoided, milestone risk reduced",
+        "Programme memory self-improves from every execution",
+        "Business case for portfolio-wide rollout with real programme numbers",
       ],
-      output: "ROI proven. Expansion decision with data.",
+      output: "ROI proven. Portfolio expansion decision with data.",
     },
   ];
 
