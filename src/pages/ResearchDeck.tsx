@@ -177,44 +177,44 @@ function S01Cover() {
 function S02WhoBreaks() {
   const personas = [
     {
-      who: "PhD candidate",
-      today: "Spends 6 to 12 months building a literature review that flattens the field into a bibliography.",
-      withAI: "Asks ChatGPT to summarise papers. Gets fluent prose with no map of the field underneath. The judgment never forms.",
-      win: "Maps the field in weeks. Stays the author of every claim.",
+      who: "Day one in a new field",
+      today: "6 to 12 months in PDFs to build a private bibliography. The map of the field stays in your head, partially.",
+      withAI: "ChatGPT gives you fluent summaries. Obsidian gives you a blank vault. Either way, you still hand-build the structure of the field.",
+      win: "Walk into a structured field map. Schools, lineages, and disagreements already typed. You start judging, not cataloguing.",
       Icon: BookOpen,
     },
     {
-      who: "Early-career researcher",
-      today: "Reads in isolation. Cannot see the lineages of disagreement between authors.",
-      withAI: "Generative tools return summaries, not relations. Schools, debates, and why-not-this decisions stay invisible.",
-      win: "Surfaces hierarchies, lineages, and the disagreements that actually constitute the field.",
+      who: "Reading paper number 200",
+      today: "You sense the disagreements between authors but cannot see them. Every reread is a tax.",
+      withAI: "Smart Connections shows related notes by similarity. It does not show you who argues against whom or which decision a school rejected.",
+      win: "Disagreement, supersession, and rebuttal as first-class objects. The structure of the debate is visible.",
       Icon: GitBranch,
     },
     {
-      who: "PI / research group lead",
-      today: "Tacit judgment dies between cohorts. Each new student restarts from zero.",
-      withAI: "Each researcher prompts their own private chat. Nothing accrues to the group. The lab has no shared memory.",
-      win: "The group's reasoning becomes a compounding asset across cohorts.",
-      Icon: Users,
+      who: "Forming your own position",
+      today: "Your why-not-this decisions live in your head and in scattered notes. They rarely make it into the thesis.",
+      withAI: "Plugins retrieve text. They do not capture how you reasoned to discard an alternative or place a school against another.",
+      win: "The judgment log is the work product. Every decision is captured against the structured map as you reason.",
+      Icon: Brain,
     },
     {
-      who: "Faculty / Vice-Rector",
-      today: "No institutional view of how AI is actually being used in research.",
-      withAI: "Generative AI writes the thesis. The next generation of researchers is hollowed out before it forms.",
-      win: "An institutional standard for AI-augmented research that protects judgment.",
-      Icon: Globe,
+      who: "Owning what you built",
+      today: "Your reading and notes are yours, but your thinking is not portable across projects.",
+      withAI: "Obsidian solved one half: markdown on your disk, no lock-in. The other half is open: the structure of how you think about a field travels with no one.",
+      win: "Your field map and judgment log are exportable, LLM-agnostic, and travel with you across projects, labs, and decades.",
+      Icon: GitBranch,
     },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="02" text="WHO THIS BREAKS FOR" />
+        <Eyebrow n="02" text="FOUR MOMENTS IN ONE PHD" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          Four people. <span style={{ color: `hsl(${TEAL})` }}>One missing layer.</span>
+          The same researcher. <span style={{ color: `hsl(${TEAL})` }}>Four places today's tools quietly break.</span>
         </h2>
         <p className="mb-6" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Mapping a field is not a bibliography task. Today researchers do it alone. With generative AI they do it faster, but flatter. The map of the field still does not exist.
+          One individual researcher across a PhD. Obsidian solved the canvas. AI assistants solved retrieval. Neither solved the structure of the field, the structure of disagreement, or the structure of judgment.
         </p>
         <div className="grid grid-cols-2 gap-5 flex-1">
           {personas.map(p => {
@@ -231,7 +231,7 @@ function S02WhoBreaks() {
                   <span style={{ color: TEXT, fontWeight: 800 }}>Today: </span>{p.today}
                 </p>
                 <p className="mb-2" style={{ fontSize: 16, color: MUTED }}>
-                  <span style={{ color: `hsl(${RED})`, fontWeight: 800 }}>Today with AI: </span>{p.withAI}
+                  <span style={{ color: `hsl(${AMBER})`, fontWeight: 800 }}>With AI / Obsidian: </span>{p.withAI}
                 </p>
                 <p style={{ fontSize: 16, color: TEXT }}>
                   <span style={{ color: `hsl(${TEAL})`, fontWeight: 800 }}>With LIZA OS: </span>{p.win}
