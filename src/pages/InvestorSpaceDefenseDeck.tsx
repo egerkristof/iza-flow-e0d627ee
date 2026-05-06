@@ -1109,16 +1109,16 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
-    { name: "Palantir Foundry / Helix", funding: "Public", round: "Public · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
-    { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Aero Division (Space & Defence Holdings)", funding: "Strategic", round: "Space & Defence Holdings portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
+    { name: "Palantir Foundry / Helix", funding: "Public", round: "Public · 2024", what: "Operational data ontology & risk insights. Reads programme data, doesn't encode chief-engineer judgment.", color: SEAFOAM },
+    { name: "Siemens Xcelerator AI", funding: "Public", round: "Siemens DI · 2024", what: "PLM-embedded copilots inside Teamcenter / NX. Strong workflow position, no governed standards layer across acquisitions.", color: BLUE },
+    { name: "Anduril Lattice / Helsing", funding: "$1.5B+ / €450M", round: "Late stage · 2024", what: "Mission autonomy stacks. Operate downstream of engineering memory, not on it.", color: GREEN },
+    { name: "Scale AI · Donovan", funding: "Public", round: "Defense AI · 2024", what: "LLM workflows on top of mission data. Strong on operations, not on programme & qualification memory.", color: GOLD },
   ];
 
   const moatLayers = [
-    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every Defense & Space AI tool will need.", icon: <Cpu size={20} /> },
-    { layer: "Compounding Project Memory", desc: "ECR precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Space & Defence Holdings ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
+    { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, standards-aware injection, drift detection. The plumbing every Defence & Space AI stack will need.", icon: <Cpu size={20} /> },
+    { layer: "Compounding Programme Memory", desc: "ECR precedent, ICD revisions, customer standards, qualification interpretations — graph deepens programme-by-programme. Switching cost grows organically.", icon: <Layers size={20} /> },
+    { layer: "Federated Conglomerate Distribution", desc: "Designed for multi-subsidiary defence & space holdings. One context layer across acquired engineering memory, not per-tool integration.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -1162,11 +1162,11 @@ function Slide06() {
           <div className="w-px h-16 shrink-0" style={{ background: `hsl(${TEAL} / 0.2)` }} />
           <div className="flex-1">
             <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-              Others read drawings and contracts.{" "}
-              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your firm decides.</span>
+              Others read documents and predict risk.{" "}
+              <span style={{ color: `hsl(${TEAL})` }}>LIZA encodes how your engineering authority decides.</span>
             </p>
             <p className="mt-1" style={{ fontSize: 17, color: MUTED }}>
-              The instruction layer every Defense & Space AI stack will need: spec amendments, ECR precedent, code interpretations, owner standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into Defense & Space.
+              The instruction layer every Defence & Space AI stack will need: ICD revisions, ECR precedent, qualification interpretations, customer standards — versioned and queryable. Same architecture validated across regulated industries, now being focused into Defence & Space.
             </p>
           </div>
         </div>
