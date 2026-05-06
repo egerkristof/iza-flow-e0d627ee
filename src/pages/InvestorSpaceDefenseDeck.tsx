@@ -422,8 +422,8 @@ const SDT_COST_BENCHMARKS = [
 
 const __VERTICAL_PERSONAS = [
   {
-    "id": "gc",
-    "name": "General Contractor",
+    "id": "prime",
+    "name": "Prime / System Integrator",
     "color": "RED",
     "iconName": "Briefcase",
     "above": [
@@ -433,50 +433,50 @@ const __VERTICAL_PERSONAS = [
       "ICDs"
     ],
     "below": [
-      "Subcontractor tolerances on this trade",
-      "Sequencing rationale from the last similar job",
-      "Field-edit patterns the foreman never wrote down"
+      "Subcontractor tolerances on this build",
+      "Integration rationale from the last similar program",
+      "Test-floor workarounds the lead tech never wrote down"
     ],
-    "breaks": "Rework. Schedule slip. Margin loss."
+    "breaks": "Rework. Milestone slip. EAC erosion."
   },
   {
-    "id": "ae",
-    "name": "Architecture / Engineering",
+    "id": "engineering",
+    "name": "Engineering Authority",
     "color": "WARM",
     "iconName": "Shield",
     "above": [
       "Design intent",
-      "Code references",
-      "Spec sections"
+      "Standards references (AS9100, ECSS, AQAP)",
+      "ICD sections"
     ],
     "below": [
-      "AHJ interpretation on this jurisdiction",
-      "Why this detail, not the catalog one",
-      "Senior PE judgment on this assembly"
+      "Certifying-authority interpretation on this program",
+      "Why this margin, not the handbook one",
+      "Chief engineer judgment on this subsystem"
     ],
-    "breaks": "Liability exposure. Redesign cycles."
+    "breaks": "Non-conformance exposure. Redesign cycles."
   },
   {
-    "id": "owner",
-    "name": "Owner / Developer",
+    "id": "customer",
+    "name": "Customer / Programme Office",
     "color": "GOLD",
     "iconName": "Database",
     "above": [
-      "Standards",
-      "As-builts",
-      "O&M manuals"
+      "Customer standards",
+      "As-built configuration",
+      "ILS / sustainment manuals"
     ],
     "below": [
-      "Owner standards exceptions and rationale",
-      "Warranty patterns from the prior asset",
-      "Operator preferences not in the brief"
+      "Customer standards exceptions and rationale",
+      "Reliability patterns from the prior platform",
+      "Operator preferences not in the requirements"
     ],
-    "breaks": "Operational risk. Warranty disputes."
+    "breaks": "Operational risk. Warranty and LCC disputes."
   }
 ] as const;
 
 function Slide03() {
-  const alsoApplies = ["Cost estimation","Procurement","MEP coordination","Permitting","Commissioning","Facilities & ops"];
+  const alsoApplies = ["Bid & estimation","Procurement","Subsystem integration","Qualification","Acceptance","Sustainment & ILS"];
   const renderIcon = (name: string, color: string) => {
     const props = { size: 20, style: { color: `hsl(${color})` } };
     if (name === "Briefcase") return <Briefcase {...props} />;
