@@ -401,7 +401,7 @@ function S08Landscape() {
           Existing tools handle artifacts. <span style={{ color: `hsl(${TEAL})` }}>None handle the field.</span>
         </h2>
         <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          Five categories of tooling already exist in research workflows. Each addresses a slice. None hold the relational map of a field, the cohort's tacit judgment, or the institution's compounding memory.
+          Five categories of tooling already exist in research workflows. Each addresses a slice. None hold the map of the field, the group's accumulated judgment, or the institution's memory across cohorts.
         </p>
         <div className="flex-1 grid grid-cols-1 gap-3">
           {tools.map(t => (
