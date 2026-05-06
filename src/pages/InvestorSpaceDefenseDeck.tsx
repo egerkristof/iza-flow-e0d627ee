@@ -221,7 +221,7 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const above: { x: number; label: string }[] = ["Mission specs","ICDs","ECRs","Qualification packages"].map((label: string, i: number) => ({
+  const above: { x: number; label: string }[] = ["Specifications","Interface documents","Change requests","Test & qualification reports"].map((label: string, i: number) => ({
     x: 720 + i * 165,
     label,
   }));
@@ -231,31 +231,31 @@ function Slide02() {
       "items": [
         "Why this margin, not the handbook one",
         "Chief engineer rule-of-thumb on this subsystem",
-        "Trade-offs already settled at PDR"
+        "Trade-offs already settled in earlier reviews"
       ]
     },
     {
-      "title": "Standards & Certifying-Authority Memory",
+      "title": "Standards & Authority Memory",
       "items": [
-        "NATO / national authority interpretations on this program",
-        "Prior qualification findings and conditions",
-        "Customer / DCMA precedent on edge cases"
+        "Authority interpretations applied on this programme",
+        "Prior audit and qualification findings",
+        "Customer precedent on edge cases"
       ]
     },
     {
       "title": "Producibility & Test Practice",
       "items": [
-        "Subcontractor-specific build tolerances",
-        "Integration sequencing learned from the last article",
-        "ECR / NCR patterns from similar platforms"
+        "Supplier-specific build tolerances",
+        "Integration sequencing learned from the last build",
+        "Change and non-conformance patterns from similar platforms"
       ]
     },
     {
       "title": "Cross-Discipline Decisions",
       "items": [
-        "ICD calls not yet redlined",
-        "Customer sign-offs and rationale",
-        "Live ECP and budget posture"
+        "Interface calls not yet redlined",
+        "Customer sign-offs and their rationale",
+        "Live cost & change posture across teams"
       ]
     }
   ];
@@ -267,13 +267,13 @@ function Slide02() {
       {/* Header */}
       <div className="relative z-20 px-28 pt-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          The Context Gap at Space & Defence Holdings
+          The Context Gap in Engineering-Led Organisations
         </p>
         <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
           The Context Gap.
         </h2>
         <p className="font-medium" style={{ fontSize: 24, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
-          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how a Space &amp; Defence organisation actually decides was never formally defined.</span>
+          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how an engineering organisation actually decides was never formally defined.</span>
         </p>
       </div>
 
@@ -302,8 +302,8 @@ function Slide02() {
           <text x="1840" y="178" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 2 }}>~10% FORMALLY DEFINED</text>
           <text x="1840" y="206" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI is given today</text>
           <text x="1840" y="262" textAnchor="end" style={{ fontSize: 26, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>~90% ORGANIZATIONAL INTELLIGENCE</text>
-          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to meet design intent &amp; certification</text>
-          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in chief engineers, reviewers, prior dispositions, and live ECRs</text>
+          <text x="1840" y="290" textAnchor="end" style={{ fontSize: 16, fontWeight: 700, fill: TEXT }}>What AI needs to meet design intent &amp; review standards</text>
+          <text x="1840" y="312" textAnchor="end" style={{ fontSize: 13, fontWeight: 500, fill: MUTED }}>Lives in chief engineers, reviewers, prior dispositions, and live change threads</text>
 
           <polygon points="870,220 960,90 1050,220" fill="url(#ice-top)" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth="1.5" />
           <polygon points="870,220 480,740 1440,740 1050,220" fill="url(#ice-bot)" stroke={`hsl(${WARM} / 0.55)`} strokeWidth="1.5" />
@@ -349,7 +349,7 @@ function Slide02() {
           })}
 
           <text x="960" y="725" textAnchor="middle"
-            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO MEET DESIGN INTENT &amp; CERTIFICATION</text>
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO MEET DESIGN INTENT &amp; REVIEW STANDARDS</text>
         </svg>
       </div>
 
