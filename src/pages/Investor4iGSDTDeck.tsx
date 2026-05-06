@@ -919,8 +919,8 @@ function Slide05() {
 function SlideArchitecture() {
   const existingSystems = [
     { name: "Procore / ACC", layer: "Project Mgmt", color: BLUE },
-    { name: "Bluebeam / Newforma", layer: "RFI & Markup", color: BLUE },
-    { name: "Revit / Allplan", layer: "Design / BIM", color: BLUE },
+    { name: "Aero Division / Newforma", layer: "RFI & Markup", color: BLUE },
+    { name: "Revit / Space Division", layer: "Design / BIM", color: BLUE },
     { name: "Navisworks / Solibri", layer: "Coordination", color: BLUE },
     { name: "Document Crunch", layer: "Spec Compliance", color: BLUE },
   ];
@@ -1112,13 +1112,13 @@ function Slide06() {
     { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
     { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
     { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
-    { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
+    { name: "Aero Division (4iG SDT)", funding: "Strategic", round: "4iG SDT portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },
   ];
 
   const moatLayers = [
     { layer: "AACE v3.1 Specification", desc: "Proprietary context engine: intent-locking, spec-aware injection, drift detection. The plumbing every AEC AI tool will need.", icon: <Cpu size={20} /> },
     { layer: "Compounding Project Memory", desc: "RFI precedent, addenda, owner standards, code interpretations — graph deepens project-by-project. Switching cost grows organically.", icon: <Layers size={20} /> },
-    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the Nemetschek ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
+    { layer: "Strategic Distribution Path", desc: "Active discussions and workflow exploration in the 4iG SDT ecosystem create a credible route to channel and embedding if execution lands.", icon: <Network size={20} /> },
   ];
 
   return (
@@ -1574,14 +1574,14 @@ function Slide09() {
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
       problem: "Estimators redo takeoffs because spec changes don't propagate. AI drafts proposals from generic data, not your win-rate patterns.",
       result: "Spec-aware estimating. Bid memory across projects. Faster, sharper proposals.",
-      proof: "Adjacent to Document Crunch & Handoff (Nemetschek portfolio)",
+      proof: "Adjacent to Document Crunch & Handoff (4iG SDT portfolio)",
     },
     {
       vertical: "Construction Execution", status: "Anchor", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
       problem: "RFIs, submittals, and field decisions live in disconnected tools. AI can't reason across them. Project memory dies between phases.",
       result: "Unified RFI & submittal lifecycle. Every AI response grounded in this project's spec, addenda, and prior decisions.",
-      proof: "Target embedding path across Bluebeam, Allplan, and Solibri workflows",
+      proof: "Target embedding path across Aero, Space, Land Systems, and Solibri workflows",
     },
     {
       vertical: "Handover & Operations", status: "Expansion", color: GOLD,
@@ -1722,19 +1722,19 @@ function Slide09Partnership() {
       phase: "Months 0-6",
       title: "Co-Sell",
       color: GREEN,
-      desc: "Warm intros into top 20 Bluebeam / Allplan accounts. LIZA sits alongside; Nemetschek opens doors. Low commitment, fast signal.",
+      desc: "Warm intros into top 20 Aero / Space Divisions accounts. LIZA sits alongside; 4iG SDT opens doors. Low commitment, fast signal.",
     },
     {
       phase: "Months 6-12",
       title: "Joint 30-Day Pilots",
       color: TEAL,
-      desc: "Co-branded RFI Lifecycle Sprint productized with Bluebeam. Generates AEC case studies plus revenue share.",
+      desc: "Co-branded RFI Lifecycle Sprint productized with Aero Division. Generates AEC case studies plus revenue share.",
     },
     {
       phase: "Months 12-24",
       title: "Embedded Instruction Layer",
       color: GOLD,
-      desc: "LIZA becomes the governance and memory layer underneath one Nemetschek brand. Start with Bluebeam for RFIs, then expand to Allplan for design intent.",
+      desc: "LIZA becomes the governance and memory layer underneath one 4iG SDT brand. Start with Aero Division for RFIs, then expand to Space Division for design intent.",
     },
   ];
 
@@ -1744,7 +1744,7 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Nemetschek GTM Mechanic
+            4iG SDT GTM Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
             A 24-month ladder from <span style={{ color: `hsl(${TEAL})` }}>co-sell</span> to <span style={{ color: `hsl(${GOLD})` }}>embedded layer</span>.
@@ -2169,7 +2169,7 @@ function Slide13() {
           {[
             { label: "AEC-Native Product UX", pct: "35%", amt: "€1.05M", desc: "Role-specific workflows, UI, onboarding, product design", color: ACCENT },
             { label: "Usage + Billing Infrastructure", pct: "25%", amt: "€750K", desc: "Credits, metering, pricing controls, margin visibility", color: GREEN },
-            { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Bluebeam, Allplan, BIM bridges, lighthouse deployments", color: GOLD },
+            { label: "AEC Integrations + Pilots", pct: "25%", amt: "€750K", desc: "Aero, Space, Land Systems, BIM bridges, lighthouse deployments", color: GOLD },
             { label: "GTM + Operations", pct: "15%", amt: "€450K", desc: "Vertical case studies, channel motion, legal, compliance", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
@@ -2185,7 +2185,7 @@ function Slide13() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
             { month: "Month 1-6", target: "AEC-native UX live", milestone: "RFI, submittal, and spec-review surfaces in market with first lighthouse deployments.", color: TEAL },
-            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Bluebeam / Allplan integration path live.", color: SEAFOAM },
+            { month: "Month 7-12", target: "Usage-priced rollout", milestone: "AEC pilots convert to platform base plus credits. Aero / Space Divisions integration path live.", color: SEAFOAM },
             { month: "Month 13-18", target: "€1.5-2.5M ARR", milestone: "12+ design partners and AEC customers on a repeatable self-serve expansion path.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
