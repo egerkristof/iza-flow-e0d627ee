@@ -577,7 +577,7 @@ function S09Architecture() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="09" text="ARCHITECTURE" />
+        <Eyebrow n="08" text="ARCHITECTURE" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Four layers. <span style={{ color: `hsl(${TEAL})` }}>One memory.</span>
         </h2>
@@ -697,7 +697,7 @@ function S14TwoDoor() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="12" text="HOW TO START" />
+        <Eyebrow n="11" text="HOW TO START" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
         </h2>
