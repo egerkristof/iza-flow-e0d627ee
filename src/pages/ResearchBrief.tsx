@@ -59,26 +59,67 @@ const loop = [
   {
     step: "Map",
     short: "See the field, not a list.",
-    desc: "Ingest the corpus and surface the schools, lineages, and disagreements between authors — not a flat bibliography.",
+    desc: "Drop in your corpus. The agentic environment reads it through pre-installed research expertise and resolves it into a structured field, not a folder.",
+    does: [
+      "Clusters the literature into schools of thought",
+      "Surfaces lineages of ideas across decades",
+      "Flags where authors actually disagree, and on what",
+    ],
     Icon: Network,
   },
   {
     step: "Anchor",
     short: "Codify your stance.",
-    desc: "Your assumptions, framework, and prior work become executable context the system reasons against.",
+    desc: "Your hypothesis, framework, and assumptions become explicit anchors inside the map. Every claim ties to your position, not a generic average of the internet.",
+    does: [
+      "Captures hypothesis, framework, assumptions as typed anchors",
+      "Locates your stance against the schools and lineages",
+      "Records why-not-this on the alternatives you reject",
+    ],
     Icon: BookOpen,
   },
   {
     step: "Augment",
     short: "Think further, faster.",
-    desc: "Trade-offs, counter-arguments, and gaps surface in dialogue. The researcher stays the author.",
+    desc: "You stay the author. The agents reason over the structure of the field and push back from inside the map.",
+    does: [
+      "Surfaces counter-arguments and trade-offs against your anchors",
+      "Names gaps in your reading and lineages you have not placed",
+      "Drafts only against your stance, never instead of it",
+    ],
     Icon: Sparkles,
   },
   {
     step: "Compound",
     short: "Knowledge accumulates.",
-    desc: "Every reading, note, and decision feeds the next project — for the researcher, the lab, and the institution.",
+    desc: "Every reading, note, and judgment feeds back into the map. Your thinking becomes a portable asset you own across projects.",
+    does: [
+      "Writes new claims and rebuttals back as typed primitives",
+      "Versions your stance as the field and your thinking move",
+      "Exportable, LLM-agnostic, no lock-in",
+    ],
     Icon: RefreshCw,
+  },
+];
+
+const outcomes = [
+  {
+    tag: "On day one",
+    stat: "Day 1",
+    statLabel: "vs 6 to 12 months of solo PDF reading",
+    headline: "Walk into a structured field",
+  },
+  {
+    tag: "While you work",
+    stat: "10x",
+    statLabel: "more hours judging and writing, fewer hours searching",
+    headline: "Augmented, not replaced",
+  },
+  {
+    tag: "At the end",
+    stat: "100%",
+    statLabel: "portable, LLM-agnostic, owned by you",
+    headline: "A portable asset that is yours",
   },
 ];
 
@@ -124,9 +165,9 @@ export default function ResearchBrief() {
           transition={{ delay: 0.05 }}
           className="font-black tracking-tight leading-[1.02] text-[40px] sm:text-7xl lg:text-8xl max-w-5xl"
         >
-          Don't just review<br className="hidden sm:block" />
-          <span> </span>the literature.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Understand the field.</span>
+          The research<br className="hidden sm:block" />
+          <span> </span>memory layer.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Structured field. Your judgment. AI inside the map.</span>
         </motion.h1>
 
         <motion.p
@@ -135,8 +176,7 @@ export default function ResearchBrief() {
           transition={{ delay: 0.15 }}
           className="mt-6 sm:mt-8 text-lg sm:text-2xl text-muted-foreground leading-snug max-w-2xl"
         >
-          Researchers lose months flattening a field into a bibliography.
-          AI that writes for them hollows out the work. There is a third path.
+          For the individual researcher. Obsidian and Roam set the bar for personal knowledge graphs. LIZA OS is the next step: a pre-installed agentic environment with research expertise, reasoning inside your map.
         </motion.p>
 
         {/* Iceberg — what reviews capture vs. what actually constitutes the field */}
@@ -167,7 +207,7 @@ export default function ResearchBrief() {
           className="mt-10 sm:mt-12 text-base sm:text-xl font-bold max-w-2xl"
           style={{ color: `hsl(${TEAL})` }}
         >
-          LIZA OS is the Research Memory Layer — it maps the relations between ideas, schools, and authors, then augments the researcher's own thinking inside that map.
+          LIZA OS is the Research Memory Layer. It maps the relations between ideas, schools, and authors, then augments the researcher's own thinking inside that map.
         </motion.p>
 
         {/* Vertical problem evidence */}
@@ -243,113 +283,89 @@ export default function ResearchBrief() {
         {/* Loop */}
         <section className="mt-14 sm:mt-20">
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
-            How LIZA OS works for research
+            Map. Anchor. Augment. Compound.
           </p>
-          <div className="relative">
-            <div
-              className="hidden sm:block absolute top-8 left-[12.5%] right-[12.5%] h-px"
-              style={{ background: `hsl(${TEAL} / 0.25)` }}
-              aria-hidden
-            />
-            <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-y-8 gap-x-3 sm:gap-x-4">
-              {loop.map((s, i) => {
-                const Icon = s.Icon;
-                return (
-                  <motion.div
-                    key={s.step}
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.05 * i }}
-                    className="flex flex-col items-center text-center"
-                  >
+          <div
+            className="rounded-2xl border-2 px-5 sm:px-6 py-4 mb-6 flex items-start sm:items-center gap-4"
+            style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.06)` }}
+          >
+            <p className="font-black text-[10px] sm:text-[11px] tracking-widest uppercase shrink-0" style={{ color: `hsl(${TEAL})` }}>
+              The engine
+            </p>
+            <p className="text-sm sm:text-base leading-snug">
+              A pre-installed agentic environment with research expertise built in. It manages the knowledge graph of your field and reasons inside it as you work.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {loop.map((s, i) => {
+              const Icon = s.Icon;
+              return (
+                <motion.div
+                  key={s.step}
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.05 * i }}
+                  className="rounded-2xl border border-border p-5 sm:p-6 flex flex-col"
+                >
+                  <div className="flex items-center gap-3 mb-3">
                     <div
-                      className="relative w-16 h-16 sm:w-16 sm:h-16 rounded-full flex items-center justify-center border-2 bg-white"
-                      style={{ borderColor: `hsl(${TEAL})`, color: `hsl(${TEAL})` }}
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{ background: `hsl(${TEAL} / 0.12)`, color: `hsl(${TEAL})` }}
                     >
-                      <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                      <span
-                        className="absolute -top-2 -right-2 text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center text-white"
-                        style={{ background: `hsl(${TEAL})` }}
-                      >
-                        {i + 1}
-                      </span>
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <p className="mt-3 font-black text-base sm:text-lg tracking-tight">{s.step}</p>
-                    <p className="mt-1 text-xs sm:text-sm font-semibold" style={{ color: `hsl(${TEAL})` }}>
-                      {s.short}
-                    </p>
-                    <p className="mt-1.5 text-xs sm:text-[13px] text-muted-foreground leading-snug max-w-[180px]">
-                      {s.desc}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <div className="hidden sm:flex items-center justify-center mt-8 gap-2 text-[11px] font-bold tracking-widest uppercase text-muted-foreground">
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>Each project leaves the next researcher smarter</span>
-            </div>
+                    <p className="font-black text-base sm:text-lg tracking-tight">{i + 1} · {s.step}</p>
+                  </div>
+                  <p className="font-bold text-sm" style={{ color: `hsl(${TEAL})` }}>{s.short}</p>
+                  <p className="mt-2 text-[13px] text-muted-foreground leading-snug">{s.desc}</p>
+                  <ul className="mt-4 pt-3 border-t border-border space-y-2">
+                    {s.does.map(d => (
+                      <li key={d} className="flex gap-2 text-[12px] text-foreground leading-snug">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: `hsl(${TEAL})` }} />
+                        <span className="font-semibold">{d}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
 
-        {/* Pilot */}
-        <section
-          className="mt-14 sm:mt-20 rounded-2xl border-2 p-6 sm:p-10"
-          style={{ borderColor: `hsl(${TEAL})`, background: `hsl(${MINT} / 0.06)` }}
-        >
-          <p
-            className="text-[11px] font-bold tracking-widest uppercase mb-2"
-            style={{ color: `hsl(${TEAL})` }}
-          >
-            30-Day Pilot
-          </p>
-          <p className="font-black text-2xl sm:text-4xl tracking-tight">
-            One research group. One field. 30 days.
-          </p>
-          <p className="mt-3 text-sm sm:text-lg text-muted-foreground leading-snug max-w-2xl">
-            We pick one PhD cohort or one research group, ingest their corpus,
-            and deliver a live map of the field with measurable hours returned
-            to the researchers. You see the difference between a literature
-            review and an understood field — in weeks, not months.
-          </p>
-        </section>
-
-        {/* Two-door ask */}
+        {/* Outcomes */}
         <section className="mt-14 sm:mt-20">
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
-            Two ways to start
+            What changes for the researcher
           </p>
-          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-            <div className="rounded-2xl bg-foreground text-background p-6 sm:p-8">
-              <p
-                className="text-[10px] font-bold tracking-widest uppercase mb-2"
-                style={{ color: `hsl(${MINT})` }}
+          <div className="grid gap-4 sm:grid-cols-3">
+            {outcomes.map((o, i) => (
+              <motion.div
+                key={o.tag}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.05 * i }}
+                className="rounded-2xl border-2 p-6 sm:p-7 flex flex-col"
+                style={{
+                  borderColor: i === 2 ? `hsl(${TEAL} / 0.5)` : "hsl(var(--border))",
+                  background: i === 2 ? `hsl(${TEAL} / 0.05)` : "transparent",
+                }}
               >
-                Option A · Customer
-              </p>
-              <p className="font-bold text-lg sm:text-xl">Run a 30-day pilot</p>
-              <p className="mt-2 text-sm sm:text-base opacity-80 leading-snug">
-                One department, one research group, one field. Fixed scope,
-                fixed price. Measured in hours of deep work returned to your
-                researchers and a usable map of the field.
-              </p>
-            </div>
-            <div
-              className="rounded-2xl p-6 sm:p-8 text-white"
-              style={{ background: `hsl(${TEAL})` }}
-            >
-              <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-white/70">
-                Option B · Sponsor
-              </p>
-              <p className="font-bold text-lg sm:text-xl">Co-define the standard</p>
-              <p className="mt-2 text-sm sm:text-base text-white/85 leading-snug">
-                Build the academic version of LIZA OS with us. Anchor it for
-                your university and faculty, take a strategic position, and
-                set the global reference for AI-augmented research.
-              </p>
-            </div>
+                <p className="text-[10px] font-bold tracking-widest uppercase" style={{ color: `hsl(${TEAL})` }}>
+                  {o.tag}
+                </p>
+                <p
+                  className="mt-3 font-black leading-none tracking-tight text-5xl sm:text-6xl"
+                  style={{ color: `hsl(${TEAL})` }}
+                >
+                  {o.stat}
+                </p>
+                <p className="mt-2 text-[13px] font-bold text-muted-foreground leading-snug">{o.statLabel}</p>
+                <div className="mt-4 mb-3 h-px bg-border" />
+                <p className="font-black text-lg sm:text-xl tracking-tight">{o.headline}</p>
+              </motion.div>
+            ))}
           </div>
         </section>
 
@@ -360,10 +376,10 @@ export default function ResearchBrief() {
               The full concept
             </p>
             <p className="font-black text-lg sm:text-2xl tracking-tight">
-              See the 15-slide Research Concept Deck
+              See the Research Concept Deck
             </p>
             <p className="mt-1 text-sm text-muted-foreground max-w-xl">
-              Personas, the landscape of existing tools, the four-layer architecture, how the group's memory forms across cohorts, the semester pilot, and the two-door ask — in one walkthrough.
+              The four moments in a PhD, the head-to-head against Obsidian, Roam, Elicit, Notion and the rest, the four-layer architecture, and what changes for the researcher on day one.
             </p>
           </div>
           <Link
