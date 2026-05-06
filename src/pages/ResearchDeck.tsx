@@ -253,14 +253,19 @@ function S03Iceberg() {
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="03" text="THE GAP" />
         <h2 className="font-black mt-5 mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          A literature review captures the tip. <span style={{ color: `hsl(${TEAL})` }}>The field lives below.</span>
+          AI summarises the tip. <span style={{ color: `hsl(${TEAL})` }}>The field lives below.</span>
         </h2>
         <div className="flex-1 flex items-center justify-center mt-2">
           <div style={{ width: 1200 }}>
             <DeckIceberg
-              aboveLabel="What a literature review captures"
+              aboveLabel="What today's AI tools can reach"
               belowLabel="What actually constitutes the field"
-              above={["Citation lists", "Abstracts", "Keywords", "Recent papers"]}
+              above={[
+                "Paper summaries from ChatGPT",
+                "Citation lists from Elicit",
+                "Keyword clusters",
+                "Fluent prose with no map",
+              ]}
               below={[
                 "Hierarchies between schools of thought",
                 "Lineages of ideas across decades",
