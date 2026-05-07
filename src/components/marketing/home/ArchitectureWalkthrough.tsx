@@ -20,9 +20,9 @@ type Scene = {
   headline: string;
   duration: number; // ms
   render: (p: number) => JSX.Element; // p = 0..1 progress within scene
-  /** Narrated beats: each appears once progress crosses `at` (0..1).
-      Use these to give the viewer time to read the scene before moving on. */
-  beats?: { at: number; text: string }[];
+  /** Single caption shown at the bottom — one line that names what the
+      visual above is showing. Same principle as ProductFilm. */
+  caption: string;
 };
 
 /* ---------- helpers ---------- */
@@ -531,52 +531,28 @@ function SceneSuccess(p: number) {
 /* ---------- scenes config ---------- */
 const SCENES: Scene[] = [
   {
-    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 19000, render: SceneHero,
-    beats: [
-      { at: 0.00, text: "It's a Tuesday. Six teams are already working with AI." },
-      { at: 0.45, text: "Sales, Legal, Support, Ops, HR, Finance — each picked their own tool." },
-      { at: 0.72, text: "A dozen assistants are running. Nobody told them what your company stands for." },
-    ],
+    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 8000, render: SceneHero,
+    caption: "Six teams. A dozen assistants. None of them know what your company stands for.",
   },
   {
-    kicker: "02 · Problem", headline: "But every tool answers differently.", duration: 20000, render: SceneProblem,
-    beats: [
-      { at: 0.00, text: "And the world won't sit still — regulation, competitors and policy shift every week." },
-      { at: 0.30, text: "One question lands in #deal-desk. Three people, three tools, three answers." },
-      { at: 0.78, text: "It's not the AI failing. It's the silos and the missing standard." },
-    ],
+    kicker: "02 · Problem", headline: "Every tool answers differently.", duration: 9000, render: SceneProblem,
+    caption: "One question. Three tools. Three answers. The AI is fine. The standard is missing.",
   },
   {
-    kicker: "03 · Stakes", headline: "And it's costing you.", duration: 14000, render: SceneStakes,
-    beats: [
-      { at: 0.00, text: "Three weeks later, the drift becomes visible." },
-      { at: 0.55, text: "Discounts slip. Audit flags real risk. People stop trusting the tools." },
-      { at: 0.80, text: "Nobody made a bad call. Nobody made the rules either." },
-    ],
+    kicker: "03 · Stakes", headline: "And it is costing you.", duration: 8000, render: SceneStakes,
+    caption: "Discounts drift. Audit flags real risk. Nobody made a bad call. Nobody made the rules either.",
   },
   {
-    kicker: "04 · Meet Liza", headline: "Liza writes how your company decides.", duration: 17000, render: SceneGuide,
-    beats: [
-      { at: 0.00, text: "Liza holds one living document: how your company actually decides." },
-      { at: 0.40, text: "Leaders author rules. Teams draft work that cites them automatically." },
-      { at: 0.70, text: "Every decision flows back as signal — closed deals, edge cases, gaps." },
-    ],
+    kicker: "04 · Meet Liza", headline: "Liza writes how your company decides.", duration: 9000, render: SceneGuide,
+    caption: "One living standard. Leaders author rules. Teams cite them. Signal flows back the same week.",
   },
   {
-    kicker: "05 · The plan", headline: "Liza learns, then governs.", duration: 18000, render: ScenePlan,
-    beats: [
-      { at: 0.00, text: "Day 1 — connect Liza to the systems where work already happens. Read-only." },
-      { at: 0.35, text: "Week 1 — Liza drafts rules from real decisions. Leaders edit and sign." },
-      { at: 0.65, text: "Week 2 — wire the standard into Copilot, Claude, Glean and your agents." },
-    ],
+    kicker: "05 · The plan", headline: "Liza learns, then governs.", duration: 9000, render: ScenePlan,
+    caption: "Connect, co-author, wire to every AI tool. Two weeks to one source of truth.",
   },
   {
-    kicker: "06 · Success", headline: "One answer. Audited. Always improving.", duration: 17000, render: SceneSuccess,
-    beats: [
-      { at: 0.00, text: "Week 2 — every AI tool cites the same source." },
-      { at: 0.35, text: "Week 6 — regulation lands. One edit; the whole company updates by morning." },
-      { at: 0.70, text: "Week 12 — edge cases sharpen the standard. The OS compounds." },
-    ],
+    kicker: "06 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
+    caption: "Same answer in every tool. Regulation rolls out in a day. The standard sharpens itself every week.",
   },
 ];
 
@@ -655,14 +631,6 @@ export function ArchitectureWalkthrough() {
 
   const scene = SCENES[index];
   const isFinal = index === SCENES.length - 1 && progress >= 0.98;
-
-  // Active narrator beat — the last one whose `at` has been crossed.
-  const activeBeat = (() => {
-    const beats = scene.beats ?? [];
-    let current: { at: number; text: string } | null = null;
-    for (const b of beats) if (progress >= b.at) current = b;
-    return current;
-  })();
 
   return (
     <div ref={wrapRef} className="w-full md:max-w-3xl md:mx-auto">
