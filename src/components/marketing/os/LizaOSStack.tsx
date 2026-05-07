@@ -867,12 +867,14 @@ function ControlTowerBlock({
                     key={it.label}
                     type="button"
                     onClick={() => setOpenItem(isOpen ? null : it.label)}
-                    className="text-left rounded-lg border px-3 py-2.5 transition-all hover:translate-y-[-1px]"
+                    aria-expanded={isOpen}
+                    className="text-left rounded-lg border px-3 py-2.5 transition-all hover:translate-y-[-1px] flex items-start gap-2"
                     style={{
                       background: isOpen ? t.chipBorder : "hsl(var(--background))",
                       borderColor: t.ring,
                     }}
                   >
+                    <span className="flex-1 min-w-0">
                     <p className="text-[12px] font-bold text-foreground/90 leading-tight">{it.label}</p>
                     <AnimatePresence initial={false}>
                       {isOpen && (
@@ -887,6 +889,12 @@ function ControlTowerBlock({
                         </motion.p>
                       )}
                     </AnimatePresence>
+                    </span>
+                    {isOpen ? (
+                      <X className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: t.accent }} />
+                    ) : (
+                      <Plus className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 opacity-70" style={{ color: t.accent }} />
+                    )}
                   </button>
                 );
               })}
@@ -905,6 +913,7 @@ function ControlTowerBlock({
                     key={it.label}
                     type="button"
                     onClick={() => setOpenItem(isOpen ? null : it.label)}
+                    aria-expanded={isOpen}
                     className="text-left rounded-lg border px-3 py-2.5 transition-all hover:translate-y-[-1px] flex items-center gap-2"
                     style={{
                       background: isOpen ? t.chipBorder : "hsl(var(--background))",
@@ -931,6 +940,11 @@ function ControlTowerBlock({
                         )}
                       </AnimatePresence>
                     </span>
+                    {isOpen ? (
+                      <X className="w-3.5 h-3.5 flex-shrink-0" style={{ color: t.accent }} />
+                    ) : (
+                      <Plus className="w-3.5 h-3.5 flex-shrink-0 opacity-70" style={{ color: t.accent }} />
+                    )}
                   </button>
                 );
               })}
