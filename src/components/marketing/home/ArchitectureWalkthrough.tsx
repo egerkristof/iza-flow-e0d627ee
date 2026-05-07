@@ -253,65 +253,91 @@ function SceneStakes(p: number) {
   );
 }
 
-/* 4. GUIDE — "Meet Liza" — a single Decision Standard doc materializes */
+/* 4. GUIDE — "Meet Liza" — the standard, plus people working with it */
 function SceneGuide(p: number) {
-  const scale = 0.85 + ease(between(p, 0, 0.35)) * 0.15;
   const lines = [
-    { k: "Discount cap",          v: "15% · 20% multi-yr" },
-    { k: "Approval > €50k",       v: "CFO + Legal" },
-    { k: "PII in prompts",        v: "Blocked" },
-    { k: "Customer tone",         v: "Direct, no hedging" },
+    { k: "Discount cap",     v: "15% · 20% multi-yr" },
+    { k: "Approval > €50k",  v: "CFO + Legal" },
+    { k: "PII in prompts",   v: "Blocked" },
   ];
+  const docIn = between(p, 0.0, 0.3);
+  const usersIn = between(p, 0.3, 0.55);
+  const liveIn = between(p, 0.55, 0.85);
   return (
-    <div className="w-full max-w-[300px] mx-auto" style={{ transform: `scale(${scale})` }}>
-      <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
-        <div className="flex items-start gap-2 mb-2">
-          <span
-            className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
-            style={{ background: PRIMARY + "1a", color: PRIMARY, border: `1px solid ${PRIMARY}33` }}
-          >
-            <Compass className="w-4 h-4" />
-          </span>
-          <div className="flex-1">
-            <p className="text-[12px] font-black text-foreground leading-tight">How your company decides.</p>
-            <p className="text-[9.5px] text-muted-foreground mt-0.5 leading-snug">
-              v2.4 · Edited by Sarah (CRO) · 2 days ago
-            </p>
+    <div className="w-full max-w-[320px] mx-auto space-y-2">
+      {/* The standard itself */}
+      <div style={{ opacity: docIn }}>
+        <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
+          <div className="flex items-start gap-2 mb-1.5">
+            <span
+              className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+              style={{ background: PRIMARY + "1a", color: PRIMARY, border: `1px solid ${PRIMARY}33` }}
+            >
+              <Compass className="w-3.5 h-3.5" />
+            </span>
+            <div className="flex-1">
+              <p className="text-[11.5px] font-black text-foreground leading-tight">How your company decides.</p>
+              <p className="text-[9px] text-muted-foreground mt-0.5">v2.4 · Sarah (CRO) · 2d ago</p>
+            </div>
           </div>
-        </div>
-        <div className="space-y-1.5">
-          {lines.map((l, i) => {
-            const a = between(p, 0.25 + i * 0.12, 0.45 + i * 0.12);
-            return (
-              <div
-                key={l.k}
-                className="flex items-center justify-between gap-2 px-2 py-1 rounded"
-                style={{ opacity: a, transform: `translateX(${(1 - a) * -8}px)` }}
-              >
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: PRIMARY }} />
-                  <span className="text-[10.5px] text-foreground/85 font-semibold truncate">{l.k}</span>
-                </div>
-                <span className="text-[10px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
+          <div className="space-y-1">
+            {lines.map((l) => (
+              <div key={l.k} className="flex items-center justify-between gap-2 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] text-foreground/85 font-semibold truncate">{l.k}</span>
+                <span className="text-[9.5px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
               </div>
-            );
-          })}
+            ))}
+          </div>
+        </MiniWindow>
+      </div>
+
+      {/* People at work, side by side */}
+      <div className="grid grid-cols-2 gap-2" style={{ opacity: usersIn }}>
+        {/* Sarah authors a rule */}
+        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+          <div className="flex items-center gap-1 mb-1">
+            <Compass className="w-3 h-3" style={{ color: PRIMARY }} />
+            <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Sarah · CRO</span>
+          </div>
+          <p className="text-[9.5px] font-bold text-foreground/85 leading-tight mb-1">Edits "Discount cap"</p>
+          <div className="text-[8.5px] font-mono text-muted-foreground leading-tight">
+            <span className="line-through">15%</span>{" "}
+            <span style={{ color: PRIMARY }} className="font-black">→ 20% multi-yr</span>
+          </div>
+          <p className="text-[8px] text-muted-foreground mt-1 italic">Diff sent to 2 reviewers.</p>
         </div>
-        <div
-          className="mt-2 pt-2 border-t flex items-center gap-1.5 flex-wrap"
-          style={{ borderColor: PRIMARY + "22", opacity: between(p, 0.75, 0.95) }}
-        >
-          <GitBranch className="w-3 h-3" style={{ color: PRIMARY }} />
-          <span className="text-[9px] font-bold text-muted-foreground">
-            v2.4 → v2.5 pending · 2 reviewers · diff in plain English
-          </span>
+        {/* Maya uses Liza in the workspace */}
+        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+          <div className="flex items-center gap-1 mb-1">
+            <Briefcase className="w-3 h-3" style={{ color: PRIMARY }} />
+            <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Maya · AE</span>
+          </div>
+          <p className="text-[9.5px] font-bold text-foreground/85 leading-tight mb-1">Drafts a renewal</p>
+          <div className="flex items-center gap-1 text-[8.5px] text-foreground/80">
+            <CheckCircle2 className="w-2.5 h-2.5" style={{ color: PRIMARY }} />
+            Liza injects v2.5 §3
+          </div>
+          <p className="text-[8px] text-muted-foreground mt-0.5 italic">Cited in the proposal.</p>
         </div>
-      </MiniWindow>
-      <p
-        className="mt-2.5 text-center text-[10px] text-muted-foreground leading-snug px-2"
-        style={{ opacity: between(p, 0.6, 0.9) }}
+      </div>
+
+      {/* Live signal coming back */}
+      <div
+        className="rounded-lg border px-2 py-1.5 flex items-center gap-2"
+        style={{ opacity: liveIn, borderColor: PRIMARY + "33", background: "hsl(var(--background))" }}
       >
-        Not a wiki. Not a slide deck. A living document every AI tool reads before it answers.
+        <Activity className="w-3 h-3 flex-shrink-0" style={{ color: PRIMARY }} />
+        <p className="text-[9.5px] text-foreground/85 leading-tight">
+          <span className="font-black">3 deals</span> just closed citing v2.5 ·{" "}
+          <span className="font-black" style={{ color: PRIMARY }}>1 edge case</span> flagged for Sarah
+        </p>
+      </div>
+
+      <p
+        className="text-center text-[9.5px] text-muted-foreground leading-snug px-2"
+        style={{ opacity: between(p, 0.7, 0.95) }}
+      >
+        Leaders write the rules. Teams work with them. Liza keeps both in sync.
       </p>
     </div>
   );
