@@ -779,22 +779,37 @@ export function ArchitectureWalkthrough() {
             </div>
           </div>
 
-          {/* Mobile narrator caption (no narrative side panel on small screens) */}
-          <div className="md:hidden mt-3 min-h-[44px] flex items-start justify-center">
-            <AnimatePresence mode="wait">
-              {activeBeat && (
-                <motion.p
-                  key={`mbeat-${index}-${activeBeat.at}`}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.4 }}
-                  className="text-[12px] leading-snug text-foreground/80 text-center max-w-[34ch] font-medium"
-                >
-                  {activeBeat.text}
-                </motion.p>
-              )}
-            </AnimatePresence>
+          {/* Mobile narrator caption — solid card, high contrast, clearly readable */}
+          <div className="md:hidden mt-3">
+            <div
+              className="rounded-xl border-2 px-3 py-2.5 min-h-[68px] flex items-center gap-2.5"
+              style={{
+                background: "hsl(var(--background))",
+                borderColor: "hsl(var(--primary) / 0.55)",
+                boxShadow: "0 8px 24px -12px hsl(var(--primary) / 0.45)",
+              }}
+            >
+              <span
+                className="flex-shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-full"
+                style={{ background: PRIMARY, color: "hsl(var(--primary-foreground))" }}
+              >
+                <ArrowRight className="w-3 h-3" />
+              </span>
+              <AnimatePresence mode="wait">
+                {activeBeat && (
+                  <motion.p
+                    key={`mbeat-${index}-${activeBeat.at}`}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -3 }}
+                    transition={{ duration: 0.35 }}
+                    className="text-[13px] leading-snug text-foreground font-semibold"
+                  >
+                    {activeBeat.text}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
 
