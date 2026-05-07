@@ -665,6 +665,7 @@ function S07Shift() {
 }
 
 function S08Loop() {
+  // (renumbered to slide 09 in eyebrow; preserves component name for git history)
   const loop = [
     {
       step: "1 · Map",
