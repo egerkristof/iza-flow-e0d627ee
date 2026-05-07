@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Database, FileSpreadsheet, Mail, MessagesSquare, Cloud,
@@ -6,7 +6,10 @@ import {
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
   Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
+  ChevronRight, ArrowRight,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon } from "./industryLexicon";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
@@ -26,25 +29,25 @@ type Layer = {
 /* CENTER — Native Surfaces. Where work actually happens. */
 const NATIVE_SURFACES: Layer = {
   id: "native",
-  kicker: "Center — where you work",
-  title: "Liza Native Surfaces",
-  sub: "Your primary execution space. Workbooks, Extraction, Oversight. ChatGPT, Claude, and custom agents run inside them against the right governed bundle.",
-  expanded: "This is where the work moves to. Teams stop bouncing between vendor chats, wikis, and trackers. They execute inside Liza, with the Judgment Core supplying the standards and the artifact graph keeping every output in sync everywhere it needs to live.",
+  kicker: "Center — where work happens",
+  title: "Where work happens",
+  sub: "One workspace for guided work, knowledge capture, and live oversight. Your AI agents run inside, against the right governed standard.",
+  expanded: "This is where the work moves to. Teams stop bouncing between vendor chats, wikis, and trackers. Every action runs against the Decision Standard, and every output is kept in sync across the systems where it lives.",
   tone: "native",
   items: [
-    { label: "Workbooks", icon: <Workflow className="w-4 h-4" />, tag: "Execute", detail: "Where work happens. Each Workbook hosts ChatGPT, Claude, and custom agents, all reading the governed bundle for that workflow." },
-    { label: "ChatGPT · Claude · Agents", icon: <Bot className="w-4 h-4" />, tag: "Inside", detail: "Frontier models and custom agents run inside Workbooks. They never see raw context, only the bundle that matches the job." },
-    { label: "Extraction Engine", icon: <Sparkles className="w-4 h-4" />, tag: "Capture", detail: "Pulls tacit judgment out of process docs, transcripts, senior interviews. Expertise that was never written down becomes a structured asset." },
-    { label: "Oversight", icon: <Eye className="w-4 h-4" />, tag: "Govern", detail: "See what teams execute, where drift happens, what needs re-encoding. The control surface for the standards layer." },
+    { label: "Guided work", icon: <Workflow className="w-4 h-4" />, tag: "Do", detail: "The room where teams execute. Each Workbook hosts your AI agents, all reading the governed bundle that matches the job." },
+    { label: "AI agents inside", icon: <Bot className="w-4 h-4" />, tag: "Inside", detail: "ChatGPT, Claude, and custom agents run inside the workspace. They never see raw context, only the bundle that fits the task." },
+    { label: "Knowledge capture", icon: <Sparkles className="w-4 h-4" />, tag: "Capture", detail: "Pulls tacit judgment out of process docs, transcripts, and senior interviews. Expertise that was never written down becomes a structured asset." },
+    { label: "Live oversight", icon: <Eye className="w-4 h-4" />, tag: "Govern", detail: "See what teams execute, where drift happens, what needs re-encoding. The control surface for the standard." },
   ],
 };
 
 /* LEFT — Source Systems. Bidirectional. */
 const SOURCE_SYSTEMS: Layer = {
   id: "data",
-  kicker: "Left — your source systems",
-  title: "Source Systems",
-  sub: "Your existing estate. Liza reads from them and writes back to them. Your data stays where it lives.",
+  kicker: "Left — systems of record",
+  title: "Your systems of record",
+  sub: "The estate you already own. Read in for context. Governed updates written back so the canonical record stays current.",
   expanded: "Liza does not replace your systems of record. It pulls context in, structures the judgment that lives across them, and pushes governed outputs and artifact updates back. Your standards become portable. Your data does not move homes.",
   tone: "data",
   items: [
@@ -59,10 +62,10 @@ const SOURCE_SYSTEMS: Layer = {
 /* RIGHT — Connected Tools. Bidirectional. */
 const CONNECTED_TOOLS: Layer = {
   id: "apps",
-  kicker: "Right — connected AI tools",
-  title: "Connected AI Tools",
-  sub: "Third-party AI you already own. Liza feeds them governed context and syncs artifacts back, so their answers stay consistent with everything else.",
-  expanded: "These tools each invent answers from generic training data today. Connect them to Liza and they read your standards, mandates, and the artifact graph. When something changes inside Liza, it propagates outward; when work happens in them, it flows back.",
+  kicker: "Right — your AI tools",
+  title: "Your AI tools",
+  sub: "Copilot, Glean, vendor RAG, ChatGPT. Connected so they answer in your standards instead of generic training data.",
+  expanded: "These tools each invent answers from generic training data today. Connect them and they read your standards, mandates, and the artifact graph. When something changes in the core, it propagates outward; when work happens in them, it flows back.",
   tone: "apps",
   items: [
     { label: "Microsoft Copilot", icon: <Sparkles className="w-4 h-4" />, detail: "Copilot stops sounding generic. It answers in your standards because Liza feeds it governed bundles instead of raw SharePoint sprawl." },
@@ -74,10 +77,10 @@ const CONNECTED_TOOLS: Layer = {
 
 /* CORE — Judgment Core. Two motions. */
 const JUDGMENT_CORE_DESC = {
-  kicker: "The center — Judgment Core",
-  title: "Judgment Core",
-  sub: "Two knowledge graphs running in parallel. One holds the systemic logic of how your company decides. The other holds the live artifacts that work produces — wherever they live.",
-  expanded: "Most knowledge tools track one thing. Liza tracks two motions in lockstep: the standards that govern decisions, and the artifacts those decisions produce. When a standard changes, the artifacts that depend on it know. When an artifact changes anywhere — inside Liza, in your source systems, in your third-party tools — the graph stays consistent.",
+  kicker: "The core — your decision standard",
+  title: "The Decision Standard",
+  sub: "Two graphs running in parallel. One holds how your company decides. The other holds what your company produces. Both governed together. We call this the Judgment Core.",
+  expanded: "Most knowledge tools track one thing. Liza tracks two motions in lockstep: the standards that govern decisions, and the artifacts those decisions produce. When a standard changes, the artifacts that depend on it know. When an artifact changes anywhere, in your systems of record or in your AI tools, the graph stays consistent.",
 };
 
 /* Two sub-graphs inside the Judgment Core */
@@ -118,9 +121,9 @@ const MODEL_FABRIC: Layer = {
 /* TOP — Strategic Control Tower */
 const CONTROL_TOWER: Layer = {
   id: "strategy",
-  kicker: "Top — strategic control tower",
-  title: "Strategic Control Tower",
-  sub: "Where the C-suite designs the system. Push governance, mandates, playbooks, and sensing jobs down. Live signal flows up from execution.",
+  kicker: "Top — leadership view",
+  title: "Leadership view",
+  sub: "Where leaders set direction and see reality. Push governance, mandates, and playbooks down. Live signal flows up from execution. Strategy and execution stop being two timelines.",
   expanded: "Strategy and execution stop being two timelines. Leadership sets the constraints — mandates, playbooks, sensing engine jobs — and pushes them into the Judgment Core. Execution feeds back transcripts, client signals, drift, and outcome metrics. Business-model innovation becomes a live loop, not a yearly offsite.",
   tone: "strategy",
   items: [
