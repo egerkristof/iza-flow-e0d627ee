@@ -321,6 +321,3 @@ function ConnectionLayer() {
     </svg>
   );
 }
-
-/* Re-export for type clarity above */
-type _IndustryView = IndustryView;
