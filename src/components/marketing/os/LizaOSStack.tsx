@@ -1022,6 +1022,7 @@ export function LizaOSStack() {
     const el = stackRef.current;
     if (!el) return;
     const onScroll = () => {
+      if (dismissedFloatingRef.current) return;
       const rect = el.getBoundingClientRect();
       const viewportH = window.innerHeight || 800;
       // Trigger when ~40% of the section has scrolled past the top of viewport.
@@ -1373,7 +1374,7 @@ function FloatingTourPrompt({
                 onClick={onDismiss}
                 className="text-[12px] font-semibold text-muted-foreground hover:text-foreground transition-colors ml-auto"
               >
-                No thanks
+                I'll keep exploring on my own
               </button>
             </div>
           </div>
