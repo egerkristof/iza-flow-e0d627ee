@@ -4,7 +4,7 @@ import {
   Database, FileSpreadsheet, Mail, MessagesSquare, Cloud,
   Network, ShieldCheck, GitBranch, History, KeySquare,
   Workflow, Eye, Layers as LayersIcon, BookOpen,
-  Bot, Sparkles, Search, FileCheck2, Plus,
+  Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowRight,
 } from "lucide-react";
 
 /* ---------- types ---------- */
@@ -15,80 +15,101 @@ type Layer = {
   title: string;
   sub: string;
   expanded: string;
-  tone: "data" | "kernel" | "native" | "apps";
+  tone: "data" | "core" | "native" | "apps" | "fabric";
   items: Item[];
 };
 
 /* ---------- data ---------- */
-const LAYERS: Layer[] = [
-  {
-    id: "apps",
-    kicker: "Layer 04",
-    title: "Application layer",
-    sub: "Every AI tool you already own becomes an app on top of LIZA OS. Same governed knowledge. Consistent behaviour everywhere.",
-    expanded: "Today these tools each invent their own answers from generic training data. Plugged into LIZA OS, they inherit your standards, mandates, and audit trail. The kernel decides what they are allowed to know and say. Procurement stops being a feature comparison and starts being a layering decision.",
-    tone: "apps",
-    items: [
-      { label: "Microsoft Copilot", icon: <Sparkles className="w-4 h-4" />, detail: "Copilot answers stop being generic. It speaks your company's standards because the kernel feeds it your governed bundles instead of raw SharePoint sprawl." },
-      { label: "Glean", icon: <Search className="w-4 h-4" />, detail: "Search results carry judgment, not just relevance. The kernel ranks and filters by your mandates and current playbooks." },
-      { label: "ChatGPT / Claude", icon: <Bot className="w-4 h-4" />, detail: "Frontier models read from the same governed context as every other surface. No more prompt-by-prompt reinvention." },
-      { label: "Veeva / NesGPT", icon: <FileCheck2 className="w-4 h-4" />, detail: "Industry stacks (life sciences, banking) consume the same standards layer. GxP and risk constraints execute consistently across vendors." },
-      { label: "Notion AI", icon: <BookOpen className="w-4 h-4" />, detail: "Workspace AI answers from the kernel, not from arbitrary pages. The wiki stops being the source of truth and becomes a surface." },
-      { label: "Custom agents", icon: <Workflow className="w-4 h-4" />, detail: "Internal agents and copilots get a single API for governed knowledge. You build agents instead of re-building context." },
-    ],
-  },
-  {
-    id: "native",
-    kicker: "Layer 03",
-    title: "Native applications",
-    sub: "The applications LIZA ships with the OS. Built directly on the kernel, designed to run executable knowledge end to end.",
-    expanded: "These are LIZA's first-party apps. They show what the kernel makes possible when an application is designed for governed execution from day one. They are also where the loop closes: capture, compose, execute, oversee.",
-    tone: "native",
-    items: [
-      { label: "Workbooks", icon: <Workflow className="w-4 h-4" />, tag: "Execute", detail: "Where work happens. Each workbook runs against a specific bundle, so the AI inside operates with the right standard for that workflow." },
-      { label: "Extraction Engine", icon: <Sparkles className="w-4 h-4" />, tag: "Capture", detail: "Pulls tacit judgment out of process docs, transcripts, and senior interviews. The expertise that was never written down becomes a structured asset." },
-      { label: "Oversight", icon: <Eye className="w-4 h-4" />, tag: "Govern", detail: "See what teams execute, where drift happens, what needs re-encoding. The control surface for the standards layer." },
-      { label: "Context Bundles", icon: <LayersIcon className="w-4 h-4" />, tag: "Compose", detail: "Playbooks, Procedures, Directives, Principles, Knowledge composed into deployable units. Versioned, governed, portable." },
-    ],
-  },
-  {
-    id: "kernel",
-    kicker: "Layer 02",
-    title: "The kernel",
-    sub: "The knowledge graph and governance services every AI surface above must consume to act with judgment. One source of truth. Versioned, mandated, audited.",
-    expanded: "The kernel is what makes this an OS rather than a product. It governs which knowledge is current, who can use it, how it is enforced, and what was done with it. Everything above it inherits the same definition of how the company decides.",
-    tone: "kernel",
-    items: [
-      { label: "Knowledge graph", icon: <Network className="w-4 h-4" />, detail: "The structured map of how your company decides. Concepts, standards, decisions, and the relationships between them. Every AI surface reads from here." },
-      { label: "Mandates & directives", icon: <ShieldCheck className="w-4 h-4" />, detail: "Non-negotiable constraints enforced at execution time. Compliance and policy stop being a PDF and become a runtime check." },
-      { label: "Versioning", icon: <GitBranch className="w-4 h-4" />, detail: "Knowledge as code. Every standard has a history, an owner, a diff, and a release. Drift becomes visible instead of silent." },
-      { label: "Audit trail", icon: <History className="w-4 h-4" />, detail: "Every execution records which bundle, which version, which mandate. Auditing happens in execution, not after." },
-      { label: "Access & roles", icon: <KeySquare className="w-4 h-4" />, detail: "Who can author, who can execute, who can override. The standards layer is governed like infrastructure, not like a wiki." },
-    ],
-  },
-  {
-    id: "data",
-    kicker: "Layer 01",
-    title: "Your sources",
-    sub: "The systems and people the kernel reads from. Liza absorbs them. They stay where they are.",
-    expanded: "LIZA does not replace your systems of record. It absorbs from them, structures the judgment that lives across them, and gives that judgment back to every surface that needs it. Your data stays where it is. Your standards become portable.",
-    tone: "data",
-    items: [
-      { label: "Drive / SharePoint", icon: <Cloud className="w-4 h-4" />, detail: "Your existing document estate. The kernel reads it for context but does not depend on its structure for governance." },
-      { label: "Databases", icon: <Database className="w-4 h-4" />, detail: "Operational and analytical data. The kernel grounds standards in real numbers, not abstract policy." },
-      { label: "Documents", icon: <FileSpreadsheet className="w-4 h-4" />, detail: "Process docs, SOPs, decks, models. Source material for the extraction engine to turn into structured knowledge." },
-      { label: "Email & chat", icon: <Mail className="w-4 h-4" />, detail: "Where decisions actually happen. Captured, not stored, so judgment is recovered, not lost." },
-      { label: "Senior interviews", icon: <MessagesSquare className="w-4 h-4" />, detail: "The tacit layer. The thinking your best people never wrote down, externalised into bundles before they leave." },
-    ],
-  },
-];
+/* Connected Tools — third-party AI products that plug into the Judgment Core */
+const CONNECTED_TOOLS: Layer = {
+  id: "apps",
+  kicker: "Top — connected tools",
+  title: "Connected Tools",
+  sub: "Third-party AI products you already own. They plug into the Judgment Core and inherit your standards. Same governed answers, everywhere.",
+  expanded: "These tools each invent answers from generic training data today. Connect them to Liza and they read your standards, mandates, and audit trail. Procurement stops being a feature bake-off and becomes a layering decision.",
+  tone: "apps",
+  items: [
+    { label: "Microsoft Copilot", icon: <Sparkles className="w-4 h-4" />, detail: "Copilot stops sounding generic. It answers in your company's standards because Liza feeds it governed bundles instead of raw SharePoint sprawl." },
+    { label: "Glean", icon: <Search className="w-4 h-4" />, detail: "Enterprise search ranks by judgment, not just relevance — filtered by your current mandates and playbooks." },
+    { label: "Veeva / NesGPT", icon: <FileCheck2 className="w-4 h-4" />, detail: "Industry stacks (life sciences, banking) consume the same standards. GxP and risk constraints execute consistently across vendors." },
+    { label: "Notion AI", icon: <BookOpen className="w-4 h-4" />, detail: "Workspace AI answers from your Judgment Core, not from arbitrary pages. The wiki stops being the source of truth." },
+  ],
+};
+
+/* Native Surfaces — Liza-built execution surfaces. ChatGPT/Claude/custom agents live inside Workbooks. */
+const NATIVE_SURFACES: Layer = {
+  id: "native",
+  kicker: "Liza — native surfaces",
+  title: "Native Surfaces",
+  sub: "Where work actually happens. Liza ships these. ChatGPT, Claude, and custom agents run inside Workbooks against the right governed bundle.",
+  expanded: "These are Liza's first-party surfaces — designed for governed execution from day one. The loop closes here: capture tacit judgment, compose it into bundles, execute against it, oversee what teams do.",
+  tone: "native",
+  items: [
+    { label: "Workbooks", icon: <Workflow className="w-4 h-4" />, tag: "Execute", detail: "Where work happens. Each Workbook hosts ChatGPT, Claude, and custom agents — all reading the governed bundle for that workflow." },
+    { label: "ChatGPT · Claude · Agents", icon: <Bot className="w-4 h-4" />, tag: "Inside", detail: "Frontier models and your custom agents run inside Workbooks. They never see raw context — only the bundle that matches the job." },
+    { label: "Extraction Engine", icon: <Sparkles className="w-4 h-4" />, tag: "Capture", detail: "Pulls tacit judgment out of process docs, transcripts, and senior interviews. Expertise that was never written down becomes a structured asset." },
+    { label: "Oversight", icon: <Eye className="w-4 h-4" />, tag: "Govern", detail: "See what teams execute, where drift happens, what needs re-encoding. The control surface for the standards layer." },
+    { label: "Context Bundles", icon: <LayersIcon className="w-4 h-4" />, tag: "Compose", detail: "Playbooks, Procedures, Directives, Principles, Knowledge composed into deployable units. Versioned, governed, portable." },
+  ],
+};
+
+/* Judgment Core — the brain. Standards, knowledge graph, governance. */
+const JUDGMENT_CORE: Layer = {
+  id: "core",
+  kicker: "The center — Judgment Core",
+  title: "Judgment Core",
+  sub: "Your knowledge graph plus the governance services every AI surface must consume to act with judgment. One source of truth. Versioned, mandated, audited.",
+  expanded: "The Judgment Core is what makes Liza an organizational layer rather than a product. It governs which knowledge is current, who can use it, how it is enforced, and what was done with it. Everything that touches it inherits the same definition of how your company decides.",
+  tone: "core",
+  items: [
+    { label: "Knowledge graph", icon: <Network className="w-4 h-4" />, detail: "The structured map of how your company decides. Concepts, standards, decisions, and the relationships between them." },
+    { label: "Mandates & directives", icon: <ShieldCheck className="w-4 h-4" />, detail: "Non-negotiable constraints enforced at execution time. Policy stops being a PDF and becomes a runtime check." },
+    { label: "Versioning", icon: <GitBranch className="w-4 h-4" />, detail: "Knowledge as code. Every standard has a history, an owner, a diff, a release. Drift becomes visible instead of silent." },
+    { label: "Audit trail", icon: <History className="w-4 h-4" />, detail: "Every execution records which bundle, which version, which mandate. Auditing happens in execution, not after." },
+    { label: "Access & roles", icon: <KeySquare className="w-4 h-4" />, detail: "Who can author, who can execute, who can override. The standards layer is governed like infrastructure, not like a wiki." },
+  ],
+};
+
+/* Source Systems — your existing estate, read from the side. Not below. */
+const SOURCE_SYSTEMS: Layer = {
+  id: "data",
+  kicker: "Side — source systems",
+  title: "Source Systems",
+  sub: "Your existing estate. Liza reads across from them. Your data stays exactly where it is.",
+  expanded: "Liza does not replace your systems of record. It reads from them, structures the judgment that lives across them, and gives that judgment back to every surface that needs it. Your standards become portable. Your data does not move.",
+  tone: "data",
+  items: [
+    { label: "Drive / SharePoint", icon: <Cloud className="w-4 h-4" />, detail: "Your document estate. Liza reads it for context but does not depend on its structure for governance." },
+    { label: "Databases", icon: <Database className="w-4 h-4" />, detail: "Operational and analytical data. Standards stay grounded in real numbers, not abstract policy." },
+    { label: "Documents", icon: <FileSpreadsheet className="w-4 h-4" />, detail: "Process docs, SOPs, decks, models. Source material for the Extraction Engine." },
+    { label: "Email & chat", icon: <Mail className="w-4 h-4" />, detail: "Where decisions actually happen. Captured, so judgment is recovered, not lost." },
+    { label: "Senior interviews", icon: <MessagesSquare className="w-4 h-4" />, detail: "The tacit layer. The thinking your best people never wrote down — externalised before they leave." },
+  ],
+};
+
+/* Model Fabric — the LLM-agnostic substrate at the bottom. */
+const MODEL_FABRIC: Layer = {
+  id: "fabric",
+  kicker: "Foundation — model fabric",
+  title: "Model Fabric",
+  sub: "LLM-agnostic substrate. Route any frontier or private model. Swap providers without rewriting your standards.",
+  expanded: "The Model Fabric is the part of Liza that talks to the models. OpenAI, Anthropic, Google, open-source, on-prem — they are interchangeable. Your Judgment Core is the asset; the model is a runtime choice that can change every quarter without disrupting how your company decides.",
+  tone: "fabric",
+  items: [
+    { label: "OpenAI", icon: <Cpu className="w-4 h-4" />, detail: "Routed when frontier reasoning matters. Liza calls it; standards stay in the Core." },
+    { label: "Anthropic", icon: <Cpu className="w-4 h-4" />, detail: "Routed for long-context and safety-sensitive tasks. Same bundles, different engine." },
+    { label: "Google", icon: <Cpu className="w-4 h-4" />, detail: "Routed for multimodal and cost-sensitive workloads." },
+    { label: "Open-source / on-prem", icon: <Cpu className="w-4 h-4" />, detail: "For sovereign, regulated, or air-gapped environments. The Core does not change." },
+  ],
+};
 
 /* ---------- tone tokens ---------- */
 const TONE: Record<Layer["tone"], { ring: string; bg: string; chipBg: string; chipBorder: string; accent: string; kicker: string }> = {
   apps:   { ring: "hsl(var(--muted-foreground) / 0.25)", bg: "hsl(var(--muted) / 0.4)",      chipBg: "hsl(var(--background))",            chipBorder: "hsl(var(--border))",                accent: "hsl(var(--muted-foreground))", kicker: "hsl(var(--muted-foreground))" },
   native: { ring: "hsl(var(--brand-green) / 0.45)",      bg: "hsl(var(--brand-green) / 0.06)",chipBg: "hsl(var(--brand-green) / 0.10)",   chipBorder: "hsl(var(--brand-green) / 0.30)",    accent: "hsl(var(--brand-green))",      kicker: "hsl(var(--brand-green))" },
-  kernel: { ring: "hsl(var(--primary) / 0.55)",          bg: "hsl(var(--primary) / 0.08)",    chipBg: "hsl(var(--primary) / 0.12)",        chipBorder: "hsl(var(--primary) / 0.35)",        accent: "hsl(var(--primary))",          kicker: "hsl(var(--primary))" },
+  core:   { ring: "hsl(var(--primary) / 0.55)",          bg: "hsl(var(--primary) / 0.08)",    chipBg: "hsl(var(--primary) / 0.12)",        chipBorder: "hsl(var(--primary) / 0.35)",        accent: "hsl(var(--primary))",          kicker: "hsl(var(--primary))" },
   data:   { ring: "hsl(var(--foreground) / 0.15)",       bg: "hsl(var(--card))",              chipBg: "hsl(var(--background))",            chipBorder: "hsl(var(--border))",                accent: "hsl(var(--foreground) / 0.7)", kicker: "hsl(var(--muted-foreground))" },
+  fabric: { ring: "hsl(var(--foreground) / 0.18)",       bg: "hsl(var(--foreground) / 0.04)", chipBg: "hsl(var(--background))",            chipBorder: "hsl(var(--foreground) / 0.18)",     accent: "hsl(var(--foreground) / 0.75)",kicker: "hsl(var(--muted-foreground))" },
 };
 
 /* ---------- chip ---------- */
@@ -175,7 +196,7 @@ function LayerBlock({ layer, index }: { layer: Layer; index: number }) {
       style={{ background: t.bg, borderColor: t.ring }}
     >
       <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: t.accent, opacity: 0.55 }} />
-      <div className="grid md:grid-cols-[260px_1fr] gap-6 p-6 md:p-8">
+      <div className="grid md:grid-cols-[240px_1fr] gap-6 p-6 md:p-8">
         <div>
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
             {layer.kicker}
@@ -193,7 +214,7 @@ function LayerBlock({ layer, index }: { layer: Layer; index: number }) {
               className="w-3 h-3 transition-transform"
               style={{ transform: expanded ? "rotate(45deg)" : "rotate(0deg)" }}
             />
-            {expanded ? "Less" : "Why this layer"}
+            {expanded ? "Less" : "Why this matters"}
           </button>
           <AnimatePresence initial={false}>
             {expanded && (
@@ -236,17 +257,100 @@ function Connector({ label }: { label: string }) {
   );
 }
 
+/* ---------- side feed (Source Systems on the side) ---------- */
+function SideFeed({ layer }: { layer: Layer }) {
+  const t = TONE[layer.tone];
+  const [openItem, setOpenItem] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -18 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55 }}
+      className="relative rounded-2xl border p-5 h-full flex flex-col"
+      style={{ background: t.bg, borderColor: t.ring }}
+    >
+      <div className="absolute top-0 left-0 bottom-0 w-[2px]" style={{ background: t.accent, opacity: 0.55 }} />
+      <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
+        {layer.kicker}
+      </p>
+      <h3 className="text-lg md:text-xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
+      <p className="text-[12.5px] leading-relaxed text-muted-foreground mb-4">{layer.sub}</p>
+      <div className="flex flex-col gap-2 flex-1">
+        {layer.items.map((it) => (
+          <Chip
+            key={it.label}
+            item={it}
+            tone={layer.tone}
+            open={openItem === it.label}
+            onToggle={() => setOpenItem(openItem === it.label ? null : it.label)}
+          />
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+        className="mt-3 inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.18em] uppercase transition-opacity hover:opacity-80 self-start"
+        style={{ color: t.accent }}
+      >
+        <Plus className="w-3 h-3 transition-transform" style={{ transform: expanded ? "rotate(45deg)" : "rotate(0deg)" }} />
+        {expanded ? "Less" : "Why this matters"}
+      </button>
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.p
+            initial={{ height: 0, opacity: 0, marginTop: 0 }}
+            animate={{ height: "auto", opacity: 1, marginTop: 10 }}
+            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+            className="overflow-hidden text-[12px] leading-relaxed text-foreground/80"
+          >
+            {layer.expanded}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+/* ---------- inflow arrow (sources -> core/surfaces) ---------- */
+function InflowArrow() {
+  return (
+    <div className="hidden md:flex items-center justify-center px-1">
+      <div className="flex flex-col items-center gap-1">
+        <ArrowRight className="w-5 h-5" style={{ color: "hsl(var(--primary) / 0.7)" }} />
+        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground rotate-90 mt-3 whitespace-nowrap">reads from</span>
+      </div>
+    </div>
+  );
+}
+
 /* ---------- main stack ---------- */
 export function LizaOSStack() {
   return (
     <div className="relative">
-      <LayerBlock layer={LAYERS[0]} index={0} />
-      <Connector label="consume governed context" />
-      <LayerBlock layer={LAYERS[1]} index={1} />
-      <Connector label="run on the kernel" />
-      <LayerBlock layer={LAYERS[2]} index={2} />
-      <Connector label="reads from" />
-      <LayerBlock layer={LAYERS[3]} index={3} />
+      {/* Connected Tools (top) */}
+      <LayerBlock layer={CONNECTED_TOOLS} index={0} />
+      <Connector label="plug into the Judgment Core" />
+
+      {/* Middle row: Source Systems on the SIDE feeding into Native Surfaces */}
+      <div className="grid md:grid-cols-[260px_24px_1fr] gap-3 md:gap-3 items-stretch">
+        <SideFeed layer={SOURCE_SYSTEMS} />
+        <InflowArrow />
+        <LayerBlock layer={NATIVE_SURFACES} index={1} />
+      </div>
+
+      <Connector label="execute against the Judgment Core" />
+
+      {/* Judgment Core (the center) */}
+      <LayerBlock layer={JUDGMENT_CORE} index={2} />
+
+      <Connector label="runs on top of any model" />
+
+      {/* Model Fabric (the foundation) */}
+      <LayerBlock layer={MODEL_FABRIC} index={3} />
     </div>
   );
 }
