@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX, Database, Workflow, Sparkles, ShieldCheck, Compass, Network } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Database, Workflow, Sparkles, ShieldCheck, Compass, Network } from "lucide-react";
 
 /* 90-second autoplaying product film for /os.
    Visual sequence (no external video file): 6 captioned beats that build the
@@ -26,7 +26,6 @@ const TOTAL = BEATS.reduce((a, b) => a + b.duration, 0);
 
 export function ProductFilm() {
   const [playing, setPlaying] = useState(true);
-  const [muted, setMuted] = useState(true);
   const [elapsed, setElapsed] = useState(0);
   const startRef = useRef<number>(performance.now());
   const accumRef = useRef<number>(0);
@@ -57,6 +56,21 @@ export function ProductFilm() {
   const beat = BEATS[beatIdx];
   const progress = elapsed / TOTAL;
 
+  const beatStart = (idx: number) => BEATS.slice(0, idx).reduce((a, b) => a + b.duration, 0);
+  const seekTo = (ms: number) => {
+    const clamped = Math.max(0, Math.min(TOTAL - 1, ms));
+    accumRef.current = clamped;
+    startRef.current = performance.now();
+    setElapsed(clamped);
+  };
+  const goPrev = () => seekTo(beatStart(Math.max(0, beatIdx - 1)));
+  const goNext = () => seekTo(beatStart(Math.min(BEATS.length - 1, beatIdx + 1)));
+  const handleScrub = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const ratio = (e.clientX - rect.left) / rect.width;
+    seekTo(ratio * TOTAL);
+  };
+
   return (
     <div
       className="relative rounded-2xl border-2 overflow-hidden"
@@ -82,11 +96,11 @@ export function ProductFilm() {
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={() => setMuted((m) => !m)}
-            aria-label={muted ? "Unmute" : "Mute"}
+            onClick={goPrev}
+            aria-label="Previous beat"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
-            {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            <SkipBack className="w-4 h-4" />
           </button>
           <button
             type="button"
@@ -95,6 +109,14 @@ export function ProductFilm() {
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Next beat"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <SkipForward className="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -147,15 +169,23 @@ export function ProductFilm() {
       </div>
 
       {/* Scrubber */}
-      <div className="relative h-1.5 bg-muted">
+      <div
+        className="relative h-2 bg-muted cursor-pointer group"
+        onClick={handleScrub}
+        role="slider"
+        aria-label="Seek"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(progress * 100)}
+      >
         <div
-          className="absolute top-0 left-0 h-full"
+          className="absolute top-0 left-0 h-full pointer-events-none"
           style={{
             width: `${progress * 100}%`,
             background: "var(--gradient-brand-btn, hsl(var(--primary)))",
           }}
         />
-        <div className="absolute top-0 left-0 right-0 h-full flex">
+        <div className="absolute top-0 left-0 right-0 h-full flex pointer-events-none">
           {BEATS.map((_, i) => (
             <div
               key={i}
