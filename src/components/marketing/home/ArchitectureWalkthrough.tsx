@@ -293,16 +293,16 @@ function SceneGuide(p: number) {
 /* 5. PLAN — Liza connects, learns, and produces artifacts. */
 function ScenePlan(p: number) {
   const records = [
-    { label: "SharePoint",  icon: <Cloud className="w-3 h-3" /> },
-    { label: "Databases",   icon: <Database className="w-3 h-3" /> },
-    { label: "Docs",        icon: <FileSpreadsheet className="w-3 h-3" /> },
-    { label: "Email",       icon: <Mail className="w-3 h-3" /> },
+    { label: "SharePoint",  sub: "12k docs",   icon: <Cloud className="w-3 h-3" /> },
+    { label: "Salesforce",  sub: "3y deals",   icon: <Database className="w-3 h-3" /> },
+    { label: "Notion",      sub: "Playbooks",  icon: <FileSpreadsheet className="w-3 h-3" /> },
+    { label: "Gmail",       sub: "Approvals",  icon: <Mail className="w-3 h-3" /> },
   ];
   const tools = [
-    { label: "Copilot", icon: <Sparkles className="w-3 h-3" /> },
-    { label: "Claude",  icon: <Bot className="w-3 h-3" /> },
-    { label: "Glean",   icon: <Search className="w-3 h-3" /> },
-    { label: "Agents",  icon: <Workflow className="w-3 h-3" /> },
+    { label: "Copilot",   icon: <Sparkles className="w-3 h-3" /> },
+    { label: "Claude",    icon: <Bot className="w-3 h-3" /> },
+    { label: "Glean",     icon: <Search className="w-3 h-3" /> },
+    { label: "Agents",    icon: <Workflow className="w-3 h-3" /> },
   ];
   const topIn = between(p, 0.0, 0.22);
   const learnIn = between(p, 0.22, 0.45);
@@ -313,14 +313,15 @@ function ScenePlan(p: number) {
       {/* Top: your data */}
       <div className="mb-1" style={{ opacity: topIn }}>
         <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          1 · Connect your data
+          1 · Liza reads what you already have
         </p>
         <div className="grid grid-cols-4 gap-1">
           {records.map((r) => (
-            <div key={r.label} className="flex flex-col items-center gap-0.5 px-1 py-1 rounded border"
+            <div key={r.label} className="flex flex-col items-center gap-0 px-1 py-1 rounded border"
               style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
               <span style={{ color: MUTED }}>{r.icon}</span>
-              <span className="text-[8px] font-bold text-foreground/75 truncate">{r.label}</span>
+              <span className="text-[8px] font-bold text-foreground/85 truncate">{r.label}</span>
+              <span className="text-[7.5px] text-muted-foreground truncate">{r.sub}</span>
             </div>
           ))}
         </div>
@@ -342,20 +343,20 @@ function ScenePlan(p: number) {
         <div className="flex items-center gap-1.5 mb-1">
           <Activity className="w-3 h-3" style={{ color: PRIMARY }} />
           <span className="text-[9px] font-black uppercase tracking-[0.14em]" style={{ color: PRIMARY }}>
-            2 · Liza learns how you actually decide
+            2 · Liza proposes rules from real decisions
           </span>
         </div>
         <div className="grid grid-cols-3 gap-1">
           {[
-            { i: <BookOpen className="w-3 h-3" />, l: "Reads docs" },
-            { i: <Eye className="w-3 h-3" />,      l: "Watches calls" },
-            { i: <FileText className="w-3 h-3" />, l: "Drafts rules" },
+            { i: <BookOpen className="w-3 h-3" />, l: "Reads 4 yrs of contracts" },
+            { i: <Eye className="w-3 h-3" />,      l: "Watches what CFO approves" },
+            { i: <FileText className="w-3 h-3" />, l: "Drafts → Sarah edits" },
           ].map((x, i) => {
             const a = between(p, 0.25 + i * 0.05, 0.4 + i * 0.05);
             return (
               <div key={x.l} className="flex flex-col items-center gap-0.5" style={{ opacity: a }}>
                 <span style={{ color: PRIMARY }}>{x.i}</span>
-                <span className="text-[8px] font-bold text-foreground/80 text-center leading-tight">{x.l}</span>
+                <span className="text-[7.5px] font-bold text-foreground/80 text-center leading-tight">{x.l}</span>
               </div>
             );
           })}
@@ -372,19 +373,19 @@ function ScenePlan(p: number) {
           <div className="flex items-center gap-1.5 mb-1.5">
             <Compass className="w-3.5 h-3.5 flex-shrink-0" style={{ color: PRIMARY }} />
             <p className="text-[10.5px] font-bold text-foreground/85">
-              Standard + living artifacts
+              The standard, plus the artifacts your teams use every day
             </p>
           </div>
           <div className="grid grid-cols-3 gap-1">
             {[
-              { l: "Policies",  i: <FileText className="w-3 h-3" /> },
-              { l: "Playbooks", i: <BookOpen className="w-3 h-3" /> },
-              { l: "Approvals", i: <Stamp className="w-3 h-3" /> },
+              { l: "Pricing policy",   i: <FileText className="w-3 h-3" /> },
+              { l: "Renewal playbook", i: <BookOpen className="w-3 h-3" /> },
+              { l: "Approval log",     i: <Stamp className="w-3 h-3" /> },
             ].map((a) => (
               <div key={a.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
                 style={{ borderColor: PRIMARY + "33", background: "hsl(var(--background))" }}>
                 <span style={{ color: PRIMARY }}>{a.i}</span>
-                <span className="text-[8.5px] font-bold text-foreground/80 truncate">{a.l}</span>
+                <span className="text-[8px] font-bold text-foreground/80 truncate">{a.l}</span>
               </div>
             ))}
           </div>
@@ -398,7 +399,7 @@ function ScenePlan(p: number) {
       {/* Bottom: your AI tools */}
       <div style={{ opacity: botIn }}>
         <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          4 · Your AI tools read the standard
+          4 · Every AI tool checks the standard before it answers
         </p>
         <div className="grid grid-cols-4 gap-1">
           {tools.map((t) => (
@@ -416,18 +417,22 @@ function ScenePlan(p: number) {
 
 /* 6. SUCCESS — concrete before/after with proof signals */
 function SceneSuccess(p: number) {
-  const tools = ["Copilot", "Claude", "Glean"];
+  const tools = [
+    { who: "Maya · Copilot",  when: "Mon 09:14" },
+    { who: "Tom · Claude",    when: "Mon 11:02" },
+    { who: "Priya · Glean",   when: "Tue 08:47" },
+  ];
   const lineIn = between(p, 0.05, 0.25);
   const wins = [
-    { k: "Same answer, every tool", v: "Discount cap: 15%" },
-    { k: "Every action, audited",   v: "147 decisions / wk" },
-    { k: "Standard improves itself", v: "+12 rules this month" },
+    { k: "Decisions logged this week",  v: "147" },
+    { k: "Edge cases surfaced to CRO",  v: "4" },
+    { k: "New rules approved by Sarah", v: "+12" },
   ];
   return (
-    <div className="w-full max-w-[290px] mx-auto">
+    <div className="w-full max-w-[300px] mx-auto">
       <div className="text-center mb-2" style={{ opacity: between(p, 0, 0.2) }}>
         <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: PRIMARY }}>
-          With Liza in place
+          Same Slack channel, six weeks later
         </span>
       </div>
 
@@ -437,19 +442,25 @@ function SceneSuccess(p: number) {
         style={{ opacity: lineIn, borderColor: PRIMARY + "44", background: PRIMARY + "08" }}
       >
         <p className="text-[9px] font-black uppercase tracking-[0.14em] text-muted-foreground mb-1.5">
-          One question
+          "Max discount on a 3-year renewal?"
         </p>
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           {tools.map((t, i) => {
             const a = between(p, 0.1 + i * 0.06, 0.25 + i * 0.06);
             return (
-              <div key={t} className="flex items-center justify-between" style={{ opacity: a }}>
-                <span className="text-[10.5px] font-black" style={{ color: PRIMARY }}>{t}</span>
-                <span className="text-[10.5px] font-bold text-foreground/85 font-mono">Discount cap: 15%</span>
+              <div key={t.who} className="flex items-center justify-between gap-2" style={{ opacity: a }}>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-black text-foreground/85 truncate">{t.who}</p>
+                  <p className="text-[8.5px] text-muted-foreground">{t.when}</p>
+                </div>
+                <span className="text-[10px] font-bold text-foreground/90 font-mono flex-shrink-0">"20% multi-yr"</span>
               </div>
             );
           })}
         </div>
+        <p className="text-[9px] text-muted-foreground mt-1.5 italic">
+          All three cite Pricing Policy v2.5 · §3.
+        </p>
       </div>
 
       <div className="space-y-1.5">
