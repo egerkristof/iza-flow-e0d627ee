@@ -6,10 +6,10 @@ import {
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
   Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
-  ChevronRight, ArrowRight,
+  ChevronRight, ArrowRight, TrendingUp, X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon } from "./industryLexicon";
+import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
