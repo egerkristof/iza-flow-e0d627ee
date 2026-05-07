@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
 import { GuidedTour, PlayTourButton } from "./GuidedTour";
 import { Play } from "lucide-react";
+import { toast } from "sonner";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
@@ -995,6 +996,54 @@ export function LizaOSStack() {
   const industry = INDUSTRY_BY_KEY[industryKey];
   const isGeneric = industryKey === "generic";
   const [tourOpen, setTourOpen] = useState(false);
+  const stackRef = useRef<HTMLDivElement>(null);
+  const nudgedRef = useRef(false);
+
+  // Scroll-triggered nudge: when the architecture section has been on screen
+  // for ~6s in generic mode, suggest picking an industry + playing the tour.
+  useEffect(() => {
+    if (!isGeneric || tourOpen || nudgedRef.current) return;
+    const el = stackRef.current;
+    if (!el) return;
+    let timer: number | null = null;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+            if (timer == null) {
+              timer = window.setTimeout(() => {
+                if (nudgedRef.current) return;
+                nudgedRef.current = true;
+                toast(
+                  "Want to see how this works for your industry?",
+                  {
+                    description:
+                      "Pick your industry above, then play the 6-step guided tour through the architecture.",
+                    duration: 9000,
+                    action: {
+                      label: "Jump to selector",
+                      onClick: () => {
+                        el.scrollIntoView({ behavior: "smooth", block: "start" });
+                      },
+                    },
+                  },
+                );
+              }, 6000);
+            }
+          } else if (timer != null) {
+            window.clearTimeout(timer);
+            timer = null;
+          }
+        }
+      },
+      { threshold: [0, 0.35, 0.6] },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      if (timer != null) window.clearTimeout(timer);
+    };
+  }, [isGeneric, tourOpen]);
 
   // Industry-overridden layers
   const sourceLayer = useMemo<Layer>(() => ({
@@ -1040,7 +1089,7 @@ export function LizaOSStack() {
   );
 
   return (
-    <div className="relative">
+    <div className="relative" ref={stackRef}>
       {/* Industry tab strip — Rolodex */}
       <IndustryRolodex
         active={industryKey}
