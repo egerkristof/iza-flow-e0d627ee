@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import {
   AlertTriangle, Compass, Database, Sparkles, Workflow,
   ArrowDown, ArrowUp, ArrowRight, Play, Pause, Cloud, Mail, FileSpreadsheet, Bot, Search,
-  CheckCircle2, TrendingDown, Users,
+  CheckCircle2, TrendingDown, Users, FileText, GitBranch, BookOpen, Stamp, Activity, Eye,
 } from "lucide-react";
 
 /* Mobile-only auto-playing "Stories" video of the Liza architecture.
@@ -205,13 +205,13 @@ function SceneStakes(p: number) {
 function SceneGuide(p: number) {
   const scale = 0.85 + ease(between(p, 0, 0.35)) * 0.15;
   const lines = [
-    "Pricing rules",
-    "Approval thresholds",
-    "Risk appetite",
-    "Tone of voice",
+    { k: "Pricing rules",        v: "Discount cap 15%" },
+    { k: "Approval thresholds",  v: "> €50k → CFO" },
+    { k: "Risk appetite",        v: "No PII to public LLMs" },
+    { k: "Tone of voice",        v: "Direct, no hedging" },
   ];
   return (
-    <div className="w-full max-w-[280px] mx-auto" style={{ transform: `scale(${scale})` }}>
+    <div className="w-full max-w-[290px] mx-auto" style={{ transform: `scale(${scale})` }}>
       <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
         <div className="flex items-start gap-2 mb-2">
           <span
@@ -222,7 +222,7 @@ function SceneGuide(p: number) {
           </span>
           <div className="flex-1">
             <p className="text-[12px] font-black text-foreground leading-tight">How your company decides.</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">v2.4 · Owned by leadership</p>
+            <p className="text-[10px] text-muted-foreground mt-0.5">v2.4 · Owned by leadership · Machine-readable</p>
           </div>
         </div>
         <div className="space-y-1.5">
@@ -230,27 +230,37 @@ function SceneGuide(p: number) {
             const a = between(p, 0.25 + i * 0.12, 0.45 + i * 0.12);
             return (
               <div
-                key={l}
-                className="flex items-center gap-2"
+                key={l.k}
+                className="flex items-center justify-between gap-2 px-2 py-1 rounded"
                 style={{ opacity: a, transform: `translateX(${(1 - a) * -8}px)` }}
               >
-                <span className="w-1 h-1 rounded-full" style={{ background: PRIMARY }} />
-                <span className="text-[11px] text-foreground/85 font-semibold">{l}</span>
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: PRIMARY }} />
+                  <span className="text-[10.5px] text-foreground/85 font-semibold truncate">{l.k}</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
               </div>
             );
           })}
+        </div>
+        <div
+          className="mt-2 pt-2 border-t flex items-center gap-1.5"
+          style={{ borderColor: PRIMARY + "22", opacity: between(p, 0.75, 0.95) }}
+        >
+          <GitBranch className="w-3 h-3" style={{ color: PRIMARY }} />
+          <span className="text-[9px] font-bold text-muted-foreground">Versioned · Auditable · Editable in plain English</span>
         </div>
       </MiniWindow>
     </div>
   );
 }
 
-/* 5. PLAN — Liza connects your data + your AI tools. One simple picture. */
+/* 5. PLAN — Liza connects, learns, and produces artifacts. */
 function ScenePlan(p: number) {
   const records = [
     { label: "SharePoint",  icon: <Cloud className="w-3 h-3" /> },
     { label: "Databases",   icon: <Database className="w-3 h-3" /> },
-    { label: "Documents",   icon: <FileSpreadsheet className="w-3 h-3" /> },
+    { label: "Docs",        icon: <FileSpreadsheet className="w-3 h-3" /> },
     { label: "Email",       icon: <Mail className="w-3 h-3" /> },
   ];
   const tools = [
@@ -259,15 +269,16 @@ function ScenePlan(p: number) {
     { label: "Glean",   icon: <Search className="w-3 h-3" /> },
     { label: "Agents",  icon: <Workflow className="w-3 h-3" /> },
   ];
-  const topIn = between(p, 0.05, 0.3);
-  const center = between(p, 0.3, 0.55);
-  const botIn = between(p, 0.55, 0.8);
+  const topIn = between(p, 0.0, 0.22);
+  const learnIn = between(p, 0.22, 0.45);
+  const center = between(p, 0.4, 0.6);
+  const botIn = between(p, 0.6, 0.8);
   return (
     <div className="w-full max-w-[290px] mx-auto">
       {/* Top: your data */}
-      <div className="mb-1.5" style={{ opacity: topIn }}>
+      <div className="mb-1" style={{ opacity: topIn }}>
         <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          Your data
+          1 · Connect your data
         </p>
         <div className="grid grid-cols-4 gap-1">
           {records.map((r) => (
@@ -280,32 +291,79 @@ function ScenePlan(p: number) {
         </div>
       </div>
 
-      {/* Arrow down */}
-      <div className="flex justify-center my-1" style={{ opacity: between(p, 0.25, 0.4) }}>
-        <ArrowDown className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
+      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.18, 0.3) }}>
+        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
       </div>
 
-      {/* Center: Liza standard */}
-      <div style={{ opacity: center, transform: `scale(${0.92 + center * 0.08})` }}>
-        <MiniWindow label="Liza · Standard" accent={PRIMARY} glow>
-          <div className="flex items-center gap-2">
-            <Compass className="w-4 h-4 flex-shrink-0" style={{ color: PRIMARY }} />
-            <p className="text-[11px] font-bold text-foreground/85">
-              One source of truth for how you decide.
+      {/* Learn step */}
+      <div
+        className="mb-1 rounded-lg border px-2 py-1.5"
+        style={{
+          opacity: learnIn,
+          borderColor: PRIMARY + "44",
+          background: PRIMARY + "08",
+        }}
+      >
+        <div className="flex items-center gap-1.5 mb-1">
+          <Activity className="w-3 h-3" style={{ color: PRIMARY }} />
+          <span className="text-[9px] font-black uppercase tracking-[0.14em]" style={{ color: PRIMARY }}>
+            2 · Liza learns how you actually decide
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-1">
+          {[
+            { i: <BookOpen className="w-3 h-3" />, l: "Reads docs" },
+            { i: <Eye className="w-3 h-3" />,      l: "Watches calls" },
+            { i: <FileText className="w-3 h-3" />, l: "Drafts rules" },
+          ].map((x, i) => {
+            const a = between(p, 0.25 + i * 0.05, 0.4 + i * 0.05);
+            return (
+              <div key={x.l} className="flex flex-col items-center gap-0.5" style={{ opacity: a }}>
+                <span style={{ color: PRIMARY }}>{x.i}</span>
+                <span className="text-[8px] font-bold text-foreground/80 text-center leading-tight">{x.l}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.42, 0.55) }}>
+        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
+      </div>
+
+      {/* Center: Standard + artifacts */}
+      <div style={{ opacity: center, transform: `scale(${0.94 + center * 0.06})` }}>
+        <MiniWindow label="3 · Liza · Decision Standard" accent={PRIMARY} glow>
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <Compass className="w-3.5 h-3.5 flex-shrink-0" style={{ color: PRIMARY }} />
+            <p className="text-[10.5px] font-bold text-foreground/85">
+              Standard + living artifacts
             </p>
+          </div>
+          <div className="grid grid-cols-3 gap-1">
+            {[
+              { l: "Policies",  i: <FileText className="w-3 h-3" /> },
+              { l: "Playbooks", i: <BookOpen className="w-3 h-3" /> },
+              { l: "Approvals", i: <Stamp className="w-3 h-3" /> },
+            ].map((a) => (
+              <div key={a.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
+                style={{ borderColor: PRIMARY + "33", background: "hsl(var(--background))" }}>
+                <span style={{ color: PRIMARY }}>{a.i}</span>
+                <span className="text-[8.5px] font-bold text-foreground/80 truncate">{a.l}</span>
+              </div>
+            ))}
           </div>
         </MiniWindow>
       </div>
 
-      {/* Arrow down */}
-      <div className="flex justify-center my-1" style={{ opacity: between(p, 0.5, 0.65) }}>
-        <ArrowDown className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
+      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.58, 0.7) }}>
+        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
       </div>
 
       {/* Bottom: your AI tools */}
       <div style={{ opacity: botIn }}>
         <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          Your AI tools
+          4 · Your AI tools read the standard
         </p>
         <div className="grid grid-cols-4 gap-1">
           {tools.map((t) => (
@@ -317,47 +375,67 @@ function ScenePlan(p: number) {
           ))}
         </div>
       </div>
-
-      <div
-        className="mt-2 text-center text-[10px] font-bold text-foreground/75"
-        style={{ opacity: between(p, 0.8, 0.95) }}
-      >
-        Liza connects. Nothing migrates.
-      </div>
     </div>
   );
 }
 
-/* 6. SUCCESS — every AI, every team, aligned */
+/* 6. SUCCESS — concrete before/after with proof signals */
 function SceneSuccess(p: number) {
+  const tools = ["Copilot", "Claude", "Glean"];
+  const lineIn = between(p, 0.05, 0.25);
   const wins = [
-    "Every AI answers the same way",
-    "Every team works to one standard",
-    "Leadership sees what's actually happening",
+    { k: "Same answer, every tool", v: "Discount cap: 15%" },
+    { k: "Every action, audited",   v: "147 decisions / wk" },
+    { k: "Standard improves itself", v: "+12 rules this month" },
   ];
   return (
     <div className="w-full max-w-[290px] mx-auto">
-      <div className="text-center mb-3" style={{ opacity: between(p, 0, 0.25) }}>
+      <div className="text-center mb-2" style={{ opacity: between(p, 0, 0.2) }}>
         <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: PRIMARY }}>
           With Liza in place
         </span>
       </div>
-      <div className="space-y-2">
+
+      {/* Same question, same answer */}
+      <div
+        className="rounded-lg border px-2.5 py-2 mb-2"
+        style={{ opacity: lineIn, borderColor: PRIMARY + "44", background: PRIMARY + "08" }}
+      >
+        <p className="text-[9px] font-black uppercase tracking-[0.14em] text-muted-foreground mb-1.5">
+          One question
+        </p>
+        <div className="space-y-1">
+          {tools.map((t, i) => {
+            const a = between(p, 0.1 + i * 0.06, 0.25 + i * 0.06);
+            return (
+              <div key={t} className="flex items-center justify-between" style={{ opacity: a }}>
+                <span className="text-[10.5px] font-black" style={{ color: PRIMARY }}>{t}</span>
+                <span className="text-[10.5px] font-bold text-foreground/85 font-mono">Discount cap: 15%</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="space-y-1.5">
         {wins.map((w, i) => {
-          const a = between(p, 0.15 + i * 0.18, 0.4 + i * 0.18);
+          const a = between(p, 0.35 + i * 0.15, 0.55 + i * 0.15);
           return (
             <div
-              key={w}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg border"
+              key={w.k}
+              className="flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg border"
               style={{
                 opacity: a,
-                transform: `translateY(${(1 - a) * 8}px)`,
+                transform: `translateY(${(1 - a) * 6}px)`,
                 borderColor: PRIMARY + "44",
                 background: PRIMARY + "0a",
               }}
             >
-              <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: PRIMARY }} />
-              <span className="text-[11.5px] font-bold text-foreground/90">{w}</span>
+              <div className="flex items-center gap-1.5 min-w-0">
+                <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: PRIMARY }} />
+                <span className="text-[10.5px] font-bold text-foreground/90 truncate">{w.k}</span>
+              </div>
+              <span className="text-[10px] font-mono font-black flex-shrink-0" style={{ color: PRIMARY }}>{w.v}</span>
             </div>
           );
         })}
@@ -371,9 +449,9 @@ const SCENES: Scene[] = [
   { kicker: "01 · You",        headline: "You shipped AI everywhere.",          duration: 3800, render: SceneHero },
   { kicker: "02 · Problem",    headline: "But every tool answers differently.", duration: 4400, render: SceneProblem },
   { kicker: "03 · Stakes",     headline: "And it's costing you.",                duration: 4200, render: SceneStakes },
-  { kicker: "04 · Meet Liza",  headline: "One standard. Owned by leadership.",  duration: 4200, render: SceneGuide },
-  { kicker: "05 · The plan",   headline: "Liza sits between your data and your AI.", duration: 4800, render: ScenePlan },
-  { kicker: "06 · Success",    headline: "Now everyone's aligned.",              duration: 4200, render: SceneSuccess },
+  { kicker: "04 · Meet Liza",  headline: "Liza writes how your company decides.", duration: 5200, render: SceneGuide },
+  { kicker: "05 · The plan",   headline: "Liza learns, then governs.",          duration: 6200, render: ScenePlan },
+  { kicker: "06 · Success",    headline: "One answer. Audited. Always improving.", duration: 5200, render: SceneSuccess },
 ];
 
 /* ---------- player ---------- */
