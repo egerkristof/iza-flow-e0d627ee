@@ -438,76 +438,88 @@ function ScenePlan(p: number) {
   );
 }
 
-/* 6. SUCCESS — concrete before/after with proof signals */
+/* 6. SUCCESS — adjustment over time, with metrics + what's happening */
 function SceneSuccess(p: number) {
-  const tools = [
-    { who: "Maya · Copilot",  when: "Mon 09:14" },
-    { who: "Tom · Claude",    when: "Mon 11:02" },
-    { who: "Priya · Glean",   when: "Tue 08:47" },
+  const timeline = [
+    {
+      when: "Week 2",
+      event: "Same answer everywhere",
+      detail: "Copilot, Claude, Glean all cite Pricing Policy v2.5 §3",
+      metric: { k: "Conflicting answers", v: "−92%" },
+    },
+    {
+      when: "Week 6",
+      event: "EU AI Act clause lands",
+      detail: "Sarah edits the standard once. Every AI tool updates by morning.",
+      metric: { k: "Time to roll out", v: "1 day" },
+    },
+    {
+      when: "Week 12",
+      event: "The standard sharpens itself",
+      detail: "23 edge cases surfaced from real deals. 17 became new rules.",
+      metric: { k: "Rules approved", v: "+17" },
+    },
   ];
-  const lineIn = between(p, 0.05, 0.25);
-  const wins = [
-    { k: "Decisions logged this week",  v: "147" },
-    { k: "Edge cases surfaced to CRO",  v: "4" },
-    { k: "New rules approved by Sarah", v: "+12" },
+  const headerIn = between(p, 0, 0.15);
+  const summary = [
+    { k: "Decisions logged",   v: "1,840" },
+    { k: "Audit ready",        v: "100%" },
+    { k: "Rework on proposals", v: "−64%" },
   ];
   return (
-    <div className="w-full max-w-[300px] mx-auto">
-      <div className="text-center mb-2" style={{ opacity: between(p, 0, 0.2) }}>
+    <div className="w-full max-w-[320px] mx-auto">
+      <div className="text-center mb-2" style={{ opacity: headerIn }}>
         <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: PRIMARY }}>
-          Same Slack channel, six weeks later
+          The standard adjusts as you do
         </span>
       </div>
 
-      {/* Same question, same answer */}
-      <div
-        className="rounded-lg border px-2.5 py-2 mb-2"
-        style={{ opacity: lineIn, borderColor: PRIMARY + "44", background: PRIMARY + "08" }}
-      >
-        <p className="text-[9px] font-black uppercase tracking-[0.14em] text-muted-foreground mb-1.5">
-          "Max discount on a 3-year renewal?"
-        </p>
-        <div className="space-y-1.5">
-          {tools.map((t, i) => {
-            const a = between(p, 0.1 + i * 0.06, 0.25 + i * 0.06);
-            return (
-              <div key={t.who} className="flex items-center justify-between gap-2" style={{ opacity: a }}>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-black text-foreground/85 truncate">{t.who}</p>
-                  <p className="text-[8.5px] text-muted-foreground">{t.when}</p>
-                </div>
-                <span className="text-[10px] font-bold text-foreground/90 font-mono flex-shrink-0">"20% multi-yr"</span>
-              </div>
-            );
-          })}
-        </div>
-        <p className="text-[9px] text-muted-foreground mt-1.5 italic">
-          All three cite Pricing Policy v2.5 · §3.
-        </p>
-      </div>
-
-      <div className="space-y-1.5">
-        {wins.map((w, i) => {
-          const a = between(p, 0.35 + i * 0.15, 0.55 + i * 0.15);
+      <div className="relative pl-4 space-y-1.5 mb-2">
+        <div className="absolute left-1 top-1 bottom-1 w-px" style={{ background: PRIMARY + "44" }} />
+        {timeline.map((t, i) => {
+          const a = between(p, 0.1 + i * 0.18, 0.32 + i * 0.18);
           return (
             <div
-              key={w.k}
-              className="flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg border"
+              key={t.when}
+              className="relative rounded-lg border p-2"
               style={{
                 opacity: a,
-                transform: `translateY(${(1 - a) * 6}px)`,
+                transform: `translateX(${(1 - a) * 6}px)`,
                 borderColor: PRIMARY + "44",
-                background: PRIMARY + "0a",
+                background: PRIMARY + "06",
               }}
             >
-              <div className="flex items-center gap-1.5 min-w-0">
-                <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: PRIMARY }} />
-                <span className="text-[10.5px] font-bold text-foreground/90 truncate">{w.k}</span>
+              <span
+                className="absolute -left-[14px] top-2 w-2 h-2 rounded-full"
+                style={{ background: PRIMARY, boxShadow: `0 0 8px ${PRIMARY}` }}
+              />
+              <div className="flex items-center justify-between gap-2 mb-0.5">
+                <span className="text-[8.5px] font-black uppercase tracking-[0.12em]" style={{ color: PRIMARY }}>{t.when}</span>
+                <span className="text-[9px] font-mono font-black" style={{ color: PRIMARY }}>
+                  {t.metric.v} <span className="text-muted-foreground font-bold">{t.metric.k}</span>
+                </span>
               </div>
-              <span className="text-[10px] font-mono font-black flex-shrink-0" style={{ color: PRIMARY }}>{w.v}</span>
+              <p className="text-[10px] font-black text-foreground/90 leading-tight">{t.event}</p>
+              <p className="text-[8.5px] text-muted-foreground leading-snug mt-0.5">{t.detail}</p>
             </div>
           );
         })}
+      </div>
+
+      <div
+        className="grid grid-cols-3 gap-1 rounded-lg border p-1.5"
+        style={{
+          opacity: between(p, 0.7, 0.9),
+          borderColor: PRIMARY + "55",
+          background: PRIMARY + "10",
+        }}
+      >
+        {summary.map((s) => (
+          <div key={s.k} className="text-center">
+            <p className="text-[12px] font-black leading-none" style={{ color: PRIMARY }}>{s.v}</p>
+            <p className="text-[7.5px] font-bold uppercase tracking-[0.08em] text-muted-foreground mt-0.5 leading-tight">{s.k}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
