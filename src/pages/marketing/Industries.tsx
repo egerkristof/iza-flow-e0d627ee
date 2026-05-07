@@ -1,8 +1,7 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { Link } from "react-router-dom";
 import {
-  Pill, Building2, Briefcase, ArrowRight, Lock, Megaphone,
-  TrendingUp, Users, Target, Handshake, GraduationCap, Radio,
+  Pill, Building2, ArrowRight, Lock,
   Rocket, Satellite, Landmark, Car,
 } from "lucide-react";
 import { SectionTag } from "@/components/marketing/home/shared";
@@ -77,89 +76,6 @@ const REGULATED_INDUSTRIES = [
       "Chassis-control IP, HQ design intent, and ISO 26262 / ASPICE judgment governed across cross-border engineering sites. Starts at HQ → Europe onboarding, extends across safety case, ASPICE, and group engineering memory.",
     tags: ["ISO 26262", "ASPICE", "ISO 21434", "AUTOSAR"],
     available: true,
-  },
-];
-
-const FUNCTIONAL_LIFECYCLES = [
-  {
-    slug: "professional-services",
-    icon: <Briefcase className="w-6 h-6" />,
-    title: "Professional Services",
-    lifecycle: "Engagement Delivery Lifecycle",
-    description:
-      "From scoping to delivery to knowledge harvest. Encode your best consultant's methodology into every engagement.",
-    tags: ["Scoping", "Delivery Playbooks", "ISO 20700"],
-    col: "270 60% 65%",
-  },
-  {
-    slug: "sales",
-    icon: <TrendingUp className="w-6 h-6" />,
-    title: "Sales",
-    lifecycle: "Deal Execution Lifecycle",
-    description:
-      "Qualification, objection handling, pricing judgment, competitive positioning. Your best seller's instincts running on every deal.",
-    tags: ["Pipeline", "Win/Loss", "Playbooks"],
-    col: "38 92% 50%",
-  },
-  {
-    slug: "gtm",
-    icon: <Target className="w-6 h-6" />,
-    title: "Go-to-Market",
-    lifecycle: "Launch & Expansion Lifecycle",
-    description:
-      "Market entry sequencing, ICP refinement, channel strategy, and expansion playbooks. Governed execution from first signal to scaled motion.",
-    tags: ["ICP", "Channel Strategy", "Launch Playbooks"],
-    col: "200 90% 52%",
-  },
-  {
-    slug: "marketing",
-    icon: <Megaphone className="w-6 h-6" />,
-    title: "Marketing",
-    lifecycle: "Positioning & Campaign Lifecycle",
-    description:
-      "Positioning logic, segment messaging, campaign judgment. Stop guessing which message lands — encode what works.",
-    tags: ["Positioning", "Content Ops", "Segment Logic"],
-    col: "330 70% 55%",
-  },
-  {
-    slug: "business-development",
-    icon: <Handshake className="w-6 h-6" />,
-    title: "Business Development",
-    lifecycle: "Partnership & Pipeline Lifecycle",
-    description:
-      "Partner evaluation, deal structuring, relationship cadence, and alliance governance. Systematic expansion beyond direct sales.",
-    tags: ["Partnerships", "Alliance Mgmt", "Deal Structure"],
-    col: "155 72% 46%",
-  },
-  {
-    slug: "account-management",
-    icon: <Users className="w-6 h-6" />,
-    title: "Account Management",
-    lifecycle: "Retention & Growth Lifecycle",
-    description:
-      "Renewal signals, expansion timing, risk detection. Protect revenue before the data tells you it's at risk.",
-    tags: ["Renewals", "Health Scoring", "Expansion"],
-    col: "180 65% 45%",
-  },
-  {
-    slug: "onboarding",
-    icon: <GraduationCap className="w-6 h-6" />,
-    title: "Onboarding & Enablement",
-    lifecycle: "Knowledge Transfer Lifecycle",
-    description:
-      "Encode your best people's judgment into protocols that make every new hire perform like a veteran in weeks, not months.",
-    tags: ["Ramp Time", "Tribal Knowledge", "Playbooks"],
-    col: "45 85% 55%",
-  },
-  {
-    slug: "meetings",
-    icon: <Radio className="w-6 h-6" />,
-    title: "Meeting Intelligence",
-    lifecycle: "Decision Capture Lifecycle",
-    description:
-      "From 1:1s to team syncs — extract decisions, detect drift, drive follow-through. Every meeting builds organisational memory.",
-    tags: ["Decisions", "Drift Detection", "Follow-through"],
-    col: "15 80% 55%",
   },
 ];
 
