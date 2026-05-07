@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Database, Workflow, Sparkles, Compass } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
+import { ArchitectureWalkthrough } from "./ArchitectureWalkthrough";
 
 type IndustryView = {
   label: string;
@@ -82,7 +83,7 @@ export function ArchitectureTeaser() {
         </div>
 
         {/* Industry toggle */}
-        <div className="flex flex-wrap justify-center gap-1.5 mb-6">
+        <div className="hidden md:flex flex-wrap justify-center gap-1.5 mb-6">
           {INDUSTRIES.map((ind, i) => {
             const isActive = active === i;
             return (
@@ -102,11 +103,15 @@ export function ArchitectureTeaser() {
             );
           })}
         </div>
-        <p className="text-center text-[11px] text-muted-foreground mb-5">
+        <p className="hidden md:block text-center text-[11px] text-muted-foreground mb-5">
           Same architecture across every industry. The standard inside is yours.
         </p>
 
-        <ArchitectureDiagram view={view} />
+        {/* Mobile: swipeable walkthrough. Desktop/tablet: full diagram. */}
+        <ArchitectureWalkthrough />
+        <div className="hidden md:block">
+          <ArchitectureDiagram view={view} />
+        </div>
 
         <div className="mt-8 flex justify-center">
           <Link
