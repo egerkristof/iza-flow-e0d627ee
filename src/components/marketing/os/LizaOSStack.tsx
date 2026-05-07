@@ -5,11 +5,11 @@ import {
   Network, ShieldCheck, GitBranch, History, KeySquare,
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
-  Boxes, RefreshCw,
+  Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
 } from "lucide-react";
 
 /* ---------- types ---------- */
-type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art";
+type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
 type Item = { label: string; icon: React.ReactNode; tag?: string; detail: string };
 type Layer = {
   id: string;
