@@ -64,9 +64,9 @@ export default function OSPage() {
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <SectionTag label="The Liza framework" />
           <h1 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5">
-            One decision standard.
+            The system of record for how your company decides.
             <br />
-            <GradientText>Every AI tool inherits it.</GradientText>
+            <GradientText>So every AI tool executes to your standard.</GradientText>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-7">
             Your standards, playbooks, and live artifacts become one governed core.
