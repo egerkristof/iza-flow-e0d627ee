@@ -82,36 +82,8 @@ export function ArchitectureTeaser() {
           </p>
         </div>
 
-        {/* Industry toggle */}
-        <div className="hidden md:flex flex-wrap justify-center gap-1.5 mb-6">
-          {INDUSTRIES.map((ind, i) => {
-            const isActive = active === i;
-            return (
-              <button
-                key={ind.label}
-                type="button"
-                onClick={() => setActive(i)}
-                className="px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all border"
-                style={{
-                  background: isActive ? "hsl(var(--primary))" : "hsl(var(--background))",
-                  color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--muted-foreground))",
-                  borderColor: isActive ? "hsl(var(--primary))" : "hsl(var(--border))",
-                }}
-              >
-                {ind.label}
-              </button>
-            );
-          })}
-        </div>
-        <p className="hidden md:block text-center text-[11px] text-muted-foreground mb-5">
-          Same architecture across every industry. The standard inside is yours.
-        </p>
-
-        {/* Mobile: swipeable walkthrough. Desktop/tablet: full diagram. */}
+        {/* Same Stories-style narrative on every device. */}
         <ArchitectureWalkthrough />
-        <div className="hidden md:block">
-          <ArchitectureDiagram view={view} />
-        </div>
 
         <div className="mt-8 flex justify-center">
           <Link
