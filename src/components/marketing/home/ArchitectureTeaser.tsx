@@ -3,31 +3,69 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Database, Workflow, Sparkles, ScrollText, ArrowLeftRight } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
-const SIDE_TILES = [
-  {
-    label: "Systems of record",
-    sub: "Drive, databases, docs, email, ticketing",
-    icon: <Database className="w-4 h-4" />,
-  },
-  {
-    label: "Your AI tools",
-    sub: "Copilot, Glean, Claude, vendor RAG",
-    icon: <Sparkles className="w-4 h-4" />,
-  },
-];
+type IndustryView = {
+  label: string;
+  decisionStandard: string;
+  workspace: string;
+  records: string;
+  tools: string;
+};
 
-const INDUSTRIES = [
-  "Industry-agnostic",
-  "Pharma & Life Sciences",
-  "Financial Services",
-  "AEC",
-  "Regulated Manufacturing",
-  "Healthcare",
-  "Enterprise IT & AI",
+const INDUSTRIES: IndustryView[] = [
+  {
+    label: "Industry-agnostic",
+    decisionStandard: "Mandates, playbooks, policy. Versioned and auditable.",
+    workspace: "Governed workspace, workbooks, agents. Every output inherits the standard.",
+    records: "Drive, databases, docs, email, ticketing",
+    tools: "Copilot, Glean, Claude, vendor RAG",
+  },
+  {
+    label: "Pharma & Life Sciences",
+    decisionStandard: "GxP playbooks, SOPs, lab and CSV policy. 21 CFR Part 11 ready.",
+    workspace: "Governed workbooks for protocols, deviations, CAPAs, and submissions.",
+    records: "Veeva Vault, LIMS, ELN, eTMF, Quality Docs",
+    tools: "Copilot, Claude, internal GPTs, vendor RAG",
+  },
+  {
+    label: "Financial Services",
+    decisionStandard: "Risk appetite, conduct, product rules. Regulator wording locked.",
+    workspace: "Workbooks for KYC, complaints, credit memos, and segment communications.",
+    records: "Core banking, CRM, AML, policy library, contracts",
+    tools: "Copilot, Claude, in-house assistants, vendor RAG",
+  },
+  {
+    label: "AEC",
+    decisionStandard: "Owner standards, ISO 19650, project mandates. Submittal logic versioned.",
+    workspace: "Governed workbooks for RFIs, submittals, change orders, BIM context.",
+    records: "Procore, BIM 360, Revit, SharePoint, project email",
+    tools: "Copilot, Claude, AEC vendor copilots",
+  },
+  {
+    label: "Regulated Manufacturing",
+    decisionStandard: "GMP, ISO 9001, AS9100 quality playbooks. Engineering judgment encoded.",
+    workspace: "Workbooks for NCRs, change control, supplier quality, engineering reviews.",
+    records: "ERP, MES, QMS, PLM, supplier portals",
+    tools: "Copilot, Claude, engineering copilots",
+  },
+  {
+    label: "Healthcare",
+    decisionStandard: "Clinical pathways, payer rules, HIPAA-aware patient comms.",
+    workspace: "Workbooks for prior auth, care coordination, clinical letters, appeals.",
+    records: "EHR, claims, payer portals, secure messaging",
+    tools: "Copilot, Claude, clinical assistants, vendor RAG",
+  },
+  {
+    label: "Enterprise IT & AI",
+    decisionStandard: "Architecture standards, security policy, AI usage mandates.",
+    workspace: "Workbooks for design reviews, vendor evals, runbooks, incident comms.",
+    records: "ServiceNow, Jira, Confluence, Git, security tooling",
+    tools: "Copilot, Glean, Claude, in-house agents",
+  },
 ];
 
 export function ArchitectureTeaser() {
   const [active, setActive] = useState(0);
+  const view = INDUSTRIES[active];
   return (
     <section className="py-16 md:py-24 px-6">
       <div className="max-w-5xl mx-auto">
@@ -48,7 +86,7 @@ export function ArchitectureTeaser() {
             const isActive = active === i;
             return (
               <button
-                key={ind}
+                key={ind.label}
                 type="button"
                 onClick={() => setActive(i)}
                 className="px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all border"
@@ -58,7 +96,7 @@ export function ArchitectureTeaser() {
                   borderColor: isActive ? "hsl(var(--primary))" : "hsl(var(--border))",
                 }}
               >
-                {ind}
+                {ind.label}
               </button>
             );
           })}
@@ -86,7 +124,7 @@ export function ArchitectureTeaser() {
                 color: "hsl(var(--primary-foreground))",
               }}
             >
-              Liza · The governed core your leadership owns
+              Liza · {view.label}
             </div>
 
             {/* Two halves of Liza */}
@@ -106,7 +144,7 @@ export function ArchitectureTeaser() {
                   How your company decides and delivers work.
                 </p>
                 <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
-                  Mandates, playbooks, policy. Versioned and auditable.
+                  {view.decisionStandard}
                 </p>
               </div>
               <div
@@ -124,7 +162,7 @@ export function ArchitectureTeaser() {
                   Governed workspace, workbooks, agents.
                 </p>
                 <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
-                  Every output inherits the standard before it ships.
+                  {view.workspace}
                 </p>
               </div>
             </div>
@@ -138,24 +176,34 @@ export function ArchitectureTeaser() {
             </p>
           </div>
 
-          {/* Side surfaces — what Liza connects to */}
+          {/* Side surfaces — what Liza connects to (industry-specific) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-            {SIDE_TILES.map((t) => (
+            <div
+              className="rounded-xl border p-4 text-center"
+              style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+            >
               <div
-                key={t.label}
-                className="rounded-xl border p-4 text-center"
-                style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+                className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-2"
+                style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}
               >
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-2"
-                  style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}
-                >
-                  {t.icon}
-                </div>
-                <p className="text-sm font-bold text-foreground leading-tight">{t.label}</p>
-                <p className="text-[11px] text-muted-foreground mt-1">{t.sub}</p>
+                <Database className="w-4 h-4" />
               </div>
-            ))}
+              <p className="text-sm font-bold text-foreground leading-tight">Systems of record</p>
+              <p className="text-[11px] text-muted-foreground mt-1">{view.records}</p>
+            </div>
+            <div
+              className="rounded-xl border p-4 text-center"
+              style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+            >
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-2"
+                style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}
+              >
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <p className="text-sm font-bold text-foreground leading-tight">Your AI tools</p>
+              <p className="text-[11px] text-muted-foreground mt-1">{view.tools}</p>
+            </div>
           </div>
 
           <p className="text-center text-xs text-muted-foreground mt-5">
