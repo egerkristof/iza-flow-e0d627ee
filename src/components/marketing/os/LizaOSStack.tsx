@@ -1253,9 +1253,6 @@ function UpfrontChoiceCard({
               <h3 className="text-[22px] md:text-[26px] font-black leading-tight text-foreground">
                 Take the guided tour, or explore the architecture on your own.
               </h3>
-              <p className="text-[13.5px] text-muted-foreground mt-2 leading-relaxed">
-                The architecture is dense. The 6-step tour walks you through it in 90 seconds, mapped to your industry if you pick one. Or scroll and inspect every block at your own pace.
-              </p>
             </div>
 
             <div className="flex flex-col gap-2.5 min-w-[260px]">
