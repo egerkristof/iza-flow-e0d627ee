@@ -286,97 +286,17 @@ function ScreenWindow({
         </span>
       </div>
       <div className="p-3.5">
-        <div className="flex items-center gap-2 mb-1.5" style={{ color: accent }}>
-          {icon}
-          <p className="text-[11px] font-black uppercase tracking-wider">{chromeLabel.replace(/^Liza · /, "")}</p>
+        <div className="flex items-start gap-2.5">
+          <span
+            className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+            style={{ background: accent + "1a", color: accent, border: `1px solid ${accent}33` }}
+          >
+            {icon}
+          </span>
+          <p className="text-[13px] text-foreground font-bold leading-snug">{title}</p>
         </div>
-        <p className="text-[12.5px] text-foreground font-semibold leading-snug">{title}</p>
         <p className="text-[11.5px] text-muted-foreground mt-1.5 leading-relaxed">{body}</p>
       </div>
     </div>
-  );
-}
-
-/* Animated dotted connection lines + traveling pulses between the four screens */
-function ConnectionLayer() {
-  const stroke = "hsl(var(--primary) / 0.45)";
-  const pulse = "hsl(var(--primary))";
-  // Coordinates in a 100x100 viewBox. Top row centers ~y=22, bottom ~y=78. Left col x=25, right col x=75.
-  // We connect every top to every bottom (Decision <-> Records, Decision <-> Tools, Workspace <-> Records, Workspace <-> Tools).
-  const lines: { x1: number; y1: number; x2: number; y2: number; delay: number }[] = [
-    { x1: 25, y1: 28, x2: 25, y2: 72, delay: 0 },     // Decision -> Records
-    { x1: 25, y1: 28, x2: 75, y2: 72, delay: 0.6 },   // Decision -> Tools
-    { x1: 75, y1: 28, x2: 25, y2: 72, delay: 1.2 },   // Workspace -> Records
-    { x1: 75, y1: 28, x2: 75, y2: 72, delay: 1.8 },   // Workspace -> Tools
-  ];
-  return (
-    <svg
-      className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      {lines.map((l, i) => (
-        <g key={i}>
-          <line
-            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-            stroke={stroke}
-            strokeWidth="0.35"
-            strokeDasharray="1.2 1.2"
-            vectorEffect="non-scaling-stroke"
-          />
-          {/* Pulse traveling top -> bottom (read in) */}
-          <motion.circle
-            r="0.9"
-            fill={pulse}
-            initial={{ opacity: 0 }}
-            animate={{
-              cx: [l.x1, l.x2],
-              cy: [l.y1, l.y2],
-              opacity: [0, 1, 1, 0],
-            }}
-            transition={{
-              duration: 2.4,
-              delay: l.delay,
-              repeat: Infinity,
-              repeatDelay: 1.6,
-              ease: "easeInOut",
-              times: [0, 0.1, 0.9, 1],
-            }}
-          />
-          {/* Pulse traveling bottom -> top (write back) */}
-          <motion.circle
-            r="0.9"
-            fill="hsl(var(--brand-green, var(--primary)))"
-            initial={{ opacity: 0 }}
-            animate={{
-              cx: [l.x2, l.x1],
-              cy: [l.y2, l.y1],
-              opacity: [0, 1, 1, 0],
-            }}
-            transition={{
-              duration: 2.4,
-              delay: l.delay + 1.2,
-              repeat: Infinity,
-              repeatDelay: 1.6,
-              ease: "easeInOut",
-              times: [0, 0.1, 0.9, 1],
-            }}
-          />
-        </g>
-      ))}
-      {/* Center horizontal sync line between the two Liza screens */}
-      <line
-        x1={36} y1={22} x2={64} y2={22}
-        stroke={stroke}
-        strokeWidth="0.35"
-        strokeDasharray="1.2 1.2"
-        vectorEffect="non-scaling-stroke"
-      />
-      {/* Legend dots */}
-      <g>
-        <circle cx="50" cy="50" r="0.8" fill={pulse} opacity="0.9" />
-      </g>
-    </svg>
   );
 }
