@@ -333,8 +333,7 @@ function CenterNativeSurfaces({ layer }: { layer: Layer }) {
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
             {layer.kicker}
           </p>
-          <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{layer.sub}</p>
+          <h3 className="text-2xl md:text-3xl font-black leading-tight text-foreground">{layer.title}</h3>
         </div>
         {/* Workspace mock: tabs + a content pane. Visually says "this is a place where work happens". */}
         <div
