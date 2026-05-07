@@ -335,10 +335,13 @@ function CenterNativeSurfaces({ layer }: { layer: Layer }) {
 /* ---------- bidirectional sync arrow between center and a side ---------- */
 function SyncArrow({ label }: { label: string }) {
   return (
-    <div className="hidden lg:flex items-center justify-center">
-      <div className="flex flex-col items-center gap-1.5">
-        <ArrowLeftRight className="w-5 h-5" style={{ color: "hsl(var(--primary) / 0.7)" }} />
-        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground text-center leading-tight whitespace-nowrap">
+    <div className="hidden lg:flex items-center justify-center px-1">
+      <div
+        className="flex items-center gap-1.5 px-2 py-1.5 rounded-full border bg-background"
+        style={{ borderColor: "hsl(var(--primary) / 0.25)" }}
+      >
+        <ArrowLeftRight className="w-3.5 h-3.5" style={{ color: "hsl(var(--primary))" }} />
+        <span className="text-[9px] font-bold tracking-[0.18em] uppercase text-muted-foreground leading-none whitespace-nowrap">
           {label}
         </span>
       </div>
@@ -820,7 +823,7 @@ export function LizaOSStack() {
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
         {/* TOP ROW: Systems of record  <->  Where work happens (center)  <->  Your AI tools */}
-        <div className="grid lg:grid-cols-[1fr_28px_1.6fr_28px_1fr] gap-3 items-stretch">
+        <div className="grid lg:grid-cols-[1fr_auto_1.5fr_auto_1fr] gap-3 items-center">
           <SidePanel layer={sourceLayer} align="left" />
           <SyncArrow label="read & write" />
           <div className="relative">
