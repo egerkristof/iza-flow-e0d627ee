@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Database, Workflow, Sparkles, ScrollText, ArrowLeftRight } from "lucide-react";
+import { ArrowRight, Database, Workflow, Sparkles, ScrollText } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
 type IndustryView = {
