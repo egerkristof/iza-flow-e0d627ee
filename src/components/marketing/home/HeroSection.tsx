@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Stethoscope, Cpu } from "lucide-react";
+import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Rocket, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
 import { CAL_URL } from "./shared";
 
@@ -25,10 +25,10 @@ const TRUST_STATS = [
 /* ── Industry lifecycles already covered ── */
 const INDUSTRY_LIFECYCLES = [
   { icon: FlaskConical, label: "Pharma & Life Sciences", sub: "GxP lifecycle" },
-  { icon: Banknote,     label: "Financial Services",     sub: "Risk & compliance" },
+  { icon: Rocket,       label: "Space Engineering & Operations", sub: "Mission lifecycle" },
   { icon: Building2,    label: "AEC",                    sub: "Project lifecycle" },
   { icon: ShieldCheck,  label: "Regulated Manufacturing",sub: "Quality lifecycle" },
-  { icon: Stethoscope,  label: "Healthcare",             sub: "Clinical lifecycle" },
+  { icon: Banknote,     label: "Financial Services",     sub: "Risk & compliance" },
   { icon: Cpu,          label: "Enterprise IT & AI",     sub: "Delivery lifecycle" },
 ];
 
