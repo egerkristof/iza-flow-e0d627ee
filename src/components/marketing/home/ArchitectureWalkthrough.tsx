@@ -82,33 +82,47 @@ function Chip({ icon, label, accent = MUTED, dim = false }: { icon: React.ReactN
 /* 1. HERO — "You already shipped AI everywhere" */
 function SceneHero(p: number) {
   const tools = [
-    { name: "Copilot", icon: <Sparkles className="w-3.5 h-3.5" /> },
-    { name: "Claude",  icon: <Bot className="w-3.5 h-3.5" /> },
-    { name: "Glean",   icon: <Search className="w-3.5 h-3.5" /> },
-    { name: "Agents",  icon: <Workflow className="w-3.5 h-3.5" /> },
+    { name: "Sales · Copilot",      sub: "Drafting proposals", icon: <Sparkles className="w-3.5 h-3.5" /> },
+    { name: "Legal · Claude",       sub: "Reviewing MSAs",     icon: <Bot className="w-3.5 h-3.5" /> },
+    { name: "Support · Glean",      sub: "Answering tickets",  icon: <Search className="w-3.5 h-3.5" /> },
+    { name: "Ops · Custom agent",   sub: "Triaging incidents", icon: <Workflow className="w-3.5 h-3.5" /> },
   ];
   return (
-    <div className="w-full max-w-[290px] mx-auto">
+    <div className="w-full max-w-[300px] mx-auto">
       <div className="text-center mb-3">
         <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-          Your company, today
+          A Tuesday at your company
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-1.5">
         {tools.map((t, i) => {
           const a = between(p, 0.05 + i * 0.12, 0.3 + i * 0.12);
           return (
-            <div key={t.name} style={{ opacity: a, transform: `scale(${0.9 + a * 0.1})` }}>
-              <Chip icon={t.icon} label={t.name} accent={PRIMARY} />
+            <div
+              key={t.name}
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border"
+              style={{
+                opacity: a,
+                transform: `translateX(${(1 - a) * -8}px)`,
+                borderColor: PRIMARY + "33",
+                background: "hsl(var(--background))",
+              }}
+            >
+              <span style={{ color: PRIMARY }}>{t.icon}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[10.5px] font-black text-foreground/85 truncate">{t.name}</p>
+                <p className="text-[9.5px] text-muted-foreground truncate">{t.sub}</p>
+              </div>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: PRIMARY, boxShadow: `0 0 6px ${PRIMARY}` }} />
             </div>
           );
         })}
       </div>
       <div
-        className="mt-3 text-center text-[11px] font-bold text-foreground/80"
+        className="mt-3 text-center text-[11px] font-bold text-foreground/80 leading-snug"
         style={{ opacity: between(p, 0.65, 0.9) }}
       >
-        AI is everywhere. <span style={{ color: PRIMARY }}>It's working.</span>
+        Four teams. Four tools. <span style={{ color: PRIMARY }}>Nobody told them what "we" means.</span>
       </div>
     </div>
   );
@@ -117,16 +131,19 @@ function SceneHero(p: number) {
 /* 2. PROBLEM — same question, conflicting answers */
 function SceneProblem(p: number) {
   const tools = [
-    { name: "Copilot", answer: "Discount cap: 15%" },
-    { name: "Claude", answer: "Discount cap: 25%" },
-    { name: "Glean", answer: "No policy found" },
+    { who: "Maya · AE",        tool: "Copilot",   answer: "Up to 15% is fine" },
+    { who: "Tom · Deal desk",  tool: "Claude",    answer: "25% on multi-year" },
+    { who: "Priya · CS",       tool: "Glean",     answer: "No policy found" },
   ];
   return (
-    <div className="w-full max-w-[290px] mx-auto">
-      <div className="text-center mb-3">
-        <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
-          One question. Three answers.
+    <div className="w-full max-w-[300px] mx-auto">
+      <div className="text-center mb-2">
+        <span className="text-[9.5px] font-black uppercase tracking-[0.16em]" style={{ color: RED }}>
+          Slack · #deal-desk · 14:02
         </span>
+        <p className="text-[11px] font-bold text-foreground/85 mt-1 leading-snug">
+          "What's our max discount on a 3-year renewal?"
+        </p>
       </div>
       <div className="space-y-2">
         {tools.map((t, i) => {
@@ -134,24 +151,29 @@ function SceneProblem(p: number) {
           const shake = p > 0.75 ? Math.sin((p - 0.75) * 60) * 2 : 0;
           return (
             <motion.div
-              key={t.name}
+              key={t.who}
               style={{
                 opacity: enter,
                 transform: `translateX(${(1 - enter) * -16 + shake}px)`,
+                borderColor: RED + "55",
+                background: RED + "06",
               }}
-              className="rounded-lg border-2 px-3 py-2 flex items-center justify-between gap-2"
+              className="rounded-lg border px-2.5 py-1.5"
             >
-              <span className="text-[11px] font-black" style={{ color: PRIMARY }}>{t.name}</span>
-              <span className="text-[11px] font-bold" style={{ color: RED }}>{t.answer}</span>
+              <div className="flex items-center justify-between gap-2 mb-0.5">
+                <span className="text-[10px] font-black text-foreground/85 truncate">{t.who}</span>
+                <span className="text-[8.5px] font-bold uppercase tracking-[0.12em] text-muted-foreground">asks {t.tool}</span>
+              </div>
+              <p className="text-[11px] font-bold" style={{ color: RED }}>"{t.answer}"</p>
             </motion.div>
           );
         })}
       </div>
       <div
-        className="mt-3 text-center text-[11px] font-black uppercase tracking-[0.18em]"
+        className="mt-3 text-center text-[10.5px] font-black uppercase tracking-[0.16em] leading-snug"
         style={{ opacity: between(p, 0.7, 0.9), color: RED }}
       >
-        Nobody's in charge.
+        Three answers. One company.
       </div>
     </div>
   );
@@ -160,24 +182,24 @@ function SceneProblem(p: number) {
 /* 3. STAKES — what it costs you when nobody's in charge */
 function SceneStakes(p: number) {
   const stakes = [
-    { label: "Decisions drift",     icon: <TrendingDown className="w-3.5 h-3.5" /> },
-    { label: "Risk compounds",      icon: <AlertTriangle className="w-3.5 h-3.5" /> },
-    { label: "Teams lose trust",    icon: <Users className="w-3.5 h-3.5" /> },
+    { label: "Maya closes at 22%",         sub: "Discounts drift quarter over quarter", icon: <TrendingDown className="w-3.5 h-3.5" /> },
+    { label: "Audit flags 3 contracts",    sub: "PII pasted into a public LLM",         icon: <AlertTriangle className="w-3.5 h-3.5" /> },
+    { label: "Tom stops trusting the tool", sub: "Goes back to asking on Slack",        icon: <Users className="w-3.5 h-3.5" /> },
   ];
   return (
-    <div className="w-full max-w-[280px] mx-auto">
+    <div className="w-full max-w-[300px] mx-auto">
       <div className="text-center mb-3">
         <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
-          The hidden cost
+          Three weeks later
         </span>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {stakes.map((s, i) => {
           const a = between(p, 0.1 + i * 0.18, 0.35 + i * 0.18);
           return (
             <div
               key={s.label}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg border"
+              className="flex items-start gap-2 px-2.5 py-2 rounded-lg border"
               style={{
                 opacity: a,
                 transform: `translateY(${(1 - a) * 8}px)`,
@@ -185,17 +207,20 @@ function SceneStakes(p: number) {
                 background: RED + "08",
               }}
             >
-              <span style={{ color: RED }}>{s.icon}</span>
-              <span className="text-[11.5px] font-bold text-foreground/85">{s.label}</span>
+              <span className="mt-0.5 flex-shrink-0" style={{ color: RED }}>{s.icon}</span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-black text-foreground/90 leading-tight">{s.label}</p>
+                <p className="text-[9.5px] text-muted-foreground mt-0.5 leading-snug">{s.sub}</p>
+              </div>
             </div>
           );
         })}
       </div>
       <div
-        className="mt-3 text-center text-[11px] font-bold text-foreground/80"
+        className="mt-3 text-center text-[10.5px] font-bold text-foreground/80 leading-snug"
         style={{ opacity: between(p, 0.75, 0.95) }}
       >
-        You can't scale what you can't govern.
+        Nobody made a bad call. Nobody made the rules either.
       </div>
     </div>
   );
@@ -205,13 +230,13 @@ function SceneStakes(p: number) {
 function SceneGuide(p: number) {
   const scale = 0.85 + ease(between(p, 0, 0.35)) * 0.15;
   const lines = [
-    { k: "Pricing rules",        v: "Discount cap 15%" },
-    { k: "Approval thresholds",  v: "> €50k → CFO" },
-    { k: "Risk appetite",        v: "No PII to public LLMs" },
-    { k: "Tone of voice",        v: "Direct, no hedging" },
+    { k: "Discount cap",          v: "15% · 20% multi-yr" },
+    { k: "Approval > €50k",       v: "CFO + Legal" },
+    { k: "PII in prompts",        v: "Blocked" },
+    { k: "Customer tone",         v: "Direct, no hedging" },
   ];
   return (
-    <div className="w-full max-w-[290px] mx-auto" style={{ transform: `scale(${scale})` }}>
+    <div className="w-full max-w-[300px] mx-auto" style={{ transform: `scale(${scale})` }}>
       <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
         <div className="flex items-start gap-2 mb-2">
           <span
@@ -222,7 +247,9 @@ function SceneGuide(p: number) {
           </span>
           <div className="flex-1">
             <p className="text-[12px] font-black text-foreground leading-tight">How your company decides.</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">v2.4 · Owned by leadership · Machine-readable</p>
+            <p className="text-[9.5px] text-muted-foreground mt-0.5 leading-snug">
+              v2.4 · Edited by Sarah (CRO) · 2 days ago
+            </p>
           </div>
         </div>
         <div className="space-y-1.5">
@@ -244,13 +271,21 @@ function SceneGuide(p: number) {
           })}
         </div>
         <div
-          className="mt-2 pt-2 border-t flex items-center gap-1.5"
+          className="mt-2 pt-2 border-t flex items-center gap-1.5 flex-wrap"
           style={{ borderColor: PRIMARY + "22", opacity: between(p, 0.75, 0.95) }}
         >
           <GitBranch className="w-3 h-3" style={{ color: PRIMARY }} />
-          <span className="text-[9px] font-bold text-muted-foreground">Versioned · Auditable · Editable in plain English</span>
+          <span className="text-[9px] font-bold text-muted-foreground">
+            v2.4 → v2.5 pending · 2 reviewers · diff in plain English
+          </span>
         </div>
       </MiniWindow>
+      <p
+        className="mt-2.5 text-center text-[10px] text-muted-foreground leading-snug px-2"
+        style={{ opacity: between(p, 0.6, 0.9) }}
+      >
+        Not a wiki. Not a slide deck. A living document every AI tool reads before it answers.
+      </p>
     </div>
   );
 }
