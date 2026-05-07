@@ -666,15 +666,15 @@ function S07Shift() {
 
 function S08LineOfWork() {
   const automate = [
-    "Reading and tagging hundreds of PDFs",
-    "Clustering papers into schools and lineages",
-    "Surfacing where authors agree, disagree, and supersede each other",
-    "Tracking citations, gaps, and unread regions of the field",
+    "Parsing, OCR, deduping, and tagging the corpus",
+    "Building the citation graph across decades and disciplines",
+    "Clustering papers into candidate schools and lineages for you to confirm",
+    "Tracking what you have read, what is unread, and where the gaps sit",
     "Logging every decision, anchor, and version as you reason",
   ];
   const augment = [
+    "Reading the foundational texts that shape your stance",
     "Forming the hypothesis and the framework",
-    "Choosing where you stand against each school",
     "Judging which counter-argument actually changes your mind",
     "Deciding what to discard and why (the why-not-this)",
     "Writing the claim. The voice. The argument.",
