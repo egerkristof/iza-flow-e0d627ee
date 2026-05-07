@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle, Compass, Database, Sparkles, Workflow,
-  ArrowDown, ArrowUp, ArrowRight, Play, Pause, Cloud, Mail, FileSpreadsheet, Bot, Search,
+  ArrowDown, ArrowUp, ArrowRight, ArrowLeft, Play, Pause, Cloud, Mail, FileSpreadsheet, Bot, Search,
   CheckCircle2, TrendingDown, Users, FileText, GitBranch, BookOpen, Stamp, Activity, Eye,
 } from "lucide-react";
 
@@ -446,12 +446,12 @@ function SceneSuccess(p: number) {
 
 /* ---------- scenes config ---------- */
 const SCENES: Scene[] = [
-  { kicker: "01 · You",        headline: "You shipped AI everywhere.",          duration: 3800, render: SceneHero },
-  { kicker: "02 · Problem",    headline: "But every tool answers differently.", duration: 4400, render: SceneProblem },
-  { kicker: "03 · Stakes",     headline: "And it's costing you.",                duration: 4200, render: SceneStakes },
-  { kicker: "04 · Meet Liza",  headline: "Liza writes how your company decides.", duration: 5200, render: SceneGuide },
-  { kicker: "05 · The plan",   headline: "Liza learns, then governs.",          duration: 6200, render: ScenePlan },
-  { kicker: "06 · Success",    headline: "One answer. Audited. Always improving.", duration: 5200, render: SceneSuccess },
+  { kicker: "01 · You",        headline: "You shipped AI everywhere.",          duration: 6500,  render: SceneHero },
+  { kicker: "02 · Problem",    headline: "But every tool answers differently.", duration: 7500,  render: SceneProblem },
+  { kicker: "03 · Stakes",     headline: "And it's costing you.",               duration: 7500,  render: SceneStakes },
+  { kicker: "04 · Meet Liza",  headline: "Liza writes how your company decides.", duration: 9000, render: SceneGuide },
+  { kicker: "05 · The plan",   headline: "Liza learns, then governs.",          duration: 11000, render: ScenePlan },
+  { kicker: "06 · Success",    headline: "One answer. Audited. Always improving.", duration: 9000, render: SceneSuccess },
 ];
 
 /* ---------- player ---------- */
@@ -621,19 +621,30 @@ export function ArchitectureWalkthrough() {
         <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 border-t" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card) / 0.85)" }}>
           <button
             type="button"
+            onClick={(e) => { e.stopPropagation(); goTo(index - 1); }}
+            disabled={index === 0}
+            className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground disabled:opacity-30"
+            aria-label="Previous scene"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back
+          </button>
+          <button
+            type="button"
             onClick={(e) => { e.stopPropagation(); setPaused((v) => !v); }}
-            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground"
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground/80"
           >
             {paused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
             {paused ? "Play" : "Pause"}
           </button>
-          <span className="text-[10px] font-bold tracking-[0.16em] text-muted-foreground">TAP TO SKIP</span>
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); restart(); }}
-            className="text-[11px] font-bold text-muted-foreground"
+            onClick={(e) => { e.stopPropagation(); isFinal ? restart() : goTo(index + 1); }}
+            className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground"
+            aria-label={isFinal ? "Replay" : "Next scene"}
           >
-            Replay
+            {isFinal ? "Replay" : "Next"}
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
