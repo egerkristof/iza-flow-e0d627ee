@@ -1,34 +1,12 @@
 import { Link } from "react-router-dom";
 import {
-  ArrowRight, Radar, Scale, Workflow as WorkflowIcon, Share2,
+  ArrowRight,
   Beaker, Landmark, Rocket, Car, Building2, Briefcase, Target, Users,
 } from "lucide-react";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { SectionTag, GradientText, CAL_URL } from "@/components/marketing/home/shared";
 import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
-
-const MOVES = [
-  {
-    icon: <Radar className="w-5 h-5" />,
-    title: "Sense",
-    body: "Pull context from your systems and your people. Capture the judgment that was never written down.",
-  },
-  {
-    icon: <Scale className="w-5 h-5" />,
-    title: "Decide",
-    body: "Standards, mandates, and playbooks become a runtime check. Policy stops being a PDF.",
-  },
-  {
-    icon: <WorkflowIcon className="w-5 h-5" />,
-    title: "Execute",
-    body: "Teams work inside one space. Your AI agents run there, against the right governed bundle.",
-  },
-  {
-    icon: <Share2 className="w-5 h-5" />,
-    title: "Propagate",
-    body: "When a standard or artifact changes, every dependent output is updated, not just flagged.",
-  },
-];
+import { FourMovesStrip } from "@/components/marketing/os/FourMovesStrip";
 
 const INDUSTRY_CARDS = [
   { label: "Pharma & Life Sciences", href: "/industries/regulated", icon: <Beaker className="w-5 h-5" /> },
@@ -98,41 +76,13 @@ export default function OSPage() {
         </div>
       </section>
 
+      {/* The four moves — orientation primer before the interactive stack */}
+      <FourMovesStrip />
+
       {/* The interactive stack */}
       <section id="stack" className="py-8 md:py-12 px-6">
         <div className="max-w-6xl mx-auto">
           <LizaOSStack />
-        </div>
-      </section>
-
-      {/* The four moves */}
-      <section className="py-16 md:py-20 px-6" style={{ background: "hsl(var(--card))" }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <SectionTag label="What the system actually does" />
-            <h2 className="text-3xl md:text-4xl font-black">
-              Four moves.{" "}
-              <GradientText>Run continuously.</GradientText>
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {MOVES.map((m) => (
-              <div
-                key={m.title}
-                className="rounded-2xl border p-5"
-                style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
-                  style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}
-                >
-                  {m.icon}
-                </div>
-                <h3 className="text-base font-black mb-1.5">{m.title}</h3>
-                <p className="text-[13px] text-muted-foreground leading-relaxed">{m.body}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
