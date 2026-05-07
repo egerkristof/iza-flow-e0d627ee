@@ -664,6 +664,85 @@ function S07Shift() {
   );
 }
 
+function S08LineOfWork() {
+  const automate = [
+    "Reading and tagging hundreds of PDFs",
+    "Clustering papers into schools and lineages",
+    "Surfacing where authors agree, disagree, and supersede each other",
+    "Tracking citations, gaps, and unread regions of the field",
+    "Logging every decision, anchor, and version as you reason",
+  ];
+  const augment = [
+    "Forming the hypothesis and the framework",
+    "Choosing where you stand against each school",
+    "Judging which counter-argument actually changes your mind",
+    "Deciding what to discard and why (the why-not-this)",
+    "Writing the claim. The voice. The argument.",
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <Eyebrow n="08" text="THE LINE OF WORK" />
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+          We automate the cataloguing.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>We augment the thinking.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 18, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
+          The scholar stays the author. We do not write your thesis, pick your stance, or generate your argument. We absorb the lower-level work that has always cost researchers months and put the higher-level act of judgment back in front of you, with the field already mapped.
+        </p>
+        <div className="grid grid-cols-2 gap-7 flex-1">
+          {/* AUTOMATE */}
+          <div className="rounded-2xl border p-8 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="flex items-baseline justify-between mb-1">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>WE AUTOMATE</p>
+              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", color: SUBTLE }}>LOWER-LEVEL WORK</p>
+            </div>
+            <p className="font-black mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The cataloguing layer</p>
+            <p className="mb-5" style={{ fontSize: 15, color: MUTED, fontStyle: "italic", lineHeight: 1.45 }}>
+              The mechanical work that has always blocked the researcher from doing original work. It does not need a human author. It needs a structured machine.
+            </p>
+            <ul className="space-y-3 mt-2">
+              {automate.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <RefreshCw size={16} style={{ color: SUBTLE, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* AUGMENT */}
+          <div className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <div className="flex items-baseline justify-between mb-1">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>WE AUGMENT</p>
+              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", color: `hsl(${TEAL})` }}>HIGHER-LEVEL JUDGMENT</p>
+            </div>
+            <p className="font-black mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The scholar's act</p>
+            <p className="mb-5" style={{ fontSize: 15, color: `hsl(${TEAL})`, fontStyle: "italic", fontWeight: 700, lineHeight: 1.45 }}>
+              The work only the researcher can do. We surface the field, push back from inside the map, and leave every claim attributable to you.
+            </p>
+            <ul className="space-y-3 mt-2">
+              {augment.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <Brain size={16} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 16, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto pt-5">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.2em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
+                The researcher stays the author.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
 function S08Loop() {
   const loop = [
     {
