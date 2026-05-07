@@ -7,13 +7,13 @@ import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
 const PRINCIPLES = [
   {
     icon: <Cpu className="w-5 h-5" />,
-    title: "A kernel, not another app",
-    body: "Your knowledge graph plus governance. Every AI surface above must read from it to act with judgment.",
+    title: "A Judgment Core, not another app",
+    body: "Your knowledge graph plus governance. Every AI surface that touches your company has to read from it to act with judgment.",
   },
   {
     icon: <Layers className="w-5 h-5" />,
-    title: "Native apps and an open app layer",
-    body: "LIZA ships its own workbooks and oversight. Copilot, Glean, Veeva, custom agents plug in as apps.",
+    title: "Native surfaces, plus everything you already own",
+    body: "Liza ships Workbooks, Extraction, and Oversight. ChatGPT, Claude, and custom agents run inside them. Copilot, Glean, Veeva connect from outside.",
   },
   {
     icon: <ShieldCheck className="w-5 h-5" />,
@@ -22,8 +22,8 @@ const PRINCIPLES = [
   },
   {
     icon: <Workflow className="w-5 h-5" />,
-    title: "Your knowledge stays portable",
-    body: "Bundles are versioned, exportable, vendor-neutral. Zero lock-in. The asset is yours.",
+    title: "Model-agnostic. Knowledge portable.",
+    body: "Swap LLMs without rewriting your standards. Bundles are versioned, exportable, vendor-neutral. The asset is yours.",
   },
 ];
 
@@ -48,15 +48,19 @@ export default function OSPage() {
           }}
         />
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <SectionTag label="Sandbox / OS frame" />
+          <SectionTag label="The Liza Framework" />
           <h1 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-6">
-            The operating system
+            The <GradientText>Judgment Core</GradientText>
             <br />
-            for <GradientText>AI-native organizations.</GradientText>
+            for AI-native organizations.
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-8">
-            Your decision logic, standards, and process intelligence become the kernel.
-            Every AI tool you already own runs on top. Consistent behaviour everywhere AI executes.
+            Your decision logic, standards, and process intelligence become the Judgment Core.
+            Every AI surface — the ones we build, the ones you already own — runs against it.
+            Consistent behaviour everywhere AI executes.
+          </p>
+          <p className="text-xs text-muted-foreground/70 max-w-xl mx-auto italic mb-8">
+            Think of it the way you think of an operating system for your AI estate. The language we use is our own.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
@@ -86,14 +90,14 @@ export default function OSPage() {
       <section className="py-12 md:py-16 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <SectionTag label="The LIZA OS stack" />
+            <SectionTag label="The Liza framework" />
             <h2 className="text-3xl md:text-4xl font-black mb-3">
-              Four layers.
+              One core.
               <br />
-              <GradientText>One governed system.</GradientText>
+              <GradientText>Every AI surface inherits it.</GradientText>
             </h2>
             <p className="text-base text-muted-foreground max-w-xl mx-auto">
-              Read from the bottom up. Sources feed the kernel. The kernel governs the apps.
+              Source Systems feed in from the side. The Judgment Core governs every surface above it. The Model Fabric below is interchangeable.
             </p>
           </div>
           <LizaOSStack />
@@ -104,10 +108,10 @@ export default function OSPage() {
       <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <SectionTag label="What makes it an OS" />
+            <SectionTag label="What makes it a Judgment Core" />
             <h2 className="text-3xl md:text-4xl font-black">
               Not a tool.{" "}
-              <GradientText>A layer everything else runs on.</GradientText>
+              <GradientText>A layer everything else runs against.</GradientText>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -138,10 +142,10 @@ export default function OSPage() {
           <h2 className="text-2xl md:text-3xl font-black leading-tight mb-5">
             Copilot, Glean, vendor RAG are not competitors.
             <br />
-            <GradientText>They are apps that get better when they run on LIZA OS.</GradientText>
+            <GradientText>They are surfaces that get better when they read from the Judgment Core.</GradientText>
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto">
-            None of them define how your company decides. The kernel does. Plug them in and they
+            None of them define how your company decides. Liza does. Connect them and they
             inherit your standards, your mandates, and your audit trail.
           </p>
         </div>
