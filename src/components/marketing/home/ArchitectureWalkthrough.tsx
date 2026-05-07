@@ -448,6 +448,9 @@ export function ArchitectureWalkthrough() {
 function ScreenCard({
   screen, index, active, total, isLast,
 }: { screen: Screen; index: number; active: boolean; total: number; isLast: boolean }) {
+  const [expanded, setExpanded] = useState(false);
+  // Collapse when card scrolls out of view
+  useEffect(() => { if (!active) setExpanded(false); }, [active]);
   return (
     <div
       className="relative rounded-2xl border p-5 min-h-[460px] flex flex-col overflow-hidden"
@@ -498,13 +501,50 @@ function ScreenCard({
         {screen.visual(active)}
       </div>
 
+      {/* Interactive example reveal */}
+      <div className="relative z-10">
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className="w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border text-left transition-colors"
+          style={{
+            borderColor: expanded ? PRIMARY + "55" : "hsl(var(--border))",
+            background: expanded ? PRIMARY + "0d" : "hsl(var(--background))",
+          }}
+          aria-expanded={expanded}
+        >
+          <span className="text-[10.5px] font-black tracking-[0.18em] uppercase" style={{ color: expanded ? PRIMARY : MUTED }}>
+            {screen.exampleLabel}
+          </span>
+          {expanded
+            ? <Minus className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
+            : <Plus className="w-3.5 h-3.5 text-muted-foreground" />}
+        </button>
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="example"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.28 }}
+              className="overflow-hidden"
+            >
+              <p className="text-[12px] text-foreground/80 leading-relaxed pt-2.5 px-1">
+                {screen.example}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {/* Final CTA */}
       {isLast && (
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={active ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
-          className="relative z-10 flex justify-center"
+          className="relative z-10 flex justify-center mt-3"
         >
           <Link
             to="/diagnostic"
