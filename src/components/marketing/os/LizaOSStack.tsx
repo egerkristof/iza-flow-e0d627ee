@@ -225,8 +225,7 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
       <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
         {layer.kicker}
       </p>
-      <h3 className="text-base md:text-lg font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
-      <p className="text-[12px] leading-relaxed text-muted-foreground mb-4">{layer.sub}</p>
+      <h3 className="text-base md:text-lg font-black leading-tight mb-3 text-foreground">{layer.title}</h3>
       {/* Endpoint tiles — looks like an integration wall, not a feature list */}
       <div className="flex flex-col gap-1.5 flex-1">
         {layer.items.map((it) => {
@@ -1002,7 +1001,7 @@ export function LizaOSStack() {
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
         {/* TOP ROW: Systems of record  <->  Where work happens (center)  <->  Your AI tools */}
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.5fr)_auto_minmax(0,1fr)] gap-3 items-stretch">
+        <div className="grid lg:grid-cols-[minmax(0,0.85fr)_auto_minmax(0,2fr)_auto_minmax(0,0.85fr)] gap-3 items-stretch">
           <SidePanel layer={sourceLayer} align="left" />
           <SyncArrow label="read & write" />
           <div className="relative">
