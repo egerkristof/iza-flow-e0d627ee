@@ -910,22 +910,24 @@ function IndustryRolodex({
 /* ---------- Flip card scenario for an industry ---------- */
 function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
   const [flipped, setFlipped] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
-    <motion.button
-      type="button"
-      onClick={() => setFlipped((v) => !v)}
+    <>
+    <motion.div
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.35, delay: 0.15 }}
-      className="hidden lg:block absolute -bottom-5 -right-5 w-[260px] h-[140px] z-10 text-left"
+      className="hidden lg:block absolute -bottom-5 -right-5 w-[280px] h-[160px] z-10"
       style={{ perspective: 1000 }}
-      aria-label="Flip scenario card"
     >
-      <motion.div
+      <motion.button
+        type="button"
+        onClick={() => setFlipped((v) => !v)}
         animate={{ rotateY: flipped ? 180 : 0 }}
         transition={{ duration: 0.55, ease: "easeInOut" }}
-        className="relative w-full h-full"
+        className="relative w-full h-full text-left"
         style={{ transformStyle: "preserve-3d" }}
+        aria-label="Flip scenario card"
       >
         {/* Front */}
         <div
@@ -953,26 +955,76 @@ function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
         <div
           className="absolute inset-0 rounded-xl border-2 p-4 flex flex-col justify-between"
           style={{
-            background: "hsl(var(--brand-green) / 0.08)",
+            background: "hsl(var(--background))",
             borderColor: "hsl(var(--brand-green) / 0.55)",
             boxShadow: "0 20px 40px -20px hsl(var(--brand-green) / 0.5)",
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
           }}
         >
-          <div>
+          <div className="flex-1 min-h-0">
             <p className="text-[9px] font-black tracking-[0.22em] uppercase mb-1.5" style={{ color: "hsl(var(--brand-green))" }}>
               outcome
             </p>
-            <p className="text-[12px] font-black leading-tight text-foreground mb-1.5">
+            <p className="text-[12.5px] font-black leading-tight text-foreground mb-1.5">
               {industry.scenario.backOutcome}
             </p>
-            <p className="text-[10.5px] leading-snug text-foreground/75">
+            <p className="text-[10.5px] leading-snug text-foreground/80 line-clamp-3">
               {industry.scenario.backDetail}
             </p>
           </div>
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={(e) => { e.stopPropagation(); setOpen(true); }}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setOpen(true); } }}
+            className="text-[10px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-1 self-start mt-1.5 hover:opacity-80 cursor-pointer"
+            style={{ color: "hsl(var(--brand-green))" }}
+          >
+            read full scenario <ArrowRight className="w-3 h-3" />
+          </span>
         </div>
-      </motion.div>
-    </motion.button>
+      </motion.button>
+    </motion.div>
+
+    {open && (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        style={{ background: "hsl(0 0% 0% / 0.6)" }}
+        onClick={() => setOpen(false)}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="relative max-w-xl w-full rounded-2xl border-2 p-6 md:p-7"
+          style={{
+            background: "hsl(var(--background))",
+            borderColor: "hsl(var(--brand-green) / 0.55)",
+            boxShadow: "0 30px 80px -20px hsl(var(--brand-green) / 0.45)",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close"
+            className="absolute top-3 right-3 p-1.5 rounded-md hover:bg-muted"
+          >
+            <X className="w-4 h-4 text-muted-foreground" />
+          </button>
+          <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: "hsl(var(--brand-green))" }}>
+            {industry.label} · full scenario
+          </p>
+          <h4 className="text-lg font-black text-foreground leading-tight mb-1.5">
+            {industry.scenario.front}
+          </h4>
+          <p className="text-sm font-black mb-4" style={{ color: "hsl(var(--brand-green))" }}>
+            {industry.scenario.backOutcome}
+          </p>
+          <p className="text-[13.5px] leading-relaxed text-foreground/85">
+            {industry.scenario.backLong}
+          </p>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
