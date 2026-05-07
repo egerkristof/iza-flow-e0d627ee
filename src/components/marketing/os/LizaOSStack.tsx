@@ -6,7 +6,7 @@ import {
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
   Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
-  ChevronRight, ChevronDown, ArrowRight, TrendingUp, X,
+  ChevronRight, ChevronDown, ArrowRight, TrendingUp, X, Monitor,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
@@ -1046,7 +1046,7 @@ export function LizaOSStack() {
   );
 }
 
-/* ---------- Mobile-only simplified vertical stack ---------- */
+/* ---------- Mobile-only: vertical loop SVG + three expandable sections ---------- */
 function MobileStack({
   industry, sourceLayer, toolsLayer, nativeLayer, isGeneric,
 }: {
@@ -1056,100 +1056,93 @@ function MobileStack({
   nativeLayer: Layer;
   isGeneric: boolean;
 }) {
-  const blocks = [
+  const sections: { id: string; tone: Tone; kicker: string; title: string; sub: string; icon: React.ReactNode; items: { label: string; detail: string }[] }[] = [
     {
       id: "leadership",
-      kicker: "Leadership view",
-      title: "Strategic control tower",
+      tone: "strategy",
+      kicker: "Leadership",
+      title: "What leadership controls",
       sub: "Set the standards, see the signals. Strategy and execution become one loop.",
-      tone: "strategy" as Tone,
       icon: <Compass className="w-4 h-4" />,
-      bullets: industry.leadership.pushItems.slice(0, 3).map((i) => i.label),
-    },
-    {
-      id: "systems",
-      kicker: "Systems of record",
-      title: sourceLayer.title,
-      sub: sourceLayer.sub,
-      tone: "data" as Tone,
-      icon: <Database className="w-4 h-4" />,
-      bullets: sourceLayer.items.slice(0, 4).map((i) => i.label),
-    },
-    {
-      id: "native",
-      kicker: "Where work happens",
-      title: "One governed workspace",
-      sub: nativeLayer.sub,
-      tone: "native" as Tone,
-      icon: <Workflow className="w-4 h-4" />,
-      bullets: nativeLayer.items.slice(0, 4).map((i) => i.label),
-    },
-    {
-      id: "tools",
-      kicker: "Your AI tools",
-      title: toolsLayer.title,
-      sub: toolsLayer.sub,
-      tone: "apps" as Tone,
-      icon: <Bot className="w-4 h-4" />,
-      bullets: toolsLayer.items.slice(0, 4).map((i) => i.label),
+      items: [
+        ...industry.leadership.pushItems.slice(0, 3).map((i) => ({ label: i.label, detail: i.detail })),
+        ...industry.leadership.upItems.slice(0, 2).map((i) => ({ label: i.label, detail: i.detail })),
+      ],
     },
     {
       id: "core",
-      kicker: "Decision standard",
-      title: "How your company decides",
-      sub: "Standards, mandates, and the artifact graph. Every surface above runs against this.",
-      tone: "core" as Tone,
+      tone: "core",
+      kicker: "Liza · Decision Standard",
+      title: "The governed core",
+      sub: "Liza captures how your company decides and delivers work, then enforces it on every AI request.",
       icon: <ShieldCheck className="w-4 h-4" />,
-      bullets: industry.judgmentCore.systemicItems.slice(0, 3).map((i) => i.label),
+      items: [
+        ...industry.judgmentCore.systemicItems.slice(0, 3).map((i) => ({ label: i.label, detail: i.detail })),
+        ...industry.judgmentCore.artifactItems.slice(0, 2).map((i) => ({ label: i.label, detail: i.detail })),
+      ],
+    },
+    {
+      id: "native",
+      tone: "native",
+      kicker: "Where work happens",
+      title: "One governed workspace",
+      sub: nativeLayer.sub,
+      icon: <Workflow className="w-4 h-4" />,
+      items: nativeLayer.items.map((i) => ({ label: i.label, detail: i.detail })),
+    },
+    {
+      id: "systems",
+      tone: "data",
+      kicker: "Systems of record",
+      title: sourceLayer.title,
+      sub: sourceLayer.sub,
+      icon: <Database className="w-4 h-4" />,
+      items: sourceLayer.items.map((i) => ({ label: i.label, detail: i.detail })),
+    },
+    {
+      id: "tools",
+      tone: "apps",
+      kicker: "Your AI tools",
+      title: toolsLayer.title,
+      sub: toolsLayer.sub,
+      icon: <Bot className="w-4 h-4" />,
+      items: toolsLayer.items.map((i) => ({ label: i.label, detail: i.detail })),
     },
   ];
 
   return (
-    <div className="space-y-3">
-      {blocks.map((b, idx) => {
-        const t = TONE[b.tone];
-        return (
-          <div key={b.id}>
-            <div
-              className="rounded-2xl border-2 p-4"
-              style={{ background: t.bg, borderColor: t.ring }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <div
-                  className="w-7 h-7 rounded-lg flex items-center justify-center"
-                  style={{ background: t.accent + "22", color: t.accent }}
-                >
-                  {b.icon}
-                </div>
-                <p className="text-[9px] font-black tracking-[0.18em] uppercase" style={{ color: t.kicker }}>
-                  {b.kicker}
-                </p>
-              </div>
-              <h4 className="text-base font-black leading-tight mb-1.5 text-foreground">{b.title}</h4>
-              <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">{b.sub}</p>
-              <ul className="space-y-1.5">
-                {b.bullets.map((label) => (
-                  <li key={label} className="flex items-start gap-2 text-[12px] text-foreground/85">
-                    <span
-                      className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0"
-                      style={{ background: t.accent }}
-                    />
-                    <span>{label}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            {idx < blocks.length - 1 && (
-              <div className="flex justify-center py-2">
-                <ChevronDown className="w-4 h-4 text-muted-foreground/60" />
-              </div>
-            )}
-          </div>
-        );
-      })}
+    <div className="space-y-4">
+      {/* Honest hint banner */}
+      <div
+        className="rounded-xl border px-3.5 py-2.5 flex items-start gap-2.5"
+        style={{
+          background: "hsl(var(--primary) / 0.06)",
+          borderColor: "hsl(var(--primary) / 0.25)",
+        }}
+      >
+        <Monitor className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--primary))" }} />
+        <div className="min-w-0">
+          <p className="text-[12px] font-bold text-foreground leading-tight">
+            Even richer on a larger screen
+          </p>
+          <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">
+            This is the short mobile version. The interactive map opens up on desktop.
+          </p>
+        </div>
+      </div>
+
+      {/* Hero loop diagram */}
+      <MobileLoopDiagram />
+
+      {/* Tap-to-expand sections */}
+      <div className="space-y-2.5">
+        {sections.map((s) => (
+          <MobileSection key={s.id} section={s} />
+        ))}
+      </div>
 
       {!isGeneric && (
-        <div className="pt-3 text-center">
+        <div className="pt-2 text-center">
           <Link
             to={industry.href}
             className="inline-flex items-center gap-2 text-sm font-bold text-primary"
@@ -1159,6 +1152,202 @@ function MobileStack({
           </Link>
         </div>
       )}
+    </div>
+  );
+}
+
+/* Vertical loop SVG: Leadership -> Decision Standard -> Workspace -> Records / AI tools, with feedback arrow */
+function MobileLoopDiagram() {
+  const PRIMARY = "hsl(var(--primary))";
+  const GREEN = "hsl(var(--brand-green))";
+  const AMBER = "hsl(var(--brand-amber, var(--primary)))";
+  const MUTED = "hsl(var(--muted-foreground))";
+  return (
+    <div
+      className="rounded-2xl border p-4"
+      style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+    >
+      <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground text-center mb-3">
+        The loop
+      </p>
+      <svg viewBox="0 0 320 380" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+        {/* Right-side feedback path (execution -> leadership) */}
+        <path
+          d="M 250 320 C 310 320 310 60 250 60"
+          fill="none"
+          stroke={GREEN}
+          strokeOpacity="0.55"
+          strokeWidth="1.4"
+          strokeDasharray="3 4"
+        />
+        <polygon points="250,55 256,65 244,65" fill={GREEN} fillOpacity="0.7" />
+        <foreignObject x="282" y="180" width="36" height="22">
+          <div
+            className="w-full h-full rounded-md flex items-center justify-center text-[8px] font-black tracking-[0.12em] uppercase"
+            style={{
+              background: "hsl(var(--background))",
+              border: `1px solid ${GREEN}55`,
+              color: GREEN,
+            }}
+          >
+            Signal
+          </div>
+        </foreignObject>
+
+        {/* Down-arrows along the spine */}
+        {[100, 170, 240].map((y) => (
+          <g key={y}>
+            <line x1="120" y1={y} x2="120" y2={y + 22} stroke={PRIMARY} strokeOpacity="0.45" strokeWidth="1.2" />
+            <polygon points={`120,${y + 28} 115,${y + 20} 125,${y + 20}`} fill={PRIMARY} fillOpacity="0.6" />
+          </g>
+        ))}
+
+        {/* Node 1 — Leadership */}
+        <foreignObject x="20" y="20" width="200" height="60">
+          <NodeBox kicker="Leadership" title="Sets the standard" tone={AMBER} />
+        </foreignObject>
+
+        {/* Node 2 — Decision Standard (Liza core) */}
+        <foreignObject x="20" y="90" width="200" height="60">
+          <NodeBox kicker="Liza · Decision Standard" title="The governed core" tone={PRIMARY} accent />
+        </foreignObject>
+
+        {/* Node 3 — Workspace */}
+        <foreignObject x="20" y="160" width="200" height="60">
+          <NodeBox kicker="Where work happens" title="Governed workspace" tone={GREEN} />
+        </foreignObject>
+
+        {/* Node 4 — Records + AI tools (split row) */}
+        <foreignObject x="6" y="240" width="118" height="60">
+          <NodeBox kicker="Systems of record" title="Drive · DBs · Email" tone={MUTED} small />
+        </foreignObject>
+        <foreignObject x="130" y="240" width="118" height="60">
+          <NodeBox kicker="Your AI tools" title="Copilot · Claude" tone={MUTED} small />
+        </foreignObject>
+
+        {/* Bottom outcome bar */}
+        <foreignObject x="20" y="320" width="230" height="40">
+          <div
+            className="w-full h-full rounded-md flex items-center justify-center text-[10px] font-black uppercase tracking-[0.18em]"
+            style={{
+              background: GREEN + "1f",
+              color: GREEN,
+              border: `1px solid ${GREEN}55`,
+            }}
+          >
+            Governed Output
+          </div>
+        </foreignObject>
+      </svg>
+      <p className="text-[11px] text-muted-foreground text-center leading-snug mt-2">
+        Leadership sets the standard. Liza enforces it on every AI request. Outcomes flow back up.
+      </p>
+    </div>
+  );
+}
+
+function NodeBox({
+  kicker, title, tone, accent, small,
+}: { kicker: string; title: string; tone: string; accent?: boolean; small?: boolean }) {
+  return (
+    <div
+      className="w-full h-full rounded-lg flex flex-col justify-center px-3 py-1.5"
+      style={{
+        background: accent ? `${tone}14` : "hsl(var(--background))",
+        border: `${accent ? "2px" : "1px"} solid ${tone}${accent ? "66" : "44"}`,
+      }}
+    >
+      <p
+        className="text-[8.5px] font-black tracking-[0.16em] uppercase truncate"
+        style={{ color: tone }}
+      >
+        {kicker}
+      </p>
+      <p
+        className={`font-black leading-tight text-foreground truncate ${small ? "text-[11px]" : "text-[12.5px]"}`}
+      >
+        {title}
+      </p>
+    </div>
+  );
+}
+
+function MobileSection({
+  section,
+}: {
+  section: { id: string; tone: Tone; kicker: string; title: string; sub: string; icon: React.ReactNode; items: { label: string; detail: string }[] };
+}) {
+  const [open, setOpen] = useState(false);
+  const t = TONE[section.tone];
+  return (
+    <div
+      className="rounded-xl border overflow-hidden"
+      style={{ background: t.bg, borderColor: t.ring }}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="w-full flex items-center gap-3 p-3.5 text-left"
+      >
+        <div
+          className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: t.accent + "22", color: t.accent }}
+        >
+          {section.icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p
+            className="text-[9.5px] font-black tracking-[0.18em] uppercase truncate"
+            style={{ color: t.kicker }}
+          >
+            {section.kicker}
+          </p>
+          <p className="text-[13px] font-black text-foreground leading-tight truncate">
+            {section.title}
+          </p>
+        </div>
+        <ChevronDown
+          className="w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+        />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="overflow-hidden"
+          >
+            <div className="px-3.5 pb-3.5 space-y-2">
+              <p className="text-[12px] text-muted-foreground leading-relaxed">
+                {section.sub}
+              </p>
+              <ul className="space-y-2">
+                {section.items.map((i) => (
+                  <li
+                    key={i.label}
+                    className="rounded-lg border p-2.5"
+                    style={{
+                      background: "hsl(var(--background))",
+                      borderColor: t.ring,
+                    }}
+                  >
+                    <p className="text-[12px] font-bold text-foreground leading-tight">
+                      {i.label}
+                    </p>
+                    <p className="text-[11.5px] text-muted-foreground leading-relaxed mt-0.5">
+                      {i.detail}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
