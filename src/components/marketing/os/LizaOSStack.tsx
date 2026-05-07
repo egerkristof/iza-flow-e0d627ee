@@ -445,13 +445,12 @@ function SyncArrow({ label }: { label: string }) {
   return (
     <div className="hidden lg:flex items-center justify-center px-1">
       <div
-        className="flex items-center gap-1.5 px-2 py-1.5 rounded-full border bg-background"
+        className="flex flex-col items-center gap-1 p-1.5 rounded-full border bg-background"
         style={{ borderColor: "hsl(var(--primary) / 0.25)" }}
+        title={label}
+        aria-label={label}
       >
-        <ArrowLeftRight className="w-3.5 h-3.5" style={{ color: "hsl(var(--primary))" }} />
-        <span className="text-[9px] font-bold tracking-[0.18em] uppercase text-muted-foreground leading-none whitespace-nowrap">
-          {label}
-        </span>
+        <ArrowLeftRight className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
       </div>
     </div>
   );
@@ -1058,7 +1057,7 @@ export function LizaOSStack() {
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
         {/* DESKTOP (lg+): Records | Workspace | Tools side by side */}
-        <div className="hidden lg:grid lg:grid-cols-[minmax(0,0.85fr)_auto_minmax(0,2fr)_auto_minmax(0,0.85fr)] gap-3 items-stretch">
+        <div className="hidden lg:grid lg:grid-cols-[minmax(0,0.7fr)_auto_minmax(0,2.4fr)_auto_minmax(0,0.7fr)] gap-3 items-stretch">
           <SidePanel layer={sourceLayer} align="left" />
           <SyncArrow label="read & write" />
           <div className="relative">
