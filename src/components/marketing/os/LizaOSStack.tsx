@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Database, FileSpreadsheet, Mail, MessagesSquare, Cloud,
@@ -6,7 +6,10 @@ import {
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
   Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
+  ChevronRight, ArrowRight,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon } from "./industryLexicon";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
@@ -26,25 +29,25 @@ type Layer = {
 /* CENTER — Native Surfaces. Where work actually happens. */
 const NATIVE_SURFACES: Layer = {
   id: "native",
-  kicker: "Center — where you work",
-  title: "Liza Native Surfaces",
-  sub: "Your primary execution space. Workbooks, Extraction, Oversight. ChatGPT, Claude, and custom agents run inside them against the right governed bundle.",
-  expanded: "This is where the work moves to. Teams stop bouncing between vendor chats, wikis, and trackers. They execute inside Liza, with the Judgment Core supplying the standards and the artifact graph keeping every output in sync everywhere it needs to live.",
+  kicker: "Center — where work happens",
+  title: "Where work happens",
+  sub: "One workspace for guided work, knowledge capture, and live oversight. Your AI agents run inside, against the right governed standard.",
+  expanded: "This is where the work moves to. Teams stop bouncing between vendor chats, wikis, and trackers. Every action runs against the Decision Standard, and every output is kept in sync across the systems where it lives.",
   tone: "native",
   items: [
-    { label: "Workbooks", icon: <Workflow className="w-4 h-4" />, tag: "Execute", detail: "Where work happens. Each Workbook hosts ChatGPT, Claude, and custom agents, all reading the governed bundle for that workflow." },
-    { label: "ChatGPT · Claude · Agents", icon: <Bot className="w-4 h-4" />, tag: "Inside", detail: "Frontier models and custom agents run inside Workbooks. They never see raw context, only the bundle that matches the job." },
-    { label: "Extraction Engine", icon: <Sparkles className="w-4 h-4" />, tag: "Capture", detail: "Pulls tacit judgment out of process docs, transcripts, senior interviews. Expertise that was never written down becomes a structured asset." },
-    { label: "Oversight", icon: <Eye className="w-4 h-4" />, tag: "Govern", detail: "See what teams execute, where drift happens, what needs re-encoding. The control surface for the standards layer." },
+    { label: "Guided work", icon: <Workflow className="w-4 h-4" />, tag: "Do", detail: "The room where teams execute. Each Workbook hosts your AI agents, all reading the governed bundle that matches the job." },
+    { label: "AI agents inside", icon: <Bot className="w-4 h-4" />, tag: "Inside", detail: "ChatGPT, Claude, and custom agents run inside the workspace. They never see raw context, only the bundle that fits the task." },
+    { label: "Knowledge capture", icon: <Sparkles className="w-4 h-4" />, tag: "Capture", detail: "Pulls tacit judgment out of process docs, transcripts, and senior interviews. Expertise that was never written down becomes a structured asset." },
+    { label: "Live oversight", icon: <Eye className="w-4 h-4" />, tag: "Govern", detail: "See what teams execute, where drift happens, what needs re-encoding. The control surface for the standard." },
   ],
 };
 
 /* LEFT — Source Systems. Bidirectional. */
 const SOURCE_SYSTEMS: Layer = {
   id: "data",
-  kicker: "Left — your source systems",
-  title: "Source Systems",
-  sub: "Your existing estate. Liza reads from them and writes back to them. Your data stays where it lives.",
+  kicker: "Left — systems of record",
+  title: "Your systems of record",
+  sub: "The estate you already own. Read in for context. Governed updates written back so the canonical record stays current.",
   expanded: "Liza does not replace your systems of record. It pulls context in, structures the judgment that lives across them, and pushes governed outputs and artifact updates back. Your standards become portable. Your data does not move homes.",
   tone: "data",
   items: [
@@ -59,10 +62,10 @@ const SOURCE_SYSTEMS: Layer = {
 /* RIGHT — Connected Tools. Bidirectional. */
 const CONNECTED_TOOLS: Layer = {
   id: "apps",
-  kicker: "Right — connected AI tools",
-  title: "Connected AI Tools",
-  sub: "Third-party AI you already own. Liza feeds them governed context and syncs artifacts back, so their answers stay consistent with everything else.",
-  expanded: "These tools each invent answers from generic training data today. Connect them to Liza and they read your standards, mandates, and the artifact graph. When something changes inside Liza, it propagates outward; when work happens in them, it flows back.",
+  kicker: "Right — your AI tools",
+  title: "Your AI tools",
+  sub: "Copilot, Glean, vendor RAG, ChatGPT. Connected so they answer in your standards instead of generic training data.",
+  expanded: "These tools each invent answers from generic training data today. Connect them and they read your standards, mandates, and the artifact graph. When something changes in the core, it propagates outward; when work happens in them, it flows back.",
   tone: "apps",
   items: [
     { label: "Microsoft Copilot", icon: <Sparkles className="w-4 h-4" />, detail: "Copilot stops sounding generic. It answers in your standards because Liza feeds it governed bundles instead of raw SharePoint sprawl." },
@@ -74,10 +77,10 @@ const CONNECTED_TOOLS: Layer = {
 
 /* CORE — Judgment Core. Two motions. */
 const JUDGMENT_CORE_DESC = {
-  kicker: "The center — Judgment Core",
-  title: "Judgment Core",
-  sub: "Two knowledge graphs running in parallel. One holds the systemic logic of how your company decides. The other holds the live artifacts that work produces — wherever they live.",
-  expanded: "Most knowledge tools track one thing. Liza tracks two motions in lockstep: the standards that govern decisions, and the artifacts those decisions produce. When a standard changes, the artifacts that depend on it know. When an artifact changes anywhere — inside Liza, in your source systems, in your third-party tools — the graph stays consistent.",
+  kicker: "The core — your decision standard",
+  title: "The Decision Standard",
+  sub: "Two graphs running in parallel. One holds how your company decides. The other holds what your company produces. Both governed together. We call this the Judgment Core.",
+  expanded: "Most knowledge tools track one thing. Liza tracks two motions in lockstep: the standards that govern decisions, and the artifacts those decisions produce. When a standard changes, the artifacts that depend on it know. When an artifact changes anywhere, in your systems of record or in your AI tools, the graph stays consistent.",
 };
 
 /* Two sub-graphs inside the Judgment Core */
@@ -118,9 +121,9 @@ const MODEL_FABRIC: Layer = {
 /* TOP — Strategic Control Tower */
 const CONTROL_TOWER: Layer = {
   id: "strategy",
-  kicker: "Top — strategic control tower",
-  title: "Strategic Control Tower",
-  sub: "Where the C-suite designs the system. Push governance, mandates, playbooks, and sensing jobs down. Live signal flows up from execution.",
+  kicker: "Top — leadership view",
+  title: "Leadership view",
+  sub: "Where leaders set direction and see reality. Push governance, mandates, and playbooks down. Live signal flows up from execution. Strategy and execution stop being two timelines.",
   expanded: "Strategy and execution stop being two timelines. Leadership sets the constraints — mandates, playbooks, sensing engine jobs — and pushes them into the Judgment Core. Execution feeds back transcripts, client signals, drift, and outcome metrics. Business-model innovation becomes a live loop, not a yearly offsite.",
   tone: "strategy",
   items: [
@@ -344,7 +347,7 @@ function SyncArrow({ label }: { label: string }) {
 }
 
 /* ---------- Judgment Core block — two motions ---------- */
-function JudgmentCoreBlock() {
+function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string; artifactsSub?: string } = {}) {
   const t = TONE.core;
   const [openItem, setOpenItem] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -373,8 +376,8 @@ function JudgmentCoreBlock() {
           <SubGraph
             tone="graph-sys"
             label="Motion 1"
-            title="Systemic knowledge graph"
-            sub="The logic of how your company decides."
+            title="How we decide"
+            sub={systemicSub ?? "The logic of how your company decides."}
             items={SYSTEMIC_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
@@ -382,8 +385,8 @@ function JudgmentCoreBlock() {
           <SubGraph
             tone="graph-art"
             label="Motion 2"
-            title="Artifact knowledge graph"
-            sub="Every artifact, native or not, kept in sync."
+            title="What we produce"
+            sub={artifactsSub ?? "Every artifact, native or not, kept in sync."}
             items={ARTIFACT_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
@@ -642,31 +645,206 @@ function ControlTowerBlock({ layer }: { layer: Layer }) {
 
 /* ---------- main stack ---------- */
 export function LizaOSStack() {
+  const [industryKey, setIndustryKey] = useState<IndustryKey>("generic");
+  const industry = INDUSTRY_BY_KEY[industryKey];
+  const isGeneric = industryKey === "generic";
+
+  // Industry-overridden layers
+  const sourceLayer = useMemo<Layer>(() => ({
+    ...SOURCE_SYSTEMS,
+    title: industry.sourceSystems.title,
+    sub: industry.sourceSystems.sub,
+    items: industry.sourceSystems.items.map((label, i) => ({
+      ...SOURCE_SYSTEMS.items[i % SOURCE_SYSTEMS.items.length],
+      label,
+    })),
+  }), [industry]);
+
+  const toolsLayer = useMemo<Layer>(() => ({
+    ...CONNECTED_TOOLS,
+    title: industry.connectedTools.title,
+    sub: industry.connectedTools.sub,
+    items: industry.connectedTools.items.map((label, i) => ({
+      ...CONNECTED_TOOLS.items[i % CONNECTED_TOOLS.items.length],
+      label,
+    })),
+  }), [industry]);
+
+  const nativeLayer = useMemo<Layer>(() => ({
+    ...NATIVE_SURFACES,
+    sub: industry.nativeSurfaces.sub,
+  }), [industry]);
+
   return (
     <div className="relative">
-      {/* TOP: Strategic Control Tower */}
-      <ControlTowerBlock layer={CONTROL_TOWER} />
+      {/* Industry tab strip — Rolodex */}
+      <IndustryRolodex
+        active={industryKey}
+        onChange={setIndustryKey}
+      />
 
-      <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
+      <motion.div
+        key={industryKey}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
+        {/* TOP: Leadership view */}
+        <ControlTowerBlock layer={CONTROL_TOWER} />
 
-      {/* TOP ROW: Source Systems  <->  Native Surfaces (center)  <->  Connected Tools */}
-      <div className="grid lg:grid-cols-[1fr_28px_1.6fr_28px_1fr] gap-3 items-stretch">
-        <SidePanel layer={SOURCE_SYSTEMS} align="left" />
-        <SyncArrow label="read & write" />
-        <CenterNativeSurfaces layer={NATIVE_SURFACES} />
-        <SyncArrow label="sync & propagate" />
-        <SidePanel layer={CONNECTED_TOOLS} align="right" />
-      </div>
+        <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
-      <Connector label="every surface above executes against the Judgment Core" />
+        {/* TOP ROW: Systems of record  <->  Where work happens (center)  <->  Your AI tools */}
+        <div className="grid lg:grid-cols-[1fr_28px_1.6fr_28px_1fr] gap-3 items-stretch">
+          <SidePanel layer={sourceLayer} align="left" />
+          <SyncArrow label="read & write" />
+          <div className="relative">
+            <CenterNativeSurfaces layer={nativeLayer} />
+            {!isGeneric && <ScenarioFlipCard industry={industry} />}
+          </div>
+          <SyncArrow label="sync & propagate" />
+          <SidePanel layer={toolsLayer} align="right" />
+        </div>
 
-      {/* JUDGMENT CORE — two motions */}
-      <JudgmentCoreBlock />
+        <Connector label="every surface above runs against the Decision Standard" />
 
-      <Connector label="runs on top of any model" />
+        {/* JUDGMENT CORE — two motions */}
+        <JudgmentCoreBlock
+          systemicSub={industry.judgmentCore.systemic}
+          artifactsSub={industry.judgmentCore.artifacts}
+        />
 
-      {/* MODEL FABRIC */}
-      <ModelFabricRow />
+        <Connector label="runs on top of any model" />
+
+        {/* MODEL FABRIC */}
+        <ModelFabricRow />
+
+        {!isGeneric && (
+          <div className="mt-6 text-center">
+            <Link
+              to={industry.href}
+              className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:opacity-80"
+            >
+              See the full {industry.label} view
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
+      </motion.div>
     </div>
+  );
+}
+
+/* ---------- Industry rolodex tab strip ---------- */
+function IndustryRolodex({
+  active, onChange,
+}: { active: IndustryKey; onChange: (k: IndustryKey) => void }) {
+  return (
+    <div className="mb-5">
+      <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground">
+          Pick your industry — the diagram relabels in your language
+        </p>
+        {active === "generic" && (
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-primary inline-flex items-center gap-1">
+            <ChevronRight className="w-3 h-3 animate-pulse" />
+            try one
+          </span>
+        )}
+      </div>
+      <div
+        className="flex flex-wrap gap-1.5 p-1.5 rounded-xl border"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        {INDUSTRIES.map((ind) => {
+          const isActive = ind.key === active;
+          return (
+            <button
+              key={ind.key}
+              type="button"
+              onClick={() => onChange(ind.key)}
+              className="text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all"
+              style={{
+                background: isActive ? "hsl(var(--primary))" : "transparent",
+                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.7)",
+                boxShadow: isActive ? "0 6px 18px -10px hsl(var(--primary))" : "none",
+              }}
+            >
+              {ind.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Flip card scenario for an industry ---------- */
+function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
+  const [flipped, setFlipped] = useState(false);
+  return (
+    <motion.button
+      type="button"
+      onClick={() => setFlipped((v) => !v)}
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.35, delay: 0.15 }}
+      className="hidden lg:block absolute -bottom-5 -right-5 w-[260px] h-[140px] z-10 text-left"
+      style={{ perspective: 1000 }}
+      aria-label="Flip scenario card"
+    >
+      <motion.div
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.55, ease: "easeInOut" }}
+        className="relative w-full h-full"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {/* Front */}
+        <div
+          className="absolute inset-0 rounded-xl border-2 p-4 flex flex-col justify-between"
+          style={{
+            background: "hsl(var(--background))",
+            borderColor: "hsl(var(--brand-green) / 0.45)",
+            boxShadow: "0 20px 40px -20px hsl(var(--brand-green) / 0.5)",
+            backfaceVisibility: "hidden",
+          }}
+        >
+          <div>
+            <p className="text-[9px] font-black tracking-[0.22em] uppercase mb-1.5" style={{ color: "hsl(var(--brand-green))" }}>
+              {industry.label} · scenario
+            </p>
+            <p className="text-[13px] font-bold leading-tight text-foreground">
+              {industry.scenario.front}
+            </p>
+          </div>
+          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground inline-flex items-center gap-1">
+            tap to see outcome <ArrowRight className="w-3 h-3" />
+          </p>
+        </div>
+        {/* Back */}
+        <div
+          className="absolute inset-0 rounded-xl border-2 p-4 flex flex-col justify-between"
+          style={{
+            background: "hsl(var(--brand-green) / 0.08)",
+            borderColor: "hsl(var(--brand-green) / 0.55)",
+            boxShadow: "0 20px 40px -20px hsl(var(--brand-green) / 0.5)",
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          <div>
+            <p className="text-[9px] font-black tracking-[0.22em] uppercase mb-1.5" style={{ color: "hsl(var(--brand-green))" }}>
+              outcome
+            </p>
+            <p className="text-[12px] font-black leading-tight text-foreground mb-1.5">
+              {industry.scenario.backOutcome}
+            </p>
+            <p className="text-[10.5px] leading-snug text-foreground/75">
+              {industry.scenario.backDetail}
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </motion.button>
   );
 }
