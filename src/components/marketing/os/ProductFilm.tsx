@@ -360,7 +360,6 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
         </div>
       );
     case "forge":
-      return (
       return <ForgeKnowledgeGraph tone={tone} green={green} amber={amber} />;
     case "broadcast":
       return (
