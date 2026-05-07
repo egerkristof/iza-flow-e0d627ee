@@ -667,7 +667,7 @@ export function ArchitectureWalkthrough() {
   return (
     <div ref={wrapRef} className="w-full md:max-w-3xl md:mx-auto">
       <div
-        className="relative rounded-2xl border overflow-hidden select-none h-[560px] md:h-[640px]"
+        className="relative rounded-2xl border overflow-hidden select-none h-[640px] md:h-[620px] md:max-w-5xl md:mx-auto"
         style={{
           background: "hsl(var(--card))",
           borderColor: "hsl(var(--border))",
@@ -697,7 +697,7 @@ export function ArchitectureWalkthrough() {
         />
 
         {/* Scene */}
-        <div className="absolute inset-0 pt-9 pb-16 px-5 md:px-10 md:pt-12 md:pb-20 flex flex-col">
+        <div className="absolute inset-0 pt-9 pb-16 px-5 md:px-8 md:pt-12 md:pb-20 flex flex-col">
           <div className="mb-2 md:mb-3">
             <span className="text-[10px] md:text-[12px] font-black tracking-[0.22em] uppercase" style={{ color: PRIMARY }}>
               {scene.kicker}
@@ -710,36 +710,86 @@ export function ArchitectureWalkthrough() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
-              className="text-[20px] md:text-[34px] font-black leading-[1.15] tracking-tight text-foreground mb-4 md:mb-6 md:max-w-2xl"
+              className="text-[20px] md:text-[28px] font-black leading-[1.15] tracking-tight text-foreground mb-4 md:mb-5"
             >
               {scene.headline}
             </motion.h3>
           </AnimatePresence>
-          <div className="flex-1 flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`v-${index}`}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="w-full"
-              >
-                {scene.render(progress)}
-              </motion.div>
-            </AnimatePresence>
+
+          {/* Stage: visual on the left, narrative beats on the right */}
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_280px] gap-4 md:gap-6 items-stretch min-h-0">
+            {/* Visual */}
+            <div className="relative flex items-center justify-center min-h-0">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`v-${index}`}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full"
+                >
+                  {scene.render(progress)}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Narrative panel — desktop only, beats appear in sync with the scene */}
+            <div className="hidden md:flex flex-col justify-center">
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground mb-3">
+                What's happening
+              </p>
+              <ol className="space-y-2.5">
+                {(scene.beats ?? []).map((b, i) => {
+                  const reached = progress >= b.at;
+                  const isActive = activeBeat?.at === b.at;
+                  return (
+                    <motion.li
+                      key={`${index}-${b.at}`}
+                      initial={false}
+                      animate={{
+                        opacity: reached ? 1 : 0.25,
+                        x: reached ? 0 : 6,
+                      }}
+                      transition={{ duration: 0.4 }}
+                      className="flex items-start gap-2.5"
+                    >
+                      <span
+                        className="mt-[3px] flex-shrink-0 inline-flex items-center justify-center rounded-full"
+                        style={{
+                          width: 18,
+                          height: 18,
+                          background: isActive ? PRIMARY : (reached ? PRIMARY + "22" : "hsl(var(--foreground) / 0.08)"),
+                          color: isActive ? "hsl(var(--primary-foreground))" : PRIMARY,
+                          boxShadow: isActive ? `0 0 0 4px ${PRIMARY}22` : "none",
+                          transition: "background 0.3s, box-shadow 0.3s",
+                        }}
+                      >
+                        <ArrowLeft className="w-2.5 h-2.5" />
+                      </span>
+                      <span
+                        className={`text-[12.5px] leading-snug ${isActive ? "font-bold text-foreground" : "font-semibold text-foreground/75"}`}
+                      >
+                        {b.text}
+                      </span>
+                    </motion.li>
+                  );
+                })}
+              </ol>
+            </div>
           </div>
-          {/* Narrator caption — gives the viewer time to process each beat */}
-          <div className="mt-3 md:mt-5 min-h-[48px] md:min-h-[56px] flex items-start justify-center">
+
+          {/* Mobile narrator caption (no narrative side panel on small screens) */}
+          <div className="md:hidden mt-3 min-h-[44px] flex items-start justify-center">
             <AnimatePresence mode="wait">
               {activeBeat && (
                 <motion.p
-                  key={`beat-${index}-${activeBeat.at}`}
+                  key={`mbeat-${index}-${activeBeat.at}`}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.45 }}
-                  className="text-[12px] md:text-[14px] leading-snug text-foreground/80 text-center max-w-[28ch] md:max-w-[52ch] font-medium"
+                  transition={{ duration: 0.4 }}
+                  className="text-[12px] leading-snug text-foreground/80 text-center max-w-[34ch] font-medium"
                 >
                   {activeBeat.text}
                 </motion.p>
