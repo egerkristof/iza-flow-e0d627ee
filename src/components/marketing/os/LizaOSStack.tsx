@@ -1203,7 +1203,186 @@ export function LizaOSStack() {
       </motion.div>
 
       <GuidedTour open={tourOpen} onClose={() => setTourOpen(false)} />
+
+      <FloatingTourPrompt
+        open={showFloatingPrompt && !choiceMade}
+        onPlayTour={() => {
+          setTourOpen(true);
+          setChoiceMade(true);
+          setShowFloatingPrompt(false);
+        }}
+        onJumpToSelector={() => {
+          jumpToSelector();
+          dismissFloating();
+        }}
+        onDismiss={dismissFloating}
+      />
     </div>
+  );
+}
+
+/* ---------- Upfront choice card (desktop/tablet) ---------- */
+function UpfrontChoiceCard({
+  visible, onPlayTour, onExplore, onJumpToSelector,
+}: {
+  visible: boolean;
+  onPlayTour: () => void;
+  onExplore: () => void;
+  onJumpToSelector: () => void;
+}) {
+  return (
+    <AnimatePresence initial={false}>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="hidden md:block mb-6 rounded-2xl border-2 p-5 md:p-6"
+          style={{
+            background: "hsl(var(--card))",
+            borderColor: "hsl(var(--primary) / 0.45)",
+            boxShadow: "0 18px 50px -22px hsl(var(--primary) / 0.45)",
+          }}
+        >
+          <div className="flex items-start justify-between gap-6 flex-wrap">
+            <div className="max-w-[640px]">
+              <p className="text-[11px] font-black tracking-[0.28em] uppercase text-primary mb-1.5">
+                Choose how you want to read this
+              </p>
+              <h3 className="text-[22px] md:text-[26px] font-black leading-tight text-foreground">
+                Take the guided tour, or explore the architecture on your own.
+              </h3>
+              <p className="text-[13.5px] text-muted-foreground mt-2 leading-relaxed">
+                The architecture is dense. The 6-step tour walks you through it in 90 seconds, mapped to your industry if you pick one. Or scroll and inspect every block at your own pace.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-2.5 min-w-[260px]">
+              <button
+                type="button"
+                onClick={onPlayTour}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-black transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--primary))",
+                  color: "hsl(var(--primary-foreground))",
+                  boxShadow: "0 14px 32px -12px hsl(var(--primary))",
+                }}
+              >
+                <Play className="w-4 h-4 fill-current" />
+                Play the 6-step guided tour
+              </button>
+              <button
+                type="button"
+                onClick={onJumpToSelector}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--background))",
+                  color: "hsl(var(--foreground))",
+                  border: "1.5px solid hsl(var(--primary) / 0.45)",
+                }}
+              >
+                Pick my industry first
+                <ArrowDown className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={onExplore}
+                className="text-[12px] font-semibold text-muted-foreground hover:text-foreground transition-colors mt-0.5"
+              >
+                I'll just explore on my own →
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ---------- Floating prompt (re-surfaces if visitor scrolled past the choice) ---------- */
+function FloatingTourPrompt({
+  open, onPlayTour, onJumpToSelector, onDismiss,
+}: {
+  open: boolean;
+  onPlayTour: () => void;
+  onJumpToSelector: () => void;
+  onDismiss: () => void;
+}) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.96 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="hidden md:block fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[min(640px,calc(100vw-32px))]"
+        >
+          <div
+            className="relative rounded-2xl border-2 p-5 md:p-6"
+            style={{
+              background: "hsl(var(--card))",
+              borderColor: "hsl(var(--primary) / 0.55)",
+              boxShadow: "0 28px 70px -20px hsl(var(--primary) / 0.55), 0 0 0 1px hsl(var(--primary) / 0.15)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={onDismiss}
+              aria-label="Dismiss"
+              className="absolute top-3 right-3 w-8 h-8 rounded-full inline-flex items-center justify-center hover:bg-muted transition-colors"
+            >
+              <X className="w-4 h-4 text-muted-foreground" />
+            </button>
+            <p className="text-[10.5px] font-black tracking-[0.28em] uppercase text-primary mb-1.5">
+              Before you go any deeper
+            </p>
+            <h4 className="text-[18px] md:text-[20px] font-black leading-tight text-foreground pr-8">
+              Want a 90-second guided tour of this architecture?
+            </h4>
+            <p className="text-[13px] text-muted-foreground mt-1.5 leading-relaxed">
+              We'll walk you through the 6 steps that make this work, mapped to your industry if you pick one.
+            </p>
+            <div className="flex flex-wrap items-center gap-2.5 mt-4">
+              <button
+                type="button"
+                onClick={onPlayTour}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-black transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--primary))",
+                  color: "hsl(var(--primary-foreground))",
+                  boxShadow: "0 12px 28px -10px hsl(var(--primary))",
+                }}
+              >
+                <Play className="w-4 h-4 fill-current" />
+                Play guided tour
+              </button>
+              <button
+                type="button"
+                onClick={onJumpToSelector}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--background))",
+                  color: "hsl(var(--foreground))",
+                  border: "1.5px solid hsl(var(--primary) / 0.45)",
+                }}
+              >
+                <ArrowUp className="w-4 h-4" />
+                Pick my industry first
+              </button>
+              <button
+                type="button"
+                onClick={onDismiss}
+                className="text-[12px] font-semibold text-muted-foreground hover:text-foreground transition-colors ml-auto"
+              >
+                No thanks
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
