@@ -173,21 +173,23 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
   // Card vertical position — clamp to viewport
   const desiredTop = rect ? Math.max(PAD + 24, Math.min(vp.h - 360, rect.top + rect.height / 2 - 180)) : 80;
 
-  // Connector line from card to spotlight edge (desktop only). Recomputed
-  // every render so it follows the card while it's being dragged.
-  let connector: { x1: number; y1: number; x2: number; y2: number } | null = null;
+  // Connector geometry — same logic on every step.
+  // Card sits on one side, arrow exits the card's inner edge at the card's
+  // vertical midpoint, enters the target's facing edge at the target's
+  // vertical midpoint. Recomputed every render so it follows the card.
+  const CARD_H_EST = 360;
+  let connector: { x1: number; y1: number; x2: number; y2: number; placeRight: boolean } | null = null;
   if (!useBottom && rect) {
     const baseLeft = placeRight ? vp.w - CARD_W - PAD : PAD;
     const cardLeft = baseLeft + drag.x;
     const cardTop = desiredTop + drag.y;
-    // Target a sensible point on the card (the side closest to the anchor).
-    const targetCenterY = rect.top + rect.height / 2;
-    const cardEdgeX = cardLeft + (placeRight ? 0 : CARD_W);
-    // Anchor the line near the title row, but follow the card vertically.
-    const cardEdgeY = Math.max(cardTop + 40, Math.min(cardTop + 200, targetCenterY));
-    const targetEdgeX = cardEdgeX < rect.left ? rect.left - 10 : rect.right + 10;
-    const targetEdgeY = Math.min(vp.h - 24, Math.max(24, targetCenterY));
-    connector = { x1: cardEdgeX, y1: cardEdgeY, x2: targetEdgeX, y2: targetEdgeY };
+    // Card's inner edge X (the side facing the target).
+    const cardEdgeX = placeRight ? cardLeft : cardLeft + CARD_W;
+    const cardEdgeY = cardTop + CARD_H_EST / 2;
+    // Target's facing edge X (the side closest to the card).
+    const targetEdgeX = placeRight ? rect.right + 8 : rect.left - 8;
+    const targetEdgeY = rect.top + rect.height / 2;
+    connector = { x1: cardEdgeX, y1: cardEdgeY, x2: targetEdgeX, y2: targetEdgeY, placeRight };
   }
 
   return (
@@ -227,18 +229,27 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
               <path d="M0,0 L10,5 L0,10 z" fill="hsl(var(--primary))" />
             </marker>
           </defs>
-          <motion.path
-            key={`conn-${step}`}
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            d={`M ${connector.x1} ${connector.y1} C ${(connector.x1 + connector.x2) / 2} ${connector.y1}, ${(connector.x1 + connector.x2) / 2} ${connector.y2}, ${connector.x2} ${connector.y2}`}
-            stroke="hsl(var(--primary))"
-            strokeWidth={2}
-            strokeDasharray="5 4"
-            fill="none"
-            markerEnd="url(#tour-arrow)"
-          />
+          {(() => {
+            // Symmetric S-curve: control points pulled horizontally toward the midpoint.
+            const dx = connector.x2 - connector.x1;
+            const cx1 = connector.x1 + dx * 0.55;
+            const cx2 = connector.x2 - dx * 0.55;
+            const d = `M ${connector.x1} ${connector.y1} C ${cx1} ${connector.y1}, ${cx2} ${connector.y2}, ${connector.x2} ${connector.y2}`;
+            return (
+              <motion.path
+                key={`conn-${step}`}
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                d={d}
+                stroke="hsl(var(--primary))"
+                strokeWidth={2.25}
+                strokeDasharray="5 4"
+                fill="none"
+                markerEnd="url(#tour-arrow)"
+              />
+            );
+          })()}
         </svg>
       )}
 
