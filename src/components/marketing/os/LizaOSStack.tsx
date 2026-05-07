@@ -1002,7 +1002,7 @@ export function LizaOSStack() {
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
         {/* TOP ROW: Systems of record  <->  Where work happens (center)  <->  Your AI tools */}
-        <div className="grid lg:grid-cols-[1fr_auto_1.5fr_auto_1fr] gap-3 items-center">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.5fr)_auto_minmax(0,1fr)] gap-3 items-stretch">
           <SidePanel layer={sourceLayer} align="left" />
           <SyncArrow label="read & write" />
           <div className="relative">
