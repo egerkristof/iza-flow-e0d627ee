@@ -347,7 +347,7 @@ function SyncArrow({ label }: { label: string }) {
 }
 
 /* ---------- Judgment Core block — two motions ---------- */
-function JudgmentCoreBlock() {
+function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string; artifactsSub?: string } = {}) {
   const t = TONE.core;
   const [openItem, setOpenItem] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -376,8 +376,8 @@ function JudgmentCoreBlock() {
           <SubGraph
             tone="graph-sys"
             label="Motion 1"
-            title="Systemic knowledge graph"
-            sub="The logic of how your company decides."
+            title="How we decide"
+            sub={systemicSub ?? "The logic of how your company decides."}
             items={SYSTEMIC_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
@@ -385,8 +385,8 @@ function JudgmentCoreBlock() {
           <SubGraph
             tone="graph-art"
             label="Motion 2"
-            title="Artifact knowledge graph"
-            sub="Every artifact, native or not, kept in sync."
+            title="What we produce"
+            sub={artifactsSub ?? "Every artifact, native or not, kept in sync."}
             items={ARTIFACT_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
