@@ -6,7 +6,7 @@ import {
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
   Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
-  ChevronRight, ChevronDown, ArrowRight, TrendingUp, X,
+  ChevronRight, ChevronDown, ArrowRight, TrendingUp, X, Monitor, Info,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
