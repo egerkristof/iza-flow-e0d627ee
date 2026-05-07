@@ -7,13 +7,13 @@ import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
 const PRINCIPLES = [
   {
     icon: <Cpu className="w-5 h-5" />,
-    title: "A Judgment Core, not another app",
-    body: "Your knowledge graph plus governance. Every AI surface that touches your company has to read from it to act with judgment.",
+    title: "Two knowledge graphs, one core",
+    body: "Systemic knowledge — how your company decides. Artifact knowledge — every output, native or in your stack, kept in sync. Both governed together.",
   },
   {
     icon: <Layers className="w-5 h-5" />,
-    title: "Native surfaces, plus everything you already own",
-    body: "Liza ships Workbooks, Extraction, and Oversight. ChatGPT, Claude, and custom agents run inside them. Copilot, Glean, Veeva connect from outside.",
+    title: "You work inside Liza",
+    body: "Workbooks, Extraction, Oversight are your primary execution space. ChatGPT, Claude, and custom agents run inside them. Source systems and third-party AI sit on either side.",
   },
   {
     icon: <ShieldCheck className="w-5 h-5" />,
@@ -22,8 +22,8 @@ const PRINCIPLES = [
   },
   {
     icon: <Workflow className="w-5 h-5" />,
-    title: "Model-agnostic. Knowledge portable.",
-    body: "Swap LLMs without rewriting your standards. Bundles are versioned, exportable, vendor-neutral. The asset is yours.",
+    title: "Bidirectional by design",
+    body: "Liza pulls context from your source systems and connected tools, and pushes governed updates back. Artifacts stay consistent wherever they live.",
   },
 ];
 
@@ -97,7 +97,7 @@ export default function OSPage() {
               <GradientText>Every AI surface inherits it.</GradientText>
             </h2>
             <p className="text-base text-muted-foreground max-w-xl mx-auto">
-              Source Systems feed in from the side. The Judgment Core governs every surface above it. The Model Fabric below is interchangeable.
+            You work in the center. Source systems and connected AI tools sit on either side, syncing both ways. The Judgment Core runs two knowledge graphs in lockstep beneath it.
             </p>
           </div>
           <LizaOSStack />
