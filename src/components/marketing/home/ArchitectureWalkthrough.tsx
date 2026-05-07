@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
   AlertTriangle, Compass, Database, Sparkles, Workflow,
   ArrowDown, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, Cloud, Mail, FileSpreadsheet, Bot, Search,
+  Plus, Minus,
 } from "lucide-react";
 
 /* Mobile-only "Stories" walkthrough of the Liza architecture.
@@ -13,6 +14,8 @@ type Screen = {
   kicker: string;
   title: string;
   sub: string;
+  exampleLabel: string;
+  example: string;
   visual: (active: boolean) => JSX.Element;
 };
 
@@ -302,38 +305,50 @@ function VisualLoop({ active }: { active: boolean }) {
 const SCREENS: Screen[] = [
   {
     kicker: "The problem",
-    title: "Your AI is ungoverned.",
-    sub: "Every tool invents its own answer. No two teams get the same one.",
+    title: "Your AI runs without a standard.",
+    sub: "Copilot, Claude, every vendor agent — each one invents its own logic from generic training data. Same question, three answers, zero accountability.",
+    exampleLabel: "What this looks like",
+    example: "Sales asks Copilot for the discount policy. It guesses. Legal asks Claude. It guesses differently. Neither matches what leadership actually approved last quarter.",
     visual: (a) => <VisualProblem active={a} />,
   },
   {
     kicker: "The fix",
-    title: "One Decision Standard.",
-    sub: "Owned by leadership. Versioned. Applied across every surface.",
+    title: "One Decision Standard, owned by you.",
+    sub: "Liza turns your mandates, playbooks and policies into machine-readable logic. Versioned. Auditable. The single source AI must obey.",
+    exampleLabel: "What gets encoded",
+    example: "Pricing rules. Approval thresholds. Risk appetite. Tone of voice. Compliance constraints. Anything you'd put in a leadership memo — now enforceable across every AI tool.",
     visual: (a) => <VisualFix active={a} />,
   },
   {
-    kicker: "Your data",
-    title: "Systems of record stay.",
-    sub: "Liza reads context in. Writes governed updates back. Nothing gets ripped out.",
+    kicker: "Your data stays put",
+    title: "Liza connects, never replaces.",
+    sub: "Your records — SharePoint, Veeva, Salesforce, your databases — stay where they are. Liza reads context in and writes governed outputs back.",
+    exampleLabel: "How it plugs in",
+    example: "Read-only by default. Write access scoped to the standard. Zero migration. Zero lock-in. Your IT team approves every connector.",
     visual: (a) => <VisualRecords active={a} />,
   },
   {
-    kicker: "Your AI",
-    title: "Tools you already pay for.",
-    sub: "Copilot, Glean, Claude. They stop inventing. They read your standard.",
+    kicker: "Your AI tools",
+    title: "Copilot and Claude finally agree.",
+    sub: "The AI tools your teams already use stop inventing. They read your standard before answering. One enterprise truth, every surface.",
+    exampleLabel: "Tools that inherit",
+    example: "Microsoft Copilot. Glean. Claude. ChatGPT Enterprise. Vendor RAG. In-house agents. If it accepts context, Liza governs it.",
     visual: (a) => <VisualTools active={a} />,
   },
   {
     kicker: "Where work happens",
     title: "The Liza Workspace.",
-    sub: "Workbooks, agents, oversight. Every output inherits the standard.",
+    sub: "Workbooks, agents, capture and oversight — built for high-stakes execution. Every output inherits the standard automatically.",
+    exampleLabel: "What teams do here",
+    example: "Draft a regulatory submission. Run a deviation investigation. Write a credit memo. Triage RFIs. Each task pulls the right standard, the right data, the right tone.",
     visual: (a) => <VisualWorkspace active={a} />,
   },
   {
-    kicker: "The loop",
-    title: "Strategy meets execution.",
-    sub: "Leadership pushes the standard down. Live signal flows back up.",
+    kicker: "The loop closes",
+    title: "Strategy meets execution. Live.",
+    sub: "Leadership pushes the standard down. Execution signal flows back up. The standard improves with every decision — your operating system, compounding.",
+    exampleLabel: "What changes for leadership",
+    example: "You see where the standard is followed, where it's bent, and where it's missing. You update once. Every team, every tool, every workflow updates with you.",
     visual: (a) => <VisualLoop active={a} />,
   },
 ];
@@ -433,9 +448,12 @@ export function ArchitectureWalkthrough() {
 function ScreenCard({
   screen, index, active, total, isLast,
 }: { screen: Screen; index: number; active: boolean; total: number; isLast: boolean }) {
+  const [expanded, setExpanded] = useState(false);
+  // Collapse when card scrolls out of view
+  useEffect(() => { if (!active) setExpanded(false); }, [active]);
   return (
     <div
-      className="relative rounded-2xl border p-5 min-h-[460px] flex flex-col overflow-hidden"
+      className="relative rounded-2xl border p-5 min-h-[520px] flex flex-col overflow-hidden"
       style={{
         background: "hsl(var(--card))",
         borderColor: "hsl(var(--border))",
@@ -483,13 +501,50 @@ function ScreenCard({
         {screen.visual(active)}
       </div>
 
+      {/* Interactive example reveal */}
+      <div className="relative z-10">
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className="w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border text-left transition-colors"
+          style={{
+            borderColor: expanded ? PRIMARY + "55" : "hsl(var(--border))",
+            background: expanded ? PRIMARY + "0d" : "hsl(var(--background))",
+          }}
+          aria-expanded={expanded}
+        >
+          <span className="text-[10.5px] font-black tracking-[0.18em] uppercase" style={{ color: expanded ? PRIMARY : MUTED }}>
+            {screen.exampleLabel}
+          </span>
+          {expanded
+            ? <Minus className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
+            : <Plus className="w-3.5 h-3.5 text-muted-foreground" />}
+        </button>
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="example"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.28 }}
+              className="overflow-hidden"
+            >
+              <p className="text-[12px] text-foreground/80 leading-relaxed pt-2.5 px-1">
+                {screen.example}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {/* Final CTA */}
       {isLast && (
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={active ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
-          className="relative z-10 flex justify-center"
+          className="relative z-10 flex justify-center mt-3"
         >
           <Link
             to="/diagnostic"
