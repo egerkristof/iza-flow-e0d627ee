@@ -531,14 +531,13 @@ export function ArchitectureWalkthrough() {
   const isFinal = index === SCENES.length - 1 && progress >= 0.98;
 
   return (
-    <div ref={wrapRef} className="md:hidden">
+    <div ref={wrapRef} className="w-full md:max-w-3xl md:mx-auto">
       <div
-        className="relative rounded-2xl border overflow-hidden select-none"
+        className="relative rounded-2xl border overflow-hidden select-none h-[560px] md:h-[640px]"
         style={{
           background: "hsl(var(--card))",
           borderColor: "hsl(var(--border))",
           boxShadow: "0 16px 40px -28px hsl(var(--foreground) / 0.3)",
-          height: 560,
         }}
         onClick={onTap}
       >
@@ -564,9 +563,9 @@ export function ArchitectureWalkthrough() {
         />
 
         {/* Scene */}
-        <div className="absolute inset-0 pt-9 pb-16 px-5 flex flex-col">
-          <div className="mb-2">
-            <span className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: PRIMARY }}>
+        <div className="absolute inset-0 pt-9 pb-16 px-5 md:px-10 md:pt-12 md:pb-20 flex flex-col">
+          <div className="mb-2 md:mb-3">
+            <span className="text-[10px] md:text-[12px] font-black tracking-[0.22em] uppercase" style={{ color: PRIMARY }}>
               {scene.kicker}
             </span>
           </div>
@@ -577,7 +576,7 @@ export function ArchitectureWalkthrough() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
-              className="text-[20px] font-black leading-[1.15] tracking-tight text-foreground mb-4"
+              className="text-[20px] md:text-[34px] font-black leading-[1.15] tracking-tight text-foreground mb-4 md:mb-6 md:max-w-2xl"
             >
               {scene.headline}
             </motion.h3>
