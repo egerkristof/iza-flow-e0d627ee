@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, X, Play, Target } from "lucide-react";
+import { ArrowRight, ArrowLeft, X, Play } from "lucide-react";
 
 /* 6-step guided tour for the LizaOSStack.
    Mirrors the homepage Stories arc (Hero → Problem → Stakes → Guide → Plan → Success)
