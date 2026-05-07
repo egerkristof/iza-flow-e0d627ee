@@ -128,7 +128,7 @@ export function HeroSection() {
             to="/os"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            Explore the full platform <ArrowRight className="w-4 h-4" />
+            See the platform <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
 
