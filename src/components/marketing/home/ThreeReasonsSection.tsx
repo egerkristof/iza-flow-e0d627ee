@@ -6,47 +6,47 @@ import { motion } from "framer-motion";
 const REASONS = [
   {
     number: "01",
-    claim: "Your knowledge never reaches the AI.",
+    claim: "Your standards never reach the AI.",
     explanation: (
       <>
-        The best current solutions let AI reference your existing documentation. That is not the same as having your <span className="font-black" style={{ color: "hsl(var(--primary))" }}>decision logic, quality standards, and playbooks enforced</span> inside every AI session. The gap between <span className="text-muted-foreground/80 line-through decoration-1">referenced</span> and <span className="font-black" style={{ color: "hsl(var(--primary))" }}>enforced</span> is where quality breaks down.
+        Today&apos;s tools let AI <span className="text-muted-foreground/80 line-through decoration-1">read</span> your documents. That is not the same as your <span className="font-black" style={{ color: "hsl(var(--primary))" }}>pricing rules, approval thresholds, and playbooks</span> being <span className="font-black" style={{ color: "hsl(var(--primary))" }}>enforced</span> inside every Copilot, Claude, and custom agent session. Retrieval is not governance. The gap is where consistency breaks.
       </>
     ),
     align: "left" as const,
     comparisons: [
-      { label: "RAG / retrieval tools", status: "partial" as const, why: "Retrieves text, doesn't enforce standards" },
-      { label: "Prompt libraries", status: "no" as const, why: "Copy-paste, no enforcement or versioning" },
-      { label: "LIZA OS", status: "yes" as const, why: "Living knowledge enforced in every session" },
+      { label: "Glean, Notion AI", status: "partial" as const, why: "Retrieves text. Doesn't enforce rules." },
+      { label: "Microsoft Copilot, Custom GPTs", status: "no" as const, why: "Per-tool prompts. No shared standard." },
+      { label: "LIZA OS", status: "yes" as const, why: "One standard enforced across every AI tool." },
     ],
   },
   {
     number: "02",
-    claim: "You can't build collective knowledge.",
+    claim: "You can't decide as one company.",
     explanation: (
       <>
-        Some tools offer shared memory or team context, but <span className="font-black text-foreground">none are designed for collective knowledge by architecture</span>. You can't reach insights that are both <span className="font-semibold" style={{ color: "hsl(var(--primary))" }}>shared across teams</span> and <span className="font-semibold" style={{ color: "hsl(var(--primary))" }}>governable by leadership</span>.
+        ChatGPT and Claude give every employee private memory. Slack and Teams capture conversation, not decisions. <span className="font-black text-foreground">No tool is designed for collective decision-making by architecture.</span> You cannot have judgment that is both <span className="font-semibold" style={{ color: "hsl(var(--primary))" }}>shared across every team</span> and <span className="font-semibold" style={{ color: "hsl(var(--primary))" }}>owned by leadership</span>.
       </>
     ),
     align: "right" as const,
     comparisons: [
-      { label: "ChatGPT / Claude memory", status: "partial" as const, why: "Per-user memory, not collective by design" },
-      { label: "Slack / Teams", status: "no" as const, why: "Conversations about AI, not inside AI" },
-      { label: "LIZA OS", status: "yes" as const, why: "Collective knowledge, governed and shared" },
+      { label: "ChatGPT Projects, Claude Projects", status: "partial" as const, why: "Per-user memory. Not collective by design." },
+      { label: "Slack AI, Teams Copilot", status: "no" as const, why: "Conversations about AI. Not rules inside AI." },
+      { label: "LIZA OS", status: "yes" as const, why: "Collective judgment, governed by leadership." },
     ],
   },
   {
     number: "03",
-    claim: "No knowledge architecture compounds.",
+    claim: "Nothing compounds. Every prompt starts from zero.",
     explanation: (
       <>
-        Some tools retain context between sessions, but <span className="text-foreground font-semibold">no intentional knowledge architecture</span> is being built. LIZA treats <span className="font-black" style={{ color: "hsl(var(--primary))" }}>knowledge as code</span>: a compounding asset that improves your human-AI effectiveness today while building <span className="text-foreground font-semibold">organizational capability for the future</span>.
+        Memory features remember what <span className="font-semibold text-foreground">one person</span> told <span className="font-semibold text-foreground">one tool</span>. Confluence and Notion fill with stale pages nobody updates. <span className="text-foreground font-semibold">No intentional architecture is being built.</span> LIZA treats <span className="font-black" style={{ color: "hsl(var(--primary))" }}>standards as code</span>. Versioned, diffed, owned. A compounding asset that gets sharper every week.
       </>
     ),
     align: "left" as const,
     comparisons: [
-      { label: "AI memory / history", status: "partial" as const, why: "Retains context, doesn't build architecture" },
-      { label: "Retrospective tools", status: "partial" as const, why: "Depends on who writes post-mortems" },
-      { label: "LIZA OS", status: "yes" as const, why: "Knowledge as a compounding strategic asset" },
+      { label: "Mem, ChatGPT memory", status: "partial" as const, why: "Personal recall. No architecture." },
+      { label: "Confluence, Notion, SharePoint", status: "partial" as const, why: "Static pages. Decay over time." },
+      { label: "LIZA OS", status: "yes" as const, why: "Versioned standards. Compounding asset." },
     ],
   },
 ];
@@ -132,13 +132,13 @@ export function ThreeReasonsSection() {
         <h2 className="text-3xl md:text-5xl font-black text-foreground mb-3 leading-[1.1]">
           Three structural gaps
           <br />
-          <span className="text-muted-foreground">between your expertise and AI.</span>
+          <span className="text-muted-foreground">between your judgment and your AI.</span>
         </h2>
         <p className="text-base text-muted-foreground max-w-xl mx-auto mt-4 leading-relaxed">
-          Other tools give AI your <span className="line-through decoration-1">documents</span>.{" "}
-          <span className="font-black text-foreground">We give AI your judgment.</span>{" "}
+          Every AI tool you bought reads your <span className="line-through decoration-1">documents</span>.{" "}
+          <span className="font-black text-foreground">None of them enforce your decisions.</span>{" "}
           That gap costs organizations an average of{" "}
-          <span className="font-black" style={{ color: "hsl(var(--primary))" }}>€550K/year</span> in rework, inconsistency, and lost expertise.
+          <span className="font-black" style={{ color: "hsl(var(--primary))" }}>€550K a year</span> in rework, inconsistent answers, and lost expertise.
         </p>
 
         <div className="mt-20 space-y-20 md:space-y-28">
