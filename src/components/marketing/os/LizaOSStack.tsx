@@ -1108,6 +1108,8 @@ export function LizaOSStack() {
         <div className="md:hidden">
           <MobileStack
             industry={industry}
+            industryKey={industryKey}
+            onIndustryChange={setIndustryKey}
             sourceLayer={sourceLayer}
             toolsLayer={toolsLayer}
             nativeLayer={nativeLayer}
