@@ -701,6 +701,22 @@ function VerticalSyncConnector({ downLabel, upLabel }: { downLabel: string; upLa
   );
 }
 
+/* ---------- Tablet: two arrows funneling Records + Tools down into Workspace ---------- */
+function FeedDownArrows({ leftLabel, rightLabel }: { leftLabel: string; rightLabel: string }) {
+  return (
+    <div className="grid grid-cols-2 gap-3 py-3">
+      {[leftLabel, rightLabel].map((lbl) => (
+        <div key={lbl} className="flex flex-col items-center gap-1">
+          <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--primary) / 0.75)" }} />
+          <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+            {lbl}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ---------- Strategic Control Tower (top block) ---------- */
 function PropagationChain({ chain }: { chain: { trigger: string; nodes: string[]; outcome: string } }) {
   const accent = "hsl(var(--primary))";
