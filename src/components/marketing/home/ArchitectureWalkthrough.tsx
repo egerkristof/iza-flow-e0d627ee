@@ -134,50 +134,75 @@ function SceneHero(p: number) {
   );
 }
 
-/* 2. PROBLEM — knowledge silos + shifting external reality + tool drift */
-function SceneProblem(p: number) {
+/* 2a. SHIFTING REALITY — the world keeps changing under you */
+function SceneShiftingReality(p: number) {
   const externals = [
-    { icon: <Newspaper className="w-3 h-3" />, l: "New EU AI Act clause" },
-    { icon: <Globe className="w-3 h-3" />,     l: "Competitor cuts price 18%" },
-    { icon: <AlertCircle className="w-3 h-3" />, l: "CFO tightens approval rules" },
+    { icon: <Newspaper className="w-3.5 h-3.5" />, l: "New EU AI Act clause", sub: "Compliance must update prompts" },
+    { icon: <Globe className="w-3.5 h-3.5" />,     l: "Competitor cuts price 18%", sub: "Sales needs new discount logic" },
+    { icon: <AlertCircle className="w-3.5 h-3.5" />, l: "CFO tightens approval rules", sub: "Deal desk thresholds change" },
   ];
+  return (
+    <div className="w-full max-w-[320px] mx-auto">
+      <div className="text-center mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
+          This week alone
+        </span>
+      </div>
+      <div className="space-y-1.5">
+        {externals.map((e, i) => {
+          const a = between(p, 0.05 + i * 0.18, 0.3 + i * 0.18);
+          return (
+            <div
+              key={e.l}
+              className="flex items-start gap-2 px-2.5 py-2 rounded-lg border"
+              style={{
+                opacity: a,
+                transform: `translateX(${(1 - a) * -10}px)`,
+                borderColor: RED + "44",
+                background: RED + "06",
+              }}
+            >
+              <span className="mt-0.5 flex-shrink-0" style={{ color: RED }}>{e.icon}</span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-black text-foreground/90 leading-tight">{e.l}</p>
+                <p className="text-[9px] text-muted-foreground mt-0.5 leading-snug">{e.sub}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div
+        className="mt-3 text-center text-[10px] font-bold text-foreground/80 leading-snug"
+        style={{ opacity: between(p, 0.7, 0.95) }}
+      >
+        Three external shifts. Zero of your AI tools knew about any of them.
+      </div>
+    </div>
+  );
+}
+
+/* 2b. TOOL DRIFT — same question, different answer */
+function SceneToolDrift(p: number) {
   const tools = [
     { who: "Maya · AE",        tool: "Copilot",   answer: "Up to 15% is fine",     ctx: "saw last quarter's deck" },
     { who: "Tom · Deal desk",  tool: "Claude",    answer: "25% on multi-year",     ctx: "read an old playbook" },
     { who: "Priya · CS",       tool: "Glean",     answer: "No policy found",       ctx: "policy lives in Legal's drive" },
   ];
-  const extIn = between(p, 0.0, 0.18);
-  const qIn = between(p, 0.2, 0.32);
+  const qIn = between(p, 0, 0.18);
   return (
     <div className="w-full max-w-[320px] mx-auto">
-      {/* External pressure layer */}
-      <div className="mb-2" style={{ opacity: extIn }}>
-        <p className="text-[8.5px] font-black uppercase tracking-[0.14em] text-muted-foreground text-center mb-1">
-          This week, the world changed three times
-        </p>
-        <div className="grid grid-cols-3 gap-1">
-          {externals.map((e) => (
-            <div key={e.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
-              style={{ borderColor: RED + "33", background: RED + "06" }}>
-              <span style={{ color: RED }}>{e.icon}</span>
-              <span className="text-[8px] font-bold text-foreground/80 leading-tight">{e.l}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="text-center mb-2" style={{ opacity: qIn }}>
+      <div className="text-center mb-2.5" style={{ opacity: qIn }}>
         <span className="text-[9.5px] font-black uppercase tracking-[0.16em]" style={{ color: RED }}>
           Slack · #deal-desk · 14:02
         </span>
-        <p className="text-[11px] font-bold text-foreground/85 mt-1 leading-snug">
+        <p className="text-[12px] font-bold text-foreground/85 mt-1 leading-snug">
           "What's our max discount on a 3-year renewal?"
         </p>
       </div>
       <div className="space-y-1.5">
         {tools.map((t, i) => {
-          const enter = between(p, 0.32 + i * 0.12, 0.5 + i * 0.12);
-          const shake = p > 0.82 ? Math.sin((p - 0.82) * 60) * 2 : 0;
+          const enter = between(p, 0.2 + i * 0.18, 0.42 + i * 0.18);
+          const shake = p > 0.85 ? Math.sin((p - 0.85) * 60) * 2 : 0;
           return (
             <motion.div
               key={t.who}
@@ -193,7 +218,7 @@ function SceneProblem(p: number) {
                 <span className="text-[10px] font-black text-foreground/85 truncate">{t.who}</span>
                 <span className="text-[8.5px] font-bold uppercase tracking-[0.12em] text-muted-foreground">asks {t.tool}</span>
               </div>
-              <p className="text-[11px] font-bold" style={{ color: RED }}>"{t.answer}"</p>
+              <p className="text-[11.5px] font-bold" style={{ color: RED }}>"{t.answer}"</p>
               <p className="text-[8.5px] text-muted-foreground italic mt-0.5">{t.ctx}</p>
             </motion.div>
           );
@@ -201,9 +226,9 @@ function SceneProblem(p: number) {
       </div>
       <div
         className="mt-2.5 text-center text-[10px] font-black uppercase tracking-[0.14em] leading-snug"
-        style={{ opacity: between(p, 0.82, 0.95), color: RED }}
+        style={{ opacity: between(p, 0.85, 0.97), color: RED }}
       >
-        Siloed teams. Shifting reality. Tools left to guess.
+        Same question. Three answers. None of them yours.
       </div>
     </div>
   );
@@ -256,48 +281,80 @@ function SceneStakes(p: number) {
   );
 }
 
-/* 4. GUIDE — "Meet Liza" — the standard, plus people working with it */
-function SceneGuide(p: number) {
+/* 4a. GUIDE — "Meet Liza" — the standard itself */
+function SceneStandard(p: number) {
   const lines = [
     { k: "Discount cap",     v: "15% · 20% multi-yr" },
     { k: "Approval > €50k",  v: "CFO + Legal" },
     { k: "PII in prompts",   v: "Blocked" },
   ];
-  const docIn = between(p, 0.0, 0.3);
-  const usersIn = between(p, 0.3, 0.55);
-  const liveIn = between(p, 0.55, 0.85);
+  const docIn = between(p, 0.0, 0.35);
+  const linesIn = (i: number) => between(p, 0.35 + i * 0.12, 0.55 + i * 0.12);
   return (
-    <div className="w-full max-w-[320px] mx-auto space-y-2">
+    <div className="w-full max-w-[320px] mx-auto">
       {/* The standard itself */}
       <div style={{ opacity: docIn }}>
         <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
-          <div className="flex items-start gap-2 mb-1.5">
+          <div className="flex items-start gap-2 mb-2">
             <span
-              className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+              className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
               style={{ background: PRIMARY + "1a", color: PRIMARY, border: `1px solid ${PRIMARY}33` }}
             >
-              <Compass className="w-3.5 h-3.5" />
+              <Compass className="w-4 h-4" />
             </span>
             <div className="flex-1">
-              <p className="text-[11.5px] font-black text-foreground leading-tight">How your company decides.</p>
+              <p className="text-[12.5px] font-black text-foreground leading-tight">How your company decides.</p>
               <p className="text-[9px] text-muted-foreground mt-0.5">v2.4 · Sarah (CRO) · 2d ago</p>
             </div>
           </div>
-          <div className="space-y-1">
-            {lines.map((l) => (
-              <div key={l.k} className="flex items-center justify-between gap-2 px-1.5 py-0.5 rounded">
-                <span className="text-[10px] text-foreground/85 font-semibold truncate">{l.k}</span>
-                <span className="text-[9.5px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
+          <div className="space-y-1.5">
+            {lines.map((l, i) => (
+              <div
+                key={l.k}
+                className="flex items-center justify-between gap-2 px-2 py-1.5 rounded border"
+                style={{
+                  opacity: linesIn(i),
+                  transform: `translateX(${(1 - linesIn(i)) * -8}px)`,
+                  borderColor: PRIMARY + "22",
+                  background: PRIMARY + "06",
+                }}
+              >
+                <span className="text-[10.5px] text-foreground/85 font-semibold truncate">{l.k}</span>
+                <span className="text-[10px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
               </div>
             ))}
           </div>
         </MiniWindow>
       </div>
+      <p
+        className="text-center text-[10px] text-muted-foreground leading-snug px-2 mt-3"
+        style={{ opacity: between(p, 0.75, 0.95) }}
+      >
+        One living document. Versioned. Owned by leaders.
+      </p>
+    </div>
+  );
+}
 
+/* 4b. THE LOOP — leaders edit, teams cite, signal flows back */
+function SceneLoop(p: number) {
+  const editIn = between(p, 0.0, 0.25);
+  const useIn = between(p, 0.25, 0.5);
+  const liveIn = between(p, 0.5, 0.78);
+  return (
+    <div className="w-full max-w-[320px] mx-auto space-y-2">
       {/* People at work, side by side */}
-      <div className="grid grid-cols-2 gap-2" style={{ opacity: usersIn }}>
+      <div className="grid grid-cols-2 gap-2">
         {/* Sarah authors a rule */}
-        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: editIn,
+            transform: `translateY(${(1 - editIn) * 8}px)`,
+            borderColor: PRIMARY + "44",
+            background: PRIMARY + "06",
+          }}
+        >
           <div className="flex items-center gap-1 mb-1">
             <Compass className="w-3 h-3" style={{ color: PRIMARY }} />
             <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Sarah · CRO</span>
@@ -310,7 +367,15 @@ function SceneGuide(p: number) {
           <p className="text-[8px] text-muted-foreground mt-1 italic">Diff sent to 2 reviewers.</p>
         </div>
         {/* Maya uses Liza in the workspace */}
-        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: useIn,
+            transform: `translateY(${(1 - useIn) * 8}px)`,
+            borderColor: PRIMARY + "44",
+            background: PRIMARY + "06",
+          }}
+        >
           <div className="flex items-center gap-1 mb-1">
             <Briefcase className="w-3 h-3" style={{ color: PRIMARY }} />
             <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Maya · AE</span>
@@ -338,7 +403,7 @@ function SceneGuide(p: number) {
 
       <p
         className="text-center text-[9.5px] text-muted-foreground leading-snug px-2"
-        style={{ opacity: between(p, 0.7, 0.95) }}
+        style={{ opacity: between(p, 0.78, 0.95) }}
       >
         Leaders write the rules. Teams work with them. Liza keeps both in sync.
       </p>
@@ -531,27 +596,35 @@ function SceneSuccess(p: number) {
 /* ---------- scenes config ---------- */
 const SCENES: Scene[] = [
   {
-    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 8000, render: SceneHero,
+    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 7500, render: SceneHero,
     caption: "Six teams. A dozen assistants. None of them know what your company stands for.",
   },
   {
-    kicker: "02 · Problem", headline: "Every tool answers differently.", duration: 9000, render: SceneProblem,
+    kicker: "02 · Pressure", headline: "The world keeps changing under you.", duration: 7000, render: SceneShiftingReality,
+    caption: "Regulation, market and policy shift weekly. None of your AI tools find out.",
+  },
+  {
+    kicker: "03 · Drift", headline: "Every tool answers differently.", duration: 7500, render: SceneToolDrift,
     caption: "One question. Three tools. Three answers. The AI is fine. The standard is missing.",
   },
   {
-    kicker: "03 · Stakes", headline: "And it is costing you.", duration: 8000, render: SceneStakes,
+    kicker: "04 · Stakes", headline: "And it is costing you.", duration: 7500, render: SceneStakes,
     caption: "Discounts drift. Audit flags real risk. Nobody made a bad call. Nobody made the rules either.",
   },
   {
-    kicker: "04 · Meet Liza", headline: "Liza writes how your company decides.", duration: 9000, render: SceneGuide,
-    caption: "One living standard. Leaders author rules. Teams cite them. Signal flows back the same week.",
+    kicker: "05 · Meet Liza", headline: "One standard your company decides by.", duration: 7500, render: SceneStandard,
+    caption: "A living document. Versioned. Owned by leaders. Read by every AI tool.",
   },
   {
-    kicker: "05 · The plan", headline: "Liza learns, then governs.", duration: 9000, render: ScenePlan,
+    kicker: "06 · The loop", headline: "Leaders write. Teams cite. Signal flows back.", duration: 8000, render: SceneLoop,
+    caption: "Sarah edits a rule. Maya cites it on a deal. Liza flags the next edge case for Sarah.",
+  },
+  {
+    kicker: "07 · The plan", headline: "Liza learns, then governs.", duration: 8500, render: ScenePlan,
     caption: "Connect, co-author, wire to every AI tool. Two weeks to one source of truth.",
   },
   {
-    kicker: "06 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
+    kicker: "08 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
     caption: "Same answer in every tool. Regulation rolls out in a day. The standard sharpens itself every week.",
   },
 ];
