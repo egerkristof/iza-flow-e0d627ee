@@ -860,6 +860,9 @@ function ControlTowerBlock({
               <ArrowDown className="w-3.5 h-3.5" style={{ color: t.accent }} />
               <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Push down — strategy as system constraints</p>
             </div>
+            <p className="text-[10px] uppercase tracking-[0.16em] font-bold mb-2 inline-flex items-center gap-1" style={{ color: t.accent }}>
+              <ChevronDown className="w-3 h-3" /> tap any row to expand
+            </p>
             <div className="flex flex-col gap-1.5">
               {downItems.map((it) => {
                 const isOpen = openItem === it.label;
@@ -906,6 +909,9 @@ function ControlTowerBlock({
               <ArrowUp className="w-3.5 h-3.5" style={{ color: t.accent }} />
               <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Flow up — live signal from execution</p>
             </div>
+            <p className="text-[10px] uppercase tracking-[0.16em] font-bold mb-2 inline-flex items-center gap-1" style={{ color: t.accent }}>
+              <ChevronDown className="w-3 h-3" /> tap any row to expand
+            </p>
             <div className="flex flex-col gap-1.5">
               {upItems.map((it) => {
                 const isOpen = openItem === it.label;
