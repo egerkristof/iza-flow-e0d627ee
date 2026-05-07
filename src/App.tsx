@@ -50,6 +50,7 @@ import TermsPage from "./pages/marketing/Terms";
 import CalculatorPage from "./pages/marketing/Calculator";
 import AuditLandingPage from "./pages/marketing/AuditLanding";
 import OSPage from "./pages/marketing/OS";
+import ByFunctionPage from "./pages/marketing/ByFunction";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +90,7 @@ const App = () => (
             <Route path="/home-archive" element={<Navigate to="/" replace />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/industries" element={<IndustriesPage />} />
+            <Route path="/by-function" element={<ByFunctionPage />} />
             <Route path="/industries/regulated" element={<IndustryPharmaPage />} />
             <Route path="/industries/pharma" element={<Navigate to="/industries/regulated" replace />} />
             <Route path="/industries/space" element={<IndustrySpacePage />} />
