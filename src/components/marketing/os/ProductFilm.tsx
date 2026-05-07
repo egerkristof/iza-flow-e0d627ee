@@ -325,8 +325,7 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
         </div>
       );
     case "trapped":
-      return (
-        return <TrappedIceberg tone={tone} amber={amber} />;
+      return <TrappedIceberg tone={tone} amber={amber} />;
     case "forge":
       return <ForgeKnowledgeGraph tone={tone} green={green} amber={amber} />;
     case "broadcast":
