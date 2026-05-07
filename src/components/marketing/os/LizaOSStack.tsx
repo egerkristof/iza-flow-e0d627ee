@@ -6,10 +6,10 @@ import {
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
   Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
-  ChevronRight, ArrowRight,
+  ChevronRight, ArrowRight, TrendingUp, X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon } from "./industryLexicon";
+import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
@@ -347,7 +347,15 @@ function SyncArrow({ label }: { label: string }) {
 }
 
 /* ---------- Judgment Core block — two motions ---------- */
-function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string; artifactsSub?: string } = {}) {
+function JudgmentCoreBlock({
+  systemicSub, artifactsSub, systemicItems, artifactItems, chain,
+}: {
+  systemicSub?: string;
+  artifactsSub?: string;
+  systemicItems?: Item[];
+  artifactItems?: Item[];
+  chain?: { trigger: string; nodes: string[]; outcome: string };
+} = {}) {
   const t = TONE.core;
   const [openItem, setOpenItem] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -378,7 +386,7 @@ function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string
             label="Motion 1"
             title="How we decide"
             sub={systemicSub ?? "The logic of how your company decides."}
-            items={SYSTEMIC_GRAPH}
+            items={systemicItems ?? SYSTEMIC_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
           />
@@ -387,15 +395,18 @@ function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string
             label="Motion 2"
             title="What we produce"
             sub={artifactsSub ?? "Every artifact, native or not, kept in sync."}
-            items={ARTIFACT_GRAPH}
+            items={artifactItems ?? ARTIFACT_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
           />
         </div>
 
+        {/* Propagation chain — when one node changes, the whole chain updates */}
+        {chain && <PropagationChain chain={chain} />}
+
         {/* Shared governance bar */}
         <div
-          className="rounded-xl border p-4"
+          className="rounded-xl border p-4 mt-4"
           style={{ background: "hsl(var(--background) / 0.6)", borderColor: t.ring }}
         >
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-3 text-center" style={{ color: t.kicker }}>
@@ -571,12 +582,108 @@ function VerticalSyncConnector({ downLabel, upLabel }: { downLabel: string; upLa
 }
 
 /* ---------- Strategic Control Tower (top block) ---------- */
-function ControlTowerBlock({ layer }: { layer: Layer }) {
+function PropagationChain({ chain }: { chain: { trigger: string; nodes: string[]; outcome: string } }) {
+  const accent = "hsl(var(--primary))";
+  return (
+    <div
+      className="rounded-xl border p-4"
+      style={{ background: "hsl(var(--background) / 0.6)", borderColor: "hsl(var(--primary) / 0.35)" }}
+    >
+      <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-3 text-center" style={{ color: accent }}>
+        Native artifact chain — change one, update all
+      </p>
+      <div className="flex flex-wrap items-center justify-center gap-1.5 text-[11px]">
+        <span
+          className="px-2.5 py-1 rounded-md font-bold border"
+          style={{ background: "hsl(var(--primary) / 0.12)", borderColor: "hsl(var(--primary) / 0.4)", color: accent }}
+        >
+          {chain.trigger}
+        </span>
+        <ArrowRight className="w-3.5 h-3.5 text-muted-foreground" />
+        {chain.nodes.map((n, i) => (
+          <span key={n} className="inline-flex items-center gap-1.5">
+            <span
+              className="px-2.5 py-1 rounded-md font-semibold border text-foreground/85"
+              style={{ background: "hsl(var(--brand-green) / 0.08)", borderColor: "hsl(var(--brand-green) / 0.35)" }}
+            >
+              {n}
+            </span>
+            {i < chain.nodes.length - 1 && <ChevronRight className="w-3 h-3 text-muted-foreground" />}
+          </span>
+        ))}
+      </div>
+      <p className="text-[11.5px] text-center mt-3 text-foreground/75 leading-snug">
+        {chain.outcome}
+      </p>
+    </div>
+  );
+}
+
+function KpiStrip({ kpis }: { kpis: Kpi[] }) {
+  return (
+    <div
+      className="rounded-xl border p-3 mb-4"
+      style={{ background: "hsl(var(--background) / 0.6)", borderColor: "hsl(var(--brand-amber, var(--primary)) / 0.32)" }}
+    >
+      <div className="flex items-center gap-1.5 mb-2.5 justify-center">
+        <TrendingUp className="w-3.5 h-3.5" style={{ color: "hsl(var(--brand-amber, var(--primary)))" }} />
+        <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: "hsl(var(--brand-amber, var(--primary)))" }}>
+          Live KPIs leadership sees
+        </p>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        {kpis.map((k) => (
+          <div
+            key={k.label}
+            className="rounded-lg border p-2.5 text-center"
+            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+          >
+            <p
+              className="text-lg font-black leading-none mb-1"
+              style={{ color: k.positive ? "hsl(var(--brand-green))" : "hsl(var(--brand-amber, var(--primary)))" }}
+            >
+              {k.value}
+            </p>
+            <p className="text-[10px] font-bold text-foreground/85 leading-tight mb-0.5">{k.label}</p>
+            <p className="text-[9px] tracking-wide uppercase text-muted-foreground">{k.delta}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ControlTowerBlock({
+  layer, leadership,
+}: {
+  layer: Layer;
+  leadership?: {
+    sub: string;
+    pushItems: { label: string; detail: string }[];
+    upItems: { label: string; detail: string }[];
+    kpis: Kpi[];
+  };
+}) {
   const t = TONE[layer.tone];
   const [openItem, setOpenItem] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
-  const downItems = layer.items.filter((i) => i.tag === "Down");
-  const upItems = layer.items.filter((i) => i.tag === "Up");
+  const baseDown = layer.items.filter((i) => i.tag === "Down");
+  const baseUp = layer.items.filter((i) => i.tag === "Up");
+  const downItems: Item[] = leadership
+    ? leadership.pushItems.map((it, i) => ({
+        ...baseDown[i % baseDown.length],
+        label: it.label,
+        detail: it.detail,
+      }))
+    : baseDown;
+  const upItems: Item[] = leadership
+    ? leadership.upItems.map((it, i) => ({
+        ...baseUp[i % baseUp.length],
+        label: it.label,
+        detail: it.detail,
+      }))
+    : baseUp;
+  const sub = leadership?.sub ?? layer.sub;
   return (
     <motion.div
       initial={{ opacity: 0, y: -12 }}
@@ -591,8 +698,9 @@ function ControlTowerBlock({ layer }: { layer: Layer }) {
         <div className="text-center mb-5">
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>{layer.kicker}</p>
           <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{layer.sub}</p>
+          <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{sub}</p>
         </div>
+        {leadership && <KpiStrip kpis={leadership.kpis} />}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
             <div className="flex items-center gap-1.5 mb-2.5">
@@ -675,6 +783,23 @@ export function LizaOSStack() {
     sub: industry.nativeSurfaces.sub,
   }), [industry]);
 
+  const systemicItems = useMemo<Item[]>(
+    () => industry.judgmentCore.systemicItems.map((it, i) => ({
+      ...SYSTEMIC_GRAPH[i % SYSTEMIC_GRAPH.length],
+      label: it.label,
+      detail: it.detail,
+    })),
+    [industry],
+  );
+  const artifactItems = useMemo<Item[]>(
+    () => industry.judgmentCore.artifactItems.map((it, i) => ({
+      ...ARTIFACT_GRAPH[i % ARTIFACT_GRAPH.length],
+      label: it.label,
+      detail: it.detail,
+    })),
+    [industry],
+  );
+
   return (
     <div className="relative">
       {/* Industry tab strip — Rolodex */}
@@ -690,7 +815,7 @@ export function LizaOSStack() {
         transition={{ duration: 0.35, ease: "easeOut" }}
       >
         {/* TOP: Leadership view */}
-        <ControlTowerBlock layer={CONTROL_TOWER} />
+        <ControlTowerBlock layer={CONTROL_TOWER} leadership={industry.leadership} />
 
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
@@ -712,6 +837,9 @@ export function LizaOSStack() {
         <JudgmentCoreBlock
           systemicSub={industry.judgmentCore.systemic}
           artifactsSub={industry.judgmentCore.artifacts}
+          systemicItems={systemicItems}
+          artifactItems={artifactItems}
+          chain={industry.judgmentCore.chain}
         />
 
         <Connector label="runs on top of any model" />
@@ -782,22 +910,24 @@ function IndustryRolodex({
 /* ---------- Flip card scenario for an industry ---------- */
 function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
   const [flipped, setFlipped] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
-    <motion.button
-      type="button"
-      onClick={() => setFlipped((v) => !v)}
+    <>
+    <motion.div
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.35, delay: 0.15 }}
-      className="hidden lg:block absolute -bottom-5 -right-5 w-[260px] h-[140px] z-10 text-left"
+      className="hidden lg:block absolute -bottom-5 -right-5 w-[280px] h-[160px] z-10"
       style={{ perspective: 1000 }}
-      aria-label="Flip scenario card"
     >
-      <motion.div
+      <motion.button
+        type="button"
+        onClick={() => setFlipped((v) => !v)}
         animate={{ rotateY: flipped ? 180 : 0 }}
         transition={{ duration: 0.55, ease: "easeInOut" }}
-        className="relative w-full h-full"
+        className="relative w-full h-full text-left"
         style={{ transformStyle: "preserve-3d" }}
+        aria-label="Flip scenario card"
       >
         {/* Front */}
         <div
@@ -825,26 +955,76 @@ function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
         <div
           className="absolute inset-0 rounded-xl border-2 p-4 flex flex-col justify-between"
           style={{
-            background: "hsl(var(--brand-green) / 0.08)",
+            background: "hsl(var(--background))",
             borderColor: "hsl(var(--brand-green) / 0.55)",
             boxShadow: "0 20px 40px -20px hsl(var(--brand-green) / 0.5)",
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
           }}
         >
-          <div>
+          <div className="flex-1 min-h-0">
             <p className="text-[9px] font-black tracking-[0.22em] uppercase mb-1.5" style={{ color: "hsl(var(--brand-green))" }}>
               outcome
             </p>
-            <p className="text-[12px] font-black leading-tight text-foreground mb-1.5">
+            <p className="text-[12.5px] font-black leading-tight text-foreground mb-1.5">
               {industry.scenario.backOutcome}
             </p>
-            <p className="text-[10.5px] leading-snug text-foreground/75">
+            <p className="text-[10.5px] leading-snug text-foreground/80 line-clamp-3">
               {industry.scenario.backDetail}
             </p>
           </div>
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={(e) => { e.stopPropagation(); setOpen(true); }}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setOpen(true); } }}
+            className="text-[10px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-1 self-start mt-1.5 hover:opacity-80 cursor-pointer"
+            style={{ color: "hsl(var(--brand-green))" }}
+          >
+            read full scenario <ArrowRight className="w-3 h-3" />
+          </span>
         </div>
-      </motion.div>
-    </motion.button>
+      </motion.button>
+    </motion.div>
+
+    {open && (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        style={{ background: "hsl(0 0% 0% / 0.6)" }}
+        onClick={() => setOpen(false)}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="relative max-w-xl w-full rounded-2xl border-2 p-6 md:p-7"
+          style={{
+            background: "hsl(var(--background))",
+            borderColor: "hsl(var(--brand-green) / 0.55)",
+            boxShadow: "0 30px 80px -20px hsl(var(--brand-green) / 0.45)",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close"
+            className="absolute top-3 right-3 p-1.5 rounded-md hover:bg-muted"
+          >
+            <X className="w-4 h-4 text-muted-foreground" />
+          </button>
+          <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: "hsl(var(--brand-green))" }}>
+            {industry.label} · full scenario
+          </p>
+          <h4 className="text-lg font-black text-foreground leading-tight mb-1.5">
+            {industry.scenario.front}
+          </h4>
+          <p className="text-sm font-black mb-4" style={{ color: "hsl(var(--brand-green))" }}>
+            {industry.scenario.backOutcome}
+          </p>
+          <p className="text-[13.5px] leading-relaxed text-foreground/85">
+            {industry.scenario.backLong}
+          </p>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
