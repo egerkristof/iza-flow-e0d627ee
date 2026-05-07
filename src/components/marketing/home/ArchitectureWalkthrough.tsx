@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
   AlertTriangle, Compass, Database, Sparkles, Workflow,
   ArrowDown, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, Cloud, Mail, FileSpreadsheet, Bot, Search,
+  Plus, Minus,
 } from "lucide-react";
 
 /* Mobile-only "Stories" walkthrough of the Liza architecture.
@@ -13,6 +14,8 @@ type Screen = {
   kicker: string;
   title: string;
   sub: string;
+  exampleLabel: string;
+  example: string;
   visual: (active: boolean) => JSX.Element;
 };
 
