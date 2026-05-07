@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Database, Workflow, Sparkles, Compass } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 import { ArchitectureWalkthrough } from "./ArchitectureWalkthrough";
+import { ExpandableViewer } from "@/components/marketing/shared/ExpandableViewer";
 
 type IndustryView = {
   label: string;
@@ -80,7 +81,9 @@ export function ArchitectureTeaser() {
         </div>
 
         {/* Same Stories-style narrative on every device. */}
-        <ArchitectureWalkthrough />
+        <ExpandableViewer label="Watch in fullscreen">
+          <ArchitectureWalkthrough />
+        </ExpandableViewer>
 
         <div className="mt-8 flex justify-center">
           <Link
