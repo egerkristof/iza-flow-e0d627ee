@@ -215,13 +215,26 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55 }}
-      className="relative rounded-2xl border p-5 h-full flex flex-col"
+      className="relative rounded-2xl border overflow-hidden h-full flex flex-col"
       style={{ background: t.bg, borderColor: t.ring }}
     >
       <div
         className={`absolute top-0 bottom-0 w-[2px] ${align === "left" ? "right-0" : "left-0"}`}
         style={{ background: t.accent, opacity: 0.55 }}
       />
+      {/* Window chrome — frames this as an external system surface (not Liza) */}
+      <div
+        className="flex items-center gap-1.5 px-3 py-2 border-b"
+        style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+      >
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+        <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+          External · {layer.kicker}
+        </span>
+      </div>
+      <div className="p-5 flex-1 flex flex-col">
       <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
         {layer.kicker}
       </p>
@@ -300,6 +313,7 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
           </motion.p>
         )}
       </AnimatePresence>
+      </div>
     </motion.div>
   );
 }
