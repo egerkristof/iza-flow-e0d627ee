@@ -347,7 +347,15 @@ function SyncArrow({ label }: { label: string }) {
 }
 
 /* ---------- Judgment Core block — two motions ---------- */
-function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string; artifactsSub?: string } = {}) {
+function JudgmentCoreBlock({
+  systemicSub, artifactsSub, systemicItems, artifactItems, chain,
+}: {
+  systemicSub?: string;
+  artifactsSub?: string;
+  systemicItems?: Item[];
+  artifactItems?: Item[];
+  chain?: { trigger: string; nodes: string[]; outcome: string };
+} = {}) {
   const t = TONE.core;
   const [openItem, setOpenItem] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -378,7 +386,7 @@ function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string
             label="Motion 1"
             title="How we decide"
             sub={systemicSub ?? "The logic of how your company decides."}
-            items={SYSTEMIC_GRAPH}
+            items={systemicItems ?? SYSTEMIC_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
           />
@@ -387,15 +395,18 @@ function JudgmentCoreBlock({ systemicSub, artifactsSub }: { systemicSub?: string
             label="Motion 2"
             title="What we produce"
             sub={artifactsSub ?? "Every artifact, native or not, kept in sync."}
-            items={ARTIFACT_GRAPH}
+            items={artifactItems ?? ARTIFACT_GRAPH}
             openItem={openItem}
             setOpenItem={setOpenItem}
           />
         </div>
 
+        {/* Propagation chain — when one node changes, the whole chain updates */}
+        {chain && <PropagationChain chain={chain} />}
+
         {/* Shared governance bar */}
         <div
-          className="rounded-xl border p-4"
+          className="rounded-xl border p-4 mt-4"
           style={{ background: "hsl(var(--background) / 0.6)", borderColor: t.ring }}
         >
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-3 text-center" style={{ color: t.kicker }}>
