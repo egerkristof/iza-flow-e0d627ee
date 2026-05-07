@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
+import { GuidedTour, PlayTourButton } from "./GuidedTour";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
@@ -992,6 +993,7 @@ export function LizaOSStack() {
   const [industryKey, setIndustryKey] = useState<IndustryKey>("generic");
   const industry = INDUSTRY_BY_KEY[industryKey];
   const isGeneric = industryKey === "generic";
+  const [tourOpen, setTourOpen] = useState(false);
 
   // Industry-overridden layers
   const sourceLayer = useMemo<Layer>(() => ({
@@ -1042,6 +1044,8 @@ export function LizaOSStack() {
       <IndustryRolodex
         active={industryKey}
         onChange={setIndustryKey}
+        onPlayTour={() => setTourOpen(true)}
+        showPlayTour={!isGeneric}
       />
 
       <motion.div
@@ -1064,30 +1068,32 @@ export function LizaOSStack() {
         {/* DESKTOP / TABLET: full diagram */}
         <div className="hidden md:block">
         {/* TOP: Leadership view */}
-        <ControlTowerBlock layer={CONTROL_TOWER} leadership={industry.leadership} />
+        <div data-tour="leadership">
+          <ControlTowerBlock layer={CONTROL_TOWER} leadership={industry.leadership} />
+        </div>
 
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
         {/* DESKTOP (lg+): Records | Workspace | Tools side by side */}
         <div className="hidden lg:grid lg:grid-cols-[minmax(0,0.7fr)_auto_minmax(0,2.4fr)_auto_minmax(0,0.7fr)] gap-3 items-stretch">
-          <SidePanel layer={sourceLayer} align="left" />
+          <div data-tour="records" className="contents"><SidePanel layer={sourceLayer} align="left" /></div>
           <SyncArrow label="read & write" />
-          <div className="relative">
+          <div className="relative" data-tour="workspace">
             <CenterNativeSurfaces layer={nativeLayer} />
             {!isGeneric && <ScenarioFlipCard industry={industry} />}
           </div>
           <SyncArrow label="sync & propagate" />
-          <SidePanel layer={toolsLayer} align="right" />
+          <div data-tour="tools" className="contents"><SidePanel layer={toolsLayer} align="right" /></div>
         </div>
 
         {/* TABLET (md, not lg): Records + Tools feed DOWN into Workspace */}
         <div className="md:block lg:hidden">
           <div className="grid grid-cols-2 gap-3">
-            <SidePanel layer={sourceLayer} align="left" />
-            <SidePanel layer={toolsLayer} align="right" />
+            <div data-tour="records"><SidePanel layer={sourceLayer} align="left" /></div>
+            <div data-tour="tools"><SidePanel layer={toolsLayer} align="right" /></div>
           </div>
           <FeedDownArrows leftLabel="read & write" rightLabel="sync & propagate" />
-          <div className="relative">
+          <div className="relative" data-tour="workspace">
             <CenterNativeSurfaces layer={nativeLayer} />
             {!isGeneric && <ScenarioFlipCard industry={industry} />}
           </div>
@@ -1096,6 +1102,7 @@ export function LizaOSStack() {
         <Connector label="every surface above runs against the Decision Standard" />
 
         {/* JUDGMENT CORE — two motions */}
+        <div data-tour="core">
         <JudgmentCoreBlock
           systemicSub={industry.judgmentCore.systemic}
           artifactsSub={industry.judgmentCore.artifacts}
@@ -1103,11 +1110,14 @@ export function LizaOSStack() {
           artifactItems={artifactItems}
           chain={industry.judgmentCore.chain}
         />
+        </div>
 
         <Connector label="runs on top of any model" />
 
         {/* MODEL FABRIC */}
-        <ModelFabricRow />
+        <div data-tour="fabric">
+          <ModelFabricRow />
+        </div>
 
         {!isGeneric && (
           <div className="mt-6 text-center">
@@ -1122,6 +1132,8 @@ export function LizaOSStack() {
         )}
         </div>
       </motion.div>
+
+      <GuidedTour open={tourOpen} onClose={() => setTourOpen(false)} />
     </div>
   );
 }
@@ -1444,24 +1456,33 @@ function MobileSection({
 
 /* ---------- Industry rolodex tab strip ---------- */
 function IndustryRolodex({
-  active, onChange,
-}: { active: IndustryKey; onChange: (k: IndustryKey) => void }) {
+  active, onChange, onPlayTour, showPlayTour,
+}: {
+  active: IndustryKey;
+  onChange: (k: IndustryKey) => void;
+  onPlayTour: () => void;
+  showPlayTour: boolean;
+}) {
   return (
-    <div className="mb-5 hidden md:block">
-      <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-        <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground">
-          Pick your industry — the diagram relabels in your language
+    <div className="mb-7 hidden md:block">
+      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <p className="text-[12px] font-black tracking-[0.22em] uppercase text-foreground/80">
+          1. Pick your industry. 2. Play the 6-step tour.
         </p>
         {active === "generic" && (
-          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-primary inline-flex items-center gap-1">
-            <ChevronRight className="w-3 h-3 animate-pulse" />
-            try one
+          <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-primary inline-flex items-center gap-1">
+            <ChevronRight className="w-3.5 h-3.5 animate-pulse" />
+            start here
           </span>
         )}
       </div>
       <div
-        className="flex flex-wrap gap-1.5 p-1.5 rounded-xl border"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+        className="flex flex-wrap items-center gap-2 p-2.5 rounded-2xl border-2"
+        style={{
+          background: "hsl(var(--card))",
+          borderColor: "hsl(var(--primary) / 0.25)",
+          boxShadow: "0 12px 40px -20px hsl(var(--primary) / 0.35)",
+        }}
       >
         {INDUSTRIES.map((ind) => {
           const isActive = ind.key === active;
@@ -1470,18 +1491,28 @@ function IndustryRolodex({
               key={ind.key}
               type="button"
               onClick={() => onChange(ind.key)}
-              className="text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all"
+              className="text-[13px] font-bold px-4 py-2.5 rounded-xl transition-all hover:-translate-y-0.5"
               style={{
-                background: isActive ? "hsl(var(--primary))" : "transparent",
-                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.7)",
-                boxShadow: isActive ? "0 6px 18px -10px hsl(var(--primary))" : "none",
+                background: isActive ? "hsl(var(--primary))" : "hsl(var(--background))",
+                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.8)",
+                border: isActive ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+                boxShadow: isActive ? "0 8px 22px -10px hsl(var(--primary))" : "none",
               }}
             >
               {ind.label}
             </button>
           );
         })}
+        <div className="flex-1" />
+        {showPlayTour && (
+          <PlayTourButton onClick={onPlayTour} />
+        )}
       </div>
+      {showPlayTour && (
+        <p className="mt-2 text-[11px] text-muted-foreground">
+          Hit <span className="font-bold text-foreground">Play 6-step tour</span> to walk through the diagram one piece at a time.
+        </p>
+      )}
     </div>
   );
 }
