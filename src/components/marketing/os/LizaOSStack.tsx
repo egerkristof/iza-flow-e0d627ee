@@ -1185,10 +1185,34 @@ function MobileLoopDiagram() {
   const GREEN = "hsl(var(--brand-green))";
   const AMBER = "hsl(var(--brand-amber, var(--primary)))";
   const steps = [
-    { kicker: "Leadership", title: "Sets the standard", tone: AMBER, isLiza: true },
-    { kicker: "Decision Core", title: "Liza enforces the standard", tone: PRIMARY, isLiza: true },
-    { kicker: "Workspace", title: "Where governed work happens", tone: PRIMARY, isLiza: true },
-    { kicker: "Records + AI tools", title: "Read in. Write back.", tone: GREEN, isLiza: false },
+    {
+      kicker: "Leadership",
+      title: "Defines how the company decides",
+      body: "Owners write the playbooks, mandates, and policies that say what good output looks like. These become machine-readable rules.",
+      tone: AMBER,
+      isLiza: true,
+    },
+    {
+      kicker: "Decision Core",
+      title: "Liza checks every AI request against those rules",
+      body: "Before any AI tool answers, Liza injects the right policy, vocabulary, and context. Off-policy answers are blocked or rewritten.",
+      tone: PRIMARY,
+      isLiza: true,
+    },
+    {
+      kicker: "Workspace",
+      title: "Teams draft, review, and ship inside Liza",
+      body: "Workbooks for memos, RFIs, deviations, complaints, communications. Every artifact is versioned, attributable, and audit-ready.",
+      tone: PRIMARY,
+      isLiza: true,
+    },
+    {
+      kicker: "Records + AI tools",
+      title: "Pulled in for context, written back as truth",
+      body: "Liza reads from your systems (Vault, Procore, ERP, Drive) and pushes approved outputs back. Your existing AI tools (Copilot, Claude, vendor agents) call Liza to stay on policy.",
+      tone: GREEN,
+      isLiza: false,
+    },
   ];
   return (
     <div
@@ -1232,8 +1256,11 @@ function MobileLoopDiagram() {
                   {s.kicker}
                 </p>
               </div>
-              <p className="text-[12.5px] font-bold leading-tight text-foreground mt-0.5">
+              <p className="text-[12.5px] font-bold leading-snug text-foreground mt-0.5">
                 {s.title}
+              </p>
+              <p className="text-[11.5px] leading-relaxed text-muted-foreground mt-1">
+                {s.body}
               </p>
             </div>
           </li>
@@ -1245,7 +1272,7 @@ function MobileLoopDiagram() {
       >
         <ArrowUp className="w-3.5 h-3.5" style={{ color: GREEN }} />
         <p className="text-[11px] leading-snug font-semibold" style={{ color: GREEN }}>
-          Outcomes flow back up to Leadership as live signal.
+          Every approved output, exception, and override flows back up so leadership sees how the standard is performing in real work.
         </p>
       </div>
     </div>
