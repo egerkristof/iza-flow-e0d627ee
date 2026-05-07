@@ -1408,7 +1408,7 @@ function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.35, delay: 0.15 }}
-      className="hidden lg:block absolute -bottom-5 -right-5 w-[280px] h-[160px] z-10"
+      className="hidden lg:block absolute -bottom-24 right-2 xl:-right-6 w-[280px] h-[170px] z-10"
       style={{ perspective: 1000 }}
     >
       <motion.button
