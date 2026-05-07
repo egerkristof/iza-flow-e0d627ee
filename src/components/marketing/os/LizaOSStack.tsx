@@ -783,6 +783,23 @@ export function LizaOSStack() {
     sub: industry.nativeSurfaces.sub,
   }), [industry]);
 
+  const systemicItems = useMemo<Item[]>(
+    () => industry.judgmentCore.systemicItems.map((it, i) => ({
+      ...SYSTEMIC_GRAPH[i % SYSTEMIC_GRAPH.length],
+      label: it.label,
+      detail: it.detail,
+    })),
+    [industry],
+  );
+  const artifactItems = useMemo<Item[]>(
+    () => industry.judgmentCore.artifactItems.map((it, i) => ({
+      ...ARTIFACT_GRAPH[i % ARTIFACT_GRAPH.length],
+      label: it.label,
+      detail: it.detail,
+    })),
+    [industry],
+  );
+
   return (
     <div className="relative">
       {/* Industry tab strip — Rolodex */}
@@ -798,7 +815,7 @@ export function LizaOSStack() {
         transition={{ duration: 0.35, ease: "easeOut" }}
       >
         {/* TOP: Leadership view */}
-        <ControlTowerBlock layer={CONTROL_TOWER} />
+        <ControlTowerBlock layer={CONTROL_TOWER} leadership={industry.leadership} />
 
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
@@ -820,6 +837,9 @@ export function LizaOSStack() {
         <JudgmentCoreBlock
           systemicSub={industry.judgmentCore.systemic}
           artifactsSub={industry.judgmentCore.artifacts}
+          systemicItems={systemicItems}
+          artifactItems={artifactItems}
+          chain={industry.judgmentCore.chain}
         />
 
         <Connector label="runs on top of any model" />
