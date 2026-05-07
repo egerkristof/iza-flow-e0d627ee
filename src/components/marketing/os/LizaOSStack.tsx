@@ -1638,3 +1638,235 @@ function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
     </>
   );
 }
+
+/* ---------- Mobile Guided Tour ----------
+   Auto-walks each section: opens it, scrolls into view, shows a narration
+   bubble. Tap right/left to skip, tap card to pause. */
+type MobileTourSection = { id: string; tone: Tone; kicker: string; title: string; sub: string; icon: React.ReactNode; items: { label: string; detail: string }[] };
+
+const TOUR_NARRATION: Record<string, { headline: string; body: string }> = {
+  leadership: {
+    headline: "Start with leadership.",
+    body: "Owners write the playbooks, mandates and policies. These become the rules every AI request runs against.",
+  },
+  core: {
+    headline: "Liza enforces those rules.",
+    body: "Every AI request — from any tool — gets checked against the standard before it answers. Off-policy outputs are blocked or rewritten.",
+  },
+  native: {
+    headline: "Work happens inside Liza.",
+    body: "Workbooks for memos, RFIs, deviations, complaints. Every artifact is versioned, attributable and audit-ready.",
+  },
+  systems: {
+    headline: "It reads from your stack.",
+    body: "Vault, Procore, ERP, Drive, SharePoint. Liza pulls context in and pushes approved outputs back as truth.",
+  },
+  tools: {
+    headline: "Your AI tools stay on policy.",
+    body: "Copilot, Claude, vendor agents — they all call Liza so every team gets the same governed answer.",
+  },
+};
+
+function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const [tourActive, setTourActive] = useState(false);
+  const [step, setStep] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const refs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const STEP_MS = 6500;
+
+  // Drive the tour
+  useEffect(() => {
+    if (!tourActive || paused) return;
+    const current = sections[step];
+    if (!current) return;
+    // open this section, close others
+    setOpen(() => ({ [current.id]: true }));
+    // scroll into view (with offset for sticky header)
+    requestAnimationFrame(() => {
+      const el = refs.current[current.id];
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const top = window.scrollY + rect.top - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    });
+    const t = window.setTimeout(() => {
+      if (step < sections.length - 1) setStep((s) => s + 1);
+      else setTourActive(false);
+    }, STEP_MS);
+    return () => window.clearTimeout(t);
+  }, [tourActive, step, paused, sections]);
+
+  const startTour = () => {
+    setStep(0);
+    setPaused(false);
+    setTourActive(true);
+  };
+
+  const stopTour = () => {
+    setTourActive(false);
+    setPaused(false);
+  };
+
+  const current = tourActive ? sections[step] : null;
+  const narration = current ? TOUR_NARRATION[current.id] : null;
+  const tone = current ? TONE[current.tone] : null;
+
+  return (
+    <>
+      {/* Tour CTA */}
+      <div
+        className="rounded-xl border-2 p-3.5 flex items-center gap-3"
+        style={{
+          background: "hsl(var(--primary) / 0.08)",
+          borderColor: "hsl(var(--primary) / 0.45)",
+        }}
+      >
+        <div
+          className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+        >
+          <Play className="w-4 h-4" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-[12.5px] font-black text-foreground leading-tight">
+            Take the 5-step guided tour
+          </p>
+          <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">
+            We'll walk you through every layer of the platform with narration.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={startTour}
+          className="text-[11px] font-black uppercase tracking-[0.12em] px-3 py-2 rounded-lg flex-shrink-0"
+          style={{
+            background: "hsl(var(--primary))",
+            color: "hsl(var(--primary-foreground))",
+          }}
+        >
+          Play
+        </button>
+      </div>
+
+      {/* The sections */}
+      <div className="space-y-2.5 mt-3">
+        {sections.map((s, i) => (
+          <MobileSection
+            key={s.id}
+            section={s}
+            open={!!open[s.id]}
+            onToggle={() =>
+              setOpen((prev) => ({ ...prev, [s.id]: !prev[s.id] }))
+            }
+            sectionRef={(el) => { refs.current[s.id] = el; }}
+          />
+        ))}
+      </div>
+
+      {/* Narration overlay (sticky bottom) while tour is active */}
+      <AnimatePresence>
+        {tourActive && current && narration && tone && (
+          <motion.div
+            key="m-tour-bar"
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed bottom-0 left-0 right-0 z-50 px-3 pb-3 pt-2 pointer-events-none"
+          >
+            <div
+              className="rounded-2xl border-2 p-3.5 pointer-events-auto"
+              style={{
+                background: "hsl(var(--background))",
+                borderColor: "hsl(var(--primary) / 0.55)",
+                boxShadow: "0 20px 50px -16px hsl(var(--primary) / 0.5)",
+              }}
+            >
+              {/* progress dots */}
+              <div className="flex gap-1 mb-2">
+                {sections.map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 h-[3px] rounded-full"
+                    style={{
+                      background: i <= step ? "hsl(var(--primary))" : "hsl(var(--foreground) / 0.12)",
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="flex items-start justify-between gap-2 mb-1">
+                <p
+                  className="text-[10px] font-black tracking-[0.18em] uppercase"
+                  style={{ color: tone.kicker }}
+                >
+                  Step {step + 1} / {sections.length} · {current.kicker}
+                </p>
+                <button
+                  type="button"
+                  onClick={stopTour}
+                  aria-label="Close tour"
+                  className="text-muted-foreground -mt-1 -mr-1 p-1"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <p className="text-[14px] font-black text-foreground leading-tight mb-1">
+                {narration.headline}
+              </p>
+              <p className="text-[12.5px] text-muted-foreground leading-snug">
+                {narration.body}
+              </p>
+              <div className="flex items-center justify-between gap-2 mt-3">
+                <button
+                  type="button"
+                  onClick={() => setStep((s) => Math.max(0, s - 1))}
+                  disabled={step === 0}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground disabled:opacity-30"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  Back
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPaused((p) => !p)}
+                  className="text-[11px] font-bold text-foreground/80"
+                >
+                  {paused ? "Resume" : "Pause"}
+                </button>
+                {step < sections.length - 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => setStep((s) => s + 1)}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-black"
+                    style={{
+                      background: "hsl(var(--primary))",
+                      color: "hsl(var(--primary-foreground))",
+                    }}
+                  >
+                    Next
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={stopTour}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-black"
+                    style={{
+                      background: "hsl(var(--primary))",
+                      color: "hsl(var(--primary-foreground))",
+                    }}
+                  >
+                    Done
+                  </button>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
