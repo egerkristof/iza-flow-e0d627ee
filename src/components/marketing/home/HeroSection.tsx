@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Stethoscope, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
 import { CAL_URL } from "./shared";
 
@@ -20,6 +20,16 @@ const TRUST_STATS = [
   { value: "40%", label: "AI output reworked" },
   { value: "0", label: "platforms govern expert knowledge" },
   { value: "100%", label: "knowledge portability" },
+];
+
+/* ── Industry lifecycles already covered ── */
+const INDUSTRY_LIFECYCLES = [
+  { icon: FlaskConical, label: "Pharma & Life Sciences", sub: "GxP lifecycle" },
+  { icon: Banknote,     label: "Financial Services",     sub: "Risk & compliance" },
+  { icon: Building2,    label: "AEC",                    sub: "Project lifecycle" },
+  { icon: ShieldCheck,  label: "Regulated Manufacturing",sub: "Quality lifecycle" },
+  { icon: Stethoscope,  label: "Healthcare",             sub: "Clinical lifecycle" },
+  { icon: Cpu,          label: "Enterprise IT & AI",     sub: "Delivery lifecycle" },
 ];
 
 export function HeroSection() {
@@ -81,7 +91,7 @@ export function HeroSection() {
         >
           The system of intelligence
           <br />
-          <span className="text-primary">for how your company decides.</span>
+          <span className="text-primary">for how your company decides and delivers work.</span>
         </motion.h1>
 
         <motion.p
@@ -90,7 +100,8 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          One governed standard your leadership owns. Every AI tool, every team, every
+          One governed standard your leadership owns, applied across the full
+          lifecycle of how work gets done. Every AI tool, every team, every
           decision executes to it.
         </motion.p>
 
@@ -122,6 +133,48 @@ export function HeroSection() {
         </motion.div>
 
       </div>
+
+      {/* ── Industry lifecycles we already cover ── */}
+      <motion.div
+        className="relative z-10 mt-2 w-full max-w-5xl mx-auto"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.45 }}
+      >
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <div className="h-px w-10 bg-border" />
+          <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
+            Built for the most demanding industry lifecycles
+          </p>
+          <div className="h-px w-10 bg-border" />
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+          {INDUSTRY_LIFECYCLES.map((ind, i) => {
+            const Icon = ind.icon;
+            return (
+              <motion.div
+                key={ind.label}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 + i * 0.05 }}
+                className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-border bg-background/40 backdrop-blur-sm hover:border-primary/40 hover:bg-background/70 transition-all"
+              >
+                <div className="shrink-0 w-7 h-7 rounded-md flex items-center justify-center bg-primary/8 text-primary">
+                  <Icon className="w-3.5 h-3.5" />
+                </div>
+                <div className="min-w-0 text-left">
+                  <div className="text-[11px] font-semibold text-foreground leading-tight truncate">
+                    {ind.label}
+                  </div>
+                  <div className="text-[10px] text-muted-foreground leading-tight truncate">
+                    {ind.sub}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.div>
 
       {/* ── Scroll hint ── */}
       <motion.div
