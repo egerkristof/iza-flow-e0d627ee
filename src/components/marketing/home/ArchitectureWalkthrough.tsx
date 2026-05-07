@@ -134,50 +134,75 @@ function SceneHero(p: number) {
   );
 }
 
-/* 2. PROBLEM — knowledge silos + shifting external reality + tool drift */
-function SceneProblem(p: number) {
+/* 2a. SHIFTING REALITY — the world keeps changing under you */
+function SceneShiftingReality(p: number) {
   const externals = [
-    { icon: <Newspaper className="w-3 h-3" />, l: "New EU AI Act clause" },
-    { icon: <Globe className="w-3 h-3" />,     l: "Competitor cuts price 18%" },
-    { icon: <AlertCircle className="w-3 h-3" />, l: "CFO tightens approval rules" },
+    { icon: <Newspaper className="w-3.5 h-3.5" />, l: "New EU AI Act clause", sub: "Compliance must update prompts" },
+    { icon: <Globe className="w-3.5 h-3.5" />,     l: "Competitor cuts price 18%", sub: "Sales needs new discount logic" },
+    { icon: <AlertCircle className="w-3.5 h-3.5" />, l: "CFO tightens approval rules", sub: "Deal desk thresholds change" },
   ];
+  return (
+    <div className="w-full max-w-[320px] mx-auto">
+      <div className="text-center mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
+          This week alone
+        </span>
+      </div>
+      <div className="space-y-1.5">
+        {externals.map((e, i) => {
+          const a = between(p, 0.05 + i * 0.18, 0.3 + i * 0.18);
+          return (
+            <div
+              key={e.l}
+              className="flex items-start gap-2 px-2.5 py-2 rounded-lg border"
+              style={{
+                opacity: a,
+                transform: `translateX(${(1 - a) * -10}px)`,
+                borderColor: RED + "44",
+                background: RED + "06",
+              }}
+            >
+              <span className="mt-0.5 flex-shrink-0" style={{ color: RED }}>{e.icon}</span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-black text-foreground/90 leading-tight">{e.l}</p>
+                <p className="text-[9px] text-muted-foreground mt-0.5 leading-snug">{e.sub}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div
+        className="mt-3 text-center text-[10px] font-bold text-foreground/80 leading-snug"
+        style={{ opacity: between(p, 0.7, 0.95) }}
+      >
+        Three external shifts. Zero of your AI tools knew about any of them.
+      </div>
+    </div>
+  );
+}
+
+/* 2b. TOOL DRIFT — same question, different answer */
+function SceneToolDrift(p: number) {
   const tools = [
     { who: "Maya · AE",        tool: "Copilot",   answer: "Up to 15% is fine",     ctx: "saw last quarter's deck" },
     { who: "Tom · Deal desk",  tool: "Claude",    answer: "25% on multi-year",     ctx: "read an old playbook" },
     { who: "Priya · CS",       tool: "Glean",     answer: "No policy found",       ctx: "policy lives in Legal's drive" },
   ];
-  const extIn = between(p, 0.0, 0.18);
-  const qIn = between(p, 0.2, 0.32);
+  const qIn = between(p, 0, 0.18);
   return (
     <div className="w-full max-w-[320px] mx-auto">
-      {/* External pressure layer */}
-      <div className="mb-2" style={{ opacity: extIn }}>
-        <p className="text-[8.5px] font-black uppercase tracking-[0.14em] text-muted-foreground text-center mb-1">
-          This week, the world changed three times
-        </p>
-        <div className="grid grid-cols-3 gap-1">
-          {externals.map((e) => (
-            <div key={e.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
-              style={{ borderColor: RED + "33", background: RED + "06" }}>
-              <span style={{ color: RED }}>{e.icon}</span>
-              <span className="text-[8px] font-bold text-foreground/80 leading-tight">{e.l}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="text-center mb-2" style={{ opacity: qIn }}>
+      <div className="text-center mb-2.5" style={{ opacity: qIn }}>
         <span className="text-[9.5px] font-black uppercase tracking-[0.16em]" style={{ color: RED }}>
           Slack · #deal-desk · 14:02
         </span>
-        <p className="text-[11px] font-bold text-foreground/85 mt-1 leading-snug">
+        <p className="text-[12px] font-bold text-foreground/85 mt-1 leading-snug">
           "What's our max discount on a 3-year renewal?"
         </p>
       </div>
       <div className="space-y-1.5">
         {tools.map((t, i) => {
-          const enter = between(p, 0.32 + i * 0.12, 0.5 + i * 0.12);
-          const shake = p > 0.82 ? Math.sin((p - 0.82) * 60) * 2 : 0;
+          const enter = between(p, 0.2 + i * 0.18, 0.42 + i * 0.18);
+          const shake = p > 0.85 ? Math.sin((p - 0.85) * 60) * 2 : 0;
           return (
             <motion.div
               key={t.who}
@@ -193,7 +218,7 @@ function SceneProblem(p: number) {
                 <span className="text-[10px] font-black text-foreground/85 truncate">{t.who}</span>
                 <span className="text-[8.5px] font-bold uppercase tracking-[0.12em] text-muted-foreground">asks {t.tool}</span>
               </div>
-              <p className="text-[11px] font-bold" style={{ color: RED }}>"{t.answer}"</p>
+              <p className="text-[11.5px] font-bold" style={{ color: RED }}>"{t.answer}"</p>
               <p className="text-[8.5px] text-muted-foreground italic mt-0.5">{t.ctx}</p>
             </motion.div>
           );
@@ -201,9 +226,9 @@ function SceneProblem(p: number) {
       </div>
       <div
         className="mt-2.5 text-center text-[10px] font-black uppercase tracking-[0.14em] leading-snug"
-        style={{ opacity: between(p, 0.82, 0.95), color: RED }}
+        style={{ opacity: between(p, 0.85, 0.97), color: RED }}
       >
-        Siloed teams. Shifting reality. Tools left to guess.
+        Same question. Three answers. None of them yours.
       </div>
     </div>
   );
