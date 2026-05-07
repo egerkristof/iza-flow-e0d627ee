@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Database, Workflow, Sparkles, ScrollText } from "lucide-react";
+import { ArrowRight, Database, Workflow, Sparkles, Compass } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
 type IndustryView = {
@@ -127,7 +127,7 @@ export function ArchitectureTeaser() {
   );
 }
 
-/* ---------- Animated four-screen architecture diagram ---------- */
+/* ---------- Three-tier architecture diagram with directional flow labels ---------- */
 function ArchitectureDiagram({ view }: { view: IndustryView }) {
   return (
     <div
@@ -135,7 +135,7 @@ function ArchitectureDiagram({ view }: { view: IndustryView }) {
       style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
     >
       {/* Industry tag */}
-      <div className="flex justify-center mb-5">
+      <div className="flex justify-center mb-6">
         <div
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black tracking-[0.18em] uppercase"
           style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
@@ -144,29 +144,40 @@ function ArchitectureDiagram({ view }: { view: IndustryView }) {
         </div>
       </div>
 
-      {/* Connection layer (SVG) — only on >=md so we can rely on grid layout */}
-      <ConnectionLayer />
-
-      {/* Top row: the two Liza-owned screens */}
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-10 md:mb-14 z-10">
+      {/* TIER 1 — Leadership View (top, single, narrower) */}
+      <div className="max-w-2xl mx-auto">
         <ScreenWindow
-          chromeLabel="Liza · Decision Standard"
-          icon={<ScrollText className="w-3.5 h-3.5" />}
-          title="How your company decides and delivers work."
+          chromeLabel="Liza · Leadership View"
+          icon={<Compass className="w-3.5 h-3.5" />}
+          title="The Decision Standard. How your company decides and delivers work."
           body={view.decisionStandard}
-          tone="liza"
-        />
-        <ScreenWindow
-          chromeLabel="Liza · Workspace"
-          icon={<Workflow className="w-3.5 h-3.5" />}
-          title="Governed workspace, workbooks, agents."
-          body={view.workspace}
           tone="liza"
         />
       </div>
 
-      {/* Bottom row: external surfaces */}
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 z-10">
+      {/* Flow 1: Leadership <-> Workspace */}
+      <FlowConnector
+        downLabel="Standards constrain the workspace"
+        upLabel="Workspace signal updates the standard"
+      />
+
+      {/* TIER 2 — Workspace (center, wide) */}
+      <ScreenWindow
+        chromeLabel="Liza · Workspace"
+        icon={<Workflow className="w-3.5 h-3.5" />}
+        title="Where work happens. Workbooks, agents, every output inherits the standard."
+        body={view.workspace}
+        tone="liza"
+      />
+
+      {/* Flow 2: Workspace <-> Records / Tools */}
+      <FlowConnector
+        downLabel="Read context in"
+        upLabel="Write approved outputs back"
+      />
+
+      {/* TIER 3 — Systems of record + AI tools (bottom row) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <ScreenWindow
           chromeLabel="Systems of record"
           icon={<Database className="w-3.5 h-3.5" />}
@@ -186,6 +197,54 @@ function ArchitectureDiagram({ view }: { view: IndustryView }) {
       <p className="text-center text-xs text-muted-foreground mt-6">
         Nothing gets ripped out. Liza governs the work; your records and AI tools stay where they are.
       </p>
+    </div>
+  );
+}
+
+/* Vertical bidirectional flow connector — explicit labels, animated pulses */
+function FlowConnector({ downLabel, upLabel }: { downLabel: string; upLabel: string }) {
+  const primary = "hsl(var(--primary))";
+  const green = "hsl(var(--brand-green, var(--primary)))";
+  return (
+    <div className="relative my-3 md:my-4 grid grid-cols-2 gap-4 md:gap-8 px-2 md:px-12">
+      {/* DOWN lane */}
+      <div className="flex items-center gap-2 justify-end">
+        <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground text-right leading-tight">
+          {downLabel}
+        </span>
+        <div
+          className="relative w-5 h-12 md:h-16 rounded-full overflow-hidden"
+          style={{ background: `linear-gradient(to bottom, ${primary}33, ${primary}11)` }}
+          aria-hidden="true"
+        >
+          <motion.span
+            className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
+            style={{ background: primary, boxShadow: `0 0 8px ${primary}` }}
+            initial={{ top: "0%", opacity: 0 }}
+            animate={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", times: [0, 0.1, 0.9, 1] }}
+          />
+        </div>
+      </div>
+      {/* UP lane */}
+      <div className="flex items-center gap-2 justify-start">
+        <div
+          className="relative w-5 h-12 md:h-16 rounded-full overflow-hidden"
+          style={{ background: `linear-gradient(to top, ${green}33, ${green}11)` }}
+          aria-hidden="true"
+        >
+          <motion.span
+            className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
+            style={{ background: green, boxShadow: `0 0 8px ${green}` }}
+            initial={{ top: "100%", opacity: 0 }}
+            animate={{ top: ["100%", "0%"], opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", times: [0, 0.1, 0.9, 1], delay: 0.9 }}
+          />
+        </div>
+        <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground text-left leading-tight">
+          {upLabel}
+        </span>
+      </div>
     </div>
   );
 }
