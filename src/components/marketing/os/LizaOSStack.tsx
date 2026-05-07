@@ -478,6 +478,18 @@ function JudgmentCoreBlock({
       style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
     >
       <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: t.accent, opacity: 0.7 }} />
+      {/* Window chrome — frames this as a Liza system surface */}
+      <div
+        className="flex items-center gap-1.5 px-3 py-2 border-b"
+        style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+      >
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+        <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+          Liza Decision Core
+        </span>
+      </div>
       <div className="p-6 md:p-8">
         <div className="text-center mb-6">
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
@@ -802,6 +814,18 @@ function ControlTowerBlock({
       style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
     >
       <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: t.accent, opacity: 0.7 }} />
+      {/* Window chrome — frames this as a Liza system surface */}
+      <div
+        className="flex items-center gap-1.5 px-3 py-2 border-b"
+        style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+      >
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+        <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+          Liza Leadership View
+        </span>
+      </div>
       <div className="p-6 md:p-8">
         <div className="text-center mb-5">
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>{layer.kicker}</p>
@@ -1160,89 +1184,70 @@ function MobileLoopDiagram() {
   const PRIMARY = "hsl(var(--primary))";
   const GREEN = "hsl(var(--brand-green))";
   const AMBER = "hsl(var(--brand-amber, var(--primary)))";
-  // Distinct, higher-contrast tones for the two side surfaces
-  const RECORDS = "hsl(var(--primary))";
-  const TOOLS = "hsl(var(--brand-green))";
+  const steps = [
+    { kicker: "Leadership", title: "Sets the standard", tone: AMBER, isLiza: true },
+    { kicker: "Decision Core", title: "Liza enforces the standard", tone: PRIMARY, isLiza: true },
+    { kicker: "Workspace", title: "Where governed work happens", tone: PRIMARY, isLiza: true },
+    { kicker: "Records + AI tools", title: "Read in. Write back.", tone: GREEN, isLiza: false },
+  ];
   return (
     <div
       className="rounded-2xl border p-4"
       style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
     >
       <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground text-center mb-3">
-        The loop
+        How the loop works
       </p>
-      <svg viewBox="0 0 320 410" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
-        {/* Right-side feedback path (execution -> leadership) */}
-        <path
-          d="M 250 350 C 312 350 312 60 250 60"
-          fill="none"
-          stroke={GREEN}
-          strokeOpacity="0.55"
-          strokeWidth="1.4"
-          strokeDasharray="3 4"
-        />
-        <polygon points="250,55 256,65 244,65" fill={GREEN} fillOpacity="0.7" />
-        <foreignObject x="282" y="195" width="36" height="22">
-          <div
-            className="w-full h-full rounded-md flex items-center justify-center text-[8px] font-black tracking-[0.12em] uppercase"
-            style={{
-              background: "hsl(var(--background))",
-              border: `1px solid ${GREEN}55`,
-              color: GREEN,
-            }}
-          >
-            Signal
-          </div>
-        </foreignObject>
-
-        {/* Down-arrows along the spine */}
-        {[100, 170, 240].map((y) => (
-          <g key={y}>
-            <line x1="120" y1={y} x2="120" y2={y + 22} stroke={PRIMARY} strokeOpacity="0.45" strokeWidth="1.2" />
-            <polygon points={`120,${y + 28} 115,${y + 20} 125,${y + 20}`} fill={PRIMARY} fillOpacity="0.6" />
-          </g>
+      <ol className="space-y-2">
+        {steps.map((s, i) => (
+          <li key={s.kicker} className="flex items-stretch gap-3">
+            <div className="flex flex-col items-center pt-1">
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black"
+                style={{ background: s.tone + "1f", color: s.tone, border: `1px solid ${s.tone}55` }}
+              >
+                {i + 1}
+              </div>
+              {i < steps.length - 1 && (
+                <div className="flex-1 w-px mt-1" style={{ background: s.tone + "44" }} />
+              )}
+            </div>
+            <div
+              className="flex-1 rounded-lg px-3 py-2"
+              style={{
+                background: s.isLiza ? s.tone + "0d" : "hsl(var(--background))",
+                border: `1px solid ${s.tone}${s.isLiza ? "55" : "33"}`,
+              }}
+            >
+              <div className="flex items-center gap-1.5">
+                {s.isLiza && (
+                  <span
+                    className="text-[8px] font-black tracking-[0.18em] uppercase px-1.5 py-0.5 rounded"
+                    style={{ background: s.tone, color: "hsl(var(--primary-foreground))" }}
+                  >
+                    Liza
+                  </span>
+                )}
+                <p className="text-[9.5px] font-black tracking-[0.16em] uppercase leading-tight" style={{ color: s.tone }}>
+                  {s.kicker}
+                </p>
+              </div>
+              <p className="text-[12.5px] font-bold leading-tight text-foreground mt-0.5">
+                {s.title}
+              </p>
+            </div>
+          </li>
         ))}
-
-        {/* Node 1 — Leadership */}
-        <foreignObject x="20" y="20" width="200" height="60">
-          <NodeBox kicker="Leadership" title="Sets the standard" tone={AMBER} />
-        </foreignObject>
-
-        {/* Node 2 — Decision Standard (Liza core) */}
-        <foreignObject x="20" y="90" width="200" height="60">
-          <NodeBox kicker="Liza · Decision Standard" title="The governed core" tone={PRIMARY} accent />
-        </foreignObject>
-
-        {/* Node 3 — Workspace */}
-        <foreignObject x="20" y="160" width="200" height="60">
-          <NodeBox kicker="Where work happens" title="Governed workspace" tone={GREEN} />
-        </foreignObject>
-
-        {/* Node 4 — Records + AI tools (split row) */}
-        <foreignObject x="2" y="240" width="120" height="74">
-          <NodeBox kicker="Systems of record" title="Drive · DBs · Email" tone={RECORDS} small />
-        </foreignObject>
-        <foreignObject x="128" y="240" width="120" height="74">
-          <NodeBox kicker="Your AI tools" title="Copilot · Claude" tone={TOOLS} small />
-        </foreignObject>
-
-        {/* Bottom outcome bar */}
-        <foreignObject x="20" y="350" width="230" height="40">
-          <div
-            className="w-full h-full rounded-md flex items-center justify-center text-[10px] font-black uppercase tracking-[0.18em]"
-            style={{
-              background: GREEN + "1f",
-              color: GREEN,
-              border: `1px solid ${GREEN}55`,
-            }}
-          >
-            Governed Output
-          </div>
-        </foreignObject>
-      </svg>
-      <p className="text-[11px] text-muted-foreground text-center leading-snug mt-2">
-        Leadership sets the standard. Liza enforces it on every AI request. Outcomes flow back up.
-      </p>
+      </ol>
+      <div
+        className="mt-3 rounded-md px-3 py-2 flex items-center gap-2"
+        style={{ background: GREEN + "14", border: `1px solid ${GREEN}55` }}
+      >
+        <ArrowUp className="w-3.5 h-3.5" style={{ color: GREEN }} />
+        <p className="text-[11px] leading-snug font-semibold" style={{ color: GREEN }}>
+          Outcomes flow back up to Leadership as live signal.
+        </p>
+      </div>
     </div>
   );
 }
