@@ -1743,46 +1743,79 @@ function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
    bubble. Tap right/left to skip, tap card to pause. */
 type MobileTourSection = { id: string; tone: Tone; kicker: string; title: string; sub: string; icon: React.ReactNode; items: { label: string; detail: string }[] };
 
-const TOUR_NARRATION: Record<string, { headline: string; body: string }> = {
-  leadership: {
-    headline: "Start with leadership.",
-    body: "Owners write the playbooks, mandates and policies. These become the rules every AI request runs against.",
-  },
-  core: {
-    headline: "Liza enforces those rules.",
-    body: "Every AI request — from any tool — gets checked against the standard before it answers. Off-policy outputs are blocked or rewritten.",
-  },
-  native: {
-    headline: "Work happens inside Liza.",
-    body: "Workbooks for memos, RFIs, deviations, complaints. Every artifact is versioned, attributable and audit-ready.",
-  },
-  systems: {
-    headline: "It reads from your stack.",
-    body: "Vault, Procore, ERP, Drive, SharePoint. Liza pulls context in and pushes approved outputs back as truth.",
-  },
-  tools: {
-    headline: "Your AI tools stay on policy.",
-    body: "Copilot, Claude, vendor agents — they all call Liza so every team gets the same governed answer.",
-  },
-};
+/* Industry-aware narration. Falls back to generic for any missing section. */
+function buildMobileNarration(
+  industry: IndustryLexicon,
+  isGeneric: boolean,
+): Record<string, { headline: string; body: string }> {
+  const label = industry.label;
+  const generic: Record<string, { headline: string; body: string }> = {
+    leadership: {
+      headline: "Start with leadership.",
+      body: "Owners write the playbooks, mandates and policies. These become the rules every AI request runs against.",
+    },
+    core: {
+      headline: "Liza enforces those rules.",
+      body: "Every AI request, from any tool, gets checked against the standard before it answers. Off-policy outputs are blocked or rewritten.",
+    },
+    native: {
+      headline: "Work happens inside Liza.",
+      body: "Workbooks for memos, RFIs, deviations, complaints. Every artifact is versioned, attributable and audit-ready.",
+    },
+    systems: {
+      headline: "It reads from your stack.",
+      body: "Vault, Procore, ERP, Drive, SharePoint. Liza pulls context in and pushes approved outputs back as truth.",
+    },
+    tools: {
+      headline: "Your AI tools stay on policy.",
+      body: "Copilot, Claude, vendor agents. They all call Liza so every team gets the same governed answer.",
+    },
+  };
+  if (isGeneric) return generic;
+  // Industry-specific overrides driven by the industry lexicon.
+  return {
+    leadership: {
+      headline: `${label}: leadership sets the standard.`,
+      body: industry.leadership.pushItems[0]?.detail ?? generic.leadership.body,
+    },
+    core: {
+      headline: `${label}: governed core checks every request.`,
+      body: industry.judgmentCore.systemic ?? generic.core.body,
+    },
+    native: {
+      headline: `${label}: this is where work happens.`,
+      body: industry.nativeSurfaces.sub ?? generic.native.body,
+    },
+    systems: {
+      headline: `${label} systems of record.`,
+      body: industry.sourceSystems.sub ?? generic.systems.body,
+    },
+    tools: {
+      headline: `${label} AI tools, kept on policy.`,
+      body: industry.connectedTools.sub ?? generic.tools.body,
+    },
+  };
+}
 
-function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
+function MobileGuidedTour({
+  sections, industry, isGeneric,
+}: { sections: MobileTourSection[]; industry: IndustryLexicon; isGeneric: boolean }) {
   const [open, setOpen] = useState<Record<string, boolean>>({});
   const [tourActive, setTourActive] = useState(false);
   const [step, setStep] = useState(0);
-  const [paused, setPaused] = useState(false);
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const STEP_MS = 6500;
+  const narrationMap = useMemo(
+    () => buildMobileNarration(industry, isGeneric),
+    [industry, isGeneric],
+  );
 
-  // Drive the tour
+  // When step changes (or tour starts), open the current section + scroll to it.
   useEffect(() => {
-    if (!tourActive || paused) return;
+    if (!tourActive) return;
     const current = sections[step];
     if (!current) return;
-    // open this section, close others
     setOpen(() => ({ [current.id]: true }));
-    // scroll into view (with offset for sticky header)
     requestAnimationFrame(() => {
       const el = refs.current[current.id];
       if (el) {
@@ -1791,26 +1824,25 @@ function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
         window.scrollTo({ top, behavior: "smooth" });
       }
     });
-    const t = window.setTimeout(() => {
-      if (step < sections.length - 1) setStep((s) => s + 1);
-      else setTourActive(false);
-    }, STEP_MS);
-    return () => window.clearTimeout(t);
-  }, [tourActive, step, paused, sections]);
+  }, [tourActive, step, sections]);
+
+  // Reset step to 0 if industry changes mid-tour so narration matches.
+  useEffect(() => {
+    if (tourActive) setStep(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [industry.label]);
 
   const startTour = () => {
     setStep(0);
-    setPaused(false);
     setTourActive(true);
   };
 
   const stopTour = () => {
     setTourActive(false);
-    setPaused(false);
   };
 
   const current = tourActive ? sections[step] : null;
-  const narration = current ? TOUR_NARRATION[current.id] : null;
+  const narration = current ? narrationMap[current.id] : null;
   const tone = current ? TONE[current.tone] : null;
 
   return (
@@ -1831,10 +1863,10 @@ function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-[12.5px] font-black text-foreground leading-tight">
-            Take the 5-step guided tour
+            {isGeneric ? "Step 2: Take the 5-step guided tour" : `Step 2: 5-step ${industry.label} tour`}
           </p>
           <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">
-            We'll walk you through every layer of the platform with narration.
+            Tap through each layer at your own pace. Back, Next, or close anytime.
           </p>
         </div>
         <button
@@ -1928,13 +1960,9 @@ function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
                   <ArrowLeft className="w-3.5 h-3.5" />
                   Back
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setPaused((p) => !p)}
-                  className="text-[11px] font-bold text-foreground/80"
-                >
-                  {paused ? "Resume" : "Pause"}
-                </button>
+                <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                  Tap next when ready
+                </span>
                 {step < sections.length - 1 ? (
                   <button
                     type="button"
