@@ -13,7 +13,7 @@ const REGULATED_INDUSTRIES = [
     title: "Regulated Science & Manufacturing",
     lifecycle: "Product & Quality Lifecycle Management",
     description:
-      "From R&D through post-market surveillance, from lab governance to food safety: govern AI across GxP and ISO-regulated processes without losing speed or traceability.",
+      "Govern AI across GxP and ISO-regulated processes without losing speed or traceability.",
     tags: ["GMP", "ISO 17025", "GLP", "GAMP 5", "21 CFR Part 11"],
     available: true,
   },
@@ -23,7 +23,7 @@ const REGULATED_INDUSTRIES = [
     title: "Architecture, Engineering & Construction",
     lifecycle: "Built-Environment Project Lifecycle",
     description:
-      "RFIs, submittals, owner standards, and BIM context governed across project delivery. Stop paying for the same rework twice.",
+      "RFIs, submittals, owner standards, and BIM context governed across project delivery.",
     tags: ["ISO 19650", "BIM", "RFI", "Submittals"],
     available: true,
   },
@@ -33,7 +33,7 @@ const REGULATED_INDUSTRIES = [
     title: "Space Engineering & Mission Operations",
     lifecycle: "Mission Lifecycle Management",
     description:
-      "Capture chief-engineer judgment and mission heritage before it retires. Govern AI across trade studies, reviews, and AIT.",
+      "Capture chief-engineer judgment and mission heritage. Govern AI across trade studies, reviews, and AIT.",
     tags: ["ECSS", "AS9100", "PDR/CDR", "Heritage"],
     available: true,
   },
@@ -43,7 +43,7 @@ const REGULATED_INDUSTRIES = [
     title: "Space & Defence Holdings",
     lifecycle: "Programme Lifecycle · Capture · Engineering · Sustainment",
     description:
-      "For consolidating Space & Defence groups: one context layer from RFP and capture, through engineering and qualification, to sustainment and ILS. Govern AQAP, AS9100, ISO 27001, and ECSS as one stack across the federation. Come on board as a customer, an investor, or both.",
+      "One context layer from capture, through engineering, to sustainment. Govern AQAP, AS9100, ISO 27001, and ECSS as one stack.",
     tags: ["NATO AQAP", "AS9100", "ECSS", "ISO 27001", "M&A Integration"],
     available: true,
   },
@@ -53,7 +53,7 @@ const REGULATED_INDUSTRIES = [
     title: "Satellite Operators & Fleet Operations",
     lifecycle: "Operator & Fleet Lifecycle",
     description:
-      "15-year fleet memory, procurement governance, and spectrum continuity. The operator memory layer for satcom.",
+      "15-year fleet memory, procurement governance, and spectrum continuity.",
     tags: ["ITU-R", "FCC Part 25", "SLA", "LEOP"],
     available: true,
   },
@@ -63,7 +63,7 @@ const REGULATED_INDUSTRIES = [
     title: "Retail Banking & Financial Services",
     lifecycle: "Brand · Conduct · Lifecycle",
     description:
-      "Brand voice, product rules, regulator wording, and segment judgment governed across every AI output. Starts at the marketing wedge, extends across KYC, complaints, credit, and group governance.",
+      "Brand voice, product rules, and regulator wording governed across KYC, complaints, credit, and group governance.",
     tags: ["EBA", "Consumer Duty", "DORA", "AML6"],
     available: true,
   },
@@ -73,7 +73,7 @@ const REGULATED_INDUSTRIES = [
     title: "Automotive R&D & Functional Safety",
     lifecycle: "Engineering V-Cycle · Cross-Border R&D",
     description:
-      "Chassis-control IP, HQ design intent, and ISO 26262 / ASPICE judgment governed across cross-border engineering sites. Starts at HQ → Europe onboarding, extends across safety case, ASPICE, and group engineering memory.",
+      "Chassis-control IP, HQ design intent, and ISO 26262 / ASPICE judgment governed across cross-border engineering sites.",
     tags: ["ISO 26262", "ASPICE", "ISO 21434", "AUTOSAR"],
     available: true,
   },
@@ -123,72 +123,84 @@ export default function IndustriesPage() {
             <p className="text-xs font-black tracking-[0.2em] uppercase mb-6 text-muted-foreground">
               Regulated Industries
             </p>
-            <div className="grid gap-5">
-              {REGULATED_INDUSTRIES.map((ind) => (
-                <div
-                  key={ind.slug}
-                  className="group rounded-2xl border p-7 transition-all relative overflow-hidden"
-                  style={{
-                    borderColor: ind.available
-                      ? "hsl(var(--primary) / 0.2)"
-                      : "hsl(var(--border))",
-                    background: "hsl(var(--card))",
-                  }}
-                >
-                  {!ind.available && (
-                    <div className="absolute top-4 right-4 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                      <Lock className="w-3 h-3" />
-                      Coming soon
-                    </div>
-                  )}
-                  <div className="flex flex-col md:flex-row md:items-start gap-5">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                      style={{
-                        background: ind.available
-                          ? "hsl(var(--primary) / 0.1)"
-                          : "hsl(var(--muted))",
-                        color: ind.available
-                          ? "hsl(var(--primary))"
-                          : "hsl(var(--muted-foreground))",
-                      }}
-                    >
-                      {ind.icon}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-1">
-                        {ind.lifecycle}
-                      </p>
-                      <h3 className="text-xl font-bold text-foreground mb-2">{ind.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                        {ind.description}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2">
-                        {ind.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[11px] font-medium px-2.5 py-1 rounded-md"
-                            style={{
-                              background: "hsl(var(--muted))",
-                              color: "hsl(var(--muted-foreground))",
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {ind.available && (
-                          <Link
-                            to={`/industries/${ind.slug}`}
-                            className="ml-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-                          >
-                            Explore <ArrowRight className="w-4 h-4" />
-                          </Link>
-                        )}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {REGULATED_INDUSTRIES.map((ind) => {
+                const card = (
+                  <div
+                    className="group h-full rounded-2xl border p-5 transition-all relative overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-0.5"
+                    style={{
+                      borderColor: ind.available
+                        ? "hsl(var(--primary) / 0.2)"
+                        : "hsl(var(--border))",
+                      background: "hsl(var(--card))",
+                    }}
+                  >
+                    {!ind.available && (
+                      <div className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-medium text-muted-foreground">
+                        <Lock className="w-3 h-3" />
+                        Soon
+                      </div>
+                    )}
+                    <div className="flex items-start gap-3 mb-3">
+                      <div
+                        className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                        style={{
+                          background: ind.available
+                            ? "hsl(var(--primary) / 0.1)"
+                            : "hsl(var(--muted))",
+                          color: ind.available
+                            ? "hsl(var(--primary))"
+                            : "hsl(var(--muted-foreground))",
+                        }}
+                      >
+                        {ind.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground mb-0.5 leading-tight">
+                          {ind.lifecycle}
+                        </p>
+                        <h3 className="text-[15px] font-bold text-foreground leading-snug">
+                          {ind.title}
+                        </h3>
                       </div>
                     </div>
+                    <p className="text-[13px] text-muted-foreground leading-relaxed mb-4 flex-1">
+                      {ind.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {ind.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[10px] font-medium px-2 py-0.5 rounded"
+                          style={{
+                            background: "hsl(var(--muted))",
+                            color: "hsl(var(--muted-foreground))",
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {ind.tags.length > 3 && (
+                        <span className="text-[10px] font-medium px-2 py-0.5 text-muted-foreground">
+                          +{ind.tags.length - 3}
+                        </span>
+                      )}
+                    </div>
+                    {ind.available && (
+                      <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary group-hover:gap-2 transition-all">
+                        Explore <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+                return ind.available ? (
+                  <Link key={ind.slug} to={`/industries/${ind.slug}`} className="block">
+                    {card}
+                  </Link>
+                ) : (
+                  <div key={ind.slug}>{card}</div>
+                );
+              })}
             </div>
           </div>
 
