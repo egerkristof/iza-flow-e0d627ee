@@ -656,6 +656,14 @@ export function ArchitectureWalkthrough() {
   const scene = SCENES[index];
   const isFinal = index === SCENES.length - 1 && progress >= 0.98;
 
+  // Active narrator beat — the last one whose `at` has been crossed.
+  const activeBeat = (() => {
+    const beats = scene.beats ?? [];
+    let current: { at: number; text: string } | null = null;
+    for (const b of beats) if (progress >= b.at) current = b;
+    return current;
+  })();
+
   return (
     <div ref={wrapRef} className="w-full md:max-w-3xl md:mx-auto">
       <div
@@ -719,6 +727,23 @@ export function ArchitectureWalkthrough() {
               >
                 {scene.render(progress)}
               </motion.div>
+            </AnimatePresence>
+          </div>
+          {/* Narrator caption — gives the viewer time to process each beat */}
+          <div className="mt-3 md:mt-5 min-h-[48px] md:min-h-[56px] flex items-start justify-center">
+            <AnimatePresence mode="wait">
+              {activeBeat && (
+                <motion.p
+                  key={`beat-${index}-${activeBeat.at}`}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.45 }}
+                  className="text-[12px] md:text-[14px] leading-snug text-foreground/80 text-center max-w-[28ch] md:max-w-[52ch] font-medium"
+                >
+                  {activeBeat.text}
+                </motion.p>
+              )}
             </AnimatePresence>
           </div>
         </div>
