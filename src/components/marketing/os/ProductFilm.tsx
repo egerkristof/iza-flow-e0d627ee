@@ -82,18 +82,19 @@ export function ProductFilm() {
     >
       {/* Frame chrome */}
       <div
-        className="flex items-center justify-between px-4 py-2.5 border-b"
+        className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 border-b gap-2"
         style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
       >
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 min-w-0">
           <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.7)" }} />
           <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-green, var(--primary)) / 0.7)" }} />
           <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--primary) / 0.7)" }} />
-          <span className="ml-3 text-[10px] font-black tracking-[0.18em] uppercase text-primary">
-            LIZA · 90-second product film
+          <span className="ml-2 sm:ml-3 text-[9px] sm:text-[10px] font-black tracking-[0.14em] sm:tracking-[0.18em] uppercase text-primary truncate">
+            <span className="hidden sm:inline">LIZA · 90-second product film</span>
+            <span className="sm:hidden">LIZA · Product film</span>
           </span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <button
             type="button"
             onClick={goPrev}
@@ -122,7 +123,7 @@ export function ProductFilm() {
       </div>
 
       {/* Stage */}
-      <div className="relative aspect-video bg-background">
+      <div className="relative aspect-[4/5] sm:aspect-video bg-background">
         {/* Dot grid backdrop */}
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.3]"
@@ -139,14 +140,14 @@ export function ProductFilm() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.04 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="absolute inset-0 flex items-center justify-center p-8"
+            className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 pb-24 sm:pb-20"
           >
             <BeatVisual visual={beat.visual} />
           </motion.div>
         </AnimatePresence>
 
         {/* Caption track */}
-        <div className="absolute bottom-0 left-0 right-0 p-5">
+        <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5">
           <AnimatePresence mode="wait">
             <motion.div
               key={beatIdx + "-cap"}
@@ -154,13 +155,13 @@ export function ProductFilm() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.4 }}
-              className="max-w-3xl mx-auto rounded-xl px-5 py-3.5 backdrop-blur-md"
+              className="max-w-3xl mx-auto rounded-xl px-3 sm:px-5 py-2.5 sm:py-3.5 backdrop-blur-md"
               style={{
                 background: "hsl(var(--background) / 0.85)",
                 border: "1px solid hsl(var(--primary) / 0.25)",
               }}
             >
-              <p className="text-center text-sm md:text-base font-bold text-foreground leading-snug">
+              <p className="text-center text-[12px] sm:text-sm md:text-base font-bold text-foreground leading-snug">
                 {beat.caption}
               </p>
             </motion.div>
