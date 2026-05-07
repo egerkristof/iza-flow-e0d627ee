@@ -20,6 +20,9 @@ type Scene = {
   headline: string;
   duration: number; // ms
   render: (p: number) => JSX.Element; // p = 0..1 progress within scene
+  /** Narrated beats: each appears once progress crosses `at` (0..1).
+      Use these to give the viewer time to read the scene before moving on. */
+  beats?: { at: number; text: string }[];
 };
 
 /* ---------- helpers ---------- */
@@ -527,12 +530,54 @@ function SceneSuccess(p: number) {
 
 /* ---------- scenes config ---------- */
 const SCENES: Scene[] = [
-  { kicker: "01 · You",        headline: "You shipped AI everywhere.",          duration: 6500,  render: SceneHero },
-  { kicker: "02 · Problem",    headline: "But every tool answers differently.", duration: 7500,  render: SceneProblem },
-  { kicker: "03 · Stakes",     headline: "And it's costing you.",               duration: 7500,  render: SceneStakes },
-  { kicker: "04 · Meet Liza",  headline: "Liza writes how your company decides.", duration: 9000, render: SceneGuide },
-  { kicker: "05 · The plan",   headline: "Liza learns, then governs.",          duration: 11000, render: ScenePlan },
-  { kicker: "06 · Success",    headline: "One answer. Audited. Always improving.", duration: 9000, render: SceneSuccess },
+  {
+    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 11000, render: SceneHero,
+    beats: [
+      { at: 0.00, text: "It's a Tuesday. Six teams are already working with AI." },
+      { at: 0.45, text: "Sales, Legal, Support, Ops, HR, Finance — each picked their own tool." },
+      { at: 0.72, text: "A dozen assistants are running. Nobody told them what your company stands for." },
+    ],
+  },
+  {
+    kicker: "02 · Problem", headline: "But every tool answers differently.", duration: 12000, render: SceneProblem,
+    beats: [
+      { at: 0.00, text: "And the world won't sit still — regulation, competitors and policy shift every week." },
+      { at: 0.30, text: "One question lands in #deal-desk. Three people, three tools, three answers." },
+      { at: 0.78, text: "It's not the AI failing. It's the silos and the missing standard." },
+    ],
+  },
+  {
+    kicker: "03 · Stakes", headline: "And it's costing you.", duration: 11000, render: SceneStakes,
+    beats: [
+      { at: 0.00, text: "Three weeks later, the drift becomes visible." },
+      { at: 0.55, text: "Discounts slip. Audit flags real risk. People stop trusting the tools." },
+      { at: 0.80, text: "Nobody made a bad call. Nobody made the rules either." },
+    ],
+  },
+  {
+    kicker: "04 · Meet Liza", headline: "Liza writes how your company decides.", duration: 13000, render: SceneGuide,
+    beats: [
+      { at: 0.00, text: "Liza holds one living document: how your company actually decides." },
+      { at: 0.40, text: "Leaders author rules. Teams draft work that cites them automatically." },
+      { at: 0.70, text: "Every decision flows back as signal — closed deals, edge cases, gaps." },
+    ],
+  },
+  {
+    kicker: "05 · The plan", headline: "Liza learns, then governs.", duration: 14000, render: ScenePlan,
+    beats: [
+      { at: 0.00, text: "Day 1 — connect Liza to the systems where work already happens. Read-only." },
+      { at: 0.35, text: "Week 1 — Liza drafts rules from real decisions. Leaders edit and sign." },
+      { at: 0.65, text: "Week 2 — wire the standard into Copilot, Claude, Glean and your agents." },
+    ],
+  },
+  {
+    kicker: "06 · Success", headline: "One answer. Audited. Always improving.", duration: 13000, render: SceneSuccess,
+    beats: [
+      { at: 0.00, text: "Week 2 — every AI tool cites the same source." },
+      { at: 0.35, text: "Week 6 — regulation lands. One edit; the whole company updates by morning." },
+      { at: 0.70, text: "Week 12 — edge cases sharpen the standard. The OS compounds." },
+    ],
+  },
 ];
 
 /* ---------- player ---------- */
