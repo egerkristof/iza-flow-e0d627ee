@@ -343,125 +343,95 @@ function SceneGuide(p: number) {
   );
 }
 
-/* 5. PLAN — Liza connects, learns, and produces artifacts. */
+/* 5. PLAN — 3 steps to start with Liza, plus the outcome */
 function ScenePlan(p: number) {
-  const records = [
-    { label: "SharePoint",  sub: "12k docs",   icon: <Cloud className="w-3 h-3" /> },
-    { label: "Salesforce",  sub: "3y deals",   icon: <Database className="w-3 h-3" /> },
-    { label: "Notion",      sub: "Playbooks",  icon: <FileSpreadsheet className="w-3 h-3" /> },
-    { label: "Gmail",       sub: "Approvals",  icon: <Mail className="w-3 h-3" /> },
+  const steps = [
+    {
+      n: "1",
+      title: "Connect",
+      time: "Day 1",
+      body: "Plug Liza into your stack. Read-only.",
+      meta: ["SharePoint", "Salesforce", "Notion", "Gmail"],
+      icon: <Plug className="w-3.5 h-3.5" />,
+    },
+    {
+      n: "2",
+      title: "Co-author the standard",
+      time: "Week 1",
+      body: "Liza drafts rules from real decisions. Leaders edit and approve.",
+      meta: ["Liza drafts", "Sarah edits", "CFO signs"],
+      icon: <FileText className="w-3.5 h-3.5" />,
+    },
+    {
+      n: "3",
+      title: "Wire to every AI tool",
+      time: "Week 2",
+      body: "Copilot, Claude, Glean, your custom agents. All cite the same source.",
+      meta: ["Copilot", "Claude", "Glean", "Agents"],
+      icon: <Link2 className="w-3.5 h-3.5" />,
+    },
   ];
-  const tools = [
-    { label: "Copilot",   icon: <Sparkles className="w-3 h-3" /> },
-    { label: "Claude",    icon: <Bot className="w-3 h-3" /> },
-    { label: "Glean",     icon: <Search className="w-3 h-3" /> },
-    { label: "Agents",    icon: <Workflow className="w-3 h-3" /> },
-  ];
-  const topIn = between(p, 0.0, 0.22);
-  const learnIn = between(p, 0.22, 0.45);
-  const center = between(p, 0.4, 0.6);
-  const botIn = between(p, 0.6, 0.8);
   return (
-    <div className="w-full max-w-[290px] mx-auto">
-      {/* Top: your data */}
-      <div className="mb-1" style={{ opacity: topIn }}>
-        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          1 · Liza reads what you already have
-        </p>
-        <div className="grid grid-cols-4 gap-1">
-          {records.map((r) => (
-            <div key={r.label} className="flex flex-col items-center gap-0 px-1 py-1 rounded border"
-              style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
-              <span style={{ color: MUTED }}>{r.icon}</span>
-              <span className="text-[8px] font-bold text-foreground/85 truncate">{r.label}</span>
-              <span className="text-[7.5px] text-muted-foreground truncate">{r.sub}</span>
+    <div className="w-full max-w-[320px] mx-auto space-y-1.5">
+      <p className="text-[9px] font-black uppercase tracking-[0.18em] text-muted-foreground text-center mb-1">
+        Three steps. Two weeks.
+      </p>
+      {steps.map((s, i) => {
+        const a = between(p, 0.05 + i * 0.18, 0.3 + i * 0.18);
+        return (
+          <div
+            key={s.n}
+            className="rounded-lg border p-2"
+            style={{
+              opacity: a,
+              transform: `translateY(${(1 - a) * 8}px)`,
+              borderColor: PRIMARY + "44",
+              background: PRIMARY + "06",
+            }}
+          >
+            <div className="flex items-start gap-2">
+              <span
+                className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 font-black text-[12px]"
+                style={{ background: PRIMARY, color: "hsl(var(--primary-foreground))" }}
+              >
+                {s.n}
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-[10.5px] font-black text-foreground leading-tight">{s.title}</p>
+                  <span className="text-[8px] font-bold uppercase tracking-[0.1em] text-muted-foreground flex-shrink-0">{s.time}</span>
+                </div>
+                <p className="text-[9.5px] text-muted-foreground leading-snug mt-0.5">{s.body}</p>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {s.meta.map((m) => (
+                    <span key={m} className="text-[8px] font-bold px-1.5 py-0.5 rounded"
+                      style={{ background: PRIMARY + "12", color: PRIMARY }}>
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.18, 0.3) }}>
-        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
-      </div>
-
-      {/* Learn step */}
+          </div>
+        );
+      })}
+      {/* Outcome */}
       <div
-        className="mb-1 rounded-lg border px-2 py-1.5"
+        className="rounded-lg border-2 border-dashed p-2 mt-1.5 flex items-center gap-2"
         style={{
-          opacity: learnIn,
-          borderColor: PRIMARY + "44",
-          background: PRIMARY + "08",
+          opacity: between(p, 0.68, 0.9),
+          borderColor: PRIMARY,
+          background: PRIMARY + "10",
         }}
       >
-        <div className="flex items-center gap-1.5 mb-1">
-          <Activity className="w-3 h-3" style={{ color: PRIMARY }} />
-          <span className="text-[9px] font-black uppercase tracking-[0.14em]" style={{ color: PRIMARY }}>
-            2 · Liza proposes rules from real decisions
-          </span>
-        </div>
-        <div className="grid grid-cols-3 gap-1">
-          {[
-            { i: <BookOpen className="w-3 h-3" />, l: "Reads 4 yrs of contracts" },
-            { i: <Eye className="w-3 h-3" />,      l: "Watches what CFO approves" },
-            { i: <FileText className="w-3 h-3" />, l: "Drafts → Sarah edits" },
-          ].map((x, i) => {
-            const a = between(p, 0.25 + i * 0.05, 0.4 + i * 0.05);
-            return (
-              <div key={x.l} className="flex flex-col items-center gap-0.5" style={{ opacity: a }}>
-                <span style={{ color: PRIMARY }}>{x.i}</span>
-                <span className="text-[7.5px] font-bold text-foreground/80 text-center leading-tight">{x.l}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.42, 0.55) }}>
-        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
-      </div>
-
-      {/* Center: Standard + artifacts */}
-      <div style={{ opacity: center, transform: `scale(${0.94 + center * 0.06})` }}>
-        <MiniWindow label="3 · Liza · Decision Standard" accent={PRIMARY} glow>
-          <div className="flex items-center gap-1.5 mb-1.5">
-            <Compass className="w-3.5 h-3.5 flex-shrink-0" style={{ color: PRIMARY }} />
-            <p className="text-[10.5px] font-bold text-foreground/85">
-              The standard, plus the artifacts your teams use every day
-            </p>
-          </div>
-          <div className="grid grid-cols-3 gap-1">
-            {[
-              { l: "Pricing policy",   i: <FileText className="w-3 h-3" /> },
-              { l: "Renewal playbook", i: <BookOpen className="w-3 h-3" /> },
-              { l: "Approval log",     i: <Stamp className="w-3 h-3" /> },
-            ].map((a) => (
-              <div key={a.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
-                style={{ borderColor: PRIMARY + "33", background: "hsl(var(--background))" }}>
-                <span style={{ color: PRIMARY }}>{a.i}</span>
-                <span className="text-[8px] font-bold text-foreground/80 truncate">{a.l}</span>
-              </div>
-            ))}
-          </div>
-        </MiniWindow>
-      </div>
-
-      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.58, 0.7) }}>
-        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
-      </div>
-
-      {/* Bottom: your AI tools */}
-      <div style={{ opacity: botIn }}>
-        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          4 · Every AI tool checks the standard before it answers
-        </p>
-        <div className="grid grid-cols-4 gap-1">
-          {tools.map((t) => (
-            <div key={t.label} className="flex flex-col items-center gap-0.5 px-1 py-1 rounded border"
-              style={{ borderColor: PRIMARY + "44", background: PRIMARY + "0a" }}>
-              <span style={{ color: PRIMARY }}>{t.icon}</span>
-              <span className="text-[8px] font-bold text-foreground/85 truncate">{t.label}</span>
-            </div>
-          ))}
+        <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: PRIMARY }} />
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.12em]" style={{ color: PRIMARY }}>
+            By Day 14
+          </p>
+          <p className="text-[10px] font-bold text-foreground/90 leading-tight">
+            Every AI tool gives the same answer. Leaders own the rules.
+          </p>
         </div>
       </div>
     </div>
