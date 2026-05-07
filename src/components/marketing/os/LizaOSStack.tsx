@@ -1456,24 +1456,33 @@ function MobileSection({
 
 /* ---------- Industry rolodex tab strip ---------- */
 function IndustryRolodex({
-  active, onChange,
-}: { active: IndustryKey; onChange: (k: IndustryKey) => void }) {
+  active, onChange, onPlayTour, showPlayTour,
+}: {
+  active: IndustryKey;
+  onChange: (k: IndustryKey) => void;
+  onPlayTour: () => void;
+  showPlayTour: boolean;
+}) {
   return (
-    <div className="mb-5 hidden md:block">
-      <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-        <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground">
-          Pick your industry — the diagram relabels in your language
+    <div className="mb-7 hidden md:block">
+      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <p className="text-[12px] font-black tracking-[0.22em] uppercase text-foreground/80">
+          1. Pick your industry. 2. Play the 6-step tour.
         </p>
         {active === "generic" && (
-          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-primary inline-flex items-center gap-1">
-            <ChevronRight className="w-3 h-3 animate-pulse" />
-            try one
+          <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-primary inline-flex items-center gap-1">
+            <ChevronRight className="w-3.5 h-3.5 animate-pulse" />
+            start here
           </span>
         )}
       </div>
       <div
-        className="flex flex-wrap gap-1.5 p-1.5 rounded-xl border"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+        className="flex flex-wrap items-center gap-2 p-2.5 rounded-2xl border-2"
+        style={{
+          background: "hsl(var(--card))",
+          borderColor: "hsl(var(--primary) / 0.25)",
+          boxShadow: "0 12px 40px -20px hsl(var(--primary) / 0.35)",
+        }}
       >
         {INDUSTRIES.map((ind) => {
           const isActive = ind.key === active;
@@ -1482,18 +1491,28 @@ function IndustryRolodex({
               key={ind.key}
               type="button"
               onClick={() => onChange(ind.key)}
-              className="text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all"
+              className="text-[13px] font-bold px-4 py-2.5 rounded-xl transition-all hover:-translate-y-0.5"
               style={{
-                background: isActive ? "hsl(var(--primary))" : "transparent",
-                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.7)",
-                boxShadow: isActive ? "0 6px 18px -10px hsl(var(--primary))" : "none",
+                background: isActive ? "hsl(var(--primary))" : "hsl(var(--background))",
+                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.8)",
+                border: isActive ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+                boxShadow: isActive ? "0 8px 22px -10px hsl(var(--primary))" : "none",
               }}
             >
               {ind.label}
             </button>
           );
         })}
+        <div className="flex-1" />
+        {showPlayTour && (
+          <PlayTourButton onClick={onPlayTour} />
+        )}
       </div>
+      {showPlayTour && (
+        <p className="mt-2 text-[11px] text-muted-foreground">
+          Hit <span className="font-bold text-foreground">Play 6-step tour</span> to walk through the diagram one piece at a time.
+        </p>
+      )}
     </div>
   );
 }
