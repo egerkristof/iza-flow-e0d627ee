@@ -1723,14 +1723,11 @@ function IndustryRolodex({
       <div className="flex items-end justify-between mb-4 flex-wrap gap-3">
         <div>
           <p className="text-[11px] font-black tracking-[0.28em] uppercase text-primary mb-1.5">
-            Step 1 of 2
+            Choose how you want to read this
           </p>
           <h3 className="text-[22px] md:text-[26px] font-black leading-tight text-foreground">
-            Pick your industry to see this run on your stack.
+            Pick your industry, then take the 6-step guided tour or explore on your own.
           </h3>
-          <p className="text-[13px] text-muted-foreground mt-1">
-            Then hit <span className="font-bold text-foreground">Play 6-step tour</span> for a guided walk-through of the architecture.
-          </p>
         </div>
         {active === "generic" && (
           <motion.span
