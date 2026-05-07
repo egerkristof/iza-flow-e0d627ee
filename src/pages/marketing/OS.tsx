@@ -71,15 +71,15 @@ export default function OSPage() {
         </div>
       </section>
 
-      {/* The four moves — orientation primer before the interactive stack */}
-      <FourMovesStrip />
-
       {/* The interactive stack */}
       <section id="stack" className="py-8 md:py-12 px-6">
         <div className="max-w-6xl mx-auto">
           <LizaOSStack />
         </div>
       </section>
+
+      {/* The four moves — runs continuously on the OS */}
+      <FourMovesStrip />
 
       {/* Industry grid */}
       <section className="py-16 md:py-20 px-6">
