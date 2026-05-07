@@ -25,7 +25,7 @@ type Beat = {
 const BEATS: Beat[] = [
   { duration: 7000,  caption: "Every AI tool you bought answers from generic training data. Different tool, different answer.", visual: "chaos" },
   { duration: 8000,  caption: "RAG bolts on a snapshot. Documents freeze. Reality moves on. Your decision logic is not in there.", visual: "rag-decay" },
-  { duration: 8000,  caption: "Your real standards stay trapped in records, threads and senior heads. Not retrievable text. Human knowledge.", visual: "trapped" },
+  { duration: 11000, caption: "Tools and docs are the tip. Your real standards live below the waterline: tacit logic, tribal know-how, decisions never written down.", visual: "trapped" },
   { duration: 12000, caption: "LIZA forges the Decision Standard. Fragments become a living knowledge graph. Nodes, relationships, governed logic.", visual: "forge" },
   { duration: 8000,  caption: "One workspace. Your AI agents execute inside, every action checked against the standard.", visual: "broadcast" },
   { duration: 8000,  caption: "Strategy pushes down. Signal flows up. Same week, not next quarter.", visual: "loop" },
