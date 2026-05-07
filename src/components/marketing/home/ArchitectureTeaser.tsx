@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Database, Workflow, Sparkles, ScrollText, ShieldCheck, GitBranch, ArrowLeftRight } from "lucide-react";
+import { ArrowRight, Database, Workflow, Sparkles, ScrollText, ArrowLeftRight } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
 const SIDE_TILES = [
