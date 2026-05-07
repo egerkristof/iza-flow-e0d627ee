@@ -16,12 +16,6 @@ const SIDE_TILES = [
   },
 ];
 
-const LIZA_PILLARS = [
-  { icon: <ScrollText className="w-3 h-3" />, label: "Mandates & playbooks" },
-  { icon: <ShieldCheck className="w-3 h-3" />, label: "Policy & guardrails" },
-  { icon: <GitBranch className="w-3 h-3" />, label: "Versioned & auditable" },
-];
-
 const INDUSTRIES = [
   "Industry-agnostic",
   "Pharma & Life Sciences",
