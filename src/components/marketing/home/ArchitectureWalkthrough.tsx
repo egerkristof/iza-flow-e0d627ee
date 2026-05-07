@@ -667,14 +667,29 @@ export function ArchitectureWalkthrough() {
   return (
     <div ref={wrapRef} className="w-full md:max-w-3xl md:mx-auto">
       <div
-        className="relative rounded-2xl border overflow-hidden select-none h-[640px] md:h-[620px] md:max-w-5xl md:mx-auto"
+        className="relative rounded-2xl border-2 overflow-hidden select-none md:max-w-5xl md:mx-auto"
         style={{
           background: "hsl(var(--card))",
-          borderColor: "hsl(var(--border))",
-          boxShadow: "0 16px 40px -28px hsl(var(--foreground) / 0.3)",
+          borderColor: "hsl(var(--primary) / 0.35)",
+          boxShadow: "0 24px 60px -24px hsl(var(--primary) / 0.4)",
         }}
-        onClick={onTap}
       >
+        {/* Frame chrome — matches ProductFilm */}
+        <div
+          className="flex items-center px-3 sm:px-4 py-2 sm:py-2.5 border-b"
+          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+        >
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.7)" }} />
+          <span className="w-2.5 h-2.5 rounded-full ml-1.5" style={{ background: "hsl(var(--brand-green, var(--primary)) / 0.7)" }} />
+          <span className="w-2.5 h-2.5 rounded-full ml-1.5" style={{ background: "hsl(var(--primary) / 0.7)" }} />
+          <span className="ml-3 text-[9px] sm:text-[10px] font-black tracking-[0.18em] uppercase text-primary truncate">
+            LIZA · The story
+          </span>
+        </div>
+        <div
+          className="relative h-[640px] md:h-[620px]"
+          onClick={onTap}
+        >
         {/* Progress bars (top) */}
         <div className="absolute top-3 left-3 right-3 z-30 flex gap-1">
           {SCENES.map((_, i) => {
@@ -899,6 +914,7 @@ export function ArchitectureWalkthrough() {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </div>
     </div>
   );
