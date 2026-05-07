@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  AlertTriangle, Compass, Database, Sparkles, Workflow,
-  ArrowDown, ArrowUp, ArrowRight, ArrowLeft, Play, Pause, Cloud, Mail, FileSpreadsheet, Bot, Search,
-  CheckCircle2, TrendingDown, Users, FileText, GitBranch, BookOpen, Stamp, Activity, Eye,
+  AlertTriangle, Compass, Sparkles, Workflow,
+  ArrowRight, ArrowLeft, Play, Pause, Bot, Search,
+  CheckCircle2, TrendingDown, Users, FileText, Activity,
+  Briefcase, Scale, Headphones, Cog, UserCheck, Wallet, Globe, Newspaper, AlertCircle, Link2, Plug,
 } from "lucide-react";
 
 /* Mobile-only auto-playing "Stories" video of the Liza architecture.
@@ -81,39 +82,41 @@ function Chip({ icon, label, accent = MUTED, dim = false }: { icon: React.ReactN
 
 /* 1. HERO — "You already shipped AI everywhere" */
 function SceneHero(p: number) {
-  const tools = [
-    { name: "Sales · Copilot",      sub: "Drafting proposals", icon: <Sparkles className="w-3.5 h-3.5" /> },
-    { name: "Legal · Claude",       sub: "Reviewing MSAs",     icon: <Bot className="w-3.5 h-3.5" /> },
-    { name: "Support · Glean",      sub: "Answering tickets",  icon: <Search className="w-3.5 h-3.5" /> },
-    { name: "Ops · Custom agent",   sub: "Triaging incidents", icon: <Workflow className="w-3.5 h-3.5" /> },
+  const teams = [
+    { dept: "Sales",   tool: "Copilot",       sub: "Drafting proposals",  icon: <Briefcase className="w-3.5 h-3.5" /> },
+    { dept: "Legal",   tool: "Claude",        sub: "Reviewing MSAs",      icon: <Scale className="w-3.5 h-3.5" /> },
+    { dept: "Support", tool: "Glean",         sub: "Answering tickets",   icon: <Headphones className="w-3.5 h-3.5" /> },
+    { dept: "Ops",     tool: "Custom agent",  sub: "Triaging incidents",  icon: <Cog className="w-3.5 h-3.5" /> },
+    { dept: "HR",      tool: "ChatGPT",       sub: "Screening candidates",icon: <UserCheck className="w-3.5 h-3.5" /> },
+    { dept: "Finance", tool: "Custom GPT",    sub: "Closing the books",   icon: <Wallet className="w-3.5 h-3.5" /> },
   ];
   return (
-    <div className="w-full max-w-[300px] mx-auto">
+    <div className="w-full max-w-[320px] mx-auto">
       <div className="text-center mb-3">
         <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
           A Tuesday at your company
         </span>
       </div>
-      <div className="grid grid-cols-1 gap-1.5">
-        {tools.map((t, i) => {
-          const a = between(p, 0.05 + i * 0.12, 0.3 + i * 0.12);
+      <div className="grid grid-cols-2 gap-1.5">
+        {teams.map((t, i) => {
+          const a = between(p, 0.05 + i * 0.08, 0.25 + i * 0.08);
           return (
             <div
-              key={t.name}
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border"
+              key={t.dept}
+              className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg border"
               style={{
                 opacity: a,
-                transform: `translateX(${(1 - a) * -8}px)`,
+                transform: `translateY(${(1 - a) * 6}px)`,
                 borderColor: PRIMARY + "33",
                 background: "hsl(var(--background))",
               }}
             >
               <span style={{ color: PRIMARY }}>{t.icon}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[10.5px] font-black text-foreground/85 truncate">{t.name}</p>
-                <p className="text-[9.5px] text-muted-foreground truncate">{t.sub}</p>
+                <p className="text-[10px] font-black text-foreground/85 truncate">{t.dept} · {t.tool}</p>
+                <p className="text-[8.5px] text-muted-foreground truncate">{t.sub}</p>
               </div>
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: PRIMARY, boxShadow: `0 0 6px ${PRIMARY}` }} />
+              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: PRIMARY, boxShadow: `0 0 6px ${PRIMARY}` }} />
             </div>
           );
         })}
@@ -122,22 +125,45 @@ function SceneHero(p: number) {
         className="mt-3 text-center text-[11px] font-bold text-foreground/80 leading-snug"
         style={{ opacity: between(p, 0.65, 0.9) }}
       >
-        Four teams. Four tools. <span style={{ color: PRIMARY }}>Nobody told them what "we" means.</span>
+        Six teams. A dozen tools. <span style={{ color: PRIMARY }}>Nobody told any of them what "we" means.</span>
       </div>
     </div>
   );
 }
 
-/* 2. PROBLEM — same question, conflicting answers */
+/* 2. PROBLEM — knowledge silos + shifting external reality + tool drift */
 function SceneProblem(p: number) {
-  const tools = [
-    { who: "Maya · AE",        tool: "Copilot",   answer: "Up to 15% is fine" },
-    { who: "Tom · Deal desk",  tool: "Claude",    answer: "25% on multi-year" },
-    { who: "Priya · CS",       tool: "Glean",     answer: "No policy found" },
+  const externals = [
+    { icon: <Newspaper className="w-3 h-3" />, l: "New EU AI Act clause" },
+    { icon: <Globe className="w-3 h-3" />,     l: "Competitor cuts price 18%" },
+    { icon: <AlertCircle className="w-3 h-3" />, l: "CFO tightens approval rules" },
   ];
+  const tools = [
+    { who: "Maya · AE",        tool: "Copilot",   answer: "Up to 15% is fine",     ctx: "saw last quarter's deck" },
+    { who: "Tom · Deal desk",  tool: "Claude",    answer: "25% on multi-year",     ctx: "read an old playbook" },
+    { who: "Priya · CS",       tool: "Glean",     answer: "No policy found",       ctx: "policy lives in Legal's drive" },
+  ];
+  const extIn = between(p, 0.0, 0.18);
+  const qIn = between(p, 0.2, 0.32);
   return (
-    <div className="w-full max-w-[300px] mx-auto">
-      <div className="text-center mb-2">
+    <div className="w-full max-w-[320px] mx-auto">
+      {/* External pressure layer */}
+      <div className="mb-2" style={{ opacity: extIn }}>
+        <p className="text-[8.5px] font-black uppercase tracking-[0.14em] text-muted-foreground text-center mb-1">
+          This week, the world changed three times
+        </p>
+        <div className="grid grid-cols-3 gap-1">
+          {externals.map((e) => (
+            <div key={e.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
+              style={{ borderColor: RED + "33", background: RED + "06" }}>
+              <span style={{ color: RED }}>{e.icon}</span>
+              <span className="text-[8px] font-bold text-foreground/80 leading-tight">{e.l}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="text-center mb-2" style={{ opacity: qIn }}>
         <span className="text-[9.5px] font-black uppercase tracking-[0.16em]" style={{ color: RED }}>
           Slack · #deal-desk · 14:02
         </span>
@@ -145,16 +171,16 @@ function SceneProblem(p: number) {
           "What's our max discount on a 3-year renewal?"
         </p>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {tools.map((t, i) => {
-          const enter = between(p, 0.05 + i * 0.15, 0.25 + i * 0.15);
-          const shake = p > 0.75 ? Math.sin((p - 0.75) * 60) * 2 : 0;
+          const enter = between(p, 0.32 + i * 0.12, 0.5 + i * 0.12);
+          const shake = p > 0.82 ? Math.sin((p - 0.82) * 60) * 2 : 0;
           return (
             <motion.div
               key={t.who}
               style={{
                 opacity: enter,
-                transform: `translateX(${(1 - enter) * -16 + shake}px)`,
+                transform: `translateX(${(1 - enter) * -12 + shake}px)`,
                 borderColor: RED + "55",
                 background: RED + "06",
               }}
@@ -165,15 +191,16 @@ function SceneProblem(p: number) {
                 <span className="text-[8.5px] font-bold uppercase tracking-[0.12em] text-muted-foreground">asks {t.tool}</span>
               </div>
               <p className="text-[11px] font-bold" style={{ color: RED }}>"{t.answer}"</p>
+              <p className="text-[8.5px] text-muted-foreground italic mt-0.5">{t.ctx}</p>
             </motion.div>
           );
         })}
       </div>
       <div
-        className="mt-3 text-center text-[10.5px] font-black uppercase tracking-[0.16em] leading-snug"
-        style={{ opacity: between(p, 0.7, 0.9), color: RED }}
+        className="mt-2.5 text-center text-[10px] font-black uppercase tracking-[0.14em] leading-snug"
+        style={{ opacity: between(p, 0.82, 0.95), color: RED }}
       >
-        Three answers. One company.
+        Siloed teams. Shifting reality. Tools left to guess.
       </div>
     </div>
   );
@@ -226,265 +253,273 @@ function SceneStakes(p: number) {
   );
 }
 
-/* 4. GUIDE — "Meet Liza" — a single Decision Standard doc materializes */
+/* 4. GUIDE — "Meet Liza" — the standard, plus people working with it */
 function SceneGuide(p: number) {
-  const scale = 0.85 + ease(between(p, 0, 0.35)) * 0.15;
   const lines = [
-    { k: "Discount cap",          v: "15% · 20% multi-yr" },
-    { k: "Approval > €50k",       v: "CFO + Legal" },
-    { k: "PII in prompts",        v: "Blocked" },
-    { k: "Customer tone",         v: "Direct, no hedging" },
+    { k: "Discount cap",     v: "15% · 20% multi-yr" },
+    { k: "Approval > €50k",  v: "CFO + Legal" },
+    { k: "PII in prompts",   v: "Blocked" },
   ];
+  const docIn = between(p, 0.0, 0.3);
+  const usersIn = between(p, 0.3, 0.55);
+  const liveIn = between(p, 0.55, 0.85);
   return (
-    <div className="w-full max-w-[300px] mx-auto" style={{ transform: `scale(${scale})` }}>
-      <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
-        <div className="flex items-start gap-2 mb-2">
-          <span
-            className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
-            style={{ background: PRIMARY + "1a", color: PRIMARY, border: `1px solid ${PRIMARY}33` }}
-          >
-            <Compass className="w-4 h-4" />
-          </span>
-          <div className="flex-1">
-            <p className="text-[12px] font-black text-foreground leading-tight">How your company decides.</p>
-            <p className="text-[9.5px] text-muted-foreground mt-0.5 leading-snug">
-              v2.4 · Edited by Sarah (CRO) · 2 days ago
-            </p>
-          </div>
-        </div>
-        <div className="space-y-1.5">
-          {lines.map((l, i) => {
-            const a = between(p, 0.25 + i * 0.12, 0.45 + i * 0.12);
-            return (
-              <div
-                key={l.k}
-                className="flex items-center justify-between gap-2 px-2 py-1 rounded"
-                style={{ opacity: a, transform: `translateX(${(1 - a) * -8}px)` }}
-              >
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: PRIMARY }} />
-                  <span className="text-[10.5px] text-foreground/85 font-semibold truncate">{l.k}</span>
-                </div>
-                <span className="text-[10px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
-              </div>
-            );
-          })}
-        </div>
-        <div
-          className="mt-2 pt-2 border-t flex items-center gap-1.5 flex-wrap"
-          style={{ borderColor: PRIMARY + "22", opacity: between(p, 0.75, 0.95) }}
-        >
-          <GitBranch className="w-3 h-3" style={{ color: PRIMARY }} />
-          <span className="text-[9px] font-bold text-muted-foreground">
-            v2.4 → v2.5 pending · 2 reviewers · diff in plain English
-          </span>
-        </div>
-      </MiniWindow>
-      <p
-        className="mt-2.5 text-center text-[10px] text-muted-foreground leading-snug px-2"
-        style={{ opacity: between(p, 0.6, 0.9) }}
-      >
-        Not a wiki. Not a slide deck. A living document every AI tool reads before it answers.
-      </p>
-    </div>
-  );
-}
-
-/* 5. PLAN — Liza connects, learns, and produces artifacts. */
-function ScenePlan(p: number) {
-  const records = [
-    { label: "SharePoint",  sub: "12k docs",   icon: <Cloud className="w-3 h-3" /> },
-    { label: "Salesforce",  sub: "3y deals",   icon: <Database className="w-3 h-3" /> },
-    { label: "Notion",      sub: "Playbooks",  icon: <FileSpreadsheet className="w-3 h-3" /> },
-    { label: "Gmail",       sub: "Approvals",  icon: <Mail className="w-3 h-3" /> },
-  ];
-  const tools = [
-    { label: "Copilot",   icon: <Sparkles className="w-3 h-3" /> },
-    { label: "Claude",    icon: <Bot className="w-3 h-3" /> },
-    { label: "Glean",     icon: <Search className="w-3 h-3" /> },
-    { label: "Agents",    icon: <Workflow className="w-3 h-3" /> },
-  ];
-  const topIn = between(p, 0.0, 0.22);
-  const learnIn = between(p, 0.22, 0.45);
-  const center = between(p, 0.4, 0.6);
-  const botIn = between(p, 0.6, 0.8);
-  return (
-    <div className="w-full max-w-[290px] mx-auto">
-      {/* Top: your data */}
-      <div className="mb-1" style={{ opacity: topIn }}>
-        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          1 · Liza reads what you already have
-        </p>
-        <div className="grid grid-cols-4 gap-1">
-          {records.map((r) => (
-            <div key={r.label} className="flex flex-col items-center gap-0 px-1 py-1 rounded border"
-              style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
-              <span style={{ color: MUTED }}>{r.icon}</span>
-              <span className="text-[8px] font-bold text-foreground/85 truncate">{r.label}</span>
-              <span className="text-[7.5px] text-muted-foreground truncate">{r.sub}</span>
+    <div className="w-full max-w-[320px] mx-auto space-y-2">
+      {/* The standard itself */}
+      <div style={{ opacity: docIn }}>
+        <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
+          <div className="flex items-start gap-2 mb-1.5">
+            <span
+              className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+              style={{ background: PRIMARY + "1a", color: PRIMARY, border: `1px solid ${PRIMARY}33` }}
+            >
+              <Compass className="w-3.5 h-3.5" />
+            </span>
+            <div className="flex-1">
+              <p className="text-[11.5px] font-black text-foreground leading-tight">How your company decides.</p>
+              <p className="text-[9px] text-muted-foreground mt-0.5">v2.4 · Sarah (CRO) · 2d ago</p>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.18, 0.3) }}>
-        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
-      </div>
-
-      {/* Learn step */}
-      <div
-        className="mb-1 rounded-lg border px-2 py-1.5"
-        style={{
-          opacity: learnIn,
-          borderColor: PRIMARY + "44",
-          background: PRIMARY + "08",
-        }}
-      >
-        <div className="flex items-center gap-1.5 mb-1">
-          <Activity className="w-3 h-3" style={{ color: PRIMARY }} />
-          <span className="text-[9px] font-black uppercase tracking-[0.14em]" style={{ color: PRIMARY }}>
-            2 · Liza proposes rules from real decisions
-          </span>
-        </div>
-        <div className="grid grid-cols-3 gap-1">
-          {[
-            { i: <BookOpen className="w-3 h-3" />, l: "Reads 4 yrs of contracts" },
-            { i: <Eye className="w-3 h-3" />,      l: "Watches what CFO approves" },
-            { i: <FileText className="w-3 h-3" />, l: "Drafts → Sarah edits" },
-          ].map((x, i) => {
-            const a = between(p, 0.25 + i * 0.05, 0.4 + i * 0.05);
-            return (
-              <div key={x.l} className="flex flex-col items-center gap-0.5" style={{ opacity: a }}>
-                <span style={{ color: PRIMARY }}>{x.i}</span>
-                <span className="text-[7.5px] font-bold text-foreground/80 text-center leading-tight">{x.l}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.42, 0.55) }}>
-        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
-      </div>
-
-      {/* Center: Standard + artifacts */}
-      <div style={{ opacity: center, transform: `scale(${0.94 + center * 0.06})` }}>
-        <MiniWindow label="3 · Liza · Decision Standard" accent={PRIMARY} glow>
-          <div className="flex items-center gap-1.5 mb-1.5">
-            <Compass className="w-3.5 h-3.5 flex-shrink-0" style={{ color: PRIMARY }} />
-            <p className="text-[10.5px] font-bold text-foreground/85">
-              The standard, plus the artifacts your teams use every day
-            </p>
           </div>
-          <div className="grid grid-cols-3 gap-1">
-            {[
-              { l: "Pricing policy",   i: <FileText className="w-3 h-3" /> },
-              { l: "Renewal playbook", i: <BookOpen className="w-3 h-3" /> },
-              { l: "Approval log",     i: <Stamp className="w-3 h-3" /> },
-            ].map((a) => (
-              <div key={a.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
-                style={{ borderColor: PRIMARY + "33", background: "hsl(var(--background))" }}>
-                <span style={{ color: PRIMARY }}>{a.i}</span>
-                <span className="text-[8px] font-bold text-foreground/80 truncate">{a.l}</span>
+          <div className="space-y-1">
+            {lines.map((l) => (
+              <div key={l.k} className="flex items-center justify-between gap-2 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] text-foreground/85 font-semibold truncate">{l.k}</span>
+                <span className="text-[9.5px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
               </div>
             ))}
           </div>
         </MiniWindow>
       </div>
 
-      <div className="flex justify-center my-0.5" style={{ opacity: between(p, 0.58, 0.7) }}>
-        <ArrowDown className="w-3 h-3" style={{ color: PRIMARY }} />
+      {/* People at work, side by side */}
+      <div className="grid grid-cols-2 gap-2" style={{ opacity: usersIn }}>
+        {/* Sarah authors a rule */}
+        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+          <div className="flex items-center gap-1 mb-1">
+            <Compass className="w-3 h-3" style={{ color: PRIMARY }} />
+            <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Sarah · CRO</span>
+          </div>
+          <p className="text-[9.5px] font-bold text-foreground/85 leading-tight mb-1">Edits "Discount cap"</p>
+          <div className="text-[8.5px] font-mono text-muted-foreground leading-tight">
+            <span className="line-through">15%</span>{" "}
+            <span style={{ color: PRIMARY }} className="font-black">→ 20% multi-yr</span>
+          </div>
+          <p className="text-[8px] text-muted-foreground mt-1 italic">Diff sent to 2 reviewers.</p>
+        </div>
+        {/* Maya uses Liza in the workspace */}
+        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+          <div className="flex items-center gap-1 mb-1">
+            <Briefcase className="w-3 h-3" style={{ color: PRIMARY }} />
+            <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Maya · AE</span>
+          </div>
+          <p className="text-[9.5px] font-bold text-foreground/85 leading-tight mb-1">Drafts a renewal</p>
+          <div className="flex items-center gap-1 text-[8.5px] text-foreground/80">
+            <CheckCircle2 className="w-2.5 h-2.5" style={{ color: PRIMARY }} />
+            Liza injects v2.5 §3
+          </div>
+          <p className="text-[8px] text-muted-foreground mt-0.5 italic">Cited in the proposal.</p>
+        </div>
       </div>
 
-      {/* Bottom: your AI tools */}
-      <div style={{ opacity: botIn }}>
-        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
-          4 · Every AI tool checks the standard before it answers
+      {/* Live signal coming back */}
+      <div
+        className="rounded-lg border px-2 py-1.5 flex items-center gap-2"
+        style={{ opacity: liveIn, borderColor: PRIMARY + "33", background: "hsl(var(--background))" }}
+      >
+        <Activity className="w-3 h-3 flex-shrink-0" style={{ color: PRIMARY }} />
+        <p className="text-[9.5px] text-foreground/85 leading-tight">
+          <span className="font-black">3 deals</span> just closed citing v2.5 ·{" "}
+          <span className="font-black" style={{ color: PRIMARY }}>1 edge case</span> flagged for Sarah
         </p>
-        <div className="grid grid-cols-4 gap-1">
-          {tools.map((t) => (
-            <div key={t.label} className="flex flex-col items-center gap-0.5 px-1 py-1 rounded border"
-              style={{ borderColor: PRIMARY + "44", background: PRIMARY + "0a" }}>
-              <span style={{ color: PRIMARY }}>{t.icon}</span>
-              <span className="text-[8px] font-bold text-foreground/85 truncate">{t.label}</span>
+      </div>
+
+      <p
+        className="text-center text-[9.5px] text-muted-foreground leading-snug px-2"
+        style={{ opacity: between(p, 0.7, 0.95) }}
+      >
+        Leaders write the rules. Teams work with them. Liza keeps both in sync.
+      </p>
+    </div>
+  );
+}
+
+/* 5. PLAN — 3 steps to start with Liza, plus the outcome */
+function ScenePlan(p: number) {
+  const steps = [
+    {
+      n: "1",
+      title: "Connect",
+      time: "Day 1",
+      body: "Plug Liza into your stack. Read-only.",
+      meta: ["SharePoint", "Salesforce", "Notion", "Gmail"],
+      icon: <Plug className="w-3.5 h-3.5" />,
+    },
+    {
+      n: "2",
+      title: "Co-author the standard",
+      time: "Week 1",
+      body: "Liza drafts rules from real decisions. Leaders edit and approve.",
+      meta: ["Liza drafts", "Sarah edits", "CFO signs"],
+      icon: <FileText className="w-3.5 h-3.5" />,
+    },
+    {
+      n: "3",
+      title: "Wire to every AI tool",
+      time: "Week 2",
+      body: "Copilot, Claude, Glean, your custom agents. All cite the same source.",
+      meta: ["Copilot", "Claude", "Glean", "Agents"],
+      icon: <Link2 className="w-3.5 h-3.5" />,
+    },
+  ];
+  return (
+    <div className="w-full max-w-[320px] mx-auto space-y-1.5">
+      <p className="text-[9px] font-black uppercase tracking-[0.18em] text-muted-foreground text-center mb-1">
+        Three steps. Two weeks.
+      </p>
+      {steps.map((s, i) => {
+        const a = between(p, 0.05 + i * 0.18, 0.3 + i * 0.18);
+        return (
+          <div
+            key={s.n}
+            className="rounded-lg border p-2"
+            style={{
+              opacity: a,
+              transform: `translateY(${(1 - a) * 8}px)`,
+              borderColor: PRIMARY + "44",
+              background: PRIMARY + "06",
+            }}
+          >
+            <div className="flex items-start gap-2">
+              <span
+                className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 font-black text-[12px]"
+                style={{ background: PRIMARY, color: "hsl(var(--primary-foreground))" }}
+              >
+                {s.n}
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-[10.5px] font-black text-foreground leading-tight">{s.title}</p>
+                  <span className="text-[8px] font-bold uppercase tracking-[0.1em] text-muted-foreground flex-shrink-0">{s.time}</span>
+                </div>
+                <p className="text-[9.5px] text-muted-foreground leading-snug mt-0.5">{s.body}</p>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {s.meta.map((m) => (
+                    <span key={m} className="text-[8px] font-bold px-1.5 py-0.5 rounded"
+                      style={{ background: PRIMARY + "12", color: PRIMARY }}>
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-          ))}
+          </div>
+        );
+      })}
+      {/* Outcome */}
+      <div
+        className="rounded-lg border-2 border-dashed p-2 mt-1.5 flex items-center gap-2"
+        style={{
+          opacity: between(p, 0.68, 0.9),
+          borderColor: PRIMARY,
+          background: PRIMARY + "10",
+        }}
+      >
+        <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: PRIMARY }} />
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.12em]" style={{ color: PRIMARY }}>
+            By Day 14
+          </p>
+          <p className="text-[10px] font-bold text-foreground/90 leading-tight">
+            Every AI tool gives the same answer. Leaders own the rules.
+          </p>
         </div>
       </div>
     </div>
   );
 }
 
-/* 6. SUCCESS — concrete before/after with proof signals */
+/* 6. SUCCESS — adjustment over time, with metrics + what's happening */
 function SceneSuccess(p: number) {
-  const tools = [
-    { who: "Maya · Copilot",  when: "Mon 09:14" },
-    { who: "Tom · Claude",    when: "Mon 11:02" },
-    { who: "Priya · Glean",   when: "Tue 08:47" },
+  const timeline = [
+    {
+      when: "Week 2",
+      event: "Same answer everywhere",
+      detail: "Copilot, Claude, Glean all cite Pricing Policy v2.5 §3",
+      metric: { k: "Conflicting answers", v: "−92%" },
+    },
+    {
+      when: "Week 6",
+      event: "EU AI Act clause lands",
+      detail: "Sarah edits the standard once. Every AI tool updates by morning.",
+      metric: { k: "Time to roll out", v: "1 day" },
+    },
+    {
+      when: "Week 12",
+      event: "The standard sharpens itself",
+      detail: "23 edge cases surfaced from real deals. 17 became new rules.",
+      metric: { k: "Rules approved", v: "+17" },
+    },
   ];
-  const lineIn = between(p, 0.05, 0.25);
-  const wins = [
-    { k: "Decisions logged this week",  v: "147" },
-    { k: "Edge cases surfaced to CRO",  v: "4" },
-    { k: "New rules approved by Sarah", v: "+12" },
+  const headerIn = between(p, 0, 0.15);
+  const summary = [
+    { k: "Decisions logged",   v: "1,840" },
+    { k: "Audit ready",        v: "100%" },
+    { k: "Rework on proposals", v: "−64%" },
   ];
   return (
-    <div className="w-full max-w-[300px] mx-auto">
-      <div className="text-center mb-2" style={{ opacity: between(p, 0, 0.2) }}>
+    <div className="w-full max-w-[320px] mx-auto">
+      <div className="text-center mb-2" style={{ opacity: headerIn }}>
         <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: PRIMARY }}>
-          Same Slack channel, six weeks later
+          The standard adjusts as you do
         </span>
       </div>
 
-      {/* Same question, same answer */}
-      <div
-        className="rounded-lg border px-2.5 py-2 mb-2"
-        style={{ opacity: lineIn, borderColor: PRIMARY + "44", background: PRIMARY + "08" }}
-      >
-        <p className="text-[9px] font-black uppercase tracking-[0.14em] text-muted-foreground mb-1.5">
-          "Max discount on a 3-year renewal?"
-        </p>
-        <div className="space-y-1.5">
-          {tools.map((t, i) => {
-            const a = between(p, 0.1 + i * 0.06, 0.25 + i * 0.06);
-            return (
-              <div key={t.who} className="flex items-center justify-between gap-2" style={{ opacity: a }}>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-black text-foreground/85 truncate">{t.who}</p>
-                  <p className="text-[8.5px] text-muted-foreground">{t.when}</p>
-                </div>
-                <span className="text-[10px] font-bold text-foreground/90 font-mono flex-shrink-0">"20% multi-yr"</span>
-              </div>
-            );
-          })}
-        </div>
-        <p className="text-[9px] text-muted-foreground mt-1.5 italic">
-          All three cite Pricing Policy v2.5 · §3.
-        </p>
-      </div>
-
-      <div className="space-y-1.5">
-        {wins.map((w, i) => {
-          const a = between(p, 0.35 + i * 0.15, 0.55 + i * 0.15);
+      <div className="relative pl-4 space-y-1.5 mb-2">
+        <div className="absolute left-1 top-1 bottom-1 w-px" style={{ background: PRIMARY + "44" }} />
+        {timeline.map((t, i) => {
+          const a = between(p, 0.1 + i * 0.18, 0.32 + i * 0.18);
           return (
             <div
-              key={w.k}
-              className="flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg border"
+              key={t.when}
+              className="relative rounded-lg border p-2"
               style={{
                 opacity: a,
-                transform: `translateY(${(1 - a) * 6}px)`,
+                transform: `translateX(${(1 - a) * 6}px)`,
                 borderColor: PRIMARY + "44",
-                background: PRIMARY + "0a",
+                background: PRIMARY + "06",
               }}
             >
-              <div className="flex items-center gap-1.5 min-w-0">
-                <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: PRIMARY }} />
-                <span className="text-[10.5px] font-bold text-foreground/90 truncate">{w.k}</span>
+              <span
+                className="absolute -left-[14px] top-2 w-2 h-2 rounded-full"
+                style={{ background: PRIMARY, boxShadow: `0 0 8px ${PRIMARY}` }}
+              />
+              <div className="flex items-center justify-between gap-2 mb-0.5">
+                <span className="text-[8.5px] font-black uppercase tracking-[0.12em]" style={{ color: PRIMARY }}>{t.when}</span>
+                <span className="text-[9px] font-mono font-black" style={{ color: PRIMARY }}>
+                  {t.metric.v} <span className="text-muted-foreground font-bold">{t.metric.k}</span>
+                </span>
               </div>
-              <span className="text-[10px] font-mono font-black flex-shrink-0" style={{ color: PRIMARY }}>{w.v}</span>
+              <p className="text-[10px] font-black text-foreground/90 leading-tight">{t.event}</p>
+              <p className="text-[8.5px] text-muted-foreground leading-snug mt-0.5">{t.detail}</p>
             </div>
           );
         })}
+      </div>
+
+      <div
+        className="grid grid-cols-3 gap-1 rounded-lg border p-1.5"
+        style={{
+          opacity: between(p, 0.7, 0.9),
+          borderColor: PRIMARY + "55",
+          background: PRIMARY + "10",
+        }}
+      >
+        {summary.map((s) => (
+          <div key={s.k} className="text-center">
+            <p className="text-[12px] font-black leading-none" style={{ color: PRIMARY }}>{s.v}</p>
+            <p className="text-[7.5px] font-bold uppercase tracking-[0.08em] text-muted-foreground mt-0.5 leading-tight">{s.k}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
