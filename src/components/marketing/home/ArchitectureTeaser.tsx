@@ -1,30 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Database, Workflow, Sparkles, ScrollText, ShieldCheck, GitBranch } from "lucide-react";
+import { ArrowRight, Database, Workflow, Sparkles, ScrollText, ArrowLeftRight } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
-const TILES = [
+const SIDE_TILES = [
   {
     label: "Systems of record",
     sub: "Drive, databases, docs, email, ticketing",
     icon: <Database className="w-4 h-4" />,
   },
   {
-    label: "Where work happens",
-    sub: "Guided workspace, workbooks, agents",
-    icon: <Workflow className="w-4 h-4" />,
-  },
-  {
     label: "Your AI tools",
     sub: "Copilot, Glean, Claude, vendor RAG",
     icon: <Sparkles className="w-4 h-4" />,
   },
-];
-
-const LIZA_PILLARS = [
-  { icon: <ScrollText className="w-3 h-3" />, label: "Mandates & playbooks" },
-  { icon: <ShieldCheck className="w-3 h-3" />, label: "Policy & guardrails" },
-  { icon: <GitBranch className="w-3 h-3" />, label: "Versioned & auditable" },
 ];
 
 const INDUSTRIES = [
@@ -79,57 +68,79 @@ export function ArchitectureTeaser() {
         </p>
 
         {/* Mini teaser diagram */}
-        <div className="relative max-w-3xl mx-auto rounded-2xl border p-6 md:p-8"
+        <div className="relative max-w-4xl mx-auto rounded-2xl border p-6 md:p-8"
           style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
         >
-          {/* Decision Standard core — what Liza is */}
-          <div className="mb-6">
+          {/* Liza core — Decision Standard + Where work happens */}
+          <div
+            className="mx-auto max-w-2xl rounded-xl px-5 py-5 text-center"
+            style={{
+              background: "hsl(var(--primary) / 0.08)",
+              border: "1px solid hsl(var(--primary) / 0.35)",
+            }}
+          >
             <div
-              className="mx-auto max-w-md rounded-xl px-5 py-4 text-center"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black tracking-[0.18em] uppercase mb-2"
               style={{
-                background: "hsl(var(--primary) / 0.08)",
-                border: "1px solid hsl(var(--primary) / 0.35)",
+                background: "hsl(var(--primary))",
+                color: "hsl(var(--primary-foreground))",
               }}
             >
+              Liza · The governed core your leadership owns
+            </div>
+
+            {/* Two halves of Liza */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 text-left">
               <div
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black tracking-[0.18em] uppercase mb-2"
+                className="rounded-lg p-3"
                 style={{
-                  background: "hsl(var(--primary))",
-                  color: "hsl(var(--primary-foreground))",
+                  background: "hsl(var(--background))",
+                  border: "1px solid hsl(var(--primary) / 0.25)",
                 }}
               >
-                Liza · Decision Standard
+                <div className="flex items-center gap-2 mb-1">
+                  <ScrollText className="w-3.5 h-3.5" style={{ color: "hsl(var(--primary))" }} />
+                  <p className="text-[12px] font-black uppercase tracking-wider" style={{ color: "hsl(var(--primary))" }}>Decision Standard</p>
+                </div>
+                <p className="text-[12px] text-foreground font-semibold leading-snug">
+                  How your company decides and delivers work.
+                </p>
+                <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                  Mandates, playbooks, policy. Versioned and auditable.
+                </p>
               </div>
-              <p className="text-[13px] font-bold text-foreground leading-snug">
-                The governed core your leadership owns
-              </p>
-              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
-                Liza captures how your company decides and delivers work, then enforces it on every AI request.
-              </p>
-              <div className="flex flex-wrap justify-center gap-1.5 mt-3">
-                {LIZA_PILLARS.map((p) => (
-                  <span
-                    key={p.label}
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold"
-                    style={{
-                      background: "hsl(var(--background))",
-                      color: "hsl(var(--primary))",
-                      border: "1px solid hsl(var(--primary) / 0.25)",
-                    }}
-                  >
-                    {p.icon} {p.label}
-                  </span>
-                ))}
+              <div
+                className="rounded-lg p-3"
+                style={{
+                  background: "hsl(var(--background))",
+                  border: "1px solid hsl(var(--primary) / 0.25)",
+                }}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <Workflow className="w-3.5 h-3.5" style={{ color: "hsl(var(--primary))" }} />
+                  <p className="text-[12px] font-black uppercase tracking-wider" style={{ color: "hsl(var(--primary))" }}>Where work happens</p>
+                </div>
+                <p className="text-[12px] text-foreground font-semibold leading-snug">
+                  Governed workspace, workbooks, agents.
+                </p>
+                <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                  Every output inherits the standard before it ships.
+                </p>
               </div>
             </div>
-            <p className="text-center text-[10px] uppercase tracking-[0.18em] text-muted-foreground font-bold mt-4">
-              Inherited by everything below
+          </div>
+
+          {/* Connector label */}
+          <div className="flex items-center justify-center gap-2 my-4">
+            <ArrowLeftRight className="w-3.5 h-3.5 text-muted-foreground" />
+            <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground font-bold">
+              Read in · Write back · Propagate everywhere
             </p>
           </div>
 
-          {/* Three connected surfaces */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-            {TILES.map((t) => (
+          {/* Side surfaces — what Liza connects to */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+            {SIDE_TILES.map((t) => (
               <div
                 key={t.label}
                 className="rounded-xl border p-4 text-center"
@@ -137,7 +148,7 @@ export function ArchitectureTeaser() {
               >
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-2"
-                  style={{ background: "hsl(var(--primary) / 0.08)", color: "hsl(var(--primary))" }}
+                  style={{ background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }}
                 >
                   {t.icon}
                 </div>
@@ -148,7 +159,7 @@ export function ArchitectureTeaser() {
           </div>
 
           <p className="text-center text-xs text-muted-foreground mt-5">
-            Read in. Write back. Propagate everywhere.
+            Nothing gets ripped out. Liza governs the work; your records and AI tools stay where they are.
           </p>
         </div>
 
