@@ -548,16 +548,113 @@ function Connector({ label }: { label: string }) {
   );
 }
 
+/* ---------- vertical bidirectional connector (strategy <-> execution) ---------- */
+function VerticalSyncConnector({ downLabel, upLabel }: { downLabel: string; upLabel: string }) {
+  return (
+    <div className="flex items-stretch justify-center py-3">
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-1">
+          <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--primary) / 0.75)" }} />
+          <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground">{downLabel}</span>
+        </div>
+        <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--border)), transparent)" }} />
+        <div className="flex flex-col items-center gap-1">
+          <ArrowUp className="w-4 h-4" style={{ color: "hsl(var(--brand-green) / 0.8)" }} />
+          <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground">{upLabel}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Strategic Control Tower (top block) ---------- */
+function ControlTowerBlock({ layer }: { layer: Layer }) {
+  const t = TONE[layer.tone];
+  const [openItem, setOpenItem] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const downItems = layer.items.filter((i) => i.tag === "Down");
+  const upItems = layer.items.filter((i) => i.tag === "Up");
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55 }}
+      className="relative rounded-2xl border-2 overflow-hidden"
+      style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
+    >
+      <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: t.accent, opacity: 0.7 }} />
+      <div className="p-6 md:p-8">
+        <div className="text-center mb-5">
+          <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>{layer.kicker}</p>
+          <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{layer.sub}</p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
+            <div className="flex items-center gap-1.5 mb-2.5">
+              <ArrowDown className="w-3.5 h-3.5" style={{ color: t.accent }} />
+              <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Push down — strategy as system constraints</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              {downItems.map((it) => (
+                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
+              ))}
+            </div>
+          </div>
+          <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
+            <div className="flex items-center gap-1.5 mb-2.5">
+              <ArrowUp className="w-3.5 h-3.5" style={{ color: t.accent }} />
+              <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Flow up — live signal from execution</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              {upItems.map((it) => (
+                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="text-center mt-5">
+          <button type="button" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}
+            className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.18em] uppercase transition-opacity hover:opacity-80"
+            style={{ color: t.accent }}>
+            <Plus className="w-3 h-3 transition-transform" style={{ transform: expanded ? "rotate(45deg)" : "rotate(0deg)" }} />
+            {expanded ? "Less" : "Why this matters"}
+          </button>
+          <AnimatePresence initial={false}>
+            {expanded && (
+              <motion.p
+                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                animate={{ height: "auto", opacity: 1, marginTop: 10 }}
+                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                transition={{ duration: 0.28, ease: "easeOut" }}
+                className="overflow-hidden text-[12.5px] leading-relaxed text-foreground/80 max-w-2xl mx-auto"
+              >
+                {layer.expanded}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 /* ---------- main stack ---------- */
 export function LizaOSStack() {
   return (
     <div className="relative">
+      {/* TOP: Strategic Control Tower */}
+      <ControlTowerBlock layer={CONTROL_TOWER} />
+
+      <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
+
       {/* TOP ROW: Source Systems  <->  Native Surfaces (center)  <->  Connected Tools */}
       <div className="grid lg:grid-cols-[1fr_28px_1.6fr_28px_1fr] gap-3 items-stretch">
         <SidePanel layer={SOURCE_SYSTEMS} align="left" />
         <SyncArrow label="read & write" />
         <CenterNativeSurfaces layer={NATIVE_SURFACES} />
-        <SyncArrow label="sync both ways" />
+        <SyncArrow label="sync & propagate" />
         <SidePanel layer={CONNECTED_TOOLS} align="right" />
       </div>
 
