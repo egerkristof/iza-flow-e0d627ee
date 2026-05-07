@@ -645,31 +645,206 @@ function ControlTowerBlock({ layer }: { layer: Layer }) {
 
 /* ---------- main stack ---------- */
 export function LizaOSStack() {
+  const [industryKey, setIndustryKey] = useState<IndustryKey>("generic");
+  const industry = INDUSTRY_BY_KEY[industryKey];
+  const isGeneric = industryKey === "generic";
+
+  // Industry-overridden layers
+  const sourceLayer = useMemo<Layer>(() => ({
+    ...SOURCE_SYSTEMS,
+    title: industry.sourceSystems.title,
+    sub: industry.sourceSystems.sub,
+    items: industry.sourceSystems.items.map((label, i) => ({
+      ...SOURCE_SYSTEMS.items[i % SOURCE_SYSTEMS.items.length],
+      label,
+    })),
+  }), [industry]);
+
+  const toolsLayer = useMemo<Layer>(() => ({
+    ...CONNECTED_TOOLS,
+    title: industry.connectedTools.title,
+    sub: industry.connectedTools.sub,
+    items: industry.connectedTools.items.map((label, i) => ({
+      ...CONNECTED_TOOLS.items[i % CONNECTED_TOOLS.items.length],
+      label,
+    })),
+  }), [industry]);
+
+  const nativeLayer = useMemo<Layer>(() => ({
+    ...NATIVE_SURFACES,
+    sub: industry.nativeSurfaces.sub,
+  }), [industry]);
+
   return (
     <div className="relative">
-      {/* TOP: Strategic Control Tower */}
-      <ControlTowerBlock layer={CONTROL_TOWER} />
+      {/* Industry tab strip — Rolodex */}
+      <IndustryRolodex
+        active={industryKey}
+        onChange={setIndustryKey}
+      />
 
-      <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
+      <motion.div
+        key={industryKey}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
+        {/* TOP: Leadership view */}
+        <ControlTowerBlock layer={CONTROL_TOWER} />
 
-      {/* TOP ROW: Source Systems  <->  Native Surfaces (center)  <->  Connected Tools */}
-      <div className="grid lg:grid-cols-[1fr_28px_1.6fr_28px_1fr] gap-3 items-stretch">
-        <SidePanel layer={SOURCE_SYSTEMS} align="left" />
-        <SyncArrow label="read & write" />
-        <CenterNativeSurfaces layer={NATIVE_SURFACES} />
-        <SyncArrow label="sync & propagate" />
-        <SidePanel layer={CONNECTED_TOOLS} align="right" />
-      </div>
+        <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
-      <Connector label="every surface above executes against the Judgment Core" />
+        {/* TOP ROW: Systems of record  <->  Where work happens (center)  <->  Your AI tools */}
+        <div className="grid lg:grid-cols-[1fr_28px_1.6fr_28px_1fr] gap-3 items-stretch">
+          <SidePanel layer={sourceLayer} align="left" />
+          <SyncArrow label="read & write" />
+          <div className="relative">
+            <CenterNativeSurfaces layer={nativeLayer} />
+            {!isGeneric && <ScenarioFlipCard industry={industry} />}
+          </div>
+          <SyncArrow label="sync & propagate" />
+          <SidePanel layer={toolsLayer} align="right" />
+        </div>
 
-      {/* JUDGMENT CORE — two motions */}
-      <JudgmentCoreBlock />
+        <Connector label="every surface above runs against the Decision Standard" />
 
-      <Connector label="runs on top of any model" />
+        {/* JUDGMENT CORE — two motions */}
+        <JudgmentCoreBlock
+          systemicSub={industry.judgmentCore.systemic}
+          artifactsSub={industry.judgmentCore.artifacts}
+        />
 
-      {/* MODEL FABRIC */}
-      <ModelFabricRow />
+        <Connector label="runs on top of any model" />
+
+        {/* MODEL FABRIC */}
+        <ModelFabricRow />
+
+        {!isGeneric && (
+          <div className="mt-6 text-center">
+            <Link
+              to={industry.href}
+              className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:opacity-80"
+            >
+              See the full {industry.label} view
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
+      </motion.div>
     </div>
+  );
+}
+
+/* ---------- Industry rolodex tab strip ---------- */
+function IndustryRolodex({
+  active, onChange,
+}: { active: IndustryKey; onChange: (k: IndustryKey) => void }) {
+  return (
+    <div className="mb-5">
+      <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground">
+          Pick your industry — the diagram relabels in your language
+        </p>
+        {active === "generic" && (
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-primary inline-flex items-center gap-1">
+            <ChevronRight className="w-3 h-3 animate-pulse" />
+            try one
+          </span>
+        )}
+      </div>
+      <div
+        className="flex flex-wrap gap-1.5 p-1.5 rounded-xl border"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        {INDUSTRIES.map((ind) => {
+          const isActive = ind.key === active;
+          return (
+            <button
+              key={ind.key}
+              type="button"
+              onClick={() => onChange(ind.key)}
+              className="text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all"
+              style={{
+                background: isActive ? "hsl(var(--primary))" : "transparent",
+                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.7)",
+                boxShadow: isActive ? "0 6px 18px -10px hsl(var(--primary))" : "none",
+              }}
+            >
+              {ind.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Flip card scenario for an industry ---------- */
+function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
+  const [flipped, setFlipped] = useState(false);
+  return (
+    <motion.button
+      type="button"
+      onClick={() => setFlipped((v) => !v)}
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.35, delay: 0.15 }}
+      className="hidden lg:block absolute -bottom-5 -right-5 w-[260px] h-[140px] z-10 text-left"
+      style={{ perspective: 1000 }}
+      aria-label="Flip scenario card"
+    >
+      <motion.div
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.55, ease: "easeInOut" }}
+        className="relative w-full h-full"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {/* Front */}
+        <div
+          className="absolute inset-0 rounded-xl border-2 p-4 flex flex-col justify-between"
+          style={{
+            background: "hsl(var(--background))",
+            borderColor: "hsl(var(--brand-green) / 0.45)",
+            boxShadow: "0 20px 40px -20px hsl(var(--brand-green) / 0.5)",
+            backfaceVisibility: "hidden",
+          }}
+        >
+          <div>
+            <p className="text-[9px] font-black tracking-[0.22em] uppercase mb-1.5" style={{ color: "hsl(var(--brand-green))" }}>
+              {industry.label} · scenario
+            </p>
+            <p className="text-[13px] font-bold leading-tight text-foreground">
+              {industry.scenario.front}
+            </p>
+          </div>
+          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground inline-flex items-center gap-1">
+            tap to see outcome <ArrowRight className="w-3 h-3" />
+          </p>
+        </div>
+        {/* Back */}
+        <div
+          className="absolute inset-0 rounded-xl border-2 p-4 flex flex-col justify-between"
+          style={{
+            background: "hsl(var(--brand-green) / 0.08)",
+            borderColor: "hsl(var(--brand-green) / 0.55)",
+            boxShadow: "0 20px 40px -20px hsl(var(--brand-green) / 0.5)",
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          <div>
+            <p className="text-[9px] font-black tracking-[0.22em] uppercase mb-1.5" style={{ color: "hsl(var(--brand-green))" }}>
+              outcome
+            </p>
+            <p className="text-[12px] font-black leading-tight text-foreground mb-1.5">
+              {industry.scenario.backOutcome}
+            </p>
+            <p className="text-[10.5px] leading-snug text-foreground/75">
+              {industry.scenario.backDetail}
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </motion.button>
   );
 }
