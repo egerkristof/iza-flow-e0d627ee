@@ -1279,8 +1279,51 @@ function MobileStack({
   );
 }
 
-/* Vertical loop SVG: Leadership -> Decision Standard -> Workspace -> Records / AI tools, with feedback arrow */
-function MobileLoopDiagram() {
+/* Mobile industry selector — compact pill rolodex */
+function MobileIndustrySelector({
+  active, onChange,
+}: { active: IndustryKey; onChange: (k: IndustryKey) => void }) {
+  return (
+    <div
+      className="rounded-2xl border-2 p-3"
+      style={{
+        background: "hsl(var(--card))",
+        borderColor: active === "generic" ? "hsl(var(--primary) / 0.55)" : "hsl(var(--primary) / 0.25)",
+        boxShadow: "0 12px 30px -18px hsl(var(--primary) / 0.4)",
+      }}
+    >
+      <p className="text-[10px] font-black tracking-[0.22em] uppercase text-primary mb-1">
+        Step 1 of 2
+      </p>
+      <p className="text-[14px] font-black text-foreground leading-tight mb-2.5">
+        Pick your industry, then play the tour.
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {INDUSTRIES.map((ind) => {
+          const isActive = ind.key === active;
+          return (
+            <button
+              key={ind.key}
+              type="button"
+              onClick={() => onChange(ind.key)}
+              className="text-[12px] font-bold px-3 py-2 rounded-lg transition-all"
+              style={{
+                background: isActive ? "hsl(var(--primary))" : "hsl(var(--background))",
+                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.85)",
+                border: isActive ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+              }}
+            >
+              {ind.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* (Old MobileLoopDiagram removed — replaced by industry-aware guided tour.) */
+function _MobileLoopDiagramUnused() {
   const PRIMARY = "hsl(var(--primary))";
   const GREEN = "hsl(var(--brand-green))";
   const AMBER = "hsl(var(--brand-amber, var(--primary)))";
