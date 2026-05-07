@@ -596,27 +596,35 @@ function SceneSuccess(p: number) {
 /* ---------- scenes config ---------- */
 const SCENES: Scene[] = [
   {
-    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 8000, render: SceneHero,
+    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 7500, render: SceneHero,
     caption: "Six teams. A dozen assistants. None of them know what your company stands for.",
   },
   {
-    kicker: "02 · Problem", headline: "Every tool answers differently.", duration: 9000, render: SceneProblem,
+    kicker: "02 · Pressure", headline: "The world keeps changing under you.", duration: 7000, render: SceneShiftingReality,
+    caption: "Regulation, market and policy shift weekly. None of your AI tools find out.",
+  },
+  {
+    kicker: "03 · Drift", headline: "Every tool answers differently.", duration: 7500, render: SceneToolDrift,
     caption: "One question. Three tools. Three answers. The AI is fine. The standard is missing.",
   },
   {
-    kicker: "03 · Stakes", headline: "And it is costing you.", duration: 8000, render: SceneStakes,
+    kicker: "04 · Stakes", headline: "And it is costing you.", duration: 7500, render: SceneStakes,
     caption: "Discounts drift. Audit flags real risk. Nobody made a bad call. Nobody made the rules either.",
   },
   {
-    kicker: "04 · Meet Liza", headline: "Liza writes how your company decides.", duration: 9000, render: SceneGuide,
-    caption: "One living standard. Leaders author rules. Teams cite them. Signal flows back the same week.",
+    kicker: "05 · Meet Liza", headline: "One standard your company decides by.", duration: 7500, render: SceneStandard,
+    caption: "A living document. Versioned. Owned by leaders. Read by every AI tool.",
   },
   {
-    kicker: "05 · The plan", headline: "Liza learns, then governs.", duration: 9000, render: ScenePlan,
+    kicker: "06 · The loop", headline: "Leaders write. Teams cite. Signal flows back.", duration: 8000, render: SceneLoop,
+    caption: "Sarah edits a rule. Maya cites it on a deal. Liza flags the next edge case for Sarah.",
+  },
+  {
+    kicker: "07 · The plan", headline: "Liza learns, then governs.", duration: 8500, render: ScenePlan,
     caption: "Connect, co-author, wire to every AI tool. Two weeks to one source of truth.",
   },
   {
-    kicker: "06 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
+    kicker: "08 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
     caption: "Same answer in every tool. Regulation rolls out in a day. The standard sharpens itself every week.",
   },
 ];
