@@ -1192,9 +1192,11 @@ export function LizaOSStack() {
 
 /* ---------- Mobile-only: vertical loop SVG + three expandable sections ---------- */
 function MobileStack({
-  industry, sourceLayer, toolsLayer, nativeLayer, isGeneric,
+  industry, industryKey, onIndustryChange, sourceLayer, toolsLayer, nativeLayer, isGeneric,
 }: {
   industry: IndustryLexicon;
+  industryKey: IndustryKey;
+  onIndustryChange: (k: IndustryKey) => void;
   sourceLayer: Layer;
   toolsLayer: Layer;
   nativeLayer: Layer;
@@ -1256,30 +1258,11 @@ function MobileStack({
 
   return (
     <div className="space-y-4">
-      {/* Honest hint banner */}
-      <div
-        className="rounded-xl border px-3.5 py-2.5 flex items-start gap-2.5"
-        style={{
-          background: "hsl(var(--primary) / 0.06)",
-          borderColor: "hsl(var(--primary) / 0.25)",
-        }}
-      >
-        <Monitor className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--primary))" }} />
-        <div className="min-w-0">
-          <p className="text-[12px] font-bold text-foreground leading-tight">
-            Open this on desktop for the full architecture diagram.
-          </p>
-          <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">
-            On mobile we only show the loop and the layers. The interactive system map needs a larger screen.
-          </p>
-        </div>
-      </div>
+      {/* Mobile industry selector */}
+      <MobileIndustrySelector active={industryKey} onChange={onIndustryChange} />
 
-      {/* Hero loop diagram */}
-      <MobileLoopDiagram />
-
-      {/* Guided tour CTA */}
-      <MobileGuidedTour sections={sections} />
+      {/* Click-driven guided tour + section list */}
+      <MobileGuidedTour sections={sections} industry={industry} isGeneric={isGeneric} />
 
       {!isGeneric && (
         <div className="pt-2 text-center">
