@@ -715,7 +715,7 @@ function S08Loop() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
-        <Eyebrow n="08" text="HOW IT WORKS" />
+        <Eyebrow n="09" text="HOW IT WORKS" />
         <h2 className="font-black mt-5 mb-10" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Map → Anchor → Augment → <span style={{ color: `hsl(${TEAL})` }}>Compound.</span>
         </h2>
