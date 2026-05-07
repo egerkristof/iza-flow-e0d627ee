@@ -173,7 +173,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <span className="font-bold text-lg tracking-tight">LIZA OS</span>
             </div>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Your team's AI is brilliant. LIZA makes it a team.
+              The system of intelligence for how your company decides and delivers work.
             </p>
           </div>
 
