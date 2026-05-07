@@ -26,7 +26,7 @@ const BEATS: Beat[] = [
   { duration: 7000,  caption: "Every AI tool you bought answers from generic training data. Different tool, different answer.", visual: "chaos" },
   { duration: 8000,  caption: "RAG bolts on a snapshot. Documents freeze. Reality moves on. Your decision logic is not in there.", visual: "rag-decay" },
   { duration: 8000,  caption: "Your real standards stay trapped in records, threads and senior heads. Not retrievable text. Human knowledge.", visual: "trapped" },
-  { duration: 9000,  caption: "LIZA forges the Decision Standard. Fragments become versioned, owned, governed logic.", visual: "forge" },
+  { duration: 12000, caption: "LIZA forges the Decision Standard. Fragments become a living knowledge graph. Nodes, relationships, governed logic.", visual: "forge" },
   { duration: 8000,  caption: "One workspace. Your AI agents execute inside, every action checked against the standard.", visual: "broadcast" },
   { duration: 8000,  caption: "Strategy pushes down. Signal flows up. Same week, not next quarter.", visual: "loop" },
   { duration: 8000,  caption: "Same answer in every tool. Standards that sharpen every week.", visual: "aligned" },
@@ -360,52 +360,7 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
         </div>
       );
     case "forge":
-      return (
-        <div className="relative w-full max-w-xl h-full flex items-center justify-center">
-          {/* Fragments converging */}
-          {["Policy", "Pricing", "Approval", "Tone", "Risk", "Playbook"].map((f, i) => {
-            const angle = (i / 6) * Math.PI * 2;
-            const r = 130;
-            const x = Math.cos(angle) * r;
-            const y = Math.sin(angle) * r;
-            return (
-              <motion.div
-                key={f}
-                initial={{ opacity: 0, x, y, scale: 0.6 }}
-                animate={{ opacity: [0, 1, 1, 0], x: [x, x, 0, 0], y: [y, y, 0, 0], scale: [0.6, 1, 0.4, 0.4] }}
-                transition={{ duration: 2.6, delay: 0.1 + i * 0.05, times: [0, 0.25, 0.75, 1] }}
-                className="absolute px-2 py-1 rounded-md border bg-card text-[10px] sm:text-[11px] font-black tracking-wider uppercase"
-                style={{ borderColor: tone + "/0.5", color: tone }}
-              >
-                {f}
-              </motion.div>
-            );
-          })}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 2.4, duration: 0.6, type: "spring", damping: 12 }}
-            className="relative rounded-2xl border-2 p-4 sm:p-6 text-center bg-background"
-            style={{
-              background: "hsl(var(--primary) / 0.08)",
-              borderColor: tone,
-              boxShadow: `0 24px 50px -20px ${tone}`,
-            }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 rounded-2xl border-2 border-dashed pointer-events-none"
-              style={{ borderColor: tone + "/0.3" }}
-            />
-            <Network className="w-8 h-8 mx-auto mb-2" style={{ color: tone }} />
-            <p className="text-[9px] sm:text-[10px] font-black tracking-[0.22em] uppercase mb-1" style={{ color: tone }}>
-              The Decision Standard
-            </p>
-            <p className="text-sm sm:text-base font-black leading-tight">Versioned. Owned. Governed.</p>
-          </motion.div>
-        </div>
-      );
+      return <ForgeKnowledgeGraph tone={tone} green={green} amber={amber} />;
     case "broadcast":
       return (
         <div className="relative w-full max-w-2xl">
@@ -546,4 +501,234 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
         </div>
       );
   }
+}
+
+/* ----------------------------- Forge: Knowledge Graph ----------------------------- */
+
+type GNode = {
+  id: string;
+  label: string;
+  sub?: string;
+  x: number; // 0-100 viewBox %
+  y: number;
+  cluster: "policy" | "pricing" | "approval" | "risk" | "tone" | "playbook";
+  appear: number; // ms within scene
+};
+
+type GEdge = { from: string; to: string; label?: string; appear: number };
+
+const CLUSTER_COLOR: Record<GNode["cluster"], string> = {
+  policy: "var(--brand-amber, var(--primary))",
+  pricing: "var(--primary)",
+  approval: "var(--brand-green, var(--primary))",
+  risk: "var(--destructive)",
+  tone: "var(--primary)",
+  playbook: "var(--brand-green, var(--primary))",
+};
+
+const NODES: GNode[] = [
+  { id: "core", label: "Decision Standard", sub: "v3.2 · governed", x: 50, y: 50, cluster: "policy", appear: 0 },
+
+  // Policy cluster (top-left)
+  { id: "pol", label: "Policy", sub: "POL-007", x: 22, y: 18, cluster: "policy", appear: 600 },
+  { id: "reg", label: "Regulation", sub: "EU AI Act", x: 8, y: 32, cluster: "policy", appear: 900 },
+
+  // Pricing cluster (top-right)
+  { id: "pri", label: "Pricing rule", sub: "v3.2", x: 78, y: 18, cluster: "pricing", appear: 1200 },
+  { id: "disc", label: "Discount tier", sub: "Tier B", x: 92, y: 32, cluster: "pricing", appear: 1500 },
+
+  // Approval cluster (right)
+  { id: "apr", label: "Approval", sub: "≥ €50k", x: 90, y: 60, cluster: "approval", appear: 1800 },
+  { id: "thr", label: "Threshold", sub: "auto", x: 84, y: 78, cluster: "approval", appear: 2100 },
+
+  // Playbook cluster (bottom)
+  { id: "pb", label: "Playbook", sub: "PB-014", x: 50, y: 86, cluster: "playbook", appear: 2400 },
+  { id: "step", label: "Step library", sub: "12 steps", x: 32, y: 82, cluster: "playbook", appear: 2700 },
+
+  // Risk cluster (left)
+  { id: "risk", label: "Risk control", sub: "RC-03", x: 10, y: 60, cluster: "risk", appear: 3000 },
+  { id: "esc", label: "Escalation", sub: "L2 · 4h", x: 18, y: 76, cluster: "risk", appear: 3300 },
+
+  // Tone cluster (top center)
+  { id: "tone", label: "Tone of voice", sub: "Formal", x: 50, y: 12, cluster: "tone", appear: 3600 },
+];
+
+const EDGES: GEdge[] = [
+  { from: "core", to: "pol", label: "enforces", appear: 700 },
+  { from: "pol", to: "reg", label: "derived from", appear: 1000 },
+  { from: "core", to: "pri", label: "enforces", appear: 1300 },
+  { from: "pri", to: "disc", label: "uses", appear: 1600 },
+  { from: "core", to: "apr", label: "requires", appear: 1900 },
+  { from: "apr", to: "thr", label: "checks", appear: 2200 },
+  { from: "core", to: "pb", label: "executes", appear: 2500 },
+  { from: "pb", to: "step", label: "contains", appear: 2800 },
+  { from: "core", to: "risk", label: "guards", appear: 3100 },
+  { from: "risk", to: "esc", label: "triggers", appear: 3400 },
+  { from: "core", to: "tone", label: "applies", appear: 3700 },
+  // Cross-links to show graph density
+  { from: "pri", to: "apr", label: "gates", appear: 4000 },
+  { from: "pol", to: "pb", label: "constrains", appear: 4200 },
+  { from: "risk", to: "apr", label: "raises", appear: 4400 },
+];
+
+function ForgeKnowledgeGraph({ tone, green, amber }: { tone: string; green: string; amber: string }) {
+  const [t, setT] = useState(0);
+  useEffect(() => {
+    const start = performance.now();
+    let raf = 0;
+    const tick = () => {
+      setT(performance.now() - start);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const nodeById = (id: string) => NODES.find((n) => n.id === id)!;
+
+  return (
+    <div className="relative w-full h-full flex flex-col items-center justify-center">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+        <motion.span
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-[0.22em]"
+          style={{ background: `hsl(${tone} / 0.1)`, color: tone, border: `1px solid hsl(${tone} / 0.4)` }}
+        >
+          LIZA · forging the standard
+        </motion.span>
+      </div>
+
+      <div className="relative w-full" style={{ aspectRatio: "16 / 10", maxHeight: "100%" }}>
+        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="coreGlow">
+              <stop offset="0%" stopColor={`hsl(${tone} / 0.35)`} />
+              <stop offset="100%" stopColor={`hsl(${tone} / 0)`} />
+            </radialGradient>
+          </defs>
+          {/* core glow */}
+          <circle cx={50} cy={50} r={22} fill="url(#coreGlow)">
+            <animate attributeName="r" values="20;24;20" dur="3s" repeatCount="indefinite" />
+          </circle>
+
+          {/* Edges */}
+          {EDGES.map((e, i) => {
+            const a = nodeById(e.from);
+            const b = nodeById(e.to);
+            const visible = t > e.appear;
+            const progress = Math.min(1, Math.max(0, (t - e.appear) / 600));
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const x2 = a.x + dx * progress;
+            const y2 = a.y + dy * progress;
+            const stroke = e.from === "core" ? `hsl(${tone} / 0.6)` : `hsl(var(--foreground) / 0.18)`;
+            return (
+              <g key={i} opacity={visible ? 1 : 0}>
+                <line
+                  x1={a.x}
+                  y1={a.y}
+                  x2={x2}
+                  y2={y2}
+                  stroke={stroke}
+                  strokeWidth={e.from === "core" ? 0.35 : 0.2}
+                  strokeLinecap="round"
+                />
+                {/* Pulse along edge from core */}
+                {e.from === "core" && progress >= 1 && (
+                  <circle r={0.6} fill={`hsl(${tone})`}>
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path={`M ${a.x} ${a.y} L ${b.x} ${b.y}`} />
+                  </circle>
+                )}
+                {e.label && progress >= 1 && (
+                  <text
+                    x={(a.x + b.x) / 2}
+                    y={(a.y + b.y) / 2 - 0.6}
+                    fontSize={1.6}
+                    fill={`hsl(var(--muted-foreground))`}
+                    textAnchor="middle"
+                    style={{ fontWeight: 700, letterSpacing: 0.1 }}
+                  >
+                    {e.label}
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* Nodes (HTML overlay for crisp text) */}
+        {NODES.map((n) => {
+          const visible = t > n.appear;
+          const isCore = n.id === "core";
+          const color = `hsl(${CLUSTER_COLOR[n.cluster]})`;
+          return (
+            <motion.div
+              key={n.id}
+              initial={false}
+              animate={
+                visible
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.5 }
+              }
+              transition={{ duration: 0.4, type: "spring", damping: 14 }}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${n.x}%`, top: `${n.y}%` }}
+            >
+              <div
+                className={`rounded-lg border ${isCore ? "border-2 px-3 py-2" : "px-2 py-1"} bg-card text-center whitespace-nowrap`}
+                style={{
+                  borderColor: color,
+                  background: isCore ? `hsl(${CLUSTER_COLOR[n.cluster]} / 0.12)` : "hsl(var(--card))",
+                  boxShadow: isCore
+                    ? `0 12px 30px -10px ${color}`
+                    : `0 4px 10px -4px ${color}`,
+                }}
+              >
+                <div className="flex items-center gap-1.5 justify-center">
+                  <span
+                    className="inline-block rounded-full"
+                    style={{ width: isCore ? 6 : 4, height: isCore ? 6 : 4, background: color }}
+                  />
+                  <span
+                    className={`font-black tracking-wider uppercase ${isCore ? "text-[10px] sm:text-[11px]" : "text-[8px] sm:text-[9px]"}`}
+                    style={{ color }}
+                  >
+                    {n.label}
+                  </span>
+                </div>
+                {n.sub && (
+                  <div className={`text-muted-foreground font-bold mt-0.5 ${isCore ? "text-[9px] sm:text-[10px]" : "text-[7px] sm:text-[8px]"}`}>
+                    {n.sub}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Bottom legend / counters */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: t > 4500 ? 1 : 0, y: t > 4500 ? 0 : 8 }}
+        transition={{ duration: 0.4 }}
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center gap-3 sm:gap-4 px-3 py-1.5 rounded-full backdrop-blur-md"
+        style={{ background: "hsl(var(--background) / 0.85)", border: "1px solid hsl(var(--border))" }}
+      >
+        <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest" style={{ color: tone }}>
+          <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: tone }} />
+          {NODES.length} nodes
+        </span>
+        <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+          <span className="inline-block w-3 h-px" style={{ background: "hsl(var(--muted-foreground))" }} />
+          {EDGES.length} relationships
+        </span>
+        <span className="hidden sm:flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest" style={{ color: green }}>
+          <GitBranch className="w-3 h-3" />
+          versioned
+        </span>
+      </motion.div>
+    </div>
+  );
 }
