@@ -55,8 +55,8 @@ export default function OSPage() {
             for <GradientText>AI-native organizations.</GradientText>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-8">
-            Your knowledge graph is the kernel. The AI tools you already own become apps on top.
-            One governed source of judgment. Consistent behaviour everywhere AI executes.
+            Your decision logic, standards, and process intelligence become the kernel.
+            Every AI tool you already own runs on top. Consistent behaviour everywhere AI executes.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
