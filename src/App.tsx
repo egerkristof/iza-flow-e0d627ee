@@ -49,6 +49,7 @@ import PrivacyPage from "./pages/marketing/Privacy";
 import TermsPage from "./pages/marketing/Terms";
 import CalculatorPage from "./pages/marketing/Calculator";
 import AuditLandingPage from "./pages/marketing/AuditLanding";
+import OSPage from "./pages/marketing/OS";
 
 const queryClient = new QueryClient();
 
@@ -108,6 +109,7 @@ const App = () => (
             <Route path="/diagnostic" element={<DiagnosticPage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/audit" element={<AuditLandingPage />} />
+            <Route path="/os" element={<OSPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
