@@ -42,16 +42,11 @@ export default function OSPage() {
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <SectionTag label="The Liza framework" />
           <h1 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5">
-            The system of record for how your company decides.
+            The system of intelligence for how your company decides.
             <br />
             <GradientText>So every AI tool executes to your standard.</GradientText>
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-7">
-            Your standards, playbooks, and live artifacts become one governed core.
-            Copilot, Glean, ChatGPT, and the workspace your teams operate in all run against it.
-            Consistent behaviour, everywhere AI executes.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#stack"
               className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold"
