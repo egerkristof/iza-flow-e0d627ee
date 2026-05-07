@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
   AlertTriangle, Compass, Database, Sparkles, Workflow,
   ArrowDown, ArrowUp, ArrowRight, Play, Pause, Cloud, Mail, FileSpreadsheet, Bot, Search,
+  CheckCircle2, TrendingDown, Users,
 } from "lucide-react";
 
 /* Mobile-only auto-playing "Stories" video of the Liza architecture.
@@ -69,9 +70,51 @@ function Chip({ icon, label, accent = MUTED, dim = false }: { icon: React.ReactN
   );
 }
 
-/* ---------- SCENES ---------- */
+/* ---------- SCENES (StoryBrand arc) ----------
+   1. Hero      — You already shipped AI everywhere.
+   2. Problem   — Every tool answers differently.
+   3. Stakes    — Decisions drift. Risk compounds.
+   4. Guide     — Meet Liza: one standard your company decides by.
+   5. Plan      — Liza plugs into your data + your AI tools. Nothing moves.
+   6. Success   — Every AI, every team, aligned. + CTA
+----------------------------------------------- */
 
-/* 1. The problem — 3 AI tools spit out 3 different conflicting answers */
+/* 1. HERO — "You already shipped AI everywhere" */
+function SceneHero(p: number) {
+  const tools = [
+    { name: "Copilot", icon: <Sparkles className="w-3.5 h-3.5" /> },
+    { name: "Claude",  icon: <Bot className="w-3.5 h-3.5" /> },
+    { name: "Glean",   icon: <Search className="w-3.5 h-3.5" /> },
+    { name: "Agents",  icon: <Workflow className="w-3.5 h-3.5" /> },
+  ];
+  return (
+    <div className="w-full max-w-[290px] mx-auto">
+      <div className="text-center mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+          Your company, today
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {tools.map((t, i) => {
+          const a = between(p, 0.05 + i * 0.12, 0.3 + i * 0.12);
+          return (
+            <div key={t.name} style={{ opacity: a, transform: `scale(${0.9 + a * 0.1})` }}>
+              <Chip icon={t.icon} label={t.name} accent={PRIMARY} />
+            </div>
+          );
+        })}
+      </div>
+      <div
+        className="mt-3 text-center text-[11px] font-bold text-foreground/80"
+        style={{ opacity: between(p, 0.65, 0.9) }}
+      >
+        AI is everywhere. <span style={{ color: PRIMARY }}>It's working.</span>
+      </div>
+    </div>
+  );
+}
+
+/* 2. PROBLEM — same question, conflicting answers */
 function SceneProblem(p: number) {
   const tools = [
     { name: "Copilot", answer: "Discount cap: 15%" },
@@ -82,7 +125,7 @@ function SceneProblem(p: number) {
     <div className="w-full max-w-[290px] mx-auto">
       <div className="text-center mb-3">
         <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
-          One question. Three AIs.
+          One question. Three answers.
         </span>
       </div>
       <div className="space-y-2">
@@ -108,14 +151,58 @@ function SceneProblem(p: number) {
         className="mt-3 text-center text-[11px] font-black uppercase tracking-[0.18em]"
         style={{ opacity: between(p, 0.7, 0.9), color: RED }}
       >
-        Conflict.
+        Nobody's in charge.
       </div>
     </div>
   );
 }
 
-/* 2. The fix — a single "Decision Standard" doc materializes */
-function SceneFix(p: number) {
+/* 3. STAKES — what it costs you when nobody's in charge */
+function SceneStakes(p: number) {
+  const stakes = [
+    { label: "Decisions drift",     icon: <TrendingDown className="w-3.5 h-3.5" /> },
+    { label: "Risk compounds",      icon: <AlertTriangle className="w-3.5 h-3.5" /> },
+    { label: "Teams lose trust",    icon: <Users className="w-3.5 h-3.5" /> },
+  ];
+  return (
+    <div className="w-full max-w-[280px] mx-auto">
+      <div className="text-center mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
+          The hidden cost
+        </span>
+      </div>
+      <div className="space-y-2">
+        {stakes.map((s, i) => {
+          const a = between(p, 0.1 + i * 0.18, 0.35 + i * 0.18);
+          return (
+            <div
+              key={s.label}
+              className="flex items-center gap-2 px-3 py-2.5 rounded-lg border"
+              style={{
+                opacity: a,
+                transform: `translateY(${(1 - a) * 8}px)`,
+                borderColor: RED + "44",
+                background: RED + "08",
+              }}
+            >
+              <span style={{ color: RED }}>{s.icon}</span>
+              <span className="text-[11.5px] font-bold text-foreground/85">{s.label}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div
+        className="mt-3 text-center text-[11px] font-bold text-foreground/80"
+        style={{ opacity: between(p, 0.75, 0.95) }}
+      >
+        You can't scale what you can't govern.
+      </div>
+    </div>
+  );
+}
+
+/* 4. GUIDE — "Meet Liza" — a single Decision Standard doc materializes */
+function SceneGuide(p: number) {
   const scale = 0.85 + ease(between(p, 0, 0.35)) * 0.15;
   const lines = [
     "Pricing rules",
@@ -158,178 +245,122 @@ function SceneFix(p: number) {
   );
 }
 
-/* 3. Records — files fly in toward a central standard */
-function SceneRecords(p: number) {
-  const items = [
-    { label: "SharePoint", icon: <Cloud className="w-3.5 h-3.5" /> },
-    { label: "Veeva / databases", icon: <Database className="w-3.5 h-3.5" /> },
-    { label: "Documents", icon: <FileSpreadsheet className="w-3.5 h-3.5" /> },
-    { label: "Email & chat", icon: <Mail className="w-3.5 h-3.5" /> },
+/* 5. PLAN — Liza connects your data + your AI tools. One simple picture. */
+function ScenePlan(p: number) {
+  const records = [
+    { label: "SharePoint",  icon: <Cloud className="w-3 h-3" /> },
+    { label: "Databases",   icon: <Database className="w-3 h-3" /> },
+    { label: "Documents",   icon: <FileSpreadsheet className="w-3 h-3" /> },
+    { label: "Email",       icon: <Mail className="w-3 h-3" /> },
   ];
+  const tools = [
+    { label: "Copilot", icon: <Sparkles className="w-3 h-3" /> },
+    { label: "Claude",  icon: <Bot className="w-3 h-3" /> },
+    { label: "Glean",   icon: <Search className="w-3 h-3" /> },
+    { label: "Agents",  icon: <Workflow className="w-3 h-3" /> },
+  ];
+  const topIn = between(p, 0.05, 0.3);
+  const center = between(p, 0.3, 0.55);
+  const botIn = between(p, 0.55, 0.8);
   return (
     <div className="w-full max-w-[290px] mx-auto">
-      <div className="grid grid-cols-2 gap-2 mb-3">
-        {items.map((it, i) => {
-          const a = between(p, 0.05 + i * 0.08, 0.3 + i * 0.08);
-          const tx = (1 - a) * (i % 2 === 0 ? -20 : 20);
-          return (
-            <div key={it.label} style={{ opacity: a, transform: `translateX(${tx}px)` }}>
-              <Chip icon={it.icon} label={it.label} accent={MUTED} />
+      {/* Top: your data */}
+      <div className="mb-1.5" style={{ opacity: topIn }}>
+        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
+          Your data
+        </p>
+        <div className="grid grid-cols-4 gap-1">
+          {records.map((r) => (
+            <div key={r.label} className="flex flex-col items-center gap-0.5 px-1 py-1 rounded border"
+              style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--background))" }}>
+              <span style={{ color: MUTED }}>{r.icon}</span>
+              <span className="text-[8px] font-bold text-foreground/75 truncate">{r.label}</span>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
-      {/* Arrows down + up */}
-      <div className="flex justify-center items-center gap-3 my-1.5" style={{ opacity: between(p, 0.5, 0.7) }}>
-        <ArrowDown className="w-4 h-4" style={{ color: PRIMARY }} />
-        <span className="text-[10px] font-black uppercase tracking-[0.16em] text-muted-foreground">Read · Write</span>
-        <ArrowUp className="w-4 h-4" style={{ color: PRIMARY }} />
+
+      {/* Arrow down */}
+      <div className="flex justify-center my-1" style={{ opacity: between(p, 0.25, 0.4) }}>
+        <ArrowDown className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
       </div>
-      <div style={{ opacity: between(p, 0.6, 0.85), transform: `scale(${0.9 + between(p, 0.6, 0.85) * 0.1})` }}>
-        <MiniWindow label="Liza" accent={PRIMARY} glow>
-          <p className="text-[11px] font-bold text-foreground/85 text-center">Your records stay where they are.</p>
+
+      {/* Center: Liza standard */}
+      <div style={{ opacity: center, transform: `scale(${0.92 + center * 0.08})` }}>
+        <MiniWindow label="Liza · Standard" accent={PRIMARY} glow>
+          <div className="flex items-center gap-2">
+            <Compass className="w-4 h-4 flex-shrink-0" style={{ color: PRIMARY }} />
+            <p className="text-[11px] font-bold text-foreground/85">
+              One source of truth for how you decide.
+            </p>
+          </div>
         </MiniWindow>
+      </div>
+
+      {/* Arrow down */}
+      <div className="flex justify-center my-1" style={{ opacity: between(p, 0.5, 0.65) }}>
+        <ArrowDown className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
+      </div>
+
+      {/* Bottom: your AI tools */}
+      <div style={{ opacity: botIn }}>
+        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground text-center mb-1">
+          Your AI tools
+        </p>
+        <div className="grid grid-cols-4 gap-1">
+          {tools.map((t) => (
+            <div key={t.label} className="flex flex-col items-center gap-0.5 px-1 py-1 rounded border"
+              style={{ borderColor: PRIMARY + "44", background: PRIMARY + "0a" }}>
+              <span style={{ color: PRIMARY }}>{t.icon}</span>
+              <span className="text-[8px] font-bold text-foreground/85 truncate">{t.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="mt-2 text-center text-[10px] font-bold text-foreground/75"
+        style={{ opacity: between(p, 0.8, 0.95) }}
+      >
+        Liza connects. Nothing migrates.
       </div>
     </div>
   );
 }
 
-/* 4. AI tools — Copilot/Claude/Glean change their answer to match the standard */
-function SceneTools(p: number) {
-  const tools = [
-    { name: "Copilot", icon: <Sparkles className="w-3.5 h-3.5" /> },
-    { name: "Claude", icon: <Bot className="w-3.5 h-3.5" /> },
-    { name: "Glean", icon: <Search className="w-3.5 h-3.5" /> },
-    { name: "Vendor RAG", icon: <Bot className="w-3.5 h-3.5" /> },
+/* 6. SUCCESS — every AI, every team, aligned */
+function SceneSuccess(p: number) {
+  const wins = [
+    "Every AI answers the same way",
+    "Every team works to one standard",
+    "Leadership sees what's actually happening",
   ];
   return (
     <div className="w-full max-w-[290px] mx-auto">
-      {/* Standard pulse on top */}
-      <div className="mb-2.5" style={{ opacity: between(p, 0, 0.2) }}>
-        <MiniWindow label="Standard" accent={PRIMARY} glow>
-          <p className="text-[10.5px] font-bold text-foreground/85 text-center">Discount cap: 20%. Approved.</p>
-        </MiniWindow>
+      <div className="text-center mb-3" style={{ opacity: between(p, 0, 0.25) }}>
+        <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: PRIMARY }}>
+          With Liza in place
+        </span>
       </div>
-      {/* Beam down */}
-      <div className="flex justify-center my-1.5" style={{ opacity: between(p, 0.2, 0.35) }}>
-        <ArrowDown className="w-4 h-4" style={{ color: PRIMARY }} />
-      </div>
-      <div className="grid grid-cols-2 gap-2">
-        {tools.map((t, i) => {
-          const a = between(p, 0.35 + i * 0.08, 0.55 + i * 0.08);
-          const aligned = p > 0.75;
+      <div className="space-y-2">
+        {wins.map((w, i) => {
+          const a = between(p, 0.15 + i * 0.18, 0.4 + i * 0.18);
           return (
             <div
-              key={t.name}
-              className="rounded-lg border px-2 py-2 flex flex-col gap-1"
+              key={w}
+              className="flex items-center gap-2 px-3 py-2.5 rounded-lg border"
               style={{
                 opacity: a,
-                borderColor: aligned ? PRIMARY + "55" : "hsl(var(--border))",
-                background: aligned ? PRIMARY + "0d" : "hsl(var(--background))",
-                transition: "border-color 220ms, background 220ms",
+                transform: `translateY(${(1 - a) * 8}px)`,
+                borderColor: PRIMARY + "44",
+                background: PRIMARY + "0a",
               }}
             >
-              <div className="flex items-center gap-1.5">
-                <span style={{ color: aligned ? PRIMARY : MUTED }}>{t.icon}</span>
-                <span className="text-[10.5px] font-black text-foreground">{t.name}</span>
-              </div>
-              <span className="text-[10px] font-bold" style={{ color: aligned ? PRIMARY : MUTED }}>
-                {aligned ? "20%" : "…"}
-              </span>
+              <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: PRIMARY }} />
+              <span className="text-[11.5px] font-bold text-foreground/90">{w}</span>
             </div>
           );
         })}
-      </div>
-    </div>
-  );
-}
-
-/* 5. Workspace — tabs typing, output appearing */
-function SceneWorkspace(p: number) {
-  const tabs = ["Workbook", "Agents", "Capture", "Oversight"];
-  const lines = [0.95, 0.78, 0.62, 0.5];
-  return (
-    <div className="w-full max-w-[300px] mx-auto" style={{ transform: `scale(${0.9 + ease(between(p, 0, 0.3)) * 0.1})` }}>
-      <MiniWindow label="Liza · Workspace" accent={PRIMARY} glow>
-        <div className="flex gap-1 mb-2">
-          {tabs.map((t, i) => {
-            const a = between(p, 0.1 + i * 0.06, 0.25 + i * 0.06);
-            return (
-              <span
-                key={t}
-                className="text-[9px] font-bold px-1.5 py-1 rounded border"
-                style={{
-                  opacity: a,
-                  color: i === 0 ? PRIMARY : MUTED,
-                  borderColor: i === 0 ? PRIMARY + "55" : "hsl(var(--border))",
-                  background: i === 0 ? PRIMARY + "12" : "transparent",
-                }}
-              >
-                {t}
-              </span>
-            );
-          })}
-        </div>
-        <div className="space-y-1.5">
-          {lines.map((w, i) => {
-            const a = between(p, 0.4 + i * 0.1, 0.7 + i * 0.1);
-            return (
-              <div key={i} className="h-1.5 rounded-full" style={{ width: `${ease(a) * w * 100}%`, background: PRIMARY + "33" }} />
-            );
-          })}
-        </div>
-        <div className="mt-2.5 flex items-center gap-1.5" style={{ opacity: between(p, 0.78, 0.95) }}>
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: PRIMARY }} />
-          <p className="text-[10px] font-bold text-foreground/85">Output approved · standard inherited</p>
-        </div>
-      </MiniWindow>
-    </div>
-  );
-}
-
-/* 6. The loop — leadership <-> execution, traveling pulses */
-function SceneLoop(p: number) {
-  return (
-    <div className="w-full max-w-[290px] mx-auto space-y-2 relative">
-      <div style={{ opacity: between(p, 0, 0.25), transform: `translateY(${(1 - between(p, 0, 0.25)) * -8}px)` }}>
-        <MiniWindow label="Leadership" accent={PRIMARY} glow>
-          <p className="text-[11px] font-bold text-foreground/85 text-center">Mandate. Strategy. Standard.</p>
-        </MiniWindow>
-      </div>
-      <div className="relative h-12 grid grid-cols-2 gap-3 px-6">
-        <div className="relative flex items-center justify-end">
-          <span className="text-[9px] font-black uppercase tracking-[0.14em] text-muted-foreground mr-1.5">Push down</span>
-          <div className="relative w-4 h-12 rounded-full overflow-hidden" style={{ background: PRIMARY + "22" }}>
-            <span
-              className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-              style={{
-                background: PRIMARY,
-                boxShadow: `0 0 8px ${PRIMARY}`,
-                top: `${between(p, 0.2, 0.6) * 100}%`,
-                opacity: between(p, 0.2, 0.7),
-              }}
-            />
-          </div>
-        </div>
-        <div className="relative flex items-center justify-start">
-          <div className="relative w-4 h-12 rounded-full overflow-hidden" style={{ background: PRIMARY + "22" }}>
-            <span
-              className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-              style={{
-                background: PRIMARY,
-                boxShadow: `0 0 8px ${PRIMARY}`,
-                top: `${(1 - between(p, 0.5, 0.9)) * 100}%`,
-                opacity: between(p, 0.5, 0.95),
-              }}
-            />
-          </div>
-          <span className="text-[9px] font-black uppercase tracking-[0.14em] text-muted-foreground ml-1.5">Signal up</span>
-        </div>
-      </div>
-      <div style={{ opacity: between(p, 0.3, 0.55), transform: `translateY(${(1 - between(p, 0.3, 0.55)) * 8}px)` }}>
-        <MiniWindow label="Execution" accent={PRIMARY} glow>
-          <p className="text-[11px] font-bold text-foreground/85 text-center">Workspace · records · AI tools.</p>
-        </MiniWindow>
       </div>
     </div>
   );
@@ -337,12 +368,12 @@ function SceneLoop(p: number) {
 
 /* ---------- scenes config ---------- */
 const SCENES: Scene[] = [
-  { kicker: "01 · The problem",    headline: "Same question. Different answers.", duration: 4200, render: SceneProblem },
-  { kicker: "02 · The fix",        headline: "One Decision Standard.",            duration: 4200, render: SceneFix },
-  { kicker: "03 · Your data",      headline: "Records stay. Liza connects.",      duration: 4400, render: SceneRecords },
-  { kicker: "04 · Your AI tools",  headline: "Copilot and Claude align.",         duration: 4400, render: SceneTools },
-  { kicker: "05 · Workspace",      headline: "Where governed work happens.",      duration: 4400, render: SceneWorkspace },
-  { kicker: "06 · The loop",       headline: "Strategy meets execution. Live.",   duration: 4600, render: SceneLoop },
+  { kicker: "01 · You",        headline: "You shipped AI everywhere.",          duration: 3800, render: SceneHero },
+  { kicker: "02 · Problem",    headline: "But every tool answers differently.", duration: 4400, render: SceneProblem },
+  { kicker: "03 · Stakes",     headline: "And it's costing you.",                duration: 4200, render: SceneStakes },
+  { kicker: "04 · Meet Liza",  headline: "One standard. Owned by leadership.",  duration: 4200, render: SceneGuide },
+  { kicker: "05 · The plan",   headline: "Liza sits between your data and your AI.", duration: 4800, render: ScenePlan },
+  { kicker: "06 · Success",    headline: "Now everyone's aligned.",              duration: 4200, render: SceneSuccess },
 ];
 
 /* ---------- player ---------- */
