@@ -136,7 +136,7 @@ export function HeroSection() {
 
       {/* ── Industry lifecycles we already cover ── */}
       <motion.div
-        className="relative z-10 mt-2 w-full max-w-5xl mx-auto"
+        className="relative z-10 mt-2 w-full max-w-4xl mx-auto"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.45 }}
@@ -148,7 +148,7 @@ export function HeroSection() {
           </p>
           <div className="h-px w-10 bg-border" />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
           {INDUSTRY_LIFECYCLES.map((ind, i) => {
             const Icon = ind.icon;
             return (
@@ -157,16 +157,16 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.5 + i * 0.05 }}
-                className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-border bg-background/40 backdrop-blur-sm hover:border-primary/40 hover:bg-background/70 transition-all"
+                className="group flex items-center gap-3 px-3.5 py-3 md:px-4 md:py-3.5 rounded-xl border border-border bg-background/40 backdrop-blur-sm hover:border-primary/40 hover:bg-background/70 transition-all"
               >
-                <div className="shrink-0 w-7 h-7 rounded-md flex items-center justify-center bg-primary/8 text-primary">
-                  <Icon className="w-3.5 h-3.5" />
+                <div className="shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center bg-primary/8 text-primary">
+                  <Icon className="w-4 h-4 md:w-[18px] md:h-[18px]" />
                 </div>
                 <div className="min-w-0 text-left">
-                  <div className="text-[11px] font-semibold text-foreground leading-tight truncate">
+                  <div className="text-[12px] md:text-[13px] font-semibold text-foreground leading-tight truncate">
                     {ind.label}
                   </div>
-                  <div className="text-[10px] text-muted-foreground leading-tight truncate">
+                  <div className="text-[10px] md:text-[11px] text-muted-foreground leading-tight truncate">
                     {ind.sub}
                   </div>
                 </div>
