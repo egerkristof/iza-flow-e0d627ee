@@ -89,8 +89,8 @@ const SYSTEMIC_GRAPH: Item[] = [
 
 const ARTIFACT_GRAPH: Item[] = [
   { label: "Native artifacts (inside Liza)", icon: <Boxes className="w-4 h-4" />, detail: "Outputs produced inside Workbooks. Versioned, governed, linked back to the standard that produced them." },
-  { label: "Non-native artifacts (in your stack)", icon: <RefreshCw className="w-4 h-4" />, detail: "Files in Drive, records in databases, pages in Notion, drafts in Copilot. Tracked and synced so updates propagate." },
-  { label: "Live sync across the estate", icon: <ArrowLeftRight className="w-4 h-4" />, detail: "Two-way. When Liza updates an artifact, the source system reflects it. When the source changes, Liza catches it." },
+  { label: "Non-native artifacts (in your stack)", icon: <RefreshCw className="w-4 h-4" />, detail: "Files in Drive, records in databases, pages in Notion, drafts in Copilot. Tracked, synced, and propagated so updates land everywhere they need to." },
+  { label: "Sync & propagation across the estate", icon: <ArrowLeftRight className="w-4 h-4" />, detail: "Two-way sync plus active propagation. When a standard changes, every dependent artifact — native or in your stack — is updated, not just flagged. When the source changes, Liza catches it." },
 ];
 
 const GOVERNANCE_BAR: Item[] = [
@@ -115,6 +115,23 @@ const MODEL_FABRIC: Layer = {
   ],
 };
 
+/* TOP — Strategic Control Tower */
+const CONTROL_TOWER: Layer = {
+  id: "strategy",
+  kicker: "Top — strategic control tower",
+  title: "Strategic Control Tower",
+  sub: "Where the C-suite designs the system. Push governance, mandates, playbooks, and sensing jobs down. Live signal flows up from execution.",
+  expanded: "Strategy and execution stop being two timelines. Leadership sets the constraints — mandates, playbooks, sensing engine jobs — and pushes them into the Judgment Core. Execution feeds back transcripts, client signals, drift, and outcome metrics. Business-model innovation becomes a live loop, not a yearly offsite.",
+  tone: "strategy",
+  items: [
+    { label: "Push: governance & mandates", icon: <ShieldCheck className="w-4 h-4" />, tag: "Down", detail: "Non-negotiables and policy enter the Judgment Core as runtime constraints. Every surface inherits them the moment they ship." },
+    { label: "Push: strategic playbooks", icon: <Compass className="w-4 h-4" />, tag: "Down", detail: "New strategic moves become executable playbooks. The org runs the new plan the day it is approved, not the quarter after." },
+    { label: "Push: sensing engine jobs", icon: <Radar className="w-4 h-4" />, tag: "Down", detail: "Standing research and signal-detection jobs deployed across markets, accounts, and the regulatory landscape." },
+    { label: "Up: execution telemetry", icon: <LineChart className="w-4 h-4" />, tag: "Up", detail: "Transcripts, client emails, win/loss, drift signals, outcome metrics flow back from execution surfaces in real time." },
+    { label: "Up: live business-model loop", icon: <Target className="w-4 h-4" />, tag: "Up", detail: "Strategy designs the system; execution updates the system. The business model becomes a continuously tuned object." },
+  ],
+};
+
 /* ---------- tone tokens ---------- */
 const TONE: Record<Tone, { ring: string; bg: string; chipBg: string; chipBorder: string; accent: string; kicker: string }> = {
   apps:        { ring: "hsl(var(--muted-foreground) / 0.25)", bg: "hsl(var(--muted) / 0.4)",       chipBg: "hsl(var(--background))",          chipBorder: "hsl(var(--border))",                accent: "hsl(var(--muted-foreground))",  kicker: "hsl(var(--muted-foreground))" },
@@ -124,6 +141,7 @@ const TONE: Record<Tone, { ring: string; bg: string; chipBg: string; chipBorder:
   fabric:      { ring: "hsl(var(--foreground) / 0.18)",       bg: "hsl(var(--foreground) / 0.04)", chipBg: "hsl(var(--background))",           chipBorder: "hsl(var(--foreground) / 0.18)",     accent: "hsl(var(--foreground) / 0.75)", kicker: "hsl(var(--muted-foreground))" },
   "graph-sys": { ring: "hsl(var(--primary) / 0.40)",          bg: "hsl(var(--primary) / 0.06)",    chipBg: "hsl(var(--primary) / 0.10)",       chipBorder: "hsl(var(--primary) / 0.30)",        accent: "hsl(var(--primary))",           kicker: "hsl(var(--primary))" },
   "graph-art": { ring: "hsl(var(--brand-green) / 0.40)",      bg: "hsl(var(--brand-green) / 0.05)",chipBg: "hsl(var(--brand-green) / 0.10)",  chipBorder: "hsl(var(--brand-green) / 0.30)",    accent: "hsl(var(--brand-green))",       kicker: "hsl(var(--brand-green))" },
+  strategy:    { ring: "hsl(var(--brand-amber, var(--primary)) / 0.45)", bg: "hsl(var(--brand-amber, var(--primary)) / 0.07)", chipBg: "hsl(var(--brand-amber, var(--primary)) / 0.10)", chipBorder: "hsl(var(--brand-amber, var(--primary)) / 0.32)", accent: "hsl(var(--brand-amber, var(--primary)))", kicker: "hsl(var(--brand-amber, var(--primary)))" },
 };
 
 /* ---------- chip ---------- */
