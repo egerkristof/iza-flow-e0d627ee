@@ -6,6 +6,7 @@ import {
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { SectionTag, GradientText, CAL_URL } from "@/components/marketing/home/shared";
 import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
+import { ArchitectureWalkthrough } from "@/components/marketing/home/ArchitectureWalkthrough";
 import { FourMovesStrip } from "@/components/marketing/os/FourMovesStrip";
 
 const INDUSTRY_CARDS = [
@@ -72,7 +73,13 @@ export default function OSPage() {
       {/* The interactive stack */}
       <section id="stack" className="py-8 md:py-12 px-6">
         <div className="max-w-6xl mx-auto">
-          <LizaOSStack />
+          {/* Mobile: 6-card guided walkthrough. Desktop: full interactive stack. */}
+          <div className="md:hidden">
+            <ArchitectureWalkthrough />
+          </div>
+          <div className="hidden md:block">
+            <LizaOSStack />
+          </div>
         </div>
       </section>
 
