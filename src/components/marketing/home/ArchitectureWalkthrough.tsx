@@ -699,100 +699,42 @@ export function ArchitectureWalkthrough() {
             </motion.h3>
           </AnimatePresence>
 
-          {/* Stage: visual on the left, narrative beats on the right */}
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_280px] gap-4 md:gap-6 items-stretch min-h-0">
-            {/* Visual */}
-            <div className="relative flex items-center justify-center min-h-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`v-${index}`}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full"
-                >
-                  {scene.render(progress)}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Narrative panel — desktop only, beats appear in sync with the scene */}
-            <div className="hidden md:flex flex-col justify-center">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground mb-3">
-                What's happening
-              </p>
-              <ol className="space-y-2.5">
-                {(scene.beats ?? []).map((b, i) => {
-                  const reached = progress >= b.at;
-                  const isActive = activeBeat?.at === b.at;
-                  return (
-                    <motion.li
-                      key={`${index}-${b.at}`}
-                      initial={false}
-                      animate={{
-                        opacity: reached ? 1 : 0.25,
-                        x: reached ? 0 : 6,
-                      }}
-                      transition={{ duration: 0.4 }}
-                      className="flex items-start gap-2.5"
-                    >
-                      <span
-                        className="mt-[3px] flex-shrink-0 inline-flex items-center justify-center rounded-full"
-                        style={{
-                          width: 18,
-                          height: 18,
-                          background: isActive ? PRIMARY : (reached ? PRIMARY + "22" : "hsl(var(--foreground) / 0.08)"),
-                          color: isActive ? "hsl(var(--primary-foreground))" : PRIMARY,
-                          boxShadow: isActive ? `0 0 0 4px ${PRIMARY}22` : "none",
-                          transition: "background 0.3s, box-shadow 0.3s",
-                        }}
-                      >
-                        <ArrowLeft className="w-2.5 h-2.5" />
-                      </span>
-                      <span
-                        className={`text-[12.5px] leading-snug ${isActive ? "font-bold text-foreground" : "font-semibold text-foreground/75"}`}
-                      >
-                        {b.text}
-                      </span>
-                    </motion.li>
-                  );
-                })}
-              </ol>
-            </div>
+          {/* Stage: single full-width visual, ProductFilm style */}
+          <div className="flex-1 relative min-h-0 flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`v-${index}`}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full"
+              >
+                {scene.render(progress)}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Mobile narrator caption — solid card, high contrast, clearly readable */}
-          <div className="md:hidden mt-3">
-            <div
-              className="rounded-xl border-2 px-3 py-2.5 min-h-[68px] flex items-center gap-2.5"
-              style={{
-                background: "hsl(var(--background))",
-                borderColor: "hsl(var(--primary) / 0.55)",
-                boxShadow: "0 8px 24px -12px hsl(var(--primary) / 0.45)",
-              }}
-            >
-              <span
-                className="flex-shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-full"
-                style={{ background: PRIMARY, color: "hsl(var(--primary-foreground))" }}
+          {/* Single caption — one line that names what the visual is showing */}
+          <div className="mt-3 md:mt-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`cap-${index}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.35 }}
+                className="max-w-3xl mx-auto rounded-xl px-3 sm:px-5 py-2.5 sm:py-3 backdrop-blur-md"
+                style={{
+                  background: "hsl(var(--background) / 0.9)",
+                  border: "1px solid hsl(var(--primary) / 0.35)",
+                }}
               >
-                <ArrowRight className="w-3 h-3" />
-              </span>
-              <AnimatePresence mode="wait">
-                {activeBeat && (
-                  <motion.p
-                    key={`mbeat-${index}-${activeBeat.at}`}
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -3 }}
-                    transition={{ duration: 0.35 }}
-                    className="text-[13px] leading-snug text-foreground font-semibold"
-                  >
-                    {activeBeat.text}
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </div>
+                <p className="text-center text-[12px] sm:text-sm md:text-base font-bold text-foreground leading-snug">
+                  {scene.caption}
+                </p>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
