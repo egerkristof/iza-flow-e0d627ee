@@ -8,6 +8,7 @@ import { SectionTag, GradientText, CAL_URL } from "@/components/marketing/home/s
 import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
 import { FourMovesStrip } from "@/components/marketing/os/FourMovesStrip";
 import { ProductFilm } from "@/components/marketing/os/ProductFilm";
+import { ExpandableViewer } from "@/components/marketing/shared/ExpandableViewer";
 
 const INDUSTRY_CARDS = [
   { label: "Pharma & Life Sciences", href: "/industries/regulated", icon: <Beaker className="w-5 h-5" /> },
@@ -70,7 +71,9 @@ export default function OSPage() {
 
           {/* 90-second product film */}
           <div className="mt-10 max-w-4xl mx-auto">
-            <ProductFilm />
+            <ExpandableViewer label="Watch in fullscreen">
+              <ProductFilm />
+            </ExpandableViewer>
           </div>
         </div>
       </section>
