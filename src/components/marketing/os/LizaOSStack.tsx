@@ -1372,20 +1372,23 @@ function NodeBox({
 }
 
 function MobileSection({
-  section,
+  section, open, onToggle, sectionRef,
 }: {
   section: { id: string; tone: Tone; kicker: string; title: string; sub: string; icon: React.ReactNode; items: { label: string; detail: string }[] };
+  open: boolean;
+  onToggle: () => void;
+  sectionRef?: (el: HTMLDivElement | null) => void;
 }) {
-  const [open, setOpen] = useState(false);
   const t = TONE[section.tone];
   return (
     <div
+      ref={sectionRef}
       className="rounded-xl border overflow-hidden"
       style={{ background: t.bg, borderColor: t.ring }}
     >
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={onToggle}
         aria-expanded={open}
         className="w-full flex items-center gap-3 p-3.5 text-left"
       >
