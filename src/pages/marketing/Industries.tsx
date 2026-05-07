@@ -192,64 +192,17 @@ export default function IndustriesPage() {
             </div>
           </div>
 
-          {/* Functional Lifecycles */}
-          <div>
-            <p className="text-xs font-black tracking-[0.2em] uppercase mb-6 text-muted-foreground">
-              Functional Lifecycles
+          {/* Functional Lifecycles moved to /by-function */}
+          <div className="rounded-2xl border p-6 text-center" style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}>
+            <p className="text-sm text-muted-foreground mb-3">
+              Looking for a function rather than an industry?
             </p>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {FUNCTIONAL_LIFECYCLES.map((fn) => (
-                <div
-                  key={fn.title}
-                  className="rounded-2xl border p-6 transition-all hover:border-primary/20"
-                  style={{
-                    borderColor: "hsl(var(--border))",
-                    background: "hsl(var(--card))",
-                  }}
-                >
-                  <div className="flex items-start gap-4 mb-3">
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                      style={{
-                        background: `hsl(${fn.col} / 0.12)`,
-                        color: `hsl(${fn.col})`,
-                      }}
-                    >
-                      {fn.icon}
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground mb-0.5">
-                        {fn.lifecycle}
-                      </p>
-                      <h3 className="text-base font-bold text-foreground">{fn.title}</h3>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                    {fn.description}
-                  </p>
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    {fn.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] font-medium px-2 py-0.5 rounded"
-                        style={{
-                          background: `hsl(${fn.col} / 0.08)`,
-                          color: `hsl(${fn.col})`,
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    <Link
-                      to={`/industries/${fn.slug}`}
-                      className="ml-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-                    >
-                      Explore <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Link
+              to="/by-function"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+            >
+              Browse LIZA By Function <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
