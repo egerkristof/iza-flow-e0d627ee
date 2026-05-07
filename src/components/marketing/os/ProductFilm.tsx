@@ -503,73 +503,7 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
   }
 }
 
-/* ----------------------------- Forge: Knowledge Graph ----------------------------- */
-
-type GNode = {
-  id: string;
-  label: string;
-  sub?: string;
-  x: number; // 0-100 viewBox %
-  y: number;
-  cluster: "policy" | "pricing" | "approval" | "risk" | "tone" | "playbook";
-  appear: number; // ms within scene
-};
-
-type GEdge = { from: string; to: string; label?: string; appear: number };
-
-const CLUSTER_COLOR: Record<GNode["cluster"], string> = {
-  policy: "var(--brand-amber, var(--primary))",
-  pricing: "var(--primary)",
-  approval: "var(--brand-green, var(--primary))",
-  risk: "var(--destructive)",
-  tone: "var(--primary)",
-  playbook: "var(--brand-green, var(--primary))",
-};
-
-const NODES: GNode[] = [
-  { id: "core", label: "Decision Standard", sub: "v3.2 · governed", x: 50, y: 50, cluster: "policy", appear: 0 },
-
-  // Policy cluster (top-left)
-  { id: "pol", label: "Policy", sub: "POL-007", x: 22, y: 18, cluster: "policy", appear: 600 },
-  { id: "reg", label: "Regulation", sub: "EU AI Act", x: 8, y: 32, cluster: "policy", appear: 900 },
-
-  // Pricing cluster (top-right)
-  { id: "pri", label: "Pricing rule", sub: "v3.2", x: 78, y: 18, cluster: "pricing", appear: 1200 },
-  { id: "disc", label: "Discount tier", sub: "Tier B", x: 92, y: 32, cluster: "pricing", appear: 1500 },
-
-  // Approval cluster (right)
-  { id: "apr", label: "Approval", sub: "≥ €50k", x: 90, y: 60, cluster: "approval", appear: 1800 },
-  { id: "thr", label: "Threshold", sub: "auto", x: 84, y: 78, cluster: "approval", appear: 2100 },
-
-  // Playbook cluster (bottom)
-  { id: "pb", label: "Playbook", sub: "PB-014", x: 50, y: 86, cluster: "playbook", appear: 2400 },
-  { id: "step", label: "Step library", sub: "12 steps", x: 32, y: 82, cluster: "playbook", appear: 2700 },
-
-  // Risk cluster (left)
-  { id: "risk", label: "Risk control", sub: "RC-03", x: 10, y: 60, cluster: "risk", appear: 3000 },
-  { id: "esc", label: "Escalation", sub: "L2 · 4h", x: 18, y: 76, cluster: "risk", appear: 3300 },
-
-  // Tone cluster (top center)
-  { id: "tone", label: "Tone of voice", sub: "Formal", x: 50, y: 12, cluster: "tone", appear: 3600 },
-];
-
-const EDGES: GEdge[] = [
-  { from: "core", to: "pol", label: "enforces", appear: 700 },
-  { from: "pol", to: "reg", label: "derived from", appear: 1000 },
-  { from: "core", to: "pri", label: "enforces", appear: 1300 },
-  { from: "pri", to: "disc", label: "uses", appear: 1600 },
-  { from: "core", to: "apr", label: "requires", appear: 1900 },
-  { from: "apr", to: "thr", label: "checks", appear: 2200 },
-  { from: "core", to: "pb", label: "executes", appear: 2500 },
-  { from: "pb", to: "step", label: "contains", appear: 2800 },
-  { from: "core", to: "risk", label: "guards", appear: 3100 },
-  { from: "risk", to: "esc", label: "triggers", appear: 3400 },
-  { from: "core", to: "tone", label: "applies", appear: 3700 },
-  // Cross-links to show graph density
-  { from: "pri", to: "apr", label: "gates", appear: 4000 },
-  { from: "pol", to: "pb", label: "constrains", appear: 4200 },
-  { from: "risk", to: "apr", label: "raises", appear: 4400 },
-];
+/* ----------------------------- Forge: simple knowledge graph ----------------------------- */
 
 function ForgeKnowledgeGraph({ tone, green, amber }: { tone: string; green: string; amber: string }) {
   const [t, setT] = useState(0);
@@ -584,151 +518,130 @@ function ForgeKnowledgeGraph({ tone, green, amber }: { tone: string; green: stri
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const nodeById = (id: string) => NODES.find((n) => n.id === id)!;
+  // 4 satellites around 1 core. Positions in % of a 320x220 box.
+  const cx = 50;
+  const cy = 50;
+  const satellites = [
+    { id: "policy", label: "Policy", angle: -90, appear: 600, color: amber, edge: "enforces" },
+    { id: "pricing", label: "Pricing", angle: 0, appear: 1100, color: tone, edge: "uses" },
+    { id: "playbook", label: "Playbook", angle: 90, appear: 1600, color: green, edge: "executes" },
+    { id: "risk", label: "Risk", angle: 180, appear: 2100, color: "hsl(var(--destructive))", edge: "guards" },
+  ];
+  const r = 32; // radius in viewBox %
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
-        <motion.span
-          initial={{ opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-[0.22em]"
-          style={{ background: `hsl(${tone} / 0.1)`, color: tone, border: `1px solid hsl(${tone} / 0.4)` }}
-        >
-          LIZA · forging the standard
-        </motion.span>
-      </div>
+    <div className="relative w-full max-w-md aspect-[4/3] mx-auto">
+      <svg viewBox="0 0 100 75" className="absolute inset-0 w-full h-full">
+        <defs>
+          <radialGradient id="coreGlow2">
+            <stop offset="0%" stopColor={`hsl(${tone} / 0.35)`} />
+            <stop offset="100%" stopColor={`hsl(${tone} / 0)`} />
+          </radialGradient>
+        </defs>
+        {/* glow */}
+        <ellipse cx={cx} cy={cy * 0.75} rx={18} ry={14} fill="url(#coreGlow2)">
+          <animate attributeName="rx" values="16;20;16" dur="3s" repeatCount="indefinite" />
+        </ellipse>
 
-      <div className="relative w-full" style={{ aspectRatio: "16 / 10", maxHeight: "100%" }}>
-        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-          <defs>
-            <radialGradient id="coreGlow">
-              <stop offset="0%" stopColor={`hsl(${tone} / 0.35)`} />
-              <stop offset="100%" stopColor={`hsl(${tone} / 0)`} />
-            </radialGradient>
-          </defs>
-          {/* core glow */}
-          <circle cx={50} cy={50} r={22} fill="url(#coreGlow)">
-            <animate attributeName="r" values="20;24;20" dur="3s" repeatCount="indefinite" />
-          </circle>
-
-          {/* Edges */}
-          {EDGES.map((e, i) => {
-            const a = nodeById(e.from);
-            const b = nodeById(e.to);
-            const visible = t > e.appear;
-            const progress = Math.min(1, Math.max(0, (t - e.appear) / 600));
-            const dx = b.x - a.x;
-            const dy = b.y - a.y;
-            const x2 = a.x + dx * progress;
-            const y2 = a.y + dy * progress;
-            const stroke = e.from === "core" ? `hsl(${tone} / 0.6)` : `hsl(var(--foreground) / 0.18)`;
-            return (
-              <g key={i} opacity={visible ? 1 : 0}>
-                <line
-                  x1={a.x}
-                  y1={a.y}
-                  x2={x2}
-                  y2={y2}
-                  stroke={stroke}
-                  strokeWidth={e.from === "core" ? 0.35 : 0.2}
-                  strokeLinecap="round"
-                />
-                {/* Pulse along edge from core */}
-                {e.from === "core" && progress >= 1 && (
-                  <circle r={0.6} fill={`hsl(${tone})`}>
-                    <animateMotion dur="2.5s" repeatCount="indefinite" path={`M ${a.x} ${a.y} L ${b.x} ${b.y}`} />
-                  </circle>
-                )}
-                {e.label && progress >= 1 && (
-                  <text
-                    x={(a.x + b.x) / 2}
-                    y={(a.y + b.y) / 2 - 0.6}
-                    fontSize={1.6}
-                    fill={`hsl(var(--muted-foreground))`}
-                    textAnchor="middle"
-                    style={{ fontWeight: 700, letterSpacing: 0.1 }}
-                  >
-                    {e.label}
-                  </text>
-                )}
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Nodes (HTML overlay for crisp text) */}
-        {NODES.map((n) => {
-          const visible = t > n.appear;
-          const isCore = n.id === "core";
-          const color = `hsl(${CLUSTER_COLOR[n.cluster]})`;
+        {/* edges */}
+        {satellites.map((s, i) => {
+          const rad = (s.angle * Math.PI) / 180;
+          const sx = cx + Math.cos(rad) * r;
+          const sy = cy * 0.75 + Math.sin(rad) * r * 0.7;
+          const visible = t > s.appear;
+          const progress = Math.min(1, Math.max(0, (t - s.appear) / 500));
+          const x2 = cx + (sx - cx) * progress;
+          const y2 = cy * 0.75 + (sy - cy * 0.75) * progress;
           return (
-            <motion.div
-              key={n.id}
-              initial={false}
-              animate={
-                visible
-                  ? { opacity: 1, scale: 1 }
-                  : { opacity: 0, scale: 0.5 }
-              }
-              transition={{ duration: 0.4, type: "spring", damping: 14 }}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${n.x}%`, top: `${n.y}%` }}
-            >
-              <div
-                className={`rounded-lg border ${isCore ? "border-2 px-3 py-2" : "px-2 py-1"} bg-card text-center whitespace-nowrap`}
-                style={{
-                  borderColor: color,
-                  background: isCore ? `hsl(${CLUSTER_COLOR[n.cluster]} / 0.12)` : "hsl(var(--card))",
-                  boxShadow: isCore
-                    ? `0 12px 30px -10px ${color}`
-                    : `0 4px 10px -4px ${color}`,
-                }}
-              >
-                <div className="flex items-center gap-1.5 justify-center">
-                  <span
-                    className="inline-block rounded-full"
-                    style={{ width: isCore ? 6 : 4, height: isCore ? 6 : 4, background: color }}
+            <g key={"e" + i} opacity={visible ? 1 : 0}>
+              <line
+                x1={cx}
+                y1={cy * 0.75}
+                x2={x2}
+                y2={y2}
+                stroke={s.color}
+                strokeOpacity={0.55}
+                strokeWidth={0.5}
+                strokeLinecap="round"
+              />
+              {progress >= 1 && (
+                <circle r={0.7} fill={s.color}>
+                  <animateMotion
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                    path={`M ${cx} ${cy * 0.75} L ${sx} ${sy}`}
                   />
-                  <span
-                    className={`font-black tracking-wider uppercase ${isCore ? "text-[10px] sm:text-[11px]" : "text-[8px] sm:text-[9px]"}`}
-                    style={{ color }}
-                  >
-                    {n.label}
-                  </span>
-                </div>
-                {n.sub && (
-                  <div className={`text-muted-foreground font-bold mt-0.5 ${isCore ? "text-[9px] sm:text-[10px]" : "text-[7px] sm:text-[8px]"}`}>
-                    {n.sub}
-                  </div>
-                )}
-              </div>
-            </motion.div>
+                </circle>
+              )}
+            </g>
           );
         })}
-      </div>
+      </svg>
 
-      {/* Bottom legend / counters */}
+      {/* Core node */}
       <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: t > 4500 ? 1 : 0, y: t > 4500 ? 0 : 8 }}
-        transition={{ duration: 0.4 }}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center gap-3 sm:gap-4 px-3 py-1.5 rounded-full backdrop-blur-md"
-        style={{ background: "hsl(var(--background) / 0.85)", border: "1px solid hsl(var(--border))" }}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, type: "spring", damping: 12 }}
+        className="absolute -translate-x-1/2 -translate-y-1/2"
+        style={{ left: "50%", top: "50%" }}
       >
-        <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest" style={{ color: tone }}>
-          <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: tone }} />
-          {NODES.length} nodes
-        </span>
-        <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-          <span className="inline-block w-3 h-px" style={{ background: "hsl(var(--muted-foreground))" }} />
-          {EDGES.length} relationships
-        </span>
-        <span className="hidden sm:flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest" style={{ color: green }}>
-          <GitBranch className="w-3 h-3" />
-          versioned
-        </span>
+        <div
+          className="rounded-xl border-2 px-3.5 py-2 bg-card text-center whitespace-nowrap"
+          style={{
+            borderColor: tone,
+            background: `hsl(${tone} / 0.08)`,
+            boxShadow: `0 16px 36px -12px ${tone}`,
+          }}
+        >
+          <div className="flex items-center gap-1.5 justify-center">
+            <Network className="w-3.5 h-3.5" style={{ color: tone }} />
+            <span className="text-[10px] sm:text-[11px] font-black tracking-[0.18em] uppercase" style={{ color: tone }}>
+              Decision Standard
+            </span>
+          </div>
+          <div className="text-[9px] sm:text-[10px] text-muted-foreground font-bold mt-0.5">v3.2 · governed</div>
+        </div>
       </motion.div>
+
+      {/* Satellite nodes */}
+      {satellites.map((s) => {
+        const rad = (s.angle * Math.PI) / 180;
+        const sx = 50 + Math.cos(rad) * 32;
+        const sy = 50 + Math.sin(rad) * 32;
+        const visible = t > s.appear + 200;
+        return (
+          <motion.div
+            key={s.id}
+            initial={false}
+            animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.4, type: "spring", damping: 14 }}
+            className="absolute -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${sx}%`, top: `${sy}%` }}
+          >
+            <div
+              className="rounded-lg border px-2.5 py-1 bg-card whitespace-nowrap"
+              style={{
+                borderColor: s.color,
+                boxShadow: `0 6px 16px -6px ${s.color}`,
+              }}
+            >
+              <div className="flex items-center gap-1.5">
+                <span
+                  className="inline-block w-1.5 h-1.5 rounded-full"
+                  style={{ background: s.color }}
+                />
+                <span
+                  className="text-[9px] sm:text-[10px] font-black tracking-[0.16em] uppercase"
+                  style={{ color: s.color }}
+                >
+                  {s.label}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
