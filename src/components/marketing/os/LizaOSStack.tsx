@@ -224,7 +224,10 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
       <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
         {layer.kicker}
       </p>
-      <h3 className="text-base md:text-lg font-black leading-tight mb-3 text-foreground">{layer.title}</h3>
+      <h3 className="text-base md:text-lg font-black leading-tight mb-1 text-foreground">{layer.title}</h3>
+      <p className="text-[10px] uppercase tracking-[0.16em] font-bold mb-3 inline-flex items-center gap-1" style={{ color: t.accent }}>
+        <ChevronDown className="w-3 h-3" /> tap any row to expand
+      </p>
       {/* Endpoint tiles — looks like an integration wall, not a feature list */}
       <div className="flex flex-col gap-1.5 flex-1">
         {layer.items.map((it) => {
