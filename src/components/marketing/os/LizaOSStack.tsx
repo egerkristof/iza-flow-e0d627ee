@@ -898,7 +898,7 @@ function MobileStack({
       sub: "Set the standards, see the signals. Strategy and execution become one loop.",
       tone: "strategy" as Tone,
       icon: <Compass className="w-4 h-4" />,
-      bullets: industry.leadership.push.slice(0, 3),
+      bullets: industry.leadership.pushItems.slice(0, 3).map((i) => i.label),
     },
     {
       id: "systems",
