@@ -802,6 +802,18 @@ function ControlTowerBlock({
       style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
     >
       <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: t.accent, opacity: 0.7 }} />
+      {/* Window chrome — frames this as a Liza system surface */}
+      <div
+        className="flex items-center gap-1.5 px-3 py-2 border-b"
+        style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+      >
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+        <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+          Liza Leadership View
+        </span>
+      </div>
       <div className="p-6 md:p-8">
         <div className="text-center mb-5">
           <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>{layer.kicker}</p>
