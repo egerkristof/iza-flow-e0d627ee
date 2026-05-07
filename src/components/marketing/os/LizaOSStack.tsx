@@ -1146,10 +1146,10 @@ function MobileStack({
         <Monitor className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--primary))" }} />
         <div className="min-w-0">
           <p className="text-[12px] font-bold text-foreground leading-tight">
-            Even richer on a larger screen
+            Open this on desktop for the full architecture diagram.
           </p>
           <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">
-            This is the short mobile version. The interactive map opens up on desktop.
+            On mobile we only show the loop and the layers. The interactive system map needs a larger screen.
           </p>
         </div>
       </div>
