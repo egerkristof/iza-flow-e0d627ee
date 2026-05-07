@@ -817,6 +817,19 @@ export function LizaOSStack() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
       >
+        {/* MOBILE: simplified vertical stack */}
+        <div className="md:hidden">
+          <MobileStack
+            industry={industry}
+            sourceLayer={sourceLayer}
+            toolsLayer={toolsLayer}
+            nativeLayer={nativeLayer}
+            isGeneric={isGeneric}
+          />
+        </div>
+
+        {/* DESKTOP / TABLET: full diagram */}
+        <div className="hidden md:block">
         {/* TOP: Leadership view */}
         <ControlTowerBlock layer={CONTROL_TOWER} leadership={industry.leadership} />
 
@@ -861,6 +874,7 @@ export function LizaOSStack() {
             </Link>
           </div>
         )}
+        </div>
       </motion.div>
     </div>
   );
