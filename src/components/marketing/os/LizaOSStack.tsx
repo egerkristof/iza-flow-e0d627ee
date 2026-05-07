@@ -701,6 +701,22 @@ function VerticalSyncConnector({ downLabel, upLabel }: { downLabel: string; upLa
   );
 }
 
+/* ---------- Tablet: two arrows funneling Records + Tools down into Workspace ---------- */
+function FeedDownArrows({ leftLabel, rightLabel }: { leftLabel: string; rightLabel: string }) {
+  return (
+    <div className="grid grid-cols-2 gap-3 py-3">
+      {[leftLabel, rightLabel].map((lbl) => (
+        <div key={lbl} className="flex flex-col items-center gap-1">
+          <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--primary) / 0.75)" }} />
+          <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+            {lbl}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ---------- Strategic Control Tower (top block) ---------- */
 function PropagationChain({ chain }: { chain: { trigger: string; nodes: string[]; outcome: string } }) {
   const accent = "hsl(var(--primary))";
@@ -1024,8 +1040,8 @@ export function LizaOSStack() {
 
         <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
 
-        {/* TOP ROW: Systems of record  <->  Where work happens (center)  <->  Your AI tools */}
-        <div className="grid lg:grid-cols-[minmax(0,0.85fr)_auto_minmax(0,2fr)_auto_minmax(0,0.85fr)] gap-3 items-stretch">
+        {/* DESKTOP (lg+): Records | Workspace | Tools side by side */}
+        <div className="hidden lg:grid lg:grid-cols-[minmax(0,0.85fr)_auto_minmax(0,2fr)_auto_minmax(0,0.85fr)] gap-3 items-stretch">
           <SidePanel layer={sourceLayer} align="left" />
           <SyncArrow label="read & write" />
           <div className="relative">
@@ -1034,6 +1050,19 @@ export function LizaOSStack() {
           </div>
           <SyncArrow label="sync & propagate" />
           <SidePanel layer={toolsLayer} align="right" />
+        </div>
+
+        {/* TABLET (md, not lg): Records + Tools feed DOWN into Workspace */}
+        <div className="md:block lg:hidden">
+          <div className="grid grid-cols-2 gap-3">
+            <SidePanel layer={sourceLayer} align="left" />
+            <SidePanel layer={toolsLayer} align="right" />
+          </div>
+          <FeedDownArrows leftLabel="read & write" rightLabel="sync & propagate" />
+          <div className="relative">
+            <CenterNativeSurfaces layer={nativeLayer} />
+            {!isGeneric && <ScenarioFlipCard industry={industry} />}
+          </div>
         </div>
 
         <Connector label="every surface above runs against the Decision Standard" />
