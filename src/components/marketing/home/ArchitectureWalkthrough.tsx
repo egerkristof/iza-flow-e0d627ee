@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import {
   AlertTriangle, Compass, Database, Sparkles, Workflow,
   ArrowDown, ArrowUp, ArrowRight, ArrowLeft, Play, Pause, Cloud, Mail, FileSpreadsheet, Bot, Search,
-  CheckCircle2, TrendingDown, Users, FileText, GitBranch, BookOpen, Stamp, Activity, Eye,
+  CheckCircle2, TrendingDown, TrendingUp, Users, FileText, GitBranch, BookOpen, Stamp, Activity, Eye,
+  Briefcase, Scale, Headphones, Cog, UserCheck, Wallet, Globe, Newspaper, AlertCircle, MessageSquare, Link2, Plug,
 } from "lucide-react";
 
 /* Mobile-only auto-playing "Stories" video of the Liza architecture.
@@ -81,39 +82,41 @@ function Chip({ icon, label, accent = MUTED, dim = false }: { icon: React.ReactN
 
 /* 1. HERO — "You already shipped AI everywhere" */
 function SceneHero(p: number) {
-  const tools = [
-    { name: "Sales · Copilot",      sub: "Drafting proposals", icon: <Sparkles className="w-3.5 h-3.5" /> },
-    { name: "Legal · Claude",       sub: "Reviewing MSAs",     icon: <Bot className="w-3.5 h-3.5" /> },
-    { name: "Support · Glean",      sub: "Answering tickets",  icon: <Search className="w-3.5 h-3.5" /> },
-    { name: "Ops · Custom agent",   sub: "Triaging incidents", icon: <Workflow className="w-3.5 h-3.5" /> },
+  const teams = [
+    { dept: "Sales",   tool: "Copilot",       sub: "Drafting proposals",  icon: <Briefcase className="w-3.5 h-3.5" /> },
+    { dept: "Legal",   tool: "Claude",        sub: "Reviewing MSAs",      icon: <Scale className="w-3.5 h-3.5" /> },
+    { dept: "Support", tool: "Glean",         sub: "Answering tickets",   icon: <Headphones className="w-3.5 h-3.5" /> },
+    { dept: "Ops",     tool: "Custom agent",  sub: "Triaging incidents",  icon: <Cog className="w-3.5 h-3.5" /> },
+    { dept: "HR",      tool: "ChatGPT",       sub: "Screening candidates",icon: <UserCheck className="w-3.5 h-3.5" /> },
+    { dept: "Finance", tool: "Custom GPT",    sub: "Closing the books",   icon: <Wallet className="w-3.5 h-3.5" /> },
   ];
   return (
-    <div className="w-full max-w-[300px] mx-auto">
+    <div className="w-full max-w-[320px] mx-auto">
       <div className="text-center mb-3">
         <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
           A Tuesday at your company
         </span>
       </div>
-      <div className="grid grid-cols-1 gap-1.5">
-        {tools.map((t, i) => {
-          const a = between(p, 0.05 + i * 0.12, 0.3 + i * 0.12);
+      <div className="grid grid-cols-2 gap-1.5">
+        {teams.map((t, i) => {
+          const a = between(p, 0.05 + i * 0.08, 0.25 + i * 0.08);
           return (
             <div
-              key={t.name}
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border"
+              key={t.dept}
+              className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg border"
               style={{
                 opacity: a,
-                transform: `translateX(${(1 - a) * -8}px)`,
+                transform: `translateY(${(1 - a) * 6}px)`,
                 borderColor: PRIMARY + "33",
                 background: "hsl(var(--background))",
               }}
             >
               <span style={{ color: PRIMARY }}>{t.icon}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[10.5px] font-black text-foreground/85 truncate">{t.name}</p>
-                <p className="text-[9.5px] text-muted-foreground truncate">{t.sub}</p>
+                <p className="text-[10px] font-black text-foreground/85 truncate">{t.dept} · {t.tool}</p>
+                <p className="text-[8.5px] text-muted-foreground truncate">{t.sub}</p>
               </div>
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: PRIMARY, boxShadow: `0 0 6px ${PRIMARY}` }} />
+              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: PRIMARY, boxShadow: `0 0 6px ${PRIMARY}` }} />
             </div>
           );
         })}
@@ -122,22 +125,45 @@ function SceneHero(p: number) {
         className="mt-3 text-center text-[11px] font-bold text-foreground/80 leading-snug"
         style={{ opacity: between(p, 0.65, 0.9) }}
       >
-        Four teams. Four tools. <span style={{ color: PRIMARY }}>Nobody told them what "we" means.</span>
+        Six teams. A dozen tools. <span style={{ color: PRIMARY }}>Nobody told any of them what "we" means.</span>
       </div>
     </div>
   );
 }
 
-/* 2. PROBLEM — same question, conflicting answers */
+/* 2. PROBLEM — knowledge silos + shifting external reality + tool drift */
 function SceneProblem(p: number) {
-  const tools = [
-    { who: "Maya · AE",        tool: "Copilot",   answer: "Up to 15% is fine" },
-    { who: "Tom · Deal desk",  tool: "Claude",    answer: "25% on multi-year" },
-    { who: "Priya · CS",       tool: "Glean",     answer: "No policy found" },
+  const externals = [
+    { icon: <Newspaper className="w-3 h-3" />, l: "New EU AI Act clause" },
+    { icon: <Globe className="w-3 h-3" />,     l: "Competitor cuts price 18%" },
+    { icon: <AlertCircle className="w-3 h-3" />, l: "CFO tightens approval rules" },
   ];
+  const tools = [
+    { who: "Maya · AE",        tool: "Copilot",   answer: "Up to 15% is fine",     ctx: "saw last quarter's deck" },
+    { who: "Tom · Deal desk",  tool: "Claude",    answer: "25% on multi-year",     ctx: "read an old playbook" },
+    { who: "Priya · CS",       tool: "Glean",     answer: "No policy found",       ctx: "policy lives in Legal's drive" },
+  ];
+  const extIn = between(p, 0.0, 0.18);
+  const qIn = between(p, 0.2, 0.32);
   return (
-    <div className="w-full max-w-[300px] mx-auto">
-      <div className="text-center mb-2">
+    <div className="w-full max-w-[320px] mx-auto">
+      {/* External pressure layer */}
+      <div className="mb-2" style={{ opacity: extIn }}>
+        <p className="text-[8.5px] font-black uppercase tracking-[0.14em] text-muted-foreground text-center mb-1">
+          This week, the world changed three times
+        </p>
+        <div className="grid grid-cols-3 gap-1">
+          {externals.map((e) => (
+            <div key={e.l} className="flex items-center gap-1 px-1.5 py-1 rounded border"
+              style={{ borderColor: RED + "33", background: RED + "06" }}>
+              <span style={{ color: RED }}>{e.icon}</span>
+              <span className="text-[8px] font-bold text-foreground/80 leading-tight">{e.l}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="text-center mb-2" style={{ opacity: qIn }}>
         <span className="text-[9.5px] font-black uppercase tracking-[0.16em]" style={{ color: RED }}>
           Slack · #deal-desk · 14:02
         </span>
@@ -145,16 +171,16 @@ function SceneProblem(p: number) {
           "What's our max discount on a 3-year renewal?"
         </p>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {tools.map((t, i) => {
-          const enter = between(p, 0.05 + i * 0.15, 0.25 + i * 0.15);
-          const shake = p > 0.75 ? Math.sin((p - 0.75) * 60) * 2 : 0;
+          const enter = between(p, 0.32 + i * 0.12, 0.5 + i * 0.12);
+          const shake = p > 0.82 ? Math.sin((p - 0.82) * 60) * 2 : 0;
           return (
             <motion.div
               key={t.who}
               style={{
                 opacity: enter,
-                transform: `translateX(${(1 - enter) * -16 + shake}px)`,
+                transform: `translateX(${(1 - enter) * -12 + shake}px)`,
                 borderColor: RED + "55",
                 background: RED + "06",
               }}
@@ -165,15 +191,16 @@ function SceneProblem(p: number) {
                 <span className="text-[8.5px] font-bold uppercase tracking-[0.12em] text-muted-foreground">asks {t.tool}</span>
               </div>
               <p className="text-[11px] font-bold" style={{ color: RED }}>"{t.answer}"</p>
+              <p className="text-[8.5px] text-muted-foreground italic mt-0.5">{t.ctx}</p>
             </motion.div>
           );
         })}
       </div>
       <div
-        className="mt-3 text-center text-[10.5px] font-black uppercase tracking-[0.16em] leading-snug"
-        style={{ opacity: between(p, 0.7, 0.9), color: RED }}
+        className="mt-2.5 text-center text-[10px] font-black uppercase tracking-[0.14em] leading-snug"
+        style={{ opacity: between(p, 0.82, 0.95), color: RED }}
       >
-        Three answers. One company.
+        Siloed teams. Shifting reality. Tools left to guess.
       </div>
     </div>
   );
