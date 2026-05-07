@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, X, Play } from "lucide-react";
+import { ArrowRight, ArrowLeft, X, Play, GripHorizontal } from "lucide-react";
 
 /* 6-step guided tour for the LizaOSStack.
    Mirrors the homepage Stories arc (Hero → Problem → Stakes → Guide → Plan → Success)
@@ -89,6 +89,8 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
   const [step, setStep] = useState(0);
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [vp, setVp] = useState({ w: typeof window !== "undefined" ? window.innerWidth : 1200, h: typeof window !== "undefined" ? window.innerHeight : 800 });
+  // Drag offset applied to the card so users can move it out of the way.
+  const [drag, setDrag] = useState({ x: 0, y: 0 });
   const wrapRef = useRef<HTMLDivElement>(null);
 
   // Reset on open/close
@@ -96,15 +98,42 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
     if (open) setStep(0);
   }, [open]);
 
-  // Scroll to target + measure
+  // Reset drag offset whenever the step changes — new anchor, fresh placement.
+  useEffect(() => {
+    setDrag({ x: 0, y: 0 });
+  }, [step]);
+
+  // Scroll to target + measure. Several layouts (tablet vs desktop) render
+  // duplicate `data-tour` nodes; pick the one that's actually visible.
   useEffect(() => {
     if (!open) return;
-    const target = document.querySelector<HTMLElement>(`[data-tour="${TOUR_STEPS[step].target}"]`);
-    if (!target) return;
+    const findVisible = (): HTMLElement | null => {
+      const all = document.querySelectorAll<HTMLElement>(`[data-tour="${TOUR_STEPS[step].target}"]`);
+      let best: { el: HTMLElement; r: DOMRect } | null = null;
+      all.forEach((el) => {
+        // `display: contents` wrappers report 0×0 — descend to the first real child.
+        let probe: HTMLElement = el;
+        if (el.getBoundingClientRect().width === 0 && el.firstElementChild) {
+          probe = el.firstElementChild as HTMLElement;
+        }
+        if (probe.offsetParent === null && probe.tagName !== "BODY") return; // hidden
+        const r = probe.getBoundingClientRect();
+        if (r.width < 20 || r.height < 20) return;
+        if (!best || r.width * r.height > best.r.width * best.r.height) {
+          best = { el: probe, r };
+        }
+      });
+      return best?.el ?? null;
+    };
+    const target = findVisible();
+    if (!target) {
+      setRect(null);
+      return;
+    }
     target.scrollIntoView({ behavior: "smooth", block: "center" });
-    // Measure after scroll settles
     const measure = () => {
-      setRect(target.getBoundingClientRect());
+      const t = findVisible();
+      if (t) setRect(t.getBoundingClientRect());
       setVp({ w: window.innerWidth, h: window.innerHeight });
     };
     const t1 = window.setTimeout(measure, 450);
@@ -144,14 +173,21 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
   // Card vertical position — clamp to viewport
   const desiredTop = rect ? Math.max(PAD + 24, Math.min(vp.h - 360, rect.top + rect.height / 2 - 180)) : 80;
 
-  // Connector line from card to spotlight edge (desktop only)
+  // Connector line from card to spotlight edge (desktop only). Recomputed
+  // every render so it follows the card while it's being dragged.
   let connector: { x1: number; y1: number; x2: number; y2: number } | null = null;
   if (!useBottom && rect) {
-    const cardLeft = placeRight ? vp.w - CARD_W - PAD : PAD;
-    const cardEdgeX = placeRight ? cardLeft : cardLeft + CARD_W;
-    const targetEdgeX = placeRight ? rect.right + 10 : rect.left - 10;
-    const cy = Math.min(vp.h - 60, Math.max(60, rect.top + rect.height / 2));
-    connector = { x1: cardEdgeX, y1: desiredTop + 80, x2: targetEdgeX, y2: cy };
+    const baseLeft = placeRight ? vp.w - CARD_W - PAD : PAD;
+    const cardLeft = baseLeft + drag.x;
+    const cardTop = desiredTop + drag.y;
+    // Target a sensible point on the card (the side closest to the anchor).
+    const targetCenterY = rect.top + rect.height / 2;
+    const cardEdgeX = cardLeft + (placeRight ? 0 : CARD_W);
+    // Anchor the line near the title row, but follow the card vertically.
+    const cardEdgeY = Math.max(cardTop + 40, Math.min(cardTop + 200, targetCenterY));
+    const targetEdgeX = cardEdgeX < rect.left ? rect.left - 10 : rect.right + 10;
+    const targetEdgeY = Math.min(vp.h - 24, Math.max(24, targetCenterY));
+    connector = { x1: cardEdgeX, y1: cardEdgeY, x2: targetEdgeX, y2: targetEdgeY };
   }
 
   return (
@@ -206,12 +242,19 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
         </svg>
       )}
 
-      {/* Step card — side-anchored on desktop, bottom on narrow */}
+      {/* Step card — side-anchored on desktop, bottom on narrow.
+          Draggable so the viewer can shove it aside to inspect the diagram. */}
       <motion.div
         key={`card-${step}`}
-        initial={{ opacity: 0, x: useBottom ? 0 : (placeRight ? 24 : -24), y: useBottom ? 16 : 0 }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 0.35 }}
+        drag
+        dragMomentum={false}
+        dragElastic={0}
+        onDragEnd={(_, info) =>
+          setDrag((d) => ({ x: d.x + info.offset.x, y: d.y + info.offset.y }))
+        }
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, x: drag.x, y: drag.y }}
+        transition={{ duration: 0.3 }}
         className={
           useBottom
             ? "absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-xl rounded-2xl border-2 p-5 pointer-events-auto"
@@ -230,6 +273,10 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
               }),
         }}
       >
+        {/* Drag handle */}
+        <div className="flex items-center justify-center -mt-1 mb-1.5 cursor-grab active:cursor-grabbing text-muted-foreground/50">
+          <GripHorizontal className="w-4 h-4" />
+        </div>
         {/* Progress bars */}
         <div className="flex gap-1 mb-3">
           {TOUR_STEPS.map((_, i) => (
@@ -328,14 +375,9 @@ export function GuidedTour({ open, onClose }: { open: boolean; onClose: () => vo
         </div>
       </motion.div>
 
-      {/* Click-catcher to close on backdrop click (only outside the card + ring) */}
-      <button
-        type="button"
-        aria-label="Close tour"
-        onClick={onClose}
-        className="absolute inset-0 cursor-default pointer-events-auto -z-10"
-        style={{ background: "transparent" }}
-      />
+      {/* No backdrop click-catcher — the rest of the page stays interactive
+          so the viewer can click into highlighted blocks while the tour is open.
+          Use Esc or the close button to dismiss. */}
     </div>
   );
 }
