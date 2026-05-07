@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Database, Workflow, Sparkles, Compass } from "lucide-react";
@@ -66,8 +65,6 @@ const INDUSTRIES: IndustryView[] = [
 ];
 
 export function ArchitectureTeaser() {
-  const [active, setActive] = useState(0);
-  const view = INDUSTRIES[active];
   return (
     <section className="py-16 md:py-24 px-6">
       <div className="max-w-5xl mx-auto">
