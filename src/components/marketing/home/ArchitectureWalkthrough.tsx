@@ -531,7 +531,7 @@ function SceneSuccess(p: number) {
 /* ---------- scenes config ---------- */
 const SCENES: Scene[] = [
   {
-    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 11000, render: SceneHero,
+    kicker: "01 · You", headline: "You shipped AI everywhere.", duration: 15000, render: SceneHero,
     beats: [
       { at: 0.00, text: "It's a Tuesday. Six teams are already working with AI." },
       { at: 0.45, text: "Sales, Legal, Support, Ops, HR, Finance — each picked their own tool." },
@@ -539,7 +539,7 @@ const SCENES: Scene[] = [
     ],
   },
   {
-    kicker: "02 · Problem", headline: "But every tool answers differently.", duration: 12000, render: SceneProblem,
+    kicker: "02 · Problem", headline: "But every tool answers differently.", duration: 16000, render: SceneProblem,
     beats: [
       { at: 0.00, text: "And the world won't sit still — regulation, competitors and policy shift every week." },
       { at: 0.30, text: "One question lands in #deal-desk. Three people, three tools, three answers." },
