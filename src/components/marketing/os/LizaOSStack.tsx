@@ -1227,12 +1227,8 @@ function MobileStack({
       {/* Hero loop diagram */}
       <MobileLoopDiagram />
 
-      {/* Tap-to-expand sections */}
-      <div className="space-y-2.5">
-        {sections.map((s) => (
-          <MobileSection key={s.id} section={s} />
-        ))}
-      </div>
+      {/* Guided tour CTA */}
+      <MobileGuidedTour sections={sections} />
 
       {!isGeneric && (
         <div className="pt-2 text-center">
