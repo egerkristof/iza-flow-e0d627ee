@@ -1359,7 +1359,7 @@ function IndustryRolodex({
   active, onChange,
 }: { active: IndustryKey; onChange: (k: IndustryKey) => void }) {
   return (
-    <div className="mb-5">
+    <div className="mb-5 hidden md:block">
       <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
         <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground">
           Pick your industry — the diagram relabels in your language
