@@ -205,36 +205,36 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
   switch (visual) {
     case "tools":
       return (
-        <div className="flex flex-wrap gap-3 justify-center max-w-2xl">
+        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center max-w-2xl">
           {["Copilot", "Claude", "Glean", "ChatGPT", "Vendor RAG"].map((t, i) => (
             <motion.div
               key={t}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="px-4 py-3 rounded-lg border bg-card flex items-center gap-2"
+              className="px-2.5 sm:px-4 py-2 sm:py-3 rounded-lg border bg-card flex items-center gap-1.5 sm:gap-2"
               style={{ borderColor: "hsl(var(--border))" }}
             >
-              <Sparkles className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm font-bold">{t}</span>
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
+              <span className="text-[11px] sm:text-sm font-bold">{t}</span>
             </motion.div>
           ))}
         </div>
       );
     case "records":
       return (
-        <div className="grid grid-cols-3 gap-3 max-w-2xl">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 max-w-2xl">
           {["SharePoint", "Salesforce", "ELN", "ERP", "Email", "Senior interviews"].map((t, i) => (
             <motion.div
               key={t}
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="px-3 py-3 rounded-lg border bg-card flex items-center gap-2"
+              className="px-2.5 sm:px-3 py-2 sm:py-3 rounded-lg border bg-card flex items-center gap-1.5 sm:gap-2"
               style={{ borderColor: "hsl(var(--border))" }}
             >
-              <Database className="w-4 h-4 text-muted-foreground" />
-              <span className="text-[12px] font-bold">{t}</span>
+              <Database className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground shrink-0" />
+              <span className="text-[10px] sm:text-[12px] font-bold truncate">{t}</span>
             </motion.div>
           ))}
         </div>
@@ -245,21 +245,21 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.55 }}
-          className="rounded-2xl border-2 p-8 max-w-md text-center"
+          className="rounded-2xl border-2 p-5 sm:p-8 max-w-md text-center"
           style={{
             background: "hsl(var(--primary) / 0.08)",
             borderColor: tone,
             boxShadow: `0 24px 50px -20px ${tone}`,
           }}
         >
-          <Network className="w-10 h-10 mx-auto mb-3" style={{ color: tone }} />
-          <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-1.5" style={{ color: tone }}>
+          <Network className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 sm:mb-3" style={{ color: tone }} />
+          <p className="text-[9px] sm:text-[10px] font-black tracking-[0.18em] sm:tracking-[0.22em] uppercase mb-1.5" style={{ color: tone }}>
             The Decision Standard
           </p>
-          <p className="text-base font-black text-foreground leading-tight">
+          <p className="text-sm sm:text-base font-black text-foreground leading-tight">
             Mandates · Playbooks · Decision logic
           </p>
-          <p className="text-[11px] text-muted-foreground mt-2">Versioned. Owned. Governed.</p>
+          <p className="text-[10px] sm:text-[11px] text-muted-foreground mt-2">Versioned. Owned. Governed.</p>
         </motion.div>
       );
     case "workspace":
@@ -268,20 +268,20 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="rounded-xl border-2 p-6 max-w-xl w-full"
+          className="rounded-xl border-2 p-4 sm:p-6 max-w-xl w-full"
           style={{
             background: "hsl(var(--brand-green, var(--primary)) / 0.08)",
             borderColor: "hsl(var(--brand-green, var(--primary)) / 0.5)",
           }}
         >
-          <div className="flex items-center gap-2 mb-3">
-            <Workflow className="w-5 h-5" style={{ color: "hsl(var(--brand-green, var(--primary)))" }} />
-            <span className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: "hsl(var(--brand-green, var(--primary)))" }}>
+          <div className="flex items-center gap-2 mb-2 sm:mb-3">
+            <Workflow className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: "hsl(var(--brand-green, var(--primary)))" }} />
+            <span className="text-[9px] sm:text-[10px] font-black tracking-[0.18em] sm:tracking-[0.22em] uppercase" style={{ color: "hsl(var(--brand-green, var(--primary)))" }}>
               Where work happens
             </span>
           </div>
-          <p className="text-base font-black mb-2">Workbook · Account renewal Q4</p>
-          <ul className="space-y-1.5 text-[12px] text-muted-foreground">
+          <p className="text-sm sm:text-base font-black mb-2">Workbook · Account renewal Q4</p>
+          <ul className="space-y-1 sm:space-y-1.5 text-[11px] sm:text-[12px] text-muted-foreground">
             <li>✓ Pricing rule v3.2 enforced</li>
             <li>✓ Approval threshold checked</li>
             <li>✓ Output cited Playbook PB-014</li>
@@ -294,56 +294,56 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center gap-3"
+          className="flex flex-col items-center gap-2 sm:gap-3"
         >
           <div
-            className="px-5 py-3 rounded-xl border flex items-center gap-2"
+            className="px-3.5 sm:px-5 py-2 sm:py-3 rounded-xl border flex items-center gap-2"
             style={{
               background: "hsl(var(--brand-amber, var(--primary)) / 0.1)",
               borderColor: "hsl(var(--brand-amber, var(--primary)) / 0.5)",
             }}
           >
             <Compass className="w-4 h-4" style={{ color: "hsl(var(--brand-amber, var(--primary)))" }} />
-            <span className="font-black text-sm">Leadership view</span>
+            <span className="font-black text-xs sm:text-sm">Leadership view</span>
           </div>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="text-2xl"
+            className="text-xl sm:text-2xl"
             style={{ color: tone }}
           >
             ⇅
           </motion.div>
           <div
-            className="px-5 py-3 rounded-xl border flex items-center gap-2"
+            className="px-3.5 sm:px-5 py-2 sm:py-3 rounded-xl border flex items-center gap-2"
             style={{
               background: "hsl(var(--primary) / 0.08)",
               borderColor: "hsl(var(--primary) / 0.5)",
             }}
           >
             <ShieldCheck className="w-4 h-4 text-primary" />
-            <span className="font-black text-sm">Decision Standard</span>
+            <span className="font-black text-xs sm:text-sm">Decision Standard</span>
           </div>
         </motion.div>
       );
     case "result":
       return (
-        <div className="grid grid-cols-3 gap-4 max-w-2xl">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-2xl w-full">
           {["Copilot", "Claude", "Glean"].map((t, i) => (
             <motion.div
               key={t}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="rounded-xl border-2 p-4 text-center"
+              className="rounded-xl border-2 p-2.5 sm:p-4 text-center"
               style={{
                 background: "hsl(var(--primary) / 0.06)",
                 borderColor: "hsl(var(--primary) / 0.4)",
               }}
             >
-              <p className="text-[10px] font-black tracking-[0.22em] uppercase text-primary mb-1.5">{t}</p>
-              <p className="text-[13px] font-black leading-tight">Same answer.</p>
-              <p className="text-[10px] text-muted-foreground mt-1">cited PB-014 · v3.2</p>
+              <p className="text-[9px] sm:text-[10px] font-black tracking-[0.18em] sm:tracking-[0.22em] uppercase text-primary mb-1 sm:mb-1.5">{t}</p>
+              <p className="text-[11px] sm:text-[13px] font-black leading-tight">Same answer.</p>
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground mt-1">cited PB-014 · v3.2</p>
             </motion.div>
           ))}
         </div>
