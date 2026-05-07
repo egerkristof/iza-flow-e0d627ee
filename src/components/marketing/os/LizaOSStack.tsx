@@ -2006,20 +2006,27 @@ function MobileGuidedTour({
     [industry, isGeneric],
   );
 
-  // When step changes (or tour starts), open the current section + scroll to it.
+  // When step changes (or tour starts), close other sections, open the current
+  // one, and scroll its header just below the top of the viewport so the body
+  // is fully visible above the sticky narration bar.
   useEffect(() => {
     if (!tourActive) return;
     const current = sections[step];
     if (!current) return;
-    setOpen(() => ({ [current.id]: true }));
-    requestAnimationFrame(() => {
+    // Collapse all others, expand the current — gives a clean focused view.
+    setOpen({ [current.id]: true });
+    // Wait for the expand animation to settle (~280ms) before measuring,
+    // otherwise the rect we read is the pre-expansion height and the scroll
+    // lands too high.
+    const t = window.setTimeout(() => {
       const el = refs.current[current.id];
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        const top = window.scrollY + rect.top - 80;
-        window.scrollTo({ top, behavior: "smooth" });
-      }
-    });
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      // Header sits ~12px below the top of the viewport.
+      const top = window.scrollY + rect.top - 12;
+      window.scrollTo({ top, behavior: "smooth" });
+    }, 320);
+    return () => window.clearTimeout(t);
   }, [tourActive, step, sections]);
 
   // Reset step to 0 if industry changes mid-tour so narration matches.
