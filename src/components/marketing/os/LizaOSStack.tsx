@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
 import { GuidedTour, PlayTourButton } from "./GuidedTour";
 import { Play } from "lucide-react";
-import { toast } from "sonner";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
@@ -997,53 +996,53 @@ export function LizaOSStack() {
   const isGeneric = industryKey === "generic";
   const [tourOpen, setTourOpen] = useState(false);
   const stackRef = useRef<HTMLDivElement>(null);
-  const nudgedRef = useRef(false);
+  const selectorRef = useRef<HTMLDivElement>(null);
+  // Upfront choice: has the visitor either picked an industry, played a tour,
+  // or explicitly said "let me explore on my own"?
+  const [choiceMade, setChoiceMade] = useState(false);
+  // Big floating prompt that re-surfaces if they scrolled past the choice card
+  // without making a decision.
+  const [showFloatingPrompt, setShowFloatingPrompt] = useState(false);
+  const dismissedFloatingRef = useRef(false);
 
-  // Scroll-triggered nudge: when the architecture section has been on screen
-  // for ~6s in generic mode, suggest picking an industry + playing the tour.
+  // Mark the choice as made when industry is picked or tour starts.
   useEffect(() => {
-    if (!isGeneric || tourOpen || nudgedRef.current) return;
+    if (!isGeneric || tourOpen) {
+      setChoiceMade(true);
+      setShowFloatingPrompt(false);
+      dismissedFloatingRef.current = true;
+    }
+  }, [isGeneric, tourOpen]);
+
+  // Floating prompt: if visitor scrolls deep into the architecture without
+  // making the upfront choice, surface a big in-page prompt that explains
+  // both paths (guided tour vs free exploration).
+  useEffect(() => {
+    if (choiceMade || dismissedFloatingRef.current) return;
     const el = stackRef.current;
     if (!el) return;
-    let timer: number | null = null;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-            if (timer == null) {
-              timer = window.setTimeout(() => {
-                if (nudgedRef.current) return;
-                nudgedRef.current = true;
-                toast(
-                  "Want to see how this works for your industry?",
-                  {
-                    description:
-                      "Pick your industry above, then play the 6-step guided tour through the architecture.",
-                    duration: 9000,
-                    action: {
-                      label: "Jump to selector",
-                      onClick: () => {
-                        el.scrollIntoView({ behavior: "smooth", block: "start" });
-                      },
-                    },
-                  },
-                );
-              }, 6000);
-            }
-          } else if (timer != null) {
-            window.clearTimeout(timer);
-            timer = null;
-          }
-        }
-      },
-      { threshold: [0, 0.35, 0.6] },
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      if (timer != null) window.clearTimeout(timer);
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const viewportH = window.innerHeight || 800;
+      // Trigger when ~40% of the section has scrolled past the top of viewport.
+      const scrolledPast = -rect.top;
+      if (scrolledPast > viewportH * 0.5) {
+        setShowFloatingPrompt(true);
+      }
     };
-  }, [isGeneric, tourOpen]);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [choiceMade]);
+
+  const dismissFloating = () => {
+    setShowFloatingPrompt(false);
+    dismissedFloatingRef.current = true;
+  };
+
+  const jumpToSelector = () => {
+    const target = selectorRef.current ?? stackRef.current;
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   // Industry-overridden layers
   const sourceLayer = useMemo<Layer>(() => ({
@@ -1090,13 +1089,31 @@ export function LizaOSStack() {
 
   return (
     <div className="relative" ref={stackRef}>
-      {/* Industry tab strip — Rolodex */}
-      <IndustryRolodex
-        active={industryKey}
-        onChange={setIndustryKey}
-        onPlayTour={() => setTourOpen(true)}
-        showPlayTour={!isGeneric}
+      {/* Upfront choice card: guided tour vs explore on my own */}
+      <UpfrontChoiceCard
+        visible={!choiceMade}
+        onPlayTour={() => {
+          setTourOpen(true);
+          setChoiceMade(true);
+        }}
+        onExplore={() => {
+          setChoiceMade(true);
+          dismissedFloatingRef.current = true;
+        }}
+        onJumpToSelector={() => {
+          jumpToSelector();
+        }}
       />
+
+      {/* Industry tab strip — Rolodex */}
+      <div ref={selectorRef}>
+        <IndustryRolodex
+          active={industryKey}
+          onChange={(k) => { setIndustryKey(k); setChoiceMade(true); }}
+          onPlayTour={() => { setTourOpen(true); setChoiceMade(true); }}
+          showPlayTour={true}
+        />
+      </div>
 
       <motion.div
         key={industryKey}
@@ -1186,7 +1203,186 @@ export function LizaOSStack() {
       </motion.div>
 
       <GuidedTour open={tourOpen} onClose={() => setTourOpen(false)} />
+
+      <FloatingTourPrompt
+        open={showFloatingPrompt && !choiceMade}
+        onPlayTour={() => {
+          setTourOpen(true);
+          setChoiceMade(true);
+          setShowFloatingPrompt(false);
+        }}
+        onJumpToSelector={() => {
+          jumpToSelector();
+          dismissFloating();
+        }}
+        onDismiss={dismissFloating}
+      />
     </div>
+  );
+}
+
+/* ---------- Upfront choice card (desktop/tablet) ---------- */
+function UpfrontChoiceCard({
+  visible, onPlayTour, onExplore, onJumpToSelector,
+}: {
+  visible: boolean;
+  onPlayTour: () => void;
+  onExplore: () => void;
+  onJumpToSelector: () => void;
+}) {
+  return (
+    <AnimatePresence initial={false}>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="hidden md:block mb-6 rounded-2xl border-2 p-5 md:p-6"
+          style={{
+            background: "hsl(var(--card))",
+            borderColor: "hsl(var(--primary) / 0.45)",
+            boxShadow: "0 18px 50px -22px hsl(var(--primary) / 0.45)",
+          }}
+        >
+          <div className="flex items-start justify-between gap-6 flex-wrap">
+            <div className="max-w-[640px]">
+              <p className="text-[11px] font-black tracking-[0.28em] uppercase text-primary mb-1.5">
+                Choose how you want to read this
+              </p>
+              <h3 className="text-[22px] md:text-[26px] font-black leading-tight text-foreground">
+                Take the guided tour, or explore the architecture on your own.
+              </h3>
+              <p className="text-[13.5px] text-muted-foreground mt-2 leading-relaxed">
+                The architecture is dense. The 6-step tour walks you through it in 90 seconds, mapped to your industry if you pick one. Or scroll and inspect every block at your own pace.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-2.5 min-w-[260px]">
+              <button
+                type="button"
+                onClick={onPlayTour}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-black transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--primary))",
+                  color: "hsl(var(--primary-foreground))",
+                  boxShadow: "0 14px 32px -12px hsl(var(--primary))",
+                }}
+              >
+                <Play className="w-4 h-4 fill-current" />
+                Play the 6-step guided tour
+              </button>
+              <button
+                type="button"
+                onClick={onJumpToSelector}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--background))",
+                  color: "hsl(var(--foreground))",
+                  border: "1.5px solid hsl(var(--primary) / 0.45)",
+                }}
+              >
+                Pick my industry first
+                <ArrowDown className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={onExplore}
+                className="text-[12px] font-semibold text-muted-foreground hover:text-foreground transition-colors mt-0.5"
+              >
+                I'll just explore on my own →
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ---------- Floating prompt (re-surfaces if visitor scrolled past the choice) ---------- */
+function FloatingTourPrompt({
+  open, onPlayTour, onJumpToSelector, onDismiss,
+}: {
+  open: boolean;
+  onPlayTour: () => void;
+  onJumpToSelector: () => void;
+  onDismiss: () => void;
+}) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.96 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="hidden md:block fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[min(640px,calc(100vw-32px))]"
+        >
+          <div
+            className="relative rounded-2xl border-2 p-5 md:p-6"
+            style={{
+              background: "hsl(var(--card))",
+              borderColor: "hsl(var(--primary) / 0.55)",
+              boxShadow: "0 28px 70px -20px hsl(var(--primary) / 0.55), 0 0 0 1px hsl(var(--primary) / 0.15)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={onDismiss}
+              aria-label="Dismiss"
+              className="absolute top-3 right-3 w-8 h-8 rounded-full inline-flex items-center justify-center hover:bg-muted transition-colors"
+            >
+              <X className="w-4 h-4 text-muted-foreground" />
+            </button>
+            <p className="text-[10.5px] font-black tracking-[0.28em] uppercase text-primary mb-1.5">
+              Before you go any deeper
+            </p>
+            <h4 className="text-[18px] md:text-[20px] font-black leading-tight text-foreground pr-8">
+              Want a 90-second guided tour of this architecture?
+            </h4>
+            <p className="text-[13px] text-muted-foreground mt-1.5 leading-relaxed">
+              We'll walk you through the 6 steps that make this work, mapped to your industry if you pick one.
+            </p>
+            <div className="flex flex-wrap items-center gap-2.5 mt-4">
+              <button
+                type="button"
+                onClick={onPlayTour}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-black transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--primary))",
+                  color: "hsl(var(--primary-foreground))",
+                  boxShadow: "0 12px 28px -10px hsl(var(--primary))",
+                }}
+              >
+                <Play className="w-4 h-4 fill-current" />
+                Play guided tour
+              </button>
+              <button
+                type="button"
+                onClick={onJumpToSelector}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all hover:-translate-y-0.5"
+                style={{
+                  background: "hsl(var(--background))",
+                  color: "hsl(var(--foreground))",
+                  border: "1.5px solid hsl(var(--primary) / 0.45)",
+                }}
+              >
+                <ArrowUp className="w-4 h-4" />
+                Pick my industry first
+              </button>
+              <button
+                type="button"
+                onClick={onDismiss}
+                className="text-[12px] font-semibold text-muted-foreground hover:text-foreground transition-colors ml-auto"
+              >
+                No thanks
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
