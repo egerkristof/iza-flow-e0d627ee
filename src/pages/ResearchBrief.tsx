@@ -279,6 +279,48 @@ export default function ResearchBrief() {
           </div>
         </section>
 
+        {/* The line of work — what we automate vs. what we augment */}
+        <section className="mt-14 sm:mt-20">
+          <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
+            The line of work
+          </p>
+          <p className="text-base sm:text-lg text-foreground leading-snug max-w-3xl mb-6">
+            We automate the cataloguing. We augment the thinking. The scholar stays the author. We do not write your thesis, pick your stance, or generate your argument.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-border p-6 sm:p-7 bg-muted/30">
+              <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground">We automate · lower-level work</p>
+              <p className="mt-2 font-black text-xl tracking-tight">The cataloguing layer</p>
+              <ul className="mt-4 space-y-2 text-[14px] text-muted-foreground leading-snug">
+                <li>· Reading and tagging hundreds of PDFs</li>
+                <li>· Clustering papers into schools and lineages</li>
+                <li>· Surfacing where authors agree, disagree, and supersede each other</li>
+                <li>· Tracking citations, gaps, and unread regions of the field</li>
+                <li>· Logging every decision, anchor, and version as you reason</li>
+              </ul>
+            </div>
+            <div
+              className="rounded-2xl border-2 p-6 sm:p-7"
+              style={{ borderColor: `hsl(${TEAL} / 0.5)`, background: `hsl(${TEAL} / 0.05)` }}
+            >
+              <p className="text-[11px] font-bold tracking-widest uppercase" style={{ color: `hsl(${TEAL})` }}>
+                We augment · higher-level judgment
+              </p>
+              <p className="mt-2 font-black text-xl tracking-tight">The scholar's act</p>
+              <ul className="mt-4 space-y-2 text-[14px] text-foreground leading-snug font-semibold">
+                <li>· Forming the hypothesis and the framework</li>
+                <li>· Choosing where you stand against each school</li>
+                <li>· Judging which counter-argument actually changes your mind</li>
+                <li>· Deciding what to discard and why (the why-not-this)</li>
+                <li>· Writing the claim. The voice. The argument.</li>
+              </ul>
+              <p className="mt-5 text-[11px] font-bold tracking-widest uppercase" style={{ color: `hsl(${TEAL})` }}>
+                The researcher stays the author.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Loop */}
         <section className="mt-14 sm:mt-20">
           <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground mb-5">
