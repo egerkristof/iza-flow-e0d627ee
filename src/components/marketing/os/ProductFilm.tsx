@@ -14,12 +14,13 @@ type Beat = {
 };
 
 const BEATS: Beat[] = [
-  { duration: 14000, caption: "Every AI tool you bought answers from generic training data.", visual: "tools" },
-  { duration: 14000, caption: "Your standards exist. They are trapped in records, docs, senior interviews.", visual: "records" },
+  { duration: 13000, caption: "Every AI tool you bought answers from generic training data.", visual: "tools" },
+  { duration: 14000, caption: "Yes, they bolt on RAG. But RAG is a snapshot of static documents, not your live decision logic.", visual: "tools" },
+  { duration: 14000, caption: "Your real standards stay trapped in records, docs and senior interviews. That is human knowledge, not retrievable text.", visual: "records" },
   { duration: 16000, caption: "LIZA writes the Decision Standard. Versioned, owned, governed.", visual: "core" },
-  { duration: 15000, caption: "One workspace. Your AI agents run inside, against the standard.", visual: "workspace" },
-  { duration: 15000, caption: "Strategy pushes down. Signal flows up. Same week, not next quarter.", visual: "leadership" },
-  { duration: 16000, caption: "Same answer in every tool. Standards that sharpen every week.", visual: "result" },
+  { duration: 14000, caption: "One workspace. Your AI agents run inside, against the standard.", visual: "workspace" },
+  { duration: 14000, caption: "Strategy pushes down. Signal flows up. Same week, not next quarter.", visual: "leadership" },
+  { duration: 15000, caption: "Same answer in every tool. Standards that sharpen every week.", visual: "result" },
 ];
 
 const TOTAL = BEATS.reduce((a, b) => a + b.duration, 0);
