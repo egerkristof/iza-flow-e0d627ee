@@ -16,10 +16,10 @@ const NODES = [
 ];
 
 const TRUST_STATS = [
-  { value: "85%", label: "AI adoption, 0% governed" },
-  { value: "40%", label: "AI output reworked" },
-  { value: "0", label: "platforms govern expert knowledge" },
-  { value: "100%", label: "knowledge portability" },
+  { value: "85%", label: "of enterprises adopted AI. Almost none govern what it produces." },
+  { value: "40%", label: "of AI productivity gains lost to rework." },
+  { value: "90%", label: "of operating knowledge stays tacit, in people and threads." },
+  { value: "$280B", label: "lost yearly to rework in US construction alone." },
 ];
 
 /* ── Industry lifecycles already covered ── */
