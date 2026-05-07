@@ -41,7 +41,7 @@ export function BetaCTASection() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
               >
-                Book a Discovery Call <ArrowRight className="w-4 h-4" />
+                Book a working session <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </div>

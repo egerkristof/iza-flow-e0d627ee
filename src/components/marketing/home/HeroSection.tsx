@@ -126,9 +126,9 @@ export function HeroSection() {
           </Link>
           <Link
             to="/os"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
           >
-            See the platform <ArrowRight className="w-4 h-4" />
+            See the architecture <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </motion.div>
 

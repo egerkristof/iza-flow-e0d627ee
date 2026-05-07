@@ -7,6 +7,7 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { SectionTag, GradientText, CAL_URL } from "@/components/marketing/home/shared";
 import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
 import { FourMovesStrip } from "@/components/marketing/os/FourMovesStrip";
+import { ProductFilm } from "@/components/marketing/os/ProductFilm";
 
 const INDUSTRY_CARDS = [
   { label: "Pharma & Life Sciences", href: "/industries/regulated", icon: <Beaker className="w-5 h-5" /> },
@@ -42,9 +43,9 @@ export default function OSPage() {
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <SectionTag label="The Liza framework" />
           <h1 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5">
-            The system of intelligence for how your company decides.
+            Here is the architecture that makes that work.
             <br />
-            <GradientText>So every AI tool executes to your standard.</GradientText>
+            <GradientText>One standard. Every AI surface inherits it.</GradientText>
           </h1>
           <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
@@ -63,8 +64,13 @@ export default function OSPage() {
               href="#stack"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
             >
-              See it for my industry
+              Skip to the architecture
             </a>
+          </div>
+
+          {/* 90-second product film */}
+          <div className="mt-10 max-w-4xl mx-auto">
+            <ProductFilm />
           </div>
         </div>
       </section>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { ReadingProgress } from "@/components/marketing/ReadingProgress";
 
 const NAV_ITEMS = [
   { label: "LIZA OS", href: "/" },
@@ -32,6 +33,7 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ReadingProgress />
       {/* Nav */}
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl"
