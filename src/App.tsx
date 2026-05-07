@@ -84,8 +84,9 @@ const App = () => (
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
 
             {/* Marketing - product-led homepage */}
-            <Route path="/" element={<OSPage />} />
-            <Route path="/home-archive" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/os" element={<OSPage />} />
+            <Route path="/home-archive" element={<Navigate to="/" replace />} />
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/industries" element={<IndustriesPage />} />
             <Route path="/industries/regulated" element={<IndustryPharmaPage />} />
@@ -110,7 +111,6 @@ const App = () => (
             <Route path="/diagnostic" element={<DiagnosticPage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/audit" element={<AuditLandingPage />} />
-            <Route path="/os" element={<Navigate to="/" replace />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
