@@ -880,6 +880,123 @@ export function LizaOSStack() {
   );
 }
 
+/* ---------- Mobile-only simplified vertical stack ---------- */
+function MobileStack({
+  industry, sourceLayer, toolsLayer, nativeLayer, isGeneric,
+}: {
+  industry: IndustryLexicon;
+  sourceLayer: Layer;
+  toolsLayer: Layer;
+  nativeLayer: Layer;
+  isGeneric: boolean;
+}) {
+  const blocks = [
+    {
+      id: "leadership",
+      kicker: "Leadership view",
+      title: "Strategic control tower",
+      sub: "Set the standards, see the signals. Strategy and execution become one loop.",
+      tone: "strategy" as Tone,
+      icon: <Compass className="w-4 h-4" />,
+      bullets: industry.leadership.push.slice(0, 3),
+    },
+    {
+      id: "systems",
+      kicker: "Systems of record",
+      title: sourceLayer.title,
+      sub: sourceLayer.sub,
+      tone: "data" as Tone,
+      icon: <Database className="w-4 h-4" />,
+      bullets: sourceLayer.items.slice(0, 4).map((i) => i.label),
+    },
+    {
+      id: "native",
+      kicker: "Where work happens",
+      title: "One governed workspace",
+      sub: nativeLayer.sub,
+      tone: "native" as Tone,
+      icon: <Workflow className="w-4 h-4" />,
+      bullets: nativeLayer.items.slice(0, 4).map((i) => i.label),
+    },
+    {
+      id: "tools",
+      kicker: "Your AI tools",
+      title: toolsLayer.title,
+      sub: toolsLayer.sub,
+      tone: "apps" as Tone,
+      icon: <Bot className="w-4 h-4" />,
+      bullets: toolsLayer.items.slice(0, 4).map((i) => i.label),
+    },
+    {
+      id: "core",
+      kicker: "Decision standard",
+      title: "How your company decides",
+      sub: "Standards, mandates, and the artifact graph. Every surface above runs against this.",
+      tone: "core" as Tone,
+      icon: <ShieldCheck className="w-4 h-4" />,
+      bullets: industry.judgmentCore.systemicItems.slice(0, 3).map((i) => i.label),
+    },
+  ];
+
+  return (
+    <div className="space-y-3">
+      {blocks.map((b, idx) => {
+        const t = TONE[b.tone];
+        return (
+          <div key={b.id}>
+            <div
+              className="rounded-2xl border-2 p-4"
+              style={{ background: t.bg, borderColor: t.ring }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div
+                  className="w-7 h-7 rounded-lg flex items-center justify-center"
+                  style={{ background: t.accent + "22", color: t.accent }}
+                >
+                  {b.icon}
+                </div>
+                <p className="text-[9px] font-black tracking-[0.18em] uppercase" style={{ color: t.kicker }}>
+                  {b.kicker}
+                </p>
+              </div>
+              <h4 className="text-base font-black leading-tight mb-1.5 text-foreground">{b.title}</h4>
+              <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">{b.sub}</p>
+              <ul className="space-y-1.5">
+                {b.bullets.map((label) => (
+                  <li key={label} className="flex items-start gap-2 text-[12px] text-foreground/85">
+                    <span
+                      className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0"
+                      style={{ background: t.accent }}
+                    />
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {idx < blocks.length - 1 && (
+              <div className="flex justify-center py-2">
+                <ChevronDown className="w-4 h-4 text-muted-foreground/60" />
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {!isGeneric && (
+        <div className="pt-3 text-center">
+          <Link
+            to={industry.href}
+            className="inline-flex items-center gap-2 text-sm font-bold text-primary"
+          >
+            See the full {industry.label} view
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ---------- Industry rolodex tab strip ---------- */
 function IndustryRolodex({
   active, onChange,
