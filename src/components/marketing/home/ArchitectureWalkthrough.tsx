@@ -453,7 +453,7 @@ function ScreenCard({
   useEffect(() => { if (!active) setExpanded(false); }, [active]);
   return (
     <div
-      className="relative rounded-2xl border p-5 min-h-[460px] flex flex-col overflow-hidden"
+      className="relative rounded-2xl border p-5 min-h-[520px] flex flex-col overflow-hidden"
       style={{
         background: "hsl(var(--card))",
         borderColor: "hsl(var(--border))",
