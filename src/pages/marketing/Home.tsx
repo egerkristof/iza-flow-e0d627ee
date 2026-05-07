@@ -1,10 +1,11 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
 import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
-import { FAQSection } from "@/components/marketing/home/FAQSection";
+import { BuyerRouterFAQ } from "@/components/marketing/home/BuyerRouterFAQ";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
 import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 import { ArchitectureTeaser } from "@/components/marketing/home/ArchitectureTeaser";
+import { TrustStrip } from "@/components/marketing/home/TrustStrip";
 
 /* Homepage = 4 acts. Hook → Story → Proof → Ask. Anatomy lives on /os. */
 export default function HomePage() {
@@ -12,6 +13,7 @@ export default function HomePage() {
     <MarketingLayout>
       {/* 1. Hook */}
       <HeroSection />
+      <TrustStrip />
       <SectionDivider />
       {/* 2. Story (the Stories player, now responsive) */}
       <ArchitectureTeaser />
@@ -19,7 +21,7 @@ export default function HomePage() {
       {/* 3. Proof */}
       <ThreeReasonsSection />
       {/* 4. Ask */}
-      <FAQSection />
+      <BuyerRouterFAQ />
       <BetaCTASection />
     </MarketingLayout>
   );
