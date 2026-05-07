@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
 import { GuidedTour, PlayTourButton } from "./GuidedTour";
 import { Play } from "lucide-react";
-import { toast } from "sonner";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
