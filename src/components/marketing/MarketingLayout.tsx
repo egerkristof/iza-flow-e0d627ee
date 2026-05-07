@@ -6,8 +6,8 @@ import { useTheme } from "next-themes";
 const NAV_ITEMS = [
   { label: "LIZA OS", href: "/" },
   { label: "Platform", href: "/os" },
-  { label: "Industries", href: "/industries" },
-  { label: "Manifesto", href: "/manifesto" },
+  { label: "By Industry", href: "/industries" },
+  { label: "By Function", href: "/by-function" },
   { label: "Find the cause", href: "/diagnostic" },
 ];
 
@@ -182,7 +182,8 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
               <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-muted-foreground">Product</p>
               <div className="flex flex-col gap-2">
                 <Link to="/os" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Platform</Link>
-                <Link to="/industries" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Industries</Link>
+                <Link to="/industries" className="text-sm text-muted-foreground hover:text-foreground transition-colors">By Industry</Link>
+                <Link to="/by-function" className="text-sm text-muted-foreground hover:text-foreground transition-colors">By Function</Link>
                 <Link to="/manifesto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Manifesto</Link>
               </div>
             </div>
