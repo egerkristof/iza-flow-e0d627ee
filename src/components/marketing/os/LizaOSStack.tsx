@@ -479,31 +479,31 @@ function JudgmentCoreBlock({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55 }}
-      className="relative rounded-2xl border-2 overflow-hidden"
-      style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
+      className="relative"
     >
-      <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: t.accent, opacity: 0.7 }} />
-      {/* Window chrome — frames this as a Liza system surface */}
-      <div
-        className="flex items-center gap-1.5 px-3 py-2 border-b"
-        style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
-      >
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
-        <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
-          Liza Decision Core
-        </span>
+      <div className="text-center mb-5">
+        <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
+          {JUDGMENT_CORE_DESC.kicker}
+        </p>
+        <h3 className="text-2xl md:text-3xl font-black leading-tight text-foreground">{JUDGMENT_CORE_DESC.title}</h3>
       </div>
-      <div className="p-6 md:p-8">
-        <div className="text-center mb-6">
-          <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
-            {JUDGMENT_CORE_DESC.kicker}
-          </p>
-          <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{JUDGMENT_CORE_DESC.title}</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{JUDGMENT_CORE_DESC.sub}</p>
+      {/* Framed surface — window chrome wraps the actual content boxes */}
+      <div
+        className="rounded-2xl border-2 overflow-hidden"
+        style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
+      >
+        <div
+          className="flex items-center gap-1.5 px-3 py-2 border-b"
+          style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+        >
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+          <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+            Liza Decision Core
+          </span>
         </div>
-
+        <div className="p-5 md:p-6">
         {/* Two parallel knowledge graphs */}
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <SubGraph
@@ -550,7 +550,9 @@ function JudgmentCoreBlock({
           </div>
         </div>
 
-        <div className="text-center mt-5">
+        </div>
+      </div>
+      <div className="text-center mt-5">
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
@@ -575,7 +577,6 @@ function JudgmentCoreBlock({
             )}
           </AnimatePresence>
         </div>
-      </div>
     </motion.div>
   );
 }
@@ -831,28 +832,29 @@ function ControlTowerBlock({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55 }}
-      className="relative rounded-2xl border-2 overflow-hidden"
-      style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
+      className="relative"
     >
-      <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: t.accent, opacity: 0.7 }} />
-      {/* Window chrome — frames this as a Liza system surface */}
-      <div
-        className="flex items-center gap-1.5 px-3 py-2 border-b"
-        style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
-      >
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
-        <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
-          Liza Leadership View
-        </span>
+      <div className="text-center mb-5">
+        <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>{layer.kicker}</p>
+        <h3 className="text-2xl md:text-3xl font-black leading-tight text-foreground">{layer.title}</h3>
       </div>
-      <div className="p-6 md:p-8">
-        <div className="text-center mb-5">
-          <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>{layer.kicker}</p>
-          <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{sub}</p>
+      {/* Framed surface — window chrome wraps the actual KPI / push-down / flow-up boxes */}
+      <div
+        className="rounded-2xl border-2 overflow-hidden"
+        style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
+      >
+        <div
+          className="flex items-center gap-1.5 px-3 py-2 border-b"
+          style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+        >
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+          <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+            Liza Leadership View
+          </span>
         </div>
+        <div className="p-5 md:p-6">
         {leadership && <KpiStrip kpis={leadership.kpis} />}
         <div className="grid md:grid-cols-2 gap-4">
           <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
@@ -958,7 +960,9 @@ function ControlTowerBlock({
             </div>
           </div>
         </div>
-        <div className="text-center mt-5">
+        </div>
+      </div>
+      <div className="text-center mt-5">
           <button type="button" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}
             className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.18em] uppercase transition-opacity hover:opacity-80"
             style={{ color: t.accent }}>
@@ -979,7 +983,6 @@ function ControlTowerBlock({
             )}
           </AnimatePresence>
         </div>
-      </div>
     </motion.div>
   );
 }
