@@ -816,10 +816,37 @@ function ControlTowerBlock({
               <ArrowDown className="w-3.5 h-3.5" style={{ color: t.accent }} />
               <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Push down — strategy as system constraints</p>
             </div>
-            <div className="flex flex-col gap-2">
-              {downItems.map((it) => (
-                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
-              ))}
+            <div className="flex flex-col gap-1.5">
+              {downItems.map((it) => {
+                const isOpen = openItem === it.label;
+                return (
+                  <button
+                    key={it.label}
+                    type="button"
+                    onClick={() => setOpenItem(isOpen ? null : it.label)}
+                    className="text-left rounded-lg border px-3 py-2.5 transition-all hover:translate-y-[-1px]"
+                    style={{
+                      background: isOpen ? t.chipBorder : "hsl(var(--background))",
+                      borderColor: t.ring,
+                    }}
+                  >
+                    <p className="text-[12px] font-bold text-foreground/90 leading-tight">{it.label}</p>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.p
+                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                          animate={{ height: "auto", opacity: 1, marginTop: 6 }}
+                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                          transition={{ duration: 0.22, ease: "easeOut" }}
+                          className="overflow-hidden text-[11px] leading-relaxed text-foreground/75"
+                        >
+                          {it.detail}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                );
+              })}
             </div>
           </div>
           <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
@@ -827,10 +854,43 @@ function ControlTowerBlock({
               <ArrowUp className="w-3.5 h-3.5" style={{ color: t.accent }} />
               <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Flow up — live signal from execution</p>
             </div>
-            <div className="flex flex-col gap-2">
-              {upItems.map((it) => (
-                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
-              ))}
+            <div className="flex flex-col gap-1.5">
+              {upItems.map((it) => {
+                const isOpen = openItem === it.label;
+                return (
+                  <button
+                    key={it.label}
+                    type="button"
+                    onClick={() => setOpenItem(isOpen ? null : it.label)}
+                    className="text-left rounded-lg border px-3 py-2.5 transition-all hover:translate-y-[-1px] flex items-center gap-2"
+                    style={{
+                      background: isOpen ? t.chipBorder : "hsl(var(--background))",
+                      borderColor: t.ring,
+                    }}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ background: "hsl(var(--brand-green))", boxShadow: "0 0 6px hsl(var(--brand-green))" }}
+                    />
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-[12px] font-bold text-foreground/90 leading-tight">{it.label}</span>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.span
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.22, ease: "easeOut" }}
+                            className="block overflow-hidden text-[11px] leading-relaxed text-foreground/75 mt-1"
+                          >
+                            {it.detail}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
