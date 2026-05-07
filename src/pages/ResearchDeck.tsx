@@ -1111,11 +1111,12 @@ const SLIDES = [
   { id: 6, title: "Why Now", component: <S06WhyNow /> },
   { id: 7, title: "The Shift", component: <S07Shift /> },
   { id: 8, title: "Line of Work", component: <S08LineOfWork /> },
-  { id: 9, title: "How It Works", component: <S08Loop /> },
-  { id: 10, title: "Architecture", component: <S09Architecture /> },
-  { id: 11, title: "Outcomes", component: <S13Outcomes /> },
-  { id: 12, title: "How to Start", component: <S14TwoDoor /> },
-  { id: 13, title: "Close", component: <S15Close /> },
+  { id: 9, title: "Reading Is the Work", component: <S08bReading /> },
+  { id: 10, title: "How It Works", component: <S08Loop /> },
+  { id: 11, title: "Architecture", component: <S09Architecture /> },
+  { id: 12, title: "Outcomes", component: <S13Outcomes /> },
+  { id: 13, title: "How to Start", component: <S14TwoDoor /> },
+  { id: 14, title: "Close", component: <S15Close /> },
 ];
 
 // ─── Main page (mirrors SpaceDefenseHoldingsDeck shell) ──────────────────────
