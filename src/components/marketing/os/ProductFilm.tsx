@@ -1,26 +1,35 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, SkipBack, SkipForward, Database, Workflow, Sparkles, ShieldCheck, Compass, Network } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Database, Workflow, Sparkles, ShieldCheck, Compass, Network, FileText, Brain, AlertTriangle, Lock, GitBranch, Zap } from "lucide-react";
 
-/* 90-second autoplaying product film for /os.
-   Visual sequence (no external video file): 6 captioned beats that build the
-   architecture as the user watches. Plays muted by default with captions,
-   click to unmute (audio hook left for later TTS integration). */
+/* Cinematic product film for /os.
+   A real movie about the architecture: each beat is a mini-scene with
+   motion, connecting lines, conflict and resolution. Faster pacing,
+   stronger visual storytelling than the architectural walkthrough below. */
+
+type Visual =
+  | "chaos"        // tools spitting conflicting answers
+  | "rag-decay"    // RAG snapshot freezing while world moves on
+  | "trapped"      // knowledge locked in people and silos
+  | "forge"        // fragments converging into the Decision Standard
+  | "broadcast"    // standard radiating into agents in workspace
+  | "loop"         // strategy down, signal up
+  | "aligned";     // every tool same answer, sharpening over time
 
 type Beat = {
   duration: number; // ms
   caption: string;
-  visual: "tools" | "records" | "core" | "workspace" | "leadership" | "result";
+  visual: Visual;
 };
 
 const BEATS: Beat[] = [
-  { duration: 13000, caption: "Every AI tool you bought answers from generic training data.", visual: "tools" },
-  { duration: 14000, caption: "Yes, they bolt on RAG. But RAG is a snapshot of static documents, not your live decision logic.", visual: "tools" },
-  { duration: 14000, caption: "Your real standards stay trapped in records, docs and senior interviews. That is human knowledge, not retrievable text.", visual: "records" },
-  { duration: 16000, caption: "LIZA writes the Decision Standard. Versioned, owned, governed.", visual: "core" },
-  { duration: 14000, caption: "One workspace. Your AI agents run inside, against the standard.", visual: "workspace" },
-  { duration: 14000, caption: "Strategy pushes down. Signal flows up. Same week, not next quarter.", visual: "leadership" },
-  { duration: 15000, caption: "Same answer in every tool. Standards that sharpen every week.", visual: "result" },
+  { duration: 7000,  caption: "Every AI tool you bought answers from generic training data. Different tool, different answer.", visual: "chaos" },
+  { duration: 8000,  caption: "RAG bolts on a snapshot. Documents freeze. Reality moves on. Your decision logic is not in there.", visual: "rag-decay" },
+  { duration: 8000,  caption: "Your real standards stay trapped in records, threads and senior heads. Not retrievable text. Human knowledge.", visual: "trapped" },
+  { duration: 9000,  caption: "LIZA forges the Decision Standard. Fragments become versioned, owned, governed logic.", visual: "forge" },
+  { duration: 8000,  caption: "One workspace. Your AI agents execute inside, every action checked against the standard.", visual: "broadcast" },
+  { duration: 8000,  caption: "Strategy pushes down. Signal flows up. Same week, not next quarter.", visual: "loop" },
+  { duration: 8000,  caption: "Same answer in every tool. Standards that sharpen every week.", visual: "aligned" },
 ];
 
 const TOTAL = BEATS.reduce((a, b) => a + b.duration, 0);
@@ -91,8 +100,8 @@ export function ProductFilm() {
           <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-green, var(--primary)) / 0.7)" }} />
           <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--primary) / 0.7)" }} />
           <span className="ml-2 sm:ml-3 text-[9px] sm:text-[10px] font-black tracking-[0.14em] sm:tracking-[0.18em] uppercase text-primary truncate">
-            <span className="hidden sm:inline">LIZA · 90-second product film</span>
-            <span className="sm:hidden">LIZA · Product film</span>
+            <span className="hidden sm:inline">LIZA · The architecture, in motion</span>
+            <span className="sm:hidden">LIZA · The film</span>
           </span>
         </div>
         <div className="flex items-center gap-3 shrink-0">
