@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Database, FileSpreadsheet, Mail, MessagesSquare, Cloud,
@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
 import { GuidedTour, PlayTourButton } from "./GuidedTour";
+import { Play } from "lucide-react";
 
 /* ---------- types ---------- */
 type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
