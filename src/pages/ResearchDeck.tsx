@@ -743,6 +743,80 @@ function S08LineOfWork() {
   );
 }
 
+function S08bReading() {
+  const before = [
+    "Months skimming hundreds of papers to find the 20 that matter",
+    "Reading reactively, in the order Google Scholar serves them",
+    "Foundational texts deferred because the surface noise never ends",
+    "Notes scattered across PDFs, margins, and a vault you rarely revisit",
+  ];
+  const after = [
+    "The corpus arrives pre-mapped: schools, lineages, and disagreements visible on day one",
+    "Read on purpose: the foundational texts of the schools your stance depends on",
+    "Every page you read deepens an anchor, not a folder",
+    "Counter-arguments and gaps surface as you read, so reading becomes dialogue",
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <Eyebrow n="09" text="READING IS THE WORK" />
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT }}>
+          We do not read for you.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>We give you back the time to read deeper.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 18, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
+          Reading is the scholar's act, not a bottleneck to be removed. The cataloguing layer absorbs the mechanical pass over the corpus so you spend your reading time on the foundational texts that actually shape your stance, with the field already mapped around you.
+        </p>
+        <div className="grid grid-cols-2 gap-7 flex-1">
+          <div className="rounded-2xl border p-8 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <div className="flex items-baseline justify-between mb-1">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>READING TODAY</p>
+              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", color: SUBTLE }}>WIDE AND SHALLOW</p>
+            </div>
+            <p className="font-black mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>Months of surface skim</p>
+            <p className="mb-5" style={{ fontSize: 15, color: MUTED, fontStyle: "italic", lineHeight: 1.45 }}>
+              The reading time exists. It is just spent in the wrong places, on the wrong papers, in the wrong order.
+            </p>
+            <ul className="space-y-3 mt-2">
+              {before.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <X size={16} style={{ color: SUBTLE, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <div className="flex items-baseline justify-between mb-1">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>READING WITH LIZA</p>
+              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", color: `hsl(${TEAL})` }}>NARROW AND DEEP</p>
+            </div>
+            <p className="font-black mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>Time spent on the foundational texts</p>
+            <p className="mb-5" style={{ fontSize: 15, color: `hsl(${TEAL})`, fontStyle: "italic", fontWeight: 700, lineHeight: 1.45 }}>
+              Same reading hours. Aimed at the texts that actually move your hypothesis.
+            </p>
+            <ul className="space-y-3 mt-2">
+              {after.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <Check size={16} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 16, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto pt-5">
+              <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.2em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
+                Read fewer papers. Understand more field.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
 function S08Loop() {
   const loop = [
     {
