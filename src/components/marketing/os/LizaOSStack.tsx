@@ -208,6 +208,7 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
   const t = TONE[layer.tone];
   const [openItem, setOpenItem] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const activeItem = layer.items.find((i) => i.label === openItem) ?? null;
   return (
     <motion.div
       initial={{ opacity: 0, x: align === "left" ? -18 : 18 }}
@@ -226,17 +227,57 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
       </p>
       <h3 className="text-base md:text-lg font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
       <p className="text-[12px] leading-relaxed text-muted-foreground mb-4">{layer.sub}</p>
-      <div className="flex flex-col gap-2 flex-1">
-        {layer.items.map((it) => (
-          <Chip
-            key={it.label}
-            item={it}
-            tone={layer.tone}
-            open={openItem === it.label}
-            onToggle={() => setOpenItem(openItem === it.label ? null : it.label)}
-          />
-        ))}
+      {/* Endpoint tiles — looks like an integration wall, not a feature list */}
+      <div className="flex flex-col gap-1.5 flex-1">
+        {layer.items.map((it) => {
+          const isOpen = openItem === it.label;
+          return (
+            <button
+              key={it.label}
+              type="button"
+              onClick={() => setOpenItem(isOpen ? null : it.label)}
+              className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg border text-left transition-all hover:translate-x-[1px]"
+              style={{
+                background: isOpen ? t.chipBorder : "hsl(var(--background) / 0.7)",
+                borderColor: t.ring,
+              }}
+            >
+              <span
+                className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+                style={{ background: t.chipBg, color: t.accent, border: `1px solid ${t.chipBorder}` }}
+              >
+                {it.icon}
+              </span>
+              <span className="flex-1 text-[12px] font-bold text-foreground/90 leading-tight">{it.label}</span>
+              <span
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                style={{ background: t.accent, boxShadow: `0 0 6px ${t.accent}` }}
+                aria-label="connected"
+              />
+            </button>
+          );
+        })}
       </div>
+      {/* Single shared detail pane (instead of inline expansion in each chip) */}
+      <AnimatePresence initial={false}>
+        {activeItem && (
+          <motion.p
+            key={activeItem.label}
+            initial={{ height: 0, opacity: 0, marginTop: 0 }}
+            animate={{ height: "auto", opacity: 1, marginTop: 10 }}
+            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="overflow-hidden text-[11.5px] leading-relaxed px-3 py-2.5 rounded-md border-l-2"
+            style={{
+              color: "hsl(var(--foreground) / 0.8)",
+              background: "hsl(var(--background) / 0.7)",
+              borderColor: t.accent,
+            }}
+          >
+            {activeItem.detail}
+          </motion.p>
+        )}
+      </AnimatePresence>
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
@@ -267,8 +308,9 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
 /* ---------- center block (Native Surfaces, prominent) ---------- */
 function CenterNativeSurfaces({ layer }: { layer: Layer }) {
   const t = TONE[layer.tone];
-  const [openItem, setOpenItem] = useState<string | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const active = layer.items[activeIdx];
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -291,16 +333,80 @@ function CenterNativeSurfaces({ layer }: { layer: Layer }) {
           <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
           <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{layer.sub}</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {layer.items.map((it) => (
-            <Chip
-              key={it.label}
-              item={it}
-              tone={layer.tone}
-              open={openItem === it.label}
-              onToggle={() => setOpenItem(openItem === it.label ? null : it.label)}
-            />
-          ))}
+        {/* Workspace mock: tabs + a content pane. Visually says "this is a place where work happens". */}
+        <div
+          className="rounded-xl border overflow-hidden"
+          style={{ background: "hsl(var(--background))", borderColor: t.ring }}
+        >
+          {/* Window chrome */}
+          <div
+            className="flex items-center gap-1.5 px-3 py-2 border-b"
+            style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+          >
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+            <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+              Liza workspace
+            </span>
+          </div>
+          {/* Tabs */}
+          <div className="flex items-stretch border-b overflow-x-auto" style={{ borderColor: t.ring }}>
+            {layer.items.map((it, i) => {
+              const isActive = i === activeIdx;
+              return (
+                <button
+                  key={it.label}
+                  type="button"
+                  onClick={() => setActiveIdx(i)}
+                  className="flex items-center gap-1.5 px-3 py-2 text-[11.5px] font-bold whitespace-nowrap border-b-2 transition-colors"
+                  style={{
+                    borderColor: isActive ? t.accent : "transparent",
+                    color: isActive ? t.accent : "hsl(var(--muted-foreground))",
+                    background: isActive ? t.bg : "transparent",
+                  }}
+                >
+                  <span className="opacity-90">{it.icon}</span>
+                  {it.label}
+                </button>
+              );
+            })}
+          </div>
+          {/* Active pane */}
+          <div className="p-4 md:p-5">
+            <div className="flex items-start gap-3">
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ background: t.chipBg, color: t.accent, border: `1px solid ${t.chipBorder}` }}
+              >
+                {active.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-sm font-black text-foreground">{active.label}</p>
+                  {active.tag && (
+                    <span
+                      className="text-[9px] tracking-widest font-black uppercase px-1.5 py-0.5 rounded"
+                      style={{ background: t.chipBg, color: t.accent, border: `1px solid ${t.chipBorder}` }}
+                    >
+                      {active.tag}
+                    </span>
+                  )}
+                </div>
+                <p className="text-[12.5px] leading-relaxed text-foreground/80">{active.detail}</p>
+              </div>
+            </div>
+            {/* Faux content rows for "workspace" feel */}
+            <div className="mt-4 space-y-1.5">
+              {[0.9, 0.7, 0.55].map((w, i) => (
+                <div
+                  key={i}
+                  className="h-2 rounded-full"
+                  style={{ width: `${w * 100}%`, background: t.accent + "22" }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
         <div className="text-center mt-4">
           <button
@@ -710,10 +816,37 @@ function ControlTowerBlock({
               <ArrowDown className="w-3.5 h-3.5" style={{ color: t.accent }} />
               <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Push down — strategy as system constraints</p>
             </div>
-            <div className="flex flex-col gap-2">
-              {downItems.map((it) => (
-                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
-              ))}
+            <div className="flex flex-col gap-1.5">
+              {downItems.map((it) => {
+                const isOpen = openItem === it.label;
+                return (
+                  <button
+                    key={it.label}
+                    type="button"
+                    onClick={() => setOpenItem(isOpen ? null : it.label)}
+                    className="text-left rounded-lg border px-3 py-2.5 transition-all hover:translate-y-[-1px]"
+                    style={{
+                      background: isOpen ? t.chipBorder : "hsl(var(--background))",
+                      borderColor: t.ring,
+                    }}
+                  >
+                    <p className="text-[12px] font-bold text-foreground/90 leading-tight">{it.label}</p>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.p
+                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                          animate={{ height: "auto", opacity: 1, marginTop: 6 }}
+                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                          transition={{ duration: 0.22, ease: "easeOut" }}
+                          className="overflow-hidden text-[11px] leading-relaxed text-foreground/75"
+                        >
+                          {it.detail}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                );
+              })}
             </div>
           </div>
           <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
@@ -721,10 +854,43 @@ function ControlTowerBlock({
               <ArrowUp className="w-3.5 h-3.5" style={{ color: t.accent }} />
               <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Flow up — live signal from execution</p>
             </div>
-            <div className="flex flex-col gap-2">
-              {upItems.map((it) => (
-                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
-              ))}
+            <div className="flex flex-col gap-1.5">
+              {upItems.map((it) => {
+                const isOpen = openItem === it.label;
+                return (
+                  <button
+                    key={it.label}
+                    type="button"
+                    onClick={() => setOpenItem(isOpen ? null : it.label)}
+                    className="text-left rounded-lg border px-3 py-2.5 transition-all hover:translate-y-[-1px] flex items-center gap-2"
+                    style={{
+                      background: isOpen ? t.chipBorder : "hsl(var(--background))",
+                      borderColor: t.ring,
+                    }}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ background: "hsl(var(--brand-green))", boxShadow: "0 0 6px hsl(var(--brand-green))" }}
+                    />
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-[12px] font-bold text-foreground/90 leading-tight">{it.label}</span>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.span
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.22, ease: "easeOut" }}
+                            className="block overflow-hidden text-[11px] leading-relaxed text-foreground/75 mt-1"
+                          >
+                            {it.detail}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
