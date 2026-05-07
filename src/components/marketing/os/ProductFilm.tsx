@@ -326,39 +326,7 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
       );
     case "trapped":
       return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 max-w-2xl">
-          {[
-            { t: "SharePoint", icon: Database },
-            { t: "Salesforce", icon: Database },
-            { t: "ELN records", icon: Database },
-            { t: "ERP exports", icon: Database },
-            { t: "Email threads", icon: FileText },
-            { t: "Senior heads", icon: Brain },
-          ].map((it, i) => {
-            const Icon = it.icon;
-            return (
-              <motion.div
-                key={it.t}
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.35, delay: i * 0.06 }}
-                className="relative px-2.5 sm:px-3 py-2 sm:py-3 rounded-lg border bg-card flex items-center gap-1.5 sm:gap-2 overflow-hidden"
-                style={{ borderColor: "hsl(var(--border))" }}
-              >
-                <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground shrink-0" />
-                <span className="text-[10px] sm:text-[12px] font-bold truncate flex-1">{it.t}</span>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 + i * 0.08 }}
-                >
-                  <Lock className="w-3 h-3" style={{ color: amber }} />
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </div>
-      );
+        return <TrappedIceberg tone={tone} amber={amber} />;
     case "forge":
       return <ForgeKnowledgeGraph tone={tone} green={green} amber={amber} />;
     case "broadcast":
