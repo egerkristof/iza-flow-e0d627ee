@@ -9,7 +9,7 @@ const GREEN = "hsl(var(--brand-green))";
 /* ---------- Tiny per-move visuals ---------- */
 
 function SenseVisual() {
-  // Scattered signals on the left, funneling into one structured node on the right
+  // Scattered signals on the left funnel into one structured "context" node on the right
   const sources = [
     { icon: <FileText className="w-3 h-3" />, y: 8 },
     { icon: <Mail className="w-3 h-3" />, y: 32 },
@@ -17,23 +17,36 @@ function SenseVisual() {
     { icon: <Database className="w-3 h-3" />, y: 80 },
   ];
   return (
-    <svg viewBox="0 0 180 100" className="w-full h-full">
+    <svg viewBox="0 0 180 100" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
       {sources.map((s, i) => (
-        <line key={i} x1="32" y1={s.y + 8} x2="138" y2="50"
-          stroke={PRIMARY} strokeWidth="0.8" strokeOpacity="0.35" strokeDasharray="2 3" />
+        <line
+          key={`l-${i}`}
+          x1="34"
+          y1={s.y + 6}
+          x2="120"
+          y2="50"
+          stroke={PRIMARY}
+          strokeWidth="0.8"
+          strokeOpacity="0.35"
+          strokeDasharray="2 3"
+        />
       ))}
       {sources.map((s, i) => (
-        <foreignObject key={i} x="10" y={s.y} width="22" height="16">
-          <div className="w-full h-full flex items-center justify-center rounded border"
-            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))", color: PRIMARY }}>
+        <foreignObject key={`s-${i}`} x="10" y={s.y} width="22" height="14">
+          <div
+            className="w-full h-full flex items-center justify-center rounded border"
+            style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))", color: PRIMARY }}
+          >
             {s.icon}
           </div>
         </foreignObject>
       ))}
-      <foreignObject x="138" y="38" width="34" height="24">
-        <div className="w-full h-full rounded-md flex items-center justify-center text-[8px] font-black tracking-widest uppercase"
-          style={{ background: PRIMARY + "1f", color: PRIMARY, border: `1px solid ${PRIMARY}55` }}>
-          context
+      <foreignObject x="120" y="38" width="52" height="24">
+        <div
+          className="w-full h-full rounded-md flex items-center justify-center text-[8px] font-black tracking-[0.15em] uppercase"
+          style={{ background: PRIMARY + "1f", color: PRIMARY, border: `1px solid ${PRIMARY}55` }}
+        >
+          Context
         </div>
       </foreignObject>
     </svg>
@@ -41,29 +54,48 @@ function SenseVisual() {
 }
 
 function DecideVisual() {
-  // An AI request passes through a stack of standard checks
+  // An AI request passes through a vertical stack of standard checks, then exits as "pass"
   const checks = ["Mandate", "Playbook", "Policy"];
   return (
-    <svg viewBox="0 0 180 100" className="w-full h-full">
-      <foreignObject x="6" y="38" width="36" height="24">
-        <div className="w-full h-full rounded-md flex items-center justify-center text-[8px] font-black tracking-widest uppercase"
-          style={{ background: "hsl(var(--background))", color: "hsl(var(--muted-foreground))", border: "1px solid hsl(var(--border))" }}>
-          request
+    <svg viewBox="0 0 180 100" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+      {/* Request */}
+      <foreignObject x="4" y="38" width="40" height="24">
+        <div
+          className="w-full h-full rounded-md flex items-center justify-center text-[8px] font-black tracking-[0.15em] uppercase"
+          style={{
+            background: "hsl(var(--background))",
+            color: "hsl(var(--muted-foreground))",
+            border: "1px solid hsl(var(--border))",
+          }}
+        >
+          Request
         </div>
       </foreignObject>
-      <line x1="42" y1="50" x2="62" y2="50" stroke={PRIMARY} strokeWidth="1" strokeOpacity="0.6" />
+      <line x1="44" y1="50" x2="66" y2="50" stroke={PRIMARY} strokeWidth="1" strokeOpacity="0.6" />
+      {/* Stack of checks (vertical, no overlap) */}
       {checks.map((c, i) => (
-        <foreignObject key={c} x={62 + i * 36} y={28 + (i % 2) * 24} width="32" height="20">
-          <div className="w-full h-full rounded flex items-center justify-center gap-1 text-[8px] font-bold"
-            style={{ background: PRIMARY + "14", color: PRIMARY, border: `1px solid ${PRIMARY}40` }}>
-            <ShieldCheck className="w-2.5 h-2.5" />{c}
+        <foreignObject key={c} x="66" y={12 + i * 28} width="48" height="22">
+          <div
+            className="w-full h-full rounded flex items-center justify-center gap-1 text-[8px] font-bold"
+            style={{
+              background: PRIMARY + "14",
+              color: PRIMARY,
+              border: `1px solid ${PRIMARY}40`,
+            }}
+          >
+            <ShieldCheck className="w-2.5 h-2.5 shrink-0" />
+            {c}
           </div>
         </foreignObject>
       ))}
-      <foreignObject x="138" y="38" width="36" height="24">
-        <div className="w-full h-full rounded-md flex items-center justify-center gap-1 text-[8px] font-black uppercase tracking-widest"
-          style={{ background: GREEN + "1f", color: GREEN, border: `1px solid ${GREEN}55` }}>
-          <CheckCircle2 className="w-2.5 h-2.5" /> pass
+      <line x1="114" y1="50" x2="130" y2="50" stroke={GREEN} strokeWidth="1" strokeOpacity="0.7" />
+      {/* Pass */}
+      <foreignObject x="130" y="38" width="44" height="24">
+        <div
+          className="w-full h-full rounded-md flex items-center justify-center gap-1 text-[8px] font-black uppercase tracking-[0.15em]"
+          style={{ background: GREEN + "1f", color: GREEN, border: `1px solid ${GREEN}55` }}
+        >
+          <CheckCircle2 className="w-2.5 h-2.5" /> Pass
         </div>
       </foreignObject>
     </svg>
@@ -71,28 +103,37 @@ function DecideVisual() {
 }
 
 function ExecuteVisual() {
-  // Mini workspace: tabs + agents working
+  // Mini governed workbook with three agents executing inside it
   const agents = [
     { name: "Copilot", icon: <Sparkles className="w-2.5 h-2.5" /> },
     { name: "Claude", icon: <Bot className="w-2.5 h-2.5" /> },
     { name: "Agent", icon: <Bot className="w-2.5 h-2.5" /> },
   ];
   return (
-    <div className="w-full h-full rounded-md border overflow-hidden flex flex-col"
-      style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}>
-      <div className="flex items-center gap-1 px-1.5 py-1 border-b"
-        style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}>
+    <div
+      className="w-full h-full rounded-md border overflow-hidden flex flex-col"
+      style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+    >
+      <div
+        className="flex items-center gap-1 px-1.5 py-1 border-b"
+        style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }}
+      >
         <span className="w-1.5 h-1.5 rounded-full" style={{ background: PRIMARY + "66" }} />
         <span className="w-1.5 h-1.5 rounded-full" style={{ background: GREEN + "66" }} />
         <span className="w-1.5 h-1.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.4)" }} />
-        <span className="ml-2 text-[7px] tracking-widest uppercase font-black text-muted-foreground">workbook</span>
+        <span className="ml-1.5 text-[7px] tracking-[0.18em] uppercase font-black text-muted-foreground truncate">
+          Workbook
+        </span>
       </div>
-      <div className="flex-1 p-1.5 grid grid-cols-3 gap-1">
+      <div className="flex-1 p-1 grid grid-cols-3 gap-1 min-h-0">
         {agents.map((a) => (
-          <div key={a.name} className="rounded flex flex-col items-center justify-center gap-0.5 py-1"
-            style={{ background: PRIMARY + "10", border: `1px solid ${PRIMARY}30`, color: PRIMARY }}>
-            {a.icon}
-            <span className="text-[7px] font-bold">{a.name}</span>
+          <div
+            key={a.name}
+            className="rounded flex items-center justify-center gap-1 px-1 min-w-0"
+            style={{ background: PRIMARY + "10", border: `1px solid ${PRIMARY}30`, color: PRIMARY }}
+          >
+            <span className="shrink-0">{a.icon}</span>
+            <span className="text-[7px] font-bold truncate">{a.name}</span>
           </div>
         ))}
       </div>
