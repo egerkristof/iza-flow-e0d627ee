@@ -47,8 +47,8 @@ export default function OSPage() {
             <GradientText>So every AI tool executes to your standard.</GradientText>
           </h1>
           <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href="#stack"
+            <Link
+              to="/diagnostic"
               className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -56,16 +56,14 @@ export default function OSPage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              See it for my industry
+              Score your AI execution
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
             <a
-              href={CAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#stack"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
             >
-              Book a mapping call
+              See it for my industry
             </a>
           </div>
         </div>
@@ -138,17 +136,14 @@ export default function OSPage() {
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-black leading-tight mb-5">
-            Ready to map your stack?
+            See where your AI execution stands.
           </h2>
           <p className="text-base text-muted-foreground max-w-xl mx-auto mb-7">
-            A 30-minute call. We sketch where the standard would live, what surfaces would inherit it,
-            and what the first 30 days would look like.
+            Five dimensions. One score. Zero signup. Then book a 20-minute debrief if you want to map your stack.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href={CAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/diagnostic"
               className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -156,15 +151,17 @@ export default function OSPage() {
                 boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
               }}
             >
-              Map your stack
+              Score your AI execution
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-            <Link
-              to="/diagnostic"
+            </Link>
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
             >
-              Score your AI execution
-            </Link>
+              Book a working session
+            </a>
           </div>
         </div>
       </section>
