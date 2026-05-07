@@ -1513,24 +1513,51 @@ function IndustryRolodex({
   showPlayTour: boolean;
 }) {
   return (
-    <div className="mb-7 hidden md:block">
-      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-        <p className="text-[12px] font-black tracking-[0.22em] uppercase text-foreground/80">
-          1. Pick your industry. 2. Play the 6-step tour.
-        </p>
+    <div className="mb-8 hidden md:block">
+      <div className="flex items-end justify-between mb-4 flex-wrap gap-3">
+        <div>
+          <p className="text-[11px] font-black tracking-[0.28em] uppercase text-primary mb-1.5">
+            Step 1 of 2
+          </p>
+          <h3 className="text-[22px] md:text-[26px] font-black leading-tight text-foreground">
+            Pick your industry to see this run on your stack.
+          </h3>
+          <p className="text-[13px] text-muted-foreground mt-1">
+            Then hit <span className="font-bold text-foreground">Play 6-step tour</span> for a guided walk-through of the architecture.
+          </p>
+        </div>
         {active === "generic" && (
-          <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-primary inline-flex items-center gap-1">
-            <ChevronRight className="w-3.5 h-3.5 animate-pulse" />
-            start here
-          </span>
+          <motion.span
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-[11px] font-black tracking-[0.22em] uppercase text-primary inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+            style={{
+              background: "hsl(var(--primary) / 0.12)",
+              border: "1px solid hsl(var(--primary) / 0.35)",
+            }}
+          >
+            <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
+            Select one below
+          </motion.span>
         )}
       </div>
-      <div
-        className="flex flex-wrap items-center gap-2 p-2.5 rounded-2xl border-2"
+      <motion.div
+        animate={
+          active === "generic"
+            ? {
+                boxShadow: [
+                  "0 12px 40px -20px hsl(var(--primary) / 0.35)",
+                  "0 16px 50px -16px hsl(var(--primary) / 0.6)",
+                  "0 12px 40px -20px hsl(var(--primary) / 0.35)",
+                ],
+              }
+            : { boxShadow: "0 12px 40px -20px hsl(var(--primary) / 0.35)" }
+        }
+        transition={{ duration: 2.4, repeat: active === "generic" ? Infinity : 0 }}
+        className="flex flex-wrap items-center gap-2.5 p-4 rounded-2xl border-2"
         style={{
           background: "hsl(var(--card))",
-          borderColor: "hsl(var(--primary) / 0.25)",
-          boxShadow: "0 12px 40px -20px hsl(var(--primary) / 0.35)",
+          borderColor: active === "generic" ? "hsl(var(--primary) / 0.55)" : "hsl(var(--primary) / 0.25)",
         }}
       >
         {INDUSTRIES.map((ind) => {
@@ -1540,12 +1567,12 @@ function IndustryRolodex({
               key={ind.key}
               type="button"
               onClick={() => onChange(ind.key)}
-              className="text-[13px] font-bold px-4 py-2.5 rounded-xl transition-all hover:-translate-y-0.5"
+              className="text-[14px] font-bold px-5 py-3 rounded-xl transition-all hover:-translate-y-0.5"
               style={{
                 background: isActive ? "hsl(var(--primary))" : "hsl(var(--background))",
-                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.8)",
-                border: isActive ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
-                boxShadow: isActive ? "0 8px 22px -10px hsl(var(--primary))" : "none",
+                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.85)",
+                border: isActive ? "1px solid hsl(var(--primary))" : "1.5px solid hsl(var(--border))",
+                boxShadow: isActive ? "0 10px 28px -10px hsl(var(--primary))" : "none",
               }}
             >
               {ind.label}
@@ -1556,12 +1583,7 @@ function IndustryRolodex({
         {showPlayTour && (
           <PlayTourButton onClick={onPlayTour} />
         )}
-      </div>
-      {showPlayTour && (
-        <p className="mt-2 text-[11px] text-muted-foreground">
-          Hit <span className="font-bold text-foreground">Play 6-step tour</span> to walk through the diagram one piece at a time.
-        </p>
-      )}
+      </motion.div>
     </div>
   );
 }
