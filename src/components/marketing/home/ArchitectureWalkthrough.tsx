@@ -281,48 +281,80 @@ function SceneStakes(p: number) {
   );
 }
 
-/* 4. GUIDE — "Meet Liza" — the standard, plus people working with it */
-function SceneGuide(p: number) {
+/* 4a. GUIDE — "Meet Liza" — the standard itself */
+function SceneStandard(p: number) {
   const lines = [
     { k: "Discount cap",     v: "15% · 20% multi-yr" },
     { k: "Approval > €50k",  v: "CFO + Legal" },
     { k: "PII in prompts",   v: "Blocked" },
   ];
-  const docIn = between(p, 0.0, 0.3);
-  const usersIn = between(p, 0.3, 0.55);
-  const liveIn = between(p, 0.55, 0.85);
+  const docIn = between(p, 0.0, 0.35);
+  const linesIn = (i: number) => between(p, 0.35 + i * 0.12, 0.55 + i * 0.12);
   return (
-    <div className="w-full max-w-[320px] mx-auto space-y-2">
+    <div className="w-full max-w-[320px] mx-auto">
       {/* The standard itself */}
       <div style={{ opacity: docIn }}>
         <MiniWindow label="Liza · Decision Standard" accent={PRIMARY} glow>
-          <div className="flex items-start gap-2 mb-1.5">
+          <div className="flex items-start gap-2 mb-2">
             <span
-              className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+              className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
               style={{ background: PRIMARY + "1a", color: PRIMARY, border: `1px solid ${PRIMARY}33` }}
             >
-              <Compass className="w-3.5 h-3.5" />
+              <Compass className="w-4 h-4" />
             </span>
             <div className="flex-1">
-              <p className="text-[11.5px] font-black text-foreground leading-tight">How your company decides.</p>
+              <p className="text-[12.5px] font-black text-foreground leading-tight">How your company decides.</p>
               <p className="text-[9px] text-muted-foreground mt-0.5">v2.4 · Sarah (CRO) · 2d ago</p>
             </div>
           </div>
-          <div className="space-y-1">
-            {lines.map((l) => (
-              <div key={l.k} className="flex items-center justify-between gap-2 px-1.5 py-0.5 rounded">
-                <span className="text-[10px] text-foreground/85 font-semibold truncate">{l.k}</span>
-                <span className="text-[9.5px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
+          <div className="space-y-1.5">
+            {lines.map((l, i) => (
+              <div
+                key={l.k}
+                className="flex items-center justify-between gap-2 px-2 py-1.5 rounded border"
+                style={{
+                  opacity: linesIn(i),
+                  transform: `translateX(${(1 - linesIn(i)) * -8}px)`,
+                  borderColor: PRIMARY + "22",
+                  background: PRIMARY + "06",
+                }}
+              >
+                <span className="text-[10.5px] text-foreground/85 font-semibold truncate">{l.k}</span>
+                <span className="text-[10px] font-mono font-bold flex-shrink-0" style={{ color: PRIMARY }}>{l.v}</span>
               </div>
             ))}
           </div>
         </MiniWindow>
       </div>
+      <p
+        className="text-center text-[10px] text-muted-foreground leading-snug px-2 mt-3"
+        style={{ opacity: between(p, 0.75, 0.95) }}
+      >
+        One living document. Versioned. Owned by leaders.
+      </p>
+    </div>
+  );
+}
 
+/* 4b. THE LOOP — leaders edit, teams cite, signal flows back */
+function SceneLoop(p: number) {
+  const editIn = between(p, 0.0, 0.25);
+  const useIn = between(p, 0.25, 0.5);
+  const liveIn = between(p, 0.5, 0.78);
+  return (
+    <div className="w-full max-w-[320px] mx-auto space-y-2">
       {/* People at work, side by side */}
-      <div className="grid grid-cols-2 gap-2" style={{ opacity: usersIn }}>
+      <div className="grid grid-cols-2 gap-2">
         {/* Sarah authors a rule */}
-        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: editIn,
+            transform: `translateY(${(1 - editIn) * 8}px)`,
+            borderColor: PRIMARY + "44",
+            background: PRIMARY + "06",
+          }}
+        >
           <div className="flex items-center gap-1 mb-1">
             <Compass className="w-3 h-3" style={{ color: PRIMARY }} />
             <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Sarah · CRO</span>
@@ -335,7 +367,15 @@ function SceneGuide(p: number) {
           <p className="text-[8px] text-muted-foreground mt-1 italic">Diff sent to 2 reviewers.</p>
         </div>
         {/* Maya uses Liza in the workspace */}
-        <div className="rounded-lg border p-2" style={{ borderColor: PRIMARY + "44", background: PRIMARY + "06" }}>
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: useIn,
+            transform: `translateY(${(1 - useIn) * 8}px)`,
+            borderColor: PRIMARY + "44",
+            background: PRIMARY + "06",
+          }}
+        >
           <div className="flex items-center gap-1 mb-1">
             <Briefcase className="w-3 h-3" style={{ color: PRIMARY }} />
             <span className="text-[8.5px] font-black uppercase tracking-[0.1em]" style={{ color: PRIMARY }}>Maya · AE</span>
@@ -363,7 +403,7 @@ function SceneGuide(p: number) {
 
       <p
         className="text-center text-[9.5px] text-muted-foreground leading-snug px-2"
-        style={{ opacity: between(p, 0.7, 0.95) }}
+        style={{ opacity: between(p, 0.78, 0.95) }}
       >
         Leaders write the rules. Teams work with them. Liza keeps both in sync.
       </p>
