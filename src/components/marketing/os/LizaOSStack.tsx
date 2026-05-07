@@ -1161,7 +1161,9 @@ function MobileLoopDiagram() {
   const PRIMARY = "hsl(var(--primary))";
   const GREEN = "hsl(var(--brand-green))";
   const AMBER = "hsl(var(--brand-amber, var(--primary)))";
-  const MUTED = "hsl(var(--muted-foreground))";
+  // Distinct, higher-contrast tones for the two side surfaces
+  const RECORDS = "hsl(var(--primary))";
+  const TOOLS = "hsl(var(--brand-green))";
   return (
     <div
       className="rounded-2xl border p-4"
@@ -1170,10 +1172,10 @@ function MobileLoopDiagram() {
       <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground text-center mb-3">
         The loop
       </p>
-      <svg viewBox="0 0 320 380" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox="0 0 320 410" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
         {/* Right-side feedback path (execution -> leadership) */}
         <path
-          d="M 250 320 C 310 320 310 60 250 60"
+          d="M 250 350 C 312 350 312 60 250 60"
           fill="none"
           stroke={GREEN}
           strokeOpacity="0.55"
@@ -1181,7 +1183,7 @@ function MobileLoopDiagram() {
           strokeDasharray="3 4"
         />
         <polygon points="250,55 256,65 244,65" fill={GREEN} fillOpacity="0.7" />
-        <foreignObject x="282" y="180" width="36" height="22">
+        <foreignObject x="282" y="195" width="36" height="22">
           <div
             className="w-full h-full rounded-md flex items-center justify-center text-[8px] font-black tracking-[0.12em] uppercase"
             style={{
@@ -1218,15 +1220,15 @@ function MobileLoopDiagram() {
         </foreignObject>
 
         {/* Node 4 — Records + AI tools (split row) */}
-        <foreignObject x="6" y="240" width="118" height="60">
-          <NodeBox kicker="Systems of record" title="Drive · DBs · Email" tone={MUTED} small />
+        <foreignObject x="2" y="240" width="120" height="74">
+          <NodeBox kicker="Systems of record" title="Drive · DBs · Email" tone={RECORDS} small />
         </foreignObject>
-        <foreignObject x="130" y="240" width="118" height="60">
-          <NodeBox kicker="Your AI tools" title="Copilot · Claude" tone={MUTED} small />
+        <foreignObject x="128" y="240" width="120" height="74">
+          <NodeBox kicker="Your AI tools" title="Copilot · Claude" tone={TOOLS} small />
         </foreignObject>
 
         {/* Bottom outcome bar */}
-        <foreignObject x="20" y="320" width="230" height="40">
+        <foreignObject x="20" y="350" width="230" height="40">
           <div
             className="w-full h-full rounded-md flex items-center justify-center text-[10px] font-black uppercase tracking-[0.18em]"
             style={{
@@ -1251,20 +1253,20 @@ function NodeBox({
 }: { kicker: string; title: string; tone: string; accent?: boolean; small?: boolean }) {
   return (
     <div
-      className="w-full h-full rounded-lg flex flex-col justify-center px-3 py-1.5"
+      className={`w-full h-full rounded-lg flex flex-col justify-center ${small ? "px-2 py-2 gap-1" : "px-3 py-1.5"}`}
       style={{
-        background: accent ? `${tone}14` : "hsl(var(--background))",
-        border: `${accent ? "2px" : "1px"} solid ${tone}${accent ? "66" : "44"}`,
+        background: accent ? `${tone}14` : small ? `${tone}0d` : "hsl(var(--background))",
+        border: `${accent ? "2px" : "1px"} solid ${tone}${accent ? "66" : small ? "55" : "44"}`,
       }}
     >
       <p
-        className="text-[8.5px] font-black tracking-[0.16em] uppercase truncate"
+        className={`font-black tracking-[0.14em] uppercase leading-tight ${small ? "text-[9px]" : "text-[8.5px] truncate"}`}
         style={{ color: tone }}
       >
         {kicker}
       </p>
       <p
-        className={`font-black leading-tight text-foreground truncate ${small ? "text-[11px]" : "text-[12.5px]"}`}
+        className={`font-black leading-tight text-foreground ${small ? "text-[11px]" : "text-[12.5px] truncate"}`}
       >
         {title}
       </p>
