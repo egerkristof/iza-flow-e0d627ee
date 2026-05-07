@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  AlertTriangle, Compass, Database, Sparkles, Workflow,
-  ArrowDown, ArrowUp, ArrowRight, ArrowLeft, Play, Pause, Cloud, Mail, FileSpreadsheet, Bot, Search,
-  CheckCircle2, TrendingDown, TrendingUp, Users, FileText, GitBranch, BookOpen, Stamp, Activity, Eye,
-  Briefcase, Scale, Headphones, Cog, UserCheck, Wallet, Globe, Newspaper, AlertCircle, MessageSquare, Link2, Plug,
+  AlertTriangle, Compass, Sparkles, Workflow,
+  ArrowRight, ArrowLeft, Play, Pause, Bot, Search,
+  CheckCircle2, TrendingDown, Users, FileText, Activity,
+  Briefcase, Scale, Headphones, Cog, UserCheck, Wallet, Globe, Newspaper, AlertCircle, Link2, Plug,
 } from "lucide-react";
 
 /* Mobile-only auto-playing "Stories" video of the Liza architecture.
