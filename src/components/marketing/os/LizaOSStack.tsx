@@ -208,6 +208,7 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
   const t = TONE[layer.tone];
   const [openItem, setOpenItem] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const activeItem = layer.items.find((i) => i.label === openItem) ?? null;
   return (
     <motion.div
       initial={{ opacity: 0, x: align === "left" ? -18 : 18 }}
@@ -226,17 +227,57 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
       </p>
       <h3 className="text-base md:text-lg font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
       <p className="text-[12px] leading-relaxed text-muted-foreground mb-4">{layer.sub}</p>
-      <div className="flex flex-col gap-2 flex-1">
-        {layer.items.map((it) => (
-          <Chip
-            key={it.label}
-            item={it}
-            tone={layer.tone}
-            open={openItem === it.label}
-            onToggle={() => setOpenItem(openItem === it.label ? null : it.label)}
-          />
-        ))}
+      {/* Endpoint tiles — looks like an integration wall, not a feature list */}
+      <div className="flex flex-col gap-1.5 flex-1">
+        {layer.items.map((it) => {
+          const isOpen = openItem === it.label;
+          return (
+            <button
+              key={it.label}
+              type="button"
+              onClick={() => setOpenItem(isOpen ? null : it.label)}
+              className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg border text-left transition-all hover:translate-x-[1px]"
+              style={{
+                background: isOpen ? t.chipBorder : "hsl(var(--background) / 0.7)",
+                borderColor: t.ring,
+              }}
+            >
+              <span
+                className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+                style={{ background: t.chipBg, color: t.accent, border: `1px solid ${t.chipBorder}` }}
+              >
+                {it.icon}
+              </span>
+              <span className="flex-1 text-[12px] font-bold text-foreground/90 leading-tight">{it.label}</span>
+              <span
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                style={{ background: t.accent, boxShadow: `0 0 6px ${t.accent}` }}
+                aria-label="connected"
+              />
+            </button>
+          );
+        })}
       </div>
+      {/* Single shared detail pane (instead of inline expansion in each chip) */}
+      <AnimatePresence initial={false}>
+        {activeItem && (
+          <motion.p
+            key={activeItem.label}
+            initial={{ height: 0, opacity: 0, marginTop: 0 }}
+            animate={{ height: "auto", opacity: 1, marginTop: 10 }}
+            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="overflow-hidden text-[11.5px] leading-relaxed px-3 py-2.5 rounded-md border-l-2"
+            style={{
+              color: "hsl(var(--foreground) / 0.8)",
+              background: "hsl(var(--background) / 0.7)",
+              borderColor: t.accent,
+            }}
+          >
+            {activeItem.detail}
+          </motion.p>
+        )}
+      </AnimatePresence>
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
