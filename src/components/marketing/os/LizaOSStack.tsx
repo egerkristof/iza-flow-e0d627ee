@@ -308,8 +308,9 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
 /* ---------- center block (Native Surfaces, prominent) ---------- */
 function CenterNativeSurfaces({ layer }: { layer: Layer }) {
   const t = TONE[layer.tone];
-  const [openItem, setOpenItem] = useState<string | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const active = layer.items[activeIdx];
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -332,16 +333,80 @@ function CenterNativeSurfaces({ layer }: { layer: Layer }) {
           <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
           <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{layer.sub}</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {layer.items.map((it) => (
-            <Chip
-              key={it.label}
-              item={it}
-              tone={layer.tone}
-              open={openItem === it.label}
-              onToggle={() => setOpenItem(openItem === it.label ? null : it.label)}
-            />
-          ))}
+        {/* Workspace mock: tabs + a content pane. Visually says "this is a place where work happens". */}
+        <div
+          className="rounded-xl border overflow-hidden"
+          style={{ background: "hsl(var(--background))", borderColor: t.ring }}
+        >
+          {/* Window chrome */}
+          <div
+            className="flex items-center gap-1.5 px-3 py-2 border-b"
+            style={{ borderColor: t.ring, background: "hsl(var(--card))" }}
+          >
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--brand-amber, var(--primary)) / 0.5)" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent + "55" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.35)" }} />
+            <span className="ml-3 text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+              Liza workspace
+            </span>
+          </div>
+          {/* Tabs */}
+          <div className="flex items-stretch border-b overflow-x-auto" style={{ borderColor: t.ring }}>
+            {layer.items.map((it, i) => {
+              const isActive = i === activeIdx;
+              return (
+                <button
+                  key={it.label}
+                  type="button"
+                  onClick={() => setActiveIdx(i)}
+                  className="flex items-center gap-1.5 px-3 py-2 text-[11.5px] font-bold whitespace-nowrap border-b-2 transition-colors"
+                  style={{
+                    borderColor: isActive ? t.accent : "transparent",
+                    color: isActive ? t.accent : "hsl(var(--muted-foreground))",
+                    background: isActive ? t.bg : "transparent",
+                  }}
+                >
+                  <span className="opacity-90">{it.icon}</span>
+                  {it.label}
+                </button>
+              );
+            })}
+          </div>
+          {/* Active pane */}
+          <div className="p-4 md:p-5">
+            <div className="flex items-start gap-3">
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ background: t.chipBg, color: t.accent, border: `1px solid ${t.chipBorder}` }}
+              >
+                {active.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-sm font-black text-foreground">{active.label}</p>
+                  {active.tag && (
+                    <span
+                      className="text-[9px] tracking-widest font-black uppercase px-1.5 py-0.5 rounded"
+                      style={{ background: t.chipBg, color: t.accent, border: `1px solid ${t.chipBorder}` }}
+                    >
+                      {active.tag}
+                    </span>
+                  )}
+                </div>
+                <p className="text-[12.5px] leading-relaxed text-foreground/80">{active.detail}</p>
+              </div>
+            </div>
+            {/* Faux content rows for "workspace" feel */}
+            <div className="mt-4 space-y-1.5">
+              {[0.9, 0.7, 0.55].map((w, i) => (
+                <div
+                  key={i}
+                  className="h-2 rounded-full"
+                  style={{ width: `${w * 100}%`, background: t.accent + "22" }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
         <div className="text-center mt-4">
           <button
