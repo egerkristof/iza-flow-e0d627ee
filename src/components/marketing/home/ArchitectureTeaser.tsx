@@ -27,11 +27,11 @@ const INDUSTRIES: IndustryView[] = [
     tools: "Copilot, Claude, internal GPTs, vendor RAG",
   },
   {
-    label: "Financial Services",
-    decisionStandard: "Risk appetite, conduct, product rules. Regulator wording locked.",
-    workspace: "Workbooks for KYC, complaints, credit memos, and segment communications.",
-    records: "Core banking, CRM, AML, policy library, contracts",
-    tools: "Copilot, Claude, in-house assistants, vendor RAG",
+    label: "Space Engineering & Operations",
+    decisionStandard: "Mission assurance rules, ECSS standards, anomaly response playbooks. Versioned per program.",
+    workspace: "Governed workbooks for mission ops procedures, anomaly reports, design reviews, and flight readiness.",
+    records: "PLM, MBSE models, telemetry archives, ECSS doc library, ground-segment systems",
+    tools: "Copilot, Claude, engineering copilots, vendor RAG",
   },
   {
     label: "AEC",
@@ -48,11 +48,11 @@ const INDUSTRIES: IndustryView[] = [
     tools: "Copilot, Claude, engineering copilots",
   },
   {
-    label: "Healthcare",
-    decisionStandard: "Clinical pathways, payer rules, HIPAA-aware patient comms.",
-    workspace: "Workbooks for prior auth, care coordination, clinical letters, appeals.",
-    records: "EHR, claims, payer portals, secure messaging",
-    tools: "Copilot, Claude, clinical assistants, vendor RAG",
+    label: "Financial Services",
+    decisionStandard: "Risk appetite, conduct, product rules. Regulator wording locked.",
+    workspace: "Workbooks for KYC, complaints, credit memos, and segment communications.",
+    records: "Core banking, CRM, AML, policy library, contracts",
+    tools: "Copilot, Claude, in-house assistants, vendor RAG",
   },
   {
     label: "Enterprise IT & AI",
