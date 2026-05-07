@@ -1090,22 +1090,6 @@ export function LizaOSStack() {
 
   return (
     <div className="relative" ref={stackRef}>
-      {/* Upfront choice card: guided tour vs explore on my own */}
-      <UpfrontChoiceCard
-        visible={!choiceMade}
-        onPlayTour={() => {
-          setTourOpen(true);
-          setChoiceMade(true);
-        }}
-        onExplore={() => {
-          setChoiceMade(true);
-          dismissedFloatingRef.current = true;
-        }}
-        onJumpToSelector={() => {
-          jumpToSelector();
-        }}
-      />
-
       {/* Industry tab strip — Rolodex */}
       <div ref={selectorRef}>
         <IndustryRolodex
