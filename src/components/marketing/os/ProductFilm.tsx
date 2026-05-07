@@ -26,7 +26,7 @@ const BEATS: Beat[] = [
   { duration: 7000,  caption: "Every AI tool you bought answers from generic training data. Different tool, different answer.", visual: "chaos" },
   { duration: 8000,  caption: "RAG bolts on a snapshot. Documents freeze. Reality moves on. Your decision logic is not in there.", visual: "rag-decay" },
   { duration: 8000,  caption: "Your real standards stay trapped in records, threads and senior heads. Not retrievable text. Human knowledge.", visual: "trapped" },
-  { duration: 9000,  caption: "LIZA forges the Decision Standard. Fragments become versioned, owned, governed logic.", visual: "forge" },
+  { duration: 12000, caption: "LIZA forges the Decision Standard. Fragments become a living knowledge graph. Nodes, relationships, governed logic.", visual: "forge" },
   { duration: 8000,  caption: "One workspace. Your AI agents execute inside, every action checked against the standard.", visual: "broadcast" },
   { duration: 8000,  caption: "Strategy pushes down. Signal flows up. Same week, not next quarter.", visual: "loop" },
   { duration: 8000,  caption: "Same answer in every tool. Standards that sharpen every week.", visual: "aligned" },
@@ -361,51 +361,7 @@ function BeatVisual({ visual }: { visual: Beat["visual"] }) {
       );
     case "forge":
       return (
-        <div className="relative w-full max-w-xl h-full flex items-center justify-center">
-          {/* Fragments converging */}
-          {["Policy", "Pricing", "Approval", "Tone", "Risk", "Playbook"].map((f, i) => {
-            const angle = (i / 6) * Math.PI * 2;
-            const r = 130;
-            const x = Math.cos(angle) * r;
-            const y = Math.sin(angle) * r;
-            return (
-              <motion.div
-                key={f}
-                initial={{ opacity: 0, x, y, scale: 0.6 }}
-                animate={{ opacity: [0, 1, 1, 0], x: [x, x, 0, 0], y: [y, y, 0, 0], scale: [0.6, 1, 0.4, 0.4] }}
-                transition={{ duration: 2.6, delay: 0.1 + i * 0.05, times: [0, 0.25, 0.75, 1] }}
-                className="absolute px-2 py-1 rounded-md border bg-card text-[10px] sm:text-[11px] font-black tracking-wider uppercase"
-                style={{ borderColor: tone + "/0.5", color: tone }}
-              >
-                {f}
-              </motion.div>
-            );
-          })}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 2.4, duration: 0.6, type: "spring", damping: 12 }}
-            className="relative rounded-2xl border-2 p-4 sm:p-6 text-center bg-background"
-            style={{
-              background: "hsl(var(--primary) / 0.08)",
-              borderColor: tone,
-              boxShadow: `0 24px 50px -20px ${tone}`,
-            }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 rounded-2xl border-2 border-dashed pointer-events-none"
-              style={{ borderColor: tone + "/0.3" }}
-            />
-            <Network className="w-8 h-8 mx-auto mb-2" style={{ color: tone }} />
-            <p className="text-[9px] sm:text-[10px] font-black tracking-[0.22em] uppercase mb-1" style={{ color: tone }}>
-              The Decision Standard
-            </p>
-            <p className="text-sm sm:text-base font-black leading-tight">Versioned. Owned. Governed.</p>
-          </motion.div>
-        </div>
-      );
+      return <ForgeKnowledgeGraph tone={tone} green={green} amber={amber} />;
     case "broadcast":
       return (
         <div className="relative w-full max-w-2xl">
