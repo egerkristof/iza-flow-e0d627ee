@@ -996,53 +996,53 @@ export function LizaOSStack() {
   const isGeneric = industryKey === "generic";
   const [tourOpen, setTourOpen] = useState(false);
   const stackRef = useRef<HTMLDivElement>(null);
-  const nudgedRef = useRef(false);
+  const selectorRef = useRef<HTMLDivElement>(null);
+  // Upfront choice: has the visitor either picked an industry, played a tour,
+  // or explicitly said "let me explore on my own"?
+  const [choiceMade, setChoiceMade] = useState(false);
+  // Big floating prompt that re-surfaces if they scrolled past the choice card
+  // without making a decision.
+  const [showFloatingPrompt, setShowFloatingPrompt] = useState(false);
+  const dismissedFloatingRef = useRef(false);
 
-  // Scroll-triggered nudge: when the architecture section has been on screen
-  // for ~6s in generic mode, suggest picking an industry + playing the tour.
+  // Mark the choice as made when industry is picked or tour starts.
   useEffect(() => {
-    if (!isGeneric || tourOpen || nudgedRef.current) return;
+    if (!isGeneric || tourOpen) {
+      setChoiceMade(true);
+      setShowFloatingPrompt(false);
+      dismissedFloatingRef.current = true;
+    }
+  }, [isGeneric, tourOpen]);
+
+  // Floating prompt: if visitor scrolls deep into the architecture without
+  // making the upfront choice, surface a big in-page prompt that explains
+  // both paths (guided tour vs free exploration).
+  useEffect(() => {
+    if (choiceMade || dismissedFloatingRef.current) return;
     const el = stackRef.current;
     if (!el) return;
-    let timer: number | null = null;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-            if (timer == null) {
-              timer = window.setTimeout(() => {
-                if (nudgedRef.current) return;
-                nudgedRef.current = true;
-                toast(
-                  "Want to see how this works for your industry?",
-                  {
-                    description:
-                      "Pick your industry above, then play the 6-step guided tour through the architecture.",
-                    duration: 9000,
-                    action: {
-                      label: "Jump to selector",
-                      onClick: () => {
-                        el.scrollIntoView({ behavior: "smooth", block: "start" });
-                      },
-                    },
-                  },
-                );
-              }, 6000);
-            }
-          } else if (timer != null) {
-            window.clearTimeout(timer);
-            timer = null;
-          }
-        }
-      },
-      { threshold: [0, 0.35, 0.6] },
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      if (timer != null) window.clearTimeout(timer);
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const viewportH = window.innerHeight || 800;
+      // Trigger when ~40% of the section has scrolled past the top of viewport.
+      const scrolledPast = -rect.top;
+      if (scrolledPast > viewportH * 0.5) {
+        setShowFloatingPrompt(true);
+      }
     };
-  }, [isGeneric, tourOpen]);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [choiceMade]);
+
+  const dismissFloating = () => {
+    setShowFloatingPrompt(false);
+    dismissedFloatingRef.current = true;
+  };
+
+  const jumpToSelector = () => {
+    const target = selectorRef.current ?? stackRef.current;
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   // Industry-overridden layers
   const sourceLayer = useMemo<Layer>(() => ({
