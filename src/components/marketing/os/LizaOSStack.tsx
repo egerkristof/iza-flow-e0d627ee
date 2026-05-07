@@ -5,11 +5,11 @@ import {
   Network, ShieldCheck, GitBranch, History, KeySquare,
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
-  Boxes, RefreshCw,
+  Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
 } from "lucide-react";
 
 /* ---------- types ---------- */
-type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art";
+type Tone = "data" | "core" | "native" | "apps" | "fabric" | "graph-sys" | "graph-art" | "strategy";
 type Item = { label: string; icon: React.ReactNode; tag?: string; detail: string };
 type Layer = {
   id: string;
@@ -89,8 +89,8 @@ const SYSTEMIC_GRAPH: Item[] = [
 
 const ARTIFACT_GRAPH: Item[] = [
   { label: "Native artifacts (inside Liza)", icon: <Boxes className="w-4 h-4" />, detail: "Outputs produced inside Workbooks. Versioned, governed, linked back to the standard that produced them." },
-  { label: "Non-native artifacts (in your stack)", icon: <RefreshCw className="w-4 h-4" />, detail: "Files in Drive, records in databases, pages in Notion, drafts in Copilot. Tracked and synced so updates propagate." },
-  { label: "Live sync across the estate", icon: <ArrowLeftRight className="w-4 h-4" />, detail: "Two-way. When Liza updates an artifact, the source system reflects it. When the source changes, Liza catches it." },
+  { label: "Non-native artifacts (in your stack)", icon: <RefreshCw className="w-4 h-4" />, detail: "Files in Drive, records in databases, pages in Notion, drafts in Copilot. Tracked, synced, and propagated so updates land everywhere they need to." },
+  { label: "Sync & propagation across the estate", icon: <ArrowLeftRight className="w-4 h-4" />, detail: "Two-way sync plus active propagation. When a standard changes, every dependent artifact — native or in your stack — is updated, not just flagged. When the source changes, Liza catches it." },
 ];
 
 const GOVERNANCE_BAR: Item[] = [
@@ -115,6 +115,23 @@ const MODEL_FABRIC: Layer = {
   ],
 };
 
+/* TOP — Strategic Control Tower */
+const CONTROL_TOWER: Layer = {
+  id: "strategy",
+  kicker: "Top — strategic control tower",
+  title: "Strategic Control Tower",
+  sub: "Where the C-suite designs the system. Push governance, mandates, playbooks, and sensing jobs down. Live signal flows up from execution.",
+  expanded: "Strategy and execution stop being two timelines. Leadership sets the constraints — mandates, playbooks, sensing engine jobs — and pushes them into the Judgment Core. Execution feeds back transcripts, client signals, drift, and outcome metrics. Business-model innovation becomes a live loop, not a yearly offsite.",
+  tone: "strategy",
+  items: [
+    { label: "Push: governance & mandates", icon: <ShieldCheck className="w-4 h-4" />, tag: "Down", detail: "Non-negotiables and policy enter the Judgment Core as runtime constraints. Every surface inherits them the moment they ship." },
+    { label: "Push: strategic playbooks", icon: <Compass className="w-4 h-4" />, tag: "Down", detail: "New strategic moves become executable playbooks. The org runs the new plan the day it is approved, not the quarter after." },
+    { label: "Push: sensing engine jobs", icon: <Radar className="w-4 h-4" />, tag: "Down", detail: "Standing research and signal-detection jobs deployed across markets, accounts, and the regulatory landscape." },
+    { label: "Up: execution telemetry", icon: <LineChart className="w-4 h-4" />, tag: "Up", detail: "Transcripts, client emails, win/loss, drift signals, outcome metrics flow back from execution surfaces in real time." },
+    { label: "Up: live business-model loop", icon: <Target className="w-4 h-4" />, tag: "Up", detail: "Strategy designs the system; execution updates the system. The business model becomes a continuously tuned object." },
+  ],
+};
+
 /* ---------- tone tokens ---------- */
 const TONE: Record<Tone, { ring: string; bg: string; chipBg: string; chipBorder: string; accent: string; kicker: string }> = {
   apps:        { ring: "hsl(var(--muted-foreground) / 0.25)", bg: "hsl(var(--muted) / 0.4)",       chipBg: "hsl(var(--background))",          chipBorder: "hsl(var(--border))",                accent: "hsl(var(--muted-foreground))",  kicker: "hsl(var(--muted-foreground))" },
@@ -124,6 +141,7 @@ const TONE: Record<Tone, { ring: string; bg: string; chipBg: string; chipBorder:
   fabric:      { ring: "hsl(var(--foreground) / 0.18)",       bg: "hsl(var(--foreground) / 0.04)", chipBg: "hsl(var(--background))",           chipBorder: "hsl(var(--foreground) / 0.18)",     accent: "hsl(var(--foreground) / 0.75)", kicker: "hsl(var(--muted-foreground))" },
   "graph-sys": { ring: "hsl(var(--primary) / 0.40)",          bg: "hsl(var(--primary) / 0.06)",    chipBg: "hsl(var(--primary) / 0.10)",       chipBorder: "hsl(var(--primary) / 0.30)",        accent: "hsl(var(--primary))",           kicker: "hsl(var(--primary))" },
   "graph-art": { ring: "hsl(var(--brand-green) / 0.40)",      bg: "hsl(var(--brand-green) / 0.05)",chipBg: "hsl(var(--brand-green) / 0.10)",  chipBorder: "hsl(var(--brand-green) / 0.30)",    accent: "hsl(var(--brand-green))",       kicker: "hsl(var(--brand-green))" },
+  strategy:    { ring: "hsl(var(--brand-amber, var(--primary)) / 0.45)", bg: "hsl(var(--brand-amber, var(--primary)) / 0.07)", chipBg: "hsl(var(--brand-amber, var(--primary)) / 0.10)", chipBorder: "hsl(var(--brand-amber, var(--primary)) / 0.32)", accent: "hsl(var(--brand-amber, var(--primary)))", kicker: "hsl(var(--brand-amber, var(--primary)))" },
 };
 
 /* ---------- chip ---------- */
@@ -530,16 +548,113 @@ function Connector({ label }: { label: string }) {
   );
 }
 
+/* ---------- vertical bidirectional connector (strategy <-> execution) ---------- */
+function VerticalSyncConnector({ downLabel, upLabel }: { downLabel: string; upLabel: string }) {
+  return (
+    <div className="flex items-stretch justify-center py-3">
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-1">
+          <ArrowDown className="w-4 h-4" style={{ color: "hsl(var(--primary) / 0.75)" }} />
+          <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground">{downLabel}</span>
+        </div>
+        <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--border)), transparent)" }} />
+        <div className="flex flex-col items-center gap-1">
+          <ArrowUp className="w-4 h-4" style={{ color: "hsl(var(--brand-green) / 0.8)" }} />
+          <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-muted-foreground">{upLabel}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Strategic Control Tower (top block) ---------- */
+function ControlTowerBlock({ layer }: { layer: Layer }) {
+  const t = TONE[layer.tone];
+  const [openItem, setOpenItem] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const downItems = layer.items.filter((i) => i.tag === "Down");
+  const upItems = layer.items.filter((i) => i.tag === "Up");
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55 }}
+      className="relative rounded-2xl border-2 overflow-hidden"
+      style={{ background: t.bg, borderColor: t.ring, boxShadow: `0 20px 60px -30px ${t.accent}` }}
+    >
+      <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: t.accent, opacity: 0.7 }} />
+      <div className="p-6 md:p-8">
+        <div className="text-center mb-5">
+          <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>{layer.kicker}</p>
+          <h3 className="text-2xl md:text-3xl font-black leading-tight mb-2 text-foreground">{layer.title}</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground max-w-2xl mx-auto">{layer.sub}</p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
+            <div className="flex items-center gap-1.5 mb-2.5">
+              <ArrowDown className="w-3.5 h-3.5" style={{ color: t.accent }} />
+              <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Push down — strategy as system constraints</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              {downItems.map((it) => (
+                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
+              ))}
+            </div>
+          </div>
+          <div className="rounded-xl border p-4" style={{ background: "hsl(var(--background) / 0.55)", borderColor: t.ring }}>
+            <div className="flex items-center gap-1.5 mb-2.5">
+              <ArrowUp className="w-3.5 h-3.5" style={{ color: t.accent }} />
+              <p className="text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: t.kicker }}>Flow up — live signal from execution</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              {upItems.map((it) => (
+                <Chip key={it.label} item={it} tone={layer.tone} open={openItem === it.label} onToggle={() => setOpenItem(openItem === it.label ? null : it.label)} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="text-center mt-5">
+          <button type="button" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}
+            className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.18em] uppercase transition-opacity hover:opacity-80"
+            style={{ color: t.accent }}>
+            <Plus className="w-3 h-3 transition-transform" style={{ transform: expanded ? "rotate(45deg)" : "rotate(0deg)" }} />
+            {expanded ? "Less" : "Why this matters"}
+          </button>
+          <AnimatePresence initial={false}>
+            {expanded && (
+              <motion.p
+                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                animate={{ height: "auto", opacity: 1, marginTop: 10 }}
+                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                transition={{ duration: 0.28, ease: "easeOut" }}
+                className="overflow-hidden text-[12.5px] leading-relaxed text-foreground/80 max-w-2xl mx-auto"
+              >
+                {layer.expanded}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 /* ---------- main stack ---------- */
 export function LizaOSStack() {
   return (
     <div className="relative">
+      {/* TOP: Strategic Control Tower */}
+      <ControlTowerBlock layer={CONTROL_TOWER} />
+
+      <VerticalSyncConnector downLabel="strategy → system" upLabel="execution → signal" />
+
       {/* TOP ROW: Source Systems  <->  Native Surfaces (center)  <->  Connected Tools */}
       <div className="grid lg:grid-cols-[1fr_28px_1.6fr_28px_1fr] gap-3 items-stretch">
         <SidePanel layer={SOURCE_SYSTEMS} align="left" />
         <SyncArrow label="read & write" />
         <CenterNativeSurfaces layer={NATIVE_SURFACES} />
-        <SyncArrow label="sync both ways" />
+        <SyncArrow label="sync & propagate" />
         <SidePanel layer={CONNECTED_TOOLS} align="right" />
       </div>
 

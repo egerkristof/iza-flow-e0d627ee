@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Cpu, Layers, Workflow, ShieldCheck } from "lucide-react";
+import { ArrowRight, Cpu, Layers, Workflow, ShieldCheck, Compass } from "lucide-react";
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { SectionTag, GradientText, CAL_URL } from "@/components/marketing/home/shared";
 import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
 
 const PRINCIPLES = [
+  {
+    icon: <Compass className="w-5 h-5" />,
+    title: "Strategy and execution on one loop",
+    body: "A control tower sits on top. Leadership pushes governance, playbooks, and sensing jobs down. Transcripts, signals, and outcome metrics flow back up. Business-model innovation becomes live.",
+  },
   {
     icon: <Cpu className="w-5 h-5" />,
     title: "Two knowledge graphs, one core",
@@ -22,8 +27,8 @@ const PRINCIPLES = [
   },
   {
     icon: <Workflow className="w-5 h-5" />,
-    title: "Bidirectional by design",
-    body: "Liza pulls context from your source systems and connected tools, and pushes governed updates back. Artifacts stay consistent wherever they live.",
+    title: "Sync and propagate, not just connect",
+    body: "Liza pulls context from your source systems and connected tools, pushes governed updates back, and propagates changes to every dependent artifact — native or in your stack.",
   },
 ];
 
@@ -97,7 +102,7 @@ export default function OSPage() {
               <GradientText>Every AI surface inherits it.</GradientText>
             </h2>
             <p className="text-base text-muted-foreground max-w-xl mx-auto">
-            You work in the center. Source systems and connected AI tools sit on either side, syncing both ways. The Judgment Core runs two knowledge graphs in lockstep beneath it.
+            A strategic control tower sits on top. You execute in the center. Source systems and connected AI tools sit on either side, syncing and propagating both ways. The Judgment Core runs two knowledge graphs in lockstep beneath it.
             </p>
           </div>
           <LizaOSStack />
