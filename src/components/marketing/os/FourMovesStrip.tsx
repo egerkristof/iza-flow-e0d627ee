@@ -377,7 +377,8 @@ export function FourMovesStrip() {
               <h3 className="text-lg font-black mb-1">{m.title}</h3>
               <p className="text-[12px] font-bold text-foreground/80 mb-3">{m.sub}</p>
 
-              {m.visual}
+              {/* Mini-diagrams only render on tablet/desktop where they fit */}
+              <div className="hidden md:block">{m.visual}</div>
 
               <p className="text-[12.5px] text-muted-foreground leading-relaxed mb-3">
                 {m.body}
