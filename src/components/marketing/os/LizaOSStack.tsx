@@ -235,9 +235,6 @@ function SidePanel({ layer, align }: { layer: Layer; align: "left" | "right" }) 
         </span>
       </div>
       <div className="p-5 flex-1 flex flex-col">
-      <p className="text-[10px] font-black tracking-[0.22em] uppercase mb-2" style={{ color: t.kicker }}>
-        {layer.kicker}
-      </p>
       <h3 className="text-base md:text-lg font-black leading-tight mb-3 text-foreground">{layer.title}</h3>
       {/* Endpoint tiles — looks like an integration wall, not a feature list */}
       <div className="flex flex-col gap-1.5 flex-1">
