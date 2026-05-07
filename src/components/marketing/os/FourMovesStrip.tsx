@@ -216,7 +216,32 @@ export function FourMovesStrip() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Mobile: compact horizontal rows. Desktop: full 4-up cards. */}
+        <div className="md:hidden flex flex-col gap-2.5">
+          {MOVES.map((m, i) => (
+            <div
+              key={m.title}
+              className="rounded-xl border p-3 flex items-center gap-3"
+              style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+            >
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                style={{ background: TOKEN_PILL, color: PRIMARY }}
+              >
+                {m.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[9px] font-bold tracking-[0.2em] text-muted-foreground">0{i + 1}</span>
+                  <h3 className="text-[15px] font-black leading-tight">{m.title}</h3>
+                </div>
+                <p className="text-[12px] text-muted-foreground leading-snug mt-1">{m.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {MOVES.map((m, i) => (
             <div
               key={m.title}
